@@ -1,6 +1,7 @@
 ﻿
 
 using System;
+using System.Runtime.InteropServices;
 
 namespace Facepunch.Steamworks
 {
@@ -22,6 +23,11 @@ namespace Facepunch.Steamworks
         /// </summary>
         public string Username { get; private set; }
 
+        /// <summary>
+        /// Current user's SteamId
+        /// </summary>
+        public ulong SteamId;
+
         public Client( int appId )
         {
             Valve.Steamworks.SteamAPI.Init( (uint) appId );
@@ -33,15 +39,28 @@ namespace Facepunch.Steamworks
                 return;
             }
 
+            //
+            // Set up warning hook callback
+            //
+            SteamAPIWarningMessageHook ptr = OnWarning;
+            _client.SetWarningMessageHook( Marshal.GetFunctionPointerForDelegate( ptr ) );
 
+            //
+            // Get pipes
+            //
             _hpipe = _client.CreateSteamPipe();
             _huser = _client.ConnectToGlobalUser( _hpipe );
 
+
+            //
+            // Get other interfaces
+            //
             _friends = _client.GetISteamFriends( _huser, _hpipe, "SteamFriends015" );
-           // _user = Valve.Steamworks.SteamAPI.SteamUser();
+            _user = _client.GetISteamUser( _huser, _hpipe, "SteamUser019" );
 
             AppId = appId;
             Username = _friends.GetPersonaName();
+            SteamId = _user.GetSteamID();
         }
 
         public void Dispose()
@@ -64,6 +83,14 @@ namespace Facepunch.Steamworks
                 _client.BShutdownIfAllPipesClosed();
                 _client = null;
             }
+        }
+
+        [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
+        public delegate void SteamAPIWarningMessageHook( int nSeverity, System.Text.StringBuilder pchDebugText );
+
+        private void OnWarning( int nSeverity, System.Text.StringBuilder text )
+        {
+            Console.Write( text.ToString() );
         }
 
         public bool Valid

@@ -25,6 +25,19 @@ namespace Facepunch.Steamworks.Test
                 var username = client.Username;
                 Console.WriteLine( username );
                 Assert.IsTrue( client.Valid );
+                Assert.IsNotNull( username );
+            }
+        }
+
+        [TestMethod]
+        public void ClientSteamId()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                var steamid = client.SteamId;
+                Console.WriteLine( steamid );
+                Assert.IsTrue( client.Valid );
+                Assert.AreNotEqual( 0, steamid );
             }
         }
     }

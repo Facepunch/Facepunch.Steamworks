@@ -2410,7 +2410,7 @@ namespace Valve.Steamworks
         {
             CheckIfUsable();
             IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamUser(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
-            return (ISteamUser)Marshal.PtrToStructure( result, typeof( ISteamUser ) );
+            return new CSteamUser( result );
         }
         internal override ISteamGameServer GetISteamGameServer( uint hSteamUser, uint hSteamPipe, string pchVersion )
         {
