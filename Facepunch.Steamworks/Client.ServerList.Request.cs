@@ -12,7 +12,7 @@ namespace Facepunch.Steamworks
         public class Request : IDisposable
         {
             internal Client client;
-            internal uint Id;
+            internal IntPtr Id;
 
             private IntPtr m_pVTable;
             private GCHandle m_pGCHandle;
@@ -133,12 +133,12 @@ namespace Facepunch.Steamworks
                 //
                 // Cancel the query if it's still running
                 //
-                if ( !Finished && Id > 0 )
+                if ( !Finished && Id != IntPtr.Zero )
                 {
                     if ( client.Valid )
                         client._servers.CancelQuery( Id );
 
-                    Id = 0;
+                    Id = IntPtr.Zero;
                 }
 
                 //
@@ -156,16 +156,16 @@ namespace Facepunch.Steamworks
                 }
             }
 
-            private void Complete( IntPtr thisptr, uint RequestId, int response )
+            private void Complete( IntPtr thisptr, IntPtr RequestId, int response )
             {
                 if ( RequestId != Id )
                     throw new Exception( "Request ID is invalid!" );
 
                 Finished = true;
-                Id = 0;
+                Id = IntPtr.Zero;
             }
 
-            private void NonResponsive( IntPtr thisptr, uint RequestId, int iServer )
+            private void NonResponsive( IntPtr thisptr, IntPtr RequestId, int iServer )
             {
                 if ( RequestId != Id )
                     throw new Exception( "Request ID is invalid!" );
@@ -174,13 +174,15 @@ namespace Facepunch.Steamworks
                 Unresponsive.Add( Server.FromSteam( info ) );
             }
 
-            private void OnServerResponded( IntPtr thisptr, uint RequestId, int iServer )
+            private void OnServerResponded( IntPtr thisptr, IntPtr RequestId, int iServer )
             {
                 if ( RequestId != Id )
                     throw new Exception( "Request ID is invalid!" );
 
                 var info = client._servers.GetServerDetails( Id, iServer );
                 Responded.Add( Server.FromSteam( info ) );
+
+                System.Diagnostics.Debug.WriteLine( info.m_szServerName );
             }
 
             internal IntPtr GetVTablePointer()
@@ -192,11 +194,11 @@ namespace Facepunch.Steamworks
             internal class VTable
             {
                 [UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-                internal delegate void InternalServerResponded( IntPtr thisptr, uint hRequest, int iServer );
+                internal delegate void InternalServerResponded( IntPtr thisptr, IntPtr hRequest, int iServer );
                 [UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-                internal delegate void InternalServerFailedToRespond( IntPtr thisptr, uint hRequest, int iServer );
+                internal delegate void InternalServerFailedToRespond( IntPtr thisptr, IntPtr hRequest, int iServer );
                 [UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-                internal delegate void InternalRefreshComplete( IntPtr thisptr, uint hRequest, int response );
+                internal delegate void InternalRefreshComplete( IntPtr thisptr, IntPtr hRequest, int response );
 
                 [NonSerialized, MarshalAs(UnmanagedType.FunctionPtr)]
                 internal InternalServerResponded responded;
