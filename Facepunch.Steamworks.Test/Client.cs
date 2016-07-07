@@ -57,5 +57,15 @@ namespace Facepunch.Steamworks.Test
                 Assert.IsTrue( ticket.Handle == 0 );
             }
         }
+
+        [TestMethod]
+        public void ClientVoiceOptimalSampleRate()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                var rate = client.Voice.OptimalSampleRate;
+                Assert.AreNotEqual( rate, 0 );
+            }
+        }
     }
 }
