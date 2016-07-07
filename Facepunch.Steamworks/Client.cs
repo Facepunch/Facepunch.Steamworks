@@ -48,6 +48,19 @@ namespace Facepunch.Steamworks
         {
             if ( _client != null )
             {
+                if ( _hpipe > 0 )
+                {
+                    if ( _huser  > 0 )
+                        _client.ReleaseUser( _hpipe, _huser );
+
+                    _client.BReleaseSteamPipe( _hpipe );
+
+                    _huser = 0;
+                    _hpipe = 0;
+                }
+
+                _friends = null;
+
                 _client.BShutdownIfAllPipesClosed();
                 _client = null;
             }
