@@ -40,5 +40,22 @@ namespace Facepunch.Steamworks.Test
                 Assert.AreNotEqual( 0, steamid );
             }
         }
+
+        [TestMethod]
+        public void ClientAuthSessionTicket()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                var ticket = client.GetAuthSessionTicket();
+
+                Assert.IsTrue( ticket != null );
+                Assert.IsTrue( ticket.Handle != 0 );
+                Assert.IsTrue( ticket.Data.Length > 0 );
+
+                client.CancelAuthTicket( ticket );
+
+                Assert.IsTrue( ticket.Handle == 0 );
+            }
+        }
     }
 }

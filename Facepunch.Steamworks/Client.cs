@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 namespace Facepunch.Steamworks
 {
-    public class Client : IDisposable
+    public partial class Client : IDisposable
     {
         private Valve.Steamworks.ISteamClient _client;
         private uint _hpipe;
