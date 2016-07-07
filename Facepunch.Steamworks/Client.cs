@@ -18,7 +18,7 @@ namespace Facepunch.Steamworks
         /// <summary>
         /// Current running program's AppId
         /// </summary>
-        public int AppId;
+        public uint AppId;
 
         /// <summary>
         /// Current user's Username
@@ -30,9 +30,9 @@ namespace Facepunch.Steamworks
         /// </summary>
         public ulong SteamId;
 
-        public Client( int appId )
+        public Client( uint appId )
         {
-            Valve.Steamworks.SteamAPI.Init( (uint) appId );
+            Valve.Steamworks.SteamAPI.Init( appId );
             _client = Valve.Steamworks.SteamAPI.SteamClient();
 
             if ( _client.GetIntPtr() == IntPtr.Zero )

@@ -1816,7 +1816,7 @@ namespace Valve.Steamworks
     internal abstract class ISteamMatchmakingServers
     {
         internal abstract IntPtr GetIntPtr();
-        internal abstract uint RequestInternetServerList( uint iApp, IntPtr[] ppchFilters, ISteamMatchmakingServerListResponse pRequestServersResponse );
+        internal abstract uint RequestInternetServerList( uint iApp, IntPtr[] ppchFilters, IntPtr pRequestServersResponse );
         internal abstract uint RequestLANServerList( uint iApp, ISteamMatchmakingServerListResponse pRequestServersResponse );
         internal abstract uint RequestFriendsServerList( uint iApp, IntPtr[] ppchFilters, ISteamMatchmakingServerListResponse pRequestServersResponse );
         internal abstract uint RequestFavoritesServerList( uint iApp, IntPtr[] ppchFilters, ISteamMatchmakingServerListResponse pRequestServersResponse );
@@ -3775,10 +3775,10 @@ namespace Valve.Steamworks
                 throw new Exception( "Steam Pointer not configured" );
             }
         }
-        internal override uint RequestInternetServerList( uint iApp, IntPtr[] ppchFilters, ISteamMatchmakingServerListResponse pRequestServersResponse )
+        internal override uint RequestInternetServerList( uint iApp, IntPtr[] ppchFilters, IntPtr pRequestServersResponse )
         {
             CheckIfUsable();
-            uint result = NativeEntrypoints.SteamAPI_ISteamMatchmakingServers_RequestInternetServerList(m_pSteamMatchmakingServers,iApp,ppchFilters,(uint) ppchFilters.Length,pRequestServersResponse.GetIntPtr());
+            uint result = NativeEntrypoints.SteamAPI_ISteamMatchmakingServers_RequestInternetServerList(m_pSteamMatchmakingServers,iApp,ppchFilters,(uint) ppchFilters.Length,pRequestServersResponse);
             return result;
         }
         internal override uint RequestLANServerList( uint iApp, ISteamMatchmakingServerListResponse pRequestServersResponse )

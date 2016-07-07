@@ -62,3 +62,8 @@ Facepunch.Steamworks/bin/Debug/Facepunch.Steamworks.dll
 Facepunch.Steamworks/bin/Release/Facepunch.Steamworks.dll
 *.opendb
 *.db
+Facepunch.Steamworks.dll
+Facepunch.Steamworks.Test.dll
+*UnitTestFramework.dll
+mscorlib.dll
+*.nlp

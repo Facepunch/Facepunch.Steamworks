@@ -9,7 +9,7 @@ namespace Facepunch.Steamworks.Test
     public class Client
     {
         [TestMethod]
-        public void ClientInit()
+        public void Init()
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {
@@ -18,7 +18,7 @@ namespace Facepunch.Steamworks.Test
         }
 
         [TestMethod]
-        public void ClientName()
+        public void Name()
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {
@@ -30,7 +30,7 @@ namespace Facepunch.Steamworks.Test
         }
 
         [TestMethod]
-        public void ClientSteamId()
+        public void SteamId()
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {
@@ -42,7 +42,7 @@ namespace Facepunch.Steamworks.Test
         }
 
         [TestMethod]
-        public void ClientAuthSessionTicket()
+        public void AuthSessionTicket()
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {
@@ -59,7 +59,7 @@ namespace Facepunch.Steamworks.Test
         }
 
         [TestMethod]
-        public void ClientVoiceOptimalSampleRate()
+        public void VoiceOptimalSampleRate()
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {
@@ -69,7 +69,7 @@ namespace Facepunch.Steamworks.Test
         }
 
         [TestMethod]
-        public void ClientUpdate()
+        public void Update()
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {
@@ -82,7 +82,7 @@ namespace Facepunch.Steamworks.Test
         }
 
         [TestMethod]
-        public void ClientGetVoice()
+        public void GetVoice()
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {
@@ -108,6 +108,27 @@ namespace Facepunch.Steamworks.Test
 
                 // Should really be > 0 if the mic was getting audio
                 Console.Write( dataRead );
+            }
+        }
+
+        [TestMethod]
+        public void GetServers()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                var query = client.ServerList.Test();
+
+                for ( int i = 0; i < 100 ; i++ )
+                {
+                    client.Update();
+                    System.Threading.Thread.Sleep( 5 );
+
+                    if ( query.Finished )
+                        break;
+                }
+
+                Console.WriteLine( "Responded: " + query.Responded.Count.ToString() );
+                Console.WriteLine( "Unresponsive: " + query.Unresponsive.Count.ToString() );
             }
         }
     }
