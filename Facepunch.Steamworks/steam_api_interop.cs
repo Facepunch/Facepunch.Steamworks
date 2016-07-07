@@ -15,1536 +15,1536 @@ namespace Valve.Interop
 
     internal class NativeEntrypoints
     {
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_CreateSteamPipe" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_CreateSteamPipe" )]
         internal static extern uint SteamAPI_ISteamClient_CreateSteamPipe( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_BReleaseSteamPipe" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_BReleaseSteamPipe" )]
         internal static extern bool SteamAPI_ISteamClient_BReleaseSteamPipe( IntPtr instancePtr, uint hSteamPipe );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_ConnectToGlobalUser" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_ConnectToGlobalUser" )]
         internal static extern uint SteamAPI_ISteamClient_ConnectToGlobalUser( IntPtr instancePtr, uint hSteamPipe );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_CreateLocalUser" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_CreateLocalUser" )]
         internal static extern uint SteamAPI_ISteamClient_CreateLocalUser( IntPtr instancePtr, ref uint phSteamPipe, uint eAccountType );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_ReleaseUser" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_ReleaseUser" )]
         internal static extern void SteamAPI_ISteamClient_ReleaseUser( IntPtr instancePtr, uint hSteamPipe, uint hUser );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_GetISteamUser" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_GetISteamUser" )]
         internal static extern IntPtr SteamAPI_ISteamClient_GetISteamUser( IntPtr instancePtr, uint hSteamUser, uint hSteamPipe, string pchVersion );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_GetISteamGameServer" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_GetISteamGameServer" )]
         internal static extern IntPtr SteamAPI_ISteamClient_GetISteamGameServer( IntPtr instancePtr, uint hSteamUser, uint hSteamPipe, string pchVersion );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_SetLocalIPBinding" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_SetLocalIPBinding" )]
         internal static extern void SteamAPI_ISteamClient_SetLocalIPBinding( IntPtr instancePtr, uint unIP, char usPort );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_GetISteamFriends" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_GetISteamFriends" )]
         internal static extern IntPtr SteamAPI_ISteamClient_GetISteamFriends( IntPtr instancePtr, uint hSteamUser, uint hSteamPipe, string pchVersion );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_GetISteamUtils" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_GetISteamUtils" )]
         internal static extern IntPtr SteamAPI_ISteamClient_GetISteamUtils( IntPtr instancePtr, uint hSteamPipe, string pchVersion );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_GetISteamMatchmaking" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_GetISteamMatchmaking" )]
         internal static extern IntPtr SteamAPI_ISteamClient_GetISteamMatchmaking( IntPtr instancePtr, uint hSteamUser, uint hSteamPipe, string pchVersion );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_GetISteamMatchmakingServers" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_GetISteamMatchmakingServers" )]
         internal static extern IntPtr SteamAPI_ISteamClient_GetISteamMatchmakingServers( IntPtr instancePtr, uint hSteamUser, uint hSteamPipe, string pchVersion );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_GetISteamGenericInterface" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_GetISteamGenericInterface" )]
         internal static extern IntPtr SteamAPI_ISteamClient_GetISteamGenericInterface( IntPtr instancePtr, uint hSteamUser, uint hSteamPipe, string pchVersion );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_GetISteamUserStats" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_GetISteamUserStats" )]
         internal static extern IntPtr SteamAPI_ISteamClient_GetISteamUserStats( IntPtr instancePtr, uint hSteamUser, uint hSteamPipe, string pchVersion );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_GetISteamGameServerStats" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_GetISteamGameServerStats" )]
         internal static extern IntPtr SteamAPI_ISteamClient_GetISteamGameServerStats( IntPtr instancePtr, uint hSteamuser, uint hSteamPipe, string pchVersion );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_GetISteamApps" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_GetISteamApps" )]
         internal static extern IntPtr SteamAPI_ISteamClient_GetISteamApps( IntPtr instancePtr, uint hSteamUser, uint hSteamPipe, string pchVersion );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_GetISteamNetworking" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_GetISteamNetworking" )]
         internal static extern IntPtr SteamAPI_ISteamClient_GetISteamNetworking( IntPtr instancePtr, uint hSteamUser, uint hSteamPipe, string pchVersion );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_GetISteamRemoteStorage" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_GetISteamRemoteStorage" )]
         internal static extern IntPtr SteamAPI_ISteamClient_GetISteamRemoteStorage( IntPtr instancePtr, uint hSteamuser, uint hSteamPipe, string pchVersion );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_GetISteamScreenshots" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_GetISteamScreenshots" )]
         internal static extern IntPtr SteamAPI_ISteamClient_GetISteamScreenshots( IntPtr instancePtr, uint hSteamuser, uint hSteamPipe, string pchVersion );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_GetIPCCallCount" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_GetIPCCallCount" )]
         internal static extern uint SteamAPI_ISteamClient_GetIPCCallCount( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_SetWarningMessageHook" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_SetWarningMessageHook" )]
         internal static extern void SteamAPI_ISteamClient_SetWarningMessageHook( IntPtr instancePtr, IntPtr pFunction );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_BShutdownIfAllPipesClosed" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_BShutdownIfAllPipesClosed" )]
         internal static extern bool SteamAPI_ISteamClient_BShutdownIfAllPipesClosed( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_GetISteamHTTP" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_GetISteamHTTP" )]
         internal static extern IntPtr SteamAPI_ISteamClient_GetISteamHTTP( IntPtr instancePtr, uint hSteamuser, uint hSteamPipe, string pchVersion );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_GetISteamUnifiedMessages" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_GetISteamUnifiedMessages" )]
         internal static extern IntPtr SteamAPI_ISteamClient_GetISteamUnifiedMessages( IntPtr instancePtr, uint hSteamuser, uint hSteamPipe, string pchVersion );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_GetISteamController" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_GetISteamController" )]
         internal static extern IntPtr SteamAPI_ISteamClient_GetISteamController( IntPtr instancePtr, uint hSteamUser, uint hSteamPipe, string pchVersion );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_GetISteamUGC" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_GetISteamUGC" )]
         internal static extern IntPtr SteamAPI_ISteamClient_GetISteamUGC( IntPtr instancePtr, uint hSteamUser, uint hSteamPipe, string pchVersion );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_GetISteamAppList" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_GetISteamAppList" )]
         internal static extern IntPtr SteamAPI_ISteamClient_GetISteamAppList( IntPtr instancePtr, uint hSteamUser, uint hSteamPipe, string pchVersion );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_GetISteamMusic" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_GetISteamMusic" )]
         internal static extern IntPtr SteamAPI_ISteamClient_GetISteamMusic( IntPtr instancePtr, uint hSteamuser, uint hSteamPipe, string pchVersion );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_GetISteamMusicRemote" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_GetISteamMusicRemote" )]
         internal static extern IntPtr SteamAPI_ISteamClient_GetISteamMusicRemote( IntPtr instancePtr, uint hSteamuser, uint hSteamPipe, string pchVersion );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_GetISteamHTMLSurface" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_GetISteamHTMLSurface" )]
         internal static extern IntPtr SteamAPI_ISteamClient_GetISteamHTMLSurface( IntPtr instancePtr, uint hSteamuser, uint hSteamPipe, string pchVersion );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_GetISteamInventory" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_GetISteamInventory" )]
         internal static extern IntPtr SteamAPI_ISteamClient_GetISteamInventory( IntPtr instancePtr, uint hSteamuser, uint hSteamPipe, string pchVersion );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamClient_GetISteamVideo" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamClient_GetISteamVideo" )]
         internal static extern IntPtr SteamAPI_ISteamClient_GetISteamVideo( IntPtr instancePtr, uint hSteamuser, uint hSteamPipe, string pchVersion );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUser_GetHSteamUser" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUser_GetHSteamUser" )]
         internal static extern uint SteamAPI_ISteamUser_GetHSteamUser( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUser_BLoggedOn" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUser_BLoggedOn" )]
         internal static extern bool SteamAPI_ISteamUser_BLoggedOn( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUser_GetSteamID" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUser_GetSteamID" )]
         internal static extern ulong SteamAPI_ISteamUser_GetSteamID( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUser_InitiateGameConnection" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUser_InitiateGameConnection" )]
         internal static extern int SteamAPI_ISteamUser_InitiateGameConnection( IntPtr instancePtr, IntPtr pAuthBlob, int cbMaxAuthBlob, ulong steamIDGameServer, uint unIPServer, char usPortServer, bool bSecure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUser_TerminateGameConnection" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUser_TerminateGameConnection" )]
         internal static extern void SteamAPI_ISteamUser_TerminateGameConnection( IntPtr instancePtr, uint unIPServer, char usPortServer );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUser_TrackAppUsageEvent" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUser_TrackAppUsageEvent" )]
         internal static extern void SteamAPI_ISteamUser_TrackAppUsageEvent( IntPtr instancePtr, ulong gameID, int eAppUsageEvent, string pchExtraInfo );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUser_GetUserDataFolder" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUser_GetUserDataFolder" )]
         internal static extern bool SteamAPI_ISteamUser_GetUserDataFolder( IntPtr instancePtr, string pchBuffer, int cubBuffer );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUser_StartVoiceRecording" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUser_StartVoiceRecording" )]
         internal static extern void SteamAPI_ISteamUser_StartVoiceRecording( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUser_StopVoiceRecording" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUser_StopVoiceRecording" )]
         internal static extern void SteamAPI_ISteamUser_StopVoiceRecording( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUser_GetAvailableVoice" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUser_GetAvailableVoice" )]
         internal static extern uint SteamAPI_ISteamUser_GetAvailableVoice( IntPtr instancePtr, ref uint pcbCompressed, ref uint pcbUncompressed, uint nUncompressedVoiceDesiredSampleRate );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUser_GetVoice" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUser_GetVoice" )]
         internal static extern uint SteamAPI_ISteamUser_GetVoice( IntPtr instancePtr, bool bWantCompressed, IntPtr pDestBuffer, uint cbDestBufferSize, ref uint nBytesWritten, bool bWantUncompressed, IntPtr pUncompressedDestBuffer, uint cbUncompressedDestBufferSize, ref uint nUncompressBytesWritten, uint nUncompressedVoiceDesiredSampleRate );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUser_DecompressVoice" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUser_DecompressVoice" )]
         internal static extern uint SteamAPI_ISteamUser_DecompressVoice( IntPtr instancePtr, IntPtr pCompressed, uint cbCompressed, IntPtr pDestBuffer, uint cbDestBufferSize, ref uint nBytesWritten, uint nDesiredSampleRate );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUser_GetVoiceOptimalSampleRate" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUser_GetVoiceOptimalSampleRate" )]
         internal static extern uint SteamAPI_ISteamUser_GetVoiceOptimalSampleRate( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUser_GetAuthSessionTicket" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUser_GetAuthSessionTicket" )]
         internal static extern uint SteamAPI_ISteamUser_GetAuthSessionTicket( IntPtr instancePtr, IntPtr pTicket, int cbMaxTicket, ref uint pcbTicket );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUser_BeginAuthSession" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUser_BeginAuthSession" )]
         internal static extern uint SteamAPI_ISteamUser_BeginAuthSession( IntPtr instancePtr, IntPtr pAuthTicket, int cbAuthTicket, ulong steamID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUser_EndAuthSession" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUser_EndAuthSession" )]
         internal static extern void SteamAPI_ISteamUser_EndAuthSession( IntPtr instancePtr, ulong steamID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUser_CancelAuthTicket" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUser_CancelAuthTicket" )]
         internal static extern void SteamAPI_ISteamUser_CancelAuthTicket( IntPtr instancePtr, uint hAuthTicket );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUser_UserHasLicenseForApp" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUser_UserHasLicenseForApp" )]
         internal static extern uint SteamAPI_ISteamUser_UserHasLicenseForApp( IntPtr instancePtr, ulong steamID, uint appID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUser_BIsBehindNAT" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUser_BIsBehindNAT" )]
         internal static extern bool SteamAPI_ISteamUser_BIsBehindNAT( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUser_AdvertiseGame" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUser_AdvertiseGame" )]
         internal static extern void SteamAPI_ISteamUser_AdvertiseGame( IntPtr instancePtr, ulong steamIDGameServer, uint unIPServer, char usPortServer );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUser_RequestEncryptedAppTicket" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUser_RequestEncryptedAppTicket" )]
         internal static extern ulong SteamAPI_ISteamUser_RequestEncryptedAppTicket( IntPtr instancePtr, IntPtr pDataToInclude, int cbDataToInclude );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUser_GetEncryptedAppTicket" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUser_GetEncryptedAppTicket" )]
         internal static extern bool SteamAPI_ISteamUser_GetEncryptedAppTicket( IntPtr instancePtr, IntPtr pTicket, int cbMaxTicket, ref uint pcbTicket );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUser_GetGameBadgeLevel" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUser_GetGameBadgeLevel" )]
         internal static extern int SteamAPI_ISteamUser_GetGameBadgeLevel( IntPtr instancePtr, int nSeries, bool bFoil );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUser_GetPlayerSteamLevel" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUser_GetPlayerSteamLevel" )]
         internal static extern int SteamAPI_ISteamUser_GetPlayerSteamLevel( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUser_RequestStoreAuthURL" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUser_RequestStoreAuthURL" )]
         internal static extern ulong SteamAPI_ISteamUser_RequestStoreAuthURL( IntPtr instancePtr, string pchRedirectURL );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUser_BIsPhoneVerified" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUser_BIsPhoneVerified" )]
         internal static extern bool SteamAPI_ISteamUser_BIsPhoneVerified( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUser_BIsTwoFactorEnabled" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUser_BIsTwoFactorEnabled" )]
         internal static extern bool SteamAPI_ISteamUser_BIsTwoFactorEnabled( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetPersonaName" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetPersonaName" )]
         internal static extern IntPtr SteamAPI_ISteamFriends_GetPersonaName( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_SetPersonaName" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_SetPersonaName" )]
         internal static extern ulong SteamAPI_ISteamFriends_SetPersonaName( IntPtr instancePtr, string pchPersonaName );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetPersonaState" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetPersonaState" )]
         internal static extern uint SteamAPI_ISteamFriends_GetPersonaState( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetFriendCount" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetFriendCount" )]
         internal static extern int SteamAPI_ISteamFriends_GetFriendCount( IntPtr instancePtr, int iFriendFlags );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetFriendByIndex" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetFriendByIndex" )]
         internal static extern ulong SteamAPI_ISteamFriends_GetFriendByIndex( IntPtr instancePtr, int iFriend, int iFriendFlags );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetFriendRelationship" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetFriendRelationship" )]
         internal static extern uint SteamAPI_ISteamFriends_GetFriendRelationship( IntPtr instancePtr, ulong steamIDFriend );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetFriendPersonaState" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetFriendPersonaState" )]
         internal static extern uint SteamAPI_ISteamFriends_GetFriendPersonaState( IntPtr instancePtr, ulong steamIDFriend );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetFriendPersonaName" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetFriendPersonaName" )]
         internal static extern IntPtr SteamAPI_ISteamFriends_GetFriendPersonaName( IntPtr instancePtr, ulong steamIDFriend );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetFriendGamePlayed" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetFriendGamePlayed" )]
         internal static extern bool SteamAPI_ISteamFriends_GetFriendGamePlayed( IntPtr instancePtr, ulong steamIDFriend, ref FriendGameInfo_t pFriendGameInfo );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetFriendPersonaNameHistory" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetFriendPersonaNameHistory" )]
         internal static extern IntPtr SteamAPI_ISteamFriends_GetFriendPersonaNameHistory( IntPtr instancePtr, ulong steamIDFriend, int iPersonaName );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetFriendSteamLevel" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetFriendSteamLevel" )]
         internal static extern int SteamAPI_ISteamFriends_GetFriendSteamLevel( IntPtr instancePtr, ulong steamIDFriend );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetPlayerNickname" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetPlayerNickname" )]
         internal static extern IntPtr SteamAPI_ISteamFriends_GetPlayerNickname( IntPtr instancePtr, ulong steamIDPlayer );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetFriendsGroupCount" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetFriendsGroupCount" )]
         internal static extern int SteamAPI_ISteamFriends_GetFriendsGroupCount( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetFriendsGroupIDByIndex" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetFriendsGroupIDByIndex" )]
         internal static extern char SteamAPI_ISteamFriends_GetFriendsGroupIDByIndex( IntPtr instancePtr, int iFG );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetFriendsGroupName" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetFriendsGroupName" )]
         internal static extern IntPtr SteamAPI_ISteamFriends_GetFriendsGroupName( IntPtr instancePtr, char friendsGroupID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetFriendsGroupMembersCount" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetFriendsGroupMembersCount" )]
         internal static extern int SteamAPI_ISteamFriends_GetFriendsGroupMembersCount( IntPtr instancePtr, char friendsGroupID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetFriendsGroupMembersList" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetFriendsGroupMembersList" )]
         internal static extern void SteamAPI_ISteamFriends_GetFriendsGroupMembersList( IntPtr instancePtr, char friendsGroupID, [In, Out] CSteamID[] pOutSteamIDMembers, int nMembersCount );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_HasFriend" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_HasFriend" )]
         internal static extern bool SteamAPI_ISteamFriends_HasFriend( IntPtr instancePtr, ulong steamIDFriend, int iFriendFlags );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetClanCount" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetClanCount" )]
         internal static extern int SteamAPI_ISteamFriends_GetClanCount( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetClanByIndex" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetClanByIndex" )]
         internal static extern ulong SteamAPI_ISteamFriends_GetClanByIndex( IntPtr instancePtr, int iClan );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetClanName" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetClanName" )]
         internal static extern IntPtr SteamAPI_ISteamFriends_GetClanName( IntPtr instancePtr, ulong steamIDClan );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetClanTag" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetClanTag" )]
         internal static extern IntPtr SteamAPI_ISteamFriends_GetClanTag( IntPtr instancePtr, ulong steamIDClan );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetClanActivityCounts" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetClanActivityCounts" )]
         internal static extern bool SteamAPI_ISteamFriends_GetClanActivityCounts( IntPtr instancePtr, ulong steamIDClan, ref int pnOnline, ref int pnInGame, ref int pnChatting );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_DownloadClanActivityCounts" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_DownloadClanActivityCounts" )]
         internal static extern ulong SteamAPI_ISteamFriends_DownloadClanActivityCounts( IntPtr instancePtr, [In, Out] CSteamID[] psteamIDClans, int cClansToRequest );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetFriendCountFromSource" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetFriendCountFromSource" )]
         internal static extern int SteamAPI_ISteamFriends_GetFriendCountFromSource( IntPtr instancePtr, ulong steamIDSource );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetFriendFromSourceByIndex" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetFriendFromSourceByIndex" )]
         internal static extern ulong SteamAPI_ISteamFriends_GetFriendFromSourceByIndex( IntPtr instancePtr, ulong steamIDSource, int iFriend );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_IsUserInSource" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_IsUserInSource" )]
         internal static extern bool SteamAPI_ISteamFriends_IsUserInSource( IntPtr instancePtr, ulong steamIDUser, ulong steamIDSource );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_SetInGameVoiceSpeaking" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_SetInGameVoiceSpeaking" )]
         internal static extern void SteamAPI_ISteamFriends_SetInGameVoiceSpeaking( IntPtr instancePtr, ulong steamIDUser, bool bSpeaking );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_ActivateGameOverlay" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_ActivateGameOverlay" )]
         internal static extern void SteamAPI_ISteamFriends_ActivateGameOverlay( IntPtr instancePtr, string pchDialog );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_ActivateGameOverlayToUser" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_ActivateGameOverlayToUser" )]
         internal static extern void SteamAPI_ISteamFriends_ActivateGameOverlayToUser( IntPtr instancePtr, string pchDialog, ulong steamID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_ActivateGameOverlayToWebPage" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_ActivateGameOverlayToWebPage" )]
         internal static extern void SteamAPI_ISteamFriends_ActivateGameOverlayToWebPage( IntPtr instancePtr, string pchURL );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_ActivateGameOverlayToStore" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_ActivateGameOverlayToStore" )]
         internal static extern void SteamAPI_ISteamFriends_ActivateGameOverlayToStore( IntPtr instancePtr, uint nAppID, char eFlag );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_SetPlayedWith" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_SetPlayedWith" )]
         internal static extern void SteamAPI_ISteamFriends_SetPlayedWith( IntPtr instancePtr, ulong steamIDUserPlayedWith );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_ActivateGameOverlayInviteDialog" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_ActivateGameOverlayInviteDialog" )]
         internal static extern void SteamAPI_ISteamFriends_ActivateGameOverlayInviteDialog( IntPtr instancePtr, ulong steamIDLobby );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetSmallFriendAvatar" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetSmallFriendAvatar" )]
         internal static extern int SteamAPI_ISteamFriends_GetSmallFriendAvatar( IntPtr instancePtr, ulong steamIDFriend );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetMediumFriendAvatar" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetMediumFriendAvatar" )]
         internal static extern int SteamAPI_ISteamFriends_GetMediumFriendAvatar( IntPtr instancePtr, ulong steamIDFriend );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetLargeFriendAvatar" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetLargeFriendAvatar" )]
         internal static extern int SteamAPI_ISteamFriends_GetLargeFriendAvatar( IntPtr instancePtr, ulong steamIDFriend );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_RequestUserInformation" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_RequestUserInformation" )]
         internal static extern bool SteamAPI_ISteamFriends_RequestUserInformation( IntPtr instancePtr, ulong steamIDUser, bool bRequireNameOnly );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_RequestClanOfficerList" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_RequestClanOfficerList" )]
         internal static extern ulong SteamAPI_ISteamFriends_RequestClanOfficerList( IntPtr instancePtr, ulong steamIDClan );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetClanOwner" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetClanOwner" )]
         internal static extern ulong SteamAPI_ISteamFriends_GetClanOwner( IntPtr instancePtr, ulong steamIDClan );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetClanOfficerCount" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetClanOfficerCount" )]
         internal static extern int SteamAPI_ISteamFriends_GetClanOfficerCount( IntPtr instancePtr, ulong steamIDClan );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetClanOfficerByIndex" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetClanOfficerByIndex" )]
         internal static extern ulong SteamAPI_ISteamFriends_GetClanOfficerByIndex( IntPtr instancePtr, ulong steamIDClan, int iOfficer );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetUserRestrictions" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetUserRestrictions" )]
         internal static extern uint SteamAPI_ISteamFriends_GetUserRestrictions( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_SetRichPresence" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_SetRichPresence" )]
         internal static extern bool SteamAPI_ISteamFriends_SetRichPresence( IntPtr instancePtr, string pchKey, string pchValue );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_ClearRichPresence" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_ClearRichPresence" )]
         internal static extern void SteamAPI_ISteamFriends_ClearRichPresence( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetFriendRichPresence" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetFriendRichPresence" )]
         internal static extern IntPtr SteamAPI_ISteamFriends_GetFriendRichPresence( IntPtr instancePtr, ulong steamIDFriend, string pchKey );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetFriendRichPresenceKeyCount" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetFriendRichPresenceKeyCount" )]
         internal static extern int SteamAPI_ISteamFriends_GetFriendRichPresenceKeyCount( IntPtr instancePtr, ulong steamIDFriend );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetFriendRichPresenceKeyByIndex" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetFriendRichPresenceKeyByIndex" )]
         internal static extern IntPtr SteamAPI_ISteamFriends_GetFriendRichPresenceKeyByIndex( IntPtr instancePtr, ulong steamIDFriend, int iKey );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_RequestFriendRichPresence" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_RequestFriendRichPresence" )]
         internal static extern void SteamAPI_ISteamFriends_RequestFriendRichPresence( IntPtr instancePtr, ulong steamIDFriend );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_InviteUserToGame" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_InviteUserToGame" )]
         internal static extern bool SteamAPI_ISteamFriends_InviteUserToGame( IntPtr instancePtr, ulong steamIDFriend, string pchConnectString );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetCoplayFriendCount" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetCoplayFriendCount" )]
         internal static extern int SteamAPI_ISteamFriends_GetCoplayFriendCount( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetCoplayFriend" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetCoplayFriend" )]
         internal static extern ulong SteamAPI_ISteamFriends_GetCoplayFriend( IntPtr instancePtr, int iCoplayFriend );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetFriendCoplayTime" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetFriendCoplayTime" )]
         internal static extern int SteamAPI_ISteamFriends_GetFriendCoplayTime( IntPtr instancePtr, ulong steamIDFriend );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetFriendCoplayGame" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetFriendCoplayGame" )]
         internal static extern uint SteamAPI_ISteamFriends_GetFriendCoplayGame( IntPtr instancePtr, ulong steamIDFriend );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_JoinClanChatRoom" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_JoinClanChatRoom" )]
         internal static extern ulong SteamAPI_ISteamFriends_JoinClanChatRoom( IntPtr instancePtr, ulong steamIDClan );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_LeaveClanChatRoom" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_LeaveClanChatRoom" )]
         internal static extern bool SteamAPI_ISteamFriends_LeaveClanChatRoom( IntPtr instancePtr, ulong steamIDClan );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetClanChatMemberCount" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetClanChatMemberCount" )]
         internal static extern int SteamAPI_ISteamFriends_GetClanChatMemberCount( IntPtr instancePtr, ulong steamIDClan );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetChatMemberByIndex" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetChatMemberByIndex" )]
         internal static extern ulong SteamAPI_ISteamFriends_GetChatMemberByIndex( IntPtr instancePtr, ulong steamIDClan, int iUser );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_SendClanChatMessage" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_SendClanChatMessage" )]
         internal static extern bool SteamAPI_ISteamFriends_SendClanChatMessage( IntPtr instancePtr, ulong steamIDClanChat, string pchText );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetClanChatMessage" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetClanChatMessage" )]
         internal static extern int SteamAPI_ISteamFriends_GetClanChatMessage( IntPtr instancePtr, ulong steamIDClanChat, int iMessage, IntPtr prgchText, int cchTextMax, ref uint peChatEntryType, ref CSteamID psteamidChatter );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_IsClanChatAdmin" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_IsClanChatAdmin" )]
         internal static extern bool SteamAPI_ISteamFriends_IsClanChatAdmin( IntPtr instancePtr, ulong steamIDClanChat, ulong steamIDUser );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_IsClanChatWindowOpenInSteam" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_IsClanChatWindowOpenInSteam" )]
         internal static extern bool SteamAPI_ISteamFriends_IsClanChatWindowOpenInSteam( IntPtr instancePtr, ulong steamIDClanChat );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_OpenClanChatWindowInSteam" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_OpenClanChatWindowInSteam" )]
         internal static extern bool SteamAPI_ISteamFriends_OpenClanChatWindowInSteam( IntPtr instancePtr, ulong steamIDClanChat );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_CloseClanChatWindowInSteam" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_CloseClanChatWindowInSteam" )]
         internal static extern bool SteamAPI_ISteamFriends_CloseClanChatWindowInSteam( IntPtr instancePtr, ulong steamIDClanChat );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_SetListenForFriendsMessages" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_SetListenForFriendsMessages" )]
         internal static extern bool SteamAPI_ISteamFriends_SetListenForFriendsMessages( IntPtr instancePtr, bool bInterceptEnabled );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_ReplyToFriendMessage" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_ReplyToFriendMessage" )]
         internal static extern bool SteamAPI_ISteamFriends_ReplyToFriendMessage( IntPtr instancePtr, ulong steamIDFriend, string pchMsgToSend );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetFriendMessage" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetFriendMessage" )]
         internal static extern int SteamAPI_ISteamFriends_GetFriendMessage( IntPtr instancePtr, ulong steamIDFriend, int iMessageID, IntPtr pvData, int cubData, ref uint peChatEntryType );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_GetFollowerCount" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_GetFollowerCount" )]
         internal static extern ulong SteamAPI_ISteamFriends_GetFollowerCount( IntPtr instancePtr, ulong steamID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_IsFollowing" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_IsFollowing" )]
         internal static extern ulong SteamAPI_ISteamFriends_IsFollowing( IntPtr instancePtr, ulong steamID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamFriends_EnumerateFollowingList" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamFriends_EnumerateFollowingList" )]
         internal static extern ulong SteamAPI_ISteamFriends_EnumerateFollowingList( IntPtr instancePtr, uint unStartIndex );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUtils_GetSecondsSinceAppActive" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUtils_GetSecondsSinceAppActive" )]
         internal static extern uint SteamAPI_ISteamUtils_GetSecondsSinceAppActive( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUtils_GetSecondsSinceComputerActive" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUtils_GetSecondsSinceComputerActive" )]
         internal static extern uint SteamAPI_ISteamUtils_GetSecondsSinceComputerActive( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUtils_GetConnectedUniverse" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUtils_GetConnectedUniverse" )]
         internal static extern int SteamAPI_ISteamUtils_GetConnectedUniverse( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUtils_GetServerRealTime" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUtils_GetServerRealTime" )]
         internal static extern uint SteamAPI_ISteamUtils_GetServerRealTime( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUtils_GetIPCountry" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUtils_GetIPCountry" )]
         internal static extern IntPtr SteamAPI_ISteamUtils_GetIPCountry( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUtils_GetImageSize" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUtils_GetImageSize" )]
         internal static extern bool SteamAPI_ISteamUtils_GetImageSize( IntPtr instancePtr, int iImage, ref uint pnWidth, ref uint pnHeight );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUtils_GetImageRGBA" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUtils_GetImageRGBA" )]
         internal static extern bool SteamAPI_ISteamUtils_GetImageRGBA( IntPtr instancePtr, int iImage, IntPtr pubDest, int nDestBufferSize );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUtils_GetCSERIPPort" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUtils_GetCSERIPPort" )]
         internal static extern bool SteamAPI_ISteamUtils_GetCSERIPPort( IntPtr instancePtr, ref uint unIP, ref char usPort );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUtils_GetCurrentBatteryPower" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUtils_GetCurrentBatteryPower" )]
         internal static extern byte SteamAPI_ISteamUtils_GetCurrentBatteryPower( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUtils_GetAppID" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUtils_GetAppID" )]
         internal static extern uint SteamAPI_ISteamUtils_GetAppID( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUtils_SetOverlayNotificationPosition" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUtils_SetOverlayNotificationPosition" )]
         internal static extern void SteamAPI_ISteamUtils_SetOverlayNotificationPosition( IntPtr instancePtr, uint eNotificationPosition );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUtils_IsAPICallCompleted" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUtils_IsAPICallCompleted" )]
         internal static extern bool SteamAPI_ISteamUtils_IsAPICallCompleted( IntPtr instancePtr, ulong hSteamAPICall, ref bool pbFailed );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUtils_GetAPICallFailureReason" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUtils_GetAPICallFailureReason" )]
         internal static extern int SteamAPI_ISteamUtils_GetAPICallFailureReason( IntPtr instancePtr, ulong hSteamAPICall );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUtils_GetAPICallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUtils_GetAPICallResult" )]
         internal static extern bool SteamAPI_ISteamUtils_GetAPICallResult( IntPtr instancePtr, ulong hSteamAPICall, IntPtr pCallback, int cubCallback, int iCallbackExpected, ref bool pbFailed );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUtils_GetIPCCallCount" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUtils_GetIPCCallCount" )]
         internal static extern uint SteamAPI_ISteamUtils_GetIPCCallCount( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUtils_SetWarningMessageHook" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUtils_SetWarningMessageHook" )]
         internal static extern void SteamAPI_ISteamUtils_SetWarningMessageHook( IntPtr instancePtr, IntPtr pFunction );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUtils_IsOverlayEnabled" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUtils_IsOverlayEnabled" )]
         internal static extern bool SteamAPI_ISteamUtils_IsOverlayEnabled( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUtils_BOverlayNeedsPresent" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUtils_BOverlayNeedsPresent" )]
         internal static extern bool SteamAPI_ISteamUtils_BOverlayNeedsPresent( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUtils_CheckFileSignature" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUtils_CheckFileSignature" )]
         internal static extern ulong SteamAPI_ISteamUtils_CheckFileSignature( IntPtr instancePtr, string szFileName );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUtils_ShowGamepadTextInput" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUtils_ShowGamepadTextInput" )]
         internal static extern bool SteamAPI_ISteamUtils_ShowGamepadTextInput( IntPtr instancePtr, int eInputMode, int eLineInputMode, string pchDescription, uint unCharMax, string pchExistingText );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUtils_GetEnteredGamepadTextLength" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUtils_GetEnteredGamepadTextLength" )]
         internal static extern uint SteamAPI_ISteamUtils_GetEnteredGamepadTextLength( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUtils_GetEnteredGamepadTextInput" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUtils_GetEnteredGamepadTextInput" )]
         internal static extern bool SteamAPI_ISteamUtils_GetEnteredGamepadTextInput( IntPtr instancePtr, string pchText, uint cchText );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUtils_GetSteamUILanguage" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUtils_GetSteamUILanguage" )]
         internal static extern IntPtr SteamAPI_ISteamUtils_GetSteamUILanguage( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUtils_IsSteamRunningInVR" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUtils_IsSteamRunningInVR" )]
         internal static extern bool SteamAPI_ISteamUtils_IsSteamRunningInVR( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUtils_SetOverlayNotificationInset" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUtils_SetOverlayNotificationInset" )]
         internal static extern void SteamAPI_ISteamUtils_SetOverlayNotificationInset( IntPtr instancePtr, int nHorizontalInset, int nVerticalInset );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUtils_IsSteamInBigPictureMode" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUtils_IsSteamInBigPictureMode" )]
         internal static extern bool SteamAPI_ISteamUtils_IsSteamInBigPictureMode( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUtils_StartVRDashboard" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUtils_StartVRDashboard" )]
         internal static extern void SteamAPI_ISteamUtils_StartVRDashboard( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_GetFavoriteGameCount" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_GetFavoriteGameCount" )]
         internal static extern int SteamAPI_ISteamMatchmaking_GetFavoriteGameCount( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_GetFavoriteGame" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_GetFavoriteGame" )]
         internal static extern bool SteamAPI_ISteamMatchmaking_GetFavoriteGame( IntPtr instancePtr, int iGame, ref uint pnAppID, ref uint pnIP, ref char pnConnPort, ref char pnQueryPort, ref uint punFlags, ref uint pRTime32LastPlayedOnServer );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_AddFavoriteGame" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_AddFavoriteGame" )]
         internal static extern int SteamAPI_ISteamMatchmaking_AddFavoriteGame( IntPtr instancePtr, uint nAppID, uint nIP, char nConnPort, char nQueryPort, uint unFlags, uint rTime32LastPlayedOnServer );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_RemoveFavoriteGame" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_RemoveFavoriteGame" )]
         internal static extern bool SteamAPI_ISteamMatchmaking_RemoveFavoriteGame( IntPtr instancePtr, uint nAppID, uint nIP, char nConnPort, char nQueryPort, uint unFlags );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_RequestLobbyList" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_RequestLobbyList" )]
         internal static extern ulong SteamAPI_ISteamMatchmaking_RequestLobbyList( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_AddRequestLobbyListStringFilter" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_AddRequestLobbyListStringFilter" )]
         internal static extern void SteamAPI_ISteamMatchmaking_AddRequestLobbyListStringFilter( IntPtr instancePtr, string pchKeyToMatch, string pchValueToMatch, uint eComparisonType );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_AddRequestLobbyListNumericalFilter" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_AddRequestLobbyListNumericalFilter" )]
         internal static extern void SteamAPI_ISteamMatchmaking_AddRequestLobbyListNumericalFilter( IntPtr instancePtr, string pchKeyToMatch, int nValueToMatch, uint eComparisonType );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_AddRequestLobbyListNearValueFilter" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_AddRequestLobbyListNearValueFilter" )]
         internal static extern void SteamAPI_ISteamMatchmaking_AddRequestLobbyListNearValueFilter( IntPtr instancePtr, string pchKeyToMatch, int nValueToBeCloseTo );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_AddRequestLobbyListFilterSlotsAvailable" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_AddRequestLobbyListFilterSlotsAvailable" )]
         internal static extern void SteamAPI_ISteamMatchmaking_AddRequestLobbyListFilterSlotsAvailable( IntPtr instancePtr, int nSlotsAvailable );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_AddRequestLobbyListDistanceFilter" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_AddRequestLobbyListDistanceFilter" )]
         internal static extern void SteamAPI_ISteamMatchmaking_AddRequestLobbyListDistanceFilter( IntPtr instancePtr, uint eLobbyDistanceFilter );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_AddRequestLobbyListResultCountFilter" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_AddRequestLobbyListResultCountFilter" )]
         internal static extern void SteamAPI_ISteamMatchmaking_AddRequestLobbyListResultCountFilter( IntPtr instancePtr, int cMaxResults );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_AddRequestLobbyListCompatibleMembersFilter" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_AddRequestLobbyListCompatibleMembersFilter" )]
         internal static extern void SteamAPI_ISteamMatchmaking_AddRequestLobbyListCompatibleMembersFilter( IntPtr instancePtr, ulong steamIDLobby );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyByIndex" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyByIndex" )]
         internal static extern ulong SteamAPI_ISteamMatchmaking_GetLobbyByIndex( IntPtr instancePtr, int iLobby );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_CreateLobby" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_CreateLobby" )]
         internal static extern ulong SteamAPI_ISteamMatchmaking_CreateLobby( IntPtr instancePtr, uint eLobbyType, int cMaxMembers );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_JoinLobby" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_JoinLobby" )]
         internal static extern ulong SteamAPI_ISteamMatchmaking_JoinLobby( IntPtr instancePtr, ulong steamIDLobby );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_LeaveLobby" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_LeaveLobby" )]
         internal static extern void SteamAPI_ISteamMatchmaking_LeaveLobby( IntPtr instancePtr, ulong steamIDLobby );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_InviteUserToLobby" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_InviteUserToLobby" )]
         internal static extern bool SteamAPI_ISteamMatchmaking_InviteUserToLobby( IntPtr instancePtr, ulong steamIDLobby, ulong steamIDInvitee );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_GetNumLobbyMembers" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_GetNumLobbyMembers" )]
         internal static extern int SteamAPI_ISteamMatchmaking_GetNumLobbyMembers( IntPtr instancePtr, ulong steamIDLobby );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyMemberByIndex" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyMemberByIndex" )]
         internal static extern ulong SteamAPI_ISteamMatchmaking_GetLobbyMemberByIndex( IntPtr instancePtr, ulong steamIDLobby, int iMember );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyData" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyData" )]
         internal static extern IntPtr SteamAPI_ISteamMatchmaking_GetLobbyData( IntPtr instancePtr, ulong steamIDLobby, string pchKey );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_SetLobbyData" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_SetLobbyData" )]
         internal static extern bool SteamAPI_ISteamMatchmaking_SetLobbyData( IntPtr instancePtr, ulong steamIDLobby, string pchKey, string pchValue );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyDataCount" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyDataCount" )]
         internal static extern int SteamAPI_ISteamMatchmaking_GetLobbyDataCount( IntPtr instancePtr, ulong steamIDLobby );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyDataByIndex" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyDataByIndex" )]
         internal static extern bool SteamAPI_ISteamMatchmaking_GetLobbyDataByIndex( IntPtr instancePtr, ulong steamIDLobby, int iLobbyData, string pchKey, int cchKeyBufferSize, string pchValue, int cchValueBufferSize );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_DeleteLobbyData" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_DeleteLobbyData" )]
         internal static extern bool SteamAPI_ISteamMatchmaking_DeleteLobbyData( IntPtr instancePtr, ulong steamIDLobby, string pchKey );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyMemberData" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyMemberData" )]
         internal static extern IntPtr SteamAPI_ISteamMatchmaking_GetLobbyMemberData( IntPtr instancePtr, ulong steamIDLobby, ulong steamIDUser, string pchKey );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_SetLobbyMemberData" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_SetLobbyMemberData" )]
         internal static extern void SteamAPI_ISteamMatchmaking_SetLobbyMemberData( IntPtr instancePtr, ulong steamIDLobby, string pchKey, string pchValue );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_SendLobbyChatMsg" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_SendLobbyChatMsg" )]
         internal static extern bool SteamAPI_ISteamMatchmaking_SendLobbyChatMsg( IntPtr instancePtr, ulong steamIDLobby, IntPtr pvMsgBody, int cubMsgBody );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyChatEntry" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyChatEntry" )]
         internal static extern int SteamAPI_ISteamMatchmaking_GetLobbyChatEntry( IntPtr instancePtr, ulong steamIDLobby, int iChatID, ref CSteamID pSteamIDUser, IntPtr pvData, int cubData, ref uint peChatEntryType );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_RequestLobbyData" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_RequestLobbyData" )]
         internal static extern bool SteamAPI_ISteamMatchmaking_RequestLobbyData( IntPtr instancePtr, ulong steamIDLobby );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_SetLobbyGameServer" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_SetLobbyGameServer" )]
         internal static extern void SteamAPI_ISteamMatchmaking_SetLobbyGameServer( IntPtr instancePtr, ulong steamIDLobby, uint unGameServerIP, char unGameServerPort, ulong steamIDGameServer );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyGameServer" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyGameServer" )]
         internal static extern bool SteamAPI_ISteamMatchmaking_GetLobbyGameServer( IntPtr instancePtr, ulong steamIDLobby, ref uint punGameServerIP, ref char punGameServerPort, ref CSteamID psteamIDGameServer );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_SetLobbyMemberLimit" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_SetLobbyMemberLimit" )]
         internal static extern bool SteamAPI_ISteamMatchmaking_SetLobbyMemberLimit( IntPtr instancePtr, ulong steamIDLobby, int cMaxMembers );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyMemberLimit" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyMemberLimit" )]
         internal static extern int SteamAPI_ISteamMatchmaking_GetLobbyMemberLimit( IntPtr instancePtr, ulong steamIDLobby );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_SetLobbyType" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_SetLobbyType" )]
         internal static extern bool SteamAPI_ISteamMatchmaking_SetLobbyType( IntPtr instancePtr, ulong steamIDLobby, uint eLobbyType );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_SetLobbyJoinable" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_SetLobbyJoinable" )]
         internal static extern bool SteamAPI_ISteamMatchmaking_SetLobbyJoinable( IntPtr instancePtr, ulong steamIDLobby, bool bLobbyJoinable );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyOwner" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyOwner" )]
         internal static extern ulong SteamAPI_ISteamMatchmaking_GetLobbyOwner( IntPtr instancePtr, ulong steamIDLobby );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_SetLobbyOwner" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_SetLobbyOwner" )]
         internal static extern bool SteamAPI_ISteamMatchmaking_SetLobbyOwner( IntPtr instancePtr, ulong steamIDLobby, ulong steamIDNewOwner );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmaking_SetLinkedLobby" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmaking_SetLinkedLobby" )]
         internal static extern bool SteamAPI_ISteamMatchmaking_SetLinkedLobby( IntPtr instancePtr, ulong steamIDLobby, ulong steamIDLobbyDependent );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmakingServerListResponse_ServerResponded" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmakingServerListResponse_ServerResponded" )]
         internal static extern void SteamAPI_ISteamMatchmakingServerListResponse_ServerResponded( IntPtr instancePtr, uint hRequest, int iServer );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmakingServerListResponse_ServerFailedToRespond" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmakingServerListResponse_ServerFailedToRespond" )]
         internal static extern void SteamAPI_ISteamMatchmakingServerListResponse_ServerFailedToRespond( IntPtr instancePtr, uint hRequest, int iServer );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmakingServerListResponse_RefreshComplete" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmakingServerListResponse_RefreshComplete" )]
         internal static extern void SteamAPI_ISteamMatchmakingServerListResponse_RefreshComplete( IntPtr instancePtr, uint hRequest, uint response );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmakingPingResponse_ServerResponded" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmakingPingResponse_ServerResponded" )]
         internal static extern void SteamAPI_ISteamMatchmakingPingResponse_ServerResponded( IntPtr instancePtr, IntPtr server );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmakingPingResponse_ServerFailedToRespond" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmakingPingResponse_ServerFailedToRespond" )]
         internal static extern void SteamAPI_ISteamMatchmakingPingResponse_ServerFailedToRespond( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmakingPlayersResponse_AddPlayerToList" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmakingPlayersResponse_AddPlayerToList" )]
         internal static extern void SteamAPI_ISteamMatchmakingPlayersResponse_AddPlayerToList( IntPtr instancePtr, string pchName, int nScore, float flTimePlayed );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmakingPlayersResponse_PlayersFailedToRespond" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmakingPlayersResponse_PlayersFailedToRespond" )]
         internal static extern void SteamAPI_ISteamMatchmakingPlayersResponse_PlayersFailedToRespond( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmakingPlayersResponse_PlayersRefreshComplete" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmakingPlayersResponse_PlayersRefreshComplete" )]
         internal static extern void SteamAPI_ISteamMatchmakingPlayersResponse_PlayersRefreshComplete( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmakingRulesResponse_RulesResponded" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmakingRulesResponse_RulesResponded" )]
         internal static extern void SteamAPI_ISteamMatchmakingRulesResponse_RulesResponded( IntPtr instancePtr, string pchRule, string pchValue );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmakingRulesResponse_RulesFailedToRespond" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmakingRulesResponse_RulesFailedToRespond" )]
         internal static extern void SteamAPI_ISteamMatchmakingRulesResponse_RulesFailedToRespond( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmakingRulesResponse_RulesRefreshComplete" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmakingRulesResponse_RulesRefreshComplete" )]
         internal static extern void SteamAPI_ISteamMatchmakingRulesResponse_RulesRefreshComplete( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmakingServers_RequestInternetServerList" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmakingServers_RequestInternetServerList" )]
         internal static extern uint SteamAPI_ISteamMatchmakingServers_RequestInternetServerList( IntPtr instancePtr, uint iApp, [In, Out] IntPtr[] ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmakingServers_RequestLANServerList" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmakingServers_RequestLANServerList" )]
         internal static extern uint SteamAPI_ISteamMatchmakingServers_RequestLANServerList( IntPtr instancePtr, uint iApp, IntPtr pRequestServersResponse );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmakingServers_RequestFriendsServerList" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmakingServers_RequestFriendsServerList" )]
         internal static extern uint SteamAPI_ISteamMatchmakingServers_RequestFriendsServerList( IntPtr instancePtr, uint iApp, [In, Out] IntPtr[] ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmakingServers_RequestFavoritesServerList" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmakingServers_RequestFavoritesServerList" )]
         internal static extern uint SteamAPI_ISteamMatchmakingServers_RequestFavoritesServerList( IntPtr instancePtr, uint iApp, [In, Out] IntPtr[] ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmakingServers_RequestHistoryServerList" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmakingServers_RequestHistoryServerList" )]
         internal static extern uint SteamAPI_ISteamMatchmakingServers_RequestHistoryServerList( IntPtr instancePtr, uint iApp, [In, Out] IntPtr[] ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmakingServers_RequestSpectatorServerList" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmakingServers_RequestSpectatorServerList" )]
         internal static extern uint SteamAPI_ISteamMatchmakingServers_RequestSpectatorServerList( IntPtr instancePtr, uint iApp, [In, Out] IntPtr[] ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmakingServers_ReleaseRequest" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmakingServers_ReleaseRequest" )]
         internal static extern void SteamAPI_ISteamMatchmakingServers_ReleaseRequest( IntPtr instancePtr, uint hServerListRequest );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmakingServers_GetServerDetails" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmakingServers_GetServerDetails" )]
         internal static extern IntPtr SteamAPI_ISteamMatchmakingServers_GetServerDetails( IntPtr instancePtr, uint hRequest, int iServer );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmakingServers_CancelQuery" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmakingServers_CancelQuery" )]
         internal static extern void SteamAPI_ISteamMatchmakingServers_CancelQuery( IntPtr instancePtr, uint hRequest );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmakingServers_RefreshQuery" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmakingServers_RefreshQuery" )]
         internal static extern void SteamAPI_ISteamMatchmakingServers_RefreshQuery( IntPtr instancePtr, uint hRequest );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmakingServers_IsRefreshing" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmakingServers_IsRefreshing" )]
         internal static extern bool SteamAPI_ISteamMatchmakingServers_IsRefreshing( IntPtr instancePtr, uint hRequest );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmakingServers_GetServerCount" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmakingServers_GetServerCount" )]
         internal static extern int SteamAPI_ISteamMatchmakingServers_GetServerCount( IntPtr instancePtr, uint hRequest );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmakingServers_RefreshServer" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmakingServers_RefreshServer" )]
         internal static extern void SteamAPI_ISteamMatchmakingServers_RefreshServer( IntPtr instancePtr, uint hRequest, int iServer );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmakingServers_PingServer" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmakingServers_PingServer" )]
         internal static extern uint SteamAPI_ISteamMatchmakingServers_PingServer( IntPtr instancePtr, uint unIP, char usPort, IntPtr pRequestServersResponse );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmakingServers_PlayerDetails" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmakingServers_PlayerDetails" )]
         internal static extern uint SteamAPI_ISteamMatchmakingServers_PlayerDetails( IntPtr instancePtr, uint unIP, char usPort, IntPtr pRequestServersResponse );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmakingServers_ServerRules" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmakingServers_ServerRules" )]
         internal static extern uint SteamAPI_ISteamMatchmakingServers_ServerRules( IntPtr instancePtr, uint unIP, char usPort, IntPtr pRequestServersResponse );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMatchmakingServers_CancelServerQuery" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMatchmakingServers_CancelServerQuery" )]
         internal static extern void SteamAPI_ISteamMatchmakingServers_CancelServerQuery( IntPtr instancePtr, uint hServerQuery );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_FileWrite" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_FileWrite" )]
         internal static extern bool SteamAPI_ISteamRemoteStorage_FileWrite( IntPtr instancePtr, string pchFile, IntPtr pvData, int cubData );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_FileRead" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_FileRead" )]
         internal static extern int SteamAPI_ISteamRemoteStorage_FileRead( IntPtr instancePtr, string pchFile, IntPtr pvData, int cubDataToRead );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_FileWriteAsync" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_FileWriteAsync" )]
         internal static extern ulong SteamAPI_ISteamRemoteStorage_FileWriteAsync( IntPtr instancePtr, string pchFile, IntPtr pvData, uint cubData );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_FileReadAsync" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_FileReadAsync" )]
         internal static extern ulong SteamAPI_ISteamRemoteStorage_FileReadAsync( IntPtr instancePtr, string pchFile, uint nOffset, uint cubToRead );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_FileReadAsyncComplete" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_FileReadAsyncComplete" )]
         internal static extern bool SteamAPI_ISteamRemoteStorage_FileReadAsyncComplete( IntPtr instancePtr, ulong hReadCall, IntPtr pvBuffer, uint cubToRead );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_FileForget" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_FileForget" )]
         internal static extern bool SteamAPI_ISteamRemoteStorage_FileForget( IntPtr instancePtr, string pchFile );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_FileDelete" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_FileDelete" )]
         internal static extern bool SteamAPI_ISteamRemoteStorage_FileDelete( IntPtr instancePtr, string pchFile );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_FileShare" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_FileShare" )]
         internal static extern ulong SteamAPI_ISteamRemoteStorage_FileShare( IntPtr instancePtr, string pchFile );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_SetSyncPlatforms" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_SetSyncPlatforms" )]
         internal static extern bool SteamAPI_ISteamRemoteStorage_SetSyncPlatforms( IntPtr instancePtr, string pchFile, uint eRemoteStoragePlatform );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_FileWriteStreamOpen" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_FileWriteStreamOpen" )]
         internal static extern ulong SteamAPI_ISteamRemoteStorage_FileWriteStreamOpen( IntPtr instancePtr, string pchFile );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_FileWriteStreamWriteChunk" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_FileWriteStreamWriteChunk" )]
         internal static extern bool SteamAPI_ISteamRemoteStorage_FileWriteStreamWriteChunk( IntPtr instancePtr, ulong writeHandle, IntPtr pvData, int cubData );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_FileWriteStreamClose" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_FileWriteStreamClose" )]
         internal static extern bool SteamAPI_ISteamRemoteStorage_FileWriteStreamClose( IntPtr instancePtr, ulong writeHandle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_FileWriteStreamCancel" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_FileWriteStreamCancel" )]
         internal static extern bool SteamAPI_ISteamRemoteStorage_FileWriteStreamCancel( IntPtr instancePtr, ulong writeHandle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_FileExists" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_FileExists" )]
         internal static extern bool SteamAPI_ISteamRemoteStorage_FileExists( IntPtr instancePtr, string pchFile );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_FilePersisted" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_FilePersisted" )]
         internal static extern bool SteamAPI_ISteamRemoteStorage_FilePersisted( IntPtr instancePtr, string pchFile );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetFileSize" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetFileSize" )]
         internal static extern int SteamAPI_ISteamRemoteStorage_GetFileSize( IntPtr instancePtr, string pchFile );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetFileTimestamp" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetFileTimestamp" )]
         internal static extern long SteamAPI_ISteamRemoteStorage_GetFileTimestamp( IntPtr instancePtr, string pchFile );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetSyncPlatforms" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetSyncPlatforms" )]
         internal static extern uint SteamAPI_ISteamRemoteStorage_GetSyncPlatforms( IntPtr instancePtr, string pchFile );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetFileCount" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetFileCount" )]
         internal static extern int SteamAPI_ISteamRemoteStorage_GetFileCount( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetFileNameAndSize" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetFileNameAndSize" )]
         internal static extern IntPtr SteamAPI_ISteamRemoteStorage_GetFileNameAndSize( IntPtr instancePtr, int iFile, ref int pnFileSizeInBytes );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetQuota" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetQuota" )]
         internal static extern bool SteamAPI_ISteamRemoteStorage_GetQuota( IntPtr instancePtr, ref int pnTotalBytes, ref int puAvailableBytes );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_IsCloudEnabledForAccount" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_IsCloudEnabledForAccount" )]
         internal static extern bool SteamAPI_ISteamRemoteStorage_IsCloudEnabledForAccount( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_IsCloudEnabledForApp" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_IsCloudEnabledForApp" )]
         internal static extern bool SteamAPI_ISteamRemoteStorage_IsCloudEnabledForApp( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_SetCloudEnabledForApp" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_SetCloudEnabledForApp" )]
         internal static extern void SteamAPI_ISteamRemoteStorage_SetCloudEnabledForApp( IntPtr instancePtr, bool bEnabled );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_UGCDownload" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_UGCDownload" )]
         internal static extern ulong SteamAPI_ISteamRemoteStorage_UGCDownload( IntPtr instancePtr, ulong hContent, uint unPriority );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetUGCDownloadProgress" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetUGCDownloadProgress" )]
         internal static extern bool SteamAPI_ISteamRemoteStorage_GetUGCDownloadProgress( IntPtr instancePtr, ulong hContent, ref int pnBytesDownloaded, ref int pnBytesExpected );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetUGCDetails" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetUGCDetails" )]
         internal static extern bool SteamAPI_ISteamRemoteStorage_GetUGCDetails( IntPtr instancePtr, ulong hContent, ref uint pnAppID, System.Text.StringBuilder ppchName, ref int pnFileSizeInBytes, ref CSteamID pSteamIDOwner );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_UGCRead" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_UGCRead" )]
         internal static extern int SteamAPI_ISteamRemoteStorage_UGCRead( IntPtr instancePtr, ulong hContent, IntPtr pvData, int cubDataToRead, uint cOffset, uint eAction );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetCachedUGCCount" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetCachedUGCCount" )]
         internal static extern int SteamAPI_ISteamRemoteStorage_GetCachedUGCCount( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetCachedUGCHandle" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetCachedUGCHandle" )]
         internal static extern ulong SteamAPI_ISteamRemoteStorage_GetCachedUGCHandle( IntPtr instancePtr, int iCachedContent );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_PublishWorkshopFile" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_PublishWorkshopFile" )]
         internal static extern ulong SteamAPI_ISteamRemoteStorage_PublishWorkshopFile( IntPtr instancePtr, string pchFile, string pchPreviewFile, uint nConsumerAppId, string pchTitle, string pchDescription, uint eVisibility, ref SteamParamStringArray_t pTags, uint eWorkshopFileType );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_CreatePublishedFileUpdateRequest" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_CreatePublishedFileUpdateRequest" )]
         internal static extern ulong SteamAPI_ISteamRemoteStorage_CreatePublishedFileUpdateRequest( IntPtr instancePtr, ulong unPublishedFileId );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_UpdatePublishedFileFile" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_UpdatePublishedFileFile" )]
         internal static extern bool SteamAPI_ISteamRemoteStorage_UpdatePublishedFileFile( IntPtr instancePtr, ulong updateHandle, string pchFile );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_UpdatePublishedFilePreviewFile" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_UpdatePublishedFilePreviewFile" )]
         internal static extern bool SteamAPI_ISteamRemoteStorage_UpdatePublishedFilePreviewFile( IntPtr instancePtr, ulong updateHandle, string pchPreviewFile );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_UpdatePublishedFileTitle" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_UpdatePublishedFileTitle" )]
         internal static extern bool SteamAPI_ISteamRemoteStorage_UpdatePublishedFileTitle( IntPtr instancePtr, ulong updateHandle, string pchTitle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_UpdatePublishedFileDescription" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_UpdatePublishedFileDescription" )]
         internal static extern bool SteamAPI_ISteamRemoteStorage_UpdatePublishedFileDescription( IntPtr instancePtr, ulong updateHandle, string pchDescription );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_UpdatePublishedFileVisibility" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_UpdatePublishedFileVisibility" )]
         internal static extern bool SteamAPI_ISteamRemoteStorage_UpdatePublishedFileVisibility( IntPtr instancePtr, ulong updateHandle, uint eVisibility );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_UpdatePublishedFileTags" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_UpdatePublishedFileTags" )]
         internal static extern bool SteamAPI_ISteamRemoteStorage_UpdatePublishedFileTags( IntPtr instancePtr, ulong updateHandle, ref SteamParamStringArray_t pTags );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_CommitPublishedFileUpdate" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_CommitPublishedFileUpdate" )]
         internal static extern ulong SteamAPI_ISteamRemoteStorage_CommitPublishedFileUpdate( IntPtr instancePtr, ulong updateHandle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetPublishedFileDetails" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetPublishedFileDetails" )]
         internal static extern ulong SteamAPI_ISteamRemoteStorage_GetPublishedFileDetails( IntPtr instancePtr, ulong unPublishedFileId, uint unMaxSecondsOld );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_DeletePublishedFile" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_DeletePublishedFile" )]
         internal static extern ulong SteamAPI_ISteamRemoteStorage_DeletePublishedFile( IntPtr instancePtr, ulong unPublishedFileId );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_EnumerateUserPublishedFiles" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_EnumerateUserPublishedFiles" )]
         internal static extern ulong SteamAPI_ISteamRemoteStorage_EnumerateUserPublishedFiles( IntPtr instancePtr, uint unStartIndex );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_SubscribePublishedFile" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_SubscribePublishedFile" )]
         internal static extern ulong SteamAPI_ISteamRemoteStorage_SubscribePublishedFile( IntPtr instancePtr, ulong unPublishedFileId );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_EnumerateUserSubscribedFiles" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_EnumerateUserSubscribedFiles" )]
         internal static extern ulong SteamAPI_ISteamRemoteStorage_EnumerateUserSubscribedFiles( IntPtr instancePtr, uint unStartIndex );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_UnsubscribePublishedFile" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_UnsubscribePublishedFile" )]
         internal static extern ulong SteamAPI_ISteamRemoteStorage_UnsubscribePublishedFile( IntPtr instancePtr, ulong unPublishedFileId );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_UpdatePublishedFileSetChangeDescription" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_UpdatePublishedFileSetChangeDescription" )]
         internal static extern bool SteamAPI_ISteamRemoteStorage_UpdatePublishedFileSetChangeDescription( IntPtr instancePtr, ulong updateHandle, string pchChangeDescription );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetPublishedItemVoteDetails" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetPublishedItemVoteDetails" )]
         internal static extern ulong SteamAPI_ISteamRemoteStorage_GetPublishedItemVoteDetails( IntPtr instancePtr, ulong unPublishedFileId );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_UpdateUserPublishedItemVote" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_UpdateUserPublishedItemVote" )]
         internal static extern ulong SteamAPI_ISteamRemoteStorage_UpdateUserPublishedItemVote( IntPtr instancePtr, ulong unPublishedFileId, bool bVoteUp );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetUserPublishedItemVoteDetails" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetUserPublishedItemVoteDetails" )]
         internal static extern ulong SteamAPI_ISteamRemoteStorage_GetUserPublishedItemVoteDetails( IntPtr instancePtr, ulong unPublishedFileId );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_EnumerateUserSharedWorkshopFiles" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_EnumerateUserSharedWorkshopFiles" )]
         internal static extern ulong SteamAPI_ISteamRemoteStorage_EnumerateUserSharedWorkshopFiles( IntPtr instancePtr, ulong steamId, uint unStartIndex, ref SteamParamStringArray_t pRequiredTags, ref SteamParamStringArray_t pExcludedTags );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_PublishVideo" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_PublishVideo" )]
         internal static extern ulong SteamAPI_ISteamRemoteStorage_PublishVideo( IntPtr instancePtr, uint eVideoProvider, string pchVideoAccount, string pchVideoIdentifier, string pchPreviewFile, uint nConsumerAppId, string pchTitle, string pchDescription, uint eVisibility, ref SteamParamStringArray_t pTags );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_SetUserPublishedFileAction" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_SetUserPublishedFileAction" )]
         internal static extern ulong SteamAPI_ISteamRemoteStorage_SetUserPublishedFileAction( IntPtr instancePtr, ulong unPublishedFileId, uint eAction );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_EnumeratePublishedFilesByUserAction" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_EnumeratePublishedFilesByUserAction" )]
         internal static extern ulong SteamAPI_ISteamRemoteStorage_EnumeratePublishedFilesByUserAction( IntPtr instancePtr, uint eAction, uint unStartIndex );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_EnumeratePublishedWorkshopFiles" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_EnumeratePublishedWorkshopFiles" )]
         internal static extern ulong SteamAPI_ISteamRemoteStorage_EnumeratePublishedWorkshopFiles( IntPtr instancePtr, uint eEnumerationType, uint unStartIndex, uint unCount, uint unDays, ref SteamParamStringArray_t pTags, ref SteamParamStringArray_t pUserTags );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamRemoteStorage_UGCDownloadToLocation" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamRemoteStorage_UGCDownloadToLocation" )]
         internal static extern ulong SteamAPI_ISteamRemoteStorage_UGCDownloadToLocation( IntPtr instancePtr, ulong hContent, string pchLocation, uint unPriority );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_RequestCurrentStats" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_RequestCurrentStats" )]
         internal static extern bool SteamAPI_ISteamUserStats_RequestCurrentStats( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_GetStat" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_GetStat" )]
         internal static extern bool SteamAPI_ISteamUserStats_GetStat( IntPtr instancePtr, string pchName, ref int pData );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_GetStat0" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_GetStat0" )]
         internal static extern bool SteamAPI_ISteamUserStats_GetStat0( IntPtr instancePtr, string pchName, ref float pData );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_SetStat" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_SetStat" )]
         internal static extern bool SteamAPI_ISteamUserStats_SetStat( IntPtr instancePtr, string pchName, int nData );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_SetStat0" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_SetStat0" )]
         internal static extern bool SteamAPI_ISteamUserStats_SetStat0( IntPtr instancePtr, string pchName, float fData );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_UpdateAvgRateStat" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_UpdateAvgRateStat" )]
         internal static extern bool SteamAPI_ISteamUserStats_UpdateAvgRateStat( IntPtr instancePtr, string pchName, float flCountThisSession, double dSessionLength );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_GetAchievement" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_GetAchievement" )]
         internal static extern bool SteamAPI_ISteamUserStats_GetAchievement( IntPtr instancePtr, string pchName, ref bool pbAchieved );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_SetAchievement" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_SetAchievement" )]
         internal static extern bool SteamAPI_ISteamUserStats_SetAchievement( IntPtr instancePtr, string pchName );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_ClearAchievement" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_ClearAchievement" )]
         internal static extern bool SteamAPI_ISteamUserStats_ClearAchievement( IntPtr instancePtr, string pchName );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_GetAchievementAndUnlockTime" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_GetAchievementAndUnlockTime" )]
         internal static extern bool SteamAPI_ISteamUserStats_GetAchievementAndUnlockTime( IntPtr instancePtr, string pchName, ref bool pbAchieved, ref uint punUnlockTime );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_StoreStats" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_StoreStats" )]
         internal static extern bool SteamAPI_ISteamUserStats_StoreStats( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_GetAchievementIcon" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_GetAchievementIcon" )]
         internal static extern int SteamAPI_ISteamUserStats_GetAchievementIcon( IntPtr instancePtr, string pchName );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_GetAchievementDisplayAttribute" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_GetAchievementDisplayAttribute" )]
         internal static extern IntPtr SteamAPI_ISteamUserStats_GetAchievementDisplayAttribute( IntPtr instancePtr, string pchName, string pchKey );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_IndicateAchievementProgress" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_IndicateAchievementProgress" )]
         internal static extern bool SteamAPI_ISteamUserStats_IndicateAchievementProgress( IntPtr instancePtr, string pchName, uint nCurProgress, uint nMaxProgress );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_GetNumAchievements" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_GetNumAchievements" )]
         internal static extern uint SteamAPI_ISteamUserStats_GetNumAchievements( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_GetAchievementName" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_GetAchievementName" )]
         internal static extern IntPtr SteamAPI_ISteamUserStats_GetAchievementName( IntPtr instancePtr, uint iAchievement );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_RequestUserStats" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_RequestUserStats" )]
         internal static extern ulong SteamAPI_ISteamUserStats_RequestUserStats( IntPtr instancePtr, ulong steamIDUser );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_GetUserStat" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_GetUserStat" )]
         internal static extern bool SteamAPI_ISteamUserStats_GetUserStat( IntPtr instancePtr, ulong steamIDUser, string pchName, ref int pData );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_GetUserStat0" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_GetUserStat0" )]
         internal static extern bool SteamAPI_ISteamUserStats_GetUserStat0( IntPtr instancePtr, ulong steamIDUser, string pchName, ref float pData );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_GetUserAchievement" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_GetUserAchievement" )]
         internal static extern bool SteamAPI_ISteamUserStats_GetUserAchievement( IntPtr instancePtr, ulong steamIDUser, string pchName, ref bool pbAchieved );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_GetUserAchievementAndUnlockTime" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_GetUserAchievementAndUnlockTime" )]
         internal static extern bool SteamAPI_ISteamUserStats_GetUserAchievementAndUnlockTime( IntPtr instancePtr, ulong steamIDUser, string pchName, ref bool pbAchieved, ref uint punUnlockTime );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_ResetAllStats" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_ResetAllStats" )]
         internal static extern bool SteamAPI_ISteamUserStats_ResetAllStats( IntPtr instancePtr, bool bAchievementsToo );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_FindOrCreateLeaderboard" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_FindOrCreateLeaderboard" )]
         internal static extern ulong SteamAPI_ISteamUserStats_FindOrCreateLeaderboard( IntPtr instancePtr, string pchLeaderboardName, uint eLeaderboardSortMethod, uint eLeaderboardDisplayType );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_FindLeaderboard" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_FindLeaderboard" )]
         internal static extern ulong SteamAPI_ISteamUserStats_FindLeaderboard( IntPtr instancePtr, string pchLeaderboardName );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_GetLeaderboardName" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_GetLeaderboardName" )]
         internal static extern IntPtr SteamAPI_ISteamUserStats_GetLeaderboardName( IntPtr instancePtr, ulong hSteamLeaderboard );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_GetLeaderboardEntryCount" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_GetLeaderboardEntryCount" )]
         internal static extern int SteamAPI_ISteamUserStats_GetLeaderboardEntryCount( IntPtr instancePtr, ulong hSteamLeaderboard );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_GetLeaderboardSortMethod" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_GetLeaderboardSortMethod" )]
         internal static extern uint SteamAPI_ISteamUserStats_GetLeaderboardSortMethod( IntPtr instancePtr, ulong hSteamLeaderboard );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_GetLeaderboardDisplayType" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_GetLeaderboardDisplayType" )]
         internal static extern uint SteamAPI_ISteamUserStats_GetLeaderboardDisplayType( IntPtr instancePtr, ulong hSteamLeaderboard );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_DownloadLeaderboardEntries" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_DownloadLeaderboardEntries" )]
         internal static extern ulong SteamAPI_ISteamUserStats_DownloadLeaderboardEntries( IntPtr instancePtr, ulong hSteamLeaderboard, uint eLeaderboardDataRequest, int nRangeStart, int nRangeEnd );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_DownloadLeaderboardEntriesForUsers" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_DownloadLeaderboardEntriesForUsers" )]
         internal static extern ulong SteamAPI_ISteamUserStats_DownloadLeaderboardEntriesForUsers( IntPtr instancePtr, ulong hSteamLeaderboard, [In, Out] CSteamID[] prgUsers, int cUsers );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_GetDownloadedLeaderboardEntry" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_GetDownloadedLeaderboardEntry" )]
         internal static extern bool SteamAPI_ISteamUserStats_GetDownloadedLeaderboardEntry( IntPtr instancePtr, ulong hSteamLeaderboardEntries, int index, ref LeaderboardEntry_t pLeaderboardEntry, ref int pDetails, int cDetailsMax );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_UploadLeaderboardScore" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_UploadLeaderboardScore" )]
         internal static extern ulong SteamAPI_ISteamUserStats_UploadLeaderboardScore( IntPtr instancePtr, ulong hSteamLeaderboard, uint eLeaderboardUploadScoreMethod, int nScore, ref int pScoreDetails, int cScoreDetailsCount );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_AttachLeaderboardUGC" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_AttachLeaderboardUGC" )]
         internal static extern ulong SteamAPI_ISteamUserStats_AttachLeaderboardUGC( IntPtr instancePtr, ulong hSteamLeaderboard, ulong hUGC );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_GetNumberOfCurrentPlayers" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_GetNumberOfCurrentPlayers" )]
         internal static extern ulong SteamAPI_ISteamUserStats_GetNumberOfCurrentPlayers( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_RequestGlobalAchievementPercentages" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_RequestGlobalAchievementPercentages" )]
         internal static extern ulong SteamAPI_ISteamUserStats_RequestGlobalAchievementPercentages( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_GetMostAchievedAchievementInfo" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_GetMostAchievedAchievementInfo" )]
         internal static extern int SteamAPI_ISteamUserStats_GetMostAchievedAchievementInfo( IntPtr instancePtr, string pchName, uint unNameBufLen, ref float pflPercent, ref bool pbAchieved );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_GetNextMostAchievedAchievementInfo" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_GetNextMostAchievedAchievementInfo" )]
         internal static extern int SteamAPI_ISteamUserStats_GetNextMostAchievedAchievementInfo( IntPtr instancePtr, int iIteratorPrevious, string pchName, uint unNameBufLen, ref float pflPercent, ref bool pbAchieved );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_GetAchievementAchievedPercent" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_GetAchievementAchievedPercent" )]
         internal static extern bool SteamAPI_ISteamUserStats_GetAchievementAchievedPercent( IntPtr instancePtr, string pchName, ref float pflPercent );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_RequestGlobalStats" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_RequestGlobalStats" )]
         internal static extern ulong SteamAPI_ISteamUserStats_RequestGlobalStats( IntPtr instancePtr, int nHistoryDays );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_GetGlobalStat" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_GetGlobalStat" )]
         internal static extern bool SteamAPI_ISteamUserStats_GetGlobalStat( IntPtr instancePtr, string pchStatName, ref long pData );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_GetGlobalStat0" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_GetGlobalStat0" )]
         internal static extern bool SteamAPI_ISteamUserStats_GetGlobalStat0( IntPtr instancePtr, string pchStatName, ref double pData );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_GetGlobalStatHistory" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_GetGlobalStatHistory" )]
         internal static extern int SteamAPI_ISteamUserStats_GetGlobalStatHistory( IntPtr instancePtr, string pchStatName, [In, Out] long[] pData, uint cubData );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUserStats_GetGlobalStatHistory0" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUserStats_GetGlobalStatHistory0" )]
         internal static extern int SteamAPI_ISteamUserStats_GetGlobalStatHistory0( IntPtr instancePtr, string pchStatName, [In, Out] double[] pData, uint cubData );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamApps_BIsSubscribed" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamApps_BIsSubscribed" )]
         internal static extern bool SteamAPI_ISteamApps_BIsSubscribed( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamApps_BIsLowViolence" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamApps_BIsLowViolence" )]
         internal static extern bool SteamAPI_ISteamApps_BIsLowViolence( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamApps_BIsCybercafe" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamApps_BIsCybercafe" )]
         internal static extern bool SteamAPI_ISteamApps_BIsCybercafe( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamApps_BIsVACBanned" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamApps_BIsVACBanned" )]
         internal static extern bool SteamAPI_ISteamApps_BIsVACBanned( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamApps_GetCurrentGameLanguage" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamApps_GetCurrentGameLanguage" )]
         internal static extern IntPtr SteamAPI_ISteamApps_GetCurrentGameLanguage( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamApps_GetAvailableGameLanguages" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamApps_GetAvailableGameLanguages" )]
         internal static extern IntPtr SteamAPI_ISteamApps_GetAvailableGameLanguages( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamApps_BIsSubscribedApp" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamApps_BIsSubscribedApp" )]
         internal static extern bool SteamAPI_ISteamApps_BIsSubscribedApp( IntPtr instancePtr, uint appID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamApps_BIsDlcInstalled" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamApps_BIsDlcInstalled" )]
         internal static extern bool SteamAPI_ISteamApps_BIsDlcInstalled( IntPtr instancePtr, uint appID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamApps_GetEarliestPurchaseUnixTime" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamApps_GetEarliestPurchaseUnixTime" )]
         internal static extern uint SteamAPI_ISteamApps_GetEarliestPurchaseUnixTime( IntPtr instancePtr, uint nAppID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamApps_BIsSubscribedFromFreeWeekend" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamApps_BIsSubscribedFromFreeWeekend" )]
         internal static extern bool SteamAPI_ISteamApps_BIsSubscribedFromFreeWeekend( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamApps_GetDLCCount" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamApps_GetDLCCount" )]
         internal static extern int SteamAPI_ISteamApps_GetDLCCount( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamApps_BGetDLCDataByIndex" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamApps_BGetDLCDataByIndex" )]
         internal static extern bool SteamAPI_ISteamApps_BGetDLCDataByIndex( IntPtr instancePtr, int iDLC, ref uint pAppID, ref bool pbAvailable, string pchName, int cchNameBufferSize );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamApps_InstallDLC" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamApps_InstallDLC" )]
         internal static extern void SteamAPI_ISteamApps_InstallDLC( IntPtr instancePtr, uint nAppID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamApps_UninstallDLC" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamApps_UninstallDLC" )]
         internal static extern void SteamAPI_ISteamApps_UninstallDLC( IntPtr instancePtr, uint nAppID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamApps_RequestAppProofOfPurchaseKey" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamApps_RequestAppProofOfPurchaseKey" )]
         internal static extern void SteamAPI_ISteamApps_RequestAppProofOfPurchaseKey( IntPtr instancePtr, uint nAppID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamApps_GetCurrentBetaName" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamApps_GetCurrentBetaName" )]
         internal static extern bool SteamAPI_ISteamApps_GetCurrentBetaName( IntPtr instancePtr, string pchName, int cchNameBufferSize );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamApps_MarkContentCorrupt" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamApps_MarkContentCorrupt" )]
         internal static extern bool SteamAPI_ISteamApps_MarkContentCorrupt( IntPtr instancePtr, bool bMissingFilesOnly );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamApps_GetInstalledDepots" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamApps_GetInstalledDepots" )]
         internal static extern uint SteamAPI_ISteamApps_GetInstalledDepots( IntPtr instancePtr, uint appID, ref uint pvecDepots, uint cMaxDepots );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamApps_GetAppInstallDir" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamApps_GetAppInstallDir" )]
         internal static extern uint SteamAPI_ISteamApps_GetAppInstallDir( IntPtr instancePtr, uint appID, string pchFolder, uint cchFolderBufferSize );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamApps_BIsAppInstalled" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamApps_BIsAppInstalled" )]
         internal static extern bool SteamAPI_ISteamApps_BIsAppInstalled( IntPtr instancePtr, uint appID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamApps_GetAppOwner" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamApps_GetAppOwner" )]
         internal static extern ulong SteamAPI_ISteamApps_GetAppOwner( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamApps_GetLaunchQueryParam" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamApps_GetLaunchQueryParam" )]
         internal static extern IntPtr SteamAPI_ISteamApps_GetLaunchQueryParam( IntPtr instancePtr, string pchKey );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamApps_GetDlcDownloadProgress" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamApps_GetDlcDownloadProgress" )]
         internal static extern bool SteamAPI_ISteamApps_GetDlcDownloadProgress( IntPtr instancePtr, uint nAppID, ref ulong punBytesDownloaded, ref ulong punBytesTotal );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamApps_GetAppBuildId" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamApps_GetAppBuildId" )]
         internal static extern int SteamAPI_ISteamApps_GetAppBuildId( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamApps_RequestAllProofOfPurchaseKeys" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamApps_RequestAllProofOfPurchaseKeys" )]
         internal static extern void SteamAPI_ISteamApps_RequestAllProofOfPurchaseKeys( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamNetworking_SendP2PPacket" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamNetworking_SendP2PPacket" )]
         internal static extern bool SteamAPI_ISteamNetworking_SendP2PPacket( IntPtr instancePtr, ulong steamIDRemote, IntPtr pubData, uint cubData, uint eP2PSendType, int nChannel );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamNetworking_IsP2PPacketAvailable" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamNetworking_IsP2PPacketAvailable" )]
         internal static extern bool SteamAPI_ISteamNetworking_IsP2PPacketAvailable( IntPtr instancePtr, ref uint pcubMsgSize, int nChannel );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamNetworking_ReadP2PPacket" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamNetworking_ReadP2PPacket" )]
         internal static extern bool SteamAPI_ISteamNetworking_ReadP2PPacket( IntPtr instancePtr, IntPtr pubDest, uint cubDest, ref uint pcubMsgSize, ref CSteamID psteamIDRemote, int nChannel );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamNetworking_AcceptP2PSessionWithUser" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamNetworking_AcceptP2PSessionWithUser" )]
         internal static extern bool SteamAPI_ISteamNetworking_AcceptP2PSessionWithUser( IntPtr instancePtr, ulong steamIDRemote );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamNetworking_CloseP2PSessionWithUser" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamNetworking_CloseP2PSessionWithUser" )]
         internal static extern bool SteamAPI_ISteamNetworking_CloseP2PSessionWithUser( IntPtr instancePtr, ulong steamIDRemote );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamNetworking_CloseP2PChannelWithUser" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamNetworking_CloseP2PChannelWithUser" )]
         internal static extern bool SteamAPI_ISteamNetworking_CloseP2PChannelWithUser( IntPtr instancePtr, ulong steamIDRemote, int nChannel );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamNetworking_GetP2PSessionState" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamNetworking_GetP2PSessionState" )]
         internal static extern bool SteamAPI_ISteamNetworking_GetP2PSessionState( IntPtr instancePtr, ulong steamIDRemote, ref P2PSessionState_t pConnectionState );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamNetworking_AllowP2PPacketRelay" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamNetworking_AllowP2PPacketRelay" )]
         internal static extern bool SteamAPI_ISteamNetworking_AllowP2PPacketRelay( IntPtr instancePtr, bool bAllow );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamNetworking_CreateListenSocket" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamNetworking_CreateListenSocket" )]
         internal static extern uint SteamAPI_ISteamNetworking_CreateListenSocket( IntPtr instancePtr, int nVirtualP2PPort, uint nIP, char nPort, bool bAllowUseOfPacketRelay );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamNetworking_CreateP2PConnectionSocket" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamNetworking_CreateP2PConnectionSocket" )]
         internal static extern uint SteamAPI_ISteamNetworking_CreateP2PConnectionSocket( IntPtr instancePtr, ulong steamIDTarget, int nVirtualPort, int nTimeoutSec, bool bAllowUseOfPacketRelay );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamNetworking_CreateConnectionSocket" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamNetworking_CreateConnectionSocket" )]
         internal static extern uint SteamAPI_ISteamNetworking_CreateConnectionSocket( IntPtr instancePtr, uint nIP, char nPort, int nTimeoutSec );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamNetworking_DestroySocket" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamNetworking_DestroySocket" )]
         internal static extern bool SteamAPI_ISteamNetworking_DestroySocket( IntPtr instancePtr, uint hSocket, bool bNotifyRemoteEnd );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamNetworking_DestroyListenSocket" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamNetworking_DestroyListenSocket" )]
         internal static extern bool SteamAPI_ISteamNetworking_DestroyListenSocket( IntPtr instancePtr, uint hSocket, bool bNotifyRemoteEnd );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamNetworking_SendDataOnSocket" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamNetworking_SendDataOnSocket" )]
         internal static extern bool SteamAPI_ISteamNetworking_SendDataOnSocket( IntPtr instancePtr, uint hSocket, IntPtr pubData, uint cubData, bool bReliable );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamNetworking_IsDataAvailableOnSocket" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamNetworking_IsDataAvailableOnSocket" )]
         internal static extern bool SteamAPI_ISteamNetworking_IsDataAvailableOnSocket( IntPtr instancePtr, uint hSocket, ref uint pcubMsgSize );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamNetworking_RetrieveDataFromSocket" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamNetworking_RetrieveDataFromSocket" )]
         internal static extern bool SteamAPI_ISteamNetworking_RetrieveDataFromSocket( IntPtr instancePtr, uint hSocket, IntPtr pubDest, uint cubDest, ref uint pcubMsgSize );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamNetworking_IsDataAvailable" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamNetworking_IsDataAvailable" )]
         internal static extern bool SteamAPI_ISteamNetworking_IsDataAvailable( IntPtr instancePtr, uint hListenSocket, ref uint pcubMsgSize, ref uint phSocket );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamNetworking_RetrieveData" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamNetworking_RetrieveData" )]
         internal static extern bool SteamAPI_ISteamNetworking_RetrieveData( IntPtr instancePtr, uint hListenSocket, IntPtr pubDest, uint cubDest, ref uint pcubMsgSize, ref uint phSocket );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamNetworking_GetSocketInfo" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamNetworking_GetSocketInfo" )]
         internal static extern bool SteamAPI_ISteamNetworking_GetSocketInfo( IntPtr instancePtr, uint hSocket, ref CSteamID pSteamIDRemote, ref int peSocketStatus, ref uint punIPRemote, ref char punPortRemote );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamNetworking_GetListenSocketInfo" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamNetworking_GetListenSocketInfo" )]
         internal static extern bool SteamAPI_ISteamNetworking_GetListenSocketInfo( IntPtr instancePtr, uint hListenSocket, ref uint pnIP, ref char pnPort );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamNetworking_GetSocketConnectionType" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamNetworking_GetSocketConnectionType" )]
         internal static extern uint SteamAPI_ISteamNetworking_GetSocketConnectionType( IntPtr instancePtr, uint hSocket );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamNetworking_GetMaxPacketSize" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamNetworking_GetMaxPacketSize" )]
         internal static extern int SteamAPI_ISteamNetworking_GetMaxPacketSize( IntPtr instancePtr, uint hSocket );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamScreenshots_WriteScreenshot" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamScreenshots_WriteScreenshot" )]
         internal static extern uint SteamAPI_ISteamScreenshots_WriteScreenshot( IntPtr instancePtr, IntPtr pubRGB, uint cubRGB, int nWidth, int nHeight );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamScreenshots_AddScreenshotToLibrary" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamScreenshots_AddScreenshotToLibrary" )]
         internal static extern uint SteamAPI_ISteamScreenshots_AddScreenshotToLibrary( IntPtr instancePtr, string pchFilename, string pchThumbnailFilename, int nWidth, int nHeight );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamScreenshots_TriggerScreenshot" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamScreenshots_TriggerScreenshot" )]
         internal static extern void SteamAPI_ISteamScreenshots_TriggerScreenshot( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamScreenshots_HookScreenshots" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamScreenshots_HookScreenshots" )]
         internal static extern void SteamAPI_ISteamScreenshots_HookScreenshots( IntPtr instancePtr, bool bHook );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamScreenshots_SetLocation" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamScreenshots_SetLocation" )]
         internal static extern bool SteamAPI_ISteamScreenshots_SetLocation( IntPtr instancePtr, uint hScreenshot, string pchLocation );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamScreenshots_TagUser" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamScreenshots_TagUser" )]
         internal static extern bool SteamAPI_ISteamScreenshots_TagUser( IntPtr instancePtr, uint hScreenshot, ulong steamID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamScreenshots_TagPublishedFile" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamScreenshots_TagPublishedFile" )]
         internal static extern bool SteamAPI_ISteamScreenshots_TagPublishedFile( IntPtr instancePtr, uint hScreenshot, ulong unPublishedFileID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusic_BIsEnabled" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusic_BIsEnabled" )]
         internal static extern bool SteamAPI_ISteamMusic_BIsEnabled( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusic_BIsPlaying" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusic_BIsPlaying" )]
         internal static extern bool SteamAPI_ISteamMusic_BIsPlaying( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusic_GetPlaybackStatus" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusic_GetPlaybackStatus" )]
         internal static extern int SteamAPI_ISteamMusic_GetPlaybackStatus( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusic_Play" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusic_Play" )]
         internal static extern void SteamAPI_ISteamMusic_Play( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusic_Pause" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusic_Pause" )]
         internal static extern void SteamAPI_ISteamMusic_Pause( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusic_PlayPrevious" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusic_PlayPrevious" )]
         internal static extern void SteamAPI_ISteamMusic_PlayPrevious( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusic_PlayNext" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusic_PlayNext" )]
         internal static extern void SteamAPI_ISteamMusic_PlayNext( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusic_SetVolume" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusic_SetVolume" )]
         internal static extern void SteamAPI_ISteamMusic_SetVolume( IntPtr instancePtr, float flVolume );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusic_GetVolume" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusic_GetVolume" )]
         internal static extern float SteamAPI_ISteamMusic_GetVolume( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_RegisterSteamMusicRemote" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_RegisterSteamMusicRemote" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_RegisterSteamMusicRemote( IntPtr instancePtr, string pchName );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_DeregisterSteamMusicRemote" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_DeregisterSteamMusicRemote" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_DeregisterSteamMusicRemote( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_BIsCurrentMusicRemote" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_BIsCurrentMusicRemote" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_BIsCurrentMusicRemote( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_BActivationSuccess" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_BActivationSuccess" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_BActivationSuccess( IntPtr instancePtr, bool bValue );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_SetDisplayName" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_SetDisplayName" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_SetDisplayName( IntPtr instancePtr, string pchDisplayName );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_SetPNGIcon_64x64" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_SetPNGIcon_64x64" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_SetPNGIcon_64x64( IntPtr instancePtr, IntPtr pvBuffer, uint cbBufferLength );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_EnablePlayPrevious" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_EnablePlayPrevious" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_EnablePlayPrevious( IntPtr instancePtr, bool bValue );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_EnablePlayNext" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_EnablePlayNext" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_EnablePlayNext( IntPtr instancePtr, bool bValue );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_EnableShuffled" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_EnableShuffled" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_EnableShuffled( IntPtr instancePtr, bool bValue );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_EnableLooped" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_EnableLooped" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_EnableLooped( IntPtr instancePtr, bool bValue );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_EnableQueue" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_EnableQueue" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_EnableQueue( IntPtr instancePtr, bool bValue );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_EnablePlaylists" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_EnablePlaylists" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_EnablePlaylists( IntPtr instancePtr, bool bValue );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_UpdatePlaybackStatus" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_UpdatePlaybackStatus" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_UpdatePlaybackStatus( IntPtr instancePtr, int nStatus );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_UpdateShuffled" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_UpdateShuffled" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_UpdateShuffled( IntPtr instancePtr, bool bValue );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_UpdateLooped" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_UpdateLooped" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_UpdateLooped( IntPtr instancePtr, bool bValue );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_UpdateVolume" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_UpdateVolume" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_UpdateVolume( IntPtr instancePtr, float flValue );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_CurrentEntryWillChange" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_CurrentEntryWillChange" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_CurrentEntryWillChange( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_CurrentEntryIsAvailable" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_CurrentEntryIsAvailable" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_CurrentEntryIsAvailable( IntPtr instancePtr, bool bAvailable );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_UpdateCurrentEntryText" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_UpdateCurrentEntryText" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_UpdateCurrentEntryText( IntPtr instancePtr, string pchText );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_UpdateCurrentEntryElapsedSeconds" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_UpdateCurrentEntryElapsedSeconds" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_UpdateCurrentEntryElapsedSeconds( IntPtr instancePtr, int nValue );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_UpdateCurrentEntryCoverArt" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_UpdateCurrentEntryCoverArt" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_UpdateCurrentEntryCoverArt( IntPtr instancePtr, IntPtr pvBuffer, uint cbBufferLength );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_CurrentEntryDidChange" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_CurrentEntryDidChange" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_CurrentEntryDidChange( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_QueueWillChange" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_QueueWillChange" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_QueueWillChange( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_ResetQueueEntries" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_ResetQueueEntries" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_ResetQueueEntries( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_SetQueueEntry" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_SetQueueEntry" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_SetQueueEntry( IntPtr instancePtr, int nID, int nPosition, string pchEntryText );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_SetCurrentQueueEntry" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_SetCurrentQueueEntry" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_SetCurrentQueueEntry( IntPtr instancePtr, int nID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_QueueDidChange" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_QueueDidChange" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_QueueDidChange( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_PlaylistWillChange" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_PlaylistWillChange" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_PlaylistWillChange( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_ResetPlaylistEntries" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_ResetPlaylistEntries" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_ResetPlaylistEntries( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_SetPlaylistEntry" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_SetPlaylistEntry" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_SetPlaylistEntry( IntPtr instancePtr, int nID, int nPosition, string pchEntryText );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_SetCurrentPlaylistEntry" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_SetCurrentPlaylistEntry" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_SetCurrentPlaylistEntry( IntPtr instancePtr, int nID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamMusicRemote_PlaylistDidChange" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamMusicRemote_PlaylistDidChange" )]
         internal static extern bool SteamAPI_ISteamMusicRemote_PlaylistDidChange( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTTP_CreateHTTPRequest" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTTP_CreateHTTPRequest" )]
         internal static extern uint SteamAPI_ISteamHTTP_CreateHTTPRequest( IntPtr instancePtr, uint eHTTPRequestMethod, string pchAbsoluteURL );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTTP_SetHTTPRequestContextValue" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTTP_SetHTTPRequestContextValue" )]
         internal static extern bool SteamAPI_ISteamHTTP_SetHTTPRequestContextValue( IntPtr instancePtr, uint hRequest, ulong ulContextValue );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTTP_SetHTTPRequestNetworkActivityTimeout" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTTP_SetHTTPRequestNetworkActivityTimeout" )]
         internal static extern bool SteamAPI_ISteamHTTP_SetHTTPRequestNetworkActivityTimeout( IntPtr instancePtr, uint hRequest, uint unTimeoutSeconds );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTTP_SetHTTPRequestHeaderValue" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTTP_SetHTTPRequestHeaderValue" )]
         internal static extern bool SteamAPI_ISteamHTTP_SetHTTPRequestHeaderValue( IntPtr instancePtr, uint hRequest, string pchHeaderName, string pchHeaderValue );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTTP_SetHTTPRequestGetOrPostParameter" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTTP_SetHTTPRequestGetOrPostParameter" )]
         internal static extern bool SteamAPI_ISteamHTTP_SetHTTPRequestGetOrPostParameter( IntPtr instancePtr, uint hRequest, string pchParamName, string pchParamValue );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTTP_SendHTTPRequest" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTTP_SendHTTPRequest" )]
         internal static extern bool SteamAPI_ISteamHTTP_SendHTTPRequest( IntPtr instancePtr, uint hRequest, ref ulong pCallHandle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTTP_SendHTTPRequestAndStreamResponse" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTTP_SendHTTPRequestAndStreamResponse" )]
         internal static extern bool SteamAPI_ISteamHTTP_SendHTTPRequestAndStreamResponse( IntPtr instancePtr, uint hRequest, ref ulong pCallHandle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTTP_DeferHTTPRequest" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTTP_DeferHTTPRequest" )]
         internal static extern bool SteamAPI_ISteamHTTP_DeferHTTPRequest( IntPtr instancePtr, uint hRequest );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTTP_PrioritizeHTTPRequest" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTTP_PrioritizeHTTPRequest" )]
         internal static extern bool SteamAPI_ISteamHTTP_PrioritizeHTTPRequest( IntPtr instancePtr, uint hRequest );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTTP_GetHTTPResponseHeaderSize" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTTP_GetHTTPResponseHeaderSize" )]
         internal static extern bool SteamAPI_ISteamHTTP_GetHTTPResponseHeaderSize( IntPtr instancePtr, uint hRequest, string pchHeaderName, ref uint unResponseHeaderSize );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTTP_GetHTTPResponseHeaderValue" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTTP_GetHTTPResponseHeaderValue" )]
         internal static extern bool SteamAPI_ISteamHTTP_GetHTTPResponseHeaderValue( IntPtr instancePtr, uint hRequest, string pchHeaderName, IntPtr pHeaderValueBuffer, uint unBufferSize );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTTP_GetHTTPResponseBodySize" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTTP_GetHTTPResponseBodySize" )]
         internal static extern bool SteamAPI_ISteamHTTP_GetHTTPResponseBodySize( IntPtr instancePtr, uint hRequest, ref uint unBodySize );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTTP_GetHTTPResponseBodyData" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTTP_GetHTTPResponseBodyData" )]
         internal static extern bool SteamAPI_ISteamHTTP_GetHTTPResponseBodyData( IntPtr instancePtr, uint hRequest, IntPtr pBodyDataBuffer, uint unBufferSize );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTTP_GetHTTPStreamingResponseBodyData" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTTP_GetHTTPStreamingResponseBodyData" )]
         internal static extern bool SteamAPI_ISteamHTTP_GetHTTPStreamingResponseBodyData( IntPtr instancePtr, uint hRequest, uint cOffset, IntPtr pBodyDataBuffer, uint unBufferSize );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTTP_ReleaseHTTPRequest" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTTP_ReleaseHTTPRequest" )]
         internal static extern bool SteamAPI_ISteamHTTP_ReleaseHTTPRequest( IntPtr instancePtr, uint hRequest );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTTP_GetHTTPDownloadProgressPct" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTTP_GetHTTPDownloadProgressPct" )]
         internal static extern bool SteamAPI_ISteamHTTP_GetHTTPDownloadProgressPct( IntPtr instancePtr, uint hRequest, ref float pflPercentOut );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTTP_SetHTTPRequestRawPostBody" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTTP_SetHTTPRequestRawPostBody" )]
         internal static extern bool SteamAPI_ISteamHTTP_SetHTTPRequestRawPostBody( IntPtr instancePtr, uint hRequest, string pchContentType, IntPtr pubBody, uint unBodyLen );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTTP_CreateCookieContainer" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTTP_CreateCookieContainer" )]
         internal static extern uint SteamAPI_ISteamHTTP_CreateCookieContainer( IntPtr instancePtr, bool bAllowResponsesToModify );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTTP_ReleaseCookieContainer" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTTP_ReleaseCookieContainer" )]
         internal static extern bool SteamAPI_ISteamHTTP_ReleaseCookieContainer( IntPtr instancePtr, uint hCookieContainer );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTTP_SetCookie" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTTP_SetCookie" )]
         internal static extern bool SteamAPI_ISteamHTTP_SetCookie( IntPtr instancePtr, uint hCookieContainer, string pchHost, string pchUrl, string pchCookie );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTTP_SetHTTPRequestCookieContainer" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTTP_SetHTTPRequestCookieContainer" )]
         internal static extern bool SteamAPI_ISteamHTTP_SetHTTPRequestCookieContainer( IntPtr instancePtr, uint hRequest, uint hCookieContainer );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTTP_SetHTTPRequestUserAgentInfo" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTTP_SetHTTPRequestUserAgentInfo" )]
         internal static extern bool SteamAPI_ISteamHTTP_SetHTTPRequestUserAgentInfo( IntPtr instancePtr, uint hRequest, string pchUserAgentInfo );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTTP_SetHTTPRequestRequiresVerifiedCertificate" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTTP_SetHTTPRequestRequiresVerifiedCertificate" )]
         internal static extern bool SteamAPI_ISteamHTTP_SetHTTPRequestRequiresVerifiedCertificate( IntPtr instancePtr, uint hRequest, bool bRequireVerifiedCertificate );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTTP_SetHTTPRequestAbsoluteTimeoutMS" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTTP_SetHTTPRequestAbsoluteTimeoutMS" )]
         internal static extern bool SteamAPI_ISteamHTTP_SetHTTPRequestAbsoluteTimeoutMS( IntPtr instancePtr, uint hRequest, uint unMilliseconds );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTTP_GetHTTPRequestWasTimedOut" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTTP_GetHTTPRequestWasTimedOut" )]
         internal static extern bool SteamAPI_ISteamHTTP_GetHTTPRequestWasTimedOut( IntPtr instancePtr, uint hRequest, ref bool pbWasTimedOut );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUnifiedMessages_SendMethod" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUnifiedMessages_SendMethod" )]
         internal static extern ulong SteamAPI_ISteamUnifiedMessages_SendMethod( IntPtr instancePtr, string pchServiceMethod, IntPtr pRequestBuffer, uint unRequestBufferSize, ulong unContext );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUnifiedMessages_GetMethodResponseInfo" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUnifiedMessages_GetMethodResponseInfo" )]
         internal static extern bool SteamAPI_ISteamUnifiedMessages_GetMethodResponseInfo( IntPtr instancePtr, ulong hHandle, ref uint punResponseSize, ref uint peResult );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUnifiedMessages_GetMethodResponseData" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUnifiedMessages_GetMethodResponseData" )]
         internal static extern bool SteamAPI_ISteamUnifiedMessages_GetMethodResponseData( IntPtr instancePtr, ulong hHandle, IntPtr pResponseBuffer, uint unResponseBufferSize, bool bAutoRelease );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUnifiedMessages_ReleaseMethod" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUnifiedMessages_ReleaseMethod" )]
         internal static extern bool SteamAPI_ISteamUnifiedMessages_ReleaseMethod( IntPtr instancePtr, ulong hHandle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUnifiedMessages_SendNotification" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUnifiedMessages_SendNotification" )]
         internal static extern bool SteamAPI_ISteamUnifiedMessages_SendNotification( IntPtr instancePtr, string pchServiceNotification, IntPtr pNotificationBuffer, uint unNotificationBufferSize );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamController_Init" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamController_Init" )]
         internal static extern bool SteamAPI_ISteamController_Init( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamController_Shutdown" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamController_Shutdown" )]
         internal static extern bool SteamAPI_ISteamController_Shutdown( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamController_RunFrame" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamController_RunFrame" )]
         internal static extern void SteamAPI_ISteamController_RunFrame( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamController_GetConnectedControllers" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamController_GetConnectedControllers" )]
         internal static extern int SteamAPI_ISteamController_GetConnectedControllers( IntPtr instancePtr, ref ulong handlesOut );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamController_ShowBindingPanel" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamController_ShowBindingPanel" )]
         internal static extern bool SteamAPI_ISteamController_ShowBindingPanel( IntPtr instancePtr, ulong controllerHandle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamController_GetActionSetHandle" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamController_GetActionSetHandle" )]
         internal static extern ulong SteamAPI_ISteamController_GetActionSetHandle( IntPtr instancePtr, string pszActionSetName );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamController_ActivateActionSet" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamController_ActivateActionSet" )]
         internal static extern void SteamAPI_ISteamController_ActivateActionSet( IntPtr instancePtr, ulong controllerHandle, ulong actionSetHandle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamController_GetCurrentActionSet" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamController_GetCurrentActionSet" )]
         internal static extern ulong SteamAPI_ISteamController_GetCurrentActionSet( IntPtr instancePtr, ulong controllerHandle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamController_GetDigitalActionHandle" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamController_GetDigitalActionHandle" )]
         internal static extern ulong SteamAPI_ISteamController_GetDigitalActionHandle( IntPtr instancePtr, string pszActionName );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamController_GetDigitalActionData" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamController_GetDigitalActionData" )]
         internal static extern ControllerDigitalActionData_t SteamAPI_ISteamController_GetDigitalActionData( IntPtr instancePtr, ulong controllerHandle, ulong digitalActionHandle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamController_GetDigitalActionOrigins" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamController_GetDigitalActionOrigins" )]
         internal static extern int SteamAPI_ISteamController_GetDigitalActionOrigins( IntPtr instancePtr, ulong controllerHandle, ulong actionSetHandle, ulong digitalActionHandle, ref uint originsOut );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamController_GetAnalogActionHandle" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamController_GetAnalogActionHandle" )]
         internal static extern ulong SteamAPI_ISteamController_GetAnalogActionHandle( IntPtr instancePtr, string pszActionName );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamController_GetAnalogActionData" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamController_GetAnalogActionData" )]
         internal static extern ControllerAnalogActionData_t SteamAPI_ISteamController_GetAnalogActionData( IntPtr instancePtr, ulong controllerHandle, ulong analogActionHandle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamController_GetAnalogActionOrigins" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamController_GetAnalogActionOrigins" )]
         internal static extern int SteamAPI_ISteamController_GetAnalogActionOrigins( IntPtr instancePtr, ulong controllerHandle, ulong actionSetHandle, ulong analogActionHandle, ref uint originsOut );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamController_StopAnalogActionMomentum" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamController_StopAnalogActionMomentum" )]
         internal static extern void SteamAPI_ISteamController_StopAnalogActionMomentum( IntPtr instancePtr, ulong controllerHandle, ulong eAction );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamController_TriggerHapticPulse" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamController_TriggerHapticPulse" )]
         internal static extern void SteamAPI_ISteamController_TriggerHapticPulse( IntPtr instancePtr, ulong controllerHandle, uint eTargetPad, char usDurationMicroSec );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamController_TriggerRepeatedHapticPulse" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamController_TriggerRepeatedHapticPulse" )]
         internal static extern void SteamAPI_ISteamController_TriggerRepeatedHapticPulse( IntPtr instancePtr, ulong controllerHandle, uint eTargetPad, char usDurationMicroSec, char usOffMicroSec, char unRepeat, uint nFlags );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_CreateQueryUserUGCRequest" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_CreateQueryUserUGCRequest" )]
         internal static extern ulong SteamAPI_ISteamUGC_CreateQueryUserUGCRequest( IntPtr instancePtr, uint unAccountID, uint eListType, uint eMatchingUGCType, uint eSortOrder, uint nCreatorAppID, uint nConsumerAppID, uint unPage );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_CreateQueryAllUGCRequest" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_CreateQueryAllUGCRequest" )]
         internal static extern ulong SteamAPI_ISteamUGC_CreateQueryAllUGCRequest( IntPtr instancePtr, uint eQueryType, uint eMatchingeMatchingUGCTypeFileType, uint nCreatorAppID, uint nConsumerAppID, uint unPage );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_CreateQueryUGCDetailsRequest" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_CreateQueryUGCDetailsRequest" )]
         internal static extern ulong SteamAPI_ISteamUGC_CreateQueryUGCDetailsRequest( IntPtr instancePtr, ref ulong pvecPublishedFileID, uint unNumPublishedFileIDs );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_SendQueryUGCRequest" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_SendQueryUGCRequest" )]
         internal static extern ulong SteamAPI_ISteamUGC_SendQueryUGCRequest( IntPtr instancePtr, ulong handle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCResult" )]
         internal static extern bool SteamAPI_ISteamUGC_GetQueryUGCResult( IntPtr instancePtr, ulong handle, uint index, ref SteamUGCDetails_t pDetails );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCPreviewURL" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCPreviewURL" )]
         internal static extern bool SteamAPI_ISteamUGC_GetQueryUGCPreviewURL( IntPtr instancePtr, ulong handle, uint index, System.Text.StringBuilder pchURL, uint cchURLSize );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCMetadata" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCMetadata" )]
         internal static extern bool SteamAPI_ISteamUGC_GetQueryUGCMetadata( IntPtr instancePtr, ulong handle, uint index, System.Text.StringBuilder pchMetadata, uint cchMetadatasize );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCChildren" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCChildren" )]
         internal static extern bool SteamAPI_ISteamUGC_GetQueryUGCChildren( IntPtr instancePtr, ulong handle, uint index, ref ulong pvecPublishedFileID, uint cMaxEntries );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCStatistic" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCStatistic" )]
         internal static extern bool SteamAPI_ISteamUGC_GetQueryUGCStatistic( IntPtr instancePtr, ulong handle, uint index, uint eStatType, ref uint pStatValue );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCNumAdditionalPreviews" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCNumAdditionalPreviews" )]
         internal static extern uint SteamAPI_ISteamUGC_GetQueryUGCNumAdditionalPreviews( IntPtr instancePtr, ulong handle, uint index );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCAdditionalPreview" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCAdditionalPreview" )]
         internal static extern bool SteamAPI_ISteamUGC_GetQueryUGCAdditionalPreview( IntPtr instancePtr, ulong handle, uint index, uint previewIndex, System.Text.StringBuilder pchURLOrVideoID, uint cchURLSize, System.Text.StringBuilder pchOriginalFileName, uint cchOriginalFileNameSize, ref uint pPreviewType );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCNumKeyValueTags" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCNumKeyValueTags" )]
         internal static extern uint SteamAPI_ISteamUGC_GetQueryUGCNumKeyValueTags( IntPtr instancePtr, ulong handle, uint index );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCKeyValueTag" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCKeyValueTag" )]
         internal static extern bool SteamAPI_ISteamUGC_GetQueryUGCKeyValueTag( IntPtr instancePtr, ulong handle, uint index, uint keyValueTagIndex, System.Text.StringBuilder pchKey, uint cchKeySize, System.Text.StringBuilder pchValue, uint cchValueSize );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_ReleaseQueryUGCRequest" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_ReleaseQueryUGCRequest" )]
         internal static extern bool SteamAPI_ISteamUGC_ReleaseQueryUGCRequest( IntPtr instancePtr, ulong handle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_AddRequiredTag" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_AddRequiredTag" )]
         internal static extern bool SteamAPI_ISteamUGC_AddRequiredTag( IntPtr instancePtr, ulong handle, string pTagName );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_AddExcludedTag" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_AddExcludedTag" )]
         internal static extern bool SteamAPI_ISteamUGC_AddExcludedTag( IntPtr instancePtr, ulong handle, string pTagName );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_SetReturnKeyValueTags" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_SetReturnKeyValueTags" )]
         internal static extern bool SteamAPI_ISteamUGC_SetReturnKeyValueTags( IntPtr instancePtr, ulong handle, bool bReturnKeyValueTags );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_SetReturnLongDescription" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_SetReturnLongDescription" )]
         internal static extern bool SteamAPI_ISteamUGC_SetReturnLongDescription( IntPtr instancePtr, ulong handle, bool bReturnLongDescription );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_SetReturnMetadata" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_SetReturnMetadata" )]
         internal static extern bool SteamAPI_ISteamUGC_SetReturnMetadata( IntPtr instancePtr, ulong handle, bool bReturnMetadata );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_SetReturnChildren" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_SetReturnChildren" )]
         internal static extern bool SteamAPI_ISteamUGC_SetReturnChildren( IntPtr instancePtr, ulong handle, bool bReturnChildren );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_SetReturnAdditionalPreviews" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_SetReturnAdditionalPreviews" )]
         internal static extern bool SteamAPI_ISteamUGC_SetReturnAdditionalPreviews( IntPtr instancePtr, ulong handle, bool bReturnAdditionalPreviews );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_SetReturnTotalOnly" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_SetReturnTotalOnly" )]
         internal static extern bool SteamAPI_ISteamUGC_SetReturnTotalOnly( IntPtr instancePtr, ulong handle, bool bReturnTotalOnly );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_SetLanguage" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_SetLanguage" )]
         internal static extern bool SteamAPI_ISteamUGC_SetLanguage( IntPtr instancePtr, ulong handle, string pchLanguage );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_SetAllowCachedResponse" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_SetAllowCachedResponse" )]
         internal static extern bool SteamAPI_ISteamUGC_SetAllowCachedResponse( IntPtr instancePtr, ulong handle, uint unMaxAgeSeconds );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_SetCloudFileNameFilter" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_SetCloudFileNameFilter" )]
         internal static extern bool SteamAPI_ISteamUGC_SetCloudFileNameFilter( IntPtr instancePtr, ulong handle, string pMatchCloudFileName );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_SetMatchAnyTag" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_SetMatchAnyTag" )]
         internal static extern bool SteamAPI_ISteamUGC_SetMatchAnyTag( IntPtr instancePtr, ulong handle, bool bMatchAnyTag );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_SetSearchText" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_SetSearchText" )]
         internal static extern bool SteamAPI_ISteamUGC_SetSearchText( IntPtr instancePtr, ulong handle, string pSearchText );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_SetRankedByTrendDays" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_SetRankedByTrendDays" )]
         internal static extern bool SteamAPI_ISteamUGC_SetRankedByTrendDays( IntPtr instancePtr, ulong handle, uint unDays );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_AddRequiredKeyValueTag" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_AddRequiredKeyValueTag" )]
         internal static extern bool SteamAPI_ISteamUGC_AddRequiredKeyValueTag( IntPtr instancePtr, ulong handle, string pKey, string pValue );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_RequestUGCDetails" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_RequestUGCDetails" )]
         internal static extern ulong SteamAPI_ISteamUGC_RequestUGCDetails( IntPtr instancePtr, ulong nPublishedFileID, uint unMaxAgeSeconds );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_CreateItem" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_CreateItem" )]
         internal static extern ulong SteamAPI_ISteamUGC_CreateItem( IntPtr instancePtr, uint nConsumerAppId, uint eFileType );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_StartItemUpdate" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_StartItemUpdate" )]
         internal static extern ulong SteamAPI_ISteamUGC_StartItemUpdate( IntPtr instancePtr, uint nConsumerAppId, ulong nPublishedFileID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_SetItemTitle" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_SetItemTitle" )]
         internal static extern bool SteamAPI_ISteamUGC_SetItemTitle( IntPtr instancePtr, ulong handle, string pchTitle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_SetItemDescription" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_SetItemDescription" )]
         internal static extern bool SteamAPI_ISteamUGC_SetItemDescription( IntPtr instancePtr, ulong handle, string pchDescription );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_SetItemUpdateLanguage" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_SetItemUpdateLanguage" )]
         internal static extern bool SteamAPI_ISteamUGC_SetItemUpdateLanguage( IntPtr instancePtr, ulong handle, string pchLanguage );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_SetItemMetadata" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_SetItemMetadata" )]
         internal static extern bool SteamAPI_ISteamUGC_SetItemMetadata( IntPtr instancePtr, ulong handle, string pchMetaData );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_SetItemVisibility" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_SetItemVisibility" )]
         internal static extern bool SteamAPI_ISteamUGC_SetItemVisibility( IntPtr instancePtr, ulong handle, uint eVisibility );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_SetItemTags" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_SetItemTags" )]
         internal static extern bool SteamAPI_ISteamUGC_SetItemTags( IntPtr instancePtr, ulong updateHandle, ref SteamParamStringArray_t pTags );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_SetItemContent" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_SetItemContent" )]
         internal static extern bool SteamAPI_ISteamUGC_SetItemContent( IntPtr instancePtr, ulong handle, string pszContentFolder );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_SetItemPreview" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_SetItemPreview" )]
         internal static extern bool SteamAPI_ISteamUGC_SetItemPreview( IntPtr instancePtr, ulong handle, string pszPreviewFile );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_RemoveItemKeyValueTags" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_RemoveItemKeyValueTags" )]
         internal static extern bool SteamAPI_ISteamUGC_RemoveItemKeyValueTags( IntPtr instancePtr, ulong handle, string pchKey );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_AddItemKeyValueTag" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_AddItemKeyValueTag" )]
         internal static extern bool SteamAPI_ISteamUGC_AddItemKeyValueTag( IntPtr instancePtr, ulong handle, string pchKey, string pchValue );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_AddItemPreviewFile" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_AddItemPreviewFile" )]
         internal static extern bool SteamAPI_ISteamUGC_AddItemPreviewFile( IntPtr instancePtr, ulong handle, string pszPreviewFile, uint type );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_AddItemPreviewVideo" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_AddItemPreviewVideo" )]
         internal static extern bool SteamAPI_ISteamUGC_AddItemPreviewVideo( IntPtr instancePtr, ulong handle, string pszVideoID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_UpdateItemPreviewFile" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_UpdateItemPreviewFile" )]
         internal static extern bool SteamAPI_ISteamUGC_UpdateItemPreviewFile( IntPtr instancePtr, ulong handle, uint index, string pszPreviewFile );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_UpdateItemPreviewVideo" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_UpdateItemPreviewVideo" )]
         internal static extern bool SteamAPI_ISteamUGC_UpdateItemPreviewVideo( IntPtr instancePtr, ulong handle, uint index, string pszVideoID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_RemoveItemPreview" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_RemoveItemPreview" )]
         internal static extern bool SteamAPI_ISteamUGC_RemoveItemPreview( IntPtr instancePtr, ulong handle, uint index );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_SubmitItemUpdate" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_SubmitItemUpdate" )]
         internal static extern ulong SteamAPI_ISteamUGC_SubmitItemUpdate( IntPtr instancePtr, ulong handle, string pchChangeNote );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_GetItemUpdateProgress" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_GetItemUpdateProgress" )]
         internal static extern uint SteamAPI_ISteamUGC_GetItemUpdateProgress( IntPtr instancePtr, ulong handle, ref ulong punBytesProcessed, ref ulong punBytesTotal );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_SetUserItemVote" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_SetUserItemVote" )]
         internal static extern ulong SteamAPI_ISteamUGC_SetUserItemVote( IntPtr instancePtr, ulong nPublishedFileID, bool bVoteUp );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_GetUserItemVote" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_GetUserItemVote" )]
         internal static extern ulong SteamAPI_ISteamUGC_GetUserItemVote( IntPtr instancePtr, ulong nPublishedFileID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_AddItemToFavorites" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_AddItemToFavorites" )]
         internal static extern ulong SteamAPI_ISteamUGC_AddItemToFavorites( IntPtr instancePtr, uint nAppId, ulong nPublishedFileID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_RemoveItemFromFavorites" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_RemoveItemFromFavorites" )]
         internal static extern ulong SteamAPI_ISteamUGC_RemoveItemFromFavorites( IntPtr instancePtr, uint nAppId, ulong nPublishedFileID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_SubscribeItem" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_SubscribeItem" )]
         internal static extern ulong SteamAPI_ISteamUGC_SubscribeItem( IntPtr instancePtr, ulong nPublishedFileID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_UnsubscribeItem" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_UnsubscribeItem" )]
         internal static extern ulong SteamAPI_ISteamUGC_UnsubscribeItem( IntPtr instancePtr, ulong nPublishedFileID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_GetNumSubscribedItems" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_GetNumSubscribedItems" )]
         internal static extern uint SteamAPI_ISteamUGC_GetNumSubscribedItems( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_GetSubscribedItems" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_GetSubscribedItems" )]
         internal static extern uint SteamAPI_ISteamUGC_GetSubscribedItems( IntPtr instancePtr, ref ulong pvecPublishedFileID, uint cMaxEntries );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_GetItemState" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_GetItemState" )]
         internal static extern uint SteamAPI_ISteamUGC_GetItemState( IntPtr instancePtr, ulong nPublishedFileID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_GetItemInstallInfo" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_GetItemInstallInfo" )]
         internal static extern bool SteamAPI_ISteamUGC_GetItemInstallInfo( IntPtr instancePtr, ulong nPublishedFileID, ref ulong punSizeOnDisk, System.Text.StringBuilder pchFolder, uint cchFolderSize, ref uint punTimeStamp );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_GetItemDownloadInfo" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_GetItemDownloadInfo" )]
         internal static extern bool SteamAPI_ISteamUGC_GetItemDownloadInfo( IntPtr instancePtr, ulong nPublishedFileID, ref ulong punBytesDownloaded, ref ulong punBytesTotal );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_DownloadItem" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_DownloadItem" )]
         internal static extern bool SteamAPI_ISteamUGC_DownloadItem( IntPtr instancePtr, ulong nPublishedFileID, bool bHighPriority );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_BInitWorkshopForGameServer" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_BInitWorkshopForGameServer" )]
         internal static extern bool SteamAPI_ISteamUGC_BInitWorkshopForGameServer( IntPtr instancePtr, uint unWorkshopDepotID, string pszFolder );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamUGC_SuspendDownloads" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamUGC_SuspendDownloads" )]
         internal static extern void SteamAPI_ISteamUGC_SuspendDownloads( IntPtr instancePtr, bool bSuspend );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamAppList_GetNumInstalledApps" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamAppList_GetNumInstalledApps" )]
         internal static extern uint SteamAPI_ISteamAppList_GetNumInstalledApps( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamAppList_GetInstalledApps" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamAppList_GetInstalledApps" )]
         internal static extern uint SteamAPI_ISteamAppList_GetInstalledApps( IntPtr instancePtr, ref uint pvecAppID, uint unMaxAppIDs );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamAppList_GetAppName" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamAppList_GetAppName" )]
         internal static extern int SteamAPI_ISteamAppList_GetAppName( IntPtr instancePtr, uint nAppID, System.Text.StringBuilder pchName, int cchNameMax );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamAppList_GetAppInstallDir" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamAppList_GetAppInstallDir" )]
         internal static extern int SteamAPI_ISteamAppList_GetAppInstallDir( IntPtr instancePtr, uint nAppID, string pchDirectory, int cchNameMax );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamAppList_GetAppBuildId" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamAppList_GetAppBuildId" )]
         internal static extern int SteamAPI_ISteamAppList_GetAppBuildId( IntPtr instancePtr, uint nAppID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_DestructISteamHTMLSurface" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_DestructISteamHTMLSurface" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_DestructISteamHTMLSurface( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_Init" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_Init" )]
         internal static extern bool SteamAPI_ISteamHTMLSurface_Init( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_Shutdown" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_Shutdown" )]
         internal static extern bool SteamAPI_ISteamHTMLSurface_Shutdown( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_CreateBrowser" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_CreateBrowser" )]
         internal static extern ulong SteamAPI_ISteamHTMLSurface_CreateBrowser( IntPtr instancePtr, string pchUserAgent, string pchUserCSS );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_RemoveBrowser" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_RemoveBrowser" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_RemoveBrowser( IntPtr instancePtr, uint unBrowserHandle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_LoadURL" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_LoadURL" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_LoadURL( IntPtr instancePtr, uint unBrowserHandle, string pchURL, string pchPostData );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_SetSize" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_SetSize" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_SetSize( IntPtr instancePtr, uint unBrowserHandle, uint unWidth, uint unHeight );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_StopLoad" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_StopLoad" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_StopLoad( IntPtr instancePtr, uint unBrowserHandle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_Reload" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_Reload" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_Reload( IntPtr instancePtr, uint unBrowserHandle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_GoBack" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_GoBack" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_GoBack( IntPtr instancePtr, uint unBrowserHandle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_GoForward" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_GoForward" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_GoForward( IntPtr instancePtr, uint unBrowserHandle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_AddHeader" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_AddHeader" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_AddHeader( IntPtr instancePtr, uint unBrowserHandle, string pchKey, string pchValue );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_ExecuteJavascript" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_ExecuteJavascript" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_ExecuteJavascript( IntPtr instancePtr, uint unBrowserHandle, string pchScript );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_MouseUp" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_MouseUp" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_MouseUp( IntPtr instancePtr, uint unBrowserHandle, uint eMouseButton );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_MouseDown" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_MouseDown" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_MouseDown( IntPtr instancePtr, uint unBrowserHandle, uint eMouseButton );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_MouseDoubleClick" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_MouseDoubleClick" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_MouseDoubleClick( IntPtr instancePtr, uint unBrowserHandle, uint eMouseButton );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_MouseMove" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_MouseMove" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_MouseMove( IntPtr instancePtr, uint unBrowserHandle, int x, int y );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_MouseWheel" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_MouseWheel" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_MouseWheel( IntPtr instancePtr, uint unBrowserHandle, int nDelta );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_KeyDown" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_KeyDown" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_KeyDown( IntPtr instancePtr, uint unBrowserHandle, uint nNativeKeyCode, uint eHTMLKeyModifiers );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_KeyUp" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_KeyUp" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_KeyUp( IntPtr instancePtr, uint unBrowserHandle, uint nNativeKeyCode, uint eHTMLKeyModifiers );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_KeyChar" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_KeyChar" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_KeyChar( IntPtr instancePtr, uint unBrowserHandle, uint cUnicodeChar, uint eHTMLKeyModifiers );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_SetHorizontalScroll" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_SetHorizontalScroll" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_SetHorizontalScroll( IntPtr instancePtr, uint unBrowserHandle, uint nAbsolutePixelScroll );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_SetVerticalScroll" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_SetVerticalScroll" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_SetVerticalScroll( IntPtr instancePtr, uint unBrowserHandle, uint nAbsolutePixelScroll );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_SetKeyFocus" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_SetKeyFocus" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_SetKeyFocus( IntPtr instancePtr, uint unBrowserHandle, bool bHasKeyFocus );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_ViewSource" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_ViewSource" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_ViewSource( IntPtr instancePtr, uint unBrowserHandle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_CopyToClipboard" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_CopyToClipboard" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_CopyToClipboard( IntPtr instancePtr, uint unBrowserHandle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_PasteFromClipboard" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_PasteFromClipboard" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_PasteFromClipboard( IntPtr instancePtr, uint unBrowserHandle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_Find" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_Find" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_Find( IntPtr instancePtr, uint unBrowserHandle, string pchSearchStr, bool bCurrentlyInFind, bool bReverse );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_StopFind" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_StopFind" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_StopFind( IntPtr instancePtr, uint unBrowserHandle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_GetLinkAtPosition" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_GetLinkAtPosition" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_GetLinkAtPosition( IntPtr instancePtr, uint unBrowserHandle, int x, int y );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_SetCookie" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_SetCookie" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_SetCookie( IntPtr instancePtr, string pchHostname, string pchKey, string pchValue, string pchPath, ulong nExpires, bool bSecure, bool bHTTPOnly );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_SetPageScaleFactor" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_SetPageScaleFactor" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_SetPageScaleFactor( IntPtr instancePtr, uint unBrowserHandle, float flZoom, int nPointX, int nPointY );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_SetBackgroundMode" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_SetBackgroundMode" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_SetBackgroundMode( IntPtr instancePtr, uint unBrowserHandle, bool bBackgroundMode );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_AllowStartRequest" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_AllowStartRequest" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_AllowStartRequest( IntPtr instancePtr, uint unBrowserHandle, bool bAllowed );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamHTMLSurface_JSDialogResponse" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamHTMLSurface_JSDialogResponse" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_JSDialogResponse( IntPtr instancePtr, uint unBrowserHandle, bool bResult );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamInventory_GetResultStatus" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamInventory_GetResultStatus" )]
         internal static extern uint SteamAPI_ISteamInventory_GetResultStatus( IntPtr instancePtr, int resultHandle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamInventory_GetResultItems" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamInventory_GetResultItems" )]
         internal static extern bool SteamAPI_ISteamInventory_GetResultItems( IntPtr instancePtr, int resultHandle, [In, Out] SteamItemDetails_t[] pOutItemsArray, ref uint punOutItemsArraySize );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamInventory_GetResultTimestamp" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamInventory_GetResultTimestamp" )]
         internal static extern uint SteamAPI_ISteamInventory_GetResultTimestamp( IntPtr instancePtr, int resultHandle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamInventory_CheckResultSteamID" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamInventory_CheckResultSteamID" )]
         internal static extern bool SteamAPI_ISteamInventory_CheckResultSteamID( IntPtr instancePtr, int resultHandle, ulong steamIDExpected );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamInventory_DestroyResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamInventory_DestroyResult" )]
         internal static extern void SteamAPI_ISteamInventory_DestroyResult( IntPtr instancePtr, int resultHandle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamInventory_GetAllItems" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamInventory_GetAllItems" )]
         internal static extern bool SteamAPI_ISteamInventory_GetAllItems( IntPtr instancePtr, ref int pResultHandle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamInventory_GetItemsByID" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamInventory_GetItemsByID" )]
         internal static extern bool SteamAPI_ISteamInventory_GetItemsByID( IntPtr instancePtr, ref int pResultHandle, [In, Out] ulong[] pInstanceIDs, uint unCountInstanceIDs );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamInventory_SerializeResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamInventory_SerializeResult" )]
         internal static extern bool SteamAPI_ISteamInventory_SerializeResult( IntPtr instancePtr, int resultHandle, IntPtr pOutBuffer, ref uint punOutBufferSize );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamInventory_DeserializeResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamInventory_DeserializeResult" )]
         internal static extern bool SteamAPI_ISteamInventory_DeserializeResult( IntPtr instancePtr, ref int pOutResultHandle, IntPtr pBuffer, uint unBufferSize, bool bRESERVED_MUST_BE_FALSE );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamInventory_GenerateItems" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamInventory_GenerateItems" )]
         internal static extern bool SteamAPI_ISteamInventory_GenerateItems( IntPtr instancePtr, ref int pResultHandle, [In, Out] int[] pArrayItemDefs, [In, Out] uint[] punArrayQuantity, uint unArrayLength );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamInventory_GrantPromoItems" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamInventory_GrantPromoItems" )]
         internal static extern bool SteamAPI_ISteamInventory_GrantPromoItems( IntPtr instancePtr, ref int pResultHandle );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamInventory_AddPromoItem" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamInventory_AddPromoItem" )]
         internal static extern bool SteamAPI_ISteamInventory_AddPromoItem( IntPtr instancePtr, ref int pResultHandle, int itemDef );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamInventory_AddPromoItems" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamInventory_AddPromoItems" )]
         internal static extern bool SteamAPI_ISteamInventory_AddPromoItems( IntPtr instancePtr, ref int pResultHandle, [In, Out] int[] pArrayItemDefs, uint unArrayLength );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamInventory_ConsumeItem" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamInventory_ConsumeItem" )]
         internal static extern bool SteamAPI_ISteamInventory_ConsumeItem( IntPtr instancePtr, ref int pResultHandle, ulong itemConsume, uint unQuantity );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamInventory_ExchangeItems" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamInventory_ExchangeItems" )]
         internal static extern bool SteamAPI_ISteamInventory_ExchangeItems( IntPtr instancePtr, ref int pResultHandle, [In, Out] int[] pArrayGenerate, [In, Out] uint[] punArrayGenerateQuantity, uint unArrayGenerateLength, [In, Out] ulong[] pArrayDestroy, [In, Out] uint[] punArrayDestroyQuantity, uint unArrayDestroyLength );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamInventory_TransferItemQuantity" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamInventory_TransferItemQuantity" )]
         internal static extern bool SteamAPI_ISteamInventory_TransferItemQuantity( IntPtr instancePtr, ref int pResultHandle, ulong itemIdSource, uint unQuantity, ulong itemIdDest );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamInventory_SendItemDropHeartbeat" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamInventory_SendItemDropHeartbeat" )]
         internal static extern void SteamAPI_ISteamInventory_SendItemDropHeartbeat( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamInventory_TriggerItemDrop" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamInventory_TriggerItemDrop" )]
         internal static extern bool SteamAPI_ISteamInventory_TriggerItemDrop( IntPtr instancePtr, ref int pResultHandle, int dropListDefinition );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamInventory_TradeItems" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamInventory_TradeItems" )]
         internal static extern bool SteamAPI_ISteamInventory_TradeItems( IntPtr instancePtr, ref int pResultHandle, ulong steamIDTradePartner, [In, Out] ulong[] pArrayGive, [In, Out] uint[] pArrayGiveQuantity, uint nArrayGiveLength, [In, Out] ulong[] pArrayGet, [In, Out] uint[] pArrayGetQuantity, uint nArrayGetLength );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamInventory_LoadItemDefinitions" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamInventory_LoadItemDefinitions" )]
         internal static extern bool SteamAPI_ISteamInventory_LoadItemDefinitions( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamInventory_GetItemDefinitionIDs" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamInventory_GetItemDefinitionIDs" )]
         internal static extern bool SteamAPI_ISteamInventory_GetItemDefinitionIDs( IntPtr instancePtr, [In, Out] int[] pItemDefIDs, ref uint punItemDefIDsArraySize );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamInventory_GetItemDefinitionProperty" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamInventory_GetItemDefinitionProperty" )]
         internal static extern bool SteamAPI_ISteamInventory_GetItemDefinitionProperty( IntPtr instancePtr, int iDefinition, string pchPropertyName, System.Text.StringBuilder pchValueBuffer, ref uint punValueBufferSize );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamVideo_GetVideoURL" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamVideo_GetVideoURL" )]
         internal static extern void SteamAPI_ISteamVideo_GetVideoURL( IntPtr instancePtr, uint unVideoAppID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamVideo_IsBroadcasting" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamVideo_IsBroadcasting" )]
         internal static extern bool SteamAPI_ISteamVideo_IsBroadcasting( IntPtr instancePtr, ref int pnNumViewers );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_InitGameServer" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_InitGameServer" )]
         internal static extern bool SteamAPI_ISteamGameServer_InitGameServer( IntPtr instancePtr, uint unIP, char usGamePort, char usQueryPort, uint unFlags, uint nGameAppId, string pchVersionString );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_SetProduct" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_SetProduct" )]
         internal static extern void SteamAPI_ISteamGameServer_SetProduct( IntPtr instancePtr, string pszProduct );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_SetGameDescription" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_SetGameDescription" )]
         internal static extern void SteamAPI_ISteamGameServer_SetGameDescription( IntPtr instancePtr, string pszGameDescription );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_SetModDir" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_SetModDir" )]
         internal static extern void SteamAPI_ISteamGameServer_SetModDir( IntPtr instancePtr, string pszModDir );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_SetDedicatedServer" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_SetDedicatedServer" )]
         internal static extern void SteamAPI_ISteamGameServer_SetDedicatedServer( IntPtr instancePtr, bool bDedicated );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_LogOn" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_LogOn" )]
         internal static extern void SteamAPI_ISteamGameServer_LogOn( IntPtr instancePtr, string pszToken );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_LogOnAnonymous" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_LogOnAnonymous" )]
         internal static extern void SteamAPI_ISteamGameServer_LogOnAnonymous( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_LogOff" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_LogOff" )]
         internal static extern void SteamAPI_ISteamGameServer_LogOff( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_BLoggedOn" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_BLoggedOn" )]
         internal static extern bool SteamAPI_ISteamGameServer_BLoggedOn( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_BSecure" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_BSecure" )]
         internal static extern bool SteamAPI_ISteamGameServer_BSecure( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_GetSteamID" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_GetSteamID" )]
         internal static extern ulong SteamAPI_ISteamGameServer_GetSteamID( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_WasRestartRequested" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_WasRestartRequested" )]
         internal static extern bool SteamAPI_ISteamGameServer_WasRestartRequested( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_SetMaxPlayerCount" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_SetMaxPlayerCount" )]
         internal static extern void SteamAPI_ISteamGameServer_SetMaxPlayerCount( IntPtr instancePtr, int cPlayersMax );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_SetBotPlayerCount" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_SetBotPlayerCount" )]
         internal static extern void SteamAPI_ISteamGameServer_SetBotPlayerCount( IntPtr instancePtr, int cBotplayers );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_SetServerName" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_SetServerName" )]
         internal static extern void SteamAPI_ISteamGameServer_SetServerName( IntPtr instancePtr, string pszServerName );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_SetMapName" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_SetMapName" )]
         internal static extern void SteamAPI_ISteamGameServer_SetMapName( IntPtr instancePtr, string pszMapName );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_SetPasswordProtected" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_SetPasswordProtected" )]
         internal static extern void SteamAPI_ISteamGameServer_SetPasswordProtected( IntPtr instancePtr, bool bPasswordProtected );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_SetSpectatorPort" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_SetSpectatorPort" )]
         internal static extern void SteamAPI_ISteamGameServer_SetSpectatorPort( IntPtr instancePtr, char unSpectatorPort );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_SetSpectatorServerName" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_SetSpectatorServerName" )]
         internal static extern void SteamAPI_ISteamGameServer_SetSpectatorServerName( IntPtr instancePtr, string pszSpectatorServerName );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_ClearAllKeyValues" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_ClearAllKeyValues" )]
         internal static extern void SteamAPI_ISteamGameServer_ClearAllKeyValues( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_SetKeyValue" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_SetKeyValue" )]
         internal static extern void SteamAPI_ISteamGameServer_SetKeyValue( IntPtr instancePtr, string pKey, string pValue );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_SetGameTags" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_SetGameTags" )]
         internal static extern void SteamAPI_ISteamGameServer_SetGameTags( IntPtr instancePtr, string pchGameTags );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_SetGameData" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_SetGameData" )]
         internal static extern void SteamAPI_ISteamGameServer_SetGameData( IntPtr instancePtr, string pchGameData );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_SetRegion" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_SetRegion" )]
         internal static extern void SteamAPI_ISteamGameServer_SetRegion( IntPtr instancePtr, string pszRegion );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_SendUserConnectAndAuthenticate" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_SendUserConnectAndAuthenticate" )]
         internal static extern bool SteamAPI_ISteamGameServer_SendUserConnectAndAuthenticate( IntPtr instancePtr, uint unIPClient, IntPtr pvAuthBlob, uint cubAuthBlobSize, ref CSteamID pSteamIDUser );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_CreateUnauthenticatedUserConnection" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_CreateUnauthenticatedUserConnection" )]
         internal static extern ulong SteamAPI_ISteamGameServer_CreateUnauthenticatedUserConnection( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_SendUserDisconnect" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_SendUserDisconnect" )]
         internal static extern void SteamAPI_ISteamGameServer_SendUserDisconnect( IntPtr instancePtr, ulong steamIDUser );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_BUpdateUserData" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_BUpdateUserData" )]
         internal static extern bool SteamAPI_ISteamGameServer_BUpdateUserData( IntPtr instancePtr, ulong steamIDUser, string pchPlayerName, uint uScore );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_GetAuthSessionTicket" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_GetAuthSessionTicket" )]
         internal static extern uint SteamAPI_ISteamGameServer_GetAuthSessionTicket( IntPtr instancePtr, IntPtr pTicket, int cbMaxTicket, ref uint pcbTicket );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_BeginAuthSession" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_BeginAuthSession" )]
         internal static extern uint SteamAPI_ISteamGameServer_BeginAuthSession( IntPtr instancePtr, IntPtr pAuthTicket, int cbAuthTicket, ulong steamID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_EndAuthSession" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_EndAuthSession" )]
         internal static extern void SteamAPI_ISteamGameServer_EndAuthSession( IntPtr instancePtr, ulong steamID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_CancelAuthTicket" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_CancelAuthTicket" )]
         internal static extern void SteamAPI_ISteamGameServer_CancelAuthTicket( IntPtr instancePtr, uint hAuthTicket );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_UserHasLicenseForApp" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_UserHasLicenseForApp" )]
         internal static extern uint SteamAPI_ISteamGameServer_UserHasLicenseForApp( IntPtr instancePtr, ulong steamID, uint appID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_RequestUserGroupStatus" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_RequestUserGroupStatus" )]
         internal static extern bool SteamAPI_ISteamGameServer_RequestUserGroupStatus( IntPtr instancePtr, ulong steamIDUser, ulong steamIDGroup );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_GetGameplayStats" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_GetGameplayStats" )]
         internal static extern void SteamAPI_ISteamGameServer_GetGameplayStats( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_GetServerReputation" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_GetServerReputation" )]
         internal static extern ulong SteamAPI_ISteamGameServer_GetServerReputation( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_GetPublicIP" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_GetPublicIP" )]
         internal static extern uint SteamAPI_ISteamGameServer_GetPublicIP( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_HandleIncomingPacket" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_HandleIncomingPacket" )]
         internal static extern bool SteamAPI_ISteamGameServer_HandleIncomingPacket( IntPtr instancePtr, IntPtr pData, int cbData, uint srcIP, char srcPort );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_GetNextOutgoingPacket" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_GetNextOutgoingPacket" )]
         internal static extern int SteamAPI_ISteamGameServer_GetNextOutgoingPacket( IntPtr instancePtr, IntPtr pOut, int cbMaxOut, ref uint pNetAdr, ref char pPort );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_EnableHeartbeats" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_EnableHeartbeats" )]
         internal static extern void SteamAPI_ISteamGameServer_EnableHeartbeats( IntPtr instancePtr, bool bActive );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_SetHeartbeatInterval" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_SetHeartbeatInterval" )]
         internal static extern void SteamAPI_ISteamGameServer_SetHeartbeatInterval( IntPtr instancePtr, int iHeartbeatInterval );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_ForceHeartbeat" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_ForceHeartbeat" )]
         internal static extern void SteamAPI_ISteamGameServer_ForceHeartbeat( IntPtr instancePtr );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_AssociateWithClan" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_AssociateWithClan" )]
         internal static extern ulong SteamAPI_ISteamGameServer_AssociateWithClan( IntPtr instancePtr, ulong steamIDClan );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServer_ComputeNewPlayerCompatibility" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServer_ComputeNewPlayerCompatibility" )]
         internal static extern ulong SteamAPI_ISteamGameServer_ComputeNewPlayerCompatibility( IntPtr instancePtr, ulong steamIDNewPlayer );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServerStats_RequestUserStats" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServerStats_RequestUserStats" )]
         internal static extern ulong SteamAPI_ISteamGameServerStats_RequestUserStats( IntPtr instancePtr, ulong steamIDUser );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServerStats_GetUserStat" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServerStats_GetUserStat" )]
         internal static extern bool SteamAPI_ISteamGameServerStats_GetUserStat( IntPtr instancePtr, ulong steamIDUser, string pchName, ref int pData );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServerStats_GetUserStat0" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServerStats_GetUserStat0" )]
         internal static extern bool SteamAPI_ISteamGameServerStats_GetUserStat0( IntPtr instancePtr, ulong steamIDUser, string pchName, ref float pData );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServerStats_GetUserAchievement" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServerStats_GetUserAchievement" )]
         internal static extern bool SteamAPI_ISteamGameServerStats_GetUserAchievement( IntPtr instancePtr, ulong steamIDUser, string pchName, ref bool pbAchieved );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServerStats_SetUserStat" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServerStats_SetUserStat" )]
         internal static extern bool SteamAPI_ISteamGameServerStats_SetUserStat( IntPtr instancePtr, ulong steamIDUser, string pchName, int nData );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServerStats_SetUserStat0" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServerStats_SetUserStat0" )]
         internal static extern bool SteamAPI_ISteamGameServerStats_SetUserStat0( IntPtr instancePtr, ulong steamIDUser, string pchName, float fData );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServerStats_UpdateUserAvgRateStat" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServerStats_UpdateUserAvgRateStat" )]
         internal static extern bool SteamAPI_ISteamGameServerStats_UpdateUserAvgRateStat( IntPtr instancePtr, ulong steamIDUser, string pchName, float flCountThisSession, double dSessionLength );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServerStats_SetUserAchievement" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServerStats_SetUserAchievement" )]
         internal static extern bool SteamAPI_ISteamGameServerStats_SetUserAchievement( IntPtr instancePtr, ulong steamIDUser, string pchName );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServerStats_ClearUserAchievement" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServerStats_ClearUserAchievement" )]
         internal static extern bool SteamAPI_ISteamGameServerStats_ClearUserAchievement( IntPtr instancePtr, ulong steamIDUser, string pchName );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_ISteamGameServerStats_StoreUserStats" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_ISteamGameServerStats_StoreUserStats" )]
         internal static extern ulong SteamAPI_ISteamGameServerStats_StoreUserStats( IntPtr instancePtr, ulong steamIDUser );
         public delegate void SteamAPI_UserStatsReceived_t_Callback( UserStatsReceived_t pUserStatsReceived_t );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CUserStatsReceived_t_SetCallback" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CUserStatsReceived_t_SetCallback" )]
         public static extern ulong CUserStatsReceived_t_SetCallback( SteamAPI_UserStatsReceived_t_Callback func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CUserStatsReceived_t_RemoveCallback" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CUserStatsReceived_t_RemoveCallback" )]
         public static extern ulong CUserStatsReceived_t_RemoveCallback( ulong handle );
         public delegate void SteamAPI_RemoteStorageFileReadAsyncComplete_t_CallResult( RemoteStorageFileReadAsyncComplete_t pRemoteStorageFileReadAsyncComplete_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageFileReadAsyncComplete_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageFileReadAsyncComplete_t_SetCallResult" )]
         public static extern ulong CRemoteStorageFileReadAsyncComplete_t_SetCallResult( ulong hAPICall, SteamAPI_RemoteStorageFileReadAsyncComplete_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageFileReadAsyncComplete_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageFileReadAsyncComplete_t_RemoveCallResult" )]
         public static extern ulong CRemoteStorageFileReadAsyncComplete_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_RemoteStorageGetPublishedItemVoteDetailsResult_t_CallResult( RemoteStorageGetPublishedItemVoteDetailsResult_t pRemoteStorageGetPublishedItemVoteDetailsResult_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageGetPublishedItemVoteDetailsResult_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageGetPublishedItemVoteDetailsResult_t_SetCallResult" )]
         public static extern ulong CRemoteStorageGetPublishedItemVoteDetailsResult_t_SetCallResult( ulong hAPICall, SteamAPI_RemoteStorageGetPublishedItemVoteDetailsResult_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageGetPublishedItemVoteDetailsResult_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageGetPublishedItemVoteDetailsResult_t_RemoveCallResult" )]
         public static extern ulong CRemoteStorageGetPublishedItemVoteDetailsResult_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_GSStatsStored_t_CallResult( GSStatsStored_t pGSStatsStored_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CGSStatsStored_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CGSStatsStored_t_SetCallResult" )]
         public static extern ulong CGSStatsStored_t_SetCallResult( ulong hAPICall, SteamAPI_GSStatsStored_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CGSStatsStored_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CGSStatsStored_t_RemoveCallResult" )]
         public static extern ulong CGSStatsStored_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_HTML_BrowserReady_t_CallResult( HTML_BrowserReady_t pHTML_BrowserReady_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CHTML_BrowserReady_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CHTML_BrowserReady_t_SetCallResult" )]
         public static extern ulong CHTML_BrowserReady_t_SetCallResult( ulong hAPICall, SteamAPI_HTML_BrowserReady_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CHTML_BrowserReady_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CHTML_BrowserReady_t_RemoveCallResult" )]
         public static extern ulong CHTML_BrowserReady_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_FriendsGetFollowerCount_t_CallResult( FriendsGetFollowerCount_t pFriendsGetFollowerCount_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CFriendsGetFollowerCount_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CFriendsGetFollowerCount_t_SetCallResult" )]
         public static extern ulong CFriendsGetFollowerCount_t_SetCallResult( ulong hAPICall, SteamAPI_FriendsGetFollowerCount_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CFriendsGetFollowerCount_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CFriendsGetFollowerCount_t_RemoveCallResult" )]
         public static extern ulong CFriendsGetFollowerCount_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_FriendsIsFollowing_t_CallResult( FriendsIsFollowing_t pFriendsIsFollowing_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CFriendsIsFollowing_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CFriendsIsFollowing_t_SetCallResult" )]
         public static extern ulong CFriendsIsFollowing_t_SetCallResult( ulong hAPICall, SteamAPI_FriendsIsFollowing_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CFriendsIsFollowing_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CFriendsIsFollowing_t_RemoveCallResult" )]
         public static extern ulong CFriendsIsFollowing_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_LobbyMatchList_t_CallResult( LobbyMatchList_t pLobbyMatchList_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CLobbyMatchList_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CLobbyMatchList_t_SetCallResult" )]
         public static extern ulong CLobbyMatchList_t_SetCallResult( ulong hAPICall, SteamAPI_LobbyMatchList_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CLobbyMatchList_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CLobbyMatchList_t_RemoveCallResult" )]
         public static extern ulong CLobbyMatchList_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_RemoteStorageUpdatePublishedFileResult_t_CallResult( RemoteStorageUpdatePublishedFileResult_t pRemoteStorageUpdatePublishedFileResult_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageUpdatePublishedFileResult_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageUpdatePublishedFileResult_t_SetCallResult" )]
         public static extern ulong CRemoteStorageUpdatePublishedFileResult_t_SetCallResult( ulong hAPICall, SteamAPI_RemoteStorageUpdatePublishedFileResult_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageUpdatePublishedFileResult_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageUpdatePublishedFileResult_t_RemoveCallResult" )]
         public static extern ulong CRemoteStorageUpdatePublishedFileResult_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_StoreAuthURLResponse_t_CallResult( StoreAuthURLResponse_t pStoreAuthURLResponse_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CStoreAuthURLResponse_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CStoreAuthURLResponse_t_SetCallResult" )]
         public static extern ulong CStoreAuthURLResponse_t_SetCallResult( ulong hAPICall, SteamAPI_StoreAuthURLResponse_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CStoreAuthURLResponse_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CStoreAuthURLResponse_t_RemoveCallResult" )]
         public static extern ulong CStoreAuthURLResponse_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_LobbyCreated_t_CallResult( LobbyCreated_t pLobbyCreated_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CLobbyCreated_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CLobbyCreated_t_SetCallResult" )]
         public static extern ulong CLobbyCreated_t_SetCallResult( ulong hAPICall, SteamAPI_LobbyCreated_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CLobbyCreated_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CLobbyCreated_t_RemoveCallResult" )]
         public static extern ulong CLobbyCreated_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_RemoteStorageFileWriteAsyncComplete_t_CallResult( RemoteStorageFileWriteAsyncComplete_t pRemoteStorageFileWriteAsyncComplete_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageFileWriteAsyncComplete_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageFileWriteAsyncComplete_t_SetCallResult" )]
         public static extern ulong CRemoteStorageFileWriteAsyncComplete_t_SetCallResult( ulong hAPICall, SteamAPI_RemoteStorageFileWriteAsyncComplete_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageFileWriteAsyncComplete_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageFileWriteAsyncComplete_t_RemoveCallResult" )]
         public static extern ulong CRemoteStorageFileWriteAsyncComplete_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_RemoteStorageDeletePublishedFileResult_t_CallResult( RemoteStorageDeletePublishedFileResult_t pRemoteStorageDeletePublishedFileResult_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageDeletePublishedFileResult_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageDeletePublishedFileResult_t_SetCallResult" )]
         public static extern ulong CRemoteStorageDeletePublishedFileResult_t_SetCallResult( ulong hAPICall, SteamAPI_RemoteStorageDeletePublishedFileResult_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageDeletePublishedFileResult_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageDeletePublishedFileResult_t_RemoveCallResult" )]
         public static extern ulong CRemoteStorageDeletePublishedFileResult_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_RemoteStorageGetPublishedFileDetailsResult_t_CallResult( RemoteStorageGetPublishedFileDetailsResult_t pRemoteStorageGetPublishedFileDetailsResult_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageGetPublishedFileDetailsResult_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageGetPublishedFileDetailsResult_t_SetCallResult" )]
         public static extern ulong CRemoteStorageGetPublishedFileDetailsResult_t_SetCallResult( ulong hAPICall, SteamAPI_RemoteStorageGetPublishedFileDetailsResult_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageGetPublishedFileDetailsResult_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageGetPublishedFileDetailsResult_t_RemoveCallResult" )]
         public static extern ulong CRemoteStorageGetPublishedFileDetailsResult_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_RemoteStorageDownloadUGCResult_t_CallResult( RemoteStorageDownloadUGCResult_t pRemoteStorageDownloadUGCResult_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageDownloadUGCResult_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageDownloadUGCResult_t_SetCallResult" )]
         public static extern ulong CRemoteStorageDownloadUGCResult_t_SetCallResult( ulong hAPICall, SteamAPI_RemoteStorageDownloadUGCResult_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageDownloadUGCResult_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageDownloadUGCResult_t_RemoveCallResult" )]
         public static extern ulong CRemoteStorageDownloadUGCResult_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_SteamUGCQueryCompleted_t_CallResult( SteamUGCQueryCompleted_t pSteamUGCQueryCompleted_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CSteamUGCQueryCompleted_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CSteamUGCQueryCompleted_t_SetCallResult" )]
         public static extern ulong CSteamUGCQueryCompleted_t_SetCallResult( ulong hAPICall, SteamAPI_SteamUGCQueryCompleted_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CSteamUGCQueryCompleted_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CSteamUGCQueryCompleted_t_RemoveCallResult" )]
         public static extern ulong CSteamUGCQueryCompleted_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_RemoteStorageFileShareResult_t_CallResult( RemoteStorageFileShareResult_t pRemoteStorageFileShareResult_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageFileShareResult_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageFileShareResult_t_SetCallResult" )]
         public static extern ulong CRemoteStorageFileShareResult_t_SetCallResult( ulong hAPICall, SteamAPI_RemoteStorageFileShareResult_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageFileShareResult_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageFileShareResult_t_RemoveCallResult" )]
         public static extern ulong CRemoteStorageFileShareResult_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_LobbyEnter_t_CallResult( LobbyEnter_t pLobbyEnter_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CLobbyEnter_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CLobbyEnter_t_SetCallResult" )]
         public static extern ulong CLobbyEnter_t_SetCallResult( ulong hAPICall, SteamAPI_LobbyEnter_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CLobbyEnter_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CLobbyEnter_t_RemoveCallResult" )]
         public static extern ulong CLobbyEnter_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_SubmitItemUpdateResult_t_CallResult( SubmitItemUpdateResult_t pSubmitItemUpdateResult_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CSubmitItemUpdateResult_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CSubmitItemUpdateResult_t_SetCallResult" )]
         public static extern ulong CSubmitItemUpdateResult_t_SetCallResult( ulong hAPICall, SteamAPI_SubmitItemUpdateResult_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CSubmitItemUpdateResult_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CSubmitItemUpdateResult_t_RemoveCallResult" )]
         public static extern ulong CSubmitItemUpdateResult_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_NumberOfCurrentPlayers_t_CallResult( NumberOfCurrentPlayers_t pNumberOfCurrentPlayers_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CNumberOfCurrentPlayers_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CNumberOfCurrentPlayers_t_SetCallResult" )]
         public static extern ulong CNumberOfCurrentPlayers_t_SetCallResult( ulong hAPICall, SteamAPI_NumberOfCurrentPlayers_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CNumberOfCurrentPlayers_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CNumberOfCurrentPlayers_t_RemoveCallResult" )]
         public static extern ulong CNumberOfCurrentPlayers_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_GSStatsReceived_t_CallResult( GSStatsReceived_t pGSStatsReceived_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CGSStatsReceived_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CGSStatsReceived_t_SetCallResult" )]
         public static extern ulong CGSStatsReceived_t_SetCallResult( ulong hAPICall, SteamAPI_GSStatsReceived_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CGSStatsReceived_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CGSStatsReceived_t_RemoveCallResult" )]
         public static extern ulong CGSStatsReceived_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_LeaderboardScoresDownloaded_t_CallResult( LeaderboardScoresDownloaded_t pLeaderboardScoresDownloaded_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CLeaderboardScoresDownloaded_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CLeaderboardScoresDownloaded_t_SetCallResult" )]
         public static extern ulong CLeaderboardScoresDownloaded_t_SetCallResult( ulong hAPICall, SteamAPI_LeaderboardScoresDownloaded_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CLeaderboardScoresDownloaded_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CLeaderboardScoresDownloaded_t_RemoveCallResult" )]
         public static extern ulong CLeaderboardScoresDownloaded_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_RemoteStorageUpdateUserPublishedItemVoteResult_t_CallResult( RemoteStorageUpdateUserPublishedItemVoteResult_t pRemoteStorageUpdateUserPublishedItemVoteResult_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageUpdateUserPublishedItemVoteResult_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageUpdateUserPublishedItemVoteResult_t_SetCallResult" )]
         public static extern ulong CRemoteStorageUpdateUserPublishedItemVoteResult_t_SetCallResult( ulong hAPICall, SteamAPI_RemoteStorageUpdateUserPublishedItemVoteResult_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageUpdateUserPublishedItemVoteResult_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageUpdateUserPublishedItemVoteResult_t_RemoveCallResult" )]
         public static extern ulong CRemoteStorageUpdateUserPublishedItemVoteResult_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_RemoteStorageEnumerateUserSubscribedFilesResult_t_CallResult( RemoteStorageEnumerateUserSubscribedFilesResult_t pRemoteStorageEnumerateUserSubscribedFilesResult_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageEnumerateUserSubscribedFilesResult_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageEnumerateUserSubscribedFilesResult_t_SetCallResult" )]
         public static extern ulong CRemoteStorageEnumerateUserSubscribedFilesResult_t_SetCallResult( ulong hAPICall, SteamAPI_RemoteStorageEnumerateUserSubscribedFilesResult_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageEnumerateUserSubscribedFilesResult_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageEnumerateUserSubscribedFilesResult_t_RemoveCallResult" )]
         public static extern ulong CRemoteStorageEnumerateUserSubscribedFilesResult_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_CreateItemResult_t_CallResult( CreateItemResult_t pCreateItemResult_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CCreateItemResult_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CCreateItemResult_t_SetCallResult" )]
         public static extern ulong CCreateItemResult_t_SetCallResult( ulong hAPICall, SteamAPI_CreateItemResult_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CCreateItemResult_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CCreateItemResult_t_RemoveCallResult" )]
         public static extern ulong CCreateItemResult_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_SetUserItemVoteResult_t_CallResult( SetUserItemVoteResult_t pSetUserItemVoteResult_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CSetUserItemVoteResult_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CSetUserItemVoteResult_t_SetCallResult" )]
         public static extern ulong CSetUserItemVoteResult_t_SetCallResult( ulong hAPICall, SteamAPI_SetUserItemVoteResult_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CSetUserItemVoteResult_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CSetUserItemVoteResult_t_RemoveCallResult" )]
         public static extern ulong CSetUserItemVoteResult_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_ComputeNewPlayerCompatibilityResult_t_CallResult( ComputeNewPlayerCompatibilityResult_t pComputeNewPlayerCompatibilityResult_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CComputeNewPlayerCompatibilityResult_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CComputeNewPlayerCompatibilityResult_t_SetCallResult" )]
         public static extern ulong CComputeNewPlayerCompatibilityResult_t_SetCallResult( ulong hAPICall, SteamAPI_ComputeNewPlayerCompatibilityResult_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CComputeNewPlayerCompatibilityResult_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CComputeNewPlayerCompatibilityResult_t_RemoveCallResult" )]
         public static extern ulong CComputeNewPlayerCompatibilityResult_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_LeaderboardScoreUploaded_t_CallResult( LeaderboardScoreUploaded_t pLeaderboardScoreUploaded_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CLeaderboardScoreUploaded_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CLeaderboardScoreUploaded_t_SetCallResult" )]
         public static extern ulong CLeaderboardScoreUploaded_t_SetCallResult( ulong hAPICall, SteamAPI_LeaderboardScoreUploaded_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CLeaderboardScoreUploaded_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CLeaderboardScoreUploaded_t_RemoveCallResult" )]
         public static extern ulong CLeaderboardScoreUploaded_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_GlobalAchievementPercentagesReady_t_CallResult( GlobalAchievementPercentagesReady_t pGlobalAchievementPercentagesReady_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CGlobalAchievementPercentagesReady_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CGlobalAchievementPercentagesReady_t_SetCallResult" )]
         public static extern ulong CGlobalAchievementPercentagesReady_t_SetCallResult( ulong hAPICall, SteamAPI_GlobalAchievementPercentagesReady_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CGlobalAchievementPercentagesReady_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CGlobalAchievementPercentagesReady_t_RemoveCallResult" )]
         public static extern ulong CGlobalAchievementPercentagesReady_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_GlobalStatsReceived_t_CallResult( GlobalStatsReceived_t pGlobalStatsReceived_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CGlobalStatsReceived_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CGlobalStatsReceived_t_SetCallResult" )]
         public static extern ulong CGlobalStatsReceived_t_SetCallResult( ulong hAPICall, SteamAPI_GlobalStatsReceived_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CGlobalStatsReceived_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CGlobalStatsReceived_t_RemoveCallResult" )]
         public static extern ulong CGlobalStatsReceived_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_RemoteStorageEnumeratePublishedFilesByUserActionResult_t_CallResult( RemoteStorageEnumeratePublishedFilesByUserActionResult_t pRemoteStorageEnumeratePublishedFilesByUserActionResult_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageEnumeratePublishedFilesByUserActionResult_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageEnumeratePublishedFilesByUserActionResult_t_SetCallResult" )]
         public static extern ulong CRemoteStorageEnumeratePublishedFilesByUserActionResult_t_SetCallResult( ulong hAPICall, SteamAPI_RemoteStorageEnumeratePublishedFilesByUserActionResult_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageEnumeratePublishedFilesByUserActionResult_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageEnumeratePublishedFilesByUserActionResult_t_RemoveCallResult" )]
         public static extern ulong CRemoteStorageEnumeratePublishedFilesByUserActionResult_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_ClanOfficerListResponse_t_CallResult( ClanOfficerListResponse_t pClanOfficerListResponse_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CClanOfficerListResponse_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CClanOfficerListResponse_t_SetCallResult" )]
         public static extern ulong CClanOfficerListResponse_t_SetCallResult( ulong hAPICall, SteamAPI_ClanOfficerListResponse_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CClanOfficerListResponse_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CClanOfficerListResponse_t_RemoveCallResult" )]
         public static extern ulong CClanOfficerListResponse_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_RemoteStoragePublishFileProgress_t_CallResult( RemoteStoragePublishFileProgress_t pRemoteStoragePublishFileProgress_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStoragePublishFileProgress_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStoragePublishFileProgress_t_SetCallResult" )]
         public static extern ulong CRemoteStoragePublishFileProgress_t_SetCallResult( ulong hAPICall, SteamAPI_RemoteStoragePublishFileProgress_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStoragePublishFileProgress_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStoragePublishFileProgress_t_RemoveCallResult" )]
         public static extern ulong CRemoteStoragePublishFileProgress_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_RemoteStorageEnumerateWorkshopFilesResult_t_CallResult( RemoteStorageEnumerateWorkshopFilesResult_t pRemoteStorageEnumerateWorkshopFilesResult_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageEnumerateWorkshopFilesResult_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageEnumerateWorkshopFilesResult_t_SetCallResult" )]
         public static extern ulong CRemoteStorageEnumerateWorkshopFilesResult_t_SetCallResult( ulong hAPICall, SteamAPI_RemoteStorageEnumerateWorkshopFilesResult_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageEnumerateWorkshopFilesResult_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageEnumerateWorkshopFilesResult_t_RemoveCallResult" )]
         public static extern ulong CRemoteStorageEnumerateWorkshopFilesResult_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_GSReputation_t_CallResult( GSReputation_t pGSReputation_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CGSReputation_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CGSReputation_t_SetCallResult" )]
         public static extern ulong CGSReputation_t_SetCallResult( ulong hAPICall, SteamAPI_GSReputation_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CGSReputation_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CGSReputation_t_RemoveCallResult" )]
         public static extern ulong CGSReputation_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_UserFavoriteItemsListChanged_t_CallResult( UserFavoriteItemsListChanged_t pUserFavoriteItemsListChanged_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CUserFavoriteItemsListChanged_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CUserFavoriteItemsListChanged_t_SetCallResult" )]
         public static extern ulong CUserFavoriteItemsListChanged_t_SetCallResult( ulong hAPICall, SteamAPI_UserFavoriteItemsListChanged_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CUserFavoriteItemsListChanged_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CUserFavoriteItemsListChanged_t_RemoveCallResult" )]
         public static extern ulong CUserFavoriteItemsListChanged_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_EncryptedAppTicketResponse_t_CallResult( EncryptedAppTicketResponse_t pEncryptedAppTicketResponse_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CEncryptedAppTicketResponse_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CEncryptedAppTicketResponse_t_SetCallResult" )]
         public static extern ulong CEncryptedAppTicketResponse_t_SetCallResult( ulong hAPICall, SteamAPI_EncryptedAppTicketResponse_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CEncryptedAppTicketResponse_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CEncryptedAppTicketResponse_t_RemoveCallResult" )]
         public static extern ulong CEncryptedAppTicketResponse_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_RemoteStorageEnumerateUserPublishedFilesResult_t_CallResult( RemoteStorageEnumerateUserPublishedFilesResult_t pRemoteStorageEnumerateUserPublishedFilesResult_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageEnumerateUserPublishedFilesResult_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageEnumerateUserPublishedFilesResult_t_SetCallResult" )]
         public static extern ulong CRemoteStorageEnumerateUserPublishedFilesResult_t_SetCallResult( ulong hAPICall, SteamAPI_RemoteStorageEnumerateUserPublishedFilesResult_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageEnumerateUserPublishedFilesResult_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageEnumerateUserPublishedFilesResult_t_RemoveCallResult" )]
         public static extern ulong CRemoteStorageEnumerateUserPublishedFilesResult_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_FriendsEnumerateFollowingList_t_CallResult( FriendsEnumerateFollowingList_t pFriendsEnumerateFollowingList_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CFriendsEnumerateFollowingList_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CFriendsEnumerateFollowingList_t_SetCallResult" )]
         public static extern ulong CFriendsEnumerateFollowingList_t_SetCallResult( ulong hAPICall, SteamAPI_FriendsEnumerateFollowingList_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CFriendsEnumerateFollowingList_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CFriendsEnumerateFollowingList_t_RemoveCallResult" )]
         public static extern ulong CFriendsEnumerateFollowingList_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_RemoteStorageSubscribePublishedFileResult_t_CallResult( RemoteStorageSubscribePublishedFileResult_t pRemoteStorageSubscribePublishedFileResult_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageSubscribePublishedFileResult_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageSubscribePublishedFileResult_t_SetCallResult" )]
         public static extern ulong CRemoteStorageSubscribePublishedFileResult_t_SetCallResult( ulong hAPICall, SteamAPI_RemoteStorageSubscribePublishedFileResult_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageSubscribePublishedFileResult_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageSubscribePublishedFileResult_t_RemoveCallResult" )]
         public static extern ulong CRemoteStorageSubscribePublishedFileResult_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_GetUserItemVoteResult_t_CallResult( GetUserItemVoteResult_t pGetUserItemVoteResult_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CGetUserItemVoteResult_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CGetUserItemVoteResult_t_SetCallResult" )]
         public static extern ulong CGetUserItemVoteResult_t_SetCallResult( ulong hAPICall, SteamAPI_GetUserItemVoteResult_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CGetUserItemVoteResult_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CGetUserItemVoteResult_t_RemoveCallResult" )]
         public static extern ulong CGetUserItemVoteResult_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_AssociateWithClanResult_t_CallResult( AssociateWithClanResult_t pAssociateWithClanResult_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CAssociateWithClanResult_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CAssociateWithClanResult_t_SetCallResult" )]
         public static extern ulong CAssociateWithClanResult_t_SetCallResult( ulong hAPICall, SteamAPI_AssociateWithClanResult_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CAssociateWithClanResult_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CAssociateWithClanResult_t_RemoveCallResult" )]
         public static extern ulong CAssociateWithClanResult_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_LeaderboardUGCSet_t_CallResult( LeaderboardUGCSet_t pLeaderboardUGCSet_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CLeaderboardUGCSet_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CLeaderboardUGCSet_t_SetCallResult" )]
         public static extern ulong CLeaderboardUGCSet_t_SetCallResult( ulong hAPICall, SteamAPI_LeaderboardUGCSet_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CLeaderboardUGCSet_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CLeaderboardUGCSet_t_RemoveCallResult" )]
         public static extern ulong CLeaderboardUGCSet_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_CheckFileSignature_t_CallResult( CheckFileSignature_t pCheckFileSignature_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CCheckFileSignature_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CCheckFileSignature_t_SetCallResult" )]
         public static extern ulong CCheckFileSignature_t_SetCallResult( ulong hAPICall, SteamAPI_CheckFileSignature_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CCheckFileSignature_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CCheckFileSignature_t_RemoveCallResult" )]
         public static extern ulong CCheckFileSignature_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_RemoteStorageUnsubscribePublishedFileResult_t_CallResult( RemoteStorageUnsubscribePublishedFileResult_t pRemoteStorageUnsubscribePublishedFileResult_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageUnsubscribePublishedFileResult_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageUnsubscribePublishedFileResult_t_SetCallResult" )]
         public static extern ulong CRemoteStorageUnsubscribePublishedFileResult_t_SetCallResult( ulong hAPICall, SteamAPI_RemoteStorageUnsubscribePublishedFileResult_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CRemoteStorageUnsubscribePublishedFileResult_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CRemoteStorageUnsubscribePublishedFileResult_t_RemoveCallResult" )]
         public static extern ulong CRemoteStorageUnsubscribePublishedFileResult_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_SetPersonaNameResponse_t_CallResult( SetPersonaNameResponse_t pSetPersonaNameResponse_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CSetPersonaNameResponse_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CSetPersonaNameResponse_t_SetCallResult" )]
         public static extern ulong CSetPersonaNameResponse_t_SetCallResult( ulong hAPICall, SteamAPI_SetPersonaNameResponse_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CSetPersonaNameResponse_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CSetPersonaNameResponse_t_RemoveCallResult" )]
         public static extern ulong CSetPersonaNameResponse_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_UserStatsReceived_t_CallResult( UserStatsReceived_t pUserStatsReceived_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CUserStatsReceived_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CUserStatsReceived_t_SetCallResult" )]
         public static extern ulong CUserStatsReceived_t_SetCallResult( ulong hAPICall, SteamAPI_UserStatsReceived_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CUserStatsReceived_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CUserStatsReceived_t_RemoveCallResult" )]
         public static extern ulong CUserStatsReceived_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_JoinClanChatRoomCompletionResult_t_CallResult( JoinClanChatRoomCompletionResult_t pJoinClanChatRoomCompletionResult_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CJoinClanChatRoomCompletionResult_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CJoinClanChatRoomCompletionResult_t_SetCallResult" )]
         public static extern ulong CJoinClanChatRoomCompletionResult_t_SetCallResult( ulong hAPICall, SteamAPI_JoinClanChatRoomCompletionResult_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CJoinClanChatRoomCompletionResult_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CJoinClanChatRoomCompletionResult_t_RemoveCallResult" )]
         public static extern ulong CJoinClanChatRoomCompletionResult_t_RemoveCallResult( ulong handle );
         public delegate void SteamAPI_LeaderboardFindResult_t_CallResult( LeaderboardFindResult_t pLeaderboardFindResult_t, bool bIOFailure );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CLeaderboardFindResult_t_SetCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CLeaderboardFindResult_t_SetCallResult" )]
         public static extern ulong CLeaderboardFindResult_t_SetCallResult( ulong hAPICall, SteamAPI_LeaderboardFindResult_t_CallResult func );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "CLeaderboardFindResult_t_RemoveCallResult" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "CLeaderboardFindResult_t_RemoveCallResult" )]
         public static extern ulong CLeaderboardFindResult_t_RemoveCallResult( ulong handle );
 
     }
@@ -7756,69 +7756,69 @@ namespace Valve.Steamworks
     }
     internal class SteamAPIInterop
     {
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_RestartAppIfNecessary" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_RestartAppIfNecessary" )]
         internal static extern void SteamAPI_RestartAppIfNecessary( uint unOwnAppID );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_Init" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_Init" )]
         internal static extern void SteamAPI_Init();
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_RunCallbacks" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_RunCallbacks" )]
         internal static extern void SteamAPI_RunCallbacks();
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_RegisterCallback" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_RegisterCallback" )]
         internal static extern void SteamAPI_RegisterCallback( IntPtr pCallback, int iCallback );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAPI_UnregisterCallback" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAPI_UnregisterCallback" )]
         internal static extern void SteamAPI_UnregisterCallback( IntPtr pCallback );
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamClient" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamClient" )]
         internal static extern IntPtr SteamClient();
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamUser" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamUser" )]
         internal static extern IntPtr SteamUser();
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamFriends" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamFriends" )]
         internal static extern IntPtr SteamFriends();
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamUtils" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamUtils" )]
         internal static extern IntPtr SteamUtils();
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamMatchmaking" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamMatchmaking" )]
         internal static extern IntPtr SteamMatchmaking();
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamMatchmakingServerListResponse" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamMatchmakingServerListResponse" )]
         internal static extern IntPtr SteamMatchmakingServerListResponse();
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamMatchmakingPingResponse" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamMatchmakingPingResponse" )]
         internal static extern IntPtr SteamMatchmakingPingResponse();
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamMatchmakingPlayersResponse" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamMatchmakingPlayersResponse" )]
         internal static extern IntPtr SteamMatchmakingPlayersResponse();
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamMatchmakingRulesResponse" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamMatchmakingRulesResponse" )]
         internal static extern IntPtr SteamMatchmakingRulesResponse();
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamMatchmakingServers" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamMatchmakingServers" )]
         internal static extern IntPtr SteamMatchmakingServers();
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamRemoteStorage" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamRemoteStorage" )]
         internal static extern IntPtr SteamRemoteStorage();
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamUserStats" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamUserStats" )]
         internal static extern IntPtr SteamUserStats();
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamApps" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamApps" )]
         internal static extern IntPtr SteamApps();
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamNetworking" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamNetworking" )]
         internal static extern IntPtr SteamNetworking();
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamScreenshots" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamScreenshots" )]
         internal static extern IntPtr SteamScreenshots();
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamMusic" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamMusic" )]
         internal static extern IntPtr SteamMusic();
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamMusicRemote" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamMusicRemote" )]
         internal static extern IntPtr SteamMusicRemote();
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamHTTP" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamHTTP" )]
         internal static extern IntPtr SteamHTTP();
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamUnifiedMessages" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamUnifiedMessages" )]
         internal static extern IntPtr SteamUnifiedMessages();
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamController" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamController" )]
         internal static extern IntPtr SteamController();
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamUGC" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamUGC" )]
         internal static extern IntPtr SteamUGC();
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamAppList" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamAppList" )]
         internal static extern IntPtr SteamAppList();
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamHTMLSurface" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamHTMLSurface" )]
         internal static extern IntPtr SteamHTMLSurface();
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamInventory" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamInventory" )]
         internal static extern IntPtr SteamInventory();
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamVideo" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamVideo" )]
         internal static extern IntPtr SteamVideo();
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamGameServer" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamGameServer" )]
         internal static extern IntPtr SteamGameServer();
-        [DllImportAttribute( "steamlibrary", EntryPoint = "SteamGameServerStats" )]
+        [DllImportAttribute( "FacepunchSteamworksApi", EntryPoint = "SteamGameServerStats" )]
         internal static extern IntPtr SteamGameServerStats();
     }
 
