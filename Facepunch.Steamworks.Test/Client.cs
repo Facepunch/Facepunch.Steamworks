@@ -46,13 +46,13 @@ namespace Facepunch.Steamworks.Test
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {
-                var ticket = client.GetAuthSessionTicket();
+                var ticket = client.Auth.GetAuthSessionTicket();
 
                 Assert.IsTrue( ticket != null );
                 Assert.IsTrue( ticket.Handle != 0 );
                 Assert.IsTrue( ticket.Data.Length > 0 );
 
-                client.CancelAuthTicket( ticket );
+                client.Auth.CancelAuthTicket( ticket );
 
                 Assert.IsTrue( ticket.Handle == 0 );
             }

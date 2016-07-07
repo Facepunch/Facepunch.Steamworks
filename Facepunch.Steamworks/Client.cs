@@ -7,11 +7,12 @@ namespace Facepunch.Steamworks
 {
     public partial class Client : IDisposable
     {
-        private Valve.Steamworks.ISteamClient _client;
         private uint _hpipe;
         private uint _huser;
-        private Valve.Steamworks.ISteamUser _user;
-        private Valve.Steamworks.ISteamFriends _friends;
+
+        internal Valve.Steamworks.ISteamClient _client;
+        internal Valve.Steamworks.ISteamUser _user;
+        internal Valve.Steamworks.ISteamFriends _friends;
 
         /// <summary>
         /// Current running program's AppId
