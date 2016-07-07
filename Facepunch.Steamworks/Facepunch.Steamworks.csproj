@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.Overlay.cs" />
+    <Compile Include="Client.ServerList.cs" />
     <Compile Include="Client.Voice.cs" />
     <Compile Include="Client.Auth.cs" />
     <Compile Include="Client.cs" />

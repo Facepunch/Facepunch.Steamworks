@@ -13,6 +13,7 @@ namespace Facepunch.Steamworks
         internal Valve.Steamworks.ISteamClient _client;
         internal Valve.Steamworks.ISteamUser _user;
         internal Valve.Steamworks.ISteamFriends _friends;
+        internal Valve.Steamworks.ISteamMatchmakingServers _servers;
 
         /// <summary>
         /// Current running program's AppId
@@ -58,6 +59,7 @@ namespace Facepunch.Steamworks
             //
             _friends = _client.GetISteamFriends( _huser, _hpipe, "SteamFriends015" );
             _user = _client.GetISteamUser( _huser, _hpipe, "SteamUser019" );
+            _servers = _client.GetISteamMatchmakingServers( _huser, _hpipe, "SteamMatchMakingServers002" );
 
             AppId = appId;
             Username = _friends.GetPersonaName();

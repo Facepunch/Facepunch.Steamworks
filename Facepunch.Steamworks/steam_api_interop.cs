@@ -2445,7 +2445,7 @@ namespace Valve.Steamworks
         {
             CheckIfUsable();
             IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamMatchmakingServers(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
-            return (ISteamMatchmakingServers)Marshal.PtrToStructure( result, typeof( ISteamMatchmakingServers ) );
+            return new CSteamMatchmakingServers( result );
         }
         internal override IntPtr GetISteamGenericInterface( uint hSteamUser, uint hSteamPipe, string pchVersion )
         {
