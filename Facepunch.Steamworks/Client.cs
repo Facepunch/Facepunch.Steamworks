@@ -94,6 +94,15 @@ namespace Facepunch.Steamworks
             Console.Write( text.ToString() );
         }
 
+        /// <summary>
+        /// Should be called at least once every frame
+        /// </summary>
+        public void Update()
+        {
+            Valve.Steamworks.SteamAPI.RunCallbacks();
+            Voice.Update();
+        }
+
         public bool Valid
         {
             get { return _client != null; }

@@ -67,5 +67,48 @@ namespace Facepunch.Steamworks.Test
                 Assert.AreNotEqual( rate, 0 );
             }
         }
+
+        [TestMethod]
+        public void ClientUpdate()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                for( int i=0; i<32; i++ )
+                {
+                    client.Update();
+                    System.Threading.Thread.Sleep( 10 );
+                }
+            }
+        }
+
+        [TestMethod]
+        public void ClientGetVoice()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                int dataRead = 0;
+
+                client.Voice.OnCompressedData = ( data ) =>
+                {
+                    dataRead += data.Length;
+                };
+
+                client.Voice.OnUncompressedData = ( data ) =>
+                {
+                    dataRead += data.Length;
+                };
+
+                client.Voice.WantsRecording = true;
+
+                for ( int i = 0; i < 32; i++ )
+                {
+                    client.Update();
+                    System.Threading.Thread.Sleep( 10 );
+                }
+
+                // Should really be > 0 if the mic was getting audio
+                Console.Write( dataRead );
+            }
+        }
     }
 }
