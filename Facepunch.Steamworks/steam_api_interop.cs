@@ -710,7 +710,7 @@ namespace Valve.Interop
         [DllImportAttribute( "FacepunchSteamworksApi", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamNetworking_IsP2PPacketAvailable" )]
         internal static extern bool SteamAPI_ISteamNetworking_IsP2PPacketAvailable( IntPtr instancePtr, ref uint pcubMsgSize, int nChannel );
         [DllImportAttribute( "FacepunchSteamworksApi", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamNetworking_ReadP2PPacket" )]
-        internal static extern bool SteamAPI_ISteamNetworking_ReadP2PPacket( IntPtr instancePtr, IntPtr pubDest, uint cubDest, ref uint pcubMsgSize, ref CSteamID psteamIDRemote, int nChannel );
+        internal static extern bool SteamAPI_ISteamNetworking_ReadP2PPacket( IntPtr instancePtr, IntPtr pubDest, uint cubDest, ref uint pcubMsgSize, ref ulong psteamIDRemote, int nChannel );
         [DllImportAttribute( "FacepunchSteamworksApi", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamNetworking_AcceptP2PSessionWithUser" )]
         internal static extern bool SteamAPI_ISteamNetworking_AcceptP2PSessionWithUser( IntPtr instancePtr, ulong steamIDRemote );
         [DllImportAttribute( "FacepunchSteamworksApi", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamNetworking_CloseP2PSessionWithUser" )]
@@ -1982,7 +1982,7 @@ namespace Valve.Steamworks
         internal abstract IntPtr GetIntPtr();
         internal abstract bool SendP2PPacket( ulong steamIDRemote, IntPtr pubData, uint cubData, uint eP2PSendType, int nChannel );
         internal abstract bool IsP2PPacketAvailable( ref uint pcubMsgSize, int nChannel );
-        internal abstract bool ReadP2PPacket( IntPtr pubDest, uint cubDest, ref uint pcubMsgSize, ref CSteamID psteamIDRemote, int nChannel );
+        internal abstract bool ReadP2PPacket( IntPtr pubDest, uint cubDest, ref uint pcubMsgSize, ref ulong psteamIDRemote, int nChannel );
         internal abstract bool AcceptP2PSessionWithUser( ulong steamIDRemote );
         internal abstract bool CloseP2PSessionWithUser( ulong steamIDRemote );
         internal abstract bool CloseP2PChannelWithUser( ulong steamIDRemote, int nChannel );
@@ -2475,7 +2475,7 @@ namespace Valve.Steamworks
         {
             CheckIfUsable();
             IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamNetworking(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
-            return (ISteamNetworking)Marshal.PtrToStructure( result, typeof( ISteamNetworking ) );
+            return new CSteamNetworking( result );
         }
         internal override ISteamRemoteStorage GetISteamRemoteStorage( uint hSteamuser, uint hSteamPipe, string pchVersion )
         {
@@ -4730,7 +4730,7 @@ namespace Valve.Steamworks
             bool result = NativeEntrypoints.SteamAPI_ISteamNetworking_IsP2PPacketAvailable(m_pSteamNetworking,ref pcubMsgSize,nChannel);
             return result;
         }
-        internal override bool ReadP2PPacket( IntPtr pubDest, uint cubDest, ref uint pcubMsgSize, ref CSteamID psteamIDRemote, int nChannel )
+        internal override bool ReadP2PPacket( IntPtr pubDest, uint cubDest, ref uint pcubMsgSize, ref ulong psteamIDRemote, int nChannel )
         {
             CheckIfUsable();
             pcubMsgSize = 0;

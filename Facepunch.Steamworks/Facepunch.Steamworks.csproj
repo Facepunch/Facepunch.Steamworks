@@ -113,6 +113,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client.Networking.cs" />
     <Compile Include="Client.Overlay.cs" />
     <Compile Include="Client.ServerList.cs" />
     <Compile Include="Client.ServerList.Request.cs" />

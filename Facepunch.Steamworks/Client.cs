@@ -15,6 +15,7 @@ namespace Facepunch.Steamworks
         internal Valve.Steamworks.ISteamFriends _friends;
         internal Valve.Steamworks.ISteamMatchmakingServers _servers;
         internal Valve.Steamworks.ISteamInventory _inventory;
+        internal Valve.Steamworks.ISteamNetworking _networking;
 
         /// <summary>
         /// Current running program's AppId
@@ -62,6 +63,7 @@ namespace Facepunch.Steamworks
             _user = _client.GetISteamUser( _huser, _hpipe, "SteamUser019" );
             _servers = _client.GetISteamMatchmakingServers( _huser, _hpipe, "SteamMatchMakingServers002" );
             _inventory = _client.GetISteamInventory( _huser, _hpipe, "STEAMINVENTORY_INTERFACE_V001" );
+            _networking = _client.GetISteamNetworking( _huser, _hpipe, "SteamNetworking005" );
 
             AppId = appId;
             Username = _friends.GetPersonaName();
@@ -106,6 +108,7 @@ namespace Facepunch.Steamworks
             Valve.Steamworks.SteamAPI.RunCallbacks();
             Voice.Update();
             Inventory.Update();
+            Networking.Update();
         }
 
         public bool Valid
@@ -113,7 +116,7 @@ namespace Facepunch.Steamworks
             get { return _client != null; }
         }
 
-        internal Action InstallCallback<T>( int type, Action<T> action )
+        internal Action InstallCallback( int type, Delegate action )
         {
             var ptr = Marshal.GetFunctionPointerForDelegate( action );
             Valve.Steamworks.SteamAPI.RegisterCallback( ptr, type );

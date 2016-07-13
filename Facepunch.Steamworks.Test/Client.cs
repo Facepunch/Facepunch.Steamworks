@@ -6,7 +6,7 @@ namespace Facepunch.Steamworks.Test
     [TestClass]
     [DeploymentItem( "FacepunchSteamworksApi.dll" )]
     [DeploymentItem( "steam_appid.txt" )]
-    public class Client
+    public partial class Client
     {
         [TestMethod]
         public void Init()

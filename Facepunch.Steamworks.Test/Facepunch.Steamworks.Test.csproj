@@ -87,6 +87,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Client.cs" />
+    <Compile Include="Client.Networking.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
