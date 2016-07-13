@@ -36,9 +36,32 @@ namespace Facepunch.Steamworks
             client = c;
 
             LoadItemDefinitions();
-
-
         }
+
+        /// <summary>
+        /// Call this at least every two minutes, every frame doesn't hurt.
+        /// You should call it when you consider it active play time.
+        /// IE - your player is alive, and playing.
+        /// Don't stress on it too much tho cuz it's super hijackable anyway.
+        /// </summary>
+        public void DropHeartbeat()
+        {
+            client._inventory.SendItemDropHeartbeat();
+        }
+
+        /// <summary>
+        /// Trigger an item drop. Call this when it's a good time to award
+        /// an item drop to a player. This won't automatically result in giving
+        /// an item to a player. Just call it every minute or so, or on launch.
+        /// ItemDefinition is usually a generator
+        /// </summary>
+        public void TriggerItemDrop( Definition definition )
+        {
+            int result = 0;
+            client._inventory.TriggerItemDrop( ref result, definition.Id );
+            client._inventory.DestroyResult( result );
+        }
+
 
         /// <summary>
         /// Call this to retrieve the items.
@@ -128,7 +151,18 @@ namespace Facepunch.Steamworks
         /// </summary>
         public Item[] Items;
 
-        private void RetrieveInventory()
+        /// <summary>
+        /// You can send this data to a server, or another player who can then deserialize it
+        /// and get a verified list of items.
+        /// </summary>
+        public byte[] SerializedItems;
+
+        /// <summary>
+        /// Serialized data exprires after an hour. This is the time the value in SerializedItems will expire.
+        /// </summary>
+        public DateTime SerializedExpireTime;
+
+        private unsafe void RetrieveInventory()
         {
             Valve.Steamworks.SteamItemDetails_t[] items = null;
             client._inventory.GetResultItems( updateRequest, out items );
@@ -145,6 +179,20 @@ namespace Facepunch.Steamworks
                     Definition      = Definitions.FirstOrDefault( y => y.Id == x.m_iDefinition )
                 };
             } ).ToArray();
+
+            //
+            // Get a serialized version
+            //
+            uint size = 0;
+            client._inventory.SerializeResult( updateRequest, IntPtr.Zero, ref size );
+            SerializedItems = new byte[size];
+
+            fixed( byte* b = SerializedItems )
+            {
+                client._inventory.SerializeResult( updateRequest, (IntPtr) b, ref size );
+            }
+
+            SerializedExpireTime = DateTime.Now.Add( TimeSpan.FromMinutes( 60 ) );
 
             //
             // Tell everyone we've got new items!
