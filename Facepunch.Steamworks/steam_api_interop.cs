@@ -2558,7 +2558,7 @@ namespace Valve.Steamworks
         {
             CheckIfUsable();
             IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamInventory(m_pSteamClient,hSteamuser,hSteamPipe,pchVersion);
-            return (ISteamInventory)Marshal.PtrToStructure( result, typeof( ISteamInventory ) );
+            return new CSteamInventory( result );
         }
         internal override ISteamVideo GetISteamVideo( uint hSteamuser, uint hSteamPipe, string pchVersion )
         {

@@ -131,5 +131,49 @@ namespace Facepunch.Steamworks.Test
                 Console.WriteLine( "Unresponsive: " + query.Unresponsive.Count.ToString() );
             }
         }
+
+        [TestMethod]
+        public void InventoryDefinitions()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                Assert.IsNotNull( client.Inventory.Definitions );
+                Assert.AreNotEqual( 0, client.Inventory.Definitions.Length );
+            }
+        }
+
+        [TestMethod]
+        public void InventoryItemList()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                bool CallbackCalled = false;
+
+                // OnUpdate hsould be called when we receive a list of our items
+                client.Inventory.OnUpdate = () => { CallbackCalled = true; };
+
+                // tell steam to download the items
+                client.Inventory.Refresh();
+
+                // Wait for the items
+                while ( client.Inventory.Items == null )
+                {
+                    client.Update();
+                    System.Threading.Thread.Sleep( 10 );
+                }
+
+                // make sure callback was called
+                Assert.IsTrue( CallbackCalled );
+
+                // Make sure items are valid
+                foreach ( var item in client.Inventory.Items )
+                {
+                    Assert.IsNotNull( item );
+                    Assert.IsNotNull( item.Definition );
+
+                    Console.WriteLine( item.Definition.Name + " - " + item.Id );
+                }
+            }
+        }
     }
 }

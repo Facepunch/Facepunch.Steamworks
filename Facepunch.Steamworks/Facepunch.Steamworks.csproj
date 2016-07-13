@@ -119,6 +119,7 @@
     <Compile Include="Client.Voice.cs" />
     <Compile Include="Client.Auth.cs" />
     <Compile Include="Client.cs" />
+    <Compile Include="Client\Inventory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="steam_api_interop.cs" />
   </ItemGroup>
