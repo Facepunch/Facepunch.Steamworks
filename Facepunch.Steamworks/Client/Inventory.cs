@@ -44,24 +44,10 @@ namespace Facepunch.Steamworks
         /// IE - your player is alive, and playing.
         /// Don't stress on it too much tho cuz it's super hijackable anyway.
         /// </summary>
-        public void DropHeartbeat()
+        public void PlaytimeHeartbeat()
         {
             client.native.inventory.SendItemDropHeartbeat();
         }
-
-        /// <summary>
-        /// Trigger an item drop. Call this when it's a good time to award
-        /// an item drop to a player. This won't automatically result in giving
-        /// an item to a player. Just call it every minute or so, or on launch.
-        /// ItemDefinition is usually a generator
-        /// </summary>
-        public void TriggerItemDrop( Definition definition )
-        {
-            int result = 0;
-            client.native.inventory.TriggerItemDrop( ref result, definition.Id );
-            client.native.inventory.DestroyResult( result );
-        }
-
 
         /// <summary>
         /// Call this to retrieve the items.
@@ -256,14 +242,42 @@ namespace Facepunch.Steamworks
                 }
             }
 
-        internal void SetupCommonProperties()
-        {
-            Name = GetProperty<string>( "name" );
-            Description = GetProperty<string>( "description" );
-            Created = GetProperty<DateTime>( "timestamp" );
-            Modified = GetProperty<DateTime>( "modified" );
+            internal void SetupCommonProperties()
+            {
+                Name = GetProperty<string>( "name" );
+                Description = GetProperty<string>( "description" );
+                Created = GetProperty<DateTime>( "timestamp" );
+                Modified = GetProperty<DateTime>( "modified" );
+            }
+
+            /// <summary>
+            /// Trigger an item drop. Call this when it's a good time to award
+            /// an item drop to a player. This won't automatically result in giving
+            /// an item to a player. Just call it every minute or so, or on launch.
+            /// ItemDefinition is usually a generator
+            /// </summary>
+            public void TriggerItemDrop()
+            {
+                int result = 0;
+                client.native.inventory.TriggerItemDrop( ref result, Id );
+                client.native.inventory.DestroyResult( result );
+            }
         }
-    }
+
+
+        /// <summary>
+        /// Utility, given a "1;VLV250" string, convert it to a 2.5
+        /// </summary>
+        public static float PriceCategoryToFloat( string price )
+        {
+            price = price.Replace( "1;VLV", "" );
+
+            int iPrice = 0;
+            if ( !int.TryParse( price, out iPrice ) )
+                return 0.0f;
+
+            return int.Parse( price ) / 100.0f;
+        }
 
     }
 }

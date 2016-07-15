@@ -35,6 +35,18 @@ namespace Facepunch.Steamworks
             client.native.apps.MarkContentCorrupt( missingFilesOnly );
         }
 
+        /// <summary>
+        /// Returns the current BuildId of the game. 
+        /// This is pretty useless, as it isn't guarenteed to return
+        /// the build id you're playing, or the latest build id.
+        /// </summary>
+        public int BuildId
+        {
+            get
+            {
+                return client.native.apps.GetAppBuildId();
+            }
+        }
 
     }
 }

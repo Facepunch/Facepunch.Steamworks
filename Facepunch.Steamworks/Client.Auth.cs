@@ -25,10 +25,31 @@ namespace Facepunch.Steamworks
     {
         internal Client client;
 
-        public class Ticket
+        public class Ticket : IDisposable
         {
+            internal Client client;
+
             public byte[] Data;
             public uint Handle;
+
+            /// <summary>
+            /// Cancels a ticket. 
+            /// You should cancel your ticket when you close the game or leave a server.
+            /// </summary>
+            public void Cancel()
+            {
+                if ( client.Valid && Handle != 0 )
+                {
+                    client.native.user.CancelAuthTicket( Handle );
+                    Handle = 0;
+                    Data = null;
+                }
+            }
+
+            public void Dispose()
+            {
+                Cancel();
+            }
         }
 
         /// <summary>
@@ -49,21 +70,13 @@ namespace Facepunch.Steamworks
 
                 return new Ticket()
                 {
+                    client = client,
                     Data = data.Take( (int)ticketLength ).ToArray(),
                     Handle = ticket
                 };
             }
         }
 
-        /// <summary>
-        /// Cancels a ticket. 
-        /// You should cancel your ticket when you close the game or leave a server.
-        /// </summary>
-        public void CancelAuthTicket( Ticket ticket )
-        {
-            client.native.user.CancelAuthTicket( ticket.Handle );
-            ticket.Handle = 0;
-            ticket.Data = null;
-        }
+
     }
 }

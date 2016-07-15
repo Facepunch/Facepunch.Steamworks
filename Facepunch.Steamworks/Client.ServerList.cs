@@ -58,5 +58,42 @@ namespace Facepunch.Steamworks
                 return request;
             }
         }
+
+        public unsafe Request History( Dictionary< string, string > filter )
+        {
+            var request = new Request()
+            {
+                client = client
+            };
+
+            request.Id = client.native.servers.RequestHistoryServerList( client.AppId, new IntPtr[] { }, request.GetVTablePointer() );
+
+            return request;
+        }
+
+        public void AddToHistory( Request.Server server )
+        {
+            // client.native.matchmaking
+        }
+
+        public void RemoveFromHistory( Request.Server server )
+        {
+            // 
+        }
+
+        public void AddToFavourite( Request.Server server )
+        {
+            // client.native.matchmaking
+        }
+
+        public void RemoveFromFavourite( Request.Server server )
+        {
+            // 
+        }
+
+        public bool IsFavourite( Request.Server server )
+        {
+            return false;
+        }
     }
 }

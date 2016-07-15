@@ -21,6 +21,7 @@ namespace Facepunch.Steamworks
             internal Valve.Steamworks.ISteamMatchmakingServers servers;
             internal Valve.Steamworks.ISteamInventory inventory;
             internal Valve.Steamworks.ISteamNetworking networking;
+            internal Valve.Steamworks.ISteamUserStats userstats;
 
             internal bool Init()
             {
@@ -41,6 +42,7 @@ namespace Facepunch.Steamworks
                 inventory = client.GetISteamInventory( _huser, _hpipe, "STEAMINVENTORY_INTERFACE_V001" );
                 networking = client.GetISteamNetworking( _huser, _hpipe, "SteamNetworking005" );
                 apps = client.GetISteamApps( _huser, _hpipe, "STEAMAPPS_INTERFACE_VERSION008" );
+                userstats = client.GetISteamUserStats( _huser, _hpipe, "STEAMUSERSTATS_INTERFACE_VERSION011" );
 
                 return true;
             }

@@ -52,7 +52,7 @@ namespace Facepunch.Steamworks.Test
                 Assert.IsTrue( ticket.Handle != 0 );
                 Assert.IsTrue( ticket.Data.Length > 0 );
 
-                client.Auth.CancelAuthTicket( ticket );
+                ticket.Cancel();
 
                 Assert.IsTrue( ticket.Handle == 0 );
             }

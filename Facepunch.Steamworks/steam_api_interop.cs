@@ -1817,11 +1817,11 @@ namespace Valve.Steamworks
     {
         internal abstract IntPtr GetIntPtr();
         internal abstract IntPtr RequestInternetServerList( uint iApp, IntPtr[] ppchFilters, IntPtr pRequestServersResponse );
-        internal abstract IntPtr RequestLANServerList( uint iApp, ISteamMatchmakingServerListResponse pRequestServersResponse );
-        internal abstract IntPtr RequestFriendsServerList( uint iApp, IntPtr[] ppchFilters, ISteamMatchmakingServerListResponse pRequestServersResponse );
-        internal abstract IntPtr RequestFavoritesServerList( uint iApp, IntPtr[] ppchFilters, ISteamMatchmakingServerListResponse pRequestServersResponse );
-        internal abstract IntPtr RequestHistoryServerList( uint iApp, IntPtr[] ppchFilters, ISteamMatchmakingServerListResponse pRequestServersResponse );
-        internal abstract IntPtr RequestSpectatorServerList( uint iApp, IntPtr[] ppchFilters, ISteamMatchmakingServerListResponse pRequestServersResponse );
+        internal abstract IntPtr RequestLANServerList( uint iApp, IntPtr pRequestServersResponse );
+        internal abstract IntPtr RequestFriendsServerList( uint iApp, IntPtr[] ppchFilters, IntPtr pRequestServersResponse );
+        internal abstract IntPtr RequestFavoritesServerList( uint iApp, IntPtr[] ppchFilters, IntPtr pRequestServersResponse );
+        internal abstract IntPtr RequestHistoryServerList( uint iApp, IntPtr[] ppchFilters, IntPtr pRequestServersResponse );
+        internal abstract IntPtr RequestSpectatorServerList( uint iApp, IntPtr[] ppchFilters, IntPtr pRequestServersResponse );
         internal abstract void ReleaseRequest( IntPtr hServerListRequest );
         internal abstract gameserveritem_t GetServerDetails( IntPtr hRequest, int iServer );
         internal abstract void CancelQuery( IntPtr hRequest );
@@ -2457,7 +2457,7 @@ namespace Valve.Steamworks
         {
             CheckIfUsable();
             IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamUserStats(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
-            return (ISteamUserStats)Marshal.PtrToStructure( result, typeof( ISteamUserStats ) );
+            return new CSteamUserStats( result );
         }
         internal override ISteamGameServerStats GetISteamGameServerStats( uint hSteamuser, uint hSteamPipe, string pchVersion )
         {
@@ -3781,34 +3781,34 @@ namespace Valve.Steamworks
             IntPtr result = NativeEntrypoints.SteamAPI_ISteamMatchmakingServers_RequestInternetServerList(m_pSteamMatchmakingServers,iApp,ppchFilters,(uint) ppchFilters.Length,pRequestServersResponse);
             return result;
         }
-        internal override IntPtr RequestLANServerList( uint iApp, ISteamMatchmakingServerListResponse pRequestServersResponse )
+        internal override IntPtr RequestLANServerList( uint iApp, IntPtr pRequestServersResponse )
         {
             CheckIfUsable();
-            IntPtr result = NativeEntrypoints.SteamAPI_ISteamMatchmakingServers_RequestLANServerList(m_pSteamMatchmakingServers,iApp,pRequestServersResponse.GetIntPtr());
+            IntPtr result = NativeEntrypoints.SteamAPI_ISteamMatchmakingServers_RequestLANServerList(m_pSteamMatchmakingServers,iApp,pRequestServersResponse);
             return result;
         }
-        internal override IntPtr RequestFriendsServerList( uint iApp, IntPtr[] ppchFilters, ISteamMatchmakingServerListResponse pRequestServersResponse )
+        internal override IntPtr RequestFriendsServerList( uint iApp, IntPtr[] ppchFilters, IntPtr pRequestServersResponse )
         {
             CheckIfUsable();
-            IntPtr result = NativeEntrypoints.SteamAPI_ISteamMatchmakingServers_RequestFriendsServerList(m_pSteamMatchmakingServers,iApp,ppchFilters,(uint) ppchFilters.Length,pRequestServersResponse.GetIntPtr());
+            IntPtr result = NativeEntrypoints.SteamAPI_ISteamMatchmakingServers_RequestFriendsServerList(m_pSteamMatchmakingServers,iApp,ppchFilters,(uint) ppchFilters.Length,pRequestServersResponse);
             return result;
         }
-        internal override IntPtr RequestFavoritesServerList( uint iApp, IntPtr[] ppchFilters, ISteamMatchmakingServerListResponse pRequestServersResponse )
+        internal override IntPtr RequestFavoritesServerList( uint iApp, IntPtr[] ppchFilters, IntPtr pRequestServersResponse )
         {
             CheckIfUsable();
-            IntPtr result = NativeEntrypoints.SteamAPI_ISteamMatchmakingServers_RequestFavoritesServerList(m_pSteamMatchmakingServers,iApp,ppchFilters,(uint) ppchFilters.Length,pRequestServersResponse.GetIntPtr());
+            IntPtr result = NativeEntrypoints.SteamAPI_ISteamMatchmakingServers_RequestFavoritesServerList(m_pSteamMatchmakingServers,iApp,ppchFilters,(uint) ppchFilters.Length,pRequestServersResponse);
             return result;
         }
-        internal override IntPtr RequestHistoryServerList( uint iApp, IntPtr[] ppchFilters, ISteamMatchmakingServerListResponse pRequestServersResponse )
+        internal override IntPtr RequestHistoryServerList( uint iApp, IntPtr[] ppchFilters, IntPtr pRequestServersResponse )
         {
             CheckIfUsable();
-            IntPtr result = NativeEntrypoints.SteamAPI_ISteamMatchmakingServers_RequestHistoryServerList(m_pSteamMatchmakingServers,iApp,ppchFilters,(uint) ppchFilters.Length,pRequestServersResponse.GetIntPtr());
+            IntPtr result = NativeEntrypoints.SteamAPI_ISteamMatchmakingServers_RequestHistoryServerList(m_pSteamMatchmakingServers,iApp,ppchFilters,(uint) ppchFilters.Length,pRequestServersResponse);
             return result;
         }
-        internal override IntPtr RequestSpectatorServerList( uint iApp, IntPtr[] ppchFilters, ISteamMatchmakingServerListResponse pRequestServersResponse )
+        internal override IntPtr RequestSpectatorServerList( uint iApp, IntPtr[] ppchFilters, IntPtr pRequestServersResponse )
         {
             CheckIfUsable();
-            IntPtr result = NativeEntrypoints.SteamAPI_ISteamMatchmakingServers_RequestSpectatorServerList(m_pSteamMatchmakingServers,iApp,ppchFilters,(uint) ppchFilters.Length,pRequestServersResponse.GetIntPtr());
+            IntPtr result = NativeEntrypoints.SteamAPI_ISteamMatchmakingServers_RequestSpectatorServerList(m_pSteamMatchmakingServers,iApp,ppchFilters,(uint) ppchFilters.Length,pRequestServersResponse);
             return result;
         }
         internal override void ReleaseRequest( IntPtr hServerListRequest )
@@ -9037,7 +9037,7 @@ namespace Valve.Steamworks
     public struct servernetadr_t
     {
         public ushort m_usConnectionPort;
-        public char m_usQueryPort;
+        public ushort m_usQueryPort;
         public uint m_unIP;
     }
     [StructLayout( LayoutKind.Sequential, Size = 372, Pack = 4, CharSet = CharSet.Ansi )]

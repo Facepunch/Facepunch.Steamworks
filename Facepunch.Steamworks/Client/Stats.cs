@@ -29,5 +29,38 @@ namespace Facepunch.Steamworks
         {
             client = c;
         }
+
+        public void UpdateStats()
+        {
+            client.native.userstats.RequestCurrentStats();
+        }
+
+        public void UpdateGlobalStats( int days = 1 )
+        {
+            client.native.userstats.GetNumberOfCurrentPlayers();
+            client.native.userstats.RequestGlobalAchievementPercentages();
+            client.native.userstats.RequestGlobalStats( days );
+        }
+
+        public int GetInt( string name )
+        {
+            return 0;
+        }
+
+        public int GetGlobalInt( string name )
+        {
+            return 0;
+        }
+
+        public int GetFloat( string name )
+        {
+            return 0;
+        }
+
+        public int GetGlobalFloat( string name )
+        {
+            return 0;
+        }
+
     }
 }

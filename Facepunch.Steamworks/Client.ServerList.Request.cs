@@ -35,10 +35,36 @@ namespace Facepunch.Steamworks
                 public string[] Tags { get; set; }
                 public ulong SteamId { get; set; }
 
+                public uint Address { get; set; }
+
+                public int ConnectionPort { get; set; }
+
+                public int QueryPort { get; set; }
+
+                public string AddressString
+                {
+                    get
+                    {
+                        return string.Format( "{0}.{1}.{2}.{3}", ( Address >> 24 ) & 0xFFul, ( Address >> 16 ) & 0xFFul, ( Address >> 8 ) & 0xFFul, Address & 0xFFul );
+                    }
+                }
+                public string ConnectionAddress
+                {
+                    get
+                    {
+                        return string.Format( "{0}.{1}.{2}.{3}:{4}", ( Address >> 24 ) & 0xFFul, ( Address >> 16 ) & 0xFFul, ( Address >> 8 ) & 0xFFul, Address & 0xFFul, ConnectionPort );
+                    }
+                }
+
+                
+
                 internal static Server FromSteam( gameserveritem_t item )
                 {
                     return new Server()
                     {
+                        Address = item.m_NetAdr.m_unIP,
+                        ConnectionPort = item.m_NetAdr.m_usConnectionPort,
+                        QueryPort = item.m_NetAdr.m_usQueryPort,
                         Name = item.m_szServerName,
                         Ping = item.m_nPing,
                         GameDir = item.m_szGameDir,
@@ -57,35 +83,6 @@ namespace Facepunch.Steamworks
                     };
                 }
             }
-
-
-            public servernetadr_t m_NetAdr;
-            public int m_nPing;
-            [MarshalAs(UnmanagedType.I1)]
-            public bool m_bHadSuccessfulResponse;
-            [MarshalAs(UnmanagedType.I1)]
-            public bool m_bDoNotRefresh;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-            public string m_szGameDir; //char[32]
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-            public string m_szMap; //char[32]
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-            public string m_szGameDescription; //char[64]
-            public uint m_nAppID;
-            public int m_nPlayers;
-            public int m_nMaxPlayers;
-            public int m_nBotPlayers;
-            [MarshalAs(UnmanagedType.I1)]
-            public bool m_bPassword;
-            [MarshalAs(UnmanagedType.I1)]
-            public bool m_bSecure;
-            public uint m_ulTimeLastPlayed;
-            public int m_nServerVersion;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-            public string m_szServerName; //char[64]
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-            public string m_szGameTags; //char[128]
-            public ulong m_steamID;
 
             /// <summary>
             /// A list of servers that responded. If you're only interested in servers that responded since you
