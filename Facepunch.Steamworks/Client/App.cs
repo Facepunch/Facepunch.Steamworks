@@ -32,7 +32,7 @@ namespace Facepunch.Steamworks
 
         public void MarkContentCorrupt( bool missingFilesOnly = false )
         {
-            client._apps.MarkContentCorrupt( missingFilesOnly );
+            client.native.apps.MarkContentCorrupt( missingFilesOnly );
         }
 
 

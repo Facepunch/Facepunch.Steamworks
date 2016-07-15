@@ -46,7 +46,7 @@ namespace Facepunch.Steamworks
         /// </summary>
         public void DropHeartbeat()
         {
-            client._inventory.SendItemDropHeartbeat();
+            client.native.inventory.SendItemDropHeartbeat();
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Facepunch.Steamworks
         public void TriggerItemDrop( Definition definition )
         {
             int result = 0;
-            client._inventory.TriggerItemDrop( ref result, definition.Id );
-            client._inventory.DestroyResult( result );
+            client.native.inventory.TriggerItemDrop( ref result, definition.Id );
+            client.native.inventory.DestroyResult( result );
         }
 
 
@@ -74,7 +74,7 @@ namespace Facepunch.Steamworks
             if ( updateRequest != 0 )
                 return;
 
-            client._inventory.GetAllItems( ref updateRequest );
+            client.native.inventory.GetAllItems( ref updateRequest );
         }
 
         internal void LoadItemDefinitions()
@@ -82,10 +82,10 @@ namespace Facepunch.Steamworks
             //
             // Make sure item definitions are loaded, because we're going to be using them.
             //
-            client._inventory.LoadItemDefinitions();
+            client.native.inventory.LoadItemDefinitions();
 
             int[] ids;
-            if ( !client._inventory.GetItemDefinitionIDs( out ids ) )
+            if ( !client.native.inventory.GetItemDefinitionIDs( out ids ) )
                 return;
 
             Definitions = ids.Select( x =>
@@ -105,7 +105,7 @@ namespace Facepunch.Steamworks
         internal T DefinitionProperty<T>( int i, string name )
         {
             string val = string.Empty;
-            client._inventory.GetItemDefinitionProperty( i, name, out val );
+            client.native.inventory.GetItemDefinitionProperty( i, name, out val );
             return (T) Convert.ChangeType( val, typeof( T) );
         }
 
@@ -113,7 +113,7 @@ namespace Facepunch.Steamworks
         {
             if ( updateRequest != 0 )
             {
-                client._inventory.DestroyResult( updateRequest );
+                client.native.inventory.DestroyResult( updateRequest );
                 updateRequest = 0;
             }
         }
@@ -129,7 +129,7 @@ namespace Facepunch.Steamworks
             if ( updateRequest == 0 )
                 return;
 
-            var status = (Valve.Steamworks.EResult) client._inventory.GetResultStatus( updateRequest );
+            var status = (Valve.Steamworks.EResult) client.native.inventory.GetResultStatus( updateRequest );
 
             if ( status == Valve.Steamworks.EResult.k_EResultPending )
                 return;
@@ -165,7 +165,7 @@ namespace Facepunch.Steamworks
         private unsafe void RetrieveInventory()
         {
             Valve.Steamworks.SteamItemDetails_t[] items = null;
-            client._inventory.GetResultItems( updateRequest, out items );
+            client.native.inventory.GetResultItems( updateRequest, out items );
 
             Items = items.Select( x =>
             {
@@ -184,12 +184,12 @@ namespace Facepunch.Steamworks
             // Get a serialized version
             //
             uint size = 0;
-            client._inventory.SerializeResult( updateRequest, IntPtr.Zero, ref size );
+            client.native.inventory.SerializeResult( updateRequest, IntPtr.Zero, ref size );
             SerializedItems = new byte[size];
 
             fixed( byte* b = SerializedItems )
             {
-                client._inventory.SerializeResult( updateRequest, (IntPtr) b, ref size );
+                client.native.inventory.SerializeResult( updateRequest, (IntPtr) b, ref size );
             }
 
             SerializedExpireTime = DateTime.Now.Add( TimeSpan.FromMinutes( 60 ) );
@@ -243,7 +243,7 @@ namespace Facepunch.Steamworks
             {
                 string val = string.Empty;
 
-                if ( !client._inventory.GetItemDefinitionProperty( Id, name, out val ) )
+                if ( !client.native.inventory.GetItemDefinitionProperty( Id, name, out val ) )
                     return default( T );
 
                 try

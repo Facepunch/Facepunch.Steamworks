@@ -53,7 +53,7 @@ namespace Facepunch.Steamworks
                     client = client
                 };
 
-                request.Id = client._servers.RequestInternetServerList( client.AppId, new IntPtr[] { }, request.GetVTablePointer() );
+                request.Id = client.native.servers.RequestInternetServerList( client.AppId, new IntPtr[] { }, request.GetVTablePointer() );
 
                 return request;
             }

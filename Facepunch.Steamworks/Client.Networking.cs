@@ -113,7 +113,7 @@ namespace Facepunch.Steamworks
         {
             fixed ( byte* p = data )
             {
-                return client._networking.SendP2PPacket( steamid, (IntPtr) p, (uint)length, (uint)eP2PSendType, nChannel );
+                return client.native.networking.SendP2PPacket( steamid, (IntPtr) p, (uint)length, (uint)eP2PSendType, nChannel );
             }
         }
 
@@ -121,7 +121,7 @@ namespace Facepunch.Steamworks
         {
             uint DataAvailable = 0;
 
-            if ( !client._networking.IsP2PPacketAvailable( ref DataAvailable, channel ) || DataAvailable == 0 )
+            if ( !client.native.networking.IsP2PPacketAvailable( ref DataAvailable, channel ) || DataAvailable == 0 )
                 return false;
 
             if ( ms.Capacity < DataAvailable )
@@ -133,7 +133,7 @@ namespace Facepunch.Steamworks
             fixed ( byte* p = ms.GetBuffer() )
             {
                 ulong steamid = 1;
-                if ( !client._networking.ReadP2PPacket( (IntPtr)p, (uint)DataAvailable, ref DataAvailable, ref steamid, channel ) || DataAvailable == 0 )
+                if ( !client.native.networking.ReadP2PPacket( (IntPtr)p, (uint)DataAvailable, ref DataAvailable, ref steamid, channel ) || DataAvailable == 0 )
                     return false;
 
                 ms.SetLength( DataAvailable );

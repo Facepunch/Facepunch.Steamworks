@@ -25,17 +25,17 @@ namespace Facepunch.Steamworks
     {
         internal Client client;
     
-        public void OpenProfile( ulong steamid ) { client._friends.ActivateGameOverlayToUser( "steamid", steamid ); }
-        public void OpenChat( ulong steamid ){ client._friends.ActivateGameOverlayToUser( "chat", steamid ); }
-        public void OpenTrade( ulong steamid ) { client._friends.ActivateGameOverlayToUser( "jointrade", steamid ); }
-        public void OpenStats( ulong steamid ) { client._friends.ActivateGameOverlayToUser( "stats", steamid ); }
-        public void OpenAchievements( ulong steamid ) { client._friends.ActivateGameOverlayToUser( "achievements", steamid ); }
+        public void OpenProfile( ulong steamid ) { client.native.friends.ActivateGameOverlayToUser( "steamid", steamid ); }
+        public void OpenChat( ulong steamid ){ client.native.friends.ActivateGameOverlayToUser( "chat", steamid ); }
+        public void OpenTrade( ulong steamid ) { client.native.friends.ActivateGameOverlayToUser( "jointrade", steamid ); }
+        public void OpenStats( ulong steamid ) { client.native.friends.ActivateGameOverlayToUser( "stats", steamid ); }
+        public void OpenAchievements( ulong steamid ) { client.native.friends.ActivateGameOverlayToUser( "achievements", steamid ); }
 
-        public void AddFriend( ulong steamid ) { client._friends.ActivateGameOverlayToUser( "friendadd", steamid ); }
-        public void RemoveFriend( ulong steamid ) { client._friends.ActivateGameOverlayToUser( "friendremove", steamid ); }
-        public void AcceptFriendRequest( ulong steamid ) { client._friends.ActivateGameOverlayToUser( "friendrequestaccept", steamid ); }
-        public void IgnoreFriendRequest( ulong steamid ) { client._friends.ActivateGameOverlayToUser( "friendrequestignore", steamid ); }
+        public void AddFriend( ulong steamid ) { client.native.friends.ActivateGameOverlayToUser( "friendadd", steamid ); }
+        public void RemoveFriend( ulong steamid ) { client.native.friends.ActivateGameOverlayToUser( "friendremove", steamid ); }
+        public void AcceptFriendRequest( ulong steamid ) { client.native.friends.ActivateGameOverlayToUser( "friendrequestaccept", steamid ); }
+        public void IgnoreFriendRequest( ulong steamid ) { client.native.friends.ActivateGameOverlayToUser( "friendrequestignore", steamid ); }
 
-        public void OpenUrl( string url ) { client._friends.ActivateGameOverlayToWebPage( url ); }
+        public void OpenUrl( string url ) { client.native.friends.ActivateGameOverlayToWebPage( url ); }
     }
 }

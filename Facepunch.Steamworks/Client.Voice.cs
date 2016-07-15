@@ -39,7 +39,7 @@ namespace Facepunch.Steamworks
         /// </summary>
         public uint OptimalSampleRate
         {
-            get { return client._user.GetVoiceOptimalSampleRate(); }
+            get { return client.native.user.GetVoiceOptimalSampleRate(); }
         }
 
         private bool _wantsrecording = false;
@@ -58,11 +58,11 @@ namespace Facepunch.Steamworks
 
                 if ( value )
                 {
-                    client._user.StartVoiceRecording();
+                    client.native.user.StartVoiceRecording();
                 }
                 else
                 {
-                    client._user.StopVoiceRecording();
+                    client.native.user.StopVoiceRecording();
                 }
             }
         }
@@ -86,7 +86,7 @@ namespace Facepunch.Steamworks
                 bufferRegularLastWrite = 0;
                 bufferCompressedLastWrite = 0;
 
-                Valve.Steamworks.EVoiceResult result = (Valve.Steamworks.EVoiceResult) client._user.GetVoice(     OnUncompressedData != null, (IntPtr) pbufferCompressed, (uint) bufferCompressed.Length, ref bufferCompressedLastWrite,
+                Valve.Steamworks.EVoiceResult result = (Valve.Steamworks.EVoiceResult) client.native.user.GetVoice(     OnUncompressedData != null, (IntPtr) pbufferCompressed, (uint) bufferCompressed.Length, ref bufferCompressedLastWrite,
                                                         OnCompressedData != null, (IntPtr) pbufferRegular, (uint) bufferRegular.Length, ref bufferRegularLastWrite, 
                                                         DesiredSampleRate == 0 ? OptimalSampleRate : DesiredSampleRate );
 

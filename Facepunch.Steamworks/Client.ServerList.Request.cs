@@ -136,7 +136,7 @@ namespace Facepunch.Steamworks
                 if ( !Finished && Id != IntPtr.Zero )
                 {
                     if ( client.Valid )
-                        client._servers.CancelQuery( Id );
+                        client.native.servers.CancelQuery( Id );
 
                     Id = IntPtr.Zero;
                 }
@@ -170,7 +170,7 @@ namespace Facepunch.Steamworks
                 if ( RequestId != Id )
                     throw new Exception( "Request ID is invalid!" );
 
-                var info = client._servers.GetServerDetails( Id, iServer );
+                var info = client.native.servers.GetServerDetails( Id, iServer );
                 Unresponsive.Add( Server.FromSteam( info ) );
             }
 
@@ -179,7 +179,7 @@ namespace Facepunch.Steamworks
                 if ( RequestId != Id )
                     throw new Exception( "Request ID is invalid!" );
 
-                var info = client._servers.GetServerDetails( Id, iServer );
+                var info = client.native.servers.GetServerDetails( Id, iServer );
                 Responded.Add( Server.FromSteam( info ) );
 
                 System.Diagnostics.Debug.WriteLine( info.m_szServerName );
