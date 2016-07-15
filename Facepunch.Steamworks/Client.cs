@@ -12,6 +12,7 @@ namespace Facepunch.Steamworks
 
         internal Valve.Steamworks.ISteamClient _client;
         internal Valve.Steamworks.ISteamUser _user;
+        internal Valve.Steamworks.ISteamApps _apps;
         internal Valve.Steamworks.ISteamFriends _friends;
         internal Valve.Steamworks.ISteamMatchmakingServers _servers;
         internal Valve.Steamworks.ISteamInventory _inventory;
@@ -32,6 +33,17 @@ namespace Facepunch.Steamworks
         /// </summary>
         public ulong SteamId;
 
+        public enum MessageType : int
+        {
+            Message = 0,
+            Warning = 1
+        }
+
+        /// <summary>
+        /// Called with a message from Steam
+        /// </summary>
+        public Action<MessageType, string> OnMessage;
+
         public Client( uint appId )
         {
             Valve.Steamworks.SteamAPI.Init( appId );
@@ -46,7 +58,7 @@ namespace Facepunch.Steamworks
             //
             // Set up warning hook callback
             //
-            SteamAPIWarningMessageHook ptr = OnWarning;
+            SteamAPIWarningMessageHook ptr = InternalOnWarning;
             _client.SetWarningMessageHook( Marshal.GetFunctionPointerForDelegate( ptr ) );
 
             //
@@ -64,6 +76,7 @@ namespace Facepunch.Steamworks
             _servers = _client.GetISteamMatchmakingServers( _huser, _hpipe, "SteamMatchMakingServers002" );
             _inventory = _client.GetISteamInventory( _huser, _hpipe, "STEAMINVENTORY_INTERFACE_V001" );
             _networking = _client.GetISteamNetworking( _huser, _hpipe, "SteamNetworking005" );
+            _apps = _client.GetISteamApps( _huser, _hpipe, "STEAMAPPS_INTERFACE_VERSION008" );
 
             AppId = appId;
             Username = _friends.GetPersonaName();
@@ -95,9 +108,12 @@ namespace Facepunch.Steamworks
         [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
         public delegate void SteamAPIWarningMessageHook( int nSeverity, System.Text.StringBuilder pchDebugText );
 
-        private void OnWarning( int nSeverity, System.Text.StringBuilder text )
+        private void InternalOnWarning( int nSeverity, System.Text.StringBuilder text )
         {
-            Console.Write( text.ToString() );
+            if ( OnMessage != null )
+            {
+                OnMessage( ( MessageType)nSeverity, text.ToString() );
+            }
         }
 
         /// <summary>

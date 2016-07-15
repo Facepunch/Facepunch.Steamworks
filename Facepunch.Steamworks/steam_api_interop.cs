@@ -2469,7 +2469,7 @@ namespace Valve.Steamworks
         {
             CheckIfUsable();
             IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamApps(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
-            return (ISteamApps)Marshal.PtrToStructure( result, typeof( ISteamApps ) );
+            return new CSteamApps( result );
         }
         internal override ISteamNetworking GetISteamNetworking( uint hSteamUser, uint hSteamPipe, string pchVersion )
         {
