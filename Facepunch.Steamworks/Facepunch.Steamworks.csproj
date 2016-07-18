@@ -122,6 +122,7 @@
     <Compile Include="Client.cs" />
     <Compile Include="Client\App.cs" />
     <Compile Include="Client\Friends.cs" />
+    <Compile Include="Client\Image.cs" />
     <Compile Include="Client\Inventory.cs" />
     <Compile Include="Client\Stats.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
