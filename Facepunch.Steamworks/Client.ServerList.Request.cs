@@ -14,6 +14,8 @@ namespace Facepunch.Steamworks
             internal Client client;
             internal IntPtr Id;
 
+            public Action OnUpdate;
+
             public struct Server
             {
                 public string Name { get; set; }
@@ -73,7 +75,7 @@ namespace Facepunch.Steamworks
                         Secure = item.m_bSecure,
                         LastTimePlayed = item.m_ulTimeLastPlayed,
                         Version = item.m_nServerVersion,
-                        Tags = item.m_szGameTags.Split( ',' ),
+                        Tags = item.m_szGameTags == null ? null : item.m_szGameTags.Split( ',' ),
                         SteamId = item.m_steamID
                     };
                 }
@@ -116,6 +118,8 @@ namespace Facepunch.Steamworks
                 if ( Id == IntPtr.Zero )
                     return;
 
+                bool changes = false;
+
                 //
                 // Add any servers we're not watching to our watch list
                 //
@@ -139,6 +143,7 @@ namespace Facepunch.Steamworks
                     if ( info.m_bHadSuccessfulResponse )
                     {
                         OnServer( info );
+                        changes = true;
                         return true;
                     }
 
@@ -164,7 +169,11 @@ namespace Facepunch.Steamworks
                     client.OnUpdate -= Update;
                     client.native.servers.CancelQuery( Id );
                     Id = IntPtr.Zero;
+                    changes = true;
                 }
+
+                if ( changes && OnUpdate != null)
+                    OnUpdate();
             }
 
             private void OnServer( gameserveritem_t info )
