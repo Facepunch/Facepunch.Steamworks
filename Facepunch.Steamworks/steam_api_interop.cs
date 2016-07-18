@@ -686,13 +686,13 @@ namespace Valve.Interop
         [DllImportAttribute( "FacepunchSteamworksApi", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamApps_RequestAppProofOfPurchaseKey" )]
         internal static extern void SteamAPI_ISteamApps_RequestAppProofOfPurchaseKey( IntPtr instancePtr, uint nAppID );
         [DllImportAttribute( "FacepunchSteamworksApi", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamApps_GetCurrentBetaName" )]
-        internal static extern bool SteamAPI_ISteamApps_GetCurrentBetaName( IntPtr instancePtr, string pchName, int cchNameBufferSize );
+        internal static extern bool SteamAPI_ISteamApps_GetCurrentBetaName( IntPtr instancePtr, IntPtr pchName, int cchNameBufferSize );
         [DllImportAttribute( "FacepunchSteamworksApi", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamApps_MarkContentCorrupt" )]
         internal static extern bool SteamAPI_ISteamApps_MarkContentCorrupt( IntPtr instancePtr, bool bMissingFilesOnly );
         [DllImportAttribute( "FacepunchSteamworksApi", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamApps_GetInstalledDepots" )]
         internal static extern uint SteamAPI_ISteamApps_GetInstalledDepots( IntPtr instancePtr, uint appID, ref uint pvecDepots, uint cMaxDepots );
         [DllImportAttribute( "FacepunchSteamworksApi", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamApps_GetAppInstallDir" )]
-        internal static extern uint SteamAPI_ISteamApps_GetAppInstallDir( IntPtr instancePtr, uint appID, string pchFolder, uint cchFolderBufferSize );
+        internal static extern uint SteamAPI_ISteamApps_GetAppInstallDir( IntPtr instancePtr, uint appID, IntPtr pchFolder, uint cchFolderBufferSize );
         [DllImportAttribute( "FacepunchSteamworksApi", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamApps_BIsAppInstalled" )]
         internal static extern bool SteamAPI_ISteamApps_BIsAppInstalled( IntPtr instancePtr, uint appID );
         [DllImportAttribute( "FacepunchSteamworksApi", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamApps_GetAppOwner" )]
@@ -1964,10 +1964,10 @@ namespace Valve.Steamworks
         internal abstract void InstallDLC( uint nAppID );
         internal abstract void UninstallDLC( uint nAppID );
         internal abstract void RequestAppProofOfPurchaseKey( uint nAppID );
-        internal abstract bool GetCurrentBetaName( string pchName, int cchNameBufferSize );
+        internal abstract string GetCurrentBetaName();
         internal abstract bool MarkContentCorrupt( bool bMissingFilesOnly );
         internal abstract uint GetInstalledDepots( uint appID, ref uint pvecDepots, uint cMaxDepots );
-        internal abstract uint GetAppInstallDir( uint appID, string pchFolder, uint cchFolderBufferSize );
+        internal abstract string GetAppInstallDir( uint appID );
         internal abstract bool BIsAppInstalled( uint appID );
         internal abstract ulong GetAppOwner();
         internal abstract string GetLaunchQueryParam( string pchKey );
@@ -2433,7 +2433,7 @@ namespace Valve.Steamworks
         {
             CheckIfUsable();
             IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamUtils(m_pSteamClient,hSteamPipe,pchVersion);
-            return (ISteamUtils)Marshal.PtrToStructure( result, typeof( ISteamUtils ) );
+            return new CSteamUtils( result );
         }
         internal override ISteamMatchmaking GetISteamMatchmaking( uint hSteamUser, uint hSteamPipe, string pchVersion )
         {
@@ -2487,7 +2487,7 @@ namespace Valve.Steamworks
         {
             CheckIfUsable();
             IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamScreenshots(m_pSteamClient,hSteamuser,hSteamPipe,pchVersion);
-            return (ISteamScreenshots)Marshal.PtrToStructure( result, typeof( ISteamScreenshots ) );
+            return new CSteamScreenshots( result );
         }
         internal override uint GetIPCCallCount()
         {
@@ -4635,11 +4635,19 @@ namespace Valve.Steamworks
             CheckIfUsable();
             NativeEntrypoints.SteamAPI_ISteamApps_RequestAppProofOfPurchaseKey( m_pSteamApps, nAppID );
         }
-        internal override bool GetCurrentBetaName( string pchName, int cchNameBufferSize )
+        internal unsafe override string GetCurrentBetaName()
         {
             CheckIfUsable();
-            bool result = NativeEntrypoints.SteamAPI_ISteamApps_GetCurrentBetaName(m_pSteamApps,pchName,cchNameBufferSize);
-            return result;
+
+            var buffer = new byte[512];
+
+            fixed ( byte* p = buffer )
+            {
+                if ( !NativeEntrypoints.SteamAPI_ISteamApps_GetCurrentBetaName( m_pSteamApps, (IntPtr)p, buffer.Length ) )
+                    return string.Empty;
+
+                return Marshal.PtrToStringAuto( (IntPtr)p );
+            }
         }
         internal override bool MarkContentCorrupt( bool bMissingFilesOnly )
         {
@@ -4654,11 +4662,19 @@ namespace Valve.Steamworks
             uint result = NativeEntrypoints.SteamAPI_ISteamApps_GetInstalledDepots(m_pSteamApps,appID,ref pvecDepots,cMaxDepots);
             return result;
         }
-        internal override uint GetAppInstallDir( uint appID, string pchFolder, uint cchFolderBufferSize )
+        internal override unsafe string GetAppInstallDir( uint appID )
         {
             CheckIfUsable();
-            uint result = NativeEntrypoints.SteamAPI_ISteamApps_GetAppInstallDir(m_pSteamApps,appID,pchFolder,cchFolderBufferSize);
-            return result;
+
+            var buffer = new byte[512];
+
+            fixed ( byte* p = buffer )
+            {
+                if ( 0 == NativeEntrypoints.SteamAPI_ISteamApps_GetAppInstallDir( m_pSteamApps, appID,( IntPtr)p, (uint) buffer.Length ) )
+                    return string.Empty;
+
+                return Marshal.PtrToStringAuto( (IntPtr)p );
+            }
         }
         internal override bool BIsAppInstalled( uint appID )
         {

@@ -22,6 +22,8 @@ namespace Facepunch.Steamworks
             internal Valve.Steamworks.ISteamInventory inventory;
             internal Valve.Steamworks.ISteamNetworking networking;
             internal Valve.Steamworks.ISteamUserStats userstats;
+            internal Valve.Steamworks.ISteamUtils utils;
+            internal Valve.Steamworks.ISteamScreenshots screenshots;
 
             internal bool Init()
             {
@@ -43,6 +45,9 @@ namespace Facepunch.Steamworks
                 networking = client.GetISteamNetworking( _huser, _hpipe, "SteamNetworking005" );
                 apps = client.GetISteamApps( _huser, _hpipe, "STEAMAPPS_INTERFACE_VERSION008" );
                 userstats = client.GetISteamUserStats( _huser, _hpipe, "STEAMUSERSTATS_INTERFACE_VERSION011" );
+                screenshots = client.GetISteamScreenshots( _huser, _hpipe, "STEAMSCREENSHOTS_INTERFACE_VERSION002" );
+
+                utils = client.GetISteamUtils( _hpipe, "SteamUtils008" );
 
                 return true;
             }
@@ -73,7 +78,7 @@ namespace Facepunch.Steamworks
         /// <summary>
         /// Current running program's AppId
         /// </summary>
-        public uint AppId;
+        public uint AppId { get; private set; }
 
         /// <summary>
         /// Current user's Username
@@ -83,7 +88,12 @@ namespace Facepunch.Steamworks
         /// <summary>
         /// Current user's SteamId
         /// </summary>
-        public ulong SteamId;
+        public ulong SteamId { get; private set; }
+
+        /// <summary>
+        /// Current Beta name, if ser
+        /// </summary>
+        public string BetaName { get; private set; }
 
         public enum MessageType : int
         {
@@ -124,6 +134,7 @@ namespace Facepunch.Steamworks
             AppId = appId;
             Username = native.friends.GetPersonaName();
             SteamId = native.user.GetSteamID();
+            BetaName = native.apps.GetCurrentBetaName();
         }
 
         public void Dispose()
