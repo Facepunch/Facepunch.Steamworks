@@ -5,7 +5,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Facepunch.Steamworks.Test
 {
-    public partial class Client
+    [TestClass]
+    [DeploymentItem( "FacepunchSteamworksApi.dll" )]
+    [DeploymentItem( "steam_appid.txt" )]
+    public partial class Networking
     {
         [TestMethod]
         public void PeerToPeerSend()

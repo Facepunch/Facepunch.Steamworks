@@ -87,7 +87,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Client.cs" />
-    <Compile Include="Client.Networking.cs" />
+    <Compile Include="Networking.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -97,7 +97,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Client.Stats.cs" />
+    <Compile Include="Serverlist.cs" />
+    <Compile Include="Stats.cs" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

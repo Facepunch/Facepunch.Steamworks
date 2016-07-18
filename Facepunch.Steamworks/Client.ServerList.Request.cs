@@ -14,9 +14,6 @@ namespace Facepunch.Steamworks
             internal Client client;
             internal IntPtr Id;
 
-            private IntPtr m_pVTable;
-            private GCHandle m_pGCHandle;
-
             public struct Server
             {
                 public string Name { get; set; }
@@ -55,8 +52,6 @@ namespace Facepunch.Steamworks
                         return string.Format( "{0}.{1}.{2}.{3}:{4}", ( Address >> 24 ) & 0xFFul, ( Address >> 16 ) & 0xFFul, ( Address >> 8 ) & 0xFFul, Address & 0xFFul, ConnectionPort );
                     }
                 }
-
-                
 
                 internal static Server FromSteam( gameserveritem_t item )
                 {
@@ -100,21 +95,11 @@ namespace Facepunch.Steamworks
             /// </summary>
             public bool Finished = false;
 
-            internal Request()
+            internal Request( Client c )
             {
-                //
-                // Create a fake vtable for Steam to respond to
-                //
-                var vt = new VTable()
-                {
-                    responded = OnServerResponded,
-                    nonresponsive = NonResponsive,
-                    complete = Complete
-                };
+                client = c;
 
-                m_pVTable = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( VTable ) ) );
-                Marshal.StructureToPtr( vt, m_pVTable, false );
-                m_pGCHandle = GCHandle.Alloc( m_pVTable, GCHandleType.Pinned );
+                client.OnUpdate += Update;
             }
 
             ~Request()
@@ -122,88 +107,98 @@ namespace Facepunch.Steamworks
                 Dispose();
             }
 
+            int lastCount = 0;
+
+            internal List<int> watchlist = new List<int>();
+
+            private void Update()
+            {
+                if ( Id == IntPtr.Zero )
+                    return;
+
+                //
+                // Add any servers we're not watching to our watch list
+                //
+                var count = client.native.servers.GetServerCount( Id );
+                if ( count != lastCount )
+                {
+                    for ( int i = lastCount; i < count; i++ )
+                    {
+                        watchlist.Add( i );
+                    }
+
+                    lastCount = count;
+                }
+
+                //
+                // Remove any servers that respond successfully
+                //
+                watchlist.RemoveAll( x =>
+                {
+                    var info = client.native.servers.GetServerDetails( Id, x );
+                    if ( info.m_bHadSuccessfulResponse )
+                    {
+                        OnServer( info );
+                        return true;
+                    }
+
+                    return false;
+                } );
+
+                //
+                // If we've finished refreshing
+                // 
+                if ( client.native.servers.IsRefreshing( Id ) == false )
+                {
+                    //
+                    // Put any other servers on the 'no response' list
+                    //
+                    watchlist.RemoveAll( x =>
+                    {
+                        var info = client.native.servers.GetServerDetails( Id, x );
+                        OnServer( info );
+                        return true;
+                    } );
+
+                    Finished = true;
+                    client.OnUpdate -= Update;
+                    client.native.servers.CancelQuery( Id );
+                    Id = IntPtr.Zero;
+                }
+            }
+
+            private void OnServer( gameserveritem_t info )
+            {
+                if ( info.m_bHadSuccessfulResponse )
+                {
+                    Responded.Add( Server.FromSteam( info ) );
+                }
+                else
+                {
+                    Unresponsive.Add( Server.FromSteam( info ) );
+                }
+
+            }
+
             /// <summary>
             /// Disposing will end the query
             /// </summary>
             public void Dispose()
             {
+                client.OnUpdate -= Update;
+
                 //
                 // Cancel the query if it's still running
                 //
-                if ( !Finished && Id != IntPtr.Zero )
+                if ( Id != IntPtr.Zero )
                 {
                     if ( client.Valid )
                         client.native.servers.CancelQuery( Id );
 
                     Id = IntPtr.Zero;
                 }
-
-                //
-                // Release the pinned GC resources
-                //
-                if ( m_pVTable != IntPtr.Zero )
-                {
-                    Marshal.FreeHGlobal( m_pVTable );
-                    m_pVTable = IntPtr.Zero;
-                }
-
-                if ( m_pGCHandle.IsAllocated )
-                {
-                    m_pGCHandle.Free();
-                }
             }
 
-            private void Complete( IntPtr thisptr, IntPtr RequestId, int response )
-            {
-                if ( RequestId != Id )
-                    throw new Exception( "Request ID is invalid!" );
-
-                Finished = true;
-                Id = IntPtr.Zero;
-            }
-
-            private void NonResponsive( IntPtr thisptr, IntPtr RequestId, int iServer )
-            {
-                if ( RequestId != Id )
-                    throw new Exception( "Request ID is invalid!" );
-
-                var info = client.native.servers.GetServerDetails( Id, iServer );
-                Unresponsive.Add( Server.FromSteam( info ) );
-            }
-
-            private void OnServerResponded( IntPtr thisptr, IntPtr RequestId, int iServer )
-            {
-                if ( RequestId != Id )
-                    throw new Exception( "Request ID is invalid!" );
-
-                var info = client.native.servers.GetServerDetails( Id, iServer );
-                Responded.Add( Server.FromSteam( info ) );
-
-                System.Diagnostics.Debug.WriteLine( info.m_szServerName );
-            }
-
-            internal IntPtr GetVTablePointer()
-            {
-                return m_pGCHandle.AddrOfPinnedObject();
-            }
-
-            [StructLayout( LayoutKind.Sequential )]
-            internal class VTable
-            {
-                [UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-                internal delegate void InternalServerResponded( IntPtr thisptr, IntPtr hRequest, int iServer );
-                [UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-                internal delegate void InternalServerFailedToRespond( IntPtr thisptr, IntPtr hRequest, int iServer );
-                [UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-                internal delegate void InternalRefreshComplete( IntPtr thisptr, IntPtr hRequest, int response );
-
-                [NonSerialized, MarshalAs(UnmanagedType.FunctionPtr)]
-                internal InternalServerResponded responded;
-                [NonSerialized, MarshalAs(UnmanagedType.FunctionPtr)]
-                internal InternalServerFailedToRespond nonresponsive;
-                [NonSerialized, MarshalAs(UnmanagedType.FunctionPtr)]
-                internal InternalRefreshComplete complete;
-            }
         }
     }
 }

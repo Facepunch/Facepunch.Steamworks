@@ -111,26 +111,7 @@ namespace Facepunch.Steamworks.Test
             }
         }
 
-        [TestMethod]
-        public void GetServers()
-        {
-            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
-            {
-                var query = client.ServerList.Test();
 
-                for ( int i = 0; i < 100 ; i++ )
-                {
-                    client.Update();
-                    System.Threading.Thread.Sleep( 5 );
-
-                    if ( query.Finished )
-                        break;
-                }
-
-                Console.WriteLine( "Responded: " + query.Responded.Count.ToString() );
-                Console.WriteLine( "Unresponsive: " + query.Unresponsive.Count.ToString() );
-            }
-        }
 
         [TestMethod]
         public void InventoryDefinitions()

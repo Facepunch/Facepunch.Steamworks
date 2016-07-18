@@ -139,7 +139,7 @@ namespace Facepunch.Steamworks
 
         public void Dispose()
         {
-            if ( native  != null)
+            if ( native != null)
             {
                 native.Dispose();
                 native = null;
@@ -157,15 +157,23 @@ namespace Facepunch.Steamworks
             }
         }
 
+        internal event Action OnUpdate;
+
         /// <summary>
         /// Should be called at least once every frame
         /// </summary>
         public void Update()
         {
+            if ( native == null )
+                return;
+
             Valve.Steamworks.SteamAPI.RunCallbacks();
             Voice.Update();
             Inventory.Update();
             Networking.Update();
+
+            if ( OnUpdate != null )
+                OnUpdate();
         }
 
         public bool Valid

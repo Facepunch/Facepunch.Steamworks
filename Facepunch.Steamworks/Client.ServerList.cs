@@ -48,25 +48,41 @@ namespace Facepunch.Steamworks
             //fixed ( void* a = array )
             {
 
-                var request = new Request()
-                {
-                    client = client
-                };
+                var request = new Request( client );
 
-                request.Id = client.native.servers.RequestInternetServerList( client.AppId, new IntPtr[] { }, request.GetVTablePointer() );
+                request.Id = client.native.servers.RequestInternetServerList( client.AppId, new IntPtr[] { }, IntPtr.Zero );
 
                 return request;
             }
         }
 
+        class ResponseClass : ISteamMatchmakingServerListResponse
+        {
+            internal override IntPtr GetIntPtr()
+            {
+                return IntPtr.Zero;
+            }
+
+            internal override void RefreshComplete( uint hRequest, uint response )
+            {
+                throw new NotImplementedException();
+            }
+
+            internal override void ServerFailedToRespond( uint hRequest, int iServer )
+            {
+                throw new NotImplementedException();
+            }
+
+            internal override void ServerResponded( uint hRequest, int iServer )
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public unsafe Request History( Dictionary< string, string > filter )
         {
-            var request = new Request()
-            {
-                client = client
-            };
-
-            request.Id = client.native.servers.RequestHistoryServerList( client.AppId, new IntPtr[] { }, request.GetVTablePointer() );
+            var request = new Request( client );
+            request.Id = client.native.servers.RequestHistoryServerList( client.AppId, new IntPtr[] { }, IntPtr.Zero );
 
             return request;
         }
