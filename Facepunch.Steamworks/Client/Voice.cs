@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -108,6 +109,36 @@ namespace Facepunch.Steamworks
                 if ( result == Valve.Steamworks.EVoiceResult.k_EVoiceResultNotRecording ||
                     result == Valve.Steamworks.EVoiceResult.k_EVoiceResultNotInitialized )
                     IsRecording = false;
+            }
+        }
+
+        public unsafe bool Decompress( byte[] input, int inputoffset, int inputsize, MemoryStream output, uint samepleRate = 0 )
+        {
+            if ( samepleRate == 0 )
+                samepleRate = OptimalSampleRate;
+
+            //
+            // Guessing the uncompressed size cuz we're dicks
+            //
+            {
+                var targetBufferSize = inputsize * 10;
+
+                if ( output.Capacity < targetBufferSize )
+                    output.Capacity = targetBufferSize;
+
+                output.SetLength( targetBufferSize );
+            }
+
+            fixed ( byte* pout = output.GetBuffer() )
+            fixed ( byte* p = input )
+            {
+                uint bytesOut = 0;
+                var result = (Valve.Steamworks.EVoiceResult) client.native.user.DecompressVoice( (IntPtr)( p + inputoffset ), (uint) inputsize, (IntPtr) pout, (uint) output.Length, ref bytesOut, (uint)samepleRate );
+
+                if ( bytesOut > 0 )
+                    output.SetLength( bytesOut );
+
+                return result == Valve.Steamworks.EVoiceResult.k_EVoiceResultOK;
             }
         }
     }

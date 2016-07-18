@@ -117,7 +117,6 @@
     <Compile Include="Client.Overlay.cs" />
     <Compile Include="Client.ServerList.cs" />
     <Compile Include="Client.ServerList.Request.cs" />
-    <Compile Include="Client.Voice.cs" />
     <Compile Include="Client.Auth.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Client\App.cs" />
@@ -125,6 +124,7 @@
     <Compile Include="Client\Image.cs" />
     <Compile Include="Client\Inventory.cs" />
     <Compile Include="Client\Stats.cs" />
+    <Compile Include="Client\Voice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="steam_api_interop.cs" />
   </ItemGroup>
