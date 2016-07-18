@@ -11,6 +11,17 @@ namespace Facepunch.Steamworks
         public int Width { get; internal set; }
         public int Height { get; internal set; }
 
+        public bool IsLoaded { get; internal set; }
+
+        /// <summary>
+        /// Return true if this image couldn't be loaded for some reason
+        /// </summary>
+        public bool IsError { get; internal set; }
+
+        public void Read( byte[] buffer )
+        {
+
+        }
 
     }
 }
