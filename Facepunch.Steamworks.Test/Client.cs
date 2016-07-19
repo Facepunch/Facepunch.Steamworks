@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Facepunch.Steamworks.Test
@@ -137,10 +138,14 @@ namespace Facepunch.Steamworks.Test
                 client.Inventory.Refresh();
 
                 // Wait for the items
+                var timeout = Stopwatch.StartNew();
                 while ( client.Inventory.Items == null )
                 {
                     client.Update();
-                    System.Threading.Thread.Sleep( 10 );
+                    System.Threading.Thread.Sleep( 1000 );
+
+                    if ( timeout.Elapsed.TotalSeconds > 5 )
+                        break;
                 }
 
                 // make sure callback was called

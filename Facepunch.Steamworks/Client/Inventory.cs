@@ -29,7 +29,7 @@ namespace Facepunch.Steamworks
         public Action OnUpdate;
 
         internal Client client;
-        private int updateRequest = 0;
+        private int updateRequest = -1;
 
         internal Inventory( Client c )
         {
@@ -57,10 +57,13 @@ namespace Facepunch.Steamworks
         public void Refresh()
         {
             // Pending
-            if ( updateRequest != 0 )
+            if ( updateRequest != -1 )
                 return;
 
-            client.native.inventory.GetAllItems( ref updateRequest );
+            if ( !client.native.inventory.GetAllItems( ref updateRequest ) )
+            {
+                Console.WriteLine( "GetAllItems failed!?" );
+            }
         }
 
         internal void LoadItemDefinitions()
@@ -97,10 +100,10 @@ namespace Facepunch.Steamworks
 
         internal void DestroyResult()
         {
-            if ( updateRequest != 0 )
+            if ( updateRequest != -1 )
             {
                 client.native.inventory.DestroyResult( updateRequest );
-                updateRequest = 0;
+                updateRequest = -1;
             }
         }
 
@@ -112,7 +115,7 @@ namespace Facepunch.Steamworks
 
         private void UpdateRequest()
         {
-            if ( updateRequest == 0 )
+            if ( updateRequest == -1 )
                 return;
 
             var status = (Valve.Steamworks.EResult) client.native.inventory.GetResultStatus( updateRequest );
