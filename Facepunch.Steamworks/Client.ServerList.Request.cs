@@ -113,8 +113,48 @@ namespace Facepunch.Steamworks
 
             internal List<int> watchlist = new List<int>();
 
+            internal IEnumerable<string> ServerList { get; set; }
+            internal int ServerListPointer = 0;
+
+
+            void UpdateCustomQuery()
+            {
+                if ( ServerList == null )
+                    return;
+
+                if ( Id != IntPtr.Zero )
+                    return;
+
+                var sublist = ServerList.Skip( ServerListPointer ).Take( 10 );
+
+                if ( sublist.Count() == 0 )
+                {
+                    ServerList = null;
+                    ServerListPointer = 0;
+                    Finished = true;
+                    return;
+                }
+
+                ServerListPointer += sublist.Count();
+
+                var filter = new Filter();
+                filter.Add( "or", sublist.Count().ToString() );
+
+                foreach ( var server in sublist )
+                {
+                    filter.Add( "gameaddr", server );
+                }
+
+
+                filter.Start();
+                Id = client.native.servers.RequestInternetServerList( client.AppId, filter.NativeArray, filter.Count, IntPtr.Zero );
+                filter.Free();
+            }
+
             private void Update()
             {
+                UpdateCustomQuery();
+
                 if ( Id == IntPtr.Zero )
                     return;
 
@@ -165,8 +205,15 @@ namespace Facepunch.Steamworks
                         return true;
                     } );
 
-                    Finished = true;
-                    client.OnUpdate -= Update;
+                    //
+                    // We have more to process
+                    //
+                    if ( ServerList == null )
+                    {
+                        Finished = true;
+                        client.OnUpdate -= Update;
+                    }
+
                     client.native.servers.CancelQuery( Id );
                     Id = IntPtr.Zero;
                     changes = true;

@@ -23,10 +23,59 @@ namespace Facepunch.Steamworks
         }
     }
 
-
+    
 
     public partial class ServerList
     {
+
+        public class Filter : List<KeyValuePair<string, string>>
+        {
+            public void Add( string k, string v )
+            {
+                Add( new KeyValuePair<string, string>( k, v ) );
+            }
+
+            internal IntPtr NativeArray;
+            private IntPtr m_pArrayEntries;
+
+            internal void Start()
+            {
+                var filters = this.Select( x =>
+                {
+                    return new MatchMakingKeyValuePair_t()
+                    {
+                        m_szKey  = x.Key,
+                        m_szValue = x.Value
+                    };
+
+                } ).ToArray();
+
+                int sizeOfMMKVP = Marshal.SizeOf(typeof(MatchMakingKeyValuePair_t));
+                NativeArray = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( IntPtr ) ) * filters.Length );
+                m_pArrayEntries = Marshal.AllocHGlobal( sizeOfMMKVP * filters.Length );
+
+                for ( int i = 0; i < filters.Length; ++i )
+                {
+                    Marshal.StructureToPtr( filters[i], new IntPtr( m_pArrayEntries.ToInt64() + ( i * sizeOfMMKVP ) ), false );
+                }
+
+                Marshal.WriteIntPtr( NativeArray, m_pArrayEntries );
+            }
+
+            internal void Free()
+            {
+                if ( m_pArrayEntries != IntPtr.Zero )
+                {
+                    Marshal.FreeHGlobal( m_pArrayEntries );
+                }
+
+                if ( NativeArray != IntPtr.Zero )
+                {
+                    Marshal.FreeHGlobal( NativeArray );
+                }
+            }
+        }
+
         internal Client client;
 
         [StructLayout( LayoutKind.Sequential )]
@@ -68,81 +117,28 @@ namespace Facepunch.Steamworks
             }
         }
 
-        class ResponseClass : ISteamMatchmakingServerListResponse
+
+
+
+
+        public Request Internet( Filter filter )
         {
-            internal override IntPtr GetIntPtr()
-            {
-                return IntPtr.Zero;
-            }
-
-            internal override void RefreshComplete( uint hRequest, uint response )
-            {
-                throw new NotImplementedException();
-            }
-
-            internal override void ServerFailedToRespond( uint hRequest, int iServer )
-            {
-                throw new NotImplementedException();
-            }
-
-            internal override void ServerResponded( uint hRequest, int iServer )
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        private IntPtr m_pNativeArray;
-        private IntPtr m_pArrayEntries;
-
-        internal void FilterStart( Dictionary<string, string> filter )
-        {
-            var filters = filter.Select( x =>
-            {
-                return new MatchMakingKeyValuePair_t()
-                {
-                    m_szKey  = x.Key,
-                    m_szValue = x.Value
-                };
-
-            } ).ToArray();
-
-            int sizeOfMMKVP = Marshal.SizeOf(typeof(MatchMakingKeyValuePair_t));
-            m_pNativeArray = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( IntPtr ) ) * filters.Length );
-            m_pArrayEntries = Marshal.AllocHGlobal( sizeOfMMKVP * filters.Length );
-
-            for ( int i = 0; i < filters.Length; ++i )
-            {
-                Marshal.StructureToPtr( filters[i], new IntPtr( m_pArrayEntries.ToInt64() + ( i * sizeOfMMKVP ) ), false );
-            }
-
-            Marshal.WriteIntPtr( m_pNativeArray, m_pArrayEntries );
-        }
-
-        internal void FilterFree()
-        {
-            if ( m_pArrayEntries != IntPtr.Zero )
-            {
-                Marshal.FreeHGlobal( m_pArrayEntries );
-            }
-
-            if ( m_pNativeArray != IntPtr.Zero )
-            {
-                Marshal.FreeHGlobal( m_pNativeArray );
-            }
-        }
-
-        public Request Internet( Dictionary< string, string > filter )
-        {
-            FilterStart( filter );
+            filter.Start();
 
             var request = new Request( client );
-            request.Id = client.native.servers.RequestInternetServerList( client.AppId, m_pNativeArray, filter.Count, IntPtr.Zero );
+            request.Id = client.native.servers.RequestInternetServerList( client.AppId, filter.NativeArray, filter.Count, IntPtr.Zero );
 
-            FilterFree();
+            filter.Free();
 
             return request;
         }
 
+        public Request Custom( IEnumerable<string> serverList )
+        {
+            var request = new Request( client );
+            request.ServerList = serverList;
+            return request;
+        }
 
         /// <summary>
         /// History filters don't seem to work, so we don't bother.
