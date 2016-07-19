@@ -164,27 +164,27 @@ namespace Facepunch.Steamworks
             return request;
         }
 
-        public void AddToHistory( Request.Server server )
+        public void AddToHistory( Server server )
         {
             // client.native.matchmaking
         }
 
-        public void RemoveFromHistory( Request.Server server )
+        public void RemoveFromHistory( Server server )
         {
             // 
         }
 
-        public void AddToFavourite( Request.Server server )
+        public void AddToFavourite( Server server )
         {
             // client.native.matchmaking
         }
 
-        public void RemoveFromFavourite( Request.Server server )
+        public void RemoveFromFavourite( Server server )
         {
             // 
         }
 
-        public bool IsFavourite( Request.Server server )
+        public bool IsFavourite( Server server )
         {
             return false;
         }

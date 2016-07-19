@@ -285,5 +285,44 @@ namespace Facepunch.Steamworks.Test
                 query.Dispose();
             }
         }
+
+        [TestMethod]
+        public void PlayerList()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                var filter = new Facepunch.Steamworks.ServerList.Filter();
+                filter.Add( "appid", client.AppId.ToString() );
+                filter.Add( "gamedir", "rust" );
+                filter.Add( "secure", "1" );
+
+                using ( var query = client.ServerList.Internet( filter ) )
+                {
+
+                    for ( int i = 0; i < 1000; i++ )
+                    {
+                        client.Update();
+                        System.Threading.Thread.Sleep( 10 );
+
+                        if ( query.Responded.Count > 0 && query.Responded.Any( x => x.Players > 5 ) )
+                            break;
+
+                        if ( query.Finished )
+                            break;
+                    }
+
+                    query.Dispose();
+
+                    var server = query.Responded.First( x => x.Players > 5 );
+                    server.UpdateRules();
+
+                    foreach ( var rule in server.Rules )
+                    {
+                        Console.WriteLine( rule.Key + " = " + rule.Value );
+                    }
+
+                }                
+            }
+        }
     }
 }

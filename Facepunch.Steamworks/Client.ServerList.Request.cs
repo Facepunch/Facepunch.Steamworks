@@ -16,71 +16,6 @@ namespace Facepunch.Steamworks
 
             public Action OnUpdate;
 
-            public struct Server
-            {
-                public string Name { get; set; }
-                public int Ping { get; set; }
-                public string GameDir { get; set; }
-                public string Map { get; set; }
-                public string Description { get; set; }
-                public uint AppId { get; set; }
-                public int Players { get; set; }
-                public int MaxPlayers { get; set; }
-                public int BotPlayers { get; set; }
-                public bool Passworded { get; set; }
-                public bool Secure { get; set; }
-                public uint LastTimePlayed { get; set; }
-                public int Version { get; set; }
-                public string[] Tags { get; set; }
-                public ulong SteamId { get; set; }
-
-                public uint Address { get; set; }
-
-                public int ConnectionPort { get; set; }
-
-                public int QueryPort { get; set; }
-
-                public string AddressString
-                {
-                    get
-                    {
-                        return string.Format( "{0}.{1}.{2}.{3}", ( Address >> 24 ) & 0xFFul, ( Address >> 16 ) & 0xFFul, ( Address >> 8 ) & 0xFFul, Address & 0xFFul );
-                    }
-                }
-                public string ConnectionAddress
-                {
-                    get
-                    {
-                        return string.Format( "{0}.{1}.{2}.{3}:{4}", ( Address >> 24 ) & 0xFFul, ( Address >> 16 ) & 0xFFul, ( Address >> 8 ) & 0xFFul, Address & 0xFFul, ConnectionPort );
-                    }
-                }
-
-                internal static Server FromSteam( gameserveritem_t item )
-                {
-                    return new Server()
-                    {
-                        Address = item.m_NetAdr.m_unIP,
-                        ConnectionPort = item.m_NetAdr.m_usConnectionPort,
-                        QueryPort = item.m_NetAdr.m_usQueryPort,
-                        Name = item.m_szServerName,
-                        Ping = item.m_nPing,
-                        GameDir = item.m_szGameDir,
-                        Map = item.m_szMap,
-                        Description = item.m_szGameDescription,
-                        AppId = item.m_nAppID,
-                        Players = item.m_nPlayers,
-                        MaxPlayers = item.m_nMaxPlayers,
-                        BotPlayers = item.m_nBotPlayers,
-                        Passworded = item.m_bPassword,
-                        Secure = item.m_bSecure,
-                        LastTimePlayed = item.m_ulTimeLastPlayed,
-                        Version = item.m_nServerVersion,
-                        Tags = item.m_szGameTags == null ? null : item.m_szGameTags.Split( ',' ),
-                        SteamId = item.m_steamID
-                    };
-                }
-            }
-
             /// <summary>
             /// A list of servers that responded. If you're only interested in servers that responded since you
             /// last updated, then simply clear this list.
@@ -144,7 +79,6 @@ namespace Facepunch.Steamworks
                 {
                     filter.Add( "gameaddr", server );
                 }
-
 
                 filter.Start();
                 Id = client.native.servers.RequestInternetServerList( client.AppId, filter.NativeArray, filter.Count, IntPtr.Zero );
@@ -227,11 +161,11 @@ namespace Facepunch.Steamworks
             {
                 if ( info.m_bHadSuccessfulResponse )
                 {
-                    Responded.Add( Server.FromSteam( info ) );
+                    Responded.Add( Server.FromSteam( client, info ) );
                 }
                 else
                 {
-                    Unresponsive.Add( Server.FromSteam( info ) );
+                    Unresponsive.Add( Server.FromSteam( client, info ) );
                 }
 
             }
