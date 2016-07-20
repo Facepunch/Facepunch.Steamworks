@@ -9,7 +9,7 @@ namespace Facepunch.Steamworks
 {
     public partial class ServerList
     {
-        public class Server
+        public struct Server
         {
             public string Name { get; set; }
             public int Ping { get; set; }

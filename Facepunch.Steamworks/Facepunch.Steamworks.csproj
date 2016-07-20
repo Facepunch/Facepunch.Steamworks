@@ -127,6 +127,7 @@
     <Compile Include="Client\Stats.cs" />
     <Compile Include="Client\Voice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Server.cs" />
     <Compile Include="steam_api_interop.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
