@@ -23,8 +23,6 @@ namespace Facepunch.Steamworks
         }
     }
 
-    
-
     public partial class ServerList
     {
 
@@ -86,40 +84,6 @@ namespace Facepunch.Steamworks
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
             public string value;
         }
-
-        public unsafe Request Test()
-        {
-            var filters = new Dictionary<string, string>();
-            filters.Add("gamedir", "rust" );
-
-            var array = filters.ToArray();
-
-            //fixed ( void* a = array )
-            {
-
-                var pairs = filters.Select( x => new MatchMakingKeyValuePair_t()
-                {
-                    m_szKey  = x.Key,
-                    m_szValue = x.Value
-                }).ToArray();
-
-
-                var request = new Request( client );
-
-                GCHandle h = GCHandle.Alloc( pairs, GCHandleType.Pinned );
-                var a = h.AddrOfPinnedObject();
-
-             //   request.Id = client.native.servers.RequestInternetServerList( client.AppId, h.AddrOfPinnedObject(), pairs.Length, IntPtr.Zero );
-
-                h.Free();
-
-                return request;
-            }
-        }
-
-
-
-
 
         public Request Internet( Filter filter )
         {
