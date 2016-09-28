@@ -100,11 +100,10 @@ namespace Facepunch.Steamworks
 
         internal void DestroyResult()
         {
-            if ( updateRequest != -1 )
-            {
-                client.native.inventory.DestroyResult( updateRequest );
-                updateRequest = -1;
-            }
+            if ( updateRequest == -1 ) return;
+            
+            client.native.inventory.DestroyResult( updateRequest );
+            updateRequest = -1;
         }
 
 
@@ -126,6 +125,8 @@ namespace Facepunch.Steamworks
             if ( status == Valve.Steamworks.EResult.k_EResultOK || status == Valve.Steamworks.EResult.k_EResultExpired )
             {
                 RetrieveInventory();
+                DestroyResult();
+                return;
             }
 
             // Some other error
