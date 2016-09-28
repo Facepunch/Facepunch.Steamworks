@@ -112,8 +112,6 @@ namespace Facepunch.Steamworks.Test
             }
         }
 
-
-
         [TestMethod]
         public void InventoryDefinitions()
         {
@@ -121,7 +119,12 @@ namespace Facepunch.Steamworks.Test
             {
                 Assert.IsNotNull( client.Inventory.Definitions );
                 Assert.AreNotEqual( 0, client.Inventory.Definitions.Length );
-            }
+
+                foreach ( var i in client.Inventory.Definitions )
+                {
+                    Console.WriteLine( "{0}: {1}", i.Id, i.Name );
+                }
+            }            
         }
 
         [TestMethod]

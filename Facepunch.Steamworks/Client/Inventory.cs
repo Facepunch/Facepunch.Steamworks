@@ -66,6 +66,14 @@ namespace Facepunch.Steamworks
             }
         }
 
+        public Definition CreateDefinition( int id )
+        {
+            return new Definition( id )
+            {
+                client = client
+            };
+        }
+
         internal void LoadItemDefinitions()
         {
             //
@@ -79,12 +87,7 @@ namespace Facepunch.Steamworks
 
             Definitions = ids.Select( x =>
             {
-                var d = new Definition()
-                {
-                    client = client,
-                    Id = x
-                };
-
+                var d = CreateDefinition( x );
                 d.SetupCommonProperties();
                 return d;
 
@@ -228,6 +231,11 @@ namespace Facepunch.Steamworks
 
             public DateTime Created;
             public DateTime Modified;
+
+            internal Definition( int id )
+            {
+                Id = id;
+            }
 
             public T GetProperty<T>( string name )
             {
