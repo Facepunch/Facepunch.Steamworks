@@ -42,6 +42,11 @@ namespace Facepunch.Steamworks.Test
                 Console.WriteLine( "Responded: " + query.Responded.Count.ToString() );
                 Console.WriteLine( "Unresponsive: " + query.Unresponsive.Count.ToString() );
 
+                foreach ( var server in query.Responded.Take( 20 ) )
+                {
+                    Console.WriteLine( "{0} {1}", server.AddressString, server.Name );
+                }
+
                 query.Dispose();
 
                 for ( int i = 0; i < 100; i++ )
@@ -313,12 +318,12 @@ namespace Facepunch.Steamworks.Test
 
                     query.Dispose();
 
-                    var server = query.Responded.First( x => x.Players > 5 );
-                    server.UpdateRules();
+                   // var server = query.Responded.First( x => x.Players > 5 );
+                   // server.UpdateRules();
 
-                    foreach ( var rule in server.Rules )
+                   // foreach ( var rule in server.Rules )
                     {
-                        Console.WriteLine( rule.Key + " = " + rule.Value );
+                       // Console.WriteLine( rule.Key + " = " + rule.Value );
                     }
 
                 }                
