@@ -306,7 +306,9 @@ namespace Facepunch.Steamworks.Test
 
                     for ( int i = 0; i < 1000; i++ )
                     {
+                        GC.Collect();
                         client.Update();
+                        GC.Collect();
                         System.Threading.Thread.Sleep( 10 );
 
                         if ( query.Responded.Count > 20 )
@@ -320,13 +322,17 @@ namespace Facepunch.Steamworks.Test
 
                    foreach ( var server in query.Responded.Take( 20 ) )
                     {
+                        GC.Collect();
                         server.FetchRules();
+                        GC.Collect();
 
                         int i = 0;
                         while ( !server.HasRules )
                         {
                             i++;
+                            GC.Collect();
                             client.Update();
+                            GC.Collect();
                             System.Threading.Thread.Sleep( 2 );
 
                             if ( i > 100 )
