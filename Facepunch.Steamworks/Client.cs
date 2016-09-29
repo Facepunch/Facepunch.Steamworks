@@ -135,6 +135,11 @@ namespace Facepunch.Steamworks
             Username = native.friends.GetPersonaName();
             SteamId = native.user.GetSteamID();
             BetaName = native.apps.GetCurrentBetaName();
+
+            //
+            // Run update, first call does some initialization
+            //
+            Update();
         }
 
         public void Dispose()
@@ -183,10 +188,15 @@ namespace Facepunch.Steamworks
 
         internal Action InstallCallback( int type, Delegate action )
         {
-            var ptr = Marshal.GetFunctionPointerForDelegate( action );
-            Valve.Steamworks.SteamAPI.RegisterCallback( ptr, type );
+            var del = Marshal.GetFunctionPointerForDelegate( action );
 
-            return () => Valve.Steamworks.SteamAPI.UnregisterCallback( ptr );
+            // var ptr = Marshal.GetFunctionPointerForDelegate( action );
+          //  Valve.Steamworks.SteamAPI.RegisterCallback( del, type );
+
+           // Valve.Steamworks.SteamAPI.UnregisterCallback( del );
+
+            //return () => Valve.Steamworks.SteamAPI.UnregisterCallback( ptr );
+            return null;
         }
     }
 }
