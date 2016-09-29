@@ -161,11 +161,11 @@ namespace Facepunch.Steamworks
             {
                 if ( info.m_bHadSuccessfulResponse )
                 {
-                    Responded.Add( Server.FromSteam( info ) );
+                    Responded.Add( Server.FromSteam( client, info ) );
                 }
                 else
                 {
-                    Unresponsive.Add( Server.FromSteam( info ) );
+                    Unresponsive.Add( Server.FromSteam( client, info ) );
                 }
 
             }

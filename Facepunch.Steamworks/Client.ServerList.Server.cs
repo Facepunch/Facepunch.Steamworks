@@ -9,7 +9,7 @@ namespace Facepunch.Steamworks
 {
     public partial class ServerList
     {
-        public struct Server
+        public class Server
         {
             public string Name { get; set; }
             public int Ping { get; set; }
@@ -26,12 +26,11 @@ namespace Facepunch.Steamworks
             public int Version { get; set; }
             public string[] Tags { get; set; }
             public ulong SteamId { get; set; }
-
             public uint Address { get; set; }
-
             public int ConnectionPort { get; set; }
-
             public int QueryPort { get; set; }
+
+            internal Client Client;
 
             public string AddressString
             {
@@ -48,10 +47,11 @@ namespace Facepunch.Steamworks
                 }
             }
 
-            internal static Server FromSteam( gameserveritem_t item )
+            internal static Server FromSteam( Client client, gameserveritem_t item )
             {
                 return new Server()
                 {
+                    Client = client,
                     Address = item.m_NetAdr.m_unIP,
                     ConnectionPort = item.m_NetAdr.m_usConnectionPort,
                     QueryPort = item.m_NetAdr.m_usQueryPort,
@@ -71,6 +71,45 @@ namespace Facepunch.Steamworks
                     Tags = item.m_szGameTags == null ? null : item.m_szGameTags.Split( ',' ),
                     SteamId = item.m_steamID
                 };
+            }
+
+            /// <summary>
+            /// Callback when rules are receieved.
+            /// The bool is true if server responded properly.
+            /// </summary>
+            public Action<bool> OnReceivedRules;
+
+            /// <summary>
+            /// List of server rules. Use HasRules to see if this is safe to access.
+            /// </summary>
+            public Dictionary<string, string> Rules;
+
+            /// <summary>
+            /// Returns true if this server has rules
+            /// </summary>
+            public bool HasRules { get { return Rules != null && Rules.Count > 0; } }
+
+           internal Interop.ServerRules RulesRequest;
+
+            /// <summary>
+            /// Populates Rules for this server
+            /// </summary>
+            public void FetchRules()
+            {
+                if ( RulesRequest != null )
+                    return;
+
+                Rules = new Dictionary<string, string>();
+
+                RulesRequest = new Interop.ServerRules( this, Address, QueryPort );
+            }
+
+            internal void OnServerRulesReceiveFinished( bool Success )
+            {
+                RulesRequest = null;
+
+                if ( OnReceivedRules != null )
+                    OnReceivedRules( Success );
             }
         }
     }

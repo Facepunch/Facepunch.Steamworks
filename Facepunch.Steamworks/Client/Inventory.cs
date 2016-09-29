@@ -128,7 +128,6 @@ namespace Facepunch.Steamworks
             if ( status == Valve.Steamworks.EResult.k_EResultOK || status == Valve.Steamworks.EResult.k_EResultExpired )
             {
                 RetrieveInventory();
-                DestroyResult();
                 return;
             }
 
@@ -186,6 +185,11 @@ namespace Facepunch.Steamworks
             }
 
             SerializedExpireTime = DateTime.Now.Add( TimeSpan.FromMinutes( 60 ) );
+
+            //
+            // Finished with this result, don't call it again
+            //
+            DestroyResult();
 
             //
             // Tell everyone we've got new items!

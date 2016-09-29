@@ -292,7 +292,7 @@ namespace Facepunch.Steamworks.Test
         }
 
         [TestMethod]
-        public void PlayerList()
+        public void Rules()
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {
@@ -309,7 +309,7 @@ namespace Facepunch.Steamworks.Test
                         client.Update();
                         System.Threading.Thread.Sleep( 10 );
 
-                        if ( query.Responded.Count > 0 && query.Responded.Any( x => x.Players > 5 ) )
+                        if ( query.Responded.Count > 20 )
                             break;
 
                         if ( query.Finished )
@@ -318,13 +318,31 @@ namespace Facepunch.Steamworks.Test
 
                     query.Dispose();
 
-                   // var server = query.Responded.First( x => x.Players > 5 );
-                   // server.UpdateRules();
-
-                   // foreach ( var rule in server.Rules )
+                   foreach ( var server in query.Responded.Take( 20 ) )
                     {
-                       // Console.WriteLine( rule.Key + " = " + rule.Value );
+                        server.FetchRules();
+
+                        int i = 0;
+                        while ( !server.HasRules )
+                        {
+                            i++;
+                            client.Update();
+                            System.Threading.Thread.Sleep( 2 );
+
+                            if ( i > 100 )
+                                break;
+                        }
+
+                        if ( server.HasRules )
+                        {
+                            foreach ( var rule in server.Rules )
+                            {
+                                Console.WriteLine( rule.Key + " = " + rule.Value );
+                            }
+                        }
                     }
+
+
 
                 }                
             }
