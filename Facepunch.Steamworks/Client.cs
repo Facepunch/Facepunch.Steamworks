@@ -198,5 +198,11 @@ namespace Facepunch.Steamworks
             //return () => Valve.Steamworks.SteamAPI.UnregisterCallback( ptr );
             return null;
         }
+
+        /// <summary>
+        /// Some platforms allow/need CallingConvention.ThisCall. If you're crashing with argument null
+        /// errors on certain platforms, try flipping this to true.
+        /// </summary>
+        public bool UseThisCall { get; set; }
     }
 }
