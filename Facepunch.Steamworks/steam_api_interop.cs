@@ -456,7 +456,7 @@ namespace Valve.Interop
         [DllImportAttribute( "FacepunchSteamworksApi", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamMatchmakingServers_PlayerDetails" )]
         internal static extern uint SteamAPI_ISteamMatchmakingServers_PlayerDetails( IntPtr instancePtr, uint unIP, char usPort, IntPtr pRequestServersResponse );
         [DllImportAttribute( "FacepunchSteamworksApi", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamMatchmakingServers_ServerRules" )]
-        internal static extern uint SteamAPI_ISteamMatchmakingServers_ServerRules( IntPtr instancePtr, uint unIP, char usPort, IntPtr pRequestServersResponse );
+        internal static extern uint SteamAPI_ISteamMatchmakingServers_ServerRules( IntPtr instancePtr, uint unIP, short usPort, IntPtr pRequestServersResponse );
         [DllImportAttribute( "FacepunchSteamworksApi", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamMatchmakingServers_CancelServerQuery" )]
         internal static extern void SteamAPI_ISteamMatchmakingServers_CancelServerQuery( IntPtr instancePtr, uint hServerQuery );
         [DllImportAttribute( "FacepunchSteamworksApi", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamRemoteStorage_FileWrite" )]
@@ -3864,7 +3864,7 @@ namespace Valve.Steamworks
         internal override uint ServerRules( uint unIP, char usPort, ISteamMatchmakingRulesResponse pRequestServersResponse )
         {
             CheckIfUsable();
-            uint result = NativeEntrypoints.SteamAPI_ISteamMatchmakingServers_ServerRules(m_pSteamMatchmakingServers,unIP,usPort,pRequestServersResponse.GetIntPtr());
+            uint result = NativeEntrypoints.SteamAPI_ISteamMatchmakingServers_ServerRules(m_pSteamMatchmakingServers,unIP, (short)usPort,pRequestServersResponse.GetIntPtr());
             return result;
         }
         internal override void CancelServerQuery( uint hServerQuery )
