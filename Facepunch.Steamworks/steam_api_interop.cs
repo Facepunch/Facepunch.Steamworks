@@ -8880,8 +8880,8 @@ namespace Valve.Steamworks
     {
         public ulong m_gameID;
         public uint m_unGameIP;
-        public char m_usGamePort;
-        public char m_usQueryPort;
+        public short m_usGamePort;
+        public short m_usQueryPort;
         public ulong m_steamIDLobby;
     }
     [StructLayout( LayoutKind.Sequential )]

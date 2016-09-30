@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Valve.Steamworks;
 
 namespace Facepunch.Steamworks
 {
@@ -28,25 +29,74 @@ namespace Facepunch.Steamworks
         /// </summary>
         public ulong Id { get; internal set; }
 
+
+        /// <summary>
+        ///  Return true if blocked
+        /// </summary>
+        public bool IsBlocked { get; internal set; }
+
         /// <summary>
         ///  Return true if is a friend. Returns false if blocked, request etc.
         /// </summary>
         public bool IsFriend { get; internal set; }
 
         /// <summary>
-        /// Returns true if this friend is playing a game (and we know about it)
-        /// </summary>
-        public bool IsPlaying { get; internal set; }
-
-        /// <summary>
-        /// If they're current in a game, what are they playing?
-        /// </summary>
-        public int CurrentAppId;
-
-        /// <summary>
         /// Their current display name
         /// </summary>
         public string Name;
+
+        /// <summary>
+        /// Returns true if this friend is online
+        /// </summary>
+        public bool IsOnline { get; internal set; }
+
+        /// <summary>
+        /// Returns true if this friend is online and playing this game
+        /// </summary>
+        public bool IsPlayingThisGame { get { return CurrentAppId == Client.AppId; } }
+
+        /// <summary>
+        /// Returns true if this friend is online and playing this game
+        /// </summary>
+        public bool IsPlaying { get { return CurrentAppId != 0; } }
+
+        /// <summary>
+        /// The AppId this guy is playing
+        /// </summary>
+        public ulong CurrentAppId { get; internal set; }
+
+        public uint ServerIp { get; internal set; }
+        public int ServerGamePort { get; internal set; }
+        public int ServerQueryPort { get; internal set; }
+        public ulong ServerLobbyId { get; internal set; }
+
+        internal Client Client { get; set; }
+
+        public void Refresh()
+        {
+            Name = Client.native.friends.GetFriendPersonaName( Id );
+
+            EFriendRelationship relationship = (EFriendRelationship) Client.native.friends.GetFriendRelationship( Id );
+
+            IsBlocked = relationship == EFriendRelationship.k_EFriendRelationshipBlocked;
+            IsFriend = relationship == EFriendRelationship.k_EFriendRelationshipFriend;
+
+            CurrentAppId = 0;
+            ServerIp = 0;
+            ServerGamePort = 0;
+            ServerQueryPort = 0;
+            ServerLobbyId = 0;
+
+            FriendGameInfo_t gameInfo = new FriendGameInfo_t();
+            if ( Client.native.friends.GetFriendGamePlayed( Id, out gameInfo ) && gameInfo.m_gameID > 0 )
+            {
+                CurrentAppId = gameInfo.m_gameID;
+                ServerIp = gameInfo.m_unGameIP;
+                ServerGamePort = gameInfo.m_usGamePort;
+                ServerQueryPort = gameInfo.m_usQueryPort;
+                ServerLobbyId = gameInfo.m_steamIDLobby;
+            }
+        }
     }
 
     public class Friends
@@ -67,6 +117,9 @@ namespace Facepunch.Steamworks
 
         private List<SteamFriend> _allFriends;
 
+        /// <summary>
+        /// Returns all friends, even blocked, ignored, friend requests etc
+        /// </summary>
         public IEnumerable<SteamFriend> All
         {
             get
@@ -81,12 +134,49 @@ namespace Facepunch.Steamworks
             }
         }
 
+        public IEnumerable<SteamFriend> AllFriends
+        {
+            get
+            {
+                foreach ( var friend in All )
+                {
+                    if ( !friend.IsFriend ) continue;
+
+                    yield return friend;
+                }
+            }
+        }
+
+        public IEnumerable<SteamFriend> AllBlocked
+        {
+            get
+            {
+                foreach ( var friend in All )
+                {
+                    if ( !friend.IsBlocked ) continue;
+
+                    yield return friend;
+                }
+            }
+        }
+
         public void Refresh()
         {
+            if ( _allFriends == null )
+            {
+                _allFriends = new List<SteamFriend>();
+            }
+
             _allFriends.Clear();
 
-            //client.native.friends.GetFriendCount( 0 );
+            var flags = (int) EFriendFlags.k_EFriendFlagAll;
+            var count = client.native.friends.GetFriendCount( flags );
 
+            for ( int i=0; i<count; i++ )
+            {
+                var steamid = client.native.friends.GetFriendByIndex( i, flags );
+                _allFriends.Add( Get( steamid ) );
+            }
         }
 
         public enum AvatarSize
@@ -138,6 +228,20 @@ namespace Facepunch.Steamworks
                 Width = (int)width,
                 Height = (int)height
             };
+        }
+
+
+        public SteamFriend Get( ulong steamid )
+        {
+            var f = new SteamFriend()
+            {
+                Id = steamid,
+                Client = client
+            };
+
+            f.Refresh();
+
+            return f;
         }
     }
 }
