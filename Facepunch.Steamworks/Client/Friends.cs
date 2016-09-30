@@ -228,7 +228,7 @@ namespace Facepunch.Steamworks
             throw new System.NotImplementedException( "Deferred Avatar Loading Todo" );
             // Add to image loading list
 
-            return img;
+            //return img;
         }
 
 
