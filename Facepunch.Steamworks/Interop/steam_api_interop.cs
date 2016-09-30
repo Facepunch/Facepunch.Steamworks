@@ -15,6 +15,28 @@ namespace Valve.Interop
 
     internal class NativeEntrypoints
     {
+        internal class Extended
+        {
+            [DllImportAttribute( "FacepunchSteamworksApi", CallingConvention = CallingConvention.Cdecl )]
+            public static extern bool SteamInternal_GameServer_Init( uint unIP, ushort usSteamPort, ushort usGamePort, ushort usQueryPort, int eServerMode, string pchVersionString );
+
+            [DllImportAttribute( "FacepunchSteamworksApi", CallingConvention = CallingConvention.Cdecl)]
+            internal static extern IntPtr SteamInternal_CreateInterface( string ver );
+
+            [DllImportAttribute( "FacepunchSteamworksApi", CallingConvention = CallingConvention.Cdecl )]
+            internal static extern uint SteamGameServer_GetHSteamUser();
+
+            [DllImportAttribute( "FacepunchSteamworksApi", CallingConvention = CallingConvention.Cdecl )]
+            internal static extern uint SteamGameServer_GetHSteamPipe();
+
+            [DllImportAttribute( "FacepunchSteamworksApi", CallingConvention = CallingConvention.Cdecl )]
+            internal static extern void SteamGameServer_Shutdown();
+
+            [DllImportAttribute( "FacepunchSteamworksApi", CallingConvention = CallingConvention.Cdecl )]
+            internal static extern void SteamGameServer_RunCallbacks();
+            
+        }
+
         [DllImportAttribute( "FacepunchSteamworksApi", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_CreateSteamPipe" )]
         internal static extern uint SteamAPI_ISteamClient_CreateSteamPipe( IntPtr instancePtr );
         [DllImportAttribute( "FacepunchSteamworksApi", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_BReleaseSteamPipe" )]
@@ -2416,7 +2438,7 @@ namespace Valve.Steamworks
         {
             CheckIfUsable();
             IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamGameServer(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
-            return (ISteamGameServer)Marshal.PtrToStructure( result, typeof( ISteamGameServer ) );
+            return new CSteamGameServer( result );
         }
         internal override void SetLocalIPBinding( uint unIP, char usPort )
         {
@@ -2463,7 +2485,7 @@ namespace Valve.Steamworks
         {
             CheckIfUsable();
             IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamGameServerStats(m_pSteamClient,hSteamuser,hSteamPipe,pchVersion);
-            return (ISteamGameServerStats)Marshal.PtrToStructure( result, typeof( ISteamGameServerStats ) );
+            return new CSteamGameServerStats( result );
         }
         internal override ISteamApps GetISteamApps( uint hSteamUser, uint hSteamPipe, string pchVersion )
         {
@@ -2510,7 +2532,7 @@ namespace Valve.Steamworks
         {
             CheckIfUsable();
             IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamHTTP(m_pSteamClient,hSteamuser,hSteamPipe,pchVersion);
-            return (ISteamHTTP)Marshal.PtrToStructure( result, typeof( ISteamHTTP ) );
+            return new CSteamHTTP( result );
         }
         internal override ISteamUnifiedMessages GetISteamUnifiedMessages( uint hSteamuser, uint hSteamPipe, string pchVersion )
         {
@@ -2528,7 +2550,7 @@ namespace Valve.Steamworks
         {
             CheckIfUsable();
             IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamUGC(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
-            return (ISteamUGC)Marshal.PtrToStructure( result, typeof( ISteamUGC ) );
+            return new CSteamUGC( result );
         }
         internal override ISteamAppList GetISteamAppList( uint hSteamUser, uint hSteamPipe, string pchVersion )
         {

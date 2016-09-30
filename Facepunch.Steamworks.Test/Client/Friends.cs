@@ -4,6 +4,8 @@ using System.Linq;
 
 namespace Facepunch.Steamworks.Test
 {
+    [DeploymentItem( "FacepunchSteamworksApi.dll" )]
+    [DeploymentItem( "steam_appid.txt" )]
     [TestClass]
     public class Friends
     {

@@ -7,8 +7,6 @@ namespace Facepunch.Steamworks
 {
     public partial class Client : IDisposable
     {
-
-
         internal class Internal : IDisposable
         {
             private uint _hpipe;
