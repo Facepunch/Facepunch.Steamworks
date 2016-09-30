@@ -214,20 +214,21 @@ namespace Facepunch.Steamworks
                     break;
             }
 
-            uint width = 0;
-            uint height = 0;
-
-            if ( imageid != 0)
+            var img = new Image()
             {
-                client.native.utils.GetImageSize( imageid, ref width, ref height );
-            }
-
-            return new Image()
-            {
-                Id = imageid,
-                Width = (int)width,
-                Height = (int)height
+                Id = imageid
             };
+
+            if ( imageid == 0 )
+                return img;
+
+            if ( img.TryLoad( client.native.utils ) )
+                return img;
+
+            throw new System.NotImplementedException( "Deferred Avatar Loading Todo" );
+            // Add to image loading list
+
+            return img;
         }
 
 
