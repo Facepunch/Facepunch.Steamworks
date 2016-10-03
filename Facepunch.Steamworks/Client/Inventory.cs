@@ -125,7 +125,7 @@ namespace Facepunch.Steamworks
             if ( status == Valve.Steamworks.EResult.k_EResultPending )
                 return;
 
-            if ( status == Valve.Steamworks.EResult.k_EResultOK || status == Valve.Steamworks.EResult.k_EResultExpired )
+            if ( status == Valve.Steamworks.EResult.k_EResultOK )
             {
                 RetrieveInventory();
                 return;

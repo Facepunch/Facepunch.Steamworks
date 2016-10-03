@@ -135,6 +135,7 @@
     <Compile Include="Interop\steam_api_interop.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="Server\Auth.cs" />
+    <Compile Include="Server\Query.cs" />
     <Compile Include="Server\Stats.cs" />
   </ItemGroup>
   <ItemGroup>
