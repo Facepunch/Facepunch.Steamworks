@@ -352,5 +352,10 @@ namespace Facepunch.Steamworks
         {
             native.gameServer.BUpdateUserData( steamid, name, (uint) score );
         }
+
+        public bool LoggedOn
+        {
+            get { return native.gameServer.BLoggedOn(); }
+        }
     }
 }

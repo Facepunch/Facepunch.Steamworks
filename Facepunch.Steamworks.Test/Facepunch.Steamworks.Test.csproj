@@ -93,6 +93,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Client\Friends.cs" />
     <Compile Include="Server\Server.cs" />
+    <Compile Include="Server\Stats.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Facepunch.Steamworks\Facepunch.Steamworks.csproj">

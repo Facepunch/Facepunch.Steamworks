@@ -9,7 +9,7 @@ namespace Facepunch.Steamworks.Test
     [DeploymentItem( "vstdlib_s.dll" )]
     [DeploymentItem( "steamclient.dll" )]
     [TestClass]
-    public class Server
+    public partial class Server
     {
         [TestMethod]
         public void Init()
