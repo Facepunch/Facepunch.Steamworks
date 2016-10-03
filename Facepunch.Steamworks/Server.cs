@@ -100,9 +100,9 @@ namespace Facepunch.Steamworks
         /// </summary>
         public Action<MessageType, string> OnMessage;
 
-        public Server( uint appId, uint IpAddress, ushort SteamPort, ushort GamePort, ushort QueryPort, bool Secure, string VersionString )
+        public Server( uint appId, uint IpAddress, ushort GamePort, ushort QueryPort, bool Secure, string VersionString )
         {
-            Valve.Interop.NativeEntrypoints.Extended.SteamInternal_GameServer_Init( IpAddress, SteamPort, GamePort, QueryPort, Secure ? 3 : 2, VersionString );
+            Valve.Interop.NativeEntrypoints.Extended.SteamInternal_GameServer_Init( IpAddress, 0, GamePort, QueryPort, Secure ? 3 : 2, VersionString );
 
             native = new Internal();
 
@@ -132,10 +132,6 @@ namespace Facepunch.Steamworks
             //
             // Initial settings
             //
-            native.gameServer.SetModDir( "rust" );
-            native.gameServer.SetProduct( "rust" );
-            native.gameServer.SetGameDescription( "rust" );
-            native.gameServer.LogOnAnonymous();
             native.gameServer.EnableHeartbeats( true );
             MaxPlayers = 32;
             BotCount = 0;
@@ -145,6 +141,14 @@ namespace Facepunch.Steamworks
             // Run update, first call does some initialization
             //
             Update();
+        }
+
+        /// <summary>
+        /// Initialize a server - query port will use the same as GamePort (MASTERSERVERUPDATERPORT_USEGAMESOCKETSHARE)
+        /// </summary>
+        public Server( uint appId, uint IpAddress, ushort GamePort, bool Secure, string VersionString ) : this( appId, IpAddress, GamePort, 0xFFFF, Secure, VersionString )
+        {
+            
         }
 
         public void Dispose()
@@ -253,5 +257,100 @@ namespace Facepunch.Steamworks
             set { if ( _mapname == value ) return; native.gameServer.SetMapName( value ); _mapname = value; }
         }
         private string _mapname;
+
+        /// <summary>
+        /// Gets or sets the current ModDir
+        /// </summary>
+        public string ModDir
+        {
+            get { return _modDir; }
+            set { if ( _modDir == value ) return; native.gameServer.SetModDir( value ); _modDir = value; }
+        }
+        private string _modDir = "";
+
+        /// <summary>
+        /// Gets or sets the current Product
+        /// </summary>
+        public string Product
+        {
+            get { return _product; }
+            set { if ( _product == value ) return; native.gameServer.SetProduct( value ); _product = value; }
+        }
+        private string _product = "";
+
+        /// <summary>
+        /// Gets or sets the current Product
+        /// </summary>
+        public string GameDescription
+        {
+            get { return _gameDescription; }
+            set { if ( _gameDescription == value ) return; native.gameServer.SetGameDescription( value ); _gameDescription = value; }
+        }
+        private string _gameDescription = "";
+
+        /// <summary>
+        /// Gets or sets the current ServerName
+        /// </summary>
+        public string ServerName
+        {
+            get { return _serverName; }
+            set { if ( _serverName == value ) return; native.gameServer.SetServerName( value ); _serverName = value; }
+        }
+        private string _serverName = "";
+
+        /// <summary>
+        /// Gets or sets the current Passworded
+        /// </summary>
+        public bool Passworded
+        {
+            get { return _passworded; }
+            set { if ( _passworded == value ) return; native.gameServer.SetPasswordProtected( value ); _passworded = value; }
+        }
+        private bool _passworded;
+
+        /// <summary>
+        /// Gets or sets the current GameTags
+        /// </summary>
+        public string GameTags
+        {
+            get { return _gametags; }
+            set { if ( _gametags == value ) return; native.gameServer.SetGameTags( value ); _gametags = value; }
+        }
+        private string _gametags = "";
+
+        /// <summary>
+        /// Log onto Steam anonymously
+        /// </summary>
+        public void LogOnAnonymous()
+        {
+            native.gameServer.LogOnAnonymous();
+        }
+
+        Dictionary<string, string> KeyValue = new Dictionary<string, string>();
+
+        /// <summary>
+        /// Sets a Key Value
+        /// </summary>
+        public void SetKey( string Key, string Value )
+        {
+            if ( KeyValue.ContainsKey( Key ) )
+            {
+                if ( KeyValue[Key] == Value )
+                    return;
+
+                KeyValue[Key] = Value;
+            }
+            else
+            {
+                KeyValue.Add( Key, Value );
+            }
+
+            native.gameServer.SetKeyValue( Key, Value );
+        }
+
+        public void UpdatePlayer( ulong steamid, string name, int score )
+        {
+            native.gameServer.BUpdateUserData( steamid, name, (uint) score );
+        }
     }
 }
