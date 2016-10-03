@@ -132,10 +132,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interop\steam_api_interop.cs" />
     <Compile Include="Server.cs" />
+    <Compile Include="Server\Auth.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Server\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

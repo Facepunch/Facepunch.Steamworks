@@ -101,12 +101,7 @@ namespace Facepunch.Steamworks
 
         public Server( uint appId, uint IpAddress, ushort SteamPort, ushort GamePort, ushort QueryPort, bool Secure, string VersionString )
         {
-            if ( !Valve.Interop.NativeEntrypoints.Extended.SteamInternal_GameServer_Init( IpAddress, SteamPort, GamePort, QueryPort, Secure ? 3 : 2 , VersionString ) )
-            {
-                return;
-            }
-
-            //Valve.Steamworks.SteamAPI.Init( appId );
+            Valve.Interop.NativeEntrypoints.Extended.SteamInternal_GameServer_Init( IpAddress, SteamPort, GamePort, QueryPort, Secure ? 3 : 2, VersionString );
 
             native = new Internal();
 
