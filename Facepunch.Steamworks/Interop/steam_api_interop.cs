@@ -1290,9 +1290,9 @@ namespace Valve.Interop
         [DllImportAttribute( "FacepunchSteamworksApi", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamGameServer_GetPublicIP" )]
         internal static extern uint SteamAPI_ISteamGameServer_GetPublicIP( IntPtr instancePtr );
         [DllImportAttribute( "FacepunchSteamworksApi", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamGameServer_HandleIncomingPacket" )]
-        internal static extern bool SteamAPI_ISteamGameServer_HandleIncomingPacket( IntPtr instancePtr, IntPtr pData, int cbData, uint srcIP, char srcPort );
+        internal static extern bool SteamAPI_ISteamGameServer_HandleIncomingPacket( IntPtr instancePtr, IntPtr pData, int cbData, uint srcIP, ushort srcPort );
         [DllImportAttribute( "FacepunchSteamworksApi", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamGameServer_GetNextOutgoingPacket" )]
-        internal static extern int SteamAPI_ISteamGameServer_GetNextOutgoingPacket( IntPtr instancePtr, IntPtr pOut, int cbMaxOut, ref uint pNetAdr, ref char pPort );
+        internal static extern int SteamAPI_ISteamGameServer_GetNextOutgoingPacket( IntPtr instancePtr, IntPtr pOut, int cbMaxOut, ref uint pNetAdr, ref ushort pPort );
         [DllImportAttribute( "FacepunchSteamworksApi", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamGameServer_EnableHeartbeats" )]
         internal static extern void SteamAPI_ISteamGameServer_EnableHeartbeats( IntPtr instancePtr, bool bActive );
         [DllImportAttribute( "FacepunchSteamworksApi", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamGameServer_SetHeartbeatInterval" )]
@@ -2355,8 +2355,8 @@ namespace Valve.Steamworks
         internal abstract void GetGameplayStats();
         internal abstract ulong GetServerReputation();
         internal abstract uint GetPublicIP();
-        internal abstract bool HandleIncomingPacket( IntPtr pData, int cbData, uint srcIP, char srcPort );
-        internal abstract int GetNextOutgoingPacket( IntPtr pOut, int cbMaxOut, ref uint pNetAdr, ref char pPort );
+        internal abstract bool HandleIncomingPacket( IntPtr pData, int cbData, uint srcIP, ushort srcPort );
+        internal abstract int GetNextOutgoingPacket( IntPtr pOut, int cbMaxOut, ref uint pNetAdr, ref ushort pPort );
         internal abstract void EnableHeartbeats( bool bActive );
         internal abstract void SetHeartbeatInterval( int iHeartbeatInterval );
         internal abstract void ForceHeartbeat();
@@ -6685,13 +6685,13 @@ namespace Valve.Steamworks
             uint result = NativeEntrypoints.SteamAPI_ISteamGameServer_GetPublicIP(m_pSteamGameServer);
             return result;
         }
-        internal override bool HandleIncomingPacket( IntPtr pData, int cbData, uint srcIP, char srcPort )
+        internal override bool HandleIncomingPacket( IntPtr pData, int cbData, uint srcIP, ushort srcPort )
         {
             CheckIfUsable();
             bool result = NativeEntrypoints.SteamAPI_ISteamGameServer_HandleIncomingPacket(m_pSteamGameServer,pData,cbData,srcIP,srcPort);
             return result;
         }
-        internal override int GetNextOutgoingPacket( IntPtr pOut, int cbMaxOut, ref uint pNetAdr, ref char pPort )
+        internal override int GetNextOutgoingPacket( IntPtr pOut, int cbMaxOut, ref uint pNetAdr, ref ushort pPort )
         {
             CheckIfUsable();
             pNetAdr = 0;
