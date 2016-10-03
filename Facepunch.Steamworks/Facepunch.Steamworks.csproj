@@ -113,6 +113,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Callbacks\User.cs" />
     <Compile Include="Client\Networking.cs" />
     <Compile Include="Client\Overlay.cs" />
     <Compile Include="Client\ServerList.cs" />
@@ -128,13 +129,16 @@
     <Compile Include="Client\Stats.cs" />
     <Compile Include="Client\Voice.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="Interop\Callback.cs" />
     <Compile Include="Interop\ServerRules.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interop\steam_api_interop.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="Server\Auth.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="Interop\Callback.This.cs" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

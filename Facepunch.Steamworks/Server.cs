@@ -1,6 +1,7 @@
 ﻿
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace Facepunch.Steamworks
@@ -119,7 +120,9 @@ namespace Facepunch.Steamworks
             // Set up warning hook callback
             //
             SteamAPIWarningMessageHook ptr = InternalOnWarning;
-          //  native.client.SetWarningMessageHook( Marshal.GetFunctionPointerForDelegate( ptr ) );
+            var d = Marshal.GetFunctionPointerForDelegate( ptr );
+            var rr = GCHandle.Alloc( d );
+            native.utils.SetWarningMessageHook( d );
 
             //
             // Cache common, unchanging info
@@ -129,6 +132,10 @@ namespace Facepunch.Steamworks
             //
             // Initial settings
             //
+            native.gameServer.SetModDir( "rust" );
+            native.gameServer.SetProduct( "rust" );
+            native.gameServer.SetGameDescription( "rust" );
+            native.gameServer.LogOnAnonymous();
             native.gameServer.EnableHeartbeats( true );
             MaxPlayers = 32;
             BotCount = 0;
@@ -147,17 +154,25 @@ namespace Facepunch.Steamworks
                 native.Dispose();
                 native = null;
             }
+
+            foreach ( var d in Disposables )
+            {
+                d.Dispose();
+            }
+            Disposables.Clear();
         }
 
         [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
-        public delegate void SteamAPIWarningMessageHook( int nSeverity, System.Text.StringBuilder pchDebugText );
+        public delegate void SteamAPIWarningMessageHook( int nSeverity, string pchDebugText );
 
-        private void InternalOnWarning( int nSeverity, System.Text.StringBuilder text )
+        private void InternalOnWarning( int nSeverity, string text )
         {
             if ( OnMessage != null )
             {
                 OnMessage( ( MessageType)nSeverity, text.ToString() );
             }
+
+            Console.WriteLine( "STEAM: {0}", text );
         }
 
         internal event Action OnUpdate;
@@ -171,9 +186,10 @@ namespace Facepunch.Steamworks
                 return;
 
             Valve.Interop.NativeEntrypoints.Extended.SteamGameServer_RunCallbacks();
+            Valve.Steamworks.SteamAPI.RunCallbacks();
           //  Voice.Update();
           //  Inventory.Update();
-           // Networking.Update();
+          // Networking.Update();
 
             if ( OnUpdate != null )
                 OnUpdate();
@@ -184,20 +200,27 @@ namespace Facepunch.Steamworks
             get { return native != null; }
         }
 
-        internal Action InstallCallback( int type, Delegate action )
+        internal Action InstallCallback<T>( Action<T> action )
         {
-            var del = Marshal.GetFunctionPointerForDelegate( action );
+           // var del = Marshal.GetFunctionPointerForDelegate( action );
 
             // var ptr = Marshal.GetFunctionPointerForDelegate( action );
-          //  Valve.Steamworks.SteamAPI.RegisterCallback( del, type );
+            //  Valve.Steamworks.SteamAPI.RegisterCallback( del, type );
 
-           // Valve.Steamworks.SteamAPI.UnregisterCallback( del );
+            // Valve.Steamworks.SteamAPI.UnregisterCallback( del );
 
             //return () => Valve.Steamworks.SteamAPI.UnregisterCallback( ptr );
             return null;
         }
 
-        
+        List<IDisposable> Disposables = new List<IDisposable>();
+
+        internal void CallResult<T>( Action<T> Callback, int id )
+        {
+            var callback = new Facepunch.Steamworks.Interop.Callback<T>( true, id, Callback );
+            Disposables.Add( callback );
+        }
+
 
         /// <summary>
         /// Gets or sets the current MaxPlayers. 

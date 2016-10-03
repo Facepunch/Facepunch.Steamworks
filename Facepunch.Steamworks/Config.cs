@@ -16,6 +16,6 @@ namespace Facepunch.Steamworks
         /// for releasing his shit open source under the MIT license so we can all learn and iterate.
         /// 
         /// </summary>
-        public static bool UseThisCall { get; set; }
+        public static bool UseThisCall { get; set; } = true;
     }
 }
