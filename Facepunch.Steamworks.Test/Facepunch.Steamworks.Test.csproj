@@ -92,6 +92,7 @@
     <Compile Include="Client\Networking.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Client\Friends.cs" />
+    <Compile Include="Server\Inventory.cs" />
     <Compile Include="Server\Server.cs" />
     <Compile Include="Server\Stats.cs" />
   </ItemGroup>

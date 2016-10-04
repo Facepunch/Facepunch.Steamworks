@@ -9,8 +9,8 @@ namespace Facepunch.Steamworks
     {
         internal class Internal : IDisposable
         {
-            private uint _hpipe;
-            private uint _huser;
+            private int _hpipe;
+            private int _huser;
 
             internal Valve.Steamworks.ISteamClient client;
             internal Valve.Steamworks.ISteamUser user;
@@ -25,7 +25,18 @@ namespace Facepunch.Steamworks
 
             internal bool Init()
             {
-                client = Valve.Steamworks.SteamAPI.SteamClient();
+                _huser = Valve.Interop.NativeEntrypoints.Extended.SteamAPI_GetHSteamUser();
+                _hpipe = Valve.Interop.NativeEntrypoints.Extended.SteamAPI_GetHSteamPipe();
+                if ( _hpipe == 0 )
+                    throw new System.Exception( "Couldn't get Steam Pipe" );
+
+                var clientPtr = Valve.Interop.NativeEntrypoints.Extended.SteamInternal_CreateInterface( "SteamClient017" );
+                if ( clientPtr == IntPtr.Zero )
+                {
+                    throw new System.Exception( "Steam Client: Couldn't load SteamClient017" );
+                }
+
+                client = new Valve.Steamworks.CSteamClient( clientPtr );
 
                 if ( client.GetIntPtr() == IntPtr.Zero )
                 {
@@ -33,13 +44,12 @@ namespace Facepunch.Steamworks
                     return false;
                 }
 
-                _hpipe = client.CreateSteamPipe();
-                _huser = client.ConnectToGlobalUser( _hpipe );
-
                 friends = client.GetISteamFriends( _huser, _hpipe, "SteamFriends015" );
+                if ( friends.GetIntPtr() == IntPtr.Zero ) throw new System.Exception( "Couldn't load SteamFriends015" );
+
                 user = client.GetISteamUser( _huser, _hpipe, "SteamUser019" );
                 servers = client.GetISteamMatchmakingServers( _huser, _hpipe, "SteamMatchMakingServers002" );
-                inventory = client.GetISteamInventory( _huser, _hpipe, "STEAMINVENTORY_INTERFACE_V001" );
+                inventory =  client.GetISteamInventory( _huser, _hpipe, "STEAMINVENTORY_INTERFACE_V001" );
                 networking = client.GetISteamNetworking( _huser, _hpipe, "SteamNetworking005" );
                 apps = client.GetISteamApps( _huser, _hpipe, "STEAMAPPS_INTERFACE_VERSION008" );
                 userstats = client.GetISteamUserStats( _huser, _hpipe, "STEAMUSERSTATS_INTERFACE_VERSION011" );
@@ -54,10 +64,10 @@ namespace Facepunch.Steamworks
             {
                 if ( _hpipe > 0 && client != null )
                 {
-                    if ( _huser > 0 )
-                        client.ReleaseUser( _hpipe, _huser );
+                  //  if ( _huser > 0 )
+                   //     client.ReleaseUser( _hpipe, _huser );
 
-                    client.BReleaseSteamPipe( _hpipe );
+                  // client.BReleaseSteamPipe( _hpipe );
 
                     _huser = 0;
                     _hpipe = 0;
@@ -68,6 +78,8 @@ namespace Facepunch.Steamworks
                     client.BShutdownIfAllPipesClosed();
                     client = null;
                 }
+
+                Valve.Interop.NativeEntrypoints.Extended.SteamAPI_Shutdown();
             }
         }
 
@@ -106,7 +118,7 @@ namespace Facepunch.Steamworks
 
         public Client( uint appId )
         {
-            Valve.Steamworks.SteamAPI.Init( appId );
+            Valve.Steamworks.SteamAPIInterop.SteamAPI_Init();
 
             native = new Internal();
 

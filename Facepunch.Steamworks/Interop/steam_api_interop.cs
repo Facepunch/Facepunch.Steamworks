@@ -15,6 +15,8 @@ namespace Valve.Interop
 {
     internal class NativeEntrypoints
     {
+        
+
         internal class Extended
         {
             [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl )]
@@ -24,57 +26,65 @@ namespace Valve.Interop
             internal static extern IntPtr SteamInternal_CreateInterface( string ver );
 
             [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl )]
-            internal static extern uint SteamGameServer_GetHSteamUser();
+            internal static extern int SteamGameServer_GetHSteamUser();
 
             [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl )]
-            internal static extern uint SteamGameServer_GetHSteamPipe();
+            internal static extern int SteamGameServer_GetHSteamPipe();
 
             [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl )]
             internal static extern void SteamGameServer_Shutdown();
 
             [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl )]
             internal static extern void SteamGameServer_RunCallbacks();
-            
+
+            [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl )]
+            internal static extern int SteamAPI_GetHSteamUser();
+
+            [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl )]
+            internal static extern int SteamAPI_GetHSteamPipe();
+
+            [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl )]
+            internal static extern int SteamAPI_Shutdown();
         }
 
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_CreateSteamPipe" )]
         internal static extern uint SteamAPI_ISteamClient_CreateSteamPipe( IntPtr instancePtr );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_BReleaseSteamPipe" )]
-        internal static extern bool SteamAPI_ISteamClient_BReleaseSteamPipe( IntPtr instancePtr, uint hSteamPipe );
+        internal static extern bool SteamAPI_ISteamClient_BReleaseSteamPipe( IntPtr instancePtr, int hSteamPipe );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_ConnectToGlobalUser" )]
-        internal static extern uint SteamAPI_ISteamClient_ConnectToGlobalUser( IntPtr instancePtr, uint hSteamPipe );
+        internal static extern uint SteamAPI_ISteamClient_ConnectToGlobalUser( IntPtr instancePtr, int hSteamPipe );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_CreateLocalUser" )]
-        internal static extern uint SteamAPI_ISteamClient_CreateLocalUser( IntPtr instancePtr, ref uint phSteamPipe, uint eAccountType );
+        internal static extern uint SteamAPI_ISteamClient_CreateLocalUser( IntPtr instancePtr, ref int phSteamPipe, uint eAccountType );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_ReleaseUser" )]
-        internal static extern void SteamAPI_ISteamClient_ReleaseUser( IntPtr instancePtr, uint hSteamPipe, uint hUser );
+        internal static extern void SteamAPI_ISteamClient_ReleaseUser( IntPtr instancePtr, int hSteamPipe, int hUser );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_GetISteamUser" )]
-        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamUser( IntPtr instancePtr, uint hSteamUser, uint hSteamPipe, string pchVersion );
+        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamUser( IntPtr instancePtr, int hSteamUser, int hSteamPipe, string pchVersion );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_GetISteamGameServer" )]
-        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamGameServer( IntPtr instancePtr, uint hSteamUser, uint hSteamPipe, string pchVersion );
+        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamGameServer( IntPtr instancePtr, int hSteamUser, int hSteamPipe, string pchVersion );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_SetLocalIPBinding" )]
         internal static extern void SteamAPI_ISteamClient_SetLocalIPBinding( IntPtr instancePtr, uint unIP, char usPort );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_GetISteamFriends" )]
-        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamFriends( IntPtr instancePtr, uint hSteamUser, uint hSteamPipe, string pchVersion );
+        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamFriends( IntPtr instancePtr, int hSteamUser, int hSteamPipe, string pchVersion );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_GetISteamUtils" )]
-        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamUtils( IntPtr instancePtr, uint hSteamPipe, string pchVersion );
+        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamUtils( IntPtr instancePtr, int hSteamPipe, string pchVersion );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_GetISteamMatchmaking" )]
-        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamMatchmaking( IntPtr instancePtr, uint hSteamUser, uint hSteamPipe, string pchVersion );
+        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamMatchmaking( IntPtr instancePtr, int hSteamUser, int hSteamPipe, string pchVersion );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_GetISteamMatchmakingServers" )]
-        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamMatchmakingServers( IntPtr instancePtr, uint hSteamUser, uint hSteamPipe, string pchVersion );
+        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamMatchmakingServers( IntPtr instancePtr, int hSteamUser, int hSteamPipe, string pchVersion );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_GetISteamGenericInterface" )]
-        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamGenericInterface( IntPtr instancePtr, uint hSteamUser, uint hSteamPipe, string pchVersion );
+        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamGenericInterface( IntPtr instancePtr, int hSteamUser, int hSteamPipe, string pchVersion );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_GetISteamUserStats" )]
-        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamUserStats( IntPtr instancePtr, uint hSteamUser, uint hSteamPipe, string pchVersion );
+        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamUserStats( IntPtr instancePtr, int hSteamUser, int hSteamPipe, string pchVersion );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_GetISteamGameServerStats" )]
-        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamGameServerStats( IntPtr instancePtr, uint hSteamuser, uint hSteamPipe, string pchVersion );
+        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamGameServerStats( IntPtr instancePtr, int hSteamUser, int hSteamPipe, string pchVersion );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_GetISteamApps" )]
-        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamApps( IntPtr instancePtr, uint hSteamUser, uint hSteamPipe, string pchVersion );
+        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamApps( IntPtr instancePtr, int hSteamUser, int hSteamPipe, string pchVersion );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_GetISteamNetworking" )]
-        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamNetworking( IntPtr instancePtr, uint hSteamUser, uint hSteamPipe, string pchVersion );
+        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamNetworking( IntPtr instancePtr, int hSteamUser, int hSteamPipe, string pchVersion );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_GetISteamRemoteStorage" )]
-        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamRemoteStorage( IntPtr instancePtr, uint hSteamuser, uint hSteamPipe, string pchVersion );
+        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamRemoteStorage( IntPtr instancePtr, int hSteamUser, int hSteamPipe, string pchVersion );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_GetISteamScreenshots" )]
-        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamScreenshots( IntPtr instancePtr, uint hSteamuser, uint hSteamPipe, string pchVersion );
+        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamScreenshots( IntPtr instancePtr, int hSteamUser, int hSteamPipe, string pchVersion );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_GetIPCCallCount" )]
         internal static extern uint SteamAPI_ISteamClient_GetIPCCallCount( IntPtr instancePtr );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_SetWarningMessageHook" )]
@@ -82,25 +92,25 @@ namespace Valve.Interop
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_BShutdownIfAllPipesClosed" )]
         internal static extern bool SteamAPI_ISteamClient_BShutdownIfAllPipesClosed( IntPtr instancePtr );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_GetISteamHTTP" )]
-        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamHTTP( IntPtr instancePtr, uint hSteamuser, uint hSteamPipe, string pchVersion );
+        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamHTTP( IntPtr instancePtr, int hSteamUser, int hSteamPipe, string pchVersion );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_GetISteamUnifiedMessages" )]
-        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamUnifiedMessages( IntPtr instancePtr, uint hSteamuser, uint hSteamPipe, string pchVersion );
+        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamUnifiedMessages( IntPtr instancePtr, int hSteamUser, int hSteamPipe, string pchVersion );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_GetISteamController" )]
-        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamController( IntPtr instancePtr, uint hSteamUser, uint hSteamPipe, string pchVersion );
+        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamController( IntPtr instancePtr, int hSteamUser, int hSteamPipe, string pchVersion );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_GetISteamUGC" )]
-        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamUGC( IntPtr instancePtr, uint hSteamUser, uint hSteamPipe, string pchVersion );
+        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamUGC( IntPtr instancePtr, int hSteamUser, int hSteamPipe, string pchVersion );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_GetISteamAppList" )]
-        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamAppList( IntPtr instancePtr, uint hSteamUser, uint hSteamPipe, string pchVersion );
+        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamAppList( IntPtr instancePtr, int hSteamUser, int hSteamPipe, string pchVersion );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_GetISteamMusic" )]
-        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamMusic( IntPtr instancePtr, uint hSteamuser, uint hSteamPipe, string pchVersion );
+        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamMusic( IntPtr instancePtr, int hSteamUser, int hSteamPipe, string pchVersion );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_GetISteamMusicRemote" )]
-        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamMusicRemote( IntPtr instancePtr, uint hSteamuser, uint hSteamPipe, string pchVersion );
+        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamMusicRemote( IntPtr instancePtr, int hSteamUser, int hSteamPipe, string pchVersion );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_GetISteamHTMLSurface" )]
-        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamHTMLSurface( IntPtr instancePtr, uint hSteamuser, uint hSteamPipe, string pchVersion );
+        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamHTMLSurface( IntPtr instancePtr, int hSteamUser, int hSteamPipe, string pchVersion );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_GetISteamInventory" )]
-        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamInventory( IntPtr instancePtr, uint hSteamuser, uint hSteamPipe, string pchVersion );
+        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamInventory( IntPtr instancePtr, int hSteamUser, int hSteamPipe, string pchVersion );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamClient_GetISteamVideo" )]
-        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamVideo( IntPtr instancePtr, uint hSteamuser, uint hSteamPipe, string pchVersion );
+        internal static extern IntPtr SteamAPI_ISteamClient_GetISteamVideo( IntPtr instancePtr, int hSteamUser, int hSteamPipe, string pchVersion );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamUser_GetHSteamUser" )]
         internal static extern uint SteamAPI_ISteamUser_GetHSteamUser( IntPtr instancePtr );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamUser_BLoggedOn" )]
@@ -1168,7 +1178,7 @@ namespace Valve.Interop
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamHTMLSurface_JSDialogResponse" )]
         internal static extern void SteamAPI_ISteamHTMLSurface_JSDialogResponse( IntPtr instancePtr, uint unBrowserHandle, bool bResult );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamInventory_GetResultStatus" )]
-        internal static extern uint SteamAPI_ISteamInventory_GetResultStatus( IntPtr instancePtr, int resultHandle );
+        internal static extern int SteamAPI_ISteamInventory_GetResultStatus( IntPtr instancePtr, int resultHandle );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamInventory_GetResultItems" )]
         internal static extern bool SteamAPI_ISteamInventory_GetResultItems( IntPtr instancePtr, int resultHandle, [In, Out] SteamItemDetails_t[] pOutItemsArray, ref uint punOutItemsArraySize );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamInventory_GetResultTimestamp" )]
@@ -1182,9 +1192,9 @@ namespace Valve.Interop
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamInventory_GetItemsByID" )]
         internal static extern bool SteamAPI_ISteamInventory_GetItemsByID( IntPtr instancePtr, ref int pResultHandle, [In, Out] ulong[] pInstanceIDs, uint unCountInstanceIDs );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamInventory_SerializeResult" )]
-        internal static extern bool SteamAPI_ISteamInventory_SerializeResult( IntPtr instancePtr, int resultHandle, IntPtr pOutBuffer, ref uint punOutBufferSize );
+        internal static extern bool SteamAPI_ISteamInventory_SerializeResult( IntPtr instancePtr, int resultHandle, IntPtr pOutBuffer, out uint punOutBufferSize );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamInventory_DeserializeResult" )]
-        internal static extern bool SteamAPI_ISteamInventory_DeserializeResult( IntPtr instancePtr, ref int pOutResultHandle, IntPtr pBuffer, uint unBufferSize, bool bRESERVED_MUST_BE_FALSE );
+        internal static unsafe extern bool SteamAPI_ISteamInventory_DeserializeResult( IntPtr instancePtr, out int pOutResultHandle, IntPtr pBuffer, uint unBufferSize, bool bRESERVED_MUST_BE_FALSE );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamInventory_GenerateItems" )]
         internal static extern bool SteamAPI_ISteamInventory_GenerateItems( IntPtr instancePtr, ref int pResultHandle, [In, Out] int[] pArrayItemDefs, [In, Out] uint[] punArrayQuantity, uint unArrayLength );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamInventory_GrantPromoItems" )]
@@ -1580,37 +1590,37 @@ namespace Valve.Steamworks
     {
         internal abstract IntPtr GetIntPtr();
         internal abstract uint CreateSteamPipe();
-        internal abstract bool BReleaseSteamPipe( uint hSteamPipe );
-        internal abstract uint ConnectToGlobalUser( uint hSteamPipe );
-        internal abstract uint CreateLocalUser( ref uint phSteamPipe, uint eAccountType );
-        internal abstract void ReleaseUser( uint hSteamPipe, uint hUser );
-        internal abstract ISteamUser GetISteamUser( uint hSteamUser, uint hSteamPipe, string pchVersion );
-        internal abstract ISteamGameServer GetISteamGameServer( uint hSteamUser, uint hSteamPipe, string pchVersion );
+        internal abstract bool BReleaseSteamPipe( int hSteamPipe );
+        internal abstract uint ConnectToGlobalUser( int hSteamPipe );
+        internal abstract uint CreateLocalUser( ref int phSteamPipe, uint eAccountType );
+        internal abstract void ReleaseUser( int hSteamPipe, int hUser );
+        internal abstract ISteamUser GetISteamUser( int hSteamUser, int hSteamPipe, string pchVersion );
+        internal abstract ISteamGameServer GetISteamGameServer( int hSteamUser, int hSteamPipe, string pchVersion );
         internal abstract void SetLocalIPBinding( uint unIP, char usPort );
-        internal abstract ISteamFriends GetISteamFriends( uint hSteamUser, uint hSteamPipe, string pchVersion );
-        internal abstract ISteamUtils GetISteamUtils( uint hSteamPipe, string pchVersion );
-        internal abstract ISteamMatchmaking GetISteamMatchmaking( uint hSteamUser, uint hSteamPipe, string pchVersion );
-        internal abstract ISteamMatchmakingServers GetISteamMatchmakingServers( uint hSteamUser, uint hSteamPipe, string pchVersion );
-        internal abstract IntPtr GetISteamGenericInterface( uint hSteamUser, uint hSteamPipe, string pchVersion );
-        internal abstract ISteamUserStats GetISteamUserStats( uint hSteamUser, uint hSteamPipe, string pchVersion );
-        internal abstract ISteamGameServerStats GetISteamGameServerStats( uint hSteamuser, uint hSteamPipe, string pchVersion );
-        internal abstract ISteamApps GetISteamApps( uint hSteamUser, uint hSteamPipe, string pchVersion );
-        internal abstract ISteamNetworking GetISteamNetworking( uint hSteamUser, uint hSteamPipe, string pchVersion );
-        internal abstract ISteamRemoteStorage GetISteamRemoteStorage( uint hSteamuser, uint hSteamPipe, string pchVersion );
-        internal abstract ISteamScreenshots GetISteamScreenshots( uint hSteamuser, uint hSteamPipe, string pchVersion );
+        internal abstract ISteamFriends GetISteamFriends( int hSteamUser, int hSteamPipe, string pchVersion );
+        internal abstract ISteamUtils GetISteamUtils( int hSteamPipe, string pchVersion );
+        internal abstract ISteamMatchmaking GetISteamMatchmaking( int hSteamUser, int hSteamPipe, string pchVersion );
+        internal abstract ISteamMatchmakingServers GetISteamMatchmakingServers( int hSteamUser, int hSteamPipe, string pchVersion );
+        internal abstract IntPtr GetISteamGenericInterface( int hSteamUser, int hSteamPipe, string pchVersion );
+        internal abstract ISteamUserStats GetISteamUserStats( int hSteamUser, int hSteamPipe, string pchVersion );
+        internal abstract ISteamGameServerStats GetISteamGameServerStats( int hSteamUser, int hSteamPipe, string pchVersion );
+        internal abstract ISteamApps GetISteamApps( int hSteamUser, int hSteamPipe, string pchVersion );
+        internal abstract ISteamNetworking GetISteamNetworking( int hSteamUser, int hSteamPipe, string pchVersion );
+        internal abstract ISteamRemoteStorage GetISteamRemoteStorage( int hSteamUser, int hSteamPipe, string pchVersion );
+        internal abstract ISteamScreenshots GetISteamScreenshots( int hSteamUser, int hSteamPipe, string pchVersion );
         internal abstract uint GetIPCCallCount();
         internal abstract void SetWarningMessageHook( IntPtr pFunction );
         internal abstract bool BShutdownIfAllPipesClosed();
-        internal abstract ISteamHTTP GetISteamHTTP( uint hSteamuser, uint hSteamPipe, string pchVersion );
-        internal abstract ISteamUnifiedMessages GetISteamUnifiedMessages( uint hSteamuser, uint hSteamPipe, string pchVersion );
-        internal abstract ISteamController GetISteamController( uint hSteamUser, uint hSteamPipe, string pchVersion );
-        internal abstract ISteamUGC GetISteamUGC( uint hSteamUser, uint hSteamPipe, string pchVersion );
-        internal abstract ISteamAppList GetISteamAppList( uint hSteamUser, uint hSteamPipe, string pchVersion );
-        internal abstract ISteamMusic GetISteamMusic( uint hSteamuser, uint hSteamPipe, string pchVersion );
-        internal abstract ISteamMusicRemote GetISteamMusicRemote( uint hSteamuser, uint hSteamPipe, string pchVersion );
-        internal abstract ISteamHTMLSurface GetISteamHTMLSurface( uint hSteamuser, uint hSteamPipe, string pchVersion );
-        internal abstract ISteamInventory GetISteamInventory( uint hSteamuser, uint hSteamPipe, string pchVersion );
-        internal abstract ISteamVideo GetISteamVideo( uint hSteamuser, uint hSteamPipe, string pchVersion );
+        internal abstract ISteamHTTP GetISteamHTTP( int hSteamUser, int hSteamPipe, string pchVersion );
+        internal abstract ISteamUnifiedMessages GetISteamUnifiedMessages( int hSteamUser, int hSteamPipe, string pchVersion );
+        internal abstract ISteamController GetISteamController( int hSteamUser, int hSteamPipe, string pchVersion );
+        internal abstract ISteamUGC GetISteamUGC( int hSteamUser, int hSteamPipe, string pchVersion );
+        internal abstract ISteamAppList GetISteamAppList( int hSteamUser, int hSteamPipe, string pchVersion );
+        internal abstract ISteamMusic GetISteamMusic( int hSteamUser, int hSteamPipe, string pchVersion );
+        internal abstract ISteamMusicRemote GetISteamMusicRemote( int hSteamUser, int hSteamPipe, string pchVersion );
+        internal abstract ISteamHTMLSurface GetISteamHTMLSurface( int hSteamUser, int hSteamPipe, string pchVersion );
+        internal abstract ISteamInventory GetISteamInventory( int hSteamUser, int hSteamPipe, string pchVersion );
+        internal abstract ISteamVideo GetISteamVideo( int hSteamUser, int hSteamPipe, string pchVersion );
     }
 
 
@@ -2282,15 +2292,15 @@ namespace Valve.Steamworks
     internal abstract class ISteamInventory
     {
         internal abstract IntPtr GetIntPtr();
-        internal abstract uint GetResultStatus( int resultHandle );
+        internal abstract int GetResultStatus( int resultHandle );
         internal abstract bool GetResultItems( int resultHandle, out SteamItemDetails_t[] pOutItemsArray );
         internal abstract uint GetResultTimestamp( int resultHandle );
         internal abstract bool CheckResultSteamID( int resultHandle, ulong steamIDExpected );
         internal abstract void DestroyResult( int resultHandle );
         internal abstract bool GetAllItems( ref int pResultHandle );
         internal abstract bool GetItemsByID( ref int pResultHandle, ulong[] pInstanceIDs );
-        internal abstract bool SerializeResult( int resultHandle, IntPtr pOutBuffer, ref uint punOutBufferSize );
-        internal abstract bool DeserializeResult( ref int pOutResultHandle, IntPtr pBuffer, uint unBufferSize, bool bRESERVED_MUST_BE_FALSE );
+        internal abstract bool SerializeResult( int resultHandle, IntPtr pOutBuffer, out uint punOutBufferSize );
+        internal abstract bool DeserializeResult( out int pOutResultHandle, IntPtr pBuffer, uint unBufferSize, bool bRESERVED_MUST_BE_FALSE );
         internal abstract bool GenerateItems( ref int pResultHandle, int[] pArrayItemDefs, uint[] punArrayQuantity );
         internal abstract bool GrantPromoItems( ref int pResultHandle );
         internal abstract bool AddPromoItem( ref int pResultHandle, int itemDef );
@@ -2404,37 +2414,37 @@ namespace Valve.Steamworks
             uint result = NativeEntrypoints.SteamAPI_ISteamClient_CreateSteamPipe(m_pSteamClient);
             return result;
         }
-        internal override bool BReleaseSteamPipe( uint hSteamPipe )
+        internal override bool BReleaseSteamPipe( int hSteamPipe )
         {
             CheckIfUsable();
             bool result = NativeEntrypoints.SteamAPI_ISteamClient_BReleaseSteamPipe(m_pSteamClient,hSteamPipe);
             return result;
         }
-        internal override uint ConnectToGlobalUser( uint hSteamPipe )
+        internal override uint ConnectToGlobalUser( int hSteamPipe )
         {
             CheckIfUsable();
             uint result = NativeEntrypoints.SteamAPI_ISteamClient_ConnectToGlobalUser(m_pSteamClient,hSteamPipe);
             return result;
         }
-        internal override uint CreateLocalUser( ref uint phSteamPipe, uint eAccountType )
+        internal override uint CreateLocalUser( ref int phSteamPipe, uint eAccountType )
         {
             CheckIfUsable();
             phSteamPipe = 0;
             uint result = NativeEntrypoints.SteamAPI_ISteamClient_CreateLocalUser(m_pSteamClient,ref phSteamPipe,eAccountType);
             return result;
         }
-        internal override void ReleaseUser( uint hSteamPipe, uint hUser )
+        internal override void ReleaseUser( int hSteamPipe, int hUser )
         {
             CheckIfUsable();
             NativeEntrypoints.SteamAPI_ISteamClient_ReleaseUser( m_pSteamClient, hSteamPipe, hUser );
         }
-        internal override ISteamUser GetISteamUser( uint hSteamUser, uint hSteamPipe, string pchVersion )
+        internal override ISteamUser GetISteamUser( int hSteamUser, int hSteamPipe, string pchVersion )
         {
             CheckIfUsable();
             IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamUser(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
             return new CSteamUser( result );
         }
-        internal override ISteamGameServer GetISteamGameServer( uint hSteamUser, uint hSteamPipe, string pchVersion )
+        internal override ISteamGameServer GetISteamGameServer( int hSteamUser, int hSteamPipe, string pchVersion )
         {
             CheckIfUsable();
             IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamGameServer(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
@@ -2445,70 +2455,70 @@ namespace Valve.Steamworks
             CheckIfUsable();
             NativeEntrypoints.SteamAPI_ISteamClient_SetLocalIPBinding( m_pSteamClient, unIP, usPort );
         }
-        internal override ISteamFriends GetISteamFriends( uint hSteamUser, uint hSteamPipe, string pchVersion )
+        internal override ISteamFriends GetISteamFriends( int hSteamUser, int hSteamPipe, string pchVersion )
         {
             CheckIfUsable();
             IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamFriends(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
             return new CSteamFriends( result );
         }
-        internal override ISteamUtils GetISteamUtils( uint hSteamPipe, string pchVersion )
+        internal override ISteamUtils GetISteamUtils( int hSteamPipe, string pchVersion )
         {
             CheckIfUsable();
             IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamUtils(m_pSteamClient,hSteamPipe,pchVersion);
             return new CSteamUtils( result );
         }
-        internal override ISteamMatchmaking GetISteamMatchmaking( uint hSteamUser, uint hSteamPipe, string pchVersion )
+        internal override ISteamMatchmaking GetISteamMatchmaking( int hSteamUser, int hSteamPipe, string pchVersion )
         {
             CheckIfUsable();
             IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamMatchmaking(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
             return (ISteamMatchmaking)Marshal.PtrToStructure( result, typeof( ISteamMatchmaking ) );
         }
-        internal override ISteamMatchmakingServers GetISteamMatchmakingServers( uint hSteamUser, uint hSteamPipe, string pchVersion )
+        internal override ISteamMatchmakingServers GetISteamMatchmakingServers( int hSteamUser, int hSteamPipe, string pchVersion )
         {
             CheckIfUsable();
             IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamMatchmakingServers(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
             return new CSteamMatchmakingServers( result );
         }
-        internal override IntPtr GetISteamGenericInterface( uint hSteamUser, uint hSteamPipe, string pchVersion )
+        internal override IntPtr GetISteamGenericInterface( int hSteamUser, int hSteamPipe, string pchVersion )
         {
             CheckIfUsable();
             IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamGenericInterface(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
             return (IntPtr)Marshal.PtrToStructure( result, typeof( IntPtr ) );
         }
-        internal override ISteamUserStats GetISteamUserStats( uint hSteamUser, uint hSteamPipe, string pchVersion )
+        internal override ISteamUserStats GetISteamUserStats( int hSteamUser, int hSteamPipe, string pchVersion )
         {
             CheckIfUsable();
             IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamUserStats(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
             return new CSteamUserStats( result );
         }
-        internal override ISteamGameServerStats GetISteamGameServerStats( uint hSteamuser, uint hSteamPipe, string pchVersion )
+        internal override ISteamGameServerStats GetISteamGameServerStats( int hSteamUser, int hSteamPipe, string pchVersion )
         {
             CheckIfUsable();
-            IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamGameServerStats(m_pSteamClient,hSteamuser,hSteamPipe,pchVersion);
+            IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamGameServerStats(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
             return new CSteamGameServerStats( result );
         }
-        internal override ISteamApps GetISteamApps( uint hSteamUser, uint hSteamPipe, string pchVersion )
+        internal override ISteamApps GetISteamApps( int hSteamUser, int hSteamPipe, string pchVersion )
         {
             CheckIfUsable();
             IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamApps(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
             return new CSteamApps( result );
         }
-        internal override ISteamNetworking GetISteamNetworking( uint hSteamUser, uint hSteamPipe, string pchVersion )
+        internal override ISteamNetworking GetISteamNetworking( int hSteamUser, int hSteamPipe, string pchVersion )
         {
             CheckIfUsable();
             IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamNetworking(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
             return new CSteamNetworking( result );
         }
-        internal override ISteamRemoteStorage GetISteamRemoteStorage( uint hSteamuser, uint hSteamPipe, string pchVersion )
+        internal override ISteamRemoteStorage GetISteamRemoteStorage( int hSteamUser, int hSteamPipe, string pchVersion )
         {
             CheckIfUsable();
-            IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamRemoteStorage(m_pSteamClient,hSteamuser,hSteamPipe,pchVersion);
+            IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamRemoteStorage(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
             return (ISteamRemoteStorage)Marshal.PtrToStructure( result, typeof( ISteamRemoteStorage ) );
         }
-        internal override ISteamScreenshots GetISteamScreenshots( uint hSteamuser, uint hSteamPipe, string pchVersion )
+        internal override ISteamScreenshots GetISteamScreenshots( int hSteamUser, int hSteamPipe, string pchVersion )
         {
             CheckIfUsable();
-            IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamScreenshots(m_pSteamClient,hSteamuser,hSteamPipe,pchVersion);
+            IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamScreenshots(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
             return new CSteamScreenshots( result );
         }
         internal override uint GetIPCCallCount()
@@ -2528,64 +2538,64 @@ namespace Valve.Steamworks
             bool result = NativeEntrypoints.SteamAPI_ISteamClient_BShutdownIfAllPipesClosed(m_pSteamClient);
             return result;
         }
-        internal override ISteamHTTP GetISteamHTTP( uint hSteamuser, uint hSteamPipe, string pchVersion )
+        internal override ISteamHTTP GetISteamHTTP( int hSteamUser, int hSteamPipe, string pchVersion )
         {
             CheckIfUsable();
-            IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamHTTP(m_pSteamClient,hSteamuser,hSteamPipe,pchVersion);
+            IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamHTTP(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
             return new CSteamHTTP( result );
         }
-        internal override ISteamUnifiedMessages GetISteamUnifiedMessages( uint hSteamuser, uint hSteamPipe, string pchVersion )
+        internal override ISteamUnifiedMessages GetISteamUnifiedMessages( int hSteamUser, int hSteamPipe, string pchVersion )
         {
             CheckIfUsable();
-            IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamUnifiedMessages(m_pSteamClient,hSteamuser,hSteamPipe,pchVersion);
+            IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamUnifiedMessages(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
             return (ISteamUnifiedMessages)Marshal.PtrToStructure( result, typeof( ISteamUnifiedMessages ) );
         }
-        internal override ISteamController GetISteamController( uint hSteamUser, uint hSteamPipe, string pchVersion )
+        internal override ISteamController GetISteamController( int hSteamUser, int hSteamPipe, string pchVersion )
         {
             CheckIfUsable();
             IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamController(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
             return (ISteamController)Marshal.PtrToStructure( result, typeof( ISteamController ) );
         }
-        internal override ISteamUGC GetISteamUGC( uint hSteamUser, uint hSteamPipe, string pchVersion )
+        internal override ISteamUGC GetISteamUGC( int hSteamUser, int hSteamPipe, string pchVersion )
         {
             CheckIfUsable();
             IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamUGC(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
             return new CSteamUGC( result );
         }
-        internal override ISteamAppList GetISteamAppList( uint hSteamUser, uint hSteamPipe, string pchVersion )
+        internal override ISteamAppList GetISteamAppList( int hSteamUser, int hSteamPipe, string pchVersion )
         {
             CheckIfUsable();
             IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamAppList(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
             return (ISteamAppList)Marshal.PtrToStructure( result, typeof( ISteamAppList ) );
         }
-        internal override ISteamMusic GetISteamMusic( uint hSteamuser, uint hSteamPipe, string pchVersion )
+        internal override ISteamMusic GetISteamMusic( int hSteamUser, int hSteamPipe, string pchVersion )
         {
             CheckIfUsable();
-            IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamMusic(m_pSteamClient,hSteamuser,hSteamPipe,pchVersion);
+            IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamMusic(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
             return (ISteamMusic)Marshal.PtrToStructure( result, typeof( ISteamMusic ) );
         }
-        internal override ISteamMusicRemote GetISteamMusicRemote( uint hSteamuser, uint hSteamPipe, string pchVersion )
+        internal override ISteamMusicRemote GetISteamMusicRemote( int hSteamUser, int hSteamPipe, string pchVersion )
         {
             CheckIfUsable();
-            IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamMusicRemote(m_pSteamClient,hSteamuser,hSteamPipe,pchVersion);
+            IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamMusicRemote(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
             return (ISteamMusicRemote)Marshal.PtrToStructure( result, typeof( ISteamMusicRemote ) );
         }
-        internal override ISteamHTMLSurface GetISteamHTMLSurface( uint hSteamuser, uint hSteamPipe, string pchVersion )
+        internal override ISteamHTMLSurface GetISteamHTMLSurface( int hSteamUser, int hSteamPipe, string pchVersion )
         {
             CheckIfUsable();
-            IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamHTMLSurface(m_pSteamClient,hSteamuser,hSteamPipe,pchVersion);
+            IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamHTMLSurface(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
             return (ISteamHTMLSurface)Marshal.PtrToStructure( result, typeof( ISteamHTMLSurface ) );
         }
-        internal override ISteamInventory GetISteamInventory( uint hSteamuser, uint hSteamPipe, string pchVersion )
+        internal override ISteamInventory GetISteamInventory( int hSteamUser, int hSteamPipe, string pchVersion )
         {
             CheckIfUsable();
-            IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamInventory(m_pSteamClient,hSteamuser,hSteamPipe,pchVersion);
+            IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamInventory(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
             return new CSteamInventory( result );
         }
-        internal override ISteamVideo GetISteamVideo( uint hSteamuser, uint hSteamPipe, string pchVersion )
+        internal override ISteamVideo GetISteamVideo( int hSteamUser, int hSteamPipe, string pchVersion )
         {
             CheckIfUsable();
-            IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamVideo(m_pSteamClient,hSteamuser,hSteamPipe,pchVersion);
+            IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamVideo(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
             return (ISteamVideo)Marshal.PtrToStructure( result, typeof( ISteamVideo ) );
         }
     }
@@ -6280,17 +6290,24 @@ namespace Valve.Steamworks
                 throw new Exception( "Steam Pointer not configured" );
             }
         }
-        internal override uint GetResultStatus( int resultHandle )
+        internal override int GetResultStatus( int resultHandle )
         {
             CheckIfUsable();
-            uint result = NativeEntrypoints.SteamAPI_ISteamInventory_GetResultStatus(m_pSteamInventory,resultHandle);
+            int result = NativeEntrypoints.SteamAPI_ISteamInventory_GetResultStatus(m_pSteamInventory,resultHandle);
             return result;
         }
         internal override bool GetResultItems( int resultHandle, out SteamItemDetails_t[] pOutItemsArray )
         {
             CheckIfUsable();
+            pOutItemsArray = null;
             uint punOutItemsArraySize = 0;
+
             bool result = NativeEntrypoints.SteamAPI_ISteamInventory_GetResultItems(m_pSteamInventory,resultHandle,null,ref punOutItemsArraySize);
+            if ( result == false )
+                return false;
+
+            Console.WriteLine( "punOutItemsArraySize: " + punOutItemsArraySize );
+
             pOutItemsArray = new SteamItemDetails_t[punOutItemsArraySize];
             result = NativeEntrypoints.SteamAPI_ISteamInventory_GetResultItems( m_pSteamInventory, resultHandle, pOutItemsArray, ref punOutItemsArraySize );
             return result;
@@ -6326,18 +6343,18 @@ namespace Valve.Steamworks
             bool result = NativeEntrypoints.SteamAPI_ISteamInventory_GetItemsByID(m_pSteamInventory,ref pResultHandle,pInstanceIDs,(uint) pInstanceIDs.Length);
             return result;
         }
-        internal override bool SerializeResult( int resultHandle, IntPtr pOutBuffer, ref uint punOutBufferSize )
+        internal override bool SerializeResult( int resultHandle, IntPtr pOutBuffer, out uint punOutBufferSize )
         {
             CheckIfUsable();
-            punOutBufferSize = 0;
-            bool result = NativeEntrypoints.SteamAPI_ISteamInventory_SerializeResult(m_pSteamInventory,resultHandle,pOutBuffer,ref punOutBufferSize);
+            bool result = NativeEntrypoints.SteamAPI_ISteamInventory_SerializeResult(m_pSteamInventory,resultHandle,pOutBuffer,out punOutBufferSize);
             return result;
         }
-        internal override bool DeserializeResult( ref int pOutResultHandle, IntPtr pBuffer, uint unBufferSize, bool bRESERVED_MUST_BE_FALSE )
+        internal unsafe override bool DeserializeResult( out int pOutResultHandle, IntPtr pBuffer, uint unBufferSize, bool bRESERVED_MUST_BE_FALSE )
         {
             CheckIfUsable();
-            pOutResultHandle = 0;
-            bool result = NativeEntrypoints.SteamAPI_ISteamInventory_DeserializeResult(m_pSteamInventory,ref pOutResultHandle,pBuffer,unBufferSize,bRESERVED_MUST_BE_FALSE);
+            pOutResultHandle = -1;
+
+            bool result = NativeEntrypoints.SteamAPI_ISteamInventory_DeserializeResult(m_pSteamInventory, out pOutResultHandle, pBuffer,unBufferSize,bRESERVED_MUST_BE_FALSE);
             return result;
         }
         internal override bool GenerateItems( ref int pResultHandle, int[] pArrayItemDefs, uint[] punArrayQuantity )
@@ -6417,8 +6434,10 @@ namespace Valve.Steamworks
         internal override bool GetItemDefinitionIDs( out int[] pItemDefIDs )
         {
             CheckIfUsable();
+            pItemDefIDs = null;
             uint punItemDefIDsArraySize = 0;
             bool result = NativeEntrypoints.SteamAPI_ISteamInventory_GetItemDefinitionIDs(m_pSteamInventory,null,ref punItemDefIDsArraySize);
+            if ( result == false ) return false;
             pItemDefIDs = new int[punItemDefIDsArraySize];
             result = NativeEntrypoints.SteamAPI_ISteamInventory_GetItemDefinitionIDs( m_pSteamInventory, pItemDefIDs, ref punItemDefIDsArraySize );
             return result;
@@ -7870,7 +7889,7 @@ namespace Valve.Steamworks
         k_EUniverseDev = 4,
         k_EUniverseMax = 5,
     }
-    public enum EResult
+    public enum EResult : int
     {
         k_EResultOK = 1,
         k_EResultFail = 2,

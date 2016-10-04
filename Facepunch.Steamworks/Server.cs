@@ -50,14 +50,16 @@ namespace Facepunch.Steamworks
                 http = client.GetISteamHTTP( user, pipe, "STEAMHTTP_INTERFACE_VERSION002" );
                 inventory = client.GetISteamInventory( user, pipe, "STEAMINVENTORY_INTERFACE_V001" );
                 ugc = client.GetISteamUGC( user, pipe, "STEAMUGC_INTERFACE_VERSION008" );
+                apps = client.GetISteamApps( user, pipe, "STEAMAPPS_INTERFACE_VERSION008" );
 
                 if ( ugc.GetIntPtr() == IntPtr.Zero )
                     throw new System.Exception( "Steam Server: Couldn't load STEAMUGC_INTERFACE_VERSION008" );
 
-                apps = client.GetISteamApps( user, pipe, "STEAMAPPS_INTERFACE_VERSION008" );
-
                 if ( apps.GetIntPtr() == IntPtr.Zero )
                     throw new System.Exception( "Steam Server: Couldn't load STEAMAPPS_INTERFACE_VERSION008" );
+
+                if ( inventory.GetIntPtr() == IntPtr.Zero )
+                    throw new System.Exception( "Steam Server: Couldn't load STEAMINVENTORY_INTERFACE_V001" );
 
                 return true;
             }
