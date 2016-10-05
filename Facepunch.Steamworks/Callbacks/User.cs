@@ -6,8 +6,8 @@ using System.Text;
 
 namespace Facepunch.Steamworks.Callbacks.User
 {
-    [StructLayout( LayoutKind.Sequential )]
-    internal class ValidateAuthTicketResponse
+    [StructLayout( LayoutKind.Explicit )]
+    internal struct ValidateAuthTicketResponse
     {
         public enum Response : int
         {
@@ -23,8 +23,11 @@ namespace Facepunch.Steamworks.Callbacks.User
             PublisherIssuedBan = 9,           // The user is banned for this game. The ban came via the web api and not VAC
         };
 
+        [FieldOffset(0)]
         public ulong SteamID;
+        [FieldOffset(8)]
         public Response AuthResponse;
+        [FieldOffset(12)]
         public ulong OwnerSteamID;
 
         public const int CallbackId = Index.User + 43;

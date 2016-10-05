@@ -44,6 +44,7 @@ namespace Facepunch.Steamworks.Test
                         Authed = status == ServerAuth.Status.OK;
 
                         Assert.AreEqual( steamid, client.SteamId );
+                        Assert.AreEqual( steamid, ownerid );
 
                         Console.WriteLine( "steamid: {0}", steamid );
                         Console.WriteLine( "ownerid: {0}", ownerid );
