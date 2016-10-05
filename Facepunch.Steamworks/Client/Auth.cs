@@ -38,7 +38,7 @@ namespace Facepunch.Steamworks
             /// </summary>
             public void Cancel()
             {
-                if ( client.Valid && Handle != 0 )
+                if ( client.IsValid && Handle != 0 )
                 {
                     client.native.user.CancelAuthTicket( Handle );
                     Handle = 0;

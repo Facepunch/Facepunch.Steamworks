@@ -182,7 +182,7 @@ namespace Facepunch.Steamworks
                 //
                 if ( Id != IntPtr.Zero )
                 {
-                    if ( client.Valid )
+                    if ( client.IsValid )
                         client.native.servers.CancelQuery( Id );
 
                     Id = IntPtr.Zero;

@@ -22,6 +22,20 @@ namespace Facepunch.Steamworks
             }
         }
 
+        public void SetupCommonInterfaces()
+        {
+            Networking = new Steamworks.Networking( this, native.networking );
+            Inventory = new Steamworks.Inventory( native.inventory, IsGameServer );
+        }
+
+        public bool IsValid
+        {
+            get { return native != null; }
+        }
+
+        public Networking Networking { get; internal set; }
+        public Inventory Inventory { get; internal set; }
+
         internal Interop.NativeInterface native;
         internal virtual bool IsGameServer { get { return false; } }
 
@@ -42,6 +56,18 @@ namespace Facepunch.Steamworks
         {
             var callback = new Facepunch.Steamworks.Interop.Callback<T>( IsGameServer, id, Callback );
             Disposables.Add( callback );
+        }
+
+        public Action OnUpdate;
+
+
+        public virtual void Update()
+        {
+            Inventory.Update();
+            Networking.Update();
+
+            if ( OnUpdate != null )
+                OnUpdate();
         }
     }
 }

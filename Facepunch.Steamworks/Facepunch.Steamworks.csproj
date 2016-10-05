@@ -116,8 +116,8 @@
     <Compile Include="BaseSteamworks.cs" />
     <Compile Include="Callbacks\Index.cs" />
     <Compile Include="Callbacks\User.cs" />
-    <Compile Include="Client\Inventory.Item.cs" />
-    <Compile Include="Client\Inventory.Result.cs" />
+    <Compile Include="Interfaces\Inventory.Item.cs" />
+    <Compile Include="Interfaces\Inventory.Result.cs" />
     <Compile Include="Interfaces\Networking.cs" />
     <Compile Include="Client\Overlay.cs" />
     <Compile Include="Client\ServerList.cs" />
@@ -128,10 +128,10 @@
     <Compile Include="Client\App.cs" />
     <Compile Include="Client\Friends.cs" />
     <Compile Include="Client\Image.cs" />
-    <Compile Include="Client\Inventory.cs" />
+    <Compile Include="Interfaces\Inventory.cs" />
     <Compile Include="Client\Screenshots.cs" />
     <Compile Include="Client\Stats.cs" />
-    <Compile Include="Client\Inventory.Definition.cs" />
+    <Compile Include="Interfaces\Inventory.Definition.cs" />
     <Compile Include="Client\Voice.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Callbacks\Networking.cs" />
@@ -142,7 +142,6 @@
     <Compile Include="Interop\steam_api_interop.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="Server\Auth.cs" />
-    <Compile Include="Server\Inventory.cs" />
     <Compile Include="Server\Query.cs" />
     <Compile Include="Server\Stats.cs" />
   </ItemGroup>

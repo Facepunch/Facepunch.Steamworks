@@ -50,6 +50,11 @@ namespace Facepunch.Steamworks
             native.utils.SetWarningMessageHook( d );
 
             //
+            // Setup interfaces that client and server both have
+            //
+            SetupCommonInterfaces();
+
+            //
             // Cache common, unchanging info
             //
             AppId = appId;
@@ -89,29 +94,17 @@ namespace Facepunch.Steamworks
             Console.WriteLine( "STEAM: {0}", text );
         }
 
-        internal event Action OnUpdate;
-
         /// <summary>
         /// Should be called at least once every frame
         /// </summary>
-        public void Update()
+        public override void Update()
         {
-            if ( native == null )
+            if ( !IsValid )
                 return;
 
             Valve.Interop.NativeEntrypoints.Extended.SteamGameServer_RunCallbacks();
-            Valve.Steamworks.SteamAPI.RunCallbacks();
-          //  Voice.Update();
-          //  Inventory.Update();
-          // Networking.Update();
 
-            if ( OnUpdate != null )
-                OnUpdate();
-        }
-
-        public bool Valid
-        {
-            get { return native != null; }
+            base.Update();
         }
 
         /// <summary>

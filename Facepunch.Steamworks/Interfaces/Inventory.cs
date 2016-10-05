@@ -6,22 +6,6 @@ using System.Text;
 
 namespace Facepunch.Steamworks
 {
-    public partial class Client : IDisposable
-    {
-        Inventory _inv;
-
-        public Inventory Inventory
-        {
-            get
-            {
-                if ( _inv == null )
-                    _inv = new Inventory( native.inventory, false );
-
-                return _inv;
-            }
-        }
-    }
-
     public partial class Inventory
     {
         /// <summary>
@@ -125,7 +109,7 @@ namespace Facepunch.Steamworks
                 d.SetupCommonProperties();
                 return d;
 
-            } ).ToArray(); 
+            } ).ToArray();
         }
 
         /// <summary>
@@ -133,7 +117,7 @@ namespace Facepunch.Steamworks
         /// </summary>
         internal void Update()
         {
-            if ( Definitions == null )
+            if ( Definitions == null && !IsServer )
                 FetchItemDefinitions();
 
             UpdateLocalRequest();
@@ -222,6 +206,5 @@ namespace Facepunch.Steamworks
                 return new Result( this, resultHandle );
             }
         }
-
     }
 }

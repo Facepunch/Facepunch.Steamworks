@@ -14,7 +14,7 @@ namespace Facepunch.Steamworks.Test
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {
-                Assert.IsTrue( client.Valid );
+                Assert.IsTrue( client.IsValid );
             }
         }
 
@@ -25,7 +25,7 @@ namespace Facepunch.Steamworks.Test
             {
                 var username = client.Username;
                 Console.WriteLine( username );
-                Assert.IsTrue( client.Valid );
+                Assert.IsTrue( client.IsValid );
                 Assert.IsNotNull( username );
             }
         }
@@ -37,7 +37,7 @@ namespace Facepunch.Steamworks.Test
             {
                 var steamid = client.SteamId;
                 Console.WriteLine( steamid );
-                Assert.IsTrue( client.Valid );
+                Assert.IsTrue( client.IsValid );
                 Assert.AreNotEqual( 0, steamid );
             }
         }

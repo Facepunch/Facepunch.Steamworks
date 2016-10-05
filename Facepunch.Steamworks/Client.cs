@@ -46,13 +46,16 @@ namespace Facepunch.Steamworks
                 return;
             }
 
-            Networking = new Steamworks.Networking( this, native.networking );
-
             //
             // Set up warning hook callback
             //
             SteamAPIWarningMessageHook ptr = InternalOnWarning;
             native.client.SetWarningMessageHook( Marshal.GetFunctionPointerForDelegate( ptr ) );
+
+            //
+            // Setup interfaces that client and server both have
+            //
+            SetupCommonInterfaces();
 
             //
             // Cache common, unchanging info
@@ -68,17 +71,6 @@ namespace Facepunch.Steamworks
             Update();
         }
 
-        public override void Dispose()
-        {
-            if ( native != null)
-            {
-                native.Dispose();
-                native = null;
-            }
-
-            base.Dispose();
-        }
-
         [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
         public delegate void SteamAPIWarningMessageHook( int nSeverity, System.Text.StringBuilder pchDebugText );
 
@@ -90,43 +82,20 @@ namespace Facepunch.Steamworks
             }
         }
 
-        internal event Action OnUpdate;
-
         /// <summary>
         /// Should be called at least once every frame
         /// </summary>
-        public void Update()
+        public override void Update()
         {
-            if ( native == null )
+            if ( !IsValid )
                 return;
 
             Valve.Steamworks.SteamAPI.RunCallbacks();
+
             Voice.Update();
-            Inventory.Update();
-            Networking.Update();
 
-            if ( OnUpdate != null )
-                OnUpdate();
+            base.Update();
         }
 
-        public bool Valid
-        {
-            get { return native != null; }
-        }
-
-        internal Action InstallCallback( int type, Delegate action )
-        {
-            var del = Marshal.GetFunctionPointerForDelegate( action );
-
-            // var ptr = Marshal.GetFunctionPointerForDelegate( action );
-          //  Valve.Steamworks.SteamAPI.RegisterCallback( del, type );
-
-           // Valve.Steamworks.SteamAPI.UnregisterCallback( del );
-
-            //return () => Valve.Steamworks.SteamAPI.UnregisterCallback( ptr );
-            return null;
-        }
-
-        public Networking Networking { get; internal set; }
     }
 }

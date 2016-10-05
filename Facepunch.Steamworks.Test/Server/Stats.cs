@@ -12,7 +12,7 @@ namespace Facepunch.Steamworks.Test
         {
             using ( var server = new Facepunch.Steamworks.Server( 252490, 0, 30002, true, "VersionString" ) )
             {
-                Assert.IsTrue( server.Valid );
+                Assert.IsTrue( server.IsValid );
                 server.LogOnAnonymous();
 
                 ulong MySteamId = 76561197960279927;

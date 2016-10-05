@@ -13,7 +13,7 @@ namespace Facepunch.Steamworks.Test
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {
-                Assert.IsTrue( client.Valid );
+                Assert.IsTrue( client.IsValid );
 
                 Assert.IsNull( client.Inventory.SerializedItems );
 
@@ -33,7 +33,7 @@ namespace Facepunch.Steamworks.Test
                 using ( var server = new Facepunch.Steamworks.Server( 252490, 0, 30002, true, "VersionString" ) )
                 {
                     server.LogOnAnonymous();
-                    Assert.IsTrue( server.Valid );
+                    Assert.IsTrue( server.IsValid );
 
                     var result = server.Inventory.Deserialize( client.Inventory.SerializedItems );
 

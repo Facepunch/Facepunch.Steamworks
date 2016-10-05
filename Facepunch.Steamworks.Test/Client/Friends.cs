@@ -14,7 +14,7 @@ namespace Facepunch.Steamworks.Test
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {
-                Assert.IsTrue( client.Valid );
+                Assert.IsTrue( client.IsValid );
 
                 client.Friends.Refresh();
 
@@ -32,7 +32,7 @@ namespace Facepunch.Steamworks.Test
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {
-                Assert.IsTrue( client.Valid );
+                Assert.IsTrue( client.IsValid );
 
                 foreach ( var friend in client.Friends.All )
                 {
@@ -46,7 +46,7 @@ namespace Facepunch.Steamworks.Test
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {
-                Assert.IsTrue( client.Valid );
+                Assert.IsTrue( client.IsValid );
 
                 var friend = client.Friends.All.First();
 
