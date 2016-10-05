@@ -10,5 +10,6 @@ namespace Facepunch.Steamworks.Callbacks
         internal const int User = 100;
         internal const int Networking = 1200;
         internal const int RemoteStorage = 1300;
+        internal const int UGC = 3400;
     }
 }
