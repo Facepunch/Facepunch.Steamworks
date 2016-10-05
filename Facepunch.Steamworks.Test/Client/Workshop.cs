@@ -27,17 +27,30 @@ namespace Facepunch.Steamworks.Test
                 Query.Block();
 
                 Assert.IsFalse( Query.IsRunning );
+                Assert.IsTrue( Query.TotalResults > 0 );
+                Assert.IsTrue( Query.Items.Length > 0 );
 
                 // results
 
                 Console.WriteLine( "Searching" );
 
-                Query.SearchText = "shit";
+                Query.Order = Workshop.Order.RankedByTextSearch;
+                Query.QueryType = Workshop.QueryType.Items_Mtx;
+                Query.SearchText = "rock";
                 Query.Run();
 
                 // Block, wait for result
                 // (don't do this in realtime)
                 Query.Block();
+
+                Assert.IsTrue( Query.TotalResults > 0 );
+                Assert.IsTrue( Query.Items.Length > 0 );
+
+                foreach ( var item in Query.Items )
+                {
+                    Console.WriteLine( "{0}", item.Title );
+                    Console.WriteLine( "{0}\n", item.Description );
+                }
 
                 for ( int i=0; i<100; i++ )
                 {

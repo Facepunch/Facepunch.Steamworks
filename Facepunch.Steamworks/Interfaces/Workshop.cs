@@ -59,7 +59,6 @@ namespace Facepunch.Steamworks
             UsableInGame = 10,        // ready-to-use items and integrated guides
             ControllerBindings = 11,
             GameManagedItems = 12,        // game managed items (not managed by users)
-            All = ~0,     // return everything
         };
 
         public WorkshopQuery CreateQuery()
@@ -69,15 +68,47 @@ namespace Facepunch.Steamworks
             return q;
         }
 
+        public class WorkshopItem
+        {
+            public string Description { get; private set; }
+            public ulong Id { get; private set; }
+            public ulong OwnerId { get; private set; }
+            public float Score { get; private set; }
+            public string[] Tags { get; private set; }
+            public string Title { get; private set; }
+            public uint VotesDown { get; private set; }
+            public uint VotesUp { get; private set; }
+
+            internal static WorkshopItem From( SteamUGCDetails_t details )
+            {
+                var item = new WorkshopItem();
+
+                item.Id = details.m_nPublishedFileId;
+                item.Title = details.m_rgchTitle;
+                item.Description = details.m_rgchDescription;
+                item.OwnerId = details.m_ulSteamIDOwner;
+                item.Tags = details.m_rgchTags.Split( ' ' );
+                item.Score = details.m_flScore;
+                item.VotesUp = details.m_unVotesUp;
+                item.VotesDown = details.m_unVotesDown;
+    
+                return item;
+            }
+        }
+
         public class WorkshopQuery
         {
             internal ulong Handle;
             internal QueryCompleted Callback;
 
-            public QueryType QueryType { get; set; } = QueryType.All;
-            public Order Order { get; set; } = Order.RankedByPublicationDate;
+            public QueryType QueryType { get; set; } = QueryType.Items;
+            public Order Order { get; set; } = Order.RankedByVote;
 
             public string SearchText { get; set; }
+
+            public WorkshopItem[] Items { get; set; }
+
+            public int TotalResults { get; set; }
 
             /// <summary>
             /// Page starts at 1 !!
@@ -106,10 +137,20 @@ namespace Facepunch.Steamworks
 
             void OnResult( QueryCompleted.Data data )
             {
+                List< WorkshopItem > items = new List<WorkshopItem>();
+                for ( int i = 0; i < data.m_unNumResultsReturned; i++ )
+                {
+                    SteamUGCDetails_t details = new SteamUGCDetails_t();
+                    workshop.ugc.GetQueryUGCResult( data.Handle, (uint) i, ref details );
+
+                    items.Add( WorkshopItem.From( details ) );
+                }
+
+                Items = items.ToArray();
+                TotalResults = (int) data.m_unTotalMatchingResults;
+
                 Callback.Dispose();
                 Callback = null;
-
-                Console.WriteLine( "Results: " + data.m_unTotalMatchingResults );
             }
 
             public bool IsRunning
