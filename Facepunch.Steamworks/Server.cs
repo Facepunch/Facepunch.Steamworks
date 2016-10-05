@@ -9,11 +9,6 @@ namespace Facepunch.Steamworks
     public partial class Server : BaseSteamworks
     {
         /// <summary>
-        /// Current running program's AppId
-        /// </summary>
-        public uint AppId { get; private set; }
-
-        /// <summary>
         /// Current user's Username
         /// </summary>
         public string Username { get; private set; }

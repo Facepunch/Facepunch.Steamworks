@@ -136,6 +136,7 @@
     <Compile Include="Config.cs" />
     <Compile Include="Callbacks\Networking.cs" />
     <Compile Include="Interop\Callback.cs" />
+    <Compile Include="Interop\CallResult.cs" />
     <Compile Include="Interop\Native.cs" />
     <Compile Include="Interop\ServerRules.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

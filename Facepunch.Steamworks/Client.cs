@@ -8,11 +8,6 @@ namespace Facepunch.Steamworks
     public partial class Client : BaseSteamworks
     {
         /// <summary>
-        /// Current running program's AppId
-        /// </summary>
-        public uint AppId { get; private set; }
-
-        /// <summary>
         /// Current user's Username
         /// </summary>
         public string Username { get; private set; }
@@ -26,9 +21,6 @@ namespace Facepunch.Steamworks
         /// Current Beta name, if ser
         /// </summary>
         public string BetaName { get; private set; }
-
-
-
 
         public Client( uint appId )
         {
