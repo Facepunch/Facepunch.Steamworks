@@ -3,51 +3,25 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Facepunch.Steamworks.Callbacks.Networking;
 using Valve.Steamworks;
 
 namespace Facepunch.Steamworks
 {
-    public partial class Client : IDisposable
-    {
-        private Networking _net;
-
-        public Networking Networking
-        {
-            get
-            {
-                if ( _net == null )
-                    _net = new Networking( this );
-
-                return _net;
-            }
-        }
-    }
-
     public class Networking
     {
         public Action<ulong, MemoryStream, int> OnP2PData;
+        public Func<ulong, bool> OnIncomingConnection;
+        public Action<ulong, SessionError> OnConnectionFailed;
 
-        internal Client client;
+        internal ISteamNetworking networking;
 
-        internal class Callback
+        internal Networking( BaseSteamworks sw, ISteamNetworking networking )
         {
-            internal delegate void P2PSessionRequest( P2PSessionRequest_t a );
-            internal delegate void P2PSessionConnectFail( P2PSessionConnectFail_t a );
-        }
+            this.networking = networking;
 
-        internal Networking( Client c )
-        {
-            client = c;
-
-            {
-                Callback.P2PSessionRequest cb = onP2PConnectionRequest;
-                client.InstallCallback( Valve.Steamworks.SteamAPI.k_iSteamNetworkingCallbacks + 2, cb );
-            }
-
-            {
-                Callback.P2PSessionConnectFail cb = onP2PConnectionFailed;
-                client.InstallCallback( Valve.Steamworks.SteamAPI.k_iSteamNetworkingCallbacks + 2, cb );
-            }
+            sw.AddCallback<P2PSessionRequest>( onP2PConnectionRequest, P2PSessionRequest.CallbackId );
+            sw.AddCallback<P2PSessionConnectFail>( onP2PConnectionFailed, P2PSessionConnectFail.CallbackId );
         }
 
         internal void Update()
@@ -65,17 +39,51 @@ namespace Facepunch.Steamworks
             }
         }
 
-        private void onP2PConnectionRequest( P2PSessionRequest_t o )
+        private void onP2PConnectionRequest( P2PSessionRequest o )
         {
-            Console.WriteLine( "onP2PConnectionRequest " + o.m_steamIDRemote );
+            if ( OnIncomingConnection != null )
+            {
+                var accept = OnIncomingConnection( o.SteamID );
+
+                if ( accept )
+                {
+                    networking.AcceptP2PSessionWithUser( o.SteamID );
+                }
+                else
+                {
+                    networking.CloseP2PSessionWithUser( o.SteamID );
+                }
+
+                return;
+            }
+
+            //
+            // Default is to reject the session
+            //
+            networking.CloseP2PSessionWithUser( o.SteamID );
         }
 
-        private void onP2PConnectionFailed( P2PSessionConnectFail_t o )
+        public enum SessionError : byte
         {
-            Console.WriteLine( "onP2PConnectionFailed " + o.m_steamIDRemote );
+            None = 0,
+            NotRunningApp = 1,            // target is not running the same game
+            NoRightsToApp = 2,            // local user doesn't own the app that is running
+            DestinationNotLoggedIn = 3,   // target user isn't connected to Steam
+            Timeout = 4,                  // target isn't responding, perhaps not calling AcceptP2PSessionWithUser()
+                                          // corporate firewalls can also block this (NAT traversal is not firewall traversal)
+                                          // make sure that UDP ports 3478, 4379, and 4380 are open in an outbound direction
+            Max = 5
+        };
+
+        private void onP2PConnectionFailed( P2PSessionConnectFail o )
+        {
+            if ( OnConnectionFailed  != null )
+            {
+                OnConnectionFailed( o.SteamID, o.Error );
+            }
         }
 
-        public enum EP2PSend : int
+        public enum SendType : int
         {
             /// <summary>
             /// Basic UDP send. Packets can't be bigger than 1200 bytes (your typical MTU size). Can be lost, or arrive out of order (rare).
@@ -109,11 +117,11 @@ namespace Facepunch.Steamworks
 
         }
 
-        public unsafe bool SendP2PPacket( ulong steamid, byte[] data, int length, EP2PSend eP2PSendType = EP2PSend.Reliable, int nChannel = 0 )
+        public unsafe bool SendP2PPacket( ulong steamid, byte[] data, int length, SendType eP2PSendType = SendType.Reliable, int nChannel = 0 )
         {
             fixed ( byte* p = data )
             {
-                return client.native.networking.SendP2PPacket( steamid, (IntPtr) p, (uint)length, (uint)eP2PSendType, nChannel );
+                return networking.SendP2PPacket( steamid, (IntPtr) p, (uint)length, (uint)eP2PSendType, nChannel );
             }
         }
 
@@ -121,7 +129,7 @@ namespace Facepunch.Steamworks
         {
             uint DataAvailable = 0;
 
-            if ( !client.native.networking.IsP2PPacketAvailable( ref DataAvailable, channel ) || DataAvailable == 0 )
+            if ( !networking.IsP2PPacketAvailable( ref DataAvailable, channel ) || DataAvailable == 0 )
                 return false;
 
             if ( ms.Capacity < DataAvailable )
@@ -133,7 +141,7 @@ namespace Facepunch.Steamworks
             fixed ( byte* p = ms.GetBuffer() )
             {
                 ulong steamid = 1;
-                if ( !client.native.networking.ReadP2PPacket( (IntPtr)p, (uint)DataAvailable, ref DataAvailable, ref steamid, channel ) || DataAvailable == 0 )
+                if ( !networking.ReadP2PPacket( (IntPtr)p, (uint)DataAvailable, ref DataAvailable, ref steamid, channel ) || DataAvailable == 0 )
                     return false;
 
                 ms.SetLength( DataAvailable );

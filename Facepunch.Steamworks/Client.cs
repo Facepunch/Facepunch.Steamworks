@@ -5,86 +5,8 @@ using System.Runtime.InteropServices;
 
 namespace Facepunch.Steamworks
 {
-    public partial class Client : IDisposable
+    public partial class Client : BaseSteamworks
     {
-        internal class Internal : IDisposable
-        {
-            private int _hpipe;
-            private int _huser;
-
-            internal Valve.Steamworks.ISteamClient client;
-            internal Valve.Steamworks.ISteamUser user;
-            internal Valve.Steamworks.ISteamApps apps;
-            internal Valve.Steamworks.ISteamFriends friends;
-            internal Valve.Steamworks.ISteamMatchmakingServers servers;
-            internal Valve.Steamworks.ISteamInventory inventory;
-            internal Valve.Steamworks.ISteamNetworking networking;
-            internal Valve.Steamworks.ISteamUserStats userstats;
-            internal Valve.Steamworks.ISteamUtils utils;
-            internal Valve.Steamworks.ISteamScreenshots screenshots;
-
-            internal bool Init()
-            {
-                _huser = Valve.Interop.NativeEntrypoints.Extended.SteamAPI_GetHSteamUser();
-                _hpipe = Valve.Interop.NativeEntrypoints.Extended.SteamAPI_GetHSteamPipe();
-                if ( _hpipe == 0 )
-                    throw new System.Exception( "Couldn't get Steam Pipe" );
-
-                var clientPtr = Valve.Interop.NativeEntrypoints.Extended.SteamInternal_CreateInterface( "SteamClient017" );
-                if ( clientPtr == IntPtr.Zero )
-                {
-                    throw new System.Exception( "Steam Client: Couldn't load SteamClient017" );
-                }
-
-                client = new Valve.Steamworks.CSteamClient( clientPtr );
-
-                if ( client.GetIntPtr() == IntPtr.Zero )
-                {
-                    client = null;
-                    return false;
-                }
-
-                friends = client.GetISteamFriends( _huser, _hpipe, "SteamFriends015" );
-                if ( friends.GetIntPtr() == IntPtr.Zero ) throw new System.Exception( "Couldn't load SteamFriends015" );
-
-                user = client.GetISteamUser( _huser, _hpipe, "SteamUser019" );
-                servers = client.GetISteamMatchmakingServers( _huser, _hpipe, "SteamMatchMakingServers002" );
-                inventory =  client.GetISteamInventory( _huser, _hpipe, "STEAMINVENTORY_INTERFACE_V001" );
-                networking = client.GetISteamNetworking( _huser, _hpipe, "SteamNetworking005" );
-                apps = client.GetISteamApps( _huser, _hpipe, "STEAMAPPS_INTERFACE_VERSION008" );
-                userstats = client.GetISteamUserStats( _huser, _hpipe, "STEAMUSERSTATS_INTERFACE_VERSION011" );
-                screenshots = client.GetISteamScreenshots( _huser, _hpipe, "STEAMSCREENSHOTS_INTERFACE_VERSION002" );
-
-                utils = client.GetISteamUtils( _hpipe, "SteamUtils008" );
-
-                return true;
-            }
-
-            public void Dispose()
-            {
-                if ( _hpipe > 0 && client != null )
-                {
-                  //  if ( _huser > 0 )
-                   //     client.ReleaseUser( _hpipe, _huser );
-
-                  // client.BReleaseSteamPipe( _hpipe );
-
-                    _huser = 0;
-                    _hpipe = 0;
-                }
-
-                if ( client != null )
-                {
-                    client.BShutdownIfAllPipesClosed();
-                    client = null;
-                }
-
-                Valve.Interop.NativeEntrypoints.Extended.SteamAPI_Shutdown();
-            }
-        }
-
-        internal Internal native;
-
         /// <summary>
         /// Current running program's AppId
         /// </summary>
@@ -105,32 +27,26 @@ namespace Facepunch.Steamworks
         /// </summary>
         public string BetaName { get; private set; }
 
-        public enum MessageType : int
-        {
-            Message = 0,
-            Warning = 1
-        }
 
-        /// <summary>
-        /// Called with a message from Steam
-        /// </summary>
-        public Action<MessageType, string> OnMessage;
+
 
         public Client( uint appId )
         {
             Valve.Steamworks.SteamAPIInterop.SteamAPI_Init();
 
-            native = new Internal();
+            native = new Interop.NativeInterface();
 
             //
             // Get other interfaces
             //
-            if ( !native.Init() )
+            if ( !native.InitClient() )
             {
                 native.Dispose();
                 native = null;
                 return;
             }
+
+            Networking = new Steamworks.Networking( this, native.networking );
 
             //
             // Set up warning hook callback
@@ -152,13 +68,15 @@ namespace Facepunch.Steamworks
             Update();
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             if ( native != null)
             {
                 native.Dispose();
                 native = null;
             }
+
+            base.Dispose();
         }
 
         [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
@@ -208,5 +126,7 @@ namespace Facepunch.Steamworks
             //return () => Valve.Steamworks.SteamAPI.UnregisterCallback( ptr );
             return null;
         }
+
+        public Networking Networking { get; internal set; }
     }
 }

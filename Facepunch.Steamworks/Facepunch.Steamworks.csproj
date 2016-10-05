@@ -113,10 +113,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseSteamworks.cs" />
+    <Compile Include="Callbacks\Index.cs" />
     <Compile Include="Callbacks\User.cs" />
     <Compile Include="Client\Inventory.Item.cs" />
     <Compile Include="Client\Inventory.Result.cs" />
-    <Compile Include="Client\Networking.cs" />
+    <Compile Include="Interfaces\Networking.cs" />
     <Compile Include="Client\Overlay.cs" />
     <Compile Include="Client\ServerList.cs" />
     <Compile Include="Client\ServerList.Request.cs" />
@@ -132,7 +134,9 @@
     <Compile Include="Client\Inventory.Definition.cs" />
     <Compile Include="Client\Voice.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="Callbacks\Networking.cs" />
     <Compile Include="Interop\Callback.cs" />
+    <Compile Include="Interop\Native.cs" />
     <Compile Include="Interop\ServerRules.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interop\steam_api_interop.cs" />

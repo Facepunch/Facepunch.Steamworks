@@ -99,7 +99,7 @@ namespace Facepunch.Steamworks.Interop
                 return;
             }
 
-            //vTablePtr = VTable.CDecl.Callback.Get( OnRunCallback, GetSize );
+            throw new System.NotImplementedException();
         }
     }
 

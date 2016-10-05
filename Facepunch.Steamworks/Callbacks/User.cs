@@ -30,8 +30,5 @@ namespace Facepunch.Steamworks.Callbacks.User
         public const int CallbackId = Index.User + 43;
     };
 
-    internal static class Index
-    {
-        internal const int User = 100;
-    }
+
 }

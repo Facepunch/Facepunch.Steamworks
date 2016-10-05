@@ -31,11 +31,7 @@ namespace Facepunch.Steamworks.Test
 
                 using ( var server = new Facepunch.Steamworks.Server( 252490, 30001, 30002, 30003, true, "VersionString" ) )
                 {
-                    
-
                     server.LogOnAnonymous();
-
-
 
                     Assert.IsTrue( server.Valid );
 

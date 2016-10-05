@@ -43,12 +43,12 @@ namespace Facepunch.Steamworks
         /// </summary>
         public void Refresh( ulong steamid )
         {
-            var handle = server.native.stats.RequestUserStats( steamid );
+            var handle = server.native.gameServerStats.RequestUserStats( steamid );
         }
 
         public void Commit( ulong steamid )
         {
-            server.native.stats.StoreUserStats( steamid );
+            server.native.gameServerStats.StoreUserStats( steamid );
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Facepunch.Steamworks
         /// </summary>
         public bool Set( ulong steamid, string name, int stat )
         {
-            return server.native.stats.SetUserStat( steamid, name, stat );
+            return server.native.gameServerStats.SetUserStat( steamid, name, stat );
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Facepunch.Steamworks
         /// </summary>
         public bool Set( ulong steamid, string name, float stat )
         {
-            return server.native.stats.SetUserStat0( steamid, name, stat );
+            return server.native.gameServerStats.SetUserStat0( steamid, name, stat );
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Facepunch.Steamworks
         {
             int data = defaultValue;
 
-            if ( !server.native.stats.GetUserStat( steamid, name, ref data ) )
+            if ( !server.native.gameServerStats.GetUserStat( steamid, name, ref data ) )
                 return defaultValue;
 
             return data;
@@ -87,7 +87,7 @@ namespace Facepunch.Steamworks
         {
             float data = defaultValue;
 
-            if ( !server.native.stats.GetUserStat0( steamid, name, ref data ) )
+            if ( !server.native.gameServerStats.GetUserStat0( steamid, name, ref data ) )
                 return defaultValue;
 
             return data;

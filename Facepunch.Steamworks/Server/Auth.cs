@@ -55,7 +55,7 @@ namespace Facepunch.Steamworks
         {
             server = s;
 
-            server.CallResult<ValidateAuthTicketResponse>( OnAuthTicketValidate, ValidateAuthTicketResponse.CallbackId );
+            server.AddCallback<ValidateAuthTicketResponse>( OnAuthTicketValidate, ValidateAuthTicketResponse.CallbackId );
         }
 
         void OnAuthTicketValidate( ValidateAuthTicketResponse data )

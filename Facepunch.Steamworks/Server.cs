@@ -6,76 +6,8 @@ using System.Runtime.InteropServices;
 
 namespace Facepunch.Steamworks
 {
-    public partial class Server : IDisposable
+    public partial class Server : BaseSteamworks
     {
-        internal class Internal : IDisposable
-        {
-            internal Valve.Steamworks.ISteamClient client;
-            internal Valve.Steamworks.ISteamGameServer gameServer;
-            internal Valve.Steamworks.ISteamUtils utils;
-            internal Valve.Steamworks.ISteamNetworking networking;
-            internal Valve.Steamworks.ISteamGameServerStats stats;
-            internal Valve.Steamworks.ISteamHTTP http;
-            internal Valve.Steamworks.ISteamInventory inventory;
-            internal Valve.Steamworks.ISteamUGC ugc;
-            internal Valve.Steamworks.ISteamApps apps;
-
-            internal bool Init()
-            {
-                var user = Valve.Interop.NativeEntrypoints.Extended.SteamGameServer_GetHSteamUser();
-                var pipe = Valve.Interop.NativeEntrypoints.Extended.SteamGameServer_GetHSteamPipe();
-                if ( pipe == 0 )
-                    return false;
-
-                var clientPtr = Valve.Interop.NativeEntrypoints.Extended.SteamInternal_CreateInterface( "SteamClient017" );
-                if ( clientPtr == IntPtr.Zero )
-                {
-                    throw new System.Exception( "Steam Server: Couldn't load SteamClient017" );
-                }
-
-                client = new Valve.Steamworks.CSteamClient( clientPtr );
-
-
-                gameServer = client.GetISteamGameServer( user, pipe, "SteamGameServer012" );
-
-                if ( gameServer.GetIntPtr() == IntPtr.Zero )
-                {
-                    gameServer = null;
-                    throw new System.Exception( "Steam Server: Couldn't load SteamGameServer012" );
-                }
-
-                utils = client.GetISteamUtils( pipe, "SteamUtils008" );
-                networking = client.GetISteamNetworking( user, pipe, "SteamNetworking005" );
-                stats = client.GetISteamGameServerStats( user, pipe, "SteamGameServerStats001" );
-                http = client.GetISteamHTTP( user, pipe, "STEAMHTTP_INTERFACE_VERSION002" );
-                inventory = client.GetISteamInventory( user, pipe, "STEAMINVENTORY_INTERFACE_V001" );
-                ugc = client.GetISteamUGC( user, pipe, "STEAMUGC_INTERFACE_VERSION008" );
-                apps = client.GetISteamApps( user, pipe, "STEAMAPPS_INTERFACE_VERSION008" );
-
-                if ( ugc.GetIntPtr() == IntPtr.Zero )
-                    throw new System.Exception( "Steam Server: Couldn't load STEAMUGC_INTERFACE_VERSION008" );
-
-                if ( apps.GetIntPtr() == IntPtr.Zero )
-                    throw new System.Exception( "Steam Server: Couldn't load STEAMAPPS_INTERFACE_VERSION008" );
-
-                if ( inventory.GetIntPtr() == IntPtr.Zero )
-                    throw new System.Exception( "Steam Server: Couldn't load STEAMINVENTORY_INTERFACE_V001" );
-
-                return true;
-            }
-
-            public void Dispose()
-            {
-                if ( client != null )
-                {
-                    client.BShutdownIfAllPipesClosed();
-                    client = null;
-                }
-            }
-        }
-
-        internal Internal native;
-
         /// <summary>
         /// Current running program's AppId
         /// </summary>
@@ -91,27 +23,18 @@ namespace Facepunch.Steamworks
         /// </summary>
         public ulong SteamId { get; private set; }
 
-        public enum MessageType : int
-        {
-            Message = 0,
-            Warning = 1
-        }
-
-        /// <summary>
-        /// Called with a message from Steam
-        /// </summary>
-        public Action<MessageType, string> OnMessage;
+        internal override bool IsGameServer { get { return true; } }
 
         public Server( uint appId, uint IpAddress, ushort GamePort, ushort QueryPort, bool Secure, string VersionString )
         {
             Valve.Interop.NativeEntrypoints.Extended.SteamInternal_GameServer_Init( IpAddress, 0, GamePort, QueryPort, Secure ? 3 : 2, VersionString );
 
-            native = new Internal();
+            native = new Interop.NativeInterface();
 
             //
             // Get other interfaces
             //
-            if ( !native.Init() )
+            if ( !native.InitServer() )
             {
                 native.Dispose();
                 native = null;
@@ -153,21 +76,6 @@ namespace Facepunch.Steamworks
             
         }
 
-        public void Dispose()
-        {
-            if ( native != null)
-            {
-                native.Dispose();
-                native = null;
-            }
-
-            foreach ( var d in Disposables )
-            {
-                d.Dispose();
-            }
-            Disposables.Clear();
-        }
-
         [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
         public delegate void SteamAPIWarningMessageHook( int nSeverity, string pchDebugText );
 
@@ -205,28 +113,6 @@ namespace Facepunch.Steamworks
         {
             get { return native != null; }
         }
-
-        internal Action InstallCallback<T>( Action<T> action )
-        {
-           // var del = Marshal.GetFunctionPointerForDelegate( action );
-
-            // var ptr = Marshal.GetFunctionPointerForDelegate( action );
-            //  Valve.Steamworks.SteamAPI.RegisterCallback( del, type );
-
-            // Valve.Steamworks.SteamAPI.UnregisterCallback( del );
-
-            //return () => Valve.Steamworks.SteamAPI.UnregisterCallback( ptr );
-            return null;
-        }
-
-        List<IDisposable> Disposables = new List<IDisposable>();
-
-        internal void CallResult<T>( Action<T> Callback, int id )
-        {
-            var callback = new Facepunch.Steamworks.Interop.Callback<T>( true, id, Callback );
-            Disposables.Add( callback );
-        }
-
 
         /// <summary>
         /// Gets or sets the current MaxPlayers. 
