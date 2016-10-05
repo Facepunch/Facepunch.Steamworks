@@ -206,22 +206,21 @@ namespace Facepunch.Steamworks
             return Definitions.FirstOrDefault( x => x.Id == def );
         }
 
-        public Result Deserialize( byte[] data, int dataLength = -1 )
+        public unsafe Result Deserialize( byte[] data, int dataLength = -1 )
         {
             if ( dataLength == -1 )
                 dataLength = data.Length;
 
             int resultHandle = -1;
 
-            IntPtr ptr = Marshal.AllocHGlobal( dataLength);
-            Marshal.Copy( data, 0, ptr, dataLength );
-            var result = inventory.DeserializeResult( out resultHandle, ptr, (uint)dataLength, false );
-            Marshal.FreeHGlobal( ptr );
+            fixed ( byte* ptr = data )
+            {
+                var result = inventory.DeserializeResult( out resultHandle, (IntPtr) ptr, (uint)dataLength, false );
+                if ( !result || resultHandle == -1 )
+                    return null;
 
-            if ( !result || resultHandle == -1 )
-                return null;
-
-            return new Result( this, resultHandle );
+                return new Result( this, resultHandle );
+            }
         }
 
     }

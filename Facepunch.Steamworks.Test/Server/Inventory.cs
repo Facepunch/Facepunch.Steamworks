@@ -9,7 +9,7 @@ namespace Facepunch.Steamworks.Test
     public partial class Server
     {
         [TestMethod]
-        public void Invetory()
+        public void InventoryDeserialize()
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {

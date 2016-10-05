@@ -79,20 +79,18 @@ namespace Facepunch.Steamworks
                 } ).ToArray();
             }
 
-            internal byte[] Serialize()
+            internal unsafe byte[] Serialize()
             {
                 uint size = 0;
                 inventory.inventory.SerializeResult( Handle, IntPtr.Zero, out size );
 
-                IntPtr ptr = Marshal.AllocHGlobal((int) size);
-
-                if ( !inventory.inventory.SerializeResult( Handle, ptr, out size ) )
-                    return null;
-
                 var data = new byte[size];
 
-                Marshal.Copy( ptr, data, 0, (int)size );
-                Marshal.FreeHGlobal( ptr );
+                fixed ( byte* ptr = data )
+                {
+                    if ( !inventory.inventory.SerializeResult( Handle, (IntPtr) ptr, out size ) )
+                        return null;
+                }
 
                 return data;
             }
