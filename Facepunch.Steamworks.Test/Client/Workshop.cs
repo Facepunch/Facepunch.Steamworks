@@ -37,6 +37,7 @@ namespace Facepunch.Steamworks.Test
                 Query.Order = Workshop.Order.RankedByTextSearch;
                 Query.QueryType = Workshop.QueryType.Items_Mtx;
                 Query.SearchText = "shit";
+                Query.RequireTags.Add( "LongTShirt Skin" );
                 Query.Run();
 
                 // Block, wait for result
@@ -53,11 +54,77 @@ namespace Facepunch.Steamworks.Test
                 {
                     Console.WriteLine( "{0}", item.Title );
                 }
+            }
+        }
 
-                for ( int i=0; i<100; i++ )
+        [TestMethod]
+        public void QueryTagRequire()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                Assert.IsTrue( client.IsValid );
+
+                using ( var Query = client.Workshop.CreateQuery() )
                 {
-                    client.Update();
-                    Thread.Sleep( 10 );
+                    Query.RequireTags.Add( "LongTShirt Skin" );
+                    Query.Run();
+
+                    Query.Block();
+
+                    Assert.IsFalse( Query.IsRunning );
+                    Assert.IsTrue( Query.TotalResults > 0 );
+                    Assert.IsTrue( Query.Items.Length > 0 );
+
+                    Console.WriteLine( "Query.TotalResults: {0}", Query.TotalResults );
+                    Console.WriteLine( "Query.Items.Length: {0}", Query.Items.Length );
+
+                    Assert.IsTrue( Query.TotalResults > 0 );
+                    Assert.IsTrue( Query.Items.Length > 0 );
+
+                    foreach ( var item in Query.Items )
+                    {
+                        Console.WriteLine( "{0}", item.Title );
+                        Console.WriteLine( "\t{0}", string.Join( ";", item.Tags ) );
+
+                        Assert.IsTrue( item.Tags.Contains( "LongTShirt Skin" ) );
+                    }
+                }
+            }
+        }
+
+        [TestMethod]
+        public void QueryTagExclude()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                Assert.IsTrue( client.IsValid );
+
+                using ( var Query = client.Workshop.CreateQuery() )
+                {
+                    Query.RequireTags.Add( "LongTShirt Skin" );
+                    Query.ExcludeTags.Add( "version2" );
+                    Query.Run();
+
+                    Query.Block();
+
+                    Assert.IsFalse( Query.IsRunning );
+                    Assert.IsTrue( Query.TotalResults > 0 );
+                    Assert.IsTrue( Query.Items.Length > 0 );
+
+                    Console.WriteLine( "Query.TotalResults: {0}", Query.TotalResults );
+                    Console.WriteLine( "Query.Items.Length: {0}", Query.Items.Length );
+
+                    Assert.IsTrue( Query.TotalResults > 0 );
+                    Assert.IsTrue( Query.Items.Length > 0 );
+
+                    foreach ( var item in Query.Items )
+                    {
+                        Console.WriteLine( "{0}", item.Title );
+                        Console.WriteLine( "\t{0}", string.Join( ";", item.Tags ) );
+
+                        Assert.IsTrue( item.Tags.Contains( "LongTShirt Skin" ) );
+                        Assert.IsFalse( item.Tags.Contains( "version2" ) );
+                    }
                 }
             }
         }

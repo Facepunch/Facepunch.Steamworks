@@ -88,7 +88,7 @@ namespace Facepunch.Steamworks
                 item.Title = details.m_rgchTitle;
                 item.Description = details.m_rgchDescription;
                 item.OwnerId = details.m_ulSteamIDOwner;
-                item.Tags = details.m_rgchTags.Split( ' ' );
+                item.Tags = details.m_rgchTags.Split( ',' );
                 item.Score = details.m_flScore;
                 item.VotesUp = details.m_unVotesUp;
                 item.VotesDown = details.m_unVotesDown;
@@ -97,7 +97,7 @@ namespace Facepunch.Steamworks
             }
         }
 
-        public class WorkshopQuery
+        public class WorkshopQuery : IDisposable
         {
             internal ulong Handle;
             internal QueryCompleted Callback;
@@ -141,6 +141,15 @@ namespace Facepunch.Steamworks
                 if ( !string.IsNullOrEmpty( SearchText ) )
                     workshop.ugc.SetSearchText( Handle, SearchText );
 
+                foreach ( var tag in RequireTags )
+                    workshop.ugc.AddRequiredTag( Handle, tag );
+
+                if ( RequireTags.Count > 0 )
+                    workshop.ugc.SetMatchAnyTag( Handle, RequireAllTags );
+
+                foreach ( var tag in ExcludeTags )
+                    workshop.ugc.AddExcludedTag( Handle, tag );
+
                 Callback = new QueryCompleted();
                 Callback.Handle = workshop.ugc.SendQueryUGCRequest( Handle );
                 Callback.OnResult = OnResult;
@@ -171,6 +180,22 @@ namespace Facepunch.Steamworks
             }
 
             /// <summary>
+            /// Only return items with these tags
+            /// </summary>
+            public List<string> RequireTags { get; set; } = new List<string>();
+
+            /// <summary>
+            /// If true, return items that have all RequireTags
+            /// If false, return items that have any tags in RequireTags
+            /// </summary>
+            public bool RequireAllTags { get; set; } = false;
+
+            /// <summary>
+            /// Don't return any items with this tag
+            /// </summary>
+            public List<string> ExcludeTags { get; set; } = new List<string>();
+
+            /// <summary>
             /// Don't call this in production!
             /// </summary>
             public void Block()
@@ -182,6 +207,11 @@ namespace Facepunch.Steamworks
                     System.Threading.Thread.Sleep( 10 );
                     workshop.steamworks.Update();
                 }
+            }
+
+            public void Dispose()
+            {
+
             }
         }
     }
