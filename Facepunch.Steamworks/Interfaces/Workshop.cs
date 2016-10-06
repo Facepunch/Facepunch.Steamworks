@@ -64,6 +64,7 @@ namespace Facepunch.Steamworks
         public WorkshopQuery CreateQuery()
         {
             var q = new WorkshopQuery();
+            q.AppId = steamworks.AppId;
             q.workshop = this;
             return q;
         }
@@ -101,6 +102,17 @@ namespace Facepunch.Steamworks
             internal ulong Handle;
             internal QueryCompleted Callback;
 
+            /// <summary>
+            /// The AppId you're querying. This defaults to this appid.
+            /// </summary>
+            public uint AppId { get; set; }
+
+            /// <summary>
+            /// The AppId of the app used to upload the item. This defaults to 0
+            /// which means all/any. 
+            /// </summary>
+            public uint UploaderAppId { get; set; }
+
             public QueryType QueryType { get; set; } = QueryType.Items;
             public Order Order { get; set; } = Order.RankedByVote;
 
@@ -124,7 +136,7 @@ namespace Facepunch.Steamworks
                 if ( Page <= 0 )
                     throw new System.Exception( "Page should be 1 or above" );
 
-                Handle = workshop.ugc.CreateQueryAllUGCRequest( (uint)Order, (uint)QueryType, workshop.steamworks.AppId, workshop.steamworks.AppId, (uint)Page );
+                Handle = workshop.ugc.CreateQueryAllUGCRequest( (uint)Order, (uint)QueryType, UploaderAppId, AppId,( uint)Page );
 
                 if ( !string.IsNullOrEmpty( SearchText ) )
                     workshop.ugc.SetSearchText( Handle, SearchText );

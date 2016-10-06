@@ -36,12 +36,15 @@ namespace Facepunch.Steamworks.Test
 
                 Query.Order = Workshop.Order.RankedByTextSearch;
                 Query.QueryType = Workshop.QueryType.Items_Mtx;
-                Query.SearchText = "rock";
+                Query.SearchText = "shit";
                 Query.Run();
 
                 // Block, wait for result
                 // (don't do this in realtime)
                 Query.Block();
+
+                Console.WriteLine( "Query.TotalResults: {0}", Query.TotalResults );
+                Console.WriteLine( "Query.Items.Length: {0}", Query.Items.Length );
 
                 Assert.IsTrue( Query.TotalResults > 0 );
                 Assert.IsTrue( Query.Items.Length > 0 );
@@ -49,7 +52,6 @@ namespace Facepunch.Steamworks.Test
                 foreach ( var item in Query.Items )
                 {
                     Console.WriteLine( "{0}", item.Title );
-                    Console.WriteLine( "{0}\n", item.Description );
                 }
 
                 for ( int i=0; i<100; i++ )
