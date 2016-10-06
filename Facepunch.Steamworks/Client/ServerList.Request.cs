@@ -12,7 +12,77 @@ namespace Facepunch.Steamworks
         public class Request : IDisposable
         {
             internal Client client;
-            internal IntPtr Id;
+
+            internal List<SubRequest> Requests = new List<SubRequest>();
+
+            internal class SubRequest
+            {
+                internal IntPtr Request;
+                internal int Pointer = 0;
+                internal List<int> WatchList = new List<int>();
+
+                internal bool Update( ISteamMatchmakingServers servers, Action<gameserveritem_t> OnServer, Action OnUpdate )
+                {
+                    if ( Request == IntPtr.Zero )
+                        return true;
+
+                    bool changes = false;
+
+                    //
+                    // Add any servers we're not watching to our watch list
+                    //
+                    var count = servers.GetServerCount( Request );
+                    if ( count != Pointer )
+                    {
+                        for ( int i = Pointer; i < count; i++ )
+                        {
+                            WatchList.Add( i );
+                        }
+                    }
+                    Pointer = count;
+
+                    //
+                    // Remove any servers that respond successfully
+                    //
+                    WatchList.RemoveAll( x =>
+                    {
+                        var info = servers.GetServerDetails( Request, x );
+                        if ( info.m_bHadSuccessfulResponse )
+                        {
+                            OnServer( info );
+                            changes = true;
+                            return true;
+                        }
+
+                        return false;
+                    } );
+
+                    //
+                    // If we've finished refreshing
+                    // 
+                    if ( servers.IsRefreshing( Request ) == false )
+                    {
+                        //
+                        // Put any other servers on the 'no response' list
+                        //
+                        WatchList.RemoveAll( x =>
+                        {
+                            var info = servers.GetServerDetails( Request, x );
+                            OnServer( info );
+                            return true;
+                        } );
+
+                        servers.CancelQuery( Request );
+                        Request = IntPtr.Zero;
+                        changes = true;
+                    }
+
+                    if ( changes && OnUpdate != null )
+                        OnUpdate();
+
+                    return Request == IntPtr.Zero;
+                }
+            }
 
             public Action OnUpdate;
 
@@ -43,118 +113,69 @@ namespace Facepunch.Steamworks
             {
                 Dispose();
             }
-
-            int lastCount = 0;
-
-            internal List<int> watchlist = new List<int>();
-
+            
             internal IEnumerable<string> ServerList { get; set; }
-            internal int ServerListPointer = 0;
 
 
-            void UpdateCustomQuery()
+            internal void StartCustomQuery()
             {
                 if ( ServerList == null )
                     return;
 
-                if ( Id != IntPtr.Zero )
-                    return;
+                int blockSize = 16;
+                int Pointer = 0;
 
-                var sublist = ServerList.Skip( ServerListPointer ).Take( 10 );
-
-                if ( sublist.Count() == 0 )
+                while ( true )
                 {
-                    ServerList = null;
-                    ServerListPointer = 0;
-                    Finished = true;
-                    return;
+                    var sublist = ServerList.Skip( Pointer ).Take( blockSize );
+
+                    if ( sublist.Count() == 0 )
+                        break;
+
+                    Pointer += sublist.Count();
+
+                    var filter = new Filter();
+                    filter.Add( "or", sublist.Count().ToString() );
+
+                    foreach ( var server in sublist )
+                    {
+                        filter.Add( "gameaddr", server );
+                    }
+
+                    filter.Start();
+                    var id = client.native.servers.RequestInternetServerList( client.AppId, filter.NativeArray, filter.Count, IntPtr.Zero );
+                    filter.Free();
+
+                    AddRequest( id );
                 }
 
-                ServerListPointer += sublist.Count();
+                ServerList = null;
+            }
 
-                var filter = new Filter();
-                filter.Add( "or", sublist.Count().ToString() );
-
-                foreach ( var server in sublist )
-                {
-                    filter.Add( "gameaddr", server );
-                }
-
-                filter.Start();
-                Id = client.native.servers.RequestInternetServerList( client.AppId, filter.NativeArray, filter.Count, IntPtr.Zero );
-                filter.Free();
+            internal void AddRequest( IntPtr id )
+            {
+                Requests.Add( new SubRequest() { Request = id } );
             }
 
             private void Update()
             {
-                UpdateCustomQuery();
-
-                if ( Id == IntPtr.Zero )
+                if ( Requests.Count == 0 )
                     return;
 
-                bool changes = false;
-
-                //
-                // Add any servers we're not watching to our watch list
-                //
-                var count = client.native.servers.GetServerCount( Id );
-                if ( count != lastCount )
+                for( int i=0; i< Requests.Count(); i++ )
                 {
-                    for ( int i = lastCount; i < count; i++ )
+                    if ( Requests[i].Update( client.native.servers, OnServer, OnUpdate ) )
                     {
-                        watchlist.Add( i );
+                        Requests.RemoveAt( i );
+                        i--;
                     }
-
-                    lastCount = count;
                 }
 
-                //
-                // Remove any servers that respond successfully
-                //
-                watchlist.RemoveAll( x =>
+                if ( Requests.Count == 0 )
                 {
-                    var info = client.native.servers.GetServerDetails( Id, x );
-                    if ( info.m_bHadSuccessfulResponse )
-                    {
-                        OnServer( info );
-                        changes = true;
-                        return true;
-                    }
-
-                    return false;
-                } );
-
-                //
-                // If we've finished refreshing
-                // 
-                if ( client.native.servers.IsRefreshing( Id ) == false )
-                {
-                    //
-                    // Put any other servers on the 'no response' list
-                    //
-                    watchlist.RemoveAll( x =>
-                    {
-                        var info = client.native.servers.GetServerDetails( Id, x );
-                        OnServer( info );
-                        return true;
-                    } );
-
-                    //
-                    // We have more to process
-                    //
-                    if ( ServerList == null )
-                    {
-                        Finished = true;
-                        client.OnUpdate -= Update;
-                    }
-
-                    client.native.servers.CancelQuery( Id );
-                    Id = IntPtr.Zero;
-                    changes = true;
+                    Finished = true;
+                    client.OnUpdate -= Update;
                 }
-
-                if ( changes && OnUpdate != null)
-                    OnUpdate();
             }
 
             private void OnServer( gameserveritem_t info )
@@ -180,13 +201,13 @@ namespace Facepunch.Steamworks
                 //
                 // Cancel the query if it's still running
                 //
-                if ( Id != IntPtr.Zero )
+                foreach( var subRequest in Requests )
                 {
                     if ( client.IsValid )
-                        client.native.servers.CancelQuery( Id );
-
-                    Id = IntPtr.Zero;
+                        client.native.servers.CancelQuery( subRequest.Request );
                 }
+                Requests.Clear();
+
             }
 
         }

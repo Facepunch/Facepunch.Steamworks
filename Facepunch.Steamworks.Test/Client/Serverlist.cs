@@ -273,7 +273,7 @@ namespace Facepunch.Steamworks.Test
                 for ( int i = 0; i < 1000; i++ )
                 {
                     client.Update();
-                    System.Threading.Thread.Sleep( 10 );
+                    System.Threading.Thread.Sleep( 20 );
 
                     if ( query.Finished )
                         break;
@@ -284,7 +284,7 @@ namespace Facepunch.Steamworks.Test
 
                 foreach ( var s in query.Responded )
                 {
-                    Console.WriteLine( s.Name );
+                    Console.WriteLine( "{0} - {1}", s.AddressString, s.Name );
                 }
 
                 query.Dispose();

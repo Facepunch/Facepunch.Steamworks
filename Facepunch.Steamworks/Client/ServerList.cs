@@ -90,7 +90,7 @@ namespace Facepunch.Steamworks
             filter.Start();
 
             var request = new Request( client );
-            request.Id = client.native.servers.RequestInternetServerList( client.AppId, filter.NativeArray, filter.Count, IntPtr.Zero );
+            request.AddRequest( client.native.servers.RequestInternetServerList( client.AppId, filter.NativeArray, filter.Count, IntPtr.Zero ) );
 
             filter.Free();
 
@@ -101,6 +101,7 @@ namespace Facepunch.Steamworks
         {
             var request = new Request( client );
             request.ServerList = serverList;
+            request.StartCustomQuery();
             return request;
         }
 
@@ -111,7 +112,7 @@ namespace Facepunch.Steamworks
         public Request History()
         {
             var request = new Request( client );
-            request.Id = client.native.servers.RequestHistoryServerList( client.AppId, new IntPtr[] { }, IntPtr.Zero );
+            request.AddRequest( client.native.servers.RequestHistoryServerList( client.AppId, new IntPtr[] { }, IntPtr.Zero ) );
 
             return request;
         }
@@ -123,7 +124,7 @@ namespace Facepunch.Steamworks
         public Request Favourites()
         {
             var request = new Request( client );
-            request.Id = client.native.servers.RequestFavoritesServerList( client.AppId, new IntPtr[] { }, IntPtr.Zero );
+            request.AddRequest( client.native.servers.RequestFavoritesServerList( client.AppId, new IntPtr[] { }, IntPtr.Zero ) );
 
             return request;
         }
