@@ -65,7 +65,7 @@ namespace Facepunch.Steamworks
         /// </summary>
         internal void AddCallback<T>( Action<T> Callback, int id )
         {
-            var callback = new Facepunch.Steamworks.Interop.Callback<T>( IsGameServer, id, Callback );
+            var callback = new Callback<T>( IsGameServer, id, Callback );
             Disposables.Add( callback );
         }
 

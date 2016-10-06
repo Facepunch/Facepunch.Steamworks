@@ -15,7 +15,7 @@ namespace Facepunch.Steamworks
     {
         public class Item
         {
-            internal ISteamUGC ugc;
+            internal Workshop workshop;
 
             public string Description { get; private set; }
             public ulong Id { get; private set; }
@@ -26,11 +26,11 @@ namespace Facepunch.Steamworks
             public uint VotesDown { get; private set; }
             public uint VotesUp { get; private set; }
 
-            internal static Item From( SteamUGCDetails_t details, ISteamUGC ugc )
+            internal static Item From( SteamUGCDetails_t details, Workshop workshop )
             {
                 var item = new Item();
 
-                item.ugc = ugc;
+                item.workshop = workshop;
                 item.Id = details.m_nPublishedFileId;
                 item.Title = details.m_rgchTitle;
                 item.Description = details.m_rgchDescription;
@@ -39,13 +39,103 @@ namespace Facepunch.Steamworks
                 item.Score = details.m_flScore;
                 item.VotesUp = details.m_unVotesUp;
                 item.VotesDown = details.m_unVotesDown;
-    
+                item.UpdateState();
+
                 return item;
             }
 
-            public void Download()
+            public void Download( bool highPriority = true )
             {
-               
+                UpdateState();
+
+                if ( Installed ) return;
+                if ( Downloading ) return;
+
+                if ( !workshop.ugc.DownloadItem( Id, highPriority ) )
+                {
+                    Console.WriteLine( "Download Failed" );
+                    return;
+                }
+
+                workshop.OnFileDownloaded += OnFileDownloaded;
+                UpdateState();
+                Downloading = true;
+            }
+
+            private void OnFileDownloaded( ulong fileid, Callbacks.Result result )
+            {
+                workshop.OnFileDownloaded -= OnFileDownloaded;
+                UpdateState();
+            }
+
+            public ulong BytesDownloaded { get { UpdateDownloadProgress(); return _BytesDownloaded; } }
+            public ulong BytesTotalDownload { get { UpdateDownloadProgress(); return _BytesTotal; } }
+
+            public double DownloadProgress
+            {
+                get
+                {
+                    UpdateDownloadProgress();
+                    if ( _BytesTotal == 0 ) return 0;
+                    return (double)_BytesDownloaded / (double)_BytesTotal;
+                }
+            }
+
+            public bool Installed { get; private set; }
+            public bool Downloading { get; private set; }
+            public bool DownloadPending { get; private set; }
+            public bool Subscribed { get; private set; }
+            public bool NeedsUpdate { get; private set; }
+
+            public DirectoryInfo Directory { get; private set; }
+
+            public ulong Size { get; private set; }
+
+            private ulong _BytesDownloaded, _BytesTotal;
+
+            internal void UpdateDownloadProgress()
+            {
+               workshop.ugc.GetItemDownloadInfo( Id, out _BytesDownloaded, out _BytesTotal );
+            }
+
+            internal void UpdateState()
+            {
+                var state = workshop.ugc.GetItemState( Id );
+
+                Installed = ( state & (uint) EItemState.k_EItemStateInstalled ) != 0;
+                Downloading = ( state & (uint) EItemState.k_EItemStateDownloading ) != 0;
+                DownloadPending = ( state & (uint) EItemState.k_EItemStateDownloadPending ) != 0;
+                Subscribed = ( state & (uint) EItemState.k_EItemStateSubscribed ) != 0;
+                NeedsUpdate = ( state & (uint) EItemState.k_EItemStateNeedsUpdate ) != 0;
+
+                if ( Installed && Directory == null )
+                {
+                    ulong sizeOnDisk;
+                    string folder;
+                    uint timestamp;
+                    workshop.ugc.GetItemInstallInfo( Id, out sizeOnDisk, out folder, out timestamp );
+
+                    Directory = new DirectoryInfo( folder );
+                    Size = sizeOnDisk;
+
+                    if ( !Directory.Exists )
+                    {
+                        Size = 0;
+                        Directory = null;
+                        Installed = false;
+                    }
+                }
+            }
+
+
+            public void VoteUp()
+            {
+                workshop.ugc.SetUserItemVote( Id, true );
+            }
+
+            public void VoteDown()
+            {
+                workshop.ugc.SetUserItemVote( Id, false );
             }
         }
     }

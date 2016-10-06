@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using Facepunch.Steamworks.Callbacks.Networking;
 using Facepunch.Steamworks.Callbacks.Workshop;
 using Facepunch.Steamworks.Interop;
 using Valve.Steamworks;
@@ -18,13 +17,32 @@ namespace Facepunch.Steamworks
         internal ISteamUGC ugc;
         internal BaseSteamworks steamworks;
 
+        internal event Action<ulong, Callbacks.Result> OnFileDownloaded;
+        internal event Action<ulong> OnItemInstalled;
+
         internal Workshop( BaseSteamworks sw, ISteamUGC ugc )
         {
             this.ugc = ugc;
             this.steamworks = sw;
 
-           // sw.AddCallback<P2PSessionRequest>( onP2PConnectionRequest, P2PSessionRequest.CallbackId );
+            sw.AddCallback<DownloadResult>( onDownloadResult, DownloadResult.CallbackId );
+            sw.AddCallback<ItemInstalled>( onItemInstalled, ItemInstalled.CallbackId );
+        }
 
+        private void onItemInstalled( ItemInstalled obj )
+        {
+            Console.WriteLine( "OnItemInstalled" );
+
+            if ( OnItemInstalled != null )
+                OnItemInstalled( obj.FileId );
+        }
+
+        private void onDownloadResult( DownloadResult obj )
+        {
+            Console.WriteLine( "onDownloadResult" );
+
+            if ( OnFileDownloaded != null )
+                OnFileDownloaded( obj.FileId, obj.Result );
         }
 
         public enum Order
@@ -148,7 +166,7 @@ namespace Facepunch.Steamworks
                     SteamUGCDetails_t details = new SteamUGCDetails_t();
                     workshop.ugc.GetQueryUGCResult( data.Handle, (uint) i, ref details );
 
-                    Items[i] = Item.From( details, workshop.ugc );
+                    Items[i] = Item.From( details, workshop );
                 }
 
                 TotalResults = (int) data.m_unTotalMatchingResults;
@@ -199,7 +217,7 @@ namespace Facepunch.Steamworks
 
             public void Dispose()
             {
-
+                // ReleaseQueryUGCRequest
             }
         }
     }

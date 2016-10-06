@@ -732,7 +732,7 @@ namespace Valve.Interop
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamApps_GetLaunchQueryParam" )]
         internal static extern IntPtr SteamAPI_ISteamApps_GetLaunchQueryParam( IntPtr instancePtr, string pchKey );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamApps_GetDlcDownloadProgress" )]
-        [return: MarshalAs(UnmanagedType.I1)] internal static extern bool SteamAPI_ISteamApps_GetDlcDownloadProgress( IntPtr instancePtr, uint nAppID, ref ulong punBytesDownloaded, ref ulong punBytesTotal );
+        [return: MarshalAs(UnmanagedType.I1)] internal static extern bool SteamAPI_ISteamApps_GetDlcDownloadProgress( IntPtr instancePtr, uint nAppID, out ulong punBytesDownloaded, out ulong punBytesTotal );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamApps_GetAppBuildId" )]
         internal static extern int SteamAPI_ISteamApps_GetAppBuildId( IntPtr instancePtr );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamApps_RequestAllProofOfPurchaseKeys" )]
@@ -1088,9 +1088,9 @@ namespace Valve.Interop
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamUGC_GetItemState" )]
         internal static extern uint SteamAPI_ISteamUGC_GetItemState( IntPtr instancePtr, ulong nPublishedFileID );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamUGC_GetItemInstallInfo" )]
-        [return: MarshalAs(UnmanagedType.I1)] internal static extern bool SteamAPI_ISteamUGC_GetItemInstallInfo( IntPtr instancePtr, ulong nPublishedFileID, ref ulong punSizeOnDisk, System.Text.StringBuilder pchFolder, uint cchFolderSize, ref uint punTimeStamp );
+        [return: MarshalAs(UnmanagedType.I1)] internal static extern bool SteamAPI_ISteamUGC_GetItemInstallInfo( IntPtr instancePtr, ulong nPublishedFileID, out ulong punSizeOnDisk, System.Text.StringBuilder pchFolder, uint cchFolderSize, out uint punTimeStamp );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamUGC_GetItemDownloadInfo" )]
-        [return: MarshalAs(UnmanagedType.I1)] internal static extern bool SteamAPI_ISteamUGC_GetItemDownloadInfo( IntPtr instancePtr, ulong nPublishedFileID, ref ulong punBytesDownloaded, ref ulong punBytesTotal );
+        [return: MarshalAs(UnmanagedType.I1)] internal static extern bool SteamAPI_ISteamUGC_GetItemDownloadInfo( IntPtr instancePtr, ulong nPublishedFileID, out ulong punBytesDownloaded, out ulong punBytesTotal );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamUGC_DownloadItem" )]
         [return: MarshalAs(UnmanagedType.I1)] internal static extern bool SteamAPI_ISteamUGC_DownloadItem( IntPtr instancePtr, ulong nPublishedFileID, bool bHighPriority );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamUGC_BInitWorkshopForGameServer" )]
@@ -2003,7 +2003,7 @@ namespace Valve.Steamworks
         internal abstract bool BIsAppInstalled( uint appID );
         internal abstract ulong GetAppOwner();
         internal abstract string GetLaunchQueryParam( string pchKey );
-        internal abstract bool GetDlcDownloadProgress( uint nAppID, ref ulong punBytesDownloaded, ref ulong punBytesTotal );
+        internal abstract bool GetDlcDownloadProgress( uint nAppID, out ulong punBytesDownloaded, out ulong punBytesTotal );
         internal abstract int GetAppBuildId();
         internal abstract void RequestAllProofOfPurchaseKeys();
     }
@@ -2229,8 +2229,8 @@ namespace Valve.Steamworks
         internal abstract uint GetNumSubscribedItems();
         internal abstract uint GetSubscribedItems( ref ulong pvecPublishedFileID, uint cMaxEntries );
         internal abstract uint GetItemState( ulong nPublishedFileID );
-        internal abstract bool GetItemInstallInfo( ulong nPublishedFileID, ref ulong punSizeOnDisk, out string pchFolder, ref uint punTimeStamp );
-        internal abstract bool GetItemDownloadInfo( ulong nPublishedFileID, ref ulong punBytesDownloaded, ref ulong punBytesTotal );
+        internal abstract bool GetItemInstallInfo( ulong nPublishedFileID, out ulong punSizeOnDisk, out string pchFolder, out uint punTimeStamp );
+        internal abstract bool GetItemDownloadInfo( ulong nPublishedFileID, out ulong punBytesDownloaded, out ulong punBytesTotal );
         internal abstract bool DownloadItem( ulong nPublishedFileID, bool bHighPriority );
         internal abstract bool BInitWorkshopForGameServer( uint unWorkshopDepotID, string pszFolder );
         internal abstract void SuspendDownloads( bool bSuspend );
@@ -4726,12 +4726,12 @@ namespace Valve.Steamworks
             IntPtr result = NativeEntrypoints.SteamAPI_ISteamApps_GetLaunchQueryParam(m_pSteamApps,pchKey);
             return Marshal.PtrToStringAnsi( result );
         }
-        internal override bool GetDlcDownloadProgress( uint nAppID, ref ulong punBytesDownloaded, ref ulong punBytesTotal )
+        internal override bool GetDlcDownloadProgress( uint nAppID, out ulong punBytesDownloaded, out ulong punBytesTotal )
         {
             CheckIfUsable();
             punBytesDownloaded = 0;
             punBytesTotal = 0;
-            bool result = NativeEntrypoints.SteamAPI_ISteamApps_GetDlcDownloadProgress(m_pSteamApps,nAppID,ref punBytesDownloaded,ref punBytesTotal);
+            bool result = NativeEntrypoints.SteamAPI_ISteamApps_GetDlcDownloadProgress(m_pSteamApps,nAppID,out punBytesDownloaded,out punBytesTotal);
             return result;
         }
         internal override int GetAppBuildId()
@@ -5985,22 +5985,25 @@ namespace Valve.Steamworks
             uint result = NativeEntrypoints.SteamAPI_ISteamUGC_GetItemState(m_pSteamUGC,nPublishedFileID);
             return result;
         }
-        internal override bool GetItemInstallInfo( ulong nPublishedFileID, ref ulong punSizeOnDisk, out string pchFolder, ref uint punTimeStamp )
+
+        static System.Text.StringBuilder StringBuffer = new System.Text.StringBuilder(1024 * 16);
+
+        internal override bool GetItemInstallInfo( ulong nPublishedFileID, out ulong punSizeOnDisk, out string pchFolder, out uint punTimeStamp )
         {
             CheckIfUsable();
             punSizeOnDisk = 0;
             punTimeStamp = 0;
-            System.Text.StringBuilder pStrBuffer1 = new System.Text.StringBuilder(2048);
-            bool result = NativeEntrypoints.SteamAPI_ISteamUGC_GetItemInstallInfo(m_pSteamUGC,nPublishedFileID,ref punSizeOnDisk,pStrBuffer1,2048,ref punTimeStamp);
-            pchFolder = pStrBuffer1.ToString();
+            
+            bool result = NativeEntrypoints.SteamAPI_ISteamUGC_GetItemInstallInfo (m_pSteamUGC,nPublishedFileID, out punSizeOnDisk, StringBuffer, (uint)StringBuffer.Capacity, out punTimeStamp );
+            pchFolder = StringBuffer.ToString();
             return result;
         }
-        internal override bool GetItemDownloadInfo( ulong nPublishedFileID, ref ulong punBytesDownloaded, ref ulong punBytesTotal )
+        internal override bool GetItemDownloadInfo( ulong nPublishedFileID, out ulong punBytesDownloaded, out ulong punBytesTotal )
         {
             CheckIfUsable();
             punBytesDownloaded = 0;
             punBytesTotal = 0;
-            bool result = NativeEntrypoints.SteamAPI_ISteamUGC_GetItemDownloadInfo(m_pSteamUGC,nPublishedFileID,ref punBytesDownloaded,ref punBytesTotal);
+            bool result = NativeEntrypoints.SteamAPI_ISteamUGC_GetItemDownloadInfo(m_pSteamUGC,nPublishedFileID,out punBytesDownloaded,out punBytesTotal);
             return result;
         }
         internal override bool DownloadItem( ulong nPublishedFileID, bool bHighPriority )
