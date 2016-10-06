@@ -129,5 +129,63 @@ namespace Facepunch.Steamworks.Test
             }
         }
 
+        [TestMethod]
+        public void QueryFile()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                Assert.IsTrue( client.IsValid );
+
+                using ( var Query = client.Workshop.CreateQuery() )
+                {
+                    Query.FileId.Add( 751993251 );
+                    Query.Run();
+
+                    Assert.IsTrue( Query.IsRunning );
+
+                    Query.Block();
+
+                    Assert.IsFalse( Query.IsRunning );
+                    Assert.AreEqual( Query.TotalResults, 1 );
+                    Assert.AreEqual( Query.Items.Length, 1 );
+
+                    Console.WriteLine( "Query.TotalResults: {0}", Query.TotalResults );
+                    Console.WriteLine( "Query.Items.Length: {0}", Query.Items.Length );
+
+                    Assert.AreEqual<ulong>( Query.Items[0].Id, 751993251 );
+                }
+            }
+        }
+
+        [TestMethod]
+        public void QueryFiles()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                Assert.IsTrue( client.IsValid );
+
+                using ( var Query = client.Workshop.CreateQuery() )
+                {
+                    Query.FileId.Add( 751993251 );
+                    Query.FileId.Add( 747266909 );
+                    Query.Run();
+
+                    Assert.IsTrue( Query.IsRunning );
+
+                    Query.Block();
+
+                    Assert.IsFalse( Query.IsRunning );
+                    Assert.AreEqual( Query.TotalResults, 2 );
+                    Assert.AreEqual( Query.Items.Length, 2 );
+
+                    Console.WriteLine( "Query.TotalResults: {0}", Query.TotalResults );
+                    Console.WriteLine( "Query.Items.Length: {0}", Query.Items.Length );
+
+                    Assert.IsTrue( Query.Items.Any( x => x.Id == 751993251 ) );
+                    Assert.IsTrue( Query.Items.Any( x => x.Id == 747266909 ) );
+                }
+            }
+        }
+
     }
 }

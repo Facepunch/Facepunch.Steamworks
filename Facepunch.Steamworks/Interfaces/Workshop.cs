@@ -128,7 +128,7 @@ namespace Facepunch.Steamworks
             public int Page { get; set; } = 1;
             internal Workshop workshop;
 
-            public void Run()
+            public unsafe void Run()
             {
                 if ( Callback != null )
                     return;
@@ -136,7 +136,21 @@ namespace Facepunch.Steamworks
                 if ( Page <= 0 )
                     throw new System.Exception( "Page should be 1 or above" );
 
-                Handle = workshop.ugc.CreateQueryAllUGCRequest( (uint)Order, (uint)QueryType, UploaderAppId, AppId,( uint)Page );
+                if ( FileId.Count != 0 )
+                {
+                    var fileArray = FileId.ToArray();
+
+                    fixed ( ulong* array = fileArray )
+                    {
+                        Handle = workshop.ugc.CreateQueryUGCDetailsRequest( (IntPtr) array, (uint)fileArray.Length );
+                    }
+                }
+                else
+                {
+                    Handle = workshop.ugc.CreateQueryAllUGCRequest( (uint)Order, (uint)QueryType, UploaderAppId, AppId, (uint)Page );
+                }
+
+                
 
                 if ( !string.IsNullOrEmpty( SearchText ) )
                     workshop.ugc.SetSearchText( Handle, SearchText );
@@ -194,6 +208,11 @@ namespace Facepunch.Steamworks
             /// Don't return any items with this tag
             /// </summary>
             public List<string> ExcludeTags { get; set; } = new List<string>();
+
+            /// <summary>
+            /// If you're querying for a particular file or files, add them to this.
+            /// </summary>
+            public List<ulong> FileId { get; set; } = new List<ulong>();
 
             /// <summary>
             /// Don't call this in production!

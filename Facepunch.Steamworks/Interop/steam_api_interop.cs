@@ -976,7 +976,7 @@ namespace Valve.Interop
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamUGC_CreateQueryAllUGCRequest" )]
         internal static extern ulong SteamAPI_ISteamUGC_CreateQueryAllUGCRequest( IntPtr instancePtr, uint eQueryType, uint eMatchingeMatchingUGCTypeFileType, uint nCreatorAppID, uint nConsumerAppID, uint unPage );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamUGC_CreateQueryUGCDetailsRequest" )]
-        internal static extern ulong SteamAPI_ISteamUGC_CreateQueryUGCDetailsRequest( IntPtr instancePtr, ref ulong pvecPublishedFileID, uint unNumPublishedFileIDs );
+        internal static unsafe extern ulong SteamAPI_ISteamUGC_CreateQueryUGCDetailsRequest( IntPtr instancePtr, IntPtr pvecPublishedFileID, uint unNumPublishedFileIDs );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamUGC_SendQueryUGCRequest" )]
         internal static extern ulong SteamAPI_ISteamUGC_SendQueryUGCRequest( IntPtr instancePtr, ulong handle );
         [DllImportAttribute( Config.LibraryName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCResult" )]
@@ -2173,7 +2173,7 @@ namespace Valve.Steamworks
         internal abstract IntPtr GetIntPtr();
         internal abstract ulong CreateQueryUserUGCRequest( uint unAccountID, uint eListType, uint eMatchingUGCType, uint eSortOrder, uint nCreatorAppID, uint nConsumerAppID, uint unPage );
         internal abstract ulong CreateQueryAllUGCRequest( uint eQueryType, uint eMatchingeMatchingUGCTypeFileType, uint nCreatorAppID, uint nConsumerAppID, uint unPage );
-        internal abstract ulong CreateQueryUGCDetailsRequest( ref ulong pvecPublishedFileID, uint unNumPublishedFileIDs );
+        internal abstract ulong CreateQueryUGCDetailsRequest( IntPtr pvecPublishedFileID, uint unNumPublishedFileIDs );
         internal abstract ulong SendQueryUGCRequest( ulong handle );
         internal abstract bool GetQueryUGCResult( ulong handle, uint index, ref SteamUGCDetails_t pDetails );
         internal abstract bool GetQueryUGCPreviewURL( ulong handle, uint index, out string pchURL );
@@ -5631,11 +5631,10 @@ namespace Valve.Steamworks
             ulong result = NativeEntrypoints.SteamAPI_ISteamUGC_CreateQueryAllUGCRequest(m_pSteamUGC,eQueryType,eMatchingeMatchingUGCTypeFileType,nCreatorAppID,nConsumerAppID,unPage);
             return result;
         }
-        internal override ulong CreateQueryUGCDetailsRequest( ref ulong pvecPublishedFileID, uint unNumPublishedFileIDs )
+        internal override ulong CreateQueryUGCDetailsRequest( IntPtr pvecPublishedFileID, uint unNumPublishedFileIDs )
         {
             CheckIfUsable();
-            pvecPublishedFileID = 0;
-            ulong result = NativeEntrypoints.SteamAPI_ISteamUGC_CreateQueryUGCDetailsRequest(m_pSteamUGC,ref pvecPublishedFileID,unNumPublishedFileIDs);
+            ulong result = NativeEntrypoints.SteamAPI_ISteamUGC_CreateQueryUGCDetailsRequest(m_pSteamUGC, pvecPublishedFileID,unNumPublishedFileIDs);
             return result;
         }
         internal override ulong SendQueryUGCRequest( ulong handle )
