@@ -38,7 +38,7 @@ namespace Facepunch.Steamworks.Test
                 Console.WriteLine( "Searching" );
 
                 Query.Order = Workshop.Order.RankedByTextSearch;
-                Query.QueryType = Workshop.QueryType.Items_Mtx;
+                Query.QueryType = Workshop.QueryType.MicrotransactionItems;
                 Query.SearchText = "shit";
                 Query.RequireTags.Add( "LongTShirt Skin" );
                 Query.Run();
@@ -234,6 +234,35 @@ namespace Facepunch.Steamworks.Test
                     Console.WriteLine( "item.Size:              {0}mb", (item.Size / 1024 / 1024) );
 
                 }
+            }
+        }
+
+        [TestMethod]
+        [TestCategory( "Run Manually" )]
+        public void CreatePublish()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                Assert.IsTrue( client.IsValid );
+
+                var item = client.Workshop.CreateItem( Workshop.ItemType.Microtransaction );
+
+                item.Title = "Facepunch.Steamworks Unit test";
+
+                item.Publish();
+
+                while ( item.Publishing )
+                {
+                    client.Update();
+                    Thread.Sleep( 100 );
+                }
+
+                Assert.IsFalse( item.Publishing );
+                Assert.AreNotEqual( 0, item.Id );
+
+                Console.WriteLine( "item.Id: {0}", item.Id );
+
+                item.Delete();
             }
         }
 

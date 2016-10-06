@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
+﻿using System.Runtime.InteropServices;
 using Facepunch.Steamworks.Interop;
 
 namespace Facepunch.Steamworks.Callbacks.Workshop
@@ -32,8 +28,6 @@ namespace Facepunch.Steamworks.Callbacks.Workshop
         public const int CallbackId = Index.UGC + 6;
     };
 
-
-
     internal class QueryCompleted : CallResult<QueryCompleted.Data>
     {
         public override int CallbackId { get { return Index.UGC + 1; } }
@@ -50,5 +44,30 @@ namespace Facepunch.Steamworks.Callbacks.Workshop
         };
     }
 
+    internal class CreateItem : CallResult<CreateItem.Data>
+    {
+        public override int CallbackId { get { return Index.UGC + 3; } }
 
+        [StructLayout( LayoutKind.Sequential )]
+        internal struct Data
+        {
+            internal Result Result;
+            internal ulong FileId;
+            [MarshalAs(UnmanagedType.I1)]
+            internal bool NeedsLegalAgreement; 
+        };
+    }
+
+    internal class SubmitItemUpdate : CallResult<SubmitItemUpdate.Data>
+    {
+        public override int CallbackId { get { return Index.UGC + 4; } }
+
+        [StructLayout( LayoutKind.Sequential )]
+        internal struct Data
+        {
+            internal Result Result;
+            [MarshalAs(UnmanagedType.I1)]
+            internal bool NeedsLegalAgreement;
+        };
+    }
 }

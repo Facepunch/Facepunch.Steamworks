@@ -137,7 +137,9 @@
     <Compile Include="Config.cs" />
     <Compile Include="Callbacks\Networking.cs" />
     <Compile Include="Interfaces\Workshop.cs" />
+    <Compile Include="Interfaces\Workshop.Editor.cs" />
     <Compile Include="Interfaces\Workshop.Item.cs" />
+    <Compile Include="Interfaces\Workshop.Query.cs" />
     <Compile Include="Interop\Callback.cs" />
     <Compile Include="Interop\CallResult.cs" />
     <Compile Include="Interop\Native.cs" />

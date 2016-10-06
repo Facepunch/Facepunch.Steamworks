@@ -21,6 +21,7 @@ namespace Facepunch.Steamworks.Interop
         internal Valve.Steamworks.ISteamUGC ugc;
         internal Valve.Steamworks.ISteamGameServer gameServer;
         internal Valve.Steamworks.ISteamGameServerStats gameServerStats;
+        internal Valve.Steamworks.ISteamRemoteStorage remoteStorage;
 
         internal bool InitClient()
         {
@@ -75,6 +76,7 @@ namespace Facepunch.Steamworks.Interop
             servers = client.GetISteamMatchmakingServers( huser, hpipe, "SteamMatchMakingServers002" );
             userstats = client.GetISteamUserStats( huser, hpipe, "STEAMUSERSTATS_INTERFACE_VERSION011" );
             screenshots = client.GetISteamScreenshots( huser, hpipe, "STEAMSCREENSHOTS_INTERFACE_VERSION002" );
+            remoteStorage = client.GetISteamRemoteStorage( huser, hpipe, "STEAMREMOTESTORAGE_INTERFACE_VERSION013" );
         }
 
         public void Dispose()

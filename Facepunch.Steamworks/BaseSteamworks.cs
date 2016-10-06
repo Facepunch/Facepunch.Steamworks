@@ -36,7 +36,7 @@ namespace Facepunch.Steamworks
         {
             Networking = new Steamworks.Networking( this, native.networking );
             Inventory = new Steamworks.Inventory( native.inventory, IsGameServer );
-            Workshop = new Steamworks.Workshop( this, native.ugc );
+            Workshop = new Steamworks.Workshop( this, native.ugc, native.remoteStorage );
         }
 
         public bool IsValid
@@ -88,12 +88,14 @@ namespace Facepunch.Steamworks
         /// <summary>
         /// Call results are results to specific actions
         /// </summary>
-        internal void AddCallResult( CallResult c )
+        internal void AddCallResult( CallResult call )
         {
-            if ( FinishCallback( c ) )
+            if ( call == null ) throw new ArgumentNullException( "call" );
+
+            if ( FinishCallback( call ) )
                 return;
 
-            Callbacks.Add( c );
+            Callbacks.Add( call );
         }
 
         void RunCallbackQueue()

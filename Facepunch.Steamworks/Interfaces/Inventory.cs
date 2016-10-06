@@ -98,10 +98,7 @@ namespace Facepunch.Steamworks
 
             int[] ids;
             if ( !inventory.GetItemDefinitionIDs( out ids ) )
-            {
-                Console.WriteLine( "Couldn't load definitions" );
                 return;
-            }
 
             Definitions = ids.Select( x =>
             {

@@ -2513,7 +2513,7 @@ namespace Valve.Steamworks
         {
             CheckIfUsable();
             IntPtr result = NativeEntrypoints.SteamAPI_ISteamClient_GetISteamRemoteStorage(m_pSteamClient,hSteamUser,hSteamPipe,pchVersion);
-            return (ISteamRemoteStorage)Marshal.PtrToStructure( result, typeof( ISteamRemoteStorage ) );
+            return new CSteamRemoteStorage( result );
         }
         internal override ISteamScreenshots GetISteamScreenshots( int hSteamUser, int hSteamPipe, string pchVersion )
         {
