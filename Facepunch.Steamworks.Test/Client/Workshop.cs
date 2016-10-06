@@ -187,5 +187,33 @@ namespace Facepunch.Steamworks.Test
             }
         }
 
+        [TestMethod]
+        public void DownloadFile()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                Assert.IsTrue( client.IsValid );
+
+                using ( var Query = client.Workshop.CreateQuery() )
+                {
+                    Query.FileId.Add( 751993251 );
+                    Query.Run();
+
+                    Assert.IsTrue( Query.IsRunning );
+
+                    Query.Block();
+
+                    Assert.IsFalse( Query.IsRunning );
+                    Assert.AreEqual( Query.TotalResults, 1 );
+                    Assert.AreEqual( Query.Items.Length, 1 );
+
+                    var item = Query.Items[0];
+
+                    item.Download();
+
+                }
+            }
+        }
+
     }
 }

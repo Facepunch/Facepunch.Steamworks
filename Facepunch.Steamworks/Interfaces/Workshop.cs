@@ -11,7 +11,7 @@ using Valve.Steamworks;
 
 namespace Facepunch.Steamworks
 {
-    public class Workshop
+    public partial class Workshop
     {
         internal const ulong InvalidHandle = 0xffffffffffffffff;
 
@@ -69,34 +69,6 @@ namespace Facepunch.Steamworks
             return q;
         }
 
-        public class WorkshopItem
-        {
-            public string Description { get; private set; }
-            public ulong Id { get; private set; }
-            public ulong OwnerId { get; private set; }
-            public float Score { get; private set; }
-            public string[] Tags { get; private set; }
-            public string Title { get; private set; }
-            public uint VotesDown { get; private set; }
-            public uint VotesUp { get; private set; }
-
-            internal static WorkshopItem From( SteamUGCDetails_t details )
-            {
-                var item = new WorkshopItem();
-
-                item.Id = details.m_nPublishedFileId;
-                item.Title = details.m_rgchTitle;
-                item.Description = details.m_rgchDescription;
-                item.OwnerId = details.m_ulSteamIDOwner;
-                item.Tags = details.m_rgchTags.Split( ',' );
-                item.Score = details.m_flScore;
-                item.VotesUp = details.m_unVotesUp;
-                item.VotesDown = details.m_unVotesDown;
-    
-                return item;
-            }
-        }
-
         public class WorkshopQuery : IDisposable
         {
             internal ulong Handle;
@@ -118,7 +90,7 @@ namespace Facepunch.Steamworks
 
             public string SearchText { get; set; }
 
-            public WorkshopItem[] Items { get; set; }
+            public Item[] Items { get; set; }
 
             public int TotalResults { get; set; }
 
@@ -150,8 +122,6 @@ namespace Facepunch.Steamworks
                     Handle = workshop.ugc.CreateQueryAllUGCRequest( (uint)Order, (uint)QueryType, UploaderAppId, AppId, (uint)Page );
                 }
 
-                
-
                 if ( !string.IsNullOrEmpty( SearchText ) )
                     workshop.ugc.SetSearchText( Handle, SearchText );
 
@@ -172,16 +142,15 @@ namespace Facepunch.Steamworks
 
             void OnResult( QueryCompleted.Data data )
             {
-                List< WorkshopItem > items = new List<WorkshopItem>();
+                Items = new Item[data.m_unNumResultsReturned];
                 for ( int i = 0; i < data.m_unNumResultsReturned; i++ )
                 {
                     SteamUGCDetails_t details = new SteamUGCDetails_t();
                     workshop.ugc.GetQueryUGCResult( data.Handle, (uint) i, ref details );
 
-                    items.Add( WorkshopItem.From( details ) );
+                    Items[i] = Item.From( details, workshop.ugc );
                 }
 
-                Items = items.ToArray();
                 TotalResults = (int) data.m_unTotalMatchingResults;
 
                 Callback.Dispose();
