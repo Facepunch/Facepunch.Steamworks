@@ -24,7 +24,7 @@ namespace Facepunch.Steamworks.Interop.VTable.This
         [MarshalAs(UnmanagedType.FunctionPtr)]
         public GetSize m_GetCallbackSizeBytes;
 
-        internal static IntPtr Get( Action<IntPtr> onRunCallback, Func<int> getSize )
+        internal static IntPtr Get( Action<IntPtr> onRunCallback, Func<int> getSize, Interop.Callback cb )
         {
             var size = Marshal.SizeOf( typeof( Callback ) );
             var ptr = Marshal.AllocHGlobal( size );
@@ -32,8 +32,8 @@ namespace Facepunch.Steamworks.Interop.VTable.This
             Callback.Result da = ( _, p ) => onRunCallback( p );
             Callback.GetSize dc = ( _ ) => getSize();
 
-            var a = GCHandle.Alloc( da );
-            var c = GCHandle.Alloc( dc );
+            cb.AddHandle( GCHandle.Alloc( da ) );
+            cb.AddHandle( GCHandle.Alloc( dc ) );
 
             var table = new Callback()
             {

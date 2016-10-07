@@ -28,7 +28,27 @@ using System.Text;
 
 namespace Facepunch.Steamworks.Interop
 {
-    internal partial class Callback<T> : IDisposable
+    internal partial class Callback : IDisposable
+    {
+        List<GCHandle> Handles = new List<GCHandle>();
+
+        public virtual void Dispose()
+        {
+            foreach ( var handle in Handles )
+            {
+                handle.Free();
+            }
+
+            Handles = null;
+        }
+
+        internal void AddHandle( GCHandle gCHandle )
+        {
+            Handles.Add( gCHandle );
+        }
+    }
+
+    internal partial class Callback<T> : Callback
     {
         public int CallbackId = 0;
         public bool GameServer = false;
@@ -50,7 +70,7 @@ namespace Facepunch.Steamworks.Interop
             Valve.Steamworks.SteamAPI.RegisterCallback( callbackPin.AddrOfPinnedObject(), CallbackId );
         }
 
-        public virtual void Dispose()
+        public override void Dispose()
         {
             if ( callbackPin.IsAllocated )
             {
@@ -63,6 +83,8 @@ namespace Facepunch.Steamworks.Interop
                 Marshal.FreeHGlobal( vTablePtr );
                 vTablePtr = IntPtr.Zero;
             }
+
+            base.Dispose();
         }
 
         private void OnRunCallback( IntPtr ptr )
@@ -95,7 +117,7 @@ namespace Facepunch.Steamworks.Interop
         {
             if ( Config.UseThisCall )
             {
-                vTablePtr = VTable.This.Callback.Get( OnRunCallback, GetSize );
+                vTablePtr = VTable.This.Callback.Get( OnRunCallback, GetSize, this );
                 return;
             }
 

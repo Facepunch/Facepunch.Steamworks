@@ -8,7 +8,7 @@ using Valve.Steamworks;
 
 namespace Facepunch.Steamworks
 {
-    public class Networking
+    public class Networking : IDisposable
     {
         public Action<ulong, MemoryStream, int> OnP2PData;
         public Func<ulong, bool> OnIncomingConnection;
@@ -22,6 +22,15 @@ namespace Facepunch.Steamworks
 
             sw.AddCallback<P2PSessionRequest>( onP2PConnectionRequest, P2PSessionRequest.CallbackId );
             sw.AddCallback<P2PSessionConnectFail>( onP2PConnectionFailed, P2PSessionConnectFail.CallbackId );
+        }
+
+        public void Dispose()
+        {
+            networking = null;
+
+            OnIncomingConnection = null;
+            OnConnectionFailed = null;
+            OnP2PData = null;
         }
 
         internal void Update()

@@ -22,12 +22,14 @@ namespace Facepunch.Steamworks.Test
         [TestMethod]
         public void Init_10000()
         {
-            for ( int i = 0; i < 100; i++ )
+            for ( int i = 0; i < 50; i++ )
             {
                 using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
                 {
                     Assert.IsTrue( client.IsValid );
                 }
+
+                GC.Collect();
             }
         }
 

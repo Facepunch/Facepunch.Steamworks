@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Facepunch.Steamworks.Interop
 {
-    class ServerRules
+    class ServerRules : IDisposable
     {
         // Pins and pointers for the created vtable
         private GCHandle vTablePin;
@@ -33,6 +33,27 @@ namespace Facepunch.Steamworks.Interop
             // Ask Steam to get the server rules, respond to our fake vtable
             //
             Valve.Interop.NativeEntrypoints.SteamAPI_ISteamMatchmakingServers_ServerRules( Server.Client.native.servers.GetIntPtr(), address, (short) queryPort, GetPtr() );
+        }
+
+        public void Dispose()
+        {
+            if ( vTablePtr != IntPtr.Zero )
+            {
+                Marshal.FreeHGlobal( vTablePtr );
+                vTablePtr = IntPtr.Zero;
+            }
+
+            if ( vTablePin.IsAllocated )
+                vTablePin.Free();
+
+            if ( RulesRespondPin.IsAllocated )
+                vTablePin.Free();
+
+            if ( FailedRespondPin.IsAllocated )
+                vTablePin.Free();
+
+            if ( CompletePin.IsAllocated )
+                vTablePin.Free();
         }
 
         void InstallVTable()
@@ -86,28 +107,6 @@ namespace Facepunch.Steamworks.Interop
 
                 vTablePin = GCHandle.Alloc( vTablePtr, GCHandleType.Pinned );
             }
-        }
-
-        void Unpin()
-        {
-            if ( vTablePtr != IntPtr.Zero )
-            {
-                Marshal.FreeHGlobal( vTablePtr );
-                vTablePtr = IntPtr.Zero;
-            }
-
-            if ( vTablePin.IsAllocated )
-                vTablePin.Free();
-
-            if ( RulesRespondPin.IsAllocated )
-                vTablePin.Free();
-
-            if ( FailedRespondPin.IsAllocated )
-                vTablePin.Free();
-
-            if ( CompletePin.IsAllocated )
-                vTablePin.Free();
-
         }
 
         private void InternalOnRulesResponded( string k, string v )

@@ -5,7 +5,7 @@ using Valve.Steamworks;
 
 namespace Facepunch.Steamworks
 {
-    public partial class Workshop
+    public partial class Workshop : IDisposable
     {
         internal const ulong InvalidHandle = 0xffffffffffffffff;
 
@@ -24,6 +24,16 @@ namespace Facepunch.Steamworks
 
             steamworks.AddCallback<DownloadResult>( onDownloadResult, DownloadResult.CallbackId );
             steamworks.AddCallback<ItemInstalled>( onItemInstalled, ItemInstalled.CallbackId );
+        }
+
+        public void Dispose()
+        {
+            ugc = null;
+            steamworks = null;
+            remoteStorage = null;
+
+            OnFileDownloaded = null;
+            OnItemInstalled = null;
         }
 
         private void onItemInstalled( ItemInstalled obj )

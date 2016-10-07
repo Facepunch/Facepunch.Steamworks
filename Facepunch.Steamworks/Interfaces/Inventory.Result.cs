@@ -99,6 +99,7 @@ namespace Facepunch.Steamworks
             {
                 inventory.inventory.DestroyResult( Handle );
                 Handle = -1;
+                inventory = null;
             }
         }
 

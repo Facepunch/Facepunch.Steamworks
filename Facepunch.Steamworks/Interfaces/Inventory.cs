@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Facepunch.Steamworks
 {
-    public partial class Inventory
+    public partial class Inventory : IDisposable
     {
         /// <summary>
         /// Called when the local client's items are first retrieved, and when they change.
@@ -32,7 +32,9 @@ namespace Facepunch.Steamworks
         public DateTime SerializedExpireTime;
 
         internal Valve.Steamworks.ISteamInventory inventory;
+
         private Result LocalPlayerRequest;
+
         private bool IsServer { get; set; }
 
         internal Inventory( Valve.Steamworks.ISteamInventory c, bool server )
@@ -42,6 +44,20 @@ namespace Facepunch.Steamworks
 
             inventory.LoadItemDefinitions();
             FetchItemDefinitions();
+        }
+
+        public void Dispose()
+        {
+            if ( LocalPlayerRequest != null )
+            {
+                LocalPlayerRequest.Dispose();
+                LocalPlayerRequest = null;
+            }
+
+            inventory = null;
+
+            Items = null;
+            SerializedItems = null;
         }
 
         /// <summary>

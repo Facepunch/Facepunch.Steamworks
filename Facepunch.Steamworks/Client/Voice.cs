@@ -7,22 +7,6 @@ using System.Text;
 
 namespace Facepunch.Steamworks
 {
-    public partial class Client : IDisposable
-    {
-        private Voice _voice;
-
-        public Voice Voice
-        {
-            get
-            {
-                if ( _voice == null )
-                    _voice = new Voice( this );
-
-                return _voice;
-            }
-        }
-    }
-
     public class Voice : IDisposable
     {
         const int ReadBufferSize = 1024 * 128;

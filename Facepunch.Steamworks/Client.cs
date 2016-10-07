@@ -22,6 +22,8 @@ namespace Facepunch.Steamworks
         /// </summary>
         public string BetaName { get; private set; }
 
+        public Voice Voice { get; internal set; }
+
         public Client( uint appId )
         {
             Valve.Steamworks.SteamAPIInterop.SteamAPI_Init();
@@ -48,6 +50,12 @@ namespace Facepunch.Steamworks
             // Setup interfaces that client and server both have
             //
             SetupCommonInterfaces();
+
+            //
+            // Client only interfaces
+            //
+            Voice = new Voice( this );
+
 
             //
             // Cache common, unchanging info
@@ -87,6 +95,16 @@ namespace Facepunch.Steamworks
             Voice.Update();
 
             base.Update();
+        }
+
+        public override void Dispose()
+        {
+            Voice.Dispose();
+            Voice = null;
+
+            base.Dispose();
+
+            Valve.Interop.NativeEntrypoints.Extended.SteamAPI_Shutdown();
         }
 
     }

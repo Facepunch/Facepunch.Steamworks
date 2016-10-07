@@ -106,6 +106,7 @@ namespace Facepunch.Steamworks
 
             internal void OnServerRulesReceiveFinished( bool Success )
             {
+                RulesRequest.Dispose();
                 RulesRequest = null;
 
                 if ( OnReceivedRules != null )

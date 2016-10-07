@@ -25,6 +25,15 @@ namespace Facepunch.Steamworks
             }
             Disposables.Clear();
 
+            Workshop.Dispose();
+            Workshop = null;
+
+            Inventory.Dispose();
+            Inventory = null;
+
+            Networking.Dispose();
+            Networking = null;
+
             if ( native != null )
             {
                 native.Dispose();

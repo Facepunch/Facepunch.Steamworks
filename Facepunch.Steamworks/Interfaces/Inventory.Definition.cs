@@ -31,9 +31,9 @@ namespace Facepunch.Steamworks
 
             public T GetProperty<T>( string name )
             {
-                string val = string.Empty;
+                string val = GetStringProperty( name );
 
-                if ( !inventory.GetItemDefinitionProperty( Id, name, out val ) )
+                if ( string.IsNullOrEmpty( val ) )
                     return default( T );
 
                 try
@@ -46,10 +46,20 @@ namespace Facepunch.Steamworks
                 }
             }
 
+            public string GetStringProperty( string name )
+            {
+                string val = string.Empty;
+
+                if ( !inventory.GetItemDefinitionProperty( Id, name, out val ) )
+                    return string.Empty;
+
+                return val;
+            }
+
             internal void SetupCommonProperties()
             {
-                Name = GetProperty<string>( "name" );
-                Description = GetProperty<string>( "description" );
+                Name = GetStringProperty( "name" );
+                Description = GetStringProperty( "description" );
                 Created = GetProperty<DateTime>( "timestamp" );
                 Modified = GetProperty<DateTime>( "modified" );
             }
