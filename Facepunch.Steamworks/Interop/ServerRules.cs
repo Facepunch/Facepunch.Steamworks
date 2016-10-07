@@ -47,13 +47,13 @@ namespace Facepunch.Steamworks.Interop
                 vTablePin.Free();
 
             if ( RulesRespondPin.IsAllocated )
-                vTablePin.Free();
+                RulesRespondPin.Free();
 
             if ( FailedRespondPin.IsAllocated )
-                vTablePin.Free();
+                FailedRespondPin.Free();
 
             if ( CompletePin.IsAllocated )
-                vTablePin.Free();
+                CompletePin.Free();
         }
 
         void InstallVTable()
