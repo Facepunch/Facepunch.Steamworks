@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Facepunch.Steamworks
@@ -15,24 +16,27 @@ namespace Facepunch.Steamworks
             get
             {
                 if ( _voice == null )
-                    _voice = new Voice { client = this };
+                    _voice = new Voice( this );
 
                 return _voice;
             }
         }
     }
 
-    public class Voice
+    public class Voice : IDisposable
     {
+        const int ReadBufferSize = 1024 * 128;
+        const int UncompressBufferSize = 1024 * 256;
+
         internal Client client;
-        internal byte[] bufferRegular = new byte[ 1024 * 8 ];
-        internal uint bufferRegularLastWrite = 0;
 
-        internal byte[] bufferCompressed = new byte[ 1024 * 8 ];
-        internal uint bufferCompressedLastWrite = 0;
+        internal IntPtr ReadCompressedBuffer;
+        internal IntPtr ReadUncompressedBuffer;
 
-        public Action<byte[]> OnCompressedData;
-        public Action<byte[]> OnUncompressedData;
+        internal IntPtr UncompressBuffer;
+
+        public Action<IntPtr, int> OnCompressedData;
+        public Action<IntPtr, int> OnUncompressedData;
 
 
         /// <summary>
@@ -68,6 +72,12 @@ namespace Facepunch.Steamworks
             }
         }
 
+        /// <summary>
+        /// The last time voice was detected, recorded
+        /// </summary>
+        public DateTime LastVoiceRecordTime { get; private set; }
+
+        public TimeSpan TimeSinceLastVoiceRecord { get { return DateTime.Now.Subtract( LastVoiceRecordTime ); } }
 
         public bool IsRecording = false;
 
@@ -76,70 +86,93 @@ namespace Facepunch.Steamworks
         /// </summary>
         public uint DesiredSampleRate = 0;
 
-        internal unsafe void Update()
+        public Voice( Client client )
+        {
+            this.client = client;
+
+            ReadCompressedBuffer = Marshal.AllocHGlobal( ReadBufferSize );
+            ReadUncompressedBuffer = Marshal.AllocHGlobal( ReadBufferSize );
+            UncompressBuffer = Marshal.AllocHGlobal( UncompressBufferSize );
+        }
+
+        public void Dispose()
+        {
+            Marshal.FreeHGlobal( ReadCompressedBuffer );
+            Marshal.FreeHGlobal( ReadUncompressedBuffer );
+
+            Marshal.FreeHGlobal( UncompressBuffer );
+        }
+
+        internal void Update()
         {
             if ( OnCompressedData == null && OnUncompressedData == null )
                 return;
 
-            fixed ( byte* pbufferRegular = bufferRegular )
-            fixed ( byte* pbufferCompressed = bufferCompressed )
+
+            uint bufferRegularLastWrite = 0;
+            uint bufferCompressedLastWrite = 0;
+
+            Valve.Steamworks.EVoiceResult result = (Valve.Steamworks.EVoiceResult) client.native.user.GetVoice( OnCompressedData != null, ReadCompressedBuffer, ReadBufferSize, ref bufferCompressedLastWrite,
+                                                    OnUncompressedData != null, (IntPtr) ReadUncompressedBuffer, ReadBufferSize, ref bufferRegularLastWrite, 
+                                                    DesiredSampleRate == 0 ? OptimalSampleRate : DesiredSampleRate );
+
+            Console.WriteLine( result );
+
+            IsRecording = true;
+
+            if ( result == Valve.Steamworks.EVoiceResult.k_EVoiceResultOK )
             {
-                bufferRegularLastWrite = 0;
-                bufferCompressedLastWrite = 0;
-
-                Valve.Steamworks.EVoiceResult result = (Valve.Steamworks.EVoiceResult) client.native.user.GetVoice( OnCompressedData != null, (IntPtr) pbufferCompressed, (uint) bufferCompressed.Length, ref bufferCompressedLastWrite,
-                                                        OnUncompressedData != null, (IntPtr) pbufferRegular, (uint) bufferRegular.Length, ref bufferRegularLastWrite, 
-                                                        DesiredSampleRate == 0 ? OptimalSampleRate : DesiredSampleRate );
-
-                IsRecording = true;
-
-                if ( result == Valve.Steamworks.EVoiceResult.k_EVoiceResultOK )
+                if ( OnCompressedData != null && bufferCompressedLastWrite > 0 )
                 {
-                    if ( OnCompressedData != null && bufferCompressedLastWrite > 0 )
-                    {
-                        OnCompressedData( bufferRegular.Take( (int)bufferCompressedLastWrite ).ToArray() );
-                    }
-
-                    if ( OnUncompressedData != null && bufferRegularLastWrite > 0 )
-                    {
-                        OnUncompressedData( bufferRegular.Take( (int)bufferRegularLastWrite ).ToArray() );
-                    }
+                    OnCompressedData( ReadCompressedBuffer, (int)bufferCompressedLastWrite );
                 }
 
-                if ( result == Valve.Steamworks.EVoiceResult.k_EVoiceResultNotRecording ||
-                    result == Valve.Steamworks.EVoiceResult.k_EVoiceResultNotInitialized )
-                    IsRecording = false;
+                if ( OnUncompressedData != null && bufferRegularLastWrite > 0 )
+                {
+                    OnUncompressedData( ReadUncompressedBuffer, (int)bufferRegularLastWrite );
+                }
+
+                LastVoiceRecordTime = DateTime.Now;
+            }
+
+            if ( result == Valve.Steamworks.EVoiceResult.k_EVoiceResultNotRecording ||
+                result == Valve.Steamworks.EVoiceResult.k_EVoiceResultNotInitialized )
+                IsRecording = false;
+            
+        }
+
+        public unsafe bool Decompress( byte[] input, MemoryStream output, uint samepleRate = 0 )
+        {
+            fixed ( byte* p = input )
+            {
+                return Decompress( (IntPtr)p, 0, input.Length, output, samepleRate );
             }
         }
 
-        public unsafe bool Decompress( byte[] input, int inputoffset, int inputsize, MemoryStream output, uint samepleRate = 0 )
+        public unsafe bool Decompress( IntPtr input, int inputoffset, int inputsize, MemoryStream output, uint samepleRate = 0 )
         {
             if ( samepleRate == 0 )
                 samepleRate = OptimalSampleRate;
 
-            //
-            // Guessing the uncompressed size cuz we're dicks
-            //
+            uint bytesOut = 0;
+            var result = (Valve.Steamworks.EVoiceResult) client.native.user.DecompressVoice( (IntPtr)( ((byte*)input) + inputoffset ), (uint) inputsize, UncompressBuffer, UncompressBufferSize, ref bytesOut, samepleRate );
+
+            if ( bytesOut > 0 )
+                output.SetLength( bytesOut );
+
+            if (  result == Valve.Steamworks.EVoiceResult.k_EVoiceResultOK )
             {
-                var targetBufferSize = inputsize * 10;
+                if ( output.Capacity < bytesOut )
+                    output.Capacity = (int) bytesOut;
 
-                if ( output.Capacity < targetBufferSize )
-                    output.Capacity = targetBufferSize;
-
-                output.SetLength( targetBufferSize );
+                output.SetLength( bytesOut );
+                Marshal.Copy( UncompressBuffer, output.GetBuffer(), 0, (int) bytesOut );
+                
+                return true;
             }
 
-            fixed ( byte* pout = output.GetBuffer() )
-            fixed ( byte* p = input )
-            {
-                uint bytesOut = 0;
-                var result = (Valve.Steamworks.EVoiceResult) client.native.user.DecompressVoice( (IntPtr)( p + inputoffset ), (uint) inputsize, (IntPtr) pout, (uint) output.Length, ref bytesOut, (uint)samepleRate );
-
-                if ( bytesOut > 0 )
-                    output.SetLength( bytesOut );
-
-                return result == Valve.Steamworks.EVoiceResult.k_EVoiceResultOK;
-            }
+            return false;
+            
         }
     }
 }

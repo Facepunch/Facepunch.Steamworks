@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Facepunch.Steamworks.Test
@@ -15,6 +16,18 @@ namespace Facepunch.Steamworks.Test
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {
                 Assert.IsTrue( client.IsValid );
+            }
+        }
+
+        [TestMethod]
+        public void Init_10000()
+        {
+            for ( int i = 0; i < 100; i++ )
+            {
+                using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+                {
+                    Assert.IsTrue( client.IsValid );
+                }
             }
         }
 
@@ -82,6 +95,8 @@ namespace Facepunch.Steamworks.Test
             }
         }
 
+        static MemoryStream decompressStream = new MemoryStream();
+
         [TestMethod]
         public void GetVoice()
         {
@@ -90,14 +105,19 @@ namespace Facepunch.Steamworks.Test
                 int unCompressed = 0;
                 int compressed = 0;
 
-                client.Voice.OnCompressedData = ( data ) =>
+                client.Voice.OnCompressedData = ( ptr, length ) =>
                 {
-                    compressed += data.Length;
+                    compressed += length;
+
+                    if ( !client.Voice.Decompress( ptr, 0, length, decompressStream ) )
+                    {
+                        Assert.Fail( "Decompress returned false" );
+                    }
                 };
 
-                client.Voice.OnUncompressedData = ( data ) =>
+                client.Voice.OnUncompressedData = ( ptr, length ) =>
                 {
-                    unCompressed += data.Length;
+                    unCompressed += length;
                 };
 
                 client.Voice.WantsRecording = true;
@@ -126,9 +146,9 @@ namespace Facepunch.Steamworks.Test
             {
                 int compressed = 0;
 
-                client.Voice.OnCompressedData = ( data ) =>
+                client.Voice.OnCompressedData = ( ptr, length ) =>
                 {
-                    compressed += data.Length;
+                    compressed += length;
                 };
 
                 client.Voice.WantsRecording = true;
@@ -153,9 +173,9 @@ namespace Facepunch.Steamworks.Test
             {
                 int unCompressed = 0;
 
-                client.Voice.OnUncompressedData = ( data ) =>
+                client.Voice.OnUncompressedData = ( ptr, length ) =>
                 {
-                    unCompressed += data.Length;
+                    unCompressed += length;
                 };
 
                 client.Voice.WantsRecording = true;
