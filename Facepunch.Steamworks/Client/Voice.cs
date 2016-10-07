@@ -87,8 +87,8 @@ namespace Facepunch.Steamworks
                 bufferRegularLastWrite = 0;
                 bufferCompressedLastWrite = 0;
 
-                Valve.Steamworks.EVoiceResult result = (Valve.Steamworks.EVoiceResult) client.native.user.GetVoice(     OnUncompressedData != null, (IntPtr) pbufferCompressed, (uint) bufferCompressed.Length, ref bufferCompressedLastWrite,
-                                                        OnCompressedData != null, (IntPtr) pbufferRegular, (uint) bufferRegular.Length, ref bufferRegularLastWrite, 
+                Valve.Steamworks.EVoiceResult result = (Valve.Steamworks.EVoiceResult) client.native.user.GetVoice( OnCompressedData != null, (IntPtr) pbufferCompressed, (uint) bufferCompressed.Length, ref bufferCompressedLastWrite,
+                                                        OnUncompressedData != null, (IntPtr) pbufferRegular, (uint) bufferRegular.Length, ref bufferRegularLastWrite, 
                                                         DesiredSampleRate == 0 ? OptimalSampleRate : DesiredSampleRate );
 
                 IsRecording = true;

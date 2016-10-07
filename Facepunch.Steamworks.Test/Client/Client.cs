@@ -87,28 +87,92 @@ namespace Facepunch.Steamworks.Test
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {
-                int dataRead = 0;
+                int unCompressed = 0;
+                int compressed = 0;
 
                 client.Voice.OnCompressedData = ( data ) =>
                 {
-                    dataRead += data.Length;
+                    compressed += data.Length;
                 };
 
                 client.Voice.OnUncompressedData = ( data ) =>
                 {
-                    dataRead += data.Length;
+                    unCompressed += data.Length;
                 };
 
                 client.Voice.WantsRecording = true;
 
-                for ( int i = 0; i < 32; i++ )
+                var sw = Stopwatch.StartNew();
+
+                while ( sw.Elapsed.TotalSeconds < 3 )
                 {
                     client.Update();
                     System.Threading.Thread.Sleep( 10 );
                 }
 
+                Assert.AreNotEqual( unCompressed, 0 );
+                Assert.AreNotEqual( compressed, 0 );
+
                 // Should really be > 0 if the mic was getting audio
-                Console.Write( dataRead );
+                Console.WriteLine( "unCompressed: {0}", unCompressed );
+                Console.WriteLine( "compressed: {0}", compressed );
+            }
+        }
+
+        [TestMethod]
+        public void GetVoice_Compressed_Only()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                int compressed = 0;
+
+                client.Voice.OnCompressedData = ( data ) =>
+                {
+                    compressed += data.Length;
+                };
+
+                client.Voice.WantsRecording = true;
+
+                var sw = Stopwatch.StartNew();
+
+                while ( sw.Elapsed.TotalSeconds < 3 )
+                {
+                    client.Update();
+                    System.Threading.Thread.Sleep( 10 );
+                }
+
+                Assert.AreNotEqual( compressed, 0 );
+                Console.WriteLine( "compressed: {0}", compressed );
+            }
+        }
+
+        [TestMethod]
+        public void GetVoice_UnCompressed_Only()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                int unCompressed = 0;
+
+                client.Voice.OnUncompressedData = ( data ) =>
+                {
+                    unCompressed += data.Length;
+                };
+
+                client.Voice.WantsRecording = true;
+
+                var sw = Stopwatch.StartNew();
+
+                while ( sw.Elapsed.TotalSeconds < 3 )
+                {
+                    client.Update();
+                    System.Threading.Thread.Sleep( 10 );
+                }
+
+                Assert.AreNotEqual( unCompressed, 0 );
+
+                // Should really be > 0 if the mic was getting audio
+                Console.WriteLine( "unCompressed: {0}", unCompressed );
+
             }
         }
 
