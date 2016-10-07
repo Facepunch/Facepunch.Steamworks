@@ -20,7 +20,7 @@ namespace Facepunch.Steamworks.Test
         }
 
         [TestMethod]
-        public void Init_10000()
+        public void Init_50()
         {
             for ( int i = 0; i < 50; i++ )
             {
@@ -89,10 +89,9 @@ namespace Facepunch.Steamworks.Test
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {
-                for( int i=0; i<32; i++ )
+                for( int i=0; i<1024; i++ )
                 {
                     client.Update();
-                    System.Threading.Thread.Sleep( 10 );
                 }
             }
         }
