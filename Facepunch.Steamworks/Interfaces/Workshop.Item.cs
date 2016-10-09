@@ -58,14 +58,29 @@ namespace Facepunch.Steamworks
                 }
 
                 workshop.OnFileDownloaded += OnFileDownloaded;
+                workshop.OnItemInstalled += OnItemInstalled;
                 UpdateState();
                 Downloading = true;
             }
 
             private void OnFileDownloaded( ulong fileid, Callbacks.Result result )
             {
+
                 workshop.OnFileDownloaded -= OnFileDownloaded;
                 UpdateState();
+
+                if ( result == Callbacks.Result.OK )
+                    Downloading = false;
+            }
+
+            private void OnItemInstalled( ulong fileid )
+            {
+
+                workshop.OnItemInstalled -= OnItemInstalled;
+                UpdateState();
+
+                Downloading = false;
+                Installed = true;
             }
 
             public ulong BytesDownloaded { get { UpdateDownloadProgress(); return _BytesDownloaded; } }
@@ -110,19 +125,23 @@ namespace Facepunch.Steamworks
 
                 if ( Installed && Directory == null )
                 {
+                    Size = 0;
+                    Directory = null;
+
                     ulong sizeOnDisk;
                     string folder;
                     uint timestamp;
-                    workshop.ugc.GetItemInstallInfo( Id, out sizeOnDisk, out folder, out timestamp );
-
-                    Directory = new DirectoryInfo( folder );
-                    Size = sizeOnDisk;
-
-                    if ( !Directory.Exists )
+                    if ( workshop.ugc.GetItemInstallInfo( Id, out sizeOnDisk, out folder, out timestamp ) )
                     {
-                        Size = 0;
-                        Directory = null;
-                        Installed = false;
+                        Directory = new DirectoryInfo( folder );
+                        Size = sizeOnDisk;
+
+                        if ( !Directory.Exists )
+                        {
+                            Size = 0;
+                            Directory = null;
+                            Installed = false;
+                        }
                     }
                 }
             }

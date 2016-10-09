@@ -89,6 +89,9 @@ namespace Facepunch.Steamworks.Interop
 
         private void OnRunCallback( IntPtr ptr )
         {
+            if ( callbackPin == null ) throw new System.Exception( "Callback wasn't pinned!" );
+            if ( vTablePtr == IntPtr.Zero ) throw new System.Exception( "vTablePtr wasn't pinned!" );
+
             T data = (T) Marshal.PtrToStructure( ptr, typeof(T) );
             Function( data );
         }
@@ -96,6 +99,7 @@ namespace Facepunch.Steamworks.Interop
 
         private int GetSize()
         {
+            Console.WriteLine( "GET SIZE CALLED" );
             throw new System.NotImplementedException();
         }
 

@@ -5986,14 +5986,13 @@ namespace Valve.Steamworks
             return result;
         }
 
-        static System.Text.StringBuilder StringBuffer = new System.Text.StringBuilder(1024 * 16);
-
         internal override bool GetItemInstallInfo( ulong nPublishedFileID, out ulong punSizeOnDisk, out string pchFolder, out uint punTimeStamp )
         {
             CheckIfUsable();
             punSizeOnDisk = 0;
             punTimeStamp = 0;
-            
+
+            var StringBuffer = new System.Text.StringBuilder(2048);
             bool result = NativeEntrypoints.SteamAPI_ISteamUGC_GetItemInstallInfo (m_pSteamUGC,nPublishedFileID, out punSizeOnDisk, StringBuffer, (uint)StringBuffer.Capacity, out punTimeStamp );
             pchFolder = StringBuffer.ToString();
             return result;
