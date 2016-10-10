@@ -96,6 +96,44 @@ namespace Facepunch.Steamworks.Test
         }
 
         [TestMethod]
+        public void QueryTagRequireMultiple()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                Assert.IsTrue( client.IsValid );
+
+                using ( var Query = client.Workshop.CreateQuery() )
+                {
+                    Query.RequireTags.Add( "LongTShirt Skin" );
+                    Query.RequireTags.Add( "version2" );
+                    Query.RequireAllTags = true;
+                    Query.Run();
+
+                    Query.Block();
+
+                    Assert.IsFalse( Query.IsRunning );
+                    Assert.IsTrue( Query.TotalResults > 0 );
+                    Assert.IsTrue( Query.Items.Length > 0 );
+
+                    Console.WriteLine( "Query.TotalResults: {0}", Query.TotalResults );
+                    Console.WriteLine( "Query.Items.Length: {0}", Query.Items.Length );
+
+                    Assert.IsTrue( Query.TotalResults > 0 );
+                    Assert.IsTrue( Query.Items.Length > 0 );
+
+                    foreach ( var item in Query.Items )
+                    {
+                        Console.WriteLine( "{0}", item.Title );
+                        Console.WriteLine( "\t{0}", string.Join( ";", item.Tags ) );
+
+                        Assert.IsTrue( item.Tags.Contains( "LongTShirt Skin" ) );
+                        Assert.IsTrue( item.Tags.Contains( "version2" ) );
+                    }
+                }
+            }
+        }
+
+        [TestMethod]
         public void QueryTagExclude()
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )

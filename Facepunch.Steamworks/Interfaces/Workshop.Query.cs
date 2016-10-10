@@ -73,7 +73,7 @@ namespace Facepunch.Steamworks
                     workshop.ugc.AddRequiredTag( Handle, tag );
 
                 if ( RequireTags.Count > 0 )
-                    workshop.ugc.SetMatchAnyTag( Handle, RequireAllTags );
+                    workshop.ugc.SetMatchAnyTag( Handle, !RequireAllTags );
 
                 foreach ( var tag in ExcludeTags )
                     workshop.ugc.AddExcludedTag( Handle, tag );
