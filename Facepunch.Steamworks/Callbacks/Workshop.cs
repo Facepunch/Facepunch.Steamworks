@@ -4,70 +4,104 @@ using Facepunch.Steamworks.Interop;
 namespace Facepunch.Steamworks.Callbacks.Workshop
 {
 
-    [StructLayout( LayoutKind.Explicit )]
-    internal class ItemInstalled
+    [StructLayout( LayoutKind.Sequential, Pack = 8 )]
+    internal struct ItemInstalled
     {
-        [FieldOffset(0)]
         public uint AppId;
-        [FieldOffset(4)]
         public ulong FileId;
 
         public const int CallbackId = Index.UGC + 5;
+
+        [StructLayout( LayoutKind.Sequential, Pack = 4 )]
+        internal struct Small
+        {
+            public uint AppId;
+            public ulong FileId;
+        };
     };
 
-    [StructLayout( LayoutKind.Explicit )]
-    internal class DownloadResult
+    [StructLayout( LayoutKind.Sequential, Pack = 8 )]
+    internal struct DownloadResult
     {
-        [FieldOffset(0)]
         public uint AppId;
-        [FieldOffset(4)]
         public ulong FileId;
-        [FieldOffset(12)]
         public Result Result;
 
         public const int CallbackId = Index.UGC + 6;
+
+        [StructLayout( LayoutKind.Sequential, Pack = 4 )]
+        internal struct Small
+        {
+            public uint AppId;
+            public ulong FileId;
+            public Result Result;
+        };
     };
 
-    internal class QueryCompleted : CallResult<QueryCompleted.Data>
+
+    internal class QueryCompleted : CallResult<QueryCompleted.Data, QueryCompleted.Data.Small>
     {
         public override int CallbackId { get { return Index.UGC + 1; } }
 
-        [StructLayout( LayoutKind.Sequential )]
+        [StructLayout( LayoutKind.Sequential, Pack = 8 )]
         internal struct Data
         {
             internal ulong Handle;
             internal int Result;
-            internal uint m_unNumResultsReturned;
-            internal uint m_unTotalMatchingResults;
-            [MarshalAs(UnmanagedType.I1)]
-            internal bool m_bCachedData; // indicates whether this data was retrieved from the local on-disk cache
+            internal uint NumResultsReturned;
+            internal uint TotalMatchingResults;
+            internal bool CachedData;
+
+            [StructLayout( LayoutKind.Sequential, Pack = 4 )]
+            internal struct Small
+            {
+                internal ulong Handle;
+                internal int Result;
+                internal uint NumResultsReturned;
+                internal uint TotalMatchingResults;
+                internal bool CachedData;
+            };
         };
     }
 
-    internal class CreateItem : CallResult<CreateItem.Data>
+    internal class CreateItem : CallResult<CreateItem.Data, CreateItem.Data.Small>
     {
         public override int CallbackId { get { return Index.UGC + 3; } }
 
-        [StructLayout( LayoutKind.Sequential )]
+        [StructLayout( LayoutKind.Sequential, Pack = 8 )]
         internal struct Data
         {
             internal Result Result;
             internal ulong FileId;
-            [MarshalAs(UnmanagedType.I1)]
-            internal bool NeedsLegalAgreement; 
+            internal bool NeedsLegalAgreement;
+
+            [StructLayout( LayoutKind.Sequential, Pack = 4 )]
+            internal struct Small
+            {
+                internal Result Result;
+                internal ulong FileId;
+ 
+                internal bool NeedsLegalAgreement;
+            };
         };
     }
 
-    internal class SubmitItemUpdate : CallResult<SubmitItemUpdate.Data>
+    internal class SubmitItemUpdate : CallResult<SubmitItemUpdate.Data, SubmitItemUpdate.Data.Small>
     {
         public override int CallbackId { get { return Index.UGC + 4; } }
 
-        [StructLayout( LayoutKind.Sequential )]
+        [StructLayout( LayoutKind.Sequential, Pack = 8 )]
         internal struct Data
         {
             internal Result Result;
-            [MarshalAs(UnmanagedType.I1)]
             internal bool NeedsLegalAgreement;
+
+            [StructLayout( LayoutKind.Sequential, Pack = 4 )]
+            internal struct Small
+            {
+                internal Result Result;
+                internal bool NeedsLegalAgreement;
+            };
         };
     }
 }

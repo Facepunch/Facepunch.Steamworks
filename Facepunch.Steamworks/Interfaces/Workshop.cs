@@ -22,8 +22,8 @@ namespace Facepunch.Steamworks
             this.steamworks = steamworks;
             this.remoteStorage = remoteStorage;
 
-            steamworks.AddCallback<DownloadResult>( onDownloadResult, DownloadResult.CallbackId );
-            steamworks.AddCallback<ItemInstalled>( onItemInstalled, ItemInstalled.CallbackId );
+            steamworks.AddCallback<DownloadResult, DownloadResult.Small>( onDownloadResult, DownloadResult.CallbackId );
+            steamworks.AddCallback<ItemInstalled, DownloadResult.Small>( onItemInstalled, ItemInstalled.CallbackId );
         }
 
         public void Dispose()

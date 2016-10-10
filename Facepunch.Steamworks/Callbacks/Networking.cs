@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Facepunch.Steamworks.Callbacks.Networking
 {
-    [StructLayout( LayoutKind.Sequential )]
+    [StructLayout( LayoutKind.Sequential, Pack = 1 )]
     internal class P2PSessionRequest
     {
         public ulong SteamID;
@@ -14,7 +14,7 @@ namespace Facepunch.Steamworks.Callbacks.Networking
         public const int CallbackId = Index.Networking + 2;
     };
 
-    [StructLayout( LayoutKind.Sequential )]
+    [StructLayout( LayoutKind.Sequential, Pack = 1 )]
     internal class P2PSessionConnectFail
     {
         public ulong SteamID;

@@ -6,9 +6,15 @@ using System.Text;
 
 namespace Facepunch.Steamworks.Callbacks.User
 {
-    [StructLayout( LayoutKind.Explicit )]
+    [StructLayout( LayoutKind.Sequential, Pack = 1 )]
     internal struct ValidateAuthTicketResponse
     {
+        public ulong SteamID;
+        public int AuthResponse;
+        public ulong OwnerSteamID;
+
+        public const int CallbackId = Index.User + 43;
+
         public enum Response : int
         {
             Okay = 0,                         // Steam has verified the user is online, the ticket is valid and ticket has not been reused.
@@ -22,15 +28,6 @@ namespace Facepunch.Steamworks.Callbacks.User
             AuthTicketInvalid = 8,            // This ticket is not from a user instance currently connected to steam.
             PublisherIssuedBan = 9,           // The user is banned for this game. The ban came via the web api and not VAC
         };
-
-        [FieldOffset(0)]
-        public ulong SteamID;
-        [FieldOffset(8)]
-        public Response AuthResponse;
-        [FieldOffset(12)]
-        public ulong OwnerSteamID;
-
-        public const int CallbackId = Index.User + 43;
     };
 
 

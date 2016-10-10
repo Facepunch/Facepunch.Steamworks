@@ -48,7 +48,7 @@ namespace Facepunch.Steamworks.Interop
         }
     }
 
-    internal partial class Callback<T> : Callback
+    internal partial class Callback<T, TSmall> : Callback
     {
         public int CallbackId = 0;
         public bool GameServer = false;
@@ -87,10 +87,13 @@ namespace Facepunch.Steamworks.Interop
             base.Dispose();
         }
 
-        private void OnRunCallback( IntPtr ptr )
+        private void OnRunCallback( IntPtr thisObject, IntPtr ptr )
         {
             if ( callbackPin == null ) throw new System.Exception( "Callback wasn't pinned!" );
             if ( vTablePtr == IntPtr.Zero ) throw new System.Exception( "vTablePtr wasn't pinned!" );
+            if ( thisObject != IntPtr.Zero && thisObject != callbackPin.AddrOfPinnedObject() ) throw new System.Exception( "This wasn't valid!" );
+
+            if ( Config.PackSmall && typeof(T) != typeof( TSmall ) ) throw new System.Exception( "Callback should use PackSmall" );
 
             T data = (T) Marshal.PtrToStructure( ptr, typeof(T) );
             Function( data );
@@ -121,7 +124,7 @@ namespace Facepunch.Steamworks.Interop
         {
             if ( Config.UseThisCall )
             {
-                vTablePtr = VTable.This.Callback.Get( OnRunCallback, GetSize, this );
+                vTablePtr = VTable.This.Callback.Get( OnRunCallback, Marshal.SizeOf( typeof( T ) ), this );
                 return;
             }
 

@@ -65,6 +65,7 @@ namespace Facepunch.Steamworks
 
             private void OnFileDownloaded( ulong fileid, Callbacks.Result result )
             {
+                if ( fileid != Id ) return;
 
                 workshop.OnFileDownloaded -= OnFileDownloaded;
                 UpdateState();
@@ -75,6 +76,7 @@ namespace Facepunch.Steamworks
 
             private void OnItemInstalled( ulong fileid )
             {
+                if ( fileid != Id ) return;
 
                 workshop.OnItemInstalled -= OnItemInstalled;
                 UpdateState();

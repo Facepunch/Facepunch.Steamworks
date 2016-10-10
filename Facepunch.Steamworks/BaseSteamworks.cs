@@ -72,10 +72,15 @@ namespace Facepunch.Steamworks
         /// <summary>
         /// Global callback type
         /// </summary>
+        internal void AddCallback<T, TSmall>( Action<T> Callback, int id )
+        {
+            var callback = new Callback<T, TSmall>( IsGameServer, id, Callback );
+            Disposables.Add( callback );
+        }
+
         internal void AddCallback<T>( Action<T> Callback, int id )
         {
-            var callback = new Callback<T>( IsGameServer, id, Callback );
-            Disposables.Add( callback );
+            AddCallback<T, T>( Callback, id );
         }
 
         public Action OnUpdate;

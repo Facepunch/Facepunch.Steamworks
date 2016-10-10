@@ -18,6 +18,11 @@ namespace Facepunch.Steamworks
         /// </summary>
         public static bool UseThisCall { get; set; } = true;
 
+        /// <summary>
+        /// Set this to true on Linux and OSX
+        /// </summary>
+        public static bool PackSmall { get; set; } = false;
+
 
         /// <summary>
         /// The Native dll to look for. This is the steam_api.dll renamed.

@@ -86,8 +86,8 @@ namespace Facepunch.Steamworks
 
             void OnResult( QueryCompleted.Data data )
             {
-                Items = new Item[data.m_unNumResultsReturned];
-                for ( int i = 0; i < data.m_unNumResultsReturned; i++ )
+                Items = new Item[data.NumResultsReturned];
+                for ( int i = 0; i < data.NumResultsReturned; i++ )
                 {
                     SteamUGCDetails_t details = new SteamUGCDetails_t();
                     workshop.ugc.GetQueryUGCResult( data.Handle, (uint)i, ref details );
@@ -95,7 +95,7 @@ namespace Facepunch.Steamworks
                     Items[i] = Item.From( details, workshop );
                 }
 
-                TotalResults = (int)data.m_unTotalMatchingResults;
+                TotalResults = (int)data.TotalMatchingResults;
 
                 Callback.Dispose();
                 Callback = null;

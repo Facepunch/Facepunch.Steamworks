@@ -9,37 +9,28 @@ namespace Facepunch.Steamworks.Interop.VTable.This
     [StructLayout( LayoutKind.Sequential )]
     internal struct Callback
     {
-        [UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-        public delegate void Result( IntPtr thisptr, IntPtr pvParam );
+        [UnmanagedFunctionPointer( CallingConvention.ThisCall )]    public delegate void Result( IntPtr thisptr, IntPtr pvParam );
+        [UnmanagedFunctionPointer( CallingConvention.ThisCall )]    public delegate int GetSize( IntPtr thisptr );
 
-        [UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-        public delegate int GetSize( IntPtr thisptr );
+        [MarshalAs(UnmanagedType.FunctionPtr)]  public Result RunCallResult;
+        [MarshalAs(UnmanagedType.FunctionPtr)]  public Result RunCallback;
+        [MarshalAs(UnmanagedType.FunctionPtr)]  public GetSize GetCallbackSizeBytes;
 
-        [MarshalAs(UnmanagedType.FunctionPtr)]
-        public Result m_RunCallback;
-
-        [MarshalAs(UnmanagedType.FunctionPtr)]
-        public Result m_RunCallResult;
-
-        [MarshalAs(UnmanagedType.FunctionPtr)]
-        public GetSize m_GetCallbackSizeBytes;
-
-        internal static IntPtr Get( Action<IntPtr> onRunCallback, Func<int> getSize, Interop.Callback cb )
+        internal static IntPtr Get( Action<IntPtr, IntPtr> onRunCallback, int size, Interop.Callback cb )
         {
-            var size = Marshal.SizeOf( typeof( Callback ) );
-            var ptr = Marshal.AllocHGlobal( size );
+            var ptr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback ) ) );
 
-            Callback.Result da = ( _, p ) => onRunCallback( p );
-            Callback.GetSize dc = ( _ ) => getSize();
+            Callback.Result da = ( _, p ) => {  onRunCallback( _, p ); Console.WriteLine( "Callback.Result: {0}", _.ToInt64() ); };
+            Callback.GetSize dc = ( _ ) => { return size; };
 
             cb.AddHandle( GCHandle.Alloc( da ) );
             cb.AddHandle( GCHandle.Alloc( dc ) );
 
             var table = new Callback()
             {
-                m_RunCallResult = da,
-                m_RunCallback = da,
-                m_GetCallbackSizeBytes = dc
+                RunCallback = da,
+                RunCallResult = da,
+                GetCallbackSizeBytes = dc
             };
 
             Marshal.StructureToPtr( table, ptr, false );
