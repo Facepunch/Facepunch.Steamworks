@@ -286,7 +286,8 @@ namespace Facepunch.Steamworks.Test
                 var item = client.Workshop.CreateItem( Workshop.ItemType.Microtransaction );
 
                 item.Title = "Facepunch.Steamworks Unit test";
-
+                item.Tags.Add( "Apple" );
+                item.Tags.Add( "Banana" );
                 item.Publish();
 
                 while ( item.Publishing )
@@ -297,6 +298,7 @@ namespace Facepunch.Steamworks.Test
 
                 Assert.IsFalse( item.Publishing );
                 Assert.AreNotEqual( 0, item.Id );
+                Assert.IsNull( item.Error );
 
                 Console.WriteLine( "item.Id: {0}", item.Id );
 

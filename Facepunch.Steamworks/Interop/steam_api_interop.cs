@@ -2208,7 +2208,7 @@ namespace Valve.Steamworks
         internal abstract bool SetItemUpdateLanguage( ulong handle, string pchLanguage );
         internal abstract bool SetItemMetadata( ulong handle, string pchMetaData );
         internal abstract bool SetItemVisibility( ulong handle, uint eVisibility );
-        internal abstract bool SetItemTags( ulong updateHandle, ref SteamParamStringArray_t pTags );
+        internal abstract bool SetItemTags( ulong updateHandle, string[] pTags );
         internal abstract bool SetItemContent( ulong handle, string pszContentFolder );
         internal abstract bool SetItemPreview( ulong handle, string pszPreviewFile );
         internal abstract bool RemoveItemKeyValueTags( ulong handle, string pchKey );
@@ -5856,10 +5856,33 @@ namespace Valve.Steamworks
             bool result = NativeEntrypoints.SteamAPI_ISteamUGC_SetItemVisibility(m_pSteamUGC,handle,eVisibility);
             return result;
         }
-        internal override bool SetItemTags( ulong updateHandle, ref SteamParamStringArray_t pTags )
+        internal override bool SetItemTags( ulong updateHandle, string[] pTags )
         {
             CheckIfUsable();
-            bool result = NativeEntrypoints.SteamAPI_ISteamUGC_SetItemTags(m_pSteamUGC,updateHandle,ref pTags);
+
+            var nativeStrings = new IntPtr[pTags.Length];
+            for ( int i = 0; i < pTags.Length; i++ )
+            {
+                nativeStrings[i] = Marshal.StringToHGlobalAnsi( pTags[i] );
+            }
+
+            var size = Marshal.SizeOf( typeof( IntPtr ) ) * nativeStrings.Length;
+            var nativeArray = Marshal.AllocHGlobal( size );
+            Marshal.Copy( nativeStrings, 0, nativeArray, nativeStrings.Length );
+
+            var tags = new SteamParamStringArray_t();
+            tags.m_ppStrings = nativeArray;
+            tags.m_nNumStrings = pTags.Length;
+
+            bool result = NativeEntrypoints.SteamAPI_ISteamUGC_SetItemTags(m_pSteamUGC,updateHandle,ref tags);
+
+            Marshal.FreeHGlobal( nativeArray );
+
+            foreach ( var item in nativeStrings )
+            {
+                Marshal.FreeHGlobal( item );
+            }
+
             return result;
         }
         internal override bool SetItemContent( ulong handle, string pszContentFolder )
