@@ -149,6 +149,7 @@ namespace Facepunch.Steamworks
 
             if ( LocalPlayerRequest.IsSuccess )
             {
+                // Try again.
                 RetrieveInventory();
                 return;
             }

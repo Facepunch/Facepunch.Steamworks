@@ -21,9 +21,9 @@ namespace Facepunch.Steamworks
                 {
                     if ( Items != null ) return false;
                     if ( Handle == -1 ) return false;
-                    if ( inventory.inventory.GetResultStatus( Handle ) == 22 ) return true;
+                    if ( Status() == Callbacks.Result.Pending ) return true;
 
-                    Fill();
+                    TryFill();
                     return false;
                 }
             }
@@ -34,9 +34,16 @@ namespace Facepunch.Steamworks
                 {
                     if ( Items != null ) return true;
                     if ( Handle == -1 ) return false;
-                    return inventory.inventory.GetResultStatus( Handle ) == 1;
+                    return Status() == Callbacks.Result.OK;
                 }
             }
+
+            internal Callbacks.Result Status()
+            {
+                if ( Handle == -1 ) return Callbacks.Result.InvalidParam;
+                return (Callbacks.Result)inventory.inventory.GetResultStatus( Handle );
+            }
+
 
             internal Result( Inventory inventory, int Handle )
             {
@@ -54,12 +61,17 @@ namespace Facepunch.Steamworks
                 return IsSuccess;
             }
 
-            internal void Fill()
+            internal void TryFill()
             {
-                if ( Items != null ) return;
+                if ( Items != null )
+                    return;
+
+                if ( !IsSuccess )
+                    return;
 
                 Valve.Steamworks.SteamItemDetails_t[] steamItems = null;
-                inventory.inventory.GetResultItems( Handle, out steamItems );
+                if ( !inventory.inventory.GetResultItems( Handle, out steamItems ) )
+                    return;
 
                 if ( steamItems == null )
                 {
