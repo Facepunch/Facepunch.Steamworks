@@ -99,8 +99,11 @@ namespace Facepunch.Steamworks
 
         public override void Dispose()
         {
-            Voice.Dispose();
-            Voice = null;
+            if ( Voice != null )
+            {
+                Voice.Dispose();
+                Voice = null;
+            }
 
             base.Dispose();
 
