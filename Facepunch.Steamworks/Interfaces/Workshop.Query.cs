@@ -38,6 +38,10 @@ namespace Facepunch.Steamworks
 
             public int TotalResults { get; set; }
 
+            public ulong? UserId { get; set; }
+
+            public UserQueryType UserQueryType { get; set; } = UserQueryType.Published;
+
             /// <summary>
             /// Page starts at 1 !!
             /// </summary>
@@ -60,6 +64,11 @@ namespace Facepunch.Steamworks
                     {
                         Handle = workshop.ugc.CreateQueryUGCDetailsRequest( (IntPtr)array, (uint)fileArray.Length );
                     }
+                }
+                else if ( UserId.HasValue )
+                {
+                    uint accountId = (uint)( UserId.Value & 0xFFFFFFFFul );
+                    Handle = workshop.ugc.CreateQueryUserUGCRequest( accountId, (uint) UserQueryType, (uint)QueryType, (uint)Order, UploaderAppId, AppId, (uint)Page );
                 }
                 else
                 {

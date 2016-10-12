@@ -125,6 +125,18 @@ namespace Facepunch.Steamworks
             GameManagedItem = 15,        // managed completely by the game, not the user, and not shown on the web
         };
 
+        public enum UserQueryType : uint
+        {
+            Published = 0,
+            VotedOn,
+            VotedUp,
+            VotedDown,
+            WillVoteLater,
+            Favorited,
+            Subscribed,
+            UsedOrPlayed,
+            Followed,
+        }
 
 
     }
