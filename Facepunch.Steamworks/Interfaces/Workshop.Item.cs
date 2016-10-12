@@ -158,6 +158,20 @@ namespace Facepunch.Steamworks
             {
                 workshop.ugc.SetUserItemVote( Id, false );
             }
+
+
+            /// <summary>
+            /// Return a URL to view this item online
+            /// </summary>
+            public string Url { get { return string.Format( "http://steamcommunity.com/sharedfiles/filedetails/?source=Facepunch.Steamworks&id={0}", Id ); } }
+
+            public string ChangelogUrl { get { return string.Format( "http://steamcommunity.com/sharedfiles/filedetails/changelog/{0}", Id ); } }
+
+            public string CommentsUrl { get { return string.Format( "http://steamcommunity.com/sharedfiles/filedetails/comments/{0}", Id ); } }
+
+            public string DiscussUrl { get { return string.Format( "http://steamcommunity.com/sharedfiles/filedetails/discussions/{0}", Id ); } }
+
+            public string StartsUrl { get { return string.Format( "http://steamcommunity.com/sharedfiles/filedetails/stats/{0}", Id ); } }
         }
     }
 }
