@@ -159,6 +159,11 @@ namespace Facepunch.Steamworks
                 workshop.ugc.SetUserItemVote( Id, false );
             }
 
+            public Editor Edit()
+            {
+                return workshop.EditItem( Id );
+            }
+
 
             /// <summary>
             /// Return a URL to view this item online

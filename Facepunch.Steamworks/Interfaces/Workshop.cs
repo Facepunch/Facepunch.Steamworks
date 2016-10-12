@@ -62,6 +62,11 @@ namespace Facepunch.Steamworks
             return new Editor() { workshop = this, Type = type };
         }
 
+        public Editor EditItem( ulong itemId )
+        {
+            return new Editor() { workshop = this, Id = itemId };
+        }
+
         public enum Order
         {
             RankedByVote = 0,
