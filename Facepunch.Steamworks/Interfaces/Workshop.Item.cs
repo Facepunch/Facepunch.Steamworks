@@ -177,6 +177,12 @@ namespace Facepunch.Steamworks
             public string DiscussUrl { get { return string.Format( "http://steamcommunity.com/sharedfiles/filedetails/discussions/{0}", Id ); } }
 
             public string StartsUrl { get { return string.Format( "http://steamcommunity.com/sharedfiles/filedetails/stats/{0}", Id ); } }
+
+            public int SubscriptionCount { get; internal set; }
+            public int FavouriteCount { get; internal set; }
+            public int FollowerCount { get; internal set; }
+            public int WebsiteViews { get; internal set; }
+            public int ReportScore { get; internal set; }
         }
     }
 }

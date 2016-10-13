@@ -102,12 +102,27 @@ namespace Facepunch.Steamworks
                     workshop.ugc.GetQueryUGCResult( data.Handle, (uint)i, ref details );
 
                     Items[i] = Item.From( details, workshop );
+
+                    Items[i].SubscriptionCount = GetStat( data.Handle, i, ItemStatistic.NumSubscriptions );
+                    Items[i].FavouriteCount = GetStat( data.Handle, i, ItemStatistic.NumFavorites );
+                    Items[i].FollowerCount = GetStat( data.Handle, i, ItemStatistic.NumFollowers );
+                    Items[i].WebsiteViews = GetStat( data.Handle, i, ItemStatistic.NumUniqueWebsiteViews );
+                    Items[i].ReportScore = GetStat( data.Handle, i, ItemStatistic.ReportScore );
                 }
 
                 TotalResults = (int)data.TotalMatchingResults;
 
                 Callback.Dispose();
                 Callback = null;
+            }
+
+            private int GetStat( ulong handle, int index, ItemStatistic stat )
+            {
+                uint val = 0;
+                if ( !workshop.ugc.GetQueryUGCStatistic( handle, (uint)index, (uint)stat, ref val ) )
+                    return 0;
+
+                return (int) val;
             }
 
             public bool IsRunning
@@ -155,5 +170,17 @@ namespace Facepunch.Steamworks
                 // ReleaseQueryUGCRequest
             }
         }
+
+        private enum ItemStatistic : uint
+        {
+            NumSubscriptions = 0,
+            NumFavorites = 1,
+            NumFollowers = 2,
+            NumUniqueSubscriptions = 3,
+            NumUniqueFavorites = 4,
+            NumUniqueFollowers = 5,
+            NumUniqueWebsiteViews = 6,
+            ReportScore = 7,
+        };
     }
 }

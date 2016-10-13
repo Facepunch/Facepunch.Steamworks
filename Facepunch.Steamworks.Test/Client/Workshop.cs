@@ -39,7 +39,7 @@ namespace Facepunch.Steamworks.Test
 
                 Query.Order = Workshop.Order.RankedByTextSearch;
                 Query.QueryType = Workshop.QueryType.MicrotransactionItems;
-                Query.SearchText = "shit";
+                Query.SearchText = "black";
                 Query.RequireTags.Add( "LongTShirt Skin" );
                 Query.Run();
 
@@ -56,6 +56,8 @@ namespace Facepunch.Steamworks.Test
                 foreach ( var item in Query.Items )
                 {
                     Console.WriteLine( "{0}", item.Title );
+                    Console.WriteLine( "\t WebsiteViews: {0}", item.WebsiteViews );
+                    Console.WriteLine( "\t VotesUp: {0}", item.VotesUp );
                 }
             }
         }
