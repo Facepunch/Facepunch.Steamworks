@@ -183,6 +183,7 @@ namespace Facepunch.Steamworks
             public int FollowerCount { get; internal set; }
             public int WebsiteViews { get; internal set; }
             public int ReportScore { get; internal set; }
+            public string PreviewImageUrl { get; internal set; }
         }
     }
 }

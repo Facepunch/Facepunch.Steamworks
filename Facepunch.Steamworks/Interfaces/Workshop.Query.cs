@@ -108,6 +108,10 @@ namespace Facepunch.Steamworks
                     Items[i].FollowerCount = GetStat( data.Handle, i, ItemStatistic.NumFollowers );
                     Items[i].WebsiteViews = GetStat( data.Handle, i, ItemStatistic.NumUniqueWebsiteViews );
                     Items[i].ReportScore = GetStat( data.Handle, i, ItemStatistic.ReportScore );
+
+                    string url = null;
+                    if ( workshop.ugc.GetQueryUGCPreviewURL( data.Handle, (uint)i, out url ) )
+                        Items[i].PreviewImageUrl = url;
                 }
 
                 TotalResults = (int)data.TotalMatchingResults;
