@@ -17,6 +17,7 @@ namespace Facepunch.Steamworks
             public string Title { get; set; } = null;
             public string Description { get; set; } = null;
             public string Folder { get; set; } = null;
+            public string PreviewImage { get; set; } = null;
             public List<string> Tags { get; set; } = new List<string>();
             public bool Publishing { get; internal set; }
             public ItemType? Type { get; set; }
@@ -148,10 +149,12 @@ namespace Facepunch.Steamworks
                 if ( Visibility.HasValue )
                     workshop.ugc.SetItemVisibility( UpdateId, (uint)Visibility.Value );
 
+                if ( PreviewImage != null )
+                    workshop.ugc.SetItemPreview( UpdateId, PreviewImage ); //  change preview image file for this item. pszPreviewFile points to local image file, which must be under 1MB in size
+
                 /*
                     workshop.ugc.SetItemUpdateLanguage( UpdateId, const char *pchLanguage ) = 0; // specify the language of the title or description that will be set
                     workshop.ugc.SetItemMetadata( UpdateId, const char *pchMetaData ) = 0; // change the metadata of an UGC item (max = k_cchDeveloperMetadataMax)
-                    workshop.ugc.SetItemPreview( UpdateId, const char *pszPreviewFile ) = 0; //  change preview image file for this item. pszPreviewFile points to local image file, which must be under 1MB in size
                     workshop.ugc.RemoveItemKeyValueTags( UpdateId, const char *pchKey ) = 0; // remove any existing key-value tags with the specified key
                     workshop.ugc.AddItemKeyValueTag( UpdateId, const char *pchKey, const char *pchValue ) = 0; // add new key-value tags for the item. Note that there can be multiple values for a tag.
                     workshop.ugc.AddItemPreviewFile( UpdateId, const char *pszPreviewFile, EItemPreviewType type ) = 0; //  add preview file for this item. pszPreviewFile points to local file, which must be under 1MB in size

@@ -46,6 +46,9 @@ namespace Facepunch.Steamworks
             /// Page starts at 1 !!
             /// </summary>
             public int Page { get; set; } = 1;
+
+            public int PerPage { get; set; } = 50;
+
             internal Workshop workshop;
 
             public unsafe void Run()
