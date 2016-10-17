@@ -232,6 +232,85 @@ namespace Facepunch.Steamworks.Test
         }
 
         [TestMethod]
+        public void Query_255()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                Assert.IsTrue( client.IsValid );
+
+                using ( var Query = client.Workshop.CreateQuery() )
+                {
+                    Query.PerPage = 255;
+                    Query.Run();
+
+                    Assert.IsTrue( Query.IsRunning );
+
+                    Query.Block();
+
+                    Assert.IsFalse( Query.IsRunning );
+                    Assert.AreEqual( Query.Items.Length, 255 );
+
+                    Console.WriteLine( "Query.TotalResults: {0}", Query.TotalResults );
+                    Console.WriteLine( "Query.Items.Length: {0}", Query.Items.Length );
+                }
+            }
+        }
+
+        [TestMethod]
+        public void Query_28()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                Assert.IsTrue( client.IsValid );
+
+                using ( var Query = client.Workshop.CreateQuery() )
+                {
+                    Query.PerPage = 28;
+                    Query.Run();
+                    Query.Block();
+
+                    var firstPage = Query.Items;
+                    Assert.AreEqual( firstPage.Length, 28 );
+
+                    Console.WriteLine( "Page 2" );
+                    Query.Page++;
+                    Query.Run();
+                    Query.Block();
+
+                    
+                    var secondPage = Query.Items;
+                    Assert.AreEqual( secondPage.Length, 28 );
+
+                    Console.WriteLine( "Page 3" );
+                    Query.Page++;
+                    Query.Run();
+                    Query.Block();
+
+                    var thirdPage = Query.Items;
+                    Assert.AreEqual( thirdPage.Length, 28 );
+
+                    foreach ( var i in firstPage )
+                    {
+                        Assert.IsFalse( secondPage.Any( x => x.Id == i.Id ) );
+                        Assert.IsFalse( thirdPage.Any( x => x.Id == i.Id ) );
+                    }
+
+                    foreach ( var i in secondPage )
+                    {
+                        Assert.IsFalse( firstPage.Any( x => x.Id == i.Id ) );
+                        Assert.IsFalse( thirdPage.Any( x => x.Id == i.Id ) );
+                    }
+
+                    foreach ( var i in thirdPage )
+                    {
+                        Assert.IsFalse( secondPage.Any( x => x.Id == i.Id ) );
+                        Assert.IsFalse( firstPage.Any( x => x.Id == i.Id ) );
+                    }
+                }
+            }
+        }
+
+        [TestMethod]
         public void DownloadFile()
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )

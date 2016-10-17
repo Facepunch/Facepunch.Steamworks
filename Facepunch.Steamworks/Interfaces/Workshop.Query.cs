@@ -15,6 +15,8 @@ namespace Facepunch.Steamworks
     {
         public class Query : IDisposable
         {
+            internal const int SteamResponseSize = 50;
+
             internal ulong Handle;
             internal QueryCompleted Callback;
 
@@ -47,11 +49,16 @@ namespace Facepunch.Steamworks
             /// </summary>
             public int Page { get; set; } = 1;
 
-            public int PerPage { get; set; } = 50;
+            public int PerPage { get; set; } = SteamResponseSize;
 
             internal Workshop workshop;
 
-            public unsafe void Run()
+            private int _resultPage = 0;
+            private int _resultsRemain = 0;
+            private int _resultSkip = 0;
+            private List<Item> _results;
+
+            public  void Run()
             {
                 if ( Callback != null )
                     return;
@@ -59,9 +66,27 @@ namespace Facepunch.Steamworks
                 if ( Page <= 0 )
                     throw new System.Exception( "Page should be 1 or above" );
 
+                var actualOffset = ((Page-1) * PerPage);
+
+                TotalResults = 0;
+
+                _resultSkip = actualOffset % SteamResponseSize;
+                _resultsRemain = PerPage;
+                _resultPage = (int) Math.Floor( (float) actualOffset / (float)SteamResponseSize );
+                _results = new List<Item>();
+
+                Console.WriteLine( "_resultPage = " + _resultPage );
+                Console.WriteLine( "_resultSkip = " + _resultSkip );
+
+                RunInternal();
+            }
+
+            unsafe void RunInternal()
+            {
                 if ( FileId.Count != 0 )
                 {
                     var fileArray = FileId.ToArray();
+                    _resultsRemain = fileArray.Length;
 
                     fixed ( ulong* array = fileArray )
                     {
@@ -71,11 +96,11 @@ namespace Facepunch.Steamworks
                 else if ( UserId.HasValue )
                 {
                     uint accountId = (uint)( UserId.Value & 0xFFFFFFFFul );
-                    Handle = workshop.ugc.CreateQueryUserUGCRequest( accountId, (uint) UserQueryType, (uint)QueryType, (uint)Order, UploaderAppId, AppId, (uint)Page );
+                    Handle = workshop.ugc.CreateQueryUserUGCRequest( accountId, (uint)UserQueryType, (uint)QueryType, (uint)Order, UploaderAppId, AppId, (uint)_resultPage + 1 );
                 }
                 else
                 {
-                    Handle = workshop.ugc.CreateQueryAllUGCRequest( (uint)Order, (uint)QueryType, UploaderAppId, AppId, (uint)Page );
+                    Handle = workshop.ugc.CreateQueryAllUGCRequest( (uint)Order, (uint)QueryType, UploaderAppId, AppId, (uint)_resultPage + 1 );
                 }
 
                 if ( !string.IsNullOrEmpty( SearchText ) )
@@ -98,29 +123,61 @@ namespace Facepunch.Steamworks
 
             void OnResult( QueryCompleted.Data data )
             {
-                Items = new Item[data.NumResultsReturned];
                 for ( int i = 0; i < data.NumResultsReturned; i++ )
                 {
+                    if ( _resultSkip > 0 )
+                    {
+                        Console.WriteLine( "{0} Skipping result", _resultPage );
+                        _resultSkip--;
+                        continue;
+                    }
+                    else
+                    {
+                        Console.WriteLine( "{0} Adding result {1}", _resultPage, _results.Count );
+                    }
+
                     SteamUGCDetails_t details = new SteamUGCDetails_t();
                     workshop.ugc.GetQueryUGCResult( data.Handle, (uint)i, ref details );
 
-                    Items[i] = Item.From( details, workshop );
+                    // We already have this file, so skip it
+                    if ( _results.Any( x => x.Id == details.m_nPublishedFileId ) )
+                        continue;
 
-                    Items[i].SubscriptionCount = GetStat( data.Handle, i, ItemStatistic.NumSubscriptions );
-                    Items[i].FavouriteCount = GetStat( data.Handle, i, ItemStatistic.NumFavorites );
-                    Items[i].FollowerCount = GetStat( data.Handle, i, ItemStatistic.NumFollowers );
-                    Items[i].WebsiteViews = GetStat( data.Handle, i, ItemStatistic.NumUniqueWebsiteViews );
-                    Items[i].ReportScore = GetStat( data.Handle, i, ItemStatistic.ReportScore );
+                    var item = Item.From( details, workshop );
+
+                    item.SubscriptionCount = GetStat( data.Handle, i, ItemStatistic.NumSubscriptions );
+                    item.FavouriteCount = GetStat( data.Handle, i, ItemStatistic.NumFavorites );
+                    item.FollowerCount = GetStat( data.Handle, i, ItemStatistic.NumFollowers );
+                    item.WebsiteViews = GetStat( data.Handle, i, ItemStatistic.NumUniqueWebsiteViews );
+                    item.ReportScore = GetStat( data.Handle, i, ItemStatistic.ReportScore );
 
                     string url = null;
                     if ( workshop.ugc.GetQueryUGCPreviewURL( data.Handle, (uint)i, out url ) )
-                        Items[i].PreviewImageUrl = url;
+                        item.PreviewImageUrl = url;
+
+                    _results.Add( item );
+
+                    _resultsRemain--;
+
+                    if ( _resultsRemain <= 0 )
+                        break;
                 }
 
-                TotalResults = (int)data.TotalMatchingResults;
+                TotalResults = TotalResults > data.TotalMatchingResults ? TotalResults : (int)data.TotalMatchingResults;
 
                 Callback.Dispose();
                 Callback = null;
+
+                _resultPage++;
+
+                if ( _resultsRemain > 0 && data.NumResultsReturned > 0 )
+                {
+                    RunInternal();
+                }
+                else
+                {
+                    Items = _results.ToArray();
+                }
             }
 
             private int GetStat( ulong handle, int index, ItemStatistic stat )
