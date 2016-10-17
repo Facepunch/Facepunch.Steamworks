@@ -25,6 +25,8 @@ namespace Facepunch.Steamworks
             public string Title { get; private set; }
             public uint VotesDown { get; private set; }
             public uint VotesUp { get; private set; }
+            public DateTime Modified { get; private set; }
+            public DateTime Created { get; private set; }
 
             internal static Item From( SteamUGCDetails_t details, Workshop workshop )
             {
@@ -39,6 +41,8 @@ namespace Facepunch.Steamworks
                 item.Score = details.m_flScore;
                 item.VotesUp = details.m_unVotesUp;
                 item.VotesDown = details.m_unVotesDown;
+                item.Modified = new DateTime( details.m_rtimeUpdated );
+                item.Created = new DateTime( details.m_rtimeCreated );
                 item.UpdateState();
 
                 return item;
