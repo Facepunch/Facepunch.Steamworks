@@ -67,3 +67,5 @@ Facepunch.Steamworks.Test.dll
 *UnitTestFramework.dll
 mscorlib.dll
 *.nlp
+packages
+Generator/bin
