@@ -153,14 +153,27 @@ namespace Facepunch.Steamworks
             }
 
 
+            private int YourVote = 0;
+
+
             public void VoteUp()
             {
+                if ( YourVote == 1 ) return;
+                if ( YourVote == -1 ) VotesDown--;
+
+                VotesUp++;
                 workshop.ugc.SetUserItemVote( Id, true );
+                YourVote = 1;
             }
 
             public void VoteDown()
             {
+                if ( YourVote == -1 ) return;
+                if ( YourVote == 1 ) VotesUp--;
+
+                VotesDown++;
                 workshop.ugc.SetUserItemVote( Id, false );
+                YourVote = -1;
             }
 
             public Editor Edit()
@@ -188,6 +201,29 @@ namespace Facepunch.Steamworks
             public int WebsiteViews { get; internal set; }
             public int ReportScore { get; internal set; }
             public string PreviewImageUrl { get; internal set; }
+
+            string _ownerName = null;
+
+            public string OwnerName
+            {
+                get
+                {
+                    if ( _ownerName == null && workshop.friends != null )
+                    {
+                        _ownerName = workshop.friends.GetName( OwnerId );
+                        if ( _ownerName == "[unknown]" )
+                        {
+                            _ownerName = null;
+                            return string.Empty;
+                        }
+                    }
+
+                    if ( _ownerName == null )
+                        return string.Empty;
+
+                    return _ownerName;
+                }
+            }
         }
     }
 }

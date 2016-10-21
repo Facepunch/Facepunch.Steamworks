@@ -56,6 +56,8 @@ namespace Facepunch.Steamworks
             //
             Voice = new Voice( this );
 
+            Workshop.friends = Friends;
+
 
             //
             // Cache common, unchanging info

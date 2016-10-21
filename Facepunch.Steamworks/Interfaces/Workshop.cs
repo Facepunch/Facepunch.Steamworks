@@ -10,6 +10,7 @@ namespace Facepunch.Steamworks
         internal const ulong InvalidHandle = 0xffffffffffffffff;
 
         internal ISteamUGC ugc;
+        internal Friends friends;
         internal BaseSteamworks steamworks;
         internal ISteamRemoteStorage remoteStorage;
 
@@ -31,6 +32,7 @@ namespace Facepunch.Steamworks
             ugc = null;
             steamworks = null;
             remoteStorage = null;
+            friends = null;
 
             OnFileDownloaded = null;
             OnItemInstalled = null;
@@ -53,7 +55,8 @@ namespace Facepunch.Steamworks
             return new Query()
             {
                 AppId = steamworks.AppId,
-                workshop = this
+                workshop = this,
+                friends = friends
             };
         }
 
