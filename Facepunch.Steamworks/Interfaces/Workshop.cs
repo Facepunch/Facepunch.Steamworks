@@ -59,6 +59,16 @@ namespace Facepunch.Steamworks
             };
         }
 
+        /// <summary>
+        /// Returns a class representing this ItemId. We don't query
+        /// item name, description etc. We don't verify that item exists.
+        /// We don't verify that this item belongs to your app.
+        /// </summary>
+        public Item ItemHandle( ulong ItemId )
+        {
+            return Item.FromId( ItemId, this );
+        }
+
         public Editor CreateItem( ItemType type )
         {
             return new Editor() { workshop = this, Type = type };
