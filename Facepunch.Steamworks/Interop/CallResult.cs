@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Text;
-using Valve.Steamworks;
 
 namespace Facepunch.Steamworks.Interop
 {
@@ -17,7 +13,7 @@ namespace Facepunch.Steamworks.Interop
             Handle = 0;
         }
 
-        internal abstract void Run( ISteamUtils utils );
+        internal abstract void Run( SteamNative.SteamUtils utils );
     }
 
     internal unsafe abstract class CallResult<T, TSmall> : CallResult where T: new()
@@ -28,15 +24,15 @@ namespace Facepunch.Steamworks.Interop
         public abstract int CallbackId { get; }
         public Action<T> OnResult;        
 
-        internal override void Run( ISteamUtils utils )
+        internal override void Run( SteamNative.SteamUtils utils )
         {
-            var packSmall = Config.PackSmall;
+            var packSmall = SteamNative.Platform.PackSmall;
 
             var datasize = packSmall ? Marshal.SizeOf( typeof( TSmall ) ) :  Marshal.SizeOf( typeof( T ) );
             var data = stackalloc byte[ datasize ];
             bool failed = false;
 
-            if ( !utils.GetAPICallResult( Handle, (IntPtr) data, datasize, CallbackId, ref failed ) || failed )
+            if ( !utils.GetAPICallResult( Handle, (IntPtr) data, datasize, CallbackId, out failed ) || failed )
             {
                 Console.WriteLine( "FAILURE" );
                 return;

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using Valve.Steamworks;
 
 namespace Facepunch.Steamworks
 {
@@ -47,7 +46,7 @@ namespace Facepunch.Steamworks
                 }
             }
 
-            internal static Server FromSteam( Client client, gameserveritem_t item )
+            internal static Server FromSteam( Client client, SteamNative.gameserveritem_t item )
             {
                 return new Server()
                 {

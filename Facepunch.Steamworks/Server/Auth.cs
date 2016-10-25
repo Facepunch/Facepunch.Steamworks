@@ -71,9 +71,9 @@ namespace Facepunch.Steamworks
         {
             fixed ( byte* p = data )
             {
-                var result = (Valve.Steamworks.EBeginAuthSessionResult) server.native.gameServer.BeginAuthSession( (IntPtr)p, data.Length, steamid );
+                var result = server.native.gameServer.BeginAuthSession( (IntPtr)p, data.Length, steamid );
 
-                if ( result == Valve.Steamworks.EBeginAuthSessionResult.k_EBeginAuthSessionResultOK )
+                if ( result == SteamNative.BeginAuthSessionResult.OK )
                     return true;
 
                 return false;

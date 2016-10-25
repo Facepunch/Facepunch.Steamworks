@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 
 namespace Facepunch.Steamworks
@@ -26,7 +24,7 @@ namespace Facepunch.Steamworks
 
         public Client( uint appId )
         {
-            Valve.Steamworks.SteamAPIInterop.SteamAPI_Init();
+            SteamNative.Globals.SteamAPI_Init();
 
             native = new Interop.NativeInterface();
 
@@ -43,8 +41,8 @@ namespace Facepunch.Steamworks
             //
             // Set up warning hook callback
             //
-            SteamAPIWarningMessageHook ptr = InternalOnWarning;
-            native.client.SetWarningMessageHook( Marshal.GetFunctionPointerForDelegate( ptr ) );
+           // SteamAPIWarningMessageHook ptr = InternalOnWarning;
+           // native.client.SetWarningMessageHook( Marshal.GetFunctionPointerForDelegate( ptr ) );
 
             //
             // Setup interfaces that client and server both have
@@ -90,7 +88,7 @@ namespace Facepunch.Steamworks
             if ( !IsValid )
                 return;
 
-            Valve.Steamworks.SteamAPI.RunCallbacks();
+            SteamNative.Globals.SteamAPI_RunCallbacks();
 
             Voice.Update();
 
@@ -107,7 +105,7 @@ namespace Facepunch.Steamworks
 
             base.Dispose();
 
-            Valve.Interop.NativeEntrypoints.Extended.SteamAPI_Shutdown();
+            SteamNative.Globals.SteamAPI_Shutdown();
         }
 
     }

@@ -15,7 +15,7 @@ namespace Facepunch.Steamworks
         /// </summary>
         public class Definition
         {
-            internal Valve.Steamworks.ISteamInventory inventory;
+            internal SteamNative.SteamInventory inventory;
 
             public int Id;
             public string Name;
@@ -72,7 +72,7 @@ namespace Facepunch.Steamworks
             /// </summary>
             public void TriggerItemDrop()
             {
-                int result = 0;
+                SteamNative.SteamInventoryResult_t result = 0;
                 inventory.TriggerItemDrop( ref result, Id );
                 inventory.DestroyResult( result );
             }

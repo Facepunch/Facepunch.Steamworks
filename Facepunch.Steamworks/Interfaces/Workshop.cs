@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Facepunch.Steamworks.Callbacks.Workshop;
-using Valve.Steamworks;
 
 namespace Facepunch.Steamworks
 {
@@ -9,14 +8,14 @@ namespace Facepunch.Steamworks
     {
         internal const ulong InvalidHandle = 0xffffffffffffffff;
 
-        internal ISteamUGC ugc;
+        internal SteamNative.SteamUGC ugc;
         internal BaseSteamworks steamworks;
-        internal ISteamRemoteStorage remoteStorage;
+        internal SteamNative.SteamRemoteStorage remoteStorage;
 
         internal event Action<ulong, Callbacks.Result> OnFileDownloaded;
         internal event Action<ulong> OnItemInstalled;
 
-        internal Workshop( BaseSteamworks steamworks, ISteamUGC ugc, ISteamRemoteStorage remoteStorage )
+        internal Workshop( BaseSteamworks steamworks, SteamNative.SteamUGC ugc, SteamNative.SteamRemoteStorage remoteStorage )
         {
             this.ugc = ugc;
             this.steamworks = steamworks;

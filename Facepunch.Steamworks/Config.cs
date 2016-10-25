@@ -18,20 +18,5 @@ namespace Facepunch.Steamworks
         /// </summary>
         public static bool UseThisCall { get; set; } = true;
 
-        /// <summary>
-        /// Set this to true on Linux and OSX
-        /// </summary>
-        public static bool PackSmall { get; set; } = false;
-
-
-        /// <summary>
-        /// The Native dll to look for. This is the steam_api.dll renamed.
-        /// We need to rename the dll anyway because we can't dynamically choose the library
-        /// ie, we can't load steam_api64.dll on windows 64 platforms. So instead we choose to
-        /// keep the library name the same.
-        /// 
-        /// This is exposed only for the benefit of implementation - and cannot be changed at runtime.
-        /// </summary>
-        public const string LibraryName = "FacepunchSteamworksApi";
     }
 }

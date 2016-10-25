@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using Valve.Steamworks;
 
 namespace Facepunch.Steamworks
 {
@@ -40,7 +39,7 @@ namespace Facepunch.Steamworks
             {
                 var filters = this.Select( x =>
                 {
-                    return new MatchMakingKeyValuePair_t()
+                    return new SteamNative.MatchMakingKeyValuePair_t()
                     {
                         m_szKey  = x.Key,
                         m_szValue = x.Value
@@ -48,7 +47,7 @@ namespace Facepunch.Steamworks
 
                 } ).ToArray();
 
-                int sizeOfMMKVP = Marshal.SizeOf(typeof(MatchMakingKeyValuePair_t));
+                int sizeOfMMKVP = Marshal.SizeOf(typeof(SteamNative.MatchMakingKeyValuePair_t));
                 NativeArray = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( IntPtr ) ) * filters.Length );
                 m_pArrayEntries = Marshal.AllocHGlobal( sizeOfMMKVP * filters.Length );
 
@@ -90,7 +89,7 @@ namespace Facepunch.Steamworks
             filter.Start();
 
             var request = new Request( client );
-            request.AddRequest( client.native.servers.RequestInternetServerList( client.AppId, filter.NativeArray, filter.Count, IntPtr.Zero ) );
+            request.AddRequest( client.native.servers.RequestInternetServerList( client.AppId, filter.NativeArray, (uint) filter.Count, IntPtr.Zero ) );
 
             filter.Free();
 
@@ -112,7 +111,7 @@ namespace Facepunch.Steamworks
         public Request History()
         {
             var request = new Request( client );
-            request.AddRequest( client.native.servers.RequestHistoryServerList( client.AppId, new IntPtr[] { }, IntPtr.Zero ) );
+            request.AddRequest( client.native.servers.RequestHistoryServerList( client.AppId, IntPtr.Zero, 0, IntPtr.Zero ) );
 
             return request;
         }
@@ -124,7 +123,7 @@ namespace Facepunch.Steamworks
         public Request Favourites()
         {
             var request = new Request( client );
-            request.AddRequest( client.native.servers.RequestFavoritesServerList( client.AppId, new IntPtr[] { }, IntPtr.Zero ) );
+            request.AddRequest( client.native.servers.RequestFavoritesServerList( client.AppId, IntPtr.Zero, 0, IntPtr.Zero ) );
 
             return request;
         }

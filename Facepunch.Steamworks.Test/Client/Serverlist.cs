@@ -8,7 +8,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Facepunch.Steamworks.Test
 {
     [TestClass]
-    [DeploymentItem( Config.LibraryName + ".dll" )]
+    [DeploymentItem( "steam_api.dll" )]
+    [DeploymentItem( "steam_api64.dll" )]
     [DeploymentItem( "steam_appid.txt" )]
     public partial class ServerList
     {
@@ -37,7 +38,9 @@ namespace Facepunch.Steamworks.Test
 
                     if ( query.Finished )
                         break;
-                }               
+                }
+
+                Assert.IsTrue( query.Responded.Count > 0 );
 
                 Console.WriteLine( "Responded: " + query.Responded.Count.ToString() );
                 Console.WriteLine( "Unresponsive: " + query.Unresponsive.Count.ToString() );

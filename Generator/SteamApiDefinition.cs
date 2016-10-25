@@ -17,7 +17,7 @@ namespace Generator
             public string Type { get; set; }
         }
 
-        public TypeDef[] typedefs { get; set; }
+        public List<TypeDef> typedefs { get; set; }
 
         public class EnumDef
         {
@@ -73,8 +73,10 @@ namespace Generator
             public string ReturnType { get; set; }
             [JsonProperty( PropertyName = "params" )]
             public ParamType[] Params { get; set; }
+
+            public bool NeedsSelfPointer = true;
         }
 
-        public MethodDef[] methods { get; set; }
+        public List<MethodDef> methods { get; set; }
     }
 }

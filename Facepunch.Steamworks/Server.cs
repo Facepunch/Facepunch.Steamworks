@@ -22,7 +22,7 @@ namespace Facepunch.Steamworks
 
         public Server( uint appId, uint IpAddress, ushort GamePort, ushort QueryPort, bool Secure, string VersionString )
         {
-            Valve.Interop.NativeEntrypoints.Extended.SteamInternal_GameServer_Init( IpAddress, 0, GamePort, QueryPort, Secure ? 3 : 2, VersionString );
+            SteamNative.Globals.SteamInternal_GameServer_Init( IpAddress, 0, GamePort, QueryPort, Secure ? 3 : 2, VersionString );
 
             native = new Interop.NativeInterface();
 
@@ -97,7 +97,7 @@ namespace Facepunch.Steamworks
             if ( !IsValid )
                 return;
 
-            Valve.Interop.NativeEntrypoints.Extended.SteamGameServer_RunCallbacks();
+            SteamNative.Globals.SteamGameServer_RunCallbacks();
 
             base.Update();
         }

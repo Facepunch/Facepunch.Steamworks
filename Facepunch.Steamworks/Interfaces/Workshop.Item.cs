@@ -6,8 +6,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Facepunch.Steamworks.Callbacks.Networking;
 using Facepunch.Steamworks.Callbacks.Workshop;
-using Facepunch.Steamworks.Interop;
-using Valve.Steamworks;
 
 namespace Facepunch.Steamworks
 {
@@ -28,7 +26,7 @@ namespace Facepunch.Steamworks
             public DateTime Modified { get; private set; }
             public DateTime Created { get; private set; }
 
-            internal static Item From( SteamUGCDetails_t details, Workshop workshop )
+            internal static Item From( SteamNative.SteamUGCDetails_t details, Workshop workshop )
             {
                 var item = new Item();
 
@@ -123,11 +121,11 @@ namespace Facepunch.Steamworks
             {
                 var state = workshop.ugc.GetItemState( Id );
 
-                Installed = ( state & (uint) EItemState.k_EItemStateInstalled ) != 0;
-                Downloading = ( state & (uint) EItemState.k_EItemStateDownloading ) != 0;
-                DownloadPending = ( state & (uint) EItemState.k_EItemStateDownloadPending ) != 0;
-                Subscribed = ( state & (uint) EItemState.k_EItemStateSubscribed ) != 0;
-                NeedsUpdate = ( state & (uint) EItemState.k_EItemStateNeedsUpdate ) != 0;
+                Installed = ( state & (uint)SteamNative.ItemState.Installed ) != 0;
+                Downloading = ( state & (uint)SteamNative.ItemState.Downloading ) != 0;
+                DownloadPending = ( state & (uint)SteamNative.ItemState.DownloadPending ) != 0;
+                Subscribed = ( state & (uint)SteamNative.ItemState.Subscribed ) != 0;
+                NeedsUpdate = ( state & (uint)SteamNative.ItemState.NeedsUpdate ) != 0;
 
                 if ( Installed && Directory == null )
                 {

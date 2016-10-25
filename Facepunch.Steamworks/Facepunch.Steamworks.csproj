@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\..\Work\Rust\Main\Assets\Plugins\Facepunch.Steamworks\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -145,11 +145,42 @@
     <Compile Include="Interop\Native.cs" />
     <Compile Include="Interop\ServerRules.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Interop\steam_api_interop.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="Server\Auth.cs" />
     <Compile Include="Server\Query.cs" />
     <Compile Include="Server\Stats.cs" />
+    <Compile Include="SteamNative\SteamNative.Enums.cs" />
+    <Compile Include="SteamNative\SteamNative.Global.cs" />
+    <Compile Include="SteamNative\SteamNative.Platform.cs" />
+    <Compile Include="SteamNative\SteamNative.Platform.Linux.cs" />
+    <Compile Include="SteamNative\SteamNative.Platform.Mac.cs" />
+    <Compile Include="SteamNative\SteamNative.Platform.Win32.cs" />
+    <Compile Include="SteamNative\SteamNative.Platform.Win64.cs" />
+    <Compile Include="SteamNative\SteamNative.SteamAppList.cs" />
+    <Compile Include="SteamNative\SteamNative.SteamApps.cs" />
+    <Compile Include="SteamNative\SteamNative.SteamClient.cs" />
+    <Compile Include="SteamNative\SteamNative.SteamController.cs" />
+    <Compile Include="SteamNative\SteamNative.SteamFriends.cs" />
+    <Compile Include="SteamNative\SteamNative.SteamGameServer.cs" />
+    <Compile Include="SteamNative\SteamNative.SteamGameServerStats.cs" />
+    <Compile Include="SteamNative\SteamNative.SteamHTMLSurface.cs" />
+    <Compile Include="SteamNative\SteamNative.SteamHTTP.cs" />
+    <Compile Include="SteamNative\SteamNative.SteamInventory.cs" />
+    <Compile Include="SteamNative\SteamNative.SteamMatchmaking.cs" />
+    <Compile Include="SteamNative\SteamNative.SteamMatchmakingServers.cs" />
+    <Compile Include="SteamNative\SteamNative.SteamMusic.cs" />
+    <Compile Include="SteamNative\SteamNative.SteamMusicRemote.cs" />
+    <Compile Include="SteamNative\SteamNative.SteamNetworking.cs" />
+    <Compile Include="SteamNative\SteamNative.SteamRemoteStorage.cs" />
+    <Compile Include="SteamNative\SteamNative.SteamScreenshots.cs" />
+    <Compile Include="SteamNative\SteamNative.SteamUGC.cs" />
+    <Compile Include="SteamNative\SteamNative.SteamUnifiedMessages.cs" />
+    <Compile Include="SteamNative\SteamNative.SteamUser.cs" />
+    <Compile Include="SteamNative\SteamNative.SteamUserStats.cs" />
+    <Compile Include="SteamNative\SteamNative.SteamUtils.cs" />
+    <Compile Include="SteamNative\SteamNative.SteamVideo.cs" />
+    <Compile Include="SteamNative\SteamNative.Structs.cs" />
+    <Compile Include="SteamNative\SteamNative.Types.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interop\Callback.This.cs" />

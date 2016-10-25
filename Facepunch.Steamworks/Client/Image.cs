@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Valve.Steamworks;
 
 namespace Facepunch.Steamworks
 {
@@ -21,13 +20,13 @@ namespace Facepunch.Steamworks
         /// </summary>
         public bool IsError { get; internal set; }
 
-        unsafe internal bool TryLoad( ISteamUtils utils )
+        unsafe internal bool TryLoad( SteamNative.SteamUtils utils )
         {
             if ( IsLoaded ) return true;
 
             uint width = 0, height = 0;
 
-            if ( utils.GetImageSize( Id, ref width, ref height ) == false )
+            if ( utils.GetImageSize( Id, out width, out height ) == false )
             {
                 IsError = true;
                 return true;

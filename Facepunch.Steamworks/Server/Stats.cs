@@ -74,7 +74,7 @@ namespace Facepunch.Steamworks
         {
             int data = defaultValue;
 
-            if ( !server.native.gameServerStats.GetUserStat( steamid, name, ref data ) )
+            if ( !server.native.gameServerStats.GetUserStat( steamid, name, out data ) )
                 return defaultValue;
 
             return data;
@@ -87,7 +87,7 @@ namespace Facepunch.Steamworks
         {
             float data = defaultValue;
 
-            if ( !server.native.gameServerStats.GetUserStat0( steamid, name, ref data ) )
+            if ( !server.native.gameServerStats.GetUserStat0( steamid, name, out data ) )
                 return defaultValue;
 
             return data;

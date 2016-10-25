@@ -63,7 +63,7 @@ namespace Facepunch.Steamworks
             fixed ( byte* b = data )
             {
                 uint ticketLength = 0;
-                uint ticket = client.native.user.GetAuthSessionTicket( (IntPtr) b, data.Length, ref ticketLength );
+                uint ticket = client.native.user.GetAuthSessionTicket( (IntPtr) b, data.Length, out ticketLength );
 
                 if ( ticket == 0 )
                     return null;

@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using Facepunch.Steamworks.Callbacks.Networking;
 using Facepunch.Steamworks.Callbacks.Workshop;
-using Facepunch.Steamworks.Interop;
-using Valve.Steamworks;
 
 namespace Facepunch.Steamworks
 {
@@ -85,22 +79,19 @@ namespace Facepunch.Steamworks
             {
                 if ( FileId.Count != 0 )
                 {
-                    var fileArray = FileId.ToArray();
+                    var fileArray = FileId.Select( x => (SteamNative.PublishedFileId_t)x ).ToArray();
                     _resultsRemain = fileArray.Length;
 
-                    fixed ( ulong* array = fileArray )
-                    {
-                        Handle = workshop.ugc.CreateQueryUGCDetailsRequest( (IntPtr)array, (uint)fileArray.Length );
-                    }
+                    Handle = workshop.ugc.CreateQueryUGCDetailsRequest( fileArray );
                 }
                 else if ( UserId.HasValue )
                 {
                     uint accountId = (uint)( UserId.Value & 0xFFFFFFFFul );
-                    Handle = workshop.ugc.CreateQueryUserUGCRequest( accountId, (uint)UserQueryType, (uint)QueryType, (uint)Order, UploaderAppId, AppId, (uint)_resultPage + 1 );
+                    Handle = workshop.ugc.CreateQueryUserUGCRequest( accountId, (SteamNative.UserUGCList)( uint)UserQueryType, (SteamNative.UGCMatchingUGCType)( uint)QueryType, SteamNative.UserUGCListSortOrder.LastUpdatedDesc, UploaderAppId, AppId, (uint)_resultPage + 1 );
                 }
                 else
                 {
-                    Handle = workshop.ugc.CreateQueryAllUGCRequest( (uint)Order, (uint)QueryType, UploaderAppId, AppId, (uint)_resultPage + 1 );
+                    Handle = workshop.ugc.CreateQueryAllUGCRequest( (SteamNative.UGCQuery)(uint)Order, (SteamNative.UGCMatchingUGCType)(uint)QueryType, UploaderAppId, AppId, (uint)_resultPage + 1 );
                 }
 
                 if ( !string.IsNullOrEmpty( SearchText ) )
@@ -136,8 +127,10 @@ namespace Facepunch.Steamworks
                         Console.WriteLine( "{0} Adding result {1}", _resultPage, _results.Count );
                     }
 
-                    SteamUGCDetails_t details = new SteamUGCDetails_t();
-                    workshop.ugc.GetQueryUGCResult( data.Handle, (uint)i, ref details );
+                    SteamNative.SteamUGCDetails_t details;
+                    //  if ( !workshop.ugc.GetQueryUGCResult( data.Handle, (uint)i, out details ) )
+                    //      continue;
+                    continue;
 
                     // We already have this file, so skip it
                     if ( _results.Any( x => x.Id == details.m_nPublishedFileId ) )
@@ -183,7 +176,7 @@ namespace Facepunch.Steamworks
             private int GetStat( ulong handle, int index, ItemStatistic stat )
             {
                 uint val = 0;
-                if ( !workshop.ugc.GetQueryUGCStatistic( handle, (uint)index, (uint)stat, ref val ) )
+                if ( !workshop.ugc.GetQueryUGCStatistic( handle, (uint)index, (SteamNative.ItemStatistic)(uint)stat, out val ) )
                     return 0;
 
                 return (int) val;

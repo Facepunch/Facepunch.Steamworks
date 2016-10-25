@@ -45,28 +45,28 @@ namespace Facepunch.Steamworks
         public int GetInt( string name )
         {
             int data = 0;
-            client.native.userstats.GetStat( name, ref data );
+            client.native.userstats.GetStat( name, out data );
             return data;
         }
 
         public long GetGlobalInt( string name )
         {
             long data = 0;
-            client.native.userstats.GetGlobalStat( name, ref data );
+            client.native.userstats.GetGlobalStat( name, out data );
             return data;
         }
 
         public float GetFloat( string name )
         {
             float data = 0;
-            client.native.userstats.GetStat0( name, ref data );
+            client.native.userstats.GetStat0( name, out data );
             return data;
         }
 
         public double GetGlobalFloat( string name )
         {
             double data = 0;
-            client.native.userstats.GetGlobalStat0( name, ref data );
+            client.native.userstats.GetGlobalStat0( name, out data );
             return data;
         }
 

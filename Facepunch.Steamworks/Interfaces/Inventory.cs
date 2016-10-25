@@ -31,13 +31,13 @@ namespace Facepunch.Steamworks
         /// </summary>
         public DateTime SerializedExpireTime;
 
-        internal Valve.Steamworks.ISteamInventory inventory;
+        internal SteamNative.SteamInventory inventory;
 
         private Result LocalPlayerRequest;
 
         private bool IsServer { get; set; }
 
-        internal Inventory( Valve.Steamworks.ISteamInventory c, bool server )
+        internal Inventory( SteamNative.SteamInventory c, bool server )
         {
             IsServer = server;
             inventory = c;
@@ -84,7 +84,7 @@ namespace Facepunch.Steamworks
             if ( LocalPlayerRequest != null )
                 return;
 
-            int request = 0;
+            SteamNative.SteamInventoryResult_t request = 0;
             if ( !inventory.GetAllItems( ref request ) || request == -1 )
             {
                 Console.WriteLine( "GetAllItems failed!?" );
@@ -112,8 +112,8 @@ namespace Facepunch.Steamworks
             // Make sure item definitions are loaded, because we're going to be using them.
             //
 
-            int[] ids;
-            if ( !inventory.GetItemDefinitionIDs( out ids ) )
+            var ids = inventory.GetItemDefinitionIDs();
+            if ( ids == null )
                 return;
 
             Definitions = ids.Select( x =>
@@ -209,11 +209,11 @@ namespace Facepunch.Steamworks
             if ( dataLength == -1 )
                 dataLength = data.Length;
 
-            int resultHandle = -1;
+            SteamNative.SteamInventoryResult_t resultHandle = -1;
 
             fixed ( byte* ptr = data )
             {
-                var result = inventory.DeserializeResult( out resultHandle, (IntPtr) ptr, (uint)dataLength, false );
+                var result = inventory.DeserializeResult( ref resultHandle, (IntPtr) ptr, (uint)dataLength, false );
                 if ( !result || resultHandle == -1 )
                     return null;
 

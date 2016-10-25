@@ -96,15 +96,15 @@ namespace Facepunch.Steamworks
             uint bufferRegularLastWrite = 0;
             uint bufferCompressedLastWrite = 0;
 
-            Valve.Steamworks.EVoiceResult result = (Valve.Steamworks.EVoiceResult) client.native.user.GetVoice( OnCompressedData != null, ReadCompressedBuffer, ReadBufferSize, ref bufferCompressedLastWrite,
-                                                    OnUncompressedData != null, (IntPtr) ReadUncompressedBuffer, ReadBufferSize, ref bufferRegularLastWrite, 
+            var result = client.native.user.GetVoice( OnCompressedData != null, ReadCompressedBuffer, ReadBufferSize, out bufferCompressedLastWrite,
+                                                    OnUncompressedData != null, (IntPtr) ReadUncompressedBuffer, ReadBufferSize, out bufferRegularLastWrite, 
                                                     DesiredSampleRate == 0 ? OptimalSampleRate : DesiredSampleRate );
 
             Console.WriteLine( result );
 
             IsRecording = true;
 
-            if ( result == Valve.Steamworks.EVoiceResult.k_EVoiceResultOK )
+            if ( result == SteamNative.VoiceResult.OK )
             {
                 if ( OnCompressedData != null && bufferCompressedLastWrite > 0 )
                 {
@@ -119,8 +119,8 @@ namespace Facepunch.Steamworks
                 LastVoiceRecordTime = DateTime.Now;
             }
 
-            if ( result == Valve.Steamworks.EVoiceResult.k_EVoiceResultNotRecording ||
-                result == Valve.Steamworks.EVoiceResult.k_EVoiceResultNotInitialized )
+            if ( result == SteamNative.VoiceResult.NotRecording ||
+                result == SteamNative.VoiceResult.NotInitialized )
                 IsRecording = false;
             
         }
@@ -139,12 +139,12 @@ namespace Facepunch.Steamworks
                 samepleRate = OptimalSampleRate;
 
             uint bytesOut = 0;
-            var result = (Valve.Steamworks.EVoiceResult) client.native.user.DecompressVoice( (IntPtr)( ((byte*)input) + inputoffset ), (uint) inputsize, UncompressBuffer, UncompressBufferSize, ref bytesOut, samepleRate );
+            var result = client.native.user.DecompressVoice( (IntPtr)( ((byte*)input) + inputoffset ), (uint) inputsize, UncompressBuffer, UncompressBufferSize, out bytesOut, samepleRate );
 
             if ( bytesOut > 0 )
                 output.SetLength( bytesOut );
 
-            if (  result == Valve.Steamworks.EVoiceResult.k_EVoiceResultOK )
+            if (  result == SteamNative.VoiceResult.OK )
             {
                 if ( output.Capacity < bytesOut )
                     output.Capacity = (int) bytesOut;

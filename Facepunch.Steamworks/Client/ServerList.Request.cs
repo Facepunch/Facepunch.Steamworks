@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using Valve.Steamworks;
 
 namespace Facepunch.Steamworks
 {
@@ -21,7 +20,7 @@ namespace Facepunch.Steamworks
                 internal int Pointer = 0;
                 internal List<int> WatchList = new List<int>();
 
-                internal bool Update( ISteamMatchmakingServers servers, Action<gameserveritem_t> OnServer, Action OnUpdate )
+                internal bool Update( SteamNative.SteamMatchmakingServers servers, Action<SteamNative.gameserveritem_t> OnServer, Action OnUpdate )
                 {
                     if ( Request == IntPtr.Zero )
                         return true;
@@ -143,7 +142,7 @@ namespace Facepunch.Steamworks
                     }
 
                     filter.Start();
-                    var id = client.native.servers.RequestInternetServerList( client.AppId, filter.NativeArray, filter.Count, IntPtr.Zero );
+                    var id = client.native.servers.RequestInternetServerList( client.AppId, filter.NativeArray, (uint)filter.Count, IntPtr.Zero );
                     filter.Free();
 
                     AddRequest( id );
@@ -178,7 +177,7 @@ namespace Facepunch.Steamworks
                 }
             }
 
-            private void OnServer( gameserveritem_t info )
+            private void OnServer( SteamNative.gameserveritem_t info )
             {
                 if ( info.m_bHadSuccessfulResponse )
                 {

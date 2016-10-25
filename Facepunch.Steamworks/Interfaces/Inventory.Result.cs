@@ -12,7 +12,7 @@ namespace Facepunch.Steamworks
         {
             internal Inventory inventory;
 
-            public int Handle { get; private set; }
+            public SteamNative.SteamInventoryResult_t Handle { get; private set; }
             public Item[] Items { get; internal set; }
 
             public bool IsPending
@@ -69,8 +69,8 @@ namespace Facepunch.Steamworks
                 if ( !IsSuccess )
                     return;
 
-                Valve.Steamworks.SteamItemDetails_t[] steamItems = null;
-                if ( !inventory.inventory.GetResultItems( Handle, out steamItems ) )
+                SteamNative.SteamItemDetails_t[] steamItems = inventory.inventory.GetResultItems( Handle );
+                if ( steamItems == null )
                     return;
 
                 if ( steamItems == null )
@@ -85,7 +85,7 @@ namespace Facepunch.Steamworks
                         Quantity = x.m_unQuantity,
                         Id = x.m_itemId,
                         DefinitionId = x.m_iDefinition,
-                        TradeLocked = ( (int)x.m_unFlags & (int)Valve.Steamworks.ESteamItemFlags.k_ESteamItemNoTrade ) != 0,
+                        TradeLocked = ( (int)x.m_unFlags & (int)SteamNative.SteamItemFlags.NoTrade ) != 0,
                         Definition = inventory.FindDefinition( x.m_iDefinition )
                     };
                 } ).ToArray();

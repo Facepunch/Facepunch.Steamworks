@@ -32,7 +32,7 @@ namespace Facepunch.Steamworks.Interop
             //
             // Ask Steam to get the server rules, respond to our fake vtable
             //
-            Valve.Interop.NativeEntrypoints.SteamAPI_ISteamMatchmakingServers_ServerRules( Server.Client.native.servers.GetIntPtr(), address, (short) queryPort, GetPtr() );
+            Server.Client.native.servers.ServerRules( address, (ushort)queryPort, GetPtr() );
         }
 
         public void Dispose()

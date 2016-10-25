@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Facepunch.Steamworks.Callbacks.Networking;
-using Valve.Steamworks;
 
 namespace Facepunch.Steamworks
 {
@@ -14,9 +13,9 @@ namespace Facepunch.Steamworks
         public Func<ulong, bool> OnIncomingConnection;
         public Action<ulong, SessionError> OnConnectionFailed;
 
-        internal ISteamNetworking networking;
+        internal SteamNative.SteamNetworking networking;
 
-        internal Networking( BaseSteamworks sw, ISteamNetworking networking )
+        internal Networking( BaseSteamworks sw, SteamNative.SteamNetworking networking )
         {
             this.networking = networking;
 
@@ -130,7 +129,7 @@ namespace Facepunch.Steamworks
         {
             fixed ( byte* p = data )
             {
-                return networking.SendP2PPacket( steamid, (IntPtr) p, (uint)length, (uint)eP2PSendType, nChannel );
+                return networking.SendP2PPacket( steamid, (IntPtr) p, (uint)length, (SteamNative.P2PSend)(int)eP2PSendType, nChannel );
             }
         }
 
@@ -138,7 +137,7 @@ namespace Facepunch.Steamworks
         {
             uint DataAvailable = 0;
 
-            if ( !networking.IsP2PPacketAvailable( ref DataAvailable, channel ) || DataAvailable == 0 )
+            if ( !networking.IsP2PPacketAvailable( out DataAvailable, channel ) || DataAvailable == 0 )
                 return false;
 
             if ( ms.Capacity < DataAvailable )
@@ -149,8 +148,8 @@ namespace Facepunch.Steamworks
 
             fixed ( byte* p = ms.GetBuffer() )
             {
-                ulong steamid = 1;
-                if ( !networking.ReadP2PPacket( (IntPtr)p, (uint)DataAvailable, ref DataAvailable, ref steamid, channel ) || DataAvailable == 0 )
+                SteamNative.CSteamID steamid = 1;
+                if ( !networking.ReadP2PPacket( (IntPtr)p, (uint)DataAvailable, out DataAvailable, out steamid, channel ) || DataAvailable == 0 )
                     return false;
 
                 ms.SetLength( DataAvailable );

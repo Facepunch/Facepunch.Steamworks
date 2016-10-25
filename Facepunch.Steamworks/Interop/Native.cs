@@ -7,26 +7,26 @@ namespace Facepunch.Steamworks.Interop
 {
     internal class NativeInterface : IDisposable
     {
-        internal Valve.Steamworks.ISteamClient client;
-        internal Valve.Steamworks.ISteamUser user;
-        internal Valve.Steamworks.ISteamApps apps;
-        internal Valve.Steamworks.ISteamFriends friends;
-        internal Valve.Steamworks.ISteamMatchmakingServers servers;
-        internal Valve.Steamworks.ISteamInventory inventory;
-        internal Valve.Steamworks.ISteamNetworking networking;
-        internal Valve.Steamworks.ISteamUserStats userstats;
-        internal Valve.Steamworks.ISteamUtils utils;
-        internal Valve.Steamworks.ISteamScreenshots screenshots;
-        internal Valve.Steamworks.ISteamHTTP http;
-        internal Valve.Steamworks.ISteamUGC ugc;
-        internal Valve.Steamworks.ISteamGameServer gameServer;
-        internal Valve.Steamworks.ISteamGameServerStats gameServerStats;
-        internal Valve.Steamworks.ISteamRemoteStorage remoteStorage;
+        internal SteamNative.SteamClient client;
+        internal SteamNative.SteamUser user;
+        internal SteamNative.SteamApps apps;
+        internal SteamNative.SteamFriends friends;
+        internal SteamNative.SteamMatchmakingServers servers;
+        internal SteamNative.SteamInventory inventory;
+        internal SteamNative.SteamNetworking networking;
+        internal SteamNative.SteamUserStats userstats;
+        internal SteamNative.SteamUtils utils;
+        internal SteamNative.SteamScreenshots screenshots;
+        internal SteamNative.SteamHTTP http;
+        internal SteamNative.SteamUGC ugc;
+        internal SteamNative.SteamGameServer gameServer;
+        internal SteamNative.SteamGameServerStats gameServerStats;
+        internal SteamNative.SteamRemoteStorage remoteStorage;
 
         internal bool InitClient()
         {
-            var user = Valve.Interop.NativeEntrypoints.Extended.SteamAPI_GetHSteamUser();
-            var pipe = Valve.Interop.NativeEntrypoints.Extended.SteamAPI_GetHSteamPipe();
+            var user = SteamNative.Globals.SteamAPI_GetHSteamUser();
+            var pipe = SteamNative.Globals.SteamAPI_GetHSteamPipe();
             if ( pipe == 0 )
                 return false;
 
@@ -37,14 +37,14 @@ namespace Facepunch.Steamworks.Interop
 
         internal bool InitServer()
         {
-            var user = Valve.Interop.NativeEntrypoints.Extended.SteamGameServer_GetHSteamUser();
-            var pipe = Valve.Interop.NativeEntrypoints.Extended.SteamGameServer_GetHSteamPipe();
+            var user = SteamNative.Globals.SteamGameServer_GetHSteamUser();
+            var pipe = SteamNative.Globals.SteamGameServer_GetHSteamPipe();
             if ( pipe == 0 )
                 return false;
 
             FillInterfaces( pipe, user );
 
-            if ( gameServer.GetIntPtr() == IntPtr.Zero )
+            if ( gameServer._ptr == IntPtr.Zero )
             {
                 gameServer = null;
                 throw new System.Exception( "Steam Server: Couldn't load SteamGameServer012" );
@@ -55,13 +55,13 @@ namespace Facepunch.Steamworks.Interop
 
         public void FillInterfaces( int hpipe, int huser )
         {
-            var clientPtr = Valve.Interop.NativeEntrypoints.Extended.SteamInternal_CreateInterface( "SteamClient017" );
+            var clientPtr = SteamNative.Globals.SteamInternal_CreateInterface( "SteamClient017" );
             if ( clientPtr == IntPtr.Zero )
             {
                 throw new System.Exception( "Steam Server: Couldn't load SteamClient017" );
             }
 
-            client = new Valve.Steamworks.CSteamClient( clientPtr );
+            client = new SteamNative.SteamClient( clientPtr );
 
             user = client.GetISteamUser( huser, hpipe, "SteamUser019" );
             utils = client.GetISteamUtils( hpipe, "SteamUtils008" );
@@ -87,7 +87,7 @@ namespace Facepunch.Steamworks.Interop
                 client = null;
             }
 
-            Valve.Interop.NativeEntrypoints.Extended.SteamAPI_Shutdown();
+            SteamNative.Globals.SteamAPI_Shutdown();
         }
     }
 }

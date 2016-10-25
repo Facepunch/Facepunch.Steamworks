@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Valve.Steamworks;
 
 namespace Facepunch.Steamworks
 {
@@ -76,10 +75,10 @@ namespace Facepunch.Steamworks
         {
             Name = Client.native.friends.GetFriendPersonaName( Id );
 
-            EFriendRelationship relationship = (EFriendRelationship) Client.native.friends.GetFriendRelationship( Id );
+            SteamNative.FriendRelationship relationship = (SteamNative.FriendRelationship) Client.native.friends.GetFriendRelationship( Id );
 
-            IsBlocked = relationship == EFriendRelationship.k_EFriendRelationshipBlocked;
-            IsFriend = relationship == EFriendRelationship.k_EFriendRelationshipFriend;
+            IsBlocked = relationship == SteamNative.FriendRelationship.Blocked;
+            IsFriend = relationship == SteamNative.FriendRelationship.Friend;
 
             CurrentAppId = 0;
             ServerIp = 0;
@@ -87,8 +86,8 @@ namespace Facepunch.Steamworks
             ServerQueryPort = 0;
             ServerLobbyId = 0;
 
-            FriendGameInfo_t gameInfo = new FriendGameInfo_t();
-            if ( Client.native.friends.GetFriendGamePlayed( Id, out gameInfo ) && gameInfo.m_gameID > 0 )
+            var gameInfo = new SteamNative.FriendGameInfo_t();
+            if ( Client.native.friends.GetFriendGamePlayed( Id, ref gameInfo ) && gameInfo.m_gameID > 0 )
             {
                 CurrentAppId = gameInfo.m_gameID;
                 ServerIp = gameInfo.m_unGameIP;
@@ -169,7 +168,7 @@ namespace Facepunch.Steamworks
 
             _allFriends.Clear();
 
-            var flags = (int) EFriendFlags.k_EFriendFlagAll;
+            var flags = (int) SteamNative.FriendFlags.All;
             var count = client.native.friends.GetFriendCount( flags );
 
             for ( int i=0; i<count; i++ )

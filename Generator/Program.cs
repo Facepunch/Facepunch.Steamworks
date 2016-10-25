@@ -14,19 +14,9 @@ namespace Generator
             var content = System.IO.File.ReadAllText( "steam_api.json" );
             var def = Newtonsoft.Json.JsonConvert.DeserializeObject<SteamApiDefinition>( content );
 
-            Console.WriteLine( content );
+            var generator = new CSharpGenerator( def );
 
-            foreach ( var d in def.typedefs )
-            {
-                Console.WriteLine( "{0} = {1}", d.Name, d.Type );
-            }
-
-            foreach ( var d in def.enums )
-            {
-                Console.WriteLine( "{0} = {1}", d.Name, d.Values );
-            }
-
-            Console.ReadKey();
+            generator.ToFolder( "../Facepunch.Steamworks/SteamNative/" );
         }
     }
 }

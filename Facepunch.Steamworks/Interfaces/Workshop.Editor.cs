@@ -48,7 +48,7 @@ namespace Facepunch.Steamworks
                     ulong b = 0;
                     ulong t = 0;
 
-                    workshop.steamworks.native.ugc.GetItemUpdateProgress( SubmitItemUpdate.Handle, ref b, ref t );
+                    workshop.steamworks.native.ugc.GetItemUpdateProgress( SubmitItemUpdate.Handle, out b, out t );
 
                     if ( t == 0 )
                         return 0;
@@ -68,7 +68,7 @@ namespace Facepunch.Steamworks
                     ulong b = 0;
                     ulong t = 0;
 
-                    workshop.steamworks.native.ugc.GetItemUpdateProgress( SubmitItemUpdate.Handle, ref b, ref t );
+                    workshop.steamworks.native.ugc.GetItemUpdateProgress( SubmitItemUpdate.Handle, out b, out t );
                     return (int) b;
                 }
             }
@@ -84,7 +84,7 @@ namespace Facepunch.Steamworks
                     ulong b = 0;
                     ulong t = 0;
 
-                    workshop.steamworks.native.ugc.GetItemUpdateProgress( SubmitItemUpdate.Handle, ref b, ref t );
+                    workshop.steamworks.native.ugc.GetItemUpdateProgress( SubmitItemUpdate.Handle, out b, out t );
                     return (int)t;
                 }
             }
@@ -109,7 +109,7 @@ namespace Facepunch.Steamworks
                     throw new System.Exception( "Editor.Type must be set when creating a new item!" );
 
                 CreateItem = new CreateItem();
-                CreateItem.Handle = workshop.ugc.CreateItem( workshop.steamworks.AppId, (uint)Type );
+                CreateItem.Handle = workshop.ugc.CreateItem( workshop.steamworks.AppId, (SteamNative.WorkshopFileType)(uint)Type );
                 CreateItem.OnResult = OnItemCreated;
                 workshop.steamworks.AddCallResult( CreateItem );
             }
@@ -143,11 +143,11 @@ namespace Facepunch.Steamworks
                 if ( Folder != null )
                     workshop.ugc.SetItemContent( UpdateId, Folder );
 
-                if ( Tags != null && Tags.Count > 0 )
-                    workshop.ugc.SetItemTags( UpdateId, Tags.ToArray() );
+               // if ( Tags != null && Tags.Count > 0 )
+               //     workshop.ugc.SetItemTags( UpdateId, Tags.ToArray() );
 
                 if ( Visibility.HasValue )
-                    workshop.ugc.SetItemVisibility( UpdateId, (uint)Visibility.Value );
+                    workshop.ugc.SetItemVisibility( UpdateId, (SteamNative.RemoteStoragePublishedFileVisibility)(uint)Visibility.Value );
 
                 if ( PreviewImage != null )
                     workshop.ugc.SetItemPreview( UpdateId, PreviewImage ); //  change preview image file for this item. pszPreviewFile points to local image file, which must be under 1MB in size

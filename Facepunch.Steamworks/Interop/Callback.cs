@@ -67,14 +67,14 @@ namespace Facepunch.Steamworks.Interop
 
             BuildVTable();
 
-            Valve.Steamworks.SteamAPI.RegisterCallback( callbackPin.AddrOfPinnedObject(), CallbackId );
+            SteamNative.Globals.SteamAPI_RegisterCallback( callbackPin.AddrOfPinnedObject(), CallbackId );
         }
 
         public override void Dispose()
         {
             if ( callbackPin.IsAllocated )
             {
-                Valve.Steamworks.SteamAPI.UnregisterCallback( callbackPin.AddrOfPinnedObject() );
+                SteamNative.Globals.SteamAPI_UnregisterCallback( callbackPin.AddrOfPinnedObject() );
                 callbackPin.Free();
             }
 
@@ -93,7 +93,7 @@ namespace Facepunch.Steamworks.Interop
             if ( vTablePtr == IntPtr.Zero ) throw new System.Exception( "vTablePtr wasn't pinned!" );
             if ( thisObject != IntPtr.Zero && thisObject != callbackPin.AddrOfPinnedObject() ) throw new System.Exception( "This wasn't valid!" );
 
-            if ( Config.PackSmall && typeof(T) != typeof( TSmall ) ) throw new System.Exception( "Callback should use PackSmall" );
+            if ( SteamNative.Platform.PackSmall && typeof(T) != typeof( TSmall ) ) throw new System.Exception( "Callback should use PackSmall" );
 
             T data = (T) Marshal.PtrToStructure( ptr, typeof(T) );
             Function( data );

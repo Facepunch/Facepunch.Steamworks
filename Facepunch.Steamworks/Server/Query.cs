@@ -55,7 +55,7 @@ namespace Facepunch.Steamworks
                 uint addr = 0;
                 ushort port = 0;
 
-                var size = server.native.gameServer.GetNextOutgoingPacket( (IntPtr)ptr, buffer.Length, ref addr, ref port );
+                var size = server.native.gameServer.GetNextOutgoingPacket( (IntPtr)ptr, buffer.Length, out addr, out port );
                 if ( size == 0 )
                     return false;
 

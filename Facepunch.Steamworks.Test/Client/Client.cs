@@ -6,7 +6,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Facepunch.Steamworks.Test
 {
     [TestClass]
-    [DeploymentItem( Config.LibraryName + ".dll" )]
+    [DeploymentItem( "steam_api.dll" )]
+    [DeploymentItem( "steam_api64.dll" )]
     [DeploymentItem( "steam_appid.txt" )]
     public partial class Client
     {
