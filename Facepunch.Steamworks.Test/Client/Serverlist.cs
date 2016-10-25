@@ -28,7 +28,7 @@ namespace Facepunch.Steamworks.Test
                 for ( int i = 0; i < 1000; i++ )
                 {
                     client.Update();
-                    System.Threading.Thread.Sleep( 10 );
+                    System.Threading.Thread.Sleep( 5 );
 
                     foreach ( var s in query.Responded )
                     {

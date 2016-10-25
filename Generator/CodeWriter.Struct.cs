@@ -24,14 +24,14 @@ namespace Generator
                 int defaultPack = 8;
 
                 if ( c.Fields.Any( x => x.Type.Contains( "class CSteamID" ) ) )
-                    defaultPack = 1;
+                    defaultPack = 4;
 
                 WriteLine( $"[StructLayout( LayoutKind.Sequential, Pack = {defaultPack} )]" );
                 StartBlock( $"public struct {c.Name}" );
 
                 StructFields( c.Fields );
 
-                WriteLine( $"public static {c.Name} FromPointer( IntPtr p ) {{ return new {c.Name}(); }}" );
+                WriteLine( $"public static {c.Name} FromPointer( IntPtr p ) {{ return ({c.Name}) Marshal.PtrToStructure( p, typeof({c.Name}) ); }}" );
 
 
                 if ( defaultPack == 8 )
@@ -71,6 +71,11 @@ namespace Generator
                 if ( TypeDefs.ContainsKey( t ) )
                 {
                     t = TypeDefs[t].ManagedType;
+                }
+
+                if ( t == "bool" )
+                {
+                    WriteLine( "[MarshalAs(UnmanagedType.I1)]" );
                 }
 
                 if ( t.StartsWith( "char " ) && t.Contains( "[" ) )

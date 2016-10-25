@@ -10,7 +10,7 @@ namespace SteamNative
 		public ulong m_u64; // uint64
 		public ushort m_u16; // uint16
 		public double m_d; // double
-		public static ValvePackingSentinel_t FromPointer( IntPtr p ) { return new ValvePackingSentinel_t(); }
+		public static ValvePackingSentinel_t FromPointer( IntPtr p ) { return (ValvePackingSentinel_t) Marshal.PtrToStructure( p, typeof(ValvePackingSentinel_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -43,7 +43,7 @@ namespace SteamNative
 		public int m_iCallback; // int
 		public IntPtr m_pubParam; // uint8 *
 		public int m_cubParam; // int
-		public static CallbackMsg_t FromPointer( IntPtr p ) { return new CallbackMsg_t(); }
+		public static CallbackMsg_t FromPointer( IntPtr p ) { return (CallbackMsg_t) Marshal.PtrToStructure( p, typeof(CallbackMsg_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -73,13 +73,15 @@ namespace SteamNative
 	public struct SteamServerConnectFailure_t
 	{
 		public Result m_eResult; // enum EResult
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bStillRetrying; // _Bool
-		public static SteamServerConnectFailure_t FromPointer( IntPtr p ) { return new SteamServerConnectFailure_t(); }
+		public static SteamServerConnectFailure_t FromPointer( IntPtr p ) { return (SteamServerConnectFailure_t) Marshal.PtrToStructure( p, typeof(SteamServerConnectFailure_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public Result m_eResult; // enum EResult
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bStillRetrying; // _Bool
 			
 			public SteamServerConnectFailure_t Get
@@ -100,7 +102,7 @@ namespace SteamNative
 	public struct SteamServersDisconnected_t
 	{
 		public Result m_eResult; // enum EResult
-		public static SteamServersDisconnected_t FromPointer( IntPtr p ) { return new SteamServersDisconnected_t(); }
+		public static SteamServersDisconnected_t FromPointer( IntPtr p ) { return (SteamServersDisconnected_t) Marshal.PtrToStructure( p, typeof(SteamServersDisconnected_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -128,7 +130,7 @@ namespace SteamNative
 		public ushort m_usGameServerPort; // uint16
 		public ushort m_bSecure; // uint16
 		public uint m_uReason; // uint32
-		public static ClientGameServerDeny_t FromPointer( IntPtr p ) { return new ClientGameServerDeny_t(); }
+		public static ClientGameServerDeny_t FromPointer( IntPtr p ) { return (ClientGameServerDeny_t) Marshal.PtrToStructure( p, typeof(ClientGameServerDeny_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -156,15 +158,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct ValidateAuthTicketResponse_t
 	{
 		public ulong m_SteamID; // class CSteamID
 		public AuthSessionResponse m_eAuthSessionResponse; // enum EAuthSessionResponse
 		public ulong m_OwnerSteamID; // class CSteamID
-		public static ValidateAuthTicketResponse_t FromPointer( IntPtr p ) { return new ValidateAuthTicketResponse_t(); }
+		public static ValidateAuthTicketResponse_t FromPointer( IntPtr p ) { return (ValidateAuthTicketResponse_t) Marshal.PtrToStructure( p, typeof(ValidateAuthTicketResponse_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong m_SteamID; // class CSteamID
@@ -192,7 +194,7 @@ namespace SteamNative
 		public uint m_unAppID; // uint32
 		public ulong m_ulOrderID; // uint64
 		public byte m_bAuthorized; // uint8
-		public static MicroTxnAuthorizationResponse_t FromPointer( IntPtr p ) { return new MicroTxnAuthorizationResponse_t(); }
+		public static MicroTxnAuthorizationResponse_t FromPointer( IntPtr p ) { return (MicroTxnAuthorizationResponse_t) Marshal.PtrToStructure( p, typeof(MicroTxnAuthorizationResponse_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -220,7 +222,7 @@ namespace SteamNative
 	public struct EncryptedAppTicketResponse_t
 	{
 		public Result m_eResult; // enum EResult
-		public static EncryptedAppTicketResponse_t FromPointer( IntPtr p ) { return new EncryptedAppTicketResponse_t(); }
+		public static EncryptedAppTicketResponse_t FromPointer( IntPtr p ) { return (EncryptedAppTicketResponse_t) Marshal.PtrToStructure( p, typeof(EncryptedAppTicketResponse_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -245,7 +247,7 @@ namespace SteamNative
 	{
 		public uint m_hAuthTicket; // HAuthTicket
 		public Result m_eResult; // enum EResult
-		public static GetAuthSessionTicketResponse_t FromPointer( IntPtr p ) { return new GetAuthSessionTicketResponse_t(); }
+		public static GetAuthSessionTicketResponse_t FromPointer( IntPtr p ) { return (GetAuthSessionTicketResponse_t) Marshal.PtrToStructure( p, typeof(GetAuthSessionTicketResponse_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -272,7 +274,7 @@ namespace SteamNative
 	{
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 		public string m_szURL; // char [256]
-		public static GameWebCallback_t FromPointer( IntPtr p ) { return new GameWebCallback_t(); }
+		public static GameWebCallback_t FromPointer( IntPtr p ) { return (GameWebCallback_t) Marshal.PtrToStructure( p, typeof(GameWebCallback_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -298,7 +300,7 @@ namespace SteamNative
 	{
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
 		public string m_szURL; // char [512]
-		public static StoreAuthURLResponse_t FromPointer( IntPtr p ) { return new StoreAuthURLResponse_t(); }
+		public static StoreAuthURLResponse_t FromPointer( IntPtr p ) { return (StoreAuthURLResponse_t) Marshal.PtrToStructure( p, typeof(StoreAuthURLResponse_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -319,7 +321,7 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct FriendGameInfo_t
 	{
 		public ulong m_gameID; // class CGameID
@@ -327,9 +329,9 @@ namespace SteamNative
 		public ushort m_usGamePort; // uint16
 		public ushort m_usQueryPort; // uint16
 		public ulong m_steamIDLobby; // class CSteamID
-		public static FriendGameInfo_t FromPointer( IntPtr p ) { return new FriendGameInfo_t(); }
+		public static FriendGameInfo_t FromPointer( IntPtr p ) { return (FriendGameInfo_t) Marshal.PtrToStructure( p, typeof(FriendGameInfo_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong m_gameID; // class CGameID
@@ -360,7 +362,7 @@ namespace SteamNative
 	{
 		public uint m_uiOnlineSessionInstances; // uint32
 		public byte m_uiPublishedToFriendsSessionInstance; // uint8
-		public static FriendSessionStateInfo_t FromPointer( IntPtr p ) { return new FriendSessionStateInfo_t(); }
+		public static FriendSessionStateInfo_t FromPointer( IntPtr p ) { return (FriendSessionStateInfo_t) Marshal.PtrToStructure( p, typeof(FriendSessionStateInfo_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -387,7 +389,7 @@ namespace SteamNative
 	{
 		public ulong m_ulSteamID; // uint64
 		public int m_nChangeFlags; // int
-		public static PersonaStateChange_t FromPointer( IntPtr p ) { return new PersonaStateChange_t(); }
+		public static PersonaStateChange_t FromPointer( IntPtr p ) { return (PersonaStateChange_t) Marshal.PtrToStructure( p, typeof(PersonaStateChange_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -413,7 +415,7 @@ namespace SteamNative
 	public struct GameOverlayActivated_t
 	{
 		public byte m_bActive; // uint8
-		public static GameOverlayActivated_t FromPointer( IntPtr p ) { return new GameOverlayActivated_t(); }
+		public static GameOverlayActivated_t FromPointer( IntPtr p ) { return (GameOverlayActivated_t) Marshal.PtrToStructure( p, typeof(GameOverlayActivated_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -440,7 +442,7 @@ namespace SteamNative
 		public string m_rgchServer; // char [64]
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
 		public string m_rgchPassword; // char [64]
-		public static GameServerChangeRequested_t FromPointer( IntPtr p ) { return new GameServerChangeRequested_t(); }
+		public static GameServerChangeRequested_t FromPointer( IntPtr p ) { return (GameServerChangeRequested_t) Marshal.PtrToStructure( p, typeof(GameServerChangeRequested_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -464,14 +466,14 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct GameLobbyJoinRequested_t
 	{
 		public ulong m_steamIDLobby; // class CSteamID
 		public ulong m_steamIDFriend; // class CSteamID
-		public static GameLobbyJoinRequested_t FromPointer( IntPtr p ) { return new GameLobbyJoinRequested_t(); }
+		public static GameLobbyJoinRequested_t FromPointer( IntPtr p ) { return (GameLobbyJoinRequested_t) Marshal.PtrToStructure( p, typeof(GameLobbyJoinRequested_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong m_steamIDLobby; // class CSteamID
@@ -491,16 +493,16 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct AvatarImageLoaded_t
 	{
 		public ulong m_steamID; // class CSteamID
 		public int m_iImage; // int
 		public int m_iWide; // int
 		public int m_iTall; // int
-		public static AvatarImageLoaded_t FromPointer( IntPtr p ) { return new AvatarImageLoaded_t(); }
+		public static AvatarImageLoaded_t FromPointer( IntPtr p ) { return (AvatarImageLoaded_t) Marshal.PtrToStructure( p, typeof(AvatarImageLoaded_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong m_steamID; // class CSteamID
@@ -524,15 +526,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct ClanOfficerListResponse_t
 	{
 		public ulong m_steamIDClan; // class CSteamID
 		public int m_cOfficers; // int
 		public byte m_bSuccess; // uint8
-		public static ClanOfficerListResponse_t FromPointer( IntPtr p ) { return new ClanOfficerListResponse_t(); }
+		public static ClanOfficerListResponse_t FromPointer( IntPtr p ) { return (ClanOfficerListResponse_t) Marshal.PtrToStructure( p, typeof(ClanOfficerListResponse_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong m_steamIDClan; // class CSteamID
@@ -554,14 +556,14 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct FriendRichPresenceUpdate_t
 	{
 		public ulong m_steamIDFriend; // class CSteamID
 		public uint m_nAppID; // AppId_t
-		public static FriendRichPresenceUpdate_t FromPointer( IntPtr p ) { return new FriendRichPresenceUpdate_t(); }
+		public static FriendRichPresenceUpdate_t FromPointer( IntPtr p ) { return (FriendRichPresenceUpdate_t) Marshal.PtrToStructure( p, typeof(FriendRichPresenceUpdate_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong m_steamIDFriend; // class CSteamID
@@ -581,15 +583,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct GameRichPresenceJoinRequested_t
 	{
 		public ulong m_steamIDFriend; // class CSteamID
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 		public string m_rgchConnect; // char [256]
-		public static GameRichPresenceJoinRequested_t FromPointer( IntPtr p ) { return new GameRichPresenceJoinRequested_t(); }
+		public static GameRichPresenceJoinRequested_t FromPointer( IntPtr p ) { return (GameRichPresenceJoinRequested_t) Marshal.PtrToStructure( p, typeof(GameRichPresenceJoinRequested_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong m_steamIDFriend; // class CSteamID
@@ -610,15 +612,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct GameConnectedClanChatMsg_t
 	{
 		public ulong m_steamIDClanChat; // class CSteamID
 		public ulong m_steamIDUser; // class CSteamID
 		public int m_iMessageID; // int
-		public static GameConnectedClanChatMsg_t FromPointer( IntPtr p ) { return new GameConnectedClanChatMsg_t(); }
+		public static GameConnectedClanChatMsg_t FromPointer( IntPtr p ) { return (GameConnectedClanChatMsg_t) Marshal.PtrToStructure( p, typeof(GameConnectedClanChatMsg_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong m_steamIDClanChat; // class CSteamID
@@ -640,14 +642,14 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct GameConnectedChatJoin_t
 	{
 		public ulong m_steamIDClanChat; // class CSteamID
 		public ulong m_steamIDUser; // class CSteamID
-		public static GameConnectedChatJoin_t FromPointer( IntPtr p ) { return new GameConnectedChatJoin_t(); }
+		public static GameConnectedChatJoin_t FromPointer( IntPtr p ) { return (GameConnectedChatJoin_t) Marshal.PtrToStructure( p, typeof(GameConnectedChatJoin_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong m_steamIDClanChat; // class CSteamID
@@ -667,21 +669,25 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct GameConnectedChatLeave_t
 	{
 		public ulong m_steamIDClanChat; // class CSteamID
 		public ulong m_steamIDUser; // class CSteamID
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bKicked; // _Bool
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bDropped; // _Bool
-		public static GameConnectedChatLeave_t FromPointer( IntPtr p ) { return new GameConnectedChatLeave_t(); }
+		public static GameConnectedChatLeave_t FromPointer( IntPtr p ) { return (GameConnectedChatLeave_t) Marshal.PtrToStructure( p, typeof(GameConnectedChatLeave_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong m_steamIDClanChat; // class CSteamID
 			public ulong m_steamIDUser; // class CSteamID
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bKicked; // _Bool
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bDropped; // _Bool
 			
 			public GameConnectedChatLeave_t Get
@@ -703,12 +709,14 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct DownloadClanActivityCountsResult_t
 	{
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bSuccess; // _Bool
-		public static DownloadClanActivityCountsResult_t FromPointer( IntPtr p ) { return new DownloadClanActivityCountsResult_t(); }
+		public static DownloadClanActivityCountsResult_t FromPointer( IntPtr p ) { return (DownloadClanActivityCountsResult_t) Marshal.PtrToStructure( p, typeof(DownloadClanActivityCountsResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bSuccess; // _Bool
 			
 			public DownloadClanActivityCountsResult_t Get
@@ -724,14 +732,14 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct JoinClanChatRoomCompletionResult_t
 	{
 		public ulong m_steamIDClanChat; // class CSteamID
 		public ChatRoomEnterResponse m_eChatRoomEnterResponse; // enum EChatRoomEnterResponse
-		public static JoinClanChatRoomCompletionResult_t FromPointer( IntPtr p ) { return new JoinClanChatRoomCompletionResult_t(); }
+		public static JoinClanChatRoomCompletionResult_t FromPointer( IntPtr p ) { return (JoinClanChatRoomCompletionResult_t) Marshal.PtrToStructure( p, typeof(JoinClanChatRoomCompletionResult_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong m_steamIDClanChat; // class CSteamID
@@ -751,14 +759,14 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct GameConnectedFriendChatMsg_t
 	{
 		public ulong m_steamIDUser; // class CSteamID
 		public int m_iMessageID; // int
-		public static GameConnectedFriendChatMsg_t FromPointer( IntPtr p ) { return new GameConnectedFriendChatMsg_t(); }
+		public static GameConnectedFriendChatMsg_t FromPointer( IntPtr p ) { return (GameConnectedFriendChatMsg_t) Marshal.PtrToStructure( p, typeof(GameConnectedFriendChatMsg_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong m_steamIDUser; // class CSteamID
@@ -778,15 +786,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct FriendsGetFollowerCount_t
 	{
 		public Result m_eResult; // enum EResult
 		public ulong m_steamID; // class CSteamID
 		public int m_nCount; // int
-		public static FriendsGetFollowerCount_t FromPointer( IntPtr p ) { return new FriendsGetFollowerCount_t(); }
+		public static FriendsGetFollowerCount_t FromPointer( IntPtr p ) { return (FriendsGetFollowerCount_t) Marshal.PtrToStructure( p, typeof(FriendsGetFollowerCount_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public Result m_eResult; // enum EResult
@@ -808,19 +816,21 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct FriendsIsFollowing_t
 	{
 		public Result m_eResult; // enum EResult
 		public ulong m_steamID; // class CSteamID
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bIsFollowing; // _Bool
-		public static FriendsIsFollowing_t FromPointer( IntPtr p ) { return new FriendsIsFollowing_t(); }
+		public static FriendsIsFollowing_t FromPointer( IntPtr p ) { return (FriendsIsFollowing_t) Marshal.PtrToStructure( p, typeof(FriendsIsFollowing_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public Result m_eResult; // enum EResult
 			public ulong m_steamID; // class CSteamID
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bIsFollowing; // _Bool
 			
 			public FriendsIsFollowing_t Get
@@ -838,7 +848,7 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct FriendsEnumerateFollowingList_t
 	{
 		public Result m_eResult; // enum EResult
@@ -846,9 +856,9 @@ namespace SteamNative
 		public ulong[] m_rgSteamID; // class CSteamID [50]
 		public int m_nResultsReturned; // int32
 		public int m_nTotalResultCount; // int32
-		public static FriendsEnumerateFollowingList_t FromPointer( IntPtr p ) { return new FriendsEnumerateFollowingList_t(); }
+		public static FriendsEnumerateFollowingList_t FromPointer( IntPtr p ) { return (FriendsEnumerateFollowingList_t) Marshal.PtrToStructure( p, typeof(FriendsEnumerateFollowingList_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public Result m_eResult; // enum EResult
@@ -876,15 +886,19 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct SetPersonaNameResponse_t
 	{
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bSuccess; // _Bool
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bLocalSuccess; // _Bool
 		public Result m_result; // enum EResult
-		public static SetPersonaNameResponse_t FromPointer( IntPtr p ) { return new SetPersonaNameResponse_t(); }
+		public static SetPersonaNameResponse_t FromPointer( IntPtr p ) { return (SetPersonaNameResponse_t) Marshal.PtrToStructure( p, typeof(SetPersonaNameResponse_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bSuccess; // _Bool
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bLocalSuccess; // _Bool
 			public Result m_result; // enum EResult
 			
@@ -907,7 +921,7 @@ namespace SteamNative
 	public struct LowBatteryPower_t
 	{
 		public byte m_nMinutesBatteryLeft; // uint8
-		public static LowBatteryPower_t FromPointer( IntPtr p ) { return new LowBatteryPower_t(); }
+		public static LowBatteryPower_t FromPointer( IntPtr p ) { return (LowBatteryPower_t) Marshal.PtrToStructure( p, typeof(LowBatteryPower_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -933,7 +947,7 @@ namespace SteamNative
 		public ulong m_hAsyncCall; // SteamAPICall_t
 		public int m_iCallback; // int
 		public uint m_cubParam; // uint32
-		public static SteamAPICallCompleted_t FromPointer( IntPtr p ) { return new SteamAPICallCompleted_t(); }
+		public static SteamAPICallCompleted_t FromPointer( IntPtr p ) { return (SteamAPICallCompleted_t) Marshal.PtrToStructure( p, typeof(SteamAPICallCompleted_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -961,7 +975,7 @@ namespace SteamNative
 	public struct CheckFileSignature_t
 	{
 		public CheckFileSignature m_eCheckFileSignature; // enum ECheckFileSignature
-		public static CheckFileSignature_t FromPointer( IntPtr p ) { return new CheckFileSignature_t(); }
+		public static CheckFileSignature_t FromPointer( IntPtr p ) { return (CheckFileSignature_t) Marshal.PtrToStructure( p, typeof(CheckFileSignature_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -984,13 +998,15 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct GamepadTextInputDismissed_t
 	{
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bSubmitted; // _Bool
 		public uint m_unSubmittedText; // uint32
-		public static GamepadTextInputDismissed_t FromPointer( IntPtr p ) { return new GamepadTextInputDismissed_t(); }
+		public static GamepadTextInputDismissed_t FromPointer( IntPtr p ) { return (GamepadTextInputDismissed_t) Marshal.PtrToStructure( p, typeof(GamepadTextInputDismissed_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bSubmitted; // _Bool
 			public uint m_unSubmittedText; // uint32
 			
@@ -1015,7 +1031,7 @@ namespace SteamNative
 		public string m_szKey; // char [256]
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 		public string m_szValue; // char [256]
-		public static MatchMakingKeyValuePair_t FromPointer( IntPtr p ) { return new MatchMakingKeyValuePair_t(); }
+		public static MatchMakingKeyValuePair_t FromPointer( IntPtr p ) { return (MatchMakingKeyValuePair_t) Marshal.PtrToStructure( p, typeof(MatchMakingKeyValuePair_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -1045,7 +1061,7 @@ namespace SteamNative
 		public ushort m_usConnectionPort; // uint16
 		public ushort m_usQueryPort; // uint16
 		public uint m_unIP; // uint32
-		public static servernetadr_t FromPointer( IntPtr p ) { return new servernetadr_t(); }
+		public static servernetadr_t FromPointer( IntPtr p ) { return (servernetadr_t) Marshal.PtrToStructure( p, typeof(servernetadr_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -1069,12 +1085,14 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct gameserveritem_t
 	{
 		public servernetadr_t m_NetAdr; // class servernetadr_t
 		public int m_nPing; // int
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bHadSuccessfulResponse; // _Bool
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bDoNotRefresh; // _Bool
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
 		public string m_szGameDir; // char [32]
@@ -1086,7 +1104,9 @@ namespace SteamNative
 		public int m_nPlayers; // int
 		public int m_nMaxPlayers; // int
 		public int m_nBotPlayers; // int
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bPassword; // _Bool
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bSecure; // _Bool
 		public uint m_ulTimeLastPlayed; // uint32
 		public int m_nServerVersion; // int
@@ -1095,14 +1115,16 @@ namespace SteamNative
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
 		public string m_szGameTags; // char [128]
 		public ulong m_steamID; // class CSteamID
-		public static gameserveritem_t FromPointer( IntPtr p ) { return new gameserveritem_t(); }
+		public static gameserveritem_t FromPointer( IntPtr p ) { return (gameserveritem_t) Marshal.PtrToStructure( p, typeof(gameserveritem_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public servernetadr_t m_NetAdr; // class servernetadr_t
 			public int m_nPing; // int
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bHadSuccessfulResponse; // _Bool
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bDoNotRefresh; // _Bool
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
 			public string m_szGameDir; // char [32]
@@ -1114,7 +1136,9 @@ namespace SteamNative
 			public int m_nPlayers; // int
 			public int m_nMaxPlayers; // int
 			public int m_nBotPlayers; // int
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bPassword; // _Bool
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bSecure; // _Bool
 			public uint m_ulTimeLastPlayed; // uint32
 			public int m_nServerVersion; // int
@@ -1162,9 +1186,10 @@ namespace SteamNative
 		public uint m_nConnPort; // uint32
 		public uint m_nAppID; // uint32
 		public uint m_nFlags; // uint32
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bAdd; // _Bool
 		public uint m_unAccountId; // AccountID_t
-		public static FavoritesListChanged_t FromPointer( IntPtr p ) { return new FavoritesListChanged_t(); }
+		public static FavoritesListChanged_t FromPointer( IntPtr p ) { return (FavoritesListChanged_t) Marshal.PtrToStructure( p, typeof(FavoritesListChanged_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -1174,6 +1199,7 @@ namespace SteamNative
 			public uint m_nConnPort; // uint32
 			public uint m_nAppID; // uint32
 			public uint m_nFlags; // uint32
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bAdd; // _Bool
 			public uint m_unAccountId; // AccountID_t
 			
@@ -1202,7 +1228,7 @@ namespace SteamNative
 		public ulong m_ulSteamIDUser; // uint64
 		public ulong m_ulSteamIDLobby; // uint64
 		public ulong m_ulGameID; // uint64
-		public static LobbyInvite_t FromPointer( IntPtr p ) { return new LobbyInvite_t(); }
+		public static LobbyInvite_t FromPointer( IntPtr p ) { return (LobbyInvite_t) Marshal.PtrToStructure( p, typeof(LobbyInvite_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -1231,15 +1257,17 @@ namespace SteamNative
 	{
 		public ulong m_ulSteamIDLobby; // uint64
 		public uint m_rgfChatPermissions; // uint32
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bLocked; // _Bool
 		public uint m_EChatRoomEnterResponse; // uint32
-		public static LobbyEnter_t FromPointer( IntPtr p ) { return new LobbyEnter_t(); }
+		public static LobbyEnter_t FromPointer( IntPtr p ) { return (LobbyEnter_t) Marshal.PtrToStructure( p, typeof(LobbyEnter_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong m_ulSteamIDLobby; // uint64
 			public uint m_rgfChatPermissions; // uint32
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bLocked; // _Bool
 			public uint m_EChatRoomEnterResponse; // uint32
 			
@@ -1265,7 +1293,7 @@ namespace SteamNative
 		public ulong m_ulSteamIDLobby; // uint64
 		public ulong m_ulSteamIDMember; // uint64
 		public byte m_bSuccess; // uint8
-		public static LobbyDataUpdate_t FromPointer( IntPtr p ) { return new LobbyDataUpdate_t(); }
+		public static LobbyDataUpdate_t FromPointer( IntPtr p ) { return (LobbyDataUpdate_t) Marshal.PtrToStructure( p, typeof(LobbyDataUpdate_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -1296,7 +1324,7 @@ namespace SteamNative
 		public ulong m_ulSteamIDUserChanged; // uint64
 		public ulong m_ulSteamIDMakingChange; // uint64
 		public uint m_rgfChatMemberStateChange; // uint32
-		public static LobbyChatUpdate_t FromPointer( IntPtr p ) { return new LobbyChatUpdate_t(); }
+		public static LobbyChatUpdate_t FromPointer( IntPtr p ) { return (LobbyChatUpdate_t) Marshal.PtrToStructure( p, typeof(LobbyChatUpdate_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -1329,7 +1357,7 @@ namespace SteamNative
 		public ulong m_ulSteamIDUser; // uint64
 		public byte m_eChatEntryType; // uint8
 		public uint m_iChatID; // uint32
-		public static LobbyChatMsg_t FromPointer( IntPtr p ) { return new LobbyChatMsg_t(); }
+		public static LobbyChatMsg_t FromPointer( IntPtr p ) { return (LobbyChatMsg_t) Marshal.PtrToStructure( p, typeof(LobbyChatMsg_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -1362,7 +1390,7 @@ namespace SteamNative
 		public ulong m_ulSteamIDGameServer; // uint64
 		public uint m_unIP; // uint32
 		public ushort m_usPort; // uint16
-		public static LobbyGameCreated_t FromPointer( IntPtr p ) { return new LobbyGameCreated_t(); }
+		public static LobbyGameCreated_t FromPointer( IntPtr p ) { return (LobbyGameCreated_t) Marshal.PtrToStructure( p, typeof(LobbyGameCreated_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -1392,7 +1420,7 @@ namespace SteamNative
 	public struct LobbyMatchList_t
 	{
 		public uint m_nLobbiesMatching; // uint32
-		public static LobbyMatchList_t FromPointer( IntPtr p ) { return new LobbyMatchList_t(); }
+		public static LobbyMatchList_t FromPointer( IntPtr p ) { return (LobbyMatchList_t) Marshal.PtrToStructure( p, typeof(LobbyMatchList_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -1418,7 +1446,7 @@ namespace SteamNative
 		public ulong m_ulSteamIDLobby; // uint64
 		public ulong m_ulSteamIDAdmin; // uint64
 		public byte m_bKickedDueToDisconnect; // uint8
-		public static LobbyKicked_t FromPointer( IntPtr p ) { return new LobbyKicked_t(); }
+		public static LobbyKicked_t FromPointer( IntPtr p ) { return (LobbyKicked_t) Marshal.PtrToStructure( p, typeof(LobbyKicked_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -1447,7 +1475,7 @@ namespace SteamNative
 	{
 		public Result m_eResult; // enum EResult
 		public ulong m_ulSteamIDLobby; // uint64
-		public static LobbyCreated_t FromPointer( IntPtr p ) { return new LobbyCreated_t(); }
+		public static LobbyCreated_t FromPointer( IntPtr p ) { return (LobbyCreated_t) Marshal.PtrToStructure( p, typeof(LobbyCreated_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -1469,16 +1497,18 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct PSNGameBootInviteResult_t
 	{
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bGameBootInviteExists; // _Bool
 		public ulong m_steamIDLobby; // class CSteamID
-		public static PSNGameBootInviteResult_t FromPointer( IntPtr p ) { return new PSNGameBootInviteResult_t(); }
+		public static PSNGameBootInviteResult_t FromPointer( IntPtr p ) { return (PSNGameBootInviteResult_t) Marshal.PtrToStructure( p, typeof(PSNGameBootInviteResult_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bGameBootInviteExists; // _Bool
 			public ulong m_steamIDLobby; // class CSteamID
 			
@@ -1500,7 +1530,7 @@ namespace SteamNative
 	public struct FavoritesListAccountsUpdated_t
 	{
 		public Result m_eResult; // enum EResult
-		public static FavoritesListAccountsUpdated_t FromPointer( IntPtr p ) { return new FavoritesListAccountsUpdated_t(); }
+		public static FavoritesListAccountsUpdated_t FromPointer( IntPtr p ) { return (FavoritesListAccountsUpdated_t) Marshal.PtrToStructure( p, typeof(FavoritesListAccountsUpdated_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -1525,7 +1555,7 @@ namespace SteamNative
 	{
 		public IntPtr m_ppStrings; // const char **
 		public int m_nNumStrings; // int32
-		public static SteamParamStringArray_t FromPointer( IntPtr p ) { return new SteamParamStringArray_t(); }
+		public static SteamParamStringArray_t FromPointer( IntPtr p ) { return (SteamParamStringArray_t) Marshal.PtrToStructure( p, typeof(SteamParamStringArray_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -1553,7 +1583,7 @@ namespace SteamNative
 		public uint m_nAppID; // AppId_t
 		public Result m_eResult; // enum EResult
 		public int m_unNumDownloads; // int
-		public static RemoteStorageAppSyncedClient_t FromPointer( IntPtr p ) { return new RemoteStorageAppSyncedClient_t(); }
+		public static RemoteStorageAppSyncedClient_t FromPointer( IntPtr p ) { return (RemoteStorageAppSyncedClient_t) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncedClient_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -1583,7 +1613,7 @@ namespace SteamNative
 		public uint m_nAppID; // AppId_t
 		public Result m_eResult; // enum EResult
 		public int m_unNumUploads; // int
-		public static RemoteStorageAppSyncedServer_t FromPointer( IntPtr p ) { return new RemoteStorageAppSyncedServer_t(); }
+		public static RemoteStorageAppSyncedServer_t FromPointer( IntPtr p ) { return (RemoteStorageAppSyncedServer_t) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncedServer_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -1615,8 +1645,9 @@ namespace SteamNative
 		public uint m_nAppID; // AppId_t
 		public uint m_uBytesTransferredThisChunk; // uint32
 		public double m_dAppPercentComplete; // double
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bUploading; // _Bool
-		public static RemoteStorageAppSyncProgress_t FromPointer( IntPtr p ) { return new RemoteStorageAppSyncProgress_t(); }
+		public static RemoteStorageAppSyncProgress_t FromPointer( IntPtr p ) { return (RemoteStorageAppSyncProgress_t) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncProgress_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -1626,6 +1657,7 @@ namespace SteamNative
 			public uint m_nAppID; // AppId_t
 			public uint m_uBytesTransferredThisChunk; // uint32
 			public double m_dAppPercentComplete; // double
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bUploading; // _Bool
 			
 			public RemoteStorageAppSyncProgress_t Get
@@ -1650,7 +1682,7 @@ namespace SteamNative
 	{
 		public uint m_nAppID; // AppId_t
 		public Result m_eResult; // enum EResult
-		public static RemoteStorageAppSyncStatusCheck_t FromPointer( IntPtr p ) { return new RemoteStorageAppSyncStatusCheck_t(); }
+		public static RemoteStorageAppSyncStatusCheck_t FromPointer( IntPtr p ) { return (RemoteStorageAppSyncStatusCheck_t) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncStatusCheck_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -1677,7 +1709,7 @@ namespace SteamNative
 	{
 		public uint m_nAppID; // AppId_t
 		public Result m_eResult; // enum EResult
-		public static RemoteStorageConflictResolution_t FromPointer( IntPtr p ) { return new RemoteStorageConflictResolution_t(); }
+		public static RemoteStorageConflictResolution_t FromPointer( IntPtr p ) { return (RemoteStorageConflictResolution_t) Marshal.PtrToStructure( p, typeof(RemoteStorageConflictResolution_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -1706,7 +1738,7 @@ namespace SteamNative
 		public ulong m_hFile; // UGCHandle_t
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
 		public string m_rgchFilename; // char [260]
-		public static RemoteStorageFileShareResult_t FromPointer( IntPtr p ) { return new RemoteStorageFileShareResult_t(); }
+		public static RemoteStorageFileShareResult_t FromPointer( IntPtr p ) { return (RemoteStorageFileShareResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageFileShareResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -1736,14 +1768,16 @@ namespace SteamNative
 	{
 		public Result m_eResult; // enum EResult
 		public ulong m_nPublishedFileId; // PublishedFileId_t
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bUserNeedsToAcceptWorkshopLegalAgreement; // _Bool
-		public static RemoteStoragePublishFileResult_t FromPointer( IntPtr p ) { return new RemoteStoragePublishFileResult_t(); }
+		public static RemoteStoragePublishFileResult_t FromPointer( IntPtr p ) { return (RemoteStoragePublishFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishFileResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public Result m_eResult; // enum EResult
 			public ulong m_nPublishedFileId; // PublishedFileId_t
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bUserNeedsToAcceptWorkshopLegalAgreement; // _Bool
 			
 			public RemoteStoragePublishFileResult_t Get
@@ -1766,7 +1800,7 @@ namespace SteamNative
 	{
 		public Result m_eResult; // enum EResult
 		public ulong m_nPublishedFileId; // PublishedFileId_t
-		public static RemoteStorageDeletePublishedFileResult_t FromPointer( IntPtr p ) { return new RemoteStorageDeletePublishedFileResult_t(); }
+		public static RemoteStorageDeletePublishedFileResult_t FromPointer( IntPtr p ) { return (RemoteStorageDeletePublishedFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageDeletePublishedFileResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -1796,7 +1830,7 @@ namespace SteamNative
 		public int m_nTotalResultCount; // int32
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
 		public ulong[] m_rgPublishedFileId; // PublishedFileId_t [50]
-		public static RemoteStorageEnumerateUserPublishedFilesResult_t FromPointer( IntPtr p ) { return new RemoteStorageEnumerateUserPublishedFilesResult_t(); }
+		public static RemoteStorageEnumerateUserPublishedFilesResult_t FromPointer( IntPtr p ) { return (RemoteStorageEnumerateUserPublishedFilesResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserPublishedFilesResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -1828,7 +1862,7 @@ namespace SteamNative
 	{
 		public Result m_eResult; // enum EResult
 		public ulong m_nPublishedFileId; // PublishedFileId_t
-		public static RemoteStorageSubscribePublishedFileResult_t FromPointer( IntPtr p ) { return new RemoteStorageSubscribePublishedFileResult_t(); }
+		public static RemoteStorageSubscribePublishedFileResult_t FromPointer( IntPtr p ) { return (RemoteStorageSubscribePublishedFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageSubscribePublishedFileResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -1860,7 +1894,7 @@ namespace SteamNative
 		public ulong[] m_rgPublishedFileId; // PublishedFileId_t [50]
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
 		public uint[] m_rgRTimeSubscribed; // uint32 [50]
-		public static RemoteStorageEnumerateUserSubscribedFilesResult_t FromPointer( IntPtr p ) { return new RemoteStorageEnumerateUserSubscribedFilesResult_t(); }
+		public static RemoteStorageEnumerateUserSubscribedFilesResult_t FromPointer( IntPtr p ) { return (RemoteStorageEnumerateUserSubscribedFilesResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserSubscribedFilesResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -1895,7 +1929,7 @@ namespace SteamNative
 	{
 		public Result m_eResult; // enum EResult
 		public ulong m_nPublishedFileId; // PublishedFileId_t
-		public static RemoteStorageUnsubscribePublishedFileResult_t FromPointer( IntPtr p ) { return new RemoteStorageUnsubscribePublishedFileResult_t(); }
+		public static RemoteStorageUnsubscribePublishedFileResult_t FromPointer( IntPtr p ) { return (RemoteStorageUnsubscribePublishedFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageUnsubscribePublishedFileResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -1922,14 +1956,16 @@ namespace SteamNative
 	{
 		public Result m_eResult; // enum EResult
 		public ulong m_nPublishedFileId; // PublishedFileId_t
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bUserNeedsToAcceptWorkshopLegalAgreement; // _Bool
-		public static RemoteStorageUpdatePublishedFileResult_t FromPointer( IntPtr p ) { return new RemoteStorageUpdatePublishedFileResult_t(); }
+		public static RemoteStorageUpdatePublishedFileResult_t FromPointer( IntPtr p ) { return (RemoteStorageUpdatePublishedFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageUpdatePublishedFileResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public Result m_eResult; // enum EResult
 			public ulong m_nPublishedFileId; // PublishedFileId_t
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bUserNeedsToAcceptWorkshopLegalAgreement; // _Bool
 			
 			public RemoteStorageUpdatePublishedFileResult_t Get
@@ -1957,7 +1993,7 @@ namespace SteamNative
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
 		public string m_pchFileName; // char [260]
 		public ulong m_ulSteamIDOwner; // uint64
-		public static RemoteStorageDownloadUGCResult_t FromPointer( IntPtr p ) { return new RemoteStorageDownloadUGCResult_t(); }
+		public static RemoteStorageDownloadUGCResult_t FromPointer( IntPtr p ) { return (RemoteStorageDownloadUGCResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageDownloadUGCResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -2005,9 +2041,11 @@ namespace SteamNative
 		public uint m_rtimeCreated; // uint32
 		public uint m_rtimeUpdated; // uint32
 		public RemoteStoragePublishedFileVisibility m_eVisibility; // enum ERemoteStoragePublishedFileVisibility
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bBanned; // _Bool
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1025)]
 		public string m_rgchTags; // char [1025]
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bTagsTruncated; // _Bool
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
 		public string m_pchFileName; // char [260]
@@ -2016,8 +2054,9 @@ namespace SteamNative
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 		public string m_rgchURL; // char [256]
 		public WorkshopFileType m_eFileType; // enum EWorkshopFileType
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bAcceptedForUse; // _Bool
-		public static RemoteStorageGetPublishedFileDetailsResult_t FromPointer( IntPtr p ) { return new RemoteStorageGetPublishedFileDetailsResult_t(); }
+		public static RemoteStorageGetPublishedFileDetailsResult_t FromPointer( IntPtr p ) { return (RemoteStorageGetPublishedFileDetailsResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageGetPublishedFileDetailsResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -2036,9 +2075,11 @@ namespace SteamNative
 			public uint m_rtimeCreated; // uint32
 			public uint m_rtimeUpdated; // uint32
 			public RemoteStoragePublishedFileVisibility m_eVisibility; // enum ERemoteStoragePublishedFileVisibility
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bBanned; // _Bool
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1025)]
 			public string m_rgchTags; // char [1025]
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bTagsTruncated; // _Bool
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
 			public string m_pchFileName; // char [260]
@@ -2047,6 +2088,7 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 			public string m_rgchURL; // char [256]
 			public WorkshopFileType m_eFileType; // enum EWorkshopFileType
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bAcceptedForUse; // _Bool
 			
 			public RemoteStorageGetPublishedFileDetailsResult_t Get
@@ -2094,7 +2136,7 @@ namespace SteamNative
 		public float[] m_rgScore; // float [50]
 		public uint m_nAppId; // AppId_t
 		public uint m_unStartIndex; // uint32
-		public static RemoteStorageEnumerateWorkshopFilesResult_t FromPointer( IntPtr p ) { return new RemoteStorageEnumerateWorkshopFilesResult_t(); }
+		public static RemoteStorageEnumerateWorkshopFilesResult_t FromPointer( IntPtr p ) { return (RemoteStorageEnumerateWorkshopFilesResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateWorkshopFilesResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -2137,7 +2179,7 @@ namespace SteamNative
 		public int m_nVotesAgainst; // int32
 		public int m_nReports; // int32
 		public float m_fScore; // float
-		public static RemoteStorageGetPublishedItemVoteDetailsResult_t FromPointer( IntPtr p ) { return new RemoteStorageGetPublishedItemVoteDetailsResult_t(); }
+		public static RemoteStorageGetPublishedItemVoteDetailsResult_t FromPointer( IntPtr p ) { return (RemoteStorageGetPublishedItemVoteDetailsResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageGetPublishedItemVoteDetailsResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -2172,7 +2214,7 @@ namespace SteamNative
 	{
 		public ulong m_nPublishedFileId; // PublishedFileId_t
 		public uint m_nAppID; // AppId_t
-		public static RemoteStoragePublishedFileSubscribed_t FromPointer( IntPtr p ) { return new RemoteStoragePublishedFileSubscribed_t(); }
+		public static RemoteStoragePublishedFileSubscribed_t FromPointer( IntPtr p ) { return (RemoteStoragePublishedFileSubscribed_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileSubscribed_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -2199,7 +2241,7 @@ namespace SteamNative
 	{
 		public ulong m_nPublishedFileId; // PublishedFileId_t
 		public uint m_nAppID; // AppId_t
-		public static RemoteStoragePublishedFileUnsubscribed_t FromPointer( IntPtr p ) { return new RemoteStoragePublishedFileUnsubscribed_t(); }
+		public static RemoteStoragePublishedFileUnsubscribed_t FromPointer( IntPtr p ) { return (RemoteStoragePublishedFileUnsubscribed_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileUnsubscribed_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -2226,7 +2268,7 @@ namespace SteamNative
 	{
 		public ulong m_nPublishedFileId; // PublishedFileId_t
 		public uint m_nAppID; // AppId_t
-		public static RemoteStoragePublishedFileDeleted_t FromPointer( IntPtr p ) { return new RemoteStoragePublishedFileDeleted_t(); }
+		public static RemoteStoragePublishedFileDeleted_t FromPointer( IntPtr p ) { return (RemoteStoragePublishedFileDeleted_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileDeleted_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -2253,7 +2295,7 @@ namespace SteamNative
 	{
 		public Result m_eResult; // enum EResult
 		public ulong m_nPublishedFileId; // PublishedFileId_t
-		public static RemoteStorageUpdateUserPublishedItemVoteResult_t FromPointer( IntPtr p ) { return new RemoteStorageUpdateUserPublishedItemVoteResult_t(); }
+		public static RemoteStorageUpdateUserPublishedItemVoteResult_t FromPointer( IntPtr p ) { return (RemoteStorageUpdateUserPublishedItemVoteResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageUpdateUserPublishedItemVoteResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -2281,7 +2323,7 @@ namespace SteamNative
 		public Result m_eResult; // enum EResult
 		public ulong m_nPublishedFileId; // PublishedFileId_t
 		public WorkshopVote m_eVote; // enum EWorkshopVote
-		public static RemoteStorageUserVoteDetails_t FromPointer( IntPtr p ) { return new RemoteStorageUserVoteDetails_t(); }
+		public static RemoteStorageUserVoteDetails_t FromPointer( IntPtr p ) { return (RemoteStorageUserVoteDetails_t) Marshal.PtrToStructure( p, typeof(RemoteStorageUserVoteDetails_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -2313,7 +2355,7 @@ namespace SteamNative
 		public int m_nTotalResultCount; // int32
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
 		public ulong[] m_rgPublishedFileId; // PublishedFileId_t [50]
-		public static RemoteStorageEnumerateUserSharedWorkshopFilesResult_t FromPointer( IntPtr p ) { return new RemoteStorageEnumerateUserSharedWorkshopFilesResult_t(); }
+		public static RemoteStorageEnumerateUserSharedWorkshopFilesResult_t FromPointer( IntPtr p ) { return (RemoteStorageEnumerateUserSharedWorkshopFilesResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserSharedWorkshopFilesResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -2346,7 +2388,7 @@ namespace SteamNative
 		public Result m_eResult; // enum EResult
 		public ulong m_nPublishedFileId; // PublishedFileId_t
 		public WorkshopFileAction m_eAction; // enum EWorkshopFileAction
-		public static RemoteStorageSetUserPublishedFileActionResult_t FromPointer( IntPtr p ) { return new RemoteStorageSetUserPublishedFileActionResult_t(); }
+		public static RemoteStorageSetUserPublishedFileActionResult_t FromPointer( IntPtr p ) { return (RemoteStorageSetUserPublishedFileActionResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageSetUserPublishedFileActionResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -2381,7 +2423,7 @@ namespace SteamNative
 		public ulong[] m_rgPublishedFileId; // PublishedFileId_t [50]
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
 		public uint[] m_rgRTimeUpdated; // uint32 [50]
-		public static RemoteStorageEnumeratePublishedFilesByUserActionResult_t FromPointer( IntPtr p ) { return new RemoteStorageEnumeratePublishedFilesByUserActionResult_t(); }
+		public static RemoteStorageEnumeratePublishedFilesByUserActionResult_t FromPointer( IntPtr p ) { return (RemoteStorageEnumeratePublishedFilesByUserActionResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumeratePublishedFilesByUserActionResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -2417,13 +2459,15 @@ namespace SteamNative
 	public struct RemoteStoragePublishFileProgress_t
 	{
 		public double m_dPercentFile; // double
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bPreview; // _Bool
-		public static RemoteStoragePublishFileProgress_t FromPointer( IntPtr p ) { return new RemoteStoragePublishFileProgress_t(); }
+		public static RemoteStoragePublishFileProgress_t FromPointer( IntPtr p ) { return (RemoteStoragePublishFileProgress_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishFileProgress_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public double m_dPercentFile; // double
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bPreview; // _Bool
 			
 			public RemoteStoragePublishFileProgress_t Get
@@ -2446,7 +2490,7 @@ namespace SteamNative
 		public ulong m_nPublishedFileId; // PublishedFileId_t
 		public uint m_nAppID; // AppId_t
 		public ulong m_ulUnused; // uint64
-		public static RemoteStoragePublishedFileUpdated_t FromPointer( IntPtr p ) { return new RemoteStoragePublishedFileUpdated_t(); }
+		public static RemoteStoragePublishedFileUpdated_t FromPointer( IntPtr p ) { return (RemoteStoragePublishedFileUpdated_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileUpdated_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -2474,7 +2518,7 @@ namespace SteamNative
 	public struct RemoteStorageFileWriteAsyncComplete_t
 	{
 		public Result m_eResult; // enum EResult
-		public static RemoteStorageFileWriteAsyncComplete_t FromPointer( IntPtr p ) { return new RemoteStorageFileWriteAsyncComplete_t(); }
+		public static RemoteStorageFileWriteAsyncComplete_t FromPointer( IntPtr p ) { return (RemoteStorageFileWriteAsyncComplete_t) Marshal.PtrToStructure( p, typeof(RemoteStorageFileWriteAsyncComplete_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -2501,7 +2545,7 @@ namespace SteamNative
 		public Result m_eResult; // enum EResult
 		public uint m_nOffset; // uint32
 		public uint m_cubRead; // uint32
-		public static RemoteStorageFileReadAsyncComplete_t FromPointer( IntPtr p ) { return new RemoteStorageFileReadAsyncComplete_t(); }
+		public static RemoteStorageFileReadAsyncComplete_t FromPointer( IntPtr p ) { return (RemoteStorageFileReadAsyncComplete_t) Marshal.PtrToStructure( p, typeof(RemoteStorageFileReadAsyncComplete_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -2527,7 +2571,7 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct LeaderboardEntry_t
 	{
 		public ulong m_steamIDUser; // class CSteamID
@@ -2535,9 +2579,9 @@ namespace SteamNative
 		public int m_nScore; // int32
 		public int m_cDetails; // int32
 		public ulong m_hUGC; // UGCHandle_t
-		public static LeaderboardEntry_t FromPointer( IntPtr p ) { return new LeaderboardEntry_t(); }
+		public static LeaderboardEntry_t FromPointer( IntPtr p ) { return (LeaderboardEntry_t) Marshal.PtrToStructure( p, typeof(LeaderboardEntry_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong m_steamIDUser; // class CSteamID
@@ -2563,15 +2607,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct UserStatsReceived_t
 	{
 		public ulong m_nGameID; // uint64
 		public Result m_eResult; // enum EResult
 		public ulong m_steamIDUser; // class CSteamID
-		public static UserStatsReceived_t FromPointer( IntPtr p ) { return new UserStatsReceived_t(); }
+		public static UserStatsReceived_t FromPointer( IntPtr p ) { return (UserStatsReceived_t) Marshal.PtrToStructure( p, typeof(UserStatsReceived_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong m_nGameID; // uint64
@@ -2598,7 +2642,7 @@ namespace SteamNative
 	{
 		public ulong m_nGameID; // uint64
 		public Result m_eResult; // enum EResult
-		public static UserStatsStored_t FromPointer( IntPtr p ) { return new UserStatsStored_t(); }
+		public static UserStatsStored_t FromPointer( IntPtr p ) { return (UserStatsStored_t) Marshal.PtrToStructure( p, typeof(UserStatsStored_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -2624,17 +2668,19 @@ namespace SteamNative
 	public struct UserAchievementStored_t
 	{
 		public ulong m_nGameID; // uint64
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bGroupAchievement; // _Bool
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
 		public string m_rgchAchievementName; // char [128]
 		public uint m_nCurProgress; // uint32
 		public uint m_nMaxProgress; // uint32
-		public static UserAchievementStored_t FromPointer( IntPtr p ) { return new UserAchievementStored_t(); }
+		public static UserAchievementStored_t FromPointer( IntPtr p ) { return (UserAchievementStored_t) Marshal.PtrToStructure( p, typeof(UserAchievementStored_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong m_nGameID; // uint64
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bGroupAchievement; // _Bool
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
 			public string m_rgchAchievementName; // char [128]
@@ -2663,7 +2709,7 @@ namespace SteamNative
 	{
 		public ulong m_hSteamLeaderboard; // SteamLeaderboard_t
 		public byte m_bLeaderboardFound; // uint8
-		public static LeaderboardFindResult_t FromPointer( IntPtr p ) { return new LeaderboardFindResult_t(); }
+		public static LeaderboardFindResult_t FromPointer( IntPtr p ) { return (LeaderboardFindResult_t) Marshal.PtrToStructure( p, typeof(LeaderboardFindResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -2691,7 +2737,7 @@ namespace SteamNative
 		public ulong m_hSteamLeaderboard; // SteamLeaderboard_t
 		public ulong m_hSteamLeaderboardEntries; // SteamLeaderboardEntries_t
 		public int m_cEntryCount; // int
-		public static LeaderboardScoresDownloaded_t FromPointer( IntPtr p ) { return new LeaderboardScoresDownloaded_t(); }
+		public static LeaderboardScoresDownloaded_t FromPointer( IntPtr p ) { return (LeaderboardScoresDownloaded_t) Marshal.PtrToStructure( p, typeof(LeaderboardScoresDownloaded_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -2724,7 +2770,7 @@ namespace SteamNative
 		public byte m_bScoreChanged; // uint8
 		public int m_nGlobalRankNew; // int
 		public int m_nGlobalRankPrevious; // int
-		public static LeaderboardScoreUploaded_t FromPointer( IntPtr p ) { return new LeaderboardScoreUploaded_t(); }
+		public static LeaderboardScoreUploaded_t FromPointer( IntPtr p ) { return (LeaderboardScoreUploaded_t) Marshal.PtrToStructure( p, typeof(LeaderboardScoreUploaded_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -2759,7 +2805,7 @@ namespace SteamNative
 	{
 		public byte m_bSuccess; // uint8
 		public int m_cPlayers; // int32
-		public static NumberOfCurrentPlayers_t FromPointer( IntPtr p ) { return new NumberOfCurrentPlayers_t(); }
+		public static NumberOfCurrentPlayers_t FromPointer( IntPtr p ) { return (NumberOfCurrentPlayers_t) Marshal.PtrToStructure( p, typeof(NumberOfCurrentPlayers_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -2781,13 +2827,13 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct UserStatsUnloaded_t
 	{
 		public ulong m_steamIDUser; // class CSteamID
-		public static UserStatsUnloaded_t FromPointer( IntPtr p ) { return new UserStatsUnloaded_t(); }
+		public static UserStatsUnloaded_t FromPointer( IntPtr p ) { return (UserStatsUnloaded_t) Marshal.PtrToStructure( p, typeof(UserStatsUnloaded_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong m_steamIDUser; // class CSteamID
@@ -2811,9 +2857,10 @@ namespace SteamNative
 		public ulong m_nGameID; // class CGameID
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
 		public string m_rgchAchievementName; // char [128]
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bAchieved; // _Bool
 		public int m_nIconHandle; // int
-		public static UserAchievementIconFetched_t FromPointer( IntPtr p ) { return new UserAchievementIconFetched_t(); }
+		public static UserAchievementIconFetched_t FromPointer( IntPtr p ) { return (UserAchievementIconFetched_t) Marshal.PtrToStructure( p, typeof(UserAchievementIconFetched_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -2821,6 +2868,7 @@ namespace SteamNative
 			public ulong m_nGameID; // class CGameID
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
 			public string m_rgchAchievementName; // char [128]
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bAchieved; // _Bool
 			public int m_nIconHandle; // int
 			
@@ -2845,7 +2893,7 @@ namespace SteamNative
 	{
 		public ulong m_nGameID; // uint64
 		public Result m_eResult; // enum EResult
-		public static GlobalAchievementPercentagesReady_t FromPointer( IntPtr p ) { return new GlobalAchievementPercentagesReady_t(); }
+		public static GlobalAchievementPercentagesReady_t FromPointer( IntPtr p ) { return (GlobalAchievementPercentagesReady_t) Marshal.PtrToStructure( p, typeof(GlobalAchievementPercentagesReady_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -2872,7 +2920,7 @@ namespace SteamNative
 	{
 		public Result m_eResult; // enum EResult
 		public ulong m_hSteamLeaderboard; // SteamLeaderboard_t
-		public static LeaderboardUGCSet_t FromPointer( IntPtr p ) { return new LeaderboardUGCSet_t(); }
+		public static LeaderboardUGCSet_t FromPointer( IntPtr p ) { return (LeaderboardUGCSet_t) Marshal.PtrToStructure( p, typeof(LeaderboardUGCSet_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -2900,7 +2948,7 @@ namespace SteamNative
 		public ulong m_nGameID; // uint64
 		public Result m_eResult; // enum EResult
 		public ulong m_ulRequiredDiskSpace; // uint64
-		public static PS3TrophiesInstalled_t FromPointer( IntPtr p ) { return new PS3TrophiesInstalled_t(); }
+		public static PS3TrophiesInstalled_t FromPointer( IntPtr p ) { return (PS3TrophiesInstalled_t) Marshal.PtrToStructure( p, typeof(PS3TrophiesInstalled_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -2929,7 +2977,7 @@ namespace SteamNative
 	{
 		public ulong m_nGameID; // uint64
 		public Result m_eResult; // enum EResult
-		public static GlobalStatsReceived_t FromPointer( IntPtr p ) { return new GlobalStatsReceived_t(); }
+		public static GlobalStatsReceived_t FromPointer( IntPtr p ) { return (GlobalStatsReceived_t) Marshal.PtrToStructure( p, typeof(GlobalStatsReceived_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -2955,7 +3003,7 @@ namespace SteamNative
 	public struct DlcInstalled_t
 	{
 		public uint m_nAppID; // AppId_t
-		public static DlcInstalled_t FromPointer( IntPtr p ) { return new DlcInstalled_t(); }
+		public static DlcInstalled_t FromPointer( IntPtr p ) { return (DlcInstalled_t) Marshal.PtrToStructure( p, typeof(DlcInstalled_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -2980,7 +3028,7 @@ namespace SteamNative
 	{
 		public RegisterActivationCodeResult m_eResult; // enum ERegisterActivationCodeResult
 		public uint m_unPackageRegistered; // uint32
-		public static RegisterActivationCodeResponse_t FromPointer( IntPtr p ) { return new RegisterActivationCodeResponse_t(); }
+		public static RegisterActivationCodeResponse_t FromPointer( IntPtr p ) { return (RegisterActivationCodeResponse_t) Marshal.PtrToStructure( p, typeof(RegisterActivationCodeResponse_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -3010,7 +3058,7 @@ namespace SteamNative
 		public uint m_cchKeyLength; // uint32
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 240)]
 		public string m_rgchKey; // char [240]
-		public static AppProofOfPurchaseKeyResponse_t FromPointer( IntPtr p ) { return new AppProofOfPurchaseKeyResponse_t(); }
+		public static AppProofOfPurchaseKeyResponse_t FromPointer( IntPtr p ) { return (AppProofOfPurchaseKeyResponse_t) Marshal.PtrToStructure( p, typeof(AppProofOfPurchaseKeyResponse_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -3048,7 +3096,7 @@ namespace SteamNative
 		public int m_nPacketsQueuedForSend; // int32
 		public uint m_nRemoteIP; // uint32
 		public ushort m_nRemotePort; // uint16
-		public static P2PSessionState_t FromPointer( IntPtr p ) { return new P2PSessionState_t(); }
+		public static P2PSessionState_t FromPointer( IntPtr p ) { return (P2PSessionState_t) Marshal.PtrToStructure( p, typeof(P2PSessionState_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -3082,13 +3130,13 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct P2PSessionRequest_t
 	{
 		public ulong m_steamIDRemote; // class CSteamID
-		public static P2PSessionRequest_t FromPointer( IntPtr p ) { return new P2PSessionRequest_t(); }
+		public static P2PSessionRequest_t FromPointer( IntPtr p ) { return (P2PSessionRequest_t) Marshal.PtrToStructure( p, typeof(P2PSessionRequest_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong m_steamIDRemote; // class CSteamID
@@ -3106,14 +3154,14 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct P2PSessionConnectFail_t
 	{
 		public ulong m_steamIDRemote; // class CSteamID
 		public byte m_eP2PSessionError; // uint8
-		public static P2PSessionConnectFail_t FromPointer( IntPtr p ) { return new P2PSessionConnectFail_t(); }
+		public static P2PSessionConnectFail_t FromPointer( IntPtr p ) { return (P2PSessionConnectFail_t) Marshal.PtrToStructure( p, typeof(P2PSessionConnectFail_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong m_steamIDRemote; // class CSteamID
@@ -3133,16 +3181,16 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct SocketStatusCallback_t
 	{
 		public uint m_hSocket; // SNetSocket_t
 		public uint m_hListenSocket; // SNetListenSocket_t
 		public ulong m_steamIDRemote; // class CSteamID
 		public int m_eSNetSocketState; // int
-		public static SocketStatusCallback_t FromPointer( IntPtr p ) { return new SocketStatusCallback_t(); }
+		public static SocketStatusCallback_t FromPointer( IntPtr p ) { return (SocketStatusCallback_t) Marshal.PtrToStructure( p, typeof(SocketStatusCallback_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public uint m_hSocket; // SNetSocket_t
@@ -3171,7 +3219,7 @@ namespace SteamNative
 	{
 		public uint m_hLocal; // ScreenshotHandle
 		public Result m_eResult; // enum EResult
-		public static ScreenshotReady_t FromPointer( IntPtr p ) { return new ScreenshotReady_t(); }
+		public static ScreenshotReady_t FromPointer( IntPtr p ) { return (ScreenshotReady_t) Marshal.PtrToStructure( p, typeof(ScreenshotReady_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -3197,7 +3245,7 @@ namespace SteamNative
 	public struct VolumeHasChanged_t
 	{
 		public float m_flNewVolume; // float
-		public static VolumeHasChanged_t FromPointer( IntPtr p ) { return new VolumeHasChanged_t(); }
+		public static VolumeHasChanged_t FromPointer( IntPtr p ) { return (VolumeHasChanged_t) Marshal.PtrToStructure( p, typeof(VolumeHasChanged_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -3220,12 +3268,14 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct MusicPlayerWantsShuffled_t
 	{
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bShuffled; // _Bool
-		public static MusicPlayerWantsShuffled_t FromPointer( IntPtr p ) { return new MusicPlayerWantsShuffled_t(); }
+		public static MusicPlayerWantsShuffled_t FromPointer( IntPtr p ) { return (MusicPlayerWantsShuffled_t) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsShuffled_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bShuffled; // _Bool
 			
 			public MusicPlayerWantsShuffled_t Get
@@ -3244,12 +3294,14 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct MusicPlayerWantsLooped_t
 	{
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bLooped; // _Bool
-		public static MusicPlayerWantsLooped_t FromPointer( IntPtr p ) { return new MusicPlayerWantsLooped_t(); }
+		public static MusicPlayerWantsLooped_t FromPointer( IntPtr p ) { return (MusicPlayerWantsLooped_t) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsLooped_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bLooped; // _Bool
 			
 			public MusicPlayerWantsLooped_t Get
@@ -3269,7 +3321,7 @@ namespace SteamNative
 	public struct MusicPlayerWantsVolume_t
 	{
 		public float m_flNewVolume; // float
-		public static MusicPlayerWantsVolume_t FromPointer( IntPtr p ) { return new MusicPlayerWantsVolume_t(); }
+		public static MusicPlayerWantsVolume_t FromPointer( IntPtr p ) { return (MusicPlayerWantsVolume_t) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsVolume_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -3293,7 +3345,7 @@ namespace SteamNative
 	public struct MusicPlayerSelectsQueueEntry_t
 	{
 		public int nID; // int
-		public static MusicPlayerSelectsQueueEntry_t FromPointer( IntPtr p ) { return new MusicPlayerSelectsQueueEntry_t(); }
+		public static MusicPlayerSelectsQueueEntry_t FromPointer( IntPtr p ) { return (MusicPlayerSelectsQueueEntry_t) Marshal.PtrToStructure( p, typeof(MusicPlayerSelectsQueueEntry_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -3317,7 +3369,7 @@ namespace SteamNative
 	public struct MusicPlayerSelectsPlaylistEntry_t
 	{
 		public int nID; // int
-		public static MusicPlayerSelectsPlaylistEntry_t FromPointer( IntPtr p ) { return new MusicPlayerSelectsPlaylistEntry_t(); }
+		public static MusicPlayerSelectsPlaylistEntry_t FromPointer( IntPtr p ) { return (MusicPlayerSelectsPlaylistEntry_t) Marshal.PtrToStructure( p, typeof(MusicPlayerSelectsPlaylistEntry_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -3341,7 +3393,7 @@ namespace SteamNative
 	public struct MusicPlayerWantsPlayingRepeatStatus_t
 	{
 		public int m_nPlayingRepeatStatus; // int
-		public static MusicPlayerWantsPlayingRepeatStatus_t FromPointer( IntPtr p ) { return new MusicPlayerWantsPlayingRepeatStatus_t(); }
+		public static MusicPlayerWantsPlayingRepeatStatus_t FromPointer( IntPtr p ) { return (MusicPlayerWantsPlayingRepeatStatus_t) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsPlayingRepeatStatus_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -3366,16 +3418,18 @@ namespace SteamNative
 	{
 		public uint m_hRequest; // HTTPRequestHandle
 		public ulong m_ulContextValue; // uint64
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bRequestSuccessful; // _Bool
 		public HTTPStatusCode m_eStatusCode; // enum EHTTPStatusCode
 		public uint m_unBodySize; // uint32
-		public static HTTPRequestCompleted_t FromPointer( IntPtr p ) { return new HTTPRequestCompleted_t(); }
+		public static HTTPRequestCompleted_t FromPointer( IntPtr p ) { return (HTTPRequestCompleted_t) Marshal.PtrToStructure( p, typeof(HTTPRequestCompleted_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public uint m_hRequest; // HTTPRequestHandle
 			public ulong m_ulContextValue; // uint64
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bRequestSuccessful; // _Bool
 			public HTTPStatusCode m_eStatusCode; // enum EHTTPStatusCode
 			public uint m_unBodySize; // uint32
@@ -3402,7 +3456,7 @@ namespace SteamNative
 	{
 		public uint m_hRequest; // HTTPRequestHandle
 		public ulong m_ulContextValue; // uint64
-		public static HTTPRequestHeadersReceived_t FromPointer( IntPtr p ) { return new HTTPRequestHeadersReceived_t(); }
+		public static HTTPRequestHeadersReceived_t FromPointer( IntPtr p ) { return (HTTPRequestHeadersReceived_t) Marshal.PtrToStructure( p, typeof(HTTPRequestHeadersReceived_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -3431,7 +3485,7 @@ namespace SteamNative
 		public ulong m_ulContextValue; // uint64
 		public uint m_cOffset; // uint32
 		public uint m_cBytesReceived; // uint32
-		public static HTTPRequestDataReceived_t FromPointer( IntPtr p ) { return new HTTPRequestDataReceived_t(); }
+		public static HTTPRequestDataReceived_t FromPointer( IntPtr p ) { return (HTTPRequestDataReceived_t) Marshal.PtrToStructure( p, typeof(HTTPRequestDataReceived_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -3464,7 +3518,7 @@ namespace SteamNative
 		public ulong m_unContext; // uint64
 		public Result m_eResult; // enum EResult
 		public uint m_unResponseSize; // uint32
-		public static SteamUnifiedMessagesSendMethodResult_t FromPointer( IntPtr p ) { return new SteamUnifiedMessagesSendMethodResult_t(); }
+		public static SteamUnifiedMessagesSendMethodResult_t FromPointer( IntPtr p ) { return (SteamUnifiedMessagesSendMethodResult_t) Marshal.PtrToStructure( p, typeof(SteamUnifiedMessagesSendMethodResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -3496,8 +3550,9 @@ namespace SteamNative
 		public ControllerSourceMode eMode; // enum EControllerSourceMode
 		public float x; // float
 		public float y; // float
+		[MarshalAs(UnmanagedType.I1)]
 		public bool bActive; // _Bool
-		public static ControllerAnalogActionData_t FromPointer( IntPtr p ) { return new ControllerAnalogActionData_t(); }
+		public static ControllerAnalogActionData_t FromPointer( IntPtr p ) { return (ControllerAnalogActionData_t) Marshal.PtrToStructure( p, typeof(ControllerAnalogActionData_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -3505,6 +3560,7 @@ namespace SteamNative
 			public ControllerSourceMode eMode; // enum EControllerSourceMode
 			public float x; // float
 			public float y; // float
+			[MarshalAs(UnmanagedType.I1)]
 			public bool bActive; // _Bool
 			
 			public ControllerAnalogActionData_t Get
@@ -3526,14 +3582,18 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct ControllerDigitalActionData_t
 	{
+		[MarshalAs(UnmanagedType.I1)]
 		public bool bState; // _Bool
+		[MarshalAs(UnmanagedType.I1)]
 		public bool bActive; // _Bool
-		public static ControllerDigitalActionData_t FromPointer( IntPtr p ) { return new ControllerDigitalActionData_t(); }
+		public static ControllerDigitalActionData_t FromPointer( IntPtr p ) { return (ControllerDigitalActionData_t) Marshal.PtrToStructure( p, typeof(ControllerDigitalActionData_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
+			[MarshalAs(UnmanagedType.I1)]
 			public bool bState; // _Bool
+			[MarshalAs(UnmanagedType.I1)]
 			public bool bActive; // _Bool
 			
 			public ControllerDigitalActionData_t Get
@@ -3567,8 +3627,11 @@ namespace SteamNative
 		public uint m_rtimeUpdated; // uint32
 		public uint m_rtimeAddedToUserList; // uint32
 		public RemoteStoragePublishedFileVisibility m_eVisibility; // enum ERemoteStoragePublishedFileVisibility
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bBanned; // _Bool
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bAcceptedForUse; // _Bool
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bTagsTruncated; // _Bool
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1025)]
 		public string m_rgchTags; // char [1025]
@@ -3584,7 +3647,7 @@ namespace SteamNative
 		public uint m_unVotesDown; // uint32
 		public float m_flScore; // float
 		public uint m_unNumChildren; // uint32
-		public static SteamUGCDetails_t FromPointer( IntPtr p ) { return new SteamUGCDetails_t(); }
+		public static SteamUGCDetails_t FromPointer( IntPtr p ) { return (SteamUGCDetails_t) Marshal.PtrToStructure( p, typeof(SteamUGCDetails_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -3603,8 +3666,11 @@ namespace SteamNative
 			public uint m_rtimeUpdated; // uint32
 			public uint m_rtimeAddedToUserList; // uint32
 			public RemoteStoragePublishedFileVisibility m_eVisibility; // enum ERemoteStoragePublishedFileVisibility
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bBanned; // _Bool
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bAcceptedForUse; // _Bool
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bTagsTruncated; // _Bool
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1025)]
 			public string m_rgchTags; // char [1025]
@@ -3666,8 +3732,9 @@ namespace SteamNative
 		public Result m_eResult; // enum EResult
 		public uint m_unNumResultsReturned; // uint32
 		public uint m_unTotalMatchingResults; // uint32
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bCachedData; // _Bool
-		public static SteamUGCQueryCompleted_t FromPointer( IntPtr p ) { return new SteamUGCQueryCompleted_t(); }
+		public static SteamUGCQueryCompleted_t FromPointer( IntPtr p ) { return (SteamUGCQueryCompleted_t) Marshal.PtrToStructure( p, typeof(SteamUGCQueryCompleted_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -3676,6 +3743,7 @@ namespace SteamNative
 			public Result m_eResult; // enum EResult
 			public uint m_unNumResultsReturned; // uint32
 			public uint m_unTotalMatchingResults; // uint32
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bCachedData; // _Bool
 			
 			public SteamUGCQueryCompleted_t Get
@@ -3699,13 +3767,15 @@ namespace SteamNative
 	public struct SteamUGCRequestUGCDetailsResult_t
 	{
 		public SteamUGCDetails_t m_details; // struct SteamUGCDetails_t
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bCachedData; // _Bool
-		public static SteamUGCRequestUGCDetailsResult_t FromPointer( IntPtr p ) { return new SteamUGCRequestUGCDetailsResult_t(); }
+		public static SteamUGCRequestUGCDetailsResult_t FromPointer( IntPtr p ) { return (SteamUGCRequestUGCDetailsResult_t) Marshal.PtrToStructure( p, typeof(SteamUGCRequestUGCDetailsResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public SteamUGCDetails_t m_details; // struct SteamUGCDetails_t
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bCachedData; // _Bool
 			
 			public SteamUGCRequestUGCDetailsResult_t Get
@@ -3727,14 +3797,16 @@ namespace SteamNative
 	{
 		public Result m_eResult; // enum EResult
 		public ulong m_nPublishedFileId; // PublishedFileId_t
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bUserNeedsToAcceptWorkshopLegalAgreement; // _Bool
-		public static CreateItemResult_t FromPointer( IntPtr p ) { return new CreateItemResult_t(); }
+		public static CreateItemResult_t FromPointer( IntPtr p ) { return (CreateItemResult_t) Marshal.PtrToStructure( p, typeof(CreateItemResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public Result m_eResult; // enum EResult
 			public ulong m_nPublishedFileId; // PublishedFileId_t
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bUserNeedsToAcceptWorkshopLegalAgreement; // _Bool
 			
 			public CreateItemResult_t Get
@@ -3756,13 +3828,15 @@ namespace SteamNative
 	public struct SubmitItemUpdateResult_t
 	{
 		public Result m_eResult; // enum EResult
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bUserNeedsToAcceptWorkshopLegalAgreement; // _Bool
-		public static SubmitItemUpdateResult_t FromPointer( IntPtr p ) { return new SubmitItemUpdateResult_t(); }
+		public static SubmitItemUpdateResult_t FromPointer( IntPtr p ) { return (SubmitItemUpdateResult_t) Marshal.PtrToStructure( p, typeof(SubmitItemUpdateResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public Result m_eResult; // enum EResult
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bUserNeedsToAcceptWorkshopLegalAgreement; // _Bool
 			
 			public SubmitItemUpdateResult_t Get
@@ -3785,7 +3859,7 @@ namespace SteamNative
 		public uint m_unAppID; // AppId_t
 		public ulong m_nPublishedFileId; // PublishedFileId_t
 		public Result m_eResult; // enum EResult
-		public static DownloadItemResult_t FromPointer( IntPtr p ) { return new DownloadItemResult_t(); }
+		public static DownloadItemResult_t FromPointer( IntPtr p ) { return (DownloadItemResult_t) Marshal.PtrToStructure( p, typeof(DownloadItemResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -3814,14 +3888,16 @@ namespace SteamNative
 	{
 		public ulong m_nPublishedFileId; // PublishedFileId_t
 		public Result m_eResult; // enum EResult
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bWasAddRequest; // _Bool
-		public static UserFavoriteItemsListChanged_t FromPointer( IntPtr p ) { return new UserFavoriteItemsListChanged_t(); }
+		public static UserFavoriteItemsListChanged_t FromPointer( IntPtr p ) { return (UserFavoriteItemsListChanged_t) Marshal.PtrToStructure( p, typeof(UserFavoriteItemsListChanged_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong m_nPublishedFileId; // PublishedFileId_t
 			public Result m_eResult; // enum EResult
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bWasAddRequest; // _Bool
 			
 			public UserFavoriteItemsListChanged_t Get
@@ -3844,14 +3920,16 @@ namespace SteamNative
 	{
 		public ulong m_nPublishedFileId; // PublishedFileId_t
 		public Result m_eResult; // enum EResult
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bVoteUp; // _Bool
-		public static SetUserItemVoteResult_t FromPointer( IntPtr p ) { return new SetUserItemVoteResult_t(); }
+		public static SetUserItemVoteResult_t FromPointer( IntPtr p ) { return (SetUserItemVoteResult_t) Marshal.PtrToStructure( p, typeof(SetUserItemVoteResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong m_nPublishedFileId; // PublishedFileId_t
 			public Result m_eResult; // enum EResult
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bVoteUp; // _Bool
 			
 			public SetUserItemVoteResult_t Get
@@ -3874,18 +3952,24 @@ namespace SteamNative
 	{
 		public ulong m_nPublishedFileId; // PublishedFileId_t
 		public Result m_eResult; // enum EResult
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bVotedUp; // _Bool
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bVotedDown; // _Bool
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bVoteSkipped; // _Bool
-		public static GetUserItemVoteResult_t FromPointer( IntPtr p ) { return new GetUserItemVoteResult_t(); }
+		public static GetUserItemVoteResult_t FromPointer( IntPtr p ) { return (GetUserItemVoteResult_t) Marshal.PtrToStructure( p, typeof(GetUserItemVoteResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong m_nPublishedFileId; // PublishedFileId_t
 			public Result m_eResult; // enum EResult
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bVotedUp; // _Bool
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bVotedDown; // _Bool
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bVoteSkipped; // _Bool
 			
 			public GetUserItemVoteResult_t Get
@@ -3909,7 +3993,7 @@ namespace SteamNative
 	public struct SteamAppInstalled_t
 	{
 		public uint m_nAppID; // AppId_t
-		public static SteamAppInstalled_t FromPointer( IntPtr p ) { return new SteamAppInstalled_t(); }
+		public static SteamAppInstalled_t FromPointer( IntPtr p ) { return (SteamAppInstalled_t) Marshal.PtrToStructure( p, typeof(SteamAppInstalled_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -3933,7 +4017,7 @@ namespace SteamNative
 	public struct SteamAppUninstalled_t
 	{
 		public uint m_nAppID; // AppId_t
-		public static SteamAppUninstalled_t FromPointer( IntPtr p ) { return new SteamAppUninstalled_t(); }
+		public static SteamAppUninstalled_t FromPointer( IntPtr p ) { return (SteamAppUninstalled_t) Marshal.PtrToStructure( p, typeof(SteamAppUninstalled_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -3957,7 +4041,7 @@ namespace SteamNative
 	public struct HTML_BrowserReady_t
 	{
 		public uint unBrowserHandle; // HHTMLBrowser
-		public static HTML_BrowserReady_t FromPointer( IntPtr p ) { return new HTML_BrowserReady_t(); }
+		public static HTML_BrowserReady_t FromPointer( IntPtr p ) { return (HTML_BrowserReady_t) Marshal.PtrToStructure( p, typeof(HTML_BrowserReady_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -3992,7 +4076,7 @@ namespace SteamNative
 		public uint unScrollY; // uint32
 		public float flPageScale; // float
 		public uint unPageSerial; // uint32
-		public static HTML_NeedsPaint_t FromPointer( IntPtr p ) { return new HTML_NeedsPaint_t(); }
+		public static HTML_NeedsPaint_t FromPointer( IntPtr p ) { return (HTML_NeedsPaint_t) Marshal.PtrToStructure( p, typeof(HTML_NeedsPaint_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4041,8 +4125,9 @@ namespace SteamNative
 		public string pchURL; // const char *
 		public string pchTarget; // const char *
 		public string pchPostData; // const char *
+		[MarshalAs(UnmanagedType.I1)]
 		public bool bIsRedirect; // _Bool
-		public static HTML_StartRequest_t FromPointer( IntPtr p ) { return new HTML_StartRequest_t(); }
+		public static HTML_StartRequest_t FromPointer( IntPtr p ) { return (HTML_StartRequest_t) Marshal.PtrToStructure( p, typeof(HTML_StartRequest_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4051,6 +4136,7 @@ namespace SteamNative
 			public string pchURL; // const char *
 			public string pchTarget; // const char *
 			public string pchPostData; // const char *
+			[MarshalAs(UnmanagedType.I1)]
 			public bool bIsRedirect; // _Bool
 			
 			public HTML_StartRequest_t Get
@@ -4074,7 +4160,7 @@ namespace SteamNative
 	public struct HTML_CloseBrowser_t
 	{
 		public uint unBrowserHandle; // HHTMLBrowser
-		public static HTML_CloseBrowser_t FromPointer( IntPtr p ) { return new HTML_CloseBrowser_t(); }
+		public static HTML_CloseBrowser_t FromPointer( IntPtr p ) { return (HTML_CloseBrowser_t) Marshal.PtrToStructure( p, typeof(HTML_CloseBrowser_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4100,10 +4186,12 @@ namespace SteamNative
 		public uint unBrowserHandle; // HHTMLBrowser
 		public string pchURL; // const char *
 		public string pchPostData; // const char *
+		[MarshalAs(UnmanagedType.I1)]
 		public bool bIsRedirect; // _Bool
 		public string pchPageTitle; // const char *
+		[MarshalAs(UnmanagedType.I1)]
 		public bool bNewNavigation; // _Bool
-		public static HTML_URLChanged_t FromPointer( IntPtr p ) { return new HTML_URLChanged_t(); }
+		public static HTML_URLChanged_t FromPointer( IntPtr p ) { return (HTML_URLChanged_t) Marshal.PtrToStructure( p, typeof(HTML_URLChanged_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4111,8 +4199,10 @@ namespace SteamNative
 			public uint unBrowserHandle; // HHTMLBrowser
 			public string pchURL; // const char *
 			public string pchPostData; // const char *
+			[MarshalAs(UnmanagedType.I1)]
 			public bool bIsRedirect; // _Bool
 			public string pchPageTitle; // const char *
+			[MarshalAs(UnmanagedType.I1)]
 			public bool bNewNavigation; // _Bool
 			
 			public HTML_URLChanged_t Get
@@ -4139,7 +4229,7 @@ namespace SteamNative
 		public uint unBrowserHandle; // HHTMLBrowser
 		public string pchURL; // const char *
 		public string pchPageTitle; // const char *
-		public static HTML_FinishedRequest_t FromPointer( IntPtr p ) { return new HTML_FinishedRequest_t(); }
+		public static HTML_FinishedRequest_t FromPointer( IntPtr p ) { return (HTML_FinishedRequest_t) Marshal.PtrToStructure( p, typeof(HTML_FinishedRequest_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4168,7 +4258,7 @@ namespace SteamNative
 	{
 		public uint unBrowserHandle; // HHTMLBrowser
 		public string pchURL; // const char *
-		public static HTML_OpenLinkInNewTab_t FromPointer( IntPtr p ) { return new HTML_OpenLinkInNewTab_t(); }
+		public static HTML_OpenLinkInNewTab_t FromPointer( IntPtr p ) { return (HTML_OpenLinkInNewTab_t) Marshal.PtrToStructure( p, typeof(HTML_OpenLinkInNewTab_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4195,7 +4285,7 @@ namespace SteamNative
 	{
 		public uint unBrowserHandle; // HHTMLBrowser
 		public string pchTitle; // const char *
-		public static HTML_ChangedTitle_t FromPointer( IntPtr p ) { return new HTML_ChangedTitle_t(); }
+		public static HTML_ChangedTitle_t FromPointer( IntPtr p ) { return (HTML_ChangedTitle_t) Marshal.PtrToStructure( p, typeof(HTML_ChangedTitle_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4223,7 +4313,7 @@ namespace SteamNative
 		public uint unBrowserHandle; // HHTMLBrowser
 		public uint unResults; // uint32
 		public uint unCurrentMatch; // uint32
-		public static HTML_SearchResults_t FromPointer( IntPtr p ) { return new HTML_SearchResults_t(); }
+		public static HTML_SearchResults_t FromPointer( IntPtr p ) { return (HTML_SearchResults_t) Marshal.PtrToStructure( p, typeof(HTML_SearchResults_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4251,15 +4341,19 @@ namespace SteamNative
 	public struct HTML_CanGoBackAndForward_t
 	{
 		public uint unBrowserHandle; // HHTMLBrowser
+		[MarshalAs(UnmanagedType.I1)]
 		public bool bCanGoBack; // _Bool
+		[MarshalAs(UnmanagedType.I1)]
 		public bool bCanGoForward; // _Bool
-		public static HTML_CanGoBackAndForward_t FromPointer( IntPtr p ) { return new HTML_CanGoBackAndForward_t(); }
+		public static HTML_CanGoBackAndForward_t FromPointer( IntPtr p ) { return (HTML_CanGoBackAndForward_t) Marshal.PtrToStructure( p, typeof(HTML_CanGoBackAndForward_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public uint unBrowserHandle; // HHTMLBrowser
+			[MarshalAs(UnmanagedType.I1)]
 			public bool bCanGoBack; // _Bool
+			[MarshalAs(UnmanagedType.I1)]
 			public bool bCanGoForward; // _Bool
 			
 			public HTML_CanGoBackAndForward_t Get
@@ -4284,9 +4378,10 @@ namespace SteamNative
 		public uint unScrollMax; // uint32
 		public uint unScrollCurrent; // uint32
 		public float flPageScale; // float
+		[MarshalAs(UnmanagedType.I1)]
 		public bool bVisible; // _Bool
 		public uint unPageSize; // uint32
-		public static HTML_HorizontalScroll_t FromPointer( IntPtr p ) { return new HTML_HorizontalScroll_t(); }
+		public static HTML_HorizontalScroll_t FromPointer( IntPtr p ) { return (HTML_HorizontalScroll_t) Marshal.PtrToStructure( p, typeof(HTML_HorizontalScroll_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4295,6 +4390,7 @@ namespace SteamNative
 			public uint unScrollMax; // uint32
 			public uint unScrollCurrent; // uint32
 			public float flPageScale; // float
+			[MarshalAs(UnmanagedType.I1)]
 			public bool bVisible; // _Bool
 			public uint unPageSize; // uint32
 			
@@ -4323,9 +4419,10 @@ namespace SteamNative
 		public uint unScrollMax; // uint32
 		public uint unScrollCurrent; // uint32
 		public float flPageScale; // float
+		[MarshalAs(UnmanagedType.I1)]
 		public bool bVisible; // _Bool
 		public uint unPageSize; // uint32
-		public static HTML_VerticalScroll_t FromPointer( IntPtr p ) { return new HTML_VerticalScroll_t(); }
+		public static HTML_VerticalScroll_t FromPointer( IntPtr p ) { return (HTML_VerticalScroll_t) Marshal.PtrToStructure( p, typeof(HTML_VerticalScroll_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4334,6 +4431,7 @@ namespace SteamNative
 			public uint unScrollMax; // uint32
 			public uint unScrollCurrent; // uint32
 			public float flPageScale; // float
+			[MarshalAs(UnmanagedType.I1)]
 			public bool bVisible; // _Bool
 			public uint unPageSize; // uint32
 			
@@ -4362,9 +4460,11 @@ namespace SteamNative
 		public uint x; // uint32
 		public uint y; // uint32
 		public string pchURL; // const char *
+		[MarshalAs(UnmanagedType.I1)]
 		public bool bInput; // _Bool
+		[MarshalAs(UnmanagedType.I1)]
 		public bool bLiveLink; // _Bool
-		public static HTML_LinkAtPosition_t FromPointer( IntPtr p ) { return new HTML_LinkAtPosition_t(); }
+		public static HTML_LinkAtPosition_t FromPointer( IntPtr p ) { return (HTML_LinkAtPosition_t) Marshal.PtrToStructure( p, typeof(HTML_LinkAtPosition_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4373,7 +4473,9 @@ namespace SteamNative
 			public uint x; // uint32
 			public uint y; // uint32
 			public string pchURL; // const char *
+			[MarshalAs(UnmanagedType.I1)]
 			public bool bInput; // _Bool
+			[MarshalAs(UnmanagedType.I1)]
 			public bool bLiveLink; // _Bool
 			
 			public HTML_LinkAtPosition_t Get
@@ -4399,7 +4501,7 @@ namespace SteamNative
 	{
 		public uint unBrowserHandle; // HHTMLBrowser
 		public string pchMessage; // const char *
-		public static HTML_JSAlert_t FromPointer( IntPtr p ) { return new HTML_JSAlert_t(); }
+		public static HTML_JSAlert_t FromPointer( IntPtr p ) { return (HTML_JSAlert_t) Marshal.PtrToStructure( p, typeof(HTML_JSAlert_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4426,7 +4528,7 @@ namespace SteamNative
 	{
 		public uint unBrowserHandle; // HHTMLBrowser
 		public string pchMessage; // const char *
-		public static HTML_JSConfirm_t FromPointer( IntPtr p ) { return new HTML_JSConfirm_t(); }
+		public static HTML_JSConfirm_t FromPointer( IntPtr p ) { return (HTML_JSConfirm_t) Marshal.PtrToStructure( p, typeof(HTML_JSConfirm_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4454,7 +4556,7 @@ namespace SteamNative
 		public uint unBrowserHandle; // HHTMLBrowser
 		public string pchTitle; // const char *
 		public string pchInitialFile; // const char *
-		public static HTML_FileOpenDialog_t FromPointer( IntPtr p ) { return new HTML_FileOpenDialog_t(); }
+		public static HTML_FileOpenDialog_t FromPointer( IntPtr p ) { return (HTML_FileOpenDialog_t) Marshal.PtrToStructure( p, typeof(HTML_FileOpenDialog_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4488,7 +4590,7 @@ namespace SteamNative
 		public uint unWide; // uint32
 		public uint unTall; // uint32
 		public uint unNewWindow_BrowserHandle; // HHTMLBrowser
-		public static HTML_NewWindow_t FromPointer( IntPtr p ) { return new HTML_NewWindow_t(); }
+		public static HTML_NewWindow_t FromPointer( IntPtr p ) { return (HTML_NewWindow_t) Marshal.PtrToStructure( p, typeof(HTML_NewWindow_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4525,7 +4627,7 @@ namespace SteamNative
 	{
 		public uint unBrowserHandle; // HHTMLBrowser
 		public uint eMouseCursor; // uint32
-		public static HTML_SetCursor_t FromPointer( IntPtr p ) { return new HTML_SetCursor_t(); }
+		public static HTML_SetCursor_t FromPointer( IntPtr p ) { return (HTML_SetCursor_t) Marshal.PtrToStructure( p, typeof(HTML_SetCursor_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4552,7 +4654,7 @@ namespace SteamNative
 	{
 		public uint unBrowserHandle; // HHTMLBrowser
 		public string pchMsg; // const char *
-		public static HTML_StatusText_t FromPointer( IntPtr p ) { return new HTML_StatusText_t(); }
+		public static HTML_StatusText_t FromPointer( IntPtr p ) { return (HTML_StatusText_t) Marshal.PtrToStructure( p, typeof(HTML_StatusText_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4579,7 +4681,7 @@ namespace SteamNative
 	{
 		public uint unBrowserHandle; // HHTMLBrowser
 		public string pchMsg; // const char *
-		public static HTML_ShowToolTip_t FromPointer( IntPtr p ) { return new HTML_ShowToolTip_t(); }
+		public static HTML_ShowToolTip_t FromPointer( IntPtr p ) { return (HTML_ShowToolTip_t) Marshal.PtrToStructure( p, typeof(HTML_ShowToolTip_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4606,7 +4708,7 @@ namespace SteamNative
 	{
 		public uint unBrowserHandle; // HHTMLBrowser
 		public string pchMsg; // const char *
-		public static HTML_UpdateToolTip_t FromPointer( IntPtr p ) { return new HTML_UpdateToolTip_t(); }
+		public static HTML_UpdateToolTip_t FromPointer( IntPtr p ) { return (HTML_UpdateToolTip_t) Marshal.PtrToStructure( p, typeof(HTML_UpdateToolTip_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4632,7 +4734,7 @@ namespace SteamNative
 	public struct HTML_HideToolTip_t
 	{
 		public uint unBrowserHandle; // HHTMLBrowser
-		public static HTML_HideToolTip_t FromPointer( IntPtr p ) { return new HTML_HideToolTip_t(); }
+		public static HTML_HideToolTip_t FromPointer( IntPtr p ) { return (HTML_HideToolTip_t) Marshal.PtrToStructure( p, typeof(HTML_HideToolTip_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4659,7 +4761,7 @@ namespace SteamNative
 		public int m_iDefinition; // SteamItemDef_t
 		public ushort m_unQuantity; // uint16
 		public ushort m_unFlags; // uint16
-		public static SteamItemDetails_t FromPointer( IntPtr p ) { return new SteamItemDetails_t(); }
+		public static SteamItemDetails_t FromPointer( IntPtr p ) { return (SteamItemDetails_t) Marshal.PtrToStructure( p, typeof(SteamItemDetails_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4690,7 +4792,7 @@ namespace SteamNative
 	{
 		public int m_handle; // SteamInventoryResult_t
 		public Result m_result; // enum EResult
-		public static SteamInventoryResultReady_t FromPointer( IntPtr p ) { return new SteamInventoryResultReady_t(); }
+		public static SteamInventoryResultReady_t FromPointer( IntPtr p ) { return (SteamInventoryResultReady_t) Marshal.PtrToStructure( p, typeof(SteamInventoryResultReady_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4716,7 +4818,7 @@ namespace SteamNative
 	public struct SteamInventoryFullUpdate_t
 	{
 		public int m_handle; // SteamInventoryResult_t
-		public static SteamInventoryFullUpdate_t FromPointer( IntPtr p ) { return new SteamInventoryFullUpdate_t(); }
+		public static SteamInventoryFullUpdate_t FromPointer( IntPtr p ) { return (SteamInventoryFullUpdate_t) Marshal.PtrToStructure( p, typeof(SteamInventoryFullUpdate_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4740,7 +4842,7 @@ namespace SteamNative
 	public struct BroadcastUploadStop_t
 	{
 		public BroadcastUploadResult m_eResult; // enum EBroadcastUploadResult
-		public static BroadcastUploadStop_t FromPointer( IntPtr p ) { return new BroadcastUploadStop_t(); }
+		public static BroadcastUploadStop_t FromPointer( IntPtr p ) { return (BroadcastUploadStop_t) Marshal.PtrToStructure( p, typeof(BroadcastUploadStop_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4767,7 +4869,7 @@ namespace SteamNative
 		public uint m_unVideoAppID; // AppId_t
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 		public string m_rgchURL; // char [256]
-		public static GetVideoURLResult_t FromPointer( IntPtr p ) { return new GetVideoURLResult_t(); }
+		public static GetVideoURLResult_t FromPointer( IntPtr p ) { return (GetVideoURLResult_t) Marshal.PtrToStructure( p, typeof(GetVideoURLResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4797,7 +4899,7 @@ namespace SteamNative
 	{
 		public byte m_nCallbackFlags; // uint8
 		public int m_iCallback; // int
-		public static CCallbackBase FromPointer( IntPtr p ) { return new CCallbackBase(); }
+		public static CCallbackBase FromPointer( IntPtr p ) { return (CCallbackBase) Marshal.PtrToStructure( p, typeof(CCallbackBase) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4819,14 +4921,14 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct GSClientApprove_t
 	{
 		public ulong m_SteamID; // class CSteamID
 		public ulong m_OwnerSteamID; // class CSteamID
-		public static GSClientApprove_t FromPointer( IntPtr p ) { return new GSClientApprove_t(); }
+		public static GSClientApprove_t FromPointer( IntPtr p ) { return (GSClientApprove_t) Marshal.PtrToStructure( p, typeof(GSClientApprove_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong m_SteamID; // class CSteamID
@@ -4846,16 +4948,16 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct GSClientDeny_t
 	{
 		public ulong m_SteamID; // class CSteamID
 		public DenyReason m_eDenyReason; // enum EDenyReason
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
 		public string m_rgchOptionalText; // char [128]
-		public static GSClientDeny_t FromPointer( IntPtr p ) { return new GSClientDeny_t(); }
+		public static GSClientDeny_t FromPointer( IntPtr p ) { return (GSClientDeny_t) Marshal.PtrToStructure( p, typeof(GSClientDeny_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong m_SteamID; // class CSteamID
@@ -4878,14 +4980,14 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct GSClientKick_t
 	{
 		public ulong m_SteamID; // class CSteamID
 		public DenyReason m_eDenyReason; // enum EDenyReason
-		public static GSClientKick_t FromPointer( IntPtr p ) { return new GSClientKick_t(); }
+		public static GSClientKick_t FromPointer( IntPtr p ) { return (GSClientKick_t) Marshal.PtrToStructure( p, typeof(GSClientKick_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong m_SteamID; // class CSteamID
@@ -4911,8 +5013,9 @@ namespace SteamNative
 		public ulong m_SteamID; // uint64
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
 		public string m_pchAchievement; // char [128]
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bUnlocked; // _Bool
-		public static GSClientAchievementStatus_t FromPointer( IntPtr p ) { return new GSClientAchievementStatus_t(); }
+		public static GSClientAchievementStatus_t FromPointer( IntPtr p ) { return (GSClientAchievementStatus_t) Marshal.PtrToStructure( p, typeof(GSClientAchievementStatus_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4920,6 +5023,7 @@ namespace SteamNative
 			public ulong m_SteamID; // uint64
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
 			public string m_pchAchievement; // char [128]
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bUnlocked; // _Bool
 			
 			public GSClientAchievementStatus_t Get
@@ -4941,7 +5045,7 @@ namespace SteamNative
 	public struct GSPolicyResponse_t
 	{
 		public byte m_bSecure; // uint8
-		public static GSPolicyResponse_t FromPointer( IntPtr p ) { return new GSPolicyResponse_t(); }
+		public static GSPolicyResponse_t FromPointer( IntPtr p ) { return (GSPolicyResponse_t) Marshal.PtrToStructure( p, typeof(GSPolicyResponse_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4968,7 +5072,7 @@ namespace SteamNative
 		public int m_nRank; // int32
 		public uint m_unTotalConnects; // uint32
 		public uint m_unTotalMinutesPlayed; // uint32
-		public static GSGameplayStats_t FromPointer( IntPtr p ) { return new GSGameplayStats_t(); }
+		public static GSGameplayStats_t FromPointer( IntPtr p ) { return (GSGameplayStats_t) Marshal.PtrToStructure( p, typeof(GSGameplayStats_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -4994,21 +5098,25 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct GSClientGroupStatus_t
 	{
 		public ulong m_SteamIDUser; // class CSteamID
 		public ulong m_SteamIDGroup; // class CSteamID
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bMember; // _Bool
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bOfficer; // _Bool
-		public static GSClientGroupStatus_t FromPointer( IntPtr p ) { return new GSClientGroupStatus_t(); }
+		public static GSClientGroupStatus_t FromPointer( IntPtr p ) { return (GSClientGroupStatus_t) Marshal.PtrToStructure( p, typeof(GSClientGroupStatus_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong m_SteamIDUser; // class CSteamID
 			public ulong m_SteamIDGroup; // class CSteamID
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bMember; // _Bool
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bOfficer; // _Bool
 			
 			public GSClientGroupStatus_t Get
@@ -5032,18 +5140,20 @@ namespace SteamNative
 	{
 		public Result m_eResult; // enum EResult
 		public uint m_unReputationScore; // uint32
+		[MarshalAs(UnmanagedType.I1)]
 		public bool m_bBanned; // _Bool
 		public uint m_unBannedIP; // uint32
 		public ushort m_usBannedPort; // uint16
 		public ulong m_ulBannedGameID; // uint64
 		public uint m_unBanExpires; // uint32
-		public static GSReputation_t FromPointer( IntPtr p ) { return new GSReputation_t(); }
+		public static GSReputation_t FromPointer( IntPtr p ) { return (GSReputation_t) Marshal.PtrToStructure( p, typeof(GSReputation_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public Result m_eResult; // enum EResult
 			public uint m_unReputationScore; // uint32
+			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bBanned; // _Bool
 			public uint m_unBannedIP; // uint32
 			public ushort m_usBannedPort; // uint16
@@ -5073,7 +5183,7 @@ namespace SteamNative
 	public struct AssociateWithClanResult_t
 	{
 		public Result m_eResult; // enum EResult
-		public static AssociateWithClanResult_t FromPointer( IntPtr p ) { return new AssociateWithClanResult_t(); }
+		public static AssociateWithClanResult_t FromPointer( IntPtr p ) { return (AssociateWithClanResult_t) Marshal.PtrToStructure( p, typeof(AssociateWithClanResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
@@ -5093,7 +5203,7 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct ComputeNewPlayerCompatibilityResult_t
 	{
 		public Result m_eResult; // enum EResult
@@ -5101,9 +5211,9 @@ namespace SteamNative
 		public int m_cPlayersThatCandidateDoesntLike; // int
 		public int m_cClanPlayersThatDontLikeCandidate; // int
 		public ulong m_SteamIDCandidate; // class CSteamID
-		public static ComputeNewPlayerCompatibilityResult_t FromPointer( IntPtr p ) { return new ComputeNewPlayerCompatibilityResult_t(); }
+		public static ComputeNewPlayerCompatibilityResult_t FromPointer( IntPtr p ) { return (ComputeNewPlayerCompatibilityResult_t) Marshal.PtrToStructure( p, typeof(ComputeNewPlayerCompatibilityResult_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public Result m_eResult; // enum EResult
@@ -5129,14 +5239,14 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct GSStatsReceived_t
 	{
 		public Result m_eResult; // enum EResult
 		public ulong m_steamIDUser; // class CSteamID
-		public static GSStatsReceived_t FromPointer( IntPtr p ) { return new GSStatsReceived_t(); }
+		public static GSStatsReceived_t FromPointer( IntPtr p ) { return (GSStatsReceived_t) Marshal.PtrToStructure( p, typeof(GSStatsReceived_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public Result m_eResult; // enum EResult
@@ -5156,14 +5266,14 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct GSStatsStored_t
 	{
 		public Result m_eResult; // enum EResult
 		public ulong m_steamIDUser; // class CSteamID
-		public static GSStatsStored_t FromPointer( IntPtr p ) { return new GSStatsStored_t(); }
+		public static GSStatsStored_t FromPointer( IntPtr p ) { return (GSStatsStored_t) Marshal.PtrToStructure( p, typeof(GSStatsStored_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public Result m_eResult; // enum EResult
@@ -5183,13 +5293,13 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct GSStatsUnloaded_t
 	{
 		public ulong m_steamIDUser; // class CSteamID
-		public static GSStatsUnloaded_t FromPointer( IntPtr p ) { return new GSStatsUnloaded_t(); }
+		public static GSStatsUnloaded_t FromPointer( IntPtr p ) { return (GSStatsUnloaded_t) Marshal.PtrToStructure( p, typeof(GSStatsUnloaded_t) ); }
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong m_steamIDUser; // class CSteamID
