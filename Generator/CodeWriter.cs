@@ -342,12 +342,7 @@ namespace Generator
 
             foreach ( var p in ps )
             {
-                var a = new Argument();
-
-                a.Name = p.Name;
-                a.NativeType = p.Type;
-                a.Build( ps, TypeDefs );
-
+                var a = new Argument( p.Name, p.Type, TypeDefs );
                 args.Add( a );
             }
 

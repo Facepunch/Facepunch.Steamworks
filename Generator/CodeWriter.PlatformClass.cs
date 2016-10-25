@@ -73,13 +73,7 @@ namespace Generator
         {
             var arguments = BuildArguments( methodDef.Params );
 
-            var ret = new Argument()
-            {
-                Name = "return",
-                NativeType = methodDef.ReturnType
-            };
-
-            ret.Build( null, TypeDefs );
+            var ret = new Argument( "return", methodDef.ReturnType, TypeDefs );
 
             var methodName = methodDef.Name;
 
@@ -147,14 +141,7 @@ namespace Generator
         private void InteropClassMethod( string library, string classname, SteamApiDefinition.MethodDef methodDef )
         {
             var arguments = BuildArguments( methodDef.Params );
-
-            var ret = new Argument()
-            {
-                Name = "return",
-                NativeType = methodDef.ReturnType
-            };
-
-            ret.Build( null, TypeDefs );
+            var ret = new Argument( "return", methodDef.ReturnType, TypeDefs );
 
             var methodName = methodDef.Name;
 

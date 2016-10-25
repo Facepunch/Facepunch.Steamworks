@@ -14,7 +14,15 @@ namespace Generator
         public bool IsRef;
         public TypeDef TypeDef;
 
-        internal void Build( SteamApiDefinition.MethodDef.ParamType[] ps, Dictionary<string, TypeDef> typeDefs )
+        public Argument( string Name, string ManagedType, Dictionary<string, TypeDef> typeDefs )
+        {
+            this.Name = Name;
+            this.NativeType = ManagedType;
+
+            Build( typeDefs );
+        }
+
+        private void Build( Dictionary<string, TypeDef> typeDefs )
         {
             var cleanNative = NativeType.Trim( '*', ' ' ).Replace( "class ", "" ).Replace( "const ", "" );
 
