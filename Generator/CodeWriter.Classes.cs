@@ -178,7 +178,7 @@ namespace Generator
         {
             foreach ( var a in callargs )
             {
-                if ( !a.InteropParameter().StartsWith( "IntPtr" ) )
+                if ( !a.InteropParameter( false ).StartsWith( "IntPtr" ) )
                 {
                     continue;
                 }

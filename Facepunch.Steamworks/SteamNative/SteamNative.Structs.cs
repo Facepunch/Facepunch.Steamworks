@@ -20,18 +20,15 @@ namespace SteamNative
 			public ushort m_u16; // uint16
 			public double m_d; // double
 			
-			public ValvePackingSentinel_t Get
+			public static implicit operator  ValvePackingSentinel_t (  ValvePackingSentinel_t.PackSmall d )
 			{
-				get
+				return new ValvePackingSentinel_t()
 				{
-					return new ValvePackingSentinel_t()
-					{
-						m_u32 = this.m_u32,
-						m_u64 = this.m_u64,
-						m_u16 = this.m_u16,
-						m_d = this.m_d,
-					};
-				}
+					m_u32 = d.m_u32,
+					m_u64 = d.m_u64,
+					m_u16 = d.m_u16,
+					m_d = d.m_d,
+				};
 			}
 		}
 	}
@@ -53,18 +50,15 @@ namespace SteamNative
 			public IntPtr m_pubParam; // uint8 *
 			public int m_cubParam; // int
 			
-			public CallbackMsg_t Get
+			public static implicit operator  CallbackMsg_t (  CallbackMsg_t.PackSmall d )
 			{
-				get
+				return new CallbackMsg_t()
 				{
-					return new CallbackMsg_t()
-					{
-						m_hSteamUser = this.m_hSteamUser,
-						m_iCallback = this.m_iCallback,
-						m_pubParam = this.m_pubParam,
-						m_cubParam = this.m_cubParam,
-					};
-				}
+					m_hSteamUser = d.m_hSteamUser,
+					m_iCallback = d.m_iCallback,
+					m_pubParam = d.m_pubParam,
+					m_cubParam = d.m_cubParam,
+				};
 			}
 		}
 	}
@@ -84,16 +78,13 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bStillRetrying; // _Bool
 			
-			public SteamServerConnectFailure_t Get
+			public static implicit operator  SteamServerConnectFailure_t (  SteamServerConnectFailure_t.PackSmall d )
 			{
-				get
+				return new SteamServerConnectFailure_t()
 				{
-					return new SteamServerConnectFailure_t()
-					{
-						m_eResult = this.m_eResult,
-						m_bStillRetrying = this.m_bStillRetrying,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_bStillRetrying = d.m_bStillRetrying,
+				};
 			}
 		}
 	}
@@ -109,15 +100,12 @@ namespace SteamNative
 		{
 			public Result m_eResult; // enum EResult
 			
-			public SteamServersDisconnected_t Get
+			public static implicit operator  SteamServersDisconnected_t (  SteamServersDisconnected_t.PackSmall d )
 			{
-				get
+				return new SteamServersDisconnected_t()
 				{
-					return new SteamServersDisconnected_t()
-					{
-						m_eResult = this.m_eResult,
-					};
-				}
+					m_eResult = d.m_eResult,
+				};
 			}
 		}
 	}
@@ -141,19 +129,16 @@ namespace SteamNative
 			public ushort m_bSecure; // uint16
 			public uint m_uReason; // uint32
 			
-			public ClientGameServerDeny_t Get
+			public static implicit operator  ClientGameServerDeny_t (  ClientGameServerDeny_t.PackSmall d )
 			{
-				get
+				return new ClientGameServerDeny_t()
 				{
-					return new ClientGameServerDeny_t()
-					{
-						m_uAppID = this.m_uAppID,
-						m_unGameServerIP = this.m_unGameServerIP,
-						m_usGameServerPort = this.m_usGameServerPort,
-						m_bSecure = this.m_bSecure,
-						m_uReason = this.m_uReason,
-					};
-				}
+					m_uAppID = d.m_uAppID,
+					m_unGameServerIP = d.m_unGameServerIP,
+					m_usGameServerPort = d.m_usGameServerPort,
+					m_bSecure = d.m_bSecure,
+					m_uReason = d.m_uReason,
+				};
 			}
 		}
 	}
@@ -173,17 +158,14 @@ namespace SteamNative
 			public AuthSessionResponse m_eAuthSessionResponse; // enum EAuthSessionResponse
 			public ulong m_OwnerSteamID; // class CSteamID
 			
-			public ValidateAuthTicketResponse_t Get
+			public static implicit operator  ValidateAuthTicketResponse_t (  ValidateAuthTicketResponse_t.PackSmall d )
 			{
-				get
+				return new ValidateAuthTicketResponse_t()
 				{
-					return new ValidateAuthTicketResponse_t()
-					{
-						m_SteamID = this.m_SteamID,
-						m_eAuthSessionResponse = this.m_eAuthSessionResponse,
-						m_OwnerSteamID = this.m_OwnerSteamID,
-					};
-				}
+					m_SteamID = d.m_SteamID,
+					m_eAuthSessionResponse = d.m_eAuthSessionResponse,
+					m_OwnerSteamID = d.m_OwnerSteamID,
+				};
 			}
 		}
 	}
@@ -203,17 +185,14 @@ namespace SteamNative
 			public ulong m_ulOrderID; // uint64
 			public byte m_bAuthorized; // uint8
 			
-			public MicroTxnAuthorizationResponse_t Get
+			public static implicit operator  MicroTxnAuthorizationResponse_t (  MicroTxnAuthorizationResponse_t.PackSmall d )
 			{
-				get
+				return new MicroTxnAuthorizationResponse_t()
 				{
-					return new MicroTxnAuthorizationResponse_t()
-					{
-						m_unAppID = this.m_unAppID,
-						m_ulOrderID = this.m_ulOrderID,
-						m_bAuthorized = this.m_bAuthorized,
-					};
-				}
+					m_unAppID = d.m_unAppID,
+					m_ulOrderID = d.m_ulOrderID,
+					m_bAuthorized = d.m_bAuthorized,
+				};
 			}
 		}
 	}
@@ -229,15 +208,12 @@ namespace SteamNative
 		{
 			public Result m_eResult; // enum EResult
 			
-			public EncryptedAppTicketResponse_t Get
+			public static implicit operator  EncryptedAppTicketResponse_t (  EncryptedAppTicketResponse_t.PackSmall d )
 			{
-				get
+				return new EncryptedAppTicketResponse_t()
 				{
-					return new EncryptedAppTicketResponse_t()
-					{
-						m_eResult = this.m_eResult,
-					};
-				}
+					m_eResult = d.m_eResult,
+				};
 			}
 		}
 	}
@@ -255,16 +231,13 @@ namespace SteamNative
 			public uint m_hAuthTicket; // HAuthTicket
 			public Result m_eResult; // enum EResult
 			
-			public GetAuthSessionTicketResponse_t Get
+			public static implicit operator  GetAuthSessionTicketResponse_t (  GetAuthSessionTicketResponse_t.PackSmall d )
 			{
-				get
+				return new GetAuthSessionTicketResponse_t()
 				{
-					return new GetAuthSessionTicketResponse_t()
-					{
-						m_hAuthTicket = this.m_hAuthTicket,
-						m_eResult = this.m_eResult,
-					};
-				}
+					m_hAuthTicket = d.m_hAuthTicket,
+					m_eResult = d.m_eResult,
+				};
 			}
 		}
 	}
@@ -282,15 +255,12 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 			public string m_szURL; // char [256]
 			
-			public GameWebCallback_t Get
+			public static implicit operator  GameWebCallback_t (  GameWebCallback_t.PackSmall d )
 			{
-				get
+				return new GameWebCallback_t()
 				{
-					return new GameWebCallback_t()
-					{
-						m_szURL = this.m_szURL,
-					};
-				}
+					m_szURL = d.m_szURL,
+				};
 			}
 		}
 	}
@@ -308,15 +278,12 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
 			public string m_szURL; // char [512]
 			
-			public StoreAuthURLResponse_t Get
+			public static implicit operator  StoreAuthURLResponse_t (  StoreAuthURLResponse_t.PackSmall d )
 			{
-				get
+				return new StoreAuthURLResponse_t()
 				{
-					return new StoreAuthURLResponse_t()
-					{
-						m_szURL = this.m_szURL,
-					};
-				}
+					m_szURL = d.m_szURL,
+				};
 			}
 		}
 	}
@@ -340,19 +307,16 @@ namespace SteamNative
 			public ushort m_usQueryPort; // uint16
 			public ulong m_steamIDLobby; // class CSteamID
 			
-			public FriendGameInfo_t Get
+			public static implicit operator  FriendGameInfo_t (  FriendGameInfo_t.PackSmall d )
 			{
-				get
+				return new FriendGameInfo_t()
 				{
-					return new FriendGameInfo_t()
-					{
-						m_gameID = this.m_gameID,
-						m_unGameIP = this.m_unGameIP,
-						m_usGamePort = this.m_usGamePort,
-						m_usQueryPort = this.m_usQueryPort,
-						m_steamIDLobby = this.m_steamIDLobby,
-					};
-				}
+					m_gameID = d.m_gameID,
+					m_unGameIP = d.m_unGameIP,
+					m_usGamePort = d.m_usGamePort,
+					m_usQueryPort = d.m_usQueryPort,
+					m_steamIDLobby = d.m_steamIDLobby,
+				};
 			}
 		}
 	}
@@ -370,16 +334,13 @@ namespace SteamNative
 			public uint m_uiOnlineSessionInstances; // uint32
 			public byte m_uiPublishedToFriendsSessionInstance; // uint8
 			
-			public FriendSessionStateInfo_t Get
+			public static implicit operator  FriendSessionStateInfo_t (  FriendSessionStateInfo_t.PackSmall d )
 			{
-				get
+				return new FriendSessionStateInfo_t()
 				{
-					return new FriendSessionStateInfo_t()
-					{
-						m_uiOnlineSessionInstances = this.m_uiOnlineSessionInstances,
-						m_uiPublishedToFriendsSessionInstance = this.m_uiPublishedToFriendsSessionInstance,
-					};
-				}
+					m_uiOnlineSessionInstances = d.m_uiOnlineSessionInstances,
+					m_uiPublishedToFriendsSessionInstance = d.m_uiPublishedToFriendsSessionInstance,
+				};
 			}
 		}
 	}
@@ -397,16 +358,13 @@ namespace SteamNative
 			public ulong m_ulSteamID; // uint64
 			public int m_nChangeFlags; // int
 			
-			public PersonaStateChange_t Get
+			public static implicit operator  PersonaStateChange_t (  PersonaStateChange_t.PackSmall d )
 			{
-				get
+				return new PersonaStateChange_t()
 				{
-					return new PersonaStateChange_t()
-					{
-						m_ulSteamID = this.m_ulSteamID,
-						m_nChangeFlags = this.m_nChangeFlags,
-					};
-				}
+					m_ulSteamID = d.m_ulSteamID,
+					m_nChangeFlags = d.m_nChangeFlags,
+				};
 			}
 		}
 	}
@@ -422,15 +380,12 @@ namespace SteamNative
 		{
 			public byte m_bActive; // uint8
 			
-			public GameOverlayActivated_t Get
+			public static implicit operator  GameOverlayActivated_t (  GameOverlayActivated_t.PackSmall d )
 			{
-				get
+				return new GameOverlayActivated_t()
 				{
-					return new GameOverlayActivated_t()
-					{
-						m_bActive = this.m_bActive,
-					};
-				}
+					m_bActive = d.m_bActive,
+				};
 			}
 		}
 	}
@@ -452,16 +407,13 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
 			public string m_rgchPassword; // char [64]
 			
-			public GameServerChangeRequested_t Get
+			public static implicit operator  GameServerChangeRequested_t (  GameServerChangeRequested_t.PackSmall d )
 			{
-				get
+				return new GameServerChangeRequested_t()
 				{
-					return new GameServerChangeRequested_t()
-					{
-						m_rgchServer = this.m_rgchServer,
-						m_rgchPassword = this.m_rgchPassword,
-					};
-				}
+					m_rgchServer = d.m_rgchServer,
+					m_rgchPassword = d.m_rgchPassword,
+				};
 			}
 		}
 	}
@@ -479,16 +431,13 @@ namespace SteamNative
 			public ulong m_steamIDLobby; // class CSteamID
 			public ulong m_steamIDFriend; // class CSteamID
 			
-			public GameLobbyJoinRequested_t Get
+			public static implicit operator  GameLobbyJoinRequested_t (  GameLobbyJoinRequested_t.PackSmall d )
 			{
-				get
+				return new GameLobbyJoinRequested_t()
 				{
-					return new GameLobbyJoinRequested_t()
-					{
-						m_steamIDLobby = this.m_steamIDLobby,
-						m_steamIDFriend = this.m_steamIDFriend,
-					};
-				}
+					m_steamIDLobby = d.m_steamIDLobby,
+					m_steamIDFriend = d.m_steamIDFriend,
+				};
 			}
 		}
 	}
@@ -510,18 +459,15 @@ namespace SteamNative
 			public int m_iWide; // int
 			public int m_iTall; // int
 			
-			public AvatarImageLoaded_t Get
+			public static implicit operator  AvatarImageLoaded_t (  AvatarImageLoaded_t.PackSmall d )
 			{
-				get
+				return new AvatarImageLoaded_t()
 				{
-					return new AvatarImageLoaded_t()
-					{
-						m_steamID = this.m_steamID,
-						m_iImage = this.m_iImage,
-						m_iWide = this.m_iWide,
-						m_iTall = this.m_iTall,
-					};
-				}
+					m_steamID = d.m_steamID,
+					m_iImage = d.m_iImage,
+					m_iWide = d.m_iWide,
+					m_iTall = d.m_iTall,
+				};
 			}
 		}
 	}
@@ -541,17 +487,14 @@ namespace SteamNative
 			public int m_cOfficers; // int
 			public byte m_bSuccess; // uint8
 			
-			public ClanOfficerListResponse_t Get
+			public static implicit operator  ClanOfficerListResponse_t (  ClanOfficerListResponse_t.PackSmall d )
 			{
-				get
+				return new ClanOfficerListResponse_t()
 				{
-					return new ClanOfficerListResponse_t()
-					{
-						m_steamIDClan = this.m_steamIDClan,
-						m_cOfficers = this.m_cOfficers,
-						m_bSuccess = this.m_bSuccess,
-					};
-				}
+					m_steamIDClan = d.m_steamIDClan,
+					m_cOfficers = d.m_cOfficers,
+					m_bSuccess = d.m_bSuccess,
+				};
 			}
 		}
 	}
@@ -569,16 +512,13 @@ namespace SteamNative
 			public ulong m_steamIDFriend; // class CSteamID
 			public uint m_nAppID; // AppId_t
 			
-			public FriendRichPresenceUpdate_t Get
+			public static implicit operator  FriendRichPresenceUpdate_t (  FriendRichPresenceUpdate_t.PackSmall d )
 			{
-				get
+				return new FriendRichPresenceUpdate_t()
 				{
-					return new FriendRichPresenceUpdate_t()
-					{
-						m_steamIDFriend = this.m_steamIDFriend,
-						m_nAppID = this.m_nAppID,
-					};
-				}
+					m_steamIDFriend = d.m_steamIDFriend,
+					m_nAppID = d.m_nAppID,
+				};
 			}
 		}
 	}
@@ -598,16 +538,13 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 			public string m_rgchConnect; // char [256]
 			
-			public GameRichPresenceJoinRequested_t Get
+			public static implicit operator  GameRichPresenceJoinRequested_t (  GameRichPresenceJoinRequested_t.PackSmall d )
 			{
-				get
+				return new GameRichPresenceJoinRequested_t()
 				{
-					return new GameRichPresenceJoinRequested_t()
-					{
-						m_steamIDFriend = this.m_steamIDFriend,
-						m_rgchConnect = this.m_rgchConnect,
-					};
-				}
+					m_steamIDFriend = d.m_steamIDFriend,
+					m_rgchConnect = d.m_rgchConnect,
+				};
 			}
 		}
 	}
@@ -627,17 +564,14 @@ namespace SteamNative
 			public ulong m_steamIDUser; // class CSteamID
 			public int m_iMessageID; // int
 			
-			public GameConnectedClanChatMsg_t Get
+			public static implicit operator  GameConnectedClanChatMsg_t (  GameConnectedClanChatMsg_t.PackSmall d )
 			{
-				get
+				return new GameConnectedClanChatMsg_t()
 				{
-					return new GameConnectedClanChatMsg_t()
-					{
-						m_steamIDClanChat = this.m_steamIDClanChat,
-						m_steamIDUser = this.m_steamIDUser,
-						m_iMessageID = this.m_iMessageID,
-					};
-				}
+					m_steamIDClanChat = d.m_steamIDClanChat,
+					m_steamIDUser = d.m_steamIDUser,
+					m_iMessageID = d.m_iMessageID,
+				};
 			}
 		}
 	}
@@ -655,16 +589,13 @@ namespace SteamNative
 			public ulong m_steamIDClanChat; // class CSteamID
 			public ulong m_steamIDUser; // class CSteamID
 			
-			public GameConnectedChatJoin_t Get
+			public static implicit operator  GameConnectedChatJoin_t (  GameConnectedChatJoin_t.PackSmall d )
 			{
-				get
+				return new GameConnectedChatJoin_t()
 				{
-					return new GameConnectedChatJoin_t()
-					{
-						m_steamIDClanChat = this.m_steamIDClanChat,
-						m_steamIDUser = this.m_steamIDUser,
-					};
-				}
+					m_steamIDClanChat = d.m_steamIDClanChat,
+					m_steamIDUser = d.m_steamIDUser,
+				};
 			}
 		}
 	}
@@ -690,18 +621,15 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bDropped; // _Bool
 			
-			public GameConnectedChatLeave_t Get
+			public static implicit operator  GameConnectedChatLeave_t (  GameConnectedChatLeave_t.PackSmall d )
 			{
-				get
+				return new GameConnectedChatLeave_t()
 				{
-					return new GameConnectedChatLeave_t()
-					{
-						m_steamIDClanChat = this.m_steamIDClanChat,
-						m_steamIDUser = this.m_steamIDUser,
-						m_bKicked = this.m_bKicked,
-						m_bDropped = this.m_bDropped,
-					};
-				}
+					m_steamIDClanChat = d.m_steamIDClanChat,
+					m_steamIDUser = d.m_steamIDUser,
+					m_bKicked = d.m_bKicked,
+					m_bDropped = d.m_bDropped,
+				};
 			}
 		}
 	}
@@ -719,15 +647,12 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bSuccess; // _Bool
 			
-			public DownloadClanActivityCountsResult_t Get
+			public static implicit operator  DownloadClanActivityCountsResult_t (  DownloadClanActivityCountsResult_t.PackSmall d )
 			{
-				get
+				return new DownloadClanActivityCountsResult_t()
 				{
-					return new DownloadClanActivityCountsResult_t()
-					{
-						m_bSuccess = this.m_bSuccess,
-					};
-				}
+					m_bSuccess = d.m_bSuccess,
+				};
 			}
 		}
 	}
@@ -745,16 +670,13 @@ namespace SteamNative
 			public ulong m_steamIDClanChat; // class CSteamID
 			public ChatRoomEnterResponse m_eChatRoomEnterResponse; // enum EChatRoomEnterResponse
 			
-			public JoinClanChatRoomCompletionResult_t Get
+			public static implicit operator  JoinClanChatRoomCompletionResult_t (  JoinClanChatRoomCompletionResult_t.PackSmall d )
 			{
-				get
+				return new JoinClanChatRoomCompletionResult_t()
 				{
-					return new JoinClanChatRoomCompletionResult_t()
-					{
-						m_steamIDClanChat = this.m_steamIDClanChat,
-						m_eChatRoomEnterResponse = this.m_eChatRoomEnterResponse,
-					};
-				}
+					m_steamIDClanChat = d.m_steamIDClanChat,
+					m_eChatRoomEnterResponse = d.m_eChatRoomEnterResponse,
+				};
 			}
 		}
 	}
@@ -772,16 +694,13 @@ namespace SteamNative
 			public ulong m_steamIDUser; // class CSteamID
 			public int m_iMessageID; // int
 			
-			public GameConnectedFriendChatMsg_t Get
+			public static implicit operator  GameConnectedFriendChatMsg_t (  GameConnectedFriendChatMsg_t.PackSmall d )
 			{
-				get
+				return new GameConnectedFriendChatMsg_t()
 				{
-					return new GameConnectedFriendChatMsg_t()
-					{
-						m_steamIDUser = this.m_steamIDUser,
-						m_iMessageID = this.m_iMessageID,
-					};
-				}
+					m_steamIDUser = d.m_steamIDUser,
+					m_iMessageID = d.m_iMessageID,
+				};
 			}
 		}
 	}
@@ -801,17 +720,14 @@ namespace SteamNative
 			public ulong m_steamID; // class CSteamID
 			public int m_nCount; // int
 			
-			public FriendsGetFollowerCount_t Get
+			public static implicit operator  FriendsGetFollowerCount_t (  FriendsGetFollowerCount_t.PackSmall d )
 			{
-				get
+				return new FriendsGetFollowerCount_t()
 				{
-					return new FriendsGetFollowerCount_t()
-					{
-						m_eResult = this.m_eResult,
-						m_steamID = this.m_steamID,
-						m_nCount = this.m_nCount,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_steamID = d.m_steamID,
+					m_nCount = d.m_nCount,
+				};
 			}
 		}
 	}
@@ -833,17 +749,14 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bIsFollowing; // _Bool
 			
-			public FriendsIsFollowing_t Get
+			public static implicit operator  FriendsIsFollowing_t (  FriendsIsFollowing_t.PackSmall d )
 			{
-				get
+				return new FriendsIsFollowing_t()
 				{
-					return new FriendsIsFollowing_t()
-					{
-						m_eResult = this.m_eResult,
-						m_steamID = this.m_steamID,
-						m_bIsFollowing = this.m_bIsFollowing,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_steamID = d.m_steamID,
+					m_bIsFollowing = d.m_bIsFollowing,
+				};
 			}
 		}
 	}
@@ -867,18 +780,15 @@ namespace SteamNative
 			public int m_nResultsReturned; // int32
 			public int m_nTotalResultCount; // int32
 			
-			public FriendsEnumerateFollowingList_t Get
+			public static implicit operator  FriendsEnumerateFollowingList_t (  FriendsEnumerateFollowingList_t.PackSmall d )
 			{
-				get
+				return new FriendsEnumerateFollowingList_t()
 				{
-					return new FriendsEnumerateFollowingList_t()
-					{
-						m_eResult = this.m_eResult,
-						m_rgSteamID = this.m_rgSteamID,
-						m_nResultsReturned = this.m_nResultsReturned,
-						m_nTotalResultCount = this.m_nTotalResultCount,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_rgSteamID = d.m_rgSteamID,
+					m_nResultsReturned = d.m_nResultsReturned,
+					m_nTotalResultCount = d.m_nTotalResultCount,
+				};
 			}
 		}
 	}
@@ -902,17 +812,14 @@ namespace SteamNative
 			public bool m_bLocalSuccess; // _Bool
 			public Result m_result; // enum EResult
 			
-			public SetPersonaNameResponse_t Get
+			public static implicit operator  SetPersonaNameResponse_t (  SetPersonaNameResponse_t.PackSmall d )
 			{
-				get
+				return new SetPersonaNameResponse_t()
 				{
-					return new SetPersonaNameResponse_t()
-					{
-						m_bSuccess = this.m_bSuccess,
-						m_bLocalSuccess = this.m_bLocalSuccess,
-						m_result = this.m_result,
-					};
-				}
+					m_bSuccess = d.m_bSuccess,
+					m_bLocalSuccess = d.m_bLocalSuccess,
+					m_result = d.m_result,
+				};
 			}
 		}
 	}
@@ -928,15 +835,12 @@ namespace SteamNative
 		{
 			public byte m_nMinutesBatteryLeft; // uint8
 			
-			public LowBatteryPower_t Get
+			public static implicit operator  LowBatteryPower_t (  LowBatteryPower_t.PackSmall d )
 			{
-				get
+				return new LowBatteryPower_t()
 				{
-					return new LowBatteryPower_t()
-					{
-						m_nMinutesBatteryLeft = this.m_nMinutesBatteryLeft,
-					};
-				}
+					m_nMinutesBatteryLeft = d.m_nMinutesBatteryLeft,
+				};
 			}
 		}
 	}
@@ -956,17 +860,14 @@ namespace SteamNative
 			public int m_iCallback; // int
 			public uint m_cubParam; // uint32
 			
-			public SteamAPICallCompleted_t Get
+			public static implicit operator  SteamAPICallCompleted_t (  SteamAPICallCompleted_t.PackSmall d )
 			{
-				get
+				return new SteamAPICallCompleted_t()
 				{
-					return new SteamAPICallCompleted_t()
-					{
-						m_hAsyncCall = this.m_hAsyncCall,
-						m_iCallback = this.m_iCallback,
-						m_cubParam = this.m_cubParam,
-					};
-				}
+					m_hAsyncCall = d.m_hAsyncCall,
+					m_iCallback = d.m_iCallback,
+					m_cubParam = d.m_cubParam,
+				};
 			}
 		}
 	}
@@ -982,15 +883,12 @@ namespace SteamNative
 		{
 			public CheckFileSignature m_eCheckFileSignature; // enum ECheckFileSignature
 			
-			public CheckFileSignature_t Get
+			public static implicit operator  CheckFileSignature_t (  CheckFileSignature_t.PackSmall d )
 			{
-				get
+				return new CheckFileSignature_t()
 				{
-					return new CheckFileSignature_t()
-					{
-						m_eCheckFileSignature = this.m_eCheckFileSignature,
-					};
-				}
+					m_eCheckFileSignature = d.m_eCheckFileSignature,
+				};
 			}
 		}
 	}
@@ -1010,16 +908,13 @@ namespace SteamNative
 			public bool m_bSubmitted; // _Bool
 			public uint m_unSubmittedText; // uint32
 			
-			public GamepadTextInputDismissed_t Get
+			public static implicit operator  GamepadTextInputDismissed_t (  GamepadTextInputDismissed_t.PackSmall d )
 			{
-				get
+				return new GamepadTextInputDismissed_t()
 				{
-					return new GamepadTextInputDismissed_t()
-					{
-						m_bSubmitted = this.m_bSubmitted,
-						m_unSubmittedText = this.m_unSubmittedText,
-					};
-				}
+					m_bSubmitted = d.m_bSubmitted,
+					m_unSubmittedText = d.m_unSubmittedText,
+				};
 			}
 		}
 	}
@@ -1041,16 +936,13 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 			public string m_szValue; // char [256]
 			
-			public MatchMakingKeyValuePair_t Get
+			public static implicit operator  MatchMakingKeyValuePair_t (  MatchMakingKeyValuePair_t.PackSmall d )
 			{
-				get
+				return new MatchMakingKeyValuePair_t()
 				{
-					return new MatchMakingKeyValuePair_t()
-					{
-						m_szKey = this.m_szKey,
-						m_szValue = this.m_szValue,
-					};
-				}
+					m_szKey = d.m_szKey,
+					m_szValue = d.m_szValue,
+				};
 			}
 		}
 	}
@@ -1070,17 +962,14 @@ namespace SteamNative
 			public ushort m_usQueryPort; // uint16
 			public uint m_unIP; // uint32
 			
-			public servernetadr_t Get
+			public static implicit operator  servernetadr_t (  servernetadr_t.PackSmall d )
 			{
-				get
+				return new servernetadr_t()
 				{
-					return new servernetadr_t()
-					{
-						m_usConnectionPort = this.m_usConnectionPort,
-						m_usQueryPort = this.m_usQueryPort,
-						m_unIP = this.m_unIP,
-					};
-				}
+					m_usConnectionPort = d.m_usConnectionPort,
+					m_usQueryPort = d.m_usQueryPort,
+					m_unIP = d.m_unIP,
+				};
 			}
 		}
 	}
@@ -1148,32 +1037,29 @@ namespace SteamNative
 			public string m_szGameTags; // char [128]
 			public ulong m_steamID; // class CSteamID
 			
-			public gameserveritem_t Get
+			public static implicit operator  gameserveritem_t (  gameserveritem_t.PackSmall d )
 			{
-				get
+				return new gameserveritem_t()
 				{
-					return new gameserveritem_t()
-					{
-						m_NetAdr = this.m_NetAdr,
-						m_nPing = this.m_nPing,
-						m_bHadSuccessfulResponse = this.m_bHadSuccessfulResponse,
-						m_bDoNotRefresh = this.m_bDoNotRefresh,
-						m_szGameDir = this.m_szGameDir,
-						m_szMap = this.m_szMap,
-						m_szGameDescription = this.m_szGameDescription,
-						m_nAppID = this.m_nAppID,
-						m_nPlayers = this.m_nPlayers,
-						m_nMaxPlayers = this.m_nMaxPlayers,
-						m_nBotPlayers = this.m_nBotPlayers,
-						m_bPassword = this.m_bPassword,
-						m_bSecure = this.m_bSecure,
-						m_ulTimeLastPlayed = this.m_ulTimeLastPlayed,
-						m_nServerVersion = this.m_nServerVersion,
-						m_szServerName = this.m_szServerName,
-						m_szGameTags = this.m_szGameTags,
-						m_steamID = this.m_steamID,
-					};
-				}
+					m_NetAdr = d.m_NetAdr,
+					m_nPing = d.m_nPing,
+					m_bHadSuccessfulResponse = d.m_bHadSuccessfulResponse,
+					m_bDoNotRefresh = d.m_bDoNotRefresh,
+					m_szGameDir = d.m_szGameDir,
+					m_szMap = d.m_szMap,
+					m_szGameDescription = d.m_szGameDescription,
+					m_nAppID = d.m_nAppID,
+					m_nPlayers = d.m_nPlayers,
+					m_nMaxPlayers = d.m_nMaxPlayers,
+					m_nBotPlayers = d.m_nBotPlayers,
+					m_bPassword = d.m_bPassword,
+					m_bSecure = d.m_bSecure,
+					m_ulTimeLastPlayed = d.m_ulTimeLastPlayed,
+					m_nServerVersion = d.m_nServerVersion,
+					m_szServerName = d.m_szServerName,
+					m_szGameTags = d.m_szGameTags,
+					m_steamID = d.m_steamID,
+				};
 			}
 		}
 	}
@@ -1203,21 +1089,18 @@ namespace SteamNative
 			public bool m_bAdd; // _Bool
 			public uint m_unAccountId; // AccountID_t
 			
-			public FavoritesListChanged_t Get
+			public static implicit operator  FavoritesListChanged_t (  FavoritesListChanged_t.PackSmall d )
 			{
-				get
+				return new FavoritesListChanged_t()
 				{
-					return new FavoritesListChanged_t()
-					{
-						m_nIP = this.m_nIP,
-						m_nQueryPort = this.m_nQueryPort,
-						m_nConnPort = this.m_nConnPort,
-						m_nAppID = this.m_nAppID,
-						m_nFlags = this.m_nFlags,
-						m_bAdd = this.m_bAdd,
-						m_unAccountId = this.m_unAccountId,
-					};
-				}
+					m_nIP = d.m_nIP,
+					m_nQueryPort = d.m_nQueryPort,
+					m_nConnPort = d.m_nConnPort,
+					m_nAppID = d.m_nAppID,
+					m_nFlags = d.m_nFlags,
+					m_bAdd = d.m_bAdd,
+					m_unAccountId = d.m_unAccountId,
+				};
 			}
 		}
 	}
@@ -1237,17 +1120,14 @@ namespace SteamNative
 			public ulong m_ulSteamIDLobby; // uint64
 			public ulong m_ulGameID; // uint64
 			
-			public LobbyInvite_t Get
+			public static implicit operator  LobbyInvite_t (  LobbyInvite_t.PackSmall d )
 			{
-				get
+				return new LobbyInvite_t()
 				{
-					return new LobbyInvite_t()
-					{
-						m_ulSteamIDUser = this.m_ulSteamIDUser,
-						m_ulSteamIDLobby = this.m_ulSteamIDLobby,
-						m_ulGameID = this.m_ulGameID,
-					};
-				}
+					m_ulSteamIDUser = d.m_ulSteamIDUser,
+					m_ulSteamIDLobby = d.m_ulSteamIDLobby,
+					m_ulGameID = d.m_ulGameID,
+				};
 			}
 		}
 	}
@@ -1271,18 +1151,15 @@ namespace SteamNative
 			public bool m_bLocked; // _Bool
 			public uint m_EChatRoomEnterResponse; // uint32
 			
-			public LobbyEnter_t Get
+			public static implicit operator  LobbyEnter_t (  LobbyEnter_t.PackSmall d )
 			{
-				get
+				return new LobbyEnter_t()
 				{
-					return new LobbyEnter_t()
-					{
-						m_ulSteamIDLobby = this.m_ulSteamIDLobby,
-						m_rgfChatPermissions = this.m_rgfChatPermissions,
-						m_bLocked = this.m_bLocked,
-						m_EChatRoomEnterResponse = this.m_EChatRoomEnterResponse,
-					};
-				}
+					m_ulSteamIDLobby = d.m_ulSteamIDLobby,
+					m_rgfChatPermissions = d.m_rgfChatPermissions,
+					m_bLocked = d.m_bLocked,
+					m_EChatRoomEnterResponse = d.m_EChatRoomEnterResponse,
+				};
 			}
 		}
 	}
@@ -1302,17 +1179,14 @@ namespace SteamNative
 			public ulong m_ulSteamIDMember; // uint64
 			public byte m_bSuccess; // uint8
 			
-			public LobbyDataUpdate_t Get
+			public static implicit operator  LobbyDataUpdate_t (  LobbyDataUpdate_t.PackSmall d )
 			{
-				get
+				return new LobbyDataUpdate_t()
 				{
-					return new LobbyDataUpdate_t()
-					{
-						m_ulSteamIDLobby = this.m_ulSteamIDLobby,
-						m_ulSteamIDMember = this.m_ulSteamIDMember,
-						m_bSuccess = this.m_bSuccess,
-					};
-				}
+					m_ulSteamIDLobby = d.m_ulSteamIDLobby,
+					m_ulSteamIDMember = d.m_ulSteamIDMember,
+					m_bSuccess = d.m_bSuccess,
+				};
 			}
 		}
 	}
@@ -1334,18 +1208,15 @@ namespace SteamNative
 			public ulong m_ulSteamIDMakingChange; // uint64
 			public uint m_rgfChatMemberStateChange; // uint32
 			
-			public LobbyChatUpdate_t Get
+			public static implicit operator  LobbyChatUpdate_t (  LobbyChatUpdate_t.PackSmall d )
 			{
-				get
+				return new LobbyChatUpdate_t()
 				{
-					return new LobbyChatUpdate_t()
-					{
-						m_ulSteamIDLobby = this.m_ulSteamIDLobby,
-						m_ulSteamIDUserChanged = this.m_ulSteamIDUserChanged,
-						m_ulSteamIDMakingChange = this.m_ulSteamIDMakingChange,
-						m_rgfChatMemberStateChange = this.m_rgfChatMemberStateChange,
-					};
-				}
+					m_ulSteamIDLobby = d.m_ulSteamIDLobby,
+					m_ulSteamIDUserChanged = d.m_ulSteamIDUserChanged,
+					m_ulSteamIDMakingChange = d.m_ulSteamIDMakingChange,
+					m_rgfChatMemberStateChange = d.m_rgfChatMemberStateChange,
+				};
 			}
 		}
 	}
@@ -1367,18 +1238,15 @@ namespace SteamNative
 			public byte m_eChatEntryType; // uint8
 			public uint m_iChatID; // uint32
 			
-			public LobbyChatMsg_t Get
+			public static implicit operator  LobbyChatMsg_t (  LobbyChatMsg_t.PackSmall d )
 			{
-				get
+				return new LobbyChatMsg_t()
 				{
-					return new LobbyChatMsg_t()
-					{
-						m_ulSteamIDLobby = this.m_ulSteamIDLobby,
-						m_ulSteamIDUser = this.m_ulSteamIDUser,
-						m_eChatEntryType = this.m_eChatEntryType,
-						m_iChatID = this.m_iChatID,
-					};
-				}
+					m_ulSteamIDLobby = d.m_ulSteamIDLobby,
+					m_ulSteamIDUser = d.m_ulSteamIDUser,
+					m_eChatEntryType = d.m_eChatEntryType,
+					m_iChatID = d.m_iChatID,
+				};
 			}
 		}
 	}
@@ -1400,18 +1268,15 @@ namespace SteamNative
 			public uint m_unIP; // uint32
 			public ushort m_usPort; // uint16
 			
-			public LobbyGameCreated_t Get
+			public static implicit operator  LobbyGameCreated_t (  LobbyGameCreated_t.PackSmall d )
 			{
-				get
+				return new LobbyGameCreated_t()
 				{
-					return new LobbyGameCreated_t()
-					{
-						m_ulSteamIDLobby = this.m_ulSteamIDLobby,
-						m_ulSteamIDGameServer = this.m_ulSteamIDGameServer,
-						m_unIP = this.m_unIP,
-						m_usPort = this.m_usPort,
-					};
-				}
+					m_ulSteamIDLobby = d.m_ulSteamIDLobby,
+					m_ulSteamIDGameServer = d.m_ulSteamIDGameServer,
+					m_unIP = d.m_unIP,
+					m_usPort = d.m_usPort,
+				};
 			}
 		}
 	}
@@ -1427,15 +1292,12 @@ namespace SteamNative
 		{
 			public uint m_nLobbiesMatching; // uint32
 			
-			public LobbyMatchList_t Get
+			public static implicit operator  LobbyMatchList_t (  LobbyMatchList_t.PackSmall d )
 			{
-				get
+				return new LobbyMatchList_t()
 				{
-					return new LobbyMatchList_t()
-					{
-						m_nLobbiesMatching = this.m_nLobbiesMatching,
-					};
-				}
+					m_nLobbiesMatching = d.m_nLobbiesMatching,
+				};
 			}
 		}
 	}
@@ -1455,17 +1317,14 @@ namespace SteamNative
 			public ulong m_ulSteamIDAdmin; // uint64
 			public byte m_bKickedDueToDisconnect; // uint8
 			
-			public LobbyKicked_t Get
+			public static implicit operator  LobbyKicked_t (  LobbyKicked_t.PackSmall d )
 			{
-				get
+				return new LobbyKicked_t()
 				{
-					return new LobbyKicked_t()
-					{
-						m_ulSteamIDLobby = this.m_ulSteamIDLobby,
-						m_ulSteamIDAdmin = this.m_ulSteamIDAdmin,
-						m_bKickedDueToDisconnect = this.m_bKickedDueToDisconnect,
-					};
-				}
+					m_ulSteamIDLobby = d.m_ulSteamIDLobby,
+					m_ulSteamIDAdmin = d.m_ulSteamIDAdmin,
+					m_bKickedDueToDisconnect = d.m_bKickedDueToDisconnect,
+				};
 			}
 		}
 	}
@@ -1483,16 +1342,13 @@ namespace SteamNative
 			public Result m_eResult; // enum EResult
 			public ulong m_ulSteamIDLobby; // uint64
 			
-			public LobbyCreated_t Get
+			public static implicit operator  LobbyCreated_t (  LobbyCreated_t.PackSmall d )
 			{
-				get
+				return new LobbyCreated_t()
 				{
-					return new LobbyCreated_t()
-					{
-						m_eResult = this.m_eResult,
-						m_ulSteamIDLobby = this.m_ulSteamIDLobby,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_ulSteamIDLobby = d.m_ulSteamIDLobby,
+				};
 			}
 		}
 	}
@@ -1512,16 +1368,13 @@ namespace SteamNative
 			public bool m_bGameBootInviteExists; // _Bool
 			public ulong m_steamIDLobby; // class CSteamID
 			
-			public PSNGameBootInviteResult_t Get
+			public static implicit operator  PSNGameBootInviteResult_t (  PSNGameBootInviteResult_t.PackSmall d )
 			{
-				get
+				return new PSNGameBootInviteResult_t()
 				{
-					return new PSNGameBootInviteResult_t()
-					{
-						m_bGameBootInviteExists = this.m_bGameBootInviteExists,
-						m_steamIDLobby = this.m_steamIDLobby,
-					};
-				}
+					m_bGameBootInviteExists = d.m_bGameBootInviteExists,
+					m_steamIDLobby = d.m_steamIDLobby,
+				};
 			}
 		}
 	}
@@ -1537,15 +1390,12 @@ namespace SteamNative
 		{
 			public Result m_eResult; // enum EResult
 			
-			public FavoritesListAccountsUpdated_t Get
+			public static implicit operator  FavoritesListAccountsUpdated_t (  FavoritesListAccountsUpdated_t.PackSmall d )
 			{
-				get
+				return new FavoritesListAccountsUpdated_t()
 				{
-					return new FavoritesListAccountsUpdated_t()
-					{
-						m_eResult = this.m_eResult,
-					};
-				}
+					m_eResult = d.m_eResult,
+				};
 			}
 		}
 	}
@@ -1563,16 +1413,13 @@ namespace SteamNative
 			public IntPtr m_ppStrings; // const char **
 			public int m_nNumStrings; // int32
 			
-			public SteamParamStringArray_t Get
+			public static implicit operator  SteamParamStringArray_t (  SteamParamStringArray_t.PackSmall d )
 			{
-				get
+				return new SteamParamStringArray_t()
 				{
-					return new SteamParamStringArray_t()
-					{
-						m_ppStrings = this.m_ppStrings,
-						m_nNumStrings = this.m_nNumStrings,
-					};
-				}
+					m_ppStrings = d.m_ppStrings,
+					m_nNumStrings = d.m_nNumStrings,
+				};
 			}
 		}
 	}
@@ -1592,17 +1439,14 @@ namespace SteamNative
 			public Result m_eResult; // enum EResult
 			public int m_unNumDownloads; // int
 			
-			public RemoteStorageAppSyncedClient_t Get
+			public static implicit operator  RemoteStorageAppSyncedClient_t (  RemoteStorageAppSyncedClient_t.PackSmall d )
 			{
-				get
+				return new RemoteStorageAppSyncedClient_t()
 				{
-					return new RemoteStorageAppSyncedClient_t()
-					{
-						m_nAppID = this.m_nAppID,
-						m_eResult = this.m_eResult,
-						m_unNumDownloads = this.m_unNumDownloads,
-					};
-				}
+					m_nAppID = d.m_nAppID,
+					m_eResult = d.m_eResult,
+					m_unNumDownloads = d.m_unNumDownloads,
+				};
 			}
 		}
 	}
@@ -1622,17 +1466,14 @@ namespace SteamNative
 			public Result m_eResult; // enum EResult
 			public int m_unNumUploads; // int
 			
-			public RemoteStorageAppSyncedServer_t Get
+			public static implicit operator  RemoteStorageAppSyncedServer_t (  RemoteStorageAppSyncedServer_t.PackSmall d )
 			{
-				get
+				return new RemoteStorageAppSyncedServer_t()
 				{
-					return new RemoteStorageAppSyncedServer_t()
-					{
-						m_nAppID = this.m_nAppID,
-						m_eResult = this.m_eResult,
-						m_unNumUploads = this.m_unNumUploads,
-					};
-				}
+					m_nAppID = d.m_nAppID,
+					m_eResult = d.m_eResult,
+					m_unNumUploads = d.m_unNumUploads,
+				};
 			}
 		}
 	}
@@ -1660,19 +1501,16 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bUploading; // _Bool
 			
-			public RemoteStorageAppSyncProgress_t Get
+			public static implicit operator  RemoteStorageAppSyncProgress_t (  RemoteStorageAppSyncProgress_t.PackSmall d )
 			{
-				get
+				return new RemoteStorageAppSyncProgress_t()
 				{
-					return new RemoteStorageAppSyncProgress_t()
-					{
-						m_rgchCurrentFile = this.m_rgchCurrentFile,
-						m_nAppID = this.m_nAppID,
-						m_uBytesTransferredThisChunk = this.m_uBytesTransferredThisChunk,
-						m_dAppPercentComplete = this.m_dAppPercentComplete,
-						m_bUploading = this.m_bUploading,
-					};
-				}
+					m_rgchCurrentFile = d.m_rgchCurrentFile,
+					m_nAppID = d.m_nAppID,
+					m_uBytesTransferredThisChunk = d.m_uBytesTransferredThisChunk,
+					m_dAppPercentComplete = d.m_dAppPercentComplete,
+					m_bUploading = d.m_bUploading,
+				};
 			}
 		}
 	}
@@ -1690,16 +1528,13 @@ namespace SteamNative
 			public uint m_nAppID; // AppId_t
 			public Result m_eResult; // enum EResult
 			
-			public RemoteStorageAppSyncStatusCheck_t Get
+			public static implicit operator  RemoteStorageAppSyncStatusCheck_t (  RemoteStorageAppSyncStatusCheck_t.PackSmall d )
 			{
-				get
+				return new RemoteStorageAppSyncStatusCheck_t()
 				{
-					return new RemoteStorageAppSyncStatusCheck_t()
-					{
-						m_nAppID = this.m_nAppID,
-						m_eResult = this.m_eResult,
-					};
-				}
+					m_nAppID = d.m_nAppID,
+					m_eResult = d.m_eResult,
+				};
 			}
 		}
 	}
@@ -1717,16 +1552,13 @@ namespace SteamNative
 			public uint m_nAppID; // AppId_t
 			public Result m_eResult; // enum EResult
 			
-			public RemoteStorageConflictResolution_t Get
+			public static implicit operator  RemoteStorageConflictResolution_t (  RemoteStorageConflictResolution_t.PackSmall d )
 			{
-				get
+				return new RemoteStorageConflictResolution_t()
 				{
-					return new RemoteStorageConflictResolution_t()
-					{
-						m_nAppID = this.m_nAppID,
-						m_eResult = this.m_eResult,
-					};
-				}
+					m_nAppID = d.m_nAppID,
+					m_eResult = d.m_eResult,
+				};
 			}
 		}
 	}
@@ -1748,17 +1580,14 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
 			public string m_rgchFilename; // char [260]
 			
-			public RemoteStorageFileShareResult_t Get
+			public static implicit operator  RemoteStorageFileShareResult_t (  RemoteStorageFileShareResult_t.PackSmall d )
 			{
-				get
+				return new RemoteStorageFileShareResult_t()
 				{
-					return new RemoteStorageFileShareResult_t()
-					{
-						m_eResult = this.m_eResult,
-						m_hFile = this.m_hFile,
-						m_rgchFilename = this.m_rgchFilename,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_hFile = d.m_hFile,
+					m_rgchFilename = d.m_rgchFilename,
+				};
 			}
 		}
 	}
@@ -1780,17 +1609,14 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bUserNeedsToAcceptWorkshopLegalAgreement; // _Bool
 			
-			public RemoteStoragePublishFileResult_t Get
+			public static implicit operator  RemoteStoragePublishFileResult_t (  RemoteStoragePublishFileResult_t.PackSmall d )
 			{
-				get
+				return new RemoteStoragePublishFileResult_t()
 				{
-					return new RemoteStoragePublishFileResult_t()
-					{
-						m_eResult = this.m_eResult,
-						m_nPublishedFileId = this.m_nPublishedFileId,
-						m_bUserNeedsToAcceptWorkshopLegalAgreement = this.m_bUserNeedsToAcceptWorkshopLegalAgreement,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_nPublishedFileId = d.m_nPublishedFileId,
+					m_bUserNeedsToAcceptWorkshopLegalAgreement = d.m_bUserNeedsToAcceptWorkshopLegalAgreement,
+				};
 			}
 		}
 	}
@@ -1808,16 +1634,13 @@ namespace SteamNative
 			public Result m_eResult; // enum EResult
 			public ulong m_nPublishedFileId; // PublishedFileId_t
 			
-			public RemoteStorageDeletePublishedFileResult_t Get
+			public static implicit operator  RemoteStorageDeletePublishedFileResult_t (  RemoteStorageDeletePublishedFileResult_t.PackSmall d )
 			{
-				get
+				return new RemoteStorageDeletePublishedFileResult_t()
 				{
-					return new RemoteStorageDeletePublishedFileResult_t()
-					{
-						m_eResult = this.m_eResult,
-						m_nPublishedFileId = this.m_nPublishedFileId,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_nPublishedFileId = d.m_nPublishedFileId,
+				};
 			}
 		}
 	}
@@ -1841,18 +1664,15 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
 			public ulong[] m_rgPublishedFileId; // PublishedFileId_t [50]
 			
-			public RemoteStorageEnumerateUserPublishedFilesResult_t Get
+			public static implicit operator  RemoteStorageEnumerateUserPublishedFilesResult_t (  RemoteStorageEnumerateUserPublishedFilesResult_t.PackSmall d )
 			{
-				get
+				return new RemoteStorageEnumerateUserPublishedFilesResult_t()
 				{
-					return new RemoteStorageEnumerateUserPublishedFilesResult_t()
-					{
-						m_eResult = this.m_eResult,
-						m_nResultsReturned = this.m_nResultsReturned,
-						m_nTotalResultCount = this.m_nTotalResultCount,
-						m_rgPublishedFileId = this.m_rgPublishedFileId,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_nResultsReturned = d.m_nResultsReturned,
+					m_nTotalResultCount = d.m_nTotalResultCount,
+					m_rgPublishedFileId = d.m_rgPublishedFileId,
+				};
 			}
 		}
 	}
@@ -1870,16 +1690,13 @@ namespace SteamNative
 			public Result m_eResult; // enum EResult
 			public ulong m_nPublishedFileId; // PublishedFileId_t
 			
-			public RemoteStorageSubscribePublishedFileResult_t Get
+			public static implicit operator  RemoteStorageSubscribePublishedFileResult_t (  RemoteStorageSubscribePublishedFileResult_t.PackSmall d )
 			{
-				get
+				return new RemoteStorageSubscribePublishedFileResult_t()
 				{
-					return new RemoteStorageSubscribePublishedFileResult_t()
-					{
-						m_eResult = this.m_eResult,
-						m_nPublishedFileId = this.m_nPublishedFileId,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_nPublishedFileId = d.m_nPublishedFileId,
+				};
 			}
 		}
 	}
@@ -1907,19 +1724,16 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
 			public uint[] m_rgRTimeSubscribed; // uint32 [50]
 			
-			public RemoteStorageEnumerateUserSubscribedFilesResult_t Get
+			public static implicit operator  RemoteStorageEnumerateUserSubscribedFilesResult_t (  RemoteStorageEnumerateUserSubscribedFilesResult_t.PackSmall d )
 			{
-				get
+				return new RemoteStorageEnumerateUserSubscribedFilesResult_t()
 				{
-					return new RemoteStorageEnumerateUserSubscribedFilesResult_t()
-					{
-						m_eResult = this.m_eResult,
-						m_nResultsReturned = this.m_nResultsReturned,
-						m_nTotalResultCount = this.m_nTotalResultCount,
-						m_rgPublishedFileId = this.m_rgPublishedFileId,
-						m_rgRTimeSubscribed = this.m_rgRTimeSubscribed,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_nResultsReturned = d.m_nResultsReturned,
+					m_nTotalResultCount = d.m_nTotalResultCount,
+					m_rgPublishedFileId = d.m_rgPublishedFileId,
+					m_rgRTimeSubscribed = d.m_rgRTimeSubscribed,
+				};
 			}
 		}
 	}
@@ -1937,16 +1751,13 @@ namespace SteamNative
 			public Result m_eResult; // enum EResult
 			public ulong m_nPublishedFileId; // PublishedFileId_t
 			
-			public RemoteStorageUnsubscribePublishedFileResult_t Get
+			public static implicit operator  RemoteStorageUnsubscribePublishedFileResult_t (  RemoteStorageUnsubscribePublishedFileResult_t.PackSmall d )
 			{
-				get
+				return new RemoteStorageUnsubscribePublishedFileResult_t()
 				{
-					return new RemoteStorageUnsubscribePublishedFileResult_t()
-					{
-						m_eResult = this.m_eResult,
-						m_nPublishedFileId = this.m_nPublishedFileId,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_nPublishedFileId = d.m_nPublishedFileId,
+				};
 			}
 		}
 	}
@@ -1968,17 +1779,14 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bUserNeedsToAcceptWorkshopLegalAgreement; // _Bool
 			
-			public RemoteStorageUpdatePublishedFileResult_t Get
+			public static implicit operator  RemoteStorageUpdatePublishedFileResult_t (  RemoteStorageUpdatePublishedFileResult_t.PackSmall d )
 			{
-				get
+				return new RemoteStorageUpdatePublishedFileResult_t()
 				{
-					return new RemoteStorageUpdatePublishedFileResult_t()
-					{
-						m_eResult = this.m_eResult,
-						m_nPublishedFileId = this.m_nPublishedFileId,
-						m_bUserNeedsToAcceptWorkshopLegalAgreement = this.m_bUserNeedsToAcceptWorkshopLegalAgreement,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_nPublishedFileId = d.m_nPublishedFileId,
+					m_bUserNeedsToAcceptWorkshopLegalAgreement = d.m_bUserNeedsToAcceptWorkshopLegalAgreement,
+				};
 			}
 		}
 	}
@@ -2006,20 +1814,17 @@ namespace SteamNative
 			public string m_pchFileName; // char [260]
 			public ulong m_ulSteamIDOwner; // uint64
 			
-			public RemoteStorageDownloadUGCResult_t Get
+			public static implicit operator  RemoteStorageDownloadUGCResult_t (  RemoteStorageDownloadUGCResult_t.PackSmall d )
 			{
-				get
+				return new RemoteStorageDownloadUGCResult_t()
 				{
-					return new RemoteStorageDownloadUGCResult_t()
-					{
-						m_eResult = this.m_eResult,
-						m_hFile = this.m_hFile,
-						m_nAppID = this.m_nAppID,
-						m_nSizeInBytes = this.m_nSizeInBytes,
-						m_pchFileName = this.m_pchFileName,
-						m_ulSteamIDOwner = this.m_ulSteamIDOwner,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_hFile = d.m_hFile,
+					m_nAppID = d.m_nAppID,
+					m_nSizeInBytes = d.m_nSizeInBytes,
+					m_pchFileName = d.m_pchFileName,
+					m_ulSteamIDOwner = d.m_ulSteamIDOwner,
+				};
 			}
 		}
 	}
@@ -2091,35 +1896,32 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bAcceptedForUse; // _Bool
 			
-			public RemoteStorageGetPublishedFileDetailsResult_t Get
+			public static implicit operator  RemoteStorageGetPublishedFileDetailsResult_t (  RemoteStorageGetPublishedFileDetailsResult_t.PackSmall d )
 			{
-				get
+				return new RemoteStorageGetPublishedFileDetailsResult_t()
 				{
-					return new RemoteStorageGetPublishedFileDetailsResult_t()
-					{
-						m_eResult = this.m_eResult,
-						m_nPublishedFileId = this.m_nPublishedFileId,
-						m_nCreatorAppID = this.m_nCreatorAppID,
-						m_nConsumerAppID = this.m_nConsumerAppID,
-						m_rgchTitle = this.m_rgchTitle,
-						m_rgchDescription = this.m_rgchDescription,
-						m_hFile = this.m_hFile,
-						m_hPreviewFile = this.m_hPreviewFile,
-						m_ulSteamIDOwner = this.m_ulSteamIDOwner,
-						m_rtimeCreated = this.m_rtimeCreated,
-						m_rtimeUpdated = this.m_rtimeUpdated,
-						m_eVisibility = this.m_eVisibility,
-						m_bBanned = this.m_bBanned,
-						m_rgchTags = this.m_rgchTags,
-						m_bTagsTruncated = this.m_bTagsTruncated,
-						m_pchFileName = this.m_pchFileName,
-						m_nFileSize = this.m_nFileSize,
-						m_nPreviewFileSize = this.m_nPreviewFileSize,
-						m_rgchURL = this.m_rgchURL,
-						m_eFileType = this.m_eFileType,
-						m_bAcceptedForUse = this.m_bAcceptedForUse,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_nPublishedFileId = d.m_nPublishedFileId,
+					m_nCreatorAppID = d.m_nCreatorAppID,
+					m_nConsumerAppID = d.m_nConsumerAppID,
+					m_rgchTitle = d.m_rgchTitle,
+					m_rgchDescription = d.m_rgchDescription,
+					m_hFile = d.m_hFile,
+					m_hPreviewFile = d.m_hPreviewFile,
+					m_ulSteamIDOwner = d.m_ulSteamIDOwner,
+					m_rtimeCreated = d.m_rtimeCreated,
+					m_rtimeUpdated = d.m_rtimeUpdated,
+					m_eVisibility = d.m_eVisibility,
+					m_bBanned = d.m_bBanned,
+					m_rgchTags = d.m_rgchTags,
+					m_bTagsTruncated = d.m_bTagsTruncated,
+					m_pchFileName = d.m_pchFileName,
+					m_nFileSize = d.m_nFileSize,
+					m_nPreviewFileSize = d.m_nPreviewFileSize,
+					m_rgchURL = d.m_rgchURL,
+					m_eFileType = d.m_eFileType,
+					m_bAcceptedForUse = d.m_bAcceptedForUse,
+				};
 			}
 		}
 	}
@@ -2151,21 +1953,18 @@ namespace SteamNative
 			public uint m_nAppId; // AppId_t
 			public uint m_unStartIndex; // uint32
 			
-			public RemoteStorageEnumerateWorkshopFilesResult_t Get
+			public static implicit operator  RemoteStorageEnumerateWorkshopFilesResult_t (  RemoteStorageEnumerateWorkshopFilesResult_t.PackSmall d )
 			{
-				get
+				return new RemoteStorageEnumerateWorkshopFilesResult_t()
 				{
-					return new RemoteStorageEnumerateWorkshopFilesResult_t()
-					{
-						m_eResult = this.m_eResult,
-						m_nResultsReturned = this.m_nResultsReturned,
-						m_nTotalResultCount = this.m_nTotalResultCount,
-						m_rgPublishedFileId = this.m_rgPublishedFileId,
-						m_rgScore = this.m_rgScore,
-						m_nAppId = this.m_nAppId,
-						m_unStartIndex = this.m_unStartIndex,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_nResultsReturned = d.m_nResultsReturned,
+					m_nTotalResultCount = d.m_nTotalResultCount,
+					m_rgPublishedFileId = d.m_rgPublishedFileId,
+					m_rgScore = d.m_rgScore,
+					m_nAppId = d.m_nAppId,
+					m_unStartIndex = d.m_unStartIndex,
+				};
 			}
 		}
 	}
@@ -2191,20 +1990,17 @@ namespace SteamNative
 			public int m_nReports; // int32
 			public float m_fScore; // float
 			
-			public RemoteStorageGetPublishedItemVoteDetailsResult_t Get
+			public static implicit operator  RemoteStorageGetPublishedItemVoteDetailsResult_t (  RemoteStorageGetPublishedItemVoteDetailsResult_t.PackSmall d )
 			{
-				get
+				return new RemoteStorageGetPublishedItemVoteDetailsResult_t()
 				{
-					return new RemoteStorageGetPublishedItemVoteDetailsResult_t()
-					{
-						m_eResult = this.m_eResult,
-						m_unPublishedFileId = this.m_unPublishedFileId,
-						m_nVotesFor = this.m_nVotesFor,
-						m_nVotesAgainst = this.m_nVotesAgainst,
-						m_nReports = this.m_nReports,
-						m_fScore = this.m_fScore,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_unPublishedFileId = d.m_unPublishedFileId,
+					m_nVotesFor = d.m_nVotesFor,
+					m_nVotesAgainst = d.m_nVotesAgainst,
+					m_nReports = d.m_nReports,
+					m_fScore = d.m_fScore,
+				};
 			}
 		}
 	}
@@ -2222,16 +2018,13 @@ namespace SteamNative
 			public ulong m_nPublishedFileId; // PublishedFileId_t
 			public uint m_nAppID; // AppId_t
 			
-			public RemoteStoragePublishedFileSubscribed_t Get
+			public static implicit operator  RemoteStoragePublishedFileSubscribed_t (  RemoteStoragePublishedFileSubscribed_t.PackSmall d )
 			{
-				get
+				return new RemoteStoragePublishedFileSubscribed_t()
 				{
-					return new RemoteStoragePublishedFileSubscribed_t()
-					{
-						m_nPublishedFileId = this.m_nPublishedFileId,
-						m_nAppID = this.m_nAppID,
-					};
-				}
+					m_nPublishedFileId = d.m_nPublishedFileId,
+					m_nAppID = d.m_nAppID,
+				};
 			}
 		}
 	}
@@ -2249,16 +2042,13 @@ namespace SteamNative
 			public ulong m_nPublishedFileId; // PublishedFileId_t
 			public uint m_nAppID; // AppId_t
 			
-			public RemoteStoragePublishedFileUnsubscribed_t Get
+			public static implicit operator  RemoteStoragePublishedFileUnsubscribed_t (  RemoteStoragePublishedFileUnsubscribed_t.PackSmall d )
 			{
-				get
+				return new RemoteStoragePublishedFileUnsubscribed_t()
 				{
-					return new RemoteStoragePublishedFileUnsubscribed_t()
-					{
-						m_nPublishedFileId = this.m_nPublishedFileId,
-						m_nAppID = this.m_nAppID,
-					};
-				}
+					m_nPublishedFileId = d.m_nPublishedFileId,
+					m_nAppID = d.m_nAppID,
+				};
 			}
 		}
 	}
@@ -2276,16 +2066,13 @@ namespace SteamNative
 			public ulong m_nPublishedFileId; // PublishedFileId_t
 			public uint m_nAppID; // AppId_t
 			
-			public RemoteStoragePublishedFileDeleted_t Get
+			public static implicit operator  RemoteStoragePublishedFileDeleted_t (  RemoteStoragePublishedFileDeleted_t.PackSmall d )
 			{
-				get
+				return new RemoteStoragePublishedFileDeleted_t()
 				{
-					return new RemoteStoragePublishedFileDeleted_t()
-					{
-						m_nPublishedFileId = this.m_nPublishedFileId,
-						m_nAppID = this.m_nAppID,
-					};
-				}
+					m_nPublishedFileId = d.m_nPublishedFileId,
+					m_nAppID = d.m_nAppID,
+				};
 			}
 		}
 	}
@@ -2303,16 +2090,13 @@ namespace SteamNative
 			public Result m_eResult; // enum EResult
 			public ulong m_nPublishedFileId; // PublishedFileId_t
 			
-			public RemoteStorageUpdateUserPublishedItemVoteResult_t Get
+			public static implicit operator  RemoteStorageUpdateUserPublishedItemVoteResult_t (  RemoteStorageUpdateUserPublishedItemVoteResult_t.PackSmall d )
 			{
-				get
+				return new RemoteStorageUpdateUserPublishedItemVoteResult_t()
 				{
-					return new RemoteStorageUpdateUserPublishedItemVoteResult_t()
-					{
-						m_eResult = this.m_eResult,
-						m_nPublishedFileId = this.m_nPublishedFileId,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_nPublishedFileId = d.m_nPublishedFileId,
+				};
 			}
 		}
 	}
@@ -2332,17 +2116,14 @@ namespace SteamNative
 			public ulong m_nPublishedFileId; // PublishedFileId_t
 			public WorkshopVote m_eVote; // enum EWorkshopVote
 			
-			public RemoteStorageUserVoteDetails_t Get
+			public static implicit operator  RemoteStorageUserVoteDetails_t (  RemoteStorageUserVoteDetails_t.PackSmall d )
 			{
-				get
+				return new RemoteStorageUserVoteDetails_t()
 				{
-					return new RemoteStorageUserVoteDetails_t()
-					{
-						m_eResult = this.m_eResult,
-						m_nPublishedFileId = this.m_nPublishedFileId,
-						m_eVote = this.m_eVote,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_nPublishedFileId = d.m_nPublishedFileId,
+					m_eVote = d.m_eVote,
+				};
 			}
 		}
 	}
@@ -2366,18 +2147,15 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
 			public ulong[] m_rgPublishedFileId; // PublishedFileId_t [50]
 			
-			public RemoteStorageEnumerateUserSharedWorkshopFilesResult_t Get
+			public static implicit operator  RemoteStorageEnumerateUserSharedWorkshopFilesResult_t (  RemoteStorageEnumerateUserSharedWorkshopFilesResult_t.PackSmall d )
 			{
-				get
+				return new RemoteStorageEnumerateUserSharedWorkshopFilesResult_t()
 				{
-					return new RemoteStorageEnumerateUserSharedWorkshopFilesResult_t()
-					{
-						m_eResult = this.m_eResult,
-						m_nResultsReturned = this.m_nResultsReturned,
-						m_nTotalResultCount = this.m_nTotalResultCount,
-						m_rgPublishedFileId = this.m_rgPublishedFileId,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_nResultsReturned = d.m_nResultsReturned,
+					m_nTotalResultCount = d.m_nTotalResultCount,
+					m_rgPublishedFileId = d.m_rgPublishedFileId,
+				};
 			}
 		}
 	}
@@ -2397,17 +2175,14 @@ namespace SteamNative
 			public ulong m_nPublishedFileId; // PublishedFileId_t
 			public WorkshopFileAction m_eAction; // enum EWorkshopFileAction
 			
-			public RemoteStorageSetUserPublishedFileActionResult_t Get
+			public static implicit operator  RemoteStorageSetUserPublishedFileActionResult_t (  RemoteStorageSetUserPublishedFileActionResult_t.PackSmall d )
 			{
-				get
+				return new RemoteStorageSetUserPublishedFileActionResult_t()
 				{
-					return new RemoteStorageSetUserPublishedFileActionResult_t()
-					{
-						m_eResult = this.m_eResult,
-						m_nPublishedFileId = this.m_nPublishedFileId,
-						m_eAction = this.m_eAction,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_nPublishedFileId = d.m_nPublishedFileId,
+					m_eAction = d.m_eAction,
+				};
 			}
 		}
 	}
@@ -2437,20 +2212,17 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
 			public uint[] m_rgRTimeUpdated; // uint32 [50]
 			
-			public RemoteStorageEnumeratePublishedFilesByUserActionResult_t Get
+			public static implicit operator  RemoteStorageEnumeratePublishedFilesByUserActionResult_t (  RemoteStorageEnumeratePublishedFilesByUserActionResult_t.PackSmall d )
 			{
-				get
+				return new RemoteStorageEnumeratePublishedFilesByUserActionResult_t()
 				{
-					return new RemoteStorageEnumeratePublishedFilesByUserActionResult_t()
-					{
-						m_eResult = this.m_eResult,
-						m_eAction = this.m_eAction,
-						m_nResultsReturned = this.m_nResultsReturned,
-						m_nTotalResultCount = this.m_nTotalResultCount,
-						m_rgPublishedFileId = this.m_rgPublishedFileId,
-						m_rgRTimeUpdated = this.m_rgRTimeUpdated,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_eAction = d.m_eAction,
+					m_nResultsReturned = d.m_nResultsReturned,
+					m_nTotalResultCount = d.m_nTotalResultCount,
+					m_rgPublishedFileId = d.m_rgPublishedFileId,
+					m_rgRTimeUpdated = d.m_rgRTimeUpdated,
+				};
 			}
 		}
 	}
@@ -2470,16 +2242,13 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bPreview; // _Bool
 			
-			public RemoteStoragePublishFileProgress_t Get
+			public static implicit operator  RemoteStoragePublishFileProgress_t (  RemoteStoragePublishFileProgress_t.PackSmall d )
 			{
-				get
+				return new RemoteStoragePublishFileProgress_t()
 				{
-					return new RemoteStoragePublishFileProgress_t()
-					{
-						m_dPercentFile = this.m_dPercentFile,
-						m_bPreview = this.m_bPreview,
-					};
-				}
+					m_dPercentFile = d.m_dPercentFile,
+					m_bPreview = d.m_bPreview,
+				};
 			}
 		}
 	}
@@ -2499,17 +2268,14 @@ namespace SteamNative
 			public uint m_nAppID; // AppId_t
 			public ulong m_ulUnused; // uint64
 			
-			public RemoteStoragePublishedFileUpdated_t Get
+			public static implicit operator  RemoteStoragePublishedFileUpdated_t (  RemoteStoragePublishedFileUpdated_t.PackSmall d )
 			{
-				get
+				return new RemoteStoragePublishedFileUpdated_t()
 				{
-					return new RemoteStoragePublishedFileUpdated_t()
-					{
-						m_nPublishedFileId = this.m_nPublishedFileId,
-						m_nAppID = this.m_nAppID,
-						m_ulUnused = this.m_ulUnused,
-					};
-				}
+					m_nPublishedFileId = d.m_nPublishedFileId,
+					m_nAppID = d.m_nAppID,
+					m_ulUnused = d.m_ulUnused,
+				};
 			}
 		}
 	}
@@ -2525,15 +2291,12 @@ namespace SteamNative
 		{
 			public Result m_eResult; // enum EResult
 			
-			public RemoteStorageFileWriteAsyncComplete_t Get
+			public static implicit operator  RemoteStorageFileWriteAsyncComplete_t (  RemoteStorageFileWriteAsyncComplete_t.PackSmall d )
 			{
-				get
+				return new RemoteStorageFileWriteAsyncComplete_t()
 				{
-					return new RemoteStorageFileWriteAsyncComplete_t()
-					{
-						m_eResult = this.m_eResult,
-					};
-				}
+					m_eResult = d.m_eResult,
+				};
 			}
 		}
 	}
@@ -2555,18 +2318,15 @@ namespace SteamNative
 			public uint m_nOffset; // uint32
 			public uint m_cubRead; // uint32
 			
-			public RemoteStorageFileReadAsyncComplete_t Get
+			public static implicit operator  RemoteStorageFileReadAsyncComplete_t (  RemoteStorageFileReadAsyncComplete_t.PackSmall d )
 			{
-				get
+				return new RemoteStorageFileReadAsyncComplete_t()
 				{
-					return new RemoteStorageFileReadAsyncComplete_t()
-					{
-						m_hFileReadAsync = this.m_hFileReadAsync,
-						m_eResult = this.m_eResult,
-						m_nOffset = this.m_nOffset,
-						m_cubRead = this.m_cubRead,
-					};
-				}
+					m_hFileReadAsync = d.m_hFileReadAsync,
+					m_eResult = d.m_eResult,
+					m_nOffset = d.m_nOffset,
+					m_cubRead = d.m_cubRead,
+				};
 			}
 		}
 	}
@@ -2590,19 +2350,16 @@ namespace SteamNative
 			public int m_cDetails; // int32
 			public ulong m_hUGC; // UGCHandle_t
 			
-			public LeaderboardEntry_t Get
+			public static implicit operator  LeaderboardEntry_t (  LeaderboardEntry_t.PackSmall d )
 			{
-				get
+				return new LeaderboardEntry_t()
 				{
-					return new LeaderboardEntry_t()
-					{
-						m_steamIDUser = this.m_steamIDUser,
-						m_nGlobalRank = this.m_nGlobalRank,
-						m_nScore = this.m_nScore,
-						m_cDetails = this.m_cDetails,
-						m_hUGC = this.m_hUGC,
-					};
-				}
+					m_steamIDUser = d.m_steamIDUser,
+					m_nGlobalRank = d.m_nGlobalRank,
+					m_nScore = d.m_nScore,
+					m_cDetails = d.m_cDetails,
+					m_hUGC = d.m_hUGC,
+				};
 			}
 		}
 	}
@@ -2622,17 +2379,14 @@ namespace SteamNative
 			public Result m_eResult; // enum EResult
 			public ulong m_steamIDUser; // class CSteamID
 			
-			public UserStatsReceived_t Get
+			public static implicit operator  UserStatsReceived_t (  UserStatsReceived_t.PackSmall d )
 			{
-				get
+				return new UserStatsReceived_t()
 				{
-					return new UserStatsReceived_t()
-					{
-						m_nGameID = this.m_nGameID,
-						m_eResult = this.m_eResult,
-						m_steamIDUser = this.m_steamIDUser,
-					};
-				}
+					m_nGameID = d.m_nGameID,
+					m_eResult = d.m_eResult,
+					m_steamIDUser = d.m_steamIDUser,
+				};
 			}
 		}
 	}
@@ -2650,16 +2404,13 @@ namespace SteamNative
 			public ulong m_nGameID; // uint64
 			public Result m_eResult; // enum EResult
 			
-			public UserStatsStored_t Get
+			public static implicit operator  UserStatsStored_t (  UserStatsStored_t.PackSmall d )
 			{
-				get
+				return new UserStatsStored_t()
 				{
-					return new UserStatsStored_t()
-					{
-						m_nGameID = this.m_nGameID,
-						m_eResult = this.m_eResult,
-					};
-				}
+					m_nGameID = d.m_nGameID,
+					m_eResult = d.m_eResult,
+				};
 			}
 		}
 	}
@@ -2687,19 +2438,16 @@ namespace SteamNative
 			public uint m_nCurProgress; // uint32
 			public uint m_nMaxProgress; // uint32
 			
-			public UserAchievementStored_t Get
+			public static implicit operator  UserAchievementStored_t (  UserAchievementStored_t.PackSmall d )
 			{
-				get
+				return new UserAchievementStored_t()
 				{
-					return new UserAchievementStored_t()
-					{
-						m_nGameID = this.m_nGameID,
-						m_bGroupAchievement = this.m_bGroupAchievement,
-						m_rgchAchievementName = this.m_rgchAchievementName,
-						m_nCurProgress = this.m_nCurProgress,
-						m_nMaxProgress = this.m_nMaxProgress,
-					};
-				}
+					m_nGameID = d.m_nGameID,
+					m_bGroupAchievement = d.m_bGroupAchievement,
+					m_rgchAchievementName = d.m_rgchAchievementName,
+					m_nCurProgress = d.m_nCurProgress,
+					m_nMaxProgress = d.m_nMaxProgress,
+				};
 			}
 		}
 	}
@@ -2717,16 +2465,13 @@ namespace SteamNative
 			public ulong m_hSteamLeaderboard; // SteamLeaderboard_t
 			public byte m_bLeaderboardFound; // uint8
 			
-			public LeaderboardFindResult_t Get
+			public static implicit operator  LeaderboardFindResult_t (  LeaderboardFindResult_t.PackSmall d )
 			{
-				get
+				return new LeaderboardFindResult_t()
 				{
-					return new LeaderboardFindResult_t()
-					{
-						m_hSteamLeaderboard = this.m_hSteamLeaderboard,
-						m_bLeaderboardFound = this.m_bLeaderboardFound,
-					};
-				}
+					m_hSteamLeaderboard = d.m_hSteamLeaderboard,
+					m_bLeaderboardFound = d.m_bLeaderboardFound,
+				};
 			}
 		}
 	}
@@ -2746,17 +2491,14 @@ namespace SteamNative
 			public ulong m_hSteamLeaderboardEntries; // SteamLeaderboardEntries_t
 			public int m_cEntryCount; // int
 			
-			public LeaderboardScoresDownloaded_t Get
+			public static implicit operator  LeaderboardScoresDownloaded_t (  LeaderboardScoresDownloaded_t.PackSmall d )
 			{
-				get
+				return new LeaderboardScoresDownloaded_t()
 				{
-					return new LeaderboardScoresDownloaded_t()
-					{
-						m_hSteamLeaderboard = this.m_hSteamLeaderboard,
-						m_hSteamLeaderboardEntries = this.m_hSteamLeaderboardEntries,
-						m_cEntryCount = this.m_cEntryCount,
-					};
-				}
+					m_hSteamLeaderboard = d.m_hSteamLeaderboard,
+					m_hSteamLeaderboardEntries = d.m_hSteamLeaderboardEntries,
+					m_cEntryCount = d.m_cEntryCount,
+				};
 			}
 		}
 	}
@@ -2782,20 +2524,17 @@ namespace SteamNative
 			public int m_nGlobalRankNew; // int
 			public int m_nGlobalRankPrevious; // int
 			
-			public LeaderboardScoreUploaded_t Get
+			public static implicit operator  LeaderboardScoreUploaded_t (  LeaderboardScoreUploaded_t.PackSmall d )
 			{
-				get
+				return new LeaderboardScoreUploaded_t()
 				{
-					return new LeaderboardScoreUploaded_t()
-					{
-						m_bSuccess = this.m_bSuccess,
-						m_hSteamLeaderboard = this.m_hSteamLeaderboard,
-						m_nScore = this.m_nScore,
-						m_bScoreChanged = this.m_bScoreChanged,
-						m_nGlobalRankNew = this.m_nGlobalRankNew,
-						m_nGlobalRankPrevious = this.m_nGlobalRankPrevious,
-					};
-				}
+					m_bSuccess = d.m_bSuccess,
+					m_hSteamLeaderboard = d.m_hSteamLeaderboard,
+					m_nScore = d.m_nScore,
+					m_bScoreChanged = d.m_bScoreChanged,
+					m_nGlobalRankNew = d.m_nGlobalRankNew,
+					m_nGlobalRankPrevious = d.m_nGlobalRankPrevious,
+				};
 			}
 		}
 	}
@@ -2813,16 +2552,13 @@ namespace SteamNative
 			public byte m_bSuccess; // uint8
 			public int m_cPlayers; // int32
 			
-			public NumberOfCurrentPlayers_t Get
+			public static implicit operator  NumberOfCurrentPlayers_t (  NumberOfCurrentPlayers_t.PackSmall d )
 			{
-				get
+				return new NumberOfCurrentPlayers_t()
 				{
-					return new NumberOfCurrentPlayers_t()
-					{
-						m_bSuccess = this.m_bSuccess,
-						m_cPlayers = this.m_cPlayers,
-					};
-				}
+					m_bSuccess = d.m_bSuccess,
+					m_cPlayers = d.m_cPlayers,
+				};
 			}
 		}
 	}
@@ -2838,15 +2574,12 @@ namespace SteamNative
 		{
 			public ulong m_steamIDUser; // class CSteamID
 			
-			public UserStatsUnloaded_t Get
+			public static implicit operator  UserStatsUnloaded_t (  UserStatsUnloaded_t.PackSmall d )
 			{
-				get
+				return new UserStatsUnloaded_t()
 				{
-					return new UserStatsUnloaded_t()
-					{
-						m_steamIDUser = this.m_steamIDUser,
-					};
-				}
+					m_steamIDUser = d.m_steamIDUser,
+				};
 			}
 		}
 	}
@@ -2872,18 +2605,15 @@ namespace SteamNative
 			public bool m_bAchieved; // _Bool
 			public int m_nIconHandle; // int
 			
-			public UserAchievementIconFetched_t Get
+			public static implicit operator  UserAchievementIconFetched_t (  UserAchievementIconFetched_t.PackSmall d )
 			{
-				get
+				return new UserAchievementIconFetched_t()
 				{
-					return new UserAchievementIconFetched_t()
-					{
-						m_nGameID = this.m_nGameID,
-						m_rgchAchievementName = this.m_rgchAchievementName,
-						m_bAchieved = this.m_bAchieved,
-						m_nIconHandle = this.m_nIconHandle,
-					};
-				}
+					m_nGameID = d.m_nGameID,
+					m_rgchAchievementName = d.m_rgchAchievementName,
+					m_bAchieved = d.m_bAchieved,
+					m_nIconHandle = d.m_nIconHandle,
+				};
 			}
 		}
 	}
@@ -2901,16 +2631,13 @@ namespace SteamNative
 			public ulong m_nGameID; // uint64
 			public Result m_eResult; // enum EResult
 			
-			public GlobalAchievementPercentagesReady_t Get
+			public static implicit operator  GlobalAchievementPercentagesReady_t (  GlobalAchievementPercentagesReady_t.PackSmall d )
 			{
-				get
+				return new GlobalAchievementPercentagesReady_t()
 				{
-					return new GlobalAchievementPercentagesReady_t()
-					{
-						m_nGameID = this.m_nGameID,
-						m_eResult = this.m_eResult,
-					};
-				}
+					m_nGameID = d.m_nGameID,
+					m_eResult = d.m_eResult,
+				};
 			}
 		}
 	}
@@ -2928,16 +2655,13 @@ namespace SteamNative
 			public Result m_eResult; // enum EResult
 			public ulong m_hSteamLeaderboard; // SteamLeaderboard_t
 			
-			public LeaderboardUGCSet_t Get
+			public static implicit operator  LeaderboardUGCSet_t (  LeaderboardUGCSet_t.PackSmall d )
 			{
-				get
+				return new LeaderboardUGCSet_t()
 				{
-					return new LeaderboardUGCSet_t()
-					{
-						m_eResult = this.m_eResult,
-						m_hSteamLeaderboard = this.m_hSteamLeaderboard,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_hSteamLeaderboard = d.m_hSteamLeaderboard,
+				};
 			}
 		}
 	}
@@ -2957,17 +2681,14 @@ namespace SteamNative
 			public Result m_eResult; // enum EResult
 			public ulong m_ulRequiredDiskSpace; // uint64
 			
-			public PS3TrophiesInstalled_t Get
+			public static implicit operator  PS3TrophiesInstalled_t (  PS3TrophiesInstalled_t.PackSmall d )
 			{
-				get
+				return new PS3TrophiesInstalled_t()
 				{
-					return new PS3TrophiesInstalled_t()
-					{
-						m_nGameID = this.m_nGameID,
-						m_eResult = this.m_eResult,
-						m_ulRequiredDiskSpace = this.m_ulRequiredDiskSpace,
-					};
-				}
+					m_nGameID = d.m_nGameID,
+					m_eResult = d.m_eResult,
+					m_ulRequiredDiskSpace = d.m_ulRequiredDiskSpace,
+				};
 			}
 		}
 	}
@@ -2985,16 +2706,13 @@ namespace SteamNative
 			public ulong m_nGameID; // uint64
 			public Result m_eResult; // enum EResult
 			
-			public GlobalStatsReceived_t Get
+			public static implicit operator  GlobalStatsReceived_t (  GlobalStatsReceived_t.PackSmall d )
 			{
-				get
+				return new GlobalStatsReceived_t()
 				{
-					return new GlobalStatsReceived_t()
-					{
-						m_nGameID = this.m_nGameID,
-						m_eResult = this.m_eResult,
-					};
-				}
+					m_nGameID = d.m_nGameID,
+					m_eResult = d.m_eResult,
+				};
 			}
 		}
 	}
@@ -3010,15 +2728,12 @@ namespace SteamNative
 		{
 			public uint m_nAppID; // AppId_t
 			
-			public DlcInstalled_t Get
+			public static implicit operator  DlcInstalled_t (  DlcInstalled_t.PackSmall d )
 			{
-				get
+				return new DlcInstalled_t()
 				{
-					return new DlcInstalled_t()
-					{
-						m_nAppID = this.m_nAppID,
-					};
-				}
+					m_nAppID = d.m_nAppID,
+				};
 			}
 		}
 	}
@@ -3036,16 +2751,13 @@ namespace SteamNative
 			public RegisterActivationCodeResult m_eResult; // enum ERegisterActivationCodeResult
 			public uint m_unPackageRegistered; // uint32
 			
-			public RegisterActivationCodeResponse_t Get
+			public static implicit operator  RegisterActivationCodeResponse_t (  RegisterActivationCodeResponse_t.PackSmall d )
 			{
-				get
+				return new RegisterActivationCodeResponse_t()
 				{
-					return new RegisterActivationCodeResponse_t()
-					{
-						m_eResult = this.m_eResult,
-						m_unPackageRegistered = this.m_unPackageRegistered,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_unPackageRegistered = d.m_unPackageRegistered,
+				};
 			}
 		}
 	}
@@ -3069,18 +2781,15 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 240)]
 			public string m_rgchKey; // char [240]
 			
-			public AppProofOfPurchaseKeyResponse_t Get
+			public static implicit operator  AppProofOfPurchaseKeyResponse_t (  AppProofOfPurchaseKeyResponse_t.PackSmall d )
 			{
-				get
+				return new AppProofOfPurchaseKeyResponse_t()
 				{
-					return new AppProofOfPurchaseKeyResponse_t()
-					{
-						m_eResult = this.m_eResult,
-						m_nAppID = this.m_nAppID,
-						m_cchKeyLength = this.m_cchKeyLength,
-						m_rgchKey = this.m_rgchKey,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_nAppID = d.m_nAppID,
+					m_cchKeyLength = d.m_cchKeyLength,
+					m_rgchKey = d.m_rgchKey,
+				};
 			}
 		}
 	}
@@ -3110,22 +2819,19 @@ namespace SteamNative
 			public uint m_nRemoteIP; // uint32
 			public ushort m_nRemotePort; // uint16
 			
-			public P2PSessionState_t Get
+			public static implicit operator  P2PSessionState_t (  P2PSessionState_t.PackSmall d )
 			{
-				get
+				return new P2PSessionState_t()
 				{
-					return new P2PSessionState_t()
-					{
-						m_bConnectionActive = this.m_bConnectionActive,
-						m_bConnecting = this.m_bConnecting,
-						m_eP2PSessionError = this.m_eP2PSessionError,
-						m_bUsingRelay = this.m_bUsingRelay,
-						m_nBytesQueuedForSend = this.m_nBytesQueuedForSend,
-						m_nPacketsQueuedForSend = this.m_nPacketsQueuedForSend,
-						m_nRemoteIP = this.m_nRemoteIP,
-						m_nRemotePort = this.m_nRemotePort,
-					};
-				}
+					m_bConnectionActive = d.m_bConnectionActive,
+					m_bConnecting = d.m_bConnecting,
+					m_eP2PSessionError = d.m_eP2PSessionError,
+					m_bUsingRelay = d.m_bUsingRelay,
+					m_nBytesQueuedForSend = d.m_nBytesQueuedForSend,
+					m_nPacketsQueuedForSend = d.m_nPacketsQueuedForSend,
+					m_nRemoteIP = d.m_nRemoteIP,
+					m_nRemotePort = d.m_nRemotePort,
+				};
 			}
 		}
 	}
@@ -3141,15 +2847,12 @@ namespace SteamNative
 		{
 			public ulong m_steamIDRemote; // class CSteamID
 			
-			public P2PSessionRequest_t Get
+			public static implicit operator  P2PSessionRequest_t (  P2PSessionRequest_t.PackSmall d )
 			{
-				get
+				return new P2PSessionRequest_t()
 				{
-					return new P2PSessionRequest_t()
-					{
-						m_steamIDRemote = this.m_steamIDRemote,
-					};
-				}
+					m_steamIDRemote = d.m_steamIDRemote,
+				};
 			}
 		}
 	}
@@ -3167,16 +2870,13 @@ namespace SteamNative
 			public ulong m_steamIDRemote; // class CSteamID
 			public byte m_eP2PSessionError; // uint8
 			
-			public P2PSessionConnectFail_t Get
+			public static implicit operator  P2PSessionConnectFail_t (  P2PSessionConnectFail_t.PackSmall d )
 			{
-				get
+				return new P2PSessionConnectFail_t()
 				{
-					return new P2PSessionConnectFail_t()
-					{
-						m_steamIDRemote = this.m_steamIDRemote,
-						m_eP2PSessionError = this.m_eP2PSessionError,
-					};
-				}
+					m_steamIDRemote = d.m_steamIDRemote,
+					m_eP2PSessionError = d.m_eP2PSessionError,
+				};
 			}
 		}
 	}
@@ -3198,18 +2898,15 @@ namespace SteamNative
 			public ulong m_steamIDRemote; // class CSteamID
 			public int m_eSNetSocketState; // int
 			
-			public SocketStatusCallback_t Get
+			public static implicit operator  SocketStatusCallback_t (  SocketStatusCallback_t.PackSmall d )
 			{
-				get
+				return new SocketStatusCallback_t()
 				{
-					return new SocketStatusCallback_t()
-					{
-						m_hSocket = this.m_hSocket,
-						m_hListenSocket = this.m_hListenSocket,
-						m_steamIDRemote = this.m_steamIDRemote,
-						m_eSNetSocketState = this.m_eSNetSocketState,
-					};
-				}
+					m_hSocket = d.m_hSocket,
+					m_hListenSocket = d.m_hListenSocket,
+					m_steamIDRemote = d.m_steamIDRemote,
+					m_eSNetSocketState = d.m_eSNetSocketState,
+				};
 			}
 		}
 	}
@@ -3227,16 +2924,13 @@ namespace SteamNative
 			public uint m_hLocal; // ScreenshotHandle
 			public Result m_eResult; // enum EResult
 			
-			public ScreenshotReady_t Get
+			public static implicit operator  ScreenshotReady_t (  ScreenshotReady_t.PackSmall d )
 			{
-				get
+				return new ScreenshotReady_t()
 				{
-					return new ScreenshotReady_t()
-					{
-						m_hLocal = this.m_hLocal,
-						m_eResult = this.m_eResult,
-					};
-				}
+					m_hLocal = d.m_hLocal,
+					m_eResult = d.m_eResult,
+				};
 			}
 		}
 	}
@@ -3252,15 +2946,12 @@ namespace SteamNative
 		{
 			public float m_flNewVolume; // float
 			
-			public VolumeHasChanged_t Get
+			public static implicit operator  VolumeHasChanged_t (  VolumeHasChanged_t.PackSmall d )
 			{
-				get
+				return new VolumeHasChanged_t()
 				{
-					return new VolumeHasChanged_t()
-					{
-						m_flNewVolume = this.m_flNewVolume,
-					};
-				}
+					m_flNewVolume = d.m_flNewVolume,
+				};
 			}
 		}
 	}
@@ -3278,15 +2969,12 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bShuffled; // _Bool
 			
-			public MusicPlayerWantsShuffled_t Get
+			public static implicit operator  MusicPlayerWantsShuffled_t (  MusicPlayerWantsShuffled_t.PackSmall d )
 			{
-				get
+				return new MusicPlayerWantsShuffled_t()
 				{
-					return new MusicPlayerWantsShuffled_t()
-					{
-						m_bShuffled = this.m_bShuffled,
-					};
-				}
+					m_bShuffled = d.m_bShuffled,
+				};
 			}
 		}
 	}
@@ -3304,15 +2992,12 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bLooped; // _Bool
 			
-			public MusicPlayerWantsLooped_t Get
+			public static implicit operator  MusicPlayerWantsLooped_t (  MusicPlayerWantsLooped_t.PackSmall d )
 			{
-				get
+				return new MusicPlayerWantsLooped_t()
 				{
-					return new MusicPlayerWantsLooped_t()
-					{
-						m_bLooped = this.m_bLooped,
-					};
-				}
+					m_bLooped = d.m_bLooped,
+				};
 			}
 		}
 	}
@@ -3328,15 +3013,12 @@ namespace SteamNative
 		{
 			public float m_flNewVolume; // float
 			
-			public MusicPlayerWantsVolume_t Get
+			public static implicit operator  MusicPlayerWantsVolume_t (  MusicPlayerWantsVolume_t.PackSmall d )
 			{
-				get
+				return new MusicPlayerWantsVolume_t()
 				{
-					return new MusicPlayerWantsVolume_t()
-					{
-						m_flNewVolume = this.m_flNewVolume,
-					};
-				}
+					m_flNewVolume = d.m_flNewVolume,
+				};
 			}
 		}
 	}
@@ -3352,15 +3034,12 @@ namespace SteamNative
 		{
 			public int nID; // int
 			
-			public MusicPlayerSelectsQueueEntry_t Get
+			public static implicit operator  MusicPlayerSelectsQueueEntry_t (  MusicPlayerSelectsQueueEntry_t.PackSmall d )
 			{
-				get
+				return new MusicPlayerSelectsQueueEntry_t()
 				{
-					return new MusicPlayerSelectsQueueEntry_t()
-					{
-						nID = this.nID,
-					};
-				}
+					nID = d.nID,
+				};
 			}
 		}
 	}
@@ -3376,15 +3055,12 @@ namespace SteamNative
 		{
 			public int nID; // int
 			
-			public MusicPlayerSelectsPlaylistEntry_t Get
+			public static implicit operator  MusicPlayerSelectsPlaylistEntry_t (  MusicPlayerSelectsPlaylistEntry_t.PackSmall d )
 			{
-				get
+				return new MusicPlayerSelectsPlaylistEntry_t()
 				{
-					return new MusicPlayerSelectsPlaylistEntry_t()
-					{
-						nID = this.nID,
-					};
-				}
+					nID = d.nID,
+				};
 			}
 		}
 	}
@@ -3400,15 +3076,12 @@ namespace SteamNative
 		{
 			public int m_nPlayingRepeatStatus; // int
 			
-			public MusicPlayerWantsPlayingRepeatStatus_t Get
+			public static implicit operator  MusicPlayerWantsPlayingRepeatStatus_t (  MusicPlayerWantsPlayingRepeatStatus_t.PackSmall d )
 			{
-				get
+				return new MusicPlayerWantsPlayingRepeatStatus_t()
 				{
-					return new MusicPlayerWantsPlayingRepeatStatus_t()
-					{
-						m_nPlayingRepeatStatus = this.m_nPlayingRepeatStatus,
-					};
-				}
+					m_nPlayingRepeatStatus = d.m_nPlayingRepeatStatus,
+				};
 			}
 		}
 	}
@@ -3434,19 +3107,16 @@ namespace SteamNative
 			public HTTPStatusCode m_eStatusCode; // enum EHTTPStatusCode
 			public uint m_unBodySize; // uint32
 			
-			public HTTPRequestCompleted_t Get
+			public static implicit operator  HTTPRequestCompleted_t (  HTTPRequestCompleted_t.PackSmall d )
 			{
-				get
+				return new HTTPRequestCompleted_t()
 				{
-					return new HTTPRequestCompleted_t()
-					{
-						m_hRequest = this.m_hRequest,
-						m_ulContextValue = this.m_ulContextValue,
-						m_bRequestSuccessful = this.m_bRequestSuccessful,
-						m_eStatusCode = this.m_eStatusCode,
-						m_unBodySize = this.m_unBodySize,
-					};
-				}
+					m_hRequest = d.m_hRequest,
+					m_ulContextValue = d.m_ulContextValue,
+					m_bRequestSuccessful = d.m_bRequestSuccessful,
+					m_eStatusCode = d.m_eStatusCode,
+					m_unBodySize = d.m_unBodySize,
+				};
 			}
 		}
 	}
@@ -3464,16 +3134,13 @@ namespace SteamNative
 			public uint m_hRequest; // HTTPRequestHandle
 			public ulong m_ulContextValue; // uint64
 			
-			public HTTPRequestHeadersReceived_t Get
+			public static implicit operator  HTTPRequestHeadersReceived_t (  HTTPRequestHeadersReceived_t.PackSmall d )
 			{
-				get
+				return new HTTPRequestHeadersReceived_t()
 				{
-					return new HTTPRequestHeadersReceived_t()
-					{
-						m_hRequest = this.m_hRequest,
-						m_ulContextValue = this.m_ulContextValue,
-					};
-				}
+					m_hRequest = d.m_hRequest,
+					m_ulContextValue = d.m_ulContextValue,
+				};
 			}
 		}
 	}
@@ -3495,18 +3162,15 @@ namespace SteamNative
 			public uint m_cOffset; // uint32
 			public uint m_cBytesReceived; // uint32
 			
-			public HTTPRequestDataReceived_t Get
+			public static implicit operator  HTTPRequestDataReceived_t (  HTTPRequestDataReceived_t.PackSmall d )
 			{
-				get
+				return new HTTPRequestDataReceived_t()
 				{
-					return new HTTPRequestDataReceived_t()
-					{
-						m_hRequest = this.m_hRequest,
-						m_ulContextValue = this.m_ulContextValue,
-						m_cOffset = this.m_cOffset,
-						m_cBytesReceived = this.m_cBytesReceived,
-					};
-				}
+					m_hRequest = d.m_hRequest,
+					m_ulContextValue = d.m_ulContextValue,
+					m_cOffset = d.m_cOffset,
+					m_cBytesReceived = d.m_cBytesReceived,
+				};
 			}
 		}
 	}
@@ -3528,18 +3192,15 @@ namespace SteamNative
 			public Result m_eResult; // enum EResult
 			public uint m_unResponseSize; // uint32
 			
-			public SteamUnifiedMessagesSendMethodResult_t Get
+			public static implicit operator  SteamUnifiedMessagesSendMethodResult_t (  SteamUnifiedMessagesSendMethodResult_t.PackSmall d )
 			{
-				get
+				return new SteamUnifiedMessagesSendMethodResult_t()
 				{
-					return new SteamUnifiedMessagesSendMethodResult_t()
-					{
-						m_hHandle = this.m_hHandle,
-						m_unContext = this.m_unContext,
-						m_eResult = this.m_eResult,
-						m_unResponseSize = this.m_unResponseSize,
-					};
-				}
+					m_hHandle = d.m_hHandle,
+					m_unContext = d.m_unContext,
+					m_eResult = d.m_eResult,
+					m_unResponseSize = d.m_unResponseSize,
+				};
 			}
 		}
 	}
@@ -3563,18 +3224,15 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			public bool bActive; // _Bool
 			
-			public ControllerAnalogActionData_t Get
+			public static implicit operator  ControllerAnalogActionData_t (  ControllerAnalogActionData_t.PackSmall d )
 			{
-				get
+				return new ControllerAnalogActionData_t()
 				{
-					return new ControllerAnalogActionData_t()
-					{
-						eMode = this.eMode,
-						x = this.x,
-						y = this.y,
-						bActive = this.bActive,
-					};
-				}
+					eMode = d.eMode,
+					x = d.x,
+					y = d.y,
+					bActive = d.bActive,
+				};
 			}
 		}
 	}
@@ -3596,16 +3254,13 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			public bool bActive; // _Bool
 			
-			public ControllerDigitalActionData_t Get
+			public static implicit operator  ControllerDigitalActionData_t (  ControllerDigitalActionData_t.PackSmall d )
 			{
-				get
+				return new ControllerDigitalActionData_t()
 				{
-					return new ControllerDigitalActionData_t()
-					{
-						bState = this.bState,
-						bActive = this.bActive,
-					};
-				}
+					bState = d.bState,
+					bActive = d.bActive,
+				};
 			}
 		}
 	}
@@ -3687,40 +3342,37 @@ namespace SteamNative
 			public float m_flScore; // float
 			public uint m_unNumChildren; // uint32
 			
-			public SteamUGCDetails_t Get
+			public static implicit operator  SteamUGCDetails_t (  SteamUGCDetails_t.PackSmall d )
 			{
-				get
+				return new SteamUGCDetails_t()
 				{
-					return new SteamUGCDetails_t()
-					{
-						m_nPublishedFileId = this.m_nPublishedFileId,
-						m_eResult = this.m_eResult,
-						m_eFileType = this.m_eFileType,
-						m_nCreatorAppID = this.m_nCreatorAppID,
-						m_nConsumerAppID = this.m_nConsumerAppID,
-						m_rgchTitle = this.m_rgchTitle,
-						m_rgchDescription = this.m_rgchDescription,
-						m_ulSteamIDOwner = this.m_ulSteamIDOwner,
-						m_rtimeCreated = this.m_rtimeCreated,
-						m_rtimeUpdated = this.m_rtimeUpdated,
-						m_rtimeAddedToUserList = this.m_rtimeAddedToUserList,
-						m_eVisibility = this.m_eVisibility,
-						m_bBanned = this.m_bBanned,
-						m_bAcceptedForUse = this.m_bAcceptedForUse,
-						m_bTagsTruncated = this.m_bTagsTruncated,
-						m_rgchTags = this.m_rgchTags,
-						m_hFile = this.m_hFile,
-						m_hPreviewFile = this.m_hPreviewFile,
-						m_pchFileName = this.m_pchFileName,
-						m_nFileSize = this.m_nFileSize,
-						m_nPreviewFileSize = this.m_nPreviewFileSize,
-						m_rgchURL = this.m_rgchURL,
-						m_unVotesUp = this.m_unVotesUp,
-						m_unVotesDown = this.m_unVotesDown,
-						m_flScore = this.m_flScore,
-						m_unNumChildren = this.m_unNumChildren,
-					};
-				}
+					m_nPublishedFileId = d.m_nPublishedFileId,
+					m_eResult = d.m_eResult,
+					m_eFileType = d.m_eFileType,
+					m_nCreatorAppID = d.m_nCreatorAppID,
+					m_nConsumerAppID = d.m_nConsumerAppID,
+					m_rgchTitle = d.m_rgchTitle,
+					m_rgchDescription = d.m_rgchDescription,
+					m_ulSteamIDOwner = d.m_ulSteamIDOwner,
+					m_rtimeCreated = d.m_rtimeCreated,
+					m_rtimeUpdated = d.m_rtimeUpdated,
+					m_rtimeAddedToUserList = d.m_rtimeAddedToUserList,
+					m_eVisibility = d.m_eVisibility,
+					m_bBanned = d.m_bBanned,
+					m_bAcceptedForUse = d.m_bAcceptedForUse,
+					m_bTagsTruncated = d.m_bTagsTruncated,
+					m_rgchTags = d.m_rgchTags,
+					m_hFile = d.m_hFile,
+					m_hPreviewFile = d.m_hPreviewFile,
+					m_pchFileName = d.m_pchFileName,
+					m_nFileSize = d.m_nFileSize,
+					m_nPreviewFileSize = d.m_nPreviewFileSize,
+					m_rgchURL = d.m_rgchURL,
+					m_unVotesUp = d.m_unVotesUp,
+					m_unVotesDown = d.m_unVotesDown,
+					m_flScore = d.m_flScore,
+					m_unNumChildren = d.m_unNumChildren,
+				};
 			}
 		}
 	}
@@ -3746,19 +3398,16 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bCachedData; // _Bool
 			
-			public SteamUGCQueryCompleted_t Get
+			public static implicit operator  SteamUGCQueryCompleted_t (  SteamUGCQueryCompleted_t.PackSmall d )
 			{
-				get
+				return new SteamUGCQueryCompleted_t()
 				{
-					return new SteamUGCQueryCompleted_t()
-					{
-						m_handle = this.m_handle,
-						m_eResult = this.m_eResult,
-						m_unNumResultsReturned = this.m_unNumResultsReturned,
-						m_unTotalMatchingResults = this.m_unTotalMatchingResults,
-						m_bCachedData = this.m_bCachedData,
-					};
-				}
+					m_handle = d.m_handle,
+					m_eResult = d.m_eResult,
+					m_unNumResultsReturned = d.m_unNumResultsReturned,
+					m_unTotalMatchingResults = d.m_unTotalMatchingResults,
+					m_bCachedData = d.m_bCachedData,
+				};
 			}
 		}
 	}
@@ -3778,16 +3427,13 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bCachedData; // _Bool
 			
-			public SteamUGCRequestUGCDetailsResult_t Get
+			public static implicit operator  SteamUGCRequestUGCDetailsResult_t (  SteamUGCRequestUGCDetailsResult_t.PackSmall d )
 			{
-				get
+				return new SteamUGCRequestUGCDetailsResult_t()
 				{
-					return new SteamUGCRequestUGCDetailsResult_t()
-					{
-						m_details = this.m_details,
-						m_bCachedData = this.m_bCachedData,
-					};
-				}
+					m_details = d.m_details,
+					m_bCachedData = d.m_bCachedData,
+				};
 			}
 		}
 	}
@@ -3809,17 +3455,14 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bUserNeedsToAcceptWorkshopLegalAgreement; // _Bool
 			
-			public CreateItemResult_t Get
+			public static implicit operator  CreateItemResult_t (  CreateItemResult_t.PackSmall d )
 			{
-				get
+				return new CreateItemResult_t()
 				{
-					return new CreateItemResult_t()
-					{
-						m_eResult = this.m_eResult,
-						m_nPublishedFileId = this.m_nPublishedFileId,
-						m_bUserNeedsToAcceptWorkshopLegalAgreement = this.m_bUserNeedsToAcceptWorkshopLegalAgreement,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_nPublishedFileId = d.m_nPublishedFileId,
+					m_bUserNeedsToAcceptWorkshopLegalAgreement = d.m_bUserNeedsToAcceptWorkshopLegalAgreement,
+				};
 			}
 		}
 	}
@@ -3839,16 +3482,13 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bUserNeedsToAcceptWorkshopLegalAgreement; // _Bool
 			
-			public SubmitItemUpdateResult_t Get
+			public static implicit operator  SubmitItemUpdateResult_t (  SubmitItemUpdateResult_t.PackSmall d )
 			{
-				get
+				return new SubmitItemUpdateResult_t()
 				{
-					return new SubmitItemUpdateResult_t()
-					{
-						m_eResult = this.m_eResult,
-						m_bUserNeedsToAcceptWorkshopLegalAgreement = this.m_bUserNeedsToAcceptWorkshopLegalAgreement,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_bUserNeedsToAcceptWorkshopLegalAgreement = d.m_bUserNeedsToAcceptWorkshopLegalAgreement,
+				};
 			}
 		}
 	}
@@ -3868,17 +3508,14 @@ namespace SteamNative
 			public ulong m_nPublishedFileId; // PublishedFileId_t
 			public Result m_eResult; // enum EResult
 			
-			public DownloadItemResult_t Get
+			public static implicit operator  DownloadItemResult_t (  DownloadItemResult_t.PackSmall d )
 			{
-				get
+				return new DownloadItemResult_t()
 				{
-					return new DownloadItemResult_t()
-					{
-						m_unAppID = this.m_unAppID,
-						m_nPublishedFileId = this.m_nPublishedFileId,
-						m_eResult = this.m_eResult,
-					};
-				}
+					m_unAppID = d.m_unAppID,
+					m_nPublishedFileId = d.m_nPublishedFileId,
+					m_eResult = d.m_eResult,
+				};
 			}
 		}
 	}
@@ -3900,17 +3537,14 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bWasAddRequest; // _Bool
 			
-			public UserFavoriteItemsListChanged_t Get
+			public static implicit operator  UserFavoriteItemsListChanged_t (  UserFavoriteItemsListChanged_t.PackSmall d )
 			{
-				get
+				return new UserFavoriteItemsListChanged_t()
 				{
-					return new UserFavoriteItemsListChanged_t()
-					{
-						m_nPublishedFileId = this.m_nPublishedFileId,
-						m_eResult = this.m_eResult,
-						m_bWasAddRequest = this.m_bWasAddRequest,
-					};
-				}
+					m_nPublishedFileId = d.m_nPublishedFileId,
+					m_eResult = d.m_eResult,
+					m_bWasAddRequest = d.m_bWasAddRequest,
+				};
 			}
 		}
 	}
@@ -3932,17 +3566,14 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bVoteUp; // _Bool
 			
-			public SetUserItemVoteResult_t Get
+			public static implicit operator  SetUserItemVoteResult_t (  SetUserItemVoteResult_t.PackSmall d )
 			{
-				get
+				return new SetUserItemVoteResult_t()
 				{
-					return new SetUserItemVoteResult_t()
-					{
-						m_nPublishedFileId = this.m_nPublishedFileId,
-						m_eResult = this.m_eResult,
-						m_bVoteUp = this.m_bVoteUp,
-					};
-				}
+					m_nPublishedFileId = d.m_nPublishedFileId,
+					m_eResult = d.m_eResult,
+					m_bVoteUp = d.m_bVoteUp,
+				};
 			}
 		}
 	}
@@ -3972,19 +3603,16 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bVoteSkipped; // _Bool
 			
-			public GetUserItemVoteResult_t Get
+			public static implicit operator  GetUserItemVoteResult_t (  GetUserItemVoteResult_t.PackSmall d )
 			{
-				get
+				return new GetUserItemVoteResult_t()
 				{
-					return new GetUserItemVoteResult_t()
-					{
-						m_nPublishedFileId = this.m_nPublishedFileId,
-						m_eResult = this.m_eResult,
-						m_bVotedUp = this.m_bVotedUp,
-						m_bVotedDown = this.m_bVotedDown,
-						m_bVoteSkipped = this.m_bVoteSkipped,
-					};
-				}
+					m_nPublishedFileId = d.m_nPublishedFileId,
+					m_eResult = d.m_eResult,
+					m_bVotedUp = d.m_bVotedUp,
+					m_bVotedDown = d.m_bVotedDown,
+					m_bVoteSkipped = d.m_bVoteSkipped,
+				};
 			}
 		}
 	}
@@ -4000,15 +3628,12 @@ namespace SteamNative
 		{
 			public uint m_nAppID; // AppId_t
 			
-			public SteamAppInstalled_t Get
+			public static implicit operator  SteamAppInstalled_t (  SteamAppInstalled_t.PackSmall d )
 			{
-				get
+				return new SteamAppInstalled_t()
 				{
-					return new SteamAppInstalled_t()
-					{
-						m_nAppID = this.m_nAppID,
-					};
-				}
+					m_nAppID = d.m_nAppID,
+				};
 			}
 		}
 	}
@@ -4024,15 +3649,12 @@ namespace SteamNative
 		{
 			public uint m_nAppID; // AppId_t
 			
-			public SteamAppUninstalled_t Get
+			public static implicit operator  SteamAppUninstalled_t (  SteamAppUninstalled_t.PackSmall d )
 			{
-				get
+				return new SteamAppUninstalled_t()
 				{
-					return new SteamAppUninstalled_t()
-					{
-						m_nAppID = this.m_nAppID,
-					};
-				}
+					m_nAppID = d.m_nAppID,
+				};
 			}
 		}
 	}
@@ -4048,15 +3670,12 @@ namespace SteamNative
 		{
 			public uint unBrowserHandle; // HHTMLBrowser
 			
-			public HTML_BrowserReady_t Get
+			public static implicit operator  HTML_BrowserReady_t (  HTML_BrowserReady_t.PackSmall d )
 			{
-				get
+				return new HTML_BrowserReady_t()
 				{
-					return new HTML_BrowserReady_t()
-					{
-						unBrowserHandle = this.unBrowserHandle,
-					};
-				}
+					unBrowserHandle = d.unBrowserHandle,
+				};
 			}
 		}
 	}
@@ -4094,26 +3713,23 @@ namespace SteamNative
 			public float flPageScale; // float
 			public uint unPageSerial; // uint32
 			
-			public HTML_NeedsPaint_t Get
+			public static implicit operator  HTML_NeedsPaint_t (  HTML_NeedsPaint_t.PackSmall d )
 			{
-				get
+				return new HTML_NeedsPaint_t()
 				{
-					return new HTML_NeedsPaint_t()
-					{
-						unBrowserHandle = this.unBrowserHandle,
-						pBGRA = this.pBGRA,
-						unWide = this.unWide,
-						unTall = this.unTall,
-						unUpdateX = this.unUpdateX,
-						unUpdateY = this.unUpdateY,
-						unUpdateWide = this.unUpdateWide,
-						unUpdateTall = this.unUpdateTall,
-						unScrollX = this.unScrollX,
-						unScrollY = this.unScrollY,
-						flPageScale = this.flPageScale,
-						unPageSerial = this.unPageSerial,
-					};
-				}
+					unBrowserHandle = d.unBrowserHandle,
+					pBGRA = d.pBGRA,
+					unWide = d.unWide,
+					unTall = d.unTall,
+					unUpdateX = d.unUpdateX,
+					unUpdateY = d.unUpdateY,
+					unUpdateWide = d.unUpdateWide,
+					unUpdateTall = d.unUpdateTall,
+					unScrollX = d.unScrollX,
+					unScrollY = d.unScrollY,
+					flPageScale = d.flPageScale,
+					unPageSerial = d.unPageSerial,
+				};
 			}
 		}
 	}
@@ -4139,19 +3755,16 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			public bool bIsRedirect; // _Bool
 			
-			public HTML_StartRequest_t Get
+			public static implicit operator  HTML_StartRequest_t (  HTML_StartRequest_t.PackSmall d )
 			{
-				get
+				return new HTML_StartRequest_t()
 				{
-					return new HTML_StartRequest_t()
-					{
-						unBrowserHandle = this.unBrowserHandle,
-						pchURL = this.pchURL,
-						pchTarget = this.pchTarget,
-						pchPostData = this.pchPostData,
-						bIsRedirect = this.bIsRedirect,
-					};
-				}
+					unBrowserHandle = d.unBrowserHandle,
+					pchURL = d.pchURL,
+					pchTarget = d.pchTarget,
+					pchPostData = d.pchPostData,
+					bIsRedirect = d.bIsRedirect,
+				};
 			}
 		}
 	}
@@ -4167,15 +3780,12 @@ namespace SteamNative
 		{
 			public uint unBrowserHandle; // HHTMLBrowser
 			
-			public HTML_CloseBrowser_t Get
+			public static implicit operator  HTML_CloseBrowser_t (  HTML_CloseBrowser_t.PackSmall d )
 			{
-				get
+				return new HTML_CloseBrowser_t()
 				{
-					return new HTML_CloseBrowser_t()
-					{
-						unBrowserHandle = this.unBrowserHandle,
-					};
-				}
+					unBrowserHandle = d.unBrowserHandle,
+				};
 			}
 		}
 	}
@@ -4205,20 +3815,17 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			public bool bNewNavigation; // _Bool
 			
-			public HTML_URLChanged_t Get
+			public static implicit operator  HTML_URLChanged_t (  HTML_URLChanged_t.PackSmall d )
 			{
-				get
+				return new HTML_URLChanged_t()
 				{
-					return new HTML_URLChanged_t()
-					{
-						unBrowserHandle = this.unBrowserHandle,
-						pchURL = this.pchURL,
-						pchPostData = this.pchPostData,
-						bIsRedirect = this.bIsRedirect,
-						pchPageTitle = this.pchPageTitle,
-						bNewNavigation = this.bNewNavigation,
-					};
-				}
+					unBrowserHandle = d.unBrowserHandle,
+					pchURL = d.pchURL,
+					pchPostData = d.pchPostData,
+					bIsRedirect = d.bIsRedirect,
+					pchPageTitle = d.pchPageTitle,
+					bNewNavigation = d.bNewNavigation,
+				};
 			}
 		}
 	}
@@ -4238,17 +3845,14 @@ namespace SteamNative
 			public string pchURL; // const char *
 			public string pchPageTitle; // const char *
 			
-			public HTML_FinishedRequest_t Get
+			public static implicit operator  HTML_FinishedRequest_t (  HTML_FinishedRequest_t.PackSmall d )
 			{
-				get
+				return new HTML_FinishedRequest_t()
 				{
-					return new HTML_FinishedRequest_t()
-					{
-						unBrowserHandle = this.unBrowserHandle,
-						pchURL = this.pchURL,
-						pchPageTitle = this.pchPageTitle,
-					};
-				}
+					unBrowserHandle = d.unBrowserHandle,
+					pchURL = d.pchURL,
+					pchPageTitle = d.pchPageTitle,
+				};
 			}
 		}
 	}
@@ -4266,16 +3870,13 @@ namespace SteamNative
 			public uint unBrowserHandle; // HHTMLBrowser
 			public string pchURL; // const char *
 			
-			public HTML_OpenLinkInNewTab_t Get
+			public static implicit operator  HTML_OpenLinkInNewTab_t (  HTML_OpenLinkInNewTab_t.PackSmall d )
 			{
-				get
+				return new HTML_OpenLinkInNewTab_t()
 				{
-					return new HTML_OpenLinkInNewTab_t()
-					{
-						unBrowserHandle = this.unBrowserHandle,
-						pchURL = this.pchURL,
-					};
-				}
+					unBrowserHandle = d.unBrowserHandle,
+					pchURL = d.pchURL,
+				};
 			}
 		}
 	}
@@ -4293,16 +3894,13 @@ namespace SteamNative
 			public uint unBrowserHandle; // HHTMLBrowser
 			public string pchTitle; // const char *
 			
-			public HTML_ChangedTitle_t Get
+			public static implicit operator  HTML_ChangedTitle_t (  HTML_ChangedTitle_t.PackSmall d )
 			{
-				get
+				return new HTML_ChangedTitle_t()
 				{
-					return new HTML_ChangedTitle_t()
-					{
-						unBrowserHandle = this.unBrowserHandle,
-						pchTitle = this.pchTitle,
-					};
-				}
+					unBrowserHandle = d.unBrowserHandle,
+					pchTitle = d.pchTitle,
+				};
 			}
 		}
 	}
@@ -4322,17 +3920,14 @@ namespace SteamNative
 			public uint unResults; // uint32
 			public uint unCurrentMatch; // uint32
 			
-			public HTML_SearchResults_t Get
+			public static implicit operator  HTML_SearchResults_t (  HTML_SearchResults_t.PackSmall d )
 			{
-				get
+				return new HTML_SearchResults_t()
 				{
-					return new HTML_SearchResults_t()
-					{
-						unBrowserHandle = this.unBrowserHandle,
-						unResults = this.unResults,
-						unCurrentMatch = this.unCurrentMatch,
-					};
-				}
+					unBrowserHandle = d.unBrowserHandle,
+					unResults = d.unResults,
+					unCurrentMatch = d.unCurrentMatch,
+				};
 			}
 		}
 	}
@@ -4356,17 +3951,14 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			public bool bCanGoForward; // _Bool
 			
-			public HTML_CanGoBackAndForward_t Get
+			public static implicit operator  HTML_CanGoBackAndForward_t (  HTML_CanGoBackAndForward_t.PackSmall d )
 			{
-				get
+				return new HTML_CanGoBackAndForward_t()
 				{
-					return new HTML_CanGoBackAndForward_t()
-					{
-						unBrowserHandle = this.unBrowserHandle,
-						bCanGoBack = this.bCanGoBack,
-						bCanGoForward = this.bCanGoForward,
-					};
-				}
+					unBrowserHandle = d.unBrowserHandle,
+					bCanGoBack = d.bCanGoBack,
+					bCanGoForward = d.bCanGoForward,
+				};
 			}
 		}
 	}
@@ -4394,20 +3986,17 @@ namespace SteamNative
 			public bool bVisible; // _Bool
 			public uint unPageSize; // uint32
 			
-			public HTML_HorizontalScroll_t Get
+			public static implicit operator  HTML_HorizontalScroll_t (  HTML_HorizontalScroll_t.PackSmall d )
 			{
-				get
+				return new HTML_HorizontalScroll_t()
 				{
-					return new HTML_HorizontalScroll_t()
-					{
-						unBrowserHandle = this.unBrowserHandle,
-						unScrollMax = this.unScrollMax,
-						unScrollCurrent = this.unScrollCurrent,
-						flPageScale = this.flPageScale,
-						bVisible = this.bVisible,
-						unPageSize = this.unPageSize,
-					};
-				}
+					unBrowserHandle = d.unBrowserHandle,
+					unScrollMax = d.unScrollMax,
+					unScrollCurrent = d.unScrollCurrent,
+					flPageScale = d.flPageScale,
+					bVisible = d.bVisible,
+					unPageSize = d.unPageSize,
+				};
 			}
 		}
 	}
@@ -4435,20 +4024,17 @@ namespace SteamNative
 			public bool bVisible; // _Bool
 			public uint unPageSize; // uint32
 			
-			public HTML_VerticalScroll_t Get
+			public static implicit operator  HTML_VerticalScroll_t (  HTML_VerticalScroll_t.PackSmall d )
 			{
-				get
+				return new HTML_VerticalScroll_t()
 				{
-					return new HTML_VerticalScroll_t()
-					{
-						unBrowserHandle = this.unBrowserHandle,
-						unScrollMax = this.unScrollMax,
-						unScrollCurrent = this.unScrollCurrent,
-						flPageScale = this.flPageScale,
-						bVisible = this.bVisible,
-						unPageSize = this.unPageSize,
-					};
-				}
+					unBrowserHandle = d.unBrowserHandle,
+					unScrollMax = d.unScrollMax,
+					unScrollCurrent = d.unScrollCurrent,
+					flPageScale = d.flPageScale,
+					bVisible = d.bVisible,
+					unPageSize = d.unPageSize,
+				};
 			}
 		}
 	}
@@ -4478,20 +4064,17 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			public bool bLiveLink; // _Bool
 			
-			public HTML_LinkAtPosition_t Get
+			public static implicit operator  HTML_LinkAtPosition_t (  HTML_LinkAtPosition_t.PackSmall d )
 			{
-				get
+				return new HTML_LinkAtPosition_t()
 				{
-					return new HTML_LinkAtPosition_t()
-					{
-						unBrowserHandle = this.unBrowserHandle,
-						x = this.x,
-						y = this.y,
-						pchURL = this.pchURL,
-						bInput = this.bInput,
-						bLiveLink = this.bLiveLink,
-					};
-				}
+					unBrowserHandle = d.unBrowserHandle,
+					x = d.x,
+					y = d.y,
+					pchURL = d.pchURL,
+					bInput = d.bInput,
+					bLiveLink = d.bLiveLink,
+				};
 			}
 		}
 	}
@@ -4509,16 +4092,13 @@ namespace SteamNative
 			public uint unBrowserHandle; // HHTMLBrowser
 			public string pchMessage; // const char *
 			
-			public HTML_JSAlert_t Get
+			public static implicit operator  HTML_JSAlert_t (  HTML_JSAlert_t.PackSmall d )
 			{
-				get
+				return new HTML_JSAlert_t()
 				{
-					return new HTML_JSAlert_t()
-					{
-						unBrowserHandle = this.unBrowserHandle,
-						pchMessage = this.pchMessage,
-					};
-				}
+					unBrowserHandle = d.unBrowserHandle,
+					pchMessage = d.pchMessage,
+				};
 			}
 		}
 	}
@@ -4536,16 +4116,13 @@ namespace SteamNative
 			public uint unBrowserHandle; // HHTMLBrowser
 			public string pchMessage; // const char *
 			
-			public HTML_JSConfirm_t Get
+			public static implicit operator  HTML_JSConfirm_t (  HTML_JSConfirm_t.PackSmall d )
 			{
-				get
+				return new HTML_JSConfirm_t()
 				{
-					return new HTML_JSConfirm_t()
-					{
-						unBrowserHandle = this.unBrowserHandle,
-						pchMessage = this.pchMessage,
-					};
-				}
+					unBrowserHandle = d.unBrowserHandle,
+					pchMessage = d.pchMessage,
+				};
 			}
 		}
 	}
@@ -4565,17 +4142,14 @@ namespace SteamNative
 			public string pchTitle; // const char *
 			public string pchInitialFile; // const char *
 			
-			public HTML_FileOpenDialog_t Get
+			public static implicit operator  HTML_FileOpenDialog_t (  HTML_FileOpenDialog_t.PackSmall d )
 			{
-				get
+				return new HTML_FileOpenDialog_t()
 				{
-					return new HTML_FileOpenDialog_t()
-					{
-						unBrowserHandle = this.unBrowserHandle,
-						pchTitle = this.pchTitle,
-						pchInitialFile = this.pchInitialFile,
-					};
-				}
+					unBrowserHandle = d.unBrowserHandle,
+					pchTitle = d.pchTitle,
+					pchInitialFile = d.pchInitialFile,
+				};
 			}
 		}
 	}
@@ -4603,21 +4177,18 @@ namespace SteamNative
 			public uint unTall; // uint32
 			public uint unNewWindow_BrowserHandle; // HHTMLBrowser
 			
-			public HTML_NewWindow_t Get
+			public static implicit operator  HTML_NewWindow_t (  HTML_NewWindow_t.PackSmall d )
 			{
-				get
+				return new HTML_NewWindow_t()
 				{
-					return new HTML_NewWindow_t()
-					{
-						unBrowserHandle = this.unBrowserHandle,
-						pchURL = this.pchURL,
-						unX = this.unX,
-						unY = this.unY,
-						unWide = this.unWide,
-						unTall = this.unTall,
-						unNewWindow_BrowserHandle = this.unNewWindow_BrowserHandle,
-					};
-				}
+					unBrowserHandle = d.unBrowserHandle,
+					pchURL = d.pchURL,
+					unX = d.unX,
+					unY = d.unY,
+					unWide = d.unWide,
+					unTall = d.unTall,
+					unNewWindow_BrowserHandle = d.unNewWindow_BrowserHandle,
+				};
 			}
 		}
 	}
@@ -4635,16 +4206,13 @@ namespace SteamNative
 			public uint unBrowserHandle; // HHTMLBrowser
 			public uint eMouseCursor; // uint32
 			
-			public HTML_SetCursor_t Get
+			public static implicit operator  HTML_SetCursor_t (  HTML_SetCursor_t.PackSmall d )
 			{
-				get
+				return new HTML_SetCursor_t()
 				{
-					return new HTML_SetCursor_t()
-					{
-						unBrowserHandle = this.unBrowserHandle,
-						eMouseCursor = this.eMouseCursor,
-					};
-				}
+					unBrowserHandle = d.unBrowserHandle,
+					eMouseCursor = d.eMouseCursor,
+				};
 			}
 		}
 	}
@@ -4662,16 +4230,13 @@ namespace SteamNative
 			public uint unBrowserHandle; // HHTMLBrowser
 			public string pchMsg; // const char *
 			
-			public HTML_StatusText_t Get
+			public static implicit operator  HTML_StatusText_t (  HTML_StatusText_t.PackSmall d )
 			{
-				get
+				return new HTML_StatusText_t()
 				{
-					return new HTML_StatusText_t()
-					{
-						unBrowserHandle = this.unBrowserHandle,
-						pchMsg = this.pchMsg,
-					};
-				}
+					unBrowserHandle = d.unBrowserHandle,
+					pchMsg = d.pchMsg,
+				};
 			}
 		}
 	}
@@ -4689,16 +4254,13 @@ namespace SteamNative
 			public uint unBrowserHandle; // HHTMLBrowser
 			public string pchMsg; // const char *
 			
-			public HTML_ShowToolTip_t Get
+			public static implicit operator  HTML_ShowToolTip_t (  HTML_ShowToolTip_t.PackSmall d )
 			{
-				get
+				return new HTML_ShowToolTip_t()
 				{
-					return new HTML_ShowToolTip_t()
-					{
-						unBrowserHandle = this.unBrowserHandle,
-						pchMsg = this.pchMsg,
-					};
-				}
+					unBrowserHandle = d.unBrowserHandle,
+					pchMsg = d.pchMsg,
+				};
 			}
 		}
 	}
@@ -4716,16 +4278,13 @@ namespace SteamNative
 			public uint unBrowserHandle; // HHTMLBrowser
 			public string pchMsg; // const char *
 			
-			public HTML_UpdateToolTip_t Get
+			public static implicit operator  HTML_UpdateToolTip_t (  HTML_UpdateToolTip_t.PackSmall d )
 			{
-				get
+				return new HTML_UpdateToolTip_t()
 				{
-					return new HTML_UpdateToolTip_t()
-					{
-						unBrowserHandle = this.unBrowserHandle,
-						pchMsg = this.pchMsg,
-					};
-				}
+					unBrowserHandle = d.unBrowserHandle,
+					pchMsg = d.pchMsg,
+				};
 			}
 		}
 	}
@@ -4741,15 +4300,12 @@ namespace SteamNative
 		{
 			public uint unBrowserHandle; // HHTMLBrowser
 			
-			public HTML_HideToolTip_t Get
+			public static implicit operator  HTML_HideToolTip_t (  HTML_HideToolTip_t.PackSmall d )
 			{
-				get
+				return new HTML_HideToolTip_t()
 				{
-					return new HTML_HideToolTip_t()
-					{
-						unBrowserHandle = this.unBrowserHandle,
-					};
-				}
+					unBrowserHandle = d.unBrowserHandle,
+				};
 			}
 		}
 	}
@@ -4771,18 +4327,15 @@ namespace SteamNative
 			public ushort m_unQuantity; // uint16
 			public ushort m_unFlags; // uint16
 			
-			public SteamItemDetails_t Get
+			public static implicit operator  SteamItemDetails_t (  SteamItemDetails_t.PackSmall d )
 			{
-				get
+				return new SteamItemDetails_t()
 				{
-					return new SteamItemDetails_t()
-					{
-						m_itemId = this.m_itemId,
-						m_iDefinition = this.m_iDefinition,
-						m_unQuantity = this.m_unQuantity,
-						m_unFlags = this.m_unFlags,
-					};
-				}
+					m_itemId = d.m_itemId,
+					m_iDefinition = d.m_iDefinition,
+					m_unQuantity = d.m_unQuantity,
+					m_unFlags = d.m_unFlags,
+				};
 			}
 		}
 	}
@@ -4800,16 +4353,13 @@ namespace SteamNative
 			public int m_handle; // SteamInventoryResult_t
 			public Result m_result; // enum EResult
 			
-			public SteamInventoryResultReady_t Get
+			public static implicit operator  SteamInventoryResultReady_t (  SteamInventoryResultReady_t.PackSmall d )
 			{
-				get
+				return new SteamInventoryResultReady_t()
 				{
-					return new SteamInventoryResultReady_t()
-					{
-						m_handle = this.m_handle,
-						m_result = this.m_result,
-					};
-				}
+					m_handle = d.m_handle,
+					m_result = d.m_result,
+				};
 			}
 		}
 	}
@@ -4825,15 +4375,12 @@ namespace SteamNative
 		{
 			public int m_handle; // SteamInventoryResult_t
 			
-			public SteamInventoryFullUpdate_t Get
+			public static implicit operator  SteamInventoryFullUpdate_t (  SteamInventoryFullUpdate_t.PackSmall d )
 			{
-				get
+				return new SteamInventoryFullUpdate_t()
 				{
-					return new SteamInventoryFullUpdate_t()
-					{
-						m_handle = this.m_handle,
-					};
-				}
+					m_handle = d.m_handle,
+				};
 			}
 		}
 	}
@@ -4849,15 +4396,12 @@ namespace SteamNative
 		{
 			public BroadcastUploadResult m_eResult; // enum EBroadcastUploadResult
 			
-			public BroadcastUploadStop_t Get
+			public static implicit operator  BroadcastUploadStop_t (  BroadcastUploadStop_t.PackSmall d )
 			{
-				get
+				return new BroadcastUploadStop_t()
 				{
-					return new BroadcastUploadStop_t()
-					{
-						m_eResult = this.m_eResult,
-					};
-				}
+					m_eResult = d.m_eResult,
+				};
 			}
 		}
 	}
@@ -4879,17 +4423,14 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 			public string m_rgchURL; // char [256]
 			
-			public GetVideoURLResult_t Get
+			public static implicit operator  GetVideoURLResult_t (  GetVideoURLResult_t.PackSmall d )
 			{
-				get
+				return new GetVideoURLResult_t()
 				{
-					return new GetVideoURLResult_t()
-					{
-						m_eResult = this.m_eResult,
-						m_unVideoAppID = this.m_unVideoAppID,
-						m_rgchURL = this.m_rgchURL,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_unVideoAppID = d.m_unVideoAppID,
+					m_rgchURL = d.m_rgchURL,
+				};
 			}
 		}
 	}
@@ -4907,16 +4448,13 @@ namespace SteamNative
 			public byte m_nCallbackFlags; // uint8
 			public int m_iCallback; // int
 			
-			public CCallbackBase Get
+			public static implicit operator  CCallbackBase (  CCallbackBase.PackSmall d )
 			{
-				get
+				return new CCallbackBase()
 				{
-					return new CCallbackBase()
-					{
-						m_nCallbackFlags = this.m_nCallbackFlags,
-						m_iCallback = this.m_iCallback,
-					};
-				}
+					m_nCallbackFlags = d.m_nCallbackFlags,
+					m_iCallback = d.m_iCallback,
+				};
 			}
 		}
 	}
@@ -4934,16 +4472,13 @@ namespace SteamNative
 			public ulong m_SteamID; // class CSteamID
 			public ulong m_OwnerSteamID; // class CSteamID
 			
-			public GSClientApprove_t Get
+			public static implicit operator  GSClientApprove_t (  GSClientApprove_t.PackSmall d )
 			{
-				get
+				return new GSClientApprove_t()
 				{
-					return new GSClientApprove_t()
-					{
-						m_SteamID = this.m_SteamID,
-						m_OwnerSteamID = this.m_OwnerSteamID,
-					};
-				}
+					m_SteamID = d.m_SteamID,
+					m_OwnerSteamID = d.m_OwnerSteamID,
+				};
 			}
 		}
 	}
@@ -4965,17 +4500,14 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
 			public string m_rgchOptionalText; // char [128]
 			
-			public GSClientDeny_t Get
+			public static implicit operator  GSClientDeny_t (  GSClientDeny_t.PackSmall d )
 			{
-				get
+				return new GSClientDeny_t()
 				{
-					return new GSClientDeny_t()
-					{
-						m_SteamID = this.m_SteamID,
-						m_eDenyReason = this.m_eDenyReason,
-						m_rgchOptionalText = this.m_rgchOptionalText,
-					};
-				}
+					m_SteamID = d.m_SteamID,
+					m_eDenyReason = d.m_eDenyReason,
+					m_rgchOptionalText = d.m_rgchOptionalText,
+				};
 			}
 		}
 	}
@@ -4993,16 +4525,13 @@ namespace SteamNative
 			public ulong m_SteamID; // class CSteamID
 			public DenyReason m_eDenyReason; // enum EDenyReason
 			
-			public GSClientKick_t Get
+			public static implicit operator  GSClientKick_t (  GSClientKick_t.PackSmall d )
 			{
-				get
+				return new GSClientKick_t()
 				{
-					return new GSClientKick_t()
-					{
-						m_SteamID = this.m_SteamID,
-						m_eDenyReason = this.m_eDenyReason,
-					};
-				}
+					m_SteamID = d.m_SteamID,
+					m_eDenyReason = d.m_eDenyReason,
+				};
 			}
 		}
 	}
@@ -5026,17 +4555,14 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bUnlocked; // _Bool
 			
-			public GSClientAchievementStatus_t Get
+			public static implicit operator  GSClientAchievementStatus_t (  GSClientAchievementStatus_t.PackSmall d )
 			{
-				get
+				return new GSClientAchievementStatus_t()
 				{
-					return new GSClientAchievementStatus_t()
-					{
-						m_SteamID = this.m_SteamID,
-						m_pchAchievement = this.m_pchAchievement,
-						m_bUnlocked = this.m_bUnlocked,
-					};
-				}
+					m_SteamID = d.m_SteamID,
+					m_pchAchievement = d.m_pchAchievement,
+					m_bUnlocked = d.m_bUnlocked,
+				};
 			}
 		}
 	}
@@ -5052,15 +4578,12 @@ namespace SteamNative
 		{
 			public byte m_bSecure; // uint8
 			
-			public GSPolicyResponse_t Get
+			public static implicit operator  GSPolicyResponse_t (  GSPolicyResponse_t.PackSmall d )
 			{
-				get
+				return new GSPolicyResponse_t()
 				{
-					return new GSPolicyResponse_t()
-					{
-						m_bSecure = this.m_bSecure,
-					};
-				}
+					m_bSecure = d.m_bSecure,
+				};
 			}
 		}
 	}
@@ -5082,18 +4605,15 @@ namespace SteamNative
 			public uint m_unTotalConnects; // uint32
 			public uint m_unTotalMinutesPlayed; // uint32
 			
-			public GSGameplayStats_t Get
+			public static implicit operator  GSGameplayStats_t (  GSGameplayStats_t.PackSmall d )
 			{
-				get
+				return new GSGameplayStats_t()
 				{
-					return new GSGameplayStats_t()
-					{
-						m_eResult = this.m_eResult,
-						m_nRank = this.m_nRank,
-						m_unTotalConnects = this.m_unTotalConnects,
-						m_unTotalMinutesPlayed = this.m_unTotalMinutesPlayed,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_nRank = d.m_nRank,
+					m_unTotalConnects = d.m_unTotalConnects,
+					m_unTotalMinutesPlayed = d.m_unTotalMinutesPlayed,
+				};
 			}
 		}
 	}
@@ -5119,18 +4639,15 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			public bool m_bOfficer; // _Bool
 			
-			public GSClientGroupStatus_t Get
+			public static implicit operator  GSClientGroupStatus_t (  GSClientGroupStatus_t.PackSmall d )
 			{
-				get
+				return new GSClientGroupStatus_t()
 				{
-					return new GSClientGroupStatus_t()
-					{
-						m_SteamIDUser = this.m_SteamIDUser,
-						m_SteamIDGroup = this.m_SteamIDGroup,
-						m_bMember = this.m_bMember,
-						m_bOfficer = this.m_bOfficer,
-					};
-				}
+					m_SteamIDUser = d.m_SteamIDUser,
+					m_SteamIDGroup = d.m_SteamIDGroup,
+					m_bMember = d.m_bMember,
+					m_bOfficer = d.m_bOfficer,
+				};
 			}
 		}
 	}
@@ -5160,21 +4677,18 @@ namespace SteamNative
 			public ulong m_ulBannedGameID; // uint64
 			public uint m_unBanExpires; // uint32
 			
-			public GSReputation_t Get
+			public static implicit operator  GSReputation_t (  GSReputation_t.PackSmall d )
 			{
-				get
+				return new GSReputation_t()
 				{
-					return new GSReputation_t()
-					{
-						m_eResult = this.m_eResult,
-						m_unReputationScore = this.m_unReputationScore,
-						m_bBanned = this.m_bBanned,
-						m_unBannedIP = this.m_unBannedIP,
-						m_usBannedPort = this.m_usBannedPort,
-						m_ulBannedGameID = this.m_ulBannedGameID,
-						m_unBanExpires = this.m_unBanExpires,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_unReputationScore = d.m_unReputationScore,
+					m_bBanned = d.m_bBanned,
+					m_unBannedIP = d.m_unBannedIP,
+					m_usBannedPort = d.m_usBannedPort,
+					m_ulBannedGameID = d.m_ulBannedGameID,
+					m_unBanExpires = d.m_unBanExpires,
+				};
 			}
 		}
 	}
@@ -5190,15 +4704,12 @@ namespace SteamNative
 		{
 			public Result m_eResult; // enum EResult
 			
-			public AssociateWithClanResult_t Get
+			public static implicit operator  AssociateWithClanResult_t (  AssociateWithClanResult_t.PackSmall d )
 			{
-				get
+				return new AssociateWithClanResult_t()
 				{
-					return new AssociateWithClanResult_t()
-					{
-						m_eResult = this.m_eResult,
-					};
-				}
+					m_eResult = d.m_eResult,
+				};
 			}
 		}
 	}
@@ -5222,19 +4733,16 @@ namespace SteamNative
 			public int m_cClanPlayersThatDontLikeCandidate; // int
 			public ulong m_SteamIDCandidate; // class CSteamID
 			
-			public ComputeNewPlayerCompatibilityResult_t Get
+			public static implicit operator  ComputeNewPlayerCompatibilityResult_t (  ComputeNewPlayerCompatibilityResult_t.PackSmall d )
 			{
-				get
+				return new ComputeNewPlayerCompatibilityResult_t()
 				{
-					return new ComputeNewPlayerCompatibilityResult_t()
-					{
-						m_eResult = this.m_eResult,
-						m_cPlayersThatDontLikeCandidate = this.m_cPlayersThatDontLikeCandidate,
-						m_cPlayersThatCandidateDoesntLike = this.m_cPlayersThatCandidateDoesntLike,
-						m_cClanPlayersThatDontLikeCandidate = this.m_cClanPlayersThatDontLikeCandidate,
-						m_SteamIDCandidate = this.m_SteamIDCandidate,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_cPlayersThatDontLikeCandidate = d.m_cPlayersThatDontLikeCandidate,
+					m_cPlayersThatCandidateDoesntLike = d.m_cPlayersThatCandidateDoesntLike,
+					m_cClanPlayersThatDontLikeCandidate = d.m_cClanPlayersThatDontLikeCandidate,
+					m_SteamIDCandidate = d.m_SteamIDCandidate,
+				};
 			}
 		}
 	}
@@ -5252,16 +4760,13 @@ namespace SteamNative
 			public Result m_eResult; // enum EResult
 			public ulong m_steamIDUser; // class CSteamID
 			
-			public GSStatsReceived_t Get
+			public static implicit operator  GSStatsReceived_t (  GSStatsReceived_t.PackSmall d )
 			{
-				get
+				return new GSStatsReceived_t()
 				{
-					return new GSStatsReceived_t()
-					{
-						m_eResult = this.m_eResult,
-						m_steamIDUser = this.m_steamIDUser,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_steamIDUser = d.m_steamIDUser,
+				};
 			}
 		}
 	}
@@ -5279,16 +4784,13 @@ namespace SteamNative
 			public Result m_eResult; // enum EResult
 			public ulong m_steamIDUser; // class CSteamID
 			
-			public GSStatsStored_t Get
+			public static implicit operator  GSStatsStored_t (  GSStatsStored_t.PackSmall d )
 			{
-				get
+				return new GSStatsStored_t()
 				{
-					return new GSStatsStored_t()
-					{
-						m_eResult = this.m_eResult,
-						m_steamIDUser = this.m_steamIDUser,
-					};
-				}
+					m_eResult = d.m_eResult,
+					m_steamIDUser = d.m_steamIDUser,
+				};
 			}
 		}
 	}
@@ -5304,15 +4806,12 @@ namespace SteamNative
 		{
 			public ulong m_steamIDUser; // class CSteamID
 			
-			public GSStatsUnloaded_t Get
+			public static implicit operator  GSStatsUnloaded_t (  GSStatsUnloaded_t.PackSmall d )
 			{
-				get
+				return new GSStatsUnloaded_t()
 				{
-					return new GSStatsUnloaded_t()
-					{
-						m_steamIDUser = this.m_steamIDUser,
-					};
-				}
+					m_steamIDUser = d.m_steamIDUser,
+				};
 			}
 		}
 	}

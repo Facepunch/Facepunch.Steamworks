@@ -43,15 +43,13 @@ namespace Generator
                 StructFields( c.Fields );
 
                 WriteLine();
-                StartBlock( $"public {c.Name} Get" );
-                StartBlock( "get" );
+                StartBlock( $"public static implicit operator  {c.Name} (  {c.Name}.PackSmall d )" );
                 StartBlock( $"return new {c.Name}()" );
                 foreach ( var f in c.Fields )
                 {
-                    WriteLine( $"{f.Name} = this.{f.Name}," );
+                    WriteLine( $"{f.Name} = d.{f.Name}," );
                 }
                 EndBlock( ";" );
-                EndBlock();
                 EndBlock();
 
                 EndBlock();

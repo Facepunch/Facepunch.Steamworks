@@ -140,13 +140,21 @@ namespace Generator
             return $"{Name}";
         }
 
-        internal string InteropParameter()
+        internal string InteropParameter( bool LargePack )
         {
+            var ps = LargePack ? "" : ".PackSmall";
+
+            if ( !NativeType.Contains( "_t" ) )
+                ps = string.Empty;
+
+            if ( TypeDef != null )
+                ps = string.Empty;
+
             if ( ShouldBeIntPtr )
                 return $"IntPtr /*{NativeType}*/ {Name}";
 
             if ( IsStructShouldBePassedAsRef )
-                return $"ref {ManagedType.Trim( '*', ' ' )} /*{NativeType}*/ {Name}";
+                return $"ref {ManagedType.Trim( '*', ' ' )}{ps} /*{NativeType}*/ {Name}";
 
             if ( ShouldBePassedAsOut )
                 return $"out {ManagedType.Trim( '*', ' ' )} /*{NativeType}*/ {Name}";

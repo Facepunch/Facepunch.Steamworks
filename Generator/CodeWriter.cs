@@ -222,7 +222,7 @@ namespace Generator
             {
                 sb = new StringBuilder();
                 Header();
-                PlatformClass( "Win32", "steam_api.dll" );
+                PlatformClass( "Win32", "steam_api.dll", true );
                 Footer();
                 System.IO.File.WriteAllText( $"{folder}SteamNative.Platform.Win32.cs", sb.ToString() );
             }
@@ -230,7 +230,7 @@ namespace Generator
             {
                 sb = new StringBuilder();
                 Header();
-                PlatformClass( "Win64", "steam_api64.dll" );
+                PlatformClass( "Win64", "steam_api64.dll", true );
                 Footer();
                 System.IO.File.WriteAllText( $"{folder}SteamNative.Platform.Win64.cs", sb.ToString() );
             }
@@ -238,7 +238,7 @@ namespace Generator
             {
                 sb = new StringBuilder();
                 Header();
-                PlatformClass( "Linux32", "libsteam_api.so" );
+                PlatformClass( "Linux32", "libsteam_api.so", false );
                 Footer();
                 System.IO.File.WriteAllText( $"{folder}SteamNative.Platform.Linux32.cs", sb.ToString() );
             }
@@ -246,7 +246,7 @@ namespace Generator
             {
                 sb = new StringBuilder();
                 Header();
-                PlatformClass( "Linux64", "libsteam_api64.so" );
+                PlatformClass( "Linux64", "libsteam_api64.so", false );
                 Footer();
                 System.IO.File.WriteAllText( $"{folder}SteamNative.Platform.Linux64.cs", sb.ToString() );
             }
@@ -254,7 +254,7 @@ namespace Generator
             {
                 sb = new StringBuilder();
                 Header();
-                PlatformClass( "Mac", "libsteam_api.dylib" );
+                PlatformClass( "Mac", "libsteam_api.dylib", false );
                 Footer();
                 System.IO.File.WriteAllText( $"{folder}SteamNative.Platform.Mac.cs", sb.ToString() );
             }

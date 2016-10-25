@@ -422,7 +422,10 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetFriendGamePlayed(_ptr, steamIDFriend, ref pFriendGameInfo);
+				var pFriendGameInfo_ps = new FriendGameInfo_t.PackSmall();
+				var ret = Native.ISteamFriends.GetFriendGamePlayed(_ptr, steamIDFriend, ref pFriendGameInfo_ps);
+				pFriendGameInfo = pFriendGameInfo_ps;
+				return ret;
 			}
 			public virtual IntPtr ISteamFriends_GetFriendPersonaNameHistory( CSteamID /*class CSteamID*/ steamIDFriend, int /*int*/ iPersonaName  )
 			{
@@ -1801,7 +1804,10 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetDownloadedLeaderboardEntry(_ptr, hSteamLeaderboardEntries, index, ref pLeaderboardEntry, pDetails, cDetailsMax);
+				var pLeaderboardEntry_ps = new LeaderboardEntry_t.PackSmall();
+				var ret = Native.ISteamUserStats.GetDownloadedLeaderboardEntry(_ptr, hSteamLeaderboardEntries, index, ref pLeaderboardEntry_ps, pDetails, cDetailsMax);
+				pLeaderboardEntry = pLeaderboardEntry_ps;
+				return ret;
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUserStats_UploadLeaderboardScore( SteamLeaderboard_t /*SteamLeaderboard_t*/ hSteamLeaderboard, LeaderboardUploadScoreMethod /*ELeaderboardUploadScoreMethod*/ eLeaderboardUploadScoreMethod , int /*int32*/ nScore , IntPtr /*const int32 **/ pScoreDetails, int /*int*/ cScoreDetailsCount  )
 			{
@@ -2067,7 +2073,10 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamNetworking _ptr is null!" );
 				
-				return Native.ISteamNetworking.GetP2PSessionState(_ptr, steamIDRemote, ref pConnectionState);
+				var pConnectionState_ps = new P2PSessionState_t.PackSmall();
+				var ret = Native.ISteamNetworking.GetP2PSessionState(_ptr, steamIDRemote, ref pConnectionState_ps);
+				pConnectionState = pConnectionState_ps;
+				return ret;
 			}
 			public virtual bool /*bool*/ ISteamNetworking_AllowP2PPacketRelay( bool /*bool*/ bAllow  )
 			{
@@ -2764,7 +2773,10 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.GetQueryUGCResult(_ptr, handle, index, ref pDetails);
+				var pDetails_ps = new SteamUGCDetails_t.PackSmall();
+				var ret = Native.ISteamUGC.GetQueryUGCResult(_ptr, handle, index, ref pDetails_ps);
+				pDetails = pDetails_ps;
+				return ret;
 			}
 			public virtual bool /*bool*/ ISteamUGC_GetQueryUGCPreviewURL( UGCQueryHandle_t /*UGCQueryHandle_t*/ handle, uint /*uint32*/ index , System.Text.StringBuilder /*char **/ pchURL, uint /*uint32*/ cchURLSize  )
 			{
@@ -3957,7 +3969,7 @@ namespace SteamNative
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamFriends_GetFriendRelationship" )] internal static extern FriendRelationship /*EFriendRelationship*/ GetFriendRelationship( IntPtr ISteamFriends, CSteamID /*class CSteamID*/ steamIDFriend );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamFriends_GetFriendPersonaState" )] internal static extern PersonaState /*EPersonaState*/ GetFriendPersonaState( IntPtr ISteamFriends, CSteamID /*class CSteamID*/ steamIDFriend );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamFriends_GetFriendPersonaName" )] internal static extern IntPtr GetFriendPersonaName( IntPtr ISteamFriends, CSteamID /*class CSteamID*/ steamIDFriend );
-					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamFriends_GetFriendGamePlayed" )] internal static extern bool /*bool*/ GetFriendGamePlayed( IntPtr ISteamFriends, CSteamID /*class CSteamID*/ steamIDFriend, ref FriendGameInfo_t /*struct FriendGameInfo_t **/ pFriendGameInfo );
+					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamFriends_GetFriendGamePlayed" )] internal static extern bool /*bool*/ GetFriendGamePlayed( IntPtr ISteamFriends, CSteamID /*class CSteamID*/ steamIDFriend, ref FriendGameInfo_t.PackSmall /*struct FriendGameInfo_t **/ pFriendGameInfo );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamFriends_GetFriendPersonaNameHistory" )] internal static extern IntPtr GetFriendPersonaNameHistory( IntPtr ISteamFriends, CSteamID /*class CSteamID*/ steamIDFriend, int /*int*/ iPersonaName  );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamFriends_GetFriendSteamLevel" )] internal static extern int /*int*/ GetFriendSteamLevel( IntPtr ISteamFriends, CSteamID /*class CSteamID*/ steamIDFriend );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamFriends_GetPlayerNickname" )] internal static extern IntPtr GetPlayerNickname( IntPtr ISteamFriends, CSteamID /*class CSteamID*/ steamIDPlayer );
@@ -4206,7 +4218,7 @@ namespace SteamNative
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUserStats_GetLeaderboardDisplayType" )] internal static extern LeaderboardDisplayType /*ELeaderboardDisplayType*/ GetLeaderboardDisplayType( IntPtr ISteamUserStats, SteamLeaderboard_t /*SteamLeaderboard_t*/ hSteamLeaderboard );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUserStats_DownloadLeaderboardEntries" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ DownloadLeaderboardEntries( IntPtr ISteamUserStats, SteamLeaderboard_t /*SteamLeaderboard_t*/ hSteamLeaderboard, LeaderboardDataRequest /*ELeaderboardDataRequest*/ eLeaderboardDataRequest , int /*int*/ nRangeStart , int /*int*/ nRangeEnd  );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUserStats_DownloadLeaderboardEntriesForUsers" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ DownloadLeaderboardEntriesForUsers( IntPtr ISteamUserStats, SteamLeaderboard_t /*SteamLeaderboard_t*/ hSteamLeaderboard, IntPtr /*class CSteamID **/ prgUsers, int /*int*/ cUsers  );
-					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUserStats_GetDownloadedLeaderboardEntry" )] internal static extern bool /*bool*/ GetDownloadedLeaderboardEntry( IntPtr ISteamUserStats, SteamLeaderboardEntries_t /*SteamLeaderboardEntries_t*/ hSteamLeaderboardEntries, int /*int*/ index , ref LeaderboardEntry_t /*struct LeaderboardEntry_t **/ pLeaderboardEntry, IntPtr /*int32 **/ pDetails, int /*int*/ cDetailsMax  );
+					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUserStats_GetDownloadedLeaderboardEntry" )] internal static extern bool /*bool*/ GetDownloadedLeaderboardEntry( IntPtr ISteamUserStats, SteamLeaderboardEntries_t /*SteamLeaderboardEntries_t*/ hSteamLeaderboardEntries, int /*int*/ index , ref LeaderboardEntry_t.PackSmall /*struct LeaderboardEntry_t **/ pLeaderboardEntry, IntPtr /*int32 **/ pDetails, int /*int*/ cDetailsMax  );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUserStats_UploadLeaderboardScore" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ UploadLeaderboardScore( IntPtr ISteamUserStats, SteamLeaderboard_t /*SteamLeaderboard_t*/ hSteamLeaderboard, LeaderboardUploadScoreMethod /*ELeaderboardUploadScoreMethod*/ eLeaderboardUploadScoreMethod , int /*int32*/ nScore , IntPtr /*const int32 **/ pScoreDetails, int /*int*/ cScoreDetailsCount  );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUserStats_AttachLeaderboardUGC" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ AttachLeaderboardUGC( IntPtr ISteamUserStats, SteamLeaderboard_t /*SteamLeaderboard_t*/ hSteamLeaderboard, UGCHandle_t /*UGCHandle_t*/ hUGC );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUserStats_GetNumberOfCurrentPlayers" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ GetNumberOfCurrentPlayers( IntPtr ISteamUserStats );
@@ -4258,7 +4270,7 @@ namespace SteamNative
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamNetworking_AcceptP2PSessionWithUser" )] internal static extern bool /*bool*/ AcceptP2PSessionWithUser( IntPtr ISteamNetworking, CSteamID /*class CSteamID*/ steamIDRemote );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamNetworking_CloseP2PSessionWithUser" )] internal static extern bool /*bool*/ CloseP2PSessionWithUser( IntPtr ISteamNetworking, CSteamID /*class CSteamID*/ steamIDRemote );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamNetworking_CloseP2PChannelWithUser" )] internal static extern bool /*bool*/ CloseP2PChannelWithUser( IntPtr ISteamNetworking, CSteamID /*class CSteamID*/ steamIDRemote, int /*int*/ nChannel  );
-					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamNetworking_GetP2PSessionState" )] internal static extern bool /*bool*/ GetP2PSessionState( IntPtr ISteamNetworking, CSteamID /*class CSteamID*/ steamIDRemote, ref P2PSessionState_t /*struct P2PSessionState_t **/ pConnectionState );
+					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamNetworking_GetP2PSessionState" )] internal static extern bool /*bool*/ GetP2PSessionState( IntPtr ISteamNetworking, CSteamID /*class CSteamID*/ steamIDRemote, ref P2PSessionState_t.PackSmall /*struct P2PSessionState_t **/ pConnectionState );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamNetworking_AllowP2PPacketRelay" )] internal static extern bool /*bool*/ AllowP2PPacketRelay( IntPtr ISteamNetworking, bool /*bool*/ bAllow  );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamNetworking_CreateListenSocket" )] internal static extern SNetListenSocket_t /*(SNetListenSocket_t)*/ CreateListenSocket( IntPtr ISteamNetworking, int /*int*/ nVirtualP2PPort , uint /*uint32*/ nIP , ushort /*uint16*/ nPort , bool /*bool*/ bAllowUseOfPacketRelay  );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamNetworking_CreateP2PConnectionSocket" )] internal static extern SNetSocket_t /*(SNetSocket_t)*/ CreateP2PConnectionSocket( IntPtr ISteamNetworking, CSteamID /*class CSteamID*/ steamIDTarget, int /*int*/ nVirtualPort , int /*int*/ nTimeoutSec , bool /*bool*/ bAllowUseOfPacketRelay  );
@@ -4401,7 +4413,7 @@ namespace SteamNative
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUGC_CreateQueryAllUGCRequest" )] internal static extern UGCQueryHandle_t /*(UGCQueryHandle_t)*/ CreateQueryAllUGCRequest( IntPtr ISteamUGC, UGCQuery /*EUGCQuery*/ eQueryType , UGCMatchingUGCType /*EUGCMatchingUGCType*/ eMatchingeMatchingUGCTypeFileType , AppId_t /*AppId_t*/ nCreatorAppID, AppId_t /*AppId_t*/ nConsumerAppID, uint /*uint32*/ unPage  );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUGC_CreateQueryUGCDetailsRequest" )] internal static extern UGCQueryHandle_t /*(UGCQueryHandle_t)*/ CreateQueryUGCDetailsRequest( IntPtr ISteamUGC, IntPtr /*PublishedFileId_t **/ pvecPublishedFileID, uint /*uint32*/ unNumPublishedFileIDs  );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUGC_SendQueryUGCRequest" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SendQueryUGCRequest( IntPtr ISteamUGC, UGCQueryHandle_t /*UGCQueryHandle_t*/ handle );
-					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCResult" )] internal static extern bool /*bool*/ GetQueryUGCResult( IntPtr ISteamUGC, UGCQueryHandle_t /*UGCQueryHandle_t*/ handle, uint /*uint32*/ index , ref SteamUGCDetails_t /*struct SteamUGCDetails_t **/ pDetails );
+					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCResult" )] internal static extern bool /*bool*/ GetQueryUGCResult( IntPtr ISteamUGC, UGCQueryHandle_t /*UGCQueryHandle_t*/ handle, uint /*uint32*/ index , ref SteamUGCDetails_t.PackSmall /*struct SteamUGCDetails_t **/ pDetails );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCPreviewURL" )] internal static extern bool /*bool*/ GetQueryUGCPreviewURL( IntPtr ISteamUGC, UGCQueryHandle_t /*UGCQueryHandle_t*/ handle, uint /*uint32*/ index , System.Text.StringBuilder /*char **/ pchURL, uint /*uint32*/ cchURLSize  );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCMetadata" )] internal static extern bool /*bool*/ GetQueryUGCMetadata( IntPtr ISteamUGC, UGCQueryHandle_t /*UGCQueryHandle_t*/ handle, uint /*uint32*/ index , System.Text.StringBuilder /*char **/ pchMetadata, uint /*uint32*/ cchMetadatasize  );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCChildren" )] internal static extern bool /*bool*/ GetQueryUGCChildren( IntPtr ISteamUGC, UGCQueryHandle_t /*UGCQueryHandle_t*/ handle, uint /*uint32*/ index , IntPtr /*PublishedFileId_t **/ pvecPublishedFileID, uint /*uint32*/ cMaxEntries  );
