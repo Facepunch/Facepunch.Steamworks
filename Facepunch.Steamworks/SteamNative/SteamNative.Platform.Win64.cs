@@ -4617,7 +4617,7 @@ namespace SteamNative
 					[DllImportAttribute( "steam_api64.dll", EntryPoint = "SteamAPI_GetHSteamPipe" )] internal static extern HSteamPipe /*(HSteamPipe)*/ SteamAPI_GetHSteamPipe();
 					[DllImportAttribute( "steam_api64.dll", EntryPoint = "SteamGameServer_GetHSteamUser" )] internal static extern HSteamUser /*(HSteamUser)*/ SteamGameServer_GetHSteamUser();
 					[DllImportAttribute( "steam_api64.dll", EntryPoint = "SteamGameServer_GetHSteamPipe" )] internal static extern HSteamPipe /*(HSteamPipe)*/ SteamGameServer_GetHSteamPipe();
-					[DllImportAttribute( "steam_api64.dll", EntryPoint = "SteamInternal_CreateInterface" )] internal static extern IntPtr /*void **/ SteamInternal_CreateInterface( string /*const char **/ version  );
+					[DllImportAttribute( "steam_api64", EntryPoint = "SteamInternal_CreateInterface" )] internal static extern IntPtr /*void **/ SteamInternal_CreateInterface( string /*const char **/ version  );
 				}
 				
 			}

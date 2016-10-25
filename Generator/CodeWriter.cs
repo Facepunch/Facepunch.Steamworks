@@ -254,7 +254,7 @@ namespace Generator
             {
                 sb = new StringBuilder();
                 Header();
-                PlatformClass( "Mac", "libsteam_api.dylib.so" );
+                PlatformClass( "Mac", "libsteam_api.dylib" );
                 Footer();
                 System.IO.File.WriteAllText( $"{folder}SteamNative.Platform.Mac.cs", sb.ToString() );
             }
