@@ -16,6 +16,8 @@ namespace SteamNative
 		// bool
 		public bool BReleaseSteamPipe( HSteamPipe hSteamPipe /*HSteamPipe*/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamClient.BReleaseSteamPipe( _ptr, hSteamPipe );
 			else return Platform.Win64.ISteamClient.BReleaseSteamPipe( _ptr, hSteamPipe );
 		}
@@ -23,6 +25,8 @@ namespace SteamNative
 		// bool
 		public bool BShutdownIfAllPipesClosed()
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamClient.BShutdownIfAllPipesClosed( _ptr );
 			else return Platform.Win64.ISteamClient.BShutdownIfAllPipesClosed( _ptr );
 		}
@@ -30,6 +34,8 @@ namespace SteamNative
 		// HSteamUser
 		public HSteamUser ConnectToGlobalUser( HSteamPipe hSteamPipe /*HSteamPipe*/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamClient.ConnectToGlobalUser( _ptr, hSteamPipe );
 			else return Platform.Win64.ISteamClient.ConnectToGlobalUser( _ptr, hSteamPipe );
 		}
@@ -37,6 +43,8 @@ namespace SteamNative
 		// HSteamUser
 		public HSteamUser CreateLocalUser( out HSteamPipe phSteamPipe /*HSteamPipe **/, AccountType eAccountType /*EAccountType*/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamClient.CreateLocalUser( _ptr, out phSteamPipe, eAccountType );
 			else return Platform.Win64.ISteamClient.CreateLocalUser( _ptr, out phSteamPipe, eAccountType );
 		}
@@ -44,6 +52,8 @@ namespace SteamNative
 		// HSteamPipe
 		public HSteamPipe CreateSteamPipe()
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamClient.CreateSteamPipe( _ptr );
 			else return Platform.Win64.ISteamClient.CreateSteamPipe( _ptr );
 		}
@@ -51,6 +61,8 @@ namespace SteamNative
 		// uint
 		public uint GetIPCCallCount()
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamClient.GetIPCCallCount( _ptr );
 			else return Platform.Win64.ISteamClient.GetIPCCallCount( _ptr );
 		}
@@ -58,6 +70,8 @@ namespace SteamNative
 		// ISteamAppList *
 		public SteamAppList GetISteamAppList( HSteamUser hSteamUser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			IntPtr interface_pointer;
 			if ( Platform.IsWindows32 ) interface_pointer = Platform.Win32.ISteamClient.GetISteamAppList( _ptr, hSteamUser, hSteamPipe, pchVersion );
 			else interface_pointer = Platform.Win64.ISteamClient.GetISteamAppList( _ptr, hSteamUser, hSteamPipe, pchVersion );
@@ -67,6 +81,8 @@ namespace SteamNative
 		// ISteamApps *
 		public SteamApps GetISteamApps( HSteamUser hSteamUser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			IntPtr interface_pointer;
 			if ( Platform.IsWindows32 ) interface_pointer = Platform.Win32.ISteamClient.GetISteamApps( _ptr, hSteamUser, hSteamPipe, pchVersion );
 			else interface_pointer = Platform.Win64.ISteamClient.GetISteamApps( _ptr, hSteamUser, hSteamPipe, pchVersion );
@@ -76,6 +92,8 @@ namespace SteamNative
 		// ISteamController *
 		public SteamController GetISteamController( HSteamUser hSteamUser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			IntPtr interface_pointer;
 			if ( Platform.IsWindows32 ) interface_pointer = Platform.Win32.ISteamClient.GetISteamController( _ptr, hSteamUser, hSteamPipe, pchVersion );
 			else interface_pointer = Platform.Win64.ISteamClient.GetISteamController( _ptr, hSteamUser, hSteamPipe, pchVersion );
@@ -85,6 +103,8 @@ namespace SteamNative
 		// ISteamFriends *
 		public SteamFriends GetISteamFriends( HSteamUser hSteamUser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			IntPtr interface_pointer;
 			if ( Platform.IsWindows32 ) interface_pointer = Platform.Win32.ISteamClient.GetISteamFriends( _ptr, hSteamUser, hSteamPipe, pchVersion );
 			else interface_pointer = Platform.Win64.ISteamClient.GetISteamFriends( _ptr, hSteamUser, hSteamPipe, pchVersion );
@@ -94,6 +114,8 @@ namespace SteamNative
 		// ISteamGameServer *
 		public SteamGameServer GetISteamGameServer( HSteamUser hSteamUser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			IntPtr interface_pointer;
 			if ( Platform.IsWindows32 ) interface_pointer = Platform.Win32.ISteamClient.GetISteamGameServer( _ptr, hSteamUser, hSteamPipe, pchVersion );
 			else interface_pointer = Platform.Win64.ISteamClient.GetISteamGameServer( _ptr, hSteamUser, hSteamPipe, pchVersion );
@@ -103,6 +125,8 @@ namespace SteamNative
 		// ISteamGameServerStats *
 		public SteamGameServerStats GetISteamGameServerStats( HSteamUser hSteamuser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			IntPtr interface_pointer;
 			if ( Platform.IsWindows32 ) interface_pointer = Platform.Win32.ISteamClient.GetISteamGameServerStats( _ptr, hSteamuser, hSteamPipe, pchVersion );
 			else interface_pointer = Platform.Win64.ISteamClient.GetISteamGameServerStats( _ptr, hSteamuser, hSteamPipe, pchVersion );
@@ -112,6 +136,8 @@ namespace SteamNative
 		// IntPtr
 		public IntPtr GetISteamGenericInterface( HSteamUser hSteamUser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamClient.GetISteamGenericInterface( _ptr, hSteamUser, hSteamPipe, pchVersion );
 			else return Platform.Win64.ISteamClient.GetISteamGenericInterface( _ptr, hSteamUser, hSteamPipe, pchVersion );
 		}
@@ -119,6 +145,8 @@ namespace SteamNative
 		// ISteamHTMLSurface *
 		public SteamHTMLSurface GetISteamHTMLSurface( HSteamUser hSteamuser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			IntPtr interface_pointer;
 			if ( Platform.IsWindows32 ) interface_pointer = Platform.Win32.ISteamClient.GetISteamHTMLSurface( _ptr, hSteamuser, hSteamPipe, pchVersion );
 			else interface_pointer = Platform.Win64.ISteamClient.GetISteamHTMLSurface( _ptr, hSteamuser, hSteamPipe, pchVersion );
@@ -128,6 +156,8 @@ namespace SteamNative
 		// ISteamHTTP *
 		public SteamHTTP GetISteamHTTP( HSteamUser hSteamuser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			IntPtr interface_pointer;
 			if ( Platform.IsWindows32 ) interface_pointer = Platform.Win32.ISteamClient.GetISteamHTTP( _ptr, hSteamuser, hSteamPipe, pchVersion );
 			else interface_pointer = Platform.Win64.ISteamClient.GetISteamHTTP( _ptr, hSteamuser, hSteamPipe, pchVersion );
@@ -137,6 +167,8 @@ namespace SteamNative
 		// ISteamInventory *
 		public SteamInventory GetISteamInventory( HSteamUser hSteamuser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			IntPtr interface_pointer;
 			if ( Platform.IsWindows32 ) interface_pointer = Platform.Win32.ISteamClient.GetISteamInventory( _ptr, hSteamuser, hSteamPipe, pchVersion );
 			else interface_pointer = Platform.Win64.ISteamClient.GetISteamInventory( _ptr, hSteamuser, hSteamPipe, pchVersion );
@@ -146,6 +178,8 @@ namespace SteamNative
 		// ISteamMatchmaking *
 		public SteamMatchmaking GetISteamMatchmaking( HSteamUser hSteamUser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			IntPtr interface_pointer;
 			if ( Platform.IsWindows32 ) interface_pointer = Platform.Win32.ISteamClient.GetISteamMatchmaking( _ptr, hSteamUser, hSteamPipe, pchVersion );
 			else interface_pointer = Platform.Win64.ISteamClient.GetISteamMatchmaking( _ptr, hSteamUser, hSteamPipe, pchVersion );
@@ -155,6 +189,8 @@ namespace SteamNative
 		// ISteamMatchmakingServers *
 		public SteamMatchmakingServers GetISteamMatchmakingServers( HSteamUser hSteamUser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			IntPtr interface_pointer;
 			if ( Platform.IsWindows32 ) interface_pointer = Platform.Win32.ISteamClient.GetISteamMatchmakingServers( _ptr, hSteamUser, hSteamPipe, pchVersion );
 			else interface_pointer = Platform.Win64.ISteamClient.GetISteamMatchmakingServers( _ptr, hSteamUser, hSteamPipe, pchVersion );
@@ -164,6 +200,8 @@ namespace SteamNative
 		// ISteamMusic *
 		public SteamMusic GetISteamMusic( HSteamUser hSteamuser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			IntPtr interface_pointer;
 			if ( Platform.IsWindows32 ) interface_pointer = Platform.Win32.ISteamClient.GetISteamMusic( _ptr, hSteamuser, hSteamPipe, pchVersion );
 			else interface_pointer = Platform.Win64.ISteamClient.GetISteamMusic( _ptr, hSteamuser, hSteamPipe, pchVersion );
@@ -173,6 +211,8 @@ namespace SteamNative
 		// ISteamMusicRemote *
 		public SteamMusicRemote GetISteamMusicRemote( HSteamUser hSteamuser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			IntPtr interface_pointer;
 			if ( Platform.IsWindows32 ) interface_pointer = Platform.Win32.ISteamClient.GetISteamMusicRemote( _ptr, hSteamuser, hSteamPipe, pchVersion );
 			else interface_pointer = Platform.Win64.ISteamClient.GetISteamMusicRemote( _ptr, hSteamuser, hSteamPipe, pchVersion );
@@ -182,6 +222,8 @@ namespace SteamNative
 		// ISteamNetworking *
 		public SteamNetworking GetISteamNetworking( HSteamUser hSteamUser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			IntPtr interface_pointer;
 			if ( Platform.IsWindows32 ) interface_pointer = Platform.Win32.ISteamClient.GetISteamNetworking( _ptr, hSteamUser, hSteamPipe, pchVersion );
 			else interface_pointer = Platform.Win64.ISteamClient.GetISteamNetworking( _ptr, hSteamUser, hSteamPipe, pchVersion );
@@ -191,6 +233,8 @@ namespace SteamNative
 		// ISteamRemoteStorage *
 		public SteamRemoteStorage GetISteamRemoteStorage( HSteamUser hSteamuser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			IntPtr interface_pointer;
 			if ( Platform.IsWindows32 ) interface_pointer = Platform.Win32.ISteamClient.GetISteamRemoteStorage( _ptr, hSteamuser, hSteamPipe, pchVersion );
 			else interface_pointer = Platform.Win64.ISteamClient.GetISteamRemoteStorage( _ptr, hSteamuser, hSteamPipe, pchVersion );
@@ -200,6 +244,8 @@ namespace SteamNative
 		// ISteamScreenshots *
 		public SteamScreenshots GetISteamScreenshots( HSteamUser hSteamuser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			IntPtr interface_pointer;
 			if ( Platform.IsWindows32 ) interface_pointer = Platform.Win32.ISteamClient.GetISteamScreenshots( _ptr, hSteamuser, hSteamPipe, pchVersion );
 			else interface_pointer = Platform.Win64.ISteamClient.GetISteamScreenshots( _ptr, hSteamuser, hSteamPipe, pchVersion );
@@ -209,6 +255,8 @@ namespace SteamNative
 		// ISteamUGC *
 		public SteamUGC GetISteamUGC( HSteamUser hSteamUser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			IntPtr interface_pointer;
 			if ( Platform.IsWindows32 ) interface_pointer = Platform.Win32.ISteamClient.GetISteamUGC( _ptr, hSteamUser, hSteamPipe, pchVersion );
 			else interface_pointer = Platform.Win64.ISteamClient.GetISteamUGC( _ptr, hSteamUser, hSteamPipe, pchVersion );
@@ -218,6 +266,8 @@ namespace SteamNative
 		// ISteamUnifiedMessages *
 		public SteamUnifiedMessages GetISteamUnifiedMessages( HSteamUser hSteamuser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			IntPtr interface_pointer;
 			if ( Platform.IsWindows32 ) interface_pointer = Platform.Win32.ISteamClient.GetISteamUnifiedMessages( _ptr, hSteamuser, hSteamPipe, pchVersion );
 			else interface_pointer = Platform.Win64.ISteamClient.GetISteamUnifiedMessages( _ptr, hSteamuser, hSteamPipe, pchVersion );
@@ -227,6 +277,8 @@ namespace SteamNative
 		// ISteamUser *
 		public SteamUser GetISteamUser( HSteamUser hSteamUser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			IntPtr interface_pointer;
 			if ( Platform.IsWindows32 ) interface_pointer = Platform.Win32.ISteamClient.GetISteamUser( _ptr, hSteamUser, hSteamPipe, pchVersion );
 			else interface_pointer = Platform.Win64.ISteamClient.GetISteamUser( _ptr, hSteamUser, hSteamPipe, pchVersion );
@@ -236,6 +288,8 @@ namespace SteamNative
 		// ISteamUserStats *
 		public SteamUserStats GetISteamUserStats( HSteamUser hSteamUser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			IntPtr interface_pointer;
 			if ( Platform.IsWindows32 ) interface_pointer = Platform.Win32.ISteamClient.GetISteamUserStats( _ptr, hSteamUser, hSteamPipe, pchVersion );
 			else interface_pointer = Platform.Win64.ISteamClient.GetISteamUserStats( _ptr, hSteamUser, hSteamPipe, pchVersion );
@@ -245,6 +299,8 @@ namespace SteamNative
 		// ISteamUtils *
 		public SteamUtils GetISteamUtils( HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			IntPtr interface_pointer;
 			if ( Platform.IsWindows32 ) interface_pointer = Platform.Win32.ISteamClient.GetISteamUtils( _ptr, hSteamPipe, pchVersion );
 			else interface_pointer = Platform.Win64.ISteamClient.GetISteamUtils( _ptr, hSteamPipe, pchVersion );
@@ -254,6 +310,8 @@ namespace SteamNative
 		// ISteamVideo *
 		public SteamVideo GetISteamVideo( HSteamUser hSteamuser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			IntPtr interface_pointer;
 			if ( Platform.IsWindows32 ) interface_pointer = Platform.Win32.ISteamClient.GetISteamVideo( _ptr, hSteamuser, hSteamPipe, pchVersion );
 			else interface_pointer = Platform.Win64.ISteamClient.GetISteamVideo( _ptr, hSteamuser, hSteamPipe, pchVersion );
@@ -263,6 +321,8 @@ namespace SteamNative
 		// void
 		public void ReleaseUser( HSteamPipe hSteamPipe /*HSteamPipe*/, HSteamUser hUser /*HSteamUser*/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			if ( Platform.IsWindows32 ) Platform.Win32.ISteamClient.ReleaseUser( _ptr, hSteamPipe, hUser );
 			else Platform.Win64.ISteamClient.ReleaseUser( _ptr, hSteamPipe, hUser );
 		}
@@ -270,6 +330,8 @@ namespace SteamNative
 		// void
 		public void SetLocalIPBinding( uint unIP /*uint32*/, ushort usPort /*uint16*/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			if ( Platform.IsWindows32 ) Platform.Win32.ISteamClient.SetLocalIPBinding( _ptr, unIP, usPort );
 			else Platform.Win64.ISteamClient.SetLocalIPBinding( _ptr, unIP, usPort );
 		}
@@ -277,6 +339,8 @@ namespace SteamNative
 		// void
 		public void SetWarningMessageHook( IntPtr pFunction /*SteamAPIWarningMessageHook_t*/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			if ( Platform.IsWindows32 ) Platform.Win32.ISteamClient.SetWarningMessageHook( _ptr, (IntPtr) pFunction );
 			else Platform.Win64.ISteamClient.SetWarningMessageHook( _ptr, (IntPtr) pFunction );
 		}

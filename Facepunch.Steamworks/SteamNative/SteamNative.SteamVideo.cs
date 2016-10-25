@@ -16,6 +16,8 @@ namespace SteamNative
 		// void
 		public void GetVideoURL( AppId_t unVideoAppID /*AppId_t*/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			if ( Platform.IsWindows32 ) Platform.Win32.ISteamVideo.GetVideoURL( _ptr, unVideoAppID );
 			else Platform.Win64.ISteamVideo.GetVideoURL( _ptr, unVideoAppID );
 		}
@@ -23,6 +25,8 @@ namespace SteamNative
 		// bool
 		public bool IsBroadcasting( IntPtr pnNumViewers /*int **/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamVideo.IsBroadcasting( _ptr, (IntPtr) pnNumViewers );
 			else return Platform.Win64.ISteamVideo.IsBroadcasting( _ptr, (IntPtr) pnNumViewers );
 		}

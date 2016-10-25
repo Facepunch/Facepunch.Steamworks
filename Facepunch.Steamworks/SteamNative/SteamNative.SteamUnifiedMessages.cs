@@ -16,6 +16,8 @@ namespace SteamNative
 		// bool
 		public bool GetMethodResponseData( ClientUnifiedMessageHandle hHandle /*ClientUnifiedMessageHandle*/, IntPtr pResponseBuffer /*void **/, uint unResponseBufferSize /*uint32*/, bool bAutoRelease /*bool*/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUnifiedMessages.GetMethodResponseData( _ptr, hHandle, (IntPtr) pResponseBuffer, unResponseBufferSize, bAutoRelease );
 			else return Platform.Win64.ISteamUnifiedMessages.GetMethodResponseData( _ptr, hHandle, (IntPtr) pResponseBuffer, unResponseBufferSize, bAutoRelease );
 		}
@@ -23,6 +25,8 @@ namespace SteamNative
 		// bool
 		public bool GetMethodResponseInfo( ClientUnifiedMessageHandle hHandle /*ClientUnifiedMessageHandle*/, out uint punResponseSize /*uint32 **/, out Result peResult /*EResult **/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUnifiedMessages.GetMethodResponseInfo( _ptr, hHandle, out punResponseSize, out peResult );
 			else return Platform.Win64.ISteamUnifiedMessages.GetMethodResponseInfo( _ptr, hHandle, out punResponseSize, out peResult );
 		}
@@ -30,6 +34,8 @@ namespace SteamNative
 		// bool
 		public bool ReleaseMethod( ClientUnifiedMessageHandle hHandle /*ClientUnifiedMessageHandle*/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUnifiedMessages.ReleaseMethod( _ptr, hHandle );
 			else return Platform.Win64.ISteamUnifiedMessages.ReleaseMethod( _ptr, hHandle );
 		}
@@ -37,6 +43,8 @@ namespace SteamNative
 		// ClientUnifiedMessageHandle
 		public ClientUnifiedMessageHandle SendMethod( string pchServiceMethod /*const char **/, IntPtr pRequestBuffer /*const void **/, uint unRequestBufferSize /*uint32*/, ulong unContext /*uint64*/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUnifiedMessages.SendMethod( _ptr, pchServiceMethod, (IntPtr) pRequestBuffer, unRequestBufferSize, unContext );
 			else return Platform.Win64.ISteamUnifiedMessages.SendMethod( _ptr, pchServiceMethod, (IntPtr) pRequestBuffer, unRequestBufferSize, unContext );
 		}
@@ -44,6 +52,8 @@ namespace SteamNative
 		// bool
 		public bool SendNotification( string pchServiceNotification /*const char **/, IntPtr pNotificationBuffer /*const void **/, uint unNotificationBufferSize /*uint32*/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUnifiedMessages.SendNotification( _ptr, pchServiceNotification, (IntPtr) pNotificationBuffer, unNotificationBufferSize );
 			else return Platform.Win64.ISteamUnifiedMessages.SendNotification( _ptr, pchServiceNotification, (IntPtr) pNotificationBuffer, unNotificationBufferSize );
 		}

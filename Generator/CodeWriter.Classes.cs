@@ -117,6 +117,12 @@ namespace Generator
             if ( argString != "" ) argString = " " + argString + " ";
             StartBlock( $"public{statc} {ReturnType} {methodName}({argString})" );
 
+            if ( classname != null )
+            {
+                WriteLine( "if ( _ptr == IntPtr.Zero ) throw new System.Exception( \"Internal pointer is null\"); // " );
+                WriteLine();
+            }
+
             CallPlatformClass( classname, m, callargs.Select( x => x.InteropVariable() ).ToList(), ReturnVar );
 
             WriteLines( BeforeLines );
@@ -237,6 +243,10 @@ namespace Generator
             bool ReturnString = argList.Count < 4 && (ReturnType == "bool" || ReturnType == "void" || ReturnType == "int"|| ReturnType == "uint");
             bool IsFirst = true;
 
+            //System.Text.StringBuilder pStrBuffer1 = new System.Text.StringBuilder(2048);
+            //bool result = NativeEntrypoints.SteamAPI_ISteamUGC_GetQueryUGCMetadata(m_pSteamUGC,handle,index,pStrBuffer1,2048);
+            //pchMetadata = pStrBuffer1.ToString();
+
             for ( int i=0; i< argList.Count; i++ )
             {
                 if ( argList[i].ManagedType != "char*" ) continue;
@@ -264,22 +274,21 @@ namespace Generator
                 if ( !ReturnString )
                     BeforeLines.Add( $"{chr.Name} = string.Empty;" );
 
-                BeforeLines.Add( $"var {chr.Name}_buffer = new char[4096];" );
-                BeforeLines.Add( $"fixed ( void* {chr.Name}_ptr = {chr.Name}_buffer )" );
-                BeforeLines.Add( "{" );
+                BeforeLines.Add( $"System.Text.StringBuilder {chr.Name}_sb = new System.Text.StringBuilder( 4096 );" );
 
                 if ( ReturnString ) ReturnType = "string";
                 ReturnVar = "bSuccess";
 
                 BeforeLines.Add( $"{num.ManagedType.Trim( '*' )} {num.Name} = 4096;" );
 
-                callargs.Where( x => x.Name == chr.Name ).All( x => { x.Name = $"({x.ManagedType})" + x.Name + "_ptr"; return true; } );
+                callargs.Where( x => x.Name == chr.Name ).All( x => { x.Name = x.Name + "_sb"; return true; } );
+           //     callargs.Where( x => x.Name == num.Name ).All( x => { x.Name = "4096"; return true; } );
 
 
 
-                if ( ReturnString ) AfterLines.Insert( 0, $"return Marshal.PtrToStringAuto( (IntPtr)" + chr.Name + "_ptr );" );
-                else AfterLines.Insert( 0, $"{chr.Name} = Marshal.PtrToStringAuto( (IntPtr)"+ chr.Name + "_ptr );" );
-                AfterLines.Insert( 1, "}" );
+                if ( ReturnString ) AfterLines.Insert( 0, $"return {chr.Name}_sb.ToString();" );
+                else AfterLines.Insert( 0, $"{chr.Name} = {chr.Name}_sb.ToString();" );
+
 
                 if ( IntReturn )
                 {

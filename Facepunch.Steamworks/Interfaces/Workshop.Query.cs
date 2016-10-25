@@ -114,6 +114,7 @@ namespace Facepunch.Steamworks
 
             void OnResult( QueryCompleted.Data data )
             {
+                var gotFiles = 0;
                 for ( int i = 0; i < data.NumResultsReturned; i++ )
                 {
                     if ( _resultSkip > 0 )
@@ -127,10 +128,9 @@ namespace Facepunch.Steamworks
                         Console.WriteLine( "{0} Adding result {1}", _resultPage, _results.Count );
                     }
 
-                    SteamNative.SteamUGCDetails_t details;
-                    //  if ( !workshop.ugc.GetQueryUGCResult( data.Handle, (uint)i, out details ) )
-                    //      continue;
-                    continue;
+                    SteamNative.SteamUGCDetails_t details = new SteamNative.SteamUGCDetails_t();
+                    if ( !workshop.ugc.GetQueryUGCResult( data.Handle, (uint)i, ref details ) )
+                        continue;
 
                     // We already have this file, so skip it
                     if ( _results.Any( x => x.Id == details.m_nPublishedFileId ) )
@@ -151,6 +151,7 @@ namespace Facepunch.Steamworks
                     _results.Add( item );
 
                     _resultsRemain--;
+                    gotFiles++;
 
                     if ( _resultsRemain <= 0 )
                         break;
@@ -163,7 +164,7 @@ namespace Facepunch.Steamworks
 
                 _resultPage++;
 
-                if ( _resultsRemain > 0 && data.NumResultsReturned > 0 )
+                if ( _resultsRemain > 0 && gotFiles > 0 )
                 {
                     RunInternal();
                 }

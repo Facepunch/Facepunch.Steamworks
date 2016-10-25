@@ -21,9 +21,9 @@ namespace Facepunch.Steamworks.Test
         }
 
         [TestMethod]
-        public void Init_50()
+        public void Init_10()
         {
-            for ( int i = 0; i < 50; i++ )
+            for ( int i = 0; i < 10; i++ )
             {
                 using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
                 {
@@ -39,9 +39,10 @@ namespace Facepunch.Steamworks.Test
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {
+                Assert.IsTrue( client.IsValid );
+
                 var username = client.Username;
                 Console.WriteLine( username );
-                Assert.IsTrue( client.IsValid );
                 Assert.IsNotNull( username );
             }
         }
@@ -51,9 +52,10 @@ namespace Facepunch.Steamworks.Test
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {
+                Assert.IsTrue( client.IsValid );
+
                 var steamid = client.SteamId;
                 Console.WriteLine( steamid );
-                Assert.IsTrue( client.IsValid );
                 Assert.AreNotEqual( 0, steamid );
             }
         }

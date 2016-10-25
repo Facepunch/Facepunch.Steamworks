@@ -52,6 +52,9 @@ namespace Generator
         {
             get
             {
+                if ( ManagedType.Contains( "SteamUGCDetails_t" ) )
+                    return false;
+
                 if ( Name == "pOutItemsArray" )
                     return true;
 
@@ -147,6 +150,11 @@ namespace Generator
 
             if ( ShouldBePassedAsOut )
                 return $"out {ManagedType.Trim( '*', ' ' )} /*{NativeType}*/ {Name}";
+
+            if ( NativeType == "char *"  || NativeType == "char **" )
+            {
+                return $"System.Text.StringBuilder /*{NativeType}*/ {Name}";
+            }
 
             if ( TypeDef != null )
             {

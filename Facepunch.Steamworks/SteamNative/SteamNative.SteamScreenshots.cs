@@ -16,6 +16,8 @@ namespace SteamNative
 		// ScreenshotHandle
 		public ScreenshotHandle AddScreenshotToLibrary( string pchFilename /*const char **/, string pchThumbnailFilename /*const char **/, int nWidth /*int*/, int nHeight /*int*/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamScreenshots.AddScreenshotToLibrary( _ptr, pchFilename, pchThumbnailFilename, nWidth, nHeight );
 			else return Platform.Win64.ISteamScreenshots.AddScreenshotToLibrary( _ptr, pchFilename, pchThumbnailFilename, nWidth, nHeight );
 		}
@@ -23,6 +25,8 @@ namespace SteamNative
 		// void
 		public void HookScreenshots( bool bHook /*bool*/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			if ( Platform.IsWindows32 ) Platform.Win32.ISteamScreenshots.HookScreenshots( _ptr, bHook );
 			else Platform.Win64.ISteamScreenshots.HookScreenshots( _ptr, bHook );
 		}
@@ -30,6 +34,8 @@ namespace SteamNative
 		// bool
 		public bool SetLocation( ScreenshotHandle hScreenshot /*ScreenshotHandle*/, string pchLocation /*const char **/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamScreenshots.SetLocation( _ptr, hScreenshot, pchLocation );
 			else return Platform.Win64.ISteamScreenshots.SetLocation( _ptr, hScreenshot, pchLocation );
 		}
@@ -37,6 +43,8 @@ namespace SteamNative
 		// bool
 		public bool TagPublishedFile( ScreenshotHandle hScreenshot /*ScreenshotHandle*/, PublishedFileId_t unPublishedFileID /*PublishedFileId_t*/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamScreenshots.TagPublishedFile( _ptr, hScreenshot, unPublishedFileID );
 			else return Platform.Win64.ISteamScreenshots.TagPublishedFile( _ptr, hScreenshot, unPublishedFileID );
 		}
@@ -44,6 +52,8 @@ namespace SteamNative
 		// bool
 		public bool TagUser( ScreenshotHandle hScreenshot /*ScreenshotHandle*/, CSteamID steamID /*class CSteamID*/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamScreenshots.TagUser( _ptr, hScreenshot, steamID );
 			else return Platform.Win64.ISteamScreenshots.TagUser( _ptr, hScreenshot, steamID );
 		}
@@ -51,6 +61,8 @@ namespace SteamNative
 		// void
 		public void TriggerScreenshot()
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			if ( Platform.IsWindows32 ) Platform.Win32.ISteamScreenshots.TriggerScreenshot( _ptr );
 			else Platform.Win64.ISteamScreenshots.TriggerScreenshot( _ptr );
 		}
@@ -58,6 +70,8 @@ namespace SteamNative
 		// ScreenshotHandle
 		public ScreenshotHandle WriteScreenshot( IntPtr pubRGB /*void **/, uint cubRGB /*uint32*/, int nWidth /*int*/, int nHeight /*int*/ )
 		{
+			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
+			
 			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamScreenshots.WriteScreenshot( _ptr, (IntPtr) pubRGB, cubRGB, nWidth, nHeight );
 			else return Platform.Win64.ISteamScreenshots.WriteScreenshot( _ptr, (IntPtr) pubRGB, cubRGB, nWidth, nHeight );
 		}

@@ -60,6 +60,8 @@ namespace Facepunch.Steamworks.Test
                     Console.WriteLine( "\t WebsiteViews:    {0}", item.WebsiteViews );
                     Console.WriteLine( "\t VotesUp:         {0}", item.VotesUp );
                     Console.WriteLine( "\t PreviewUrl:      {0}", item.PreviewImageUrl );
+
+                    Assert.IsTrue( item.PreviewImageUrl.Contains( "http" ) );
                 }
             }
         }
