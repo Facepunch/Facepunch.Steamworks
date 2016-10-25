@@ -8,78 +8,88 @@ namespace Generator
 {
     public partial class CodeWriter
     {
-        void Classes( string targetName )
-        {
-            foreach  ( var g in def.methods.GroupBy( x => x.ClassName ) )
-            {
-                if ( g.Key == "ISteamMatchmakingPingResponse" ) continue;
-                if ( g.Key == "ISteamMatchmakingServerListResponse" ) continue;
-                if ( g.Key == "ISteamMatchmakingPlayersResponse" ) continue;
-                if ( g.Key == "ISteamMatchmakingRulesResponse" ) continue;
-                if ( g.Key == "ISteamMatchmakingPingResponse" ) continue;
-                if ( g.Key == "ISteamMatchmakingPingResponse" ) continue;
-
-                if ( g.Key == "SteamApi" )
-                {
-                    sb = new StringBuilder();
-                    Header();
-                    Class( "SteamApi", g.OrderBy( x => x.Name ).ToArray() );
-                    Footer();
-                    System.IO.File.WriteAllText( $"{targetName}SteamApi.cs", sb.ToString() );
-                    return;
-                }
-
-                sb = new StringBuilder();
-                Header();
-                Class( g.Key, g.OrderBy( x => x.Name ).ToArray() );
-                Footer();
-                System.IO.File.WriteAllText( $"{targetName}{g.Key.Substring( 1 )}.cs", sb.ToString() );
-            }
-        }
-
-        private void Class( string classname, SteamApiDefinition.MethodDef[] methodDef )
-        {
-            var GenerateClassName = classname;
-            if ( classname[0] == 'I' ) GenerateClassName = classname.Substring( 1 );
-
-            StartBlock( $"public unsafe class {GenerateClassName}" );
-
-            WriteLine( "internal Platform.Interface _pi;" );
-
-            WriteLine();
-
-            //
-            // Constructor
-            //
-            StartBlock( $"public {GenerateClassName}( IntPtr pointer )" );
-
-            WriteLine( "if ( Platform.IsWindows64 ) _pi = new Platform.Win64( pointer );" );
-            WriteLine( "else if ( Platform.IsWindows32 ) _pi = new Platform.Win32( pointer );" );
-            WriteLine( "else if ( Platform.IsLinux32 ) _pi = new Platform.Linux32( pointer );" );
-            WriteLine( "else if ( Platform.IsLinux64 ) _pi = new Platform.Linux64( pointer );" );
-            WriteLine( "else if ( Platform.IsOsx ) _pi = new Platform.Mac( pointer );" );
-
-            EndBlock();
-            WriteLine();
-            WriteLine( "public bool IsValid{ get{ return _pi != null && _pi.IsValid; } }" );
-            WriteLine();
-
-            LastMethodName = "";
-
-            foreach ( var m in methodDef )
-                ClassMethod( classname, m );
-
-            EndBlock();
-        }
-
         string LastMethodName;
-
         List<string> BeforeLines;
         List<string> AfterLines;
         string ReturnType;
         string ReturnVar;
         SteamApiDefinition.MethodDef MethodDef;
         string ClassName;
+
+        //
+        // Output a class into a file
+        //
+        void Class( string FileName )
+        {
+            foreach  ( var g in def.methods.GroupBy( x => x.ClassName ) )
+            {
+                if ( ShouldIgnoreClass( g.Key ) ) continue;
+
+                sb = new StringBuilder();
+                Header();
+                Class( g.Key, g.OrderBy( x => x.Name ).ToArray() );
+                Footer();
+                System.IO.File.WriteAllText( $"{FileName}{InterfaceNameToClass(g.Key)}.cs", sb.ToString() );
+            }
+        }
+
+        private void Class( string classname, SteamApiDefinition.MethodDef[] methodDef )
+        {
+            StartBlock( $"public unsafe class {InterfaceNameToClass(classname)} : IDisposable" );
+            {
+                WriteLine( "//" );
+                WriteLine( "// Holds a platform specific implentation" );
+                WriteLine( "//" );
+                WriteLine( "internal Platform.Interface _pi;" );
+                WriteLine();
+
+                WriteLine( "//" );
+                WriteLine( "// Constructor decides which implementation to use based on current platform" );
+                WriteLine( "//" );
+                StartBlock( $"public {InterfaceNameToClass( classname )}( IntPtr pointer )" );
+                {
+                    WriteLine( "if ( Platform.IsWindows64 ) _pi = new Platform.Win64( pointer );" );
+                    WriteLine( "else if ( Platform.IsWindows32 ) _pi = new Platform.Win32( pointer );" );
+                    WriteLine( "else if ( Platform.IsLinux32 ) _pi = new Platform.Linux32( pointer );" );
+                    WriteLine( "else if ( Platform.IsLinux64 ) _pi = new Platform.Linux64( pointer );" );
+                    WriteLine( "else if ( Platform.IsOsx ) _pi = new Platform.Mac( pointer );" );
+                }
+                EndBlock();
+                WriteLine();
+
+                WriteLine( "//" );
+                WriteLine( "// Class is invalid if we don't have a valid implementation" );
+                WriteLine( "//" );
+                WriteLine( "public bool IsValid{ get{ return _pi != null && _pi.IsValid; } }" );
+                WriteLine();
+
+                WriteLine( "//" );
+                WriteLine( "// When shutting down clear all the internals to avoid accidental use" );
+                WriteLine( "//" );
+                StartBlock( $"public virtual void Dispose()" );
+                {
+                    StartBlock( " if ( _pi != null )" );
+                    {
+                        WriteLine( "_pi.Dispose();" );
+                        WriteLine( "_pi = null;" );
+                    }
+                    EndBlock();
+                }
+                EndBlock();
+                WriteLine();
+
+                //
+                // Methods
+                //
+                foreach ( var m in methodDef )
+                {
+                    ClassMethod( classname, m );
+                }
+            }
+            EndBlock();
+        }
+
+
 
         private void ClassMethod( string classname, SteamApiDefinition.MethodDef m )
         {

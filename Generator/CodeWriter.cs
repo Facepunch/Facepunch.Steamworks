@@ -260,7 +260,7 @@ namespace Generator
             }
 
             {
-                Classes( $"{folder}SteamNative." );
+                Class( $"{folder}SteamNative." );
             }
         }
 

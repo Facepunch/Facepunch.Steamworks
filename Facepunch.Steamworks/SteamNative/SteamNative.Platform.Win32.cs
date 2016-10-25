@@ -10,10 +10,21 @@ namespace SteamNative
 			internal IntPtr _ptr;
 			public bool IsValid { get{ return _ptr != null; } }
 			
+			//
+			// Constructor sets pointer to native class
+			//
 			public Win32( IntPtr pointer )
 			{
 				_ptr = pointer;
 			}
+			//
+			// When shutting down clear all the internals to avoid accidental use
+			//
+			public virtual void Dispose()
+			{
+				_ptr = IntPtr.Zero;
+			}
+			
 			public virtual HSteamPipe /*(HSteamPipe)*/ ISteamClient_CreateSteamPipe()
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );

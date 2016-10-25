@@ -8,9 +8,6 @@ namespace Generator
 {
     public partial class CodeWriter
     {
-
-
-
         bool LargePack;
 
         private void PlatformClass( string type, string libraryName, bool LargePack )
@@ -18,43 +15,54 @@ namespace Generator
             this.LargePack = LargePack;
 
             StartBlock( $"internal static partial class Platform" );
-            StartBlock( $"public class {type} : Interface" );
-
-            WriteLine( "internal IntPtr _ptr;" );
-            WriteLine( "public bool IsValid { get{ return _ptr != null; } }" );
-
-            WriteLine();
-
-            //
-            // Constructor
-            //
-            StartBlock( $"public {type}( IntPtr pointer )" );
-                WriteLine( "_ptr = pointer;" );
-            EndBlock();
-
-            foreach ( var c in def.methods.GroupBy( x => x.ClassName ) )
             {
-                PlatformClass( c.Key, c.ToArray() );
-            }
+                StartBlock( $"public class {type} : Interface" );
+                {
+                    WriteLine( "internal IntPtr _ptr;" );
+                    WriteLine( "public bool IsValid { get{ return _ptr != null; } }" );
+                    WriteLine();
 
-            StartBlock( $"internal static unsafe class Native" );
-            foreach ( var c in def.methods.GroupBy( x => x.ClassName ) )
-            {
-                InteropClass( libraryName, c.Key, c.ToArray() );
-            }
-            EndBlock();
+                    WriteLine( "//" );
+                    WriteLine( "// Constructor sets pointer to native class" );
+                    WriteLine( "//" );
+                    StartBlock( $"public {type}( IntPtr pointer )" );
+                    {
+                        WriteLine( "_ptr = pointer;" );
+                    }
+                    EndBlock();
 
-            EndBlock();
+                    WriteLine( "//" );
+                    WriteLine( "// When shutting down clear all the internals to avoid accidental use" );
+                    WriteLine( "//" );
+                    StartBlock( $"public virtual void Dispose()" );
+                    {
+                        WriteLine( "_ptr = IntPtr.Zero;" );
+                    }
+                    EndBlock();
+                    WriteLine();
+
+                    foreach ( var c in def.methods.GroupBy( x => x.ClassName ) )
+                    {
+                        PlatformClass( c.Key, c.ToArray() );
+                    }
+
+                    StartBlock( $"internal static unsafe class Native" );
+                    {
+                        foreach ( var c in def.methods.GroupBy( x => x.ClassName ) )
+                        {
+                            InteropClass( libraryName, c.Key, c.ToArray() );
+                        }
+                    }
+                    EndBlock();
+                }
+                EndBlock();
+            }
             EndBlock();
         }
 
         private void PlatformClass( string className, SteamApiDefinition.MethodDef[] methodDef )
         {
-            if ( className == "ISteamMatchmakingPingResponse" ) return;
-            if ( className == "ISteamMatchmakingServerListResponse" ) return;
-            if ( className == "ISteamMatchmakingPlayersResponse" ) return;
-            if ( className == "ISteamMatchmakingRulesResponse" ) return;
-            if ( className == "ISteamMatchmakingPingResponse" ) return;
+            if ( ShouldIgnoreClass( className ) ) return;
 
             LastMethodName = "";
             foreach ( var m in methodDef )
@@ -169,11 +177,7 @@ namespace Generator
 
         private void InteropClass( string libraryName, string className, SteamApiDefinition.MethodDef[] methodDef )
         {
-            if ( className == "ISteamMatchmakingPingResponse" ) return;
-            if ( className == "ISteamMatchmakingServerListResponse" ) return;
-            if ( className == "ISteamMatchmakingPlayersResponse" ) return;
-            if ( className == "ISteamMatchmakingRulesResponse" ) return;
-            if ( className == "ISteamMatchmakingPingResponse" ) return;
+            if ( ShouldIgnoreClass( className ) ) return;
 
             StartBlock( $"internal static unsafe class {className}" );
 

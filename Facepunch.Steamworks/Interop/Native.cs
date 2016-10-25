@@ -92,10 +92,100 @@ namespace Facepunch.Steamworks.Interop
         {
             if ( client != null )
             {
+                client.Dispose();
                 client = null;
             }
 
-            api.SteamAPI_Shutdown();
+            if ( user != null )
+            {
+                user.Dispose();
+                user = null;
+            }
+
+            if ( utils != null )
+            {
+                utils.Dispose();
+                utils = null;
+            }
+
+            if ( networking != null )
+            {
+                networking.Dispose();
+                networking = null;
+            }
+
+            if ( gameServerStats != null )
+            {
+                gameServerStats.Dispose();
+                gameServerStats = null;
+            }
+
+            if ( http != null )
+            {
+                http.Dispose();
+                http = null;
+            }
+
+            if ( inventory != null )
+            {
+                inventory.Dispose();
+                inventory = null;
+            }
+
+            if ( ugc != null )
+            {
+                ugc.Dispose();
+                ugc = null;
+            }
+
+            if ( apps != null )
+            {
+                apps.Dispose();
+                apps = null;
+            }
+
+            if ( gameServer != null )
+            {
+                gameServer.Dispose();
+                gameServer = null;
+            }
+
+            if ( friends != null )
+            {
+                friends.Dispose();
+                friends = null;
+            }
+
+            if ( servers != null )
+            {
+                servers.Dispose();
+                servers = null;
+            }
+
+            if ( userstats != null )
+            {
+                userstats.Dispose();
+                userstats = null;
+            }
+
+            if ( screenshots != null )
+            {
+                screenshots.Dispose();
+                screenshots = null;
+            }
+
+            if ( remoteStorage != null )
+            {
+                remoteStorage.Dispose();
+                remoteStorage = null;
+            }
+
+            if ( api != null )
+            {
+                api.SteamAPI_Shutdown();
+                api.Dispose();
+                api = null;
+            }
         }
     }
 }

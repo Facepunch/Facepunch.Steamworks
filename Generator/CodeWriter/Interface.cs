@@ -15,7 +15,7 @@ namespace Generator
         {
             StartBlock( $"internal static partial class Platform" );
             {
-                StartBlock( $"public interface Interface" );
+                StartBlock( $"public interface Interface : IDisposable" );
                 {
                     WriteLine( "// Implementation should return true if _ptr is non null" );
                     WriteLine( "bool IsValid { get; } " );
@@ -24,11 +24,7 @@ namespace Generator
 
                     foreach ( var m in def.methods.OrderBy( x => x.ClassName ) )
                     {
-                        if ( m.ClassName == "ISteamMatchmakingPingResponse" ) continue;
-                        if ( m.ClassName == "ISteamMatchmakingServerListResponse" ) continue;
-                        if ( m.ClassName == "ISteamMatchmakingPlayersResponse" ) continue;
-                        if ( m.ClassName == "ISteamMatchmakingRulesResponse" ) continue;
-                        if ( m.ClassName == "ISteamMatchmakingPingResponse" ) continue;
+                        if ( ShouldIgnoreClass( m.ClassName ) ) continue;
 
                         PlatformInterfaceMethod( m );
                     }

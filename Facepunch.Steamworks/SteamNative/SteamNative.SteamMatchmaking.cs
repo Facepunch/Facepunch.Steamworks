@@ -3,10 +3,16 @@ using System.Runtime.InteropServices;
 
 namespace SteamNative
 {
-	public unsafe class SteamMatchmaking
+	public unsafe class SteamMatchmaking : IDisposable
 	{
+		//
+		// Holds a platform specific implentation
+		//
 		internal Platform.Interface _pi;
 		
+		//
+		// Constructor decides which implementation to use based on current platform
+		//
 		public SteamMatchmaking( IntPtr pointer )
 		{
 			if ( Platform.IsWindows64 ) _pi = new Platform.Win64( pointer );
@@ -16,7 +22,22 @@ namespace SteamNative
 			else if ( Platform.IsOsx ) _pi = new Platform.Mac( pointer );
 		}
 		
+		//
+		// Class is invalid if we don't have a valid implementation
+		//
 		public bool IsValid{ get{ return _pi != null && _pi.IsValid; } }
+		
+		//
+		// When shutting down clear all the internals to avoid accidental use
+		//
+		public virtual void Dispose()
+		{
+			 if ( _pi != null )
+			{
+				_pi.Dispose();
+				_pi = null;
+			}
+		}
 		
 		// int
 		public int AddFavoriteGame( AppId_t nAppID /*AppId_t*/, uint nIP /*uint32*/, ushort nConnPort /*uint16*/, ushort nQueryPort /*uint16*/, uint unFlags /*uint32*/, uint rTime32LastPlayedOnServer /*uint32*/ )
