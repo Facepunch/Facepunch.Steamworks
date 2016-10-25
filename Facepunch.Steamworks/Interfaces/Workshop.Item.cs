@@ -26,12 +26,16 @@ namespace Facepunch.Steamworks
             public DateTime Modified { get; private set; }
             public DateTime Created { get; private set; }
 
+            public Item( ulong Id, Workshop workshop )
+            {
+                this.Id = Id;
+                this.workshop = workshop;
+            }
+
             internal static Item From( SteamNative.SteamUGCDetails_t details, Workshop workshop )
             {
-                var item = new Item();
+                var item = new Item( details.m_nPublishedFileId, workshop);
 
-                item.workshop = workshop;
-                item.Id = details.m_nPublishedFileId;
                 item.Title = details.m_rgchTitle;
                 item.Description = details.m_rgchDescription;
                 item.OwnerId = details.m_ulSteamIDOwner;
@@ -201,6 +205,8 @@ namespace Facepunch.Steamworks
             public string PreviewImageUrl { get; internal set; }
 
             string _ownerName = null;
+
+
 
             public string OwnerName
             {
