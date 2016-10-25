@@ -50,6 +50,8 @@ namespace Facepunch.Steamworks.Interop
 
     internal partial class Callback<T, TSmall> : Callback
     {
+        private SteamNative.SteamApi api;
+
         public int CallbackId = 0;
         public bool GameServer = false;
         public Action<T> Function;
@@ -59,22 +61,23 @@ namespace Facepunch.Steamworks.Interop
 
         private readonly int m_size = Marshal.SizeOf(typeof(T));
 
-        public Callback( bool gameserver, int callbackid, Action<T> func )
+        public Callback( SteamNative.SteamApi api, bool gameserver, int callbackid, Action<T> func )
         {
+            this.api = api;
             GameServer = gameserver;
             CallbackId = callbackid;
             Function = func;
 
             BuildVTable();
 
-            SteamNative.Globals.SteamAPI_RegisterCallback( callbackPin.AddrOfPinnedObject(), CallbackId );
+            this.api.SteamAPI_RegisterCallback( callbackPin.AddrOfPinnedObject(), CallbackId );
         }
 
         public override void Dispose()
         {
             if ( callbackPin.IsAllocated )
             {
-                SteamNative.Globals.SteamAPI_UnregisterCallback( callbackPin.AddrOfPinnedObject() );
+                api.SteamAPI_UnregisterCallback( callbackPin.AddrOfPinnedObject() );
                 callbackPin.Free();
             }
 

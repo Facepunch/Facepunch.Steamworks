@@ -7,6 +7,7 @@ namespace Facepunch.Steamworks.Interop
 {
     internal class NativeInterface : IDisposable
     {
+        internal SteamNative.SteamApi api;
         internal SteamNative.SteamClient client;
         internal SteamNative.SteamUser user;
         internal SteamNative.SteamApps apps;
@@ -25,8 +26,12 @@ namespace Facepunch.Steamworks.Interop
 
         internal bool InitClient()
         {
-            var user = SteamNative.Globals.SteamAPI_GetHSteamUser();
-            var pipe = SteamNative.Globals.SteamAPI_GetHSteamPipe();
+            api = new SteamNative.SteamApi( (IntPtr) 1 );
+
+            api.SteamAPI_Init();
+
+            var user = api.SteamAPI_GetHSteamUser();
+            var pipe = api.SteamAPI_GetHSteamPipe();
             if ( pipe == 0 )
                 return false;
 
@@ -35,16 +40,20 @@ namespace Facepunch.Steamworks.Interop
             return true;
         }
 
-        internal bool InitServer()
+        internal bool InitServer( uint IpAddress /*uint32*/, ushort usPort /*uint16*/, ushort GamePort /*uint16*/, ushort QueryPort /*uint16*/, int eServerMode /*int*/, string pchVersionString /*const char **/)
         {
-            var user = SteamNative.Globals.SteamGameServer_GetHSteamUser();
-            var pipe = SteamNative.Globals.SteamGameServer_GetHSteamPipe();
+            api = new SteamNative.SteamApi( (IntPtr)1 );
+
+            api.SteamInternal_GameServer_Init( IpAddress, usPort, GamePort, QueryPort, eServerMode, pchVersionString );
+
+            var user = api.SteamGameServer_GetHSteamUser();
+            var pipe = api.SteamGameServer_GetHSteamPipe();
             if ( pipe == 0 )
                 return false;
 
             FillInterfaces( pipe, user );
 
-            if ( gameServer._ptr == IntPtr.Zero )
+            if ( !gameServer.IsValid )
             {
                 gameServer = null;
                 throw new System.Exception( "Steam Server: Couldn't load SteamGameServer012" );
@@ -55,7 +64,7 @@ namespace Facepunch.Steamworks.Interop
 
         public void FillInterfaces( int hpipe, int huser )
         {
-            var clientPtr = SteamNative.Globals.SteamInternal_CreateInterface( "SteamClient017" );
+            var clientPtr = api.SteamInternal_CreateInterface( "SteamClient017" );
             if ( clientPtr == IntPtr.Zero )
             {
                 throw new System.Exception( "Steam Server: Couldn't load SteamClient017" );
@@ -83,11 +92,10 @@ namespace Facepunch.Steamworks.Interop
         {
             if ( client != null )
             {
-                client.BShutdownIfAllPipesClosed();
                 client = null;
             }
 
-            SteamNative.Globals.SteamAPI_Shutdown();
+            api.SteamAPI_Shutdown();
         }
     }
 }

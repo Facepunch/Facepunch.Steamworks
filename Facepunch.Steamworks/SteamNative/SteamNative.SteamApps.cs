@@ -5,26 +5,28 @@ namespace SteamNative
 {
 	public unsafe class SteamApps
 	{
-		internal IntPtr _ptr;
+		internal Platform.Interface _pi;
 		
 		public SteamApps( IntPtr pointer )
 		{
-			_ptr = pointer;
+			if ( Platform.IsWindows64 ) _pi = new Platform.Win64( pointer );
+			else if ( Platform.IsWindows32 ) _pi = new Platform.Win32( pointer );
+			else if ( Platform.IsLinux32 ) _pi = new Platform.Linux32( pointer );
+			else if ( Platform.IsLinux64 ) _pi = new Platform.Linux64( pointer );
+			else if ( Platform.IsOsx ) _pi = new Platform.Mac( pointer );
 		}
 		
+		public bool IsValid{ get{ return _pi != null && _pi.IsValid; } }
 		
 		// bool
 		// with: Detect_StringFetch False
 		public bool BGetDLCDataByIndex( int iDLC /*int*/, ref AppId_t pAppID /*AppId_t **/, out bool pbAvailable /*bool **/, out string pchName /*char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
 			bool bSuccess = default( bool );
 			pchName = string.Empty;
 			System.Text.StringBuilder pchName_sb = new System.Text.StringBuilder( 4096 );
 			int cchNameBufferSize = 4096;
-			if ( Platform.IsWindows32 ) bSuccess = Platform.Win32.ISteamApps.BGetDLCDataByIndex( _ptr, iDLC, ref pAppID, out pbAvailable, pchName_sb, cchNameBufferSize );
-			else bSuccess = Platform.Win64.ISteamApps.BGetDLCDataByIndex( _ptr, iDLC, ref pAppID, out pbAvailable, pchName_sb, cchNameBufferSize );
+			bSuccess = _pi.ISteamApps_BGetDLCDataByIndex( iDLC, ref pAppID, out pbAvailable, pchName_sb, cchNameBufferSize );
 			if ( !bSuccess ) return bSuccess;
 			pchName = pchName_sb.ToString();
 			return bSuccess;
@@ -33,95 +35,65 @@ namespace SteamNative
 		// bool
 		public bool BIsAppInstalled( AppId_t appID /*AppId_t*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamApps.BIsAppInstalled( _ptr, appID );
-			else return Platform.Win64.ISteamApps.BIsAppInstalled( _ptr, appID );
+			return _pi.ISteamApps_BIsAppInstalled( appID );
 		}
 		
 		// bool
 		public bool BIsCybercafe()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamApps.BIsCybercafe( _ptr );
-			else return Platform.Win64.ISteamApps.BIsCybercafe( _ptr );
+			return _pi.ISteamApps_BIsCybercafe();
 		}
 		
 		// bool
 		public bool BIsDlcInstalled( AppId_t appID /*AppId_t*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamApps.BIsDlcInstalled( _ptr, appID );
-			else return Platform.Win64.ISteamApps.BIsDlcInstalled( _ptr, appID );
+			return _pi.ISteamApps_BIsDlcInstalled( appID );
 		}
 		
 		// bool
 		public bool BIsLowViolence()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamApps.BIsLowViolence( _ptr );
-			else return Platform.Win64.ISteamApps.BIsLowViolence( _ptr );
+			return _pi.ISteamApps_BIsLowViolence();
 		}
 		
 		// bool
 		public bool BIsSubscribed()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamApps.BIsSubscribed( _ptr );
-			else return Platform.Win64.ISteamApps.BIsSubscribed( _ptr );
+			return _pi.ISteamApps_BIsSubscribed();
 		}
 		
 		// bool
 		public bool BIsSubscribedApp( AppId_t appID /*AppId_t*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamApps.BIsSubscribedApp( _ptr, appID );
-			else return Platform.Win64.ISteamApps.BIsSubscribedApp( _ptr, appID );
+			return _pi.ISteamApps_BIsSubscribedApp( appID );
 		}
 		
 		// bool
 		public bool BIsSubscribedFromFreeWeekend()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamApps.BIsSubscribedFromFreeWeekend( _ptr );
-			else return Platform.Win64.ISteamApps.BIsSubscribedFromFreeWeekend( _ptr );
+			return _pi.ISteamApps_BIsSubscribedFromFreeWeekend();
 		}
 		
 		// bool
 		public bool BIsVACBanned()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamApps.BIsVACBanned( _ptr );
-			else return Platform.Win64.ISteamApps.BIsVACBanned( _ptr );
+			return _pi.ISteamApps_BIsVACBanned();
 		}
 		
 		// int
 		public int GetAppBuildId()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamApps.GetAppBuildId( _ptr );
-			else return Platform.Win64.ISteamApps.GetAppBuildId( _ptr );
+			return _pi.ISteamApps_GetAppBuildId();
 		}
 		
 		// uint
 		// with: Detect_StringFetch True
 		public string GetAppInstallDir( AppId_t appID /*AppId_t*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
 			uint bSuccess = default( uint );
 			System.Text.StringBuilder pchFolder_sb = new System.Text.StringBuilder( 4096 );
 			uint cchFolderBufferSize = 4096;
-			if ( Platform.IsWindows32 ) bSuccess = Platform.Win32.ISteamApps.GetAppInstallDir( _ptr, appID, pchFolder_sb, cchFolderBufferSize );
-			else bSuccess = Platform.Win64.ISteamApps.GetAppInstallDir( _ptr, appID, pchFolder_sb, cchFolderBufferSize );
+			bSuccess = _pi.ISteamApps_GetAppInstallDir( appID, pchFolder_sb, cchFolderBufferSize );
 			if ( bSuccess <= 0 ) return null;
 			return pchFolder_sb.ToString();
 		}
@@ -129,21 +101,15 @@ namespace SteamNative
 		// ulong
 		public ulong GetAppOwner()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamApps.GetAppOwner( _ptr );
-			else return Platform.Win64.ISteamApps.GetAppOwner( _ptr );
+			return _pi.ISteamApps_GetAppOwner();
 		}
 		
 		// string
 		// with: Detect_StringReturn
 		public string GetAvailableGameLanguages()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
 			IntPtr string_pointer;
-			if ( Platform.IsWindows32 ) string_pointer = Platform.Win32.ISteamApps.GetAvailableGameLanguages( _ptr );
-			else string_pointer = Platform.Win64.ISteamApps.GetAvailableGameLanguages( _ptr );
+			string_pointer = _pi.ISteamApps_GetAvailableGameLanguages();
 			return Marshal.PtrToStringAnsi( string_pointer );
 		}
 		
@@ -151,13 +117,10 @@ namespace SteamNative
 		// with: Detect_StringFetch True
 		public string GetCurrentBetaName()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
 			bool bSuccess = default( bool );
 			System.Text.StringBuilder pchName_sb = new System.Text.StringBuilder( 4096 );
 			int cchNameBufferSize = 4096;
-			if ( Platform.IsWindows32 ) bSuccess = Platform.Win32.ISteamApps.GetCurrentBetaName( _ptr, pchName_sb, cchNameBufferSize );
-			else bSuccess = Platform.Win64.ISteamApps.GetCurrentBetaName( _ptr, pchName_sb, cchNameBufferSize );
+			bSuccess = _pi.ISteamApps_GetCurrentBetaName( pchName_sb, cchNameBufferSize );
 			if ( !bSuccess ) return null;
 			return pchName_sb.ToString();
 		}
@@ -166,105 +129,72 @@ namespace SteamNative
 		// with: Detect_StringReturn
 		public string GetCurrentGameLanguage()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
 			IntPtr string_pointer;
-			if ( Platform.IsWindows32 ) string_pointer = Platform.Win32.ISteamApps.GetCurrentGameLanguage( _ptr );
-			else string_pointer = Platform.Win64.ISteamApps.GetCurrentGameLanguage( _ptr );
+			string_pointer = _pi.ISteamApps_GetCurrentGameLanguage();
 			return Marshal.PtrToStringAnsi( string_pointer );
 		}
 		
 		// int
 		public int GetDLCCount()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamApps.GetDLCCount( _ptr );
-			else return Platform.Win64.ISteamApps.GetDLCCount( _ptr );
+			return _pi.ISteamApps_GetDLCCount();
 		}
 		
 		// bool
 		public bool GetDlcDownloadProgress( AppId_t nAppID /*AppId_t*/, out ulong punBytesDownloaded /*uint64 **/, out ulong punBytesTotal /*uint64 **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamApps.GetDlcDownloadProgress( _ptr, nAppID, out punBytesDownloaded, out punBytesTotal );
-			else return Platform.Win64.ISteamApps.GetDlcDownloadProgress( _ptr, nAppID, out punBytesDownloaded, out punBytesTotal );
+			return _pi.ISteamApps_GetDlcDownloadProgress( nAppID, out punBytesDownloaded, out punBytesTotal );
 		}
 		
 		// uint
 		public uint GetEarliestPurchaseUnixTime( AppId_t nAppID /*AppId_t*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamApps.GetEarliestPurchaseUnixTime( _ptr, nAppID );
-			else return Platform.Win64.ISteamApps.GetEarliestPurchaseUnixTime( _ptr, nAppID );
+			return _pi.ISteamApps_GetEarliestPurchaseUnixTime( nAppID );
 		}
 		
 		// uint
 		public uint GetInstalledDepots( AppId_t appID /*AppId_t*/, IntPtr pvecDepots /*DepotId_t **/, uint cMaxDepots /*uint32*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamApps.GetInstalledDepots( _ptr, appID, (IntPtr) pvecDepots, cMaxDepots );
-			else return Platform.Win64.ISteamApps.GetInstalledDepots( _ptr, appID, (IntPtr) pvecDepots, cMaxDepots );
+			return _pi.ISteamApps_GetInstalledDepots( appID, (IntPtr) pvecDepots, cMaxDepots );
 		}
 		
 		// string
 		// with: Detect_StringReturn
 		public string GetLaunchQueryParam( string pchKey /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
 			IntPtr string_pointer;
-			if ( Platform.IsWindows32 ) string_pointer = Platform.Win32.ISteamApps.GetLaunchQueryParam( _ptr, pchKey );
-			else string_pointer = Platform.Win64.ISteamApps.GetLaunchQueryParam( _ptr, pchKey );
+			string_pointer = _pi.ISteamApps_GetLaunchQueryParam( pchKey );
 			return Marshal.PtrToStringAnsi( string_pointer );
 		}
 		
 		// void
 		public void InstallDLC( AppId_t nAppID /*AppId_t*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamApps.InstallDLC( _ptr, nAppID );
-			else Platform.Win64.ISteamApps.InstallDLC( _ptr, nAppID );
+			_pi.ISteamApps_InstallDLC( nAppID );
 		}
 		
 		// bool
 		public bool MarkContentCorrupt( bool bMissingFilesOnly /*bool*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamApps.MarkContentCorrupt( _ptr, bMissingFilesOnly );
-			else return Platform.Win64.ISteamApps.MarkContentCorrupt( _ptr, bMissingFilesOnly );
+			return _pi.ISteamApps_MarkContentCorrupt( bMissingFilesOnly );
 		}
 		
 		// void
 		public void RequestAllProofOfPurchaseKeys()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamApps.RequestAllProofOfPurchaseKeys( _ptr );
-			else Platform.Win64.ISteamApps.RequestAllProofOfPurchaseKeys( _ptr );
+			_pi.ISteamApps_RequestAllProofOfPurchaseKeys();
 		}
 		
 		// void
 		public void RequestAppProofOfPurchaseKey( AppId_t nAppID /*AppId_t*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamApps.RequestAppProofOfPurchaseKey( _ptr, nAppID );
-			else Platform.Win64.ISteamApps.RequestAppProofOfPurchaseKey( _ptr, nAppID );
+			_pi.ISteamApps_RequestAppProofOfPurchaseKey( nAppID );
 		}
 		
 		// void
 		public void UninstallDLC( AppId_t nAppID /*AppId_t*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamApps.UninstallDLC( _ptr, nAppID );
-			else Platform.Win64.ISteamApps.UninstallDLC( _ptr, nAppID );
+			_pi.ISteamApps_UninstallDLC( nAppID );
 		}
 		
 	}

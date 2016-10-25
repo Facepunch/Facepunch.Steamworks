@@ -5,102 +5,77 @@ namespace SteamNative
 {
 	public unsafe class SteamGameServerStats
 	{
-		internal IntPtr _ptr;
+		internal Platform.Interface _pi;
 		
 		public SteamGameServerStats( IntPtr pointer )
 		{
-			_ptr = pointer;
+			if ( Platform.IsWindows64 ) _pi = new Platform.Win64( pointer );
+			else if ( Platform.IsWindows32 ) _pi = new Platform.Win32( pointer );
+			else if ( Platform.IsLinux32 ) _pi = new Platform.Linux32( pointer );
+			else if ( Platform.IsLinux64 ) _pi = new Platform.Linux64( pointer );
+			else if ( Platform.IsOsx ) _pi = new Platform.Mac( pointer );
 		}
 		
+		public bool IsValid{ get{ return _pi != null && _pi.IsValid; } }
 		
 		// bool
 		public bool ClearUserAchievement( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamGameServerStats.ClearUserAchievement( _ptr, steamIDUser, pchName );
-			else return Platform.Win64.ISteamGameServerStats.ClearUserAchievement( _ptr, steamIDUser, pchName );
+			return _pi.ISteamGameServerStats_ClearUserAchievement( steamIDUser, pchName );
 		}
 		
 		// bool
 		public bool GetUserAchievement( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/, out bool pbAchieved /*bool **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamGameServerStats.GetUserAchievement( _ptr, steamIDUser, pchName, out pbAchieved );
-			else return Platform.Win64.ISteamGameServerStats.GetUserAchievement( _ptr, steamIDUser, pchName, out pbAchieved );
+			return _pi.ISteamGameServerStats_GetUserAchievement( steamIDUser, pchName, out pbAchieved );
 		}
 		
 		// bool
 		public bool GetUserStat( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/, out int pData /*int32 **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamGameServerStats.GetUserStat( _ptr, steamIDUser, pchName, out pData );
-			else return Platform.Win64.ISteamGameServerStats.GetUserStat( _ptr, steamIDUser, pchName, out pData );
+			return _pi.ISteamGameServerStats_GetUserStat( steamIDUser, pchName, out pData );
 		}
 		
 		// bool
 		public bool GetUserStat0( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/, out float pData /*float **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamGameServerStats.GetUserStat0( _ptr, steamIDUser, pchName, out pData );
-			else return Platform.Win64.ISteamGameServerStats.GetUserStat0( _ptr, steamIDUser, pchName, out pData );
+			return _pi.ISteamGameServerStats_GetUserStat0( steamIDUser, pchName, out pData );
 		}
 		
 		// SteamAPICall_t
 		public SteamAPICall_t RequestUserStats( CSteamID steamIDUser /*class CSteamID*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamGameServerStats.RequestUserStats( _ptr, steamIDUser );
-			else return Platform.Win64.ISteamGameServerStats.RequestUserStats( _ptr, steamIDUser );
+			return _pi.ISteamGameServerStats_RequestUserStats( steamIDUser );
 		}
 		
 		// bool
 		public bool SetUserAchievement( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamGameServerStats.SetUserAchievement( _ptr, steamIDUser, pchName );
-			else return Platform.Win64.ISteamGameServerStats.SetUserAchievement( _ptr, steamIDUser, pchName );
+			return _pi.ISteamGameServerStats_SetUserAchievement( steamIDUser, pchName );
 		}
 		
 		// bool
 		public bool SetUserStat( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/, int nData /*int32*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamGameServerStats.SetUserStat( _ptr, steamIDUser, pchName, nData );
-			else return Platform.Win64.ISteamGameServerStats.SetUserStat( _ptr, steamIDUser, pchName, nData );
+			return _pi.ISteamGameServerStats_SetUserStat( steamIDUser, pchName, nData );
 		}
 		
 		// bool
 		public bool SetUserStat0( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/, float fData /*float*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamGameServerStats.SetUserStat0( _ptr, steamIDUser, pchName, fData );
-			else return Platform.Win64.ISteamGameServerStats.SetUserStat0( _ptr, steamIDUser, pchName, fData );
+			return _pi.ISteamGameServerStats_SetUserStat0( steamIDUser, pchName, fData );
 		}
 		
 		// SteamAPICall_t
 		public SteamAPICall_t StoreUserStats( CSteamID steamIDUser /*class CSteamID*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamGameServerStats.StoreUserStats( _ptr, steamIDUser );
-			else return Platform.Win64.ISteamGameServerStats.StoreUserStats( _ptr, steamIDUser );
+			return _pi.ISteamGameServerStats_StoreUserStats( steamIDUser );
 		}
 		
 		// bool
 		public bool UpdateUserAvgRateStat( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/, float flCountThisSession /*float*/, double dSessionLength /*double*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamGameServerStats.UpdateUserAvgRateStat( _ptr, steamIDUser, pchName, flCountThisSession, dSessionLength );
-			else return Platform.Win64.ISteamGameServerStats.UpdateUserAvgRateStat( _ptr, steamIDUser, pchName, flCountThisSession, dSessionLength );
+			return _pi.ISteamGameServerStats_UpdateUserAvgRateStat( steamIDUser, pchName, flCountThisSession, dSessionLength );
 		}
 		
 	}

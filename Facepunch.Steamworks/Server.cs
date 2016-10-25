@@ -22,14 +22,12 @@ namespace Facepunch.Steamworks
 
         public Server( uint appId, uint IpAddress, ushort GamePort, ushort QueryPort, bool Secure, string VersionString )
         {
-            SteamNative.Globals.SteamInternal_GameServer_Init( IpAddress, 0, GamePort, QueryPort, Secure ? 3 : 2, VersionString );
-
             native = new Interop.NativeInterface();
 
             //
             // Get other interfaces
             //
-            if ( !native.InitServer() )
+            if ( !native.InitServer( IpAddress, 0, GamePort, QueryPort, Secure ? 3 : 2, VersionString ) )
             {
                 native.Dispose();
                 native = null;
@@ -97,7 +95,7 @@ namespace Facepunch.Steamworks
             if ( !IsValid )
                 return;
 
-            SteamNative.Globals.SteamGameServer_RunCallbacks();
+            native.api.SteamGameServer_RunCallbacks();
 
             base.Update();
         }

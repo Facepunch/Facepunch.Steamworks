@@ -5,93 +5,71 @@ namespace SteamNative
 {
 	public unsafe class SteamMusic
 	{
-		internal IntPtr _ptr;
+		internal Platform.Interface _pi;
 		
 		public SteamMusic( IntPtr pointer )
 		{
-			_ptr = pointer;
+			if ( Platform.IsWindows64 ) _pi = new Platform.Win64( pointer );
+			else if ( Platform.IsWindows32 ) _pi = new Platform.Win32( pointer );
+			else if ( Platform.IsLinux32 ) _pi = new Platform.Linux32( pointer );
+			else if ( Platform.IsLinux64 ) _pi = new Platform.Linux64( pointer );
+			else if ( Platform.IsOsx ) _pi = new Platform.Mac( pointer );
 		}
 		
+		public bool IsValid{ get{ return _pi != null && _pi.IsValid; } }
 		
 		// bool
 		public bool BIsEnabled()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusic.BIsEnabled( _ptr );
-			else return Platform.Win64.ISteamMusic.BIsEnabled( _ptr );
+			return _pi.ISteamMusic_BIsEnabled();
 		}
 		
 		// bool
 		public bool BIsPlaying()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusic.BIsPlaying( _ptr );
-			else return Platform.Win64.ISteamMusic.BIsPlaying( _ptr );
+			return _pi.ISteamMusic_BIsPlaying();
 		}
 		
 		// AudioPlayback_Status
 		public AudioPlayback_Status GetPlaybackStatus()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusic.GetPlaybackStatus( _ptr );
-			else return Platform.Win64.ISteamMusic.GetPlaybackStatus( _ptr );
+			return _pi.ISteamMusic_GetPlaybackStatus();
 		}
 		
 		// float
 		public float GetVolume()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusic.GetVolume( _ptr );
-			else return Platform.Win64.ISteamMusic.GetVolume( _ptr );
+			return _pi.ISteamMusic_GetVolume();
 		}
 		
 		// void
 		public void Pause()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamMusic.Pause( _ptr );
-			else Platform.Win64.ISteamMusic.Pause( _ptr );
+			_pi.ISteamMusic_Pause();
 		}
 		
 		// void
 		public void Play()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamMusic.Play( _ptr );
-			else Platform.Win64.ISteamMusic.Play( _ptr );
+			_pi.ISteamMusic_Play();
 		}
 		
 		// void
 		public void PlayNext()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamMusic.PlayNext( _ptr );
-			else Platform.Win64.ISteamMusic.PlayNext( _ptr );
+			_pi.ISteamMusic_PlayNext();
 		}
 		
 		// void
 		public void PlayPrevious()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamMusic.PlayPrevious( _ptr );
-			else Platform.Win64.ISteamMusic.PlayPrevious( _ptr );
+			_pi.ISteamMusic_PlayPrevious();
 		}
 		
 		// void
 		public void SetVolume( float flVolume /*float*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamMusic.SetVolume( _ptr, flVolume );
-			else Platform.Win64.ISteamMusic.SetVolume( _ptr, flVolume );
+			_pi.ISteamMusic_SetVolume( flVolume );
 		}
 		
 	}

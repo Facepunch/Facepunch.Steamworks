@@ -19,13 +19,13 @@ namespace Generator
                 if ( g.Key == "ISteamMatchmakingPingResponse" ) continue;
                 if ( g.Key == "ISteamMatchmakingPingResponse" ) continue;
 
-                if ( g.Key == "Global" )
+                if ( g.Key == "SteamApi" )
                 {
                     sb = new StringBuilder();
                     Header();
-                    GlobalClass( g.ToArray() );
+                    Class( "SteamApi", g.OrderBy( x => x.Name ).ToArray() );
                     Footer();
-                    System.IO.File.WriteAllText( $"{targetName}Global.cs", sb.ToString() );
+                    System.IO.File.WriteAllText( $"{targetName}SteamApi.cs", sb.ToString() );
                     return;
                 }
 
@@ -39,11 +39,12 @@ namespace Generator
 
         private void Class( string classname, SteamApiDefinition.MethodDef[] methodDef )
         {
-            var GenerateClassName = classname.Substring( 1 );
+            var GenerateClassName = classname;
+            if ( classname[0] == 'I' ) GenerateClassName = classname.Substring( 1 );
 
             StartBlock( $"public unsafe class {GenerateClassName}" );
 
-            WriteLine( "internal IntPtr _ptr;" );
+            WriteLine( "internal Platform.Interface _pi;" );
 
             WriteLine();
 
@@ -52,10 +53,15 @@ namespace Generator
             //
             StartBlock( $"public {GenerateClassName}( IntPtr pointer )" );
 
-            WriteLine( "_ptr = pointer;" );
+            WriteLine( "if ( Platform.IsWindows64 ) _pi = new Platform.Win64( pointer );" );
+            WriteLine( "else if ( Platform.IsWindows32 ) _pi = new Platform.Win32( pointer );" );
+            WriteLine( "else if ( Platform.IsLinux32 ) _pi = new Platform.Linux32( pointer );" );
+            WriteLine( "else if ( Platform.IsLinux64 ) _pi = new Platform.Linux64( pointer );" );
+            WriteLine( "else if ( Platform.IsOsx ) _pi = new Platform.Mac( pointer );" );
 
             EndBlock();
             WriteLine();
+            WriteLine( "public bool IsValid{ get{ return _pi != null && _pi.IsValid; } }" );
             WriteLine();
 
             LastMethodName = "";
@@ -67,16 +73,6 @@ namespace Generator
         }
 
         string LastMethodName;
-
-        private void GlobalClass( SteamApiDefinition.MethodDef[] methodDef )
-        {
-            StartBlock( $"public unsafe class Globals" );
-
-            foreach ( var m in methodDef )
-                ClassMethod( null, m );
-
-            EndBlock();
-        }
 
         List<string> BeforeLines;
         List<string> AfterLines;
@@ -116,12 +112,6 @@ namespace Generator
             var argString = string.Join( ", ", argList.Select( x => x.ManagedParameter() ) );
             if ( argString != "" ) argString = " " + argString + " ";
             StartBlock( $"public{statc} {ReturnType} {methodName}({argString})" );
-
-            if ( classname != null )
-            {
-                WriteLine( "if ( _ptr == IntPtr.Zero ) throw new System.Exception( \"Internal pointer is null\"); // " );
-                WriteLine();
-            }
 
             CallPlatformClass( classname, m, callargs.Select( x => x.InteropVariable() ).ToList(), ReturnVar );
 
@@ -367,12 +357,9 @@ namespace Generator
 
         private void CallPlatformClass( string classname, SteamApiDefinition.MethodDef m, List<string> argList, string returnVar )
         {
-            var firstArg = "_ptr";
-
             if ( classname == null )
             {
-                classname = "Global";
-                firstArg = "";
+                classname = "SteamApi";
             }
 
             var methodName = m.Name;
@@ -381,9 +368,7 @@ namespace Generator
                 methodName += "0";
 
             var args = string.Join( ", ", argList );
-            if ( args != "" && firstArg != "" ) args = $" {firstArg}, {args} ";
-            else if ( args != "" ) args = $" {args} ";
-            else args = $" {firstArg} ";
+            if ( args != "" ) args = $" {args} ";
 
             var r = "";
             if ( ReturnType != "void" )
@@ -393,8 +378,7 @@ namespace Generator
                 r = returnVar + " = ";
 
             //  StartBlock( "case 1:" );
-            BeforeLines.Add( $"if ( Platform.IsWindows32 ) {r}Platform.Win32.{classname}.{methodName}({args});" );
-            BeforeLines.Add( $"else {r}Platform.Win64.{classname}.{methodName}({args});" );
+            BeforeLines.Add( $"{r}_pi.{classname}_{methodName}({args});" );
             // WriteLine( "break;" );
             // EndBlock();
 

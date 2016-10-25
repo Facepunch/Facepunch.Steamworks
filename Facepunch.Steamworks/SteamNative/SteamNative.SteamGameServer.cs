@@ -5,408 +5,281 @@ namespace SteamNative
 {
 	public unsafe class SteamGameServer
 	{
-		internal IntPtr _ptr;
+		internal Platform.Interface _pi;
 		
 		public SteamGameServer( IntPtr pointer )
 		{
-			_ptr = pointer;
+			if ( Platform.IsWindows64 ) _pi = new Platform.Win64( pointer );
+			else if ( Platform.IsWindows32 ) _pi = new Platform.Win32( pointer );
+			else if ( Platform.IsLinux32 ) _pi = new Platform.Linux32( pointer );
+			else if ( Platform.IsLinux64 ) _pi = new Platform.Linux64( pointer );
+			else if ( Platform.IsOsx ) _pi = new Platform.Mac( pointer );
 		}
 		
+		public bool IsValid{ get{ return _pi != null && _pi.IsValid; } }
 		
 		// SteamAPICall_t
 		public SteamAPICall_t AssociateWithClan( CSteamID steamIDClan /*class CSteamID*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamGameServer.AssociateWithClan( _ptr, steamIDClan );
-			else return Platform.Win64.ISteamGameServer.AssociateWithClan( _ptr, steamIDClan );
+			return _pi.ISteamGameServer_AssociateWithClan( steamIDClan );
 		}
 		
 		// BeginAuthSessionResult
 		public BeginAuthSessionResult BeginAuthSession( IntPtr pAuthTicket /*const void **/, int cbAuthTicket /*int*/, CSteamID steamID /*class CSteamID*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamGameServer.BeginAuthSession( _ptr, (IntPtr) pAuthTicket, cbAuthTicket, steamID );
-			else return Platform.Win64.ISteamGameServer.BeginAuthSession( _ptr, (IntPtr) pAuthTicket, cbAuthTicket, steamID );
+			return _pi.ISteamGameServer_BeginAuthSession( (IntPtr) pAuthTicket, cbAuthTicket, steamID );
 		}
 		
 		// bool
 		public bool BLoggedOn()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamGameServer.BLoggedOn( _ptr );
-			else return Platform.Win64.ISteamGameServer.BLoggedOn( _ptr );
+			return _pi.ISteamGameServer_BLoggedOn();
 		}
 		
 		// bool
 		public bool BSecure()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamGameServer.BSecure( _ptr );
-			else return Platform.Win64.ISteamGameServer.BSecure( _ptr );
+			return _pi.ISteamGameServer_BSecure();
 		}
 		
 		// bool
 		public bool BUpdateUserData( CSteamID steamIDUser /*class CSteamID*/, string pchPlayerName /*const char **/, uint uScore /*uint32*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamGameServer.BUpdateUserData( _ptr, steamIDUser, pchPlayerName, uScore );
-			else return Platform.Win64.ISteamGameServer.BUpdateUserData( _ptr, steamIDUser, pchPlayerName, uScore );
+			return _pi.ISteamGameServer_BUpdateUserData( steamIDUser, pchPlayerName, uScore );
 		}
 		
 		// void
 		public void CancelAuthTicket( HAuthTicket hAuthTicket /*HAuthTicket*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamGameServer.CancelAuthTicket( _ptr, hAuthTicket );
-			else Platform.Win64.ISteamGameServer.CancelAuthTicket( _ptr, hAuthTicket );
+			_pi.ISteamGameServer_CancelAuthTicket( hAuthTicket );
 		}
 		
 		// void
 		public void ClearAllKeyValues()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamGameServer.ClearAllKeyValues( _ptr );
-			else Platform.Win64.ISteamGameServer.ClearAllKeyValues( _ptr );
+			_pi.ISteamGameServer_ClearAllKeyValues();
 		}
 		
 		// SteamAPICall_t
 		public SteamAPICall_t ComputeNewPlayerCompatibility( CSteamID steamIDNewPlayer /*class CSteamID*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamGameServer.ComputeNewPlayerCompatibility( _ptr, steamIDNewPlayer );
-			else return Platform.Win64.ISteamGameServer.ComputeNewPlayerCompatibility( _ptr, steamIDNewPlayer );
+			return _pi.ISteamGameServer_ComputeNewPlayerCompatibility( steamIDNewPlayer );
 		}
 		
 		// ulong
 		public ulong CreateUnauthenticatedUserConnection()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamGameServer.CreateUnauthenticatedUserConnection( _ptr );
-			else return Platform.Win64.ISteamGameServer.CreateUnauthenticatedUserConnection( _ptr );
+			return _pi.ISteamGameServer_CreateUnauthenticatedUserConnection();
 		}
 		
 		// void
 		public void EnableHeartbeats( bool bActive /*bool*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamGameServer.EnableHeartbeats( _ptr, bActive );
-			else Platform.Win64.ISteamGameServer.EnableHeartbeats( _ptr, bActive );
+			_pi.ISteamGameServer_EnableHeartbeats( bActive );
 		}
 		
 		// void
 		public void EndAuthSession( CSteamID steamID /*class CSteamID*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamGameServer.EndAuthSession( _ptr, steamID );
-			else Platform.Win64.ISteamGameServer.EndAuthSession( _ptr, steamID );
+			_pi.ISteamGameServer_EndAuthSession( steamID );
 		}
 		
 		// void
 		public void ForceHeartbeat()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamGameServer.ForceHeartbeat( _ptr );
-			else Platform.Win64.ISteamGameServer.ForceHeartbeat( _ptr );
+			_pi.ISteamGameServer_ForceHeartbeat();
 		}
 		
 		// HAuthTicket
 		public HAuthTicket GetAuthSessionTicket( IntPtr pTicket /*void **/, int cbMaxTicket /*int*/, out uint pcbTicket /*uint32 **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamGameServer.GetAuthSessionTicket( _ptr, (IntPtr) pTicket, cbMaxTicket, out pcbTicket );
-			else return Platform.Win64.ISteamGameServer.GetAuthSessionTicket( _ptr, (IntPtr) pTicket, cbMaxTicket, out pcbTicket );
+			return _pi.ISteamGameServer_GetAuthSessionTicket( (IntPtr) pTicket, cbMaxTicket, out pcbTicket );
 		}
 		
 		// void
 		public void GetGameplayStats()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamGameServer.GetGameplayStats( _ptr );
-			else Platform.Win64.ISteamGameServer.GetGameplayStats( _ptr );
+			_pi.ISteamGameServer_GetGameplayStats();
 		}
 		
 		// int
 		public int GetNextOutgoingPacket( IntPtr pOut /*void **/, int cbMaxOut /*int*/, out uint pNetAdr /*uint32 **/, out ushort pPort /*uint16 **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamGameServer.GetNextOutgoingPacket( _ptr, (IntPtr) pOut, cbMaxOut, out pNetAdr, out pPort );
-			else return Platform.Win64.ISteamGameServer.GetNextOutgoingPacket( _ptr, (IntPtr) pOut, cbMaxOut, out pNetAdr, out pPort );
+			return _pi.ISteamGameServer_GetNextOutgoingPacket( (IntPtr) pOut, cbMaxOut, out pNetAdr, out pPort );
 		}
 		
 		// uint
 		public uint GetPublicIP()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamGameServer.GetPublicIP( _ptr );
-			else return Platform.Win64.ISteamGameServer.GetPublicIP( _ptr );
+			return _pi.ISteamGameServer_GetPublicIP();
 		}
 		
 		// SteamAPICall_t
 		public SteamAPICall_t GetServerReputation()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamGameServer.GetServerReputation( _ptr );
-			else return Platform.Win64.ISteamGameServer.GetServerReputation( _ptr );
+			return _pi.ISteamGameServer_GetServerReputation();
 		}
 		
 		// ulong
 		public ulong GetSteamID()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamGameServer.GetSteamID( _ptr );
-			else return Platform.Win64.ISteamGameServer.GetSteamID( _ptr );
+			return _pi.ISteamGameServer_GetSteamID();
 		}
 		
 		// bool
 		public bool HandleIncomingPacket( IntPtr pData /*const void **/, int cbData /*int*/, uint srcIP /*uint32*/, ushort srcPort /*uint16*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamGameServer.HandleIncomingPacket( _ptr, (IntPtr) pData, cbData, srcIP, srcPort );
-			else return Platform.Win64.ISteamGameServer.HandleIncomingPacket( _ptr, (IntPtr) pData, cbData, srcIP, srcPort );
+			return _pi.ISteamGameServer_HandleIncomingPacket( (IntPtr) pData, cbData, srcIP, srcPort );
 		}
 		
 		// bool
 		public bool InitGameServer( uint unIP /*uint32*/, ushort usGamePort /*uint16*/, ushort usQueryPort /*uint16*/, uint unFlags /*uint32*/, AppId_t nGameAppId /*AppId_t*/, string pchVersionString /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamGameServer.InitGameServer( _ptr, unIP, usGamePort, usQueryPort, unFlags, nGameAppId, pchVersionString );
-			else return Platform.Win64.ISteamGameServer.InitGameServer( _ptr, unIP, usGamePort, usQueryPort, unFlags, nGameAppId, pchVersionString );
+			return _pi.ISteamGameServer_InitGameServer( unIP, usGamePort, usQueryPort, unFlags, nGameAppId, pchVersionString );
 		}
 		
 		// void
 		public void LogOff()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamGameServer.LogOff( _ptr );
-			else Platform.Win64.ISteamGameServer.LogOff( _ptr );
+			_pi.ISteamGameServer_LogOff();
 		}
 		
 		// void
 		public void LogOn( string pszToken /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamGameServer.LogOn( _ptr, pszToken );
-			else Platform.Win64.ISteamGameServer.LogOn( _ptr, pszToken );
+			_pi.ISteamGameServer_LogOn( pszToken );
 		}
 		
 		// void
 		public void LogOnAnonymous()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamGameServer.LogOnAnonymous( _ptr );
-			else Platform.Win64.ISteamGameServer.LogOnAnonymous( _ptr );
+			_pi.ISteamGameServer_LogOnAnonymous();
 		}
 		
 		// bool
 		public bool RequestUserGroupStatus( CSteamID steamIDUser /*class CSteamID*/, CSteamID steamIDGroup /*class CSteamID*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamGameServer.RequestUserGroupStatus( _ptr, steamIDUser, steamIDGroup );
-			else return Platform.Win64.ISteamGameServer.RequestUserGroupStatus( _ptr, steamIDUser, steamIDGroup );
+			return _pi.ISteamGameServer_RequestUserGroupStatus( steamIDUser, steamIDGroup );
 		}
 		
 		// bool
 		public bool SendUserConnectAndAuthenticate( uint unIPClient /*uint32*/, IntPtr pvAuthBlob /*const void **/, uint cubAuthBlobSize /*uint32*/, out CSteamID pSteamIDUser /*class CSteamID **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamGameServer.SendUserConnectAndAuthenticate( _ptr, unIPClient, (IntPtr) pvAuthBlob, cubAuthBlobSize, out pSteamIDUser );
-			else return Platform.Win64.ISteamGameServer.SendUserConnectAndAuthenticate( _ptr, unIPClient, (IntPtr) pvAuthBlob, cubAuthBlobSize, out pSteamIDUser );
+			return _pi.ISteamGameServer_SendUserConnectAndAuthenticate( unIPClient, (IntPtr) pvAuthBlob, cubAuthBlobSize, out pSteamIDUser );
 		}
 		
 		// void
 		public void SendUserDisconnect( CSteamID steamIDUser /*class CSteamID*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamGameServer.SendUserDisconnect( _ptr, steamIDUser );
-			else Platform.Win64.ISteamGameServer.SendUserDisconnect( _ptr, steamIDUser );
+			_pi.ISteamGameServer_SendUserDisconnect( steamIDUser );
 		}
 		
 		// void
 		public void SetBotPlayerCount( int cBotplayers /*int*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamGameServer.SetBotPlayerCount( _ptr, cBotplayers );
-			else Platform.Win64.ISteamGameServer.SetBotPlayerCount( _ptr, cBotplayers );
+			_pi.ISteamGameServer_SetBotPlayerCount( cBotplayers );
 		}
 		
 		// void
 		public void SetDedicatedServer( bool bDedicated /*bool*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamGameServer.SetDedicatedServer( _ptr, bDedicated );
-			else Platform.Win64.ISteamGameServer.SetDedicatedServer( _ptr, bDedicated );
+			_pi.ISteamGameServer_SetDedicatedServer( bDedicated );
 		}
 		
 		// void
 		public void SetGameData( string pchGameData /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamGameServer.SetGameData( _ptr, pchGameData );
-			else Platform.Win64.ISteamGameServer.SetGameData( _ptr, pchGameData );
+			_pi.ISteamGameServer_SetGameData( pchGameData );
 		}
 		
 		// void
 		public void SetGameDescription( string pszGameDescription /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamGameServer.SetGameDescription( _ptr, pszGameDescription );
-			else Platform.Win64.ISteamGameServer.SetGameDescription( _ptr, pszGameDescription );
+			_pi.ISteamGameServer_SetGameDescription( pszGameDescription );
 		}
 		
 		// void
 		public void SetGameTags( string pchGameTags /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamGameServer.SetGameTags( _ptr, pchGameTags );
-			else Platform.Win64.ISteamGameServer.SetGameTags( _ptr, pchGameTags );
+			_pi.ISteamGameServer_SetGameTags( pchGameTags );
 		}
 		
 		// void
 		public void SetHeartbeatInterval( int iHeartbeatInterval /*int*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamGameServer.SetHeartbeatInterval( _ptr, iHeartbeatInterval );
-			else Platform.Win64.ISteamGameServer.SetHeartbeatInterval( _ptr, iHeartbeatInterval );
+			_pi.ISteamGameServer_SetHeartbeatInterval( iHeartbeatInterval );
 		}
 		
 		// void
 		public void SetKeyValue( string pKey /*const char **/, string pValue /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamGameServer.SetKeyValue( _ptr, pKey, pValue );
-			else Platform.Win64.ISteamGameServer.SetKeyValue( _ptr, pKey, pValue );
+			_pi.ISteamGameServer_SetKeyValue( pKey, pValue );
 		}
 		
 		// void
 		public void SetMapName( string pszMapName /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamGameServer.SetMapName( _ptr, pszMapName );
-			else Platform.Win64.ISteamGameServer.SetMapName( _ptr, pszMapName );
+			_pi.ISteamGameServer_SetMapName( pszMapName );
 		}
 		
 		// void
 		public void SetMaxPlayerCount( int cPlayersMax /*int*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamGameServer.SetMaxPlayerCount( _ptr, cPlayersMax );
-			else Platform.Win64.ISteamGameServer.SetMaxPlayerCount( _ptr, cPlayersMax );
+			_pi.ISteamGameServer_SetMaxPlayerCount( cPlayersMax );
 		}
 		
 		// void
 		public void SetModDir( string pszModDir /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamGameServer.SetModDir( _ptr, pszModDir );
-			else Platform.Win64.ISteamGameServer.SetModDir( _ptr, pszModDir );
+			_pi.ISteamGameServer_SetModDir( pszModDir );
 		}
 		
 		// void
 		public void SetPasswordProtected( bool bPasswordProtected /*bool*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamGameServer.SetPasswordProtected( _ptr, bPasswordProtected );
-			else Platform.Win64.ISteamGameServer.SetPasswordProtected( _ptr, bPasswordProtected );
+			_pi.ISteamGameServer_SetPasswordProtected( bPasswordProtected );
 		}
 		
 		// void
 		public void SetProduct( string pszProduct /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamGameServer.SetProduct( _ptr, pszProduct );
-			else Platform.Win64.ISteamGameServer.SetProduct( _ptr, pszProduct );
+			_pi.ISteamGameServer_SetProduct( pszProduct );
 		}
 		
 		// void
 		public void SetRegion( string pszRegion /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamGameServer.SetRegion( _ptr, pszRegion );
-			else Platform.Win64.ISteamGameServer.SetRegion( _ptr, pszRegion );
+			_pi.ISteamGameServer_SetRegion( pszRegion );
 		}
 		
 		// void
 		public void SetServerName( string pszServerName /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamGameServer.SetServerName( _ptr, pszServerName );
-			else Platform.Win64.ISteamGameServer.SetServerName( _ptr, pszServerName );
+			_pi.ISteamGameServer_SetServerName( pszServerName );
 		}
 		
 		// void
 		public void SetSpectatorPort( ushort unSpectatorPort /*uint16*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamGameServer.SetSpectatorPort( _ptr, unSpectatorPort );
-			else Platform.Win64.ISteamGameServer.SetSpectatorPort( _ptr, unSpectatorPort );
+			_pi.ISteamGameServer_SetSpectatorPort( unSpectatorPort );
 		}
 		
 		// void
 		public void SetSpectatorServerName( string pszSpectatorServerName /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamGameServer.SetSpectatorServerName( _ptr, pszSpectatorServerName );
-			else Platform.Win64.ISteamGameServer.SetSpectatorServerName( _ptr, pszSpectatorServerName );
+			_pi.ISteamGameServer_SetSpectatorServerName( pszSpectatorServerName );
 		}
 		
 		// UserHasLicenseForAppResult
 		public UserHasLicenseForAppResult UserHasLicenseForApp( CSteamID steamID /*class CSteamID*/, AppId_t appID /*AppId_t*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamGameServer.UserHasLicenseForApp( _ptr, steamID, appID );
-			else return Platform.Win64.ISteamGameServer.UserHasLicenseForApp( _ptr, steamID, appID );
+			return _pi.ISteamGameServer_UserHasLicenseForApp( steamID, appID );
 		}
 		
 		// bool
 		public bool WasRestartRequested()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamGameServer.WasRestartRequested( _ptr );
-			else return Platform.Win64.ISteamGameServer.WasRestartRequested( _ptr );
+			return _pi.ISteamGameServer_WasRestartRequested();
 		}
 		
 	}

@@ -5,300 +5,209 @@ namespace SteamNative
 {
 	public unsafe class SteamMusicRemote
 	{
-		internal IntPtr _ptr;
+		internal Platform.Interface _pi;
 		
 		public SteamMusicRemote( IntPtr pointer )
 		{
-			_ptr = pointer;
+			if ( Platform.IsWindows64 ) _pi = new Platform.Win64( pointer );
+			else if ( Platform.IsWindows32 ) _pi = new Platform.Win32( pointer );
+			else if ( Platform.IsLinux32 ) _pi = new Platform.Linux32( pointer );
+			else if ( Platform.IsLinux64 ) _pi = new Platform.Linux64( pointer );
+			else if ( Platform.IsOsx ) _pi = new Platform.Mac( pointer );
 		}
 		
+		public bool IsValid{ get{ return _pi != null && _pi.IsValid; } }
 		
 		// bool
 		public bool BActivationSuccess( bool bValue /*bool*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.BActivationSuccess( _ptr, bValue );
-			else return Platform.Win64.ISteamMusicRemote.BActivationSuccess( _ptr, bValue );
+			return _pi.ISteamMusicRemote_BActivationSuccess( bValue );
 		}
 		
 		// bool
 		public bool BIsCurrentMusicRemote()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.BIsCurrentMusicRemote( _ptr );
-			else return Platform.Win64.ISteamMusicRemote.BIsCurrentMusicRemote( _ptr );
+			return _pi.ISteamMusicRemote_BIsCurrentMusicRemote();
 		}
 		
 		// bool
 		public bool CurrentEntryDidChange()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.CurrentEntryDidChange( _ptr );
-			else return Platform.Win64.ISteamMusicRemote.CurrentEntryDidChange( _ptr );
+			return _pi.ISteamMusicRemote_CurrentEntryDidChange();
 		}
 		
 		// bool
 		public bool CurrentEntryIsAvailable( bool bAvailable /*bool*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.CurrentEntryIsAvailable( _ptr, bAvailable );
-			else return Platform.Win64.ISteamMusicRemote.CurrentEntryIsAvailable( _ptr, bAvailable );
+			return _pi.ISteamMusicRemote_CurrentEntryIsAvailable( bAvailable );
 		}
 		
 		// bool
 		public bool CurrentEntryWillChange()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.CurrentEntryWillChange( _ptr );
-			else return Platform.Win64.ISteamMusicRemote.CurrentEntryWillChange( _ptr );
+			return _pi.ISteamMusicRemote_CurrentEntryWillChange();
 		}
 		
 		// bool
 		public bool DeregisterSteamMusicRemote()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.DeregisterSteamMusicRemote( _ptr );
-			else return Platform.Win64.ISteamMusicRemote.DeregisterSteamMusicRemote( _ptr );
+			return _pi.ISteamMusicRemote_DeregisterSteamMusicRemote();
 		}
 		
 		// bool
 		public bool EnableLooped( bool bValue /*bool*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.EnableLooped( _ptr, bValue );
-			else return Platform.Win64.ISteamMusicRemote.EnableLooped( _ptr, bValue );
+			return _pi.ISteamMusicRemote_EnableLooped( bValue );
 		}
 		
 		// bool
 		public bool EnablePlaylists( bool bValue /*bool*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.EnablePlaylists( _ptr, bValue );
-			else return Platform.Win64.ISteamMusicRemote.EnablePlaylists( _ptr, bValue );
+			return _pi.ISteamMusicRemote_EnablePlaylists( bValue );
 		}
 		
 		// bool
 		public bool EnablePlayNext( bool bValue /*bool*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.EnablePlayNext( _ptr, bValue );
-			else return Platform.Win64.ISteamMusicRemote.EnablePlayNext( _ptr, bValue );
+			return _pi.ISteamMusicRemote_EnablePlayNext( bValue );
 		}
 		
 		// bool
 		public bool EnablePlayPrevious( bool bValue /*bool*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.EnablePlayPrevious( _ptr, bValue );
-			else return Platform.Win64.ISteamMusicRemote.EnablePlayPrevious( _ptr, bValue );
+			return _pi.ISteamMusicRemote_EnablePlayPrevious( bValue );
 		}
 		
 		// bool
 		public bool EnableQueue( bool bValue /*bool*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.EnableQueue( _ptr, bValue );
-			else return Platform.Win64.ISteamMusicRemote.EnableQueue( _ptr, bValue );
+			return _pi.ISteamMusicRemote_EnableQueue( bValue );
 		}
 		
 		// bool
 		public bool EnableShuffled( bool bValue /*bool*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.EnableShuffled( _ptr, bValue );
-			else return Platform.Win64.ISteamMusicRemote.EnableShuffled( _ptr, bValue );
+			return _pi.ISteamMusicRemote_EnableShuffled( bValue );
 		}
 		
 		// bool
 		public bool PlaylistDidChange()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.PlaylistDidChange( _ptr );
-			else return Platform.Win64.ISteamMusicRemote.PlaylistDidChange( _ptr );
+			return _pi.ISteamMusicRemote_PlaylistDidChange();
 		}
 		
 		// bool
 		public bool PlaylistWillChange()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.PlaylistWillChange( _ptr );
-			else return Platform.Win64.ISteamMusicRemote.PlaylistWillChange( _ptr );
+			return _pi.ISteamMusicRemote_PlaylistWillChange();
 		}
 		
 		// bool
 		public bool QueueDidChange()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.QueueDidChange( _ptr );
-			else return Platform.Win64.ISteamMusicRemote.QueueDidChange( _ptr );
+			return _pi.ISteamMusicRemote_QueueDidChange();
 		}
 		
 		// bool
 		public bool QueueWillChange()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.QueueWillChange( _ptr );
-			else return Platform.Win64.ISteamMusicRemote.QueueWillChange( _ptr );
+			return _pi.ISteamMusicRemote_QueueWillChange();
 		}
 		
 		// bool
 		public bool RegisterSteamMusicRemote( string pchName /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.RegisterSteamMusicRemote( _ptr, pchName );
-			else return Platform.Win64.ISteamMusicRemote.RegisterSteamMusicRemote( _ptr, pchName );
+			return _pi.ISteamMusicRemote_RegisterSteamMusicRemote( pchName );
 		}
 		
 		// bool
 		public bool ResetPlaylistEntries()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.ResetPlaylistEntries( _ptr );
-			else return Platform.Win64.ISteamMusicRemote.ResetPlaylistEntries( _ptr );
+			return _pi.ISteamMusicRemote_ResetPlaylistEntries();
 		}
 		
 		// bool
 		public bool ResetQueueEntries()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.ResetQueueEntries( _ptr );
-			else return Platform.Win64.ISteamMusicRemote.ResetQueueEntries( _ptr );
+			return _pi.ISteamMusicRemote_ResetQueueEntries();
 		}
 		
 		// bool
 		public bool SetCurrentPlaylistEntry( int nID /*int*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.SetCurrentPlaylistEntry( _ptr, nID );
-			else return Platform.Win64.ISteamMusicRemote.SetCurrentPlaylistEntry( _ptr, nID );
+			return _pi.ISteamMusicRemote_SetCurrentPlaylistEntry( nID );
 		}
 		
 		// bool
 		public bool SetCurrentQueueEntry( int nID /*int*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.SetCurrentQueueEntry( _ptr, nID );
-			else return Platform.Win64.ISteamMusicRemote.SetCurrentQueueEntry( _ptr, nID );
+			return _pi.ISteamMusicRemote_SetCurrentQueueEntry( nID );
 		}
 		
 		// bool
 		public bool SetDisplayName( string pchDisplayName /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.SetDisplayName( _ptr, pchDisplayName );
-			else return Platform.Win64.ISteamMusicRemote.SetDisplayName( _ptr, pchDisplayName );
+			return _pi.ISteamMusicRemote_SetDisplayName( pchDisplayName );
 		}
 		
 		// bool
 		public bool SetPlaylistEntry( int nID /*int*/, int nPosition /*int*/, string pchEntryText /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.SetPlaylistEntry( _ptr, nID, nPosition, pchEntryText );
-			else return Platform.Win64.ISteamMusicRemote.SetPlaylistEntry( _ptr, nID, nPosition, pchEntryText );
+			return _pi.ISteamMusicRemote_SetPlaylistEntry( nID, nPosition, pchEntryText );
 		}
 		
 		// bool
 		public bool SetPNGIcon_64x64( IntPtr pvBuffer /*void **/, uint cbBufferLength /*uint32*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.SetPNGIcon_64x64( _ptr, (IntPtr) pvBuffer, cbBufferLength );
-			else return Platform.Win64.ISteamMusicRemote.SetPNGIcon_64x64( _ptr, (IntPtr) pvBuffer, cbBufferLength );
+			return _pi.ISteamMusicRemote_SetPNGIcon_64x64( (IntPtr) pvBuffer, cbBufferLength );
 		}
 		
 		// bool
 		public bool SetQueueEntry( int nID /*int*/, int nPosition /*int*/, string pchEntryText /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.SetQueueEntry( _ptr, nID, nPosition, pchEntryText );
-			else return Platform.Win64.ISteamMusicRemote.SetQueueEntry( _ptr, nID, nPosition, pchEntryText );
+			return _pi.ISteamMusicRemote_SetQueueEntry( nID, nPosition, pchEntryText );
 		}
 		
 		// bool
 		public bool UpdateCurrentEntryCoverArt( IntPtr pvBuffer /*void **/, uint cbBufferLength /*uint32*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.UpdateCurrentEntryCoverArt( _ptr, (IntPtr) pvBuffer, cbBufferLength );
-			else return Platform.Win64.ISteamMusicRemote.UpdateCurrentEntryCoverArt( _ptr, (IntPtr) pvBuffer, cbBufferLength );
+			return _pi.ISteamMusicRemote_UpdateCurrentEntryCoverArt( (IntPtr) pvBuffer, cbBufferLength );
 		}
 		
 		// bool
 		public bool UpdateCurrentEntryElapsedSeconds( int nValue /*int*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.UpdateCurrentEntryElapsedSeconds( _ptr, nValue );
-			else return Platform.Win64.ISteamMusicRemote.UpdateCurrentEntryElapsedSeconds( _ptr, nValue );
+			return _pi.ISteamMusicRemote_UpdateCurrentEntryElapsedSeconds( nValue );
 		}
 		
 		// bool
 		public bool UpdateCurrentEntryText( string pchText /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.UpdateCurrentEntryText( _ptr, pchText );
-			else return Platform.Win64.ISteamMusicRemote.UpdateCurrentEntryText( _ptr, pchText );
+			return _pi.ISteamMusicRemote_UpdateCurrentEntryText( pchText );
 		}
 		
 		// bool
 		public bool UpdateLooped( bool bValue /*bool*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.UpdateLooped( _ptr, bValue );
-			else return Platform.Win64.ISteamMusicRemote.UpdateLooped( _ptr, bValue );
+			return _pi.ISteamMusicRemote_UpdateLooped( bValue );
 		}
 		
 		// bool
 		public bool UpdatePlaybackStatus( AudioPlayback_Status nStatus /*AudioPlayback_Status*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.UpdatePlaybackStatus( _ptr, nStatus );
-			else return Platform.Win64.ISteamMusicRemote.UpdatePlaybackStatus( _ptr, nStatus );
+			return _pi.ISteamMusicRemote_UpdatePlaybackStatus( nStatus );
 		}
 		
 		// bool
 		public bool UpdateShuffled( bool bValue /*bool*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.UpdateShuffled( _ptr, bValue );
-			else return Platform.Win64.ISteamMusicRemote.UpdateShuffled( _ptr, bValue );
+			return _pi.ISteamMusicRemote_UpdateShuffled( bValue );
 		}
 		
 		// bool
 		public bool UpdateVolume( float flValue /*float*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamMusicRemote.UpdateVolume( _ptr, flValue );
-			else return Platform.Win64.ISteamMusicRemote.UpdateVolume( _ptr, flValue );
+			return _pi.ISteamMusicRemote_UpdateVolume( flValue );
 		}
 		
 	}

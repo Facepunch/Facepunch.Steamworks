@@ -5,30 +5,29 @@ namespace SteamNative
 {
 	public unsafe class SteamVideo
 	{
-		internal IntPtr _ptr;
+		internal Platform.Interface _pi;
 		
 		public SteamVideo( IntPtr pointer )
 		{
-			_ptr = pointer;
+			if ( Platform.IsWindows64 ) _pi = new Platform.Win64( pointer );
+			else if ( Platform.IsWindows32 ) _pi = new Platform.Win32( pointer );
+			else if ( Platform.IsLinux32 ) _pi = new Platform.Linux32( pointer );
+			else if ( Platform.IsLinux64 ) _pi = new Platform.Linux64( pointer );
+			else if ( Platform.IsOsx ) _pi = new Platform.Mac( pointer );
 		}
 		
+		public bool IsValid{ get{ return _pi != null && _pi.IsValid; } }
 		
 		// void
 		public void GetVideoURL( AppId_t unVideoAppID /*AppId_t*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamVideo.GetVideoURL( _ptr, unVideoAppID );
-			else Platform.Win64.ISteamVideo.GetVideoURL( _ptr, unVideoAppID );
+			_pi.ISteamVideo_GetVideoURL( unVideoAppID );
 		}
 		
 		// bool
 		public bool IsBroadcasting( IntPtr pnNumViewers /*int **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamVideo.IsBroadcasting( _ptr, (IntPtr) pnNumViewers );
-			else return Platform.Win64.ISteamVideo.IsBroadcasting( _ptr, (IntPtr) pnNumViewers );
+			return _pi.ISteamVideo_IsBroadcasting( (IntPtr) pnNumViewers );
 		}
 		
 	}

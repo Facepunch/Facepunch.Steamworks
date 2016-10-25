@@ -150,12 +150,14 @@
     <Compile Include="Server\Query.cs" />
     <Compile Include="Server\Stats.cs" />
     <Compile Include="SteamNative\SteamNative.Enums.cs" />
-    <Compile Include="SteamNative\SteamNative.Global.cs" />
     <Compile Include="SteamNative\SteamNative.Platform.cs" />
-    <Compile Include="SteamNative\SteamNative.Platform.Linux.cs" />
+    <Compile Include="SteamNative\SteamNative.Platform.Interface.cs" />
+    <Compile Include="SteamNative\SteamNative.Platform.Linux32.cs" />
+    <Compile Include="SteamNative\SteamNative.Platform.Linux64.cs" />
     <Compile Include="SteamNative\SteamNative.Platform.Mac.cs" />
     <Compile Include="SteamNative\SteamNative.Platform.Win32.cs" />
     <Compile Include="SteamNative\SteamNative.Platform.Win64.cs" />
+    <Compile Include="SteamNative\SteamNative.SteamApi.cs" />
     <Compile Include="SteamNative\SteamNative.SteamAppList.cs" />
     <Compile Include="SteamNative\SteamNative.SteamApps.cs" />
     <Compile Include="SteamNative\SteamNative.SteamClient.cs" />

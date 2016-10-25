@@ -5,237 +5,167 @@ namespace SteamNative
 {
 	public unsafe class SteamHTTP
 	{
-		internal IntPtr _ptr;
+		internal Platform.Interface _pi;
 		
 		public SteamHTTP( IntPtr pointer )
 		{
-			_ptr = pointer;
+			if ( Platform.IsWindows64 ) _pi = new Platform.Win64( pointer );
+			else if ( Platform.IsWindows32 ) _pi = new Platform.Win32( pointer );
+			else if ( Platform.IsLinux32 ) _pi = new Platform.Linux32( pointer );
+			else if ( Platform.IsLinux64 ) _pi = new Platform.Linux64( pointer );
+			else if ( Platform.IsOsx ) _pi = new Platform.Mac( pointer );
 		}
 		
+		public bool IsValid{ get{ return _pi != null && _pi.IsValid; } }
 		
 		// HTTPCookieContainerHandle
 		public HTTPCookieContainerHandle CreateCookieContainer( bool bAllowResponsesToModify /*bool*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamHTTP.CreateCookieContainer( _ptr, bAllowResponsesToModify );
-			else return Platform.Win64.ISteamHTTP.CreateCookieContainer( _ptr, bAllowResponsesToModify );
+			return _pi.ISteamHTTP_CreateCookieContainer( bAllowResponsesToModify );
 		}
 		
 		// HTTPRequestHandle
 		public HTTPRequestHandle CreateHTTPRequest( HTTPMethod eHTTPRequestMethod /*EHTTPMethod*/, string pchAbsoluteURL /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamHTTP.CreateHTTPRequest( _ptr, eHTTPRequestMethod, pchAbsoluteURL );
-			else return Platform.Win64.ISteamHTTP.CreateHTTPRequest( _ptr, eHTTPRequestMethod, pchAbsoluteURL );
+			return _pi.ISteamHTTP_CreateHTTPRequest( eHTTPRequestMethod, pchAbsoluteURL );
 		}
 		
 		// bool
 		public bool DeferHTTPRequest( HTTPRequestHandle hRequest /*HTTPRequestHandle*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamHTTP.DeferHTTPRequest( _ptr, hRequest );
-			else return Platform.Win64.ISteamHTTP.DeferHTTPRequest( _ptr, hRequest );
+			return _pi.ISteamHTTP_DeferHTTPRequest( hRequest );
 		}
 		
 		// bool
 		public bool GetHTTPDownloadProgressPct( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, out float pflPercentOut /*float **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamHTTP.GetHTTPDownloadProgressPct( _ptr, hRequest, out pflPercentOut );
-			else return Platform.Win64.ISteamHTTP.GetHTTPDownloadProgressPct( _ptr, hRequest, out pflPercentOut );
+			return _pi.ISteamHTTP_GetHTTPDownloadProgressPct( hRequest, out pflPercentOut );
 		}
 		
 		// bool
 		public bool GetHTTPRequestWasTimedOut( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, out bool pbWasTimedOut /*bool **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamHTTP.GetHTTPRequestWasTimedOut( _ptr, hRequest, out pbWasTimedOut );
-			else return Platform.Win64.ISteamHTTP.GetHTTPRequestWasTimedOut( _ptr, hRequest, out pbWasTimedOut );
+			return _pi.ISteamHTTP_GetHTTPRequestWasTimedOut( hRequest, out pbWasTimedOut );
 		}
 		
 		// bool
 		public bool GetHTTPResponseBodyData( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, out byte pBodyDataBuffer /*uint8 **/, uint unBufferSize /*uint32*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamHTTP.GetHTTPResponseBodyData( _ptr, hRequest, out pBodyDataBuffer, unBufferSize );
-			else return Platform.Win64.ISteamHTTP.GetHTTPResponseBodyData( _ptr, hRequest, out pBodyDataBuffer, unBufferSize );
+			return _pi.ISteamHTTP_GetHTTPResponseBodyData( hRequest, out pBodyDataBuffer, unBufferSize );
 		}
 		
 		// bool
 		public bool GetHTTPResponseBodySize( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, out uint unBodySize /*uint32 **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamHTTP.GetHTTPResponseBodySize( _ptr, hRequest, out unBodySize );
-			else return Platform.Win64.ISteamHTTP.GetHTTPResponseBodySize( _ptr, hRequest, out unBodySize );
+			return _pi.ISteamHTTP_GetHTTPResponseBodySize( hRequest, out unBodySize );
 		}
 		
 		// bool
 		public bool GetHTTPResponseHeaderSize( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, string pchHeaderName /*const char **/, out uint unResponseHeaderSize /*uint32 **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamHTTP.GetHTTPResponseHeaderSize( _ptr, hRequest, pchHeaderName, out unResponseHeaderSize );
-			else return Platform.Win64.ISteamHTTP.GetHTTPResponseHeaderSize( _ptr, hRequest, pchHeaderName, out unResponseHeaderSize );
+			return _pi.ISteamHTTP_GetHTTPResponseHeaderSize( hRequest, pchHeaderName, out unResponseHeaderSize );
 		}
 		
 		// bool
 		public bool GetHTTPResponseHeaderValue( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, string pchHeaderName /*const char **/, out byte pHeaderValueBuffer /*uint8 **/, uint unBufferSize /*uint32*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamHTTP.GetHTTPResponseHeaderValue( _ptr, hRequest, pchHeaderName, out pHeaderValueBuffer, unBufferSize );
-			else return Platform.Win64.ISteamHTTP.GetHTTPResponseHeaderValue( _ptr, hRequest, pchHeaderName, out pHeaderValueBuffer, unBufferSize );
+			return _pi.ISteamHTTP_GetHTTPResponseHeaderValue( hRequest, pchHeaderName, out pHeaderValueBuffer, unBufferSize );
 		}
 		
 		// bool
 		public bool GetHTTPStreamingResponseBodyData( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, uint cOffset /*uint32*/, out byte pBodyDataBuffer /*uint8 **/, uint unBufferSize /*uint32*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamHTTP.GetHTTPStreamingResponseBodyData( _ptr, hRequest, cOffset, out pBodyDataBuffer, unBufferSize );
-			else return Platform.Win64.ISteamHTTP.GetHTTPStreamingResponseBodyData( _ptr, hRequest, cOffset, out pBodyDataBuffer, unBufferSize );
+			return _pi.ISteamHTTP_GetHTTPStreamingResponseBodyData( hRequest, cOffset, out pBodyDataBuffer, unBufferSize );
 		}
 		
 		// bool
 		public bool PrioritizeHTTPRequest( HTTPRequestHandle hRequest /*HTTPRequestHandle*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamHTTP.PrioritizeHTTPRequest( _ptr, hRequest );
-			else return Platform.Win64.ISteamHTTP.PrioritizeHTTPRequest( _ptr, hRequest );
+			return _pi.ISteamHTTP_PrioritizeHTTPRequest( hRequest );
 		}
 		
 		// bool
 		public bool ReleaseCookieContainer( HTTPCookieContainerHandle hCookieContainer /*HTTPCookieContainerHandle*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamHTTP.ReleaseCookieContainer( _ptr, hCookieContainer );
-			else return Platform.Win64.ISteamHTTP.ReleaseCookieContainer( _ptr, hCookieContainer );
+			return _pi.ISteamHTTP_ReleaseCookieContainer( hCookieContainer );
 		}
 		
 		// bool
 		public bool ReleaseHTTPRequest( HTTPRequestHandle hRequest /*HTTPRequestHandle*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamHTTP.ReleaseHTTPRequest( _ptr, hRequest );
-			else return Platform.Win64.ISteamHTTP.ReleaseHTTPRequest( _ptr, hRequest );
+			return _pi.ISteamHTTP_ReleaseHTTPRequest( hRequest );
 		}
 		
 		// bool
 		public bool SendHTTPRequest( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, ref SteamAPICall_t pCallHandle /*SteamAPICall_t **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamHTTP.SendHTTPRequest( _ptr, hRequest, ref pCallHandle );
-			else return Platform.Win64.ISteamHTTP.SendHTTPRequest( _ptr, hRequest, ref pCallHandle );
+			return _pi.ISteamHTTP_SendHTTPRequest( hRequest, ref pCallHandle );
 		}
 		
 		// bool
 		public bool SendHTTPRequestAndStreamResponse( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, ref SteamAPICall_t pCallHandle /*SteamAPICall_t **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamHTTP.SendHTTPRequestAndStreamResponse( _ptr, hRequest, ref pCallHandle );
-			else return Platform.Win64.ISteamHTTP.SendHTTPRequestAndStreamResponse( _ptr, hRequest, ref pCallHandle );
+			return _pi.ISteamHTTP_SendHTTPRequestAndStreamResponse( hRequest, ref pCallHandle );
 		}
 		
 		// bool
 		public bool SetCookie( HTTPCookieContainerHandle hCookieContainer /*HTTPCookieContainerHandle*/, string pchHost /*const char **/, string pchUrl /*const char **/, string pchCookie /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamHTTP.SetCookie( _ptr, hCookieContainer, pchHost, pchUrl, pchCookie );
-			else return Platform.Win64.ISteamHTTP.SetCookie( _ptr, hCookieContainer, pchHost, pchUrl, pchCookie );
+			return _pi.ISteamHTTP_SetCookie( hCookieContainer, pchHost, pchUrl, pchCookie );
 		}
 		
 		// bool
 		public bool SetHTTPRequestAbsoluteTimeoutMS( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, uint unMilliseconds /*uint32*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamHTTP.SetHTTPRequestAbsoluteTimeoutMS( _ptr, hRequest, unMilliseconds );
-			else return Platform.Win64.ISteamHTTP.SetHTTPRequestAbsoluteTimeoutMS( _ptr, hRequest, unMilliseconds );
+			return _pi.ISteamHTTP_SetHTTPRequestAbsoluteTimeoutMS( hRequest, unMilliseconds );
 		}
 		
 		// bool
 		public bool SetHTTPRequestContextValue( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, ulong ulContextValue /*uint64*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamHTTP.SetHTTPRequestContextValue( _ptr, hRequest, ulContextValue );
-			else return Platform.Win64.ISteamHTTP.SetHTTPRequestContextValue( _ptr, hRequest, ulContextValue );
+			return _pi.ISteamHTTP_SetHTTPRequestContextValue( hRequest, ulContextValue );
 		}
 		
 		// bool
 		public bool SetHTTPRequestCookieContainer( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, HTTPCookieContainerHandle hCookieContainer /*HTTPCookieContainerHandle*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamHTTP.SetHTTPRequestCookieContainer( _ptr, hRequest, hCookieContainer );
-			else return Platform.Win64.ISteamHTTP.SetHTTPRequestCookieContainer( _ptr, hRequest, hCookieContainer );
+			return _pi.ISteamHTTP_SetHTTPRequestCookieContainer( hRequest, hCookieContainer );
 		}
 		
 		// bool
 		public bool SetHTTPRequestGetOrPostParameter( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, string pchParamName /*const char **/, string pchParamValue /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamHTTP.SetHTTPRequestGetOrPostParameter( _ptr, hRequest, pchParamName, pchParamValue );
-			else return Platform.Win64.ISteamHTTP.SetHTTPRequestGetOrPostParameter( _ptr, hRequest, pchParamName, pchParamValue );
+			return _pi.ISteamHTTP_SetHTTPRequestGetOrPostParameter( hRequest, pchParamName, pchParamValue );
 		}
 		
 		// bool
 		public bool SetHTTPRequestHeaderValue( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, string pchHeaderName /*const char **/, string pchHeaderValue /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamHTTP.SetHTTPRequestHeaderValue( _ptr, hRequest, pchHeaderName, pchHeaderValue );
-			else return Platform.Win64.ISteamHTTP.SetHTTPRequestHeaderValue( _ptr, hRequest, pchHeaderName, pchHeaderValue );
+			return _pi.ISteamHTTP_SetHTTPRequestHeaderValue( hRequest, pchHeaderName, pchHeaderValue );
 		}
 		
 		// bool
 		public bool SetHTTPRequestNetworkActivityTimeout( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, uint unTimeoutSeconds /*uint32*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamHTTP.SetHTTPRequestNetworkActivityTimeout( _ptr, hRequest, unTimeoutSeconds );
-			else return Platform.Win64.ISteamHTTP.SetHTTPRequestNetworkActivityTimeout( _ptr, hRequest, unTimeoutSeconds );
+			return _pi.ISteamHTTP_SetHTTPRequestNetworkActivityTimeout( hRequest, unTimeoutSeconds );
 		}
 		
 		// bool
 		public bool SetHTTPRequestRawPostBody( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, string pchContentType /*const char **/, out byte pubBody /*uint8 **/, uint unBodyLen /*uint32*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamHTTP.SetHTTPRequestRawPostBody( _ptr, hRequest, pchContentType, out pubBody, unBodyLen );
-			else return Platform.Win64.ISteamHTTP.SetHTTPRequestRawPostBody( _ptr, hRequest, pchContentType, out pubBody, unBodyLen );
+			return _pi.ISteamHTTP_SetHTTPRequestRawPostBody( hRequest, pchContentType, out pubBody, unBodyLen );
 		}
 		
 		// bool
 		public bool SetHTTPRequestRequiresVerifiedCertificate( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, bool bRequireVerifiedCertificate /*bool*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamHTTP.SetHTTPRequestRequiresVerifiedCertificate( _ptr, hRequest, bRequireVerifiedCertificate );
-			else return Platform.Win64.ISteamHTTP.SetHTTPRequestRequiresVerifiedCertificate( _ptr, hRequest, bRequireVerifiedCertificate );
+			return _pi.ISteamHTTP_SetHTTPRequestRequiresVerifiedCertificate( hRequest, bRequireVerifiedCertificate );
 		}
 		
 		// bool
 		public bool SetHTTPRequestUserAgentInfo( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, string pchUserAgentInfo /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamHTTP.SetHTTPRequestUserAgentInfo( _ptr, hRequest, pchUserAgentInfo );
-			else return Platform.Win64.ISteamHTTP.SetHTTPRequestUserAgentInfo( _ptr, hRequest, pchUserAgentInfo );
+			return _pi.ISteamHTTP_SetHTTPRequestUserAgentInfo( hRequest, pchUserAgentInfo );
 		}
 		
 	}

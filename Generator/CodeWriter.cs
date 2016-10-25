@@ -21,7 +21,7 @@ namespace Generator
 
             def.methods.Add( new SteamApiDefinition.MethodDef()
             {
-                ClassName = "Global",
+                ClassName = "SteamApi",
                 Name = "SteamAPI_Init",
                 ReturnType = "void",
                 NeedsSelfPointer = false
@@ -29,7 +29,7 @@ namespace Generator
 
             def.methods.Add( new SteamApiDefinition.MethodDef()
             {
-                ClassName = "Global",
+                ClassName = "SteamApi",
                 Name = "SteamAPI_RunCallbacks",
                 ReturnType = "void",
                 NeedsSelfPointer = false
@@ -37,7 +37,7 @@ namespace Generator
 
             def.methods.Add( new SteamApiDefinition.MethodDef()
             {
-                ClassName = "Global",
+                ClassName = "SteamApi",
                 Name = "SteamGameServer_RunCallbacks",
                 ReturnType = "void",
                 NeedsSelfPointer = false
@@ -45,7 +45,7 @@ namespace Generator
 
             def.methods.Add( new SteamApiDefinition.MethodDef()
             {
-                ClassName = "Global",
+                ClassName = "SteamApi",
                 Name = "SteamAPI_RegisterCallback",
                 ReturnType = "void",
                 NeedsSelfPointer = false,
@@ -66,7 +66,7 @@ namespace Generator
 
             def.methods.Add( new SteamApiDefinition.MethodDef()
             {
-                ClassName = "Global",
+                ClassName = "SteamApi",
                 Name = "SteamAPI_UnregisterCallback",
                 ReturnType = "void",
                 NeedsSelfPointer = false,
@@ -82,7 +82,7 @@ namespace Generator
 
             def.methods.Add( new SteamApiDefinition.MethodDef()
             {
-                ClassName = "Global",
+                ClassName = "SteamApi",
                 Name = "SteamInternal_GameServer_Init",
                 ReturnType = "bool",
                 NeedsSelfPointer = false,
@@ -123,7 +123,7 @@ namespace Generator
 
             def.methods.Add( new SteamApiDefinition.MethodDef()
             {
-                ClassName = "Global",
+                ClassName = "SteamApi",
                 Name = "SteamAPI_Shutdown",
                 ReturnType = "void",
                 NeedsSelfPointer = false
@@ -134,7 +134,7 @@ namespace Generator
 
             def.methods.Add( new SteamApiDefinition.MethodDef()
             {
-                ClassName = "Global",
+                ClassName = "SteamApi",
                 Name = "SteamAPI_GetHSteamUser",
                 ReturnType = "HSteamUser",
                 NeedsSelfPointer = false
@@ -142,7 +142,7 @@ namespace Generator
 
             def.methods.Add( new SteamApiDefinition.MethodDef()
             {
-                ClassName = "Global",
+                ClassName = "SteamApi",
                 Name = "SteamAPI_GetHSteamPipe",
                 ReturnType = "HSteamPipe",
                 NeedsSelfPointer = false
@@ -150,7 +150,7 @@ namespace Generator
 
             def.methods.Add( new SteamApiDefinition.MethodDef()
             {
-                ClassName = "Global",
+                ClassName = "SteamApi",
                 Name = "SteamGameServer_GetHSteamUser",
                 ReturnType = "HSteamUser",
                 NeedsSelfPointer = false
@@ -158,7 +158,7 @@ namespace Generator
 
             def.methods.Add( new SteamApiDefinition.MethodDef()
             {
-                ClassName = "Global",
+                ClassName = "SteamApi",
                 Name = "SteamGameServer_GetHSteamPipe",
                 ReturnType = "HSteamPipe",
                 NeedsSelfPointer = false
@@ -166,7 +166,7 @@ namespace Generator
 
             def.methods.Add( new SteamApiDefinition.MethodDef()
             {
-                ClassName = "Global",
+                ClassName = "SteamApi",
                 Name = "SteamInternal_CreateInterface",
                 ReturnType = "void *",
                 Params = new SteamApiDefinition.MethodDef.ParamType[]
@@ -211,6 +211,13 @@ namespace Generator
                 System.IO.File.WriteAllText( $"{folder}SteamNative.Structs.cs", sb.ToString() );
             }
 
+            {
+                sb = new StringBuilder();
+                Header();
+                PlatformInterface();
+                Footer();
+                System.IO.File.WriteAllText( $"{folder}SteamNative.Platform.Interface.cs", sb.ToString() );
+            }
 
             {
                 sb = new StringBuilder();
@@ -231,9 +238,17 @@ namespace Generator
             {
                 sb = new StringBuilder();
                 Header();
-                PlatformClass( "Linux", "libsteam_api.so" );
+                PlatformClass( "Linux32", "libsteam_api.so" );
                 Footer();
-                System.IO.File.WriteAllText( $"{folder}SteamNative.Platform.Linux.cs", sb.ToString() );
+                System.IO.File.WriteAllText( $"{folder}SteamNative.Platform.Linux32.cs", sb.ToString() );
+            }
+
+            {
+                sb = new StringBuilder();
+                Header();
+                PlatformClass( "Linux64", "libsteam_api64.so" );
+                Footer();
+                System.IO.File.WriteAllText( $"{folder}SteamNative.Platform.Linux64.cs", sb.ToString() );
             }
 
             {

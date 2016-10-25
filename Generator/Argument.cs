@@ -176,7 +176,7 @@ namespace Generator
             return $"{ManagedType} /*{NativeType}*/ {Name} ";
         }
 
-        internal object Return()
+        internal string Return()
         {
             if ( ManagedType.EndsWith( "*" ) )
             {
@@ -185,7 +185,7 @@ namespace Generator
 
             if ( TypeDef != null )
             {
-                return $"{TypeDef.ManagedType} /*{NativeType}*/";
+                return $"{TypeDef.Name} /*({NativeType})*/";
             }
 
             if ( ManagedType == "string" )

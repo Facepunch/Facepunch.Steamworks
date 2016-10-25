@@ -24,8 +24,6 @@ namespace Facepunch.Steamworks
 
         public Client( uint appId )
         {
-            SteamNative.Globals.SteamAPI_Init();
-
             native = new Interop.NativeInterface();
 
             //
@@ -88,7 +86,7 @@ namespace Facepunch.Steamworks
             if ( !IsValid )
                 return;
 
-            SteamNative.Globals.SteamAPI_RunCallbacks();
+            native.api.SteamAPI_RunCallbacks();
 
             Voice.Update();
 
@@ -104,8 +102,6 @@ namespace Facepunch.Steamworks
             }
 
             base.Dispose();
-
-            SteamNative.Globals.SteamAPI_Shutdown();
         }
 
     }

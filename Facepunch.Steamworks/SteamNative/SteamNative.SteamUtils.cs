@@ -5,97 +5,75 @@ namespace SteamNative
 {
 	public unsafe class SteamUtils
 	{
-		internal IntPtr _ptr;
+		internal Platform.Interface _pi;
 		
 		public SteamUtils( IntPtr pointer )
 		{
-			_ptr = pointer;
+			if ( Platform.IsWindows64 ) _pi = new Platform.Win64( pointer );
+			else if ( Platform.IsWindows32 ) _pi = new Platform.Win32( pointer );
+			else if ( Platform.IsLinux32 ) _pi = new Platform.Linux32( pointer );
+			else if ( Platform.IsLinux64 ) _pi = new Platform.Linux64( pointer );
+			else if ( Platform.IsOsx ) _pi = new Platform.Mac( pointer );
 		}
 		
+		public bool IsValid{ get{ return _pi != null && _pi.IsValid; } }
 		
 		// bool
 		public bool BOverlayNeedsPresent()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUtils.BOverlayNeedsPresent( _ptr );
-			else return Platform.Win64.ISteamUtils.BOverlayNeedsPresent( _ptr );
+			return _pi.ISteamUtils_BOverlayNeedsPresent();
 		}
 		
 		// SteamAPICall_t
 		public SteamAPICall_t CheckFileSignature( string szFileName /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUtils.CheckFileSignature( _ptr, szFileName );
-			else return Platform.Win64.ISteamUtils.CheckFileSignature( _ptr, szFileName );
+			return _pi.ISteamUtils_CheckFileSignature( szFileName );
 		}
 		
 		// SteamAPICallFailure
 		public SteamAPICallFailure GetAPICallFailureReason( SteamAPICall_t hSteamAPICall /*SteamAPICall_t*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUtils.GetAPICallFailureReason( _ptr, hSteamAPICall );
-			else return Platform.Win64.ISteamUtils.GetAPICallFailureReason( _ptr, hSteamAPICall );
+			return _pi.ISteamUtils_GetAPICallFailureReason( hSteamAPICall );
 		}
 		
 		// bool
 		public bool GetAPICallResult( SteamAPICall_t hSteamAPICall /*SteamAPICall_t*/, IntPtr pCallback /*void **/, int cubCallback /*int*/, int iCallbackExpected /*int*/, out bool pbFailed /*bool **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUtils.GetAPICallResult( _ptr, hSteamAPICall, (IntPtr) pCallback, cubCallback, iCallbackExpected, out pbFailed );
-			else return Platform.Win64.ISteamUtils.GetAPICallResult( _ptr, hSteamAPICall, (IntPtr) pCallback, cubCallback, iCallbackExpected, out pbFailed );
+			return _pi.ISteamUtils_GetAPICallResult( hSteamAPICall, (IntPtr) pCallback, cubCallback, iCallbackExpected, out pbFailed );
 		}
 		
 		// uint
 		public uint GetAppID()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUtils.GetAppID( _ptr );
-			else return Platform.Win64.ISteamUtils.GetAppID( _ptr );
+			return _pi.ISteamUtils_GetAppID();
 		}
 		
 		// Universe
 		public Universe GetConnectedUniverse()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUtils.GetConnectedUniverse( _ptr );
-			else return Platform.Win64.ISteamUtils.GetConnectedUniverse( _ptr );
+			return _pi.ISteamUtils_GetConnectedUniverse();
 		}
 		
 		// bool
 		public bool GetCSERIPPort( out uint unIP /*uint32 **/, out ushort usPort /*uint16 **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUtils.GetCSERIPPort( _ptr, out unIP, out usPort );
-			else return Platform.Win64.ISteamUtils.GetCSERIPPort( _ptr, out unIP, out usPort );
+			return _pi.ISteamUtils_GetCSERIPPort( out unIP, out usPort );
 		}
 		
 		// byte
 		public byte GetCurrentBatteryPower()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUtils.GetCurrentBatteryPower( _ptr );
-			else return Platform.Win64.ISteamUtils.GetCurrentBatteryPower( _ptr );
+			return _pi.ISteamUtils_GetCurrentBatteryPower();
 		}
 		
 		// bool
 		// with: Detect_StringFetch True
 		public string GetEnteredGamepadTextInput()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
 			bool bSuccess = default( bool );
 			System.Text.StringBuilder pchText_sb = new System.Text.StringBuilder( 4096 );
 			uint cchText = 4096;
-			if ( Platform.IsWindows32 ) bSuccess = Platform.Win32.ISteamUtils.GetEnteredGamepadTextInput( _ptr, pchText_sb, cchText );
-			else bSuccess = Platform.Win64.ISteamUtils.GetEnteredGamepadTextInput( _ptr, pchText_sb, cchText );
+			bSuccess = _pi.ISteamUtils_GetEnteredGamepadTextInput( pchText_sb, cchText );
 			if ( !bSuccess ) return null;
 			return pchText_sb.ToString();
 		}
@@ -103,169 +81,115 @@ namespace SteamNative
 		// uint
 		public uint GetEnteredGamepadTextLength()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUtils.GetEnteredGamepadTextLength( _ptr );
-			else return Platform.Win64.ISteamUtils.GetEnteredGamepadTextLength( _ptr );
+			return _pi.ISteamUtils_GetEnteredGamepadTextLength();
 		}
 		
 		// bool
 		public bool GetImageRGBA( int iImage /*int*/, IntPtr pubDest /*uint8 **/, int nDestBufferSize /*int*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUtils.GetImageRGBA( _ptr, iImage, (IntPtr) pubDest, nDestBufferSize );
-			else return Platform.Win64.ISteamUtils.GetImageRGBA( _ptr, iImage, (IntPtr) pubDest, nDestBufferSize );
+			return _pi.ISteamUtils_GetImageRGBA( iImage, (IntPtr) pubDest, nDestBufferSize );
 		}
 		
 		// bool
 		public bool GetImageSize( int iImage /*int*/, out uint pnWidth /*uint32 **/, out uint pnHeight /*uint32 **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUtils.GetImageSize( _ptr, iImage, out pnWidth, out pnHeight );
-			else return Platform.Win64.ISteamUtils.GetImageSize( _ptr, iImage, out pnWidth, out pnHeight );
+			return _pi.ISteamUtils_GetImageSize( iImage, out pnWidth, out pnHeight );
 		}
 		
 		// uint
 		public uint GetIPCCallCount()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUtils.GetIPCCallCount( _ptr );
-			else return Platform.Win64.ISteamUtils.GetIPCCallCount( _ptr );
+			return _pi.ISteamUtils_GetIPCCallCount();
 		}
 		
 		// string
 		// with: Detect_StringReturn
 		public string GetIPCountry()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
 			IntPtr string_pointer;
-			if ( Platform.IsWindows32 ) string_pointer = Platform.Win32.ISteamUtils.GetIPCountry( _ptr );
-			else string_pointer = Platform.Win64.ISteamUtils.GetIPCountry( _ptr );
+			string_pointer = _pi.ISteamUtils_GetIPCountry();
 			return Marshal.PtrToStringAnsi( string_pointer );
 		}
 		
 		// uint
 		public uint GetSecondsSinceAppActive()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUtils.GetSecondsSinceAppActive( _ptr );
-			else return Platform.Win64.ISteamUtils.GetSecondsSinceAppActive( _ptr );
+			return _pi.ISteamUtils_GetSecondsSinceAppActive();
 		}
 		
 		// uint
 		public uint GetSecondsSinceComputerActive()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUtils.GetSecondsSinceComputerActive( _ptr );
-			else return Platform.Win64.ISteamUtils.GetSecondsSinceComputerActive( _ptr );
+			return _pi.ISteamUtils_GetSecondsSinceComputerActive();
 		}
 		
 		// uint
 		public uint GetServerRealTime()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUtils.GetServerRealTime( _ptr );
-			else return Platform.Win64.ISteamUtils.GetServerRealTime( _ptr );
+			return _pi.ISteamUtils_GetServerRealTime();
 		}
 		
 		// string
 		// with: Detect_StringReturn
 		public string GetSteamUILanguage()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
 			IntPtr string_pointer;
-			if ( Platform.IsWindows32 ) string_pointer = Platform.Win32.ISteamUtils.GetSteamUILanguage( _ptr );
-			else string_pointer = Platform.Win64.ISteamUtils.GetSteamUILanguage( _ptr );
+			string_pointer = _pi.ISteamUtils_GetSteamUILanguage();
 			return Marshal.PtrToStringAnsi( string_pointer );
 		}
 		
 		// bool
 		public bool IsAPICallCompleted( SteamAPICall_t hSteamAPICall /*SteamAPICall_t*/, out bool pbFailed /*bool **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUtils.IsAPICallCompleted( _ptr, hSteamAPICall, out pbFailed );
-			else return Platform.Win64.ISteamUtils.IsAPICallCompleted( _ptr, hSteamAPICall, out pbFailed );
+			return _pi.ISteamUtils_IsAPICallCompleted( hSteamAPICall, out pbFailed );
 		}
 		
 		// bool
 		public bool IsOverlayEnabled()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUtils.IsOverlayEnabled( _ptr );
-			else return Platform.Win64.ISteamUtils.IsOverlayEnabled( _ptr );
+			return _pi.ISteamUtils_IsOverlayEnabled();
 		}
 		
 		// bool
 		public bool IsSteamInBigPictureMode()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUtils.IsSteamInBigPictureMode( _ptr );
-			else return Platform.Win64.ISteamUtils.IsSteamInBigPictureMode( _ptr );
+			return _pi.ISteamUtils_IsSteamInBigPictureMode();
 		}
 		
 		// bool
 		public bool IsSteamRunningInVR()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUtils.IsSteamRunningInVR( _ptr );
-			else return Platform.Win64.ISteamUtils.IsSteamRunningInVR( _ptr );
+			return _pi.ISteamUtils_IsSteamRunningInVR();
 		}
 		
 		// void
 		public void SetOverlayNotificationInset( int nHorizontalInset /*int*/, int nVerticalInset /*int*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamUtils.SetOverlayNotificationInset( _ptr, nHorizontalInset, nVerticalInset );
-			else Platform.Win64.ISteamUtils.SetOverlayNotificationInset( _ptr, nHorizontalInset, nVerticalInset );
+			_pi.ISteamUtils_SetOverlayNotificationInset( nHorizontalInset, nVerticalInset );
 		}
 		
 		// void
 		public void SetOverlayNotificationPosition( NotificationPosition eNotificationPosition /*ENotificationPosition*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamUtils.SetOverlayNotificationPosition( _ptr, eNotificationPosition );
-			else Platform.Win64.ISteamUtils.SetOverlayNotificationPosition( _ptr, eNotificationPosition );
+			_pi.ISteamUtils_SetOverlayNotificationPosition( eNotificationPosition );
 		}
 		
 		// void
 		public void SetWarningMessageHook( IntPtr pFunction /*SteamAPIWarningMessageHook_t*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamUtils.SetWarningMessageHook( _ptr, (IntPtr) pFunction );
-			else Platform.Win64.ISteamUtils.SetWarningMessageHook( _ptr, (IntPtr) pFunction );
+			_pi.ISteamUtils_SetWarningMessageHook( (IntPtr) pFunction );
 		}
 		
 		// bool
 		public bool ShowGamepadTextInput( GamepadTextInputMode eInputMode /*EGamepadTextInputMode*/, GamepadTextInputLineMode eLineInputMode /*EGamepadTextInputLineMode*/, string pchDescription /*const char **/, uint unCharMax /*uint32*/, string pchExistingText /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUtils.ShowGamepadTextInput( _ptr, eInputMode, eLineInputMode, pchDescription, unCharMax, pchExistingText );
-			else return Platform.Win64.ISteamUtils.ShowGamepadTextInput( _ptr, eInputMode, eLineInputMode, pchDescription, unCharMax, pchExistingText );
+			return _pi.ISteamUtils_ShowGamepadTextInput( eInputMode, eLineInputMode, pchDescription, unCharMax, pchExistingText );
 		}
 		
 		// void
 		public void StartVRDashboard()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamUtils.StartVRDashboard( _ptr );
-			else Platform.Win64.ISteamUtils.StartVRDashboard( _ptr );
+			_pi.ISteamUtils_StartVRDashboard();
 		}
 		
 	}

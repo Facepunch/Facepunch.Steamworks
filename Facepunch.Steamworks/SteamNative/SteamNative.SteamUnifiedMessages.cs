@@ -5,57 +5,47 @@ namespace SteamNative
 {
 	public unsafe class SteamUnifiedMessages
 	{
-		internal IntPtr _ptr;
+		internal Platform.Interface _pi;
 		
 		public SteamUnifiedMessages( IntPtr pointer )
 		{
-			_ptr = pointer;
+			if ( Platform.IsWindows64 ) _pi = new Platform.Win64( pointer );
+			else if ( Platform.IsWindows32 ) _pi = new Platform.Win32( pointer );
+			else if ( Platform.IsLinux32 ) _pi = new Platform.Linux32( pointer );
+			else if ( Platform.IsLinux64 ) _pi = new Platform.Linux64( pointer );
+			else if ( Platform.IsOsx ) _pi = new Platform.Mac( pointer );
 		}
 		
+		public bool IsValid{ get{ return _pi != null && _pi.IsValid; } }
 		
 		// bool
 		public bool GetMethodResponseData( ClientUnifiedMessageHandle hHandle /*ClientUnifiedMessageHandle*/, IntPtr pResponseBuffer /*void **/, uint unResponseBufferSize /*uint32*/, bool bAutoRelease /*bool*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUnifiedMessages.GetMethodResponseData( _ptr, hHandle, (IntPtr) pResponseBuffer, unResponseBufferSize, bAutoRelease );
-			else return Platform.Win64.ISteamUnifiedMessages.GetMethodResponseData( _ptr, hHandle, (IntPtr) pResponseBuffer, unResponseBufferSize, bAutoRelease );
+			return _pi.ISteamUnifiedMessages_GetMethodResponseData( hHandle, (IntPtr) pResponseBuffer, unResponseBufferSize, bAutoRelease );
 		}
 		
 		// bool
 		public bool GetMethodResponseInfo( ClientUnifiedMessageHandle hHandle /*ClientUnifiedMessageHandle*/, out uint punResponseSize /*uint32 **/, out Result peResult /*EResult **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUnifiedMessages.GetMethodResponseInfo( _ptr, hHandle, out punResponseSize, out peResult );
-			else return Platform.Win64.ISteamUnifiedMessages.GetMethodResponseInfo( _ptr, hHandle, out punResponseSize, out peResult );
+			return _pi.ISteamUnifiedMessages_GetMethodResponseInfo( hHandle, out punResponseSize, out peResult );
 		}
 		
 		// bool
 		public bool ReleaseMethod( ClientUnifiedMessageHandle hHandle /*ClientUnifiedMessageHandle*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUnifiedMessages.ReleaseMethod( _ptr, hHandle );
-			else return Platform.Win64.ISteamUnifiedMessages.ReleaseMethod( _ptr, hHandle );
+			return _pi.ISteamUnifiedMessages_ReleaseMethod( hHandle );
 		}
 		
 		// ClientUnifiedMessageHandle
 		public ClientUnifiedMessageHandle SendMethod( string pchServiceMethod /*const char **/, IntPtr pRequestBuffer /*const void **/, uint unRequestBufferSize /*uint32*/, ulong unContext /*uint64*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUnifiedMessages.SendMethod( _ptr, pchServiceMethod, (IntPtr) pRequestBuffer, unRequestBufferSize, unContext );
-			else return Platform.Win64.ISteamUnifiedMessages.SendMethod( _ptr, pchServiceMethod, (IntPtr) pRequestBuffer, unRequestBufferSize, unContext );
+			return _pi.ISteamUnifiedMessages_SendMethod( pchServiceMethod, (IntPtr) pRequestBuffer, unRequestBufferSize, unContext );
 		}
 		
 		// bool
 		public bool SendNotification( string pchServiceNotification /*const char **/, IntPtr pNotificationBuffer /*const void **/, uint unNotificationBufferSize /*uint32*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUnifiedMessages.SendNotification( _ptr, pchServiceNotification, (IntPtr) pNotificationBuffer, unNotificationBufferSize );
-			else return Platform.Win64.ISteamUnifiedMessages.SendNotification( _ptr, pchServiceNotification, (IntPtr) pNotificationBuffer, unNotificationBufferSize );
+			return _pi.ISteamUnifiedMessages_SendNotification( pchServiceNotification, (IntPtr) pNotificationBuffer, unNotificationBufferSize );
 		}
 		
 	}

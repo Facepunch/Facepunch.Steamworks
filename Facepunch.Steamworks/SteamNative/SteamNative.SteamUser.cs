@@ -5,169 +5,123 @@ namespace SteamNative
 {
 	public unsafe class SteamUser
 	{
-		internal IntPtr _ptr;
+		internal Platform.Interface _pi;
 		
 		public SteamUser( IntPtr pointer )
 		{
-			_ptr = pointer;
+			if ( Platform.IsWindows64 ) _pi = new Platform.Win64( pointer );
+			else if ( Platform.IsWindows32 ) _pi = new Platform.Win32( pointer );
+			else if ( Platform.IsLinux32 ) _pi = new Platform.Linux32( pointer );
+			else if ( Platform.IsLinux64 ) _pi = new Platform.Linux64( pointer );
+			else if ( Platform.IsOsx ) _pi = new Platform.Mac( pointer );
 		}
 		
+		public bool IsValid{ get{ return _pi != null && _pi.IsValid; } }
 		
 		// void
 		public void AdvertiseGame( CSteamID steamIDGameServer /*class CSteamID*/, uint unIPServer /*uint32*/, ushort usPortServer /*uint16*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamUser.AdvertiseGame( _ptr, steamIDGameServer, unIPServer, usPortServer );
-			else Platform.Win64.ISteamUser.AdvertiseGame( _ptr, steamIDGameServer, unIPServer, usPortServer );
+			_pi.ISteamUser_AdvertiseGame( steamIDGameServer, unIPServer, usPortServer );
 		}
 		
 		// BeginAuthSessionResult
 		public BeginAuthSessionResult BeginAuthSession( IntPtr pAuthTicket /*const void **/, int cbAuthTicket /*int*/, CSteamID steamID /*class CSteamID*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUser.BeginAuthSession( _ptr, (IntPtr) pAuthTicket, cbAuthTicket, steamID );
-			else return Platform.Win64.ISteamUser.BeginAuthSession( _ptr, (IntPtr) pAuthTicket, cbAuthTicket, steamID );
+			return _pi.ISteamUser_BeginAuthSession( (IntPtr) pAuthTicket, cbAuthTicket, steamID );
 		}
 		
 		// bool
 		public bool BIsBehindNAT()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUser.BIsBehindNAT( _ptr );
-			else return Platform.Win64.ISteamUser.BIsBehindNAT( _ptr );
+			return _pi.ISteamUser_BIsBehindNAT();
 		}
 		
 		// bool
 		public bool BIsPhoneVerified()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUser.BIsPhoneVerified( _ptr );
-			else return Platform.Win64.ISteamUser.BIsPhoneVerified( _ptr );
+			return _pi.ISteamUser_BIsPhoneVerified();
 		}
 		
 		// bool
 		public bool BIsTwoFactorEnabled()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUser.BIsTwoFactorEnabled( _ptr );
-			else return Platform.Win64.ISteamUser.BIsTwoFactorEnabled( _ptr );
+			return _pi.ISteamUser_BIsTwoFactorEnabled();
 		}
 		
 		// bool
 		public bool BLoggedOn()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUser.BLoggedOn( _ptr );
-			else return Platform.Win64.ISteamUser.BLoggedOn( _ptr );
+			return _pi.ISteamUser_BLoggedOn();
 		}
 		
 		// void
 		public void CancelAuthTicket( HAuthTicket hAuthTicket /*HAuthTicket*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamUser.CancelAuthTicket( _ptr, hAuthTicket );
-			else Platform.Win64.ISteamUser.CancelAuthTicket( _ptr, hAuthTicket );
+			_pi.ISteamUser_CancelAuthTicket( hAuthTicket );
 		}
 		
 		// VoiceResult
 		public VoiceResult DecompressVoice( IntPtr pCompressed /*const void **/, uint cbCompressed /*uint32*/, IntPtr pDestBuffer /*void **/, uint cbDestBufferSize /*uint32*/, out uint nBytesWritten /*uint32 **/, uint nDesiredSampleRate /*uint32*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUser.DecompressVoice( _ptr, (IntPtr) pCompressed, cbCompressed, (IntPtr) pDestBuffer, cbDestBufferSize, out nBytesWritten, nDesiredSampleRate );
-			else return Platform.Win64.ISteamUser.DecompressVoice( _ptr, (IntPtr) pCompressed, cbCompressed, (IntPtr) pDestBuffer, cbDestBufferSize, out nBytesWritten, nDesiredSampleRate );
+			return _pi.ISteamUser_DecompressVoice( (IntPtr) pCompressed, cbCompressed, (IntPtr) pDestBuffer, cbDestBufferSize, out nBytesWritten, nDesiredSampleRate );
 		}
 		
 		// void
 		public void EndAuthSession( CSteamID steamID /*class CSteamID*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamUser.EndAuthSession( _ptr, steamID );
-			else Platform.Win64.ISteamUser.EndAuthSession( _ptr, steamID );
+			_pi.ISteamUser_EndAuthSession( steamID );
 		}
 		
 		// HAuthTicket
 		public HAuthTicket GetAuthSessionTicket( IntPtr pTicket /*void **/, int cbMaxTicket /*int*/, out uint pcbTicket /*uint32 **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUser.GetAuthSessionTicket( _ptr, (IntPtr) pTicket, cbMaxTicket, out pcbTicket );
-			else return Platform.Win64.ISteamUser.GetAuthSessionTicket( _ptr, (IntPtr) pTicket, cbMaxTicket, out pcbTicket );
+			return _pi.ISteamUser_GetAuthSessionTicket( (IntPtr) pTicket, cbMaxTicket, out pcbTicket );
 		}
 		
 		// VoiceResult
 		public VoiceResult GetAvailableVoice( out uint pcbCompressed /*uint32 **/, out uint pcbUncompressed /*uint32 **/, uint nUncompressedVoiceDesiredSampleRate /*uint32*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUser.GetAvailableVoice( _ptr, out pcbCompressed, out pcbUncompressed, nUncompressedVoiceDesiredSampleRate );
-			else return Platform.Win64.ISteamUser.GetAvailableVoice( _ptr, out pcbCompressed, out pcbUncompressed, nUncompressedVoiceDesiredSampleRate );
+			return _pi.ISteamUser_GetAvailableVoice( out pcbCompressed, out pcbUncompressed, nUncompressedVoiceDesiredSampleRate );
 		}
 		
 		// bool
 		public bool GetEncryptedAppTicket( IntPtr pTicket /*void **/, int cbMaxTicket /*int*/, out uint pcbTicket /*uint32 **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUser.GetEncryptedAppTicket( _ptr, (IntPtr) pTicket, cbMaxTicket, out pcbTicket );
-			else return Platform.Win64.ISteamUser.GetEncryptedAppTicket( _ptr, (IntPtr) pTicket, cbMaxTicket, out pcbTicket );
+			return _pi.ISteamUser_GetEncryptedAppTicket( (IntPtr) pTicket, cbMaxTicket, out pcbTicket );
 		}
 		
 		// int
 		public int GetGameBadgeLevel( int nSeries /*int*/, bool bFoil /*bool*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUser.GetGameBadgeLevel( _ptr, nSeries, bFoil );
-			else return Platform.Win64.ISteamUser.GetGameBadgeLevel( _ptr, nSeries, bFoil );
+			return _pi.ISteamUser_GetGameBadgeLevel( nSeries, bFoil );
 		}
 		
 		// HSteamUser
 		public HSteamUser GetHSteamUser()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUser.GetHSteamUser( _ptr );
-			else return Platform.Win64.ISteamUser.GetHSteamUser( _ptr );
+			return _pi.ISteamUser_GetHSteamUser();
 		}
 		
 		// int
 		public int GetPlayerSteamLevel()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUser.GetPlayerSteamLevel( _ptr );
-			else return Platform.Win64.ISteamUser.GetPlayerSteamLevel( _ptr );
+			return _pi.ISteamUser_GetPlayerSteamLevel();
 		}
 		
 		// ulong
 		public ulong GetSteamID()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUser.GetSteamID( _ptr );
-			else return Platform.Win64.ISteamUser.GetSteamID( _ptr );
+			return _pi.ISteamUser_GetSteamID();
 		}
 		
 		// bool
 		// with: Detect_StringFetch True
 		public string GetUserDataFolder()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
 			bool bSuccess = default( bool );
 			System.Text.StringBuilder pchBuffer_sb = new System.Text.StringBuilder( 4096 );
 			int cubBuffer = 4096;
-			if ( Platform.IsWindows32 ) bSuccess = Platform.Win32.ISteamUser.GetUserDataFolder( _ptr, pchBuffer_sb, cubBuffer );
-			else bSuccess = Platform.Win64.ISteamUser.GetUserDataFolder( _ptr, pchBuffer_sb, cubBuffer );
+			bSuccess = _pi.ISteamUser_GetUserDataFolder( pchBuffer_sb, cubBuffer );
 			if ( !bSuccess ) return null;
 			return pchBuffer_sb.ToString();
 		}
@@ -175,91 +129,61 @@ namespace SteamNative
 		// VoiceResult
 		public VoiceResult GetVoice( bool bWantCompressed /*bool*/, IntPtr pDestBuffer /*void **/, uint cbDestBufferSize /*uint32*/, out uint nBytesWritten /*uint32 **/, bool bWantUncompressed /*bool*/, IntPtr pUncompressedDestBuffer /*void **/, uint cbUncompressedDestBufferSize /*uint32*/, out uint nUncompressBytesWritten /*uint32 **/, uint nUncompressedVoiceDesiredSampleRate /*uint32*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUser.GetVoice( _ptr, bWantCompressed, (IntPtr) pDestBuffer, cbDestBufferSize, out nBytesWritten, bWantUncompressed, (IntPtr) pUncompressedDestBuffer, cbUncompressedDestBufferSize, out nUncompressBytesWritten, nUncompressedVoiceDesiredSampleRate );
-			else return Platform.Win64.ISteamUser.GetVoice( _ptr, bWantCompressed, (IntPtr) pDestBuffer, cbDestBufferSize, out nBytesWritten, bWantUncompressed, (IntPtr) pUncompressedDestBuffer, cbUncompressedDestBufferSize, out nUncompressBytesWritten, nUncompressedVoiceDesiredSampleRate );
+			return _pi.ISteamUser_GetVoice( bWantCompressed, (IntPtr) pDestBuffer, cbDestBufferSize, out nBytesWritten, bWantUncompressed, (IntPtr) pUncompressedDestBuffer, cbUncompressedDestBufferSize, out nUncompressBytesWritten, nUncompressedVoiceDesiredSampleRate );
 		}
 		
 		// uint
 		public uint GetVoiceOptimalSampleRate()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUser.GetVoiceOptimalSampleRate( _ptr );
-			else return Platform.Win64.ISteamUser.GetVoiceOptimalSampleRate( _ptr );
+			return _pi.ISteamUser_GetVoiceOptimalSampleRate();
 		}
 		
 		// int
 		public int InitiateGameConnection( IntPtr pAuthBlob /*void **/, int cbMaxAuthBlob /*int*/, CSteamID steamIDGameServer /*class CSteamID*/, uint unIPServer /*uint32*/, ushort usPortServer /*uint16*/, bool bSecure /*bool*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUser.InitiateGameConnection( _ptr, (IntPtr) pAuthBlob, cbMaxAuthBlob, steamIDGameServer, unIPServer, usPortServer, bSecure );
-			else return Platform.Win64.ISteamUser.InitiateGameConnection( _ptr, (IntPtr) pAuthBlob, cbMaxAuthBlob, steamIDGameServer, unIPServer, usPortServer, bSecure );
+			return _pi.ISteamUser_InitiateGameConnection( (IntPtr) pAuthBlob, cbMaxAuthBlob, steamIDGameServer, unIPServer, usPortServer, bSecure );
 		}
 		
 		// SteamAPICall_t
 		public SteamAPICall_t RequestEncryptedAppTicket( IntPtr pDataToInclude /*void **/, int cbDataToInclude /*int*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUser.RequestEncryptedAppTicket( _ptr, (IntPtr) pDataToInclude, cbDataToInclude );
-			else return Platform.Win64.ISteamUser.RequestEncryptedAppTicket( _ptr, (IntPtr) pDataToInclude, cbDataToInclude );
+			return _pi.ISteamUser_RequestEncryptedAppTicket( (IntPtr) pDataToInclude, cbDataToInclude );
 		}
 		
 		// SteamAPICall_t
 		public SteamAPICall_t RequestStoreAuthURL( string pchRedirectURL /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUser.RequestStoreAuthURL( _ptr, pchRedirectURL );
-			else return Platform.Win64.ISteamUser.RequestStoreAuthURL( _ptr, pchRedirectURL );
+			return _pi.ISteamUser_RequestStoreAuthURL( pchRedirectURL );
 		}
 		
 		// void
 		public void StartVoiceRecording()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamUser.StartVoiceRecording( _ptr );
-			else Platform.Win64.ISteamUser.StartVoiceRecording( _ptr );
+			_pi.ISteamUser_StartVoiceRecording();
 		}
 		
 		// void
 		public void StopVoiceRecording()
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamUser.StopVoiceRecording( _ptr );
-			else Platform.Win64.ISteamUser.StopVoiceRecording( _ptr );
+			_pi.ISteamUser_StopVoiceRecording();
 		}
 		
 		// void
 		public void TerminateGameConnection( uint unIPServer /*uint32*/, ushort usPortServer /*uint16*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamUser.TerminateGameConnection( _ptr, unIPServer, usPortServer );
-			else Platform.Win64.ISteamUser.TerminateGameConnection( _ptr, unIPServer, usPortServer );
+			_pi.ISteamUser_TerminateGameConnection( unIPServer, usPortServer );
 		}
 		
 		// void
 		public void TrackAppUsageEvent( CGameID gameID /*class CGameID*/, int eAppUsageEvent /*int*/, string pchExtraInfo /*const char **/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) Platform.Win32.ISteamUser.TrackAppUsageEvent( _ptr, gameID, eAppUsageEvent, pchExtraInfo );
-			else Platform.Win64.ISteamUser.TrackAppUsageEvent( _ptr, gameID, eAppUsageEvent, pchExtraInfo );
+			_pi.ISteamUser_TrackAppUsageEvent( gameID, eAppUsageEvent, pchExtraInfo );
 		}
 		
 		// UserHasLicenseForAppResult
 		public UserHasLicenseForAppResult UserHasLicenseForApp( CSteamID steamID /*class CSteamID*/, AppId_t appID /*AppId_t*/ )
 		{
-			if ( _ptr == IntPtr.Zero ) throw new System.Exception( "Internal pointer is null"); // 
-			
-			if ( Platform.IsWindows32 ) return Platform.Win32.ISteamUser.UserHasLicenseForApp( _ptr, steamID, appID );
-			else return Platform.Win64.ISteamUser.UserHasLicenseForApp( _ptr, steamID, appID );
+			return _pi.ISteamUser_UserHasLicenseForApp( steamID, appID );
 		}
 		
 	}
