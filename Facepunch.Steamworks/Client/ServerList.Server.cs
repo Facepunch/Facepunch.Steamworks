@@ -51,24 +51,24 @@ namespace Facepunch.Steamworks
                 return new Server()
                 {
                     Client = client,
-                    Address = item.m_NetAdr.m_unIP,
-                    ConnectionPort = item.m_NetAdr.m_usConnectionPort,
-                    QueryPort = item.m_NetAdr.m_usQueryPort,
-                    Name = item.m_szServerName,
-                    Ping = item.m_nPing,
-                    GameDir = item.m_szGameDir,
-                    Map = item.m_szMap,
-                    Description = item.m_szGameDescription,
-                    AppId = item.m_nAppID,
-                    Players = item.m_nPlayers,
-                    MaxPlayers = item.m_nMaxPlayers,
-                    BotPlayers = item.m_nBotPlayers,
-                    Passworded = item.m_bPassword,
-                    Secure = item.m_bSecure,
-                    LastTimePlayed = item.m_ulTimeLastPlayed,
-                    Version = item.m_nServerVersion,
-                    Tags = item.m_szGameTags == null ? null : item.m_szGameTags.Split( ',' ),
-                    SteamId = item.m_steamID
+                    Address = item.NetAdr.IP,
+                    ConnectionPort = item.NetAdr.ConnectionPort,
+                    QueryPort = item.NetAdr.QueryPort,
+                    Name = item.ServerName,
+                    Ping = item.Ping,
+                    GameDir = item.GameDir,
+                    Map = item.Map,
+                    Description = item.GameDescription,
+                    AppId = item.AppID,
+                    Players = item.Players,
+                    MaxPlayers = item.MaxPlayers,
+                    BotPlayers = item.BotPlayers,
+                    Passworded = item.Password,
+                    Secure = item.Secure,
+                    LastTimePlayed = item.TimeLastPlayed,
+                    Version = item.ServerVersion,
+                    Tags = item.GameTags == null ? null : item.GameTags.Split( ',' ),
+                    SteamId = item.SteamID
                 };
             }
 

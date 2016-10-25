@@ -8,14 +8,14 @@ using Generator;
 
 namespace Generator
 {
-    public partial class CSharpGenerator
+    public partial class CodeWriter
     {
         private StringBuilder sb = new StringBuilder();
         private SteamApiDefinition def;
 
         private Dictionary<string, TypeDef> TypeDefs = new Dictionary<string, TypeDef>();
 
-        public CSharpGenerator( SteamApiDefinition def )
+        public CodeWriter( SteamApiDefinition def )
         {
             this.def = def;
 

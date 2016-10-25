@@ -82,11 +82,11 @@ namespace Facepunch.Steamworks
                 {
                     return new Inventory.Item()
                     {
-                        Quantity = x.m_unQuantity,
-                        Id = x.m_itemId,
-                        DefinitionId = x.m_iDefinition,
-                        TradeLocked = ( (int)x.m_unFlags & (int)SteamNative.SteamItemFlags.NoTrade ) != 0,
-                        Definition = inventory.FindDefinition( x.m_iDefinition )
+                        Quantity = x.Quantity,
+                        Id = x.ItemId,
+                        DefinitionId = x.Definition,
+                        TradeLocked = ( (int)x.Flags & (int)SteamNative.SteamItemFlags.NoTrade ) != 0,
+                        Definition = inventory.FindDefinition( x.Definition )
                     };
                 } ).ToArray();
             }

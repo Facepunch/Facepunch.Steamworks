@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Generator
 {
-    public partial class CSharpGenerator
+    public partial class CodeWriter
     {
         void Structs()
         {
@@ -131,6 +131,8 @@ namespace Generator
         {
             if ( m == "m_pubParam" ) return "ParamPtr";
             if ( m == "m_cubParam" ) return "ParamCount";
+            if ( m == "m_itemId" ) return "ItemId";
+            
 
             var cleanName = m.Replace( "m_un", "" )
                     .Replace( "m_us", "" )
@@ -139,11 +141,15 @@ namespace Generator
                     .Replace( "m_e", "" )
                     .Replace( "m_un", "" )
                     .Replace( "m_ul", "" )
+                    .Replace( "m_fl", "" )
                     .Replace( "m_u", "" )
                     .Replace( "m_b", "" )
                     .Replace( "m_i", "" )
                     .Replace( "m_pub", "" )
                     .Replace( "m_cub", "" )
+                    .Replace( "m_n", "" )
+                    .Replace( "m_rgch", "" )
+                    .Replace( "m_r", "" )
                     .Replace( "m_", "" );
 
             return cleanName.Substring( 0, 1 ).ToUpper() + cleanName.Substring( 1 );

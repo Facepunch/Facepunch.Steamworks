@@ -134,7 +134,7 @@ namespace Facepunch.Steamworks
                         continue;
 
                     // We already have this file, so skip it
-                    if ( _results.Any( x => x.Id == details.m_nPublishedFileId ) )
+                    if ( _results.Any( x => x.Id == details.PublishedFileId ) )
                         continue;
 
                     var item = Item.From( details, workshop );

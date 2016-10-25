@@ -41,8 +41,8 @@ namespace Facepunch.Steamworks
                 {
                     return new SteamNative.MatchMakingKeyValuePair_t()
                     {
-                        m_szKey  = x.Key,
-                        m_szValue = x.Value
+                        Key  = x.Key,
+                        Value = x.Value
                     };
 
                 } ).ToArray();

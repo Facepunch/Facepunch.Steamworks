@@ -319,21 +319,21 @@ namespace SteamNative
 	public struct PersonaStateChange_t
 	{
 		public ulong SteamID; // m_ulSteamID uint64
-		public int NChangeFlags; // m_nChangeFlags int
+		public int ChangeFlags; // m_nChangeFlags int
 		public static PersonaStateChange_t FromPointer( IntPtr p ) { return (PersonaStateChange_t) Marshal.PtrToStructure( p, typeof(PersonaStateChange_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong SteamID; // m_ulSteamID uint64
-			public int NChangeFlags; // m_nChangeFlags int
+			public int ChangeFlags; // m_nChangeFlags int
 			
 			public static implicit operator PersonaStateChange_t (  PersonaStateChange_t.PackSmall d )
 			{
 				return new PersonaStateChange_t()
 				{
 					SteamID = d.SteamID,
-					NChangeFlags = d.NChangeFlags,
+					ChangeFlags = d.ChangeFlags,
 				};
 			}
 		}
@@ -364,25 +364,25 @@ namespace SteamNative
 	public struct GameServerChangeRequested_t
 	{
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-		public string RgchServer; // m_rgchServer char [64]
+		public string Server; // m_rgchServer char [64]
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-		public string RgchPassword; // m_rgchPassword char [64]
+		public string Password; // m_rgchPassword char [64]
 		public static GameServerChangeRequested_t FromPointer( IntPtr p ) { return (GameServerChangeRequested_t) Marshal.PtrToStructure( p, typeof(GameServerChangeRequested_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-			public string RgchServer; // m_rgchServer char [64]
+			public string Server; // m_rgchServer char [64]
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-			public string RgchPassword; // m_rgchPassword char [64]
+			public string Password; // m_rgchPassword char [64]
 			
 			public static implicit operator GameServerChangeRequested_t (  GameServerChangeRequested_t.PackSmall d )
 			{
 				return new GameServerChangeRequested_t()
 				{
-					RgchServer = d.RgchServer,
-					RgchPassword = d.RgchPassword,
+					Server = d.Server,
+					Password = d.Password,
 				};
 			}
 		}
@@ -473,21 +473,21 @@ namespace SteamNative
 	public struct FriendRichPresenceUpdate_t
 	{
 		public ulong SteamIDFriend; // m_steamIDFriend class CSteamID
-		public uint NAppID; // m_nAppID AppId_t
+		public uint AppID; // m_nAppID AppId_t
 		public static FriendRichPresenceUpdate_t FromPointer( IntPtr p ) { return (FriendRichPresenceUpdate_t) Marshal.PtrToStructure( p, typeof(FriendRichPresenceUpdate_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public ulong SteamIDFriend; // m_steamIDFriend class CSteamID
-			public uint NAppID; // m_nAppID AppId_t
+			public uint AppID; // m_nAppID AppId_t
 			
 			public static implicit operator FriendRichPresenceUpdate_t (  FriendRichPresenceUpdate_t.PackSmall d )
 			{
 				return new FriendRichPresenceUpdate_t()
 				{
 					SteamIDFriend = d.SteamIDFriend,
-					NAppID = d.NAppID,
+					AppID = d.AppID,
 				};
 			}
 		}
@@ -498,7 +498,7 @@ namespace SteamNative
 	{
 		public ulong SteamIDFriend; // m_steamIDFriend class CSteamID
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-		public string RgchConnect; // m_rgchConnect char [256]
+		public string Connect; // m_rgchConnect char [256]
 		public static GameRichPresenceJoinRequested_t FromPointer( IntPtr p ) { return (GameRichPresenceJoinRequested_t) Marshal.PtrToStructure( p, typeof(GameRichPresenceJoinRequested_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
@@ -506,14 +506,14 @@ namespace SteamNative
 		{
 			public ulong SteamIDFriend; // m_steamIDFriend class CSteamID
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-			public string RgchConnect; // m_rgchConnect char [256]
+			public string Connect; // m_rgchConnect char [256]
 			
 			public static implicit operator GameRichPresenceJoinRequested_t (  GameRichPresenceJoinRequested_t.PackSmall d )
 			{
 				return new GameRichPresenceJoinRequested_t()
 				{
 					SteamIDFriend = d.SteamIDFriend,
-					RgchConnect = d.RgchConnect,
+					Connect = d.Connect,
 				};
 			}
 		}
@@ -680,7 +680,7 @@ namespace SteamNative
 	{
 		public Result Result; // m_eResult enum EResult
 		public ulong SteamID; // m_steamID class CSteamID
-		public int NCount; // m_nCount int
+		public int Count; // m_nCount int
 		public static FriendsGetFollowerCount_t FromPointer( IntPtr p ) { return (FriendsGetFollowerCount_t) Marshal.PtrToStructure( p, typeof(FriendsGetFollowerCount_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
@@ -688,7 +688,7 @@ namespace SteamNative
 		{
 			public Result Result; // m_eResult enum EResult
 			public ulong SteamID; // m_steamID class CSteamID
-			public int NCount; // m_nCount int
+			public int Count; // m_nCount int
 			
 			public static implicit operator FriendsGetFollowerCount_t (  FriendsGetFollowerCount_t.PackSmall d )
 			{
@@ -696,7 +696,7 @@ namespace SteamNative
 				{
 					Result = d.Result,
 					SteamID = d.SteamID,
-					NCount = d.NCount,
+					Count = d.Count,
 				};
 			}
 		}
@@ -736,9 +736,9 @@ namespace SteamNative
 	{
 		public Result Result; // m_eResult enum EResult
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-		public ulong[] RgSteamID; // m_rgSteamID class CSteamID [50]
-		public int NResultsReturned; // m_nResultsReturned int32
-		public int NTotalResultCount; // m_nTotalResultCount int32
+		public ulong[] GSteamID; // m_rgSteamID class CSteamID [50]
+		public int ResultsReturned; // m_nResultsReturned int32
+		public int TotalResultCount; // m_nTotalResultCount int32
 		public static FriendsEnumerateFollowingList_t FromPointer( IntPtr p ) { return (FriendsEnumerateFollowingList_t) Marshal.PtrToStructure( p, typeof(FriendsEnumerateFollowingList_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
@@ -746,18 +746,18 @@ namespace SteamNative
 		{
 			public Result Result; // m_eResult enum EResult
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-			public ulong[] RgSteamID; // m_rgSteamID class CSteamID [50]
-			public int NResultsReturned; // m_nResultsReturned int32
-			public int NTotalResultCount; // m_nTotalResultCount int32
+			public ulong[] GSteamID; // m_rgSteamID class CSteamID [50]
+			public int ResultsReturned; // m_nResultsReturned int32
+			public int TotalResultCount; // m_nTotalResultCount int32
 			
 			public static implicit operator FriendsEnumerateFollowingList_t (  FriendsEnumerateFollowingList_t.PackSmall d )
 			{
 				return new FriendsEnumerateFollowingList_t()
 				{
 					Result = d.Result,
-					RgSteamID = d.RgSteamID,
-					NResultsReturned = d.NResultsReturned,
-					NTotalResultCount = d.NTotalResultCount,
+					GSteamID = d.GSteamID,
+					ResultsReturned = d.ResultsReturned,
+					TotalResultCount = d.TotalResultCount,
 				};
 			}
 		}
@@ -770,7 +770,7 @@ namespace SteamNative
 		public bool Success; // m_bSuccess _Bool
 		[MarshalAs(UnmanagedType.I1)]
 		public bool LocalSuccess; // m_bLocalSuccess _Bool
-		public Result Result; // m_result enum EResult
+		public Result Esult; // m_result enum EResult
 		public static SetPersonaNameResponse_t FromPointer( IntPtr p ) { return (SetPersonaNameResponse_t) Marshal.PtrToStructure( p, typeof(SetPersonaNameResponse_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
@@ -780,7 +780,7 @@ namespace SteamNative
 			public bool Success; // m_bSuccess _Bool
 			[MarshalAs(UnmanagedType.I1)]
 			public bool LocalSuccess; // m_bLocalSuccess _Bool
-			public Result Result; // m_result enum EResult
+			public Result Esult; // m_result enum EResult
 			
 			public static implicit operator SetPersonaNameResponse_t (  SetPersonaNameResponse_t.PackSmall d )
 			{
@@ -788,7 +788,7 @@ namespace SteamNative
 				{
 					Success = d.Success,
 					LocalSuccess = d.LocalSuccess,
-					Result = d.Result,
+					Esult = d.Esult,
 				};
 			}
 		}
@@ -797,19 +797,19 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct LowBatteryPower_t
 	{
-		public byte NMinutesBatteryLeft; // m_nMinutesBatteryLeft uint8
+		public byte MinutesBatteryLeft; // m_nMinutesBatteryLeft uint8
 		public static LowBatteryPower_t FromPointer( IntPtr p ) { return (LowBatteryPower_t) Marshal.PtrToStructure( p, typeof(LowBatteryPower_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public byte NMinutesBatteryLeft; // m_nMinutesBatteryLeft uint8
+			public byte MinutesBatteryLeft; // m_nMinutesBatteryLeft uint8
 			
 			public static implicit operator LowBatteryPower_t (  LowBatteryPower_t.PackSmall d )
 			{
 				return new LowBatteryPower_t()
 				{
-					NMinutesBatteryLeft = d.NMinutesBatteryLeft,
+					MinutesBatteryLeft = d.MinutesBatteryLeft,
 				};
 			}
 		}
@@ -948,7 +948,7 @@ namespace SteamNative
 	public struct gameserveritem_t
 	{
 		public servernetadr_t NetAdr; // m_NetAdr class servernetadr_t
-		public int NPing; // m_nPing int
+		public int Ping; // m_nPing int
 		[MarshalAs(UnmanagedType.I1)]
 		public bool HadSuccessfulResponse; // m_bHadSuccessfulResponse _Bool
 		[MarshalAs(UnmanagedType.I1)]
@@ -959,16 +959,16 @@ namespace SteamNative
 		public string Map; // m_szMap char [32]
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
 		public string GameDescription; // m_szGameDescription char [64]
-		public uint NAppID; // m_nAppID uint32
-		public int NPlayers; // m_nPlayers int
-		public int NMaxPlayers; // m_nMaxPlayers int
-		public int NBotPlayers; // m_nBotPlayers int
+		public uint AppID; // m_nAppID uint32
+		public int Players; // m_nPlayers int
+		public int MaxPlayers; // m_nMaxPlayers int
+		public int BotPlayers; // m_nBotPlayers int
 		[MarshalAs(UnmanagedType.I1)]
 		public bool Password; // m_bPassword _Bool
 		[MarshalAs(UnmanagedType.I1)]
 		public bool Secure; // m_bSecure _Bool
 		public uint TimeLastPlayed; // m_ulTimeLastPlayed uint32
-		public int NServerVersion; // m_nServerVersion int
+		public int ServerVersion; // m_nServerVersion int
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
 		public string ServerName; // m_szServerName char [64]
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
@@ -980,7 +980,7 @@ namespace SteamNative
 		public struct PackSmall
 		{
 			public servernetadr_t NetAdr; // m_NetAdr class servernetadr_t
-			public int NPing; // m_nPing int
+			public int Ping; // m_nPing int
 			[MarshalAs(UnmanagedType.I1)]
 			public bool HadSuccessfulResponse; // m_bHadSuccessfulResponse _Bool
 			[MarshalAs(UnmanagedType.I1)]
@@ -991,16 +991,16 @@ namespace SteamNative
 			public string Map; // m_szMap char [32]
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
 			public string GameDescription; // m_szGameDescription char [64]
-			public uint NAppID; // m_nAppID uint32
-			public int NPlayers; // m_nPlayers int
-			public int NMaxPlayers; // m_nMaxPlayers int
-			public int NBotPlayers; // m_nBotPlayers int
+			public uint AppID; // m_nAppID uint32
+			public int Players; // m_nPlayers int
+			public int MaxPlayers; // m_nMaxPlayers int
+			public int BotPlayers; // m_nBotPlayers int
 			[MarshalAs(UnmanagedType.I1)]
 			public bool Password; // m_bPassword _Bool
 			[MarshalAs(UnmanagedType.I1)]
 			public bool Secure; // m_bSecure _Bool
 			public uint TimeLastPlayed; // m_ulTimeLastPlayed uint32
-			public int NServerVersion; // m_nServerVersion int
+			public int ServerVersion; // m_nServerVersion int
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
 			public string ServerName; // m_szServerName char [64]
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
@@ -1012,20 +1012,20 @@ namespace SteamNative
 				return new gameserveritem_t()
 				{
 					NetAdr = d.NetAdr,
-					NPing = d.NPing,
+					Ping = d.Ping,
 					HadSuccessfulResponse = d.HadSuccessfulResponse,
 					DoNotRefresh = d.DoNotRefresh,
 					GameDir = d.GameDir,
 					Map = d.Map,
 					GameDescription = d.GameDescription,
-					NAppID = d.NAppID,
-					NPlayers = d.NPlayers,
-					NMaxPlayers = d.NMaxPlayers,
-					NBotPlayers = d.NBotPlayers,
+					AppID = d.AppID,
+					Players = d.Players,
+					MaxPlayers = d.MaxPlayers,
+					BotPlayers = d.BotPlayers,
 					Password = d.Password,
 					Secure = d.Secure,
 					TimeLastPlayed = d.TimeLastPlayed,
-					NServerVersion = d.NServerVersion,
+					ServerVersion = d.ServerVersion,
 					ServerName = d.ServerName,
 					GameTags = d.GameTags,
 					SteamID = d.SteamID,
@@ -1037,11 +1037,11 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct FavoritesListChanged_t
 	{
-		public uint NIP; // m_nIP uint32
-		public uint NQueryPort; // m_nQueryPort uint32
-		public uint NConnPort; // m_nConnPort uint32
-		public uint NAppID; // m_nAppID uint32
-		public uint NFlags; // m_nFlags uint32
+		public uint IP; // m_nIP uint32
+		public uint QueryPort; // m_nQueryPort uint32
+		public uint ConnPort; // m_nConnPort uint32
+		public uint AppID; // m_nAppID uint32
+		public uint Flags; // m_nFlags uint32
 		[MarshalAs(UnmanagedType.I1)]
 		public bool Add; // m_bAdd _Bool
 		public uint AccountId; // m_unAccountId AccountID_t
@@ -1050,11 +1050,11 @@ namespace SteamNative
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public uint NIP; // m_nIP uint32
-			public uint NQueryPort; // m_nQueryPort uint32
-			public uint NConnPort; // m_nConnPort uint32
-			public uint NAppID; // m_nAppID uint32
-			public uint NFlags; // m_nFlags uint32
+			public uint IP; // m_nIP uint32
+			public uint QueryPort; // m_nQueryPort uint32
+			public uint ConnPort; // m_nConnPort uint32
+			public uint AppID; // m_nAppID uint32
+			public uint Flags; // m_nFlags uint32
 			[MarshalAs(UnmanagedType.I1)]
 			public bool Add; // m_bAdd _Bool
 			public uint AccountId; // m_unAccountId AccountID_t
@@ -1063,11 +1063,11 @@ namespace SteamNative
 			{
 				return new FavoritesListChanged_t()
 				{
-					NIP = d.NIP,
-					NQueryPort = d.NQueryPort,
-					NConnPort = d.NConnPort,
-					NAppID = d.NAppID,
-					NFlags = d.NFlags,
+					IP = d.IP,
+					QueryPort = d.QueryPort,
+					ConnPort = d.ConnPort,
+					AppID = d.AppID,
+					Flags = d.Flags,
 					Add = d.Add,
 					AccountId = d.AccountId,
 				};
@@ -1106,7 +1106,7 @@ namespace SteamNative
 	public struct LobbyEnter_t
 	{
 		public ulong SteamIDLobby; // m_ulSteamIDLobby uint64
-		public uint RgfChatPermissions; // m_rgfChatPermissions uint32
+		public uint GfChatPermissions; // m_rgfChatPermissions uint32
 		[MarshalAs(UnmanagedType.I1)]
 		public bool Locked; // m_bLocked _Bool
 		public uint EChatRoomEnterResponse; // m_EChatRoomEnterResponse uint32
@@ -1116,7 +1116,7 @@ namespace SteamNative
 		public struct PackSmall
 		{
 			public ulong SteamIDLobby; // m_ulSteamIDLobby uint64
-			public uint RgfChatPermissions; // m_rgfChatPermissions uint32
+			public uint GfChatPermissions; // m_rgfChatPermissions uint32
 			[MarshalAs(UnmanagedType.I1)]
 			public bool Locked; // m_bLocked _Bool
 			public uint EChatRoomEnterResponse; // m_EChatRoomEnterResponse uint32
@@ -1126,7 +1126,7 @@ namespace SteamNative
 				return new LobbyEnter_t()
 				{
 					SteamIDLobby = d.SteamIDLobby,
-					RgfChatPermissions = d.RgfChatPermissions,
+					GfChatPermissions = d.GfChatPermissions,
 					Locked = d.Locked,
 					EChatRoomEnterResponse = d.EChatRoomEnterResponse,
 				};
@@ -1167,7 +1167,7 @@ namespace SteamNative
 		public ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 		public ulong SteamIDUserChanged; // m_ulSteamIDUserChanged uint64
 		public ulong SteamIDMakingChange; // m_ulSteamIDMakingChange uint64
-		public uint RgfChatMemberStateChange; // m_rgfChatMemberStateChange uint32
+		public uint GfChatMemberStateChange; // m_rgfChatMemberStateChange uint32
 		public static LobbyChatUpdate_t FromPointer( IntPtr p ) { return (LobbyChatUpdate_t) Marshal.PtrToStructure( p, typeof(LobbyChatUpdate_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
@@ -1176,7 +1176,7 @@ namespace SteamNative
 			public ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 			public ulong SteamIDUserChanged; // m_ulSteamIDUserChanged uint64
 			public ulong SteamIDMakingChange; // m_ulSteamIDMakingChange uint64
-			public uint RgfChatMemberStateChange; // m_rgfChatMemberStateChange uint32
+			public uint GfChatMemberStateChange; // m_rgfChatMemberStateChange uint32
 			
 			public static implicit operator LobbyChatUpdate_t (  LobbyChatUpdate_t.PackSmall d )
 			{
@@ -1185,7 +1185,7 @@ namespace SteamNative
 					SteamIDLobby = d.SteamIDLobby,
 					SteamIDUserChanged = d.SteamIDUserChanged,
 					SteamIDMakingChange = d.SteamIDMakingChange,
-					RgfChatMemberStateChange = d.RgfChatMemberStateChange,
+					GfChatMemberStateChange = d.GfChatMemberStateChange,
 				};
 			}
 		}
@@ -1254,19 +1254,19 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct LobbyMatchList_t
 	{
-		public uint NLobbiesMatching; // m_nLobbiesMatching uint32
+		public uint LobbiesMatching; // m_nLobbiesMatching uint32
 		public static LobbyMatchList_t FromPointer( IntPtr p ) { return (LobbyMatchList_t) Marshal.PtrToStructure( p, typeof(LobbyMatchList_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public uint NLobbiesMatching; // m_nLobbiesMatching uint32
+			public uint LobbiesMatching; // m_nLobbiesMatching uint32
 			
 			public static implicit operator LobbyMatchList_t (  LobbyMatchList_t.PackSmall d )
 			{
 				return new LobbyMatchList_t()
 				{
-					NLobbiesMatching = d.NLobbiesMatching,
+					LobbiesMatching = d.LobbiesMatching,
 				};
 			}
 		}
@@ -1374,21 +1374,21 @@ namespace SteamNative
 	public struct SteamParamStringArray_t
 	{
 		public IntPtr PpStrings; // m_ppStrings const char **
-		public int NNumStrings; // m_nNumStrings int32
+		public int NumStrings; // m_nNumStrings int32
 		public static SteamParamStringArray_t FromPointer( IntPtr p ) { return (SteamParamStringArray_t) Marshal.PtrToStructure( p, typeof(SteamParamStringArray_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public IntPtr PpStrings; // m_ppStrings const char **
-			public int NNumStrings; // m_nNumStrings int32
+			public int NumStrings; // m_nNumStrings int32
 			
 			public static implicit operator SteamParamStringArray_t (  SteamParamStringArray_t.PackSmall d )
 			{
 				return new SteamParamStringArray_t()
 				{
 					PpStrings = d.PpStrings,
-					NNumStrings = d.NNumStrings,
+					NumStrings = d.NumStrings,
 				};
 			}
 		}
@@ -1397,7 +1397,7 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct RemoteStorageAppSyncedClient_t
 	{
-		public uint NAppID; // m_nAppID AppId_t
+		public uint AppID; // m_nAppID AppId_t
 		public Result Result; // m_eResult enum EResult
 		public int NumDownloads; // m_unNumDownloads int
 		public static RemoteStorageAppSyncedClient_t FromPointer( IntPtr p ) { return (RemoteStorageAppSyncedClient_t) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncedClient_t) ); }
@@ -1405,7 +1405,7 @@ namespace SteamNative
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public uint NAppID; // m_nAppID AppId_t
+			public uint AppID; // m_nAppID AppId_t
 			public Result Result; // m_eResult enum EResult
 			public int NumDownloads; // m_unNumDownloads int
 			
@@ -1413,7 +1413,7 @@ namespace SteamNative
 			{
 				return new RemoteStorageAppSyncedClient_t()
 				{
-					NAppID = d.NAppID,
+					AppID = d.AppID,
 					Result = d.Result,
 					NumDownloads = d.NumDownloads,
 				};
@@ -1424,7 +1424,7 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct RemoteStorageAppSyncedServer_t
 	{
-		public uint NAppID; // m_nAppID AppId_t
+		public uint AppID; // m_nAppID AppId_t
 		public Result Result; // m_eResult enum EResult
 		public int NumUploads; // m_unNumUploads int
 		public static RemoteStorageAppSyncedServer_t FromPointer( IntPtr p ) { return (RemoteStorageAppSyncedServer_t) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncedServer_t) ); }
@@ -1432,7 +1432,7 @@ namespace SteamNative
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public uint NAppID; // m_nAppID AppId_t
+			public uint AppID; // m_nAppID AppId_t
 			public Result Result; // m_eResult enum EResult
 			public int NumUploads; // m_unNumUploads int
 			
@@ -1440,7 +1440,7 @@ namespace SteamNative
 			{
 				return new RemoteStorageAppSyncedServer_t()
 				{
-					NAppID = d.NAppID,
+					AppID = d.AppID,
 					Result = d.Result,
 					NumUploads = d.NumUploads,
 				};
@@ -1452,8 +1452,8 @@ namespace SteamNative
 	public struct RemoteStorageAppSyncProgress_t
 	{
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-		public string RgchCurrentFile; // m_rgchCurrentFile char [260]
-		public uint NAppID; // m_nAppID AppId_t
+		public string CurrentFile; // m_rgchCurrentFile char [260]
+		public uint AppID; // m_nAppID AppId_t
 		public uint BytesTransferredThisChunk; // m_uBytesTransferredThisChunk uint32
 		public double DAppPercentComplete; // m_dAppPercentComplete double
 		[MarshalAs(UnmanagedType.I1)]
@@ -1464,8 +1464,8 @@ namespace SteamNative
 		public struct PackSmall
 		{
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-			public string RgchCurrentFile; // m_rgchCurrentFile char [260]
-			public uint NAppID; // m_nAppID AppId_t
+			public string CurrentFile; // m_rgchCurrentFile char [260]
+			public uint AppID; // m_nAppID AppId_t
 			public uint BytesTransferredThisChunk; // m_uBytesTransferredThisChunk uint32
 			public double DAppPercentComplete; // m_dAppPercentComplete double
 			[MarshalAs(UnmanagedType.I1)]
@@ -1475,8 +1475,8 @@ namespace SteamNative
 			{
 				return new RemoteStorageAppSyncProgress_t()
 				{
-					RgchCurrentFile = d.RgchCurrentFile,
-					NAppID = d.NAppID,
+					CurrentFile = d.CurrentFile,
+					AppID = d.AppID,
 					BytesTransferredThisChunk = d.BytesTransferredThisChunk,
 					DAppPercentComplete = d.DAppPercentComplete,
 					Uploading = d.Uploading,
@@ -1488,21 +1488,21 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct RemoteStorageAppSyncStatusCheck_t
 	{
-		public uint NAppID; // m_nAppID AppId_t
+		public uint AppID; // m_nAppID AppId_t
 		public Result Result; // m_eResult enum EResult
 		public static RemoteStorageAppSyncStatusCheck_t FromPointer( IntPtr p ) { return (RemoteStorageAppSyncStatusCheck_t) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncStatusCheck_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public uint NAppID; // m_nAppID AppId_t
+			public uint AppID; // m_nAppID AppId_t
 			public Result Result; // m_eResult enum EResult
 			
 			public static implicit operator RemoteStorageAppSyncStatusCheck_t (  RemoteStorageAppSyncStatusCheck_t.PackSmall d )
 			{
 				return new RemoteStorageAppSyncStatusCheck_t()
 				{
-					NAppID = d.NAppID,
+					AppID = d.AppID,
 					Result = d.Result,
 				};
 			}
@@ -1512,21 +1512,21 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct RemoteStorageConflictResolution_t
 	{
-		public uint NAppID; // m_nAppID AppId_t
+		public uint AppID; // m_nAppID AppId_t
 		public Result Result; // m_eResult enum EResult
 		public static RemoteStorageConflictResolution_t FromPointer( IntPtr p ) { return (RemoteStorageConflictResolution_t) Marshal.PtrToStructure( p, typeof(RemoteStorageConflictResolution_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public uint NAppID; // m_nAppID AppId_t
+			public uint AppID; // m_nAppID AppId_t
 			public Result Result; // m_eResult enum EResult
 			
 			public static implicit operator RemoteStorageConflictResolution_t (  RemoteStorageConflictResolution_t.PackSmall d )
 			{
 				return new RemoteStorageConflictResolution_t()
 				{
-					NAppID = d.NAppID,
+					AppID = d.AppID,
 					Result = d.Result,
 				};
 			}
@@ -1539,7 +1539,7 @@ namespace SteamNative
 		public Result Result; // m_eResult enum EResult
 		public ulong File; // m_hFile UGCHandle_t
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-		public string RgchFilename; // m_rgchFilename char [260]
+		public string Filename; // m_rgchFilename char [260]
 		public static RemoteStorageFileShareResult_t FromPointer( IntPtr p ) { return (RemoteStorageFileShareResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageFileShareResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
@@ -1548,7 +1548,7 @@ namespace SteamNative
 			public Result Result; // m_eResult enum EResult
 			public ulong File; // m_hFile UGCHandle_t
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-			public string RgchFilename; // m_rgchFilename char [260]
+			public string Filename; // m_rgchFilename char [260]
 			
 			public static implicit operator RemoteStorageFileShareResult_t (  RemoteStorageFileShareResult_t.PackSmall d )
 			{
@@ -1556,7 +1556,7 @@ namespace SteamNative
 				{
 					Result = d.Result,
 					File = d.File,
-					RgchFilename = d.RgchFilename,
+					Filename = d.Filename,
 				};
 			}
 		}
@@ -1566,7 +1566,7 @@ namespace SteamNative
 	public struct RemoteStoragePublishFileResult_t
 	{
 		public Result Result; // m_eResult enum EResult
-		public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		[MarshalAs(UnmanagedType.I1)]
 		public bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 		public static RemoteStoragePublishFileResult_t FromPointer( IntPtr p ) { return (RemoteStoragePublishFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishFileResult_t) ); }
@@ -1575,7 +1575,7 @@ namespace SteamNative
 		public struct PackSmall
 		{
 			public Result Result; // m_eResult enum EResult
-			public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			[MarshalAs(UnmanagedType.I1)]
 			public bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 			
@@ -1584,7 +1584,7 @@ namespace SteamNative
 				return new RemoteStoragePublishFileResult_t()
 				{
 					Result = d.Result,
-					NPublishedFileId = d.NPublishedFileId,
+					PublishedFileId = d.PublishedFileId,
 					UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement,
 				};
 			}
@@ -1595,21 +1595,21 @@ namespace SteamNative
 	public struct RemoteStorageDeletePublishedFileResult_t
 	{
 		public Result Result; // m_eResult enum EResult
-		public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		public static RemoteStorageDeletePublishedFileResult_t FromPointer( IntPtr p ) { return (RemoteStorageDeletePublishedFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageDeletePublishedFileResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public Result Result; // m_eResult enum EResult
-			public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
 			public static implicit operator RemoteStorageDeletePublishedFileResult_t (  RemoteStorageDeletePublishedFileResult_t.PackSmall d )
 			{
 				return new RemoteStorageDeletePublishedFileResult_t()
 				{
 					Result = d.Result,
-					NPublishedFileId = d.NPublishedFileId,
+					PublishedFileId = d.PublishedFileId,
 				};
 			}
 		}
@@ -1619,29 +1619,29 @@ namespace SteamNative
 	public struct RemoteStorageEnumerateUserPublishedFilesResult_t
 	{
 		public Result Result; // m_eResult enum EResult
-		public int NResultsReturned; // m_nResultsReturned int32
-		public int NTotalResultCount; // m_nTotalResultCount int32
+		public int ResultsReturned; // m_nResultsReturned int32
+		public int TotalResultCount; // m_nTotalResultCount int32
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-		public ulong[] RgPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+		public ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 		public static RemoteStorageEnumerateUserPublishedFilesResult_t FromPointer( IntPtr p ) { return (RemoteStorageEnumerateUserPublishedFilesResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserPublishedFilesResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public Result Result; // m_eResult enum EResult
-			public int NResultsReturned; // m_nResultsReturned int32
-			public int NTotalResultCount; // m_nTotalResultCount int32
+			public int ResultsReturned; // m_nResultsReturned int32
+			public int TotalResultCount; // m_nTotalResultCount int32
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-			public ulong[] RgPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+			public ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 			
 			public static implicit operator RemoteStorageEnumerateUserPublishedFilesResult_t (  RemoteStorageEnumerateUserPublishedFilesResult_t.PackSmall d )
 			{
 				return new RemoteStorageEnumerateUserPublishedFilesResult_t()
 				{
 					Result = d.Result,
-					NResultsReturned = d.NResultsReturned,
-					NTotalResultCount = d.NTotalResultCount,
-					RgPublishedFileId = d.RgPublishedFileId,
+					ResultsReturned = d.ResultsReturned,
+					TotalResultCount = d.TotalResultCount,
+					GPublishedFileId = d.GPublishedFileId,
 				};
 			}
 		}
@@ -1651,21 +1651,21 @@ namespace SteamNative
 	public struct RemoteStorageSubscribePublishedFileResult_t
 	{
 		public Result Result; // m_eResult enum EResult
-		public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		public static RemoteStorageSubscribePublishedFileResult_t FromPointer( IntPtr p ) { return (RemoteStorageSubscribePublishedFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageSubscribePublishedFileResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public Result Result; // m_eResult enum EResult
-			public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
 			public static implicit operator RemoteStorageSubscribePublishedFileResult_t (  RemoteStorageSubscribePublishedFileResult_t.PackSmall d )
 			{
 				return new RemoteStorageSubscribePublishedFileResult_t()
 				{
 					Result = d.Result,
-					NPublishedFileId = d.NPublishedFileId,
+					PublishedFileId = d.PublishedFileId,
 				};
 			}
 		}
@@ -1675,34 +1675,34 @@ namespace SteamNative
 	public struct RemoteStorageEnumerateUserSubscribedFilesResult_t
 	{
 		public Result Result; // m_eResult enum EResult
-		public int NResultsReturned; // m_nResultsReturned int32
-		public int NTotalResultCount; // m_nTotalResultCount int32
+		public int ResultsReturned; // m_nResultsReturned int32
+		public int TotalResultCount; // m_nTotalResultCount int32
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-		public ulong[] RgPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+		public ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-		public uint[] RgRTimeSubscribed; // m_rgRTimeSubscribed uint32 [50]
+		public uint[] GRTimeSubscribed; // m_rgRTimeSubscribed uint32 [50]
 		public static RemoteStorageEnumerateUserSubscribedFilesResult_t FromPointer( IntPtr p ) { return (RemoteStorageEnumerateUserSubscribedFilesResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserSubscribedFilesResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public Result Result; // m_eResult enum EResult
-			public int NResultsReturned; // m_nResultsReturned int32
-			public int NTotalResultCount; // m_nTotalResultCount int32
+			public int ResultsReturned; // m_nResultsReturned int32
+			public int TotalResultCount; // m_nTotalResultCount int32
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-			public ulong[] RgPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+			public ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-			public uint[] RgRTimeSubscribed; // m_rgRTimeSubscribed uint32 [50]
+			public uint[] GRTimeSubscribed; // m_rgRTimeSubscribed uint32 [50]
 			
 			public static implicit operator RemoteStorageEnumerateUserSubscribedFilesResult_t (  RemoteStorageEnumerateUserSubscribedFilesResult_t.PackSmall d )
 			{
 				return new RemoteStorageEnumerateUserSubscribedFilesResult_t()
 				{
 					Result = d.Result,
-					NResultsReturned = d.NResultsReturned,
-					NTotalResultCount = d.NTotalResultCount,
-					RgPublishedFileId = d.RgPublishedFileId,
-					RgRTimeSubscribed = d.RgRTimeSubscribed,
+					ResultsReturned = d.ResultsReturned,
+					TotalResultCount = d.TotalResultCount,
+					GPublishedFileId = d.GPublishedFileId,
+					GRTimeSubscribed = d.GRTimeSubscribed,
 				};
 			}
 		}
@@ -1712,21 +1712,21 @@ namespace SteamNative
 	public struct RemoteStorageUnsubscribePublishedFileResult_t
 	{
 		public Result Result; // m_eResult enum EResult
-		public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		public static RemoteStorageUnsubscribePublishedFileResult_t FromPointer( IntPtr p ) { return (RemoteStorageUnsubscribePublishedFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageUnsubscribePublishedFileResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public Result Result; // m_eResult enum EResult
-			public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
 			public static implicit operator RemoteStorageUnsubscribePublishedFileResult_t (  RemoteStorageUnsubscribePublishedFileResult_t.PackSmall d )
 			{
 				return new RemoteStorageUnsubscribePublishedFileResult_t()
 				{
 					Result = d.Result,
-					NPublishedFileId = d.NPublishedFileId,
+					PublishedFileId = d.PublishedFileId,
 				};
 			}
 		}
@@ -1736,7 +1736,7 @@ namespace SteamNative
 	public struct RemoteStorageUpdatePublishedFileResult_t
 	{
 		public Result Result; // m_eResult enum EResult
-		public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		[MarshalAs(UnmanagedType.I1)]
 		public bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 		public static RemoteStorageUpdatePublishedFileResult_t FromPointer( IntPtr p ) { return (RemoteStorageUpdatePublishedFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageUpdatePublishedFileResult_t) ); }
@@ -1745,7 +1745,7 @@ namespace SteamNative
 		public struct PackSmall
 		{
 			public Result Result; // m_eResult enum EResult
-			public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			[MarshalAs(UnmanagedType.I1)]
 			public bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 			
@@ -1754,7 +1754,7 @@ namespace SteamNative
 				return new RemoteStorageUpdatePublishedFileResult_t()
 				{
 					Result = d.Result,
-					NPublishedFileId = d.NPublishedFileId,
+					PublishedFileId = d.PublishedFileId,
 					UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement,
 				};
 			}
@@ -1766,8 +1766,8 @@ namespace SteamNative
 	{
 		public Result Result; // m_eResult enum EResult
 		public ulong File; // m_hFile UGCHandle_t
-		public uint NAppID; // m_nAppID AppId_t
-		public int NSizeInBytes; // m_nSizeInBytes int32
+		public uint AppID; // m_nAppID AppId_t
+		public int SizeInBytes; // m_nSizeInBytes int32
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
 		public string PchFileName; // m_pchFileName char [260]
 		public ulong SteamIDOwner; // m_ulSteamIDOwner uint64
@@ -1778,8 +1778,8 @@ namespace SteamNative
 		{
 			public Result Result; // m_eResult enum EResult
 			public ulong File; // m_hFile UGCHandle_t
-			public uint NAppID; // m_nAppID AppId_t
-			public int NSizeInBytes; // m_nSizeInBytes int32
+			public uint AppID; // m_nAppID AppId_t
+			public int SizeInBytes; // m_nSizeInBytes int32
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
 			public string PchFileName; // m_pchFileName char [260]
 			public ulong SteamIDOwner; // m_ulSteamIDOwner uint64
@@ -1790,8 +1790,8 @@ namespace SteamNative
 				{
 					Result = d.Result,
 					File = d.File,
-					NAppID = d.NAppID,
-					NSizeInBytes = d.NSizeInBytes,
+					AppID = d.AppID,
+					SizeInBytes = d.SizeInBytes,
 					PchFileName = d.PchFileName,
 					SteamIDOwner = d.SteamIDOwner,
 				};
@@ -1803,31 +1803,31 @@ namespace SteamNative
 	public struct RemoteStorageGetPublishedFileDetailsResult_t
 	{
 		public Result Result; // m_eResult enum EResult
-		public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
-		public uint NCreatorAppID; // m_nCreatorAppID AppId_t
-		public uint NConsumerAppID; // m_nConsumerAppID AppId_t
+		public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		public uint CreatorAppID; // m_nCreatorAppID AppId_t
+		public uint ConsumerAppID; // m_nConsumerAppID AppId_t
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 129)]
-		public string RgchTitle; // m_rgchTitle char [129]
+		public string Title; // m_rgchTitle char [129]
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8000)]
-		public string RgchDescription; // m_rgchDescription char [8000]
+		public string Description; // m_rgchDescription char [8000]
 		public ulong File; // m_hFile UGCHandle_t
 		public ulong PreviewFile; // m_hPreviewFile UGCHandle_t
 		public ulong SteamIDOwner; // m_ulSteamIDOwner uint64
-		public uint RtimeCreated; // m_rtimeCreated uint32
-		public uint RtimeUpdated; // m_rtimeUpdated uint32
+		public uint TimeCreated; // m_rtimeCreated uint32
+		public uint TimeUpdated; // m_rtimeUpdated uint32
 		public RemoteStoragePublishedFileVisibility Visibility; // m_eVisibility enum ERemoteStoragePublishedFileVisibility
 		[MarshalAs(UnmanagedType.I1)]
 		public bool Banned; // m_bBanned _Bool
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1025)]
-		public string RgchTags; // m_rgchTags char [1025]
+		public string Tags; // m_rgchTags char [1025]
 		[MarshalAs(UnmanagedType.I1)]
 		public bool TagsTruncated; // m_bTagsTruncated _Bool
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
 		public string PchFileName; // m_pchFileName char [260]
-		public int NFileSize; // m_nFileSize int32
-		public int NPreviewFileSize; // m_nPreviewFileSize int32
+		public int FileSize; // m_nFileSize int32
+		public int PreviewFileSize; // m_nPreviewFileSize int32
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-		public string RgchURL; // m_rgchURL char [256]
+		public string URL; // m_rgchURL char [256]
 		public WorkshopFileType FileType; // m_eFileType enum EWorkshopFileType
 		[MarshalAs(UnmanagedType.I1)]
 		public bool AcceptedForUse; // m_bAcceptedForUse _Bool
@@ -1837,31 +1837,31 @@ namespace SteamNative
 		public struct PackSmall
 		{
 			public Result Result; // m_eResult enum EResult
-			public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			public uint NCreatorAppID; // m_nCreatorAppID AppId_t
-			public uint NConsumerAppID; // m_nConsumerAppID AppId_t
+			public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			public uint CreatorAppID; // m_nCreatorAppID AppId_t
+			public uint ConsumerAppID; // m_nConsumerAppID AppId_t
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 129)]
-			public string RgchTitle; // m_rgchTitle char [129]
+			public string Title; // m_rgchTitle char [129]
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8000)]
-			public string RgchDescription; // m_rgchDescription char [8000]
+			public string Description; // m_rgchDescription char [8000]
 			public ulong File; // m_hFile UGCHandle_t
 			public ulong PreviewFile; // m_hPreviewFile UGCHandle_t
 			public ulong SteamIDOwner; // m_ulSteamIDOwner uint64
-			public uint RtimeCreated; // m_rtimeCreated uint32
-			public uint RtimeUpdated; // m_rtimeUpdated uint32
+			public uint TimeCreated; // m_rtimeCreated uint32
+			public uint TimeUpdated; // m_rtimeUpdated uint32
 			public RemoteStoragePublishedFileVisibility Visibility; // m_eVisibility enum ERemoteStoragePublishedFileVisibility
 			[MarshalAs(UnmanagedType.I1)]
 			public bool Banned; // m_bBanned _Bool
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1025)]
-			public string RgchTags; // m_rgchTags char [1025]
+			public string Tags; // m_rgchTags char [1025]
 			[MarshalAs(UnmanagedType.I1)]
 			public bool TagsTruncated; // m_bTagsTruncated _Bool
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
 			public string PchFileName; // m_pchFileName char [260]
-			public int NFileSize; // m_nFileSize int32
-			public int NPreviewFileSize; // m_nPreviewFileSize int32
+			public int FileSize; // m_nFileSize int32
+			public int PreviewFileSize; // m_nPreviewFileSize int32
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-			public string RgchURL; // m_rgchURL char [256]
+			public string URL; // m_rgchURL char [256]
 			public WorkshopFileType FileType; // m_eFileType enum EWorkshopFileType
 			[MarshalAs(UnmanagedType.I1)]
 			public bool AcceptedForUse; // m_bAcceptedForUse _Bool
@@ -1871,24 +1871,24 @@ namespace SteamNative
 				return new RemoteStorageGetPublishedFileDetailsResult_t()
 				{
 					Result = d.Result,
-					NPublishedFileId = d.NPublishedFileId,
-					NCreatorAppID = d.NCreatorAppID,
-					NConsumerAppID = d.NConsumerAppID,
-					RgchTitle = d.RgchTitle,
-					RgchDescription = d.RgchDescription,
+					PublishedFileId = d.PublishedFileId,
+					CreatorAppID = d.CreatorAppID,
+					ConsumerAppID = d.ConsumerAppID,
+					Title = d.Title,
+					Description = d.Description,
 					File = d.File,
 					PreviewFile = d.PreviewFile,
 					SteamIDOwner = d.SteamIDOwner,
-					RtimeCreated = d.RtimeCreated,
-					RtimeUpdated = d.RtimeUpdated,
+					TimeCreated = d.TimeCreated,
+					TimeUpdated = d.TimeUpdated,
 					Visibility = d.Visibility,
 					Banned = d.Banned,
-					RgchTags = d.RgchTags,
+					Tags = d.Tags,
 					TagsTruncated = d.TagsTruncated,
 					PchFileName = d.PchFileName,
-					NFileSize = d.NFileSize,
-					NPreviewFileSize = d.NPreviewFileSize,
-					RgchURL = d.RgchURL,
+					FileSize = d.FileSize,
+					PreviewFileSize = d.PreviewFileSize,
+					URL = d.URL,
 					FileType = d.FileType,
 					AcceptedForUse = d.AcceptedForUse,
 				};
@@ -1900,13 +1900,13 @@ namespace SteamNative
 	public struct RemoteStorageEnumerateWorkshopFilesResult_t
 	{
 		public Result Result; // m_eResult enum EResult
-		public int NResultsReturned; // m_nResultsReturned int32
-		public int NTotalResultCount; // m_nTotalResultCount int32
+		public int ResultsReturned; // m_nResultsReturned int32
+		public int TotalResultCount; // m_nTotalResultCount int32
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-		public ulong[] RgPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+		public ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.R4)]
-		public float[] RgScore; // m_rgScore float [50]
-		public uint NAppId; // m_nAppId AppId_t
+		public float[] GScore; // m_rgScore float [50]
+		public uint AppId; // m_nAppId AppId_t
 		public uint StartIndex; // m_unStartIndex uint32
 		public static RemoteStorageEnumerateWorkshopFilesResult_t FromPointer( IntPtr p ) { return (RemoteStorageEnumerateWorkshopFilesResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateWorkshopFilesResult_t) ); }
 		
@@ -1914,13 +1914,13 @@ namespace SteamNative
 		public struct PackSmall
 		{
 			public Result Result; // m_eResult enum EResult
-			public int NResultsReturned; // m_nResultsReturned int32
-			public int NTotalResultCount; // m_nTotalResultCount int32
+			public int ResultsReturned; // m_nResultsReturned int32
+			public int TotalResultCount; // m_nTotalResultCount int32
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-			public ulong[] RgPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+			public ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.R4)]
-			public float[] RgScore; // m_rgScore float [50]
-			public uint NAppId; // m_nAppId AppId_t
+			public float[] GScore; // m_rgScore float [50]
+			public uint AppId; // m_nAppId AppId_t
 			public uint StartIndex; // m_unStartIndex uint32
 			
 			public static implicit operator RemoteStorageEnumerateWorkshopFilesResult_t (  RemoteStorageEnumerateWorkshopFilesResult_t.PackSmall d )
@@ -1928,11 +1928,11 @@ namespace SteamNative
 				return new RemoteStorageEnumerateWorkshopFilesResult_t()
 				{
 					Result = d.Result,
-					NResultsReturned = d.NResultsReturned,
-					NTotalResultCount = d.NTotalResultCount,
-					RgPublishedFileId = d.RgPublishedFileId,
-					RgScore = d.RgScore,
-					NAppId = d.NAppId,
+					ResultsReturned = d.ResultsReturned,
+					TotalResultCount = d.TotalResultCount,
+					GPublishedFileId = d.GPublishedFileId,
+					GScore = d.GScore,
+					AppId = d.AppId,
 					StartIndex = d.StartIndex,
 				};
 			}
@@ -1944,9 +1944,9 @@ namespace SteamNative
 	{
 		public Result Result; // m_eResult enum EResult
 		public ulong PublishedFileId; // m_unPublishedFileId PublishedFileId_t
-		public int NVotesFor; // m_nVotesFor int32
-		public int NVotesAgainst; // m_nVotesAgainst int32
-		public int NReports; // m_nReports int32
+		public int VotesFor; // m_nVotesFor int32
+		public int VotesAgainst; // m_nVotesAgainst int32
+		public int Reports; // m_nReports int32
 		public float FScore; // m_fScore float
 		public static RemoteStorageGetPublishedItemVoteDetailsResult_t FromPointer( IntPtr p ) { return (RemoteStorageGetPublishedItemVoteDetailsResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageGetPublishedItemVoteDetailsResult_t) ); }
 		
@@ -1955,9 +1955,9 @@ namespace SteamNative
 		{
 			public Result Result; // m_eResult enum EResult
 			public ulong PublishedFileId; // m_unPublishedFileId PublishedFileId_t
-			public int NVotesFor; // m_nVotesFor int32
-			public int NVotesAgainst; // m_nVotesAgainst int32
-			public int NReports; // m_nReports int32
+			public int VotesFor; // m_nVotesFor int32
+			public int VotesAgainst; // m_nVotesAgainst int32
+			public int Reports; // m_nReports int32
 			public float FScore; // m_fScore float
 			
 			public static implicit operator RemoteStorageGetPublishedItemVoteDetailsResult_t (  RemoteStorageGetPublishedItemVoteDetailsResult_t.PackSmall d )
@@ -1966,9 +1966,9 @@ namespace SteamNative
 				{
 					Result = d.Result,
 					PublishedFileId = d.PublishedFileId,
-					NVotesFor = d.NVotesFor,
-					NVotesAgainst = d.NVotesAgainst,
-					NReports = d.NReports,
+					VotesFor = d.VotesFor,
+					VotesAgainst = d.VotesAgainst,
+					Reports = d.Reports,
 					FScore = d.FScore,
 				};
 			}
@@ -1978,22 +1978,22 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct RemoteStoragePublishedFileSubscribed_t
 	{
-		public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
-		public uint NAppID; // m_nAppID AppId_t
+		public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		public uint AppID; // m_nAppID AppId_t
 		public static RemoteStoragePublishedFileSubscribed_t FromPointer( IntPtr p ) { return (RemoteStoragePublishedFileSubscribed_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileSubscribed_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			public uint NAppID; // m_nAppID AppId_t
+			public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			public uint AppID; // m_nAppID AppId_t
 			
 			public static implicit operator RemoteStoragePublishedFileSubscribed_t (  RemoteStoragePublishedFileSubscribed_t.PackSmall d )
 			{
 				return new RemoteStoragePublishedFileSubscribed_t()
 				{
-					NPublishedFileId = d.NPublishedFileId,
-					NAppID = d.NAppID,
+					PublishedFileId = d.PublishedFileId,
+					AppID = d.AppID,
 				};
 			}
 		}
@@ -2002,22 +2002,22 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct RemoteStoragePublishedFileUnsubscribed_t
 	{
-		public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
-		public uint NAppID; // m_nAppID AppId_t
+		public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		public uint AppID; // m_nAppID AppId_t
 		public static RemoteStoragePublishedFileUnsubscribed_t FromPointer( IntPtr p ) { return (RemoteStoragePublishedFileUnsubscribed_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileUnsubscribed_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			public uint NAppID; // m_nAppID AppId_t
+			public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			public uint AppID; // m_nAppID AppId_t
 			
 			public static implicit operator RemoteStoragePublishedFileUnsubscribed_t (  RemoteStoragePublishedFileUnsubscribed_t.PackSmall d )
 			{
 				return new RemoteStoragePublishedFileUnsubscribed_t()
 				{
-					NPublishedFileId = d.NPublishedFileId,
-					NAppID = d.NAppID,
+					PublishedFileId = d.PublishedFileId,
+					AppID = d.AppID,
 				};
 			}
 		}
@@ -2026,22 +2026,22 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct RemoteStoragePublishedFileDeleted_t
 	{
-		public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
-		public uint NAppID; // m_nAppID AppId_t
+		public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		public uint AppID; // m_nAppID AppId_t
 		public static RemoteStoragePublishedFileDeleted_t FromPointer( IntPtr p ) { return (RemoteStoragePublishedFileDeleted_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileDeleted_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			public uint NAppID; // m_nAppID AppId_t
+			public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			public uint AppID; // m_nAppID AppId_t
 			
 			public static implicit operator RemoteStoragePublishedFileDeleted_t (  RemoteStoragePublishedFileDeleted_t.PackSmall d )
 			{
 				return new RemoteStoragePublishedFileDeleted_t()
 				{
-					NPublishedFileId = d.NPublishedFileId,
-					NAppID = d.NAppID,
+					PublishedFileId = d.PublishedFileId,
+					AppID = d.AppID,
 				};
 			}
 		}
@@ -2051,21 +2051,21 @@ namespace SteamNative
 	public struct RemoteStorageUpdateUserPublishedItemVoteResult_t
 	{
 		public Result Result; // m_eResult enum EResult
-		public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		public static RemoteStorageUpdateUserPublishedItemVoteResult_t FromPointer( IntPtr p ) { return (RemoteStorageUpdateUserPublishedItemVoteResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageUpdateUserPublishedItemVoteResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public Result Result; // m_eResult enum EResult
-			public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
 			public static implicit operator RemoteStorageUpdateUserPublishedItemVoteResult_t (  RemoteStorageUpdateUserPublishedItemVoteResult_t.PackSmall d )
 			{
 				return new RemoteStorageUpdateUserPublishedItemVoteResult_t()
 				{
 					Result = d.Result,
-					NPublishedFileId = d.NPublishedFileId,
+					PublishedFileId = d.PublishedFileId,
 				};
 			}
 		}
@@ -2075,7 +2075,7 @@ namespace SteamNative
 	public struct RemoteStorageUserVoteDetails_t
 	{
 		public Result Result; // m_eResult enum EResult
-		public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		public WorkshopVote Vote; // m_eVote enum EWorkshopVote
 		public static RemoteStorageUserVoteDetails_t FromPointer( IntPtr p ) { return (RemoteStorageUserVoteDetails_t) Marshal.PtrToStructure( p, typeof(RemoteStorageUserVoteDetails_t) ); }
 		
@@ -2083,7 +2083,7 @@ namespace SteamNative
 		public struct PackSmall
 		{
 			public Result Result; // m_eResult enum EResult
-			public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			public WorkshopVote Vote; // m_eVote enum EWorkshopVote
 			
 			public static implicit operator RemoteStorageUserVoteDetails_t (  RemoteStorageUserVoteDetails_t.PackSmall d )
@@ -2091,7 +2091,7 @@ namespace SteamNative
 				return new RemoteStorageUserVoteDetails_t()
 				{
 					Result = d.Result,
-					NPublishedFileId = d.NPublishedFileId,
+					PublishedFileId = d.PublishedFileId,
 					Vote = d.Vote,
 				};
 			}
@@ -2102,29 +2102,29 @@ namespace SteamNative
 	public struct RemoteStorageEnumerateUserSharedWorkshopFilesResult_t
 	{
 		public Result Result; // m_eResult enum EResult
-		public int NResultsReturned; // m_nResultsReturned int32
-		public int NTotalResultCount; // m_nTotalResultCount int32
+		public int ResultsReturned; // m_nResultsReturned int32
+		public int TotalResultCount; // m_nTotalResultCount int32
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-		public ulong[] RgPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+		public ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 		public static RemoteStorageEnumerateUserSharedWorkshopFilesResult_t FromPointer( IntPtr p ) { return (RemoteStorageEnumerateUserSharedWorkshopFilesResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserSharedWorkshopFilesResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public Result Result; // m_eResult enum EResult
-			public int NResultsReturned; // m_nResultsReturned int32
-			public int NTotalResultCount; // m_nTotalResultCount int32
+			public int ResultsReturned; // m_nResultsReturned int32
+			public int TotalResultCount; // m_nTotalResultCount int32
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-			public ulong[] RgPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+			public ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 			
 			public static implicit operator RemoteStorageEnumerateUserSharedWorkshopFilesResult_t (  RemoteStorageEnumerateUserSharedWorkshopFilesResult_t.PackSmall d )
 			{
 				return new RemoteStorageEnumerateUserSharedWorkshopFilesResult_t()
 				{
 					Result = d.Result,
-					NResultsReturned = d.NResultsReturned,
-					NTotalResultCount = d.NTotalResultCount,
-					RgPublishedFileId = d.RgPublishedFileId,
+					ResultsReturned = d.ResultsReturned,
+					TotalResultCount = d.TotalResultCount,
+					GPublishedFileId = d.GPublishedFileId,
 				};
 			}
 		}
@@ -2134,7 +2134,7 @@ namespace SteamNative
 	public struct RemoteStorageSetUserPublishedFileActionResult_t
 	{
 		public Result Result; // m_eResult enum EResult
-		public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		public WorkshopFileAction Action; // m_eAction enum EWorkshopFileAction
 		public static RemoteStorageSetUserPublishedFileActionResult_t FromPointer( IntPtr p ) { return (RemoteStorageSetUserPublishedFileActionResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageSetUserPublishedFileActionResult_t) ); }
 		
@@ -2142,7 +2142,7 @@ namespace SteamNative
 		public struct PackSmall
 		{
 			public Result Result; // m_eResult enum EResult
-			public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			public WorkshopFileAction Action; // m_eAction enum EWorkshopFileAction
 			
 			public static implicit operator RemoteStorageSetUserPublishedFileActionResult_t (  RemoteStorageSetUserPublishedFileActionResult_t.PackSmall d )
@@ -2150,7 +2150,7 @@ namespace SteamNative
 				return new RemoteStorageSetUserPublishedFileActionResult_t()
 				{
 					Result = d.Result,
-					NPublishedFileId = d.NPublishedFileId,
+					PublishedFileId = d.PublishedFileId,
 					Action = d.Action,
 				};
 			}
@@ -2162,12 +2162,12 @@ namespace SteamNative
 	{
 		public Result Result; // m_eResult enum EResult
 		public WorkshopFileAction Action; // m_eAction enum EWorkshopFileAction
-		public int NResultsReturned; // m_nResultsReturned int32
-		public int NTotalResultCount; // m_nTotalResultCount int32
+		public int ResultsReturned; // m_nResultsReturned int32
+		public int TotalResultCount; // m_nTotalResultCount int32
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-		public ulong[] RgPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+		public ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-		public uint[] RgRTimeUpdated; // m_rgRTimeUpdated uint32 [50]
+		public uint[] GRTimeUpdated; // m_rgRTimeUpdated uint32 [50]
 		public static RemoteStorageEnumeratePublishedFilesByUserActionResult_t FromPointer( IntPtr p ) { return (RemoteStorageEnumeratePublishedFilesByUserActionResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumeratePublishedFilesByUserActionResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
@@ -2175,12 +2175,12 @@ namespace SteamNative
 		{
 			public Result Result; // m_eResult enum EResult
 			public WorkshopFileAction Action; // m_eAction enum EWorkshopFileAction
-			public int NResultsReturned; // m_nResultsReturned int32
-			public int NTotalResultCount; // m_nTotalResultCount int32
+			public int ResultsReturned; // m_nResultsReturned int32
+			public int TotalResultCount; // m_nTotalResultCount int32
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-			public ulong[] RgPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+			public ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-			public uint[] RgRTimeUpdated; // m_rgRTimeUpdated uint32 [50]
+			public uint[] GRTimeUpdated; // m_rgRTimeUpdated uint32 [50]
 			
 			public static implicit operator RemoteStorageEnumeratePublishedFilesByUserActionResult_t (  RemoteStorageEnumeratePublishedFilesByUserActionResult_t.PackSmall d )
 			{
@@ -2188,10 +2188,10 @@ namespace SteamNative
 				{
 					Result = d.Result,
 					Action = d.Action,
-					NResultsReturned = d.NResultsReturned,
-					NTotalResultCount = d.NTotalResultCount,
-					RgPublishedFileId = d.RgPublishedFileId,
-					RgRTimeUpdated = d.RgRTimeUpdated,
+					ResultsReturned = d.ResultsReturned,
+					TotalResultCount = d.TotalResultCount,
+					GPublishedFileId = d.GPublishedFileId,
+					GRTimeUpdated = d.GRTimeUpdated,
 				};
 			}
 		}
@@ -2226,24 +2226,24 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct RemoteStoragePublishedFileUpdated_t
 	{
-		public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
-		public uint NAppID; // m_nAppID AppId_t
+		public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		public uint AppID; // m_nAppID AppId_t
 		public ulong Unused; // m_ulUnused uint64
 		public static RemoteStoragePublishedFileUpdated_t FromPointer( IntPtr p ) { return (RemoteStoragePublishedFileUpdated_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileUpdated_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			public uint NAppID; // m_nAppID AppId_t
+			public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			public uint AppID; // m_nAppID AppId_t
 			public ulong Unused; // m_ulUnused uint64
 			
 			public static implicit operator RemoteStoragePublishedFileUpdated_t (  RemoteStoragePublishedFileUpdated_t.PackSmall d )
 			{
 				return new RemoteStoragePublishedFileUpdated_t()
 				{
-					NPublishedFileId = d.NPublishedFileId,
-					NAppID = d.NAppID,
+					PublishedFileId = d.PublishedFileId,
+					AppID = d.AppID,
 					Unused = d.Unused,
 				};
 			}
@@ -2276,7 +2276,7 @@ namespace SteamNative
 	{
 		public ulong FileReadAsync; // m_hFileReadAsync SteamAPICall_t
 		public Result Result; // m_eResult enum EResult
-		public uint NOffset; // m_nOffset uint32
+		public uint Offset; // m_nOffset uint32
 		public uint Read; // m_cubRead uint32
 		public static RemoteStorageFileReadAsyncComplete_t FromPointer( IntPtr p ) { return (RemoteStorageFileReadAsyncComplete_t) Marshal.PtrToStructure( p, typeof(RemoteStorageFileReadAsyncComplete_t) ); }
 		
@@ -2285,7 +2285,7 @@ namespace SteamNative
 		{
 			public ulong FileReadAsync; // m_hFileReadAsync SteamAPICall_t
 			public Result Result; // m_eResult enum EResult
-			public uint NOffset; // m_nOffset uint32
+			public uint Offset; // m_nOffset uint32
 			public uint Read; // m_cubRead uint32
 			
 			public static implicit operator RemoteStorageFileReadAsyncComplete_t (  RemoteStorageFileReadAsyncComplete_t.PackSmall d )
@@ -2294,7 +2294,7 @@ namespace SteamNative
 				{
 					FileReadAsync = d.FileReadAsync,
 					Result = d.Result,
-					NOffset = d.NOffset,
+					Offset = d.Offset,
 					Read = d.Read,
 				};
 			}
@@ -2305,8 +2305,8 @@ namespace SteamNative
 	public struct LeaderboardEntry_t
 	{
 		public ulong SteamIDUser; // m_steamIDUser class CSteamID
-		public int NGlobalRank; // m_nGlobalRank int32
-		public int NScore; // m_nScore int32
+		public int GlobalRank; // m_nGlobalRank int32
+		public int Score; // m_nScore int32
 		public int CDetails; // m_cDetails int32
 		public ulong UGC; // m_hUGC UGCHandle_t
 		public static LeaderboardEntry_t FromPointer( IntPtr p ) { return (LeaderboardEntry_t) Marshal.PtrToStructure( p, typeof(LeaderboardEntry_t) ); }
@@ -2315,8 +2315,8 @@ namespace SteamNative
 		public struct PackSmall
 		{
 			public ulong SteamIDUser; // m_steamIDUser class CSteamID
-			public int NGlobalRank; // m_nGlobalRank int32
-			public int NScore; // m_nScore int32
+			public int GlobalRank; // m_nGlobalRank int32
+			public int Score; // m_nScore int32
 			public int CDetails; // m_cDetails int32
 			public ulong UGC; // m_hUGC UGCHandle_t
 			
@@ -2325,8 +2325,8 @@ namespace SteamNative
 				return new LeaderboardEntry_t()
 				{
 					SteamIDUser = d.SteamIDUser,
-					NGlobalRank = d.NGlobalRank,
-					NScore = d.NScore,
+					GlobalRank = d.GlobalRank,
+					Score = d.Score,
 					CDetails = d.CDetails,
 					UGC = d.UGC,
 				};
@@ -2337,7 +2337,7 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct UserStatsReceived_t
 	{
-		public ulong NGameID; // m_nGameID uint64
+		public ulong GameID; // m_nGameID uint64
 		public Result Result; // m_eResult enum EResult
 		public ulong SteamIDUser; // m_steamIDUser class CSteamID
 		public static UserStatsReceived_t FromPointer( IntPtr p ) { return (UserStatsReceived_t) Marshal.PtrToStructure( p, typeof(UserStatsReceived_t) ); }
@@ -2345,7 +2345,7 @@ namespace SteamNative
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public ulong NGameID; // m_nGameID uint64
+			public ulong GameID; // m_nGameID uint64
 			public Result Result; // m_eResult enum EResult
 			public ulong SteamIDUser; // m_steamIDUser class CSteamID
 			
@@ -2353,7 +2353,7 @@ namespace SteamNative
 			{
 				return new UserStatsReceived_t()
 				{
-					NGameID = d.NGameID,
+					GameID = d.GameID,
 					Result = d.Result,
 					SteamIDUser = d.SteamIDUser,
 				};
@@ -2364,21 +2364,21 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct UserStatsStored_t
 	{
-		public ulong NGameID; // m_nGameID uint64
+		public ulong GameID; // m_nGameID uint64
 		public Result Result; // m_eResult enum EResult
 		public static UserStatsStored_t FromPointer( IntPtr p ) { return (UserStatsStored_t) Marshal.PtrToStructure( p, typeof(UserStatsStored_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public ulong NGameID; // m_nGameID uint64
+			public ulong GameID; // m_nGameID uint64
 			public Result Result; // m_eResult enum EResult
 			
 			public static implicit operator UserStatsStored_t (  UserStatsStored_t.PackSmall d )
 			{
 				return new UserStatsStored_t()
 				{
-					NGameID = d.NGameID,
+					GameID = d.GameID,
 					Result = d.Result,
 				};
 			}
@@ -2388,35 +2388,35 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct UserAchievementStored_t
 	{
-		public ulong NGameID; // m_nGameID uint64
+		public ulong GameID; // m_nGameID uint64
 		[MarshalAs(UnmanagedType.I1)]
 		public bool GroupAchievement; // m_bGroupAchievement _Bool
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-		public string RgchAchievementName; // m_rgchAchievementName char [128]
-		public uint NCurProgress; // m_nCurProgress uint32
-		public uint NMaxProgress; // m_nMaxProgress uint32
+		public string AchievementName; // m_rgchAchievementName char [128]
+		public uint CurProgress; // m_nCurProgress uint32
+		public uint MaxProgress; // m_nMaxProgress uint32
 		public static UserAchievementStored_t FromPointer( IntPtr p ) { return (UserAchievementStored_t) Marshal.PtrToStructure( p, typeof(UserAchievementStored_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public ulong NGameID; // m_nGameID uint64
+			public ulong GameID; // m_nGameID uint64
 			[MarshalAs(UnmanagedType.I1)]
 			public bool GroupAchievement; // m_bGroupAchievement _Bool
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-			public string RgchAchievementName; // m_rgchAchievementName char [128]
-			public uint NCurProgress; // m_nCurProgress uint32
-			public uint NMaxProgress; // m_nMaxProgress uint32
+			public string AchievementName; // m_rgchAchievementName char [128]
+			public uint CurProgress; // m_nCurProgress uint32
+			public uint MaxProgress; // m_nMaxProgress uint32
 			
 			public static implicit operator UserAchievementStored_t (  UserAchievementStored_t.PackSmall d )
 			{
 				return new UserAchievementStored_t()
 				{
-					NGameID = d.NGameID,
+					GameID = d.GameID,
 					GroupAchievement = d.GroupAchievement,
-					RgchAchievementName = d.RgchAchievementName,
-					NCurProgress = d.NCurProgress,
-					NMaxProgress = d.NMaxProgress,
+					AchievementName = d.AchievementName,
+					CurProgress = d.CurProgress,
+					MaxProgress = d.MaxProgress,
 				};
 			}
 		}
@@ -2478,10 +2478,10 @@ namespace SteamNative
 	{
 		public byte Success; // m_bSuccess uint8
 		public ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
-		public int NScore; // m_nScore int32
+		public int Score; // m_nScore int32
 		public byte ScoreChanged; // m_bScoreChanged uint8
-		public int NGlobalRankNew; // m_nGlobalRankNew int
-		public int NGlobalRankPrevious; // m_nGlobalRankPrevious int
+		public int GlobalRankNew; // m_nGlobalRankNew int
+		public int GlobalRankPrevious; // m_nGlobalRankPrevious int
 		public static LeaderboardScoreUploaded_t FromPointer( IntPtr p ) { return (LeaderboardScoreUploaded_t) Marshal.PtrToStructure( p, typeof(LeaderboardScoreUploaded_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
@@ -2489,10 +2489,10 @@ namespace SteamNative
 		{
 			public byte Success; // m_bSuccess uint8
 			public ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
-			public int NScore; // m_nScore int32
+			public int Score; // m_nScore int32
 			public byte ScoreChanged; // m_bScoreChanged uint8
-			public int NGlobalRankNew; // m_nGlobalRankNew int
-			public int NGlobalRankPrevious; // m_nGlobalRankPrevious int
+			public int GlobalRankNew; // m_nGlobalRankNew int
+			public int GlobalRankPrevious; // m_nGlobalRankPrevious int
 			
 			public static implicit operator LeaderboardScoreUploaded_t (  LeaderboardScoreUploaded_t.PackSmall d )
 			{
@@ -2500,10 +2500,10 @@ namespace SteamNative
 				{
 					Success = d.Success,
 					SteamLeaderboard = d.SteamLeaderboard,
-					NScore = d.NScore,
+					Score = d.Score,
 					ScoreChanged = d.ScoreChanged,
-					NGlobalRankNew = d.NGlobalRankNew,
-					NGlobalRankPrevious = d.NGlobalRankPrevious,
+					GlobalRankNew = d.GlobalRankNew,
+					GlobalRankPrevious = d.GlobalRankPrevious,
 				};
 			}
 		}
@@ -2557,32 +2557,32 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct UserAchievementIconFetched_t
 	{
-		public ulong NGameID; // m_nGameID class CGameID
+		public ulong GameID; // m_nGameID class CGameID
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-		public string RgchAchievementName; // m_rgchAchievementName char [128]
+		public string AchievementName; // m_rgchAchievementName char [128]
 		[MarshalAs(UnmanagedType.I1)]
 		public bool Achieved; // m_bAchieved _Bool
-		public int NIconHandle; // m_nIconHandle int
+		public int IconHandle; // m_nIconHandle int
 		public static UserAchievementIconFetched_t FromPointer( IntPtr p ) { return (UserAchievementIconFetched_t) Marshal.PtrToStructure( p, typeof(UserAchievementIconFetched_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public ulong NGameID; // m_nGameID class CGameID
+			public ulong GameID; // m_nGameID class CGameID
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-			public string RgchAchievementName; // m_rgchAchievementName char [128]
+			public string AchievementName; // m_rgchAchievementName char [128]
 			[MarshalAs(UnmanagedType.I1)]
 			public bool Achieved; // m_bAchieved _Bool
-			public int NIconHandle; // m_nIconHandle int
+			public int IconHandle; // m_nIconHandle int
 			
 			public static implicit operator UserAchievementIconFetched_t (  UserAchievementIconFetched_t.PackSmall d )
 			{
 				return new UserAchievementIconFetched_t()
 				{
-					NGameID = d.NGameID,
-					RgchAchievementName = d.RgchAchievementName,
+					GameID = d.GameID,
+					AchievementName = d.AchievementName,
 					Achieved = d.Achieved,
-					NIconHandle = d.NIconHandle,
+					IconHandle = d.IconHandle,
 				};
 			}
 		}
@@ -2591,21 +2591,21 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct GlobalAchievementPercentagesReady_t
 	{
-		public ulong NGameID; // m_nGameID uint64
+		public ulong GameID; // m_nGameID uint64
 		public Result Result; // m_eResult enum EResult
 		public static GlobalAchievementPercentagesReady_t FromPointer( IntPtr p ) { return (GlobalAchievementPercentagesReady_t) Marshal.PtrToStructure( p, typeof(GlobalAchievementPercentagesReady_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public ulong NGameID; // m_nGameID uint64
+			public ulong GameID; // m_nGameID uint64
 			public Result Result; // m_eResult enum EResult
 			
 			public static implicit operator GlobalAchievementPercentagesReady_t (  GlobalAchievementPercentagesReady_t.PackSmall d )
 			{
 				return new GlobalAchievementPercentagesReady_t()
 				{
-					NGameID = d.NGameID,
+					GameID = d.GameID,
 					Result = d.Result,
 				};
 			}
@@ -2639,7 +2639,7 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct PS3TrophiesInstalled_t
 	{
-		public ulong NGameID; // m_nGameID uint64
+		public ulong GameID; // m_nGameID uint64
 		public Result Result; // m_eResult enum EResult
 		public ulong RequiredDiskSpace; // m_ulRequiredDiskSpace uint64
 		public static PS3TrophiesInstalled_t FromPointer( IntPtr p ) { return (PS3TrophiesInstalled_t) Marshal.PtrToStructure( p, typeof(PS3TrophiesInstalled_t) ); }
@@ -2647,7 +2647,7 @@ namespace SteamNative
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public ulong NGameID; // m_nGameID uint64
+			public ulong GameID; // m_nGameID uint64
 			public Result Result; // m_eResult enum EResult
 			public ulong RequiredDiskSpace; // m_ulRequiredDiskSpace uint64
 			
@@ -2655,7 +2655,7 @@ namespace SteamNative
 			{
 				return new PS3TrophiesInstalled_t()
 				{
-					NGameID = d.NGameID,
+					GameID = d.GameID,
 					Result = d.Result,
 					RequiredDiskSpace = d.RequiredDiskSpace,
 				};
@@ -2666,21 +2666,21 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct GlobalStatsReceived_t
 	{
-		public ulong NGameID; // m_nGameID uint64
+		public ulong GameID; // m_nGameID uint64
 		public Result Result; // m_eResult enum EResult
 		public static GlobalStatsReceived_t FromPointer( IntPtr p ) { return (GlobalStatsReceived_t) Marshal.PtrToStructure( p, typeof(GlobalStatsReceived_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public ulong NGameID; // m_nGameID uint64
+			public ulong GameID; // m_nGameID uint64
 			public Result Result; // m_eResult enum EResult
 			
 			public static implicit operator GlobalStatsReceived_t (  GlobalStatsReceived_t.PackSmall d )
 			{
 				return new GlobalStatsReceived_t()
 				{
-					NGameID = d.NGameID,
+					GameID = d.GameID,
 					Result = d.Result,
 				};
 			}
@@ -2690,19 +2690,19 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct DlcInstalled_t
 	{
-		public uint NAppID; // m_nAppID AppId_t
+		public uint AppID; // m_nAppID AppId_t
 		public static DlcInstalled_t FromPointer( IntPtr p ) { return (DlcInstalled_t) Marshal.PtrToStructure( p, typeof(DlcInstalled_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public uint NAppID; // m_nAppID AppId_t
+			public uint AppID; // m_nAppID AppId_t
 			
 			public static implicit operator DlcInstalled_t (  DlcInstalled_t.PackSmall d )
 			{
 				return new DlcInstalled_t()
 				{
-					NAppID = d.NAppID,
+					AppID = d.AppID,
 				};
 			}
 		}
@@ -2736,29 +2736,29 @@ namespace SteamNative
 	public struct AppProofOfPurchaseKeyResponse_t
 	{
 		public Result Result; // m_eResult enum EResult
-		public uint NAppID; // m_nAppID uint32
+		public uint AppID; // m_nAppID uint32
 		public uint CchKeyLength; // m_cchKeyLength uint32
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 240)]
-		public string RgchKey; // m_rgchKey char [240]
+		public string Key; // m_rgchKey char [240]
 		public static AppProofOfPurchaseKeyResponse_t FromPointer( IntPtr p ) { return (AppProofOfPurchaseKeyResponse_t) Marshal.PtrToStructure( p, typeof(AppProofOfPurchaseKeyResponse_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public Result Result; // m_eResult enum EResult
-			public uint NAppID; // m_nAppID uint32
+			public uint AppID; // m_nAppID uint32
 			public uint CchKeyLength; // m_cchKeyLength uint32
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 240)]
-			public string RgchKey; // m_rgchKey char [240]
+			public string Key; // m_rgchKey char [240]
 			
 			public static implicit operator AppProofOfPurchaseKeyResponse_t (  AppProofOfPurchaseKeyResponse_t.PackSmall d )
 			{
 				return new AppProofOfPurchaseKeyResponse_t()
 				{
 					Result = d.Result,
-					NAppID = d.NAppID,
+					AppID = d.AppID,
 					CchKeyLength = d.CchKeyLength,
-					RgchKey = d.RgchKey,
+					Key = d.Key,
 				};
 			}
 		}
@@ -2771,10 +2771,10 @@ namespace SteamNative
 		public byte Connecting; // m_bConnecting uint8
 		public byte P2PSessionError; // m_eP2PSessionError uint8
 		public byte UsingRelay; // m_bUsingRelay uint8
-		public int NBytesQueuedForSend; // m_nBytesQueuedForSend int32
-		public int NPacketsQueuedForSend; // m_nPacketsQueuedForSend int32
-		public uint NRemoteIP; // m_nRemoteIP uint32
-		public ushort NRemotePort; // m_nRemotePort uint16
+		public int BytesQueuedForSend; // m_nBytesQueuedForSend int32
+		public int PacketsQueuedForSend; // m_nPacketsQueuedForSend int32
+		public uint RemoteIP; // m_nRemoteIP uint32
+		public ushort RemotePort; // m_nRemotePort uint16
 		public static P2PSessionState_t FromPointer( IntPtr p ) { return (P2PSessionState_t) Marshal.PtrToStructure( p, typeof(P2PSessionState_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
@@ -2784,10 +2784,10 @@ namespace SteamNative
 			public byte Connecting; // m_bConnecting uint8
 			public byte P2PSessionError; // m_eP2PSessionError uint8
 			public byte UsingRelay; // m_bUsingRelay uint8
-			public int NBytesQueuedForSend; // m_nBytesQueuedForSend int32
-			public int NPacketsQueuedForSend; // m_nPacketsQueuedForSend int32
-			public uint NRemoteIP; // m_nRemoteIP uint32
-			public ushort NRemotePort; // m_nRemotePort uint16
+			public int BytesQueuedForSend; // m_nBytesQueuedForSend int32
+			public int PacketsQueuedForSend; // m_nPacketsQueuedForSend int32
+			public uint RemoteIP; // m_nRemoteIP uint32
+			public ushort RemotePort; // m_nRemotePort uint16
 			
 			public static implicit operator P2PSessionState_t (  P2PSessionState_t.PackSmall d )
 			{
@@ -2797,10 +2797,10 @@ namespace SteamNative
 					Connecting = d.Connecting,
 					P2PSessionError = d.P2PSessionError,
 					UsingRelay = d.UsingRelay,
-					NBytesQueuedForSend = d.NBytesQueuedForSend,
-					NPacketsQueuedForSend = d.NPacketsQueuedForSend,
-					NRemoteIP = d.NRemoteIP,
-					NRemotePort = d.NRemotePort,
+					BytesQueuedForSend = d.BytesQueuedForSend,
+					PacketsQueuedForSend = d.PacketsQueuedForSend,
+					RemoteIP = d.RemoteIP,
+					RemotePort = d.RemotePort,
 				};
 			}
 		}
@@ -2908,19 +2908,19 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct VolumeHasChanged_t
 	{
-		public float FlNewVolume; // m_flNewVolume float
+		public float NewVolume; // m_flNewVolume float
 		public static VolumeHasChanged_t FromPointer( IntPtr p ) { return (VolumeHasChanged_t) Marshal.PtrToStructure( p, typeof(VolumeHasChanged_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public float FlNewVolume; // m_flNewVolume float
+			public float NewVolume; // m_flNewVolume float
 			
 			public static implicit operator VolumeHasChanged_t (  VolumeHasChanged_t.PackSmall d )
 			{
 				return new VolumeHasChanged_t()
 				{
-					FlNewVolume = d.FlNewVolume,
+					NewVolume = d.NewVolume,
 				};
 			}
 		}
@@ -2975,19 +2975,19 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct MusicPlayerWantsVolume_t
 	{
-		public float FlNewVolume; // m_flNewVolume float
+		public float NewVolume; // m_flNewVolume float
 		public static MusicPlayerWantsVolume_t FromPointer( IntPtr p ) { return (MusicPlayerWantsVolume_t) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsVolume_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public float FlNewVolume; // m_flNewVolume float
+			public float NewVolume; // m_flNewVolume float
 			
 			public static implicit operator MusicPlayerWantsVolume_t (  MusicPlayerWantsVolume_t.PackSmall d )
 			{
 				return new MusicPlayerWantsVolume_t()
 				{
-					FlNewVolume = d.FlNewVolume,
+					NewVolume = d.NewVolume,
 				};
 			}
 		}
@@ -3038,19 +3038,19 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct MusicPlayerWantsPlayingRepeatStatus_t
 	{
-		public int NPlayingRepeatStatus; // m_nPlayingRepeatStatus int
+		public int PlayingRepeatStatus; // m_nPlayingRepeatStatus int
 		public static MusicPlayerWantsPlayingRepeatStatus_t FromPointer( IntPtr p ) { return (MusicPlayerWantsPlayingRepeatStatus_t) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsPlayingRepeatStatus_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public int NPlayingRepeatStatus; // m_nPlayingRepeatStatus int
+			public int PlayingRepeatStatus; // m_nPlayingRepeatStatus int
 			
 			public static implicit operator MusicPlayerWantsPlayingRepeatStatus_t (  MusicPlayerWantsPlayingRepeatStatus_t.PackSmall d )
 			{
 				return new MusicPlayerWantsPlayingRepeatStatus_t()
 				{
-					NPlayingRepeatStatus = d.NPlayingRepeatStatus,
+					PlayingRepeatStatus = d.PlayingRepeatStatus,
 				};
 			}
 		}
@@ -3238,19 +3238,19 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct SteamUGCDetails_t
 	{
-		public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		public Result Result; // m_eResult enum EResult
 		public WorkshopFileType FileType; // m_eFileType enum EWorkshopFileType
-		public uint NCreatorAppID; // m_nCreatorAppID AppId_t
-		public uint NConsumerAppID; // m_nConsumerAppID AppId_t
+		public uint CreatorAppID; // m_nCreatorAppID AppId_t
+		public uint ConsumerAppID; // m_nConsumerAppID AppId_t
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 129)]
-		public string RgchTitle; // m_rgchTitle char [129]
+		public string Title; // m_rgchTitle char [129]
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8000)]
-		public string RgchDescription; // m_rgchDescription char [8000]
+		public string Description; // m_rgchDescription char [8000]
 		public ulong SteamIDOwner; // m_ulSteamIDOwner uint64
-		public uint RtimeCreated; // m_rtimeCreated uint32
-		public uint RtimeUpdated; // m_rtimeUpdated uint32
-		public uint RtimeAddedToUserList; // m_rtimeAddedToUserList uint32
+		public uint TimeCreated; // m_rtimeCreated uint32
+		public uint TimeUpdated; // m_rtimeUpdated uint32
+		public uint TimeAddedToUserList; // m_rtimeAddedToUserList uint32
 		public RemoteStoragePublishedFileVisibility Visibility; // m_eVisibility enum ERemoteStoragePublishedFileVisibility
 		[MarshalAs(UnmanagedType.I1)]
 		public bool Banned; // m_bBanned _Bool
@@ -3259,37 +3259,37 @@ namespace SteamNative
 		[MarshalAs(UnmanagedType.I1)]
 		public bool TagsTruncated; // m_bTagsTruncated _Bool
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1025)]
-		public string RgchTags; // m_rgchTags char [1025]
+		public string Tags; // m_rgchTags char [1025]
 		public ulong File; // m_hFile UGCHandle_t
 		public ulong PreviewFile; // m_hPreviewFile UGCHandle_t
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
 		public string PchFileName; // m_pchFileName char [260]
-		public int NFileSize; // m_nFileSize int32
-		public int NPreviewFileSize; // m_nPreviewFileSize int32
+		public int FileSize; // m_nFileSize int32
+		public int PreviewFileSize; // m_nPreviewFileSize int32
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-		public string RgchURL; // m_rgchURL char [256]
+		public string URL; // m_rgchURL char [256]
 		public uint VotesUp; // m_unVotesUp uint32
 		public uint VotesDown; // m_unVotesDown uint32
-		public float FlScore; // m_flScore float
+		public float Score; // m_flScore float
 		public uint NumChildren; // m_unNumChildren uint32
 		public static SteamUGCDetails_t FromPointer( IntPtr p ) { return (SteamUGCDetails_t) Marshal.PtrToStructure( p, typeof(SteamUGCDetails_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			public Result Result; // m_eResult enum EResult
 			public WorkshopFileType FileType; // m_eFileType enum EWorkshopFileType
-			public uint NCreatorAppID; // m_nCreatorAppID AppId_t
-			public uint NConsumerAppID; // m_nConsumerAppID AppId_t
+			public uint CreatorAppID; // m_nCreatorAppID AppId_t
+			public uint ConsumerAppID; // m_nConsumerAppID AppId_t
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 129)]
-			public string RgchTitle; // m_rgchTitle char [129]
+			public string Title; // m_rgchTitle char [129]
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8000)]
-			public string RgchDescription; // m_rgchDescription char [8000]
+			public string Description; // m_rgchDescription char [8000]
 			public ulong SteamIDOwner; // m_ulSteamIDOwner uint64
-			public uint RtimeCreated; // m_rtimeCreated uint32
-			public uint RtimeUpdated; // m_rtimeUpdated uint32
-			public uint RtimeAddedToUserList; // m_rtimeAddedToUserList uint32
+			public uint TimeCreated; // m_rtimeCreated uint32
+			public uint TimeUpdated; // m_rtimeUpdated uint32
+			public uint TimeAddedToUserList; // m_rtimeAddedToUserList uint32
 			public RemoteStoragePublishedFileVisibility Visibility; // m_eVisibility enum ERemoteStoragePublishedFileVisibility
 			[MarshalAs(UnmanagedType.I1)]
 			public bool Banned; // m_bBanned _Bool
@@ -3298,49 +3298,49 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			public bool TagsTruncated; // m_bTagsTruncated _Bool
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1025)]
-			public string RgchTags; // m_rgchTags char [1025]
+			public string Tags; // m_rgchTags char [1025]
 			public ulong File; // m_hFile UGCHandle_t
 			public ulong PreviewFile; // m_hPreviewFile UGCHandle_t
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
 			public string PchFileName; // m_pchFileName char [260]
-			public int NFileSize; // m_nFileSize int32
-			public int NPreviewFileSize; // m_nPreviewFileSize int32
+			public int FileSize; // m_nFileSize int32
+			public int PreviewFileSize; // m_nPreviewFileSize int32
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-			public string RgchURL; // m_rgchURL char [256]
+			public string URL; // m_rgchURL char [256]
 			public uint VotesUp; // m_unVotesUp uint32
 			public uint VotesDown; // m_unVotesDown uint32
-			public float FlScore; // m_flScore float
+			public float Score; // m_flScore float
 			public uint NumChildren; // m_unNumChildren uint32
 			
 			public static implicit operator SteamUGCDetails_t (  SteamUGCDetails_t.PackSmall d )
 			{
 				return new SteamUGCDetails_t()
 				{
-					NPublishedFileId = d.NPublishedFileId,
+					PublishedFileId = d.PublishedFileId,
 					Result = d.Result,
 					FileType = d.FileType,
-					NCreatorAppID = d.NCreatorAppID,
-					NConsumerAppID = d.NConsumerAppID,
-					RgchTitle = d.RgchTitle,
-					RgchDescription = d.RgchDescription,
+					CreatorAppID = d.CreatorAppID,
+					ConsumerAppID = d.ConsumerAppID,
+					Title = d.Title,
+					Description = d.Description,
 					SteamIDOwner = d.SteamIDOwner,
-					RtimeCreated = d.RtimeCreated,
-					RtimeUpdated = d.RtimeUpdated,
-					RtimeAddedToUserList = d.RtimeAddedToUserList,
+					TimeCreated = d.TimeCreated,
+					TimeUpdated = d.TimeUpdated,
+					TimeAddedToUserList = d.TimeAddedToUserList,
 					Visibility = d.Visibility,
 					Banned = d.Banned,
 					AcceptedForUse = d.AcceptedForUse,
 					TagsTruncated = d.TagsTruncated,
-					RgchTags = d.RgchTags,
+					Tags = d.Tags,
 					File = d.File,
 					PreviewFile = d.PreviewFile,
 					PchFileName = d.PchFileName,
-					NFileSize = d.NFileSize,
-					NPreviewFileSize = d.NPreviewFileSize,
-					RgchURL = d.RgchURL,
+					FileSize = d.FileSize,
+					PreviewFileSize = d.PreviewFileSize,
+					URL = d.URL,
 					VotesUp = d.VotesUp,
 					VotesDown = d.VotesDown,
-					FlScore = d.FlScore,
+					Score = d.Score,
 					NumChildren = d.NumChildren,
 				};
 			}
@@ -3412,7 +3412,7 @@ namespace SteamNative
 	public struct CreateItemResult_t
 	{
 		public Result Result; // m_eResult enum EResult
-		public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		[MarshalAs(UnmanagedType.I1)]
 		public bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 		public static CreateItemResult_t FromPointer( IntPtr p ) { return (CreateItemResult_t) Marshal.PtrToStructure( p, typeof(CreateItemResult_t) ); }
@@ -3421,7 +3421,7 @@ namespace SteamNative
 		public struct PackSmall
 		{
 			public Result Result; // m_eResult enum EResult
-			public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			[MarshalAs(UnmanagedType.I1)]
 			public bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 			
@@ -3430,7 +3430,7 @@ namespace SteamNative
 				return new CreateItemResult_t()
 				{
 					Result = d.Result,
-					NPublishedFileId = d.NPublishedFileId,
+					PublishedFileId = d.PublishedFileId,
 					UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement,
 				};
 			}
@@ -3467,7 +3467,7 @@ namespace SteamNative
 	public struct DownloadItemResult_t
 	{
 		public uint AppID; // m_unAppID AppId_t
-		public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		public Result Result; // m_eResult enum EResult
 		public static DownloadItemResult_t FromPointer( IntPtr p ) { return (DownloadItemResult_t) Marshal.PtrToStructure( p, typeof(DownloadItemResult_t) ); }
 		
@@ -3475,7 +3475,7 @@ namespace SteamNative
 		public struct PackSmall
 		{
 			public uint AppID; // m_unAppID AppId_t
-			public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			public Result Result; // m_eResult enum EResult
 			
 			public static implicit operator DownloadItemResult_t (  DownloadItemResult_t.PackSmall d )
@@ -3483,7 +3483,7 @@ namespace SteamNative
 				return new DownloadItemResult_t()
 				{
 					AppID = d.AppID,
-					NPublishedFileId = d.NPublishedFileId,
+					PublishedFileId = d.PublishedFileId,
 					Result = d.Result,
 				};
 			}
@@ -3493,7 +3493,7 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct UserFavoriteItemsListChanged_t
 	{
-		public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		public Result Result; // m_eResult enum EResult
 		[MarshalAs(UnmanagedType.I1)]
 		public bool WasAddRequest; // m_bWasAddRequest _Bool
@@ -3502,7 +3502,7 @@ namespace SteamNative
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			public Result Result; // m_eResult enum EResult
 			[MarshalAs(UnmanagedType.I1)]
 			public bool WasAddRequest; // m_bWasAddRequest _Bool
@@ -3511,7 +3511,7 @@ namespace SteamNative
 			{
 				return new UserFavoriteItemsListChanged_t()
 				{
-					NPublishedFileId = d.NPublishedFileId,
+					PublishedFileId = d.PublishedFileId,
 					Result = d.Result,
 					WasAddRequest = d.WasAddRequest,
 				};
@@ -3522,7 +3522,7 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct SetUserItemVoteResult_t
 	{
-		public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		public Result Result; // m_eResult enum EResult
 		[MarshalAs(UnmanagedType.I1)]
 		public bool VoteUp; // m_bVoteUp _Bool
@@ -3531,7 +3531,7 @@ namespace SteamNative
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			public Result Result; // m_eResult enum EResult
 			[MarshalAs(UnmanagedType.I1)]
 			public bool VoteUp; // m_bVoteUp _Bool
@@ -3540,7 +3540,7 @@ namespace SteamNative
 			{
 				return new SetUserItemVoteResult_t()
 				{
-					NPublishedFileId = d.NPublishedFileId,
+					PublishedFileId = d.PublishedFileId,
 					Result = d.Result,
 					VoteUp = d.VoteUp,
 				};
@@ -3551,7 +3551,7 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct GetUserItemVoteResult_t
 	{
-		public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		public Result Result; // m_eResult enum EResult
 		[MarshalAs(UnmanagedType.I1)]
 		public bool VotedUp; // m_bVotedUp _Bool
@@ -3564,7 +3564,7 @@ namespace SteamNative
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public ulong NPublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			public Result Result; // m_eResult enum EResult
 			[MarshalAs(UnmanagedType.I1)]
 			public bool VotedUp; // m_bVotedUp _Bool
@@ -3577,7 +3577,7 @@ namespace SteamNative
 			{
 				return new GetUserItemVoteResult_t()
 				{
-					NPublishedFileId = d.NPublishedFileId,
+					PublishedFileId = d.PublishedFileId,
 					Result = d.Result,
 					VotedUp = d.VotedUp,
 					VotedDown = d.VotedDown,
@@ -3590,19 +3590,19 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct SteamAppInstalled_t
 	{
-		public uint NAppID; // m_nAppID AppId_t
+		public uint AppID; // m_nAppID AppId_t
 		public static SteamAppInstalled_t FromPointer( IntPtr p ) { return (SteamAppInstalled_t) Marshal.PtrToStructure( p, typeof(SteamAppInstalled_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public uint NAppID; // m_nAppID AppId_t
+			public uint AppID; // m_nAppID AppId_t
 			
 			public static implicit operator SteamAppInstalled_t (  SteamAppInstalled_t.PackSmall d )
 			{
 				return new SteamAppInstalled_t()
 				{
-					NAppID = d.NAppID,
+					AppID = d.AppID,
 				};
 			}
 		}
@@ -3611,19 +3611,19 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct SteamAppUninstalled_t
 	{
-		public uint NAppID; // m_nAppID AppId_t
+		public uint AppID; // m_nAppID AppId_t
 		public static SteamAppUninstalled_t FromPointer( IntPtr p ) { return (SteamAppUninstalled_t) Marshal.PtrToStructure( p, typeof(SteamAppUninstalled_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public uint NAppID; // m_nAppID AppId_t
+			public uint AppID; // m_nAppID AppId_t
 			
 			public static implicit operator SteamAppUninstalled_t (  SteamAppUninstalled_t.PackSmall d )
 			{
 				return new SteamAppUninstalled_t()
 				{
-					NAppID = d.NAppID,
+					AppID = d.AppID,
 				};
 			}
 		}
@@ -4283,7 +4283,7 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct SteamItemDetails_t
 	{
-		public ulong TemId; // m_itemId SteamItemInstanceID_t
+		public ulong ItemId; // m_itemId SteamItemInstanceID_t
 		public int Definition; // m_iDefinition SteamItemDef_t
 		public ushort Quantity; // m_unQuantity uint16
 		public ushort Flags; // m_unFlags uint16
@@ -4292,7 +4292,7 @@ namespace SteamNative
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public ulong TemId; // m_itemId SteamItemInstanceID_t
+			public ulong ItemId; // m_itemId SteamItemInstanceID_t
 			public int Definition; // m_iDefinition SteamItemDef_t
 			public ushort Quantity; // m_unQuantity uint16
 			public ushort Flags; // m_unFlags uint16
@@ -4301,7 +4301,7 @@ namespace SteamNative
 			{
 				return new SteamItemDetails_t()
 				{
-					TemId = d.TemId,
+					ItemId = d.ItemId,
 					Definition = d.Definition,
 					Quantity = d.Quantity,
 					Flags = d.Flags,
@@ -4314,21 +4314,21 @@ namespace SteamNative
 	public struct SteamInventoryResultReady_t
 	{
 		public int Andle; // m_handle SteamInventoryResult_t
-		public Result Result; // m_result enum EResult
+		public Result Esult; // m_result enum EResult
 		public static SteamInventoryResultReady_t FromPointer( IntPtr p ) { return (SteamInventoryResultReady_t) Marshal.PtrToStructure( p, typeof(SteamInventoryResultReady_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
 			public int Andle; // m_handle SteamInventoryResult_t
-			public Result Result; // m_result enum EResult
+			public Result Esult; // m_result enum EResult
 			
 			public static implicit operator SteamInventoryResultReady_t (  SteamInventoryResultReady_t.PackSmall d )
 			{
 				return new SteamInventoryResultReady_t()
 				{
 					Andle = d.Andle,
-					Result = d.Result,
+					Esult = d.Esult,
 				};
 			}
 		}
@@ -4382,7 +4382,7 @@ namespace SteamNative
 		public Result Result; // m_eResult enum EResult
 		public uint VideoAppID; // m_unVideoAppID AppId_t
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-		public string RgchURL; // m_rgchURL char [256]
+		public string URL; // m_rgchURL char [256]
 		public static GetVideoURLResult_t FromPointer( IntPtr p ) { return (GetVideoURLResult_t) Marshal.PtrToStructure( p, typeof(GetVideoURLResult_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
@@ -4391,7 +4391,7 @@ namespace SteamNative
 			public Result Result; // m_eResult enum EResult
 			public uint VideoAppID; // m_unVideoAppID AppId_t
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-			public string RgchURL; // m_rgchURL char [256]
+			public string URL; // m_rgchURL char [256]
 			
 			public static implicit operator GetVideoURLResult_t (  GetVideoURLResult_t.PackSmall d )
 			{
@@ -4399,7 +4399,7 @@ namespace SteamNative
 				{
 					Result = d.Result,
 					VideoAppID = d.VideoAppID,
-					RgchURL = d.RgchURL,
+					URL = d.URL,
 				};
 			}
 		}
@@ -4408,21 +4408,21 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct CCallbackBase
 	{
-		public byte NCallbackFlags; // m_nCallbackFlags uint8
+		public byte CallbackFlags; // m_nCallbackFlags uint8
 		public int Callback; // m_iCallback int
 		public static CCallbackBase FromPointer( IntPtr p ) { return (CCallbackBase) Marshal.PtrToStructure( p, typeof(CCallbackBase) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public byte NCallbackFlags; // m_nCallbackFlags uint8
+			public byte CallbackFlags; // m_nCallbackFlags uint8
 			public int Callback; // m_iCallback int
 			
 			public static implicit operator CCallbackBase (  CCallbackBase.PackSmall d )
 			{
 				return new CCallbackBase()
 				{
-					NCallbackFlags = d.NCallbackFlags,
+					CallbackFlags = d.CallbackFlags,
 					Callback = d.Callback,
 				};
 			}
@@ -4459,7 +4459,7 @@ namespace SteamNative
 		public ulong SteamID; // m_SteamID class CSteamID
 		public DenyReason DenyReason; // m_eDenyReason enum EDenyReason
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-		public string RgchOptionalText; // m_rgchOptionalText char [128]
+		public string OptionalText; // m_rgchOptionalText char [128]
 		public static GSClientDeny_t FromPointer( IntPtr p ) { return (GSClientDeny_t) Marshal.PtrToStructure( p, typeof(GSClientDeny_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
@@ -4468,7 +4468,7 @@ namespace SteamNative
 			public ulong SteamID; // m_SteamID class CSteamID
 			public DenyReason DenyReason; // m_eDenyReason enum EDenyReason
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-			public string RgchOptionalText; // m_rgchOptionalText char [128]
+			public string OptionalText; // m_rgchOptionalText char [128]
 			
 			public static implicit operator GSClientDeny_t (  GSClientDeny_t.PackSmall d )
 			{
@@ -4476,7 +4476,7 @@ namespace SteamNative
 				{
 					SteamID = d.SteamID,
 					DenyReason = d.DenyReason,
-					RgchOptionalText = d.RgchOptionalText,
+					OptionalText = d.OptionalText,
 				};
 			}
 		}
@@ -4562,7 +4562,7 @@ namespace SteamNative
 	public struct GSGameplayStats_t
 	{
 		public Result Result; // m_eResult enum EResult
-		public int NRank; // m_nRank int32
+		public int Rank; // m_nRank int32
 		public uint TotalConnects; // m_unTotalConnects uint32
 		public uint TotalMinutesPlayed; // m_unTotalMinutesPlayed uint32
 		public static GSGameplayStats_t FromPointer( IntPtr p ) { return (GSGameplayStats_t) Marshal.PtrToStructure( p, typeof(GSGameplayStats_t) ); }
@@ -4571,7 +4571,7 @@ namespace SteamNative
 		public struct PackSmall
 		{
 			public Result Result; // m_eResult enum EResult
-			public int NRank; // m_nRank int32
+			public int Rank; // m_nRank int32
 			public uint TotalConnects; // m_unTotalConnects uint32
 			public uint TotalMinutesPlayed; // m_unTotalMinutesPlayed uint32
 			
@@ -4580,7 +4580,7 @@ namespace SteamNative
 				return new GSGameplayStats_t()
 				{
 					Result = d.Result,
-					NRank = d.NRank,
+					Rank = d.Rank,
 					TotalConnects = d.TotalConnects,
 					TotalMinutesPlayed = d.TotalMinutesPlayed,
 				};

@@ -34,17 +34,17 @@ namespace Facepunch.Steamworks
 
             internal static Item From( SteamNative.SteamUGCDetails_t details, Workshop workshop )
             {
-                var item = new Item( details.m_nPublishedFileId, workshop);
+                var item = new Item( details.PublishedFileId, workshop);
 
-                item.Title = details.m_rgchTitle;
-                item.Description = details.m_rgchDescription;
-                item.OwnerId = details.m_ulSteamIDOwner;
-                item.Tags = details.m_rgchTags.Split( ',' );
-                item.Score = details.m_flScore;
-                item.VotesUp = details.m_unVotesUp;
-                item.VotesDown = details.m_unVotesDown;
-                item.Modified = new DateTime( details.m_rtimeUpdated );
-                item.Created = new DateTime( details.m_rtimeCreated );
+                item.Title = details.Title;
+                item.Description = details.Description;
+                item.OwnerId = details.SteamIDOwner;
+                item.Tags = details.Tags.Split( ',' );
+                item.Score = details.Score;
+                item.VotesUp = details.VotesUp;
+                item.VotesDown = details.VotesDown;
+                item.Modified = new DateTime( details.TimeUpdated );
+                item.Created = new DateTime( details.TimeCreated );
                 item.UpdateState();
 
                 return item;

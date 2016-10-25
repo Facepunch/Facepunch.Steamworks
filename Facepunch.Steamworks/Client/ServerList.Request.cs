@@ -46,7 +46,7 @@ namespace Facepunch.Steamworks
                     WatchList.RemoveAll( x =>
                     {
                         var info = servers.GetServerDetails( Request, x );
-                        if ( info.m_bHadSuccessfulResponse )
+                        if ( info.HadSuccessfulResponse )
                         {
                             OnServer( info );
                             changes = true;
@@ -179,7 +179,7 @@ namespace Facepunch.Steamworks
 
             private void OnServer( SteamNative.gameserveritem_t info )
             {
-                if ( info.m_bHadSuccessfulResponse )
+                if ( info.HadSuccessfulResponse )
                 {
                     Responded.Add( Server.FromSteam( client, info ) );
                 }

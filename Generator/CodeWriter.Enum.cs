@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Generator
 {
-    public partial class CSharpGenerator
+    public partial class CodeWriter
     {
         private void Enums()
         {

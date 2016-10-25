@@ -6,24 +6,9 @@ using System.Threading.Tasks;
 
 namespace Generator
 {
-    public partial class CSharpGenerator
+    public partial class CodeWriter
     {
-        void PlatformInterface()
-        {
-            StartBlock( $"internal static partial class Platform" );
-            StartBlock( $"public interface Interface" );
 
-            WriteLine( "bool IsValid { get; } " );
-            WriteLine();
-
-            foreach ( var c in def.methods.GroupBy( x => x.ClassName ) )
-            {
-                PlatformInterface( c.Key, c.ToArray() );
-            }
-
-            EndBlock();
-            EndBlock();
-        }
 
 
         bool LargePack;
@@ -80,51 +65,9 @@ namespace Generator
             WriteLine();
         }
 
-        private void PlatformInterface( string className, SteamApiDefinition.MethodDef[] methodDef )
-        {
-            if ( className == "ISteamMatchmakingPingResponse" ) return;
-            if ( className == "ISteamMatchmakingServerListResponse" ) return;
-            if ( className == "ISteamMatchmakingPlayersResponse" ) return;
-            if ( className == "ISteamMatchmakingRulesResponse" ) return;
-            if ( className == "ISteamMatchmakingPingResponse" ) return;
 
-            LastMethodName = "";
-            foreach ( var m in methodDef )
-            {
-                PlatformInterfaceMethod( className, m );
-            }
 
-            WriteLine();
-        }
 
-        private void PlatformInterfaceMethod( string classname, SteamApiDefinition.MethodDef methodDef )
-        {
-            var arguments = BuildArguments( methodDef.Params );
-
-            var ret = new Argument()
-            {
-                Name = "return",
-                NativeType = methodDef.ReturnType
-            };
-
-            ret.Build( null, TypeDefs );
-
-            var methodName = methodDef.Name;
-
-            if ( LastMethodName == methodName )
-                methodName = methodName + "0";
-
-            var flatName = $"SteamAPI_{classname}_{methodName}";
-
-            if ( classname == "SteamApi" )
-                flatName = methodName;
-
-            var argstring = string.Join( ", ", arguments.Select( x => x.InteropParameter( true ) ) );
-            if ( argstring != "" ) argstring = $" {argstring} ";
-
-            WriteLine( $"{ret.Return()} {classname}_{methodName}({argstring});" );
-            LastMethodName = methodDef.Name;
-        }
 
         private void PlatformClassMethod( string classname, SteamApiDefinition.MethodDef methodDef )
         {

@@ -87,13 +87,13 @@ namespace Facepunch.Steamworks
             ServerLobbyId = 0;
 
             var gameInfo = new SteamNative.FriendGameInfo_t();
-            if ( Client.native.friends.GetFriendGamePlayed( Id, ref gameInfo ) && gameInfo.m_gameID > 0 )
+            if ( Client.native.friends.GetFriendGamePlayed( Id, ref gameInfo ) && gameInfo.GameID > 0 )
             {
-                CurrentAppId = gameInfo.m_gameID;
-                ServerIp = gameInfo.m_unGameIP;
-                ServerGamePort = gameInfo.m_usGamePort;
-                ServerQueryPort = gameInfo.m_usQueryPort;
-                ServerLobbyId = gameInfo.m_steamIDLobby;
+                CurrentAppId = gameInfo.GameID;
+                ServerIp = gameInfo.GameIP;
+                ServerGamePort = gameInfo.GamePort;
+                ServerQueryPort = gameInfo.QueryPort;
+                ServerLobbyId = gameInfo.SteamIDLobby;
             }
         }
     }
