@@ -25,8 +25,13 @@ namespace Generator
             EndBlock();
         }
 
-        private void PlatformClass( string type, string libraryName )
+
+        bool LargePack;
+
+        private void PlatformClass( string type, string libraryName, bool LargePack )
         {
+            this.LargePack = LargePack;
+
             StartBlock( $"internal static partial class Platform" );
             StartBlock( $"public class {type} : Interface" );
 
@@ -114,7 +119,7 @@ namespace Generator
             if ( classname == "SteamApi" )
                 flatName = methodName;
 
-            var argstring = string.Join( ", ", arguments.Select( x => x.InteropParameter() ) );
+            var argstring = string.Join( ", ", arguments.Select( x => x.InteropParameter( true ) ) );
             if ( argstring != "" ) argstring = $" {argstring} ";
 
             WriteLine( $"{ret.Return()} {classname}_{methodName}({argstring});" );
@@ -143,8 +148,7 @@ namespace Generator
             if ( classname == "SteamApi" )
                 flatName = methodName;
 
-
-            var argstring = string.Join( ", ", arguments.Select( x => x.InteropParameter() ) );
+            var argstring = string.Join( ", ", arguments.Select( x => x.InteropParameter( true ) ) );
             if ( argstring != "" ) argstring = $" {argstring} ";
 
             StartBlock( $"public virtual {ret.Return()} {classname}_{methodName}({argstring})" );
@@ -155,9 +159,26 @@ namespace Generator
                 WriteLine();
             }
 
-                var retcode = "";
+            var retcode = "";
             if ( ret.NativeType != "void" )
                 retcode = "return ";
+
+            AfterLines = new List<string>();
+
+            foreach ( var a in arguments )
+            {
+                if ( a.InteropParameter( LargePack ).Contains( ".PackSmall" ) )
+                {
+                    WriteLine( $"var {a.Name}_ps = new {a.ManagedType.Trim( '*' )}.PackSmall();" );
+                    AfterLines.Add( $"{a.Name} = {a.Name}_ps;" );
+                    a.Name = "ref " + a.Name + "_ps";
+
+                    if ( retcode != "" )
+                        retcode = "var ret = ";
+
+                    
+                }
+            }
 
             argstring = string.Join( ", ", arguments.Select( x => x.InteropVariable() ) );
 
@@ -166,7 +187,16 @@ namespace Generator
 
             WriteLine( $"{retcode}Native.{classname}.{methodName}({argstring});" );
 
+            WriteLines( AfterLines );
+
+            if ( retcode.StartsWith( "var" ) )
+            {
+                WriteLine( "return ret;" );
+            }
+
             EndBlock();
+
+            
 
             LastMethodName = methodDef.Name;
         }
@@ -194,7 +224,7 @@ namespace Generator
                 flatName = methodName;
 
 
-            var argstring = string.Join( ", ", arguments.Select( x => x.InteropParameter() ) );
+            var argstring = string.Join( ", ", arguments.Select( x => x.InteropParameter( LargePack ) ) );
 
             if ( methodDef.NeedsSelfPointer )
             {

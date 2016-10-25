@@ -15,7 +15,8 @@ namespace Generator
                 if ( c.Name == "CSteamID" ||
                     c.Name == "CSteamAPIContext" ||
                     c.Name == "CCallResult" ||
-                    c.Name == "CCallback" )
+                    c.Name == "CCallback" || 
+                    c.Name == "ValvePackingSentinel_t" )
                     continue;
 
                 if ( c.Name.Contains( "::" ) )
@@ -43,11 +44,15 @@ namespace Generator
                 StructFields( c.Fields );
 
                 WriteLine();
-                StartBlock( $"public static implicit operator  {c.Name} (  {c.Name}.PackSmall d )" );
+
+                //
+                // Implicit convert from PackSmall to regular
+                //
+                StartBlock( $"public static implicit operator {c.Name} (  {c.Name}.PackSmall d )" );
                 StartBlock( $"return new {c.Name}()" );
                 foreach ( var f in c.Fields )
                 {
-                    WriteLine( $"{f.Name} = d.{f.Name}," );
+                    WriteLine( $"{CleanMemberName( f.Name )} = d.{CleanMemberName( f.Name )}," );
                 }
                 EndBlock( ";" );
                 EndBlock();
@@ -111,13 +116,37 @@ namespace Generator
                     WriteLine( $"[MarshalAs(UnmanagedType.ByValArray, SizeConst = {num}, ArraySubType = UnmanagedType.R4)]" );
                 }
 
+                
+
                 if ( t == "const char **" )
                 {
                     t = "IntPtr";
                 }
 
-                WriteLine( $"public {t} {m.Name}; // {m.Type}" );
+                WriteLine( $"public {t} {CleanMemberName( m.Name )}; // {m.Name} {m.Type}" );
             }
+        }
+
+        string CleanMemberName( string m )
+        {
+            if ( m == "m_pubParam" ) return "ParamPtr";
+            if ( m == "m_cubParam" ) return "ParamCount";
+
+            var cleanName = m.Replace( "m_un", "" )
+                    .Replace( "m_us", "" )
+                    .Replace( "m_sz", "" )
+                    .Replace( "m_h", "" )
+                    .Replace( "m_e", "" )
+                    .Replace( "m_un", "" )
+                    .Replace( "m_ul", "" )
+                    .Replace( "m_u", "" )
+                    .Replace( "m_b", "" )
+                    .Replace( "m_i", "" )
+                    .Replace( "m_pub", "" )
+                    .Replace( "m_cub", "" )
+                    .Replace( "m_", "" );
+
+            return cleanName.Substring( 0, 1 ).ToUpper() + cleanName.Substring( 1 );
         }
     }
 }

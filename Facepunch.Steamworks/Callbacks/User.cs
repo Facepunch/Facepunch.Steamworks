@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Facepunch.Steamworks.Callbacks.User
 {
-    [StructLayout( LayoutKind.Sequential, Pack = 1 )]
+    [StructLayout( LayoutKind.Sequential, Pack = 4 )]
     internal struct ValidateAuthTicketResponse
     {
         public ulong SteamID;
