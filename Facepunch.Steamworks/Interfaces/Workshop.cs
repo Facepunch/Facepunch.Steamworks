@@ -9,7 +9,7 @@ namespace Facepunch.Steamworks
         internal const ulong InvalidHandle = 0xffffffffffffffff;
 
         internal SteamNative.SteamUGC ugc;
-        internal SteamNative.Friends friends;
+        internal Friends friends;
         internal BaseSteamworks steamworks;
         internal SteamNative.SteamRemoteStorage remoteStorage;
 
