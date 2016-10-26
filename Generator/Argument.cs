@@ -55,6 +55,8 @@ namespace Generator
         {
             get
             {
+                
+
                 return ManagedType.EndsWith( "*" ) && !ManagedType.Contains( "_t" ) && !ManagedType.Contains( "char" ) && !ManagedType.Contains( "bool" );
             }
         }
@@ -66,7 +68,7 @@ namespace Generator
                 if ( ManagedType.Contains( "SteamUGCDetails_t" ) )
                     return false;
 
-                if ( Name == "pOutItemsArray" )
+                if ( Name == "pOutItemsArray" || Name == "handlesOut" )
                     return true;
 
                 if ( Name.Contains( "Dest" ) && ManagedType.EndsWith( "*" ) )
@@ -76,6 +78,19 @@ namespace Generator
                     return true;
 
                 return false;
+            }
+        }
+
+        bool PassedToNativeAsValue
+        {
+           get
+            {
+                if ( Name.StartsWith( "pvec" ) ) return false;
+                if ( TypeDef == null ) return false;
+                if ( ManagedType.Contains( "IntPtr" ) ) return false;
+                if ( Name.Contains( "IntPtr" ) ) return false;
+
+                return true;
             }
         }
 
@@ -137,18 +152,20 @@ namespace Generator
             return $"{refv}{ManagedType} {Name} /*{NativeType}*/";
         }
 
-        internal string InteropVariable()
+        internal string InteropVariable( bool AsRawValues )
         {
             if ( ShouldBeIntPtr )
                 return $"{Name}";
 
+            var value = (PassedToNativeAsValue && AsRawValues) ? ".Value" : "";
+
             if ( IsStructShouldBePassedAsRef )
-                return $"ref {Name}";
+                return $"ref {Name}{value}";
 
             if ( ShouldBePassedAsOut )
-                return $"out {Name}";
+                return $"out {Name}{value}";
 
-            return $"{Name}";
+            return $"{Name}{value}";
         }
 
         internal string InteropParameter( bool LargePack, bool includeMarshalling = false )
@@ -166,10 +183,14 @@ namespace Generator
                 if ( NativeType == "bool" ) marshalling = "[MarshalAs(UnmanagedType.U1)]";
                 if ( NativeType == "bool *" ) marshalling = "[MarshalAs(UnmanagedType.U1)]";
 
-                if ( TypeDef != null && TypeDef.NativeType.Contains( "_t" ) )
+                if ( PassedToNativeAsValue && !ShouldBeIntPtr )
                 {
-               //     if ( !TypeDef.NativeType.Contains( "*" ) )
-              //          return $"{TypeDef.ManagedType} {Name}";
+                    if ( IsStructShouldBePassedAsRef )
+                        return $"ref {TypeDef.ManagedType} {Name}";
+                    else if ( ShouldBePassedAsOut )
+                        return $"out {TypeDef.ManagedType} {Name}";
+                    else
+                        return $"{TypeDef.ManagedType} {Name}";
                 }
             }
 

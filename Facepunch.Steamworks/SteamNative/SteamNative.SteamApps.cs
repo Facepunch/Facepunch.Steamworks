@@ -47,7 +47,7 @@ namespace SteamNative
 			pchName = string.Empty;
 			System.Text.StringBuilder pchName_sb = new System.Text.StringBuilder( 4096 );
 			int cchNameBufferSize = 4096;
-			bSuccess = _pi.ISteamApps_BGetDLCDataByIndex( iDLC, ref pAppID, ref pbAvailable, pchName_sb, cchNameBufferSize );
+			bSuccess = _pi.ISteamApps_BGetDLCDataByIndex( iDLC /*C*/, ref pAppID.Value /*A*/, ref pbAvailable /*A*/, pchName_sb /*C*/, cchNameBufferSize /*C*/ );
 			if ( !bSuccess ) return bSuccess;
 			pchName = pchName_sb.ToString();
 			return bSuccess;
@@ -56,7 +56,7 @@ namespace SteamNative
 		// bool
 		public bool BIsAppInstalled( AppId_t appID /*AppId_t*/ )
 		{
-			return _pi.ISteamApps_BIsAppInstalled( appID );
+			return _pi.ISteamApps_BIsAppInstalled( appID.Value /*C*/ );
 		}
 		
 		// bool
@@ -68,7 +68,7 @@ namespace SteamNative
 		// bool
 		public bool BIsDlcInstalled( AppId_t appID /*AppId_t*/ )
 		{
-			return _pi.ISteamApps_BIsDlcInstalled( appID );
+			return _pi.ISteamApps_BIsDlcInstalled( appID.Value /*C*/ );
 		}
 		
 		// bool
@@ -86,7 +86,7 @@ namespace SteamNative
 		// bool
 		public bool BIsSubscribedApp( AppId_t appID /*AppId_t*/ )
 		{
-			return _pi.ISteamApps_BIsSubscribedApp( appID );
+			return _pi.ISteamApps_BIsSubscribedApp( appID.Value /*C*/ );
 		}
 		
 		// bool
@@ -114,7 +114,7 @@ namespace SteamNative
 			uint bSuccess = default( uint );
 			System.Text.StringBuilder pchFolder_sb = new System.Text.StringBuilder( 4096 );
 			uint cchFolderBufferSize = 4096;
-			bSuccess = _pi.ISteamApps_GetAppInstallDir( appID, pchFolder_sb, cchFolderBufferSize );
+			bSuccess = _pi.ISteamApps_GetAppInstallDir( appID.Value /*C*/, pchFolder_sb /*C*/, cchFolderBufferSize /*C*/ );
 			if ( bSuccess <= 0 ) return null;
 			return pchFolder_sb.ToString();
 		}
@@ -141,7 +141,7 @@ namespace SteamNative
 			bool bSuccess = default( bool );
 			System.Text.StringBuilder pchName_sb = new System.Text.StringBuilder( 4096 );
 			int cchNameBufferSize = 4096;
-			bSuccess = _pi.ISteamApps_GetCurrentBetaName( pchName_sb, cchNameBufferSize );
+			bSuccess = _pi.ISteamApps_GetCurrentBetaName( pchName_sb /*C*/, cchNameBufferSize /*C*/ );
 			if ( !bSuccess ) return null;
 			return pchName_sb.ToString();
 		}
@@ -164,19 +164,19 @@ namespace SteamNative
 		// bool
 		public bool GetDlcDownloadProgress( AppId_t nAppID /*AppId_t*/, out ulong punBytesDownloaded /*uint64 **/, out ulong punBytesTotal /*uint64 **/ )
 		{
-			return _pi.ISteamApps_GetDlcDownloadProgress( nAppID, out punBytesDownloaded, out punBytesTotal );
+			return _pi.ISteamApps_GetDlcDownloadProgress( nAppID.Value /*C*/, out punBytesDownloaded /*B*/, out punBytesTotal /*B*/ );
 		}
 		
 		// uint
 		public uint GetEarliestPurchaseUnixTime( AppId_t nAppID /*AppId_t*/ )
 		{
-			return _pi.ISteamApps_GetEarliestPurchaseUnixTime( nAppID );
+			return _pi.ISteamApps_GetEarliestPurchaseUnixTime( nAppID.Value /*C*/ );
 		}
 		
 		// uint
 		public uint GetInstalledDepots( AppId_t appID /*AppId_t*/, IntPtr pvecDepots /*DepotId_t **/, uint cMaxDepots /*uint32*/ )
 		{
-			return _pi.ISteamApps_GetInstalledDepots( appID, (IntPtr) pvecDepots, cMaxDepots );
+			return _pi.ISteamApps_GetInstalledDepots( appID.Value /*C*/, (IntPtr) pvecDepots, cMaxDepots /*C*/ );
 		}
 		
 		// string
@@ -184,20 +184,20 @@ namespace SteamNative
 		public string GetLaunchQueryParam( string pchKey /*const char **/ )
 		{
 			IntPtr string_pointer;
-			string_pointer = _pi.ISteamApps_GetLaunchQueryParam( pchKey );
+			string_pointer = _pi.ISteamApps_GetLaunchQueryParam( pchKey /*C*/ );
 			return Marshal.PtrToStringAnsi( string_pointer );
 		}
 		
 		// void
 		public void InstallDLC( AppId_t nAppID /*AppId_t*/ )
 		{
-			_pi.ISteamApps_InstallDLC( nAppID );
+			_pi.ISteamApps_InstallDLC( nAppID.Value /*C*/ );
 		}
 		
 		// bool
 		public bool MarkContentCorrupt( bool bMissingFilesOnly /*bool*/ )
 		{
-			return _pi.ISteamApps_MarkContentCorrupt( bMissingFilesOnly );
+			return _pi.ISteamApps_MarkContentCorrupt( bMissingFilesOnly /*C*/ );
 		}
 		
 		// void
@@ -209,13 +209,13 @@ namespace SteamNative
 		// void
 		public void RequestAppProofOfPurchaseKey( AppId_t nAppID /*AppId_t*/ )
 		{
-			_pi.ISteamApps_RequestAppProofOfPurchaseKey( nAppID );
+			_pi.ISteamApps_RequestAppProofOfPurchaseKey( nAppID.Value /*C*/ );
 		}
 		
 		// void
 		public void UninstallDLC( AppId_t nAppID /*AppId_t*/ )
 		{
-			_pi.ISteamApps_UninstallDLC( nAppID );
+			_pi.ISteamApps_UninstallDLC( nAppID.Value /*C*/ );
 		}
 		
 	}

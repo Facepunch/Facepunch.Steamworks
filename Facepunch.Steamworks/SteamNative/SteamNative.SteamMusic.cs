@@ -90,7 +90,7 @@ namespace SteamNative
 		// void
 		public void SetVolume( float flVolume /*float*/ )
 		{
-			_pi.ISteamMusic_SetVolume( flVolume );
+			_pi.ISteamMusic_SetVolume( flVolume /*C*/ );
 		}
 		
 	}

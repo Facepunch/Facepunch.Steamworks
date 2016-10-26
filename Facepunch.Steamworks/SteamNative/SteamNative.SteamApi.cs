@@ -60,7 +60,7 @@ namespace SteamNative
 		// void
 		public void SteamAPI_RegisterCallback( IntPtr pCallback /*void **/, int callback /*int*/ )
 		{
-			_pi.SteamApi_SteamAPI_RegisterCallback( (IntPtr) pCallback, callback );
+			_pi.SteamApi_SteamAPI_RegisterCallback( (IntPtr) pCallback /*C*/, callback /*C*/ );
 		}
 		
 		// void
@@ -78,7 +78,7 @@ namespace SteamNative
 		// void
 		public void SteamAPI_UnregisterCallback( IntPtr pCallback /*void **/ )
 		{
-			_pi.SteamApi_SteamAPI_UnregisterCallback( (IntPtr) pCallback );
+			_pi.SteamApi_SteamAPI_UnregisterCallback( (IntPtr) pCallback /*C*/ );
 		}
 		
 		// HSteamPipe
@@ -102,13 +102,13 @@ namespace SteamNative
 		// IntPtr
 		public IntPtr SteamInternal_CreateInterface( string version /*const char **/ )
 		{
-			return _pi.SteamApi_SteamInternal_CreateInterface( version );
+			return _pi.SteamApi_SteamInternal_CreateInterface( version /*C*/ );
 		}
 		
 		// bool
 		public bool SteamInternal_GameServer_Init( uint unIP /*uint32*/, ushort usPort /*uint16*/, ushort usGamePort /*uint16*/, ushort usQueryPort /*uint16*/, int eServerMode /*int*/, string pchVersionString /*const char **/ )
 		{
-			return _pi.SteamApi_SteamInternal_GameServer_Init( unIP, usPort, usGamePort, usQueryPort, eServerMode, pchVersionString );
+			return _pi.SteamApi_SteamInternal_GameServer_Init( unIP /*C*/, usPort /*C*/, usGamePort /*C*/, usQueryPort /*C*/, eServerMode /*C*/, pchVersionString /*C*/ );
 		}
 		
 	}

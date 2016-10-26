@@ -42,7 +42,7 @@ namespace SteamNative
 		// bool
 		public bool BReleaseSteamPipe( HSteamPipe hSteamPipe /*HSteamPipe*/ )
 		{
-			return _pi.ISteamClient_BReleaseSteamPipe( hSteamPipe );
+			return _pi.ISteamClient_BReleaseSteamPipe( hSteamPipe.Value /*C*/ );
 		}
 		
 		// bool
@@ -54,13 +54,13 @@ namespace SteamNative
 		// HSteamUser
 		public HSteamUser ConnectToGlobalUser( HSteamPipe hSteamPipe /*HSteamPipe*/ )
 		{
-			return _pi.ISteamClient_ConnectToGlobalUser( hSteamPipe );
+			return _pi.ISteamClient_ConnectToGlobalUser( hSteamPipe.Value /*C*/ );
 		}
 		
 		// HSteamUser
 		public HSteamUser CreateLocalUser( out HSteamPipe phSteamPipe /*HSteamPipe **/, AccountType eAccountType /*EAccountType*/ )
 		{
-			return _pi.ISteamClient_CreateLocalUser( out phSteamPipe, eAccountType );
+			return _pi.ISteamClient_CreateLocalUser( out phSteamPipe.Value /*B*/, eAccountType /*C*/ );
 		}
 		
 		// HSteamPipe
@@ -79,7 +79,7 @@ namespace SteamNative
 		public SteamAppList GetISteamAppList( HSteamUser hSteamUser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
 			IntPtr interface_pointer;
-			interface_pointer = _pi.ISteamClient_GetISteamAppList( hSteamUser, hSteamPipe, pchVersion );
+			interface_pointer = _pi.ISteamClient_GetISteamAppList( hSteamUser.Value /*C*/, hSteamPipe.Value /*C*/, pchVersion /*C*/ );
 			return new SteamAppList( interface_pointer );
 		}
 		
@@ -87,7 +87,7 @@ namespace SteamNative
 		public SteamApps GetISteamApps( HSteamUser hSteamUser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
 			IntPtr interface_pointer;
-			interface_pointer = _pi.ISteamClient_GetISteamApps( hSteamUser, hSteamPipe, pchVersion );
+			interface_pointer = _pi.ISteamClient_GetISteamApps( hSteamUser.Value /*C*/, hSteamPipe.Value /*C*/, pchVersion /*C*/ );
 			return new SteamApps( interface_pointer );
 		}
 		
@@ -95,7 +95,7 @@ namespace SteamNative
 		public SteamController GetISteamController( HSteamUser hSteamUser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
 			IntPtr interface_pointer;
-			interface_pointer = _pi.ISteamClient_GetISteamController( hSteamUser, hSteamPipe, pchVersion );
+			interface_pointer = _pi.ISteamClient_GetISteamController( hSteamUser.Value /*C*/, hSteamPipe.Value /*C*/, pchVersion /*C*/ );
 			return new SteamController( interface_pointer );
 		}
 		
@@ -103,7 +103,7 @@ namespace SteamNative
 		public SteamFriends GetISteamFriends( HSteamUser hSteamUser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
 			IntPtr interface_pointer;
-			interface_pointer = _pi.ISteamClient_GetISteamFriends( hSteamUser, hSteamPipe, pchVersion );
+			interface_pointer = _pi.ISteamClient_GetISteamFriends( hSteamUser.Value /*C*/, hSteamPipe.Value /*C*/, pchVersion /*C*/ );
 			return new SteamFriends( interface_pointer );
 		}
 		
@@ -111,7 +111,7 @@ namespace SteamNative
 		public SteamGameServer GetISteamGameServer( HSteamUser hSteamUser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
 			IntPtr interface_pointer;
-			interface_pointer = _pi.ISteamClient_GetISteamGameServer( hSteamUser, hSteamPipe, pchVersion );
+			interface_pointer = _pi.ISteamClient_GetISteamGameServer( hSteamUser.Value /*C*/, hSteamPipe.Value /*C*/, pchVersion /*C*/ );
 			return new SteamGameServer( interface_pointer );
 		}
 		
@@ -119,21 +119,21 @@ namespace SteamNative
 		public SteamGameServerStats GetISteamGameServerStats( HSteamUser hSteamuser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
 			IntPtr interface_pointer;
-			interface_pointer = _pi.ISteamClient_GetISteamGameServerStats( hSteamuser, hSteamPipe, pchVersion );
+			interface_pointer = _pi.ISteamClient_GetISteamGameServerStats( hSteamuser.Value /*C*/, hSteamPipe.Value /*C*/, pchVersion /*C*/ );
 			return new SteamGameServerStats( interface_pointer );
 		}
 		
 		// IntPtr
 		public IntPtr GetISteamGenericInterface( HSteamUser hSteamUser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
-			return _pi.ISteamClient_GetISteamGenericInterface( hSteamUser, hSteamPipe, pchVersion );
+			return _pi.ISteamClient_GetISteamGenericInterface( hSteamUser.Value /*C*/, hSteamPipe.Value /*C*/, pchVersion /*C*/ );
 		}
 		
 		// ISteamHTMLSurface *
 		public SteamHTMLSurface GetISteamHTMLSurface( HSteamUser hSteamuser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
 			IntPtr interface_pointer;
-			interface_pointer = _pi.ISteamClient_GetISteamHTMLSurface( hSteamuser, hSteamPipe, pchVersion );
+			interface_pointer = _pi.ISteamClient_GetISteamHTMLSurface( hSteamuser.Value /*C*/, hSteamPipe.Value /*C*/, pchVersion /*C*/ );
 			return new SteamHTMLSurface( interface_pointer );
 		}
 		
@@ -141,7 +141,7 @@ namespace SteamNative
 		public SteamHTTP GetISteamHTTP( HSteamUser hSteamuser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
 			IntPtr interface_pointer;
-			interface_pointer = _pi.ISteamClient_GetISteamHTTP( hSteamuser, hSteamPipe, pchVersion );
+			interface_pointer = _pi.ISteamClient_GetISteamHTTP( hSteamuser.Value /*C*/, hSteamPipe.Value /*C*/, pchVersion /*C*/ );
 			return new SteamHTTP( interface_pointer );
 		}
 		
@@ -149,7 +149,7 @@ namespace SteamNative
 		public SteamInventory GetISteamInventory( HSteamUser hSteamuser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
 			IntPtr interface_pointer;
-			interface_pointer = _pi.ISteamClient_GetISteamInventory( hSteamuser, hSteamPipe, pchVersion );
+			interface_pointer = _pi.ISteamClient_GetISteamInventory( hSteamuser.Value /*C*/, hSteamPipe.Value /*C*/, pchVersion /*C*/ );
 			return new SteamInventory( interface_pointer );
 		}
 		
@@ -157,7 +157,7 @@ namespace SteamNative
 		public SteamMatchmaking GetISteamMatchmaking( HSteamUser hSteamUser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
 			IntPtr interface_pointer;
-			interface_pointer = _pi.ISteamClient_GetISteamMatchmaking( hSteamUser, hSteamPipe, pchVersion );
+			interface_pointer = _pi.ISteamClient_GetISteamMatchmaking( hSteamUser.Value /*C*/, hSteamPipe.Value /*C*/, pchVersion /*C*/ );
 			return new SteamMatchmaking( interface_pointer );
 		}
 		
@@ -165,7 +165,7 @@ namespace SteamNative
 		public SteamMatchmakingServers GetISteamMatchmakingServers( HSteamUser hSteamUser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
 			IntPtr interface_pointer;
-			interface_pointer = _pi.ISteamClient_GetISteamMatchmakingServers( hSteamUser, hSteamPipe, pchVersion );
+			interface_pointer = _pi.ISteamClient_GetISteamMatchmakingServers( hSteamUser.Value /*C*/, hSteamPipe.Value /*C*/, pchVersion /*C*/ );
 			return new SteamMatchmakingServers( interface_pointer );
 		}
 		
@@ -173,7 +173,7 @@ namespace SteamNative
 		public SteamMusic GetISteamMusic( HSteamUser hSteamuser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
 			IntPtr interface_pointer;
-			interface_pointer = _pi.ISteamClient_GetISteamMusic( hSteamuser, hSteamPipe, pchVersion );
+			interface_pointer = _pi.ISteamClient_GetISteamMusic( hSteamuser.Value /*C*/, hSteamPipe.Value /*C*/, pchVersion /*C*/ );
 			return new SteamMusic( interface_pointer );
 		}
 		
@@ -181,7 +181,7 @@ namespace SteamNative
 		public SteamMusicRemote GetISteamMusicRemote( HSteamUser hSteamuser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
 			IntPtr interface_pointer;
-			interface_pointer = _pi.ISteamClient_GetISteamMusicRemote( hSteamuser, hSteamPipe, pchVersion );
+			interface_pointer = _pi.ISteamClient_GetISteamMusicRemote( hSteamuser.Value /*C*/, hSteamPipe.Value /*C*/, pchVersion /*C*/ );
 			return new SteamMusicRemote( interface_pointer );
 		}
 		
@@ -189,7 +189,7 @@ namespace SteamNative
 		public SteamNetworking GetISteamNetworking( HSteamUser hSteamUser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
 			IntPtr interface_pointer;
-			interface_pointer = _pi.ISteamClient_GetISteamNetworking( hSteamUser, hSteamPipe, pchVersion );
+			interface_pointer = _pi.ISteamClient_GetISteamNetworking( hSteamUser.Value /*C*/, hSteamPipe.Value /*C*/, pchVersion /*C*/ );
 			return new SteamNetworking( interface_pointer );
 		}
 		
@@ -197,7 +197,7 @@ namespace SteamNative
 		public SteamRemoteStorage GetISteamRemoteStorage( HSteamUser hSteamuser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
 			IntPtr interface_pointer;
-			interface_pointer = _pi.ISteamClient_GetISteamRemoteStorage( hSteamuser, hSteamPipe, pchVersion );
+			interface_pointer = _pi.ISteamClient_GetISteamRemoteStorage( hSteamuser.Value /*C*/, hSteamPipe.Value /*C*/, pchVersion /*C*/ );
 			return new SteamRemoteStorage( interface_pointer );
 		}
 		
@@ -205,7 +205,7 @@ namespace SteamNative
 		public SteamScreenshots GetISteamScreenshots( HSteamUser hSteamuser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
 			IntPtr interface_pointer;
-			interface_pointer = _pi.ISteamClient_GetISteamScreenshots( hSteamuser, hSteamPipe, pchVersion );
+			interface_pointer = _pi.ISteamClient_GetISteamScreenshots( hSteamuser.Value /*C*/, hSteamPipe.Value /*C*/, pchVersion /*C*/ );
 			return new SteamScreenshots( interface_pointer );
 		}
 		
@@ -213,7 +213,7 @@ namespace SteamNative
 		public SteamUGC GetISteamUGC( HSteamUser hSteamUser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
 			IntPtr interface_pointer;
-			interface_pointer = _pi.ISteamClient_GetISteamUGC( hSteamUser, hSteamPipe, pchVersion );
+			interface_pointer = _pi.ISteamClient_GetISteamUGC( hSteamUser.Value /*C*/, hSteamPipe.Value /*C*/, pchVersion /*C*/ );
 			return new SteamUGC( interface_pointer );
 		}
 		
@@ -221,7 +221,7 @@ namespace SteamNative
 		public SteamUnifiedMessages GetISteamUnifiedMessages( HSteamUser hSteamuser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
 			IntPtr interface_pointer;
-			interface_pointer = _pi.ISteamClient_GetISteamUnifiedMessages( hSteamuser, hSteamPipe, pchVersion );
+			interface_pointer = _pi.ISteamClient_GetISteamUnifiedMessages( hSteamuser.Value /*C*/, hSteamPipe.Value /*C*/, pchVersion /*C*/ );
 			return new SteamUnifiedMessages( interface_pointer );
 		}
 		
@@ -229,7 +229,7 @@ namespace SteamNative
 		public SteamUser GetISteamUser( HSteamUser hSteamUser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
 			IntPtr interface_pointer;
-			interface_pointer = _pi.ISteamClient_GetISteamUser( hSteamUser, hSteamPipe, pchVersion );
+			interface_pointer = _pi.ISteamClient_GetISteamUser( hSteamUser.Value /*C*/, hSteamPipe.Value /*C*/, pchVersion /*C*/ );
 			return new SteamUser( interface_pointer );
 		}
 		
@@ -237,7 +237,7 @@ namespace SteamNative
 		public SteamUserStats GetISteamUserStats( HSteamUser hSteamUser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
 			IntPtr interface_pointer;
-			interface_pointer = _pi.ISteamClient_GetISteamUserStats( hSteamUser, hSteamPipe, pchVersion );
+			interface_pointer = _pi.ISteamClient_GetISteamUserStats( hSteamUser.Value /*C*/, hSteamPipe.Value /*C*/, pchVersion /*C*/ );
 			return new SteamUserStats( interface_pointer );
 		}
 		
@@ -245,7 +245,7 @@ namespace SteamNative
 		public SteamUtils GetISteamUtils( HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
 			IntPtr interface_pointer;
-			interface_pointer = _pi.ISteamClient_GetISteamUtils( hSteamPipe, pchVersion );
+			interface_pointer = _pi.ISteamClient_GetISteamUtils( hSteamPipe.Value /*C*/, pchVersion /*C*/ );
 			return new SteamUtils( interface_pointer );
 		}
 		
@@ -253,26 +253,26 @@ namespace SteamNative
 		public SteamVideo GetISteamVideo( HSteamUser hSteamuser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
 			IntPtr interface_pointer;
-			interface_pointer = _pi.ISteamClient_GetISteamVideo( hSteamuser, hSteamPipe, pchVersion );
+			interface_pointer = _pi.ISteamClient_GetISteamVideo( hSteamuser.Value /*C*/, hSteamPipe.Value /*C*/, pchVersion /*C*/ );
 			return new SteamVideo( interface_pointer );
 		}
 		
 		// void
 		public void ReleaseUser( HSteamPipe hSteamPipe /*HSteamPipe*/, HSteamUser hUser /*HSteamUser*/ )
 		{
-			_pi.ISteamClient_ReleaseUser( hSteamPipe, hUser );
+			_pi.ISteamClient_ReleaseUser( hSteamPipe.Value /*C*/, hUser.Value /*C*/ );
 		}
 		
 		// void
 		public void SetLocalIPBinding( uint unIP /*uint32*/, ushort usPort /*uint16*/ )
 		{
-			_pi.ISteamClient_SetLocalIPBinding( unIP, usPort );
+			_pi.ISteamClient_SetLocalIPBinding( unIP /*C*/, usPort /*C*/ );
 		}
 		
 		// void
 		public void SetWarningMessageHook( IntPtr pFunction /*SteamAPIWarningMessageHook_t*/ )
 		{
-			_pi.ISteamClient_SetWarningMessageHook( (IntPtr) pFunction );
+			_pi.ISteamClient_SetWarningMessageHook( (IntPtr) pFunction /*C*/ );
 		}
 		
 	}

@@ -42,19 +42,19 @@ namespace SteamNative
 		// void
 		public void CancelQuery( HServerListRequest hRequest /*HServerListRequest*/ )
 		{
-			_pi.ISteamMatchmakingServers_CancelQuery( hRequest );
+			_pi.ISteamMatchmakingServers_CancelQuery( hRequest.Value /*C*/ );
 		}
 		
 		// void
 		public void CancelServerQuery( HServerQuery hServerQuery /*HServerQuery*/ )
 		{
-			_pi.ISteamMatchmakingServers_CancelServerQuery( hServerQuery );
+			_pi.ISteamMatchmakingServers_CancelServerQuery( hServerQuery.Value /*C*/ );
 		}
 		
 		// int
 		public int GetServerCount( HServerListRequest hRequest /*HServerListRequest*/ )
 		{
-			return _pi.ISteamMatchmakingServers_GetServerCount( hRequest );
+			return _pi.ISteamMatchmakingServers_GetServerCount( hRequest.Value /*C*/ );
 		}
 		
 		// gameserveritem_t *
@@ -62,7 +62,7 @@ namespace SteamNative
 		public gameserveritem_t GetServerDetails( HServerListRequest hRequest /*HServerListRequest*/, int iServer /*int*/ )
 		{
 			IntPtr struct_pointer;
-			struct_pointer = _pi.ISteamMatchmakingServers_GetServerDetails( hRequest, iServer );
+			struct_pointer = _pi.ISteamMatchmakingServers_GetServerDetails( hRequest.Value /*C*/, iServer /*C*/ );
 			if ( struct_pointer == IntPtr.Zero ) return default(gameserveritem_t);
 			return gameserveritem_t.FromPointer( struct_pointer );
 		}
@@ -70,84 +70,84 @@ namespace SteamNative
 		// bool
 		public bool IsRefreshing( HServerListRequest hRequest /*HServerListRequest*/ )
 		{
-			return _pi.ISteamMatchmakingServers_IsRefreshing( hRequest );
+			return _pi.ISteamMatchmakingServers_IsRefreshing( hRequest.Value /*C*/ );
 		}
 		
 		// HServerQuery
 		public HServerQuery PingServer( uint unIP /*uint32*/, ushort usPort /*uint16*/, IntPtr pRequestServersResponse /*class ISteamMatchmakingPingResponse **/ )
 		{
-			return _pi.ISteamMatchmakingServers_PingServer( unIP, usPort, (IntPtr) pRequestServersResponse );
+			return _pi.ISteamMatchmakingServers_PingServer( unIP /*C*/, usPort /*C*/, (IntPtr) pRequestServersResponse /*C*/ );
 		}
 		
 		// HServerQuery
 		public HServerQuery PlayerDetails( uint unIP /*uint32*/, ushort usPort /*uint16*/, IntPtr pRequestServersResponse /*class ISteamMatchmakingPlayersResponse **/ )
 		{
-			return _pi.ISteamMatchmakingServers_PlayerDetails( unIP, usPort, (IntPtr) pRequestServersResponse );
+			return _pi.ISteamMatchmakingServers_PlayerDetails( unIP /*C*/, usPort /*C*/, (IntPtr) pRequestServersResponse /*C*/ );
 		}
 		
 		// void
 		public void RefreshQuery( HServerListRequest hRequest /*HServerListRequest*/ )
 		{
-			_pi.ISteamMatchmakingServers_RefreshQuery( hRequest );
+			_pi.ISteamMatchmakingServers_RefreshQuery( hRequest.Value /*C*/ );
 		}
 		
 		// void
 		public void RefreshServer( HServerListRequest hRequest /*HServerListRequest*/, int iServer /*int*/ )
 		{
-			_pi.ISteamMatchmakingServers_RefreshServer( hRequest, iServer );
+			_pi.ISteamMatchmakingServers_RefreshServer( hRequest.Value /*C*/, iServer /*C*/ );
 		}
 		
 		// void
 		public void ReleaseRequest( HServerListRequest hServerListRequest /*HServerListRequest*/ )
 		{
-			_pi.ISteamMatchmakingServers_ReleaseRequest( hServerListRequest );
+			_pi.ISteamMatchmakingServers_ReleaseRequest( hServerListRequest.Value /*C*/ );
 		}
 		
 		// HServerListRequest
 		// with: Detect_MatchmakingFilters
 		public HServerListRequest RequestFavoritesServerList( AppId_t iApp /*AppId_t*/, IntPtr ppchFilters /*struct MatchMakingKeyValuePair_t ***/, uint nFilters /*uint32*/, IntPtr pRequestServersResponse /*class ISteamMatchmakingServerListResponse **/ )
 		{
-			return _pi.ISteamMatchmakingServers_RequestFavoritesServerList( iApp, (IntPtr) ppchFilters, nFilters, (IntPtr) pRequestServersResponse );
+			return _pi.ISteamMatchmakingServers_RequestFavoritesServerList( iApp.Value /*C*/, (IntPtr) ppchFilters, nFilters /*C*/, (IntPtr) pRequestServersResponse /*C*/ );
 		}
 		
 		// HServerListRequest
 		// with: Detect_MatchmakingFilters
 		public HServerListRequest RequestFriendsServerList( AppId_t iApp /*AppId_t*/, IntPtr ppchFilters /*struct MatchMakingKeyValuePair_t ***/, uint nFilters /*uint32*/, IntPtr pRequestServersResponse /*class ISteamMatchmakingServerListResponse **/ )
 		{
-			return _pi.ISteamMatchmakingServers_RequestFriendsServerList( iApp, (IntPtr) ppchFilters, nFilters, (IntPtr) pRequestServersResponse );
+			return _pi.ISteamMatchmakingServers_RequestFriendsServerList( iApp.Value /*C*/, (IntPtr) ppchFilters, nFilters /*C*/, (IntPtr) pRequestServersResponse /*C*/ );
 		}
 		
 		// HServerListRequest
 		// with: Detect_MatchmakingFilters
 		public HServerListRequest RequestHistoryServerList( AppId_t iApp /*AppId_t*/, IntPtr ppchFilters /*struct MatchMakingKeyValuePair_t ***/, uint nFilters /*uint32*/, IntPtr pRequestServersResponse /*class ISteamMatchmakingServerListResponse **/ )
 		{
-			return _pi.ISteamMatchmakingServers_RequestHistoryServerList( iApp, (IntPtr) ppchFilters, nFilters, (IntPtr) pRequestServersResponse );
+			return _pi.ISteamMatchmakingServers_RequestHistoryServerList( iApp.Value /*C*/, (IntPtr) ppchFilters, nFilters /*C*/, (IntPtr) pRequestServersResponse /*C*/ );
 		}
 		
 		// HServerListRequest
 		// with: Detect_MatchmakingFilters
 		public HServerListRequest RequestInternetServerList( AppId_t iApp /*AppId_t*/, IntPtr ppchFilters /*struct MatchMakingKeyValuePair_t ***/, uint nFilters /*uint32*/, IntPtr pRequestServersResponse /*class ISteamMatchmakingServerListResponse **/ )
 		{
-			return _pi.ISteamMatchmakingServers_RequestInternetServerList( iApp, (IntPtr) ppchFilters, nFilters, (IntPtr) pRequestServersResponse );
+			return _pi.ISteamMatchmakingServers_RequestInternetServerList( iApp.Value /*C*/, (IntPtr) ppchFilters, nFilters /*C*/, (IntPtr) pRequestServersResponse /*C*/ );
 		}
 		
 		// HServerListRequest
 		public HServerListRequest RequestLANServerList( AppId_t iApp /*AppId_t*/, IntPtr pRequestServersResponse /*class ISteamMatchmakingServerListResponse **/ )
 		{
-			return _pi.ISteamMatchmakingServers_RequestLANServerList( iApp, (IntPtr) pRequestServersResponse );
+			return _pi.ISteamMatchmakingServers_RequestLANServerList( iApp.Value /*C*/, (IntPtr) pRequestServersResponse /*C*/ );
 		}
 		
 		// HServerListRequest
 		// with: Detect_MatchmakingFilters
 		public HServerListRequest RequestSpectatorServerList( AppId_t iApp /*AppId_t*/, IntPtr ppchFilters /*struct MatchMakingKeyValuePair_t ***/, uint nFilters /*uint32*/, IntPtr pRequestServersResponse /*class ISteamMatchmakingServerListResponse **/ )
 		{
-			return _pi.ISteamMatchmakingServers_RequestSpectatorServerList( iApp, (IntPtr) ppchFilters, nFilters, (IntPtr) pRequestServersResponse );
+			return _pi.ISteamMatchmakingServers_RequestSpectatorServerList( iApp.Value /*C*/, (IntPtr) ppchFilters, nFilters /*C*/, (IntPtr) pRequestServersResponse /*C*/ );
 		}
 		
 		// HServerQuery
 		public HServerQuery ServerRules( uint unIP /*uint32*/, ushort usPort /*uint16*/, IntPtr pRequestServersResponse /*class ISteamMatchmakingRulesResponse **/ )
 		{
-			return _pi.ISteamMatchmakingServers_ServerRules( unIP, usPort, (IntPtr) pRequestServersResponse );
+			return _pi.ISteamMatchmakingServers_ServerRules( unIP /*C*/, usPort /*C*/, (IntPtr) pRequestServersResponse /*C*/ );
 		}
 		
 	}

@@ -42,7 +42,7 @@ namespace SteamNative
 		// void
 		public void GetVideoURL( AppId_t unVideoAppID /*AppId_t*/ )
 		{
-			_pi.ISteamVideo_GetVideoURL( unVideoAppID );
+			_pi.ISteamVideo_GetVideoURL( unVideoAppID.Value /*C*/ );
 		}
 		
 		// bool

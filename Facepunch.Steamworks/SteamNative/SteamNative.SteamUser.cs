@@ -42,13 +42,13 @@ namespace SteamNative
 		// void
 		public void AdvertiseGame( CSteamID steamIDGameServer /*class CSteamID*/, uint unIPServer /*uint32*/, ushort usPortServer /*uint16*/ )
 		{
-			_pi.ISteamUser_AdvertiseGame( steamIDGameServer, unIPServer, usPortServer );
+			_pi.ISteamUser_AdvertiseGame( steamIDGameServer.Value /*C*/, unIPServer /*C*/, usPortServer /*C*/ );
 		}
 		
 		// BeginAuthSessionResult
 		public BeginAuthSessionResult BeginAuthSession( IntPtr pAuthTicket /*const void **/, int cbAuthTicket /*int*/, CSteamID steamID /*class CSteamID*/ )
 		{
-			return _pi.ISteamUser_BeginAuthSession( (IntPtr) pAuthTicket, cbAuthTicket, steamID );
+			return _pi.ISteamUser_BeginAuthSession( (IntPtr) pAuthTicket /*C*/, cbAuthTicket /*C*/, steamID.Value /*C*/ );
 		}
 		
 		// bool
@@ -78,43 +78,43 @@ namespace SteamNative
 		// void
 		public void CancelAuthTicket( HAuthTicket hAuthTicket /*HAuthTicket*/ )
 		{
-			_pi.ISteamUser_CancelAuthTicket( hAuthTicket );
+			_pi.ISteamUser_CancelAuthTicket( hAuthTicket.Value /*C*/ );
 		}
 		
 		// VoiceResult
 		public VoiceResult DecompressVoice( IntPtr pCompressed /*const void **/, uint cbCompressed /*uint32*/, IntPtr pDestBuffer /*void **/, uint cbDestBufferSize /*uint32*/, out uint nBytesWritten /*uint32 **/, uint nDesiredSampleRate /*uint32*/ )
 		{
-			return _pi.ISteamUser_DecompressVoice( (IntPtr) pCompressed, cbCompressed, (IntPtr) pDestBuffer, cbDestBufferSize, out nBytesWritten, nDesiredSampleRate );
+			return _pi.ISteamUser_DecompressVoice( (IntPtr) pCompressed /*C*/, cbCompressed /*C*/, (IntPtr) pDestBuffer /*C*/, cbDestBufferSize /*C*/, out nBytesWritten /*B*/, nDesiredSampleRate /*C*/ );
 		}
 		
 		// void
 		public void EndAuthSession( CSteamID steamID /*class CSteamID*/ )
 		{
-			_pi.ISteamUser_EndAuthSession( steamID );
+			_pi.ISteamUser_EndAuthSession( steamID.Value /*C*/ );
 		}
 		
 		// HAuthTicket
 		public HAuthTicket GetAuthSessionTicket( IntPtr pTicket /*void **/, int cbMaxTicket /*int*/, out uint pcbTicket /*uint32 **/ )
 		{
-			return _pi.ISteamUser_GetAuthSessionTicket( (IntPtr) pTicket, cbMaxTicket, out pcbTicket );
+			return _pi.ISteamUser_GetAuthSessionTicket( (IntPtr) pTicket /*C*/, cbMaxTicket /*C*/, out pcbTicket /*B*/ );
 		}
 		
 		// VoiceResult
 		public VoiceResult GetAvailableVoice( out uint pcbCompressed /*uint32 **/, out uint pcbUncompressed /*uint32 **/, uint nUncompressedVoiceDesiredSampleRate /*uint32*/ )
 		{
-			return _pi.ISteamUser_GetAvailableVoice( out pcbCompressed, out pcbUncompressed, nUncompressedVoiceDesiredSampleRate );
+			return _pi.ISteamUser_GetAvailableVoice( out pcbCompressed /*B*/, out pcbUncompressed /*B*/, nUncompressedVoiceDesiredSampleRate /*C*/ );
 		}
 		
 		// bool
 		public bool GetEncryptedAppTicket( IntPtr pTicket /*void **/, int cbMaxTicket /*int*/, out uint pcbTicket /*uint32 **/ )
 		{
-			return _pi.ISteamUser_GetEncryptedAppTicket( (IntPtr) pTicket, cbMaxTicket, out pcbTicket );
+			return _pi.ISteamUser_GetEncryptedAppTicket( (IntPtr) pTicket /*C*/, cbMaxTicket /*C*/, out pcbTicket /*B*/ );
 		}
 		
 		// int
 		public int GetGameBadgeLevel( int nSeries /*int*/, bool bFoil /*bool*/ )
 		{
-			return _pi.ISteamUser_GetGameBadgeLevel( nSeries, bFoil );
+			return _pi.ISteamUser_GetGameBadgeLevel( nSeries /*C*/, bFoil /*C*/ );
 		}
 		
 		// HSteamUser
@@ -142,7 +142,7 @@ namespace SteamNative
 			bool bSuccess = default( bool );
 			System.Text.StringBuilder pchBuffer_sb = new System.Text.StringBuilder( 4096 );
 			int cubBuffer = 4096;
-			bSuccess = _pi.ISteamUser_GetUserDataFolder( pchBuffer_sb, cubBuffer );
+			bSuccess = _pi.ISteamUser_GetUserDataFolder( pchBuffer_sb /*C*/, cubBuffer /*C*/ );
 			if ( !bSuccess ) return null;
 			return pchBuffer_sb.ToString();
 		}
@@ -150,7 +150,7 @@ namespace SteamNative
 		// VoiceResult
 		public VoiceResult GetVoice( bool bWantCompressed /*bool*/, IntPtr pDestBuffer /*void **/, uint cbDestBufferSize /*uint32*/, out uint nBytesWritten /*uint32 **/, bool bWantUncompressed /*bool*/, IntPtr pUncompressedDestBuffer /*void **/, uint cbUncompressedDestBufferSize /*uint32*/, out uint nUncompressBytesWritten /*uint32 **/, uint nUncompressedVoiceDesiredSampleRate /*uint32*/ )
 		{
-			return _pi.ISteamUser_GetVoice( bWantCompressed, (IntPtr) pDestBuffer, cbDestBufferSize, out nBytesWritten, bWantUncompressed, (IntPtr) pUncompressedDestBuffer, cbUncompressedDestBufferSize, out nUncompressBytesWritten, nUncompressedVoiceDesiredSampleRate );
+			return _pi.ISteamUser_GetVoice( bWantCompressed /*C*/, (IntPtr) pDestBuffer /*C*/, cbDestBufferSize /*C*/, out nBytesWritten /*B*/, bWantUncompressed /*C*/, (IntPtr) pUncompressedDestBuffer /*C*/, cbUncompressedDestBufferSize /*C*/, out nUncompressBytesWritten /*B*/, nUncompressedVoiceDesiredSampleRate /*C*/ );
 		}
 		
 		// uint
@@ -162,19 +162,19 @@ namespace SteamNative
 		// int
 		public int InitiateGameConnection( IntPtr pAuthBlob /*void **/, int cbMaxAuthBlob /*int*/, CSteamID steamIDGameServer /*class CSteamID*/, uint unIPServer /*uint32*/, ushort usPortServer /*uint16*/, bool bSecure /*bool*/ )
 		{
-			return _pi.ISteamUser_InitiateGameConnection( (IntPtr) pAuthBlob, cbMaxAuthBlob, steamIDGameServer, unIPServer, usPortServer, bSecure );
+			return _pi.ISteamUser_InitiateGameConnection( (IntPtr) pAuthBlob /*C*/, cbMaxAuthBlob /*C*/, steamIDGameServer.Value /*C*/, unIPServer /*C*/, usPortServer /*C*/, bSecure /*C*/ );
 		}
 		
 		// SteamAPICall_t
 		public SteamAPICall_t RequestEncryptedAppTicket( IntPtr pDataToInclude /*void **/, int cbDataToInclude /*int*/ )
 		{
-			return _pi.ISteamUser_RequestEncryptedAppTicket( (IntPtr) pDataToInclude, cbDataToInclude );
+			return _pi.ISteamUser_RequestEncryptedAppTicket( (IntPtr) pDataToInclude /*C*/, cbDataToInclude /*C*/ );
 		}
 		
 		// SteamAPICall_t
 		public SteamAPICall_t RequestStoreAuthURL( string pchRedirectURL /*const char **/ )
 		{
-			return _pi.ISteamUser_RequestStoreAuthURL( pchRedirectURL );
+			return _pi.ISteamUser_RequestStoreAuthURL( pchRedirectURL /*C*/ );
 		}
 		
 		// void
@@ -192,19 +192,19 @@ namespace SteamNative
 		// void
 		public void TerminateGameConnection( uint unIPServer /*uint32*/, ushort usPortServer /*uint16*/ )
 		{
-			_pi.ISteamUser_TerminateGameConnection( unIPServer, usPortServer );
+			_pi.ISteamUser_TerminateGameConnection( unIPServer /*C*/, usPortServer /*C*/ );
 		}
 		
 		// void
 		public void TrackAppUsageEvent( CGameID gameID /*class CGameID*/, int eAppUsageEvent /*int*/, string pchExtraInfo /*const char **/ )
 		{
-			_pi.ISteamUser_TrackAppUsageEvent( gameID, eAppUsageEvent, pchExtraInfo );
+			_pi.ISteamUser_TrackAppUsageEvent( gameID.Value /*C*/, eAppUsageEvent /*C*/, pchExtraInfo /*C*/ );
 		}
 		
 		// UserHasLicenseForAppResult
 		public UserHasLicenseForAppResult UserHasLicenseForApp( CSteamID steamID /*class CSteamID*/, AppId_t appID /*AppId_t*/ )
 		{
-			return _pi.ISteamUser_UserHasLicenseForApp( steamID, appID );
+			return _pi.ISteamUser_UserHasLicenseForApp( steamID.Value /*C*/, appID.Value /*C*/ );
 		}
 		
 	}

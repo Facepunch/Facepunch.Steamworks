@@ -93,7 +93,7 @@ namespace Generator
             if ( classname == "SteamApi" )
                 flatName = methodName;
 
-            var argstring = string.Join( ", ", arguments.Select( x => x.InteropParameter( true ) ) );
+            var argstring = string.Join( ", ", arguments.Select( x => x.InteropParameter( true, true ) ) );
             if ( argstring != "" ) argstring = $" {argstring} ";
 
             StartBlock( $"public virtual {ret.Return()} {classname}_{methodName}({argstring})" );
@@ -125,7 +125,7 @@ namespace Generator
                 }
             }
 
-            argstring = string.Join( ", ", arguments.Select( x => x.InteropVariable() ) );
+            argstring = string.Join( ", ", arguments.Select( x => x.InteropVariable( false ) ) );
 
             if ( methodDef.NeedsSelfPointer )
                 argstring = "_ptr" + ( argstring.Length > 0 ? ", " : "" ) + argstring;

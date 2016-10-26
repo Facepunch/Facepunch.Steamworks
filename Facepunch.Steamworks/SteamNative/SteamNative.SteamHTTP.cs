@@ -42,151 +42,151 @@ namespace SteamNative
 		// HTTPCookieContainerHandle
 		public HTTPCookieContainerHandle CreateCookieContainer( bool bAllowResponsesToModify /*bool*/ )
 		{
-			return _pi.ISteamHTTP_CreateCookieContainer( bAllowResponsesToModify );
+			return _pi.ISteamHTTP_CreateCookieContainer( bAllowResponsesToModify /*C*/ );
 		}
 		
 		// HTTPRequestHandle
 		public HTTPRequestHandle CreateHTTPRequest( HTTPMethod eHTTPRequestMethod /*EHTTPMethod*/, string pchAbsoluteURL /*const char **/ )
 		{
-			return _pi.ISteamHTTP_CreateHTTPRequest( eHTTPRequestMethod, pchAbsoluteURL );
+			return _pi.ISteamHTTP_CreateHTTPRequest( eHTTPRequestMethod /*C*/, pchAbsoluteURL /*C*/ );
 		}
 		
 		// bool
 		public bool DeferHTTPRequest( HTTPRequestHandle hRequest /*HTTPRequestHandle*/ )
 		{
-			return _pi.ISteamHTTP_DeferHTTPRequest( hRequest );
+			return _pi.ISteamHTTP_DeferHTTPRequest( hRequest.Value /*C*/ );
 		}
 		
 		// bool
 		public bool GetHTTPDownloadProgressPct( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, out float pflPercentOut /*float **/ )
 		{
-			return _pi.ISteamHTTP_GetHTTPDownloadProgressPct( hRequest, out pflPercentOut );
+			return _pi.ISteamHTTP_GetHTTPDownloadProgressPct( hRequest.Value /*C*/, out pflPercentOut /*B*/ );
 		}
 		
 		// bool
 		public bool GetHTTPRequestWasTimedOut( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, ref bool pbWasTimedOut /*bool **/ )
 		{
-			return _pi.ISteamHTTP_GetHTTPRequestWasTimedOut( hRequest, ref pbWasTimedOut );
+			return _pi.ISteamHTTP_GetHTTPRequestWasTimedOut( hRequest.Value /*C*/, ref pbWasTimedOut /*A*/ );
 		}
 		
 		// bool
 		public bool GetHTTPResponseBodyData( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, out byte pBodyDataBuffer /*uint8 **/, uint unBufferSize /*uint32*/ )
 		{
-			return _pi.ISteamHTTP_GetHTTPResponseBodyData( hRequest, out pBodyDataBuffer, unBufferSize );
+			return _pi.ISteamHTTP_GetHTTPResponseBodyData( hRequest.Value /*C*/, out pBodyDataBuffer /*B*/, unBufferSize /*C*/ );
 		}
 		
 		// bool
 		public bool GetHTTPResponseBodySize( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, out uint unBodySize /*uint32 **/ )
 		{
-			return _pi.ISteamHTTP_GetHTTPResponseBodySize( hRequest, out unBodySize );
+			return _pi.ISteamHTTP_GetHTTPResponseBodySize( hRequest.Value /*C*/, out unBodySize /*B*/ );
 		}
 		
 		// bool
 		public bool GetHTTPResponseHeaderSize( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, string pchHeaderName /*const char **/, out uint unResponseHeaderSize /*uint32 **/ )
 		{
-			return _pi.ISteamHTTP_GetHTTPResponseHeaderSize( hRequest, pchHeaderName, out unResponseHeaderSize );
+			return _pi.ISteamHTTP_GetHTTPResponseHeaderSize( hRequest.Value /*C*/, pchHeaderName /*C*/, out unResponseHeaderSize /*B*/ );
 		}
 		
 		// bool
 		public bool GetHTTPResponseHeaderValue( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, string pchHeaderName /*const char **/, out byte pHeaderValueBuffer /*uint8 **/, uint unBufferSize /*uint32*/ )
 		{
-			return _pi.ISteamHTTP_GetHTTPResponseHeaderValue( hRequest, pchHeaderName, out pHeaderValueBuffer, unBufferSize );
+			return _pi.ISteamHTTP_GetHTTPResponseHeaderValue( hRequest.Value /*C*/, pchHeaderName /*C*/, out pHeaderValueBuffer /*B*/, unBufferSize /*C*/ );
 		}
 		
 		// bool
 		public bool GetHTTPStreamingResponseBodyData( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, uint cOffset /*uint32*/, out byte pBodyDataBuffer /*uint8 **/, uint unBufferSize /*uint32*/ )
 		{
-			return _pi.ISteamHTTP_GetHTTPStreamingResponseBodyData( hRequest, cOffset, out pBodyDataBuffer, unBufferSize );
+			return _pi.ISteamHTTP_GetHTTPStreamingResponseBodyData( hRequest.Value /*C*/, cOffset /*C*/, out pBodyDataBuffer /*B*/, unBufferSize /*C*/ );
 		}
 		
 		// bool
 		public bool PrioritizeHTTPRequest( HTTPRequestHandle hRequest /*HTTPRequestHandle*/ )
 		{
-			return _pi.ISteamHTTP_PrioritizeHTTPRequest( hRequest );
+			return _pi.ISteamHTTP_PrioritizeHTTPRequest( hRequest.Value /*C*/ );
 		}
 		
 		// bool
 		public bool ReleaseCookieContainer( HTTPCookieContainerHandle hCookieContainer /*HTTPCookieContainerHandle*/ )
 		{
-			return _pi.ISteamHTTP_ReleaseCookieContainer( hCookieContainer );
+			return _pi.ISteamHTTP_ReleaseCookieContainer( hCookieContainer.Value /*C*/ );
 		}
 		
 		// bool
 		public bool ReleaseHTTPRequest( HTTPRequestHandle hRequest /*HTTPRequestHandle*/ )
 		{
-			return _pi.ISteamHTTP_ReleaseHTTPRequest( hRequest );
+			return _pi.ISteamHTTP_ReleaseHTTPRequest( hRequest.Value /*C*/ );
 		}
 		
 		// bool
 		public bool SendHTTPRequest( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, ref SteamAPICall_t pCallHandle /*SteamAPICall_t **/ )
 		{
-			return _pi.ISteamHTTP_SendHTTPRequest( hRequest, ref pCallHandle );
+			return _pi.ISteamHTTP_SendHTTPRequest( hRequest.Value /*C*/, ref pCallHandle.Value /*A*/ );
 		}
 		
 		// bool
 		public bool SendHTTPRequestAndStreamResponse( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, ref SteamAPICall_t pCallHandle /*SteamAPICall_t **/ )
 		{
-			return _pi.ISteamHTTP_SendHTTPRequestAndStreamResponse( hRequest, ref pCallHandle );
+			return _pi.ISteamHTTP_SendHTTPRequestAndStreamResponse( hRequest.Value /*C*/, ref pCallHandle.Value /*A*/ );
 		}
 		
 		// bool
 		public bool SetCookie( HTTPCookieContainerHandle hCookieContainer /*HTTPCookieContainerHandle*/, string pchHost /*const char **/, string pchUrl /*const char **/, string pchCookie /*const char **/ )
 		{
-			return _pi.ISteamHTTP_SetCookie( hCookieContainer, pchHost, pchUrl, pchCookie );
+			return _pi.ISteamHTTP_SetCookie( hCookieContainer.Value /*C*/, pchHost /*C*/, pchUrl /*C*/, pchCookie /*C*/ );
 		}
 		
 		// bool
 		public bool SetHTTPRequestAbsoluteTimeoutMS( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, uint unMilliseconds /*uint32*/ )
 		{
-			return _pi.ISteamHTTP_SetHTTPRequestAbsoluteTimeoutMS( hRequest, unMilliseconds );
+			return _pi.ISteamHTTP_SetHTTPRequestAbsoluteTimeoutMS( hRequest.Value /*C*/, unMilliseconds /*C*/ );
 		}
 		
 		// bool
 		public bool SetHTTPRequestContextValue( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, ulong ulContextValue /*uint64*/ )
 		{
-			return _pi.ISteamHTTP_SetHTTPRequestContextValue( hRequest, ulContextValue );
+			return _pi.ISteamHTTP_SetHTTPRequestContextValue( hRequest.Value /*C*/, ulContextValue /*C*/ );
 		}
 		
 		// bool
 		public bool SetHTTPRequestCookieContainer( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, HTTPCookieContainerHandle hCookieContainer /*HTTPCookieContainerHandle*/ )
 		{
-			return _pi.ISteamHTTP_SetHTTPRequestCookieContainer( hRequest, hCookieContainer );
+			return _pi.ISteamHTTP_SetHTTPRequestCookieContainer( hRequest.Value /*C*/, hCookieContainer.Value /*C*/ );
 		}
 		
 		// bool
 		public bool SetHTTPRequestGetOrPostParameter( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, string pchParamName /*const char **/, string pchParamValue /*const char **/ )
 		{
-			return _pi.ISteamHTTP_SetHTTPRequestGetOrPostParameter( hRequest, pchParamName, pchParamValue );
+			return _pi.ISteamHTTP_SetHTTPRequestGetOrPostParameter( hRequest.Value /*C*/, pchParamName /*C*/, pchParamValue /*C*/ );
 		}
 		
 		// bool
 		public bool SetHTTPRequestHeaderValue( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, string pchHeaderName /*const char **/, string pchHeaderValue /*const char **/ )
 		{
-			return _pi.ISteamHTTP_SetHTTPRequestHeaderValue( hRequest, pchHeaderName, pchHeaderValue );
+			return _pi.ISteamHTTP_SetHTTPRequestHeaderValue( hRequest.Value /*C*/, pchHeaderName /*C*/, pchHeaderValue /*C*/ );
 		}
 		
 		// bool
 		public bool SetHTTPRequestNetworkActivityTimeout( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, uint unTimeoutSeconds /*uint32*/ )
 		{
-			return _pi.ISteamHTTP_SetHTTPRequestNetworkActivityTimeout( hRequest, unTimeoutSeconds );
+			return _pi.ISteamHTTP_SetHTTPRequestNetworkActivityTimeout( hRequest.Value /*C*/, unTimeoutSeconds /*C*/ );
 		}
 		
 		// bool
 		public bool SetHTTPRequestRawPostBody( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, string pchContentType /*const char **/, out byte pubBody /*uint8 **/, uint unBodyLen /*uint32*/ )
 		{
-			return _pi.ISteamHTTP_SetHTTPRequestRawPostBody( hRequest, pchContentType, out pubBody, unBodyLen );
+			return _pi.ISteamHTTP_SetHTTPRequestRawPostBody( hRequest.Value /*C*/, pchContentType /*C*/, out pubBody /*B*/, unBodyLen /*C*/ );
 		}
 		
 		// bool
 		public bool SetHTTPRequestRequiresVerifiedCertificate( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, bool bRequireVerifiedCertificate /*bool*/ )
 		{
-			return _pi.ISteamHTTP_SetHTTPRequestRequiresVerifiedCertificate( hRequest, bRequireVerifiedCertificate );
+			return _pi.ISteamHTTP_SetHTTPRequestRequiresVerifiedCertificate( hRequest.Value /*C*/, bRequireVerifiedCertificate /*C*/ );
 		}
 		
 		// bool
 		public bool SetHTTPRequestUserAgentInfo( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, string pchUserAgentInfo /*const char **/ )
 		{
-			return _pi.ISteamHTTP_SetHTTPRequestUserAgentInfo( hRequest, pchUserAgentInfo );
+			return _pi.ISteamHTTP_SetHTTPRequestUserAgentInfo( hRequest.Value /*C*/, pchUserAgentInfo /*C*/ );
 		}
 		
 	}

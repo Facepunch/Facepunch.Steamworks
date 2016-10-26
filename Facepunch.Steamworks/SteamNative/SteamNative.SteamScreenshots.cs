@@ -42,31 +42,31 @@ namespace SteamNative
 		// ScreenshotHandle
 		public ScreenshotHandle AddScreenshotToLibrary( string pchFilename /*const char **/, string pchThumbnailFilename /*const char **/, int nWidth /*int*/, int nHeight /*int*/ )
 		{
-			return _pi.ISteamScreenshots_AddScreenshotToLibrary( pchFilename, pchThumbnailFilename, nWidth, nHeight );
+			return _pi.ISteamScreenshots_AddScreenshotToLibrary( pchFilename /*C*/, pchThumbnailFilename /*C*/, nWidth /*C*/, nHeight /*C*/ );
 		}
 		
 		// void
 		public void HookScreenshots( bool bHook /*bool*/ )
 		{
-			_pi.ISteamScreenshots_HookScreenshots( bHook );
+			_pi.ISteamScreenshots_HookScreenshots( bHook /*C*/ );
 		}
 		
 		// bool
 		public bool SetLocation( ScreenshotHandle hScreenshot /*ScreenshotHandle*/, string pchLocation /*const char **/ )
 		{
-			return _pi.ISteamScreenshots_SetLocation( hScreenshot, pchLocation );
+			return _pi.ISteamScreenshots_SetLocation( hScreenshot.Value /*C*/, pchLocation /*C*/ );
 		}
 		
 		// bool
 		public bool TagPublishedFile( ScreenshotHandle hScreenshot /*ScreenshotHandle*/, PublishedFileId_t unPublishedFileID /*PublishedFileId_t*/ )
 		{
-			return _pi.ISteamScreenshots_TagPublishedFile( hScreenshot, unPublishedFileID );
+			return _pi.ISteamScreenshots_TagPublishedFile( hScreenshot.Value /*C*/, unPublishedFileID.Value /*C*/ );
 		}
 		
 		// bool
 		public bool TagUser( ScreenshotHandle hScreenshot /*ScreenshotHandle*/, CSteamID steamID /*class CSteamID*/ )
 		{
-			return _pi.ISteamScreenshots_TagUser( hScreenshot, steamID );
+			return _pi.ISteamScreenshots_TagUser( hScreenshot.Value /*C*/, steamID.Value /*C*/ );
 		}
 		
 		// void
@@ -78,7 +78,7 @@ namespace SteamNative
 		// ScreenshotHandle
 		public ScreenshotHandle WriteScreenshot( IntPtr pubRGB /*void **/, uint cubRGB /*uint32*/, int nWidth /*int*/, int nHeight /*int*/ )
 		{
-			return _pi.ISteamScreenshots_WriteScreenshot( (IntPtr) pubRGB, cubRGB, nWidth, nHeight );
+			return _pi.ISteamScreenshots_WriteScreenshot( (IntPtr) pubRGB /*C*/, cubRGB /*C*/, nWidth /*C*/, nHeight /*C*/ );
 		}
 		
 	}

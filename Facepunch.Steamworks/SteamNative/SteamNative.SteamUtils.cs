@@ -48,19 +48,19 @@ namespace SteamNative
 		// SteamAPICall_t
 		public SteamAPICall_t CheckFileSignature( string szFileName /*const char **/ )
 		{
-			return _pi.ISteamUtils_CheckFileSignature( szFileName );
+			return _pi.ISteamUtils_CheckFileSignature( szFileName /*C*/ );
 		}
 		
 		// SteamAPICallFailure
 		public SteamAPICallFailure GetAPICallFailureReason( SteamAPICall_t hSteamAPICall /*SteamAPICall_t*/ )
 		{
-			return _pi.ISteamUtils_GetAPICallFailureReason( hSteamAPICall );
+			return _pi.ISteamUtils_GetAPICallFailureReason( hSteamAPICall.Value /*C*/ );
 		}
 		
 		// bool
 		public bool GetAPICallResult( SteamAPICall_t hSteamAPICall /*SteamAPICall_t*/, IntPtr pCallback /*void **/, int cubCallback /*int*/, int iCallbackExpected /*int*/, ref bool pbFailed /*bool **/ )
 		{
-			return _pi.ISteamUtils_GetAPICallResult( hSteamAPICall, (IntPtr) pCallback, cubCallback, iCallbackExpected, ref pbFailed );
+			return _pi.ISteamUtils_GetAPICallResult( hSteamAPICall.Value /*C*/, (IntPtr) pCallback /*C*/, cubCallback /*C*/, iCallbackExpected /*C*/, ref pbFailed /*A*/ );
 		}
 		
 		// uint
@@ -78,7 +78,7 @@ namespace SteamNative
 		// bool
 		public bool GetCSERIPPort( out uint unIP /*uint32 **/, out ushort usPort /*uint16 **/ )
 		{
-			return _pi.ISteamUtils_GetCSERIPPort( out unIP, out usPort );
+			return _pi.ISteamUtils_GetCSERIPPort( out unIP /*B*/, out usPort /*B*/ );
 		}
 		
 		// byte
@@ -94,7 +94,7 @@ namespace SteamNative
 			bool bSuccess = default( bool );
 			System.Text.StringBuilder pchText_sb = new System.Text.StringBuilder( 4096 );
 			uint cchText = 4096;
-			bSuccess = _pi.ISteamUtils_GetEnteredGamepadTextInput( pchText_sb, cchText );
+			bSuccess = _pi.ISteamUtils_GetEnteredGamepadTextInput( pchText_sb /*C*/, cchText /*C*/ );
 			if ( !bSuccess ) return null;
 			return pchText_sb.ToString();
 		}
@@ -108,13 +108,13 @@ namespace SteamNative
 		// bool
 		public bool GetImageRGBA( int iImage /*int*/, IntPtr pubDest /*uint8 **/, int nDestBufferSize /*int*/ )
 		{
-			return _pi.ISteamUtils_GetImageRGBA( iImage, (IntPtr) pubDest, nDestBufferSize );
+			return _pi.ISteamUtils_GetImageRGBA( iImage /*C*/, (IntPtr) pubDest, nDestBufferSize /*C*/ );
 		}
 		
 		// bool
 		public bool GetImageSize( int iImage /*int*/, out uint pnWidth /*uint32 **/, out uint pnHeight /*uint32 **/ )
 		{
-			return _pi.ISteamUtils_GetImageSize( iImage, out pnWidth, out pnHeight );
+			return _pi.ISteamUtils_GetImageSize( iImage /*C*/, out pnWidth /*B*/, out pnHeight /*B*/ );
 		}
 		
 		// uint
@@ -162,7 +162,7 @@ namespace SteamNative
 		// bool
 		public bool IsAPICallCompleted( SteamAPICall_t hSteamAPICall /*SteamAPICall_t*/, ref bool pbFailed /*bool **/ )
 		{
-			return _pi.ISteamUtils_IsAPICallCompleted( hSteamAPICall, ref pbFailed );
+			return _pi.ISteamUtils_IsAPICallCompleted( hSteamAPICall.Value /*C*/, ref pbFailed /*A*/ );
 		}
 		
 		// bool
@@ -186,25 +186,25 @@ namespace SteamNative
 		// void
 		public void SetOverlayNotificationInset( int nHorizontalInset /*int*/, int nVerticalInset /*int*/ )
 		{
-			_pi.ISteamUtils_SetOverlayNotificationInset( nHorizontalInset, nVerticalInset );
+			_pi.ISteamUtils_SetOverlayNotificationInset( nHorizontalInset /*C*/, nVerticalInset /*C*/ );
 		}
 		
 		// void
 		public void SetOverlayNotificationPosition( NotificationPosition eNotificationPosition /*ENotificationPosition*/ )
 		{
-			_pi.ISteamUtils_SetOverlayNotificationPosition( eNotificationPosition );
+			_pi.ISteamUtils_SetOverlayNotificationPosition( eNotificationPosition /*C*/ );
 		}
 		
 		// void
 		public void SetWarningMessageHook( IntPtr pFunction /*SteamAPIWarningMessageHook_t*/ )
 		{
-			_pi.ISteamUtils_SetWarningMessageHook( (IntPtr) pFunction );
+			_pi.ISteamUtils_SetWarningMessageHook( (IntPtr) pFunction /*C*/ );
 		}
 		
 		// bool
 		public bool ShowGamepadTextInput( GamepadTextInputMode eInputMode /*EGamepadTextInputMode*/, GamepadTextInputLineMode eLineInputMode /*EGamepadTextInputLineMode*/, string pchDescription /*const char **/, uint unCharMax /*uint32*/, string pchExistingText /*const char **/ )
 		{
-			return _pi.ISteamUtils_ShowGamepadTextInput( eInputMode, eLineInputMode, pchDescription, unCharMax, pchExistingText );
+			return _pi.ISteamUtils_ShowGamepadTextInput( eInputMode /*C*/, eLineInputMode /*C*/, pchDescription /*C*/, unCharMax /*C*/, pchExistingText /*C*/ );
 		}
 		
 		// void

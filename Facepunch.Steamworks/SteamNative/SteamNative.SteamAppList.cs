@@ -42,7 +42,7 @@ namespace SteamNative
 		// int
 		public int GetAppBuildId( AppId_t nAppID /*AppId_t*/ )
 		{
-			return _pi.ISteamAppList_GetAppBuildId( nAppID );
+			return _pi.ISteamAppList_GetAppBuildId( nAppID.Value /*C*/ );
 		}
 		
 		// int
@@ -52,7 +52,7 @@ namespace SteamNative
 			int bSuccess = default( int );
 			System.Text.StringBuilder pchDirectory_sb = new System.Text.StringBuilder( 4096 );
 			int cchNameMax = 4096;
-			bSuccess = _pi.ISteamAppList_GetAppInstallDir( nAppID, pchDirectory_sb, cchNameMax );
+			bSuccess = _pi.ISteamAppList_GetAppInstallDir( nAppID.Value /*C*/, pchDirectory_sb /*C*/, cchNameMax /*C*/ );
 			if ( bSuccess <= 0 ) return null;
 			return pchDirectory_sb.ToString();
 		}
@@ -64,7 +64,7 @@ namespace SteamNative
 			int bSuccess = default( int );
 			System.Text.StringBuilder pchName_sb = new System.Text.StringBuilder( 4096 );
 			int cchNameMax = 4096;
-			bSuccess = _pi.ISteamAppList_GetAppName( nAppID, pchName_sb, cchNameMax );
+			bSuccess = _pi.ISteamAppList_GetAppName( nAppID.Value /*C*/, pchName_sb /*C*/, cchNameMax /*C*/ );
 			if ( bSuccess <= 0 ) return null;
 			return pchName_sb.ToString();
 		}
@@ -76,7 +76,7 @@ namespace SteamNative
 			var unMaxAppIDs = (uint) pvecAppID.Length;
 			fixed ( AppId_t* pvecAppID_ptr = pvecAppID  )
 			{
-				return _pi.ISteamAppList_GetInstalledApps( (IntPtr) pvecAppID_ptr, unMaxAppIDs );
+				return _pi.ISteamAppList_GetInstalledApps( (IntPtr) pvecAppID_ptr /*C*/, unMaxAppIDs /*C*/ );
 			}
 		}
 		

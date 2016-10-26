@@ -42,7 +42,7 @@ namespace SteamNative
 		// bool
 		public bool BActivationSuccess( bool bValue /*bool*/ )
 		{
-			return _pi.ISteamMusicRemote_BActivationSuccess( bValue );
+			return _pi.ISteamMusicRemote_BActivationSuccess( bValue /*C*/ );
 		}
 		
 		// bool
@@ -60,7 +60,7 @@ namespace SteamNative
 		// bool
 		public bool CurrentEntryIsAvailable( bool bAvailable /*bool*/ )
 		{
-			return _pi.ISteamMusicRemote_CurrentEntryIsAvailable( bAvailable );
+			return _pi.ISteamMusicRemote_CurrentEntryIsAvailable( bAvailable /*C*/ );
 		}
 		
 		// bool
@@ -78,37 +78,37 @@ namespace SteamNative
 		// bool
 		public bool EnableLooped( bool bValue /*bool*/ )
 		{
-			return _pi.ISteamMusicRemote_EnableLooped( bValue );
+			return _pi.ISteamMusicRemote_EnableLooped( bValue /*C*/ );
 		}
 		
 		// bool
 		public bool EnablePlaylists( bool bValue /*bool*/ )
 		{
-			return _pi.ISteamMusicRemote_EnablePlaylists( bValue );
+			return _pi.ISteamMusicRemote_EnablePlaylists( bValue /*C*/ );
 		}
 		
 		// bool
 		public bool EnablePlayNext( bool bValue /*bool*/ )
 		{
-			return _pi.ISteamMusicRemote_EnablePlayNext( bValue );
+			return _pi.ISteamMusicRemote_EnablePlayNext( bValue /*C*/ );
 		}
 		
 		// bool
 		public bool EnablePlayPrevious( bool bValue /*bool*/ )
 		{
-			return _pi.ISteamMusicRemote_EnablePlayPrevious( bValue );
+			return _pi.ISteamMusicRemote_EnablePlayPrevious( bValue /*C*/ );
 		}
 		
 		// bool
 		public bool EnableQueue( bool bValue /*bool*/ )
 		{
-			return _pi.ISteamMusicRemote_EnableQueue( bValue );
+			return _pi.ISteamMusicRemote_EnableQueue( bValue /*C*/ );
 		}
 		
 		// bool
 		public bool EnableShuffled( bool bValue /*bool*/ )
 		{
-			return _pi.ISteamMusicRemote_EnableShuffled( bValue );
+			return _pi.ISteamMusicRemote_EnableShuffled( bValue /*C*/ );
 		}
 		
 		// bool
@@ -138,7 +138,7 @@ namespace SteamNative
 		// bool
 		public bool RegisterSteamMusicRemote( string pchName /*const char **/ )
 		{
-			return _pi.ISteamMusicRemote_RegisterSteamMusicRemote( pchName );
+			return _pi.ISteamMusicRemote_RegisterSteamMusicRemote( pchName /*C*/ );
 		}
 		
 		// bool
@@ -156,79 +156,79 @@ namespace SteamNative
 		// bool
 		public bool SetCurrentPlaylistEntry( int nID /*int*/ )
 		{
-			return _pi.ISteamMusicRemote_SetCurrentPlaylistEntry( nID );
+			return _pi.ISteamMusicRemote_SetCurrentPlaylistEntry( nID /*C*/ );
 		}
 		
 		// bool
 		public bool SetCurrentQueueEntry( int nID /*int*/ )
 		{
-			return _pi.ISteamMusicRemote_SetCurrentQueueEntry( nID );
+			return _pi.ISteamMusicRemote_SetCurrentQueueEntry( nID /*C*/ );
 		}
 		
 		// bool
 		public bool SetDisplayName( string pchDisplayName /*const char **/ )
 		{
-			return _pi.ISteamMusicRemote_SetDisplayName( pchDisplayName );
+			return _pi.ISteamMusicRemote_SetDisplayName( pchDisplayName /*C*/ );
 		}
 		
 		// bool
 		public bool SetPlaylistEntry( int nID /*int*/, int nPosition /*int*/, string pchEntryText /*const char **/ )
 		{
-			return _pi.ISteamMusicRemote_SetPlaylistEntry( nID, nPosition, pchEntryText );
+			return _pi.ISteamMusicRemote_SetPlaylistEntry( nID /*C*/, nPosition /*C*/, pchEntryText /*C*/ );
 		}
 		
 		// bool
 		public bool SetPNGIcon_64x64( IntPtr pvBuffer /*void **/, uint cbBufferLength /*uint32*/ )
 		{
-			return _pi.ISteamMusicRemote_SetPNGIcon_64x64( (IntPtr) pvBuffer, cbBufferLength );
+			return _pi.ISteamMusicRemote_SetPNGIcon_64x64( (IntPtr) pvBuffer /*C*/, cbBufferLength /*C*/ );
 		}
 		
 		// bool
 		public bool SetQueueEntry( int nID /*int*/, int nPosition /*int*/, string pchEntryText /*const char **/ )
 		{
-			return _pi.ISteamMusicRemote_SetQueueEntry( nID, nPosition, pchEntryText );
+			return _pi.ISteamMusicRemote_SetQueueEntry( nID /*C*/, nPosition /*C*/, pchEntryText /*C*/ );
 		}
 		
 		// bool
 		public bool UpdateCurrentEntryCoverArt( IntPtr pvBuffer /*void **/, uint cbBufferLength /*uint32*/ )
 		{
-			return _pi.ISteamMusicRemote_UpdateCurrentEntryCoverArt( (IntPtr) pvBuffer, cbBufferLength );
+			return _pi.ISteamMusicRemote_UpdateCurrentEntryCoverArt( (IntPtr) pvBuffer /*C*/, cbBufferLength /*C*/ );
 		}
 		
 		// bool
 		public bool UpdateCurrentEntryElapsedSeconds( int nValue /*int*/ )
 		{
-			return _pi.ISteamMusicRemote_UpdateCurrentEntryElapsedSeconds( nValue );
+			return _pi.ISteamMusicRemote_UpdateCurrentEntryElapsedSeconds( nValue /*C*/ );
 		}
 		
 		// bool
 		public bool UpdateCurrentEntryText( string pchText /*const char **/ )
 		{
-			return _pi.ISteamMusicRemote_UpdateCurrentEntryText( pchText );
+			return _pi.ISteamMusicRemote_UpdateCurrentEntryText( pchText /*C*/ );
 		}
 		
 		// bool
 		public bool UpdateLooped( bool bValue /*bool*/ )
 		{
-			return _pi.ISteamMusicRemote_UpdateLooped( bValue );
+			return _pi.ISteamMusicRemote_UpdateLooped( bValue /*C*/ );
 		}
 		
 		// bool
 		public bool UpdatePlaybackStatus( AudioPlayback_Status nStatus /*AudioPlayback_Status*/ )
 		{
-			return _pi.ISteamMusicRemote_UpdatePlaybackStatus( nStatus );
+			return _pi.ISteamMusicRemote_UpdatePlaybackStatus( nStatus /*C*/ );
 		}
 		
 		// bool
 		public bool UpdateShuffled( bool bValue /*bool*/ )
 		{
-			return _pi.ISteamMusicRemote_UpdateShuffled( bValue );
+			return _pi.ISteamMusicRemote_UpdateShuffled( bValue /*C*/ );
 		}
 		
 		// bool
 		public bool UpdateVolume( float flValue /*float*/ )
 		{
-			return _pi.ISteamMusicRemote_UpdateVolume( flValue );
+			return _pi.ISteamMusicRemote_UpdateVolume( flValue /*C*/ );
 		}
 		
 	}

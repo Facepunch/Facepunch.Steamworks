@@ -123,7 +123,7 @@ namespace Generator
             if ( argString != "" ) argString = " " + argString + " ";
             StartBlock( $"public{statc} {ReturnType} {methodName}({argString})" );
 
-            CallPlatformClass( classname, m, callargs.Select( x => x.InteropVariable() ).ToList(), ReturnVar );
+            CallPlatformClass( classname, m, callargs.Select( x => x.InteropVariable( true ) ).ToList(), ReturnVar );
 
             WriteLines( BeforeLines );
 
@@ -162,7 +162,7 @@ namespace Generator
             ReturnType = argPtr.ManagedType.Trim( '*', ' ' ) + "[]";
             ReturnVar = "success";
 
-            CallPlatformClass( ClassName, MethodDef, callargs.Select( x => x.Name.Replace( "(IntPtr) ", "" )  == argPtr.Name ? "IntPtr.Zero" : x.InteropVariable() ).ToArray().ToList(), ReturnVar );
+            CallPlatformClass( ClassName, MethodDef, callargs.Select( x => x.Name.Replace( "(IntPtr) ", "" )  == argPtr.Name ? "IntPtr.Zero" : x.InteropVariable( true ) ).ToArray().ToList(), ReturnVar );
             BeforeLines.Add( $"if ( !success || {argNum.Name} == 0) return null;" );
             BeforeLines.Add( "" );
 
