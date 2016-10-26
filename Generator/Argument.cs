@@ -11,7 +11,6 @@ namespace Generator
         public string Name;
         public string NativeType;
         public string ManagedType;
-        public bool IsRef;
         public TypeDef TypeDef;
 
         public Argument( string Name, string ManagedType, Dictionary<string, TypeDef> typeDefs )
@@ -148,8 +147,7 @@ namespace Generator
             if ( ShouldBePassedAsOut )
                 return $"out {ManagedType.Trim( '*', ' ' )} {Name} /*{NativeType}*/";
 
-            var refv = IsRef ? "ref " : "";
-            return $"{refv}{ManagedType} {Name} /*{NativeType}*/";
+            return $"{ManagedType} {Name} /*{NativeType}*/";
         }
 
         internal string InteropVariable( bool AsRawValues )
