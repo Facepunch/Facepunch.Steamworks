@@ -104,7 +104,7 @@ namespace Generator
 
             if ( methodDef.NeedsSelfPointer )
             {
-                WriteLine( $"if ( _ptr == null ) throw new System.Exception( \"{classname} _ptr is null!\" );" );
+                WriteLine( $"if ( _ptr == IntPtr.Zero ) throw new System.Exception( \"{classname} _ptr is null!\" );" );
                 WriteLine();
             }
 
