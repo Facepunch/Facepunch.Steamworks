@@ -64,9 +64,30 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public SteamAPICall_t EnumeratePublishedWorkshopFiles( WorkshopEnumerationType eEnumerationType /*EWorkshopEnumerationType*/, uint unStartIndex /*uint32*/, uint unCount /*uint32*/, uint unDays /*uint32*/, IntPtr pTags /*struct SteamParamStringArray_t **/, IntPtr pUserTags /*struct SteamParamStringArray_t **/ )
+		// using: Detect_StringArray
+		public SteamAPICall_t EnumeratePublishedWorkshopFiles( WorkshopEnumerationType eEnumerationType /*EWorkshopEnumerationType*/, uint unStartIndex /*uint32*/, uint unCount /*uint32*/, uint unDays /*uint32*/, string[] pTags /*struct SteamParamStringArray_t **/, ref SteamParamStringArray_t pUserTags /*struct SteamParamStringArray_t **/ )
 		{
-			return _pi.ISteamRemoteStorage_EnumeratePublishedWorkshopFiles( eEnumerationType, unStartIndex, unCount, unDays, (IntPtr) pTags, (IntPtr) pUserTags );
+			// Create strings
+			var nativeStrings = new IntPtr[pTags.Length];
+			for ( int i = 0; i < pTags.Length; i++ )
+			{
+				nativeStrings[i] = Marshal.StringToHGlobalAnsi( pTags[i] );
+			}
+			
+			// Create string array
+			var size = Marshal.SizeOf( typeof( IntPtr ) ) * nativeStrings.Length;
+			var nativeArray = Marshal.AllocHGlobal( size );
+			Marshal.Copy( nativeStrings, 0, nativeArray, nativeStrings.Length );
+			
+			// Create SteamParamStringArray_t
+			var tags = new SteamParamStringArray_t();
+			tags.Strings = nativeArray;
+			tags.NumStrings = pTags.Length;
+			var result = _pi.ISteamRemoteStorage_EnumeratePublishedWorkshopFiles( eEnumerationType, unStartIndex, unCount, unDays, ref tags, ref pUserTags );
+			foreach ( var x in nativeStrings )
+			   Marshal.FreeHGlobal( x );
+			
+			return result;
 		}
 		
 		// SteamAPICall_t
@@ -76,9 +97,30 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public SteamAPICall_t EnumerateUserSharedWorkshopFiles( CSteamID steamId /*class CSteamID*/, uint unStartIndex /*uint32*/, IntPtr pRequiredTags /*struct SteamParamStringArray_t **/, IntPtr pExcludedTags /*struct SteamParamStringArray_t **/ )
+		// using: Detect_StringArray
+		public SteamAPICall_t EnumerateUserSharedWorkshopFiles( CSteamID steamId /*class CSteamID*/, uint unStartIndex /*uint32*/, string[] pRequiredTags /*struct SteamParamStringArray_t **/, ref SteamParamStringArray_t pExcludedTags /*struct SteamParamStringArray_t **/ )
 		{
-			return _pi.ISteamRemoteStorage_EnumerateUserSharedWorkshopFiles( steamId.Value, unStartIndex, (IntPtr) pRequiredTags, (IntPtr) pExcludedTags );
+			// Create strings
+			var nativeStrings = new IntPtr[pRequiredTags.Length];
+			for ( int i = 0; i < pRequiredTags.Length; i++ )
+			{
+				nativeStrings[i] = Marshal.StringToHGlobalAnsi( pRequiredTags[i] );
+			}
+			
+			// Create string array
+			var size = Marshal.SizeOf( typeof( IntPtr ) ) * nativeStrings.Length;
+			var nativeArray = Marshal.AllocHGlobal( size );
+			Marshal.Copy( nativeStrings, 0, nativeArray, nativeStrings.Length );
+			
+			// Create SteamParamStringArray_t
+			var tags = new SteamParamStringArray_t();
+			tags.Strings = nativeArray;
+			tags.NumStrings = pRequiredTags.Length;
+			var result = _pi.ISteamRemoteStorage_EnumerateUserSharedWorkshopFiles( steamId.Value, unStartIndex, ref tags, ref pExcludedTags );
+			foreach ( var x in nativeStrings )
+			   Marshal.FreeHGlobal( x );
+			
+			return result;
 		}
 		
 		// SteamAPICall_t
@@ -273,15 +315,57 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public SteamAPICall_t PublishVideo( WorkshopVideoProvider eVideoProvider /*EWorkshopVideoProvider*/, string pchVideoAccount /*const char **/, string pchVideoIdentifier /*const char **/, string pchPreviewFile /*const char **/, AppId_t nConsumerAppId /*AppId_t*/, string pchTitle /*const char **/, string pchDescription /*const char **/, RemoteStoragePublishedFileVisibility eVisibility /*ERemoteStoragePublishedFileVisibility*/, IntPtr pTags /*struct SteamParamStringArray_t **/ )
+		// using: Detect_StringArray
+		public SteamAPICall_t PublishVideo( WorkshopVideoProvider eVideoProvider /*EWorkshopVideoProvider*/, string pchVideoAccount /*const char **/, string pchVideoIdentifier /*const char **/, string pchPreviewFile /*const char **/, AppId_t nConsumerAppId /*AppId_t*/, string pchTitle /*const char **/, string pchDescription /*const char **/, RemoteStoragePublishedFileVisibility eVisibility /*ERemoteStoragePublishedFileVisibility*/, string[] pTags /*struct SteamParamStringArray_t **/ )
 		{
-			return _pi.ISteamRemoteStorage_PublishVideo( eVideoProvider, pchVideoAccount, pchVideoIdentifier, pchPreviewFile, nConsumerAppId.Value, pchTitle, pchDescription, eVisibility, (IntPtr) pTags );
+			// Create strings
+			var nativeStrings = new IntPtr[pTags.Length];
+			for ( int i = 0; i < pTags.Length; i++ )
+			{
+				nativeStrings[i] = Marshal.StringToHGlobalAnsi( pTags[i] );
+			}
+			
+			// Create string array
+			var size = Marshal.SizeOf( typeof( IntPtr ) ) * nativeStrings.Length;
+			var nativeArray = Marshal.AllocHGlobal( size );
+			Marshal.Copy( nativeStrings, 0, nativeArray, nativeStrings.Length );
+			
+			// Create SteamParamStringArray_t
+			var tags = new SteamParamStringArray_t();
+			tags.Strings = nativeArray;
+			tags.NumStrings = pTags.Length;
+			var result = _pi.ISteamRemoteStorage_PublishVideo( eVideoProvider, pchVideoAccount, pchVideoIdentifier, pchPreviewFile, nConsumerAppId.Value, pchTitle, pchDescription, eVisibility, ref tags );
+			foreach ( var x in nativeStrings )
+			   Marshal.FreeHGlobal( x );
+			
+			return result;
 		}
 		
 		// SteamAPICall_t
-		public SteamAPICall_t PublishWorkshopFile( string pchFile /*const char **/, string pchPreviewFile /*const char **/, AppId_t nConsumerAppId /*AppId_t*/, string pchTitle /*const char **/, string pchDescription /*const char **/, RemoteStoragePublishedFileVisibility eVisibility /*ERemoteStoragePublishedFileVisibility*/, IntPtr pTags /*struct SteamParamStringArray_t **/, WorkshopFileType eWorkshopFileType /*EWorkshopFileType*/ )
+		// using: Detect_StringArray
+		public SteamAPICall_t PublishWorkshopFile( string pchFile /*const char **/, string pchPreviewFile /*const char **/, AppId_t nConsumerAppId /*AppId_t*/, string pchTitle /*const char **/, string pchDescription /*const char **/, RemoteStoragePublishedFileVisibility eVisibility /*ERemoteStoragePublishedFileVisibility*/, string[] pTags /*struct SteamParamStringArray_t **/, WorkshopFileType eWorkshopFileType /*EWorkshopFileType*/ )
 		{
-			return _pi.ISteamRemoteStorage_PublishWorkshopFile( pchFile, pchPreviewFile, nConsumerAppId.Value, pchTitle, pchDescription, eVisibility, (IntPtr) pTags, eWorkshopFileType );
+			// Create strings
+			var nativeStrings = new IntPtr[pTags.Length];
+			for ( int i = 0; i < pTags.Length; i++ )
+			{
+				nativeStrings[i] = Marshal.StringToHGlobalAnsi( pTags[i] );
+			}
+			
+			// Create string array
+			var size = Marshal.SizeOf( typeof( IntPtr ) ) * nativeStrings.Length;
+			var nativeArray = Marshal.AllocHGlobal( size );
+			Marshal.Copy( nativeStrings, 0, nativeArray, nativeStrings.Length );
+			
+			// Create SteamParamStringArray_t
+			var tags = new SteamParamStringArray_t();
+			tags.Strings = nativeArray;
+			tags.NumStrings = pTags.Length;
+			var result = _pi.ISteamRemoteStorage_PublishWorkshopFile( pchFile, pchPreviewFile, nConsumerAppId.Value, pchTitle, pchDescription, eVisibility, ref tags, eWorkshopFileType );
+			foreach ( var x in nativeStrings )
+			   Marshal.FreeHGlobal( x );
+			
+			return result;
 		}
 		
 		// void
@@ -357,9 +441,30 @@ namespace SteamNative
 		}
 		
 		// bool
-		public bool UpdatePublishedFileTags( PublishedFileUpdateHandle_t updateHandle /*PublishedFileUpdateHandle_t*/, IntPtr pTags /*struct SteamParamStringArray_t **/ )
+		// using: Detect_StringArray
+		public bool UpdatePublishedFileTags( PublishedFileUpdateHandle_t updateHandle /*PublishedFileUpdateHandle_t*/, string[] pTags /*struct SteamParamStringArray_t **/ )
 		{
-			return _pi.ISteamRemoteStorage_UpdatePublishedFileTags( updateHandle.Value, (IntPtr) pTags );
+			// Create strings
+			var nativeStrings = new IntPtr[pTags.Length];
+			for ( int i = 0; i < pTags.Length; i++ )
+			{
+				nativeStrings[i] = Marshal.StringToHGlobalAnsi( pTags[i] );
+			}
+			
+			// Create string array
+			var size = Marshal.SizeOf( typeof( IntPtr ) ) * nativeStrings.Length;
+			var nativeArray = Marshal.AllocHGlobal( size );
+			Marshal.Copy( nativeStrings, 0, nativeArray, nativeStrings.Length );
+			
+			// Create SteamParamStringArray_t
+			var tags = new SteamParamStringArray_t();
+			tags.Strings = nativeArray;
+			tags.NumStrings = pTags.Length;
+			var result = _pi.ISteamRemoteStorage_UpdatePublishedFileTags( updateHandle.Value, ref tags );
+			foreach ( var x in nativeStrings )
+			   Marshal.FreeHGlobal( x );
+			
+			return result;
 		}
 		
 		// bool

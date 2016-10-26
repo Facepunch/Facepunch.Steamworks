@@ -143,8 +143,8 @@ namespace Facepunch.Steamworks
                 if ( Folder != null )
                     workshop.ugc.SetItemContent( UpdateHandle, Folder );
 
-               // if ( Tags != null && Tags.Count > 0 )
-               //     workshop.ugc.SetItemTags( UpdateId, Tags.ToArray() );
+                if ( Tags != null && Tags.Count > 0 )
+                    workshop.ugc.SetItemTags( UpdateHandle, Tags.ToArray() );
 
                 if ( Visibility.HasValue )
                     workshop.ugc.SetItemVisibility( UpdateHandle, (SteamNative.RemoteStoragePublishedFileVisibility)(uint)Visibility.Value );

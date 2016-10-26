@@ -113,6 +113,7 @@ namespace Generator
             Detect_ReturningStruct();
             Detect_IntPtrArgs( argList, callargs );
             Detect_MultiSizeArrayReturn( argList, callargs );
+            Detect_StringArray( argList, callargs );
 
             var methodName = m.Name;
 
@@ -133,6 +134,47 @@ namespace Generator
             WriteLine();
 
             LastMethodName = m.Name;
+        }
+
+        private void Detect_StringArray( List<Argument> argList, List<Argument> callargs )
+        {
+            var arg = argList.FirstOrDefault( x => x.NativeType.Contains( "SteamParamStringArray_t") );
+            if ( arg == null ) return;
+
+            arg.ManagedType = "string[]";
+
+            WriteLine( "// using: Detect_StringArray" );
+
+            BeforeLines.Add( "// Create strings" );
+            BeforeLines.Add( $"var nativeStrings = new IntPtr[{arg.Name}.Length];" );
+            BeforeLines.Add( $"for ( int i = 0; i < {arg.Name}.Length; i++ )" );
+            BeforeLines.Add( $"{{" );
+            BeforeLines.Add( $"nativeStrings[i] = Marshal.StringToHGlobalAnsi( {arg.Name}[i] );" );
+            BeforeLines.Add( $"}}" );
+
+            BeforeLines.Add( "" );
+            BeforeLines.Add( "// Create string array" );
+            BeforeLines.Add( $"var size = Marshal.SizeOf( typeof( IntPtr ) ) * nativeStrings.Length;" );
+            BeforeLines.Add( $"var nativeArray = Marshal.AllocHGlobal( size );" );
+            BeforeLines.Add( $"Marshal.Copy( nativeStrings, 0, nativeArray, nativeStrings.Length );" );
+
+            BeforeLines.Add( "" );
+            BeforeLines.Add( "// Create SteamParamStringArray_t" );
+            BeforeLines.Add( $"var tags = new SteamParamStringArray_t();" );
+            BeforeLines.Add( $"tags.Strings = nativeArray;" );
+            BeforeLines.Add( $"tags.NumStrings = {arg.Name}.Length;" );
+
+            ReturnVar = "var result";
+
+            AfterLines.Add( $"foreach ( var x in nativeStrings )" );
+            AfterLines.Add( $"   Marshal.FreeHGlobal( x );" );
+            AfterLines.Add( $"" );
+            AfterLines.Add( $"return result;" );
+
+
+
+            foreach ( var a in callargs )
+                if ( a.Name == arg.Name ) a.Name = "ref tags";
         }
 
         private void Detect_MultiSizeArrayReturn( List<Argument> argList, List<Argument> callargs )
@@ -387,12 +429,7 @@ namespace Generator
             if ( returnVar != "" )
                 r = returnVar + " = ";
 
-            //  StartBlock( "case 1:" );
             BeforeLines.Add( $"{r}_pi.{classname}_{methodName}({args});" );
-            // WriteLine( "break;" );
-            // EndBlock();
-
-            // EndBlock();
         }
     }
 }

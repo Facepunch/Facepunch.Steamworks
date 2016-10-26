@@ -1492,11 +1492,14 @@ namespace SteamNative
 				
 				return Native.ISteamRemoteStorage.GetCachedUGCHandle(_ptr, iCachedContent);
 			}
-			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_PublishWorkshopFile( string /*const char **/ pchFile, string /*const char **/ pchPreviewFile, uint nConsumerAppId, string /*const char **/ pchTitle, string /*const char **/ pchDescription, RemoteStoragePublishedFileVisibility /*ERemoteStoragePublishedFileVisibility*/ eVisibility, IntPtr /*struct SteamParamStringArray_t **/ pTags, WorkshopFileType /*EWorkshopFileType*/ eWorkshopFileType )
+			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_PublishWorkshopFile( string /*const char **/ pchFile, string /*const char **/ pchPreviewFile, uint nConsumerAppId, string /*const char **/ pchTitle, string /*const char **/ pchDescription, RemoteStoragePublishedFileVisibility /*ERemoteStoragePublishedFileVisibility*/ eVisibility, ref SteamParamStringArray_t /*struct SteamParamStringArray_t **/ pTags, WorkshopFileType /*EWorkshopFileType*/ eWorkshopFileType )
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.PublishWorkshopFile(_ptr, pchFile, pchPreviewFile, nConsumerAppId, pchTitle, pchDescription, eVisibility, pTags, eWorkshopFileType);
+				var pTags_ps = new SteamParamStringArray_t.PackSmall();
+				var ret = Native.ISteamRemoteStorage.PublishWorkshopFile(_ptr, pchFile, pchPreviewFile, nConsumerAppId, pchTitle, pchDescription, eVisibility, ref pTags_ps, eWorkshopFileType);
+				pTags = pTags_ps;
+				return ret;
 			}
 			public virtual PublishedFileUpdateHandle_t /*(PublishedFileUpdateHandle_t)*/ ISteamRemoteStorage_CreatePublishedFileUpdateRequest( ulong unPublishedFileId )
 			{
@@ -1534,11 +1537,14 @@ namespace SteamNative
 				
 				return Native.ISteamRemoteStorage.UpdatePublishedFileVisibility(_ptr, updateHandle, eVisibility);
 			}
-			public virtual bool /*bool*/ ISteamRemoteStorage_UpdatePublishedFileTags( ulong updateHandle, IntPtr /*struct SteamParamStringArray_t **/ pTags )
+			public virtual bool /*bool*/ ISteamRemoteStorage_UpdatePublishedFileTags( ulong updateHandle, ref SteamParamStringArray_t /*struct SteamParamStringArray_t **/ pTags )
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.UpdatePublishedFileTags(_ptr, updateHandle, pTags);
+				var pTags_ps = new SteamParamStringArray_t.PackSmall();
+				var ret = Native.ISteamRemoteStorage.UpdatePublishedFileTags(_ptr, updateHandle, ref pTags_ps);
+				pTags = pTags_ps;
+				return ret;
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_CommitPublishedFileUpdate( ulong updateHandle )
 			{
@@ -1606,17 +1612,25 @@ namespace SteamNative
 				
 				return Native.ISteamRemoteStorage.GetUserPublishedItemVoteDetails(_ptr, unPublishedFileId);
 			}
-			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_EnumerateUserSharedWorkshopFiles( ulong steamId, uint /*uint32*/ unStartIndex, IntPtr /*struct SteamParamStringArray_t **/ pRequiredTags, IntPtr /*struct SteamParamStringArray_t **/ pExcludedTags )
+			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_EnumerateUserSharedWorkshopFiles( ulong steamId, uint /*uint32*/ unStartIndex, ref SteamParamStringArray_t /*struct SteamParamStringArray_t **/ pRequiredTags, ref SteamParamStringArray_t /*struct SteamParamStringArray_t **/ pExcludedTags )
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.EnumerateUserSharedWorkshopFiles(_ptr, steamId, unStartIndex, pRequiredTags, pExcludedTags);
+				var pRequiredTags_ps = new SteamParamStringArray_t.PackSmall();
+				var pExcludedTags_ps = new SteamParamStringArray_t.PackSmall();
+				var ret = Native.ISteamRemoteStorage.EnumerateUserSharedWorkshopFiles(_ptr, steamId, unStartIndex, ref pRequiredTags_ps, ref pExcludedTags_ps);
+				pRequiredTags = pRequiredTags_ps;
+				pExcludedTags = pExcludedTags_ps;
+				return ret;
 			}
-			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_PublishVideo( WorkshopVideoProvider /*EWorkshopVideoProvider*/ eVideoProvider, string /*const char **/ pchVideoAccount, string /*const char **/ pchVideoIdentifier, string /*const char **/ pchPreviewFile, uint nConsumerAppId, string /*const char **/ pchTitle, string /*const char **/ pchDescription, RemoteStoragePublishedFileVisibility /*ERemoteStoragePublishedFileVisibility*/ eVisibility, IntPtr /*struct SteamParamStringArray_t **/ pTags )
+			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_PublishVideo( WorkshopVideoProvider /*EWorkshopVideoProvider*/ eVideoProvider, string /*const char **/ pchVideoAccount, string /*const char **/ pchVideoIdentifier, string /*const char **/ pchPreviewFile, uint nConsumerAppId, string /*const char **/ pchTitle, string /*const char **/ pchDescription, RemoteStoragePublishedFileVisibility /*ERemoteStoragePublishedFileVisibility*/ eVisibility, ref SteamParamStringArray_t /*struct SteamParamStringArray_t **/ pTags )
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.PublishVideo(_ptr, eVideoProvider, pchVideoAccount, pchVideoIdentifier, pchPreviewFile, nConsumerAppId, pchTitle, pchDescription, eVisibility, pTags);
+				var pTags_ps = new SteamParamStringArray_t.PackSmall();
+				var ret = Native.ISteamRemoteStorage.PublishVideo(_ptr, eVideoProvider, pchVideoAccount, pchVideoIdentifier, pchPreviewFile, nConsumerAppId, pchTitle, pchDescription, eVisibility, ref pTags_ps);
+				pTags = pTags_ps;
+				return ret;
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_SetUserPublishedFileAction( ulong unPublishedFileId, WorkshopFileAction /*EWorkshopFileAction*/ eAction )
 			{
@@ -1630,11 +1644,16 @@ namespace SteamNative
 				
 				return Native.ISteamRemoteStorage.EnumeratePublishedFilesByUserAction(_ptr, eAction, unStartIndex);
 			}
-			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_EnumeratePublishedWorkshopFiles( WorkshopEnumerationType /*EWorkshopEnumerationType*/ eEnumerationType, uint /*uint32*/ unStartIndex, uint /*uint32*/ unCount, uint /*uint32*/ unDays, IntPtr /*struct SteamParamStringArray_t **/ pTags, IntPtr /*struct SteamParamStringArray_t **/ pUserTags )
+			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_EnumeratePublishedWorkshopFiles( WorkshopEnumerationType /*EWorkshopEnumerationType*/ eEnumerationType, uint /*uint32*/ unStartIndex, uint /*uint32*/ unCount, uint /*uint32*/ unDays, ref SteamParamStringArray_t /*struct SteamParamStringArray_t **/ pTags, ref SteamParamStringArray_t /*struct SteamParamStringArray_t **/ pUserTags )
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.EnumeratePublishedWorkshopFiles(_ptr, eEnumerationType, unStartIndex, unCount, unDays, pTags, pUserTags);
+				var pTags_ps = new SteamParamStringArray_t.PackSmall();
+				var pUserTags_ps = new SteamParamStringArray_t.PackSmall();
+				var ret = Native.ISteamRemoteStorage.EnumeratePublishedWorkshopFiles(_ptr, eEnumerationType, unStartIndex, unCount, unDays, ref pTags_ps, ref pUserTags_ps);
+				pTags = pTags_ps;
+				pUserTags = pUserTags_ps;
+				return ret;
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_UGCDownloadToLocation( ulong hContent, string /*const char **/ pchLocation, uint /*uint32*/ unPriority )
 			{
@@ -3047,11 +3066,14 @@ namespace SteamNative
 				
 				return Native.ISteamUGC.SetItemVisibility(_ptr, handle, eVisibility);
 			}
-			public virtual bool /*bool*/ ISteamUGC_SetItemTags( ulong updateHandle, IntPtr /*const struct SteamParamStringArray_t **/ pTags )
+			public virtual bool /*bool*/ ISteamUGC_SetItemTags( ulong updateHandle, ref SteamParamStringArray_t /*const struct SteamParamStringArray_t **/ pTags )
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.SetItemTags(_ptr, updateHandle, pTags);
+				var pTags_ps = new SteamParamStringArray_t.PackSmall();
+				var ret = Native.ISteamUGC.SetItemTags(_ptr, updateHandle, ref pTags_ps);
+				pTags = pTags_ps;
+				return ret;
 			}
 			public virtual bool /*bool*/ ISteamUGC_SetItemContent( ulong handle, string /*const char **/ pszContentFolder )
 			{
@@ -4500,7 +4522,7 @@ namespace SteamNative
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetCachedUGCHandle" )]
 					internal static extern UGCHandle_t /*(UGCHandle_t)*/ GetCachedUGCHandle( IntPtr ISteamRemoteStorage, int /*int32*/ iCachedContent );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamRemoteStorage_PublishWorkshopFile" )]
-					internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ PublishWorkshopFile( IntPtr ISteamRemoteStorage, string /*const char **/ pchFile, string /*const char **/ pchPreviewFile, uint nConsumerAppId, string /*const char **/ pchTitle, string /*const char **/ pchDescription, RemoteStoragePublishedFileVisibility /*ERemoteStoragePublishedFileVisibility*/ eVisibility, IntPtr /*struct SteamParamStringArray_t **/ pTags, WorkshopFileType /*EWorkshopFileType*/ eWorkshopFileType );
+					internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ PublishWorkshopFile( IntPtr ISteamRemoteStorage, string /*const char **/ pchFile, string /*const char **/ pchPreviewFile, uint nConsumerAppId, string /*const char **/ pchTitle, string /*const char **/ pchDescription, RemoteStoragePublishedFileVisibility /*ERemoteStoragePublishedFileVisibility*/ eVisibility, ref SteamParamStringArray_t.PackSmall /*struct SteamParamStringArray_t **/ pTags, WorkshopFileType /*EWorkshopFileType*/ eWorkshopFileType );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamRemoteStorage_CreatePublishedFileUpdateRequest" )]
 					internal static extern PublishedFileUpdateHandle_t /*(PublishedFileUpdateHandle_t)*/ CreatePublishedFileUpdateRequest( IntPtr ISteamRemoteStorage, ulong unPublishedFileId );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamRemoteStorage_UpdatePublishedFileFile" )]
@@ -4514,7 +4536,7 @@ namespace SteamNative
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamRemoteStorage_UpdatePublishedFileVisibility" )]
 					internal static extern bool /*bool*/ UpdatePublishedFileVisibility( IntPtr ISteamRemoteStorage, ulong updateHandle, RemoteStoragePublishedFileVisibility /*ERemoteStoragePublishedFileVisibility*/ eVisibility );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamRemoteStorage_UpdatePublishedFileTags" )]
-					internal static extern bool /*bool*/ UpdatePublishedFileTags( IntPtr ISteamRemoteStorage, ulong updateHandle, IntPtr /*struct SteamParamStringArray_t **/ pTags );
+					internal static extern bool /*bool*/ UpdatePublishedFileTags( IntPtr ISteamRemoteStorage, ulong updateHandle, ref SteamParamStringArray_t.PackSmall /*struct SteamParamStringArray_t **/ pTags );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamRemoteStorage_CommitPublishedFileUpdate" )]
 					internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ CommitPublishedFileUpdate( IntPtr ISteamRemoteStorage, ulong updateHandle );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetPublishedFileDetails" )]
@@ -4538,15 +4560,15 @@ namespace SteamNative
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetUserPublishedItemVoteDetails" )]
 					internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ GetUserPublishedItemVoteDetails( IntPtr ISteamRemoteStorage, ulong unPublishedFileId );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamRemoteStorage_EnumerateUserSharedWorkshopFiles" )]
-					internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ EnumerateUserSharedWorkshopFiles( IntPtr ISteamRemoteStorage, ulong steamId, uint /*uint32*/ unStartIndex, IntPtr /*struct SteamParamStringArray_t **/ pRequiredTags, IntPtr /*struct SteamParamStringArray_t **/ pExcludedTags );
+					internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ EnumerateUserSharedWorkshopFiles( IntPtr ISteamRemoteStorage, ulong steamId, uint /*uint32*/ unStartIndex, ref SteamParamStringArray_t.PackSmall /*struct SteamParamStringArray_t **/ pRequiredTags, ref SteamParamStringArray_t.PackSmall /*struct SteamParamStringArray_t **/ pExcludedTags );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamRemoteStorage_PublishVideo" )]
-					internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ PublishVideo( IntPtr ISteamRemoteStorage, WorkshopVideoProvider /*EWorkshopVideoProvider*/ eVideoProvider, string /*const char **/ pchVideoAccount, string /*const char **/ pchVideoIdentifier, string /*const char **/ pchPreviewFile, uint nConsumerAppId, string /*const char **/ pchTitle, string /*const char **/ pchDescription, RemoteStoragePublishedFileVisibility /*ERemoteStoragePublishedFileVisibility*/ eVisibility, IntPtr /*struct SteamParamStringArray_t **/ pTags );
+					internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ PublishVideo( IntPtr ISteamRemoteStorage, WorkshopVideoProvider /*EWorkshopVideoProvider*/ eVideoProvider, string /*const char **/ pchVideoAccount, string /*const char **/ pchVideoIdentifier, string /*const char **/ pchPreviewFile, uint nConsumerAppId, string /*const char **/ pchTitle, string /*const char **/ pchDescription, RemoteStoragePublishedFileVisibility /*ERemoteStoragePublishedFileVisibility*/ eVisibility, ref SteamParamStringArray_t.PackSmall /*struct SteamParamStringArray_t **/ pTags );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamRemoteStorage_SetUserPublishedFileAction" )]
 					internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SetUserPublishedFileAction( IntPtr ISteamRemoteStorage, ulong unPublishedFileId, WorkshopFileAction /*EWorkshopFileAction*/ eAction );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamRemoteStorage_EnumeratePublishedFilesByUserAction" )]
 					internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ EnumeratePublishedFilesByUserAction( IntPtr ISteamRemoteStorage, WorkshopFileAction /*EWorkshopFileAction*/ eAction, uint /*uint32*/ unStartIndex );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamRemoteStorage_EnumeratePublishedWorkshopFiles" )]
-					internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ EnumeratePublishedWorkshopFiles( IntPtr ISteamRemoteStorage, WorkshopEnumerationType /*EWorkshopEnumerationType*/ eEnumerationType, uint /*uint32*/ unStartIndex, uint /*uint32*/ unCount, uint /*uint32*/ unDays, IntPtr /*struct SteamParamStringArray_t **/ pTags, IntPtr /*struct SteamParamStringArray_t **/ pUserTags );
+					internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ EnumeratePublishedWorkshopFiles( IntPtr ISteamRemoteStorage, WorkshopEnumerationType /*EWorkshopEnumerationType*/ eEnumerationType, uint /*uint32*/ unStartIndex, uint /*uint32*/ unCount, uint /*uint32*/ unDays, ref SteamParamStringArray_t.PackSmall /*struct SteamParamStringArray_t **/ pTags, ref SteamParamStringArray_t.PackSmall /*struct SteamParamStringArray_t **/ pUserTags );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamRemoteStorage_UGCDownloadToLocation" )]
 					internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ UGCDownloadToLocation( IntPtr ISteamRemoteStorage, ulong hContent, string /*const char **/ pchLocation, uint /*uint32*/ unPriority );
 				}
@@ -5052,7 +5074,7 @@ namespace SteamNative
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUGC_SetItemVisibility" )]
 					internal static extern bool /*bool*/ SetItemVisibility( IntPtr ISteamUGC, ulong handle, RemoteStoragePublishedFileVisibility /*ERemoteStoragePublishedFileVisibility*/ eVisibility );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUGC_SetItemTags" )]
-					internal static extern bool /*bool*/ SetItemTags( IntPtr ISteamUGC, ulong updateHandle, IntPtr /*const struct SteamParamStringArray_t **/ pTags );
+					internal static extern bool /*bool*/ SetItemTags( IntPtr ISteamUGC, ulong updateHandle, ref SteamParamStringArray_t.PackSmall /*const struct SteamParamStringArray_t **/ pTags );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUGC_SetItemContent" )]
 					internal static extern bool /*bool*/ SetItemContent( IntPtr ISteamUGC, ulong handle, string /*const char **/ pszContentFolder );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUGC_SetItemPreview" )]

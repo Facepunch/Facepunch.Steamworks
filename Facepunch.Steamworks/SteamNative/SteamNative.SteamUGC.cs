@@ -343,9 +343,30 @@ namespace SteamNative
 		}
 		
 		// bool
-		public bool SetItemTags( UGCUpdateHandle_t updateHandle /*UGCUpdateHandle_t*/, IntPtr pTags /*const struct SteamParamStringArray_t **/ )
+		// using: Detect_StringArray
+		public bool SetItemTags( UGCUpdateHandle_t updateHandle /*UGCUpdateHandle_t*/, string[] pTags /*const struct SteamParamStringArray_t **/ )
 		{
-			return _pi.ISteamUGC_SetItemTags( updateHandle.Value, (IntPtr) pTags );
+			// Create strings
+			var nativeStrings = new IntPtr[pTags.Length];
+			for ( int i = 0; i < pTags.Length; i++ )
+			{
+				nativeStrings[i] = Marshal.StringToHGlobalAnsi( pTags[i] );
+			}
+			
+			// Create string array
+			var size = Marshal.SizeOf( typeof( IntPtr ) ) * nativeStrings.Length;
+			var nativeArray = Marshal.AllocHGlobal( size );
+			Marshal.Copy( nativeStrings, 0, nativeArray, nativeStrings.Length );
+			
+			// Create SteamParamStringArray_t
+			var tags = new SteamParamStringArray_t();
+			tags.Strings = nativeArray;
+			tags.NumStrings = pTags.Length;
+			var result = _pi.ISteamUGC_SetItemTags( updateHandle.Value, ref tags );
+			foreach ( var x in nativeStrings )
+			   Marshal.FreeHGlobal( x );
+			
+			return result;
 		}
 		
 		// bool

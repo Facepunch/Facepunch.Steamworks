@@ -1373,21 +1373,21 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct SteamParamStringArray_t
 	{
-		public IntPtr PpStrings; // m_ppStrings const char **
+		public IntPtr Strings; // m_ppStrings const char **
 		public int NumStrings; // m_nNumStrings int32
 		public static SteamParamStringArray_t FromPointer( IntPtr p ) { return (SteamParamStringArray_t) Marshal.PtrToStructure( p, typeof(SteamParamStringArray_t) ); }
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public IntPtr PpStrings; // m_ppStrings const char **
+			public IntPtr Strings; // m_ppStrings const char **
 			public int NumStrings; // m_nNumStrings int32
 			
 			public static implicit operator SteamParamStringArray_t (  SteamParamStringArray_t.PackSmall d )
 			{
 				return new SteamParamStringArray_t()
 				{
-					PpStrings = d.PpStrings,
+					Strings = d.Strings,
 					NumStrings = d.NumStrings,
 				};
 			}

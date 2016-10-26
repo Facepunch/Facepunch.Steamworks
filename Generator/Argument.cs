@@ -64,7 +64,7 @@ namespace Generator
         {
             get
             {
-                if ( ManagedType.Contains( "SteamUGCDetails_t" ) )
+                if ( ManagedType.Contains( "SteamUGCDetails_t" ) || ManagedType.Contains( "SteamParamStringArray_t" ) )
                     return false;
 
                 if ( Name == "pOutItemsArray" || Name == "handlesOut" )

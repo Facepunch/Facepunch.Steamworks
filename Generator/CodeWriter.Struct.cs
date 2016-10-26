@@ -145,6 +145,7 @@ namespace Generator
                     .Replace( "m_us", "" )
                     .Replace( "m_sz", "" )
                     .Replace( "m_h", "" )
+                    .Replace( "m_pp", "" )
                     .Replace( "m_e", "" )
                     .Replace( "m_un", "" )
                     .Replace( "m_ul", "" )
