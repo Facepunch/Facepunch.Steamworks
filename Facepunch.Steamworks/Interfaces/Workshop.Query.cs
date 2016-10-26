@@ -95,8 +95,6 @@ namespace Facepunch.Steamworks
                     Handle = workshop.ugc.CreateQueryAllUGCRequest( (SteamNative.UGCQuery)(int)Order, (SteamNative.UGCMatchingUGCType)(int)QueryType, UploaderAppId, AppId, (uint)_resultPage + 1 );
                 }
 
-                Console.WriteLine( "Handle: " + Handle.Value );
-
                 if ( !string.IsNullOrEmpty( SearchText ) )
                     workshop.ugc.SetSearchText( Handle, SearchText );
 
@@ -112,8 +110,6 @@ namespace Facepunch.Steamworks
                 Callback = new QueryCompleted();
                 Callback.Handle = workshop.ugc.SendQueryUGCRequest( Handle );
                 Callback.OnResult = OnResult;
-
-                Console.WriteLine( "Callback.Handle: " + Callback.Handle.Value );
 
                 workshop.steamworks.AddCallResult( Callback );
             }
