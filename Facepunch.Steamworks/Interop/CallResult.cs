@@ -6,7 +6,7 @@ namespace Facepunch.Steamworks.Interop
 {
     internal unsafe abstract class CallResult : IDisposable
     {
-        public ulong Handle;
+        public SteamNative.SteamAPICall_t Handle;
 
         public void Dispose()
         {

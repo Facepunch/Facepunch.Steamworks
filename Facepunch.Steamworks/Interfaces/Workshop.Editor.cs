@@ -48,7 +48,7 @@ namespace Facepunch.Steamworks
                     ulong b = 0;
                     ulong t = 0;
 
-                    workshop.steamworks.native.ugc.GetItemUpdateProgress( SubmitItemUpdate.Handle, out b, out t );
+                    workshop.steamworks.native.ugc.GetItemUpdateProgress( SubmitItemUpdate.UpdateHandle, out b, out t );
 
                     if ( t == 0 )
                         return 0;
@@ -68,7 +68,7 @@ namespace Facepunch.Steamworks
                     ulong b = 0;
                     ulong t = 0;
 
-                    workshop.steamworks.native.ugc.GetItemUpdateProgress( SubmitItemUpdate.Handle, out b, out t );
+                    workshop.steamworks.native.ugc.GetItemUpdateProgress( SubmitItemUpdate.UpdateHandle, out b, out t );
                     return (int) b;
                 }
             }
@@ -84,7 +84,7 @@ namespace Facepunch.Steamworks
                     ulong b = 0;
                     ulong t = 0;
 
-                    workshop.steamworks.native.ugc.GetItemUpdateProgress( SubmitItemUpdate.Handle, out b, out t );
+                    workshop.steamworks.native.ugc.GetItemUpdateProgress( SubmitItemUpdate.UpdateHandle, out b, out t );
                     return (int)t;
                 }
             }
@@ -132,25 +132,25 @@ namespace Facepunch.Steamworks
 
             private void PublishChanges()
             {
-                ulong UpdateId = workshop.ugc.StartItemUpdate( workshop.steamworks.AppId, Id );
+                SteamNative.UGCUpdateHandle_t UpdateHandle = workshop.ugc.StartItemUpdate( workshop.steamworks.AppId, Id );
 
                 if ( Title != null )
-                    workshop.ugc.SetItemTitle( UpdateId, Title );
+                    workshop.ugc.SetItemTitle( UpdateHandle, Title );
 
                 if ( Description != null )
-                    workshop.ugc.SetItemDescription( UpdateId, Description );
+                    workshop.ugc.SetItemDescription( UpdateHandle, Description );
 
                 if ( Folder != null )
-                    workshop.ugc.SetItemContent( UpdateId, Folder );
+                    workshop.ugc.SetItemContent( UpdateHandle, Folder );
 
                // if ( Tags != null && Tags.Count > 0 )
                //     workshop.ugc.SetItemTags( UpdateId, Tags.ToArray() );
 
                 if ( Visibility.HasValue )
-                    workshop.ugc.SetItemVisibility( UpdateId, (SteamNative.RemoteStoragePublishedFileVisibility)(uint)Visibility.Value );
+                    workshop.ugc.SetItemVisibility( UpdateHandle, (SteamNative.RemoteStoragePublishedFileVisibility)(uint)Visibility.Value );
 
                 if ( PreviewImage != null )
-                    workshop.ugc.SetItemPreview( UpdateId, PreviewImage ); //  change preview image file for this item. pszPreviewFile points to local image file, which must be under 1MB in size
+                    workshop.ugc.SetItemPreview( UpdateHandle, PreviewImage ); //  change preview image file for this item. pszPreviewFile points to local image file, which must be under 1MB in size
 
                 /*
                     workshop.ugc.SetItemUpdateLanguage( UpdateId, const char *pchLanguage ) = 0; // specify the language of the title or description that will be set
@@ -165,8 +165,9 @@ namespace Facepunch.Steamworks
                  */
 
                 SubmitItemUpdate = new SubmitItemUpdate();
-                SubmitItemUpdate.Handle = workshop.ugc.SubmitItemUpdate( UpdateId, ChangeNote );
+                SubmitItemUpdate.Handle = workshop.ugc.SubmitItemUpdate( UpdateHandle, ChangeNote );
                 SubmitItemUpdate.OnResult = OnChangesSubmitted;
+                SubmitItemUpdate.UpdateHandle = UpdateHandle;
                 workshop.steamworks.AddCallResult( SubmitItemUpdate );
             }
 

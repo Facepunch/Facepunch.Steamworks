@@ -90,6 +90,8 @@ namespace Facepunch.Steamworks.Callbacks.Workshop
     {
         public override int CallbackId { get { return Index.UGC + 4; } }
 
+        public SteamNative.UGCUpdateHandle_t UpdateHandle;
+
         [StructLayout( LayoutKind.Sequential, Pack = 8 )]
         internal struct Data
         {
