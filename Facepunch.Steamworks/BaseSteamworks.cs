@@ -137,7 +137,7 @@ namespace Facepunch.Steamworks
         {
             bool failed = true;
 
-            if ( !native.utils.IsAPICallCompleted( call.Handle, out failed ) )
+            if ( !native.utils.IsAPICallCompleted( call.Handle, ref failed ) )
                 return false;
 
             if ( failed )

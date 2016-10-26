@@ -58,9 +58,9 @@ namespace SteamNative
 		}
 		
 		// bool
-		public bool GetAPICallResult( SteamAPICall_t hSteamAPICall /*SteamAPICall_t*/, IntPtr pCallback /*void **/, int cubCallback /*int*/, int iCallbackExpected /*int*/, out bool pbFailed /*bool **/ )
+		public bool GetAPICallResult( SteamAPICall_t hSteamAPICall /*SteamAPICall_t*/, IntPtr pCallback /*void **/, int cubCallback /*int*/, int iCallbackExpected /*int*/, ref bool pbFailed /*bool **/ )
 		{
-			return _pi.ISteamUtils_GetAPICallResult( hSteamAPICall, (IntPtr) pCallback, cubCallback, iCallbackExpected, out pbFailed );
+			return _pi.ISteamUtils_GetAPICallResult( hSteamAPICall, (IntPtr) pCallback, cubCallback, iCallbackExpected, ref pbFailed );
 		}
 		
 		// uint
@@ -160,9 +160,9 @@ namespace SteamNative
 		}
 		
 		// bool
-		public bool IsAPICallCompleted( SteamAPICall_t hSteamAPICall /*SteamAPICall_t*/, out bool pbFailed /*bool **/ )
+		public bool IsAPICallCompleted( SteamAPICall_t hSteamAPICall /*SteamAPICall_t*/, ref bool pbFailed /*bool **/ )
 		{
-			return _pi.ISteamUtils_IsAPICallCompleted( hSteamAPICall, out pbFailed );
+			return _pi.ISteamUtils_IsAPICallCompleted( hSteamAPICall, ref pbFailed );
 		}
 		
 		// bool

@@ -32,7 +32,7 @@ namespace Facepunch.Steamworks.Interop
             var data = stackalloc byte[ datasize ];
             bool failed = false;
 
-            if ( !utils.GetAPICallResult( Handle, (IntPtr) data, datasize, CallbackId, out failed ) || failed )
+            if ( !utils.GetAPICallResult( Handle, (IntPtr) data, datasize, CallbackId, ref failed ) || failed )
             {
                 Console.WriteLine( "FAILURE" );
                 return;

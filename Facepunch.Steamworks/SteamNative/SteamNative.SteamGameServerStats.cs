@@ -46,9 +46,9 @@ namespace SteamNative
 		}
 		
 		// bool
-		public bool GetUserAchievement( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/, out bool pbAchieved /*bool **/ )
+		public bool GetUserAchievement( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/, ref bool pbAchieved /*bool **/ )
 		{
-			return _pi.ISteamGameServerStats_GetUserAchievement( steamIDUser, pchName, out pbAchieved );
+			return _pi.ISteamGameServerStats_GetUserAchievement( steamIDUser, pchName, ref pbAchieved );
 		}
 		
 		// bool

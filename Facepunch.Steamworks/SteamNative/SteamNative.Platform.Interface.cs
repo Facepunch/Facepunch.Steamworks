@@ -26,7 +26,7 @@ namespace SteamNative
 			uint /*uint32*/ ISteamApps_GetEarliestPurchaseUnixTime( AppId_t /*AppId_t*/ nAppID );
 			bool /*bool*/ ISteamApps_BIsSubscribedFromFreeWeekend();
 			int /*int*/ ISteamApps_GetDLCCount();
-			bool /*bool*/ ISteamApps_BGetDLCDataByIndex( int /*int*/ iDLC , ref AppId_t /*AppId_t **/ pAppID, out bool /*bool **/ pbAvailable, System.Text.StringBuilder /*char **/ pchName, int /*int*/ cchNameBufferSize  );
+			bool /*bool*/ ISteamApps_BGetDLCDataByIndex( int /*int*/ iDLC , ref AppId_t /*AppId_t **/ pAppID, ref bool /*bool **/ pbAvailable, System.Text.StringBuilder /*char **/ pchName, int /*int*/ cchNameBufferSize  );
 			void /*void*/ ISteamApps_InstallDLC( AppId_t /*AppId_t*/ nAppID );
 			void /*void*/ ISteamApps_UninstallDLC( AppId_t /*AppId_t*/ nAppID );
 			void /*void*/ ISteamApps_RequestAppProofOfPurchaseKey( AppId_t /*AppId_t*/ nAppID );
@@ -206,7 +206,7 @@ namespace SteamNative
 			SteamAPICall_t /*(SteamAPICall_t)*/ ISteamGameServerStats_RequestUserStats( CSteamID /*class CSteamID*/ steamIDUser );
 			bool /*bool*/ ISteamGameServerStats_GetUserStat( CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , out int /*int32 **/ pData );
 			bool /*bool*/ ISteamGameServerStats_GetUserStat0( CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , out float /*float **/ pData );
-			bool /*bool*/ ISteamGameServerStats_GetUserAchievement( CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , out bool /*bool **/ pbAchieved );
+			bool /*bool*/ ISteamGameServerStats_GetUserAchievement( CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , ref bool /*bool **/ pbAchieved );
 			bool /*bool*/ ISteamGameServerStats_SetUserStat( CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , int /*int32*/ nData  );
 			bool /*bool*/ ISteamGameServerStats_SetUserStat0( CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , float /*float*/ fData  );
 			bool /*bool*/ ISteamGameServerStats_UpdateUserAvgRateStat( CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , float /*float*/ flCountThisSession , double /*double*/ dSessionLength  );
@@ -272,7 +272,7 @@ namespace SteamNative
 			bool /*bool*/ ISteamHTTP_SetHTTPRequestUserAgentInfo( HTTPRequestHandle /*HTTPRequestHandle*/ hRequest, string /*const char **/ pchUserAgentInfo  );
 			bool /*bool*/ ISteamHTTP_SetHTTPRequestRequiresVerifiedCertificate( HTTPRequestHandle /*HTTPRequestHandle*/ hRequest, bool /*bool*/ bRequireVerifiedCertificate  );
 			bool /*bool*/ ISteamHTTP_SetHTTPRequestAbsoluteTimeoutMS( HTTPRequestHandle /*HTTPRequestHandle*/ hRequest, uint /*uint32*/ unMilliseconds  );
-			bool /*bool*/ ISteamHTTP_GetHTTPRequestWasTimedOut( HTTPRequestHandle /*HTTPRequestHandle*/ hRequest, out bool /*bool **/ pbWasTimedOut );
+			bool /*bool*/ ISteamHTTP_GetHTTPRequestWasTimedOut( HTTPRequestHandle /*HTTPRequestHandle*/ hRequest, ref bool /*bool **/ pbWasTimedOut );
 			Result /*EResult*/ ISteamInventory_GetResultStatus( SteamInventoryResult_t /*SteamInventoryResult_t*/ resultHandle );
 			bool /*bool*/ ISteamInventory_GetResultItems( SteamInventoryResult_t /*SteamInventoryResult_t*/ resultHandle, IntPtr /*struct SteamItemDetails_t **/ pOutItemsArray, out uint /*uint32 **/ punOutItemsArraySize );
 			uint /*uint32*/ ISteamInventory_GetResultTimestamp( SteamInventoryResult_t /*SteamInventoryResult_t*/ resultHandle );
@@ -576,10 +576,10 @@ namespace SteamNative
 			bool /*bool*/ ISteamUserStats_SetStat( string /*const char **/ pchName , int /*int32*/ nData  );
 			bool /*bool*/ ISteamUserStats_SetStat0( string /*const char **/ pchName , float /*float*/ fData  );
 			bool /*bool*/ ISteamUserStats_UpdateAvgRateStat( string /*const char **/ pchName , float /*float*/ flCountThisSession , double /*double*/ dSessionLength  );
-			bool /*bool*/ ISteamUserStats_GetAchievement( string /*const char **/ pchName , out bool /*bool **/ pbAchieved );
+			bool /*bool*/ ISteamUserStats_GetAchievement( string /*const char **/ pchName , ref bool /*bool **/ pbAchieved );
 			bool /*bool*/ ISteamUserStats_SetAchievement( string /*const char **/ pchName  );
 			bool /*bool*/ ISteamUserStats_ClearAchievement( string /*const char **/ pchName  );
-			bool /*bool*/ ISteamUserStats_GetAchievementAndUnlockTime( string /*const char **/ pchName , out bool /*bool **/ pbAchieved, out uint /*uint32 **/ punUnlockTime );
+			bool /*bool*/ ISteamUserStats_GetAchievementAndUnlockTime( string /*const char **/ pchName , ref bool /*bool **/ pbAchieved, out uint /*uint32 **/ punUnlockTime );
 			bool /*bool*/ ISteamUserStats_StoreStats();
 			int /*int*/ ISteamUserStats_GetAchievementIcon( string /*const char **/ pchName  );
 			IntPtr ISteamUserStats_GetAchievementDisplayAttribute( string /*const char **/ pchName , string /*const char **/ pchKey  );
@@ -589,8 +589,8 @@ namespace SteamNative
 			SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUserStats_RequestUserStats( CSteamID /*class CSteamID*/ steamIDUser );
 			bool /*bool*/ ISteamUserStats_GetUserStat( CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , out int /*int32 **/ pData );
 			bool /*bool*/ ISteamUserStats_GetUserStat0( CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , out float /*float **/ pData );
-			bool /*bool*/ ISteamUserStats_GetUserAchievement( CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , out bool /*bool **/ pbAchieved );
-			bool /*bool*/ ISteamUserStats_GetUserAchievementAndUnlockTime( CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , out bool /*bool **/ pbAchieved, out uint /*uint32 **/ punUnlockTime );
+			bool /*bool*/ ISteamUserStats_GetUserAchievement( CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , ref bool /*bool **/ pbAchieved );
+			bool /*bool*/ ISteamUserStats_GetUserAchievementAndUnlockTime( CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , ref bool /*bool **/ pbAchieved, out uint /*uint32 **/ punUnlockTime );
 			bool /*bool*/ ISteamUserStats_ResetAllStats( bool /*bool*/ bAchievementsToo  );
 			SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUserStats_FindOrCreateLeaderboard( string /*const char **/ pchLeaderboardName , LeaderboardSortMethod /*ELeaderboardSortMethod*/ eLeaderboardSortMethod , LeaderboardDisplayType /*ELeaderboardDisplayType*/ eLeaderboardDisplayType  );
 			SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUserStats_FindLeaderboard( string /*const char **/ pchLeaderboardName  );
@@ -605,8 +605,8 @@ namespace SteamNative
 			SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUserStats_AttachLeaderboardUGC( SteamLeaderboard_t /*SteamLeaderboard_t*/ hSteamLeaderboard, UGCHandle_t /*UGCHandle_t*/ hUGC );
 			SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUserStats_GetNumberOfCurrentPlayers();
 			SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUserStats_RequestGlobalAchievementPercentages();
-			int /*int*/ ISteamUserStats_GetMostAchievedAchievementInfo( System.Text.StringBuilder /*char **/ pchName, uint /*uint32*/ unNameBufLen , out float /*float **/ pflPercent, out bool /*bool **/ pbAchieved );
-			int /*int*/ ISteamUserStats_GetNextMostAchievedAchievementInfo( int /*int*/ iIteratorPrevious , System.Text.StringBuilder /*char **/ pchName, uint /*uint32*/ unNameBufLen , out float /*float **/ pflPercent, out bool /*bool **/ pbAchieved );
+			int /*int*/ ISteamUserStats_GetMostAchievedAchievementInfo( System.Text.StringBuilder /*char **/ pchName, uint /*uint32*/ unNameBufLen , out float /*float **/ pflPercent, ref bool /*bool **/ pbAchieved );
+			int /*int*/ ISteamUserStats_GetNextMostAchievedAchievementInfo( int /*int*/ iIteratorPrevious , System.Text.StringBuilder /*char **/ pchName, uint /*uint32*/ unNameBufLen , out float /*float **/ pflPercent, ref bool /*bool **/ pbAchieved );
 			bool /*bool*/ ISteamUserStats_GetAchievementAchievedPercent( string /*const char **/ pchName , out float /*float **/ pflPercent );
 			SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUserStats_RequestGlobalStats( int /*int*/ nHistoryDays  );
 			bool /*bool*/ ISteamUserStats_GetGlobalStat( string /*const char **/ pchStatName , out long /*int64 **/ pData );
@@ -624,9 +624,9 @@ namespace SteamNative
 			byte /*uint8*/ ISteamUtils_GetCurrentBatteryPower();
 			uint /*uint32*/ ISteamUtils_GetAppID();
 			void /*void*/ ISteamUtils_SetOverlayNotificationPosition( NotificationPosition /*ENotificationPosition*/ eNotificationPosition  );
-			bool /*bool*/ ISteamUtils_IsAPICallCompleted( SteamAPICall_t /*SteamAPICall_t*/ hSteamAPICall, out bool /*bool **/ pbFailed );
+			bool /*bool*/ ISteamUtils_IsAPICallCompleted( SteamAPICall_t /*SteamAPICall_t*/ hSteamAPICall, ref bool /*bool **/ pbFailed );
 			SteamAPICallFailure /*ESteamAPICallFailure*/ ISteamUtils_GetAPICallFailureReason( SteamAPICall_t /*SteamAPICall_t*/ hSteamAPICall );
-			bool /*bool*/ ISteamUtils_GetAPICallResult( SteamAPICall_t /*SteamAPICall_t*/ hSteamAPICall, IntPtr /*void **/ pCallback , int /*int*/ cubCallback , int /*int*/ iCallbackExpected , out bool /*bool **/ pbFailed );
+			bool /*bool*/ ISteamUtils_GetAPICallResult( SteamAPICall_t /*SteamAPICall_t*/ hSteamAPICall, IntPtr /*void **/ pCallback , int /*int*/ cubCallback , int /*int*/ iCallbackExpected , ref bool /*bool **/ pbFailed );
 			uint /*uint32*/ ISteamUtils_GetIPCCallCount();
 			void /*void*/ ISteamUtils_SetWarningMessageHook( IntPtr /*SteamAPIWarningMessageHook_t*/ pFunction  );
 			bool /*bool*/ ISteamUtils_IsOverlayEnabled();

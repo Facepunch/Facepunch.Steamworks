@@ -41,13 +41,13 @@ namespace SteamNative
 		
 		// bool
 		// with: Detect_StringFetch False
-		public bool BGetDLCDataByIndex( int iDLC /*int*/, ref AppId_t pAppID /*AppId_t **/, out bool pbAvailable /*bool **/, out string pchName /*char **/ )
+		public bool BGetDLCDataByIndex( int iDLC /*int*/, ref AppId_t pAppID /*AppId_t **/, ref bool pbAvailable /*bool **/, out string pchName /*char **/ )
 		{
 			bool bSuccess = default( bool );
 			pchName = string.Empty;
 			System.Text.StringBuilder pchName_sb = new System.Text.StringBuilder( 4096 );
 			int cchNameBufferSize = 4096;
-			bSuccess = _pi.ISteamApps_BGetDLCDataByIndex( iDLC, ref pAppID, out pbAvailable, pchName_sb, cchNameBufferSize );
+			bSuccess = _pi.ISteamApps_BGetDLCDataByIndex( iDLC, ref pAppID, ref pbAvailable, pchName_sb, cchNameBufferSize );
 			if ( !bSuccess ) return bSuccess;
 			pchName = pchName_sb.ToString();
 			return bSuccess;

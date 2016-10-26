@@ -871,11 +871,11 @@ namespace SteamNative
 				
 				Native.ISteamUtils.SetOverlayNotificationPosition(_ptr, eNotificationPosition);
 			}
-			public virtual bool /*bool*/ ISteamUtils_IsAPICallCompleted( SteamAPICall_t /*SteamAPICall_t*/ hSteamAPICall, out bool /*bool **/ pbFailed )
+			public virtual bool /*bool*/ ISteamUtils_IsAPICallCompleted( SteamAPICall_t /*SteamAPICall_t*/ hSteamAPICall, ref bool /*bool **/ pbFailed )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUtils _ptr is null!" );
 				
-				return Native.ISteamUtils.IsAPICallCompleted(_ptr, hSteamAPICall, out pbFailed);
+				return Native.ISteamUtils.IsAPICallCompleted(_ptr, hSteamAPICall, ref pbFailed);
 			}
 			public virtual SteamAPICallFailure /*ESteamAPICallFailure*/ ISteamUtils_GetAPICallFailureReason( SteamAPICall_t /*SteamAPICall_t*/ hSteamAPICall )
 			{
@@ -883,11 +883,11 @@ namespace SteamNative
 				
 				return Native.ISteamUtils.GetAPICallFailureReason(_ptr, hSteamAPICall);
 			}
-			public virtual bool /*bool*/ ISteamUtils_GetAPICallResult( SteamAPICall_t /*SteamAPICall_t*/ hSteamAPICall, IntPtr /*void **/ pCallback , int /*int*/ cubCallback , int /*int*/ iCallbackExpected , out bool /*bool **/ pbFailed )
+			public virtual bool /*bool*/ ISteamUtils_GetAPICallResult( SteamAPICall_t /*SteamAPICall_t*/ hSteamAPICall, IntPtr /*void **/ pCallback , int /*int*/ cubCallback , int /*int*/ iCallbackExpected , ref bool /*bool **/ pbFailed )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUtils _ptr is null!" );
 				
-				return Native.ISteamUtils.GetAPICallResult(_ptr, hSteamAPICall, pCallback, cubCallback, iCallbackExpected, out pbFailed);
+				return Native.ISteamUtils.GetAPICallResult(_ptr, hSteamAPICall, pCallback, cubCallback, iCallbackExpected, ref pbFailed);
 			}
 			public virtual uint /*uint32*/ ISteamUtils_GetIPCCallCount()
 			{
@@ -1667,11 +1667,11 @@ namespace SteamNative
 				
 				return Native.ISteamUserStats.UpdateAvgRateStat(_ptr, pchName, flCountThisSession, dSessionLength);
 			}
-			public virtual bool /*bool*/ ISteamUserStats_GetAchievement( string /*const char **/ pchName , out bool /*bool **/ pbAchieved )
+			public virtual bool /*bool*/ ISteamUserStats_GetAchievement( string /*const char **/ pchName , ref bool /*bool **/ pbAchieved )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetAchievement(_ptr, pchName, out pbAchieved);
+				return Native.ISteamUserStats.GetAchievement(_ptr, pchName, ref pbAchieved);
 			}
 			public virtual bool /*bool*/ ISteamUserStats_SetAchievement( string /*const char **/ pchName  )
 			{
@@ -1685,11 +1685,11 @@ namespace SteamNative
 				
 				return Native.ISteamUserStats.ClearAchievement(_ptr, pchName);
 			}
-			public virtual bool /*bool*/ ISteamUserStats_GetAchievementAndUnlockTime( string /*const char **/ pchName , out bool /*bool **/ pbAchieved, out uint /*uint32 **/ punUnlockTime )
+			public virtual bool /*bool*/ ISteamUserStats_GetAchievementAndUnlockTime( string /*const char **/ pchName , ref bool /*bool **/ pbAchieved, out uint /*uint32 **/ punUnlockTime )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetAchievementAndUnlockTime(_ptr, pchName, out pbAchieved, out punUnlockTime);
+				return Native.ISteamUserStats.GetAchievementAndUnlockTime(_ptr, pchName, ref pbAchieved, out punUnlockTime);
 			}
 			public virtual bool /*bool*/ ISteamUserStats_StoreStats()
 			{
@@ -1745,17 +1745,17 @@ namespace SteamNative
 				
 				return Native.ISteamUserStats.GetUserStat0(_ptr, steamIDUser, pchName, out pData);
 			}
-			public virtual bool /*bool*/ ISteamUserStats_GetUserAchievement( CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , out bool /*bool **/ pbAchieved )
+			public virtual bool /*bool*/ ISteamUserStats_GetUserAchievement( CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , ref bool /*bool **/ pbAchieved )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetUserAchievement(_ptr, steamIDUser, pchName, out pbAchieved);
+				return Native.ISteamUserStats.GetUserAchievement(_ptr, steamIDUser, pchName, ref pbAchieved);
 			}
-			public virtual bool /*bool*/ ISteamUserStats_GetUserAchievementAndUnlockTime( CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , out bool /*bool **/ pbAchieved, out uint /*uint32 **/ punUnlockTime )
+			public virtual bool /*bool*/ ISteamUserStats_GetUserAchievementAndUnlockTime( CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , ref bool /*bool **/ pbAchieved, out uint /*uint32 **/ punUnlockTime )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetUserAchievementAndUnlockTime(_ptr, steamIDUser, pchName, out pbAchieved, out punUnlockTime);
+				return Native.ISteamUserStats.GetUserAchievementAndUnlockTime(_ptr, steamIDUser, pchName, ref pbAchieved, out punUnlockTime);
 			}
 			public virtual bool /*bool*/ ISteamUserStats_ResetAllStats( bool /*bool*/ bAchievementsToo  )
 			{
@@ -1844,17 +1844,17 @@ namespace SteamNative
 				
 				return Native.ISteamUserStats.RequestGlobalAchievementPercentages(_ptr);
 			}
-			public virtual int /*int*/ ISteamUserStats_GetMostAchievedAchievementInfo( System.Text.StringBuilder /*char **/ pchName, uint /*uint32*/ unNameBufLen , out float /*float **/ pflPercent, out bool /*bool **/ pbAchieved )
+			public virtual int /*int*/ ISteamUserStats_GetMostAchievedAchievementInfo( System.Text.StringBuilder /*char **/ pchName, uint /*uint32*/ unNameBufLen , out float /*float **/ pflPercent, ref bool /*bool **/ pbAchieved )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetMostAchievedAchievementInfo(_ptr, pchName, unNameBufLen, out pflPercent, out pbAchieved);
+				return Native.ISteamUserStats.GetMostAchievedAchievementInfo(_ptr, pchName, unNameBufLen, out pflPercent, ref pbAchieved);
 			}
-			public virtual int /*int*/ ISteamUserStats_GetNextMostAchievedAchievementInfo( int /*int*/ iIteratorPrevious , System.Text.StringBuilder /*char **/ pchName, uint /*uint32*/ unNameBufLen , out float /*float **/ pflPercent, out bool /*bool **/ pbAchieved )
+			public virtual int /*int*/ ISteamUserStats_GetNextMostAchievedAchievementInfo( int /*int*/ iIteratorPrevious , System.Text.StringBuilder /*char **/ pchName, uint /*uint32*/ unNameBufLen , out float /*float **/ pflPercent, ref bool /*bool **/ pbAchieved )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetNextMostAchievedAchievementInfo(_ptr, iIteratorPrevious, pchName, unNameBufLen, out pflPercent, out pbAchieved);
+				return Native.ISteamUserStats.GetNextMostAchievedAchievementInfo(_ptr, iIteratorPrevious, pchName, unNameBufLen, out pflPercent, ref pbAchieved);
 			}
 			public virtual bool /*bool*/ ISteamUserStats_GetAchievementAchievedPercent( string /*const char **/ pchName , out float /*float **/ pflPercent )
 			{
@@ -1959,11 +1959,11 @@ namespace SteamNative
 				
 				return Native.ISteamApps.GetDLCCount(_ptr);
 			}
-			public virtual bool /*bool*/ ISteamApps_BGetDLCDataByIndex( int /*int*/ iDLC , ref AppId_t /*AppId_t **/ pAppID, out bool /*bool **/ pbAvailable, System.Text.StringBuilder /*char **/ pchName, int /*int*/ cchNameBufferSize  )
+			public virtual bool /*bool*/ ISteamApps_BGetDLCDataByIndex( int /*int*/ iDLC , ref AppId_t /*AppId_t **/ pAppID, ref bool /*bool **/ pbAvailable, System.Text.StringBuilder /*char **/ pchName, int /*int*/ cchNameBufferSize  )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamApps _ptr is null!" );
 				
-				return Native.ISteamApps.BGetDLCDataByIndex(_ptr, iDLC, ref pAppID, out pbAvailable, pchName, cchNameBufferSize);
+				return Native.ISteamApps.BGetDLCDataByIndex(_ptr, iDLC, ref pAppID, ref pbAvailable, pchName, cchNameBufferSize);
 			}
 			public virtual void /*void*/ ISteamApps_InstallDLC( AppId_t /*AppId_t*/ nAppID )
 			{
@@ -2615,11 +2615,11 @@ namespace SteamNative
 				
 				return Native.ISteamHTTP.SetHTTPRequestAbsoluteTimeoutMS(_ptr, hRequest, unMilliseconds);
 			}
-			public virtual bool /*bool*/ ISteamHTTP_GetHTTPRequestWasTimedOut( HTTPRequestHandle /*HTTPRequestHandle*/ hRequest, out bool /*bool **/ pbWasTimedOut )
+			public virtual bool /*bool*/ ISteamHTTP_GetHTTPRequestWasTimedOut( HTTPRequestHandle /*HTTPRequestHandle*/ hRequest, ref bool /*bool **/ pbWasTimedOut )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTTP _ptr is null!" );
 				
-				return Native.ISteamHTTP.GetHTTPRequestWasTimedOut(_ptr, hRequest, out pbWasTimedOut);
+				return Native.ISteamHTTP.GetHTTPRequestWasTimedOut(_ptr, hRequest, ref pbWasTimedOut);
 			}
 			
 			public virtual ClientUnifiedMessageHandle /*(ClientUnifiedMessageHandle)*/ ISteamUnifiedMessages_SendMethod( string /*const char **/ pchServiceMethod , IntPtr /*const void **/ pRequestBuffer , uint /*uint32*/ unRequestBufferSize , ulong /*uint64*/ unContext  )
@@ -3809,11 +3809,11 @@ namespace SteamNative
 				
 				return Native.ISteamGameServerStats.GetUserStat0(_ptr, steamIDUser, pchName, out pData);
 			}
-			public virtual bool /*bool*/ ISteamGameServerStats_GetUserAchievement( CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , out bool /*bool **/ pbAchieved )
+			public virtual bool /*bool*/ ISteamGameServerStats_GetUserAchievement( CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , ref bool /*bool **/ pbAchieved )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServerStats _ptr is null!" );
 				
-				return Native.ISteamGameServerStats.GetUserAchievement(_ptr, steamIDUser, pchName, out pbAchieved);
+				return Native.ISteamGameServerStats.GetUserAchievement(_ptr, steamIDUser, pchName, ref pbAchieved);
 			}
 			public virtual bool /*bool*/ ISteamGameServerStats_SetUserStat( CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , int /*int32*/ nData  )
 			{
@@ -4057,9 +4057,9 @@ namespace SteamNative
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUtils_GetCurrentBatteryPower" )] internal static extern byte /*uint8*/ GetCurrentBatteryPower( IntPtr ISteamUtils );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUtils_GetAppID" )] internal static extern uint /*uint32*/ GetAppID( IntPtr ISteamUtils );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUtils_SetOverlayNotificationPosition" )] internal static extern void /*void*/ SetOverlayNotificationPosition( IntPtr ISteamUtils, NotificationPosition /*ENotificationPosition*/ eNotificationPosition  );
-					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUtils_IsAPICallCompleted" )] internal static extern bool /*bool*/ IsAPICallCompleted( IntPtr ISteamUtils, SteamAPICall_t /*SteamAPICall_t*/ hSteamAPICall, out bool /*bool **/ pbFailed );
+					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUtils_IsAPICallCompleted" )] internal static extern bool /*bool*/ IsAPICallCompleted( IntPtr ISteamUtils, SteamAPICall_t /*SteamAPICall_t*/ hSteamAPICall, ref bool /*bool **/ pbFailed );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUtils_GetAPICallFailureReason" )] internal static extern SteamAPICallFailure /*ESteamAPICallFailure*/ GetAPICallFailureReason( IntPtr ISteamUtils, SteamAPICall_t /*SteamAPICall_t*/ hSteamAPICall );
-					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUtils_GetAPICallResult" )] internal static extern bool /*bool*/ GetAPICallResult( IntPtr ISteamUtils, SteamAPICall_t /*SteamAPICall_t*/ hSteamAPICall, IntPtr /*void **/ pCallback , int /*int*/ cubCallback , int /*int*/ iCallbackExpected , out bool /*bool **/ pbFailed );
+					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUtils_GetAPICallResult" )] internal static extern bool /*bool*/ GetAPICallResult( IntPtr ISteamUtils, SteamAPICall_t /*SteamAPICall_t*/ hSteamAPICall, IntPtr /*void **/ pCallback , int /*int*/ cubCallback , int /*int*/ iCallbackExpected , ref bool /*bool **/ pbFailed );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUtils_GetIPCCallCount" )] internal static extern uint /*uint32*/ GetIPCCallCount( IntPtr ISteamUtils );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUtils_SetWarningMessageHook" )] internal static extern void /*void*/ SetWarningMessageHook( IntPtr ISteamUtils, IntPtr /*SteamAPIWarningMessageHook_t*/ pFunction  );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUtils_IsOverlayEnabled" )] internal static extern bool /*bool*/ IsOverlayEnabled( IntPtr ISteamUtils );
@@ -4205,10 +4205,10 @@ namespace SteamNative
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_SetStat" )] internal static extern bool /*bool*/ SetStat( IntPtr ISteamUserStats, string /*const char **/ pchName , int /*int32*/ nData  );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_SetStat0" )] internal static extern bool /*bool*/ SetStat0( IntPtr ISteamUserStats, string /*const char **/ pchName , float /*float*/ fData  );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_UpdateAvgRateStat" )] internal static extern bool /*bool*/ UpdateAvgRateStat( IntPtr ISteamUserStats, string /*const char **/ pchName , float /*float*/ flCountThisSession , double /*double*/ dSessionLength  );
-					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_GetAchievement" )] internal static extern bool /*bool*/ GetAchievement( IntPtr ISteamUserStats, string /*const char **/ pchName , out bool /*bool **/ pbAchieved );
+					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_GetAchievement" )] internal static extern bool /*bool*/ GetAchievement( IntPtr ISteamUserStats, string /*const char **/ pchName , ref bool /*bool **/ pbAchieved );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_SetAchievement" )] internal static extern bool /*bool*/ SetAchievement( IntPtr ISteamUserStats, string /*const char **/ pchName  );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_ClearAchievement" )] internal static extern bool /*bool*/ ClearAchievement( IntPtr ISteamUserStats, string /*const char **/ pchName  );
-					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_GetAchievementAndUnlockTime" )] internal static extern bool /*bool*/ GetAchievementAndUnlockTime( IntPtr ISteamUserStats, string /*const char **/ pchName , out bool /*bool **/ pbAchieved, out uint /*uint32 **/ punUnlockTime );
+					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_GetAchievementAndUnlockTime" )] internal static extern bool /*bool*/ GetAchievementAndUnlockTime( IntPtr ISteamUserStats, string /*const char **/ pchName , ref bool /*bool **/ pbAchieved, out uint /*uint32 **/ punUnlockTime );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_StoreStats" )] internal static extern bool /*bool*/ StoreStats( IntPtr ISteamUserStats );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_GetAchievementIcon" )] internal static extern int /*int*/ GetAchievementIcon( IntPtr ISteamUserStats, string /*const char **/ pchName  );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_GetAchievementDisplayAttribute" )] internal static extern IntPtr GetAchievementDisplayAttribute( IntPtr ISteamUserStats, string /*const char **/ pchName , string /*const char **/ pchKey  );
@@ -4218,8 +4218,8 @@ namespace SteamNative
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_RequestUserStats" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ RequestUserStats( IntPtr ISteamUserStats, CSteamID /*class CSteamID*/ steamIDUser );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_GetUserStat" )] internal static extern bool /*bool*/ GetUserStat( IntPtr ISteamUserStats, CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , out int /*int32 **/ pData );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_GetUserStat0" )] internal static extern bool /*bool*/ GetUserStat0( IntPtr ISteamUserStats, CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , out float /*float **/ pData );
-					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_GetUserAchievement" )] internal static extern bool /*bool*/ GetUserAchievement( IntPtr ISteamUserStats, CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , out bool /*bool **/ pbAchieved );
-					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_GetUserAchievementAndUnlockTime" )] internal static extern bool /*bool*/ GetUserAchievementAndUnlockTime( IntPtr ISteamUserStats, CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , out bool /*bool **/ pbAchieved, out uint /*uint32 **/ punUnlockTime );
+					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_GetUserAchievement" )] internal static extern bool /*bool*/ GetUserAchievement( IntPtr ISteamUserStats, CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , ref bool /*bool **/ pbAchieved );
+					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_GetUserAchievementAndUnlockTime" )] internal static extern bool /*bool*/ GetUserAchievementAndUnlockTime( IntPtr ISteamUserStats, CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , ref bool /*bool **/ pbAchieved, out uint /*uint32 **/ punUnlockTime );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_ResetAllStats" )] internal static extern bool /*bool*/ ResetAllStats( IntPtr ISteamUserStats, bool /*bool*/ bAchievementsToo  );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_FindOrCreateLeaderboard" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ FindOrCreateLeaderboard( IntPtr ISteamUserStats, string /*const char **/ pchLeaderboardName , LeaderboardSortMethod /*ELeaderboardSortMethod*/ eLeaderboardSortMethod , LeaderboardDisplayType /*ELeaderboardDisplayType*/ eLeaderboardDisplayType  );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_FindLeaderboard" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ FindLeaderboard( IntPtr ISteamUserStats, string /*const char **/ pchLeaderboardName  );
@@ -4234,8 +4234,8 @@ namespace SteamNative
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_AttachLeaderboardUGC" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ AttachLeaderboardUGC( IntPtr ISteamUserStats, SteamLeaderboard_t /*SteamLeaderboard_t*/ hSteamLeaderboard, UGCHandle_t /*UGCHandle_t*/ hUGC );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_GetNumberOfCurrentPlayers" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ GetNumberOfCurrentPlayers( IntPtr ISteamUserStats );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_RequestGlobalAchievementPercentages" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ RequestGlobalAchievementPercentages( IntPtr ISteamUserStats );
-					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_GetMostAchievedAchievementInfo" )] internal static extern int /*int*/ GetMostAchievedAchievementInfo( IntPtr ISteamUserStats, System.Text.StringBuilder /*char **/ pchName, uint /*uint32*/ unNameBufLen , out float /*float **/ pflPercent, out bool /*bool **/ pbAchieved );
-					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_GetNextMostAchievedAchievementInfo" )] internal static extern int /*int*/ GetNextMostAchievedAchievementInfo( IntPtr ISteamUserStats, int /*int*/ iIteratorPrevious , System.Text.StringBuilder /*char **/ pchName, uint /*uint32*/ unNameBufLen , out float /*float **/ pflPercent, out bool /*bool **/ pbAchieved );
+					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_GetMostAchievedAchievementInfo" )] internal static extern int /*int*/ GetMostAchievedAchievementInfo( IntPtr ISteamUserStats, System.Text.StringBuilder /*char **/ pchName, uint /*uint32*/ unNameBufLen , out float /*float **/ pflPercent, ref bool /*bool **/ pbAchieved );
+					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_GetNextMostAchievedAchievementInfo" )] internal static extern int /*int*/ GetNextMostAchievedAchievementInfo( IntPtr ISteamUserStats, int /*int*/ iIteratorPrevious , System.Text.StringBuilder /*char **/ pchName, uint /*uint32*/ unNameBufLen , out float /*float **/ pflPercent, ref bool /*bool **/ pbAchieved );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_GetAchievementAchievedPercent" )] internal static extern bool /*bool*/ GetAchievementAchievedPercent( IntPtr ISteamUserStats, string /*const char **/ pchName , out float /*float **/ pflPercent );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_RequestGlobalStats" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ RequestGlobalStats( IntPtr ISteamUserStats, int /*int*/ nHistoryDays  );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamUserStats_GetGlobalStat" )] internal static extern bool /*bool*/ GetGlobalStat( IntPtr ISteamUserStats, string /*const char **/ pchStatName , out long /*int64 **/ pData );
@@ -4257,7 +4257,7 @@ namespace SteamNative
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamApps_GetEarliestPurchaseUnixTime" )] internal static extern uint /*uint32*/ GetEarliestPurchaseUnixTime( IntPtr ISteamApps, AppId_t /*AppId_t*/ nAppID );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamApps_BIsSubscribedFromFreeWeekend" )] internal static extern bool /*bool*/ BIsSubscribedFromFreeWeekend( IntPtr ISteamApps );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamApps_GetDLCCount" )] internal static extern int /*int*/ GetDLCCount( IntPtr ISteamApps );
-					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamApps_BGetDLCDataByIndex" )] internal static extern bool /*bool*/ BGetDLCDataByIndex( IntPtr ISteamApps, int /*int*/ iDLC , ref AppId_t /*AppId_t **/ pAppID, out bool /*bool **/ pbAvailable, System.Text.StringBuilder /*char **/ pchName, int /*int*/ cchNameBufferSize  );
+					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamApps_BGetDLCDataByIndex" )] internal static extern bool /*bool*/ BGetDLCDataByIndex( IntPtr ISteamApps, int /*int*/ iDLC , ref AppId_t /*AppId_t **/ pAppID, ref bool /*bool **/ pbAvailable, System.Text.StringBuilder /*char **/ pchName, int /*int*/ cchNameBufferSize  );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamApps_InstallDLC" )] internal static extern void /*void*/ InstallDLC( IntPtr ISteamApps, AppId_t /*AppId_t*/ nAppID );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamApps_UninstallDLC" )] internal static extern void /*void*/ UninstallDLC( IntPtr ISteamApps, AppId_t /*AppId_t*/ nAppID );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamApps_RequestAppProofOfPurchaseKey" )] internal static extern void /*void*/ RequestAppProofOfPurchaseKey( IntPtr ISteamApps, AppId_t /*AppId_t*/ nAppID );
@@ -4385,7 +4385,7 @@ namespace SteamNative
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamHTTP_SetHTTPRequestUserAgentInfo" )] internal static extern bool /*bool*/ SetHTTPRequestUserAgentInfo( IntPtr ISteamHTTP, HTTPRequestHandle /*HTTPRequestHandle*/ hRequest, string /*const char **/ pchUserAgentInfo  );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamHTTP_SetHTTPRequestRequiresVerifiedCertificate" )] internal static extern bool /*bool*/ SetHTTPRequestRequiresVerifiedCertificate( IntPtr ISteamHTTP, HTTPRequestHandle /*HTTPRequestHandle*/ hRequest, bool /*bool*/ bRequireVerifiedCertificate  );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamHTTP_SetHTTPRequestAbsoluteTimeoutMS" )] internal static extern bool /*bool*/ SetHTTPRequestAbsoluteTimeoutMS( IntPtr ISteamHTTP, HTTPRequestHandle /*HTTPRequestHandle*/ hRequest, uint /*uint32*/ unMilliseconds  );
-					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamHTTP_GetHTTPRequestWasTimedOut" )] internal static extern bool /*bool*/ GetHTTPRequestWasTimedOut( IntPtr ISteamHTTP, HTTPRequestHandle /*HTTPRequestHandle*/ hRequest, out bool /*bool **/ pbWasTimedOut );
+					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamHTTP_GetHTTPRequestWasTimedOut" )] internal static extern bool /*bool*/ GetHTTPRequestWasTimedOut( IntPtr ISteamHTTP, HTTPRequestHandle /*HTTPRequestHandle*/ hRequest, ref bool /*bool **/ pbWasTimedOut );
 				}
 				
 				internal static unsafe class ISteamUnifiedMessages
@@ -4618,7 +4618,7 @@ namespace SteamNative
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamGameServerStats_RequestUserStats" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ RequestUserStats( IntPtr ISteamGameServerStats, CSteamID /*class CSteamID*/ steamIDUser );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamGameServerStats_GetUserStat" )] internal static extern bool /*bool*/ GetUserStat( IntPtr ISteamGameServerStats, CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , out int /*int32 **/ pData );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamGameServerStats_GetUserStat0" )] internal static extern bool /*bool*/ GetUserStat0( IntPtr ISteamGameServerStats, CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , out float /*float **/ pData );
-					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamGameServerStats_GetUserAchievement" )] internal static extern bool /*bool*/ GetUserAchievement( IntPtr ISteamGameServerStats, CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , out bool /*bool **/ pbAchieved );
+					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamGameServerStats_GetUserAchievement" )] internal static extern bool /*bool*/ GetUserAchievement( IntPtr ISteamGameServerStats, CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , ref bool /*bool **/ pbAchieved );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamGameServerStats_SetUserStat" )] internal static extern bool /*bool*/ SetUserStat( IntPtr ISteamGameServerStats, CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , int /*int32*/ nData  );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamGameServerStats_SetUserStat0" )] internal static extern bool /*bool*/ SetUserStat0( IntPtr ISteamGameServerStats, CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , float /*float*/ fData  );
 					[DllImportAttribute( "libsteam_api64.so", EntryPoint = "SteamAPI_ISteamGameServerStats_UpdateUserAvgRateStat" )] internal static extern bool /*bool*/ UpdateUserAvgRateStat( IntPtr ISteamGameServerStats, CSteamID /*class CSteamID*/ steamIDUser, string /*const char **/ pchName , float /*float*/ flCountThisSession , double /*double*/ dSessionLength  );

@@ -64,9 +64,9 @@ namespace SteamNative
 		}
 		
 		// bool
-		public bool GetHTTPRequestWasTimedOut( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, out bool pbWasTimedOut /*bool **/ )
+		public bool GetHTTPRequestWasTimedOut( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, ref bool pbWasTimedOut /*bool **/ )
 		{
-			return _pi.ISteamHTTP_GetHTTPRequestWasTimedOut( hRequest, out pbWasTimedOut );
+			return _pi.ISteamHTTP_GetHTTPRequestWasTimedOut( hRequest, ref pbWasTimedOut );
 		}
 		
 		// bool

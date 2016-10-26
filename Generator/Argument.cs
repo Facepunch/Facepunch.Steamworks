@@ -44,6 +44,9 @@ namespace Generator
         {
             get
             {
+                if ( ManagedType.Contains( "bool*" ) )
+                    return true;
+
                 return ManagedType.EndsWith( "*" ) && ManagedType.Contains( "_t" ) && Name.StartsWith( "p" ) && !Name.StartsWith( "pvec" );
             }
         }
@@ -52,7 +55,7 @@ namespace Generator
         {
             get
             {
-                return ManagedType.EndsWith( "*" ) && !ManagedType.Contains( "_t" ) && !ManagedType.Contains( "char" );
+                return ManagedType.EndsWith( "*" ) && !ManagedType.Contains( "_t" ) && !ManagedType.Contains( "char" ) && !ManagedType.Contains( "bool" );
             }
         }
 

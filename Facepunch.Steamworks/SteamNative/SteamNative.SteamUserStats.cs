@@ -76,9 +76,9 @@ namespace SteamNative
 		}
 		
 		// bool
-		public bool GetAchievement( string pchName /*const char **/, out bool pbAchieved /*bool **/ )
+		public bool GetAchievement( string pchName /*const char **/, ref bool pbAchieved /*bool **/ )
 		{
-			return _pi.ISteamUserStats_GetAchievement( pchName, out pbAchieved );
+			return _pi.ISteamUserStats_GetAchievement( pchName, ref pbAchieved );
 		}
 		
 		// bool
@@ -88,9 +88,9 @@ namespace SteamNative
 		}
 		
 		// bool
-		public bool GetAchievementAndUnlockTime( string pchName /*const char **/, out bool pbAchieved /*bool **/, out uint punUnlockTime /*uint32 **/ )
+		public bool GetAchievementAndUnlockTime( string pchName /*const char **/, ref bool pbAchieved /*bool **/, out uint punUnlockTime /*uint32 **/ )
 		{
-			return _pi.ISteamUserStats_GetAchievementAndUnlockTime( pchName, out pbAchieved, out punUnlockTime );
+			return _pi.ISteamUserStats_GetAchievementAndUnlockTime( pchName, ref pbAchieved, out punUnlockTime );
 		}
 		
 		// string
@@ -176,13 +176,13 @@ namespace SteamNative
 		
 		// int
 		// with: Detect_StringFetch False
-		public int GetMostAchievedAchievementInfo( out string pchName /*char **/, out float pflPercent /*float **/, out bool pbAchieved /*bool **/ )
+		public int GetMostAchievedAchievementInfo( out string pchName /*char **/, out float pflPercent /*float **/, ref bool pbAchieved /*bool **/ )
 		{
 			int bSuccess = default( int );
 			pchName = string.Empty;
 			System.Text.StringBuilder pchName_sb = new System.Text.StringBuilder( 4096 );
 			uint unNameBufLen = 4096;
-			bSuccess = _pi.ISteamUserStats_GetMostAchievedAchievementInfo( pchName_sb, unNameBufLen, out pflPercent, out pbAchieved );
+			bSuccess = _pi.ISteamUserStats_GetMostAchievedAchievementInfo( pchName_sb, unNameBufLen, out pflPercent, ref pbAchieved );
 			if ( bSuccess <= 0 ) return bSuccess;
 			pchName = pchName_sb.ToString();
 			return bSuccess;
@@ -190,13 +190,13 @@ namespace SteamNative
 		
 		// int
 		// with: Detect_StringFetch False
-		public int GetNextMostAchievedAchievementInfo( int iIteratorPrevious /*int*/, out string pchName /*char **/, out float pflPercent /*float **/, out bool pbAchieved /*bool **/ )
+		public int GetNextMostAchievedAchievementInfo( int iIteratorPrevious /*int*/, out string pchName /*char **/, out float pflPercent /*float **/, ref bool pbAchieved /*bool **/ )
 		{
 			int bSuccess = default( int );
 			pchName = string.Empty;
 			System.Text.StringBuilder pchName_sb = new System.Text.StringBuilder( 4096 );
 			uint unNameBufLen = 4096;
-			bSuccess = _pi.ISteamUserStats_GetNextMostAchievedAchievementInfo( iIteratorPrevious, pchName_sb, unNameBufLen, out pflPercent, out pbAchieved );
+			bSuccess = _pi.ISteamUserStats_GetNextMostAchievedAchievementInfo( iIteratorPrevious, pchName_sb, unNameBufLen, out pflPercent, ref pbAchieved );
 			if ( bSuccess <= 0 ) return bSuccess;
 			pchName = pchName_sb.ToString();
 			return bSuccess;
@@ -227,15 +227,15 @@ namespace SteamNative
 		}
 		
 		// bool
-		public bool GetUserAchievement( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/, out bool pbAchieved /*bool **/ )
+		public bool GetUserAchievement( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/, ref bool pbAchieved /*bool **/ )
 		{
-			return _pi.ISteamUserStats_GetUserAchievement( steamIDUser, pchName, out pbAchieved );
+			return _pi.ISteamUserStats_GetUserAchievement( steamIDUser, pchName, ref pbAchieved );
 		}
 		
 		// bool
-		public bool GetUserAchievementAndUnlockTime( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/, out bool pbAchieved /*bool **/, out uint punUnlockTime /*uint32 **/ )
+		public bool GetUserAchievementAndUnlockTime( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/, ref bool pbAchieved /*bool **/, out uint punUnlockTime /*uint32 **/ )
 		{
-			return _pi.ISteamUserStats_GetUserAchievementAndUnlockTime( steamIDUser, pchName, out pbAchieved, out punUnlockTime );
+			return _pi.ISteamUserStats_GetUserAchievementAndUnlockTime( steamIDUser, pchName, ref pbAchieved, out punUnlockTime );
 		}
 		
 		// bool
