@@ -28,7 +28,8 @@ namespace Facepunch.Steamworks.Interop
         {
             api = new SteamNative.SteamApi( (IntPtr) 1 );
 
-            api.SteamAPI_Init();
+            if ( !api.SteamAPI_Init() )
+                return false;
 
             var user = api.SteamAPI_GetHSteamUser();
             var pipe = api.SteamAPI_GetHSteamPipe();
