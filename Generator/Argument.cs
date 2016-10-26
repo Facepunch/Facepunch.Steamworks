@@ -154,52 +154,58 @@ namespace Generator
         internal string InteropParameter( bool LargePack, bool includeMarshalling = false )
         {
             var ps = LargePack ? "" : ".PackSmall";
-
+            var marshalling = "";
             if ( !NativeType.Contains( "_t" ) )
                 ps = string.Empty;
 
             if ( TypeDef != null )
                 ps = string.Empty;
 
-            if ( includeMarshalling  )
+            if ( includeMarshalling )
             {
+                if ( NativeType == "bool" ) marshalling = "[MarshalAs(UnmanagedType.U1)]";
+                if ( NativeType == "bool *" ) marshalling = "[MarshalAs(UnmanagedType.U1)]";
 
+                if ( TypeDef != null && TypeDef.NativeType.Contains( "_t" ) )
+                {
+               //     if ( !TypeDef.NativeType.Contains( "*" ) )
+              //          return $"{TypeDef.ManagedType} {Name}";
+                }
             }
 
-
             if ( ShouldBeIntPtr )
-                return $"IntPtr /*{NativeType}*/ {Name}";
+            return $"IntPtr /*{NativeType}*/ {Name}".Trim();
 
             if ( IsStructShouldBePassedAsRef )
-                return $"ref {ManagedType.Trim( '*', ' ' )}{ps} /*{NativeType}*/ {Name}";
+                return $"{marshalling} ref {ManagedType.Trim( '*', ' ' )}{ps} /*{NativeType}*/ {Name}".Trim();
 
             if ( ShouldBePassedAsOut )
-                return $"out {ManagedType.Trim( '*', ' ' )} /*{NativeType}*/ {Name}";
+                return $"{marshalling} out {ManagedType.Trim( '*', ' ' )} /*{NativeType}*/ {Name}".Trim();
 
             if ( NativeType == "char *"  || NativeType == "char **" )
             {
-                return $"System.Text.StringBuilder /*{NativeType}*/ {Name}";
+                return $"System.Text.StringBuilder /*{NativeType}*/ {Name}".Trim();
             }
 
             if ( TypeDef != null )
             {
                 if ( NativeType.EndsWith( "*" ) )
                 {
-                    return $"IntPtr /*{NativeType}*/ {Name}";
+                    return $"IntPtr /*{NativeType}*/ {Name}".Trim();
                 }
                 else
                 {
-                    return $"{TypeDef.Name} /*{NativeType}*/ {Name}";
+                    return $"{marshalling} {TypeDef.Name} /*{NativeType}*/ {Name}".Trim();
                 }                
             }
 
 
             if ( NativeType.EndsWith( "*" ) && ManagedType.Contains( "_t" ) )
             {
-                return $"IntPtr /*{NativeType}*/ {Name} ";
+                return $"IntPtr /*{NativeType}*/ {Name} ".Trim();
             }
 
-            return $"{ManagedType} /*{NativeType}*/ {Name} ";
+            return $"{marshalling} {ManagedType} /*{NativeType}*/ {Name} ".Trim();
         }
 
         internal string Return()

@@ -173,7 +173,7 @@ namespace Generator
 
             WriteLine( $"[DllImportAttribute( \"{library}\", EntryPoint = \"{flatName}\" )]" );
 
-            if ( ret.Return() == "bool" )WriteLine( "[return: MarshalAs(UnmanagedType.Bool)]" );
+            if ( ret.Return() == "bool" ) WriteLine( "[return: MarshalAs(UnmanagedType.U1)]" );
 
             WriteLine( $"internal static extern {ret.Return()} {methodName}({argstring});" );
             LastMethodName = methodDef.Name;
