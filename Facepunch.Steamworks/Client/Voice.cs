@@ -100,8 +100,6 @@ namespace Facepunch.Steamworks
                                                     OnUncompressedData != null, (IntPtr) ReadUncompressedBuffer, ReadBufferSize, out bufferRegularLastWrite, 
                                                     DesiredSampleRate == 0 ? OptimalSampleRate : DesiredSampleRate );
 
-            Console.WriteLine( result );
-
             IsRecording = true;
 
             if ( result == SteamNative.VoiceResult.OK )
