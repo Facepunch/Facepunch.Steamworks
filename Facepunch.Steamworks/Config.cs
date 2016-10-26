@@ -18,5 +18,17 @@ namespace Facepunch.Steamworks
         /// </summary>
         public static bool UseThisCall { get; set; } = true;
 
+
+        /// <summary>
+        /// You can force the platform to a particular one here.
+        /// This is useful if you're on OSX because some versions of mono don't have a way
+        /// to tell which platform we're running
+        /// </summary>
+        public static void ForcePlatform( SteamNative.OperatingSystem os, SteamNative.Architecture arch )
+        {
+            SteamNative.Platform.Os = os;
+            SteamNative.Platform.Arch = arch;
+        }
+
     }
 }

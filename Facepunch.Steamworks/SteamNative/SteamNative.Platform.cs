@@ -3,23 +3,23 @@ using System.Runtime.InteropServices;
 
 namespace SteamNative
 {
+    public enum OperatingSystem
+    {
+        Unset,
+        Windows,
+        Linux,
+        Osx,
+    }
+
+    public enum Architecture
+    {
+        Unset,
+        x86,
+        x64
+    }
+
     internal static partial class Platform
     {
-        internal enum OperatingSystem
-        {
-            Unset,
-            Windows,
-            Linux,
-            Osx,
-        }
-
-        internal enum Architecture
-        {
-            Unset,
-            x86,
-            x64
-        }
-
         private static OperatingSystem _os;
         private static Architecture _arch;
 
@@ -49,6 +49,11 @@ namespace SteamNative
 
                 return _os;
             }
+
+            set
+            {
+                _os = value;
+            }
         }
 
         internal static Architecture Arch
@@ -69,6 +74,11 @@ namespace SteamNative
                 }
 
                 return _arch;
+            }
+
+            set
+            {
+                _arch = value;
             }
         }
 
