@@ -79,14 +79,14 @@ namespace Facepunch.Steamworks.Interop
             gameServerStats = client.GetISteamGameServerStats( huser, hpipe, "SteamGameServerStats001" );
             http = client.GetISteamHTTP( huser, hpipe, "STEAMHTTP_INTERFACE_VERSION002" );
             inventory = client.GetISteamInventory( huser, hpipe, "STEAMINVENTORY_INTERFACE_V001" );
-            ugc = client.GetISteamUGC( huser, hpipe, "STEAMUGC_INTERFACE_VERSION008" );
+            ugc = client.GetISteamUGC( huser, hpipe, "STEAMUGC_INTERFACE_VERSION009" );
             apps = client.GetISteamApps( huser, hpipe, "STEAMAPPS_INTERFACE_VERSION008" );
             gameServer = client.GetISteamGameServer( huser, hpipe, "SteamGameServer012" );
             friends = client.GetISteamFriends( huser, hpipe, "SteamFriends015" );
             servers = client.GetISteamMatchmakingServers( huser, hpipe, "SteamMatchMakingServers002" );
             userstats = client.GetISteamUserStats( huser, hpipe, "STEAMUSERSTATS_INTERFACE_VERSION011" );
-            screenshots = client.GetISteamScreenshots( huser, hpipe, "STEAMSCREENSHOTS_INTERFACE_VERSION002" );
-            remoteStorage = client.GetISteamRemoteStorage( huser, hpipe, "STEAMREMOTESTORAGE_INTERFACE_VERSION013" );
+            screenshots = client.GetISteamScreenshots( huser, hpipe, "STEAMSCREENSHOTS_INTERFACE_VERSION003" );
+            remoteStorage = client.GetISteamRemoteStorage( huser, hpipe, "STEAMREMOTESTORAGE_INTERFACE_VERSION014" );
         }
 
         public void Dispose()
