@@ -119,8 +119,8 @@ namespace SteamNative
 			bool bSuccess = default( bool );
 			pchValueBuffer = string.Empty;
 			System.Text.StringBuilder pchValueBuffer_sb = new System.Text.StringBuilder( 4096 );
-			uint punValueBufferSize = 4096;
-			bSuccess = _pi.ISteamInventory_GetItemDefinitionProperty( iDefinition.Value, pchPropertyName, pchValueBuffer_sb, out punValueBufferSize );
+			uint punValueBufferSizeOut = 4096;
+			bSuccess = _pi.ISteamInventory_GetItemDefinitionProperty( iDefinition.Value, pchPropertyName, pchValueBuffer_sb, out punValueBufferSizeOut );
 			if ( !bSuccess ) return bSuccess;
 			pchValueBuffer = pchValueBuffer_sb.ToString();
 			return bSuccess;

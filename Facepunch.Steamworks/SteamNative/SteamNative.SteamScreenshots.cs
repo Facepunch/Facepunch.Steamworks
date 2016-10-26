@@ -45,10 +45,22 @@ namespace SteamNative
 			return _pi.ISteamScreenshots_AddScreenshotToLibrary( pchFilename, pchThumbnailFilename, nWidth, nHeight );
 		}
 		
+		// ScreenshotHandle
+		public ScreenshotHandle AddVRScreenshotToLibrary( VRScreenshotType eType /*EVRScreenshotType*/, string pchFilename /*const char **/, string pchVRFilename /*const char **/ )
+		{
+			return _pi.ISteamScreenshots_AddVRScreenshotToLibrary( eType, pchFilename, pchVRFilename );
+		}
+		
 		// void
 		public void HookScreenshots( bool bHook /*bool*/ )
 		{
 			_pi.ISteamScreenshots_HookScreenshots( bHook );
+		}
+		
+		// bool
+		public bool IsScreenshotsHooked()
+		{
+			return _pi.ISteamScreenshots_IsScreenshotsHooked();
 		}
 		
 		// bool

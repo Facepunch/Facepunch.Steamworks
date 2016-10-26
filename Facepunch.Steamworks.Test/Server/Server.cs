@@ -9,6 +9,9 @@ namespace Facepunch.Steamworks.Test
     [DeploymentItem( "tier0_s.dll" )]
     [DeploymentItem( "vstdlib_s.dll" )]
     [DeploymentItem( "steamclient.dll" )]
+    [DeploymentItem( "tier0_s64.dll" )]
+    [DeploymentItem( "vstdlib_s64.dll" )]
+    [DeploymentItem( "steamclient64.dll" )]
     [TestClass]
     public partial class Server
     {

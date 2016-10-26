@@ -98,6 +98,10 @@ namespace Generator
 
             StartBlock( $"public virtual {ret.Return()} {classname}_{methodName}({argstring})" );
 
+          //  var vars = string.Join( " + \",\" + ", arguments.Where( x => !x.InteropParameter( true, true ).StartsWith( "out " ) ).Select( x => x.Name ) );
+         //   if ( vars != "" ) vars = "\" + " + vars + " + \"";
+         //   WriteLine( $"Console.WriteLine( \"{classname}_{methodName}( {vars} )\" );" );
+
             if ( methodDef.NeedsSelfPointer )
             {
                 WriteLine( $"if ( _ptr == null ) throw new System.Exception( \"{classname} _ptr is null!\" );" );

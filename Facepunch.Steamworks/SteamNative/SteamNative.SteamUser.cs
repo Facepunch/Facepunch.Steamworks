@@ -58,6 +58,18 @@ namespace SteamNative
 		}
 		
 		// bool
+		public bool BIsPhoneIdentifying()
+		{
+			return _pi.ISteamUser_BIsPhoneIdentifying();
+		}
+		
+		// bool
+		public bool BIsPhoneRequiringVerification()
+		{
+			return _pi.ISteamUser_BIsPhoneRequiringVerification();
+		}
+		
+		// bool
 		public bool BIsPhoneVerified()
 		{
 			return _pi.ISteamUser_BIsPhoneVerified();

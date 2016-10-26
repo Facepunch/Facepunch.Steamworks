@@ -380,6 +380,18 @@ namespace SteamNative
 				
 				return Native.ISteamUser.BIsTwoFactorEnabled(_ptr);
 			}
+			public virtual bool /*bool*/ ISteamUser_BIsPhoneIdentifying()
+			{
+				if ( _ptr == null ) throw new System.Exception( "ISteamUser _ptr is null!" );
+				
+				return Native.ISteamUser.BIsPhoneIdentifying(_ptr);
+			}
+			public virtual bool /*bool*/ ISteamUser_BIsPhoneRequiringVerification()
+			{
+				if ( _ptr == null ) throw new System.Exception( "ISteamUser _ptr is null!" );
+				
+				return Native.ISteamUser.BIsPhoneRequiringVerification(_ptr);
+			}
 			
 			public virtual IntPtr ISteamFriends_GetPersonaName()
 			{
@@ -1420,7 +1432,7 @@ namespace SteamNative
 				
 				return Native.ISteamRemoteStorage.GetFileNameAndSize(_ptr, iFile, pnFileSizeInBytes);
 			}
-			public virtual bool /*bool*/ ISteamRemoteStorage_GetQuota( IntPtr /*int32 **/ pnTotalBytes, IntPtr /*int32 **/ puAvailableBytes )
+			public virtual bool /*bool*/ ISteamRemoteStorage_GetQuota( IntPtr /*uint64 **/ pnTotalBytes, IntPtr /*uint64 **/ puAvailableBytes )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
@@ -2043,6 +2055,12 @@ namespace SteamNative
 				
 				Native.ISteamApps.RequestAllProofOfPurchaseKeys(_ptr);
 			}
+			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamApps_GetFileDetails( string /*const char **/ pszFileName )
+			{
+				if ( _ptr == null ) throw new System.Exception( "ISteamApps _ptr is null!" );
+				
+				return Native.ISteamApps.GetFileDetails(_ptr, pszFileName);
+			}
 			
 			public virtual bool /*bool*/ ISteamNetworking_SendP2PPacket( ulong steamIDRemote, IntPtr /*const void **/ pubData, uint /*uint32*/ cubData, P2PSend /*EP2PSend*/ eP2PSendType, int /*int*/ nChannel )
 			{
@@ -2221,6 +2239,18 @@ namespace SteamNative
 				if ( _ptr == null ) throw new System.Exception( "ISteamScreenshots _ptr is null!" );
 				
 				return Native.ISteamScreenshots.TagPublishedFile(_ptr, hScreenshot, unPublishedFileID);
+			}
+			public virtual bool /*bool*/ ISteamScreenshots_IsScreenshotsHooked()
+			{
+				if ( _ptr == null ) throw new System.Exception( "ISteamScreenshots _ptr is null!" );
+				
+				return Native.ISteamScreenshots.IsScreenshotsHooked(_ptr);
+			}
+			public virtual ScreenshotHandle /*(ScreenshotHandle)*/ ISteamScreenshots_AddVRScreenshotToLibrary( VRScreenshotType /*EVRScreenshotType*/ eType, string /*const char **/ pchFilename, string /*const char **/ pchVRFilename )
+			{
+				if ( _ptr == null ) throw new System.Exception( "ISteamScreenshots _ptr is null!" );
+				
+				return Native.ISteamScreenshots.AddVRScreenshotToLibrary(_ptr, eType, pchFilename, pchVRFilename);
 			}
 			
 			public virtual bool /*bool*/ ISteamMusic_BIsEnabled()
@@ -2755,6 +2785,36 @@ namespace SteamNative
 				
 				Native.ISteamController.TriggerRepeatedHapticPulse(_ptr, controllerHandle, eTargetPad, usDurationMicroSec, usOffMicroSec, unRepeat, nFlags);
 			}
+			public virtual int /*int*/ ISteamController_GetGamepadIndexForController( ulong ulControllerHandle )
+			{
+				if ( _ptr == null ) throw new System.Exception( "ISteamController _ptr is null!" );
+				
+				return Native.ISteamController.GetGamepadIndexForController(_ptr, ulControllerHandle);
+			}
+			public virtual ControllerHandle_t /*(ControllerHandle_t)*/ ISteamController_GetControllerForGamepadIndex( int /*int*/ nIndex )
+			{
+				if ( _ptr == null ) throw new System.Exception( "ISteamController _ptr is null!" );
+				
+				return Native.ISteamController.GetControllerForGamepadIndex(_ptr, nIndex);
+			}
+			public virtual ControllerMotionData_t /*struct ControllerMotionData_t*/ ISteamController_GetMotionData( ulong controllerHandle )
+			{
+				if ( _ptr == null ) throw new System.Exception( "ISteamController _ptr is null!" );
+				
+				return Native.ISteamController.GetMotionData(_ptr, controllerHandle);
+			}
+			public virtual bool /*bool*/ ISteamController_ShowDigitalActionOrigins( ulong controllerHandle, ulong digitalActionHandle, float /*float*/ flScale, float /*float*/ flXPosition, float /*float*/ flYPosition )
+			{
+				if ( _ptr == null ) throw new System.Exception( "ISteamController _ptr is null!" );
+				
+				return Native.ISteamController.ShowDigitalActionOrigins(_ptr, controllerHandle, digitalActionHandle, flScale, flXPosition, flYPosition);
+			}
+			public virtual bool /*bool*/ ISteamController_ShowAnalogActionOrigins( ulong controllerHandle, ulong analogActionHandle, float /*float*/ flScale, float /*float*/ flXPosition, float /*float*/ flYPosition )
+			{
+				if ( _ptr == null ) throw new System.Exception( "ISteamController _ptr is null!" );
+				
+				return Native.ISteamController.ShowAnalogActionOrigins(_ptr, controllerHandle, analogActionHandle, flScale, flXPosition, flYPosition);
+			}
 			
 			public virtual UGCQueryHandle_t /*(UGCQueryHandle_t)*/ ISteamUGC_CreateQueryUserUGCRequest( uint unAccountID, UserUGCList /*EUserUGCList*/ eListType, UGCMatchingUGCType /*EUGCMatchingUGCType*/ eMatchingUGCType, UserUGCListSortOrder /*EUserUGCListSortOrder*/ eSortOrder, uint nCreatorAppID, uint nConsumerAppID, uint /*uint32*/ unPage )
 			{
@@ -2807,7 +2867,7 @@ namespace SteamNative
 				
 				return Native.ISteamUGC.GetQueryUGCChildren(_ptr, handle, index, pvecPublishedFileID, cMaxEntries);
 			}
-			public virtual bool /*bool*/ ISteamUGC_GetQueryUGCStatistic( ulong handle, uint /*uint32*/ index, ItemStatistic /*EItemStatistic*/ eStatType, out uint /*uint32 **/ pStatValue )
+			public virtual bool /*bool*/ ISteamUGC_GetQueryUGCStatistic( ulong handle, uint /*uint32*/ index, ItemStatistic /*EItemStatistic*/ eStatType, out ulong /*uint64 **/ pStatValue )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
@@ -2854,6 +2914,12 @@ namespace SteamNative
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
 				return Native.ISteamUGC.AddExcludedTag(_ptr, handle, pTagName);
+			}
+			public virtual bool /*bool*/ ISteamUGC_SetReturnOnlyIDs( ulong handle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bReturnOnlyIDs )
+			{
+				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
+				
+				return Native.ISteamUGC.SetReturnOnlyIDs(_ptr, handle, bReturnOnlyIDs);
 			}
 			public virtual bool /*bool*/ ISteamUGC_SetReturnKeyValueTags( ulong handle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bReturnKeyValueTags )
 			{
@@ -3136,6 +3202,24 @@ namespace SteamNative
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
 				Native.ISteamUGC.SuspendDownloads(_ptr, bSuspend);
+			}
+			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUGC_StartPlaytimeTracking( IntPtr /*PublishedFileId_t **/ pvecPublishedFileID, uint /*uint32*/ unNumPublishedFileIDs )
+			{
+				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
+				
+				return Native.ISteamUGC.StartPlaytimeTracking(_ptr, pvecPublishedFileID, unNumPublishedFileIDs);
+			}
+			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUGC_StopPlaytimeTracking( IntPtr /*PublishedFileId_t **/ pvecPublishedFileID, uint /*uint32*/ unNumPublishedFileIDs )
+			{
+				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
+				
+				return Native.ISteamUGC.StopPlaytimeTracking(_ptr, pvecPublishedFileID, unNumPublishedFileIDs);
+			}
+			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUGC_StopPlaytimeTrackingForAllItems()
+			{
+				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
+				
+				return Native.ISteamUGC.StopPlaytimeTrackingForAllItems(_ptr);
 			}
 			
 			public virtual uint /*uint32*/ ISteamAppList_GetNumInstalledApps()
@@ -3506,11 +3590,11 @@ namespace SteamNative
 				
 				return Native.ISteamInventory.GetItemDefinitionIDs(_ptr, pItemDefIDs, out punItemDefIDsArraySize);
 			}
-			public virtual bool /*bool*/ ISteamInventory_GetItemDefinitionProperty( int iDefinition, string /*const char **/ pchPropertyName, System.Text.StringBuilder /*char **/ pchValueBuffer, out uint /*uint32 **/ punValueBufferSize )
+			public virtual bool /*bool*/ ISteamInventory_GetItemDefinitionProperty( int iDefinition, string /*const char **/ pchPropertyName, System.Text.StringBuilder /*char **/ pchValueBuffer, out uint /*uint32 **/ punValueBufferSizeOut )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamInventory _ptr is null!" );
 				
-				return Native.ISteamInventory.GetItemDefinitionProperty(_ptr, iDefinition, pchPropertyName, pchValueBuffer, out punValueBufferSize);
+				return Native.ISteamInventory.GetItemDefinitionProperty(_ptr, iDefinition, pchPropertyName, pchValueBuffer, out punValueBufferSizeOut);
 			}
 			
 			public virtual void /*void*/ ISteamVideo_GetVideoURL( uint unVideoAppID )
@@ -3852,9 +3936,9 @@ namespace SteamNative
 				return Native.ISteamGameServerStats.StoreUserStats(_ptr, steamIDUser);
 			}
 			
-			public virtual void /*void*/ SteamApi_SteamAPI_Init()
+			public virtual bool /*bool*/ SteamApi_SteamAPI_Init()
 			{
-				Native.SteamApi.SteamAPI_Init();
+				return Native.SteamApi.SteamAPI_Init();
 			}
 			public virtual void /*void*/ SteamApi_SteamAPI_RunCallbacks()
 			{
@@ -4027,6 +4111,10 @@ namespace SteamNative
 					internal static extern bool /*bool*/ BIsPhoneVerified( IntPtr ISteamUser );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUser_BIsTwoFactorEnabled" )]
 					internal static extern bool /*bool*/ BIsTwoFactorEnabled( IntPtr ISteamUser );
+					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUser_BIsPhoneIdentifying" )]
+					internal static extern bool /*bool*/ BIsPhoneIdentifying( IntPtr ISteamUser );
+					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUser_BIsPhoneRequiringVerification" )]
+					internal static extern bool /*bool*/ BIsPhoneRequiringVerification( IntPtr ISteamUser );
 				}
 				
 				internal static unsafe class ISteamFriends
@@ -4392,7 +4480,7 @@ namespace SteamNative
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetFileNameAndSize" )]
 					internal static extern IntPtr GetFileNameAndSize( IntPtr ISteamRemoteStorage, int /*int*/ iFile, IntPtr /*int32 **/ pnFileSizeInBytes );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamRemoteStorage_GetQuota" )]
-					internal static extern bool /*bool*/ GetQuota( IntPtr ISteamRemoteStorage, IntPtr /*int32 **/ pnTotalBytes, IntPtr /*int32 **/ puAvailableBytes );
+					internal static extern bool /*bool*/ GetQuota( IntPtr ISteamRemoteStorage, IntPtr /*uint64 **/ pnTotalBytes, IntPtr /*uint64 **/ puAvailableBytes );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamRemoteStorage_IsCloudEnabledForAccount" )]
 					internal static extern bool /*bool*/ IsCloudEnabledForAccount( IntPtr ISteamRemoteStorage );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamRemoteStorage_IsCloudEnabledForApp" )]
@@ -4605,6 +4693,8 @@ namespace SteamNative
 					internal static extern int /*int*/ GetAppBuildId( IntPtr ISteamApps );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamApps_RequestAllProofOfPurchaseKeys" )]
 					internal static extern void /*void*/ RequestAllProofOfPurchaseKeys( IntPtr ISteamApps );
+					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamApps_GetFileDetails" )]
+					internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ GetFileDetails( IntPtr ISteamApps, string /*const char **/ pszFileName );
 				}
 				
 				internal static unsafe class ISteamNetworking
@@ -4671,6 +4761,10 @@ namespace SteamNative
 					internal static extern bool /*bool*/ TagUser( IntPtr ISteamScreenshots, uint hScreenshot, ulong steamID );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamScreenshots_TagPublishedFile" )]
 					internal static extern bool /*bool*/ TagPublishedFile( IntPtr ISteamScreenshots, uint hScreenshot, ulong unPublishedFileID );
+					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamScreenshots_IsScreenshotsHooked" )]
+					internal static extern bool /*bool*/ IsScreenshotsHooked( IntPtr ISteamScreenshots );
+					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamScreenshots_AddVRScreenshotToLibrary" )]
+					internal static extern ScreenshotHandle /*(ScreenshotHandle)*/ AddVRScreenshotToLibrary( IntPtr ISteamScreenshots, VRScreenshotType /*EVRScreenshotType*/ eType, string /*const char **/ pchFilename, string /*const char **/ pchVRFilename );
 				}
 				
 				internal static unsafe class ISteamMusic
@@ -4867,6 +4961,16 @@ namespace SteamNative
 					internal static extern void /*void*/ TriggerHapticPulse( IntPtr ISteamController, ulong controllerHandle, SteamControllerPad /*ESteamControllerPad*/ eTargetPad, ushort /*unsigned short*/ usDurationMicroSec );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamController_TriggerRepeatedHapticPulse" )]
 					internal static extern void /*void*/ TriggerRepeatedHapticPulse( IntPtr ISteamController, ulong controllerHandle, SteamControllerPad /*ESteamControllerPad*/ eTargetPad, ushort /*unsigned short*/ usDurationMicroSec, ushort /*unsigned short*/ usOffMicroSec, ushort /*unsigned short*/ unRepeat, uint /*unsigned int*/ nFlags );
+					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamController_GetGamepadIndexForController" )]
+					internal static extern int /*int*/ GetGamepadIndexForController( IntPtr ISteamController, ulong ulControllerHandle );
+					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamController_GetControllerForGamepadIndex" )]
+					internal static extern ControllerHandle_t /*(ControllerHandle_t)*/ GetControllerForGamepadIndex( IntPtr ISteamController, int /*int*/ nIndex );
+					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamController_GetMotionData" )]
+					internal static extern ControllerMotionData_t /*struct ControllerMotionData_t*/ GetMotionData( IntPtr ISteamController, ulong controllerHandle );
+					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamController_ShowDigitalActionOrigins" )]
+					internal static extern bool /*bool*/ ShowDigitalActionOrigins( IntPtr ISteamController, ulong controllerHandle, ulong digitalActionHandle, float /*float*/ flScale, float /*float*/ flXPosition, float /*float*/ flYPosition );
+					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamController_ShowAnalogActionOrigins" )]
+					internal static extern bool /*bool*/ ShowAnalogActionOrigins( IntPtr ISteamController, ulong controllerHandle, ulong analogActionHandle, float /*float*/ flScale, float /*float*/ flXPosition, float /*float*/ flYPosition );
 				}
 				
 				internal static unsafe class ISteamUGC
@@ -4888,7 +4992,7 @@ namespace SteamNative
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCChildren" )]
 					internal static extern bool /*bool*/ GetQueryUGCChildren( IntPtr ISteamUGC, ulong handle, uint /*uint32*/ index, IntPtr /*PublishedFileId_t **/ pvecPublishedFileID, uint /*uint32*/ cMaxEntries );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCStatistic" )]
-					internal static extern bool /*bool*/ GetQueryUGCStatistic( IntPtr ISteamUGC, ulong handle, uint /*uint32*/ index, ItemStatistic /*EItemStatistic*/ eStatType, out uint /*uint32 **/ pStatValue );
+					internal static extern bool /*bool*/ GetQueryUGCStatistic( IntPtr ISteamUGC, ulong handle, uint /*uint32*/ index, ItemStatistic /*EItemStatistic*/ eStatType, out ulong /*uint64 **/ pStatValue );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCNumAdditionalPreviews" )]
 					internal static extern uint /*uint32*/ GetQueryUGCNumAdditionalPreviews( IntPtr ISteamUGC, ulong handle, uint /*uint32*/ index );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCAdditionalPreview" )]
@@ -4903,6 +5007,8 @@ namespace SteamNative
 					internal static extern bool /*bool*/ AddRequiredTag( IntPtr ISteamUGC, ulong handle, string /*const char **/ pTagName );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUGC_AddExcludedTag" )]
 					internal static extern bool /*bool*/ AddExcludedTag( IntPtr ISteamUGC, ulong handle, string /*const char **/ pTagName );
+					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUGC_SetReturnOnlyIDs" )]
+					internal static extern bool /*bool*/ SetReturnOnlyIDs( IntPtr ISteamUGC, ulong handle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bReturnOnlyIDs );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUGC_SetReturnKeyValueTags" )]
 					internal static extern bool /*bool*/ SetReturnKeyValueTags( IntPtr ISteamUGC, ulong handle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bReturnKeyValueTags );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUGC_SetReturnLongDescription" )]
@@ -4997,6 +5103,12 @@ namespace SteamNative
 					internal static extern bool /*bool*/ BInitWorkshopForGameServer( IntPtr ISteamUGC, uint unWorkshopDepotID, string /*const char **/ pszFolder );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUGC_SuspendDownloads" )]
 					internal static extern void /*void*/ SuspendDownloads( IntPtr ISteamUGC, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bSuspend );
+					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUGC_StartPlaytimeTracking" )]
+					internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ StartPlaytimeTracking( IntPtr ISteamUGC, IntPtr /*PublishedFileId_t **/ pvecPublishedFileID, uint /*uint32*/ unNumPublishedFileIDs );
+					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUGC_StopPlaytimeTracking" )]
+					internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ StopPlaytimeTracking( IntPtr ISteamUGC, IntPtr /*PublishedFileId_t **/ pvecPublishedFileID, uint /*uint32*/ unNumPublishedFileIDs );
+					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamUGC_StopPlaytimeTrackingForAllItems" )]
+					internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ StopPlaytimeTrackingForAllItems( IntPtr ISteamUGC );
 				}
 				
 				internal static unsafe class ISteamAppList
@@ -5132,7 +5244,7 @@ namespace SteamNative
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamInventory_GetItemDefinitionIDs" )]
 					internal static extern bool /*bool*/ GetItemDefinitionIDs( IntPtr ISteamInventory, IntPtr /*SteamItemDef_t **/ pItemDefIDs, out uint /*uint32 **/ punItemDefIDsArraySize );
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_ISteamInventory_GetItemDefinitionProperty" )]
-					internal static extern bool /*bool*/ GetItemDefinitionProperty( IntPtr ISteamInventory, int iDefinition, string /*const char **/ pchPropertyName, System.Text.StringBuilder /*char **/ pchValueBuffer, out uint /*uint32 **/ punValueBufferSize );
+					internal static extern bool /*bool*/ GetItemDefinitionProperty( IntPtr ISteamInventory, int iDefinition, string /*const char **/ pchPropertyName, System.Text.StringBuilder /*char **/ pchValueBuffer, out uint /*uint32 **/ punValueBufferSizeOut );
 				}
 				
 				internal static unsafe class ISteamVideo
@@ -5262,7 +5374,7 @@ namespace SteamNative
 				internal static unsafe class SteamApi
 				{
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_Init" )]
-					internal static extern void /*void*/ SteamAPI_Init();
+					internal static extern bool /*bool*/ SteamAPI_Init();
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamAPI_RunCallbacks" )]
 					internal static extern void /*void*/ SteamAPI_RunCallbacks();
 					[DllImportAttribute( "libsteam_api.dylib", EntryPoint = "SteamGameServer_RunCallbacks" )]

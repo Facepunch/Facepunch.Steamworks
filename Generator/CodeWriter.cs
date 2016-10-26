@@ -23,7 +23,7 @@ namespace Generator
             {
                 ClassName = "SteamApi",
                 Name = "SteamAPI_Init",
-                ReturnType = "void",
+                ReturnType = "bool",
                 NeedsSelfPointer = false
             } );
 

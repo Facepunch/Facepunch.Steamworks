@@ -223,7 +223,7 @@ namespace SteamNative
 		}
 		
 		// bool
-		public bool GetQuota( IntPtr pnTotalBytes /*int32 **/, IntPtr puAvailableBytes /*int32 **/ )
+		public bool GetQuota( IntPtr pnTotalBytes /*uint64 **/, IntPtr puAvailableBytes /*uint64 **/ )
 		{
 			return _pi.ISteamRemoteStorage_GetQuota( (IntPtr) pnTotalBytes, (IntPtr) puAvailableBytes );
 		}

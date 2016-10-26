@@ -75,6 +75,12 @@ namespace SteamNative
 			return _pi.ISteamController_GetConnectedControllers( (IntPtr) handlesOut );
 		}
 		
+		// ControllerHandle_t
+		public ControllerHandle_t GetControllerForGamepadIndex( int nIndex /*int*/ )
+		{
+			return _pi.ISteamController_GetControllerForGamepadIndex( nIndex );
+		}
+		
 		// ControllerActionSetHandle_t
 		public ControllerActionSetHandle_t GetCurrentActionSet( ControllerHandle_t controllerHandle /*ControllerHandle_t*/ )
 		{
@@ -99,6 +105,18 @@ namespace SteamNative
 			return _pi.ISteamController_GetDigitalActionOrigins( controllerHandle.Value, actionSetHandle.Value, digitalActionHandle.Value, out originsOut );
 		}
 		
+		// int
+		public int GetGamepadIndexForController( ControllerHandle_t ulControllerHandle /*ControllerHandle_t*/ )
+		{
+			return _pi.ISteamController_GetGamepadIndexForController( ulControllerHandle.Value );
+		}
+		
+		// ControllerMotionData_t
+		public ControllerMotionData_t GetMotionData( ControllerHandle_t controllerHandle /*ControllerHandle_t*/ )
+		{
+			return _pi.ISteamController_GetMotionData( controllerHandle.Value );
+		}
+		
 		// bool
 		public bool Init()
 		{
@@ -112,9 +130,21 @@ namespace SteamNative
 		}
 		
 		// bool
+		public bool ShowAnalogActionOrigins( ControllerHandle_t controllerHandle /*ControllerHandle_t*/, ControllerAnalogActionHandle_t analogActionHandle /*ControllerAnalogActionHandle_t*/, float flScale /*float*/, float flXPosition /*float*/, float flYPosition /*float*/ )
+		{
+			return _pi.ISteamController_ShowAnalogActionOrigins( controllerHandle.Value, analogActionHandle.Value, flScale, flXPosition, flYPosition );
+		}
+		
+		// bool
 		public bool ShowBindingPanel( ControllerHandle_t controllerHandle /*ControllerHandle_t*/ )
 		{
 			return _pi.ISteamController_ShowBindingPanel( controllerHandle.Value );
+		}
+		
+		// bool
+		public bool ShowDigitalActionOrigins( ControllerHandle_t controllerHandle /*ControllerHandle_t*/, ControllerDigitalActionHandle_t digitalActionHandle /*ControllerDigitalActionHandle_t*/, float flScale /*float*/, float flXPosition /*float*/, float flYPosition /*float*/ )
+		{
+			return _pi.ISteamController_ShowDigitalActionOrigins( controllerHandle.Value, digitalActionHandle.Value, flScale, flXPosition, flYPosition );
 		}
 		
 		// bool

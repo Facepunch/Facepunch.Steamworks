@@ -125,6 +125,7 @@ namespace SteamNative
 		GSOwnerDenied = 103,
 		InvalidItemType = 104,
 		IPBanned = 105,
+		GSLTExpired = 106,
 	}
 	
 	//
@@ -280,9 +281,11 @@ namespace SteamNative
 		Driver = 128,
 		Config = 256,
 		Hardware = 512,
+		Franchise = 1024,
 		Video = 2048,
 		Plugin = 4096,
 		Music = 8192,
+		Series = 16384,
 		Shortcut = 1073741824,
 		DepotOnly = -2147483648,
 	}
@@ -412,8 +415,9 @@ namespace SteamNative
 		Option1 = 10,
 		Option2 = 11,
 		Option3 = 12,
-		OtherVR = 13,
+		OculusVR = 13,
 		OpenVROverlay = 14,
+		OSVR = 15,
 		Dialog = 1000,
 	}
 	
@@ -422,6 +426,7 @@ namespace SteamNative
 	//
 	public enum VRHMDType : int
 	{
+		None = -1,
 		Unknown = 0,
 		HTC_Dev = 1,
 		HTC_VivePre = 2,
@@ -431,6 +436,24 @@ namespace SteamNative
 		Oculus_DK2 = 22,
 		Oculus_Rift = 23,
 		Oculus_Unknown = 40,
+	}
+	
+	//
+	// EControllerType
+	//
+	public enum ControllerType : int
+	{
+		None = -1,
+		Unknown = 0,
+		UnknownSteamController = 1,
+		SteamController = 2,
+		UnknownNonSteamController = 30,
+		XBox360Controller = 31,
+		XBoxOneController = 32,
+		PS3Controller = 33,
+		PS4Controller = 34,
+		WiiController = 35,
+		AppleController = 36,
 	}
 	
 	//
@@ -465,7 +488,7 @@ namespace SteamNative
 		RequestInitiator = 4,
 		Ignored = 5,
 		IgnoredFriend = 6,
-		Suggested = 7,
+		Suggested_DEPRECATED = 7,
 		Max = 8,
 	}
 	
@@ -647,15 +670,6 @@ namespace SteamNative
 		Disconnected = 4,
 		Kicked = 8,
 		Banned = 16,
-	}
-	
-	//
-	// EResolveConflict
-	//
-	public enum ResolveConflict : int
-	{
-		Client = 1,
-		Server = 2,
 	}
 	
 	//
@@ -867,6 +881,19 @@ namespace SteamNative
 	}
 	
 	//
+	// EVRScreenshotType
+	//
+	public enum VRScreenshotType : int
+	{
+		None = 0,
+		Mono = 1,
+		Stereo = 2,
+		MonoCubemap = 3,
+		MonoPanorama = 4,
+		StereoPanorama = 5,
+	}
+	
+	//
 	// AudioPlayback_Status
 	//
 	public enum AudioPlayback_Status : int
@@ -987,6 +1014,8 @@ namespace SteamNative
 		TouchMenu = 10,
 		MouseJoystick = 11,
 		MouseRegion = 12,
+		RadialMenu = 13,
+		Switches = 14,
 	}
 	
 	//
@@ -1034,6 +1063,81 @@ namespace SteamNative
 		Gyro_Yaw = 37,
 		Gyro_Roll = 38,
 		Count = 39,
+	}
+	
+	//
+	// EControllerActivationType
+	//
+	public enum ControllerActivationType : int
+	{
+		None = 0,
+		FullPress = 1,
+		SoftPress = 2,
+		StartPress = 3,
+		Release = 4,
+		LongPress = 5,
+		DoublePress = 6,
+		Analog = 7,
+	}
+	
+	//
+	// EControllerPressureButton
+	//
+	public enum ControllerPressureButton : int
+	{
+		LeftTrackPad = 0,
+		RightTrackPad = 1,
+		LeftBumper = 2,
+		RightBumper = 3,
+		LeftGripLower = 4,
+		RightGripLower = 5,
+		LeftGripUpper = 6,
+		RightGripUpper = 7,
+		Invalid = 8,
+	}
+	
+	//
+	// EControllerActivatorOutputAxis
+	//
+	public enum ControllerActivatorOutputAxis : int
+	{
+		LeftTrigger = 0,
+		RightTrigger = 1,
+		LeftThumbXPos = 2,
+		LeftThumbXNeg = 3,
+		LeftThumbYPos = 4,
+		LeftThumbYNeg = 5,
+		RightThumbXPos = 6,
+		RightThumbXNeg = 7,
+		RightThumbYPos = 8,
+		RightThumbYNeg = 9,
+	}
+	
+	//
+	// EControllerConfigFeature
+	//
+	public enum ControllerConfigFeature : int
+	{
+		None = 0,
+		Gamepad = 1,
+		Keyboard = 2,
+		Mouse = 3,
+		Gyro = 4,
+		TouchMenu = 5,
+		ModeShift = 6,
+		ActionSet = 7,
+		Activator = 8,
+	}
+	
+	//
+	// EControllerPopupMenuActivationType
+	//
+	public enum ControllerPopupMenuActivationType : int
+	{
+		ButtonPress = 0,
+		ButtonRelease = 1,
+		TouchRelease = 2,
+		TouchAlways = 3,
 	}
 	
 	//
@@ -1105,6 +1209,12 @@ namespace SteamNative
 		RankedByVotesUp = 10,
 		RankedByTextSearch = 11,
 		RankedByTotalUniqueSubscriptions = 12,
+		RankedByPlaytimeTrend = 13,
+		RankedByTotalPlaytime = 14,
+		RankedByAveragePlaytimeTrend = 15,
+		RankedByLifetimeAveragePlaytime = 16,
+		RankedByPlaytimeSessionsTrend = 17,
+		RankedByLifetimePlaytimeSessions = 18,
 	}
 	
 	//
@@ -1147,6 +1257,9 @@ namespace SteamNative
 		NumUniqueFollowers = 5,
 		NumUniqueWebsiteViews = 6,
 		ReportScore = 7,
+		NumSecondsPlayed = 8,
+		NumPlaytimeSessions = 9,
+		NumComments = 10,
 	}
 	
 	//

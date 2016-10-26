@@ -88,6 +88,13 @@ namespace Generator
                     WriteLine( $"[MarshalAs(UnmanagedType.ByValTStr, SizeConst = {num})]" );
                 }
 
+                if ( t.StartsWith( "uint8 " ) && t.Contains( "[" ) )
+                {
+                    var num = t.Replace( "uint8", "" ).Trim( '[', ']', ' ' );
+                    t = "char";
+                    WriteLine( $"[MarshalAs(UnmanagedType.ByValTStr, SizeConst = {num})]" );
+                }
+
                 if ( t.StartsWith( "CSteamID " ) && t.Contains( "[" ) )
                 {
                     var num = t.Replace( "CSteamID", "" ).Trim( '[', ']', ' ' );

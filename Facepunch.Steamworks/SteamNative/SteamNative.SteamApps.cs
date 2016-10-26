@@ -173,6 +173,12 @@ namespace SteamNative
 			return _pi.ISteamApps_GetEarliestPurchaseUnixTime( nAppID.Value );
 		}
 		
+		// SteamAPICall_t
+		public SteamAPICall_t GetFileDetails( string pszFileName /*const char **/ )
+		{
+			return _pi.ISteamApps_GetFileDetails( pszFileName );
+		}
+		
 		// uint
 		public uint GetInstalledDepots( AppId_t appID /*AppId_t*/, IntPtr pvecDepots /*DepotId_t **/, uint cMaxDepots /*uint32*/ )
 		{

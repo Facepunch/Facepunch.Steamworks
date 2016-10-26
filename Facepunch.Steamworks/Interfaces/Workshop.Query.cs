@@ -177,7 +177,7 @@ namespace Facepunch.Steamworks
 
             private int GetStat( ulong handle, int index, ItemStatistic stat )
             {
-                uint val = 0;
+                ulong val = 0;
                 if ( !workshop.ugc.GetQueryUGCStatistic( handle, (uint)index, (SteamNative.ItemStatistic)(uint)stat, out val ) )
                     return 0;
 

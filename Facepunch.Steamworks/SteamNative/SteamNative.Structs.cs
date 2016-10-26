@@ -1510,30 +1510,6 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStorageConflictResolution_t
-	{
-		public uint AppID; // m_nAppID AppId_t
-		public Result Result; // m_eResult enum EResult
-		public static RemoteStorageConflictResolution_t FromPointer( IntPtr p ) { return (RemoteStorageConflictResolution_t) Marshal.PtrToStructure( p, typeof(RemoteStorageConflictResolution_t) ); }
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
-		{
-			public uint AppID; // m_nAppID AppId_t
-			public Result Result; // m_eResult enum EResult
-			
-			public static implicit operator RemoteStorageConflictResolution_t (  RemoteStorageConflictResolution_t.PackSmall d )
-			{
-				return new RemoteStorageConflictResolution_t()
-				{
-					AppID = d.AppID,
-					Result = d.Result,
-				};
-			}
-		}
-	}
-	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct RemoteStorageFileShareResult_t
 	{
 		public Result Result; // m_eResult enum EResult
@@ -2765,6 +2741,38 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+	public struct FileDetailsResult_t
+	{
+		public Result Result; // m_eResult enum EResult
+		public ulong FileSize; // m_ulFileSize uint64
+		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 20)]
+		public char FileSHA; // m_FileSHA uint8 [20]
+		public uint Flags; // m_unFlags uint32
+		public static FileDetailsResult_t FromPointer( IntPtr p ) { return (FileDetailsResult_t) Marshal.PtrToStructure( p, typeof(FileDetailsResult_t) ); }
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct PackSmall
+		{
+			public Result Result; // m_eResult enum EResult
+			public ulong FileSize; // m_ulFileSize uint64
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 20)]
+			public char FileSHA; // m_FileSHA uint8 [20]
+			public uint Flags; // m_unFlags uint32
+			
+			public static implicit operator FileDetailsResult_t (  FileDetailsResult_t.PackSmall d )
+			{
+				return new FileDetailsResult_t()
+				{
+					Result = d.Result,
+					FileSize = d.FileSize,
+					FileSHA = d.FileSHA,
+					Flags = d.Flags,
+				};
+			}
+		}
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct P2PSessionState_t
 	{
 		public byte ConnectionActive; // m_bConnectionActive uint8
@@ -3236,6 +3244,54 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+	public struct ControllerMotionData_t
+	{
+		public float RotQuatX; // rotQuatX float
+		public float RotQuatY; // rotQuatY float
+		public float RotQuatZ; // rotQuatZ float
+		public float RotQuatW; // rotQuatW float
+		public float PosAccelX; // posAccelX float
+		public float PosAccelY; // posAccelY float
+		public float PosAccelZ; // posAccelZ float
+		public float RotVelX; // rotVelX float
+		public float RotVelY; // rotVelY float
+		public float RotVelZ; // rotVelZ float
+		public static ControllerMotionData_t FromPointer( IntPtr p ) { return (ControllerMotionData_t) Marshal.PtrToStructure( p, typeof(ControllerMotionData_t) ); }
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct PackSmall
+		{
+			public float RotQuatX; // rotQuatX float
+			public float RotQuatY; // rotQuatY float
+			public float RotQuatZ; // rotQuatZ float
+			public float RotQuatW; // rotQuatW float
+			public float PosAccelX; // posAccelX float
+			public float PosAccelY; // posAccelY float
+			public float PosAccelZ; // posAccelZ float
+			public float RotVelX; // rotVelX float
+			public float RotVelY; // rotVelY float
+			public float RotVelZ; // rotVelZ float
+			
+			public static implicit operator ControllerMotionData_t (  ControllerMotionData_t.PackSmall d )
+			{
+				return new ControllerMotionData_t()
+				{
+					RotQuatX = d.RotQuatX,
+					RotQuatY = d.RotQuatY,
+					RotQuatZ = d.RotQuatZ,
+					RotQuatW = d.RotQuatW,
+					PosAccelX = d.PosAccelX,
+					PosAccelY = d.PosAccelY,
+					PosAccelZ = d.PosAccelZ,
+					RotVelX = d.RotVelX,
+					RotVelY = d.RotVelY,
+					RotVelZ = d.RotVelZ,
+				};
+			}
+		}
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct SteamUGCDetails_t
 	{
 		public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -3582,6 +3638,48 @@ namespace SteamNative
 					VotedUp = d.VotedUp,
 					VotedDown = d.VotedDown,
 					VoteSkipped = d.VoteSkipped,
+				};
+			}
+		}
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+	public struct StartPlaytimeTrackingResult_t
+	{
+		public Result Result; // m_eResult enum EResult
+		public static StartPlaytimeTrackingResult_t FromPointer( IntPtr p ) { return (StartPlaytimeTrackingResult_t) Marshal.PtrToStructure( p, typeof(StartPlaytimeTrackingResult_t) ); }
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct PackSmall
+		{
+			public Result Result; // m_eResult enum EResult
+			
+			public static implicit operator StartPlaytimeTrackingResult_t (  StartPlaytimeTrackingResult_t.PackSmall d )
+			{
+				return new StartPlaytimeTrackingResult_t()
+				{
+					Result = d.Result,
+				};
+			}
+		}
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+	public struct StopPlaytimeTrackingResult_t
+	{
+		public Result Result; // m_eResult enum EResult
+		public static StopPlaytimeTrackingResult_t FromPointer( IntPtr p ) { return (StopPlaytimeTrackingResult_t) Marshal.PtrToStructure( p, typeof(StopPlaytimeTrackingResult_t) ); }
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct PackSmall
+		{
+			public Result Result; // m_eResult enum EResult
+			
+			public static implicit operator StopPlaytimeTrackingResult_t (  StopPlaytimeTrackingResult_t.PackSmall d )
+			{
+				return new StopPlaytimeTrackingResult_t()
+				{
+					Result = d.Result,
 				};
 			}
 		}

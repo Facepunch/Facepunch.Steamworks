@@ -51,10 +51,10 @@ namespace SteamNative
 			return _pi.SteamApi_SteamAPI_GetHSteamUser();
 		}
 		
-		// void
-		public void SteamAPI_Init()
+		// bool
+		public bool SteamAPI_Init()
 		{
-			_pi.SteamApi_SteamAPI_Init();
+			return _pi.SteamApi_SteamAPI_Init();
 		}
 		
 		// void

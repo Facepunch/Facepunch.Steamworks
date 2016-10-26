@@ -253,7 +253,7 @@ namespace SteamNative
 		}
 		
 		// bool
-		public bool GetQueryUGCStatistic( UGCQueryHandle_t handle /*UGCQueryHandle_t*/, uint index /*uint32*/, ItemStatistic eStatType /*EItemStatistic*/, out uint pStatValue /*uint32 **/ )
+		public bool GetQueryUGCStatistic( UGCQueryHandle_t handle /*UGCQueryHandle_t*/, uint index /*uint32*/, ItemStatistic eStatType /*EItemStatistic*/, out ulong pStatValue /*uint64 **/ )
 		{
 			return _pi.ISteamUGC_GetQueryUGCStatistic( handle.Value, index, eStatType, out pStatValue );
 		}
@@ -415,6 +415,12 @@ namespace SteamNative
 		}
 		
 		// bool
+		public bool SetReturnOnlyIDs( UGCQueryHandle_t handle /*UGCQueryHandle_t*/, bool bReturnOnlyIDs /*bool*/ )
+		{
+			return _pi.ISteamUGC_SetReturnOnlyIDs( handle.Value, bReturnOnlyIDs );
+		}
+		
+		// bool
 		public bool SetReturnTotalOnly( UGCQueryHandle_t handle /*UGCQueryHandle_t*/, bool bReturnTotalOnly /*bool*/ )
 		{
 			return _pi.ISteamUGC_SetReturnTotalOnly( handle.Value, bReturnTotalOnly );
@@ -436,6 +442,34 @@ namespace SteamNative
 		public UGCUpdateHandle_t StartItemUpdate( AppId_t nConsumerAppId /*AppId_t*/, PublishedFileId_t nPublishedFileID /*PublishedFileId_t*/ )
 		{
 			return _pi.ISteamUGC_StartItemUpdate( nConsumerAppId.Value, nPublishedFileID.Value );
+		}
+		
+		// with: Detect_VectorReturn
+		// SteamAPICall_t
+		public SteamAPICall_t StartPlaytimeTracking( PublishedFileId_t[] pvecPublishedFileID /*PublishedFileId_t **/ )
+		{
+			var unNumPublishedFileIDs = (uint) pvecPublishedFileID.Length;
+			fixed ( PublishedFileId_t* pvecPublishedFileID_ptr = pvecPublishedFileID  )
+			{
+				return _pi.ISteamUGC_StartPlaytimeTracking( (IntPtr) pvecPublishedFileID_ptr, unNumPublishedFileIDs );
+			}
+		}
+		
+		// with: Detect_VectorReturn
+		// SteamAPICall_t
+		public SteamAPICall_t StopPlaytimeTracking( PublishedFileId_t[] pvecPublishedFileID /*PublishedFileId_t **/ )
+		{
+			var unNumPublishedFileIDs = (uint) pvecPublishedFileID.Length;
+			fixed ( PublishedFileId_t* pvecPublishedFileID_ptr = pvecPublishedFileID  )
+			{
+				return _pi.ISteamUGC_StopPlaytimeTracking( (IntPtr) pvecPublishedFileID_ptr, unNumPublishedFileIDs );
+			}
+		}
+		
+		// SteamAPICall_t
+		public SteamAPICall_t StopPlaytimeTrackingForAllItems()
+		{
+			return _pi.ISteamUGC_StopPlaytimeTrackingForAllItems();
 		}
 		
 		// SteamAPICall_t

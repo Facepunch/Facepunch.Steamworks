@@ -40,6 +40,7 @@ namespace SteamNative
 			bool /*bool*/ ISteamApps_GetDlcDownloadProgress( uint nAppID, out ulong /*uint64 **/ punBytesDownloaded, out ulong /*uint64 **/ punBytesTotal );
 			int /*int*/ ISteamApps_GetAppBuildId();
 			void /*void*/ ISteamApps_RequestAllProofOfPurchaseKeys();
+			SteamAPICall_t /*(SteamAPICall_t)*/ ISteamApps_GetFileDetails( string /*const char **/ pszFileName );
 			HSteamPipe /*(HSteamPipe)*/ ISteamClient_CreateSteamPipe();
 			bool /*bool*/ ISteamClient_BReleaseSteamPipe( int hSteamPipe );
 			HSteamUser /*(HSteamUser)*/ ISteamClient_ConnectToGlobalUser( int hSteamPipe );
@@ -89,6 +90,11 @@ namespace SteamNative
 			void /*void*/ ISteamController_StopAnalogActionMomentum( ulong controllerHandle, ulong eAction );
 			void /*void*/ ISteamController_TriggerHapticPulse( ulong controllerHandle, SteamControllerPad /*ESteamControllerPad*/ eTargetPad, ushort /*unsigned short*/ usDurationMicroSec );
 			void /*void*/ ISteamController_TriggerRepeatedHapticPulse( ulong controllerHandle, SteamControllerPad /*ESteamControllerPad*/ eTargetPad, ushort /*unsigned short*/ usDurationMicroSec, ushort /*unsigned short*/ usOffMicroSec, ushort /*unsigned short*/ unRepeat, uint /*unsigned int*/ nFlags );
+			int /*int*/ ISteamController_GetGamepadIndexForController( ulong ulControllerHandle );
+			ControllerHandle_t /*(ControllerHandle_t)*/ ISteamController_GetControllerForGamepadIndex( int /*int*/ nIndex );
+			ControllerMotionData_t /*struct ControllerMotionData_t*/ ISteamController_GetMotionData( ulong controllerHandle );
+			bool /*bool*/ ISteamController_ShowDigitalActionOrigins( ulong controllerHandle, ulong digitalActionHandle, float /*float*/ flScale, float /*float*/ flXPosition, float /*float*/ flYPosition );
+			bool /*bool*/ ISteamController_ShowAnalogActionOrigins( ulong controllerHandle, ulong analogActionHandle, float /*float*/ flScale, float /*float*/ flXPosition, float /*float*/ flYPosition );
 			IntPtr ISteamFriends_GetPersonaName();
 			SteamAPICall_t /*(SteamAPICall_t)*/ ISteamFriends_SetPersonaName( string /*const char **/ pchPersonaName );
 			PersonaState /*EPersonaState*/ ISteamFriends_GetPersonaState();
@@ -294,7 +300,7 @@ namespace SteamNative
 			bool /*bool*/ ISteamInventory_TradeItems( ref int pResultHandle, ulong steamIDTradePartner, ref ulong pArrayGive, out uint /*const uint32 **/ pArrayGiveQuantity, uint /*uint32*/ nArrayGiveLength, ref ulong pArrayGet, out uint /*const uint32 **/ pArrayGetQuantity, uint /*uint32*/ nArrayGetLength );
 			bool /*bool*/ ISteamInventory_LoadItemDefinitions();
 			bool /*bool*/ ISteamInventory_GetItemDefinitionIDs( IntPtr /*SteamItemDef_t **/ pItemDefIDs, out uint /*uint32 **/ punItemDefIDsArraySize );
-			bool /*bool*/ ISteamInventory_GetItemDefinitionProperty( int iDefinition, string /*const char **/ pchPropertyName, System.Text.StringBuilder /*char **/ pchValueBuffer, out uint /*uint32 **/ punValueBufferSize );
+			bool /*bool*/ ISteamInventory_GetItemDefinitionProperty( int iDefinition, string /*const char **/ pchPropertyName, System.Text.StringBuilder /*char **/ pchValueBuffer, out uint /*uint32 **/ punValueBufferSizeOut );
 			int /*int*/ ISteamMatchmaking_GetFavoriteGameCount();
 			bool /*bool*/ ISteamMatchmaking_GetFavoriteGame( int /*int*/ iGame, ref uint pnAppID, out uint /*uint32 **/ pnIP, out ushort /*uint16 **/ pnConnPort, out ushort /*uint16 **/ pnQueryPort, IntPtr /*uint32 **/ punFlags, out uint /*uint32 **/ pRTime32LastPlayedOnServer );
 			int /*int*/ ISteamMatchmaking_AddFavoriteGame( uint nAppID, uint /*uint32*/ nIP, ushort /*uint16*/ nConnPort, ushort /*uint16*/ nQueryPort, uint /*uint32*/ unFlags, uint /*uint32*/ rTime32LastPlayedOnServer );
@@ -433,7 +439,7 @@ namespace SteamNative
 			RemoteStoragePlatform /*ERemoteStoragePlatform*/ ISteamRemoteStorage_GetSyncPlatforms( string /*const char **/ pchFile );
 			int /*int32*/ ISteamRemoteStorage_GetFileCount();
 			IntPtr ISteamRemoteStorage_GetFileNameAndSize( int /*int*/ iFile, IntPtr /*int32 **/ pnFileSizeInBytes );
-			bool /*bool*/ ISteamRemoteStorage_GetQuota( IntPtr /*int32 **/ pnTotalBytes, IntPtr /*int32 **/ puAvailableBytes );
+			bool /*bool*/ ISteamRemoteStorage_GetQuota( IntPtr /*uint64 **/ pnTotalBytes, IntPtr /*uint64 **/ puAvailableBytes );
 			bool /*bool*/ ISteamRemoteStorage_IsCloudEnabledForAccount();
 			bool /*bool*/ ISteamRemoteStorage_IsCloudEnabledForApp();
 			void /*void*/ ISteamRemoteStorage_SetCloudEnabledForApp( [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bEnabled );
@@ -475,6 +481,8 @@ namespace SteamNative
 			bool /*bool*/ ISteamScreenshots_SetLocation( uint hScreenshot, string /*const char **/ pchLocation );
 			bool /*bool*/ ISteamScreenshots_TagUser( uint hScreenshot, ulong steamID );
 			bool /*bool*/ ISteamScreenshots_TagPublishedFile( uint hScreenshot, ulong unPublishedFileID );
+			bool /*bool*/ ISteamScreenshots_IsScreenshotsHooked();
+			ScreenshotHandle /*(ScreenshotHandle)*/ ISteamScreenshots_AddVRScreenshotToLibrary( VRScreenshotType /*EVRScreenshotType*/ eType, string /*const char **/ pchFilename, string /*const char **/ pchVRFilename );
 			UGCQueryHandle_t /*(UGCQueryHandle_t)*/ ISteamUGC_CreateQueryUserUGCRequest( uint unAccountID, UserUGCList /*EUserUGCList*/ eListType, UGCMatchingUGCType /*EUGCMatchingUGCType*/ eMatchingUGCType, UserUGCListSortOrder /*EUserUGCListSortOrder*/ eSortOrder, uint nCreatorAppID, uint nConsumerAppID, uint /*uint32*/ unPage );
 			UGCQueryHandle_t /*(UGCQueryHandle_t)*/ ISteamUGC_CreateQueryAllUGCRequest( UGCQuery /*EUGCQuery*/ eQueryType, UGCMatchingUGCType /*EUGCMatchingUGCType*/ eMatchingeMatchingUGCTypeFileType, uint nCreatorAppID, uint nConsumerAppID, uint /*uint32*/ unPage );
 			UGCQueryHandle_t /*(UGCQueryHandle_t)*/ ISteamUGC_CreateQueryUGCDetailsRequest( IntPtr /*PublishedFileId_t **/ pvecPublishedFileID, uint /*uint32*/ unNumPublishedFileIDs );
@@ -483,7 +491,7 @@ namespace SteamNative
 			bool /*bool*/ ISteamUGC_GetQueryUGCPreviewURL( ulong handle, uint /*uint32*/ index, System.Text.StringBuilder /*char **/ pchURL, uint /*uint32*/ cchURLSize );
 			bool /*bool*/ ISteamUGC_GetQueryUGCMetadata( ulong handle, uint /*uint32*/ index, System.Text.StringBuilder /*char **/ pchMetadata, uint /*uint32*/ cchMetadatasize );
 			bool /*bool*/ ISteamUGC_GetQueryUGCChildren( ulong handle, uint /*uint32*/ index, IntPtr /*PublishedFileId_t **/ pvecPublishedFileID, uint /*uint32*/ cMaxEntries );
-			bool /*bool*/ ISteamUGC_GetQueryUGCStatistic( ulong handle, uint /*uint32*/ index, ItemStatistic /*EItemStatistic*/ eStatType, out uint /*uint32 **/ pStatValue );
+			bool /*bool*/ ISteamUGC_GetQueryUGCStatistic( ulong handle, uint /*uint32*/ index, ItemStatistic /*EItemStatistic*/ eStatType, out ulong /*uint64 **/ pStatValue );
 			uint /*uint32*/ ISteamUGC_GetQueryUGCNumAdditionalPreviews( ulong handle, uint /*uint32*/ index );
 			bool /*bool*/ ISteamUGC_GetQueryUGCAdditionalPreview( ulong handle, uint /*uint32*/ index, uint /*uint32*/ previewIndex, System.Text.StringBuilder /*char **/ pchURLOrVideoID, uint /*uint32*/ cchURLSize, System.Text.StringBuilder /*char **/ pchOriginalFileName, uint /*uint32*/ cchOriginalFileNameSize, out ItemPreviewType /*EItemPreviewType **/ pPreviewType );
 			uint /*uint32*/ ISteamUGC_GetQueryUGCNumKeyValueTags( ulong handle, uint /*uint32*/ index );
@@ -491,6 +499,7 @@ namespace SteamNative
 			bool /*bool*/ ISteamUGC_ReleaseQueryUGCRequest( ulong handle );
 			bool /*bool*/ ISteamUGC_AddRequiredTag( ulong handle, string /*const char **/ pTagName );
 			bool /*bool*/ ISteamUGC_AddExcludedTag( ulong handle, string /*const char **/ pTagName );
+			bool /*bool*/ ISteamUGC_SetReturnOnlyIDs( ulong handle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bReturnOnlyIDs );
 			bool /*bool*/ ISteamUGC_SetReturnKeyValueTags( ulong handle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bReturnKeyValueTags );
 			bool /*bool*/ ISteamUGC_SetReturnLongDescription( ulong handle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bReturnLongDescription );
 			bool /*bool*/ ISteamUGC_SetReturnMetadata( ulong handle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bReturnMetadata );
@@ -538,6 +547,9 @@ namespace SteamNative
 			bool /*bool*/ ISteamUGC_DownloadItem( ulong nPublishedFileID, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bHighPriority );
 			bool /*bool*/ ISteamUGC_BInitWorkshopForGameServer( uint unWorkshopDepotID, string /*const char **/ pszFolder );
 			void /*void*/ ISteamUGC_SuspendDownloads( [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bSuspend );
+			SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUGC_StartPlaytimeTracking( IntPtr /*PublishedFileId_t **/ pvecPublishedFileID, uint /*uint32*/ unNumPublishedFileIDs );
+			SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUGC_StopPlaytimeTracking( IntPtr /*PublishedFileId_t **/ pvecPublishedFileID, uint /*uint32*/ unNumPublishedFileIDs );
+			SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUGC_StopPlaytimeTrackingForAllItems();
 			ClientUnifiedMessageHandle /*(ClientUnifiedMessageHandle)*/ ISteamUnifiedMessages_SendMethod( string /*const char **/ pchServiceMethod, IntPtr /*const void **/ pRequestBuffer, uint /*uint32*/ unRequestBufferSize, ulong /*uint64*/ unContext );
 			bool /*bool*/ ISteamUnifiedMessages_GetMethodResponseInfo( ulong hHandle, out uint /*uint32 **/ punResponseSize, out Result /*EResult **/ peResult );
 			bool /*bool*/ ISteamUnifiedMessages_GetMethodResponseData( ulong hHandle, IntPtr /*void **/ pResponseBuffer, uint /*uint32*/ unResponseBufferSize, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bAutoRelease );
@@ -570,6 +582,8 @@ namespace SteamNative
 			SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUser_RequestStoreAuthURL( string /*const char **/ pchRedirectURL );
 			bool /*bool*/ ISteamUser_BIsPhoneVerified();
 			bool /*bool*/ ISteamUser_BIsTwoFactorEnabled();
+			bool /*bool*/ ISteamUser_BIsPhoneIdentifying();
+			bool /*bool*/ ISteamUser_BIsPhoneRequiringVerification();
 			bool /*bool*/ ISteamUserStats_RequestCurrentStats();
 			bool /*bool*/ ISteamUserStats_GetStat( string /*const char **/ pchName, out int /*int32 **/ pData );
 			bool /*bool*/ ISteamUserStats_GetStat0( string /*const char **/ pchName, out float /*float **/ pData );
@@ -642,7 +656,7 @@ namespace SteamNative
 			void /*void*/ ISteamUtils_StartVRDashboard();
 			void /*void*/ ISteamVideo_GetVideoURL( uint unVideoAppID );
 			bool /*bool*/ ISteamVideo_IsBroadcasting( IntPtr /*int **/ pnNumViewers );
-			void /*void*/ SteamApi_SteamAPI_Init();
+			bool /*bool*/ SteamApi_SteamAPI_Init();
 			void /*void*/ SteamApi_SteamAPI_RunCallbacks();
 			void /*void*/ SteamApi_SteamGameServer_RunCallbacks();
 			void /*void*/ SteamApi_SteamAPI_RegisterCallback( IntPtr /*void **/ pCallback, int /*int*/ callback );
