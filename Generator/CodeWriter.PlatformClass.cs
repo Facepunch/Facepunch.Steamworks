@@ -162,7 +162,7 @@ namespace Generator
                 flatName = methodName;
 
 
-            var argstring = string.Join( ", ", arguments.Select( x => x.InteropParameter( LargePack ) ) );
+            var argstring = string.Join( ", ", arguments.Select( x => x.InteropParameter( LargePack, true ) ) );
 
             if ( methodDef.NeedsSelfPointer )
             {
@@ -171,7 +171,11 @@ namespace Generator
 
             if ( argstring != "" ) argstring = $" {argstring} ";
 
-            WriteLine( $"[DllImportAttribute( \"{library}\", EntryPoint = \"{flatName}\" )] internal static extern {ret.Return()} {methodName}({argstring});" );
+            WriteLine( $"[DllImportAttribute( \"{library}\", EntryPoint = \"{flatName}\" )]" );
+
+            if ( ret.Return() == "bool" )WriteLine( "[return: MarshalAs(UnmanagedType.Bool)]" );
+
+            WriteLine( $"internal static extern {ret.Return()} {methodName}({argstring});" );
             LastMethodName = methodDef.Name;
         }
 

@@ -151,7 +151,7 @@ namespace Generator
             return $"{Name}";
         }
 
-        internal string InteropParameter( bool LargePack )
+        internal string InteropParameter( bool LargePack, bool includeMarshalling = false )
         {
             var ps = LargePack ? "" : ".PackSmall";
 
@@ -160,6 +160,12 @@ namespace Generator
 
             if ( TypeDef != null )
                 ps = string.Empty;
+
+            if ( includeMarshalling  )
+            {
+
+            }
+
 
             if ( ShouldBeIntPtr )
                 return $"IntPtr /*{NativeType}*/ {Name}";
@@ -186,6 +192,7 @@ namespace Generator
                     return $"{TypeDef.Name} /*{NativeType}*/ {Name}";
                 }                
             }
+
 
             if ( NativeType.EndsWith( "*" ) && ManagedType.Contains( "_t" ) )
             {
