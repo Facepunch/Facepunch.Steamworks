@@ -50,17 +50,6 @@ namespace Facepunch.Steamworks
                 return item;
             }
 
-            internal static Item FromId( ulong id, Workshop workshop )
-            {
-                var item = new Item();
-
-                item.workshop = workshop;
-                item.Id = id;
-                item.UpdateState();
-
-                return item;
-            }
-
             public void Download( bool highPriority = true )
             {
                 UpdateState();
