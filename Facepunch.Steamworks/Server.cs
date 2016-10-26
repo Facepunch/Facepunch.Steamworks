@@ -37,10 +37,10 @@ namespace Facepunch.Steamworks
             //
             // Set up warning hook callback
             //
-            SteamAPIWarningMessageHook ptr = InternalOnWarning;
-            var d = Marshal.GetFunctionPointerForDelegate( ptr );
-            var rr = GCHandle.Alloc( d );
-            native.utils.SetWarningMessageHook( d );
+          //  SteamAPIWarningMessageHook ptr = InternalOnWarning;
+          //  var d = Marshal.GetFunctionPointerForDelegate( ptr );
+         //   var rr = GCHandle.Alloc( d );
+           // native.utils.SetWarningMessageHook( d );
 
             //
             // Setup interfaces that client and server both have
