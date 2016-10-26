@@ -42,61 +42,61 @@ namespace SteamNative
 		// bool
 		public bool ClearUserAchievement( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/ )
 		{
-			return _pi.ISteamGameServerStats_ClearUserAchievement( steamIDUser.Value /*C*/, pchName /*C*/ );
+			return _pi.ISteamGameServerStats_ClearUserAchievement( steamIDUser.Value, pchName );
 		}
 		
 		// bool
 		public bool GetUserAchievement( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/, ref bool pbAchieved /*bool **/ )
 		{
-			return _pi.ISteamGameServerStats_GetUserAchievement( steamIDUser.Value /*C*/, pchName /*C*/, ref pbAchieved /*A*/ );
+			return _pi.ISteamGameServerStats_GetUserAchievement( steamIDUser.Value, pchName, ref pbAchieved );
 		}
 		
 		// bool
 		public bool GetUserStat( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/, out int pData /*int32 **/ )
 		{
-			return _pi.ISteamGameServerStats_GetUserStat( steamIDUser.Value /*C*/, pchName /*C*/, out pData /*B*/ );
+			return _pi.ISteamGameServerStats_GetUserStat( steamIDUser.Value, pchName, out pData );
 		}
 		
 		// bool
 		public bool GetUserStat0( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/, out float pData /*float **/ )
 		{
-			return _pi.ISteamGameServerStats_GetUserStat0( steamIDUser.Value /*C*/, pchName /*C*/, out pData /*B*/ );
+			return _pi.ISteamGameServerStats_GetUserStat0( steamIDUser.Value, pchName, out pData );
 		}
 		
 		// SteamAPICall_t
 		public SteamAPICall_t RequestUserStats( CSteamID steamIDUser /*class CSteamID*/ )
 		{
-			return _pi.ISteamGameServerStats_RequestUserStats( steamIDUser.Value /*C*/ );
+			return _pi.ISteamGameServerStats_RequestUserStats( steamIDUser.Value );
 		}
 		
 		// bool
 		public bool SetUserAchievement( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/ )
 		{
-			return _pi.ISteamGameServerStats_SetUserAchievement( steamIDUser.Value /*C*/, pchName /*C*/ );
+			return _pi.ISteamGameServerStats_SetUserAchievement( steamIDUser.Value, pchName );
 		}
 		
 		// bool
 		public bool SetUserStat( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/, int nData /*int32*/ )
 		{
-			return _pi.ISteamGameServerStats_SetUserStat( steamIDUser.Value /*C*/, pchName /*C*/, nData /*C*/ );
+			return _pi.ISteamGameServerStats_SetUserStat( steamIDUser.Value, pchName, nData );
 		}
 		
 		// bool
 		public bool SetUserStat0( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/, float fData /*float*/ )
 		{
-			return _pi.ISteamGameServerStats_SetUserStat0( steamIDUser.Value /*C*/, pchName /*C*/, fData /*C*/ );
+			return _pi.ISteamGameServerStats_SetUserStat0( steamIDUser.Value, pchName, fData );
 		}
 		
 		// SteamAPICall_t
 		public SteamAPICall_t StoreUserStats( CSteamID steamIDUser /*class CSteamID*/ )
 		{
-			return _pi.ISteamGameServerStats_StoreUserStats( steamIDUser.Value /*C*/ );
+			return _pi.ISteamGameServerStats_StoreUserStats( steamIDUser.Value );
 		}
 		
 		// bool
 		public bool UpdateUserAvgRateStat( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/, float flCountThisSession /*float*/, double dSessionLength /*double*/ )
 		{
-			return _pi.ISteamGameServerStats_UpdateUserAvgRateStat( steamIDUser.Value /*C*/, pchName /*C*/, flCountThisSession /*C*/, dSessionLength /*C*/ );
+			return _pi.ISteamGameServerStats_UpdateUserAvgRateStat( steamIDUser.Value, pchName, flCountThisSession, dSessionLength );
 		}
 		
 	}

@@ -42,31 +42,31 @@ namespace SteamNative
 		// void
 		public void ActivateGameOverlay( string pchDialog /*const char **/ )
 		{
-			_pi.ISteamFriends_ActivateGameOverlay( pchDialog /*C*/ );
+			_pi.ISteamFriends_ActivateGameOverlay( pchDialog );
 		}
 		
 		// void
 		public void ActivateGameOverlayInviteDialog( CSteamID steamIDLobby /*class CSteamID*/ )
 		{
-			_pi.ISteamFriends_ActivateGameOverlayInviteDialog( steamIDLobby.Value /*C*/ );
+			_pi.ISteamFriends_ActivateGameOverlayInviteDialog( steamIDLobby.Value );
 		}
 		
 		// void
 		public void ActivateGameOverlayToStore( AppId_t nAppID /*AppId_t*/, OverlayToStoreFlag eFlag /*EOverlayToStoreFlag*/ )
 		{
-			_pi.ISteamFriends_ActivateGameOverlayToStore( nAppID.Value /*C*/, eFlag /*C*/ );
+			_pi.ISteamFriends_ActivateGameOverlayToStore( nAppID.Value, eFlag );
 		}
 		
 		// void
 		public void ActivateGameOverlayToUser( string pchDialog /*const char **/, CSteamID steamID /*class CSteamID*/ )
 		{
-			_pi.ISteamFriends_ActivateGameOverlayToUser( pchDialog /*C*/, steamID.Value /*C*/ );
+			_pi.ISteamFriends_ActivateGameOverlayToUser( pchDialog, steamID.Value );
 		}
 		
 		// void
 		public void ActivateGameOverlayToWebPage( string pchURL /*const char **/ )
 		{
-			_pi.ISteamFriends_ActivateGameOverlayToWebPage( pchURL /*C*/ );
+			_pi.ISteamFriends_ActivateGameOverlayToWebPage( pchURL );
 		}
 		
 		// void
@@ -78,49 +78,49 @@ namespace SteamNative
 		// bool
 		public bool CloseClanChatWindowInSteam( CSteamID steamIDClanChat /*class CSteamID*/ )
 		{
-			return _pi.ISteamFriends_CloseClanChatWindowInSteam( steamIDClanChat.Value /*C*/ );
+			return _pi.ISteamFriends_CloseClanChatWindowInSteam( steamIDClanChat.Value );
 		}
 		
 		// SteamAPICall_t
 		public SteamAPICall_t DownloadClanActivityCounts( IntPtr psteamIDClans /*class CSteamID **/, int cClansToRequest /*int*/ )
 		{
-			return _pi.ISteamFriends_DownloadClanActivityCounts( (IntPtr) psteamIDClans, cClansToRequest /*C*/ );
+			return _pi.ISteamFriends_DownloadClanActivityCounts( (IntPtr) psteamIDClans, cClansToRequest );
 		}
 		
 		// SteamAPICall_t
 		public SteamAPICall_t EnumerateFollowingList( uint unStartIndex /*uint32*/ )
 		{
-			return _pi.ISteamFriends_EnumerateFollowingList( unStartIndex /*C*/ );
+			return _pi.ISteamFriends_EnumerateFollowingList( unStartIndex );
 		}
 		
 		// ulong
 		public ulong GetChatMemberByIndex( CSteamID steamIDClan /*class CSteamID*/, int iUser /*int*/ )
 		{
-			return _pi.ISteamFriends_GetChatMemberByIndex( steamIDClan.Value /*C*/, iUser /*C*/ );
+			return _pi.ISteamFriends_GetChatMemberByIndex( steamIDClan.Value, iUser );
 		}
 		
 		// bool
 		public bool GetClanActivityCounts( CSteamID steamIDClan /*class CSteamID*/, out int pnOnline /*int **/, out int pnInGame /*int **/, out int pnChatting /*int **/ )
 		{
-			return _pi.ISteamFriends_GetClanActivityCounts( steamIDClan.Value /*C*/, out pnOnline /*B*/, out pnInGame /*B*/, out pnChatting /*B*/ );
+			return _pi.ISteamFriends_GetClanActivityCounts( steamIDClan.Value, out pnOnline, out pnInGame, out pnChatting );
 		}
 		
 		// ulong
 		public ulong GetClanByIndex( int iClan /*int*/ )
 		{
-			return _pi.ISteamFriends_GetClanByIndex( iClan /*C*/ );
+			return _pi.ISteamFriends_GetClanByIndex( iClan );
 		}
 		
 		// int
 		public int GetClanChatMemberCount( CSteamID steamIDClan /*class CSteamID*/ )
 		{
-			return _pi.ISteamFriends_GetClanChatMemberCount( steamIDClan.Value /*C*/ );
+			return _pi.ISteamFriends_GetClanChatMemberCount( steamIDClan.Value );
 		}
 		
 		// int
 		public int GetClanChatMessage( CSteamID steamIDClanChat /*class CSteamID*/, int iMessage /*int*/, IntPtr prgchText /*void **/, int cchTextMax /*int*/, out ChatEntryType peChatEntryType /*EChatEntryType **/, out CSteamID psteamidChatter /*class CSteamID **/ )
 		{
-			return _pi.ISteamFriends_GetClanChatMessage( steamIDClanChat.Value /*C*/, iMessage /*C*/, (IntPtr) prgchText /*C*/, cchTextMax /*C*/, out peChatEntryType /*B*/, out psteamidChatter.Value /*B*/ );
+			return _pi.ISteamFriends_GetClanChatMessage( steamIDClanChat.Value, iMessage, (IntPtr) prgchText, cchTextMax, out peChatEntryType, out psteamidChatter.Value );
 		}
 		
 		// int
@@ -134,26 +134,26 @@ namespace SteamNative
 		public string GetClanName( CSteamID steamIDClan /*class CSteamID*/ )
 		{
 			IntPtr string_pointer;
-			string_pointer = _pi.ISteamFriends_GetClanName( steamIDClan.Value /*C*/ );
+			string_pointer = _pi.ISteamFriends_GetClanName( steamIDClan.Value );
 			return Marshal.PtrToStringAnsi( string_pointer );
 		}
 		
 		// ulong
 		public ulong GetClanOfficerByIndex( CSteamID steamIDClan /*class CSteamID*/, int iOfficer /*int*/ )
 		{
-			return _pi.ISteamFriends_GetClanOfficerByIndex( steamIDClan.Value /*C*/, iOfficer /*C*/ );
+			return _pi.ISteamFriends_GetClanOfficerByIndex( steamIDClan.Value, iOfficer );
 		}
 		
 		// int
 		public int GetClanOfficerCount( CSteamID steamIDClan /*class CSteamID*/ )
 		{
-			return _pi.ISteamFriends_GetClanOfficerCount( steamIDClan.Value /*C*/ );
+			return _pi.ISteamFriends_GetClanOfficerCount( steamIDClan.Value );
 		}
 		
 		// ulong
 		public ulong GetClanOwner( CSteamID steamIDClan /*class CSteamID*/ )
 		{
-			return _pi.ISteamFriends_GetClanOwner( steamIDClan.Value /*C*/ );
+			return _pi.ISteamFriends_GetClanOwner( steamIDClan.Value );
 		}
 		
 		// string
@@ -161,14 +161,14 @@ namespace SteamNative
 		public string GetClanTag( CSteamID steamIDClan /*class CSteamID*/ )
 		{
 			IntPtr string_pointer;
-			string_pointer = _pi.ISteamFriends_GetClanTag( steamIDClan.Value /*C*/ );
+			string_pointer = _pi.ISteamFriends_GetClanTag( steamIDClan.Value );
 			return Marshal.PtrToStringAnsi( string_pointer );
 		}
 		
 		// ulong
 		public ulong GetCoplayFriend( int iCoplayFriend /*int*/ )
 		{
-			return _pi.ISteamFriends_GetCoplayFriend( iCoplayFriend /*C*/ );
+			return _pi.ISteamFriends_GetCoplayFriend( iCoplayFriend );
 		}
 		
 		// int
@@ -180,55 +180,55 @@ namespace SteamNative
 		// SteamAPICall_t
 		public SteamAPICall_t GetFollowerCount( CSteamID steamID /*class CSteamID*/ )
 		{
-			return _pi.ISteamFriends_GetFollowerCount( steamID.Value /*C*/ );
+			return _pi.ISteamFriends_GetFollowerCount( steamID.Value );
 		}
 		
 		// ulong
 		public ulong GetFriendByIndex( int iFriend /*int*/, int iFriendFlags /*int*/ )
 		{
-			return _pi.ISteamFriends_GetFriendByIndex( iFriend /*C*/, iFriendFlags /*C*/ );
+			return _pi.ISteamFriends_GetFriendByIndex( iFriend, iFriendFlags );
 		}
 		
 		// AppId_t
 		public AppId_t GetFriendCoplayGame( CSteamID steamIDFriend /*class CSteamID*/ )
 		{
-			return _pi.ISteamFriends_GetFriendCoplayGame( steamIDFriend.Value /*C*/ );
+			return _pi.ISteamFriends_GetFriendCoplayGame( steamIDFriend.Value );
 		}
 		
 		// int
 		public int GetFriendCoplayTime( CSteamID steamIDFriend /*class CSteamID*/ )
 		{
-			return _pi.ISteamFriends_GetFriendCoplayTime( steamIDFriend.Value /*C*/ );
+			return _pi.ISteamFriends_GetFriendCoplayTime( steamIDFriend.Value );
 		}
 		
 		// int
 		public int GetFriendCount( int iFriendFlags /*int*/ )
 		{
-			return _pi.ISteamFriends_GetFriendCount( iFriendFlags /*C*/ );
+			return _pi.ISteamFriends_GetFriendCount( iFriendFlags );
 		}
 		
 		// int
 		public int GetFriendCountFromSource( CSteamID steamIDSource /*class CSteamID*/ )
 		{
-			return _pi.ISteamFriends_GetFriendCountFromSource( steamIDSource.Value /*C*/ );
+			return _pi.ISteamFriends_GetFriendCountFromSource( steamIDSource.Value );
 		}
 		
 		// ulong
 		public ulong GetFriendFromSourceByIndex( CSteamID steamIDSource /*class CSteamID*/, int iFriend /*int*/ )
 		{
-			return _pi.ISteamFriends_GetFriendFromSourceByIndex( steamIDSource.Value /*C*/, iFriend /*C*/ );
+			return _pi.ISteamFriends_GetFriendFromSourceByIndex( steamIDSource.Value, iFriend );
 		}
 		
 		// bool
 		public bool GetFriendGamePlayed( CSteamID steamIDFriend /*class CSteamID*/, ref FriendGameInfo_t pFriendGameInfo /*struct FriendGameInfo_t **/ )
 		{
-			return _pi.ISteamFriends_GetFriendGamePlayed( steamIDFriend.Value /*C*/, ref pFriendGameInfo /*A*/ );
+			return _pi.ISteamFriends_GetFriendGamePlayed( steamIDFriend.Value, ref pFriendGameInfo );
 		}
 		
 		// int
 		public int GetFriendMessage( CSteamID steamIDFriend /*class CSteamID*/, int iMessageID /*int*/, IntPtr pvData /*void **/, int cubData /*int*/, out ChatEntryType peChatEntryType /*EChatEntryType **/ )
 		{
-			return _pi.ISteamFriends_GetFriendMessage( steamIDFriend.Value /*C*/, iMessageID /*C*/, (IntPtr) pvData /*C*/, cubData /*C*/, out peChatEntryType /*B*/ );
+			return _pi.ISteamFriends_GetFriendMessage( steamIDFriend.Value, iMessageID, (IntPtr) pvData, cubData, out peChatEntryType );
 		}
 		
 		// string
@@ -236,7 +236,7 @@ namespace SteamNative
 		public string GetFriendPersonaName( CSteamID steamIDFriend /*class CSteamID*/ )
 		{
 			IntPtr string_pointer;
-			string_pointer = _pi.ISteamFriends_GetFriendPersonaName( steamIDFriend.Value /*C*/ );
+			string_pointer = _pi.ISteamFriends_GetFriendPersonaName( steamIDFriend.Value );
 			return Marshal.PtrToStringAnsi( string_pointer );
 		}
 		
@@ -245,20 +245,20 @@ namespace SteamNative
 		public string GetFriendPersonaNameHistory( CSteamID steamIDFriend /*class CSteamID*/, int iPersonaName /*int*/ )
 		{
 			IntPtr string_pointer;
-			string_pointer = _pi.ISteamFriends_GetFriendPersonaNameHistory( steamIDFriend.Value /*C*/, iPersonaName /*C*/ );
+			string_pointer = _pi.ISteamFriends_GetFriendPersonaNameHistory( steamIDFriend.Value, iPersonaName );
 			return Marshal.PtrToStringAnsi( string_pointer );
 		}
 		
 		// PersonaState
 		public PersonaState GetFriendPersonaState( CSteamID steamIDFriend /*class CSteamID*/ )
 		{
-			return _pi.ISteamFriends_GetFriendPersonaState( steamIDFriend.Value /*C*/ );
+			return _pi.ISteamFriends_GetFriendPersonaState( steamIDFriend.Value );
 		}
 		
 		// FriendRelationship
 		public FriendRelationship GetFriendRelationship( CSteamID steamIDFriend /*class CSteamID*/ )
 		{
-			return _pi.ISteamFriends_GetFriendRelationship( steamIDFriend.Value /*C*/ );
+			return _pi.ISteamFriends_GetFriendRelationship( steamIDFriend.Value );
 		}
 		
 		// string
@@ -266,7 +266,7 @@ namespace SteamNative
 		public string GetFriendRichPresence( CSteamID steamIDFriend /*class CSteamID*/, string pchKey /*const char **/ )
 		{
 			IntPtr string_pointer;
-			string_pointer = _pi.ISteamFriends_GetFriendRichPresence( steamIDFriend.Value /*C*/, pchKey /*C*/ );
+			string_pointer = _pi.ISteamFriends_GetFriendRichPresence( steamIDFriend.Value, pchKey );
 			return Marshal.PtrToStringAnsi( string_pointer );
 		}
 		
@@ -275,14 +275,14 @@ namespace SteamNative
 		public string GetFriendRichPresenceKeyByIndex( CSteamID steamIDFriend /*class CSteamID*/, int iKey /*int*/ )
 		{
 			IntPtr string_pointer;
-			string_pointer = _pi.ISteamFriends_GetFriendRichPresenceKeyByIndex( steamIDFriend.Value /*C*/, iKey /*C*/ );
+			string_pointer = _pi.ISteamFriends_GetFriendRichPresenceKeyByIndex( steamIDFriend.Value, iKey );
 			return Marshal.PtrToStringAnsi( string_pointer );
 		}
 		
 		// int
 		public int GetFriendRichPresenceKeyCount( CSteamID steamIDFriend /*class CSteamID*/ )
 		{
-			return _pi.ISteamFriends_GetFriendRichPresenceKeyCount( steamIDFriend.Value /*C*/ );
+			return _pi.ISteamFriends_GetFriendRichPresenceKeyCount( steamIDFriend.Value );
 		}
 		
 		// int
@@ -294,19 +294,19 @@ namespace SteamNative
 		// FriendsGroupID_t
 		public FriendsGroupID_t GetFriendsGroupIDByIndex( int iFG /*int*/ )
 		{
-			return _pi.ISteamFriends_GetFriendsGroupIDByIndex( iFG /*C*/ );
+			return _pi.ISteamFriends_GetFriendsGroupIDByIndex( iFG );
 		}
 		
 		// int
 		public int GetFriendsGroupMembersCount( FriendsGroupID_t friendsGroupID /*FriendsGroupID_t*/ )
 		{
-			return _pi.ISteamFriends_GetFriendsGroupMembersCount( friendsGroupID.Value /*C*/ );
+			return _pi.ISteamFriends_GetFriendsGroupMembersCount( friendsGroupID.Value );
 		}
 		
 		// void
 		public void GetFriendsGroupMembersList( FriendsGroupID_t friendsGroupID /*FriendsGroupID_t*/, IntPtr pOutSteamIDMembers /*class CSteamID **/, int nMembersCount /*int*/ )
 		{
-			_pi.ISteamFriends_GetFriendsGroupMembersList( friendsGroupID.Value /*C*/, (IntPtr) pOutSteamIDMembers, nMembersCount /*C*/ );
+			_pi.ISteamFriends_GetFriendsGroupMembersList( friendsGroupID.Value, (IntPtr) pOutSteamIDMembers, nMembersCount );
 		}
 		
 		// string
@@ -314,26 +314,26 @@ namespace SteamNative
 		public string GetFriendsGroupName( FriendsGroupID_t friendsGroupID /*FriendsGroupID_t*/ )
 		{
 			IntPtr string_pointer;
-			string_pointer = _pi.ISteamFriends_GetFriendsGroupName( friendsGroupID.Value /*C*/ );
+			string_pointer = _pi.ISteamFriends_GetFriendsGroupName( friendsGroupID.Value );
 			return Marshal.PtrToStringAnsi( string_pointer );
 		}
 		
 		// int
 		public int GetFriendSteamLevel( CSteamID steamIDFriend /*class CSteamID*/ )
 		{
-			return _pi.ISteamFriends_GetFriendSteamLevel( steamIDFriend.Value /*C*/ );
+			return _pi.ISteamFriends_GetFriendSteamLevel( steamIDFriend.Value );
 		}
 		
 		// int
 		public int GetLargeFriendAvatar( CSteamID steamIDFriend /*class CSteamID*/ )
 		{
-			return _pi.ISteamFriends_GetLargeFriendAvatar( steamIDFriend.Value /*C*/ );
+			return _pi.ISteamFriends_GetLargeFriendAvatar( steamIDFriend.Value );
 		}
 		
 		// int
 		public int GetMediumFriendAvatar( CSteamID steamIDFriend /*class CSteamID*/ )
 		{
-			return _pi.ISteamFriends_GetMediumFriendAvatar( steamIDFriend.Value /*C*/ );
+			return _pi.ISteamFriends_GetMediumFriendAvatar( steamIDFriend.Value );
 		}
 		
 		// string
@@ -356,14 +356,14 @@ namespace SteamNative
 		public string GetPlayerNickname( CSteamID steamIDPlayer /*class CSteamID*/ )
 		{
 			IntPtr string_pointer;
-			string_pointer = _pi.ISteamFriends_GetPlayerNickname( steamIDPlayer.Value /*C*/ );
+			string_pointer = _pi.ISteamFriends_GetPlayerNickname( steamIDPlayer.Value );
 			return Marshal.PtrToStringAnsi( string_pointer );
 		}
 		
 		// int
 		public int GetSmallFriendAvatar( CSteamID steamIDFriend /*class CSteamID*/ )
 		{
-			return _pi.ISteamFriends_GetSmallFriendAvatar( steamIDFriend.Value /*C*/ );
+			return _pi.ISteamFriends_GetSmallFriendAvatar( steamIDFriend.Value );
 		}
 		
 		// uint
@@ -375,115 +375,115 @@ namespace SteamNative
 		// bool
 		public bool HasFriend( CSteamID steamIDFriend /*class CSteamID*/, int iFriendFlags /*int*/ )
 		{
-			return _pi.ISteamFriends_HasFriend( steamIDFriend.Value /*C*/, iFriendFlags /*C*/ );
+			return _pi.ISteamFriends_HasFriend( steamIDFriend.Value, iFriendFlags );
 		}
 		
 		// bool
 		public bool InviteUserToGame( CSteamID steamIDFriend /*class CSteamID*/, string pchConnectString /*const char **/ )
 		{
-			return _pi.ISteamFriends_InviteUserToGame( steamIDFriend.Value /*C*/, pchConnectString /*C*/ );
+			return _pi.ISteamFriends_InviteUserToGame( steamIDFriend.Value, pchConnectString );
 		}
 		
 		// bool
 		public bool IsClanChatAdmin( CSteamID steamIDClanChat /*class CSteamID*/, CSteamID steamIDUser /*class CSteamID*/ )
 		{
-			return _pi.ISteamFriends_IsClanChatAdmin( steamIDClanChat.Value /*C*/, steamIDUser.Value /*C*/ );
+			return _pi.ISteamFriends_IsClanChatAdmin( steamIDClanChat.Value, steamIDUser.Value );
 		}
 		
 		// bool
 		public bool IsClanChatWindowOpenInSteam( CSteamID steamIDClanChat /*class CSteamID*/ )
 		{
-			return _pi.ISteamFriends_IsClanChatWindowOpenInSteam( steamIDClanChat.Value /*C*/ );
+			return _pi.ISteamFriends_IsClanChatWindowOpenInSteam( steamIDClanChat.Value );
 		}
 		
 		// SteamAPICall_t
 		public SteamAPICall_t IsFollowing( CSteamID steamID /*class CSteamID*/ )
 		{
-			return _pi.ISteamFriends_IsFollowing( steamID.Value /*C*/ );
+			return _pi.ISteamFriends_IsFollowing( steamID.Value );
 		}
 		
 		// bool
 		public bool IsUserInSource( CSteamID steamIDUser /*class CSteamID*/, CSteamID steamIDSource /*class CSteamID*/ )
 		{
-			return _pi.ISteamFriends_IsUserInSource( steamIDUser.Value /*C*/, steamIDSource.Value /*C*/ );
+			return _pi.ISteamFriends_IsUserInSource( steamIDUser.Value, steamIDSource.Value );
 		}
 		
 		// SteamAPICall_t
 		public SteamAPICall_t JoinClanChatRoom( CSteamID steamIDClan /*class CSteamID*/ )
 		{
-			return _pi.ISteamFriends_JoinClanChatRoom( steamIDClan.Value /*C*/ );
+			return _pi.ISteamFriends_JoinClanChatRoom( steamIDClan.Value );
 		}
 		
 		// bool
 		public bool LeaveClanChatRoom( CSteamID steamIDClan /*class CSteamID*/ )
 		{
-			return _pi.ISteamFriends_LeaveClanChatRoom( steamIDClan.Value /*C*/ );
+			return _pi.ISteamFriends_LeaveClanChatRoom( steamIDClan.Value );
 		}
 		
 		// bool
 		public bool OpenClanChatWindowInSteam( CSteamID steamIDClanChat /*class CSteamID*/ )
 		{
-			return _pi.ISteamFriends_OpenClanChatWindowInSteam( steamIDClanChat.Value /*C*/ );
+			return _pi.ISteamFriends_OpenClanChatWindowInSteam( steamIDClanChat.Value );
 		}
 		
 		// bool
 		public bool ReplyToFriendMessage( CSteamID steamIDFriend /*class CSteamID*/, string pchMsgToSend /*const char **/ )
 		{
-			return _pi.ISteamFriends_ReplyToFriendMessage( steamIDFriend.Value /*C*/, pchMsgToSend /*C*/ );
+			return _pi.ISteamFriends_ReplyToFriendMessage( steamIDFriend.Value, pchMsgToSend );
 		}
 		
 		// SteamAPICall_t
 		public SteamAPICall_t RequestClanOfficerList( CSteamID steamIDClan /*class CSteamID*/ )
 		{
-			return _pi.ISteamFriends_RequestClanOfficerList( steamIDClan.Value /*C*/ );
+			return _pi.ISteamFriends_RequestClanOfficerList( steamIDClan.Value );
 		}
 		
 		// void
 		public void RequestFriendRichPresence( CSteamID steamIDFriend /*class CSteamID*/ )
 		{
-			_pi.ISteamFriends_RequestFriendRichPresence( steamIDFriend.Value /*C*/ );
+			_pi.ISteamFriends_RequestFriendRichPresence( steamIDFriend.Value );
 		}
 		
 		// bool
 		public bool RequestUserInformation( CSteamID steamIDUser /*class CSteamID*/, bool bRequireNameOnly /*bool*/ )
 		{
-			return _pi.ISteamFriends_RequestUserInformation( steamIDUser.Value /*C*/, bRequireNameOnly /*C*/ );
+			return _pi.ISteamFriends_RequestUserInformation( steamIDUser.Value, bRequireNameOnly );
 		}
 		
 		// bool
 		public bool SendClanChatMessage( CSteamID steamIDClanChat /*class CSteamID*/, string pchText /*const char **/ )
 		{
-			return _pi.ISteamFriends_SendClanChatMessage( steamIDClanChat.Value /*C*/, pchText /*C*/ );
+			return _pi.ISteamFriends_SendClanChatMessage( steamIDClanChat.Value, pchText );
 		}
 		
 		// void
 		public void SetInGameVoiceSpeaking( CSteamID steamIDUser /*class CSteamID*/, bool bSpeaking /*bool*/ )
 		{
-			_pi.ISteamFriends_SetInGameVoiceSpeaking( steamIDUser.Value /*C*/, bSpeaking /*C*/ );
+			_pi.ISteamFriends_SetInGameVoiceSpeaking( steamIDUser.Value, bSpeaking );
 		}
 		
 		// bool
 		public bool SetListenForFriendsMessages( bool bInterceptEnabled /*bool*/ )
 		{
-			return _pi.ISteamFriends_SetListenForFriendsMessages( bInterceptEnabled /*C*/ );
+			return _pi.ISteamFriends_SetListenForFriendsMessages( bInterceptEnabled );
 		}
 		
 		// SteamAPICall_t
 		public SteamAPICall_t SetPersonaName( string pchPersonaName /*const char **/ )
 		{
-			return _pi.ISteamFriends_SetPersonaName( pchPersonaName /*C*/ );
+			return _pi.ISteamFriends_SetPersonaName( pchPersonaName );
 		}
 		
 		// void
 		public void SetPlayedWith( CSteamID steamIDUserPlayedWith /*class CSteamID*/ )
 		{
-			_pi.ISteamFriends_SetPlayedWith( steamIDUserPlayedWith.Value /*C*/ );
+			_pi.ISteamFriends_SetPlayedWith( steamIDUserPlayedWith.Value );
 		}
 		
 		// bool
 		public bool SetRichPresence( string pchKey /*const char **/, string pchValue /*const char **/ )
 		{
-			return _pi.ISteamFriends_SetRichPresence( pchKey /*C*/, pchValue /*C*/ );
+			return _pi.ISteamFriends_SetRichPresence( pchKey, pchValue );
 		}
 		
 	}

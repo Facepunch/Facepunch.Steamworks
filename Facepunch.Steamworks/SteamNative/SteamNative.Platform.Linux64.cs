@@ -35,109 +35,109 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				return Native.ISteamClient.BReleaseSteamPipe(_ptr, hSteamPipe /*C*/);
+				return Native.ISteamClient.BReleaseSteamPipe(_ptr, hSteamPipe);
 			}
 			public virtual HSteamUser /*(HSteamUser)*/ ISteamClient_ConnectToGlobalUser( int hSteamPipe )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				return Native.ISteamClient.ConnectToGlobalUser(_ptr, hSteamPipe /*C*/);
+				return Native.ISteamClient.ConnectToGlobalUser(_ptr, hSteamPipe);
 			}
 			public virtual HSteamUser /*(HSteamUser)*/ ISteamClient_CreateLocalUser( out int phSteamPipe, AccountType /*EAccountType*/ eAccountType )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				return Native.ISteamClient.CreateLocalUser(_ptr, out phSteamPipe /*B*/, eAccountType /*C*/);
+				return Native.ISteamClient.CreateLocalUser(_ptr, out phSteamPipe, eAccountType);
 			}
 			public virtual void /*void*/ ISteamClient_ReleaseUser( int hSteamPipe, int hUser )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				Native.ISteamClient.ReleaseUser(_ptr, hSteamPipe /*C*/, hUser /*C*/);
+				Native.ISteamClient.ReleaseUser(_ptr, hSteamPipe, hUser);
 			}
 			public virtual IntPtr /*class ISteamUser **/ ISteamClient_GetISteamUser( int hSteamUser, int hSteamPipe, string /*const char **/ pchVersion )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				return Native.ISteamClient.GetISteamUser(_ptr, hSteamUser /*C*/, hSteamPipe /*C*/, pchVersion /*C*/);
+				return Native.ISteamClient.GetISteamUser(_ptr, hSteamUser, hSteamPipe, pchVersion);
 			}
 			public virtual IntPtr /*class ISteamGameServer **/ ISteamClient_GetISteamGameServer( int hSteamUser, int hSteamPipe, string /*const char **/ pchVersion )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				return Native.ISteamClient.GetISteamGameServer(_ptr, hSteamUser /*C*/, hSteamPipe /*C*/, pchVersion /*C*/);
+				return Native.ISteamClient.GetISteamGameServer(_ptr, hSteamUser, hSteamPipe, pchVersion);
 			}
 			public virtual void /*void*/ ISteamClient_SetLocalIPBinding( uint /*uint32*/ unIP, ushort /*uint16*/ usPort )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				Native.ISteamClient.SetLocalIPBinding(_ptr, unIP /*C*/, usPort /*C*/);
+				Native.ISteamClient.SetLocalIPBinding(_ptr, unIP, usPort);
 			}
 			public virtual IntPtr /*class ISteamFriends **/ ISteamClient_GetISteamFriends( int hSteamUser, int hSteamPipe, string /*const char **/ pchVersion )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				return Native.ISteamClient.GetISteamFriends(_ptr, hSteamUser /*C*/, hSteamPipe /*C*/, pchVersion /*C*/);
+				return Native.ISteamClient.GetISteamFriends(_ptr, hSteamUser, hSteamPipe, pchVersion);
 			}
 			public virtual IntPtr /*class ISteamUtils **/ ISteamClient_GetISteamUtils( int hSteamPipe, string /*const char **/ pchVersion )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				return Native.ISteamClient.GetISteamUtils(_ptr, hSteamPipe /*C*/, pchVersion /*C*/);
+				return Native.ISteamClient.GetISteamUtils(_ptr, hSteamPipe, pchVersion);
 			}
 			public virtual IntPtr /*class ISteamMatchmaking **/ ISteamClient_GetISteamMatchmaking( int hSteamUser, int hSteamPipe, string /*const char **/ pchVersion )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				return Native.ISteamClient.GetISteamMatchmaking(_ptr, hSteamUser /*C*/, hSteamPipe /*C*/, pchVersion /*C*/);
+				return Native.ISteamClient.GetISteamMatchmaking(_ptr, hSteamUser, hSteamPipe, pchVersion);
 			}
 			public virtual IntPtr /*class ISteamMatchmakingServers **/ ISteamClient_GetISteamMatchmakingServers( int hSteamUser, int hSteamPipe, string /*const char **/ pchVersion )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				return Native.ISteamClient.GetISteamMatchmakingServers(_ptr, hSteamUser /*C*/, hSteamPipe /*C*/, pchVersion /*C*/);
+				return Native.ISteamClient.GetISteamMatchmakingServers(_ptr, hSteamUser, hSteamPipe, pchVersion);
 			}
 			public virtual IntPtr /*void **/ ISteamClient_GetISteamGenericInterface( int hSteamUser, int hSteamPipe, string /*const char **/ pchVersion )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				return Native.ISteamClient.GetISteamGenericInterface(_ptr, hSteamUser /*C*/, hSteamPipe /*C*/, pchVersion /*C*/);
+				return Native.ISteamClient.GetISteamGenericInterface(_ptr, hSteamUser, hSteamPipe, pchVersion);
 			}
 			public virtual IntPtr /*class ISteamUserStats **/ ISteamClient_GetISteamUserStats( int hSteamUser, int hSteamPipe, string /*const char **/ pchVersion )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				return Native.ISteamClient.GetISteamUserStats(_ptr, hSteamUser /*C*/, hSteamPipe /*C*/, pchVersion /*C*/);
+				return Native.ISteamClient.GetISteamUserStats(_ptr, hSteamUser, hSteamPipe, pchVersion);
 			}
 			public virtual IntPtr /*class ISteamGameServerStats **/ ISteamClient_GetISteamGameServerStats( int hSteamuser, int hSteamPipe, string /*const char **/ pchVersion )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				return Native.ISteamClient.GetISteamGameServerStats(_ptr, hSteamuser /*C*/, hSteamPipe /*C*/, pchVersion /*C*/);
+				return Native.ISteamClient.GetISteamGameServerStats(_ptr, hSteamuser, hSteamPipe, pchVersion);
 			}
 			public virtual IntPtr /*class ISteamApps **/ ISteamClient_GetISteamApps( int hSteamUser, int hSteamPipe, string /*const char **/ pchVersion )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				return Native.ISteamClient.GetISteamApps(_ptr, hSteamUser /*C*/, hSteamPipe /*C*/, pchVersion /*C*/);
+				return Native.ISteamClient.GetISteamApps(_ptr, hSteamUser, hSteamPipe, pchVersion);
 			}
 			public virtual IntPtr /*class ISteamNetworking **/ ISteamClient_GetISteamNetworking( int hSteamUser, int hSteamPipe, string /*const char **/ pchVersion )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				return Native.ISteamClient.GetISteamNetworking(_ptr, hSteamUser /*C*/, hSteamPipe /*C*/, pchVersion /*C*/);
+				return Native.ISteamClient.GetISteamNetworking(_ptr, hSteamUser, hSteamPipe, pchVersion);
 			}
 			public virtual IntPtr /*class ISteamRemoteStorage **/ ISteamClient_GetISteamRemoteStorage( int hSteamuser, int hSteamPipe, string /*const char **/ pchVersion )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				return Native.ISteamClient.GetISteamRemoteStorage(_ptr, hSteamuser /*C*/, hSteamPipe /*C*/, pchVersion /*C*/);
+				return Native.ISteamClient.GetISteamRemoteStorage(_ptr, hSteamuser, hSteamPipe, pchVersion);
 			}
 			public virtual IntPtr /*class ISteamScreenshots **/ ISteamClient_GetISteamScreenshots( int hSteamuser, int hSteamPipe, string /*const char **/ pchVersion )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				return Native.ISteamClient.GetISteamScreenshots(_ptr, hSteamuser /*C*/, hSteamPipe /*C*/, pchVersion /*C*/);
+				return Native.ISteamClient.GetISteamScreenshots(_ptr, hSteamuser, hSteamPipe, pchVersion);
 			}
 			public virtual uint /*uint32*/ ISteamClient_GetIPCCallCount()
 			{
@@ -149,7 +149,7 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				Native.ISteamClient.SetWarningMessageHook(_ptr, pFunction /*C*/);
+				Native.ISteamClient.SetWarningMessageHook(_ptr, pFunction);
 			}
 			public virtual bool /*bool*/ ISteamClient_BShutdownIfAllPipesClosed()
 			{
@@ -161,61 +161,61 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				return Native.ISteamClient.GetISteamHTTP(_ptr, hSteamuser /*C*/, hSteamPipe /*C*/, pchVersion /*C*/);
+				return Native.ISteamClient.GetISteamHTTP(_ptr, hSteamuser, hSteamPipe, pchVersion);
 			}
 			public virtual IntPtr /*class ISteamUnifiedMessages **/ ISteamClient_GetISteamUnifiedMessages( int hSteamuser, int hSteamPipe, string /*const char **/ pchVersion )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				return Native.ISteamClient.GetISteamUnifiedMessages(_ptr, hSteamuser /*C*/, hSteamPipe /*C*/, pchVersion /*C*/);
+				return Native.ISteamClient.GetISteamUnifiedMessages(_ptr, hSteamuser, hSteamPipe, pchVersion);
 			}
 			public virtual IntPtr /*class ISteamController **/ ISteamClient_GetISteamController( int hSteamUser, int hSteamPipe, string /*const char **/ pchVersion )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				return Native.ISteamClient.GetISteamController(_ptr, hSteamUser /*C*/, hSteamPipe /*C*/, pchVersion /*C*/);
+				return Native.ISteamClient.GetISteamController(_ptr, hSteamUser, hSteamPipe, pchVersion);
 			}
 			public virtual IntPtr /*class ISteamUGC **/ ISteamClient_GetISteamUGC( int hSteamUser, int hSteamPipe, string /*const char **/ pchVersion )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				return Native.ISteamClient.GetISteamUGC(_ptr, hSteamUser /*C*/, hSteamPipe /*C*/, pchVersion /*C*/);
+				return Native.ISteamClient.GetISteamUGC(_ptr, hSteamUser, hSteamPipe, pchVersion);
 			}
 			public virtual IntPtr /*class ISteamAppList **/ ISteamClient_GetISteamAppList( int hSteamUser, int hSteamPipe, string /*const char **/ pchVersion )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				return Native.ISteamClient.GetISteamAppList(_ptr, hSteamUser /*C*/, hSteamPipe /*C*/, pchVersion /*C*/);
+				return Native.ISteamClient.GetISteamAppList(_ptr, hSteamUser, hSteamPipe, pchVersion);
 			}
 			public virtual IntPtr /*class ISteamMusic **/ ISteamClient_GetISteamMusic( int hSteamuser, int hSteamPipe, string /*const char **/ pchVersion )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				return Native.ISteamClient.GetISteamMusic(_ptr, hSteamuser /*C*/, hSteamPipe /*C*/, pchVersion /*C*/);
+				return Native.ISteamClient.GetISteamMusic(_ptr, hSteamuser, hSteamPipe, pchVersion);
 			}
 			public virtual IntPtr /*class ISteamMusicRemote **/ ISteamClient_GetISteamMusicRemote( int hSteamuser, int hSteamPipe, string /*const char **/ pchVersion )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				return Native.ISteamClient.GetISteamMusicRemote(_ptr, hSteamuser /*C*/, hSteamPipe /*C*/, pchVersion /*C*/);
+				return Native.ISteamClient.GetISteamMusicRemote(_ptr, hSteamuser, hSteamPipe, pchVersion);
 			}
 			public virtual IntPtr /*class ISteamHTMLSurface **/ ISteamClient_GetISteamHTMLSurface( int hSteamuser, int hSteamPipe, string /*const char **/ pchVersion )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				return Native.ISteamClient.GetISteamHTMLSurface(_ptr, hSteamuser /*C*/, hSteamPipe /*C*/, pchVersion /*C*/);
+				return Native.ISteamClient.GetISteamHTMLSurface(_ptr, hSteamuser, hSteamPipe, pchVersion);
 			}
 			public virtual IntPtr /*class ISteamInventory **/ ISteamClient_GetISteamInventory( int hSteamuser, int hSteamPipe, string /*const char **/ pchVersion )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				return Native.ISteamClient.GetISteamInventory(_ptr, hSteamuser /*C*/, hSteamPipe /*C*/, pchVersion /*C*/);
+				return Native.ISteamClient.GetISteamInventory(_ptr, hSteamuser, hSteamPipe, pchVersion);
 			}
 			public virtual IntPtr /*class ISteamVideo **/ ISteamClient_GetISteamVideo( int hSteamuser, int hSteamPipe, string /*const char **/ pchVersion )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
-				return Native.ISteamClient.GetISteamVideo(_ptr, hSteamuser /*C*/, hSteamPipe /*C*/, pchVersion /*C*/);
+				return Native.ISteamClient.GetISteamVideo(_ptr, hSteamuser, hSteamPipe, pchVersion);
 			}
 			
 			public virtual HSteamUser /*(HSteamUser)*/ ISteamUser_GetHSteamUser()
@@ -240,25 +240,25 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUser _ptr is null!" );
 				
-				return Native.ISteamUser.InitiateGameConnection(_ptr, pAuthBlob /*C*/, cbMaxAuthBlob /*C*/, steamIDGameServer /*C*/, unIPServer /*C*/, usPortServer /*C*/, bSecure /*C*/);
+				return Native.ISteamUser.InitiateGameConnection(_ptr, pAuthBlob, cbMaxAuthBlob, steamIDGameServer, unIPServer, usPortServer, bSecure);
 			}
 			public virtual void /*void*/ ISteamUser_TerminateGameConnection( uint /*uint32*/ unIPServer, ushort /*uint16*/ usPortServer )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUser _ptr is null!" );
 				
-				Native.ISteamUser.TerminateGameConnection(_ptr, unIPServer /*C*/, usPortServer /*C*/);
+				Native.ISteamUser.TerminateGameConnection(_ptr, unIPServer, usPortServer);
 			}
 			public virtual void /*void*/ ISteamUser_TrackAppUsageEvent( ulong gameID, int /*int*/ eAppUsageEvent, string /*const char **/ pchExtraInfo )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUser _ptr is null!" );
 				
-				Native.ISteamUser.TrackAppUsageEvent(_ptr, gameID /*C*/, eAppUsageEvent /*C*/, pchExtraInfo /*C*/);
+				Native.ISteamUser.TrackAppUsageEvent(_ptr, gameID, eAppUsageEvent, pchExtraInfo);
 			}
 			public virtual bool /*bool*/ ISteamUser_GetUserDataFolder( System.Text.StringBuilder /*char **/ pchBuffer, int /*int*/ cubBuffer )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUser _ptr is null!" );
 				
-				return Native.ISteamUser.GetUserDataFolder(_ptr, pchBuffer /*C*/, cubBuffer /*C*/);
+				return Native.ISteamUser.GetUserDataFolder(_ptr, pchBuffer, cubBuffer);
 			}
 			public virtual void /*void*/ ISteamUser_StartVoiceRecording()
 			{
@@ -276,19 +276,19 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUser _ptr is null!" );
 				
-				return Native.ISteamUser.GetAvailableVoice(_ptr, out pcbCompressed /*B*/, out pcbUncompressed /*B*/, nUncompressedVoiceDesiredSampleRate /*C*/);
+				return Native.ISteamUser.GetAvailableVoice(_ptr, out pcbCompressed, out pcbUncompressed, nUncompressedVoiceDesiredSampleRate);
 			}
 			public virtual VoiceResult /*EVoiceResult*/ ISteamUser_GetVoice( [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bWantCompressed, IntPtr /*void **/ pDestBuffer, uint /*uint32*/ cbDestBufferSize, out uint /*uint32 **/ nBytesWritten, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bWantUncompressed, IntPtr /*void **/ pUncompressedDestBuffer, uint /*uint32*/ cbUncompressedDestBufferSize, out uint /*uint32 **/ nUncompressBytesWritten, uint /*uint32*/ nUncompressedVoiceDesiredSampleRate )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUser _ptr is null!" );
 				
-				return Native.ISteamUser.GetVoice(_ptr, bWantCompressed /*C*/, pDestBuffer /*C*/, cbDestBufferSize /*C*/, out nBytesWritten /*B*/, bWantUncompressed /*C*/, pUncompressedDestBuffer /*C*/, cbUncompressedDestBufferSize /*C*/, out nUncompressBytesWritten /*B*/, nUncompressedVoiceDesiredSampleRate /*C*/);
+				return Native.ISteamUser.GetVoice(_ptr, bWantCompressed, pDestBuffer, cbDestBufferSize, out nBytesWritten, bWantUncompressed, pUncompressedDestBuffer, cbUncompressedDestBufferSize, out nUncompressBytesWritten, nUncompressedVoiceDesiredSampleRate);
 			}
 			public virtual VoiceResult /*EVoiceResult*/ ISteamUser_DecompressVoice( IntPtr /*const void **/ pCompressed, uint /*uint32*/ cbCompressed, IntPtr /*void **/ pDestBuffer, uint /*uint32*/ cbDestBufferSize, out uint /*uint32 **/ nBytesWritten, uint /*uint32*/ nDesiredSampleRate )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUser _ptr is null!" );
 				
-				return Native.ISteamUser.DecompressVoice(_ptr, pCompressed /*C*/, cbCompressed /*C*/, pDestBuffer /*C*/, cbDestBufferSize /*C*/, out nBytesWritten /*B*/, nDesiredSampleRate /*C*/);
+				return Native.ISteamUser.DecompressVoice(_ptr, pCompressed, cbCompressed, pDestBuffer, cbDestBufferSize, out nBytesWritten, nDesiredSampleRate);
 			}
 			public virtual uint /*uint32*/ ISteamUser_GetVoiceOptimalSampleRate()
 			{
@@ -300,31 +300,31 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUser _ptr is null!" );
 				
-				return Native.ISteamUser.GetAuthSessionTicket(_ptr, pTicket /*C*/, cbMaxTicket /*C*/, out pcbTicket /*B*/);
+				return Native.ISteamUser.GetAuthSessionTicket(_ptr, pTicket, cbMaxTicket, out pcbTicket);
 			}
 			public virtual BeginAuthSessionResult /*EBeginAuthSessionResult*/ ISteamUser_BeginAuthSession( IntPtr /*const void **/ pAuthTicket, int /*int*/ cbAuthTicket, ulong steamID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUser _ptr is null!" );
 				
-				return Native.ISteamUser.BeginAuthSession(_ptr, pAuthTicket /*C*/, cbAuthTicket /*C*/, steamID /*C*/);
+				return Native.ISteamUser.BeginAuthSession(_ptr, pAuthTicket, cbAuthTicket, steamID);
 			}
 			public virtual void /*void*/ ISteamUser_EndAuthSession( ulong steamID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUser _ptr is null!" );
 				
-				Native.ISteamUser.EndAuthSession(_ptr, steamID /*C*/);
+				Native.ISteamUser.EndAuthSession(_ptr, steamID);
 			}
 			public virtual void /*void*/ ISteamUser_CancelAuthTicket( uint hAuthTicket )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUser _ptr is null!" );
 				
-				Native.ISteamUser.CancelAuthTicket(_ptr, hAuthTicket /*C*/);
+				Native.ISteamUser.CancelAuthTicket(_ptr, hAuthTicket);
 			}
 			public virtual UserHasLicenseForAppResult /*EUserHasLicenseForAppResult*/ ISteamUser_UserHasLicenseForApp( ulong steamID, uint appID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUser _ptr is null!" );
 				
-				return Native.ISteamUser.UserHasLicenseForApp(_ptr, steamID /*C*/, appID /*C*/);
+				return Native.ISteamUser.UserHasLicenseForApp(_ptr, steamID, appID);
 			}
 			public virtual bool /*bool*/ ISteamUser_BIsBehindNAT()
 			{
@@ -336,25 +336,25 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUser _ptr is null!" );
 				
-				Native.ISteamUser.AdvertiseGame(_ptr, steamIDGameServer /*C*/, unIPServer /*C*/, usPortServer /*C*/);
+				Native.ISteamUser.AdvertiseGame(_ptr, steamIDGameServer, unIPServer, usPortServer);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUser_RequestEncryptedAppTicket( IntPtr /*void **/ pDataToInclude, int /*int*/ cbDataToInclude )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUser _ptr is null!" );
 				
-				return Native.ISteamUser.RequestEncryptedAppTicket(_ptr, pDataToInclude /*C*/, cbDataToInclude /*C*/);
+				return Native.ISteamUser.RequestEncryptedAppTicket(_ptr, pDataToInclude, cbDataToInclude);
 			}
 			public virtual bool /*bool*/ ISteamUser_GetEncryptedAppTicket( IntPtr /*void **/ pTicket, int /*int*/ cbMaxTicket, out uint /*uint32 **/ pcbTicket )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUser _ptr is null!" );
 				
-				return Native.ISteamUser.GetEncryptedAppTicket(_ptr, pTicket /*C*/, cbMaxTicket /*C*/, out pcbTicket /*B*/);
+				return Native.ISteamUser.GetEncryptedAppTicket(_ptr, pTicket, cbMaxTicket, out pcbTicket);
 			}
 			public virtual int /*int*/ ISteamUser_GetGameBadgeLevel( int /*int*/ nSeries, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bFoil )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUser _ptr is null!" );
 				
-				return Native.ISteamUser.GetGameBadgeLevel(_ptr, nSeries /*C*/, bFoil /*C*/);
+				return Native.ISteamUser.GetGameBadgeLevel(_ptr, nSeries, bFoil);
 			}
 			public virtual int /*int*/ ISteamUser_GetPlayerSteamLevel()
 			{
@@ -366,7 +366,7 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUser _ptr is null!" );
 				
-				return Native.ISteamUser.RequestStoreAuthURL(_ptr, pchRedirectURL /*C*/);
+				return Native.ISteamUser.RequestStoreAuthURL(_ptr, pchRedirectURL);
 			}
 			public virtual bool /*bool*/ ISteamUser_BIsPhoneVerified()
 			{
@@ -391,7 +391,7 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.SetPersonaName(_ptr, pchPersonaName /*C*/);
+				return Native.ISteamFriends.SetPersonaName(_ptr, pchPersonaName);
 			}
 			public virtual PersonaState /*EPersonaState*/ ISteamFriends_GetPersonaState()
 			{
@@ -403,38 +403,38 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetFriendCount(_ptr, iFriendFlags /*C*/);
+				return Native.ISteamFriends.GetFriendCount(_ptr, iFriendFlags);
 			}
 			public virtual CSteamID /*(class CSteamID)*/ ISteamFriends_GetFriendByIndex( int /*int*/ iFriend, int /*int*/ iFriendFlags )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetFriendByIndex(_ptr, iFriend /*C*/, iFriendFlags /*C*/);
+				return Native.ISteamFriends.GetFriendByIndex(_ptr, iFriend, iFriendFlags);
 			}
 			public virtual FriendRelationship /*EFriendRelationship*/ ISteamFriends_GetFriendRelationship( ulong steamIDFriend )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetFriendRelationship(_ptr, steamIDFriend /*C*/);
+				return Native.ISteamFriends.GetFriendRelationship(_ptr, steamIDFriend);
 			}
 			public virtual PersonaState /*EPersonaState*/ ISteamFriends_GetFriendPersonaState( ulong steamIDFriend )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetFriendPersonaState(_ptr, steamIDFriend /*C*/);
+				return Native.ISteamFriends.GetFriendPersonaState(_ptr, steamIDFriend);
 			}
 			public virtual IntPtr ISteamFriends_GetFriendPersonaName( ulong steamIDFriend )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetFriendPersonaName(_ptr, steamIDFriend /*C*/);
+				return Native.ISteamFriends.GetFriendPersonaName(_ptr, steamIDFriend);
 			}
 			public virtual bool /*bool*/ ISteamFriends_GetFriendGamePlayed( ulong steamIDFriend, ref FriendGameInfo_t /*struct FriendGameInfo_t **/ pFriendGameInfo )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
 				var pFriendGameInfo_ps = new FriendGameInfo_t.PackSmall();
-				var ret = Native.ISteamFriends.GetFriendGamePlayed(_ptr, steamIDFriend /*C*/, ref pFriendGameInfo_ps);
+				var ret = Native.ISteamFriends.GetFriendGamePlayed(_ptr, steamIDFriend, ref pFriendGameInfo_ps);
 				pFriendGameInfo = pFriendGameInfo_ps;
 				return ret;
 			}
@@ -442,19 +442,19 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetFriendPersonaNameHistory(_ptr, steamIDFriend /*C*/, iPersonaName /*C*/);
+				return Native.ISteamFriends.GetFriendPersonaNameHistory(_ptr, steamIDFriend, iPersonaName);
 			}
 			public virtual int /*int*/ ISteamFriends_GetFriendSteamLevel( ulong steamIDFriend )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetFriendSteamLevel(_ptr, steamIDFriend /*C*/);
+				return Native.ISteamFriends.GetFriendSteamLevel(_ptr, steamIDFriend);
 			}
 			public virtual IntPtr ISteamFriends_GetPlayerNickname( ulong steamIDPlayer )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetPlayerNickname(_ptr, steamIDPlayer /*C*/);
+				return Native.ISteamFriends.GetPlayerNickname(_ptr, steamIDPlayer);
 			}
 			public virtual int /*int*/ ISteamFriends_GetFriendsGroupCount()
 			{
@@ -466,31 +466,31 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetFriendsGroupIDByIndex(_ptr, iFG /*C*/);
+				return Native.ISteamFriends.GetFriendsGroupIDByIndex(_ptr, iFG);
 			}
 			public virtual IntPtr ISteamFriends_GetFriendsGroupName( short friendsGroupID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetFriendsGroupName(_ptr, friendsGroupID /*C*/);
+				return Native.ISteamFriends.GetFriendsGroupName(_ptr, friendsGroupID);
 			}
 			public virtual int /*int*/ ISteamFriends_GetFriendsGroupMembersCount( short friendsGroupID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetFriendsGroupMembersCount(_ptr, friendsGroupID /*C*/);
+				return Native.ISteamFriends.GetFriendsGroupMembersCount(_ptr, friendsGroupID);
 			}
 			public virtual void /*void*/ ISteamFriends_GetFriendsGroupMembersList( short friendsGroupID, IntPtr /*class CSteamID **/ pOutSteamIDMembers, int /*int*/ nMembersCount )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				Native.ISteamFriends.GetFriendsGroupMembersList(_ptr, friendsGroupID /*C*/, pOutSteamIDMembers, nMembersCount /*C*/);
+				Native.ISteamFriends.GetFriendsGroupMembersList(_ptr, friendsGroupID, pOutSteamIDMembers, nMembersCount);
 			}
 			public virtual bool /*bool*/ ISteamFriends_HasFriend( ulong steamIDFriend, int /*int*/ iFriendFlags )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.HasFriend(_ptr, steamIDFriend /*C*/, iFriendFlags /*C*/);
+				return Native.ISteamFriends.HasFriend(_ptr, steamIDFriend, iFriendFlags);
 			}
 			public virtual int /*int*/ ISteamFriends_GetClanCount()
 			{
@@ -502,139 +502,139 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetClanByIndex(_ptr, iClan /*C*/);
+				return Native.ISteamFriends.GetClanByIndex(_ptr, iClan);
 			}
 			public virtual IntPtr ISteamFriends_GetClanName( ulong steamIDClan )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetClanName(_ptr, steamIDClan /*C*/);
+				return Native.ISteamFriends.GetClanName(_ptr, steamIDClan);
 			}
 			public virtual IntPtr ISteamFriends_GetClanTag( ulong steamIDClan )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetClanTag(_ptr, steamIDClan /*C*/);
+				return Native.ISteamFriends.GetClanTag(_ptr, steamIDClan);
 			}
 			public virtual bool /*bool*/ ISteamFriends_GetClanActivityCounts( ulong steamIDClan, out int /*int **/ pnOnline, out int /*int **/ pnInGame, out int /*int **/ pnChatting )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetClanActivityCounts(_ptr, steamIDClan /*C*/, out pnOnline /*B*/, out pnInGame /*B*/, out pnChatting /*B*/);
+				return Native.ISteamFriends.GetClanActivityCounts(_ptr, steamIDClan, out pnOnline, out pnInGame, out pnChatting);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamFriends_DownloadClanActivityCounts( IntPtr /*class CSteamID **/ psteamIDClans, int /*int*/ cClansToRequest )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.DownloadClanActivityCounts(_ptr, psteamIDClans, cClansToRequest /*C*/);
+				return Native.ISteamFriends.DownloadClanActivityCounts(_ptr, psteamIDClans, cClansToRequest);
 			}
 			public virtual int /*int*/ ISteamFriends_GetFriendCountFromSource( ulong steamIDSource )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetFriendCountFromSource(_ptr, steamIDSource /*C*/);
+				return Native.ISteamFriends.GetFriendCountFromSource(_ptr, steamIDSource);
 			}
 			public virtual CSteamID /*(class CSteamID)*/ ISteamFriends_GetFriendFromSourceByIndex( ulong steamIDSource, int /*int*/ iFriend )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetFriendFromSourceByIndex(_ptr, steamIDSource /*C*/, iFriend /*C*/);
+				return Native.ISteamFriends.GetFriendFromSourceByIndex(_ptr, steamIDSource, iFriend);
 			}
 			public virtual bool /*bool*/ ISteamFriends_IsUserInSource( ulong steamIDUser, ulong steamIDSource )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.IsUserInSource(_ptr, steamIDUser /*C*/, steamIDSource /*C*/);
+				return Native.ISteamFriends.IsUserInSource(_ptr, steamIDUser, steamIDSource);
 			}
 			public virtual void /*void*/ ISteamFriends_SetInGameVoiceSpeaking( ulong steamIDUser, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bSpeaking )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				Native.ISteamFriends.SetInGameVoiceSpeaking(_ptr, steamIDUser /*C*/, bSpeaking /*C*/);
+				Native.ISteamFriends.SetInGameVoiceSpeaking(_ptr, steamIDUser, bSpeaking);
 			}
 			public virtual void /*void*/ ISteamFriends_ActivateGameOverlay( string /*const char **/ pchDialog )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				Native.ISteamFriends.ActivateGameOverlay(_ptr, pchDialog /*C*/);
+				Native.ISteamFriends.ActivateGameOverlay(_ptr, pchDialog);
 			}
 			public virtual void /*void*/ ISteamFriends_ActivateGameOverlayToUser( string /*const char **/ pchDialog, ulong steamID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				Native.ISteamFriends.ActivateGameOverlayToUser(_ptr, pchDialog /*C*/, steamID /*C*/);
+				Native.ISteamFriends.ActivateGameOverlayToUser(_ptr, pchDialog, steamID);
 			}
 			public virtual void /*void*/ ISteamFriends_ActivateGameOverlayToWebPage( string /*const char **/ pchURL )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				Native.ISteamFriends.ActivateGameOverlayToWebPage(_ptr, pchURL /*C*/);
+				Native.ISteamFriends.ActivateGameOverlayToWebPage(_ptr, pchURL);
 			}
 			public virtual void /*void*/ ISteamFriends_ActivateGameOverlayToStore( uint nAppID, OverlayToStoreFlag /*EOverlayToStoreFlag*/ eFlag )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				Native.ISteamFriends.ActivateGameOverlayToStore(_ptr, nAppID /*C*/, eFlag /*C*/);
+				Native.ISteamFriends.ActivateGameOverlayToStore(_ptr, nAppID, eFlag);
 			}
 			public virtual void /*void*/ ISteamFriends_SetPlayedWith( ulong steamIDUserPlayedWith )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				Native.ISteamFriends.SetPlayedWith(_ptr, steamIDUserPlayedWith /*C*/);
+				Native.ISteamFriends.SetPlayedWith(_ptr, steamIDUserPlayedWith);
 			}
 			public virtual void /*void*/ ISteamFriends_ActivateGameOverlayInviteDialog( ulong steamIDLobby )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				Native.ISteamFriends.ActivateGameOverlayInviteDialog(_ptr, steamIDLobby /*C*/);
+				Native.ISteamFriends.ActivateGameOverlayInviteDialog(_ptr, steamIDLobby);
 			}
 			public virtual int /*int*/ ISteamFriends_GetSmallFriendAvatar( ulong steamIDFriend )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetSmallFriendAvatar(_ptr, steamIDFriend /*C*/);
+				return Native.ISteamFriends.GetSmallFriendAvatar(_ptr, steamIDFriend);
 			}
 			public virtual int /*int*/ ISteamFriends_GetMediumFriendAvatar( ulong steamIDFriend )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetMediumFriendAvatar(_ptr, steamIDFriend /*C*/);
+				return Native.ISteamFriends.GetMediumFriendAvatar(_ptr, steamIDFriend);
 			}
 			public virtual int /*int*/ ISteamFriends_GetLargeFriendAvatar( ulong steamIDFriend )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetLargeFriendAvatar(_ptr, steamIDFriend /*C*/);
+				return Native.ISteamFriends.GetLargeFriendAvatar(_ptr, steamIDFriend);
 			}
 			public virtual bool /*bool*/ ISteamFriends_RequestUserInformation( ulong steamIDUser, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bRequireNameOnly )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.RequestUserInformation(_ptr, steamIDUser /*C*/, bRequireNameOnly /*C*/);
+				return Native.ISteamFriends.RequestUserInformation(_ptr, steamIDUser, bRequireNameOnly);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamFriends_RequestClanOfficerList( ulong steamIDClan )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.RequestClanOfficerList(_ptr, steamIDClan /*C*/);
+				return Native.ISteamFriends.RequestClanOfficerList(_ptr, steamIDClan);
 			}
 			public virtual CSteamID /*(class CSteamID)*/ ISteamFriends_GetClanOwner( ulong steamIDClan )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetClanOwner(_ptr, steamIDClan /*C*/);
+				return Native.ISteamFriends.GetClanOwner(_ptr, steamIDClan);
 			}
 			public virtual int /*int*/ ISteamFriends_GetClanOfficerCount( ulong steamIDClan )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetClanOfficerCount(_ptr, steamIDClan /*C*/);
+				return Native.ISteamFriends.GetClanOfficerCount(_ptr, steamIDClan);
 			}
 			public virtual CSteamID /*(class CSteamID)*/ ISteamFriends_GetClanOfficerByIndex( ulong steamIDClan, int /*int*/ iOfficer )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetClanOfficerByIndex(_ptr, steamIDClan /*C*/, iOfficer /*C*/);
+				return Native.ISteamFriends.GetClanOfficerByIndex(_ptr, steamIDClan, iOfficer);
 			}
 			public virtual uint /*uint32*/ ISteamFriends_GetUserRestrictions()
 			{
@@ -646,7 +646,7 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.SetRichPresence(_ptr, pchKey /*C*/, pchValue /*C*/);
+				return Native.ISteamFriends.SetRichPresence(_ptr, pchKey, pchValue);
 			}
 			public virtual void /*void*/ ISteamFriends_ClearRichPresence()
 			{
@@ -658,31 +658,31 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetFriendRichPresence(_ptr, steamIDFriend /*C*/, pchKey /*C*/);
+				return Native.ISteamFriends.GetFriendRichPresence(_ptr, steamIDFriend, pchKey);
 			}
 			public virtual int /*int*/ ISteamFriends_GetFriendRichPresenceKeyCount( ulong steamIDFriend )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetFriendRichPresenceKeyCount(_ptr, steamIDFriend /*C*/);
+				return Native.ISteamFriends.GetFriendRichPresenceKeyCount(_ptr, steamIDFriend);
 			}
 			public virtual IntPtr ISteamFriends_GetFriendRichPresenceKeyByIndex( ulong steamIDFriend, int /*int*/ iKey )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetFriendRichPresenceKeyByIndex(_ptr, steamIDFriend /*C*/, iKey /*C*/);
+				return Native.ISteamFriends.GetFriendRichPresenceKeyByIndex(_ptr, steamIDFriend, iKey);
 			}
 			public virtual void /*void*/ ISteamFriends_RequestFriendRichPresence( ulong steamIDFriend )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				Native.ISteamFriends.RequestFriendRichPresence(_ptr, steamIDFriend /*C*/);
+				Native.ISteamFriends.RequestFriendRichPresence(_ptr, steamIDFriend);
 			}
 			public virtual bool /*bool*/ ISteamFriends_InviteUserToGame( ulong steamIDFriend, string /*const char **/ pchConnectString )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.InviteUserToGame(_ptr, steamIDFriend /*C*/, pchConnectString /*C*/);
+				return Native.ISteamFriends.InviteUserToGame(_ptr, steamIDFriend, pchConnectString);
 			}
 			public virtual int /*int*/ ISteamFriends_GetCoplayFriendCount()
 			{
@@ -694,115 +694,115 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetCoplayFriend(_ptr, iCoplayFriend /*C*/);
+				return Native.ISteamFriends.GetCoplayFriend(_ptr, iCoplayFriend);
 			}
 			public virtual int /*int*/ ISteamFriends_GetFriendCoplayTime( ulong steamIDFriend )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetFriendCoplayTime(_ptr, steamIDFriend /*C*/);
+				return Native.ISteamFriends.GetFriendCoplayTime(_ptr, steamIDFriend);
 			}
 			public virtual AppId_t /*(AppId_t)*/ ISteamFriends_GetFriendCoplayGame( ulong steamIDFriend )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetFriendCoplayGame(_ptr, steamIDFriend /*C*/);
+				return Native.ISteamFriends.GetFriendCoplayGame(_ptr, steamIDFriend);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamFriends_JoinClanChatRoom( ulong steamIDClan )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.JoinClanChatRoom(_ptr, steamIDClan /*C*/);
+				return Native.ISteamFriends.JoinClanChatRoom(_ptr, steamIDClan);
 			}
 			public virtual bool /*bool*/ ISteamFriends_LeaveClanChatRoom( ulong steamIDClan )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.LeaveClanChatRoom(_ptr, steamIDClan /*C*/);
+				return Native.ISteamFriends.LeaveClanChatRoom(_ptr, steamIDClan);
 			}
 			public virtual int /*int*/ ISteamFriends_GetClanChatMemberCount( ulong steamIDClan )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetClanChatMemberCount(_ptr, steamIDClan /*C*/);
+				return Native.ISteamFriends.GetClanChatMemberCount(_ptr, steamIDClan);
 			}
 			public virtual CSteamID /*(class CSteamID)*/ ISteamFriends_GetChatMemberByIndex( ulong steamIDClan, int /*int*/ iUser )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetChatMemberByIndex(_ptr, steamIDClan /*C*/, iUser /*C*/);
+				return Native.ISteamFriends.GetChatMemberByIndex(_ptr, steamIDClan, iUser);
 			}
 			public virtual bool /*bool*/ ISteamFriends_SendClanChatMessage( ulong steamIDClanChat, string /*const char **/ pchText )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.SendClanChatMessage(_ptr, steamIDClanChat /*C*/, pchText /*C*/);
+				return Native.ISteamFriends.SendClanChatMessage(_ptr, steamIDClanChat, pchText);
 			}
 			public virtual int /*int*/ ISteamFriends_GetClanChatMessage( ulong steamIDClanChat, int /*int*/ iMessage, IntPtr /*void **/ prgchText, int /*int*/ cchTextMax, out ChatEntryType /*EChatEntryType **/ peChatEntryType, out ulong psteamidChatter )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetClanChatMessage(_ptr, steamIDClanChat /*C*/, iMessage /*C*/, prgchText /*C*/, cchTextMax /*C*/, out peChatEntryType /*B*/, out psteamidChatter /*B*/);
+				return Native.ISteamFriends.GetClanChatMessage(_ptr, steamIDClanChat, iMessage, prgchText, cchTextMax, out peChatEntryType, out psteamidChatter);
 			}
 			public virtual bool /*bool*/ ISteamFriends_IsClanChatAdmin( ulong steamIDClanChat, ulong steamIDUser )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.IsClanChatAdmin(_ptr, steamIDClanChat /*C*/, steamIDUser /*C*/);
+				return Native.ISteamFriends.IsClanChatAdmin(_ptr, steamIDClanChat, steamIDUser);
 			}
 			public virtual bool /*bool*/ ISteamFriends_IsClanChatWindowOpenInSteam( ulong steamIDClanChat )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.IsClanChatWindowOpenInSteam(_ptr, steamIDClanChat /*C*/);
+				return Native.ISteamFriends.IsClanChatWindowOpenInSteam(_ptr, steamIDClanChat);
 			}
 			public virtual bool /*bool*/ ISteamFriends_OpenClanChatWindowInSteam( ulong steamIDClanChat )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.OpenClanChatWindowInSteam(_ptr, steamIDClanChat /*C*/);
+				return Native.ISteamFriends.OpenClanChatWindowInSteam(_ptr, steamIDClanChat);
 			}
 			public virtual bool /*bool*/ ISteamFriends_CloseClanChatWindowInSteam( ulong steamIDClanChat )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.CloseClanChatWindowInSteam(_ptr, steamIDClanChat /*C*/);
+				return Native.ISteamFriends.CloseClanChatWindowInSteam(_ptr, steamIDClanChat);
 			}
 			public virtual bool /*bool*/ ISteamFriends_SetListenForFriendsMessages( [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bInterceptEnabled )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.SetListenForFriendsMessages(_ptr, bInterceptEnabled /*C*/);
+				return Native.ISteamFriends.SetListenForFriendsMessages(_ptr, bInterceptEnabled);
 			}
 			public virtual bool /*bool*/ ISteamFriends_ReplyToFriendMessage( ulong steamIDFriend, string /*const char **/ pchMsgToSend )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.ReplyToFriendMessage(_ptr, steamIDFriend /*C*/, pchMsgToSend /*C*/);
+				return Native.ISteamFriends.ReplyToFriendMessage(_ptr, steamIDFriend, pchMsgToSend);
 			}
 			public virtual int /*int*/ ISteamFriends_GetFriendMessage( ulong steamIDFriend, int /*int*/ iMessageID, IntPtr /*void **/ pvData, int /*int*/ cubData, out ChatEntryType /*EChatEntryType **/ peChatEntryType )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetFriendMessage(_ptr, steamIDFriend /*C*/, iMessageID /*C*/, pvData /*C*/, cubData /*C*/, out peChatEntryType /*B*/);
+				return Native.ISteamFriends.GetFriendMessage(_ptr, steamIDFriend, iMessageID, pvData, cubData, out peChatEntryType);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamFriends_GetFollowerCount( ulong steamID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.GetFollowerCount(_ptr, steamID /*C*/);
+				return Native.ISteamFriends.GetFollowerCount(_ptr, steamID);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamFriends_IsFollowing( ulong steamID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.IsFollowing(_ptr, steamID /*C*/);
+				return Native.ISteamFriends.IsFollowing(_ptr, steamID);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamFriends_EnumerateFollowingList( uint /*uint32*/ unStartIndex )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				return Native.ISteamFriends.EnumerateFollowingList(_ptr, unStartIndex /*C*/);
+				return Native.ISteamFriends.EnumerateFollowingList(_ptr, unStartIndex);
 			}
 			
 			public virtual uint /*uint32*/ ISteamUtils_GetSecondsSinceAppActive()
@@ -839,19 +839,19 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUtils _ptr is null!" );
 				
-				return Native.ISteamUtils.GetImageSize(_ptr, iImage /*C*/, out pnWidth /*B*/, out pnHeight /*B*/);
+				return Native.ISteamUtils.GetImageSize(_ptr, iImage, out pnWidth, out pnHeight);
 			}
 			public virtual bool /*bool*/ ISteamUtils_GetImageRGBA( int /*int*/ iImage, IntPtr /*uint8 **/ pubDest, int /*int*/ nDestBufferSize )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUtils _ptr is null!" );
 				
-				return Native.ISteamUtils.GetImageRGBA(_ptr, iImage /*C*/, pubDest, nDestBufferSize /*C*/);
+				return Native.ISteamUtils.GetImageRGBA(_ptr, iImage, pubDest, nDestBufferSize);
 			}
 			public virtual bool /*bool*/ ISteamUtils_GetCSERIPPort( out uint /*uint32 **/ unIP, out ushort /*uint16 **/ usPort )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUtils _ptr is null!" );
 				
-				return Native.ISteamUtils.GetCSERIPPort(_ptr, out unIP /*B*/, out usPort /*B*/);
+				return Native.ISteamUtils.GetCSERIPPort(_ptr, out unIP, out usPort);
 			}
 			public virtual byte /*uint8*/ ISteamUtils_GetCurrentBatteryPower()
 			{
@@ -869,25 +869,25 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUtils _ptr is null!" );
 				
-				Native.ISteamUtils.SetOverlayNotificationPosition(_ptr, eNotificationPosition /*C*/);
+				Native.ISteamUtils.SetOverlayNotificationPosition(_ptr, eNotificationPosition);
 			}
 			public virtual bool /*bool*/ ISteamUtils_IsAPICallCompleted( ulong hSteamAPICall, [MarshalAs(UnmanagedType.U1)] ref bool /*bool **/ pbFailed )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUtils _ptr is null!" );
 				
-				return Native.ISteamUtils.IsAPICallCompleted(_ptr, hSteamAPICall /*C*/, ref pbFailed /*A*/);
+				return Native.ISteamUtils.IsAPICallCompleted(_ptr, hSteamAPICall, ref pbFailed);
 			}
 			public virtual SteamAPICallFailure /*ESteamAPICallFailure*/ ISteamUtils_GetAPICallFailureReason( ulong hSteamAPICall )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUtils _ptr is null!" );
 				
-				return Native.ISteamUtils.GetAPICallFailureReason(_ptr, hSteamAPICall /*C*/);
+				return Native.ISteamUtils.GetAPICallFailureReason(_ptr, hSteamAPICall);
 			}
 			public virtual bool /*bool*/ ISteamUtils_GetAPICallResult( ulong hSteamAPICall, IntPtr /*void **/ pCallback, int /*int*/ cubCallback, int /*int*/ iCallbackExpected, [MarshalAs(UnmanagedType.U1)] ref bool /*bool **/ pbFailed )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUtils _ptr is null!" );
 				
-				return Native.ISteamUtils.GetAPICallResult(_ptr, hSteamAPICall /*C*/, pCallback /*C*/, cubCallback /*C*/, iCallbackExpected /*C*/, ref pbFailed /*A*/);
+				return Native.ISteamUtils.GetAPICallResult(_ptr, hSteamAPICall, pCallback, cubCallback, iCallbackExpected, ref pbFailed);
 			}
 			public virtual uint /*uint32*/ ISteamUtils_GetIPCCallCount()
 			{
@@ -899,7 +899,7 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUtils _ptr is null!" );
 				
-				Native.ISteamUtils.SetWarningMessageHook(_ptr, pFunction /*C*/);
+				Native.ISteamUtils.SetWarningMessageHook(_ptr, pFunction);
 			}
 			public virtual bool /*bool*/ ISteamUtils_IsOverlayEnabled()
 			{
@@ -917,13 +917,13 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUtils _ptr is null!" );
 				
-				return Native.ISteamUtils.CheckFileSignature(_ptr, szFileName /*C*/);
+				return Native.ISteamUtils.CheckFileSignature(_ptr, szFileName);
 			}
 			public virtual bool /*bool*/ ISteamUtils_ShowGamepadTextInput( GamepadTextInputMode /*EGamepadTextInputMode*/ eInputMode, GamepadTextInputLineMode /*EGamepadTextInputLineMode*/ eLineInputMode, string /*const char **/ pchDescription, uint /*uint32*/ unCharMax, string /*const char **/ pchExistingText )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUtils _ptr is null!" );
 				
-				return Native.ISteamUtils.ShowGamepadTextInput(_ptr, eInputMode /*C*/, eLineInputMode /*C*/, pchDescription /*C*/, unCharMax /*C*/, pchExistingText /*C*/);
+				return Native.ISteamUtils.ShowGamepadTextInput(_ptr, eInputMode, eLineInputMode, pchDescription, unCharMax, pchExistingText);
 			}
 			public virtual uint /*uint32*/ ISteamUtils_GetEnteredGamepadTextLength()
 			{
@@ -935,7 +935,7 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUtils _ptr is null!" );
 				
-				return Native.ISteamUtils.GetEnteredGamepadTextInput(_ptr, pchText /*C*/, cchText /*C*/);
+				return Native.ISteamUtils.GetEnteredGamepadTextInput(_ptr, pchText, cchText);
 			}
 			public virtual IntPtr ISteamUtils_GetSteamUILanguage()
 			{
@@ -953,7 +953,7 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUtils _ptr is null!" );
 				
-				Native.ISteamUtils.SetOverlayNotificationInset(_ptr, nHorizontalInset /*C*/, nVerticalInset /*C*/);
+				Native.ISteamUtils.SetOverlayNotificationInset(_ptr, nHorizontalInset, nVerticalInset);
 			}
 			public virtual bool /*bool*/ ISteamUtils_IsSteamInBigPictureMode()
 			{
@@ -978,19 +978,19 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				return Native.ISteamMatchmaking.GetFavoriteGame(_ptr, iGame /*C*/, ref pnAppID /*A*/, out pnIP /*B*/, out pnConnPort /*B*/, out pnQueryPort /*B*/, punFlags, out pRTime32LastPlayedOnServer /*B*/);
+				return Native.ISteamMatchmaking.GetFavoriteGame(_ptr, iGame, ref pnAppID, out pnIP, out pnConnPort, out pnQueryPort, punFlags, out pRTime32LastPlayedOnServer);
 			}
 			public virtual int /*int*/ ISteamMatchmaking_AddFavoriteGame( uint nAppID, uint /*uint32*/ nIP, ushort /*uint16*/ nConnPort, ushort /*uint16*/ nQueryPort, uint /*uint32*/ unFlags, uint /*uint32*/ rTime32LastPlayedOnServer )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				return Native.ISteamMatchmaking.AddFavoriteGame(_ptr, nAppID /*C*/, nIP /*C*/, nConnPort /*C*/, nQueryPort /*C*/, unFlags /*C*/, rTime32LastPlayedOnServer /*C*/);
+				return Native.ISteamMatchmaking.AddFavoriteGame(_ptr, nAppID, nIP, nConnPort, nQueryPort, unFlags, rTime32LastPlayedOnServer);
 			}
 			public virtual bool /*bool*/ ISteamMatchmaking_RemoveFavoriteGame( uint nAppID, uint /*uint32*/ nIP, ushort /*uint16*/ nConnPort, ushort /*uint16*/ nQueryPort, uint /*uint32*/ unFlags )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				return Native.ISteamMatchmaking.RemoveFavoriteGame(_ptr, nAppID /*C*/, nIP /*C*/, nConnPort /*C*/, nQueryPort /*C*/, unFlags /*C*/);
+				return Native.ISteamMatchmaking.RemoveFavoriteGame(_ptr, nAppID, nIP, nConnPort, nQueryPort, unFlags);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamMatchmaking_RequestLobbyList()
 			{
@@ -1002,411 +1002,411 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				Native.ISteamMatchmaking.AddRequestLobbyListStringFilter(_ptr, pchKeyToMatch /*C*/, pchValueToMatch /*C*/, eComparisonType /*C*/);
+				Native.ISteamMatchmaking.AddRequestLobbyListStringFilter(_ptr, pchKeyToMatch, pchValueToMatch, eComparisonType);
 			}
 			public virtual void /*void*/ ISteamMatchmaking_AddRequestLobbyListNumericalFilter( string /*const char **/ pchKeyToMatch, int /*int*/ nValueToMatch, LobbyComparison /*ELobbyComparison*/ eComparisonType )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				Native.ISteamMatchmaking.AddRequestLobbyListNumericalFilter(_ptr, pchKeyToMatch /*C*/, nValueToMatch /*C*/, eComparisonType /*C*/);
+				Native.ISteamMatchmaking.AddRequestLobbyListNumericalFilter(_ptr, pchKeyToMatch, nValueToMatch, eComparisonType);
 			}
 			public virtual void /*void*/ ISteamMatchmaking_AddRequestLobbyListNearValueFilter( string /*const char **/ pchKeyToMatch, int /*int*/ nValueToBeCloseTo )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				Native.ISteamMatchmaking.AddRequestLobbyListNearValueFilter(_ptr, pchKeyToMatch /*C*/, nValueToBeCloseTo /*C*/);
+				Native.ISteamMatchmaking.AddRequestLobbyListNearValueFilter(_ptr, pchKeyToMatch, nValueToBeCloseTo);
 			}
 			public virtual void /*void*/ ISteamMatchmaking_AddRequestLobbyListFilterSlotsAvailable( int /*int*/ nSlotsAvailable )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				Native.ISteamMatchmaking.AddRequestLobbyListFilterSlotsAvailable(_ptr, nSlotsAvailable /*C*/);
+				Native.ISteamMatchmaking.AddRequestLobbyListFilterSlotsAvailable(_ptr, nSlotsAvailable);
 			}
 			public virtual void /*void*/ ISteamMatchmaking_AddRequestLobbyListDistanceFilter( LobbyDistanceFilter /*ELobbyDistanceFilter*/ eLobbyDistanceFilter )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				Native.ISteamMatchmaking.AddRequestLobbyListDistanceFilter(_ptr, eLobbyDistanceFilter /*C*/);
+				Native.ISteamMatchmaking.AddRequestLobbyListDistanceFilter(_ptr, eLobbyDistanceFilter);
 			}
 			public virtual void /*void*/ ISteamMatchmaking_AddRequestLobbyListResultCountFilter( int /*int*/ cMaxResults )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				Native.ISteamMatchmaking.AddRequestLobbyListResultCountFilter(_ptr, cMaxResults /*C*/);
+				Native.ISteamMatchmaking.AddRequestLobbyListResultCountFilter(_ptr, cMaxResults);
 			}
 			public virtual void /*void*/ ISteamMatchmaking_AddRequestLobbyListCompatibleMembersFilter( ulong steamIDLobby )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				Native.ISteamMatchmaking.AddRequestLobbyListCompatibleMembersFilter(_ptr, steamIDLobby /*C*/);
+				Native.ISteamMatchmaking.AddRequestLobbyListCompatibleMembersFilter(_ptr, steamIDLobby);
 			}
 			public virtual CSteamID /*(class CSteamID)*/ ISteamMatchmaking_GetLobbyByIndex( int /*int*/ iLobby )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				return Native.ISteamMatchmaking.GetLobbyByIndex(_ptr, iLobby /*C*/);
+				return Native.ISteamMatchmaking.GetLobbyByIndex(_ptr, iLobby);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamMatchmaking_CreateLobby( LobbyType /*ELobbyType*/ eLobbyType, int /*int*/ cMaxMembers )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				return Native.ISteamMatchmaking.CreateLobby(_ptr, eLobbyType /*C*/, cMaxMembers /*C*/);
+				return Native.ISteamMatchmaking.CreateLobby(_ptr, eLobbyType, cMaxMembers);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamMatchmaking_JoinLobby( ulong steamIDLobby )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				return Native.ISteamMatchmaking.JoinLobby(_ptr, steamIDLobby /*C*/);
+				return Native.ISteamMatchmaking.JoinLobby(_ptr, steamIDLobby);
 			}
 			public virtual void /*void*/ ISteamMatchmaking_LeaveLobby( ulong steamIDLobby )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				Native.ISteamMatchmaking.LeaveLobby(_ptr, steamIDLobby /*C*/);
+				Native.ISteamMatchmaking.LeaveLobby(_ptr, steamIDLobby);
 			}
 			public virtual bool /*bool*/ ISteamMatchmaking_InviteUserToLobby( ulong steamIDLobby, ulong steamIDInvitee )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				return Native.ISteamMatchmaking.InviteUserToLobby(_ptr, steamIDLobby /*C*/, steamIDInvitee /*C*/);
+				return Native.ISteamMatchmaking.InviteUserToLobby(_ptr, steamIDLobby, steamIDInvitee);
 			}
 			public virtual int /*int*/ ISteamMatchmaking_GetNumLobbyMembers( ulong steamIDLobby )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				return Native.ISteamMatchmaking.GetNumLobbyMembers(_ptr, steamIDLobby /*C*/);
+				return Native.ISteamMatchmaking.GetNumLobbyMembers(_ptr, steamIDLobby);
 			}
 			public virtual CSteamID /*(class CSteamID)*/ ISteamMatchmaking_GetLobbyMemberByIndex( ulong steamIDLobby, int /*int*/ iMember )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				return Native.ISteamMatchmaking.GetLobbyMemberByIndex(_ptr, steamIDLobby /*C*/, iMember /*C*/);
+				return Native.ISteamMatchmaking.GetLobbyMemberByIndex(_ptr, steamIDLobby, iMember);
 			}
 			public virtual IntPtr ISteamMatchmaking_GetLobbyData( ulong steamIDLobby, string /*const char **/ pchKey )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				return Native.ISteamMatchmaking.GetLobbyData(_ptr, steamIDLobby /*C*/, pchKey /*C*/);
+				return Native.ISteamMatchmaking.GetLobbyData(_ptr, steamIDLobby, pchKey);
 			}
 			public virtual bool /*bool*/ ISteamMatchmaking_SetLobbyData( ulong steamIDLobby, string /*const char **/ pchKey, string /*const char **/ pchValue )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				return Native.ISteamMatchmaking.SetLobbyData(_ptr, steamIDLobby /*C*/, pchKey /*C*/, pchValue /*C*/);
+				return Native.ISteamMatchmaking.SetLobbyData(_ptr, steamIDLobby, pchKey, pchValue);
 			}
 			public virtual int /*int*/ ISteamMatchmaking_GetLobbyDataCount( ulong steamIDLobby )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				return Native.ISteamMatchmaking.GetLobbyDataCount(_ptr, steamIDLobby /*C*/);
+				return Native.ISteamMatchmaking.GetLobbyDataCount(_ptr, steamIDLobby);
 			}
 			public virtual bool /*bool*/ ISteamMatchmaking_GetLobbyDataByIndex( ulong steamIDLobby, int /*int*/ iLobbyData, System.Text.StringBuilder /*char **/ pchKey, int /*int*/ cchKeyBufferSize, System.Text.StringBuilder /*char **/ pchValue, int /*int*/ cchValueBufferSize )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				return Native.ISteamMatchmaking.GetLobbyDataByIndex(_ptr, steamIDLobby /*C*/, iLobbyData /*C*/, pchKey /*C*/, cchKeyBufferSize /*C*/, pchValue /*C*/, cchValueBufferSize /*C*/);
+				return Native.ISteamMatchmaking.GetLobbyDataByIndex(_ptr, steamIDLobby, iLobbyData, pchKey, cchKeyBufferSize, pchValue, cchValueBufferSize);
 			}
 			public virtual bool /*bool*/ ISteamMatchmaking_DeleteLobbyData( ulong steamIDLobby, string /*const char **/ pchKey )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				return Native.ISteamMatchmaking.DeleteLobbyData(_ptr, steamIDLobby /*C*/, pchKey /*C*/);
+				return Native.ISteamMatchmaking.DeleteLobbyData(_ptr, steamIDLobby, pchKey);
 			}
 			public virtual IntPtr ISteamMatchmaking_GetLobbyMemberData( ulong steamIDLobby, ulong steamIDUser, string /*const char **/ pchKey )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				return Native.ISteamMatchmaking.GetLobbyMemberData(_ptr, steamIDLobby /*C*/, steamIDUser /*C*/, pchKey /*C*/);
+				return Native.ISteamMatchmaking.GetLobbyMemberData(_ptr, steamIDLobby, steamIDUser, pchKey);
 			}
 			public virtual void /*void*/ ISteamMatchmaking_SetLobbyMemberData( ulong steamIDLobby, string /*const char **/ pchKey, string /*const char **/ pchValue )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				Native.ISteamMatchmaking.SetLobbyMemberData(_ptr, steamIDLobby /*C*/, pchKey /*C*/, pchValue /*C*/);
+				Native.ISteamMatchmaking.SetLobbyMemberData(_ptr, steamIDLobby, pchKey, pchValue);
 			}
 			public virtual bool /*bool*/ ISteamMatchmaking_SendLobbyChatMsg( ulong steamIDLobby, IntPtr /*const void **/ pvMsgBody, int /*int*/ cubMsgBody )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				return Native.ISteamMatchmaking.SendLobbyChatMsg(_ptr, steamIDLobby /*C*/, pvMsgBody /*C*/, cubMsgBody /*C*/);
+				return Native.ISteamMatchmaking.SendLobbyChatMsg(_ptr, steamIDLobby, pvMsgBody, cubMsgBody);
 			}
 			public virtual int /*int*/ ISteamMatchmaking_GetLobbyChatEntry( ulong steamIDLobby, int /*int*/ iChatID, out ulong pSteamIDUser, IntPtr /*void **/ pvData, int /*int*/ cubData, out ChatEntryType /*EChatEntryType **/ peChatEntryType )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				return Native.ISteamMatchmaking.GetLobbyChatEntry(_ptr, steamIDLobby /*C*/, iChatID /*C*/, out pSteamIDUser /*B*/, pvData /*C*/, cubData /*C*/, out peChatEntryType /*B*/);
+				return Native.ISteamMatchmaking.GetLobbyChatEntry(_ptr, steamIDLobby, iChatID, out pSteamIDUser, pvData, cubData, out peChatEntryType);
 			}
 			public virtual bool /*bool*/ ISteamMatchmaking_RequestLobbyData( ulong steamIDLobby )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				return Native.ISteamMatchmaking.RequestLobbyData(_ptr, steamIDLobby /*C*/);
+				return Native.ISteamMatchmaking.RequestLobbyData(_ptr, steamIDLobby);
 			}
 			public virtual void /*void*/ ISteamMatchmaking_SetLobbyGameServer( ulong steamIDLobby, uint /*uint32*/ unGameServerIP, ushort /*uint16*/ unGameServerPort, ulong steamIDGameServer )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				Native.ISteamMatchmaking.SetLobbyGameServer(_ptr, steamIDLobby /*C*/, unGameServerIP /*C*/, unGameServerPort /*C*/, steamIDGameServer /*C*/);
+				Native.ISteamMatchmaking.SetLobbyGameServer(_ptr, steamIDLobby, unGameServerIP, unGameServerPort, steamIDGameServer);
 			}
 			public virtual bool /*bool*/ ISteamMatchmaking_GetLobbyGameServer( ulong steamIDLobby, out uint /*uint32 **/ punGameServerIP, out ushort /*uint16 **/ punGameServerPort, out ulong psteamIDGameServer )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				return Native.ISteamMatchmaking.GetLobbyGameServer(_ptr, steamIDLobby /*C*/, out punGameServerIP /*B*/, out punGameServerPort /*B*/, out psteamIDGameServer /*B*/);
+				return Native.ISteamMatchmaking.GetLobbyGameServer(_ptr, steamIDLobby, out punGameServerIP, out punGameServerPort, out psteamIDGameServer);
 			}
 			public virtual bool /*bool*/ ISteamMatchmaking_SetLobbyMemberLimit( ulong steamIDLobby, int /*int*/ cMaxMembers )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				return Native.ISteamMatchmaking.SetLobbyMemberLimit(_ptr, steamIDLobby /*C*/, cMaxMembers /*C*/);
+				return Native.ISteamMatchmaking.SetLobbyMemberLimit(_ptr, steamIDLobby, cMaxMembers);
 			}
 			public virtual int /*int*/ ISteamMatchmaking_GetLobbyMemberLimit( ulong steamIDLobby )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				return Native.ISteamMatchmaking.GetLobbyMemberLimit(_ptr, steamIDLobby /*C*/);
+				return Native.ISteamMatchmaking.GetLobbyMemberLimit(_ptr, steamIDLobby);
 			}
 			public virtual bool /*bool*/ ISteamMatchmaking_SetLobbyType( ulong steamIDLobby, LobbyType /*ELobbyType*/ eLobbyType )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				return Native.ISteamMatchmaking.SetLobbyType(_ptr, steamIDLobby /*C*/, eLobbyType /*C*/);
+				return Native.ISteamMatchmaking.SetLobbyType(_ptr, steamIDLobby, eLobbyType);
 			}
 			public virtual bool /*bool*/ ISteamMatchmaking_SetLobbyJoinable( ulong steamIDLobby, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bLobbyJoinable )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				return Native.ISteamMatchmaking.SetLobbyJoinable(_ptr, steamIDLobby /*C*/, bLobbyJoinable /*C*/);
+				return Native.ISteamMatchmaking.SetLobbyJoinable(_ptr, steamIDLobby, bLobbyJoinable);
 			}
 			public virtual CSteamID /*(class CSteamID)*/ ISteamMatchmaking_GetLobbyOwner( ulong steamIDLobby )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				return Native.ISteamMatchmaking.GetLobbyOwner(_ptr, steamIDLobby /*C*/);
+				return Native.ISteamMatchmaking.GetLobbyOwner(_ptr, steamIDLobby);
 			}
 			public virtual bool /*bool*/ ISteamMatchmaking_SetLobbyOwner( ulong steamIDLobby, ulong steamIDNewOwner )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				return Native.ISteamMatchmaking.SetLobbyOwner(_ptr, steamIDLobby /*C*/, steamIDNewOwner /*C*/);
+				return Native.ISteamMatchmaking.SetLobbyOwner(_ptr, steamIDLobby, steamIDNewOwner);
 			}
 			public virtual bool /*bool*/ ISteamMatchmaking_SetLinkedLobby( ulong steamIDLobby, ulong steamIDLobbyDependent )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				return Native.ISteamMatchmaking.SetLinkedLobby(_ptr, steamIDLobby /*C*/, steamIDLobbyDependent /*C*/);
+				return Native.ISteamMatchmaking.SetLinkedLobby(_ptr, steamIDLobby, steamIDLobbyDependent);
 			}
 			
 			public virtual HServerListRequest /*(HServerListRequest)*/ ISteamMatchmakingServers_RequestInternetServerList( uint iApp, IntPtr /*struct MatchMakingKeyValuePair_t ***/ ppchFilters, uint /*uint32*/ nFilters, IntPtr /*class ISteamMatchmakingServerListResponse **/ pRequestServersResponse )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmakingServers _ptr is null!" );
 				
-				return Native.ISteamMatchmakingServers.RequestInternetServerList(_ptr, iApp /*C*/, ppchFilters, nFilters /*C*/, pRequestServersResponse /*C*/);
+				return Native.ISteamMatchmakingServers.RequestInternetServerList(_ptr, iApp, ppchFilters, nFilters, pRequestServersResponse);
 			}
 			public virtual HServerListRequest /*(HServerListRequest)*/ ISteamMatchmakingServers_RequestLANServerList( uint iApp, IntPtr /*class ISteamMatchmakingServerListResponse **/ pRequestServersResponse )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmakingServers _ptr is null!" );
 				
-				return Native.ISteamMatchmakingServers.RequestLANServerList(_ptr, iApp /*C*/, pRequestServersResponse /*C*/);
+				return Native.ISteamMatchmakingServers.RequestLANServerList(_ptr, iApp, pRequestServersResponse);
 			}
 			public virtual HServerListRequest /*(HServerListRequest)*/ ISteamMatchmakingServers_RequestFriendsServerList( uint iApp, IntPtr /*struct MatchMakingKeyValuePair_t ***/ ppchFilters, uint /*uint32*/ nFilters, IntPtr /*class ISteamMatchmakingServerListResponse **/ pRequestServersResponse )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmakingServers _ptr is null!" );
 				
-				return Native.ISteamMatchmakingServers.RequestFriendsServerList(_ptr, iApp /*C*/, ppchFilters, nFilters /*C*/, pRequestServersResponse /*C*/);
+				return Native.ISteamMatchmakingServers.RequestFriendsServerList(_ptr, iApp, ppchFilters, nFilters, pRequestServersResponse);
 			}
 			public virtual HServerListRequest /*(HServerListRequest)*/ ISteamMatchmakingServers_RequestFavoritesServerList( uint iApp, IntPtr /*struct MatchMakingKeyValuePair_t ***/ ppchFilters, uint /*uint32*/ nFilters, IntPtr /*class ISteamMatchmakingServerListResponse **/ pRequestServersResponse )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmakingServers _ptr is null!" );
 				
-				return Native.ISteamMatchmakingServers.RequestFavoritesServerList(_ptr, iApp /*C*/, ppchFilters, nFilters /*C*/, pRequestServersResponse /*C*/);
+				return Native.ISteamMatchmakingServers.RequestFavoritesServerList(_ptr, iApp, ppchFilters, nFilters, pRequestServersResponse);
 			}
 			public virtual HServerListRequest /*(HServerListRequest)*/ ISteamMatchmakingServers_RequestHistoryServerList( uint iApp, IntPtr /*struct MatchMakingKeyValuePair_t ***/ ppchFilters, uint /*uint32*/ nFilters, IntPtr /*class ISteamMatchmakingServerListResponse **/ pRequestServersResponse )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmakingServers _ptr is null!" );
 				
-				return Native.ISteamMatchmakingServers.RequestHistoryServerList(_ptr, iApp /*C*/, ppchFilters, nFilters /*C*/, pRequestServersResponse /*C*/);
+				return Native.ISteamMatchmakingServers.RequestHistoryServerList(_ptr, iApp, ppchFilters, nFilters, pRequestServersResponse);
 			}
 			public virtual HServerListRequest /*(HServerListRequest)*/ ISteamMatchmakingServers_RequestSpectatorServerList( uint iApp, IntPtr /*struct MatchMakingKeyValuePair_t ***/ ppchFilters, uint /*uint32*/ nFilters, IntPtr /*class ISteamMatchmakingServerListResponse **/ pRequestServersResponse )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmakingServers _ptr is null!" );
 				
-				return Native.ISteamMatchmakingServers.RequestSpectatorServerList(_ptr, iApp /*C*/, ppchFilters, nFilters /*C*/, pRequestServersResponse /*C*/);
+				return Native.ISteamMatchmakingServers.RequestSpectatorServerList(_ptr, iApp, ppchFilters, nFilters, pRequestServersResponse);
 			}
 			public virtual void /*void*/ ISteamMatchmakingServers_ReleaseRequest( IntPtr hServerListRequest )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmakingServers _ptr is null!" );
 				
-				Native.ISteamMatchmakingServers.ReleaseRequest(_ptr, hServerListRequest /*C*/);
+				Native.ISteamMatchmakingServers.ReleaseRequest(_ptr, hServerListRequest);
 			}
 			public virtual IntPtr /*class gameserveritem_t **/ ISteamMatchmakingServers_GetServerDetails( IntPtr hRequest, int /*int*/ iServer )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmakingServers _ptr is null!" );
 				
-				return Native.ISteamMatchmakingServers.GetServerDetails(_ptr, hRequest /*C*/, iServer /*C*/);
+				return Native.ISteamMatchmakingServers.GetServerDetails(_ptr, hRequest, iServer);
 			}
 			public virtual void /*void*/ ISteamMatchmakingServers_CancelQuery( IntPtr hRequest )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmakingServers _ptr is null!" );
 				
-				Native.ISteamMatchmakingServers.CancelQuery(_ptr, hRequest /*C*/);
+				Native.ISteamMatchmakingServers.CancelQuery(_ptr, hRequest);
 			}
 			public virtual void /*void*/ ISteamMatchmakingServers_RefreshQuery( IntPtr hRequest )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmakingServers _ptr is null!" );
 				
-				Native.ISteamMatchmakingServers.RefreshQuery(_ptr, hRequest /*C*/);
+				Native.ISteamMatchmakingServers.RefreshQuery(_ptr, hRequest);
 			}
 			public virtual bool /*bool*/ ISteamMatchmakingServers_IsRefreshing( IntPtr hRequest )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmakingServers _ptr is null!" );
 				
-				return Native.ISteamMatchmakingServers.IsRefreshing(_ptr, hRequest /*C*/);
+				return Native.ISteamMatchmakingServers.IsRefreshing(_ptr, hRequest);
 			}
 			public virtual int /*int*/ ISteamMatchmakingServers_GetServerCount( IntPtr hRequest )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmakingServers _ptr is null!" );
 				
-				return Native.ISteamMatchmakingServers.GetServerCount(_ptr, hRequest /*C*/);
+				return Native.ISteamMatchmakingServers.GetServerCount(_ptr, hRequest);
 			}
 			public virtual void /*void*/ ISteamMatchmakingServers_RefreshServer( IntPtr hRequest, int /*int*/ iServer )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmakingServers _ptr is null!" );
 				
-				Native.ISteamMatchmakingServers.RefreshServer(_ptr, hRequest /*C*/, iServer /*C*/);
+				Native.ISteamMatchmakingServers.RefreshServer(_ptr, hRequest, iServer);
 			}
 			public virtual HServerQuery /*(HServerQuery)*/ ISteamMatchmakingServers_PingServer( uint /*uint32*/ unIP, ushort /*uint16*/ usPort, IntPtr /*class ISteamMatchmakingPingResponse **/ pRequestServersResponse )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmakingServers _ptr is null!" );
 				
-				return Native.ISteamMatchmakingServers.PingServer(_ptr, unIP /*C*/, usPort /*C*/, pRequestServersResponse /*C*/);
+				return Native.ISteamMatchmakingServers.PingServer(_ptr, unIP, usPort, pRequestServersResponse);
 			}
 			public virtual HServerQuery /*(HServerQuery)*/ ISteamMatchmakingServers_PlayerDetails( uint /*uint32*/ unIP, ushort /*uint16*/ usPort, IntPtr /*class ISteamMatchmakingPlayersResponse **/ pRequestServersResponse )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmakingServers _ptr is null!" );
 				
-				return Native.ISteamMatchmakingServers.PlayerDetails(_ptr, unIP /*C*/, usPort /*C*/, pRequestServersResponse /*C*/);
+				return Native.ISteamMatchmakingServers.PlayerDetails(_ptr, unIP, usPort, pRequestServersResponse);
 			}
 			public virtual HServerQuery /*(HServerQuery)*/ ISteamMatchmakingServers_ServerRules( uint /*uint32*/ unIP, ushort /*uint16*/ usPort, IntPtr /*class ISteamMatchmakingRulesResponse **/ pRequestServersResponse )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmakingServers _ptr is null!" );
 				
-				return Native.ISteamMatchmakingServers.ServerRules(_ptr, unIP /*C*/, usPort /*C*/, pRequestServersResponse /*C*/);
+				return Native.ISteamMatchmakingServers.ServerRules(_ptr, unIP, usPort, pRequestServersResponse);
 			}
 			public virtual void /*void*/ ISteamMatchmakingServers_CancelServerQuery( int hServerQuery )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMatchmakingServers _ptr is null!" );
 				
-				Native.ISteamMatchmakingServers.CancelServerQuery(_ptr, hServerQuery /*C*/);
+				Native.ISteamMatchmakingServers.CancelServerQuery(_ptr, hServerQuery);
 			}
 			
 			public virtual bool /*bool*/ ISteamRemoteStorage_FileWrite( string /*const char **/ pchFile, IntPtr /*const void **/ pvData, int /*int32*/ cubData )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.FileWrite(_ptr, pchFile /*C*/, pvData /*C*/, cubData /*C*/);
+				return Native.ISteamRemoteStorage.FileWrite(_ptr, pchFile, pvData, cubData);
 			}
 			public virtual int /*int32*/ ISteamRemoteStorage_FileRead( string /*const char **/ pchFile, IntPtr /*void **/ pvData, int /*int32*/ cubDataToRead )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.FileRead(_ptr, pchFile /*C*/, pvData /*C*/, cubDataToRead /*C*/);
+				return Native.ISteamRemoteStorage.FileRead(_ptr, pchFile, pvData, cubDataToRead);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_FileWriteAsync( string /*const char **/ pchFile, IntPtr /*const void **/ pvData, uint /*uint32*/ cubData )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.FileWriteAsync(_ptr, pchFile /*C*/, pvData /*C*/, cubData /*C*/);
+				return Native.ISteamRemoteStorage.FileWriteAsync(_ptr, pchFile, pvData, cubData);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_FileReadAsync( string /*const char **/ pchFile, uint /*uint32*/ nOffset, uint /*uint32*/ cubToRead )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.FileReadAsync(_ptr, pchFile /*C*/, nOffset /*C*/, cubToRead /*C*/);
+				return Native.ISteamRemoteStorage.FileReadAsync(_ptr, pchFile, nOffset, cubToRead);
 			}
 			public virtual bool /*bool*/ ISteamRemoteStorage_FileReadAsyncComplete( ulong hReadCall, IntPtr /*void **/ pvBuffer, uint /*uint32*/ cubToRead )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.FileReadAsyncComplete(_ptr, hReadCall /*C*/, pvBuffer /*C*/, cubToRead /*C*/);
+				return Native.ISteamRemoteStorage.FileReadAsyncComplete(_ptr, hReadCall, pvBuffer, cubToRead);
 			}
 			public virtual bool /*bool*/ ISteamRemoteStorage_FileForget( string /*const char **/ pchFile )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.FileForget(_ptr, pchFile /*C*/);
+				return Native.ISteamRemoteStorage.FileForget(_ptr, pchFile);
 			}
 			public virtual bool /*bool*/ ISteamRemoteStorage_FileDelete( string /*const char **/ pchFile )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.FileDelete(_ptr, pchFile /*C*/);
+				return Native.ISteamRemoteStorage.FileDelete(_ptr, pchFile);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_FileShare( string /*const char **/ pchFile )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.FileShare(_ptr, pchFile /*C*/);
+				return Native.ISteamRemoteStorage.FileShare(_ptr, pchFile);
 			}
 			public virtual bool /*bool*/ ISteamRemoteStorage_SetSyncPlatforms( string /*const char **/ pchFile, RemoteStoragePlatform /*ERemoteStoragePlatform*/ eRemoteStoragePlatform )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.SetSyncPlatforms(_ptr, pchFile /*C*/, eRemoteStoragePlatform /*C*/);
+				return Native.ISteamRemoteStorage.SetSyncPlatforms(_ptr, pchFile, eRemoteStoragePlatform);
 			}
 			public virtual UGCFileWriteStreamHandle_t /*(UGCFileWriteStreamHandle_t)*/ ISteamRemoteStorage_FileWriteStreamOpen( string /*const char **/ pchFile )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.FileWriteStreamOpen(_ptr, pchFile /*C*/);
+				return Native.ISteamRemoteStorage.FileWriteStreamOpen(_ptr, pchFile);
 			}
 			public virtual bool /*bool*/ ISteamRemoteStorage_FileWriteStreamWriteChunk( ulong writeHandle, IntPtr /*const void **/ pvData, int /*int32*/ cubData )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.FileWriteStreamWriteChunk(_ptr, writeHandle /*C*/, pvData /*C*/, cubData /*C*/);
+				return Native.ISteamRemoteStorage.FileWriteStreamWriteChunk(_ptr, writeHandle, pvData, cubData);
 			}
 			public virtual bool /*bool*/ ISteamRemoteStorage_FileWriteStreamClose( ulong writeHandle )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.FileWriteStreamClose(_ptr, writeHandle /*C*/);
+				return Native.ISteamRemoteStorage.FileWriteStreamClose(_ptr, writeHandle);
 			}
 			public virtual bool /*bool*/ ISteamRemoteStorage_FileWriteStreamCancel( ulong writeHandle )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.FileWriteStreamCancel(_ptr, writeHandle /*C*/);
+				return Native.ISteamRemoteStorage.FileWriteStreamCancel(_ptr, writeHandle);
 			}
 			public virtual bool /*bool*/ ISteamRemoteStorage_FileExists( string /*const char **/ pchFile )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.FileExists(_ptr, pchFile /*C*/);
+				return Native.ISteamRemoteStorage.FileExists(_ptr, pchFile);
 			}
 			public virtual bool /*bool*/ ISteamRemoteStorage_FilePersisted( string /*const char **/ pchFile )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.FilePersisted(_ptr, pchFile /*C*/);
+				return Native.ISteamRemoteStorage.FilePersisted(_ptr, pchFile);
 			}
 			public virtual int /*int32*/ ISteamRemoteStorage_GetFileSize( string /*const char **/ pchFile )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.GetFileSize(_ptr, pchFile /*C*/);
+				return Native.ISteamRemoteStorage.GetFileSize(_ptr, pchFile);
 			}
 			public virtual long /*int64*/ ISteamRemoteStorage_GetFileTimestamp( string /*const char **/ pchFile )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.GetFileTimestamp(_ptr, pchFile /*C*/);
+				return Native.ISteamRemoteStorage.GetFileTimestamp(_ptr, pchFile);
 			}
 			public virtual RemoteStoragePlatform /*ERemoteStoragePlatform*/ ISteamRemoteStorage_GetSyncPlatforms( string /*const char **/ pchFile )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.GetSyncPlatforms(_ptr, pchFile /*C*/);
+				return Native.ISteamRemoteStorage.GetSyncPlatforms(_ptr, pchFile);
 			}
 			public virtual int /*int32*/ ISteamRemoteStorage_GetFileCount()
 			{
@@ -1418,7 +1418,7 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.GetFileNameAndSize(_ptr, iFile /*C*/, pnFileSizeInBytes);
+				return Native.ISteamRemoteStorage.GetFileNameAndSize(_ptr, iFile, pnFileSizeInBytes);
 			}
 			public virtual bool /*bool*/ ISteamRemoteStorage_GetQuota( IntPtr /*int32 **/ pnTotalBytes, IntPtr /*int32 **/ puAvailableBytes )
 			{
@@ -1442,31 +1442,31 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				Native.ISteamRemoteStorage.SetCloudEnabledForApp(_ptr, bEnabled /*C*/);
+				Native.ISteamRemoteStorage.SetCloudEnabledForApp(_ptr, bEnabled);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_UGCDownload( ulong hContent, uint /*uint32*/ unPriority )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.UGCDownload(_ptr, hContent /*C*/, unPriority /*C*/);
+				return Native.ISteamRemoteStorage.UGCDownload(_ptr, hContent, unPriority);
 			}
 			public virtual bool /*bool*/ ISteamRemoteStorage_GetUGCDownloadProgress( ulong hContent, out int /*int32 **/ pnBytesDownloaded, out int /*int32 **/ pnBytesExpected )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.GetUGCDownloadProgress(_ptr, hContent /*C*/, out pnBytesDownloaded /*B*/, out pnBytesExpected /*B*/);
+				return Native.ISteamRemoteStorage.GetUGCDownloadProgress(_ptr, hContent, out pnBytesDownloaded, out pnBytesExpected);
 			}
 			public virtual bool /*bool*/ ISteamRemoteStorage_GetUGCDetails( ulong hContent, ref uint pnAppID, System.Text.StringBuilder /*char ***/ ppchName, IntPtr /*int32 **/ pnFileSizeInBytes, out ulong pSteamIDOwner )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.GetUGCDetails(_ptr, hContent /*C*/, ref pnAppID /*A*/, ppchName /*C*/, pnFileSizeInBytes, out pSteamIDOwner /*B*/);
+				return Native.ISteamRemoteStorage.GetUGCDetails(_ptr, hContent, ref pnAppID, ppchName, pnFileSizeInBytes, out pSteamIDOwner);
 			}
 			public virtual int /*int32*/ ISteamRemoteStorage_UGCRead( ulong hContent, IntPtr /*void **/ pvData, int /*int32*/ cubDataToRead, uint /*uint32*/ cOffset, UGCReadAction /*EUGCReadAction*/ eAction )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.UGCRead(_ptr, hContent /*C*/, pvData /*C*/, cubDataToRead /*C*/, cOffset /*C*/, eAction /*C*/);
+				return Native.ISteamRemoteStorage.UGCRead(_ptr, hContent, pvData, cubDataToRead, cOffset, eAction);
 			}
 			public virtual int /*int32*/ ISteamRemoteStorage_GetCachedUGCCount()
 			{
@@ -1478,157 +1478,157 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.GetCachedUGCHandle(_ptr, iCachedContent /*C*/);
+				return Native.ISteamRemoteStorage.GetCachedUGCHandle(_ptr, iCachedContent);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_PublishWorkshopFile( string /*const char **/ pchFile, string /*const char **/ pchPreviewFile, uint nConsumerAppId, string /*const char **/ pchTitle, string /*const char **/ pchDescription, RemoteStoragePublishedFileVisibility /*ERemoteStoragePublishedFileVisibility*/ eVisibility, IntPtr /*struct SteamParamStringArray_t **/ pTags, WorkshopFileType /*EWorkshopFileType*/ eWorkshopFileType )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.PublishWorkshopFile(_ptr, pchFile /*C*/, pchPreviewFile /*C*/, nConsumerAppId /*C*/, pchTitle /*C*/, pchDescription /*C*/, eVisibility /*C*/, pTags, eWorkshopFileType /*C*/);
+				return Native.ISteamRemoteStorage.PublishWorkshopFile(_ptr, pchFile, pchPreviewFile, nConsumerAppId, pchTitle, pchDescription, eVisibility, pTags, eWorkshopFileType);
 			}
 			public virtual PublishedFileUpdateHandle_t /*(PublishedFileUpdateHandle_t)*/ ISteamRemoteStorage_CreatePublishedFileUpdateRequest( ulong unPublishedFileId )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.CreatePublishedFileUpdateRequest(_ptr, unPublishedFileId /*C*/);
+				return Native.ISteamRemoteStorage.CreatePublishedFileUpdateRequest(_ptr, unPublishedFileId);
 			}
 			public virtual bool /*bool*/ ISteamRemoteStorage_UpdatePublishedFileFile( ulong updateHandle, string /*const char **/ pchFile )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.UpdatePublishedFileFile(_ptr, updateHandle /*C*/, pchFile /*C*/);
+				return Native.ISteamRemoteStorage.UpdatePublishedFileFile(_ptr, updateHandle, pchFile);
 			}
 			public virtual bool /*bool*/ ISteamRemoteStorage_UpdatePublishedFilePreviewFile( ulong updateHandle, string /*const char **/ pchPreviewFile )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.UpdatePublishedFilePreviewFile(_ptr, updateHandle /*C*/, pchPreviewFile /*C*/);
+				return Native.ISteamRemoteStorage.UpdatePublishedFilePreviewFile(_ptr, updateHandle, pchPreviewFile);
 			}
 			public virtual bool /*bool*/ ISteamRemoteStorage_UpdatePublishedFileTitle( ulong updateHandle, string /*const char **/ pchTitle )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.UpdatePublishedFileTitle(_ptr, updateHandle /*C*/, pchTitle /*C*/);
+				return Native.ISteamRemoteStorage.UpdatePublishedFileTitle(_ptr, updateHandle, pchTitle);
 			}
 			public virtual bool /*bool*/ ISteamRemoteStorage_UpdatePublishedFileDescription( ulong updateHandle, string /*const char **/ pchDescription )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.UpdatePublishedFileDescription(_ptr, updateHandle /*C*/, pchDescription /*C*/);
+				return Native.ISteamRemoteStorage.UpdatePublishedFileDescription(_ptr, updateHandle, pchDescription);
 			}
 			public virtual bool /*bool*/ ISteamRemoteStorage_UpdatePublishedFileVisibility( ulong updateHandle, RemoteStoragePublishedFileVisibility /*ERemoteStoragePublishedFileVisibility*/ eVisibility )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.UpdatePublishedFileVisibility(_ptr, updateHandle /*C*/, eVisibility /*C*/);
+				return Native.ISteamRemoteStorage.UpdatePublishedFileVisibility(_ptr, updateHandle, eVisibility);
 			}
 			public virtual bool /*bool*/ ISteamRemoteStorage_UpdatePublishedFileTags( ulong updateHandle, IntPtr /*struct SteamParamStringArray_t **/ pTags )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.UpdatePublishedFileTags(_ptr, updateHandle /*C*/, pTags);
+				return Native.ISteamRemoteStorage.UpdatePublishedFileTags(_ptr, updateHandle, pTags);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_CommitPublishedFileUpdate( ulong updateHandle )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.CommitPublishedFileUpdate(_ptr, updateHandle /*C*/);
+				return Native.ISteamRemoteStorage.CommitPublishedFileUpdate(_ptr, updateHandle);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_GetPublishedFileDetails( ulong unPublishedFileId, uint /*uint32*/ unMaxSecondsOld )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.GetPublishedFileDetails(_ptr, unPublishedFileId /*C*/, unMaxSecondsOld /*C*/);
+				return Native.ISteamRemoteStorage.GetPublishedFileDetails(_ptr, unPublishedFileId, unMaxSecondsOld);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_DeletePublishedFile( ulong unPublishedFileId )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.DeletePublishedFile(_ptr, unPublishedFileId /*C*/);
+				return Native.ISteamRemoteStorage.DeletePublishedFile(_ptr, unPublishedFileId);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_EnumerateUserPublishedFiles( uint /*uint32*/ unStartIndex )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.EnumerateUserPublishedFiles(_ptr, unStartIndex /*C*/);
+				return Native.ISteamRemoteStorage.EnumerateUserPublishedFiles(_ptr, unStartIndex);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_SubscribePublishedFile( ulong unPublishedFileId )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.SubscribePublishedFile(_ptr, unPublishedFileId /*C*/);
+				return Native.ISteamRemoteStorage.SubscribePublishedFile(_ptr, unPublishedFileId);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_EnumerateUserSubscribedFiles( uint /*uint32*/ unStartIndex )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.EnumerateUserSubscribedFiles(_ptr, unStartIndex /*C*/);
+				return Native.ISteamRemoteStorage.EnumerateUserSubscribedFiles(_ptr, unStartIndex);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_UnsubscribePublishedFile( ulong unPublishedFileId )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.UnsubscribePublishedFile(_ptr, unPublishedFileId /*C*/);
+				return Native.ISteamRemoteStorage.UnsubscribePublishedFile(_ptr, unPublishedFileId);
 			}
 			public virtual bool /*bool*/ ISteamRemoteStorage_UpdatePublishedFileSetChangeDescription( ulong updateHandle, string /*const char **/ pchChangeDescription )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.UpdatePublishedFileSetChangeDescription(_ptr, updateHandle /*C*/, pchChangeDescription /*C*/);
+				return Native.ISteamRemoteStorage.UpdatePublishedFileSetChangeDescription(_ptr, updateHandle, pchChangeDescription);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_GetPublishedItemVoteDetails( ulong unPublishedFileId )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.GetPublishedItemVoteDetails(_ptr, unPublishedFileId /*C*/);
+				return Native.ISteamRemoteStorage.GetPublishedItemVoteDetails(_ptr, unPublishedFileId);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_UpdateUserPublishedItemVote( ulong unPublishedFileId, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bVoteUp )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.UpdateUserPublishedItemVote(_ptr, unPublishedFileId /*C*/, bVoteUp /*C*/);
+				return Native.ISteamRemoteStorage.UpdateUserPublishedItemVote(_ptr, unPublishedFileId, bVoteUp);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_GetUserPublishedItemVoteDetails( ulong unPublishedFileId )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.GetUserPublishedItemVoteDetails(_ptr, unPublishedFileId /*C*/);
+				return Native.ISteamRemoteStorage.GetUserPublishedItemVoteDetails(_ptr, unPublishedFileId);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_EnumerateUserSharedWorkshopFiles( ulong steamId, uint /*uint32*/ unStartIndex, IntPtr /*struct SteamParamStringArray_t **/ pRequiredTags, IntPtr /*struct SteamParamStringArray_t **/ pExcludedTags )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.EnumerateUserSharedWorkshopFiles(_ptr, steamId /*C*/, unStartIndex /*C*/, pRequiredTags, pExcludedTags);
+				return Native.ISteamRemoteStorage.EnumerateUserSharedWorkshopFiles(_ptr, steamId, unStartIndex, pRequiredTags, pExcludedTags);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_PublishVideo( WorkshopVideoProvider /*EWorkshopVideoProvider*/ eVideoProvider, string /*const char **/ pchVideoAccount, string /*const char **/ pchVideoIdentifier, string /*const char **/ pchPreviewFile, uint nConsumerAppId, string /*const char **/ pchTitle, string /*const char **/ pchDescription, RemoteStoragePublishedFileVisibility /*ERemoteStoragePublishedFileVisibility*/ eVisibility, IntPtr /*struct SteamParamStringArray_t **/ pTags )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.PublishVideo(_ptr, eVideoProvider /*C*/, pchVideoAccount /*C*/, pchVideoIdentifier /*C*/, pchPreviewFile /*C*/, nConsumerAppId /*C*/, pchTitle /*C*/, pchDescription /*C*/, eVisibility /*C*/, pTags);
+				return Native.ISteamRemoteStorage.PublishVideo(_ptr, eVideoProvider, pchVideoAccount, pchVideoIdentifier, pchPreviewFile, nConsumerAppId, pchTitle, pchDescription, eVisibility, pTags);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_SetUserPublishedFileAction( ulong unPublishedFileId, WorkshopFileAction /*EWorkshopFileAction*/ eAction )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.SetUserPublishedFileAction(_ptr, unPublishedFileId /*C*/, eAction /*C*/);
+				return Native.ISteamRemoteStorage.SetUserPublishedFileAction(_ptr, unPublishedFileId, eAction);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_EnumeratePublishedFilesByUserAction( WorkshopFileAction /*EWorkshopFileAction*/ eAction, uint /*uint32*/ unStartIndex )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.EnumeratePublishedFilesByUserAction(_ptr, eAction /*C*/, unStartIndex /*C*/);
+				return Native.ISteamRemoteStorage.EnumeratePublishedFilesByUserAction(_ptr, eAction, unStartIndex);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_EnumeratePublishedWorkshopFiles( WorkshopEnumerationType /*EWorkshopEnumerationType*/ eEnumerationType, uint /*uint32*/ unStartIndex, uint /*uint32*/ unCount, uint /*uint32*/ unDays, IntPtr /*struct SteamParamStringArray_t **/ pTags, IntPtr /*struct SteamParamStringArray_t **/ pUserTags )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.EnumeratePublishedWorkshopFiles(_ptr, eEnumerationType /*C*/, unStartIndex /*C*/, unCount /*C*/, unDays /*C*/, pTags, pUserTags);
+				return Native.ISteamRemoteStorage.EnumeratePublishedWorkshopFiles(_ptr, eEnumerationType, unStartIndex, unCount, unDays, pTags, pUserTags);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_UGCDownloadToLocation( ulong hContent, string /*const char **/ pchLocation, uint /*uint32*/ unPriority )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.ISteamRemoteStorage.UGCDownloadToLocation(_ptr, hContent /*C*/, pchLocation /*C*/, unPriority /*C*/);
+				return Native.ISteamRemoteStorage.UGCDownloadToLocation(_ptr, hContent, pchLocation, unPriority);
 			}
 			
 			public virtual bool /*bool*/ ISteamUserStats_RequestCurrentStats()
@@ -1641,55 +1641,55 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetStat(_ptr, pchName /*C*/, out pData /*B*/);
+				return Native.ISteamUserStats.GetStat(_ptr, pchName, out pData);
 			}
 			public virtual bool /*bool*/ ISteamUserStats_GetStat0( string /*const char **/ pchName, out float /*float **/ pData )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetStat0(_ptr, pchName /*C*/, out pData /*B*/);
+				return Native.ISteamUserStats.GetStat0(_ptr, pchName, out pData);
 			}
 			public virtual bool /*bool*/ ISteamUserStats_SetStat( string /*const char **/ pchName, int /*int32*/ nData )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.SetStat(_ptr, pchName /*C*/, nData /*C*/);
+				return Native.ISteamUserStats.SetStat(_ptr, pchName, nData);
 			}
 			public virtual bool /*bool*/ ISteamUserStats_SetStat0( string /*const char **/ pchName, float /*float*/ fData )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.SetStat0(_ptr, pchName /*C*/, fData /*C*/);
+				return Native.ISteamUserStats.SetStat0(_ptr, pchName, fData);
 			}
 			public virtual bool /*bool*/ ISteamUserStats_UpdateAvgRateStat( string /*const char **/ pchName, float /*float*/ flCountThisSession, double /*double*/ dSessionLength )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.UpdateAvgRateStat(_ptr, pchName /*C*/, flCountThisSession /*C*/, dSessionLength /*C*/);
+				return Native.ISteamUserStats.UpdateAvgRateStat(_ptr, pchName, flCountThisSession, dSessionLength);
 			}
 			public virtual bool /*bool*/ ISteamUserStats_GetAchievement( string /*const char **/ pchName, [MarshalAs(UnmanagedType.U1)] ref bool /*bool **/ pbAchieved )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetAchievement(_ptr, pchName /*C*/, ref pbAchieved /*A*/);
+				return Native.ISteamUserStats.GetAchievement(_ptr, pchName, ref pbAchieved);
 			}
 			public virtual bool /*bool*/ ISteamUserStats_SetAchievement( string /*const char **/ pchName )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.SetAchievement(_ptr, pchName /*C*/);
+				return Native.ISteamUserStats.SetAchievement(_ptr, pchName);
 			}
 			public virtual bool /*bool*/ ISteamUserStats_ClearAchievement( string /*const char **/ pchName )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.ClearAchievement(_ptr, pchName /*C*/);
+				return Native.ISteamUserStats.ClearAchievement(_ptr, pchName);
 			}
 			public virtual bool /*bool*/ ISteamUserStats_GetAchievementAndUnlockTime( string /*const char **/ pchName, [MarshalAs(UnmanagedType.U1)] ref bool /*bool **/ pbAchieved, out uint /*uint32 **/ punUnlockTime )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetAchievementAndUnlockTime(_ptr, pchName /*C*/, ref pbAchieved /*A*/, out punUnlockTime /*B*/);
+				return Native.ISteamUserStats.GetAchievementAndUnlockTime(_ptr, pchName, ref pbAchieved, out punUnlockTime);
 			}
 			public virtual bool /*bool*/ ISteamUserStats_StoreStats()
 			{
@@ -1701,19 +1701,19 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetAchievementIcon(_ptr, pchName /*C*/);
+				return Native.ISteamUserStats.GetAchievementIcon(_ptr, pchName);
 			}
 			public virtual IntPtr ISteamUserStats_GetAchievementDisplayAttribute( string /*const char **/ pchName, string /*const char **/ pchKey )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetAchievementDisplayAttribute(_ptr, pchName /*C*/, pchKey /*C*/);
+				return Native.ISteamUserStats.GetAchievementDisplayAttribute(_ptr, pchName, pchKey);
 			}
 			public virtual bool /*bool*/ ISteamUserStats_IndicateAchievementProgress( string /*const char **/ pchName, uint /*uint32*/ nCurProgress, uint /*uint32*/ nMaxProgress )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.IndicateAchievementProgress(_ptr, pchName /*C*/, nCurProgress /*C*/, nMaxProgress /*C*/);
+				return Native.ISteamUserStats.IndicateAchievementProgress(_ptr, pchName, nCurProgress, nMaxProgress);
 			}
 			public virtual uint /*uint32*/ ISteamUserStats_GetNumAchievements()
 			{
@@ -1725,98 +1725,98 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetAchievementName(_ptr, iAchievement /*C*/);
+				return Native.ISteamUserStats.GetAchievementName(_ptr, iAchievement);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUserStats_RequestUserStats( ulong steamIDUser )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.RequestUserStats(_ptr, steamIDUser /*C*/);
+				return Native.ISteamUserStats.RequestUserStats(_ptr, steamIDUser);
 			}
 			public virtual bool /*bool*/ ISteamUserStats_GetUserStat( ulong steamIDUser, string /*const char **/ pchName, out int /*int32 **/ pData )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetUserStat(_ptr, steamIDUser /*C*/, pchName /*C*/, out pData /*B*/);
+				return Native.ISteamUserStats.GetUserStat(_ptr, steamIDUser, pchName, out pData);
 			}
 			public virtual bool /*bool*/ ISteamUserStats_GetUserStat0( ulong steamIDUser, string /*const char **/ pchName, out float /*float **/ pData )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetUserStat0(_ptr, steamIDUser /*C*/, pchName /*C*/, out pData /*B*/);
+				return Native.ISteamUserStats.GetUserStat0(_ptr, steamIDUser, pchName, out pData);
 			}
 			public virtual bool /*bool*/ ISteamUserStats_GetUserAchievement( ulong steamIDUser, string /*const char **/ pchName, [MarshalAs(UnmanagedType.U1)] ref bool /*bool **/ pbAchieved )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetUserAchievement(_ptr, steamIDUser /*C*/, pchName /*C*/, ref pbAchieved /*A*/);
+				return Native.ISteamUserStats.GetUserAchievement(_ptr, steamIDUser, pchName, ref pbAchieved);
 			}
 			public virtual bool /*bool*/ ISteamUserStats_GetUserAchievementAndUnlockTime( ulong steamIDUser, string /*const char **/ pchName, [MarshalAs(UnmanagedType.U1)] ref bool /*bool **/ pbAchieved, out uint /*uint32 **/ punUnlockTime )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetUserAchievementAndUnlockTime(_ptr, steamIDUser /*C*/, pchName /*C*/, ref pbAchieved /*A*/, out punUnlockTime /*B*/);
+				return Native.ISteamUserStats.GetUserAchievementAndUnlockTime(_ptr, steamIDUser, pchName, ref pbAchieved, out punUnlockTime);
 			}
 			public virtual bool /*bool*/ ISteamUserStats_ResetAllStats( [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bAchievementsToo )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.ResetAllStats(_ptr, bAchievementsToo /*C*/);
+				return Native.ISteamUserStats.ResetAllStats(_ptr, bAchievementsToo);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUserStats_FindOrCreateLeaderboard( string /*const char **/ pchLeaderboardName, LeaderboardSortMethod /*ELeaderboardSortMethod*/ eLeaderboardSortMethod, LeaderboardDisplayType /*ELeaderboardDisplayType*/ eLeaderboardDisplayType )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.FindOrCreateLeaderboard(_ptr, pchLeaderboardName /*C*/, eLeaderboardSortMethod /*C*/, eLeaderboardDisplayType /*C*/);
+				return Native.ISteamUserStats.FindOrCreateLeaderboard(_ptr, pchLeaderboardName, eLeaderboardSortMethod, eLeaderboardDisplayType);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUserStats_FindLeaderboard( string /*const char **/ pchLeaderboardName )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.FindLeaderboard(_ptr, pchLeaderboardName /*C*/);
+				return Native.ISteamUserStats.FindLeaderboard(_ptr, pchLeaderboardName);
 			}
 			public virtual IntPtr ISteamUserStats_GetLeaderboardName( ulong hSteamLeaderboard )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetLeaderboardName(_ptr, hSteamLeaderboard /*C*/);
+				return Native.ISteamUserStats.GetLeaderboardName(_ptr, hSteamLeaderboard);
 			}
 			public virtual int /*int*/ ISteamUserStats_GetLeaderboardEntryCount( ulong hSteamLeaderboard )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetLeaderboardEntryCount(_ptr, hSteamLeaderboard /*C*/);
+				return Native.ISteamUserStats.GetLeaderboardEntryCount(_ptr, hSteamLeaderboard);
 			}
 			public virtual LeaderboardSortMethod /*ELeaderboardSortMethod*/ ISteamUserStats_GetLeaderboardSortMethod( ulong hSteamLeaderboard )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetLeaderboardSortMethod(_ptr, hSteamLeaderboard /*C*/);
+				return Native.ISteamUserStats.GetLeaderboardSortMethod(_ptr, hSteamLeaderboard);
 			}
 			public virtual LeaderboardDisplayType /*ELeaderboardDisplayType*/ ISteamUserStats_GetLeaderboardDisplayType( ulong hSteamLeaderboard )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetLeaderboardDisplayType(_ptr, hSteamLeaderboard /*C*/);
+				return Native.ISteamUserStats.GetLeaderboardDisplayType(_ptr, hSteamLeaderboard);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUserStats_DownloadLeaderboardEntries( ulong hSteamLeaderboard, LeaderboardDataRequest /*ELeaderboardDataRequest*/ eLeaderboardDataRequest, int /*int*/ nRangeStart, int /*int*/ nRangeEnd )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.DownloadLeaderboardEntries(_ptr, hSteamLeaderboard /*C*/, eLeaderboardDataRequest /*C*/, nRangeStart /*C*/, nRangeEnd /*C*/);
+				return Native.ISteamUserStats.DownloadLeaderboardEntries(_ptr, hSteamLeaderboard, eLeaderboardDataRequest, nRangeStart, nRangeEnd);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUserStats_DownloadLeaderboardEntriesForUsers( ulong hSteamLeaderboard, IntPtr /*class CSteamID **/ prgUsers, int /*int*/ cUsers )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.DownloadLeaderboardEntriesForUsers(_ptr, hSteamLeaderboard /*C*/, prgUsers, cUsers /*C*/);
+				return Native.ISteamUserStats.DownloadLeaderboardEntriesForUsers(_ptr, hSteamLeaderboard, prgUsers, cUsers);
 			}
 			public virtual bool /*bool*/ ISteamUserStats_GetDownloadedLeaderboardEntry( ulong hSteamLeaderboardEntries, int /*int*/ index, ref LeaderboardEntry_t /*struct LeaderboardEntry_t **/ pLeaderboardEntry, IntPtr /*int32 **/ pDetails, int /*int*/ cDetailsMax )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
 				var pLeaderboardEntry_ps = new LeaderboardEntry_t.PackSmall();
-				var ret = Native.ISteamUserStats.GetDownloadedLeaderboardEntry(_ptr, hSteamLeaderboardEntries /*C*/, index /*C*/, ref pLeaderboardEntry_ps, pDetails, cDetailsMax /*C*/);
+				var ret = Native.ISteamUserStats.GetDownloadedLeaderboardEntry(_ptr, hSteamLeaderboardEntries, index, ref pLeaderboardEntry_ps, pDetails, cDetailsMax);
 				pLeaderboardEntry = pLeaderboardEntry_ps;
 				return ret;
 			}
@@ -1824,13 +1824,13 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.UploadLeaderboardScore(_ptr, hSteamLeaderboard /*C*/, eLeaderboardUploadScoreMethod /*C*/, nScore /*C*/, pScoreDetails, cScoreDetailsCount /*C*/);
+				return Native.ISteamUserStats.UploadLeaderboardScore(_ptr, hSteamLeaderboard, eLeaderboardUploadScoreMethod, nScore, pScoreDetails, cScoreDetailsCount);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUserStats_AttachLeaderboardUGC( ulong hSteamLeaderboard, ulong hUGC )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.AttachLeaderboardUGC(_ptr, hSteamLeaderboard /*C*/, hUGC /*C*/);
+				return Native.ISteamUserStats.AttachLeaderboardUGC(_ptr, hSteamLeaderboard, hUGC);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUserStats_GetNumberOfCurrentPlayers()
 			{
@@ -1848,49 +1848,49 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetMostAchievedAchievementInfo(_ptr, pchName /*C*/, unNameBufLen /*C*/, out pflPercent /*B*/, ref pbAchieved /*A*/);
+				return Native.ISteamUserStats.GetMostAchievedAchievementInfo(_ptr, pchName, unNameBufLen, out pflPercent, ref pbAchieved);
 			}
 			public virtual int /*int*/ ISteamUserStats_GetNextMostAchievedAchievementInfo( int /*int*/ iIteratorPrevious, System.Text.StringBuilder /*char **/ pchName, uint /*uint32*/ unNameBufLen, out float /*float **/ pflPercent, [MarshalAs(UnmanagedType.U1)] ref bool /*bool **/ pbAchieved )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetNextMostAchievedAchievementInfo(_ptr, iIteratorPrevious /*C*/, pchName /*C*/, unNameBufLen /*C*/, out pflPercent /*B*/, ref pbAchieved /*A*/);
+				return Native.ISteamUserStats.GetNextMostAchievedAchievementInfo(_ptr, iIteratorPrevious, pchName, unNameBufLen, out pflPercent, ref pbAchieved);
 			}
 			public virtual bool /*bool*/ ISteamUserStats_GetAchievementAchievedPercent( string /*const char **/ pchName, out float /*float **/ pflPercent )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetAchievementAchievedPercent(_ptr, pchName /*C*/, out pflPercent /*B*/);
+				return Native.ISteamUserStats.GetAchievementAchievedPercent(_ptr, pchName, out pflPercent);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUserStats_RequestGlobalStats( int /*int*/ nHistoryDays )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.RequestGlobalStats(_ptr, nHistoryDays /*C*/);
+				return Native.ISteamUserStats.RequestGlobalStats(_ptr, nHistoryDays);
 			}
 			public virtual bool /*bool*/ ISteamUserStats_GetGlobalStat( string /*const char **/ pchStatName, out long /*int64 **/ pData )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetGlobalStat(_ptr, pchStatName /*C*/, out pData /*B*/);
+				return Native.ISteamUserStats.GetGlobalStat(_ptr, pchStatName, out pData);
 			}
 			public virtual bool /*bool*/ ISteamUserStats_GetGlobalStat0( string /*const char **/ pchStatName, out double /*double **/ pData )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetGlobalStat0(_ptr, pchStatName /*C*/, out pData /*B*/);
+				return Native.ISteamUserStats.GetGlobalStat0(_ptr, pchStatName, out pData);
 			}
 			public virtual int /*int32*/ ISteamUserStats_GetGlobalStatHistory( string /*const char **/ pchStatName, out long /*int64 **/ pData, uint /*uint32*/ cubData )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetGlobalStatHistory(_ptr, pchStatName /*C*/, out pData /*B*/, cubData /*C*/);
+				return Native.ISteamUserStats.GetGlobalStatHistory(_ptr, pchStatName, out pData, cubData);
 			}
 			public virtual int /*int32*/ ISteamUserStats_GetGlobalStatHistory0( string /*const char **/ pchStatName, out double /*double **/ pData, uint /*uint32*/ cubData )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				return Native.ISteamUserStats.GetGlobalStatHistory0(_ptr, pchStatName /*C*/, out pData /*B*/, cubData /*C*/);
+				return Native.ISteamUserStats.GetGlobalStatHistory0(_ptr, pchStatName, out pData, cubData);
 			}
 			
 			public virtual bool /*bool*/ ISteamApps_BIsSubscribed()
@@ -1933,19 +1933,19 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamApps _ptr is null!" );
 				
-				return Native.ISteamApps.BIsSubscribedApp(_ptr, appID /*C*/);
+				return Native.ISteamApps.BIsSubscribedApp(_ptr, appID);
 			}
 			public virtual bool /*bool*/ ISteamApps_BIsDlcInstalled( uint appID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamApps _ptr is null!" );
 				
-				return Native.ISteamApps.BIsDlcInstalled(_ptr, appID /*C*/);
+				return Native.ISteamApps.BIsDlcInstalled(_ptr, appID);
 			}
 			public virtual uint /*uint32*/ ISteamApps_GetEarliestPurchaseUnixTime( uint nAppID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamApps _ptr is null!" );
 				
-				return Native.ISteamApps.GetEarliestPurchaseUnixTime(_ptr, nAppID /*C*/);
+				return Native.ISteamApps.GetEarliestPurchaseUnixTime(_ptr, nAppID);
 			}
 			public virtual bool /*bool*/ ISteamApps_BIsSubscribedFromFreeWeekend()
 			{
@@ -1963,55 +1963,55 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamApps _ptr is null!" );
 				
-				return Native.ISteamApps.BGetDLCDataByIndex(_ptr, iDLC /*C*/, ref pAppID /*A*/, ref pbAvailable /*A*/, pchName /*C*/, cchNameBufferSize /*C*/);
+				return Native.ISteamApps.BGetDLCDataByIndex(_ptr, iDLC, ref pAppID, ref pbAvailable, pchName, cchNameBufferSize);
 			}
 			public virtual void /*void*/ ISteamApps_InstallDLC( uint nAppID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamApps _ptr is null!" );
 				
-				Native.ISteamApps.InstallDLC(_ptr, nAppID /*C*/);
+				Native.ISteamApps.InstallDLC(_ptr, nAppID);
 			}
 			public virtual void /*void*/ ISteamApps_UninstallDLC( uint nAppID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamApps _ptr is null!" );
 				
-				Native.ISteamApps.UninstallDLC(_ptr, nAppID /*C*/);
+				Native.ISteamApps.UninstallDLC(_ptr, nAppID);
 			}
 			public virtual void /*void*/ ISteamApps_RequestAppProofOfPurchaseKey( uint nAppID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamApps _ptr is null!" );
 				
-				Native.ISteamApps.RequestAppProofOfPurchaseKey(_ptr, nAppID /*C*/);
+				Native.ISteamApps.RequestAppProofOfPurchaseKey(_ptr, nAppID);
 			}
 			public virtual bool /*bool*/ ISteamApps_GetCurrentBetaName( System.Text.StringBuilder /*char **/ pchName, int /*int*/ cchNameBufferSize )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamApps _ptr is null!" );
 				
-				return Native.ISteamApps.GetCurrentBetaName(_ptr, pchName /*C*/, cchNameBufferSize /*C*/);
+				return Native.ISteamApps.GetCurrentBetaName(_ptr, pchName, cchNameBufferSize);
 			}
 			public virtual bool /*bool*/ ISteamApps_MarkContentCorrupt( [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bMissingFilesOnly )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamApps _ptr is null!" );
 				
-				return Native.ISteamApps.MarkContentCorrupt(_ptr, bMissingFilesOnly /*C*/);
+				return Native.ISteamApps.MarkContentCorrupt(_ptr, bMissingFilesOnly);
 			}
 			public virtual uint /*uint32*/ ISteamApps_GetInstalledDepots( uint appID, IntPtr /*DepotId_t **/ pvecDepots, uint /*uint32*/ cMaxDepots )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamApps _ptr is null!" );
 				
-				return Native.ISteamApps.GetInstalledDepots(_ptr, appID /*C*/, pvecDepots, cMaxDepots /*C*/);
+				return Native.ISteamApps.GetInstalledDepots(_ptr, appID, pvecDepots, cMaxDepots);
 			}
 			public virtual uint /*uint32*/ ISteamApps_GetAppInstallDir( uint appID, System.Text.StringBuilder /*char **/ pchFolder, uint /*uint32*/ cchFolderBufferSize )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamApps _ptr is null!" );
 				
-				return Native.ISteamApps.GetAppInstallDir(_ptr, appID /*C*/, pchFolder /*C*/, cchFolderBufferSize /*C*/);
+				return Native.ISteamApps.GetAppInstallDir(_ptr, appID, pchFolder, cchFolderBufferSize);
 			}
 			public virtual bool /*bool*/ ISteamApps_BIsAppInstalled( uint appID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamApps _ptr is null!" );
 				
-				return Native.ISteamApps.BIsAppInstalled(_ptr, appID /*C*/);
+				return Native.ISteamApps.BIsAppInstalled(_ptr, appID);
 			}
 			public virtual CSteamID /*(class CSteamID)*/ ISteamApps_GetAppOwner()
 			{
@@ -2023,13 +2023,13 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamApps _ptr is null!" );
 				
-				return Native.ISteamApps.GetLaunchQueryParam(_ptr, pchKey /*C*/);
+				return Native.ISteamApps.GetLaunchQueryParam(_ptr, pchKey);
 			}
 			public virtual bool /*bool*/ ISteamApps_GetDlcDownloadProgress( uint nAppID, out ulong /*uint64 **/ punBytesDownloaded, out ulong /*uint64 **/ punBytesTotal )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamApps _ptr is null!" );
 				
-				return Native.ISteamApps.GetDlcDownloadProgress(_ptr, nAppID /*C*/, out punBytesDownloaded /*B*/, out punBytesTotal /*B*/);
+				return Native.ISteamApps.GetDlcDownloadProgress(_ptr, nAppID, out punBytesDownloaded, out punBytesTotal);
 			}
 			public virtual int /*int*/ ISteamApps_GetAppBuildId()
 			{
@@ -2048,44 +2048,44 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamNetworking _ptr is null!" );
 				
-				return Native.ISteamNetworking.SendP2PPacket(_ptr, steamIDRemote /*C*/, pubData /*C*/, cubData /*C*/, eP2PSendType /*C*/, nChannel /*C*/);
+				return Native.ISteamNetworking.SendP2PPacket(_ptr, steamIDRemote, pubData, cubData, eP2PSendType, nChannel);
 			}
 			public virtual bool /*bool*/ ISteamNetworking_IsP2PPacketAvailable( out uint /*uint32 **/ pcubMsgSize, int /*int*/ nChannel )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamNetworking _ptr is null!" );
 				
-				return Native.ISteamNetworking.IsP2PPacketAvailable(_ptr, out pcubMsgSize /*B*/, nChannel /*C*/);
+				return Native.ISteamNetworking.IsP2PPacketAvailable(_ptr, out pcubMsgSize, nChannel);
 			}
 			public virtual bool /*bool*/ ISteamNetworking_ReadP2PPacket( IntPtr /*void **/ pubDest, uint /*uint32*/ cubDest, out uint /*uint32 **/ pcubMsgSize, out ulong psteamIDRemote, int /*int*/ nChannel )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamNetworking _ptr is null!" );
 				
-				return Native.ISteamNetworking.ReadP2PPacket(_ptr, pubDest /*C*/, cubDest /*C*/, out pcubMsgSize /*B*/, out psteamIDRemote /*B*/, nChannel /*C*/);
+				return Native.ISteamNetworking.ReadP2PPacket(_ptr, pubDest, cubDest, out pcubMsgSize, out psteamIDRemote, nChannel);
 			}
 			public virtual bool /*bool*/ ISteamNetworking_AcceptP2PSessionWithUser( ulong steamIDRemote )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamNetworking _ptr is null!" );
 				
-				return Native.ISteamNetworking.AcceptP2PSessionWithUser(_ptr, steamIDRemote /*C*/);
+				return Native.ISteamNetworking.AcceptP2PSessionWithUser(_ptr, steamIDRemote);
 			}
 			public virtual bool /*bool*/ ISteamNetworking_CloseP2PSessionWithUser( ulong steamIDRemote )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamNetworking _ptr is null!" );
 				
-				return Native.ISteamNetworking.CloseP2PSessionWithUser(_ptr, steamIDRemote /*C*/);
+				return Native.ISteamNetworking.CloseP2PSessionWithUser(_ptr, steamIDRemote);
 			}
 			public virtual bool /*bool*/ ISteamNetworking_CloseP2PChannelWithUser( ulong steamIDRemote, int /*int*/ nChannel )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamNetworking _ptr is null!" );
 				
-				return Native.ISteamNetworking.CloseP2PChannelWithUser(_ptr, steamIDRemote /*C*/, nChannel /*C*/);
+				return Native.ISteamNetworking.CloseP2PChannelWithUser(_ptr, steamIDRemote, nChannel);
 			}
 			public virtual bool /*bool*/ ISteamNetworking_GetP2PSessionState( ulong steamIDRemote, ref P2PSessionState_t /*struct P2PSessionState_t **/ pConnectionState )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamNetworking _ptr is null!" );
 				
 				var pConnectionState_ps = new P2PSessionState_t.PackSmall();
-				var ret = Native.ISteamNetworking.GetP2PSessionState(_ptr, steamIDRemote /*C*/, ref pConnectionState_ps);
+				var ret = Native.ISteamNetworking.GetP2PSessionState(_ptr, steamIDRemote, ref pConnectionState_ps);
 				pConnectionState = pConnectionState_ps;
 				return ret;
 			}
@@ -2093,104 +2093,104 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamNetworking _ptr is null!" );
 				
-				return Native.ISteamNetworking.AllowP2PPacketRelay(_ptr, bAllow /*C*/);
+				return Native.ISteamNetworking.AllowP2PPacketRelay(_ptr, bAllow);
 			}
 			public virtual SNetListenSocket_t /*(SNetListenSocket_t)*/ ISteamNetworking_CreateListenSocket( int /*int*/ nVirtualP2PPort, uint /*uint32*/ nIP, ushort /*uint16*/ nPort, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bAllowUseOfPacketRelay )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamNetworking _ptr is null!" );
 				
-				return Native.ISteamNetworking.CreateListenSocket(_ptr, nVirtualP2PPort /*C*/, nIP /*C*/, nPort /*C*/, bAllowUseOfPacketRelay /*C*/);
+				return Native.ISteamNetworking.CreateListenSocket(_ptr, nVirtualP2PPort, nIP, nPort, bAllowUseOfPacketRelay);
 			}
 			public virtual SNetSocket_t /*(SNetSocket_t)*/ ISteamNetworking_CreateP2PConnectionSocket( ulong steamIDTarget, int /*int*/ nVirtualPort, int /*int*/ nTimeoutSec, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bAllowUseOfPacketRelay )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamNetworking _ptr is null!" );
 				
-				return Native.ISteamNetworking.CreateP2PConnectionSocket(_ptr, steamIDTarget /*C*/, nVirtualPort /*C*/, nTimeoutSec /*C*/, bAllowUseOfPacketRelay /*C*/);
+				return Native.ISteamNetworking.CreateP2PConnectionSocket(_ptr, steamIDTarget, nVirtualPort, nTimeoutSec, bAllowUseOfPacketRelay);
 			}
 			public virtual SNetSocket_t /*(SNetSocket_t)*/ ISteamNetworking_CreateConnectionSocket( uint /*uint32*/ nIP, ushort /*uint16*/ nPort, int /*int*/ nTimeoutSec )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamNetworking _ptr is null!" );
 				
-				return Native.ISteamNetworking.CreateConnectionSocket(_ptr, nIP /*C*/, nPort /*C*/, nTimeoutSec /*C*/);
+				return Native.ISteamNetworking.CreateConnectionSocket(_ptr, nIP, nPort, nTimeoutSec);
 			}
 			public virtual bool /*bool*/ ISteamNetworking_DestroySocket( uint hSocket, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bNotifyRemoteEnd )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamNetworking _ptr is null!" );
 				
-				return Native.ISteamNetworking.DestroySocket(_ptr, hSocket /*C*/, bNotifyRemoteEnd /*C*/);
+				return Native.ISteamNetworking.DestroySocket(_ptr, hSocket, bNotifyRemoteEnd);
 			}
 			public virtual bool /*bool*/ ISteamNetworking_DestroyListenSocket( uint hSocket, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bNotifyRemoteEnd )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamNetworking _ptr is null!" );
 				
-				return Native.ISteamNetworking.DestroyListenSocket(_ptr, hSocket /*C*/, bNotifyRemoteEnd /*C*/);
+				return Native.ISteamNetworking.DestroyListenSocket(_ptr, hSocket, bNotifyRemoteEnd);
 			}
 			public virtual bool /*bool*/ ISteamNetworking_SendDataOnSocket( uint hSocket, IntPtr /*void **/ pubData, uint /*uint32*/ cubData, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bReliable )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamNetworking _ptr is null!" );
 				
-				return Native.ISteamNetworking.SendDataOnSocket(_ptr, hSocket /*C*/, pubData /*C*/, cubData /*C*/, bReliable /*C*/);
+				return Native.ISteamNetworking.SendDataOnSocket(_ptr, hSocket, pubData, cubData, bReliable);
 			}
 			public virtual bool /*bool*/ ISteamNetworking_IsDataAvailableOnSocket( uint hSocket, out uint /*uint32 **/ pcubMsgSize )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamNetworking _ptr is null!" );
 				
-				return Native.ISteamNetworking.IsDataAvailableOnSocket(_ptr, hSocket /*C*/, out pcubMsgSize /*B*/);
+				return Native.ISteamNetworking.IsDataAvailableOnSocket(_ptr, hSocket, out pcubMsgSize);
 			}
 			public virtual bool /*bool*/ ISteamNetworking_RetrieveDataFromSocket( uint hSocket, IntPtr /*void **/ pubDest, uint /*uint32*/ cubDest, out uint /*uint32 **/ pcubMsgSize )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamNetworking _ptr is null!" );
 				
-				return Native.ISteamNetworking.RetrieveDataFromSocket(_ptr, hSocket /*C*/, pubDest /*C*/, cubDest /*C*/, out pcubMsgSize /*B*/);
+				return Native.ISteamNetworking.RetrieveDataFromSocket(_ptr, hSocket, pubDest, cubDest, out pcubMsgSize);
 			}
 			public virtual bool /*bool*/ ISteamNetworking_IsDataAvailable( uint hListenSocket, out uint /*uint32 **/ pcubMsgSize, ref uint phSocket )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamNetworking _ptr is null!" );
 				
-				return Native.ISteamNetworking.IsDataAvailable(_ptr, hListenSocket /*C*/, out pcubMsgSize /*B*/, ref phSocket /*A*/);
+				return Native.ISteamNetworking.IsDataAvailable(_ptr, hListenSocket, out pcubMsgSize, ref phSocket);
 			}
 			public virtual bool /*bool*/ ISteamNetworking_RetrieveData( uint hListenSocket, IntPtr /*void **/ pubDest, uint /*uint32*/ cubDest, out uint /*uint32 **/ pcubMsgSize, ref uint phSocket )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamNetworking _ptr is null!" );
 				
-				return Native.ISteamNetworking.RetrieveData(_ptr, hListenSocket /*C*/, pubDest /*C*/, cubDest /*C*/, out pcubMsgSize /*B*/, ref phSocket /*A*/);
+				return Native.ISteamNetworking.RetrieveData(_ptr, hListenSocket, pubDest, cubDest, out pcubMsgSize, ref phSocket);
 			}
 			public virtual bool /*bool*/ ISteamNetworking_GetSocketInfo( uint hSocket, out ulong pSteamIDRemote, IntPtr /*int **/ peSocketStatus, out uint /*uint32 **/ punIPRemote, out ushort /*uint16 **/ punPortRemote )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamNetworking _ptr is null!" );
 				
-				return Native.ISteamNetworking.GetSocketInfo(_ptr, hSocket /*C*/, out pSteamIDRemote /*B*/, peSocketStatus, out punIPRemote /*B*/, out punPortRemote /*B*/);
+				return Native.ISteamNetworking.GetSocketInfo(_ptr, hSocket, out pSteamIDRemote, peSocketStatus, out punIPRemote, out punPortRemote);
 			}
 			public virtual bool /*bool*/ ISteamNetworking_GetListenSocketInfo( uint hListenSocket, out uint /*uint32 **/ pnIP, out ushort /*uint16 **/ pnPort )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamNetworking _ptr is null!" );
 				
-				return Native.ISteamNetworking.GetListenSocketInfo(_ptr, hListenSocket /*C*/, out pnIP /*B*/, out pnPort /*B*/);
+				return Native.ISteamNetworking.GetListenSocketInfo(_ptr, hListenSocket, out pnIP, out pnPort);
 			}
 			public virtual SNetSocketConnectionType /*ESNetSocketConnectionType*/ ISteamNetworking_GetSocketConnectionType( uint hSocket )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamNetworking _ptr is null!" );
 				
-				return Native.ISteamNetworking.GetSocketConnectionType(_ptr, hSocket /*C*/);
+				return Native.ISteamNetworking.GetSocketConnectionType(_ptr, hSocket);
 			}
 			public virtual int /*int*/ ISteamNetworking_GetMaxPacketSize( uint hSocket )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamNetworking _ptr is null!" );
 				
-				return Native.ISteamNetworking.GetMaxPacketSize(_ptr, hSocket /*C*/);
+				return Native.ISteamNetworking.GetMaxPacketSize(_ptr, hSocket);
 			}
 			
 			public virtual ScreenshotHandle /*(ScreenshotHandle)*/ ISteamScreenshots_WriteScreenshot( IntPtr /*void **/ pubRGB, uint /*uint32*/ cubRGB, int /*int*/ nWidth, int /*int*/ nHeight )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamScreenshots _ptr is null!" );
 				
-				return Native.ISteamScreenshots.WriteScreenshot(_ptr, pubRGB /*C*/, cubRGB /*C*/, nWidth /*C*/, nHeight /*C*/);
+				return Native.ISteamScreenshots.WriteScreenshot(_ptr, pubRGB, cubRGB, nWidth, nHeight);
 			}
 			public virtual ScreenshotHandle /*(ScreenshotHandle)*/ ISteamScreenshots_AddScreenshotToLibrary( string /*const char **/ pchFilename, string /*const char **/ pchThumbnailFilename, int /*int*/ nWidth, int /*int*/ nHeight )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamScreenshots _ptr is null!" );
 				
-				return Native.ISteamScreenshots.AddScreenshotToLibrary(_ptr, pchFilename /*C*/, pchThumbnailFilename /*C*/, nWidth /*C*/, nHeight /*C*/);
+				return Native.ISteamScreenshots.AddScreenshotToLibrary(_ptr, pchFilename, pchThumbnailFilename, nWidth, nHeight);
 			}
 			public virtual void /*void*/ ISteamScreenshots_TriggerScreenshot()
 			{
@@ -2202,25 +2202,25 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamScreenshots _ptr is null!" );
 				
-				Native.ISteamScreenshots.HookScreenshots(_ptr, bHook /*C*/);
+				Native.ISteamScreenshots.HookScreenshots(_ptr, bHook);
 			}
 			public virtual bool /*bool*/ ISteamScreenshots_SetLocation( uint hScreenshot, string /*const char **/ pchLocation )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamScreenshots _ptr is null!" );
 				
-				return Native.ISteamScreenshots.SetLocation(_ptr, hScreenshot /*C*/, pchLocation /*C*/);
+				return Native.ISteamScreenshots.SetLocation(_ptr, hScreenshot, pchLocation);
 			}
 			public virtual bool /*bool*/ ISteamScreenshots_TagUser( uint hScreenshot, ulong steamID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamScreenshots _ptr is null!" );
 				
-				return Native.ISteamScreenshots.TagUser(_ptr, hScreenshot /*C*/, steamID /*C*/);
+				return Native.ISteamScreenshots.TagUser(_ptr, hScreenshot, steamID);
 			}
 			public virtual bool /*bool*/ ISteamScreenshots_TagPublishedFile( uint hScreenshot, ulong unPublishedFileID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamScreenshots _ptr is null!" );
 				
-				return Native.ISteamScreenshots.TagPublishedFile(_ptr, hScreenshot /*C*/, unPublishedFileID /*C*/);
+				return Native.ISteamScreenshots.TagPublishedFile(_ptr, hScreenshot, unPublishedFileID);
 			}
 			
 			public virtual bool /*bool*/ ISteamMusic_BIsEnabled()
@@ -2269,7 +2269,7 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMusic _ptr is null!" );
 				
-				Native.ISteamMusic.SetVolume(_ptr, flVolume /*C*/);
+				Native.ISteamMusic.SetVolume(_ptr, flVolume);
 			}
 			public virtual float /*float*/ ISteamMusic_GetVolume()
 			{
@@ -2282,7 +2282,7 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMusicRemote _ptr is null!" );
 				
-				return Native.ISteamMusicRemote.RegisterSteamMusicRemote(_ptr, pchName /*C*/);
+				return Native.ISteamMusicRemote.RegisterSteamMusicRemote(_ptr, pchName);
 			}
 			public virtual bool /*bool*/ ISteamMusicRemote_DeregisterSteamMusicRemote()
 			{
@@ -2300,79 +2300,79 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMusicRemote _ptr is null!" );
 				
-				return Native.ISteamMusicRemote.BActivationSuccess(_ptr, bValue /*C*/);
+				return Native.ISteamMusicRemote.BActivationSuccess(_ptr, bValue);
 			}
 			public virtual bool /*bool*/ ISteamMusicRemote_SetDisplayName( string /*const char **/ pchDisplayName )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMusicRemote _ptr is null!" );
 				
-				return Native.ISteamMusicRemote.SetDisplayName(_ptr, pchDisplayName /*C*/);
+				return Native.ISteamMusicRemote.SetDisplayName(_ptr, pchDisplayName);
 			}
 			public virtual bool /*bool*/ ISteamMusicRemote_SetPNGIcon_64x64( IntPtr /*void **/ pvBuffer, uint /*uint32*/ cbBufferLength )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMusicRemote _ptr is null!" );
 				
-				return Native.ISteamMusicRemote.SetPNGIcon_64x64(_ptr, pvBuffer /*C*/, cbBufferLength /*C*/);
+				return Native.ISteamMusicRemote.SetPNGIcon_64x64(_ptr, pvBuffer, cbBufferLength);
 			}
 			public virtual bool /*bool*/ ISteamMusicRemote_EnablePlayPrevious( [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bValue )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMusicRemote _ptr is null!" );
 				
-				return Native.ISteamMusicRemote.EnablePlayPrevious(_ptr, bValue /*C*/);
+				return Native.ISteamMusicRemote.EnablePlayPrevious(_ptr, bValue);
 			}
 			public virtual bool /*bool*/ ISteamMusicRemote_EnablePlayNext( [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bValue )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMusicRemote _ptr is null!" );
 				
-				return Native.ISteamMusicRemote.EnablePlayNext(_ptr, bValue /*C*/);
+				return Native.ISteamMusicRemote.EnablePlayNext(_ptr, bValue);
 			}
 			public virtual bool /*bool*/ ISteamMusicRemote_EnableShuffled( [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bValue )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMusicRemote _ptr is null!" );
 				
-				return Native.ISteamMusicRemote.EnableShuffled(_ptr, bValue /*C*/);
+				return Native.ISteamMusicRemote.EnableShuffled(_ptr, bValue);
 			}
 			public virtual bool /*bool*/ ISteamMusicRemote_EnableLooped( [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bValue )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMusicRemote _ptr is null!" );
 				
-				return Native.ISteamMusicRemote.EnableLooped(_ptr, bValue /*C*/);
+				return Native.ISteamMusicRemote.EnableLooped(_ptr, bValue);
 			}
 			public virtual bool /*bool*/ ISteamMusicRemote_EnableQueue( [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bValue )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMusicRemote _ptr is null!" );
 				
-				return Native.ISteamMusicRemote.EnableQueue(_ptr, bValue /*C*/);
+				return Native.ISteamMusicRemote.EnableQueue(_ptr, bValue);
 			}
 			public virtual bool /*bool*/ ISteamMusicRemote_EnablePlaylists( [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bValue )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMusicRemote _ptr is null!" );
 				
-				return Native.ISteamMusicRemote.EnablePlaylists(_ptr, bValue /*C*/);
+				return Native.ISteamMusicRemote.EnablePlaylists(_ptr, bValue);
 			}
 			public virtual bool /*bool*/ ISteamMusicRemote_UpdatePlaybackStatus( AudioPlayback_Status /*AudioPlayback_Status*/ nStatus )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMusicRemote _ptr is null!" );
 				
-				return Native.ISteamMusicRemote.UpdatePlaybackStatus(_ptr, nStatus /*C*/);
+				return Native.ISteamMusicRemote.UpdatePlaybackStatus(_ptr, nStatus);
 			}
 			public virtual bool /*bool*/ ISteamMusicRemote_UpdateShuffled( [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bValue )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMusicRemote _ptr is null!" );
 				
-				return Native.ISteamMusicRemote.UpdateShuffled(_ptr, bValue /*C*/);
+				return Native.ISteamMusicRemote.UpdateShuffled(_ptr, bValue);
 			}
 			public virtual bool /*bool*/ ISteamMusicRemote_UpdateLooped( [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bValue )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMusicRemote _ptr is null!" );
 				
-				return Native.ISteamMusicRemote.UpdateLooped(_ptr, bValue /*C*/);
+				return Native.ISteamMusicRemote.UpdateLooped(_ptr, bValue);
 			}
 			public virtual bool /*bool*/ ISteamMusicRemote_UpdateVolume( float /*float*/ flValue )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMusicRemote _ptr is null!" );
 				
-				return Native.ISteamMusicRemote.UpdateVolume(_ptr, flValue /*C*/);
+				return Native.ISteamMusicRemote.UpdateVolume(_ptr, flValue);
 			}
 			public virtual bool /*bool*/ ISteamMusicRemote_CurrentEntryWillChange()
 			{
@@ -2384,25 +2384,25 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMusicRemote _ptr is null!" );
 				
-				return Native.ISteamMusicRemote.CurrentEntryIsAvailable(_ptr, bAvailable /*C*/);
+				return Native.ISteamMusicRemote.CurrentEntryIsAvailable(_ptr, bAvailable);
 			}
 			public virtual bool /*bool*/ ISteamMusicRemote_UpdateCurrentEntryText( string /*const char **/ pchText )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMusicRemote _ptr is null!" );
 				
-				return Native.ISteamMusicRemote.UpdateCurrentEntryText(_ptr, pchText /*C*/);
+				return Native.ISteamMusicRemote.UpdateCurrentEntryText(_ptr, pchText);
 			}
 			public virtual bool /*bool*/ ISteamMusicRemote_UpdateCurrentEntryElapsedSeconds( int /*int*/ nValue )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMusicRemote _ptr is null!" );
 				
-				return Native.ISteamMusicRemote.UpdateCurrentEntryElapsedSeconds(_ptr, nValue /*C*/);
+				return Native.ISteamMusicRemote.UpdateCurrentEntryElapsedSeconds(_ptr, nValue);
 			}
 			public virtual bool /*bool*/ ISteamMusicRemote_UpdateCurrentEntryCoverArt( IntPtr /*void **/ pvBuffer, uint /*uint32*/ cbBufferLength )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMusicRemote _ptr is null!" );
 				
-				return Native.ISteamMusicRemote.UpdateCurrentEntryCoverArt(_ptr, pvBuffer /*C*/, cbBufferLength /*C*/);
+				return Native.ISteamMusicRemote.UpdateCurrentEntryCoverArt(_ptr, pvBuffer, cbBufferLength);
 			}
 			public virtual bool /*bool*/ ISteamMusicRemote_CurrentEntryDidChange()
 			{
@@ -2426,13 +2426,13 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMusicRemote _ptr is null!" );
 				
-				return Native.ISteamMusicRemote.SetQueueEntry(_ptr, nID /*C*/, nPosition /*C*/, pchEntryText /*C*/);
+				return Native.ISteamMusicRemote.SetQueueEntry(_ptr, nID, nPosition, pchEntryText);
 			}
 			public virtual bool /*bool*/ ISteamMusicRemote_SetCurrentQueueEntry( int /*int*/ nID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMusicRemote _ptr is null!" );
 				
-				return Native.ISteamMusicRemote.SetCurrentQueueEntry(_ptr, nID /*C*/);
+				return Native.ISteamMusicRemote.SetCurrentQueueEntry(_ptr, nID);
 			}
 			public virtual bool /*bool*/ ISteamMusicRemote_QueueDidChange()
 			{
@@ -2456,13 +2456,13 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMusicRemote _ptr is null!" );
 				
-				return Native.ISteamMusicRemote.SetPlaylistEntry(_ptr, nID /*C*/, nPosition /*C*/, pchEntryText /*C*/);
+				return Native.ISteamMusicRemote.SetPlaylistEntry(_ptr, nID, nPosition, pchEntryText);
 			}
 			public virtual bool /*bool*/ ISteamMusicRemote_SetCurrentPlaylistEntry( int /*int*/ nID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamMusicRemote _ptr is null!" );
 				
-				return Native.ISteamMusicRemote.SetCurrentPlaylistEntry(_ptr, nID /*C*/);
+				return Native.ISteamMusicRemote.SetCurrentPlaylistEntry(_ptr, nID);
 			}
 			public virtual bool /*bool*/ ISteamMusicRemote_PlaylistDidChange()
 			{
@@ -2475,182 +2475,182 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTTP _ptr is null!" );
 				
-				return Native.ISteamHTTP.CreateHTTPRequest(_ptr, eHTTPRequestMethod /*C*/, pchAbsoluteURL /*C*/);
+				return Native.ISteamHTTP.CreateHTTPRequest(_ptr, eHTTPRequestMethod, pchAbsoluteURL);
 			}
 			public virtual bool /*bool*/ ISteamHTTP_SetHTTPRequestContextValue( uint hRequest, ulong /*uint64*/ ulContextValue )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTTP _ptr is null!" );
 				
-				return Native.ISteamHTTP.SetHTTPRequestContextValue(_ptr, hRequest /*C*/, ulContextValue /*C*/);
+				return Native.ISteamHTTP.SetHTTPRequestContextValue(_ptr, hRequest, ulContextValue);
 			}
 			public virtual bool /*bool*/ ISteamHTTP_SetHTTPRequestNetworkActivityTimeout( uint hRequest, uint /*uint32*/ unTimeoutSeconds )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTTP _ptr is null!" );
 				
-				return Native.ISteamHTTP.SetHTTPRequestNetworkActivityTimeout(_ptr, hRequest /*C*/, unTimeoutSeconds /*C*/);
+				return Native.ISteamHTTP.SetHTTPRequestNetworkActivityTimeout(_ptr, hRequest, unTimeoutSeconds);
 			}
 			public virtual bool /*bool*/ ISteamHTTP_SetHTTPRequestHeaderValue( uint hRequest, string /*const char **/ pchHeaderName, string /*const char **/ pchHeaderValue )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTTP _ptr is null!" );
 				
-				return Native.ISteamHTTP.SetHTTPRequestHeaderValue(_ptr, hRequest /*C*/, pchHeaderName /*C*/, pchHeaderValue /*C*/);
+				return Native.ISteamHTTP.SetHTTPRequestHeaderValue(_ptr, hRequest, pchHeaderName, pchHeaderValue);
 			}
 			public virtual bool /*bool*/ ISteamHTTP_SetHTTPRequestGetOrPostParameter( uint hRequest, string /*const char **/ pchParamName, string /*const char **/ pchParamValue )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTTP _ptr is null!" );
 				
-				return Native.ISteamHTTP.SetHTTPRequestGetOrPostParameter(_ptr, hRequest /*C*/, pchParamName /*C*/, pchParamValue /*C*/);
+				return Native.ISteamHTTP.SetHTTPRequestGetOrPostParameter(_ptr, hRequest, pchParamName, pchParamValue);
 			}
 			public virtual bool /*bool*/ ISteamHTTP_SendHTTPRequest( uint hRequest, ref ulong pCallHandle )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTTP _ptr is null!" );
 				
-				return Native.ISteamHTTP.SendHTTPRequest(_ptr, hRequest /*C*/, ref pCallHandle /*A*/);
+				return Native.ISteamHTTP.SendHTTPRequest(_ptr, hRequest, ref pCallHandle);
 			}
 			public virtual bool /*bool*/ ISteamHTTP_SendHTTPRequestAndStreamResponse( uint hRequest, ref ulong pCallHandle )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTTP _ptr is null!" );
 				
-				return Native.ISteamHTTP.SendHTTPRequestAndStreamResponse(_ptr, hRequest /*C*/, ref pCallHandle /*A*/);
+				return Native.ISteamHTTP.SendHTTPRequestAndStreamResponse(_ptr, hRequest, ref pCallHandle);
 			}
 			public virtual bool /*bool*/ ISteamHTTP_DeferHTTPRequest( uint hRequest )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTTP _ptr is null!" );
 				
-				return Native.ISteamHTTP.DeferHTTPRequest(_ptr, hRequest /*C*/);
+				return Native.ISteamHTTP.DeferHTTPRequest(_ptr, hRequest);
 			}
 			public virtual bool /*bool*/ ISteamHTTP_PrioritizeHTTPRequest( uint hRequest )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTTP _ptr is null!" );
 				
-				return Native.ISteamHTTP.PrioritizeHTTPRequest(_ptr, hRequest /*C*/);
+				return Native.ISteamHTTP.PrioritizeHTTPRequest(_ptr, hRequest);
 			}
 			public virtual bool /*bool*/ ISteamHTTP_GetHTTPResponseHeaderSize( uint hRequest, string /*const char **/ pchHeaderName, out uint /*uint32 **/ unResponseHeaderSize )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTTP _ptr is null!" );
 				
-				return Native.ISteamHTTP.GetHTTPResponseHeaderSize(_ptr, hRequest /*C*/, pchHeaderName /*C*/, out unResponseHeaderSize /*B*/);
+				return Native.ISteamHTTP.GetHTTPResponseHeaderSize(_ptr, hRequest, pchHeaderName, out unResponseHeaderSize);
 			}
 			public virtual bool /*bool*/ ISteamHTTP_GetHTTPResponseHeaderValue( uint hRequest, string /*const char **/ pchHeaderName, out byte /*uint8 **/ pHeaderValueBuffer, uint /*uint32*/ unBufferSize )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTTP _ptr is null!" );
 				
-				return Native.ISteamHTTP.GetHTTPResponseHeaderValue(_ptr, hRequest /*C*/, pchHeaderName /*C*/, out pHeaderValueBuffer /*B*/, unBufferSize /*C*/);
+				return Native.ISteamHTTP.GetHTTPResponseHeaderValue(_ptr, hRequest, pchHeaderName, out pHeaderValueBuffer, unBufferSize);
 			}
 			public virtual bool /*bool*/ ISteamHTTP_GetHTTPResponseBodySize( uint hRequest, out uint /*uint32 **/ unBodySize )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTTP _ptr is null!" );
 				
-				return Native.ISteamHTTP.GetHTTPResponseBodySize(_ptr, hRequest /*C*/, out unBodySize /*B*/);
+				return Native.ISteamHTTP.GetHTTPResponseBodySize(_ptr, hRequest, out unBodySize);
 			}
 			public virtual bool /*bool*/ ISteamHTTP_GetHTTPResponseBodyData( uint hRequest, out byte /*uint8 **/ pBodyDataBuffer, uint /*uint32*/ unBufferSize )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTTP _ptr is null!" );
 				
-				return Native.ISteamHTTP.GetHTTPResponseBodyData(_ptr, hRequest /*C*/, out pBodyDataBuffer /*B*/, unBufferSize /*C*/);
+				return Native.ISteamHTTP.GetHTTPResponseBodyData(_ptr, hRequest, out pBodyDataBuffer, unBufferSize);
 			}
 			public virtual bool /*bool*/ ISteamHTTP_GetHTTPStreamingResponseBodyData( uint hRequest, uint /*uint32*/ cOffset, out byte /*uint8 **/ pBodyDataBuffer, uint /*uint32*/ unBufferSize )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTTP _ptr is null!" );
 				
-				return Native.ISteamHTTP.GetHTTPStreamingResponseBodyData(_ptr, hRequest /*C*/, cOffset /*C*/, out pBodyDataBuffer /*B*/, unBufferSize /*C*/);
+				return Native.ISteamHTTP.GetHTTPStreamingResponseBodyData(_ptr, hRequest, cOffset, out pBodyDataBuffer, unBufferSize);
 			}
 			public virtual bool /*bool*/ ISteamHTTP_ReleaseHTTPRequest( uint hRequest )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTTP _ptr is null!" );
 				
-				return Native.ISteamHTTP.ReleaseHTTPRequest(_ptr, hRequest /*C*/);
+				return Native.ISteamHTTP.ReleaseHTTPRequest(_ptr, hRequest);
 			}
 			public virtual bool /*bool*/ ISteamHTTP_GetHTTPDownloadProgressPct( uint hRequest, out float /*float **/ pflPercentOut )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTTP _ptr is null!" );
 				
-				return Native.ISteamHTTP.GetHTTPDownloadProgressPct(_ptr, hRequest /*C*/, out pflPercentOut /*B*/);
+				return Native.ISteamHTTP.GetHTTPDownloadProgressPct(_ptr, hRequest, out pflPercentOut);
 			}
 			public virtual bool /*bool*/ ISteamHTTP_SetHTTPRequestRawPostBody( uint hRequest, string /*const char **/ pchContentType, out byte /*uint8 **/ pubBody, uint /*uint32*/ unBodyLen )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTTP _ptr is null!" );
 				
-				return Native.ISteamHTTP.SetHTTPRequestRawPostBody(_ptr, hRequest /*C*/, pchContentType /*C*/, out pubBody /*B*/, unBodyLen /*C*/);
+				return Native.ISteamHTTP.SetHTTPRequestRawPostBody(_ptr, hRequest, pchContentType, out pubBody, unBodyLen);
 			}
 			public virtual HTTPCookieContainerHandle /*(HTTPCookieContainerHandle)*/ ISteamHTTP_CreateCookieContainer( [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bAllowResponsesToModify )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTTP _ptr is null!" );
 				
-				return Native.ISteamHTTP.CreateCookieContainer(_ptr, bAllowResponsesToModify /*C*/);
+				return Native.ISteamHTTP.CreateCookieContainer(_ptr, bAllowResponsesToModify);
 			}
 			public virtual bool /*bool*/ ISteamHTTP_ReleaseCookieContainer( uint hCookieContainer )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTTP _ptr is null!" );
 				
-				return Native.ISteamHTTP.ReleaseCookieContainer(_ptr, hCookieContainer /*C*/);
+				return Native.ISteamHTTP.ReleaseCookieContainer(_ptr, hCookieContainer);
 			}
 			public virtual bool /*bool*/ ISteamHTTP_SetCookie( uint hCookieContainer, string /*const char **/ pchHost, string /*const char **/ pchUrl, string /*const char **/ pchCookie )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTTP _ptr is null!" );
 				
-				return Native.ISteamHTTP.SetCookie(_ptr, hCookieContainer /*C*/, pchHost /*C*/, pchUrl /*C*/, pchCookie /*C*/);
+				return Native.ISteamHTTP.SetCookie(_ptr, hCookieContainer, pchHost, pchUrl, pchCookie);
 			}
 			public virtual bool /*bool*/ ISteamHTTP_SetHTTPRequestCookieContainer( uint hRequest, uint hCookieContainer )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTTP _ptr is null!" );
 				
-				return Native.ISteamHTTP.SetHTTPRequestCookieContainer(_ptr, hRequest /*C*/, hCookieContainer /*C*/);
+				return Native.ISteamHTTP.SetHTTPRequestCookieContainer(_ptr, hRequest, hCookieContainer);
 			}
 			public virtual bool /*bool*/ ISteamHTTP_SetHTTPRequestUserAgentInfo( uint hRequest, string /*const char **/ pchUserAgentInfo )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTTP _ptr is null!" );
 				
-				return Native.ISteamHTTP.SetHTTPRequestUserAgentInfo(_ptr, hRequest /*C*/, pchUserAgentInfo /*C*/);
+				return Native.ISteamHTTP.SetHTTPRequestUserAgentInfo(_ptr, hRequest, pchUserAgentInfo);
 			}
 			public virtual bool /*bool*/ ISteamHTTP_SetHTTPRequestRequiresVerifiedCertificate( uint hRequest, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bRequireVerifiedCertificate )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTTP _ptr is null!" );
 				
-				return Native.ISteamHTTP.SetHTTPRequestRequiresVerifiedCertificate(_ptr, hRequest /*C*/, bRequireVerifiedCertificate /*C*/);
+				return Native.ISteamHTTP.SetHTTPRequestRequiresVerifiedCertificate(_ptr, hRequest, bRequireVerifiedCertificate);
 			}
 			public virtual bool /*bool*/ ISteamHTTP_SetHTTPRequestAbsoluteTimeoutMS( uint hRequest, uint /*uint32*/ unMilliseconds )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTTP _ptr is null!" );
 				
-				return Native.ISteamHTTP.SetHTTPRequestAbsoluteTimeoutMS(_ptr, hRequest /*C*/, unMilliseconds /*C*/);
+				return Native.ISteamHTTP.SetHTTPRequestAbsoluteTimeoutMS(_ptr, hRequest, unMilliseconds);
 			}
 			public virtual bool /*bool*/ ISteamHTTP_GetHTTPRequestWasTimedOut( uint hRequest, [MarshalAs(UnmanagedType.U1)] ref bool /*bool **/ pbWasTimedOut )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTTP _ptr is null!" );
 				
-				return Native.ISteamHTTP.GetHTTPRequestWasTimedOut(_ptr, hRequest /*C*/, ref pbWasTimedOut /*A*/);
+				return Native.ISteamHTTP.GetHTTPRequestWasTimedOut(_ptr, hRequest, ref pbWasTimedOut);
 			}
 			
 			public virtual ClientUnifiedMessageHandle /*(ClientUnifiedMessageHandle)*/ ISteamUnifiedMessages_SendMethod( string /*const char **/ pchServiceMethod, IntPtr /*const void **/ pRequestBuffer, uint /*uint32*/ unRequestBufferSize, ulong /*uint64*/ unContext )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUnifiedMessages _ptr is null!" );
 				
-				return Native.ISteamUnifiedMessages.SendMethod(_ptr, pchServiceMethod /*C*/, pRequestBuffer /*C*/, unRequestBufferSize /*C*/, unContext /*C*/);
+				return Native.ISteamUnifiedMessages.SendMethod(_ptr, pchServiceMethod, pRequestBuffer, unRequestBufferSize, unContext);
 			}
 			public virtual bool /*bool*/ ISteamUnifiedMessages_GetMethodResponseInfo( ulong hHandle, out uint /*uint32 **/ punResponseSize, out Result /*EResult **/ peResult )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUnifiedMessages _ptr is null!" );
 				
-				return Native.ISteamUnifiedMessages.GetMethodResponseInfo(_ptr, hHandle /*C*/, out punResponseSize /*B*/, out peResult /*B*/);
+				return Native.ISteamUnifiedMessages.GetMethodResponseInfo(_ptr, hHandle, out punResponseSize, out peResult);
 			}
 			public virtual bool /*bool*/ ISteamUnifiedMessages_GetMethodResponseData( ulong hHandle, IntPtr /*void **/ pResponseBuffer, uint /*uint32*/ unResponseBufferSize, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bAutoRelease )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUnifiedMessages _ptr is null!" );
 				
-				return Native.ISteamUnifiedMessages.GetMethodResponseData(_ptr, hHandle /*C*/, pResponseBuffer /*C*/, unResponseBufferSize /*C*/, bAutoRelease /*C*/);
+				return Native.ISteamUnifiedMessages.GetMethodResponseData(_ptr, hHandle, pResponseBuffer, unResponseBufferSize, bAutoRelease);
 			}
 			public virtual bool /*bool*/ ISteamUnifiedMessages_ReleaseMethod( ulong hHandle )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUnifiedMessages _ptr is null!" );
 				
-				return Native.ISteamUnifiedMessages.ReleaseMethod(_ptr, hHandle /*C*/);
+				return Native.ISteamUnifiedMessages.ReleaseMethod(_ptr, hHandle);
 			}
 			public virtual bool /*bool*/ ISteamUnifiedMessages_SendNotification( string /*const char **/ pchServiceNotification, IntPtr /*const void **/ pNotificationBuffer, uint /*uint32*/ unNotificationBufferSize )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUnifiedMessages _ptr is null!" );
 				
-				return Native.ISteamUnifiedMessages.SendNotification(_ptr, pchServiceNotification /*C*/, pNotificationBuffer /*C*/, unNotificationBufferSize /*C*/);
+				return Native.ISteamUnifiedMessages.SendNotification(_ptr, pchServiceNotification, pNotificationBuffer, unNotificationBufferSize);
 			}
 			
 			public virtual bool /*bool*/ ISteamController_Init()
@@ -2681,111 +2681,111 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamController _ptr is null!" );
 				
-				return Native.ISteamController.ShowBindingPanel(_ptr, controllerHandle /*C*/);
+				return Native.ISteamController.ShowBindingPanel(_ptr, controllerHandle);
 			}
 			public virtual ControllerActionSetHandle_t /*(ControllerActionSetHandle_t)*/ ISteamController_GetActionSetHandle( string /*const char **/ pszActionSetName )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamController _ptr is null!" );
 				
-				return Native.ISteamController.GetActionSetHandle(_ptr, pszActionSetName /*C*/);
+				return Native.ISteamController.GetActionSetHandle(_ptr, pszActionSetName);
 			}
 			public virtual void /*void*/ ISteamController_ActivateActionSet( ulong controllerHandle, ulong actionSetHandle )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamController _ptr is null!" );
 				
-				Native.ISteamController.ActivateActionSet(_ptr, controllerHandle /*C*/, actionSetHandle /*C*/);
+				Native.ISteamController.ActivateActionSet(_ptr, controllerHandle, actionSetHandle);
 			}
 			public virtual ControllerActionSetHandle_t /*(ControllerActionSetHandle_t)*/ ISteamController_GetCurrentActionSet( ulong controllerHandle )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamController _ptr is null!" );
 				
-				return Native.ISteamController.GetCurrentActionSet(_ptr, controllerHandle /*C*/);
+				return Native.ISteamController.GetCurrentActionSet(_ptr, controllerHandle);
 			}
 			public virtual ControllerDigitalActionHandle_t /*(ControllerDigitalActionHandle_t)*/ ISteamController_GetDigitalActionHandle( string /*const char **/ pszActionName )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamController _ptr is null!" );
 				
-				return Native.ISteamController.GetDigitalActionHandle(_ptr, pszActionName /*C*/);
+				return Native.ISteamController.GetDigitalActionHandle(_ptr, pszActionName);
 			}
 			public virtual ControllerDigitalActionData_t /*struct ControllerDigitalActionData_t*/ ISteamController_GetDigitalActionData( ulong controllerHandle, ulong digitalActionHandle )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamController _ptr is null!" );
 				
-				return Native.ISteamController.GetDigitalActionData(_ptr, controllerHandle /*C*/, digitalActionHandle /*C*/);
+				return Native.ISteamController.GetDigitalActionData(_ptr, controllerHandle, digitalActionHandle);
 			}
 			public virtual int /*int*/ ISteamController_GetDigitalActionOrigins( ulong controllerHandle, ulong actionSetHandle, ulong digitalActionHandle, out ControllerActionOrigin /*EControllerActionOrigin **/ originsOut )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamController _ptr is null!" );
 				
-				return Native.ISteamController.GetDigitalActionOrigins(_ptr, controllerHandle /*C*/, actionSetHandle /*C*/, digitalActionHandle /*C*/, out originsOut /*B*/);
+				return Native.ISteamController.GetDigitalActionOrigins(_ptr, controllerHandle, actionSetHandle, digitalActionHandle, out originsOut);
 			}
 			public virtual ControllerAnalogActionHandle_t /*(ControllerAnalogActionHandle_t)*/ ISteamController_GetAnalogActionHandle( string /*const char **/ pszActionName )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamController _ptr is null!" );
 				
-				return Native.ISteamController.GetAnalogActionHandle(_ptr, pszActionName /*C*/);
+				return Native.ISteamController.GetAnalogActionHandle(_ptr, pszActionName);
 			}
 			public virtual ControllerAnalogActionData_t /*struct ControllerAnalogActionData_t*/ ISteamController_GetAnalogActionData( ulong controllerHandle, ulong analogActionHandle )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamController _ptr is null!" );
 				
-				return Native.ISteamController.GetAnalogActionData(_ptr, controllerHandle /*C*/, analogActionHandle /*C*/);
+				return Native.ISteamController.GetAnalogActionData(_ptr, controllerHandle, analogActionHandle);
 			}
 			public virtual int /*int*/ ISteamController_GetAnalogActionOrigins( ulong controllerHandle, ulong actionSetHandle, ulong analogActionHandle, out ControllerActionOrigin /*EControllerActionOrigin **/ originsOut )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamController _ptr is null!" );
 				
-				return Native.ISteamController.GetAnalogActionOrigins(_ptr, controllerHandle /*C*/, actionSetHandle /*C*/, analogActionHandle /*C*/, out originsOut /*B*/);
+				return Native.ISteamController.GetAnalogActionOrigins(_ptr, controllerHandle, actionSetHandle, analogActionHandle, out originsOut);
 			}
 			public virtual void /*void*/ ISteamController_StopAnalogActionMomentum( ulong controllerHandle, ulong eAction )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamController _ptr is null!" );
 				
-				Native.ISteamController.StopAnalogActionMomentum(_ptr, controllerHandle /*C*/, eAction /*C*/);
+				Native.ISteamController.StopAnalogActionMomentum(_ptr, controllerHandle, eAction);
 			}
 			public virtual void /*void*/ ISteamController_TriggerHapticPulse( ulong controllerHandle, SteamControllerPad /*ESteamControllerPad*/ eTargetPad, ushort /*unsigned short*/ usDurationMicroSec )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamController _ptr is null!" );
 				
-				Native.ISteamController.TriggerHapticPulse(_ptr, controllerHandle /*C*/, eTargetPad /*C*/, usDurationMicroSec /*C*/);
+				Native.ISteamController.TriggerHapticPulse(_ptr, controllerHandle, eTargetPad, usDurationMicroSec);
 			}
 			public virtual void /*void*/ ISteamController_TriggerRepeatedHapticPulse( ulong controllerHandle, SteamControllerPad /*ESteamControllerPad*/ eTargetPad, ushort /*unsigned short*/ usDurationMicroSec, ushort /*unsigned short*/ usOffMicroSec, ushort /*unsigned short*/ unRepeat, uint /*unsigned int*/ nFlags )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamController _ptr is null!" );
 				
-				Native.ISteamController.TriggerRepeatedHapticPulse(_ptr, controllerHandle /*C*/, eTargetPad /*C*/, usDurationMicroSec /*C*/, usOffMicroSec /*C*/, unRepeat /*C*/, nFlags /*C*/);
+				Native.ISteamController.TriggerRepeatedHapticPulse(_ptr, controllerHandle, eTargetPad, usDurationMicroSec, usOffMicroSec, unRepeat, nFlags);
 			}
 			
 			public virtual UGCQueryHandle_t /*(UGCQueryHandle_t)*/ ISteamUGC_CreateQueryUserUGCRequest( uint unAccountID, UserUGCList /*EUserUGCList*/ eListType, UGCMatchingUGCType /*EUGCMatchingUGCType*/ eMatchingUGCType, UserUGCListSortOrder /*EUserUGCListSortOrder*/ eSortOrder, uint nCreatorAppID, uint nConsumerAppID, uint /*uint32*/ unPage )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.CreateQueryUserUGCRequest(_ptr, unAccountID /*C*/, eListType /*C*/, eMatchingUGCType /*C*/, eSortOrder /*C*/, nCreatorAppID /*C*/, nConsumerAppID /*C*/, unPage /*C*/);
+				return Native.ISteamUGC.CreateQueryUserUGCRequest(_ptr, unAccountID, eListType, eMatchingUGCType, eSortOrder, nCreatorAppID, nConsumerAppID, unPage);
 			}
 			public virtual UGCQueryHandle_t /*(UGCQueryHandle_t)*/ ISteamUGC_CreateQueryAllUGCRequest( UGCQuery /*EUGCQuery*/ eQueryType, UGCMatchingUGCType /*EUGCMatchingUGCType*/ eMatchingeMatchingUGCTypeFileType, uint nCreatorAppID, uint nConsumerAppID, uint /*uint32*/ unPage )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.CreateQueryAllUGCRequest(_ptr, eQueryType /*C*/, eMatchingeMatchingUGCTypeFileType /*C*/, nCreatorAppID /*C*/, nConsumerAppID /*C*/, unPage /*C*/);
+				return Native.ISteamUGC.CreateQueryAllUGCRequest(_ptr, eQueryType, eMatchingeMatchingUGCTypeFileType, nCreatorAppID, nConsumerAppID, unPage);
 			}
 			public virtual UGCQueryHandle_t /*(UGCQueryHandle_t)*/ ISteamUGC_CreateQueryUGCDetailsRequest( IntPtr /*PublishedFileId_t **/ pvecPublishedFileID, uint /*uint32*/ unNumPublishedFileIDs )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.CreateQueryUGCDetailsRequest(_ptr, pvecPublishedFileID /*C*/, unNumPublishedFileIDs /*C*/);
+				return Native.ISteamUGC.CreateQueryUGCDetailsRequest(_ptr, pvecPublishedFileID, unNumPublishedFileIDs);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUGC_SendQueryUGCRequest( ulong handle )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.SendQueryUGCRequest(_ptr, handle /*C*/);
+				return Native.ISteamUGC.SendQueryUGCRequest(_ptr, handle);
 			}
 			public virtual bool /*bool*/ ISteamUGC_GetQueryUGCResult( ulong handle, uint /*uint32*/ index, ref SteamUGCDetails_t /*struct SteamUGCDetails_t **/ pDetails )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
 				var pDetails_ps = new SteamUGCDetails_t.PackSmall();
-				var ret = Native.ISteamUGC.GetQueryUGCResult(_ptr, handle /*C*/, index /*C*/, ref pDetails_ps /*C*/);
+				var ret = Native.ISteamUGC.GetQueryUGCResult(_ptr, handle, index, ref pDetails_ps);
 				pDetails = pDetails_ps;
 				return ret;
 			}
@@ -2793,301 +2793,301 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.GetQueryUGCPreviewURL(_ptr, handle /*C*/, index /*C*/, pchURL /*C*/, cchURLSize /*C*/);
+				return Native.ISteamUGC.GetQueryUGCPreviewURL(_ptr, handle, index, pchURL, cchURLSize);
 			}
 			public virtual bool /*bool*/ ISteamUGC_GetQueryUGCMetadata( ulong handle, uint /*uint32*/ index, System.Text.StringBuilder /*char **/ pchMetadata, uint /*uint32*/ cchMetadatasize )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.GetQueryUGCMetadata(_ptr, handle /*C*/, index /*C*/, pchMetadata /*C*/, cchMetadatasize /*C*/);
+				return Native.ISteamUGC.GetQueryUGCMetadata(_ptr, handle, index, pchMetadata, cchMetadatasize);
 			}
 			public virtual bool /*bool*/ ISteamUGC_GetQueryUGCChildren( ulong handle, uint /*uint32*/ index, IntPtr /*PublishedFileId_t **/ pvecPublishedFileID, uint /*uint32*/ cMaxEntries )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.GetQueryUGCChildren(_ptr, handle /*C*/, index /*C*/, pvecPublishedFileID /*C*/, cMaxEntries /*C*/);
+				return Native.ISteamUGC.GetQueryUGCChildren(_ptr, handle, index, pvecPublishedFileID, cMaxEntries);
 			}
 			public virtual bool /*bool*/ ISteamUGC_GetQueryUGCStatistic( ulong handle, uint /*uint32*/ index, ItemStatistic /*EItemStatistic*/ eStatType, out uint /*uint32 **/ pStatValue )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.GetQueryUGCStatistic(_ptr, handle /*C*/, index /*C*/, eStatType /*C*/, out pStatValue /*B*/);
+				return Native.ISteamUGC.GetQueryUGCStatistic(_ptr, handle, index, eStatType, out pStatValue);
 			}
 			public virtual uint /*uint32*/ ISteamUGC_GetQueryUGCNumAdditionalPreviews( ulong handle, uint /*uint32*/ index )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.GetQueryUGCNumAdditionalPreviews(_ptr, handle /*C*/, index /*C*/);
+				return Native.ISteamUGC.GetQueryUGCNumAdditionalPreviews(_ptr, handle, index);
 			}
 			public virtual bool /*bool*/ ISteamUGC_GetQueryUGCAdditionalPreview( ulong handle, uint /*uint32*/ index, uint /*uint32*/ previewIndex, System.Text.StringBuilder /*char **/ pchURLOrVideoID, uint /*uint32*/ cchURLSize, System.Text.StringBuilder /*char **/ pchOriginalFileName, uint /*uint32*/ cchOriginalFileNameSize, out ItemPreviewType /*EItemPreviewType **/ pPreviewType )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.GetQueryUGCAdditionalPreview(_ptr, handle /*C*/, index /*C*/, previewIndex /*C*/, pchURLOrVideoID /*C*/, cchURLSize /*C*/, pchOriginalFileName /*C*/, cchOriginalFileNameSize /*C*/, out pPreviewType /*B*/);
+				return Native.ISteamUGC.GetQueryUGCAdditionalPreview(_ptr, handle, index, previewIndex, pchURLOrVideoID, cchURLSize, pchOriginalFileName, cchOriginalFileNameSize, out pPreviewType);
 			}
 			public virtual uint /*uint32*/ ISteamUGC_GetQueryUGCNumKeyValueTags( ulong handle, uint /*uint32*/ index )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.GetQueryUGCNumKeyValueTags(_ptr, handle /*C*/, index /*C*/);
+				return Native.ISteamUGC.GetQueryUGCNumKeyValueTags(_ptr, handle, index);
 			}
 			public virtual bool /*bool*/ ISteamUGC_GetQueryUGCKeyValueTag( ulong handle, uint /*uint32*/ index, uint /*uint32*/ keyValueTagIndex, System.Text.StringBuilder /*char **/ pchKey, uint /*uint32*/ cchKeySize, System.Text.StringBuilder /*char **/ pchValue, uint /*uint32*/ cchValueSize )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.GetQueryUGCKeyValueTag(_ptr, handle /*C*/, index /*C*/, keyValueTagIndex /*C*/, pchKey /*C*/, cchKeySize /*C*/, pchValue /*C*/, cchValueSize /*C*/);
+				return Native.ISteamUGC.GetQueryUGCKeyValueTag(_ptr, handle, index, keyValueTagIndex, pchKey, cchKeySize, pchValue, cchValueSize);
 			}
 			public virtual bool /*bool*/ ISteamUGC_ReleaseQueryUGCRequest( ulong handle )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.ReleaseQueryUGCRequest(_ptr, handle /*C*/);
+				return Native.ISteamUGC.ReleaseQueryUGCRequest(_ptr, handle);
 			}
 			public virtual bool /*bool*/ ISteamUGC_AddRequiredTag( ulong handle, string /*const char **/ pTagName )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.AddRequiredTag(_ptr, handle /*C*/, pTagName /*C*/);
+				return Native.ISteamUGC.AddRequiredTag(_ptr, handle, pTagName);
 			}
 			public virtual bool /*bool*/ ISteamUGC_AddExcludedTag( ulong handle, string /*const char **/ pTagName )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.AddExcludedTag(_ptr, handle /*C*/, pTagName /*C*/);
+				return Native.ISteamUGC.AddExcludedTag(_ptr, handle, pTagName);
 			}
 			public virtual bool /*bool*/ ISteamUGC_SetReturnKeyValueTags( ulong handle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bReturnKeyValueTags )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.SetReturnKeyValueTags(_ptr, handle /*C*/, bReturnKeyValueTags /*C*/);
+				return Native.ISteamUGC.SetReturnKeyValueTags(_ptr, handle, bReturnKeyValueTags);
 			}
 			public virtual bool /*bool*/ ISteamUGC_SetReturnLongDescription( ulong handle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bReturnLongDescription )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.SetReturnLongDescription(_ptr, handle /*C*/, bReturnLongDescription /*C*/);
+				return Native.ISteamUGC.SetReturnLongDescription(_ptr, handle, bReturnLongDescription);
 			}
 			public virtual bool /*bool*/ ISteamUGC_SetReturnMetadata( ulong handle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bReturnMetadata )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.SetReturnMetadata(_ptr, handle /*C*/, bReturnMetadata /*C*/);
+				return Native.ISteamUGC.SetReturnMetadata(_ptr, handle, bReturnMetadata);
 			}
 			public virtual bool /*bool*/ ISteamUGC_SetReturnChildren( ulong handle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bReturnChildren )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.SetReturnChildren(_ptr, handle /*C*/, bReturnChildren /*C*/);
+				return Native.ISteamUGC.SetReturnChildren(_ptr, handle, bReturnChildren);
 			}
 			public virtual bool /*bool*/ ISteamUGC_SetReturnAdditionalPreviews( ulong handle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bReturnAdditionalPreviews )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.SetReturnAdditionalPreviews(_ptr, handle /*C*/, bReturnAdditionalPreviews /*C*/);
+				return Native.ISteamUGC.SetReturnAdditionalPreviews(_ptr, handle, bReturnAdditionalPreviews);
 			}
 			public virtual bool /*bool*/ ISteamUGC_SetReturnTotalOnly( ulong handle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bReturnTotalOnly )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.SetReturnTotalOnly(_ptr, handle /*C*/, bReturnTotalOnly /*C*/);
+				return Native.ISteamUGC.SetReturnTotalOnly(_ptr, handle, bReturnTotalOnly);
 			}
 			public virtual bool /*bool*/ ISteamUGC_SetLanguage( ulong handle, string /*const char **/ pchLanguage )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.SetLanguage(_ptr, handle /*C*/, pchLanguage /*C*/);
+				return Native.ISteamUGC.SetLanguage(_ptr, handle, pchLanguage);
 			}
 			public virtual bool /*bool*/ ISteamUGC_SetAllowCachedResponse( ulong handle, uint /*uint32*/ unMaxAgeSeconds )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.SetAllowCachedResponse(_ptr, handle /*C*/, unMaxAgeSeconds /*C*/);
+				return Native.ISteamUGC.SetAllowCachedResponse(_ptr, handle, unMaxAgeSeconds);
 			}
 			public virtual bool /*bool*/ ISteamUGC_SetCloudFileNameFilter( ulong handle, string /*const char **/ pMatchCloudFileName )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.SetCloudFileNameFilter(_ptr, handle /*C*/, pMatchCloudFileName /*C*/);
+				return Native.ISteamUGC.SetCloudFileNameFilter(_ptr, handle, pMatchCloudFileName);
 			}
 			public virtual bool /*bool*/ ISteamUGC_SetMatchAnyTag( ulong handle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bMatchAnyTag )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.SetMatchAnyTag(_ptr, handle /*C*/, bMatchAnyTag /*C*/);
+				return Native.ISteamUGC.SetMatchAnyTag(_ptr, handle, bMatchAnyTag);
 			}
 			public virtual bool /*bool*/ ISteamUGC_SetSearchText( ulong handle, string /*const char **/ pSearchText )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.SetSearchText(_ptr, handle /*C*/, pSearchText /*C*/);
+				return Native.ISteamUGC.SetSearchText(_ptr, handle, pSearchText);
 			}
 			public virtual bool /*bool*/ ISteamUGC_SetRankedByTrendDays( ulong handle, uint /*uint32*/ unDays )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.SetRankedByTrendDays(_ptr, handle /*C*/, unDays /*C*/);
+				return Native.ISteamUGC.SetRankedByTrendDays(_ptr, handle, unDays);
 			}
 			public virtual bool /*bool*/ ISteamUGC_AddRequiredKeyValueTag( ulong handle, string /*const char **/ pKey, string /*const char **/ pValue )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.AddRequiredKeyValueTag(_ptr, handle /*C*/, pKey /*C*/, pValue /*C*/);
+				return Native.ISteamUGC.AddRequiredKeyValueTag(_ptr, handle, pKey, pValue);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUGC_RequestUGCDetails( ulong nPublishedFileID, uint /*uint32*/ unMaxAgeSeconds )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.RequestUGCDetails(_ptr, nPublishedFileID /*C*/, unMaxAgeSeconds /*C*/);
+				return Native.ISteamUGC.RequestUGCDetails(_ptr, nPublishedFileID, unMaxAgeSeconds);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUGC_CreateItem( uint nConsumerAppId, WorkshopFileType /*EWorkshopFileType*/ eFileType )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.CreateItem(_ptr, nConsumerAppId /*C*/, eFileType /*C*/);
+				return Native.ISteamUGC.CreateItem(_ptr, nConsumerAppId, eFileType);
 			}
 			public virtual UGCUpdateHandle_t /*(UGCUpdateHandle_t)*/ ISteamUGC_StartItemUpdate( uint nConsumerAppId, ulong nPublishedFileID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.StartItemUpdate(_ptr, nConsumerAppId /*C*/, nPublishedFileID /*C*/);
+				return Native.ISteamUGC.StartItemUpdate(_ptr, nConsumerAppId, nPublishedFileID);
 			}
 			public virtual bool /*bool*/ ISteamUGC_SetItemTitle( ulong handle, string /*const char **/ pchTitle )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.SetItemTitle(_ptr, handle /*C*/, pchTitle /*C*/);
+				return Native.ISteamUGC.SetItemTitle(_ptr, handle, pchTitle);
 			}
 			public virtual bool /*bool*/ ISteamUGC_SetItemDescription( ulong handle, string /*const char **/ pchDescription )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.SetItemDescription(_ptr, handle /*C*/, pchDescription /*C*/);
+				return Native.ISteamUGC.SetItemDescription(_ptr, handle, pchDescription);
 			}
 			public virtual bool /*bool*/ ISteamUGC_SetItemUpdateLanguage( ulong handle, string /*const char **/ pchLanguage )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.SetItemUpdateLanguage(_ptr, handle /*C*/, pchLanguage /*C*/);
+				return Native.ISteamUGC.SetItemUpdateLanguage(_ptr, handle, pchLanguage);
 			}
 			public virtual bool /*bool*/ ISteamUGC_SetItemMetadata( ulong handle, string /*const char **/ pchMetaData )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.SetItemMetadata(_ptr, handle /*C*/, pchMetaData /*C*/);
+				return Native.ISteamUGC.SetItemMetadata(_ptr, handle, pchMetaData);
 			}
 			public virtual bool /*bool*/ ISteamUGC_SetItemVisibility( ulong handle, RemoteStoragePublishedFileVisibility /*ERemoteStoragePublishedFileVisibility*/ eVisibility )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.SetItemVisibility(_ptr, handle /*C*/, eVisibility /*C*/);
+				return Native.ISteamUGC.SetItemVisibility(_ptr, handle, eVisibility);
 			}
 			public virtual bool /*bool*/ ISteamUGC_SetItemTags( ulong updateHandle, IntPtr /*const struct SteamParamStringArray_t **/ pTags )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.SetItemTags(_ptr, updateHandle /*C*/, pTags);
+				return Native.ISteamUGC.SetItemTags(_ptr, updateHandle, pTags);
 			}
 			public virtual bool /*bool*/ ISteamUGC_SetItemContent( ulong handle, string /*const char **/ pszContentFolder )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.SetItemContent(_ptr, handle /*C*/, pszContentFolder /*C*/);
+				return Native.ISteamUGC.SetItemContent(_ptr, handle, pszContentFolder);
 			}
 			public virtual bool /*bool*/ ISteamUGC_SetItemPreview( ulong handle, string /*const char **/ pszPreviewFile )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.SetItemPreview(_ptr, handle /*C*/, pszPreviewFile /*C*/);
+				return Native.ISteamUGC.SetItemPreview(_ptr, handle, pszPreviewFile);
 			}
 			public virtual bool /*bool*/ ISteamUGC_RemoveItemKeyValueTags( ulong handle, string /*const char **/ pchKey )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.RemoveItemKeyValueTags(_ptr, handle /*C*/, pchKey /*C*/);
+				return Native.ISteamUGC.RemoveItemKeyValueTags(_ptr, handle, pchKey);
 			}
 			public virtual bool /*bool*/ ISteamUGC_AddItemKeyValueTag( ulong handle, string /*const char **/ pchKey, string /*const char **/ pchValue )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.AddItemKeyValueTag(_ptr, handle /*C*/, pchKey /*C*/, pchValue /*C*/);
+				return Native.ISteamUGC.AddItemKeyValueTag(_ptr, handle, pchKey, pchValue);
 			}
 			public virtual bool /*bool*/ ISteamUGC_AddItemPreviewFile( ulong handle, string /*const char **/ pszPreviewFile, ItemPreviewType /*EItemPreviewType*/ type )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.AddItemPreviewFile(_ptr, handle /*C*/, pszPreviewFile /*C*/, type /*C*/);
+				return Native.ISteamUGC.AddItemPreviewFile(_ptr, handle, pszPreviewFile, type);
 			}
 			public virtual bool /*bool*/ ISteamUGC_AddItemPreviewVideo( ulong handle, string /*const char **/ pszVideoID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.AddItemPreviewVideo(_ptr, handle /*C*/, pszVideoID /*C*/);
+				return Native.ISteamUGC.AddItemPreviewVideo(_ptr, handle, pszVideoID);
 			}
 			public virtual bool /*bool*/ ISteamUGC_UpdateItemPreviewFile( ulong handle, uint /*uint32*/ index, string /*const char **/ pszPreviewFile )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.UpdateItemPreviewFile(_ptr, handle /*C*/, index /*C*/, pszPreviewFile /*C*/);
+				return Native.ISteamUGC.UpdateItemPreviewFile(_ptr, handle, index, pszPreviewFile);
 			}
 			public virtual bool /*bool*/ ISteamUGC_UpdateItemPreviewVideo( ulong handle, uint /*uint32*/ index, string /*const char **/ pszVideoID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.UpdateItemPreviewVideo(_ptr, handle /*C*/, index /*C*/, pszVideoID /*C*/);
+				return Native.ISteamUGC.UpdateItemPreviewVideo(_ptr, handle, index, pszVideoID);
 			}
 			public virtual bool /*bool*/ ISteamUGC_RemoveItemPreview( ulong handle, uint /*uint32*/ index )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.RemoveItemPreview(_ptr, handle /*C*/, index /*C*/);
+				return Native.ISteamUGC.RemoveItemPreview(_ptr, handle, index);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUGC_SubmitItemUpdate( ulong handle, string /*const char **/ pchChangeNote )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.SubmitItemUpdate(_ptr, handle /*C*/, pchChangeNote /*C*/);
+				return Native.ISteamUGC.SubmitItemUpdate(_ptr, handle, pchChangeNote);
 			}
 			public virtual ItemUpdateStatus /*EItemUpdateStatus*/ ISteamUGC_GetItemUpdateProgress( ulong handle, out ulong /*uint64 **/ punBytesProcessed, out ulong /*uint64 **/ punBytesTotal )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.GetItemUpdateProgress(_ptr, handle /*C*/, out punBytesProcessed /*B*/, out punBytesTotal /*B*/);
+				return Native.ISteamUGC.GetItemUpdateProgress(_ptr, handle, out punBytesProcessed, out punBytesTotal);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUGC_SetUserItemVote( ulong nPublishedFileID, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bVoteUp )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.SetUserItemVote(_ptr, nPublishedFileID /*C*/, bVoteUp /*C*/);
+				return Native.ISteamUGC.SetUserItemVote(_ptr, nPublishedFileID, bVoteUp);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUGC_GetUserItemVote( ulong nPublishedFileID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.GetUserItemVote(_ptr, nPublishedFileID /*C*/);
+				return Native.ISteamUGC.GetUserItemVote(_ptr, nPublishedFileID);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUGC_AddItemToFavorites( uint nAppId, ulong nPublishedFileID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.AddItemToFavorites(_ptr, nAppId /*C*/, nPublishedFileID /*C*/);
+				return Native.ISteamUGC.AddItemToFavorites(_ptr, nAppId, nPublishedFileID);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUGC_RemoveItemFromFavorites( uint nAppId, ulong nPublishedFileID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.RemoveItemFromFavorites(_ptr, nAppId /*C*/, nPublishedFileID /*C*/);
+				return Native.ISteamUGC.RemoveItemFromFavorites(_ptr, nAppId, nPublishedFileID);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUGC_SubscribeItem( ulong nPublishedFileID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.SubscribeItem(_ptr, nPublishedFileID /*C*/);
+				return Native.ISteamUGC.SubscribeItem(_ptr, nPublishedFileID);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUGC_UnsubscribeItem( ulong nPublishedFileID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.UnsubscribeItem(_ptr, nPublishedFileID /*C*/);
+				return Native.ISteamUGC.UnsubscribeItem(_ptr, nPublishedFileID);
 			}
 			public virtual uint /*uint32*/ ISteamUGC_GetNumSubscribedItems()
 			{
@@ -3099,43 +3099,43 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.GetSubscribedItems(_ptr, pvecPublishedFileID /*C*/, cMaxEntries /*C*/);
+				return Native.ISteamUGC.GetSubscribedItems(_ptr, pvecPublishedFileID, cMaxEntries);
 			}
 			public virtual uint /*uint32*/ ISteamUGC_GetItemState( ulong nPublishedFileID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.GetItemState(_ptr, nPublishedFileID /*C*/);
+				return Native.ISteamUGC.GetItemState(_ptr, nPublishedFileID);
 			}
 			public virtual bool /*bool*/ ISteamUGC_GetItemInstallInfo( ulong nPublishedFileID, out ulong /*uint64 **/ punSizeOnDisk, System.Text.StringBuilder /*char **/ pchFolder, uint /*uint32*/ cchFolderSize, out uint /*uint32 **/ punTimeStamp )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.GetItemInstallInfo(_ptr, nPublishedFileID /*C*/, out punSizeOnDisk /*B*/, pchFolder /*C*/, cchFolderSize /*C*/, out punTimeStamp /*B*/);
+				return Native.ISteamUGC.GetItemInstallInfo(_ptr, nPublishedFileID, out punSizeOnDisk, pchFolder, cchFolderSize, out punTimeStamp);
 			}
 			public virtual bool /*bool*/ ISteamUGC_GetItemDownloadInfo( ulong nPublishedFileID, out ulong /*uint64 **/ punBytesDownloaded, out ulong /*uint64 **/ punBytesTotal )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.GetItemDownloadInfo(_ptr, nPublishedFileID /*C*/, out punBytesDownloaded /*B*/, out punBytesTotal /*B*/);
+				return Native.ISteamUGC.GetItemDownloadInfo(_ptr, nPublishedFileID, out punBytesDownloaded, out punBytesTotal);
 			}
 			public virtual bool /*bool*/ ISteamUGC_DownloadItem( ulong nPublishedFileID, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bHighPriority )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.DownloadItem(_ptr, nPublishedFileID /*C*/, bHighPriority /*C*/);
+				return Native.ISteamUGC.DownloadItem(_ptr, nPublishedFileID, bHighPriority);
 			}
 			public virtual bool /*bool*/ ISteamUGC_BInitWorkshopForGameServer( uint unWorkshopDepotID, string /*const char **/ pszFolder )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				return Native.ISteamUGC.BInitWorkshopForGameServer(_ptr, unWorkshopDepotID /*C*/, pszFolder /*C*/);
+				return Native.ISteamUGC.BInitWorkshopForGameServer(_ptr, unWorkshopDepotID, pszFolder);
 			}
 			public virtual void /*void*/ ISteamUGC_SuspendDownloads( [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bSuspend )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				Native.ISteamUGC.SuspendDownloads(_ptr, bSuspend /*C*/);
+				Native.ISteamUGC.SuspendDownloads(_ptr, bSuspend);
 			}
 			
 			public virtual uint /*uint32*/ ISteamAppList_GetNumInstalledApps()
@@ -3148,25 +3148,25 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamAppList _ptr is null!" );
 				
-				return Native.ISteamAppList.GetInstalledApps(_ptr, pvecAppID /*C*/, unMaxAppIDs /*C*/);
+				return Native.ISteamAppList.GetInstalledApps(_ptr, pvecAppID, unMaxAppIDs);
 			}
 			public virtual int /*int*/ ISteamAppList_GetAppName( uint nAppID, System.Text.StringBuilder /*char **/ pchName, int /*int*/ cchNameMax )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamAppList _ptr is null!" );
 				
-				return Native.ISteamAppList.GetAppName(_ptr, nAppID /*C*/, pchName /*C*/, cchNameMax /*C*/);
+				return Native.ISteamAppList.GetAppName(_ptr, nAppID, pchName, cchNameMax);
 			}
 			public virtual int /*int*/ ISteamAppList_GetAppInstallDir( uint nAppID, System.Text.StringBuilder /*char **/ pchDirectory, int /*int*/ cchNameMax )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamAppList _ptr is null!" );
 				
-				return Native.ISteamAppList.GetAppInstallDir(_ptr, nAppID /*C*/, pchDirectory /*C*/, cchNameMax /*C*/);
+				return Native.ISteamAppList.GetAppInstallDir(_ptr, nAppID, pchDirectory, cchNameMax);
 			}
 			public virtual int /*int*/ ISteamAppList_GetAppBuildId( uint nAppID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamAppList _ptr is null!" );
 				
-				return Native.ISteamAppList.GetAppBuildId(_ptr, nAppID /*C*/);
+				return Native.ISteamAppList.GetAppBuildId(_ptr, nAppID);
 			}
 			
 			public virtual void /*void*/ ISteamHTMLSurface_DestructISteamHTMLSurface()
@@ -3191,290 +3191,290 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				return Native.ISteamHTMLSurface.CreateBrowser(_ptr, pchUserAgent /*C*/, pchUserCSS /*C*/);
+				return Native.ISteamHTMLSurface.CreateBrowser(_ptr, pchUserAgent, pchUserCSS);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_RemoveBrowser( uint unBrowserHandle )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.RemoveBrowser(_ptr, unBrowserHandle /*C*/);
+				Native.ISteamHTMLSurface.RemoveBrowser(_ptr, unBrowserHandle);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_LoadURL( uint unBrowserHandle, string /*const char **/ pchURL, string /*const char **/ pchPostData )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.LoadURL(_ptr, unBrowserHandle /*C*/, pchURL /*C*/, pchPostData /*C*/);
+				Native.ISteamHTMLSurface.LoadURL(_ptr, unBrowserHandle, pchURL, pchPostData);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_SetSize( uint unBrowserHandle, uint /*uint32*/ unWidth, uint /*uint32*/ unHeight )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.SetSize(_ptr, unBrowserHandle /*C*/, unWidth /*C*/, unHeight /*C*/);
+				Native.ISteamHTMLSurface.SetSize(_ptr, unBrowserHandle, unWidth, unHeight);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_StopLoad( uint unBrowserHandle )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.StopLoad(_ptr, unBrowserHandle /*C*/);
+				Native.ISteamHTMLSurface.StopLoad(_ptr, unBrowserHandle);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_Reload( uint unBrowserHandle )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.Reload(_ptr, unBrowserHandle /*C*/);
+				Native.ISteamHTMLSurface.Reload(_ptr, unBrowserHandle);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_GoBack( uint unBrowserHandle )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.GoBack(_ptr, unBrowserHandle /*C*/);
+				Native.ISteamHTMLSurface.GoBack(_ptr, unBrowserHandle);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_GoForward( uint unBrowserHandle )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.GoForward(_ptr, unBrowserHandle /*C*/);
+				Native.ISteamHTMLSurface.GoForward(_ptr, unBrowserHandle);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_AddHeader( uint unBrowserHandle, string /*const char **/ pchKey, string /*const char **/ pchValue )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.AddHeader(_ptr, unBrowserHandle /*C*/, pchKey /*C*/, pchValue /*C*/);
+				Native.ISteamHTMLSurface.AddHeader(_ptr, unBrowserHandle, pchKey, pchValue);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_ExecuteJavascript( uint unBrowserHandle, string /*const char **/ pchScript )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.ExecuteJavascript(_ptr, unBrowserHandle /*C*/, pchScript /*C*/);
+				Native.ISteamHTMLSurface.ExecuteJavascript(_ptr, unBrowserHandle, pchScript);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_MouseUp( uint unBrowserHandle, HTMLMouseButton /*ISteamHTMLSurface::EHTMLMouseButton*/ eMouseButton )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.MouseUp(_ptr, unBrowserHandle /*C*/, eMouseButton /*C*/);
+				Native.ISteamHTMLSurface.MouseUp(_ptr, unBrowserHandle, eMouseButton);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_MouseDown( uint unBrowserHandle, HTMLMouseButton /*ISteamHTMLSurface::EHTMLMouseButton*/ eMouseButton )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.MouseDown(_ptr, unBrowserHandle /*C*/, eMouseButton /*C*/);
+				Native.ISteamHTMLSurface.MouseDown(_ptr, unBrowserHandle, eMouseButton);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_MouseDoubleClick( uint unBrowserHandle, HTMLMouseButton /*ISteamHTMLSurface::EHTMLMouseButton*/ eMouseButton )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.MouseDoubleClick(_ptr, unBrowserHandle /*C*/, eMouseButton /*C*/);
+				Native.ISteamHTMLSurface.MouseDoubleClick(_ptr, unBrowserHandle, eMouseButton);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_MouseMove( uint unBrowserHandle, int /*int*/ x, int /*int*/ y )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.MouseMove(_ptr, unBrowserHandle /*C*/, x /*C*/, y /*C*/);
+				Native.ISteamHTMLSurface.MouseMove(_ptr, unBrowserHandle, x, y);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_MouseWheel( uint unBrowserHandle, int /*int32*/ nDelta )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.MouseWheel(_ptr, unBrowserHandle /*C*/, nDelta /*C*/);
+				Native.ISteamHTMLSurface.MouseWheel(_ptr, unBrowserHandle, nDelta);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_KeyDown( uint unBrowserHandle, uint /*uint32*/ nNativeKeyCode, HTMLKeyModifiers /*ISteamHTMLSurface::EHTMLKeyModifiers*/ eHTMLKeyModifiers )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.KeyDown(_ptr, unBrowserHandle /*C*/, nNativeKeyCode /*C*/, eHTMLKeyModifiers /*C*/);
+				Native.ISteamHTMLSurface.KeyDown(_ptr, unBrowserHandle, nNativeKeyCode, eHTMLKeyModifiers);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_KeyUp( uint unBrowserHandle, uint /*uint32*/ nNativeKeyCode, HTMLKeyModifiers /*ISteamHTMLSurface::EHTMLKeyModifiers*/ eHTMLKeyModifiers )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.KeyUp(_ptr, unBrowserHandle /*C*/, nNativeKeyCode /*C*/, eHTMLKeyModifiers /*C*/);
+				Native.ISteamHTMLSurface.KeyUp(_ptr, unBrowserHandle, nNativeKeyCode, eHTMLKeyModifiers);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_KeyChar( uint unBrowserHandle, uint /*uint32*/ cUnicodeChar, HTMLKeyModifiers /*ISteamHTMLSurface::EHTMLKeyModifiers*/ eHTMLKeyModifiers )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.KeyChar(_ptr, unBrowserHandle /*C*/, cUnicodeChar /*C*/, eHTMLKeyModifiers /*C*/);
+				Native.ISteamHTMLSurface.KeyChar(_ptr, unBrowserHandle, cUnicodeChar, eHTMLKeyModifiers);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_SetHorizontalScroll( uint unBrowserHandle, uint /*uint32*/ nAbsolutePixelScroll )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.SetHorizontalScroll(_ptr, unBrowserHandle /*C*/, nAbsolutePixelScroll /*C*/);
+				Native.ISteamHTMLSurface.SetHorizontalScroll(_ptr, unBrowserHandle, nAbsolutePixelScroll);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_SetVerticalScroll( uint unBrowserHandle, uint /*uint32*/ nAbsolutePixelScroll )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.SetVerticalScroll(_ptr, unBrowserHandle /*C*/, nAbsolutePixelScroll /*C*/);
+				Native.ISteamHTMLSurface.SetVerticalScroll(_ptr, unBrowserHandle, nAbsolutePixelScroll);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_SetKeyFocus( uint unBrowserHandle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bHasKeyFocus )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.SetKeyFocus(_ptr, unBrowserHandle /*C*/, bHasKeyFocus /*C*/);
+				Native.ISteamHTMLSurface.SetKeyFocus(_ptr, unBrowserHandle, bHasKeyFocus);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_ViewSource( uint unBrowserHandle )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.ViewSource(_ptr, unBrowserHandle /*C*/);
+				Native.ISteamHTMLSurface.ViewSource(_ptr, unBrowserHandle);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_CopyToClipboard( uint unBrowserHandle )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.CopyToClipboard(_ptr, unBrowserHandle /*C*/);
+				Native.ISteamHTMLSurface.CopyToClipboard(_ptr, unBrowserHandle);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_PasteFromClipboard( uint unBrowserHandle )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.PasteFromClipboard(_ptr, unBrowserHandle /*C*/);
+				Native.ISteamHTMLSurface.PasteFromClipboard(_ptr, unBrowserHandle);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_Find( uint unBrowserHandle, string /*const char **/ pchSearchStr, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bCurrentlyInFind, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bReverse )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.Find(_ptr, unBrowserHandle /*C*/, pchSearchStr /*C*/, bCurrentlyInFind /*C*/, bReverse /*C*/);
+				Native.ISteamHTMLSurface.Find(_ptr, unBrowserHandle, pchSearchStr, bCurrentlyInFind, bReverse);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_StopFind( uint unBrowserHandle )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.StopFind(_ptr, unBrowserHandle /*C*/);
+				Native.ISteamHTMLSurface.StopFind(_ptr, unBrowserHandle);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_GetLinkAtPosition( uint unBrowserHandle, int /*int*/ x, int /*int*/ y )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.GetLinkAtPosition(_ptr, unBrowserHandle /*C*/, x /*C*/, y /*C*/);
+				Native.ISteamHTMLSurface.GetLinkAtPosition(_ptr, unBrowserHandle, x, y);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_SetCookie( string /*const char **/ pchHostname, string /*const char **/ pchKey, string /*const char **/ pchValue, string /*const char **/ pchPath, uint nExpires, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bSecure, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bHTTPOnly )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.SetCookie(_ptr, pchHostname /*C*/, pchKey /*C*/, pchValue /*C*/, pchPath /*C*/, nExpires /*C*/, bSecure /*C*/, bHTTPOnly /*C*/);
+				Native.ISteamHTMLSurface.SetCookie(_ptr, pchHostname, pchKey, pchValue, pchPath, nExpires, bSecure, bHTTPOnly);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_SetPageScaleFactor( uint unBrowserHandle, float /*float*/ flZoom, int /*int*/ nPointX, int /*int*/ nPointY )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.SetPageScaleFactor(_ptr, unBrowserHandle /*C*/, flZoom /*C*/, nPointX /*C*/, nPointY /*C*/);
+				Native.ISteamHTMLSurface.SetPageScaleFactor(_ptr, unBrowserHandle, flZoom, nPointX, nPointY);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_SetBackgroundMode( uint unBrowserHandle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bBackgroundMode )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.SetBackgroundMode(_ptr, unBrowserHandle /*C*/, bBackgroundMode /*C*/);
+				Native.ISteamHTMLSurface.SetBackgroundMode(_ptr, unBrowserHandle, bBackgroundMode);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_AllowStartRequest( uint unBrowserHandle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bAllowed )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.AllowStartRequest(_ptr, unBrowserHandle /*C*/, bAllowed /*C*/);
+				Native.ISteamHTMLSurface.AllowStartRequest(_ptr, unBrowserHandle, bAllowed);
 			}
 			public virtual void /*void*/ ISteamHTMLSurface_JSDialogResponse( uint unBrowserHandle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bResult )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
 				
-				Native.ISteamHTMLSurface.JSDialogResponse(_ptr, unBrowserHandle /*C*/, bResult /*C*/);
+				Native.ISteamHTMLSurface.JSDialogResponse(_ptr, unBrowserHandle, bResult);
 			}
 			
 			public virtual Result /*EResult*/ ISteamInventory_GetResultStatus( int resultHandle )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamInventory _ptr is null!" );
 				
-				return Native.ISteamInventory.GetResultStatus(_ptr, resultHandle /*C*/);
+				return Native.ISteamInventory.GetResultStatus(_ptr, resultHandle);
 			}
 			public virtual bool /*bool*/ ISteamInventory_GetResultItems( int resultHandle, IntPtr /*struct SteamItemDetails_t **/ pOutItemsArray, out uint /*uint32 **/ punOutItemsArraySize )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamInventory _ptr is null!" );
 				
-				return Native.ISteamInventory.GetResultItems(_ptr, resultHandle /*C*/, pOutItemsArray, out punOutItemsArraySize /*B*/);
+				return Native.ISteamInventory.GetResultItems(_ptr, resultHandle, pOutItemsArray, out punOutItemsArraySize);
 			}
 			public virtual uint /*uint32*/ ISteamInventory_GetResultTimestamp( int resultHandle )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamInventory _ptr is null!" );
 				
-				return Native.ISteamInventory.GetResultTimestamp(_ptr, resultHandle /*C*/);
+				return Native.ISteamInventory.GetResultTimestamp(_ptr, resultHandle);
 			}
 			public virtual bool /*bool*/ ISteamInventory_CheckResultSteamID( int resultHandle, ulong steamIDExpected )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamInventory _ptr is null!" );
 				
-				return Native.ISteamInventory.CheckResultSteamID(_ptr, resultHandle /*C*/, steamIDExpected /*C*/);
+				return Native.ISteamInventory.CheckResultSteamID(_ptr, resultHandle, steamIDExpected);
 			}
 			public virtual void /*void*/ ISteamInventory_DestroyResult( int resultHandle )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamInventory _ptr is null!" );
 				
-				Native.ISteamInventory.DestroyResult(_ptr, resultHandle /*C*/);
+				Native.ISteamInventory.DestroyResult(_ptr, resultHandle);
 			}
 			public virtual bool /*bool*/ ISteamInventory_GetAllItems( ref int pResultHandle )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamInventory _ptr is null!" );
 				
-				return Native.ISteamInventory.GetAllItems(_ptr, ref pResultHandle /*A*/);
+				return Native.ISteamInventory.GetAllItems(_ptr, ref pResultHandle);
 			}
 			public virtual bool /*bool*/ ISteamInventory_GetItemsByID( ref int pResultHandle, IntPtr /*const SteamItemInstanceID_t **/ pInstanceIDs, uint /*uint32*/ unCountInstanceIDs )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamInventory _ptr is null!" );
 				
-				return Native.ISteamInventory.GetItemsByID(_ptr, ref pResultHandle /*A*/, pInstanceIDs, unCountInstanceIDs /*C*/);
+				return Native.ISteamInventory.GetItemsByID(_ptr, ref pResultHandle, pInstanceIDs, unCountInstanceIDs);
 			}
 			public virtual bool /*bool*/ ISteamInventory_SerializeResult( int resultHandle, IntPtr /*void **/ pOutBuffer, out uint /*uint32 **/ punOutBufferSize )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamInventory _ptr is null!" );
 				
-				return Native.ISteamInventory.SerializeResult(_ptr, resultHandle /*C*/, pOutBuffer /*C*/, out punOutBufferSize /*B*/);
+				return Native.ISteamInventory.SerializeResult(_ptr, resultHandle, pOutBuffer, out punOutBufferSize);
 			}
 			public virtual bool /*bool*/ ISteamInventory_DeserializeResult( ref int pOutResultHandle, IntPtr /*const void **/ pBuffer, uint /*uint32*/ unBufferSize, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bRESERVED_MUST_BE_FALSE )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamInventory _ptr is null!" );
 				
-				return Native.ISteamInventory.DeserializeResult(_ptr, ref pOutResultHandle /*A*/, pBuffer /*C*/, unBufferSize /*C*/, bRESERVED_MUST_BE_FALSE /*C*/);
+				return Native.ISteamInventory.DeserializeResult(_ptr, ref pOutResultHandle, pBuffer, unBufferSize, bRESERVED_MUST_BE_FALSE);
 			}
 			public virtual bool /*bool*/ ISteamInventory_GenerateItems( ref int pResultHandle, IntPtr /*const SteamItemDef_t **/ pArrayItemDefs, out uint /*const uint32 **/ punArrayQuantity, uint /*uint32*/ unArrayLength )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamInventory _ptr is null!" );
 				
-				return Native.ISteamInventory.GenerateItems(_ptr, ref pResultHandle /*A*/, pArrayItemDefs, out punArrayQuantity /*B*/, unArrayLength /*C*/);
+				return Native.ISteamInventory.GenerateItems(_ptr, ref pResultHandle, pArrayItemDefs, out punArrayQuantity, unArrayLength);
 			}
 			public virtual bool /*bool*/ ISteamInventory_GrantPromoItems( ref int pResultHandle )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamInventory _ptr is null!" );
 				
-				return Native.ISteamInventory.GrantPromoItems(_ptr, ref pResultHandle /*A*/);
+				return Native.ISteamInventory.GrantPromoItems(_ptr, ref pResultHandle);
 			}
 			public virtual bool /*bool*/ ISteamInventory_AddPromoItem( ref int pResultHandle, int itemDef )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamInventory _ptr is null!" );
 				
-				return Native.ISteamInventory.AddPromoItem(_ptr, ref pResultHandle /*A*/, itemDef /*C*/);
+				return Native.ISteamInventory.AddPromoItem(_ptr, ref pResultHandle, itemDef);
 			}
 			public virtual bool /*bool*/ ISteamInventory_AddPromoItems( ref int pResultHandle, IntPtr /*const SteamItemDef_t **/ pArrayItemDefs, uint /*uint32*/ unArrayLength )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamInventory _ptr is null!" );
 				
-				return Native.ISteamInventory.AddPromoItems(_ptr, ref pResultHandle /*A*/, pArrayItemDefs, unArrayLength /*C*/);
+				return Native.ISteamInventory.AddPromoItems(_ptr, ref pResultHandle, pArrayItemDefs, unArrayLength);
 			}
 			public virtual bool /*bool*/ ISteamInventory_ConsumeItem( ref int pResultHandle, ulong itemConsume, uint /*uint32*/ unQuantity )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamInventory _ptr is null!" );
 				
-				return Native.ISteamInventory.ConsumeItem(_ptr, ref pResultHandle /*A*/, itemConsume /*C*/, unQuantity /*C*/);
+				return Native.ISteamInventory.ConsumeItem(_ptr, ref pResultHandle, itemConsume, unQuantity);
 			}
 			public virtual bool /*bool*/ ISteamInventory_ExchangeItems( ref int pResultHandle, ref int pArrayGenerate, out uint /*const uint32 **/ punArrayGenerateQuantity, uint /*uint32*/ unArrayGenerateLength, IntPtr /*const SteamItemInstanceID_t **/ pArrayDestroy, IntPtr /*const uint32 **/ punArrayDestroyQuantity, uint /*uint32*/ unArrayDestroyLength )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamInventory _ptr is null!" );
 				
-				return Native.ISteamInventory.ExchangeItems(_ptr, ref pResultHandle /*A*/, ref pArrayGenerate /*A*/, out punArrayGenerateQuantity /*B*/, unArrayGenerateLength /*C*/, pArrayDestroy, punArrayDestroyQuantity, unArrayDestroyLength /*C*/);
+				return Native.ISteamInventory.ExchangeItems(_ptr, ref pResultHandle, ref pArrayGenerate, out punArrayGenerateQuantity, unArrayGenerateLength, pArrayDestroy, punArrayDestroyQuantity, unArrayDestroyLength);
 			}
 			public virtual bool /*bool*/ ISteamInventory_TransferItemQuantity( ref int pResultHandle, ulong itemIdSource, uint /*uint32*/ unQuantity, ulong itemIdDest )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamInventory _ptr is null!" );
 				
-				return Native.ISteamInventory.TransferItemQuantity(_ptr, ref pResultHandle /*A*/, itemIdSource /*C*/, unQuantity /*C*/, itemIdDest /*C*/);
+				return Native.ISteamInventory.TransferItemQuantity(_ptr, ref pResultHandle, itemIdSource, unQuantity, itemIdDest);
 			}
 			public virtual void /*void*/ ISteamInventory_SendItemDropHeartbeat()
 			{
@@ -3486,13 +3486,13 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamInventory _ptr is null!" );
 				
-				return Native.ISteamInventory.TriggerItemDrop(_ptr, ref pResultHandle /*A*/, dropListDefinition /*C*/);
+				return Native.ISteamInventory.TriggerItemDrop(_ptr, ref pResultHandle, dropListDefinition);
 			}
 			public virtual bool /*bool*/ ISteamInventory_TradeItems( ref int pResultHandle, ulong steamIDTradePartner, ref ulong pArrayGive, out uint /*const uint32 **/ pArrayGiveQuantity, uint /*uint32*/ nArrayGiveLength, ref ulong pArrayGet, out uint /*const uint32 **/ pArrayGetQuantity, uint /*uint32*/ nArrayGetLength )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamInventory _ptr is null!" );
 				
-				return Native.ISteamInventory.TradeItems(_ptr, ref pResultHandle /*A*/, steamIDTradePartner /*C*/, ref pArrayGive /*A*/, out pArrayGiveQuantity /*B*/, nArrayGiveLength /*C*/, ref pArrayGet /*A*/, out pArrayGetQuantity /*B*/, nArrayGetLength /*C*/);
+				return Native.ISteamInventory.TradeItems(_ptr, ref pResultHandle, steamIDTradePartner, ref pArrayGive, out pArrayGiveQuantity, nArrayGiveLength, ref pArrayGet, out pArrayGetQuantity, nArrayGetLength);
 			}
 			public virtual bool /*bool*/ ISteamInventory_LoadItemDefinitions()
 			{
@@ -3504,20 +3504,20 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamInventory _ptr is null!" );
 				
-				return Native.ISteamInventory.GetItemDefinitionIDs(_ptr, pItemDefIDs, out punItemDefIDsArraySize /*B*/);
+				return Native.ISteamInventory.GetItemDefinitionIDs(_ptr, pItemDefIDs, out punItemDefIDsArraySize);
 			}
 			public virtual bool /*bool*/ ISteamInventory_GetItemDefinitionProperty( int iDefinition, string /*const char **/ pchPropertyName, System.Text.StringBuilder /*char **/ pchValueBuffer, out uint /*uint32 **/ punValueBufferSize )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamInventory _ptr is null!" );
 				
-				return Native.ISteamInventory.GetItemDefinitionProperty(_ptr, iDefinition /*C*/, pchPropertyName /*C*/, pchValueBuffer /*C*/, out punValueBufferSize /*B*/);
+				return Native.ISteamInventory.GetItemDefinitionProperty(_ptr, iDefinition, pchPropertyName, pchValueBuffer, out punValueBufferSize);
 			}
 			
 			public virtual void /*void*/ ISteamVideo_GetVideoURL( uint unVideoAppID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamVideo _ptr is null!" );
 				
-				Native.ISteamVideo.GetVideoURL(_ptr, unVideoAppID /*C*/);
+				Native.ISteamVideo.GetVideoURL(_ptr, unVideoAppID);
 			}
 			public virtual bool /*bool*/ ISteamVideo_IsBroadcasting( IntPtr /*int **/ pnNumViewers )
 			{
@@ -3530,37 +3530,37 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				return Native.ISteamGameServer.InitGameServer(_ptr, unIP /*C*/, usGamePort /*C*/, usQueryPort /*C*/, unFlags /*C*/, nGameAppId /*C*/, pchVersionString /*C*/);
+				return Native.ISteamGameServer.InitGameServer(_ptr, unIP, usGamePort, usQueryPort, unFlags, nGameAppId, pchVersionString);
 			}
 			public virtual void /*void*/ ISteamGameServer_SetProduct( string /*const char **/ pszProduct )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				Native.ISteamGameServer.SetProduct(_ptr, pszProduct /*C*/);
+				Native.ISteamGameServer.SetProduct(_ptr, pszProduct);
 			}
 			public virtual void /*void*/ ISteamGameServer_SetGameDescription( string /*const char **/ pszGameDescription )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				Native.ISteamGameServer.SetGameDescription(_ptr, pszGameDescription /*C*/);
+				Native.ISteamGameServer.SetGameDescription(_ptr, pszGameDescription);
 			}
 			public virtual void /*void*/ ISteamGameServer_SetModDir( string /*const char **/ pszModDir )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				Native.ISteamGameServer.SetModDir(_ptr, pszModDir /*C*/);
+				Native.ISteamGameServer.SetModDir(_ptr, pszModDir);
 			}
 			public virtual void /*void*/ ISteamGameServer_SetDedicatedServer( [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bDedicated )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				Native.ISteamGameServer.SetDedicatedServer(_ptr, bDedicated /*C*/);
+				Native.ISteamGameServer.SetDedicatedServer(_ptr, bDedicated);
 			}
 			public virtual void /*void*/ ISteamGameServer_LogOn( string /*const char **/ pszToken )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				Native.ISteamGameServer.LogOn(_ptr, pszToken /*C*/);
+				Native.ISteamGameServer.LogOn(_ptr, pszToken);
 			}
 			public virtual void /*void*/ ISteamGameServer_LogOnAnonymous()
 			{
@@ -3602,43 +3602,43 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				Native.ISteamGameServer.SetMaxPlayerCount(_ptr, cPlayersMax /*C*/);
+				Native.ISteamGameServer.SetMaxPlayerCount(_ptr, cPlayersMax);
 			}
 			public virtual void /*void*/ ISteamGameServer_SetBotPlayerCount( int /*int*/ cBotplayers )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				Native.ISteamGameServer.SetBotPlayerCount(_ptr, cBotplayers /*C*/);
+				Native.ISteamGameServer.SetBotPlayerCount(_ptr, cBotplayers);
 			}
 			public virtual void /*void*/ ISteamGameServer_SetServerName( string /*const char **/ pszServerName )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				Native.ISteamGameServer.SetServerName(_ptr, pszServerName /*C*/);
+				Native.ISteamGameServer.SetServerName(_ptr, pszServerName);
 			}
 			public virtual void /*void*/ ISteamGameServer_SetMapName( string /*const char **/ pszMapName )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				Native.ISteamGameServer.SetMapName(_ptr, pszMapName /*C*/);
+				Native.ISteamGameServer.SetMapName(_ptr, pszMapName);
 			}
 			public virtual void /*void*/ ISteamGameServer_SetPasswordProtected( [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bPasswordProtected )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				Native.ISteamGameServer.SetPasswordProtected(_ptr, bPasswordProtected /*C*/);
+				Native.ISteamGameServer.SetPasswordProtected(_ptr, bPasswordProtected);
 			}
 			public virtual void /*void*/ ISteamGameServer_SetSpectatorPort( ushort /*uint16*/ unSpectatorPort )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				Native.ISteamGameServer.SetSpectatorPort(_ptr, unSpectatorPort /*C*/);
+				Native.ISteamGameServer.SetSpectatorPort(_ptr, unSpectatorPort);
 			}
 			public virtual void /*void*/ ISteamGameServer_SetSpectatorServerName( string /*const char **/ pszSpectatorServerName )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				Native.ISteamGameServer.SetSpectatorServerName(_ptr, pszSpectatorServerName /*C*/);
+				Native.ISteamGameServer.SetSpectatorServerName(_ptr, pszSpectatorServerName);
 			}
 			public virtual void /*void*/ ISteamGameServer_ClearAllKeyValues()
 			{
@@ -3650,31 +3650,31 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				Native.ISteamGameServer.SetKeyValue(_ptr, pKey /*C*/, pValue /*C*/);
+				Native.ISteamGameServer.SetKeyValue(_ptr, pKey, pValue);
 			}
 			public virtual void /*void*/ ISteamGameServer_SetGameTags( string /*const char **/ pchGameTags )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				Native.ISteamGameServer.SetGameTags(_ptr, pchGameTags /*C*/);
+				Native.ISteamGameServer.SetGameTags(_ptr, pchGameTags);
 			}
 			public virtual void /*void*/ ISteamGameServer_SetGameData( string /*const char **/ pchGameData )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				Native.ISteamGameServer.SetGameData(_ptr, pchGameData /*C*/);
+				Native.ISteamGameServer.SetGameData(_ptr, pchGameData);
 			}
 			public virtual void /*void*/ ISteamGameServer_SetRegion( string /*const char **/ pszRegion )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				Native.ISteamGameServer.SetRegion(_ptr, pszRegion /*C*/);
+				Native.ISteamGameServer.SetRegion(_ptr, pszRegion);
 			}
 			public virtual bool /*bool*/ ISteamGameServer_SendUserConnectAndAuthenticate( uint /*uint32*/ unIPClient, IntPtr /*const void **/ pvAuthBlob, uint /*uint32*/ cubAuthBlobSize, out ulong pSteamIDUser )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				return Native.ISteamGameServer.SendUserConnectAndAuthenticate(_ptr, unIPClient /*C*/, pvAuthBlob /*C*/, cubAuthBlobSize /*C*/, out pSteamIDUser /*B*/);
+				return Native.ISteamGameServer.SendUserConnectAndAuthenticate(_ptr, unIPClient, pvAuthBlob, cubAuthBlobSize, out pSteamIDUser);
 			}
 			public virtual CSteamID /*(class CSteamID)*/ ISteamGameServer_CreateUnauthenticatedUserConnection()
 			{
@@ -3686,49 +3686,49 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				Native.ISteamGameServer.SendUserDisconnect(_ptr, steamIDUser /*C*/);
+				Native.ISteamGameServer.SendUserDisconnect(_ptr, steamIDUser);
 			}
 			public virtual bool /*bool*/ ISteamGameServer_BUpdateUserData( ulong steamIDUser, string /*const char **/ pchPlayerName, uint /*uint32*/ uScore )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				return Native.ISteamGameServer.BUpdateUserData(_ptr, steamIDUser /*C*/, pchPlayerName /*C*/, uScore /*C*/);
+				return Native.ISteamGameServer.BUpdateUserData(_ptr, steamIDUser, pchPlayerName, uScore);
 			}
 			public virtual HAuthTicket /*(HAuthTicket)*/ ISteamGameServer_GetAuthSessionTicket( IntPtr /*void **/ pTicket, int /*int*/ cbMaxTicket, out uint /*uint32 **/ pcbTicket )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				return Native.ISteamGameServer.GetAuthSessionTicket(_ptr, pTicket /*C*/, cbMaxTicket /*C*/, out pcbTicket /*B*/);
+				return Native.ISteamGameServer.GetAuthSessionTicket(_ptr, pTicket, cbMaxTicket, out pcbTicket);
 			}
 			public virtual BeginAuthSessionResult /*EBeginAuthSessionResult*/ ISteamGameServer_BeginAuthSession( IntPtr /*const void **/ pAuthTicket, int /*int*/ cbAuthTicket, ulong steamID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				return Native.ISteamGameServer.BeginAuthSession(_ptr, pAuthTicket /*C*/, cbAuthTicket /*C*/, steamID /*C*/);
+				return Native.ISteamGameServer.BeginAuthSession(_ptr, pAuthTicket, cbAuthTicket, steamID);
 			}
 			public virtual void /*void*/ ISteamGameServer_EndAuthSession( ulong steamID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				Native.ISteamGameServer.EndAuthSession(_ptr, steamID /*C*/);
+				Native.ISteamGameServer.EndAuthSession(_ptr, steamID);
 			}
 			public virtual void /*void*/ ISteamGameServer_CancelAuthTicket( uint hAuthTicket )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				Native.ISteamGameServer.CancelAuthTicket(_ptr, hAuthTicket /*C*/);
+				Native.ISteamGameServer.CancelAuthTicket(_ptr, hAuthTicket);
 			}
 			public virtual UserHasLicenseForAppResult /*EUserHasLicenseForAppResult*/ ISteamGameServer_UserHasLicenseForApp( ulong steamID, uint appID )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				return Native.ISteamGameServer.UserHasLicenseForApp(_ptr, steamID /*C*/, appID /*C*/);
+				return Native.ISteamGameServer.UserHasLicenseForApp(_ptr, steamID, appID);
 			}
 			public virtual bool /*bool*/ ISteamGameServer_RequestUserGroupStatus( ulong steamIDUser, ulong steamIDGroup )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				return Native.ISteamGameServer.RequestUserGroupStatus(_ptr, steamIDUser /*C*/, steamIDGroup /*C*/);
+				return Native.ISteamGameServer.RequestUserGroupStatus(_ptr, steamIDUser, steamIDGroup);
 			}
 			public virtual void /*void*/ ISteamGameServer_GetGameplayStats()
 			{
@@ -3752,25 +3752,25 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				return Native.ISteamGameServer.HandleIncomingPacket(_ptr, pData /*C*/, cbData /*C*/, srcIP /*C*/, srcPort /*C*/);
+				return Native.ISteamGameServer.HandleIncomingPacket(_ptr, pData, cbData, srcIP, srcPort);
 			}
 			public virtual int /*int*/ ISteamGameServer_GetNextOutgoingPacket( IntPtr /*void **/ pOut, int /*int*/ cbMaxOut, out uint /*uint32 **/ pNetAdr, out ushort /*uint16 **/ pPort )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				return Native.ISteamGameServer.GetNextOutgoingPacket(_ptr, pOut /*C*/, cbMaxOut /*C*/, out pNetAdr /*B*/, out pPort /*B*/);
+				return Native.ISteamGameServer.GetNextOutgoingPacket(_ptr, pOut, cbMaxOut, out pNetAdr, out pPort);
 			}
 			public virtual void /*void*/ ISteamGameServer_EnableHeartbeats( [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bActive )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				Native.ISteamGameServer.EnableHeartbeats(_ptr, bActive /*C*/);
+				Native.ISteamGameServer.EnableHeartbeats(_ptr, bActive);
 			}
 			public virtual void /*void*/ ISteamGameServer_SetHeartbeatInterval( int /*int*/ iHeartbeatInterval )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				Native.ISteamGameServer.SetHeartbeatInterval(_ptr, iHeartbeatInterval /*C*/);
+				Native.ISteamGameServer.SetHeartbeatInterval(_ptr, iHeartbeatInterval);
 			}
 			public virtual void /*void*/ ISteamGameServer_ForceHeartbeat()
 			{
@@ -3782,74 +3782,74 @@ namespace SteamNative
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				return Native.ISteamGameServer.AssociateWithClan(_ptr, steamIDClan /*C*/);
+				return Native.ISteamGameServer.AssociateWithClan(_ptr, steamIDClan);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamGameServer_ComputeNewPlayerCompatibility( ulong steamIDNewPlayer )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServer _ptr is null!" );
 				
-				return Native.ISteamGameServer.ComputeNewPlayerCompatibility(_ptr, steamIDNewPlayer /*C*/);
+				return Native.ISteamGameServer.ComputeNewPlayerCompatibility(_ptr, steamIDNewPlayer);
 			}
 			
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamGameServerStats_RequestUserStats( ulong steamIDUser )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServerStats _ptr is null!" );
 				
-				return Native.ISteamGameServerStats.RequestUserStats(_ptr, steamIDUser /*C*/);
+				return Native.ISteamGameServerStats.RequestUserStats(_ptr, steamIDUser);
 			}
 			public virtual bool /*bool*/ ISteamGameServerStats_GetUserStat( ulong steamIDUser, string /*const char **/ pchName, out int /*int32 **/ pData )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServerStats _ptr is null!" );
 				
-				return Native.ISteamGameServerStats.GetUserStat(_ptr, steamIDUser /*C*/, pchName /*C*/, out pData /*B*/);
+				return Native.ISteamGameServerStats.GetUserStat(_ptr, steamIDUser, pchName, out pData);
 			}
 			public virtual bool /*bool*/ ISteamGameServerStats_GetUserStat0( ulong steamIDUser, string /*const char **/ pchName, out float /*float **/ pData )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServerStats _ptr is null!" );
 				
-				return Native.ISteamGameServerStats.GetUserStat0(_ptr, steamIDUser /*C*/, pchName /*C*/, out pData /*B*/);
+				return Native.ISteamGameServerStats.GetUserStat0(_ptr, steamIDUser, pchName, out pData);
 			}
 			public virtual bool /*bool*/ ISteamGameServerStats_GetUserAchievement( ulong steamIDUser, string /*const char **/ pchName, [MarshalAs(UnmanagedType.U1)] ref bool /*bool **/ pbAchieved )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServerStats _ptr is null!" );
 				
-				return Native.ISteamGameServerStats.GetUserAchievement(_ptr, steamIDUser /*C*/, pchName /*C*/, ref pbAchieved /*A*/);
+				return Native.ISteamGameServerStats.GetUserAchievement(_ptr, steamIDUser, pchName, ref pbAchieved);
 			}
 			public virtual bool /*bool*/ ISteamGameServerStats_SetUserStat( ulong steamIDUser, string /*const char **/ pchName, int /*int32*/ nData )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServerStats _ptr is null!" );
 				
-				return Native.ISteamGameServerStats.SetUserStat(_ptr, steamIDUser /*C*/, pchName /*C*/, nData /*C*/);
+				return Native.ISteamGameServerStats.SetUserStat(_ptr, steamIDUser, pchName, nData);
 			}
 			public virtual bool /*bool*/ ISteamGameServerStats_SetUserStat0( ulong steamIDUser, string /*const char **/ pchName, float /*float*/ fData )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServerStats _ptr is null!" );
 				
-				return Native.ISteamGameServerStats.SetUserStat0(_ptr, steamIDUser /*C*/, pchName /*C*/, fData /*C*/);
+				return Native.ISteamGameServerStats.SetUserStat0(_ptr, steamIDUser, pchName, fData);
 			}
 			public virtual bool /*bool*/ ISteamGameServerStats_UpdateUserAvgRateStat( ulong steamIDUser, string /*const char **/ pchName, float /*float*/ flCountThisSession, double /*double*/ dSessionLength )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServerStats _ptr is null!" );
 				
-				return Native.ISteamGameServerStats.UpdateUserAvgRateStat(_ptr, steamIDUser /*C*/, pchName /*C*/, flCountThisSession /*C*/, dSessionLength /*C*/);
+				return Native.ISteamGameServerStats.UpdateUserAvgRateStat(_ptr, steamIDUser, pchName, flCountThisSession, dSessionLength);
 			}
 			public virtual bool /*bool*/ ISteamGameServerStats_SetUserAchievement( ulong steamIDUser, string /*const char **/ pchName )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServerStats _ptr is null!" );
 				
-				return Native.ISteamGameServerStats.SetUserAchievement(_ptr, steamIDUser /*C*/, pchName /*C*/);
+				return Native.ISteamGameServerStats.SetUserAchievement(_ptr, steamIDUser, pchName);
 			}
 			public virtual bool /*bool*/ ISteamGameServerStats_ClearUserAchievement( ulong steamIDUser, string /*const char **/ pchName )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServerStats _ptr is null!" );
 				
-				return Native.ISteamGameServerStats.ClearUserAchievement(_ptr, steamIDUser /*C*/, pchName /*C*/);
+				return Native.ISteamGameServerStats.ClearUserAchievement(_ptr, steamIDUser, pchName);
 			}
 			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamGameServerStats_StoreUserStats( ulong steamIDUser )
 			{
 				if ( _ptr == null ) throw new System.Exception( "ISteamGameServerStats _ptr is null!" );
 				
-				return Native.ISteamGameServerStats.StoreUserStats(_ptr, steamIDUser /*C*/);
+				return Native.ISteamGameServerStats.StoreUserStats(_ptr, steamIDUser);
 			}
 			
 			public virtual void /*void*/ SteamApi_SteamAPI_Init()
@@ -3866,15 +3866,15 @@ namespace SteamNative
 			}
 			public virtual void /*void*/ SteamApi_SteamAPI_RegisterCallback( IntPtr /*void **/ pCallback, int /*int*/ callback )
 			{
-				Native.SteamApi.SteamAPI_RegisterCallback(pCallback /*C*/, callback /*C*/);
+				Native.SteamApi.SteamAPI_RegisterCallback(pCallback, callback);
 			}
 			public virtual void /*void*/ SteamApi_SteamAPI_UnregisterCallback( IntPtr /*void **/ pCallback )
 			{
-				Native.SteamApi.SteamAPI_UnregisterCallback(pCallback /*C*/);
+				Native.SteamApi.SteamAPI_UnregisterCallback(pCallback);
 			}
 			public virtual bool /*bool*/ SteamApi_SteamInternal_GameServer_Init( uint /*uint32*/ unIP, ushort /*uint16*/ usPort, ushort /*uint16*/ usGamePort, ushort /*uint16*/ usQueryPort, int /*int*/ eServerMode, string /*const char **/ pchVersionString )
 			{
-				return Native.SteamApi.SteamInternal_GameServer_Init(unIP /*C*/, usPort /*C*/, usGamePort /*C*/, usQueryPort /*C*/, eServerMode /*C*/, pchVersionString /*C*/);
+				return Native.SteamApi.SteamInternal_GameServer_Init(unIP, usPort, usGamePort, usQueryPort, eServerMode, pchVersionString);
 			}
 			public virtual void /*void*/ SteamApi_SteamAPI_Shutdown()
 			{
@@ -3898,7 +3898,7 @@ namespace SteamNative
 			}
 			public virtual IntPtr /*void **/ SteamApi_SteamInternal_CreateInterface( string /*const char **/ version )
 			{
-				return Native.SteamApi.SteamInternal_CreateInterface(version /*C*/);
+				return Native.SteamApi.SteamInternal_CreateInterface(version);
 			}
 			
 			internal static unsafe class Native

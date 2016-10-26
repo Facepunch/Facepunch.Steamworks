@@ -42,25 +42,25 @@ namespace SteamNative
 		// void
 		public void AddHeader( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, string pchKey /*const char **/, string pchValue /*const char **/ )
 		{
-			_pi.ISteamHTMLSurface_AddHeader( unBrowserHandle.Value /*C*/, pchKey /*C*/, pchValue /*C*/ );
+			_pi.ISteamHTMLSurface_AddHeader( unBrowserHandle.Value, pchKey, pchValue );
 		}
 		
 		// void
 		public void AllowStartRequest( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, bool bAllowed /*bool*/ )
 		{
-			_pi.ISteamHTMLSurface_AllowStartRequest( unBrowserHandle.Value /*C*/, bAllowed /*C*/ );
+			_pi.ISteamHTMLSurface_AllowStartRequest( unBrowserHandle.Value, bAllowed );
 		}
 		
 		// void
 		public void CopyToClipboard( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/ )
 		{
-			_pi.ISteamHTMLSurface_CopyToClipboard( unBrowserHandle.Value /*C*/ );
+			_pi.ISteamHTMLSurface_CopyToClipboard( unBrowserHandle.Value );
 		}
 		
 		// SteamAPICall_t
 		public SteamAPICall_t CreateBrowser( string pchUserAgent /*const char **/, string pchUserCSS /*const char **/ )
 		{
-			return _pi.ISteamHTMLSurface_CreateBrowser( pchUserAgent /*C*/, pchUserCSS /*C*/ );
+			return _pi.ISteamHTMLSurface_CreateBrowser( pchUserAgent, pchUserCSS );
 		}
 		
 		// void
@@ -72,31 +72,31 @@ namespace SteamNative
 		// void
 		public void ExecuteJavascript( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, string pchScript /*const char **/ )
 		{
-			_pi.ISteamHTMLSurface_ExecuteJavascript( unBrowserHandle.Value /*C*/, pchScript /*C*/ );
+			_pi.ISteamHTMLSurface_ExecuteJavascript( unBrowserHandle.Value, pchScript );
 		}
 		
 		// void
 		public void Find( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, string pchSearchStr /*const char **/, bool bCurrentlyInFind /*bool*/, bool bReverse /*bool*/ )
 		{
-			_pi.ISteamHTMLSurface_Find( unBrowserHandle.Value /*C*/, pchSearchStr /*C*/, bCurrentlyInFind /*C*/, bReverse /*C*/ );
+			_pi.ISteamHTMLSurface_Find( unBrowserHandle.Value, pchSearchStr, bCurrentlyInFind, bReverse );
 		}
 		
 		// void
 		public void GetLinkAtPosition( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, int x /*int*/, int y /*int*/ )
 		{
-			_pi.ISteamHTMLSurface_GetLinkAtPosition( unBrowserHandle.Value /*C*/, x /*C*/, y /*C*/ );
+			_pi.ISteamHTMLSurface_GetLinkAtPosition( unBrowserHandle.Value, x, y );
 		}
 		
 		// void
 		public void GoBack( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/ )
 		{
-			_pi.ISteamHTMLSurface_GoBack( unBrowserHandle.Value /*C*/ );
+			_pi.ISteamHTMLSurface_GoBack( unBrowserHandle.Value );
 		}
 		
 		// void
 		public void GoForward( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/ )
 		{
-			_pi.ISteamHTMLSurface_GoForward( unBrowserHandle.Value /*C*/ );
+			_pi.ISteamHTMLSurface_GoForward( unBrowserHandle.Value );
 		}
 		
 		// bool
@@ -108,121 +108,121 @@ namespace SteamNative
 		// void
 		public void JSDialogResponse( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, bool bResult /*bool*/ )
 		{
-			_pi.ISteamHTMLSurface_JSDialogResponse( unBrowserHandle.Value /*C*/, bResult /*C*/ );
+			_pi.ISteamHTMLSurface_JSDialogResponse( unBrowserHandle.Value, bResult );
 		}
 		
 		// void
 		public void KeyChar( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, uint cUnicodeChar /*uint32*/, HTMLKeyModifiers eHTMLKeyModifiers /*ISteamHTMLSurface::EHTMLKeyModifiers*/ )
 		{
-			_pi.ISteamHTMLSurface_KeyChar( unBrowserHandle.Value /*C*/, cUnicodeChar /*C*/, eHTMLKeyModifiers /*C*/ );
+			_pi.ISteamHTMLSurface_KeyChar( unBrowserHandle.Value, cUnicodeChar, eHTMLKeyModifiers );
 		}
 		
 		// void
 		public void KeyDown( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, uint nNativeKeyCode /*uint32*/, HTMLKeyModifiers eHTMLKeyModifiers /*ISteamHTMLSurface::EHTMLKeyModifiers*/ )
 		{
-			_pi.ISteamHTMLSurface_KeyDown( unBrowserHandle.Value /*C*/, nNativeKeyCode /*C*/, eHTMLKeyModifiers /*C*/ );
+			_pi.ISteamHTMLSurface_KeyDown( unBrowserHandle.Value, nNativeKeyCode, eHTMLKeyModifiers );
 		}
 		
 		// void
 		public void KeyUp( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, uint nNativeKeyCode /*uint32*/, HTMLKeyModifiers eHTMLKeyModifiers /*ISteamHTMLSurface::EHTMLKeyModifiers*/ )
 		{
-			_pi.ISteamHTMLSurface_KeyUp( unBrowserHandle.Value /*C*/, nNativeKeyCode /*C*/, eHTMLKeyModifiers /*C*/ );
+			_pi.ISteamHTMLSurface_KeyUp( unBrowserHandle.Value, nNativeKeyCode, eHTMLKeyModifiers );
 		}
 		
 		// void
 		public void LoadURL( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, string pchURL /*const char **/, string pchPostData /*const char **/ )
 		{
-			_pi.ISteamHTMLSurface_LoadURL( unBrowserHandle.Value /*C*/, pchURL /*C*/, pchPostData /*C*/ );
+			_pi.ISteamHTMLSurface_LoadURL( unBrowserHandle.Value, pchURL, pchPostData );
 		}
 		
 		// void
 		public void MouseDoubleClick( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, HTMLMouseButton eMouseButton /*ISteamHTMLSurface::EHTMLMouseButton*/ )
 		{
-			_pi.ISteamHTMLSurface_MouseDoubleClick( unBrowserHandle.Value /*C*/, eMouseButton /*C*/ );
+			_pi.ISteamHTMLSurface_MouseDoubleClick( unBrowserHandle.Value, eMouseButton );
 		}
 		
 		// void
 		public void MouseDown( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, HTMLMouseButton eMouseButton /*ISteamHTMLSurface::EHTMLMouseButton*/ )
 		{
-			_pi.ISteamHTMLSurface_MouseDown( unBrowserHandle.Value /*C*/, eMouseButton /*C*/ );
+			_pi.ISteamHTMLSurface_MouseDown( unBrowserHandle.Value, eMouseButton );
 		}
 		
 		// void
 		public void MouseMove( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, int x /*int*/, int y /*int*/ )
 		{
-			_pi.ISteamHTMLSurface_MouseMove( unBrowserHandle.Value /*C*/, x /*C*/, y /*C*/ );
+			_pi.ISteamHTMLSurface_MouseMove( unBrowserHandle.Value, x, y );
 		}
 		
 		// void
 		public void MouseUp( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, HTMLMouseButton eMouseButton /*ISteamHTMLSurface::EHTMLMouseButton*/ )
 		{
-			_pi.ISteamHTMLSurface_MouseUp( unBrowserHandle.Value /*C*/, eMouseButton /*C*/ );
+			_pi.ISteamHTMLSurface_MouseUp( unBrowserHandle.Value, eMouseButton );
 		}
 		
 		// void
 		public void MouseWheel( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, int nDelta /*int32*/ )
 		{
-			_pi.ISteamHTMLSurface_MouseWheel( unBrowserHandle.Value /*C*/, nDelta /*C*/ );
+			_pi.ISteamHTMLSurface_MouseWheel( unBrowserHandle.Value, nDelta );
 		}
 		
 		// void
 		public void PasteFromClipboard( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/ )
 		{
-			_pi.ISteamHTMLSurface_PasteFromClipboard( unBrowserHandle.Value /*C*/ );
+			_pi.ISteamHTMLSurface_PasteFromClipboard( unBrowserHandle.Value );
 		}
 		
 		// void
 		public void Reload( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/ )
 		{
-			_pi.ISteamHTMLSurface_Reload( unBrowserHandle.Value /*C*/ );
+			_pi.ISteamHTMLSurface_Reload( unBrowserHandle.Value );
 		}
 		
 		// void
 		public void RemoveBrowser( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/ )
 		{
-			_pi.ISteamHTMLSurface_RemoveBrowser( unBrowserHandle.Value /*C*/ );
+			_pi.ISteamHTMLSurface_RemoveBrowser( unBrowserHandle.Value );
 		}
 		
 		// void
 		public void SetBackgroundMode( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, bool bBackgroundMode /*bool*/ )
 		{
-			_pi.ISteamHTMLSurface_SetBackgroundMode( unBrowserHandle.Value /*C*/, bBackgroundMode /*C*/ );
+			_pi.ISteamHTMLSurface_SetBackgroundMode( unBrowserHandle.Value, bBackgroundMode );
 		}
 		
 		// void
 		public void SetCookie( string pchHostname /*const char **/, string pchKey /*const char **/, string pchValue /*const char **/, string pchPath /*const char **/, RTime32 nExpires /*RTime32*/, bool bSecure /*bool*/, bool bHTTPOnly /*bool*/ )
 		{
-			_pi.ISteamHTMLSurface_SetCookie( pchHostname /*C*/, pchKey /*C*/, pchValue /*C*/, pchPath /*C*/, nExpires.Value /*C*/, bSecure /*C*/, bHTTPOnly /*C*/ );
+			_pi.ISteamHTMLSurface_SetCookie( pchHostname, pchKey, pchValue, pchPath, nExpires.Value, bSecure, bHTTPOnly );
 		}
 		
 		// void
 		public void SetHorizontalScroll( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, uint nAbsolutePixelScroll /*uint32*/ )
 		{
-			_pi.ISteamHTMLSurface_SetHorizontalScroll( unBrowserHandle.Value /*C*/, nAbsolutePixelScroll /*C*/ );
+			_pi.ISteamHTMLSurface_SetHorizontalScroll( unBrowserHandle.Value, nAbsolutePixelScroll );
 		}
 		
 		// void
 		public void SetKeyFocus( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, bool bHasKeyFocus /*bool*/ )
 		{
-			_pi.ISteamHTMLSurface_SetKeyFocus( unBrowserHandle.Value /*C*/, bHasKeyFocus /*C*/ );
+			_pi.ISteamHTMLSurface_SetKeyFocus( unBrowserHandle.Value, bHasKeyFocus );
 		}
 		
 		// void
 		public void SetPageScaleFactor( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, float flZoom /*float*/, int nPointX /*int*/, int nPointY /*int*/ )
 		{
-			_pi.ISteamHTMLSurface_SetPageScaleFactor( unBrowserHandle.Value /*C*/, flZoom /*C*/, nPointX /*C*/, nPointY /*C*/ );
+			_pi.ISteamHTMLSurface_SetPageScaleFactor( unBrowserHandle.Value, flZoom, nPointX, nPointY );
 		}
 		
 		// void
 		public void SetSize( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, uint unWidth /*uint32*/, uint unHeight /*uint32*/ )
 		{
-			_pi.ISteamHTMLSurface_SetSize( unBrowserHandle.Value /*C*/, unWidth /*C*/, unHeight /*C*/ );
+			_pi.ISteamHTMLSurface_SetSize( unBrowserHandle.Value, unWidth, unHeight );
 		}
 		
 		// void
 		public void SetVerticalScroll( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, uint nAbsolutePixelScroll /*uint32*/ )
 		{
-			_pi.ISteamHTMLSurface_SetVerticalScroll( unBrowserHandle.Value /*C*/, nAbsolutePixelScroll /*C*/ );
+			_pi.ISteamHTMLSurface_SetVerticalScroll( unBrowserHandle.Value, nAbsolutePixelScroll );
 		}
 		
 		// bool
@@ -234,19 +234,19 @@ namespace SteamNative
 		// void
 		public void StopFind( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/ )
 		{
-			_pi.ISteamHTMLSurface_StopFind( unBrowserHandle.Value /*C*/ );
+			_pi.ISteamHTMLSurface_StopFind( unBrowserHandle.Value );
 		}
 		
 		// void
 		public void StopLoad( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/ )
 		{
-			_pi.ISteamHTMLSurface_StopLoad( unBrowserHandle.Value /*C*/ );
+			_pi.ISteamHTMLSurface_StopLoad( unBrowserHandle.Value );
 		}
 		
 		// void
 		public void ViewSource( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/ )
 		{
-			_pi.ISteamHTMLSurface_ViewSource( unBrowserHandle.Value /*C*/ );
+			_pi.ISteamHTMLSurface_ViewSource( unBrowserHandle.Value );
 		}
 		
 	}
