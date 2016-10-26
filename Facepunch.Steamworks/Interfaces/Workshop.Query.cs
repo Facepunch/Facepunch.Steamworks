@@ -11,7 +11,7 @@ namespace Facepunch.Steamworks
         {
             internal const int SteamResponseSize = 50;
 
-            internal ulong Handle;
+            internal SteamNative.UGCQueryHandle_t Handle;
             internal QueryCompleted Callback;
 
             /// <summary>
@@ -88,12 +88,14 @@ namespace Facepunch.Steamworks
                 else if ( UserId.HasValue )
                 {
                     uint accountId = (uint)( UserId.Value & 0xFFFFFFFFul );
-                    Handle = workshop.ugc.CreateQueryUserUGCRequest( accountId, (SteamNative.UserUGCList)( uint)UserQueryType, (SteamNative.UGCMatchingUGCType)( uint)QueryType, SteamNative.UserUGCListSortOrder.LastUpdatedDesc, UploaderAppId, AppId, (uint)_resultPage + 1 );
+                    Handle = workshop.ugc.CreateQueryUserUGCRequest( accountId, (SteamNative.UserUGCList)( int)UserQueryType, (SteamNative.UGCMatchingUGCType)( int)QueryType, SteamNative.UserUGCListSortOrder.LastUpdatedDesc, UploaderAppId, AppId, (uint)_resultPage + 1 );
                 }
                 else
                 {
-                    Handle = workshop.ugc.CreateQueryAllUGCRequest( (SteamNative.UGCQuery)(uint)Order, (SteamNative.UGCMatchingUGCType)(uint)QueryType, UploaderAppId, AppId, (uint)_resultPage + 1 );
+                    Handle = workshop.ugc.CreateQueryAllUGCRequest( (SteamNative.UGCQuery)(int)Order, (SteamNative.UGCMatchingUGCType)(int)QueryType, UploaderAppId, AppId, (uint)_resultPage + 1 );
                 }
+
+                Console.WriteLine( "Handle: " + Handle.Value );
 
                 if ( !string.IsNullOrEmpty( SearchText ) )
                     workshop.ugc.SetSearchText( Handle, SearchText );
@@ -110,6 +112,9 @@ namespace Facepunch.Steamworks
                 Callback = new QueryCompleted();
                 Callback.Handle = workshop.ugc.SendQueryUGCRequest( Handle );
                 Callback.OnResult = OnResult;
+
+                Console.WriteLine( "Callback.Handle: " + Callback.Handle.Value );
+
                 workshop.steamworks.AddCallResult( Callback );
             }
 
