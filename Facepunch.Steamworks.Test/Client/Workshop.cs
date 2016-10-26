@@ -373,21 +373,44 @@ namespace Facepunch.Steamworks.Test
                 item.Title = "Facepunch.Steamworks Unit test";
                 item.Tags.Add( "Apple" );
                 item.Tags.Add( "Banana" );
-                item.Publish();
 
-                while ( item.Publishing )
+                try
                 {
-                    client.Update();
-                    Thread.Sleep( 100 );
+                    item.Publish();
+
+                    while ( item.Publishing )
+                    {
+                        client.Update();
+                        Thread.Sleep( 100 );
+                    }
+
+                    Assert.IsFalse( item.Publishing );
+                    Assert.AreNotEqual( 0, item.Id );
+                    Assert.IsNull( item.Error );
+
+                    Console.WriteLine( "item.Id: {0}", item.Id );
+
+                    using ( var Query = client.Workshop.CreateQuery() )
+                    {
+                        Query.FileId.Add( item.Id );
+                        Query.Run();
+
+                        Query.Block();
+
+                        var itemInfo = Query.Items[0];
+
+                        Assert.AreEqual( itemInfo.Id, item.Id );
+                        Assert.AreEqual( itemInfo.OwnerId, client.SteamId );
+                        Assert.AreEqual( itemInfo.Title, item.Title );
+                        Assert.IsTrue( itemInfo.Tags.Contains( "Apple" ), "Missing Tag" );
+                        Assert.IsTrue( itemInfo.Tags.Contains( "Banana" ), "Missing Tag" );
+                    }
                 }
-
-                Assert.IsFalse( item.Publishing );
-                Assert.AreNotEqual( 0, item.Id );
-                Assert.IsNull( item.Error );
-
-                Console.WriteLine( "item.Id: {0}", item.Id );
-
-                item.Delete();
+                finally
+                {
+                    Console.WriteLine( "Deleting: {0}", item.Id );
+                    item.Delete();
+                }
             }
         }
 
