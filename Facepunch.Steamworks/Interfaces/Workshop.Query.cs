@@ -120,13 +120,8 @@ namespace Facepunch.Steamworks
                 {
                     if ( _resultSkip > 0 )
                     {
-                        Console.WriteLine( "{0} Skipping result", _resultPage );
                         _resultSkip--;
                         continue;
-                    }
-                    else
-                    {
-                        Console.WriteLine( "{0} Adding result {1}", _resultPage, _results.Count );
                     }
 
                     SteamNative.SteamUGCDetails_t details = new SteamNative.SteamUGCDetails_t();
