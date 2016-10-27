@@ -1,0 +1,556 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Facepunch.Steamworks</name>
+    </assembly>
+    <members>
+        <member name="P:Facepunch.Steamworks.BaseSteamworks.AppId">
+            <summary>
+            Current running program's AppId
+            </summary>
+        </member>
+        <member name="F:Facepunch.Steamworks.BaseSteamworks.OnMessage">
+            <summary>
+            Called with a message from Steam
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.BaseSteamworks.AddCallback``2(System.Action{``0},System.Int32)">
+            <summary>
+            Global callback type
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.BaseSteamworks.AddCallResult(Facepunch.Steamworks.Interop.CallResult)">
+            <summary>
+            Call results are results to specific actions
+            </summary>
+        </member>
+        <member name="T:Facepunch.Steamworks.Inventory.Item">
+            <summary>
+            An item in your inventory.
+            </summary>
+        </member>
+        <member name="F:Facepunch.Steamworks.Inventory.Item.Definition">
+            <summary>
+            Careful, this might not be available. Especially on a game server.
+            </summary>
+        </member>
+        <member name="F:Facepunch.Steamworks.Inventory.OnUpdate">
+            <summary>
+            Called when the local client's items are first retrieved, and when they change.
+            Obviously not called on the server.
+            </summary>
+        </member>
+        <member name="F:Facepunch.Steamworks.Inventory.Items">
+            <summary>
+            A list of items owned by this user. You should call Refresh() before trying to access this, 
+            and then wait until it's non null or listen to OnUpdate to find out immediately when it's populated.
+            </summary>
+        </member>
+        <member name="F:Facepunch.Steamworks.Inventory.SerializedItems">
+            <summary>
+            You can send this data to a server, or another player who can then deserialize it
+            and get a verified list of items.
+            </summary>
+        </member>
+        <member name="F:Facepunch.Steamworks.Inventory.SerializedExpireTime">
+            <summary>
+            Serialized data exprires after an hour. This is the time the value in SerializedItems will expire.
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.Inventory.PlaytimeHeartbeat">
+            <summary>
+            Call this at least every two minutes, every frame doesn't hurt.
+            You should call it when you consider it active play time.
+            IE - your player is alive, and playing.
+            Don't stress on it too much tho cuz it's super hijackable anyway.
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.Inventory.Refresh">
+            <summary>
+            Call this to retrieve the items.
+            Note that if this has already been called it won't
+            trigger a call to OnUpdate unless the items have changed
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.Inventory.CreateDefinition(System.Int32)">
+            <summary>
+            Some definitions aren't sent to the client, and all aren't available on the server.
+            Manually getting a Definition here lets you call functions on those definitions.
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.Inventory.Update">
+            <summary>
+            Called every frame
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.Inventory.UpdateLocalRequest">
+            <summary>
+            If we have a local player request process it.
+            </summary>
+        </member>
+        <member name="F:Facepunch.Steamworks.Inventory.Definitions">
+            <summary>
+            A list of items defined for this app. 
+            This should be immediately populated and available.
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.Inventory.PriceCategoryToFloat(System.String)">
+            <summary>
+            Utility, given a "1;VLV250" string, convert it to a 2.5
+            </summary>
+        </member>
+        <member name="T:Facepunch.Steamworks.Inventory.Definition">
+            <summary>
+            An item definition. This describes an item in your Steam inventory, but is
+            not unique to that item. For example, this might be a tshirt, but you might be able to own
+            multiple tshirts.
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.Inventory.Definition.TriggerItemDrop">
+            <summary>
+            Trigger an item drop. Call this when it's a good time to award
+            an item drop to a player. This won't automatically result in giving
+            an item to a player. Just call it every minute or so, or on launch.
+            ItemDefinition is usually a generator
+            </summary>
+        </member>
+        <member name="F:Facepunch.Steamworks.Networking.SendType.Unreliable">
+            <summary>
+            Basic UDP send. Packets can't be bigger than 1200 bytes (your typical MTU size). Can be lost, or arrive out of order (rare).
+            The sending API does have some knowledge of the underlying connection, so if there is no NAT-traversal accomplished or
+            there is a recognized adjustment happening on the connection, the packet will be batched until the connection is open again.
+            </summary>
+        </member>
+        <member name="F:Facepunch.Steamworks.Networking.SendType.UnreliableNoDelay">
+            <summary>
+            As above, but if the underlying p2p connection isn't yet established the packet will just be thrown away. Using this on the first
+            packet sent to a remote host almost guarantees the packet will be dropped.
+            This is only really useful for kinds of data that should never buffer up, i.e. voice payload packets
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:Facepunch.Steamworks.Networking.SendType.Reliable" -->
+        <member name="F:Facepunch.Steamworks.Networking.SendType.ReliableWithBuffering">
+            <summary>
+            As above, but applies the Nagle algorithm to the send - sends will accumulate
+            until the current MTU size (typically ~1200 bytes, but can change) or ~200ms has passed (Nagle algorithm).
+            Useful if you want to send a set of smaller messages but have the coalesced into a single packet
+            Since the reliable stream is all ordered, you can do several small message sends with k_EP2PSendReliableWithBuffering and then
+            do a normal k_EP2PSendReliable to force all the buffered data to be sent.
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Client.Username">
+            <summary>
+            Current user's Username
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Client.SteamId">
+            <summary>
+            Current user's SteamId
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Client.BetaName">
+            <summary>
+            Current Beta name, if ser
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.Client.Update">
+            <summary>
+            Should be called at least once every frame
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.ServerList.History">
+            <summary>
+            History filters don't seem to work, so we don't bother.
+            You should apply them post process'dly
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.ServerList.Favourites">
+            <summary>
+            Favourite filters don't seem to work, so we don't bother.
+            You should apply them post process'dly
+            </summary>
+        </member>
+        <member name="F:Facepunch.Steamworks.ServerList.Request.Responded">
+            <summary>
+            A list of servers that responded. If you're only interested in servers that responded since you
+            last updated, then simply clear this list.
+            </summary>
+        </member>
+        <member name="F:Facepunch.Steamworks.ServerList.Request.Unresponsive">
+            <summary>
+            A list of servers that were in the master list but didn't respond. 
+            </summary>
+        </member>
+        <member name="F:Facepunch.Steamworks.ServerList.Request.Finished">
+            <summary>
+            True when we have finished
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.ServerList.Request.Dispose">
+            <summary>
+            Disposing will end the query
+            </summary>
+        </member>
+        <member name="F:Facepunch.Steamworks.ServerList.Server.OnReceivedRules">
+            <summary>
+            Callback when rules are receieved.
+            The bool is true if server responded properly.
+            </summary>
+        </member>
+        <member name="F:Facepunch.Steamworks.ServerList.Server.Rules">
+            <summary>
+            List of server rules. Use HasRules to see if this is safe to access.
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.ServerList.Server.HasRules">
+            <summary>
+            Returns true if this server has rules
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.ServerList.Server.FetchRules">
+            <summary>
+            Populates Rules for this server
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.Auth.Ticket.Cancel">
+            <summary>
+            Cancels a ticket. 
+            You should cancel your ticket when you close the game or leave a server.
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.Auth.GetAuthSessionTicket">
+            <summary>
+            Creates an auth ticket. 
+            Which you can send to a server to authenticate that you are who you say you are.
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.App.BuildId">
+            <summary>
+            Returns the current BuildId of the game. 
+            This is pretty useless, as it isn't guarenteed to return
+            the build id you're playing, or the latest build id.
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.SteamFriend.Id">
+            <summary>
+            Steam Id
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.SteamFriend.IsBlocked">
+            <summary>
+             Return true if blocked
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.SteamFriend.IsFriend">
+            <summary>
+             Return true if is a friend. Returns false if blocked, request etc.
+            </summary>
+        </member>
+        <member name="F:Facepunch.Steamworks.SteamFriend.Name">
+            <summary>
+            Their current display name
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.SteamFriend.IsOnline">
+            <summary>
+            Returns true if this friend is online
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.SteamFriend.IsPlayingThisGame">
+            <summary>
+            Returns true if this friend is online and playing this game
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.SteamFriend.IsPlaying">
+            <summary>
+            Returns true if this friend is online and playing this game
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.SteamFriend.CurrentAppId">
+            <summary>
+            The AppId this guy is playing
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Friends.All">
+            <summary>
+            Returns all friends, even blocked, ignored, friend requests etc
+            </summary>
+        </member>
+        <member name="F:Facepunch.Steamworks.Friends.AvatarSize.Small">
+            <summary>
+            Should be 32x32 - but make sure to check!
+            </summary>
+        </member>
+        <member name="F:Facepunch.Steamworks.Friends.AvatarSize.Medium">
+            <summary>
+            Should be 64x64 - but make sure to check!
+            </summary>
+        </member>
+        <member name="F:Facepunch.Steamworks.Friends.AvatarSize.Large">
+            <summary>
+            Should be 184x184 - but make sure to check!
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Image.IsError">
+            <summary>
+            Return true if this image couldn't be loaded for some reason
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Voice.OptimalSampleRate">
+            <summary>
+            Returns the optimal sample rate for voice - according to Steam
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Voice.WantsRecording">
+            <summary>
+            If set to true we are listening to the mic. 
+            You should usually toggle this with the press of a key for push to talk.
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Voice.LastVoiceRecordTime">
+            <summary>
+            The last time voice was detected, recorded
+            </summary>
+        </member>
+        <member name="F:Facepunch.Steamworks.Voice.DesiredSampleRate">
+            <summary>
+            If set we will capture the audio at this rate. If unset (set to 0) will capture at OptimalSampleRate
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Config.UseThisCall">
+            <summary>
+            Some platforms allow/need CallingConvention.ThisCall. If you're crashing with argument null
+            errors on certain platforms, try flipping this to true.
+            
+            I owe this logic to Riley Labrecque's hard work on Steamworks.net - I don't have the knowledge
+            or patience to find this shit on my own, so massive thanks to him. And also massive thanks to him
+            for releasing his shit open source under the MIT license so we can all learn and iterate.
+            
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Config.PackSmall">
+            <summary>
+            Set this to true on Linux and OSX
+            </summary>
+        </member>
+        <member name="F:Facepunch.Steamworks.Config.LibraryName">
+            <summary>
+            The Native dll to look for. This is the steam_api.dll renamed.
+            We need to rename the dll anyway because we can't dynamically choose the library
+            ie, we can't load steam_api64.dll on windows 64 platforms. So instead we choose to
+            keep the library name the same.
+            
+            This is exposed only for the benefit of implementation - and cannot be changed at runtime.
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.Workshop.ItemHandle(System.UInt64)">
+            <summary>
+            Returns a class representing this ItemId. We don't query
+            item name, description etc. We don't verify that item exists.
+            We don't verify that this item belongs to your app.
+            </summary>
+        </member>
+        <member name="F:Facepunch.Steamworks.Workshop.QueryType.Items">
+            <summary>
+            Both MicrotransactionItems and subscriptionItems
+            </summary>
+        </member>
+        <member name="F:Facepunch.Steamworks.Workshop.QueryType.MicrotransactionItems">
+            <summary>
+            Workshop item that is meant to be voted on for the purpose of selling in-game
+            </summary>
+        </member>
+        <member name="F:Facepunch.Steamworks.Workshop.QueryType.subscriptionItems">
+            <summary>
+            normal Workshop item that can be subscribed to
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Workshop.Item.Url">
+            <summary>
+            Return a URL to view this item online
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Workshop.Query.AppId">
+            <summary>
+            The AppId you're querying. This defaults to this appid.
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Workshop.Query.UploaderAppId">
+            <summary>
+            The AppId of the app used to upload the item. This defaults to 0
+            which means all/any. 
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Workshop.Query.Page">
+            <summary>
+            Page starts at 1 !!
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Workshop.Query.RequireTags">
+            <summary>
+            Only return items with these tags
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Workshop.Query.RequireAllTags">
+            <summary>
+            If true, return items that have all RequireTags
+            If false, return items that have any tags in RequireTags
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Workshop.Query.ExcludeTags">
+            <summary>
+            Don't return any items with this tag
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Workshop.Query.FileId">
+            <summary>
+            If you're querying for a particular file or files, add them to this.
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.Workshop.Query.Block">
+            <summary>
+            Don't call this in production!
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Server.Username">
+            <summary>
+            Current user's Username
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Server.SteamId">
+            <summary>
+            Current user's SteamId
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.Server.#ctor(System.UInt32,System.UInt32,System.UInt16,System.Boolean,System.String)">
+            <summary>
+            Initialize a server - query port will use the same as GamePort (MASTERSERVERUPDATERPORT_USEGAMESOCKETSHARE)
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.Server.Update">
+            <summary>
+            Should be called at least once every frame
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Server.MaxPlayers">
+            <summary>
+            Gets or sets the current MaxPlayers. 
+            This doesn't enforce any kind of limit, it just updates the master server.
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Server.BotCount">
+            <summary>
+            Gets or sets the current BotCount. 
+            This doesn't enforce any kind of limit, it just updates the master server.
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Server.MapName">
+            <summary>
+            Gets or sets the current Map Name. 
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Server.ModDir">
+            <summary>
+            Gets or sets the current ModDir
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Server.Product">
+            <summary>
+            Gets or sets the current Product
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Server.GameDescription">
+            <summary>
+            Gets or sets the current Product
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Server.ServerName">
+            <summary>
+            Gets or sets the current ServerName
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Server.Passworded">
+            <summary>
+            Gets or sets the current Passworded
+            </summary>
+        </member>
+        <member name="P:Facepunch.Steamworks.Server.GameTags">
+            <summary>
+            Gets or sets the current GameTags
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.Server.LogOnAnonymous">
+            <summary>
+            Log onto Steam anonymously
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.Server.SetKey(System.String,System.String)">
+            <summary>
+            Sets a Key Value
+            </summary>
+        </member>
+        <member name="F:Facepunch.Steamworks.ServerAuth.OnAuthChange">
+            <summary>
+            Steamid, Ownerid, Status
+            </summary>
+        </member>
+        <member name="T:Facepunch.Steamworks.ServerAuth.Status">
+            <summary>
+            Steam authetication statuses
+            </summary>
+        </member>
+        <member name="F:Facepunch.Steamworks.ServerAuth.Status.OK">
+            <summary>
+            Steam has verified the user is online, the ticket is valid and ticket has not been reused.
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.ServerAuth.StartSession(System.Byte[],System.UInt64)">
+            <summary>
+            Start authorizing a ticket. This user isn't authorized yet. Wait for a call to OnAuthChange.
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.ServerAuth.EndSession(System.UInt64)">
+            <summary>
+            Forget this guy. They're no longer in the game.
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.ServerQuery.GetOutgoingPacket(Facepunch.Steamworks.ServerQuery.Packet@)">
+            <summary>
+            If true, Steam wants to send a packet. You should respond by sending
+            this packet in an unconnected way to the returned Address and Port
+            </summary>
+            <param name="packet"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Facepunch.Steamworks.ServerQuery.Handle(System.Byte[],System.Int32,System.UInt32,System.UInt16)">
+            <summary>
+            We have received a server query on our game port. Pass it to Steam to handle.
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.ServerStats.Refresh(System.UInt64)">
+            <summary>
+            Retrieve the stats for this user
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.ServerStats.Set(System.UInt64,System.String,System.Int32)">
+            <summary>
+            Set the named statistic for this user
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.ServerStats.Set(System.UInt64,System.String,System.Single)">
+            <summary>
+            Set the named statistic for this user
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.ServerStats.GetInt(System.UInt64,System.String,System.Int32)">
+            <summary>
+            Set the named stat for this user
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.ServerStats.GetFloat(System.UInt64,System.String,System.Single)">
+            <summary>
+            Set the named stat for this user
+            </summary>
+        </member>
+    </members>
+</doc>
