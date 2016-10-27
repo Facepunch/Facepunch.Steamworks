@@ -20,7 +20,7 @@ namespace Facepunch.Steamworks.Interop.VTable.This
         {
             var ptr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback ) ) );
 
-            Callback.Result da = ( _, p ) => {  onRunCallback( _, p ); Console.WriteLine( "Callback.Result: {0}", _.ToInt64() ); };
+            Callback.Result da = ( _, p ) => {  onRunCallback( _, p ); };
             Callback.GetSize dc = ( _ ) => { return size; };
 
             cb.AddHandle( GCHandle.Alloc( da ) );
