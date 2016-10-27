@@ -109,7 +109,7 @@ namespace Facepunch.Steamworks
             /// <summary>
             /// normal Workshop item that can be subscribed to
             /// </summary>
-            subscriptionItems = 2,
+            SubscriptionItems = 2,
             Collections = 3,
             Artwork = 4,
             Videos = 5,
