@@ -100,10 +100,7 @@ namespace Facepunch.Steamworks
         /// </summary>
         public Definition CreateDefinition( int id )
         {
-            return new Definition( id )
-            {
-                inventory = inventory
-            };
+            return new Definition( inventory, id );
         }
 
         internal void FetchItemDefinitions()
@@ -118,9 +115,7 @@ namespace Facepunch.Steamworks
 
             Definitions = ids.Select( x =>
             {
-                var d = CreateDefinition( x );
-                d.SetupCommonProperties();
-                return d;
+                return CreateDefinition( x );
 
             } ).ToArray();
         }
@@ -130,8 +125,12 @@ namespace Facepunch.Steamworks
         /// </summary>
         internal void Update()
         {
-            if ( Definitions == null && !IsServer )
+            if ( Definitions == null )
+            {
                 FetchItemDefinitions();
+
+                inventory.LoadItemDefinitions();
+            }
 
             UpdateLocalRequest();
         }
@@ -197,11 +196,15 @@ namespace Facepunch.Steamworks
             return int.Parse( price ) / 100.0f;
         }
 
-        private Definition FindDefinition( int def )
+        /// <summary>
+        /// You really need me to explain what this does?
+        /// Use your brains.
+        /// </summary>
+        public Definition FindDefinition( int DefinitionId )
         {
             if ( Definitions == null ) return null;
 
-            return Definitions.FirstOrDefault( x => x.Id == def );
+            return Definitions.FirstOrDefault( x => x.Id == DefinitionId );
         }
 
         public unsafe Result Deserialize( byte[] data, int dataLength = -1 )

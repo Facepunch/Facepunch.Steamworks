@@ -17,16 +17,37 @@ namespace Facepunch.Steamworks
         {
             internal SteamNative.SteamInventory inventory;
 
-            public int Id;
+            public int Id { get; private set; }
             public string Name;
             public string Description;
 
             public DateTime Created;
             public DateTime Modified;
 
-            internal Definition( int id )
+            private Dictionary<string, string> customProperties;
+
+            internal Definition( SteamNative.SteamInventory i, int id )
             {
+                inventory = i;
                 Id = id;
+
+                SetupCommonProperties();
+            }
+
+            /// <summary>
+            /// If you're manually occupying the Definition (because maybe you're on a server
+            /// and want to hack around the fact that definitions aren't presented to you), 
+            /// you can use this to set propertis.
+            /// </summary>
+            public void SetProperty( string name, string value )
+            {
+                if ( customProperties == null )
+                    customProperties = new Dictionary<string, string>();
+
+                if ( !customProperties.ContainsKey( name ) )
+                    customProperties.Add( name, value );
+                else
+                    customProperties[name] = value;
             }
 
             public T GetProperty<T>( string name )
@@ -49,6 +70,9 @@ namespace Facepunch.Steamworks
             public string GetStringProperty( string name )
             {
                 string val = string.Empty;
+
+                if ( customProperties != null && customProperties.ContainsKey( name ) )
+                    return customProperties[name];
 
                 if ( !inventory.GetItemDefinitionProperty( Id, name, out val ) )
                     return string.Empty;
