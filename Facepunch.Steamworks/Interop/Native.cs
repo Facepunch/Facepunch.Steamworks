@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SteamNative;
 
 namespace Facepunch.Steamworks.Interop
 {
@@ -26,6 +27,9 @@ namespace Facepunch.Steamworks.Interop
 
         private bool isServer;
 
+        private HSteamUser hUser;
+        private HSteamPipe hPipe;
+
         internal bool InitClient()
         {
             isServer = false;
@@ -35,12 +39,12 @@ namespace Facepunch.Steamworks.Interop
             if ( !api.SteamAPI_Init() )
                 return false;
 
-            var huser = api.SteamAPI_GetHSteamUser();
-            var hpipe = api.SteamAPI_GetHSteamPipe();
-            if ( hpipe == 0 )
+            hUser = api.SteamAPI_GetHSteamUser();
+            hPipe = api.SteamAPI_GetHSteamPipe();
+            if ( hPipe == 0 )
                 return false;
 
-            FillInterfaces( huser, hpipe );
+            FillInterfaces( hUser, hPipe );
 
             // Ensure that the user has logged into Steam. This will always return true if the game is launched
             // from Steam, but if Steam is at the login prompt when you run your game it will return false.
@@ -61,12 +65,12 @@ namespace Facepunch.Steamworks.Interop
                 return false;
             }
 
-            var user = api.SteamGameServer_GetHSteamUser();
-            var pipe = api.SteamGameServer_GetHSteamPipe();
-            if ( pipe == 0 )
+            hUser = api.SteamGameServer_GetHSteamUser();
+            hPipe = api.SteamGameServer_GetHSteamPipe();
+            if ( hPipe == 0 )
                 return false;
 
-            FillInterfaces( pipe, user );
+            FillInterfaces( hPipe, hUser );
 
             if ( !gameServer.IsValid )
             {
@@ -107,6 +111,21 @@ namespace Facepunch.Steamworks.Interop
         {
             if ( client != null )
             {
+                if ( hPipe != 0 )
+                {
+                    if ( hUser != 0 )
+                    {
+                        client.ReleaseUser( hPipe, hUser );
+                        hUser = 0;
+                    }
+
+                    client.BReleaseSteamPipe( hPipe );
+                    hPipe = 0;
+                }
+
+                if ( !client.BShutdownIfAllPipesClosed() )
+                    Console.WriteLine( "BShutdownIfAllPipesClosed returned false" );
+
                 client.Dispose();
                 client = null;
             }
