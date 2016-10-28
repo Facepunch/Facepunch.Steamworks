@@ -58,7 +58,7 @@ namespace Facepunch.Steamworks
             server.AddCallback<ValidateAuthTicketResponse>( OnAuthTicketValidate, ValidateAuthTicketResponse.CallbackId );
         }
 
-        void OnAuthTicketValidate( ValidateAuthTicketResponse data )
+        void OnAuthTicketValidate( ValidateAuthTicketResponse data, bool b )
         {
             if ( OnAuthChange != null )
                 OnAuthChange( data.SteamID, data.OwnerSteamID, (Status) data.AuthResponse );

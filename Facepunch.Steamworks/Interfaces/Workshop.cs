@@ -37,13 +37,13 @@ namespace Facepunch.Steamworks
             OnItemInstalled = null;
         }
 
-        private void onItemInstalled( ItemInstalled obj )
+        private void onItemInstalled( ItemInstalled obj, bool failed )
         {
             if ( OnItemInstalled != null )
                 OnItemInstalled( obj.FileId );
         }
 
-        private void onDownloadResult( DownloadResult obj )
+        private void onDownloadResult( DownloadResult obj, bool failed )
         {
             if ( OnFileDownloaded != null )
                 OnFileDownloaded( obj.FileId, obj.Result );

@@ -47,7 +47,7 @@ namespace Facepunch.Steamworks
             }
         }
 
-        private void onP2PConnectionRequest( P2PSessionRequest o )
+        private void onP2PConnectionRequest( P2PSessionRequest o, bool b )
         {
             if ( OnIncomingConnection != null )
             {
@@ -83,7 +83,7 @@ namespace Facepunch.Steamworks
             Max = 5
         };
 
-        private void onP2PConnectionFailed( P2PSessionConnectFail o )
+        private void onP2PConnectionFailed( P2PSessionConnectFail o, bool b )
         {
             if ( OnConnectionFailed  != null )
             {

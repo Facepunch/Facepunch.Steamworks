@@ -81,13 +81,13 @@ namespace Facepunch.Steamworks
         /// <summary>
         /// Global callback type
         /// </summary>
-        internal void AddCallback<T, TSmall>( Action<T> Callback, int id )
+        internal void AddCallback<T, TSmall>( Action<T, bool> Callback, int id ) where T : new()
         {
             var callback = new Callback<T, TSmall>( native.api, IsGameServer, id, Callback );
             Disposables.Add( callback );
         }
 
-        internal void AddCallback<T>( Action<T> Callback, int id )
+        internal void AddCallback<T>( Action<T, bool> Callback, int id ) where T : new()
         {
             AddCallback<T, T>( Callback, id );
         }

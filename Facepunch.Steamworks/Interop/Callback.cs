@@ -48,20 +48,20 @@ namespace Facepunch.Steamworks.Interop
         }
     }
 
-    internal partial class Callback<T, TSmall> : Callback
+    internal partial class Callback<T, TSmall> : Callback where T : new()
     {
         private SteamNative.SteamApi api;
 
         public int CallbackId = 0;
         public bool GameServer = false;
-        public Action<T> Function;
+        public Action<T, bool> Function;
 
         private IntPtr vTablePtr = IntPtr.Zero;
         private GCHandle callbackPin;
 
         private readonly int m_size = Marshal.SizeOf(typeof(T));
 
-        public Callback( SteamNative.SteamApi api, bool gameserver, int callbackid, Action<T> func )
+        public Callback( SteamNative.SteamApi api, bool gameserver, int callbackid, Action<T, bool> func )
         {
             this.api = api;
             GameServer = gameserver;
@@ -90,16 +90,22 @@ namespace Facepunch.Steamworks.Interop
             base.Dispose();
         }
 
-        private void OnRunCallback( IntPtr thisObject, IntPtr ptr )
+        private void OnRunCallback( IntPtr thisObject, IntPtr ptr, bool failure )
         {
             if ( callbackPin == null ) throw new System.Exception( "Callback wasn't pinned!" );
             if ( vTablePtr == IntPtr.Zero ) throw new System.Exception( "vTablePtr wasn't pinned!" );
-            if ( thisObject != IntPtr.Zero && thisObject != callbackPin.AddrOfPinnedObject() ) throw new System.Exception( "This wasn't valid!" );
+            if ( thisObject != IntPtr.Zero && thisObject != callbackPin.AddrOfPinnedObject() ) throw new System.Exception( "This wasn't valid! ("+ thisObject.ToInt64() + ") ( "+ callbackPin.AddrOfPinnedObject().ToInt64() + " )" );
 
             if ( SteamNative.Platform.PackSmall && typeof(T) != typeof( TSmall ) ) throw new System.Exception( "Callback should use PackSmall" );
 
+            if ( failure )
+            {
+                Function( new T(), failure );
+                return;
+            }
+
             T data = (T) Marshal.PtrToStructure( ptr, typeof(T) );
-            Function( data );
+            Function( data, failure );
         }
 
 
