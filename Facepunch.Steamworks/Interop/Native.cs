@@ -31,12 +31,17 @@ namespace Facepunch.Steamworks.Interop
             if ( !api.SteamAPI_Init() )
                 return false;
 
-            var user = api.SteamAPI_GetHSteamUser();
-            var pipe = api.SteamAPI_GetHSteamPipe();
-            if ( pipe == 0 )
+            var huser = api.SteamAPI_GetHSteamUser();
+            var hpipe = api.SteamAPI_GetHSteamPipe();
+            if ( hpipe == 0 )
                 return false;
 
-            FillInterfaces( user, pipe );
+            FillInterfaces( huser, hpipe );
+
+            // Ensure that the user has logged into Steam. This will always return true if the game is launched
+            // from Steam, but if Steam is at the login prompt when you run your game it will return false.
+            if ( !user.BLoggedOn() )
+                return false;
 
             return true;
         }
