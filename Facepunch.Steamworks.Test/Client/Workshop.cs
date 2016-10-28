@@ -320,43 +320,28 @@ namespace Facepunch.Steamworks.Test
             {
                 Assert.IsTrue( client.IsValid );
 
-                using ( var Query = client.Workshop.CreateQuery() )
+                var item = client.Workshop.GetItem( 661319648);
+
+                if ( !item.Installed )
                 {
-                    Query.FileId.Add( 661319648 );
-                    Query.Run();
+                    item.Download();
 
-                    Assert.IsTrue( Query.IsRunning );
-
-                    Query.Block();
-
-                    Assert.IsFalse( Query.IsRunning );
-                    Assert.AreEqual( Query.TotalResults, 1 );
-                    Assert.AreEqual( Query.Items.Length, 1 );
-
-                    var item = Query.Items[0];
-
-                    if ( !item.Installed )
+                    while ( item.Downloading )
                     {
-                        item.Download();
-
-                        while ( item.Downloading )
-                        {
-                            Thread.Sleep( 500 );
-                            client.Update();
-                            Console.WriteLine( "Download Progress: {0}", item.DownloadProgress );
-                        }
+                        Thread.Sleep( 500 );
+                        client.Update();
+                        Console.WriteLine( "Download Progress: {0}", item.DownloadProgress );
                     }
-
-                    Assert.IsNotNull( item.Directory );
-                    Assert.AreNotEqual( 0, item.Size );
-
-                    Console.WriteLine( "item.Installed:         {0}", item.Installed );
-                    Console.WriteLine( "item.Downloading:       {0}", item.Downloading );
-                    Console.WriteLine( "item.DownloadPending:   {0}", item.DownloadPending );
-                    Console.WriteLine( "item.Directory:         {0}", item.Directory );
-                    Console.WriteLine( "item.Size:              {0}mb", (item.Size / 1024 / 1024) );
-
                 }
+
+                Assert.IsNotNull( item.Directory );
+                Assert.AreNotEqual( 0, item.Size );
+
+                Console.WriteLine( "item.Installed:         {0}", item.Installed );
+                Console.WriteLine( "item.Downloading:       {0}", item.Downloading );
+                Console.WriteLine( "item.DownloadPending:   {0}", item.DownloadPending );
+                Console.WriteLine( "item.Directory:         {0}", item.Directory );
+                Console.WriteLine( "item.Size:              {0}mb", (item.Size / 1024 / 1024) );
             }
         }
 
@@ -386,7 +371,7 @@ namespace Facepunch.Steamworks.Test
 
                     Assert.IsFalse( item.Publishing );
                     Assert.AreNotEqual( 0, item.Id );
-                    Assert.IsNull( item.Error );
+                    Assert.IsNull( item.Error, item.Error );
 
                     Console.WriteLine( "item.Id: {0}", item.Id );
 
