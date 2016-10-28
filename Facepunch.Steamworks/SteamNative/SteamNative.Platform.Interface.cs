@@ -663,6 +663,7 @@ namespace SteamNative
 			void /*void*/ SteamApi_SteamAPI_UnregisterCallback( IntPtr /*void **/ pCallback );
 			bool /*bool*/ SteamApi_SteamInternal_GameServer_Init( uint /*uint32*/ unIP, ushort /*uint16*/ usPort, ushort /*uint16*/ usGamePort, ushort /*uint16*/ usQueryPort, int /*int*/ eServerMode, string /*const char **/ pchVersionString );
 			void /*void*/ SteamApi_SteamAPI_Shutdown();
+			void /*void*/ SteamApi_SteamGameServer_Shutdown();
 			HSteamUser /*(HSteamUser)*/ SteamApi_SteamAPI_GetHSteamUser();
 			HSteamPipe /*(HSteamPipe)*/ SteamApi_SteamAPI_GetHSteamPipe();
 			HSteamUser /*(HSteamUser)*/ SteamApi_SteamGameServer_GetHSteamUser();

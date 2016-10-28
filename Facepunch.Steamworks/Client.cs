@@ -91,8 +91,9 @@ namespace Facepunch.Steamworks
             native.api.SteamAPI_RunCallbacks();
 
             Voice.Update();
-
             base.Update();
+
+            native.api.SteamAPI_RunCallbacks();
         }
 
         public override void Dispose()
@@ -105,6 +106,5 @@ namespace Facepunch.Steamworks
 
             base.Dispose();
         }
-
     }
 }

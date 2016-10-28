@@ -24,8 +24,12 @@ namespace Facepunch.Steamworks.Interop
         internal SteamNative.SteamGameServerStats gameServerStats;
         internal SteamNative.SteamRemoteStorage remoteStorage;
 
+        private bool isServer;
+
         internal bool InitClient()
         {
+            isServer = false;
+
             api = new SteamNative.SteamApi( (IntPtr) 1 );
 
             if ( !api.SteamAPI_Init() )
@@ -48,6 +52,8 @@ namespace Facepunch.Steamworks.Interop
 
         internal bool InitServer( uint IpAddress /*uint32*/, ushort usPort /*uint16*/, ushort GamePort /*uint16*/, ushort QueryPort /*uint16*/, int eServerMode /*int*/, string pchVersionString /*const char **/)
         {
+            isServer = true;
+
             api = new SteamNative.SteamApi( (IntPtr)1 );
 
             if ( !api.SteamInternal_GameServer_Init( IpAddress, usPort, GamePort, QueryPort, eServerMode, pchVersionString ) )
@@ -155,6 +161,11 @@ namespace Facepunch.Steamworks.Interop
 
             if ( gameServer != null )
             {
+                //
+                // Calling this can cause the process to hang
+                //
+                //gameServer.LogOff();
+                
                 gameServer.Dispose();
                 gameServer = null;
             }
@@ -191,7 +202,11 @@ namespace Facepunch.Steamworks.Interop
 
             if ( api != null )
             {
-                api.SteamAPI_Shutdown();
+                if ( isServer )
+                    api.SteamGameServer_Shutdown();
+                else
+                    api.SteamAPI_Shutdown();
+
                 api.Dispose();
                 api = null;
             }

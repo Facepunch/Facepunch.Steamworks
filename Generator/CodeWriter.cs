@@ -129,8 +129,13 @@ namespace Generator
                 NeedsSelfPointer = false
             } );
 
-
-
+            def.methods.Add( new SteamApiDefinition.MethodDef()
+            {
+                ClassName = "SteamApi",
+                Name = "SteamGameServer_Shutdown",
+                ReturnType = "void",
+                NeedsSelfPointer = false
+            } );
 
             def.methods.Add( new SteamApiDefinition.MethodDef()
             {

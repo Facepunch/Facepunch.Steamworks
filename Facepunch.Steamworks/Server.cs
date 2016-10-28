@@ -98,6 +98,8 @@ namespace Facepunch.Steamworks
             native.api.SteamGameServer_RunCallbacks();
 
             base.Update();
+
+            native.api.SteamGameServer_RunCallbacks();
         }
 
         /// <summary>

@@ -3986,6 +3986,10 @@ namespace SteamNative
 			{
 				Native.SteamApi.SteamAPI_Shutdown();
 			}
+			public virtual void /*void*/ SteamApi_SteamGameServer_Shutdown()
+			{
+				Native.SteamApi.SteamGameServer_Shutdown();
+			}
 			public virtual HSteamUser /*(HSteamUser)*/ SteamApi_SteamAPI_GetHSteamUser()
 			{
 				return Native.SteamApi.SteamAPI_GetHSteamUser();
@@ -5409,6 +5413,8 @@ namespace SteamNative
 					internal static extern bool /*bool*/ SteamInternal_GameServer_Init( uint /*uint32*/ unIP, ushort /*uint16*/ usPort, ushort /*uint16*/ usGamePort, ushort /*uint16*/ usQueryPort, int /*int*/ eServerMode, string /*const char **/ pchVersionString );
 					[DllImportAttribute( "libsteam_api.so", EntryPoint = "SteamAPI_Shutdown" )]
 					internal static extern void /*void*/ SteamAPI_Shutdown();
+					[DllImportAttribute( "libsteam_api.so", EntryPoint = "SteamGameServer_Shutdown" )]
+					internal static extern void /*void*/ SteamGameServer_Shutdown();
 					[DllImportAttribute( "libsteam_api.so", EntryPoint = "SteamAPI_GetHSteamUser" )]
 					internal static extern HSteamUser /*(HSteamUser)*/ SteamAPI_GetHSteamUser();
 					[DllImportAttribute( "libsteam_api.so", EntryPoint = "SteamAPI_GetHSteamPipe" )]

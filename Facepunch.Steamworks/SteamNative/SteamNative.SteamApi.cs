@@ -99,6 +99,12 @@ namespace SteamNative
 			_pi.SteamApi_SteamGameServer_RunCallbacks();
 		}
 		
+		// void
+		public void SteamGameServer_Shutdown()
+		{
+			_pi.SteamApi_SteamGameServer_Shutdown();
+		}
+		
 		// IntPtr
 		public IntPtr SteamInternal_CreateInterface( string version /*const char **/ )
 		{
