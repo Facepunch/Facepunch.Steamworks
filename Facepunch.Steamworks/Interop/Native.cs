@@ -50,7 +50,10 @@ namespace Facepunch.Steamworks.Interop
         {
             api = new SteamNative.SteamApi( (IntPtr)1 );
 
-            api.SteamInternal_GameServer_Init( IpAddress, usPort, GamePort, QueryPort, eServerMode, pchVersionString );
+            if ( !api.SteamInternal_GameServer_Init( IpAddress, usPort, GamePort, QueryPort, eServerMode, pchVersionString ) )
+            {
+                return false;
+            }
 
             var user = api.SteamGameServer_GetHSteamUser();
             var pipe = api.SteamGameServer_GetHSteamPipe();
