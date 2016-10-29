@@ -19,7 +19,7 @@ namespace Generator
         //
         // Output a class into a file
         //
-        void Class( string FileName )
+        void GenerateClasses( string FileName )
         {
             foreach  ( var g in def.methods.GroupBy( x => x.ClassName ) )
             {

@@ -10,10 +10,7 @@ namespace Generator
 {
     public partial class CodeWriter
     {
-        private StringBuilder sb = new StringBuilder();
         private SteamApiDefinition def;
-
-        private Dictionary<string, TypeDef> TypeDefs = new Dictionary<string, TypeDef>();
 
         public CodeWriter( SteamApiDefinition def )
         {
@@ -265,7 +262,7 @@ namespace Generator
             }
 
             {
-                Class( $"{folder}SteamNative." );
+                GenerateClasses( $"{folder}SteamNative." );
             }
         }
 
@@ -296,50 +293,6 @@ namespace Generator
             }
         }
 
-        private string ToManagedType( string type )
-        {
-            type = type.Replace( "ISteamHTMLSurface::", "" );
-            type = type.Replace( "class ", "" );
-            type = type.Replace( "struct ", "" );
-            type = type.Replace( "const void", "void" );
-            type = type.Replace( "union ", "" );
-            type = type.Replace( "enum ", "" );
-
-            switch ( type )
-            {
-                case "uint64": return "ulong";
-                case "uint32": return "uint";
-                case "int32": return "int";
-                case "int64": return "long";
-                case "void *": return "IntPtr";
-                case "uint8 *": return "IntPtr";
-                case "int16": return "short";
-                case "uint8": return "byte";
-                case "int8": return "char";
-                case "unsigned short": return "ushort";
-                case "unsigned int": return "uint";
-                case "uint16": return "ushort";
-                case "const char *": return "string";
-                case "_Bool": return "bool";
-                case "CSteamID": return "ulong";
-
-                case "SteamAPIWarningMessageHook_t": return "IntPtr";
-            }
-
-            //type = type.Trim( '*', ' ' );
-
-            // Enums - skip the 'E'
-            if ( type[0] == 'E' )
-            {
-                return type.Substring( 1 );
-            }
-
-            if ( type.StartsWith( "ISteamMatchmak" ) && type.Contains( "Response" )  )
-                return "IntPtr";
-
-            return type;
-        }
-
         private List<Argument> BuildArguments( SteamApiDefinition.MethodDef.ParamType[] ps )
         {
             var args = new List<Argument>();
@@ -354,51 +307,6 @@ namespace Generator
             return args;
         }
 
-        
-
-        private int indent = 0;
-        public string Indent { get { return new string( '\t', indent ); } }
-
-        private void EndBlock( string end = "" )
-        {
-            indent--;
-            sb.AppendLine( $"{Indent}}}{end}" );
-        }
-
-
-        private void WriteLine( string v = "" )
-        {
-            sb.AppendLine( $"{Indent}{v}" );
-        }
-
-        private void StartBlock( string v )
-        {
-            sb.AppendLine( $"{Indent}{v}" );
-            sb.AppendLine( $"{Indent}{{" );
-
-            indent++;
-        }
-
-        private void WriteLines( List<string> beforeLines )
-        {
-            foreach ( var line in beforeLines )
-            {
-                if ( line == "}" )
-                    indent--;
-
-                WriteLine( line );
-
-                if ( line == "{" )
-                    indent++;
-            }
-        }
-
-
-        private void Footer()
-        {
-            EndBlock();
-        }
-
         private void Header()
         {
             WriteLine( "using System;" );
@@ -406,13 +314,10 @@ namespace Generator
             WriteLine();
             StartBlock( "namespace SteamNative" );
         }
+
+        private void Footer()
+        {
+            EndBlock();
+        }
     }
 }
-
-class TypeDef
-{
-    public string Name;
-    public string NativeType;
-    public string ManagedType;
-}
-

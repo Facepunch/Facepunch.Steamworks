@@ -11,9 +11,9 @@ namespace Generator
         public string Name;
         public string NativeType;
         public string ManagedType;
-        public TypeDef TypeDef;
+        public CodeWriter.TypeDef TypeDef;
 
-        public Argument( string Name, string ManagedType, Dictionary<string, TypeDef> typeDefs )
+        public Argument( string Name, string ManagedType, Dictionary<string, CodeWriter.TypeDef> typeDefs )
         {
             this.Name = Name;
             this.NativeType = ManagedType;
@@ -21,7 +21,7 @@ namespace Generator
             Build( typeDefs );
         }
 
-        private void Build( Dictionary<string, TypeDef> typeDefs )
+        private void Build( Dictionary<string, CodeWriter.TypeDef> typeDefs )
         {
             var cleanNative = NativeType.Trim( '*', ' ' ).Replace( "class ", "" ).Replace( "const ", "" );
 

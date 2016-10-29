@@ -8,6 +8,15 @@ namespace Generator
 {
     public partial class CodeWriter
     {
+        public class TypeDef
+        {
+            public string Name;
+            public string NativeType;
+            public string ManagedType;
+        }
+
+        private Dictionary<string, TypeDef> TypeDefs = new Dictionary<string, TypeDef>();
+
         //
         // Don't give a fuck about these classes, they just cause us trouble
         //

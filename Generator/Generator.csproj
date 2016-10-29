@@ -49,7 +49,8 @@
   <ItemGroup>
     <Compile Include="Argument.cs" />
     <Compile Include="CodeWriter\Class.cs" />
-    <Compile Include="CodeWriter.cs" />
+    <Compile Include="CodeWriter\Writing.cs" />
+    <Compile Include="CodeWriter\CodeWriter.cs" />
     <Compile Include="CodeWriter\Enums.cs" />
     <Compile Include="CodeWriter\Struct.cs" />
     <Compile Include="CodeWriter\Types.cs" />

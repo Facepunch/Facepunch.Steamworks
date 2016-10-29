@@ -57,5 +57,50 @@ namespace Generator
 
             return cleanName.Substring( 0, 1 ).ToUpper() + cleanName.Substring( 1 );
         }
+
+
+        private string ToManagedType( string type )
+        {
+            type = type.Replace( "ISteamHTMLSurface::", "" );
+            type = type.Replace( "class ", "" );
+            type = type.Replace( "struct ", "" );
+            type = type.Replace( "const void", "void" );
+            type = type.Replace( "union ", "" );
+            type = type.Replace( "enum ", "" );
+
+            switch ( type )
+            {
+                case "uint64": return "ulong";
+                case "uint32": return "uint";
+                case "int32": return "int";
+                case "int64": return "long";
+                case "void *": return "IntPtr";
+                case "uint8 *": return "IntPtr";
+                case "int16": return "short";
+                case "uint8": return "byte";
+                case "int8": return "char";
+                case "unsigned short": return "ushort";
+                case "unsigned int": return "uint";
+                case "uint16": return "ushort";
+                case "const char *": return "string";
+                case "_Bool": return "bool";
+                case "CSteamID": return "ulong";
+
+                case "SteamAPIWarningMessageHook_t": return "IntPtr";
+            }
+
+            //type = type.Trim( '*', ' ' );
+
+            // Enums - skip the 'E'
+            if ( type[0] == 'E' )
+            {
+                return type.Substring( 1 );
+            }
+
+            if ( type.StartsWith( "ISteamMatchmak" ) && type.Contains( "Response" ) )
+                return "IntPtr";
+
+            return type;
+        }
     }
 }
