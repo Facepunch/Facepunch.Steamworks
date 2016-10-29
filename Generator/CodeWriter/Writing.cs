@@ -13,24 +13,32 @@ namespace Generator
         private StringBuilder sb = new StringBuilder();
        
         private int indent = 0;
-        public string Indent { get { return new string( '\t', indent ); } }
+        private bool skipIndent = false;
+        public string Indent { get { if ( skipIndent ) { return ""; } return new string( '\t', indent ); } }
 
         private void EndBlock( string end = "" )
         {
             indent--;
-            sb.AppendLine( $"{Indent}}}{end}" );
+            WriteLine( "}" + end );
         }
 
 
         private void WriteLine( string v = "" )
         {
             sb.AppendLine( $"{Indent}{v}" );
+            skipIndent = false;
+        }
+
+        private void Write( string v = "" )
+        {
+            sb.Append( $"{Indent}{v}" );
+            skipIndent = true;
         }
 
         private void StartBlock( string v )
         {
-            sb.AppendLine( $"{Indent}{v}" );
-            sb.AppendLine( $"{Indent}{{" );
+            WriteLine( v );
+            WriteLine( "{" );
 
             indent++;
         }

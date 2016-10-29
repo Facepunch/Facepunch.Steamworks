@@ -73,10 +73,6 @@ namespace Generator
             WriteLine();
         }
 
-
-
-
-
         private void PlatformClassMethod( string classname, SteamApiDefinition.MethodDef methodDef )
         {
             var arguments = BuildArguments( methodDef.Params );
@@ -97,57 +93,74 @@ namespace Generator
             if ( argstring != "" ) argstring = $" {argstring} ";
 
             StartBlock( $"public virtual {ret.Return()} {classname}_{methodName}({argstring})" );
-
-          //  var vars = string.Join( " + \",\" + ", arguments.Where( x => !x.InteropParameter( true, true ).StartsWith( "out " ) ).Select( x => x.Name ) );
-         //   if ( vars != "" ) vars = "\" + " + vars + " + \"";
-         //   WriteLine( $"Console.WriteLine( \"{classname}_{methodName}( {vars} )\" );" );
-
-            if ( methodDef.NeedsSelfPointer )
             {
-                WriteLine( $"if ( _ptr == IntPtr.Zero ) throw new System.Exception( \"{classname} _ptr is null!\" );" );
-                WriteLine();
-            }
 
-            var retcode = "";
-            if ( ret.NativeType != "void" )
-                retcode = "return ";
+                //  var vars = string.Join( " + \",\" + ", arguments.Where( x => !x.InteropParameter( true, true ).StartsWith( "out " ) ).Select( x => x.Name ) );
+                //   if ( vars != "" ) vars = "\" + " + vars + " + \"";
+                //   WriteLine( $"Console.WriteLine( \"{classname}_{methodName}( {vars} )\" );" );
 
-            AfterLines = new List<string>();
-
-            foreach ( var a in arguments )
-            {
-                if ( a.InteropParameter( LargePack ).Contains( ".PackSmall" ) )
+                if ( methodDef.NeedsSelfPointer )
                 {
-                    WriteLine( $"var {a.Name}_ps = new {a.ManagedType.Trim( '*' )}.PackSmall();" );
-                    AfterLines.Add( $"{a.Name} = {a.Name}_ps;" );
-                    a.Name = "ref " + a.Name + "_ps";
-
-                    if ( retcode != "" )
-                        retcode = "var ret = ";
-
-                    
+                    WriteLine( $"if ( _ptr == IntPtr.Zero ) throw new System.Exception( \"{classname} _ptr is null!\" );" );
+                    WriteLine();
                 }
+
+                var retcode = "";
+                if ( ret.NativeType != "void" )
+                    retcode = "return ";
+
+                AfterLines = new List<string>();
+
+                foreach ( var a in arguments )
+                {
+                    if ( a.InteropParameter( LargePack ).Contains( ".PackSmall" ) )
+                    {
+                        WriteLine( $"var {a.Name}_ps = new {a.ManagedType.Trim( '*' )}.PackSmall();" );
+                        AfterLines.Add( $"{a.Name} = {a.Name}_ps;" );
+                        a.Name = "ref " + a.Name + "_ps";
+
+                        if ( retcode != "" )
+                            retcode = "var ret = ";
+                    }
+                }
+
+                argstring = string.Join( ", ", arguments.Select( x => x.InteropVariable( false ) ) );
+
+                if ( methodDef.NeedsSelfPointer )
+                    argstring = "_ptr" + ( argstring.Length > 0 ? ", " : "" ) + argstring;
+
+                WriteLine( $"{retcode}Native.{flatName}({argstring});" );
+
+                WriteLines( AfterLines );
+
+                if ( retcode.StartsWith( "var" ) )
+                {
+                    WriteLine( "return ret;" );
+                }
+
             }
-
-            argstring = string.Join( ", ", arguments.Select( x => x.InteropVariable( false ) ) );
-
-            if ( methodDef.NeedsSelfPointer )
-                argstring = "_ptr" + ( argstring.Length > 0 ? ", " : "" ) + argstring;
-
-            WriteLine( $"{retcode}Native.{classname}.{methodName}({argstring});" );
-
-            WriteLines( AfterLines );
-
-            if ( retcode.StartsWith( "var" ) )
-            {
-                WriteLine( "return ret;" );
-            }
-
             EndBlock();
 
-            
-
             LastMethodName = methodDef.Name;
+        }
+
+
+
+        private void InteropClass( string libraryName, string className, SteamApiDefinition.MethodDef[] methodDef )
+        {
+            if ( ShouldIgnoreClass( className ) ) return;
+
+            WriteLine( $"//" );
+            WriteLine( $"// {className} " );
+            WriteLine( $"//" );
+
+            LastMethodName = "";
+            foreach ( var m in methodDef )
+            {
+                InteropClassMethod( libraryName, className, m );
+            }
+
+            WriteLine();
         }
 
         private void InteropClassMethod( string library, string classname, SteamApiDefinition.MethodDef methodDef )
@@ -165,7 +178,6 @@ namespace Generator
             if ( classname == "SteamApi" )
                 flatName = methodName;
 
-
             var argstring = string.Join( ", ", arguments.Select( x => x.InteropParameter( LargePack, true ) ) );
 
             if ( methodDef.NeedsSelfPointer )
@@ -175,29 +187,12 @@ namespace Generator
 
             if ( argstring != "" ) argstring = $" {argstring} ";
 
-            WriteLine( $"[DllImportAttribute( \"{library}\", EntryPoint = \"{flatName}\" )]" );
+            Write( $"[DllImportAttribute( \"{library}\" )] " );
 
             if ( ret.Return() == "bool" ) WriteLine( "[return: MarshalAs(UnmanagedType.U1)]" );
 
-            WriteLine( $"internal static extern {ret.Return()} {methodName}({argstring});" );
+            WriteLine( $"internal static extern {ret.Return()} {flatName}({argstring});" );
             LastMethodName = methodDef.Name;
-        }
-
-        private void InteropClass( string libraryName, string className, SteamApiDefinition.MethodDef[] methodDef )
-        {
-            if ( ShouldIgnoreClass( className ) ) return;
-
-            StartBlock( $"internal static unsafe class {className}" );
-
-            LastMethodName = "";
-            foreach ( var m in methodDef )
-            {
-                InteropClassMethod( libraryName, className, m );
-            }
-
-            EndBlock();
-
-            WriteLine();
         }
 
 

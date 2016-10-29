@@ -62,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <Compile Include="CodeWriter.PlatformClass.cs" />
+    <Compile Include="CodeWriter\PlatformClass.cs" />
     <None Include="packages.config" />
     <None Include="steam_api.json" />
   </ItemGroup>
