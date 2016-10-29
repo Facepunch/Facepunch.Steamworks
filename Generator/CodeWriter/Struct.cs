@@ -50,6 +50,11 @@ namespace Generator
                 WriteLine( $"[StructLayout( LayoutKind.Sequential, Pack = {defaultPack} )]" );
                 StartBlock( $"public struct {c.Name}" );
                 {
+                    if ( !string.IsNullOrEmpty( c.CallbackId ) )
+                    {
+                        WriteLine( "public const int CallbackId = " + c.CallbackId + ";" );
+                    }
+
                     //
                     // The fields
                     //

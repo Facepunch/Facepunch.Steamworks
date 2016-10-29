@@ -51,6 +51,8 @@ namespace Generator
             public string Name { get; set; }
             [JsonProperty( PropertyName = "fields" )]
             public StructFields[] Fields { get; set; }
+
+            public string CallbackId { get; set; }
         }
 
         public StructDef[] structs { get; set; }
@@ -78,5 +80,8 @@ namespace Generator
         }
 
         public List<MethodDef> methods { get; set; }
+
+
+        public Dictionary<string, int> CallbackIds { get; internal set; }
     }
 }

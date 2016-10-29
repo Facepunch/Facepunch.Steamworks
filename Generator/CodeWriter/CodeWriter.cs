@@ -216,6 +216,14 @@ namespace Generator
             {
                 sb = new StringBuilder();
                 Header();
+                Constants();
+                Footer();
+                System.IO.File.WriteAllText( $"{folder}SteamNative.Constants.cs", sb.ToString() );
+            }
+
+            {
+                sb = new StringBuilder();
+                Header();
                 PlatformInterface();
                 Footer();
                 System.IO.File.WriteAllText( $"{folder}SteamNative.Platform.Interface.cs", sb.ToString() );

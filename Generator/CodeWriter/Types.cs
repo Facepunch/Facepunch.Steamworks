@@ -8,59 +8,14 @@ namespace Generator
 {
     public partial class CodeWriter
     {
-        //
-        // Don't give a fuck about these types
-        //
-        public readonly static string[] SkipTypes = new string[]
+        private void Constants()
         {
-            "ValvePackingSentinel_t",
-            "SteamAPIWarningMessageHook_t",
-            "Salt_t",
-            "SteamAPI_CheckCallbackRegistered_t",
-            "compile_time_assert_type"
-        };
-
-        //
-        // Native types and function defs
-        //
-        public readonly static string[] SkipTypesStartingWith = new string[]
-        {
-            "uint",
-            "int",
-            "ulint",
-            "lint",
-            "PFN"
-        };
-
-        private void Types()
-        {
-            foreach ( var o in def.typedefs.Where( x => !x.Name.Contains( "::" ) ) )
+            StartBlock( "public static class CallbackIdentifiers" );
+            foreach ( var o in def.CallbackIds )
             {
-                if ( SkipTypes.Contains( o.Name ) )
-                    continue;
-
-                if ( SkipTypesStartingWith.Any( x => o.Name.StartsWith( x ) ) )
-                    continue;
-
-                StartBlock( $"public struct {o.Name}" );
-                {
-                    WriteLine( $"public {ToManagedType( o.Type )} Value;" );
-                    WriteLine();
-                    StartBlock( $"public static implicit operator {o.Name}( {ToManagedType( o.Type )} value )" );
-                    {
-                        WriteLine( $"return new {o.Name}(){{ Value = value }};" );
-                    }
-                    EndBlock();
-                    WriteLine();
-                    StartBlock( $"public static implicit operator {ToManagedType( o.Type )}( {o.Name} value )" );
-                    {
-                        WriteLine( $"return value.Value;" );
-                    }
-                    EndBlock();
-                }
-                EndBlock();
-                WriteLine();
+                WriteLine( $"public const int {o.Key} = {o.Value};" );
             }
+            EndBlock();
         }
     }
 }

@@ -148,6 +148,7 @@
     <Compile Include="Server\Auth.cs" />
     <Compile Include="Server\Query.cs" />
     <Compile Include="Server\Stats.cs" />
+    <Compile Include="SteamNative\SteamNative.Constants.cs" />
     <Compile Include="SteamNative\SteamNative.Enums.cs" />
     <Compile Include="SteamNative\SteamNative.Platform.cs" />
     <Compile Include="SteamNative\SteamNative.Platform.Interface.cs" />
