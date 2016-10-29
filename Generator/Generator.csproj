@@ -51,7 +51,7 @@
     <Compile Include="CodeWriter\Class.cs" />
     <Compile Include="CodeWriter.cs" />
     <Compile Include="CodeWriter\Enums.cs" />
-    <Compile Include="CodeWriter.Struct.cs" />
+    <Compile Include="CodeWriter\Struct.cs" />
     <Compile Include="CodeWriter.Types.cs" />
     <Compile Include="CodeWriter\Utility.cs" />
     <Compile Include="CodeWriter\Interface.cs" />

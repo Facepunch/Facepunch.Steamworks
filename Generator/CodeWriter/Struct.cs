@@ -8,15 +8,23 @@ namespace Generator
 {
     public partial class CodeWriter
     {
+        //
+        // Don't give a fuck about these classes, they just cause us trouble
+        //
+        public readonly static string[] SkipStructs = new string[]
+        {
+            "CSteamID",
+            "CSteamAPIContext",
+            "CCallResult",
+            "CCallback",
+            "ValvePackingSentinel_t"
+        };
+
         void Structs()
         {
             foreach ( var c in def.structs )
             {
-                if ( c.Name == "CSteamID" ||
-                    c.Name == "CSteamAPIContext" ||
-                    c.Name == "CCallResult" ||
-                    c.Name == "CCallback" || 
-                    c.Name == "ValvePackingSentinel_t" )
+                if ( SkipStructs.Contains( c.Name ) )
                     continue;
 
                 if ( c.Name.Contains( "::" ) )
@@ -27,39 +35,73 @@ namespace Generator
                 if ( c.Fields.Any( x => x.Type.Contains( "class CSteamID" ) ) )
                     defaultPack = 4;
 
+                //
+                // Main struct
+                //
                 WriteLine( $"[StructLayout( LayoutKind.Sequential, Pack = {defaultPack} )]" );
                 StartBlock( $"public struct {c.Name}" );
-
-                StructFields( c.Fields );
-
-                WriteLine( $"public static {c.Name} FromPointer( IntPtr p ) {{ return ({c.Name}) Marshal.PtrToStructure( p, typeof({c.Name}) ); }}" );
-
-
-                if ( defaultPack == 8 )
-                    defaultPack = 4;
-
-                WriteLine();
-                WriteLine( $"[StructLayout( LayoutKind.Sequential, Pack = {defaultPack} )]" );
-                StartBlock( $"public struct PackSmall" );
-                StructFields( c.Fields );
-
-                WriteLine();
-
-                //
-                // Implicit convert from PackSmall to regular
-                //
-                StartBlock( $"public static implicit operator {c.Name} (  {c.Name}.PackSmall d )" );
-                StartBlock( $"return new {c.Name}()" );
-                foreach ( var f in c.Fields )
                 {
-                    WriteLine( $"{CleanMemberName( f.Name )} = d.{CleanMemberName( f.Name )}," );
+                    //
+                    // The fields
+                    //
+                    StructFields( c.Fields );
+
+                    WriteLine();
+                    WriteLine( "//" );
+                    WriteLine( "// Read this struct from a pointer, usually from Native" );
+                    WriteLine( "//" );
+                    StartBlock( $"public static {c.Name} FromPointer( IntPtr p )" );
+                    {
+                        WriteLine( $"return ({c.Name}) Marshal.PtrToStructure( p, typeof({c.Name}) );" );
+                    }
+                    EndBlock();
+
+                    if ( defaultPack == 8 )
+                        defaultPack = 4;
+
+                    //
+                    // Small packed struct (for osx, linux)
+                    //
+                    WriteLine();
+                    WriteLine( $"[StructLayout( LayoutKind.Sequential, Pack = {defaultPack} )]" );
+                    StartBlock( $"public struct PackSmall" );
+                    {
+                        StructFields( c.Fields );
+
+                        //
+                        // Implicit convert from PackSmall to regular
+                        //
+                        WriteLine();
+                        WriteLine( "//" );
+                        WriteLine( $"// Easily convert from PackSmall to {c.Name}" );
+                        WriteLine( "//" );
+                        StartBlock( $"public static implicit operator {c.Name} (  {c.Name}.PackSmall d )" );
+                        {
+                            StartBlock( $"return new {c.Name}()" );
+                            {
+                                foreach ( var f in c.Fields )
+                                {
+                                    WriteLine( $"{CleanMemberName( f.Name )} = d.{CleanMemberName( f.Name )}," );
+                                }
+                            }
+                            EndBlock( ";" );
+                        }
+                        EndBlock();
+
+                        WriteLine();
+                        WriteLine( "//" );
+                        WriteLine( "// Read this struct from a pointer, usually from Native" );
+                        WriteLine( "//" );
+                        StartBlock( $"public static PackSmall FromPointer( IntPtr p )" );
+                        {
+                            WriteLine( $"return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );" );
+                        }
+                        EndBlock();
+
+                    }
+                    EndBlock();
+
                 }
-                EndBlock( ";" );
-                EndBlock();
-
-                EndBlock();
-
-
                 EndBlock();
                 WriteLine();
             }
@@ -123,8 +165,6 @@ namespace Generator
                     WriteLine( $"[MarshalAs(UnmanagedType.ByValArray, SizeConst = {num}, ArraySubType = UnmanagedType.R4)]" );
                 }
 
-                
-
                 if ( t == "const char **" )
                 {
                     t = "IntPtr";
@@ -132,35 +172,6 @@ namespace Generator
 
                 WriteLine( $"public {t} {CleanMemberName( m.Name )}; // {m.Name} {m.Type}" );
             }
-        }
-
-        string CleanMemberName( string m )
-        {
-            if ( m == "m_pubParam" ) return "ParamPtr";
-            if ( m == "m_cubParam" ) return "ParamCount";
-            if ( m == "m_itemId" ) return "ItemId";
-            
-
-            var cleanName = m.Replace( "m_un", "" )
-                    .Replace( "m_us", "" )
-                    .Replace( "m_sz", "" )
-                    .Replace( "m_h", "" )
-                    .Replace( "m_pp", "" )
-                    .Replace( "m_e", "" )
-                    .Replace( "m_un", "" )
-                    .Replace( "m_ul", "" )
-                    .Replace( "m_fl", "" )
-                    .Replace( "m_u", "" )
-                    .Replace( "m_b", "" )
-                    .Replace( "m_i", "" )
-                    .Replace( "m_pub", "" )
-                    .Replace( "m_cub", "" )
-                    .Replace( "m_n", "" )
-                    .Replace( "m_rgch", "" )
-                    .Replace( "m_r", "" )
-                    .Replace( "m_", "" );
-
-            return cleanName.Substring( 0, 1 ).ToUpper() + cleanName.Substring( 1 );
         }
     }
 }
