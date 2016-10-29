@@ -4651,6 +4651,7 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct P2PSessionRequest_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamNetworking + 2;
 		public ulong SteamIDRemote; // m_steamIDRemote class CSteamID
 		
 		//
@@ -4690,6 +4691,7 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct P2PSessionConnectFail_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamNetworking + 3;
 		public ulong SteamIDRemote; // m_steamIDRemote class CSteamID
 		public byte P2PSessionError; // m_eP2PSessionError uint8
 		
@@ -4732,6 +4734,7 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct SocketStatusCallback_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamNetworking + 1;
 		public uint Socket; // m_hSocket SNetSocket_t
 		public uint ListenSocket; // m_hListenSocket SNetListenSocket_t
 		public ulong SteamIDRemote; // m_steamIDRemote class CSteamID
@@ -5588,7 +5591,7 @@ namespace SteamNative
 	public struct SteamUGCQueryCompleted_t
 	{
 		public const int CallbackId = CallbackIdentifiers.ClientUGC + 1;
-		public ulong Andle; // m_handle UGCQueryHandle_t
+		public ulong Handle; // m_handle UGCQueryHandle_t
 		public Result Result; // m_eResult enum EResult
 		public uint NumResultsReturned; // m_unNumResultsReturned uint32
 		public uint TotalMatchingResults; // m_unTotalMatchingResults uint32
@@ -5606,7 +5609,7 @@ namespace SteamNative
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public ulong Andle; // m_handle UGCQueryHandle_t
+			public ulong Handle; // m_handle UGCQueryHandle_t
 			public Result Result; // m_eResult enum EResult
 			public uint NumResultsReturned; // m_unNumResultsReturned uint32
 			public uint TotalMatchingResults; // m_unTotalMatchingResults uint32
@@ -5620,7 +5623,7 @@ namespace SteamNative
 			{
 				return new SteamUGCQueryCompleted_t()
 				{
-					Andle = d.Andle,
+					Handle = d.Handle,
 					Result = d.Result,
 					NumResultsReturned = d.NumResultsReturned,
 					TotalMatchingResults = d.TotalMatchingResults,
@@ -7233,7 +7236,7 @@ namespace SteamNative
 	public struct SteamInventoryResultReady_t
 	{
 		public const int CallbackId = CallbackIdentifiers.ClientInventory + 0;
-		public int Andle; // m_handle SteamInventoryResult_t
+		public int Handle; // m_handle SteamInventoryResult_t
 		public Result Esult; // m_result enum EResult
 		
 		//
@@ -7247,7 +7250,7 @@ namespace SteamNative
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public int Andle; // m_handle SteamInventoryResult_t
+			public int Handle; // m_handle SteamInventoryResult_t
 			public Result Esult; // m_result enum EResult
 			
 			//
@@ -7257,7 +7260,7 @@ namespace SteamNative
 			{
 				return new SteamInventoryResultReady_t()
 				{
-					Andle = d.Andle,
+					Handle = d.Handle,
 					Esult = d.Esult,
 				};
 			}
@@ -7276,7 +7279,7 @@ namespace SteamNative
 	public struct SteamInventoryFullUpdate_t
 	{
 		public const int CallbackId = CallbackIdentifiers.ClientInventory + 1;
-		public int Andle; // m_handle SteamInventoryResult_t
+		public int Handle; // m_handle SteamInventoryResult_t
 		
 		//
 		// Read this struct from a pointer, usually from Native
@@ -7289,7 +7292,7 @@ namespace SteamNative
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct PackSmall
 		{
-			public int Andle; // m_handle SteamInventoryResult_t
+			public int Handle; // m_handle SteamInventoryResult_t
 			
 			//
 			// Easily convert from PackSmall to SteamInventoryFullUpdate_t
@@ -7298,7 +7301,7 @@ namespace SteamNative
 			{
 				return new SteamInventoryFullUpdate_t()
 				{
-					Andle = d.Andle,
+					Handle = d.Handle,
 				};
 			}
 			

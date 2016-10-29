@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Facepunch.Steamworks.Callbacks.Networking;
 
 namespace Facepunch.Steamworks
 {
@@ -19,8 +18,8 @@ namespace Facepunch.Steamworks
         {
             this.networking = networking;
 
-            sw.AddCallback<P2PSessionRequest>( onP2PConnectionRequest, P2PSessionRequest.CallbackId );
-            sw.AddCallback<P2PSessionConnectFail>( onP2PConnectionFailed, P2PSessionConnectFail.CallbackId );
+            sw.AddCallback<SteamNative.P2PSessionRequest_t>( onP2PConnectionRequest, SteamNative.P2PSessionRequest_t.CallbackId );
+            sw.AddCallback<SteamNative.P2PSessionConnectFail_t>( onP2PConnectionFailed, SteamNative.P2PSessionConnectFail_t.CallbackId );
         }
 
         public void Dispose()
@@ -47,19 +46,19 @@ namespace Facepunch.Steamworks
             }
         }
 
-        private void onP2PConnectionRequest( P2PSessionRequest o, bool b )
+        private void onP2PConnectionRequest( SteamNative.P2PSessionRequest_t o, bool b )
         {
             if ( OnIncomingConnection != null )
             {
-                var accept = OnIncomingConnection( o.SteamID );
+                var accept = OnIncomingConnection( o.SteamIDRemote );
 
                 if ( accept )
                 {
-                    networking.AcceptP2PSessionWithUser( o.SteamID );
+                    networking.AcceptP2PSessionWithUser( o.SteamIDRemote );
                 }
                 else
                 {
-                    networking.CloseP2PSessionWithUser( o.SteamID );
+                    networking.CloseP2PSessionWithUser( o.SteamIDRemote );
                 }
 
                 return;
@@ -68,7 +67,7 @@ namespace Facepunch.Steamworks
             //
             // Default is to reject the session
             //
-            networking.CloseP2PSessionWithUser( o.SteamID );
+            networking.CloseP2PSessionWithUser( o.SteamIDRemote );
         }
 
         public enum SessionError : byte
@@ -83,11 +82,11 @@ namespace Facepunch.Steamworks
             Max = 5
         };
 
-        private void onP2PConnectionFailed( P2PSessionConnectFail o, bool b )
+        private void onP2PConnectionFailed( SteamNative.P2PSessionConnectFail_t o, bool b )
         {
             if ( OnConnectionFailed  != null )
             {
-                OnConnectionFailed( o.SteamID, o.Error );
+                OnConnectionFailed( o.SteamIDRemote, (SessionError) o.P2PSessionError );
             }
         }
 

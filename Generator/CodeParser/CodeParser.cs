@@ -41,7 +41,7 @@ namespace Generator
             {
                 Console.WriteLine( t.Name );
 
-                var r = new Regex( @"struct "+t.Name+@"\n{\n(?:.)+enum { k_iCallback = (.+) \+ ([0-9]+)", RegexOptions.Multiline | RegexOptions.IgnoreCase );
+                var r = new Regex( @"struct "+t.Name+@"\n{ ?\n(?:.)+enum { k_iCallback = (.+) \+ ([0-9]+)", RegexOptions.Multiline | RegexOptions.IgnoreCase );
                 var m = r.Match( Content );
                 if ( m.Success )
                 {

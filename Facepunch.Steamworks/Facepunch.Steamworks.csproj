@@ -114,7 +114,6 @@
   <ItemGroup>
     <Compile Include="BaseSteamworks.cs" />
     <Compile Include="Callbacks\Index.cs" />
-    <Compile Include="Callbacks\User.cs" />
     <Compile Include="Callbacks\Workshop.cs" />
     <Compile Include="Interfaces\Inventory.Item.cs" />
     <Compile Include="Interfaces\Inventory.Result.cs" />
@@ -134,7 +133,6 @@
     <Compile Include="Interfaces\Inventory.Definition.cs" />
     <Compile Include="Client\Voice.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="Callbacks\Networking.cs" />
     <Compile Include="Interfaces\Workshop.cs" />
     <Compile Include="Interfaces\Workshop.Editor.cs" />
     <Compile Include="Interfaces\Workshop.Item.cs" />

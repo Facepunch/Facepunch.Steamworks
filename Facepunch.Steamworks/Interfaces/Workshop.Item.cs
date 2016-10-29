@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using Facepunch.Steamworks.Callbacks.Networking;
 using Facepunch.Steamworks.Callbacks.Workshop;
 
 namespace Facepunch.Steamworks

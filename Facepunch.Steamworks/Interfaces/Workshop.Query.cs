@@ -114,7 +114,7 @@ namespace Facepunch.Steamworks
                 workshop.steamworks.AddCallResult( Callback );
             }
 
-            void OnResult( QueryCompleted.Data data )
+            void OnResult( SteamNative.SteamUGCQueryCompleted_t data )
             {
                 var gotFiles = 0;
                 for ( int i = 0; i < data.NumResultsReturned; i++ )

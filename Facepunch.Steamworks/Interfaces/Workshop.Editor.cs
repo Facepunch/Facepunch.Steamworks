@@ -114,14 +114,14 @@ namespace Facepunch.Steamworks
                 workshop.steamworks.AddCallResult( CreateItem );
             }
 
-            private void OnItemCreated( CreateItem.Data obj )
+            private void OnItemCreated( SteamNative.CreateItemResult_t obj )
             {
-                NeedToAgreeToWorkshopLegal = obj.NeedsLegalAgreement;
+                NeedToAgreeToWorkshopLegal = obj.UserNeedsToAcceptWorkshopLegalAgreement;
                 CreateItem = null;
 
-                if ( obj.Result == Callbacks.Result.OK )
+                if ( obj.Result == SteamNative.Result.OK )
                 {
-                    Id = obj.FileId;
+                    Id = obj.PublishedFileId;
                     PublishChanges();
                     return;
                 }
@@ -171,13 +171,13 @@ namespace Facepunch.Steamworks
                 workshop.steamworks.AddCallResult( SubmitItemUpdate );
             }
 
-            private void OnChangesSubmitted( SubmitItemUpdate.Data obj )
+            private void OnChangesSubmitted( SteamNative.SubmitItemUpdateResult_t obj )
             {
                 SubmitItemUpdate = null;
-                NeedToAgreeToWorkshopLegal = obj.NeedsLegalAgreement;
+                NeedToAgreeToWorkshopLegal = obj.UserNeedsToAcceptWorkshopLegalAgreement;
                 Publishing = false;
 
-                if ( obj.Result == Callbacks.Result.OK )
+                if ( obj.Result == SteamNative.Result.OK )
                 {
                     return;
                 }

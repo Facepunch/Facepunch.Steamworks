@@ -35,6 +35,7 @@ namespace Generator
             if ( m == "m_pubParam" ) return "ParamPtr";
             if ( m == "m_cubParam" ) return "ParamCount";
             if ( m == "m_itemId" ) return "ItemId";
+            if ( m == "m_handle" ) return "Handle";
 
             var cleanName = m.Replace( "m_un", "" )
                     .Replace( "m_us", "" )

@@ -3,14 +3,13 @@ using Facepunch.Steamworks.Interop;
 
 namespace Facepunch.Steamworks.Callbacks.Workshop
 {
-
     [StructLayout( LayoutKind.Sequential, Pack = 8 )]
     internal struct ItemInstalled
     {
         public uint AppId;
         public ulong FileId;
 
-        public const int CallbackId = Index.UGC + 5;
+        public const int CallbackId = SteamNative.CallbackIdentifiers.ClientUGC + 5;
 
         [StructLayout( LayoutKind.Sequential, Pack = 4 )]
         internal struct Small
@@ -20,90 +19,20 @@ namespace Facepunch.Steamworks.Callbacks.Workshop
         };
     };
 
-    [StructLayout( LayoutKind.Sequential, Pack = 8 )]
-    internal struct DownloadResult
+    internal class QueryCompleted : CallResult<SteamNative.SteamUGCQueryCompleted_t, SteamNative.SteamUGCQueryCompleted_t.PackSmall>
     {
-        public uint AppId;
-        public ulong FileId;
-        public Result Result;
-
-        public const int CallbackId = Index.UGC + 6;
-
-        [StructLayout( LayoutKind.Sequential, Pack = 4 )]
-        internal struct Small
-        {
-            public uint AppId;
-            public ulong FileId;
-            public Result Result;
-        };
-    };
-
-
-    internal class QueryCompleted : CallResult<QueryCompleted.Data, QueryCompleted.Data.Small>
-    {
-        public override int CallbackId { get { return Index.UGC + 1; } }
-
-        [StructLayout( LayoutKind.Sequential, Pack = 8 )]
-        internal struct Data
-        {
-            internal ulong Handle;
-            internal int Result;
-            internal uint NumResultsReturned;
-            internal uint TotalMatchingResults;
-            internal bool CachedData;
-
-            [StructLayout( LayoutKind.Sequential, Pack = 4 )]
-            internal struct Small
-            {
-                internal ulong Handle;
-                internal int Result;
-                internal uint NumResultsReturned;
-                internal uint TotalMatchingResults;
-                internal bool CachedData;
-            };
-        };
+        public override int CallbackId { get { return SteamNative.SteamUGCQueryCompleted_t.CallbackId; } }
     }
 
-    internal class CreateItem : CallResult<CreateItem.Data, CreateItem.Data.Small>
+    internal class CreateItem : CallResult<SteamNative.CreateItemResult_t, SteamNative.CreateItemResult_t.PackSmall>
     {
-        public override int CallbackId { get { return Index.UGC + 3; } }
-
-        [StructLayout( LayoutKind.Sequential, Pack = 8 )]
-        internal struct Data
-        {
-            internal Result Result;
-            internal ulong FileId;
-            internal bool NeedsLegalAgreement;
-
-            [StructLayout( LayoutKind.Sequential, Pack = 4 )]
-            internal struct Small
-            {
-                internal Result Result;
-                internal ulong FileId;
- 
-                internal bool NeedsLegalAgreement;
-            };
-        };
+        public override int CallbackId { get { return SteamNative.CreateItemResult_t.CallbackId; } }
     }
 
-    internal class SubmitItemUpdate : CallResult<SubmitItemUpdate.Data, SubmitItemUpdate.Data.Small>
+    internal class SubmitItemUpdate : CallResult<SteamNative.SubmitItemUpdateResult_t, SteamNative.SubmitItemUpdateResult_t.PackSmall>
     {
-        public override int CallbackId { get { return Index.UGC + 4; } }
+        public override int CallbackId { get { return SteamNative.SubmitItemUpdateResult_t.CallbackId; } }
 
         public SteamNative.UGCUpdateHandle_t UpdateHandle;
-
-        [StructLayout( LayoutKind.Sequential, Pack = 8 )]
-        internal struct Data
-        {
-            internal Result Result;
-            internal bool NeedsLegalAgreement;
-
-            [StructLayout( LayoutKind.Sequential, Pack = 4 )]
-            internal struct Small
-            {
-                internal Result Result;
-                internal bool NeedsLegalAgreement;
-            };
-        };
     }
 }
