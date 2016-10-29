@@ -50,7 +50,7 @@
     <Compile Include="Argument.cs" />
     <Compile Include="CodeWriter\Class.cs" />
     <Compile Include="CodeWriter.cs" />
-    <Compile Include="CodeWriter.Enum.cs" />
+    <Compile Include="CodeWriter\Enums.cs" />
     <Compile Include="CodeWriter.Struct.cs" />
     <Compile Include="CodeWriter.Types.cs" />
     <Compile Include="CodeWriter\Utility.cs" />
