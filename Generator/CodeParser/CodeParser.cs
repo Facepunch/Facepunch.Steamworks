@@ -54,6 +54,17 @@ namespace Generator
                 }
             }
 
+            def.Defines = new Dictionary<string, string>();
+            {
+                var r = new Regex( @"#define ([a-zA-Z_]+) ""(.+)""" );
+                var ma = r.Matches( Content );
+
+                foreach ( Match m in ma )
+                {
+                    def.Defines.Add( m.Groups[1].Value.Replace( "Callbacks", "" ), m.Groups[2].Value );
+                }
+            }
+
         }
     }
 }

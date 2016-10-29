@@ -91,20 +91,20 @@ namespace Facepunch.Steamworks.Interop
 
             client = new SteamNative.SteamClient( clientPtr );
 
-            user = client.GetISteamUser( huser, hpipe, "SteamUser019" );
-            utils = client.GetISteamUtils( hpipe, "SteamUtils008" );
-            networking = client.GetISteamNetworking( huser, hpipe, "SteamNetworking005" );
-            gameServerStats = client.GetISteamGameServerStats( huser, hpipe, "SteamGameServerStats001" );
-            http = client.GetISteamHTTP( huser, hpipe, "STEAMHTTP_INTERFACE_VERSION002" );
-            inventory = client.GetISteamInventory( huser, hpipe, "STEAMINVENTORY_INTERFACE_V001" );
-            ugc = client.GetISteamUGC( huser, hpipe, "STEAMUGC_INTERFACE_VERSION009" );
-            apps = client.GetISteamApps( huser, hpipe, "STEAMAPPS_INTERFACE_VERSION008" );
-            gameServer = client.GetISteamGameServer( huser, hpipe, "SteamGameServer012" );
-            friends = client.GetISteamFriends( huser, hpipe, "SteamFriends015" );
-            servers = client.GetISteamMatchmakingServers( huser, hpipe, "SteamMatchMakingServers002" );
-            userstats = client.GetISteamUserStats( huser, hpipe, "STEAMUSERSTATS_INTERFACE_VERSION011" );
-            screenshots = client.GetISteamScreenshots( huser, hpipe, "STEAMSCREENSHOTS_INTERFACE_VERSION003" );
-            remoteStorage = client.GetISteamRemoteStorage( huser, hpipe, "STEAMREMOTESTORAGE_INTERFACE_VERSION014" );
+            user = client.GetISteamUser( huser, hpipe, SteamNative.Defines.STEAMUSER_INTERFACE_VERSION );
+            utils = client.GetISteamUtils( hpipe, SteamNative.Defines.STEAMUTILS_INTERFACE_VERSION );
+            networking = client.GetISteamNetworking( huser, hpipe, SteamNative.Defines.STEAMNETWORKING_INTERFACE_VERSION );
+            gameServerStats = client.GetISteamGameServerStats( huser, hpipe, SteamNative.Defines.STEAMGAMESERVERSTATS_INTERFACE_VERSION );
+            http = client.GetISteamHTTP( huser, hpipe, SteamNative.Defines.STEAMHTTP_INTERFACE_VERSION );
+            inventory = client.GetISteamInventory( huser, hpipe, SteamNative.Defines.STEAMINVENTORY_INTERFACE_VERSION );
+            ugc = client.GetISteamUGC( huser, hpipe, SteamNative.Defines.STEAMUGC_INTERFACE_VERSION );
+            apps = client.GetISteamApps( huser, hpipe, SteamNative.Defines.STEAMAPPS_INTERFACE_VERSION );
+            gameServer = client.GetISteamGameServer( huser, hpipe, SteamNative.Defines.STEAMGAMESERVER_INTERFACE_VERSION );
+            friends = client.GetISteamFriends( huser, hpipe, SteamNative.Defines.STEAMFRIENDS_INTERFACE_VERSION );
+            servers = client.GetISteamMatchmakingServers( huser, hpipe, SteamNative.Defines.STEAMMATCHMAKINGSERVERS_INTERFACE_VERSION );
+            userstats = client.GetISteamUserStats( huser, hpipe, SteamNative.Defines.STEAMUSERSTATS_INTERFACE_VERSION );
+            screenshots = client.GetISteamScreenshots( huser, hpipe, SteamNative.Defines.STEAMSCREENSHOTS_INTERFACE_VERSION );
+            remoteStorage = client.GetISteamRemoteStorage( huser, hpipe, SteamNative.Defines.STEAMREMOTESTORAGE_INTERFACE_VERSION );
         }
 
         public void Dispose()

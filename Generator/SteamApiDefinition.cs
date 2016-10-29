@@ -83,5 +83,6 @@ namespace Generator
 
 
         public Dictionary<string, int> CallbackIds { get; internal set; }
+        public Dictionary<string, string> Defines { get; internal set; }
     }
 }
