@@ -22,8 +22,10 @@ namespace Facepunch.Steamworks
             this.steamworks = steamworks;
             this.remoteStorage = remoteStorage;
 
-            steamworks.AddCallback<SteamNative.DownloadItemResult_t, SteamNative.DownloadItemResult_t.PackSmall>( onDownloadResult, SteamNative.DownloadItemResult_t.CallbackId );
-            steamworks.AddCallback<ItemInstalled, ItemInstalled.Small>( onItemInstalled, ItemInstalled.CallbackId );
+            SteamNative.DownloadItemResult_t.RegisterCallback( steamworks, onDownloadResult );
+            SteamNative.ItemInstalled_t.RegisterCallback( steamworks, onItemInstalled );
+
+            // steamworks.AddCallback<ItemInstalled, ItemInstalled.Small>( onItemInstalled, ItemInstalled.CallbackId );
         }
 
         public void Dispose()
@@ -37,10 +39,10 @@ namespace Facepunch.Steamworks
             OnItemInstalled = null;
         }
 
-        private void onItemInstalled( ItemInstalled obj, bool failed )
+        private void onItemInstalled( SteamNative.ItemInstalled_t obj, bool failed )
         {
             if ( OnItemInstalled != null )
-                OnItemInstalled( obj.FileId );
+                OnItemInstalled( obj.PublishedFileId );
         }
 
         private void onDownloadResult( SteamNative.DownloadItemResult_t obj, bool failed )

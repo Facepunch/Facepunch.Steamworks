@@ -19,11 +19,11 @@ namespace Facepunch.Steamworks
 
         public virtual void Dispose()
         {
-            foreach ( var d in Disposables )
+            foreach ( var h in CallbackHandles )
             {
-                d.Dispose();
+                h.Remove( this );
             }
-            Disposables.Clear();
+            CallbackHandles.Clear();
 
             if ( Workshop != null )
             {
@@ -65,8 +65,6 @@ namespace Facepunch.Steamworks
         internal Interop.NativeInterface native;
         internal virtual bool IsGameServer { get { return false; } }
 
-        private List<IDisposable> Disposables = new List<IDisposable>();
-
         public enum MessageType : int
         {
             Message = 0,
@@ -78,18 +76,11 @@ namespace Facepunch.Steamworks
         /// </summary>
         public Action<MessageType, string> OnMessage;
 
-        /// <summary>
-        /// Global callback type
-        /// </summary>
-        internal void AddCallback<T, TSmall>( Action<T, bool> Callback, int id ) where T : new()
-        {
-            var callback = new Callback<T, TSmall>( native.api, IsGameServer, id, Callback );
-            Disposables.Add( callback );
-        }
 
-        internal void AddCallback<T>( Action<T, bool> Callback, int id ) where T : new()
+        private List<SteamNative.Callback.Handle> CallbackHandles = new List<SteamNative.Callback.Handle>();
+        internal void RegisterCallbackHandle( SteamNative.Callback.Handle handle )
         {
-            AddCallback<T, T>( Callback, id );
+            CallbackHandles.Add( handle );
         }
 
         public Action OnUpdate;

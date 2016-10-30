@@ -51,7 +51,7 @@ namespace Facepunch.Steamworks
         {
             server = s;
 
-            server.AddCallback<SteamNative.ValidateAuthTicketResponse_t>( OnAuthTicketValidate, SteamNative.ValidateAuthTicketResponse_t.CallbackId );
+            SteamNative.ValidateAuthTicketResponse_t.RegisterCallback( server, OnAuthTicketValidate );
         }
 
         void OnAuthTicketValidate( SteamNative.ValidateAuthTicketResponse_t data, bool b )

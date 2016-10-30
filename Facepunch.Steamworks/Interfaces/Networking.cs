@@ -14,12 +14,12 @@ namespace Facepunch.Steamworks
 
         internal SteamNative.SteamNetworking networking;
 
-        internal Networking( BaseSteamworks sw, SteamNative.SteamNetworking networking )
+        internal Networking( BaseSteamworks steamworks, SteamNative.SteamNetworking networking )
         {
             this.networking = networking;
 
-            sw.AddCallback<SteamNative.P2PSessionRequest_t>( onP2PConnectionRequest, SteamNative.P2PSessionRequest_t.CallbackId );
-            sw.AddCallback<SteamNative.P2PSessionConnectFail_t>( onP2PConnectionFailed, SteamNative.P2PSessionConnectFail_t.CallbackId );
+            SteamNative.P2PSessionRequest_t.RegisterCallback( steamworks, onP2PConnectionRequest );
+            SteamNative.P2PSessionConnectFail_t.RegisterCallback( steamworks, onP2PConnectionFailed );
         }
 
         public void Dispose()

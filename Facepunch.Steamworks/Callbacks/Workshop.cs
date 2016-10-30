@@ -3,22 +3,6 @@ using Facepunch.Steamworks.Interop;
 
 namespace Facepunch.Steamworks.Callbacks.Workshop
 {
-    [StructLayout( LayoutKind.Sequential, Pack = 8 )]
-    internal struct ItemInstalled
-    {
-        public uint AppId;
-        public ulong FileId;
-
-        public const int CallbackId = SteamNative.CallbackIdentifiers.ClientUGC + 5;
-
-        [StructLayout( LayoutKind.Sequential, Pack = 4 )]
-        internal struct Small
-        {
-            public uint AppId;
-            public ulong FileId;
-        };
-    };
-
     internal class QueryCompleted : CallResult<SteamNative.SteamUGCQueryCompleted_t, SteamNative.SteamUGCQueryCompleted_t.PackSmall>
     {
         public override int CallbackId { get { return SteamNative.SteamUGCQueryCompleted_t.CallbackId; } }

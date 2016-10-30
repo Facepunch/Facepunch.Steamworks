@@ -320,7 +320,7 @@ namespace Facepunch.Steamworks.Test
             {
                 Assert.IsTrue( client.IsValid );
 
-                var item = client.Workshop.GetItem( 661319648);
+                var item = client.Workshop.GetItem( 787387588 );
 
                 if ( !item.Installed )
                 {

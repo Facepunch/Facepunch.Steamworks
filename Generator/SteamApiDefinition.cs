@@ -55,7 +55,7 @@ namespace Generator
             public string CallbackId { get; set; }
         }
 
-        public StructDef[] structs { get; set; }
+        public List<StructDef> structs { get; set; }
 
         public class MethodDef
         {
