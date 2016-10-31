@@ -40,19 +40,21 @@ namespace SteamNative
     public class CallbackHandle : IDisposable
     {
         internal BaseSteamworks steamworks;
-
-        internal SteamAPICall_t callHandle;
-
-        public GCHandle FuncA;
-        public GCHandle FuncB;
-        public GCHandle FuncC;
-
-        public IntPtr vTablePtr;
-
-        public GCHandle PinnedCallback;
+        internal SteamAPICall_t CallResultHandle;
+        internal bool CallResult;
+        internal GCHandle FuncA;
+        internal GCHandle FuncB;
+        internal GCHandle FuncC;
+        internal IntPtr vTablePtr;
+        internal GCHandle PinnedCallback;
 
         public void Dispose()
         {
+            if ( CallResult )
+                UnregisterCallResult();
+            else
+                UnregisterCallback();
+
             if ( FuncA.IsAllocated )
                 FuncA.Free();
 
@@ -72,50 +74,24 @@ namespace SteamNative
             }
         }
 
-        internal void UnregisterCallback()
+        private void UnregisterCallback()
         {
-            if ( PinnedCallback.IsAllocated )
-            {
-                steamworks.native.api.SteamAPI_UnregisterCallback( PinnedCallback.AddrOfPinnedObject() );
-            }
+            if ( !PinnedCallback.IsAllocated )
+                return;
 
-            Dispose();
+            steamworks.native.api.SteamAPI_UnregisterCallback( PinnedCallback.AddrOfPinnedObject() );
         }
 
-        internal void UnregisterCallResult()
+        private void UnregisterCallResult()
         {
-            if ( PinnedCallback.IsAllocated )
-            {
-                steamworks.native.api.SteamAPI_UnregisterCallResult( PinnedCallback.AddrOfPinnedObject(), callHandle );
-            }
+            if ( CallResultHandle == 0 )
+                return;
 
-            Dispose();
-        }
-    }
-    /*
-    public class CallResult<T> : IDisposable
-    {
-        public SteamAPICall_t Handle { get; private set; }
-        private Callback.Handle CallbackHandle;
-        
+            if ( !PinnedCallback.IsAllocated )
+                return;
 
-        internal CallResult( BaseSteamworks steamworks, SteamAPICall_t Handle, Callback.Handle CallbackHandle )
-        {
-            this.Handle = Handle;
-            this.CallbackHandle = CallbackHandle;
-            this.steamworks = steamworks;
-        }
-
-        public void Dispose()
-        {
-            if ( !steamworks.IsValid ) return;
-            if ( this.Handle == 0 ) return;
-
-            steamworks.native.api.SteamAPI_UnregisterCallResult( CallbackHandle.PinnedCallback.AddrOfPinnedObject(), Handle );
-            CallbackHandle.Dispose();
-            Handle = 0;
+            steamworks.native.api.SteamAPI_UnregisterCallResult( PinnedCallback.AddrOfPinnedObject(), CallResultHandle );
         }
     }
-    */
 
 }

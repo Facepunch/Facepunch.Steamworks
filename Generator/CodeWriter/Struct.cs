@@ -272,14 +272,24 @@ namespace Generator
             {
                 WriteLine( $"var handle = new CallbackHandle();" );
                 WriteLine( $"handle.steamworks = steamworks;" );
-                WriteLine( $"handle.callHandle = call;" );
+                WriteLine( $"handle.CallResultHandle = call;" );
+                WriteLine( $"handle.CallResult = true;" );
                 WriteLine( $"" );
 
                 WriteLine( "//" );
                 WriteLine( "// Create the functions we need for the vtable" );
                 WriteLine( "//" );
-                WriteLine( $"Callback.Result         funcA = ( _, p ) => {{ CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); }};" );
-                WriteLine( $"Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => {{ CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); }};" );
+                WriteLine( $"Callback.Result         funcA = ( _, p ) => {{  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); }};" );
+                StartBlock( $"Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => " );
+                {
+                    WriteLine( "if ( hSteamAPICall != call ) return;" );
+                    WriteLine();
+                    WriteLine( "handle.CallResultHandle = 0;" );
+                    WriteLine( "handle.Dispose();" );
+                    WriteLine();
+                    WriteLine( "CallbackFunction( FromPointer( p ), bIOFailure );" );
+                }
+                EndBlock( ";" );
                 WriteLine( $"Callback.GetSize        funcC = ( _ ) => {{ return Marshal.SizeOf( typeof( {c.Name} ) ); }};" );
                 WriteLine();
                 WriteLine( "//" );

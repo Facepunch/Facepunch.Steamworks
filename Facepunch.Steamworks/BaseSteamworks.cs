@@ -21,7 +21,7 @@ namespace Facepunch.Steamworks
         {
             foreach ( var h in CallbackHandles )
             {
-                h.UnregisterCallback();
+                h.Dispose();
             }
             CallbackHandles.Clear();
 

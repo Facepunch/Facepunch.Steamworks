@@ -114,20 +114,17 @@ namespace Facepunch.Steamworks
 
             private void OnItemCreated( SteamNative.CreateItemResult_t obj, bool Failed )
             {
-                if ( Failed )
-                    throw new System.Exception( "CreateItemResult_t Failed" );
-
                 NeedToAgreeToWorkshopLegal = obj.UserNeedsToAcceptWorkshopLegalAgreement;
-                CreateItem = null;
+                CreateItem.Dispose();
 
-                if ( obj.Result == SteamNative.Result.OK )
+                if ( obj.Result == SteamNative.Result.OK && !Failed )
                 {
                     Id = obj.PublishedFileId;
                     PublishChanges();
                     return;
                 }
 
-                Error = "Error creating new file: " + obj.Result.ToString();
+                Error = "Error creating new file: " + obj.Result.ToString() + "("+ obj.PublishedFileId+ ")";
                 Publishing = false;
             }
 
