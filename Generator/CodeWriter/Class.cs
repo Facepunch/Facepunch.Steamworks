@@ -35,24 +35,27 @@ namespace Generator
 
         private void Class( string classname, SteamApiDefinition.MethodDef[] methodDef )
         {
-            StartBlock( $"public unsafe class {InterfaceNameToClass(classname)} : IDisposable" );
+            StartBlock( $"internal unsafe class {InterfaceNameToClass(classname)} : IDisposable" );
             {
                 WriteLine( "//" );
                 WriteLine( "// Holds a platform specific implentation" );
                 WriteLine( "//" );
-                WriteLine( "internal Platform.Interface _pi;" );
+                WriteLine( "internal Platform.Interface platform;" );
+                WriteLine( "internal Facepunch.Steamworks.BaseSteamworks steamworks;" );
                 WriteLine();
 
                 WriteLine( "//" );
                 WriteLine( "// Constructor decides which implementation to use based on current platform" );
                 WriteLine( "//" );
-                StartBlock( $"public {InterfaceNameToClass( classname )}( IntPtr pointer )" );
+                StartBlock( $"public {InterfaceNameToClass( classname )}( Facepunch.Steamworks.BaseSteamworks steamworks, IntPtr pointer )" );
                 {
-                    WriteLine( "if ( Platform.IsWindows64 ) _pi = new Platform.Win64( pointer );" );
-                    WriteLine( "else if ( Platform.IsWindows32 ) _pi = new Platform.Win32( pointer );" );
-                    WriteLine( "else if ( Platform.IsLinux32 ) _pi = new Platform.Linux32( pointer );" );
-                    WriteLine( "else if ( Platform.IsLinux64 ) _pi = new Platform.Linux64( pointer );" );
-                    WriteLine( "else if ( Platform.IsOsx ) _pi = new Platform.Mac( pointer );" );
+                    WriteLine( "this.steamworks = steamworks;" );
+                    WriteLine( "" );
+                    WriteLine( "if ( Platform.IsWindows64 ) platform = new Platform.Win64( pointer );" );
+                    WriteLine( "else if ( Platform.IsWindows32 ) platform = new Platform.Win32( pointer );" );
+                    WriteLine( "else if ( Platform.IsLinux32 ) platform = new Platform.Linux32( pointer );" );
+                    WriteLine( "else if ( Platform.IsLinux64 ) platform = new Platform.Linux64( pointer );" );
+                    WriteLine( "else if ( Platform.IsOsx ) platform = new Platform.Mac( pointer );" );
                 }
                 EndBlock();
                 WriteLine();
@@ -60,7 +63,7 @@ namespace Generator
                 WriteLine( "//" );
                 WriteLine( "// Class is invalid if we don't have a valid implementation" );
                 WriteLine( "//" );
-                WriteLine( "public bool IsValid{ get{ return _pi != null && _pi.IsValid; } }" );
+                WriteLine( "public bool IsValid{ get{ return platform != null && platform.IsValid; } }" );
                 WriteLine();
 
                 WriteLine( "//" );
@@ -68,10 +71,10 @@ namespace Generator
                 WriteLine( "//" );
                 StartBlock( $"public virtual void Dispose()" );
                 {
-                    StartBlock( " if ( _pi != null )" );
+                    StartBlock( " if ( platform != null )" );
                     {
-                        WriteLine( "_pi.Dispose();" );
-                        WriteLine( "_pi = null;" );
+                        WriteLine( "platform.Dispose();" );
+                        WriteLine( "platform = null;" );
                     }
                     EndBlock();
                 }
@@ -114,6 +117,7 @@ namespace Generator
             Detect_IntPtrArgs( argList, callargs );
             Detect_MultiSizeArrayReturn( argList, callargs );
             Detect_StringArray( argList, callargs );
+            Detect_CallResult( argList, callargs );
 
             var methodName = m.Name;
 
@@ -136,6 +140,24 @@ namespace Generator
             LastMethodName = m.Name;
         }
 
+        private void Detect_CallResult( List<Argument> argList, List<Argument> callargs )
+        {
+            if ( ReturnType != "SteamAPICall_t" ) return;
+            if ( string.IsNullOrEmpty( MethodDef.CallResult ) ) return;
+
+            argList.Insert( argList.Count, new Argument( "CallbackFunction = null", $"Action<{MethodDef.CallResult}, bool>", null ) );
+            BeforeLines.Insert( 0, "SteamAPICall_t callback = 0;" );
+
+            ReturnVar = "callback";
+            ReturnType = $"CallbackHandle";
+
+            AfterLines.Add( "" );
+            AfterLines.Add( "if ( CallbackFunction == null ) return null;" );
+            AfterLines.Add( "" );
+
+            AfterLines.Add( $"return {MethodDef.CallResult}.CallResult( steamworks, callback, CallbackFunction );" );
+        }
+
         private void Detect_StringArray( List<Argument> argList, List<Argument> callargs )
         {
             var arg = argList.FirstOrDefault( x => x.NativeType.Contains( "SteamParamStringArray_t") );
@@ -152,6 +174,9 @@ namespace Generator
             BeforeLines.Add( $"nativeStrings[i] = Marshal.StringToHGlobalAnsi( {arg.Name}[i] );" );
             BeforeLines.Add( $"}}" );
 
+            BeforeLines.Add( "try" );
+            BeforeLines.Add( "{" );
+
             BeforeLines.Add( "" );
             BeforeLines.Add( "// Create string array" );
             BeforeLines.Add( $"var size = Marshal.SizeOf( typeof( IntPtr ) ) * nativeStrings.Length;" );
@@ -164,14 +189,13 @@ namespace Generator
             BeforeLines.Add( $"tags.Strings = nativeArray;" );
             BeforeLines.Add( $"tags.NumStrings = {arg.Name}.Length;" );
 
-            ReturnVar = "var result";
-
+            AfterLines.Add( "}" );
+            AfterLines.Add( "finally" );
+            AfterLines.Add( "{" );
             AfterLines.Add( $"foreach ( var x in nativeStrings )" );
             AfterLines.Add( $"   Marshal.FreeHGlobal( x );" );
             AfterLines.Add( $"" );
-            AfterLines.Add( $"return result;" );
-
-
+            AfterLines.Add( "}" );
 
             foreach ( var a in callargs )
                 if ( a.Name == arg.Name ) a.Name = "ref tags";
@@ -375,7 +399,7 @@ namespace Generator
             ReturnVar = "interface_pointer";
             ReturnType = ReturnType.Substring( 1 ).Trim( '*', ' ' );
 
-            AfterLines.Add( $"return new {ReturnType}( interface_pointer );" );
+            AfterLines.Add( $"return new {ReturnType}( steamworks, interface_pointer );" );
         }
 
         private void Detect_VectorReturn( List<Argument> argList, List<Argument> callArgs )
@@ -429,7 +453,7 @@ namespace Generator
             if ( returnVar != "" )
                 r = returnVar + " = ";
 
-            BeforeLines.Add( $"{r}_pi.{classname}_{methodName}({args});" );
+            BeforeLines.Add( $"{r}platform.{classname}_{methodName}({args});" );
         }
     }
 }

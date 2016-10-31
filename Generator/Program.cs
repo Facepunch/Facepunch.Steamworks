@@ -110,6 +110,48 @@ namespace Generator
             def.methods.Add( new SteamApiDefinition.MethodDef()
             {
                 ClassName = "SteamApi",
+                Name = "SteamAPI_RegisterCallResult",
+                ReturnType = "void",
+                NeedsSelfPointer = false,
+                Params = new SteamApiDefinition.MethodDef.ParamType[]
+                {
+                    new SteamApiDefinition.MethodDef.ParamType()
+                    {
+                        Name = "pCallback",
+                        Type = "void *"
+                    },
+                    new SteamApiDefinition.MethodDef.ParamType()
+                    {
+                        Name = "callback",
+                        Type = "SteamAPICall_t"
+                    },
+                }
+            } );
+
+            def.methods.Add( new SteamApiDefinition.MethodDef()
+            {
+                ClassName = "SteamApi",
+                Name = "SteamAPI_UnregisterCallResult",
+                ReturnType = "void",
+                NeedsSelfPointer = false,
+                Params = new SteamApiDefinition.MethodDef.ParamType[]
+                {
+                    new SteamApiDefinition.MethodDef.ParamType()
+                    {
+                        Name = "pCallback",
+                        Type = "void *"
+                    },
+                    new SteamApiDefinition.MethodDef.ParamType()
+                    {
+                        Name = "callback",
+                        Type = "SteamAPICall_t"
+                    },
+                }
+            } );
+
+            def.methods.Add( new SteamApiDefinition.MethodDef()
+            {
+                ClassName = "SteamApi",
                 Name = "SteamInternal_GameServer_Init",
                 ReturnType = "bool",
                 NeedsSelfPointer = false,

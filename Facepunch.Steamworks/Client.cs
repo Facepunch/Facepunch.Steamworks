@@ -29,7 +29,7 @@ namespace Facepunch.Steamworks
             //
             // Get other interfaces
             //
-            if ( !native.InitClient() )
+            if ( !native.InitClient( this ) )
             {
                 native.Dispose();
                 native = null;

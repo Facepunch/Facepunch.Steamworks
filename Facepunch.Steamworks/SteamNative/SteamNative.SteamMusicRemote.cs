@@ -3,232 +3,235 @@ using System.Runtime.InteropServices;
 
 namespace SteamNative
 {
-	public unsafe class SteamMusicRemote : IDisposable
+	internal unsafe class SteamMusicRemote : IDisposable
 	{
 		//
 		// Holds a platform specific implentation
 		//
-		internal Platform.Interface _pi;
+		internal Platform.Interface platform;
+		internal Facepunch.Steamworks.BaseSteamworks steamworks;
 		
 		//
 		// Constructor decides which implementation to use based on current platform
 		//
-		public SteamMusicRemote( IntPtr pointer )
+		public SteamMusicRemote( Facepunch.Steamworks.BaseSteamworks steamworks, IntPtr pointer )
 		{
-			if ( Platform.IsWindows64 ) _pi = new Platform.Win64( pointer );
-			else if ( Platform.IsWindows32 ) _pi = new Platform.Win32( pointer );
-			else if ( Platform.IsLinux32 ) _pi = new Platform.Linux32( pointer );
-			else if ( Platform.IsLinux64 ) _pi = new Platform.Linux64( pointer );
-			else if ( Platform.IsOsx ) _pi = new Platform.Mac( pointer );
+			this.steamworks = steamworks;
+			
+			if ( Platform.IsWindows64 ) platform = new Platform.Win64( pointer );
+			else if ( Platform.IsWindows32 ) platform = new Platform.Win32( pointer );
+			else if ( Platform.IsLinux32 ) platform = new Platform.Linux32( pointer );
+			else if ( Platform.IsLinux64 ) platform = new Platform.Linux64( pointer );
+			else if ( Platform.IsOsx ) platform = new Platform.Mac( pointer );
 		}
 		
 		//
 		// Class is invalid if we don't have a valid implementation
 		//
-		public bool IsValid{ get{ return _pi != null && _pi.IsValid; } }
+		public bool IsValid{ get{ return platform != null && platform.IsValid; } }
 		
 		//
 		// When shutting down clear all the internals to avoid accidental use
 		//
 		public virtual void Dispose()
 		{
-			 if ( _pi != null )
+			 if ( platform != null )
 			{
-				_pi.Dispose();
-				_pi = null;
+				platform.Dispose();
+				platform = null;
 			}
 		}
 		
 		// bool
 		public bool BActivationSuccess( bool bValue /*bool*/ )
 		{
-			return _pi.ISteamMusicRemote_BActivationSuccess( bValue );
+			return platform.ISteamMusicRemote_BActivationSuccess( bValue );
 		}
 		
 		// bool
 		public bool BIsCurrentMusicRemote()
 		{
-			return _pi.ISteamMusicRemote_BIsCurrentMusicRemote();
+			return platform.ISteamMusicRemote_BIsCurrentMusicRemote();
 		}
 		
 		// bool
 		public bool CurrentEntryDidChange()
 		{
-			return _pi.ISteamMusicRemote_CurrentEntryDidChange();
+			return platform.ISteamMusicRemote_CurrentEntryDidChange();
 		}
 		
 		// bool
 		public bool CurrentEntryIsAvailable( bool bAvailable /*bool*/ )
 		{
-			return _pi.ISteamMusicRemote_CurrentEntryIsAvailable( bAvailable );
+			return platform.ISteamMusicRemote_CurrentEntryIsAvailable( bAvailable );
 		}
 		
 		// bool
 		public bool CurrentEntryWillChange()
 		{
-			return _pi.ISteamMusicRemote_CurrentEntryWillChange();
+			return platform.ISteamMusicRemote_CurrentEntryWillChange();
 		}
 		
 		// bool
 		public bool DeregisterSteamMusicRemote()
 		{
-			return _pi.ISteamMusicRemote_DeregisterSteamMusicRemote();
+			return platform.ISteamMusicRemote_DeregisterSteamMusicRemote();
 		}
 		
 		// bool
 		public bool EnableLooped( bool bValue /*bool*/ )
 		{
-			return _pi.ISteamMusicRemote_EnableLooped( bValue );
+			return platform.ISteamMusicRemote_EnableLooped( bValue );
 		}
 		
 		// bool
 		public bool EnablePlaylists( bool bValue /*bool*/ )
 		{
-			return _pi.ISteamMusicRemote_EnablePlaylists( bValue );
+			return platform.ISteamMusicRemote_EnablePlaylists( bValue );
 		}
 		
 		// bool
 		public bool EnablePlayNext( bool bValue /*bool*/ )
 		{
-			return _pi.ISteamMusicRemote_EnablePlayNext( bValue );
+			return platform.ISteamMusicRemote_EnablePlayNext( bValue );
 		}
 		
 		// bool
 		public bool EnablePlayPrevious( bool bValue /*bool*/ )
 		{
-			return _pi.ISteamMusicRemote_EnablePlayPrevious( bValue );
+			return platform.ISteamMusicRemote_EnablePlayPrevious( bValue );
 		}
 		
 		// bool
 		public bool EnableQueue( bool bValue /*bool*/ )
 		{
-			return _pi.ISteamMusicRemote_EnableQueue( bValue );
+			return platform.ISteamMusicRemote_EnableQueue( bValue );
 		}
 		
 		// bool
 		public bool EnableShuffled( bool bValue /*bool*/ )
 		{
-			return _pi.ISteamMusicRemote_EnableShuffled( bValue );
+			return platform.ISteamMusicRemote_EnableShuffled( bValue );
 		}
 		
 		// bool
 		public bool PlaylistDidChange()
 		{
-			return _pi.ISteamMusicRemote_PlaylistDidChange();
+			return platform.ISteamMusicRemote_PlaylistDidChange();
 		}
 		
 		// bool
 		public bool PlaylistWillChange()
 		{
-			return _pi.ISteamMusicRemote_PlaylistWillChange();
+			return platform.ISteamMusicRemote_PlaylistWillChange();
 		}
 		
 		// bool
 		public bool QueueDidChange()
 		{
-			return _pi.ISteamMusicRemote_QueueDidChange();
+			return platform.ISteamMusicRemote_QueueDidChange();
 		}
 		
 		// bool
 		public bool QueueWillChange()
 		{
-			return _pi.ISteamMusicRemote_QueueWillChange();
+			return platform.ISteamMusicRemote_QueueWillChange();
 		}
 		
 		// bool
 		public bool RegisterSteamMusicRemote( string pchName /*const char **/ )
 		{
-			return _pi.ISteamMusicRemote_RegisterSteamMusicRemote( pchName );
+			return platform.ISteamMusicRemote_RegisterSteamMusicRemote( pchName );
 		}
 		
 		// bool
 		public bool ResetPlaylistEntries()
 		{
-			return _pi.ISteamMusicRemote_ResetPlaylistEntries();
+			return platform.ISteamMusicRemote_ResetPlaylistEntries();
 		}
 		
 		// bool
 		public bool ResetQueueEntries()
 		{
-			return _pi.ISteamMusicRemote_ResetQueueEntries();
+			return platform.ISteamMusicRemote_ResetQueueEntries();
 		}
 		
 		// bool
 		public bool SetCurrentPlaylistEntry( int nID /*int*/ )
 		{
-			return _pi.ISteamMusicRemote_SetCurrentPlaylistEntry( nID );
+			return platform.ISteamMusicRemote_SetCurrentPlaylistEntry( nID );
 		}
 		
 		// bool
 		public bool SetCurrentQueueEntry( int nID /*int*/ )
 		{
-			return _pi.ISteamMusicRemote_SetCurrentQueueEntry( nID );
+			return platform.ISteamMusicRemote_SetCurrentQueueEntry( nID );
 		}
 		
 		// bool
 		public bool SetDisplayName( string pchDisplayName /*const char **/ )
 		{
-			return _pi.ISteamMusicRemote_SetDisplayName( pchDisplayName );
+			return platform.ISteamMusicRemote_SetDisplayName( pchDisplayName );
 		}
 		
 		// bool
 		public bool SetPlaylistEntry( int nID /*int*/, int nPosition /*int*/, string pchEntryText /*const char **/ )
 		{
-			return _pi.ISteamMusicRemote_SetPlaylistEntry( nID, nPosition, pchEntryText );
+			return platform.ISteamMusicRemote_SetPlaylistEntry( nID, nPosition, pchEntryText );
 		}
 		
 		// bool
 		public bool SetPNGIcon_64x64( IntPtr pvBuffer /*void **/, uint cbBufferLength /*uint32*/ )
 		{
-			return _pi.ISteamMusicRemote_SetPNGIcon_64x64( (IntPtr) pvBuffer, cbBufferLength );
+			return platform.ISteamMusicRemote_SetPNGIcon_64x64( (IntPtr) pvBuffer, cbBufferLength );
 		}
 		
 		// bool
 		public bool SetQueueEntry( int nID /*int*/, int nPosition /*int*/, string pchEntryText /*const char **/ )
 		{
-			return _pi.ISteamMusicRemote_SetQueueEntry( nID, nPosition, pchEntryText );
+			return platform.ISteamMusicRemote_SetQueueEntry( nID, nPosition, pchEntryText );
 		}
 		
 		// bool
 		public bool UpdateCurrentEntryCoverArt( IntPtr pvBuffer /*void **/, uint cbBufferLength /*uint32*/ )
 		{
-			return _pi.ISteamMusicRemote_UpdateCurrentEntryCoverArt( (IntPtr) pvBuffer, cbBufferLength );
+			return platform.ISteamMusicRemote_UpdateCurrentEntryCoverArt( (IntPtr) pvBuffer, cbBufferLength );
 		}
 		
 		// bool
 		public bool UpdateCurrentEntryElapsedSeconds( int nValue /*int*/ )
 		{
-			return _pi.ISteamMusicRemote_UpdateCurrentEntryElapsedSeconds( nValue );
+			return platform.ISteamMusicRemote_UpdateCurrentEntryElapsedSeconds( nValue );
 		}
 		
 		// bool
 		public bool UpdateCurrentEntryText( string pchText /*const char **/ )
 		{
-			return _pi.ISteamMusicRemote_UpdateCurrentEntryText( pchText );
+			return platform.ISteamMusicRemote_UpdateCurrentEntryText( pchText );
 		}
 		
 		// bool
 		public bool UpdateLooped( bool bValue /*bool*/ )
 		{
-			return _pi.ISteamMusicRemote_UpdateLooped( bValue );
+			return platform.ISteamMusicRemote_UpdateLooped( bValue );
 		}
 		
 		// bool
 		public bool UpdatePlaybackStatus( AudioPlayback_Status nStatus /*AudioPlayback_Status*/ )
 		{
-			return _pi.ISteamMusicRemote_UpdatePlaybackStatus( nStatus );
+			return platform.ISteamMusicRemote_UpdatePlaybackStatus( nStatus );
 		}
 		
 		// bool
 		public bool UpdateShuffled( bool bValue /*bool*/ )
 		{
-			return _pi.ISteamMusicRemote_UpdateShuffled( bValue );
+			return platform.ISteamMusicRemote_UpdateShuffled( bValue );
 		}
 		
 		// bool
 		public bool UpdateVolume( float flValue /*float*/ )
 		{
-			return _pi.ISteamMusicRemote_UpdateVolume( flValue );
+			return platform.ISteamMusicRemote_UpdateVolume( flValue );
 		}
 		
 	}

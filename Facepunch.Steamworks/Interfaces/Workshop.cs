@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Facepunch.Steamworks.Callbacks.Workshop;
+using SteamNative;
 
 namespace Facepunch.Steamworks
 {
@@ -24,6 +24,7 @@ namespace Facepunch.Steamworks
 
             SteamNative.DownloadItemResult_t.RegisterCallback( steamworks, onDownloadResult );
             SteamNative.ItemInstalled_t.RegisterCallback( steamworks, onItemInstalled );
+          //  SteamNative.SteamUGCQueryCompleted_t.RegisterCallback( steamworks, onQueryComplete );
 
             // steamworks.AddCallback<ItemInstalled, ItemInstalled.Small>( onItemInstalled, ItemInstalled.CallbackId );
         }

@@ -27,7 +27,7 @@ namespace Facepunch.Steamworks
             //
             // Get other interfaces
             //
-            if ( !native.InitServer( IpAddress, 0, GamePort, QueryPort, Secure ? 3 : 2, VersionString ) )
+            if ( !native.InitServer( this, IpAddress, 0, GamePort, QueryPort, Secure ? 3 : 2, VersionString ) )
             {
                 native.Dispose();
                 native = null;

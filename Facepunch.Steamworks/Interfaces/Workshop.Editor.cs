@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Facepunch.Steamworks.Callbacks.Workshop;
+using SteamNative;
 
 namespace Facepunch.Steamworks
 {
@@ -10,8 +10,9 @@ namespace Facepunch.Steamworks
         {
             internal Workshop workshop;
 
-            internal CreateItem CreateItem;
-            internal SubmitItemUpdate SubmitItemUpdate;
+            internal CallbackHandle CreateItem;
+            internal CallbackHandle SubmitItemUpdate;
+            internal SteamNative.UGCUpdateHandle_t UpdateHandle;
 
             public ulong Id { get; internal set; }
             public string Title { get; set; } = null;
@@ -48,7 +49,7 @@ namespace Facepunch.Steamworks
                     ulong b = 0;
                     ulong t = 0;
 
-                    workshop.steamworks.native.ugc.GetItemUpdateProgress( SubmitItemUpdate.UpdateHandle, out b, out t );
+                    workshop.steamworks.native.ugc.GetItemUpdateProgress( UpdateHandle, out b, out t );
 
                     if ( t == 0 )
                         return 0;
@@ -68,7 +69,7 @@ namespace Facepunch.Steamworks
                     ulong b = 0;
                     ulong t = 0;
 
-                    workshop.steamworks.native.ugc.GetItemUpdateProgress( SubmitItemUpdate.UpdateHandle, out b, out t );
+                    workshop.steamworks.native.ugc.GetItemUpdateProgress( UpdateHandle, out b, out t );
                     return (int) b;
                 }
             }
@@ -84,7 +85,7 @@ namespace Facepunch.Steamworks
                     ulong b = 0;
                     ulong t = 0;
 
-                    workshop.steamworks.native.ugc.GetItemUpdateProgress( SubmitItemUpdate.UpdateHandle, out b, out t );
+                    workshop.steamworks.native.ugc.GetItemUpdateProgress( UpdateHandle, out b, out t );
                     return (int)t;
                 }
             }
@@ -108,14 +109,14 @@ namespace Facepunch.Steamworks
                 if ( !Type.HasValue )
                     throw new System.Exception( "Editor.Type must be set when creating a new item!" );
 
-                CreateItem = new CreateItem();
-                CreateItem.Handle = workshop.ugc.CreateItem( workshop.steamworks.AppId, (SteamNative.WorkshopFileType)(uint)Type );
-                CreateItem.OnResult = OnItemCreated;
-                workshop.steamworks.AddCallResult( CreateItem );
+                CreateItem = workshop.ugc.CreateItem( workshop.steamworks.AppId, (SteamNative.WorkshopFileType)(uint)Type, OnItemCreated );
             }
 
-            private void OnItemCreated( SteamNative.CreateItemResult_t obj )
+            private void OnItemCreated( SteamNative.CreateItemResult_t obj, bool Failed )
             {
+                if ( Failed )
+                    throw new System.Exception( "CreateItemResult_t Failed" );
+
                 NeedToAgreeToWorkshopLegal = obj.UserNeedsToAcceptWorkshopLegalAgreement;
                 CreateItem = null;
 
@@ -132,7 +133,7 @@ namespace Facepunch.Steamworks
 
             private void PublishChanges()
             {
-                SteamNative.UGCUpdateHandle_t UpdateHandle = workshop.ugc.StartItemUpdate( workshop.steamworks.AppId, Id );
+                UpdateHandle = workshop.ugc.StartItemUpdate( workshop.steamworks.AppId, Id );
 
                 if ( Title != null )
                     workshop.ugc.SetItemTitle( UpdateHandle, Title );
@@ -164,15 +165,14 @@ namespace Facepunch.Steamworks
                     workshop.ugc.RemoveItemPreview( UpdateId, uint32 index ) = 0; // remove a preview by index starting at 0 (previews are sorted)
                  */
 
-                SubmitItemUpdate = new SubmitItemUpdate();
-                SubmitItemUpdate.Handle = workshop.ugc.SubmitItemUpdate( UpdateHandle, ChangeNote );
-                SubmitItemUpdate.OnResult = OnChangesSubmitted;
-                SubmitItemUpdate.UpdateHandle = UpdateHandle;
-                workshop.steamworks.AddCallResult( SubmitItemUpdate );
+                SubmitItemUpdate = workshop.ugc.SubmitItemUpdate( UpdateHandle, ChangeNote, OnChangesSubmitted );
             }
 
-            private void OnChangesSubmitted( SteamNative.SubmitItemUpdateResult_t obj )
+            private void OnChangesSubmitted( SteamNative.SubmitItemUpdateResult_t obj, bool Failed )
             {
+                if ( Failed )
+                    throw new System.Exception( "CreateItemResult_t Failed" );
+
                 SubmitItemUpdate = null;
                 NeedToAgreeToWorkshopLegal = obj.UserNeedsToAcceptWorkshopLegalAgreement;
                 Publishing = false;

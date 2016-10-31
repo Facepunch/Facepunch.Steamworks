@@ -12,10 +12,11 @@ namespace SteamNative
 		public int ParamCount; // m_cubParam int
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static CallbackMsg_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (CallbackMsg_t.PackSmall) Marshal.PtrToStructure( p, typeof(CallbackMsg_t.PackSmall) );
 			return (CallbackMsg_t) Marshal.PtrToStructure( p, typeof(CallbackMsg_t) );
 		}
 		
@@ -40,14 +41,6 @@ namespace SteamNative
 					ParamCount = d.ParamCount,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 	}
 	
@@ -60,10 +53,11 @@ namespace SteamNative
 		public bool StillRetrying; // m_bStillRetrying _Bool
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static SteamServerConnectFailure_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (SteamServerConnectFailure_t.PackSmall) Marshal.PtrToStructure( p, typeof(SteamServerConnectFailure_t.PackSmall) );
 			return (SteamServerConnectFailure_t) Marshal.PtrToStructure( p, typeof(SteamServerConnectFailure_t) );
 		}
 		
@@ -85,25 +79,18 @@ namespace SteamNative
 					StillRetrying = d.StillRetrying,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<SteamServerConnectFailure_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamServerConnectFailure_t ) ); };
 			
 			//
@@ -111,8 +98,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -164,10 +149,11 @@ namespace SteamNative
 		public Result Result; // m_eResult enum EResult
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static SteamServersDisconnected_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (SteamServersDisconnected_t.PackSmall) Marshal.PtrToStructure( p, typeof(SteamServersDisconnected_t.PackSmall) );
 			return (SteamServersDisconnected_t) Marshal.PtrToStructure( p, typeof(SteamServersDisconnected_t) );
 		}
 		
@@ -186,25 +172,18 @@ namespace SteamNative
 					Result = d.Result,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<SteamServersDisconnected_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamServersDisconnected_t ) ); };
 			
 			//
@@ -212,8 +191,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -269,10 +246,11 @@ namespace SteamNative
 		public uint Reason; // m_uReason uint32
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static ClientGameServerDeny_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (ClientGameServerDeny_t.PackSmall) Marshal.PtrToStructure( p, typeof(ClientGameServerDeny_t.PackSmall) );
 			return (ClientGameServerDeny_t) Marshal.PtrToStructure( p, typeof(ClientGameServerDeny_t) );
 		}
 		
@@ -299,25 +277,18 @@ namespace SteamNative
 					Reason = d.Reason,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<ClientGameServerDeny_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( ClientGameServerDeny_t ) ); };
 			
 			//
@@ -325,8 +296,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -380,10 +349,11 @@ namespace SteamNative
 		public ulong OwnerSteamID; // m_OwnerSteamID class CSteamID
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static ValidateAuthTicketResponse_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (ValidateAuthTicketResponse_t.PackSmall) Marshal.PtrToStructure( p, typeof(ValidateAuthTicketResponse_t.PackSmall) );
 			return (ValidateAuthTicketResponse_t) Marshal.PtrToStructure( p, typeof(ValidateAuthTicketResponse_t) );
 		}
 		
@@ -406,25 +376,18 @@ namespace SteamNative
 					OwnerSteamID = d.OwnerSteamID,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<ValidateAuthTicketResponse_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( ValidateAuthTicketResponse_t ) ); };
 			
 			//
@@ -432,8 +395,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -487,10 +448,11 @@ namespace SteamNative
 		public byte Authorized; // m_bAuthorized uint8
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static MicroTxnAuthorizationResponse_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (MicroTxnAuthorizationResponse_t.PackSmall) Marshal.PtrToStructure( p, typeof(MicroTxnAuthorizationResponse_t.PackSmall) );
 			return (MicroTxnAuthorizationResponse_t) Marshal.PtrToStructure( p, typeof(MicroTxnAuthorizationResponse_t) );
 		}
 		
@@ -513,25 +475,18 @@ namespace SteamNative
 					Authorized = d.Authorized,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<MicroTxnAuthorizationResponse_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( MicroTxnAuthorizationResponse_t ) ); };
 			
 			//
@@ -539,8 +494,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -592,10 +545,11 @@ namespace SteamNative
 		public Result Result; // m_eResult enum EResult
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static EncryptedAppTicketResponse_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (EncryptedAppTicketResponse_t.PackSmall) Marshal.PtrToStructure( p, typeof(EncryptedAppTicketResponse_t.PackSmall) );
 			return (EncryptedAppTicketResponse_t) Marshal.PtrToStructure( p, typeof(EncryptedAppTicketResponse_t) );
 		}
 		
@@ -614,25 +568,19 @@ namespace SteamNative
 					Result = d.Result,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<EncryptedAppTicketResponse_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<EncryptedAppTicketResponse_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( EncryptedAppTicketResponse_t ) ); };
 			
 			//
@@ -640,8 +588,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -680,9 +626,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -694,10 +640,11 @@ namespace SteamNative
 		public Result Result; // m_eResult enum EResult
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static GetAuthSessionTicketResponse_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (GetAuthSessionTicketResponse_t.PackSmall) Marshal.PtrToStructure( p, typeof(GetAuthSessionTicketResponse_t.PackSmall) );
 			return (GetAuthSessionTicketResponse_t) Marshal.PtrToStructure( p, typeof(GetAuthSessionTicketResponse_t) );
 		}
 		
@@ -718,25 +665,18 @@ namespace SteamNative
 					Result = d.Result,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GetAuthSessionTicketResponse_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GetAuthSessionTicketResponse_t ) ); };
 			
 			//
@@ -744,8 +684,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -798,10 +736,11 @@ namespace SteamNative
 		public string URL; // m_szURL char [256]
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static GameWebCallback_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (GameWebCallback_t.PackSmall) Marshal.PtrToStructure( p, typeof(GameWebCallback_t.PackSmall) );
 			return (GameWebCallback_t) Marshal.PtrToStructure( p, typeof(GameWebCallback_t) );
 		}
 		
@@ -821,25 +760,18 @@ namespace SteamNative
 					URL = d.URL,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GameWebCallback_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GameWebCallback_t ) ); };
 			
 			//
@@ -847,8 +779,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -901,10 +831,11 @@ namespace SteamNative
 		public string URL; // m_szURL char [512]
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static StoreAuthURLResponse_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (StoreAuthURLResponse_t.PackSmall) Marshal.PtrToStructure( p, typeof(StoreAuthURLResponse_t.PackSmall) );
 			return (StoreAuthURLResponse_t) Marshal.PtrToStructure( p, typeof(StoreAuthURLResponse_t) );
 		}
 		
@@ -924,25 +855,19 @@ namespace SteamNative
 					URL = d.URL,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<StoreAuthURLResponse_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<StoreAuthURLResponse_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( StoreAuthURLResponse_t ) ); };
 			
 			//
@@ -950,8 +875,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -990,9 +913,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -1006,10 +929,11 @@ namespace SteamNative
 		public ulong SteamIDLobby; // m_steamIDLobby class CSteamID
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static FriendGameInfo_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (FriendGameInfo_t.PackSmall) Marshal.PtrToStructure( p, typeof(FriendGameInfo_t.PackSmall) );
 			return (FriendGameInfo_t) Marshal.PtrToStructure( p, typeof(FriendGameInfo_t) );
 		}
 		
@@ -1036,14 +960,6 @@ namespace SteamNative
 					SteamIDLobby = d.SteamIDLobby,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 	}
 	
@@ -1054,10 +970,11 @@ namespace SteamNative
 		public byte IPublishedToFriendsSessionInstance; // m_uiPublishedToFriendsSessionInstance uint8
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static FriendSessionStateInfo_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (FriendSessionStateInfo_t.PackSmall) Marshal.PtrToStructure( p, typeof(FriendSessionStateInfo_t.PackSmall) );
 			return (FriendSessionStateInfo_t) Marshal.PtrToStructure( p, typeof(FriendSessionStateInfo_t) );
 		}
 		
@@ -1078,14 +995,6 @@ namespace SteamNative
 					IPublishedToFriendsSessionInstance = d.IPublishedToFriendsSessionInstance,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 	}
 	
@@ -1097,10 +1006,11 @@ namespace SteamNative
 		public int ChangeFlags; // m_nChangeFlags int
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static PersonaStateChange_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (PersonaStateChange_t.PackSmall) Marshal.PtrToStructure( p, typeof(PersonaStateChange_t.PackSmall) );
 			return (PersonaStateChange_t) Marshal.PtrToStructure( p, typeof(PersonaStateChange_t) );
 		}
 		
@@ -1121,25 +1031,18 @@ namespace SteamNative
 					ChangeFlags = d.ChangeFlags,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<PersonaStateChange_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( PersonaStateChange_t ) ); };
 			
 			//
@@ -1147,8 +1050,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -1200,10 +1101,11 @@ namespace SteamNative
 		public byte Active; // m_bActive uint8
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static GameOverlayActivated_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (GameOverlayActivated_t.PackSmall) Marshal.PtrToStructure( p, typeof(GameOverlayActivated_t.PackSmall) );
 			return (GameOverlayActivated_t) Marshal.PtrToStructure( p, typeof(GameOverlayActivated_t) );
 		}
 		
@@ -1222,25 +1124,18 @@ namespace SteamNative
 					Active = d.Active,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GameOverlayActivated_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GameOverlayActivated_t ) ); };
 			
 			//
@@ -1248,8 +1143,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -1304,10 +1197,11 @@ namespace SteamNative
 		public string Password; // m_rgchPassword char [64]
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static GameServerChangeRequested_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (GameServerChangeRequested_t.PackSmall) Marshal.PtrToStructure( p, typeof(GameServerChangeRequested_t.PackSmall) );
 			return (GameServerChangeRequested_t) Marshal.PtrToStructure( p, typeof(GameServerChangeRequested_t) );
 		}
 		
@@ -1330,25 +1224,18 @@ namespace SteamNative
 					Password = d.Password,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GameServerChangeRequested_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GameServerChangeRequested_t ) ); };
 			
 			//
@@ -1356,8 +1243,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -1410,10 +1295,11 @@ namespace SteamNative
 		public ulong SteamIDFriend; // m_steamIDFriend class CSteamID
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static GameLobbyJoinRequested_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (GameLobbyJoinRequested_t.PackSmall) Marshal.PtrToStructure( p, typeof(GameLobbyJoinRequested_t.PackSmall) );
 			return (GameLobbyJoinRequested_t) Marshal.PtrToStructure( p, typeof(GameLobbyJoinRequested_t) );
 		}
 		
@@ -1434,25 +1320,18 @@ namespace SteamNative
 					SteamIDFriend = d.SteamIDFriend,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GameLobbyJoinRequested_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GameLobbyJoinRequested_t ) ); };
 			
 			//
@@ -1460,8 +1339,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -1516,10 +1393,11 @@ namespace SteamNative
 		public int Tall; // m_iTall int
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static AvatarImageLoaded_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (AvatarImageLoaded_t.PackSmall) Marshal.PtrToStructure( p, typeof(AvatarImageLoaded_t.PackSmall) );
 			return (AvatarImageLoaded_t) Marshal.PtrToStructure( p, typeof(AvatarImageLoaded_t) );
 		}
 		
@@ -1544,25 +1422,18 @@ namespace SteamNative
 					Tall = d.Tall,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<AvatarImageLoaded_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( AvatarImageLoaded_t ) ); };
 			
 			//
@@ -1570,8 +1441,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -1625,10 +1494,11 @@ namespace SteamNative
 		public byte Success; // m_bSuccess uint8
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static ClanOfficerListResponse_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (ClanOfficerListResponse_t.PackSmall) Marshal.PtrToStructure( p, typeof(ClanOfficerListResponse_t.PackSmall) );
 			return (ClanOfficerListResponse_t) Marshal.PtrToStructure( p, typeof(ClanOfficerListResponse_t) );
 		}
 		
@@ -1651,25 +1521,19 @@ namespace SteamNative
 					Success = d.Success,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<ClanOfficerListResponse_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<ClanOfficerListResponse_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( ClanOfficerListResponse_t ) ); };
 			
 			//
@@ -1677,8 +1541,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -1717,9 +1579,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -1731,10 +1593,11 @@ namespace SteamNative
 		public uint AppID; // m_nAppID AppId_t
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static FriendRichPresenceUpdate_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (FriendRichPresenceUpdate_t.PackSmall) Marshal.PtrToStructure( p, typeof(FriendRichPresenceUpdate_t.PackSmall) );
 			return (FriendRichPresenceUpdate_t) Marshal.PtrToStructure( p, typeof(FriendRichPresenceUpdate_t) );
 		}
 		
@@ -1755,25 +1618,18 @@ namespace SteamNative
 					AppID = d.AppID,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<FriendRichPresenceUpdate_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( FriendRichPresenceUpdate_t ) ); };
 			
 			//
@@ -1781,8 +1637,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -1836,10 +1690,11 @@ namespace SteamNative
 		public string Connect; // m_rgchConnect char [256]
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static GameRichPresenceJoinRequested_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (GameRichPresenceJoinRequested_t.PackSmall) Marshal.PtrToStructure( p, typeof(GameRichPresenceJoinRequested_t.PackSmall) );
 			return (GameRichPresenceJoinRequested_t) Marshal.PtrToStructure( p, typeof(GameRichPresenceJoinRequested_t) );
 		}
 		
@@ -1861,25 +1716,18 @@ namespace SteamNative
 					Connect = d.Connect,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GameRichPresenceJoinRequested_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GameRichPresenceJoinRequested_t ) ); };
 			
 			//
@@ -1887,8 +1735,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -1942,10 +1788,11 @@ namespace SteamNative
 		public int MessageID; // m_iMessageID int
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static GameConnectedClanChatMsg_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (GameConnectedClanChatMsg_t.PackSmall) Marshal.PtrToStructure( p, typeof(GameConnectedClanChatMsg_t.PackSmall) );
 			return (GameConnectedClanChatMsg_t) Marshal.PtrToStructure( p, typeof(GameConnectedClanChatMsg_t) );
 		}
 		
@@ -1968,25 +1815,18 @@ namespace SteamNative
 					MessageID = d.MessageID,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GameConnectedClanChatMsg_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GameConnectedClanChatMsg_t ) ); };
 			
 			//
@@ -1994,8 +1834,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -2048,10 +1886,11 @@ namespace SteamNative
 		public ulong SteamIDUser; // m_steamIDUser class CSteamID
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static GameConnectedChatJoin_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (GameConnectedChatJoin_t.PackSmall) Marshal.PtrToStructure( p, typeof(GameConnectedChatJoin_t.PackSmall) );
 			return (GameConnectedChatJoin_t) Marshal.PtrToStructure( p, typeof(GameConnectedChatJoin_t) );
 		}
 		
@@ -2072,25 +1911,18 @@ namespace SteamNative
 					SteamIDUser = d.SteamIDUser,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GameConnectedChatJoin_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GameConnectedChatJoin_t ) ); };
 			
 			//
@@ -2098,8 +1930,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -2156,10 +1986,11 @@ namespace SteamNative
 		public bool Dropped; // m_bDropped _Bool
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static GameConnectedChatLeave_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (GameConnectedChatLeave_t.PackSmall) Marshal.PtrToStructure( p, typeof(GameConnectedChatLeave_t.PackSmall) );
 			return (GameConnectedChatLeave_t) Marshal.PtrToStructure( p, typeof(GameConnectedChatLeave_t) );
 		}
 		
@@ -2186,25 +2017,18 @@ namespace SteamNative
 					Dropped = d.Dropped,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GameConnectedChatLeave_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GameConnectedChatLeave_t ) ); };
 			
 			//
@@ -2212,8 +2036,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -2266,10 +2088,11 @@ namespace SteamNative
 		public bool Success; // m_bSuccess _Bool
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static DownloadClanActivityCountsResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (DownloadClanActivityCountsResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(DownloadClanActivityCountsResult_t.PackSmall) );
 			return (DownloadClanActivityCountsResult_t) Marshal.PtrToStructure( p, typeof(DownloadClanActivityCountsResult_t) );
 		}
 		
@@ -2289,25 +2112,18 @@ namespace SteamNative
 					Success = d.Success,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<DownloadClanActivityCountsResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( DownloadClanActivityCountsResult_t ) ); };
 			
 			//
@@ -2315,8 +2131,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -2369,10 +2183,11 @@ namespace SteamNative
 		public ChatRoomEnterResponse ChatRoomEnterResponse; // m_eChatRoomEnterResponse enum EChatRoomEnterResponse
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static JoinClanChatRoomCompletionResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (JoinClanChatRoomCompletionResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(JoinClanChatRoomCompletionResult_t.PackSmall) );
 			return (JoinClanChatRoomCompletionResult_t) Marshal.PtrToStructure( p, typeof(JoinClanChatRoomCompletionResult_t) );
 		}
 		
@@ -2393,25 +2208,19 @@ namespace SteamNative
 					ChatRoomEnterResponse = d.ChatRoomEnterResponse,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<JoinClanChatRoomCompletionResult_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<JoinClanChatRoomCompletionResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( JoinClanChatRoomCompletionResult_t ) ); };
 			
 			//
@@ -2419,8 +2228,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -2459,9 +2266,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -2473,10 +2280,11 @@ namespace SteamNative
 		public int MessageID; // m_iMessageID int
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static GameConnectedFriendChatMsg_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (GameConnectedFriendChatMsg_t.PackSmall) Marshal.PtrToStructure( p, typeof(GameConnectedFriendChatMsg_t.PackSmall) );
 			return (GameConnectedFriendChatMsg_t) Marshal.PtrToStructure( p, typeof(GameConnectedFriendChatMsg_t) );
 		}
 		
@@ -2497,25 +2305,18 @@ namespace SteamNative
 					MessageID = d.MessageID,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GameConnectedFriendChatMsg_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GameConnectedFriendChatMsg_t ) ); };
 			
 			//
@@ -2523,8 +2324,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -2578,10 +2377,11 @@ namespace SteamNative
 		public int Count; // m_nCount int
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static FriendsGetFollowerCount_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (FriendsGetFollowerCount_t.PackSmall) Marshal.PtrToStructure( p, typeof(FriendsGetFollowerCount_t.PackSmall) );
 			return (FriendsGetFollowerCount_t) Marshal.PtrToStructure( p, typeof(FriendsGetFollowerCount_t) );
 		}
 		
@@ -2604,25 +2404,19 @@ namespace SteamNative
 					Count = d.Count,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<FriendsGetFollowerCount_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<FriendsGetFollowerCount_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( FriendsGetFollowerCount_t ) ); };
 			
 			//
@@ -2630,8 +2424,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -2670,9 +2462,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -2686,10 +2478,11 @@ namespace SteamNative
 		public bool IsFollowing; // m_bIsFollowing _Bool
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static FriendsIsFollowing_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (FriendsIsFollowing_t.PackSmall) Marshal.PtrToStructure( p, typeof(FriendsIsFollowing_t.PackSmall) );
 			return (FriendsIsFollowing_t) Marshal.PtrToStructure( p, typeof(FriendsIsFollowing_t) );
 		}
 		
@@ -2713,25 +2506,19 @@ namespace SteamNative
 					IsFollowing = d.IsFollowing,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<FriendsIsFollowing_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<FriendsIsFollowing_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( FriendsIsFollowing_t ) ); };
 			
 			//
@@ -2739,8 +2526,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -2779,9 +2564,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -2796,10 +2581,11 @@ namespace SteamNative
 		public int TotalResultCount; // m_nTotalResultCount int32
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static FriendsEnumerateFollowingList_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (FriendsEnumerateFollowingList_t.PackSmall) Marshal.PtrToStructure( p, typeof(FriendsEnumerateFollowingList_t.PackSmall) );
 			return (FriendsEnumerateFollowingList_t) Marshal.PtrToStructure( p, typeof(FriendsEnumerateFollowingList_t) );
 		}
 		
@@ -2825,25 +2611,19 @@ namespace SteamNative
 					TotalResultCount = d.TotalResultCount,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<FriendsEnumerateFollowingList_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<FriendsEnumerateFollowingList_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( FriendsEnumerateFollowingList_t ) ); };
 			
 			//
@@ -2851,8 +2631,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -2891,9 +2669,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -2908,10 +2686,11 @@ namespace SteamNative
 		public Result Esult; // m_result enum EResult
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static SetPersonaNameResponse_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (SetPersonaNameResponse_t.PackSmall) Marshal.PtrToStructure( p, typeof(SetPersonaNameResponse_t.PackSmall) );
 			return (SetPersonaNameResponse_t) Marshal.PtrToStructure( p, typeof(SetPersonaNameResponse_t) );
 		}
 		
@@ -2936,25 +2715,19 @@ namespace SteamNative
 					Esult = d.Esult,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<SetPersonaNameResponse_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<SetPersonaNameResponse_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SetPersonaNameResponse_t ) ); };
 			
 			//
@@ -2962,8 +2735,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -3002,9 +2773,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -3015,10 +2786,11 @@ namespace SteamNative
 		public byte MinutesBatteryLeft; // m_nMinutesBatteryLeft uint8
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static LowBatteryPower_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (LowBatteryPower_t.PackSmall) Marshal.PtrToStructure( p, typeof(LowBatteryPower_t.PackSmall) );
 			return (LowBatteryPower_t) Marshal.PtrToStructure( p, typeof(LowBatteryPower_t) );
 		}
 		
@@ -3037,25 +2809,18 @@ namespace SteamNative
 					MinutesBatteryLeft = d.MinutesBatteryLeft,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<LowBatteryPower_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( LowBatteryPower_t ) ); };
 			
 			//
@@ -3063,8 +2828,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -3118,10 +2881,11 @@ namespace SteamNative
 		public uint ParamCount; // m_cubParam uint32
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static SteamAPICallCompleted_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (SteamAPICallCompleted_t.PackSmall) Marshal.PtrToStructure( p, typeof(SteamAPICallCompleted_t.PackSmall) );
 			return (SteamAPICallCompleted_t) Marshal.PtrToStructure( p, typeof(SteamAPICallCompleted_t) );
 		}
 		
@@ -3144,25 +2908,18 @@ namespace SteamNative
 					ParamCount = d.ParamCount,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<SteamAPICallCompleted_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamAPICallCompleted_t ) ); };
 			
 			//
@@ -3170,8 +2927,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -3223,10 +2978,11 @@ namespace SteamNative
 		public CheckFileSignature CheckFileSignature; // m_eCheckFileSignature enum ECheckFileSignature
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static CheckFileSignature_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (CheckFileSignature_t.PackSmall) Marshal.PtrToStructure( p, typeof(CheckFileSignature_t.PackSmall) );
 			return (CheckFileSignature_t) Marshal.PtrToStructure( p, typeof(CheckFileSignature_t) );
 		}
 		
@@ -3245,25 +3001,19 @@ namespace SteamNative
 					CheckFileSignature = d.CheckFileSignature,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<CheckFileSignature_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<CheckFileSignature_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( CheckFileSignature_t ) ); };
 			
 			//
@@ -3271,8 +3021,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -3311,9 +3059,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -3326,10 +3074,11 @@ namespace SteamNative
 		public uint SubmittedText; // m_unSubmittedText uint32
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static GamepadTextInputDismissed_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (GamepadTextInputDismissed_t.PackSmall) Marshal.PtrToStructure( p, typeof(GamepadTextInputDismissed_t.PackSmall) );
 			return (GamepadTextInputDismissed_t) Marshal.PtrToStructure( p, typeof(GamepadTextInputDismissed_t) );
 		}
 		
@@ -3351,25 +3100,18 @@ namespace SteamNative
 					SubmittedText = d.SubmittedText,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GamepadTextInputDismissed_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GamepadTextInputDismissed_t ) ); };
 			
 			//
@@ -3377,8 +3119,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -3432,10 +3172,11 @@ namespace SteamNative
 		public string Value; // m_szValue char [256]
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static MatchMakingKeyValuePair_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (MatchMakingKeyValuePair_t.PackSmall) Marshal.PtrToStructure( p, typeof(MatchMakingKeyValuePair_t.PackSmall) );
 			return (MatchMakingKeyValuePair_t) Marshal.PtrToStructure( p, typeof(MatchMakingKeyValuePair_t) );
 		}
 		
@@ -3458,14 +3199,6 @@ namespace SteamNative
 					Value = d.Value,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 	}
 	
@@ -3477,10 +3210,11 @@ namespace SteamNative
 		public uint IP; // m_unIP uint32
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static servernetadr_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (servernetadr_t.PackSmall) Marshal.PtrToStructure( p, typeof(servernetadr_t.PackSmall) );
 			return (servernetadr_t) Marshal.PtrToStructure( p, typeof(servernetadr_t) );
 		}
 		
@@ -3502,14 +3236,6 @@ namespace SteamNative
 					QueryPort = d.QueryPort,
 					IP = d.IP,
 				};
-			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			}
 		}
 	}
@@ -3546,10 +3272,11 @@ namespace SteamNative
 		public ulong SteamID; // m_steamID class CSteamID
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static gameserveritem_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (gameserveritem_t.PackSmall) Marshal.PtrToStructure( p, typeof(gameserveritem_t.PackSmall) );
 			return (gameserveritem_t) Marshal.PtrToStructure( p, typeof(gameserveritem_t) );
 		}
 		
@@ -3611,14 +3338,6 @@ namespace SteamNative
 					SteamID = d.SteamID,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 	}
 	
@@ -3636,10 +3355,11 @@ namespace SteamNative
 		public uint AccountId; // m_unAccountId AccountID_t
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static FavoritesListChanged_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (FavoritesListChanged_t.PackSmall) Marshal.PtrToStructure( p, typeof(FavoritesListChanged_t.PackSmall) );
 			return (FavoritesListChanged_t) Marshal.PtrToStructure( p, typeof(FavoritesListChanged_t) );
 		}
 		
@@ -3671,25 +3391,18 @@ namespace SteamNative
 					AccountId = d.AccountId,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<FavoritesListChanged_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( FavoritesListChanged_t ) ); };
 			
 			//
@@ -3697,8 +3410,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -3752,10 +3463,11 @@ namespace SteamNative
 		public ulong GameID; // m_ulGameID uint64
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static LobbyInvite_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (LobbyInvite_t.PackSmall) Marshal.PtrToStructure( p, typeof(LobbyInvite_t.PackSmall) );
 			return (LobbyInvite_t) Marshal.PtrToStructure( p, typeof(LobbyInvite_t) );
 		}
 		
@@ -3778,25 +3490,18 @@ namespace SteamNative
 					GameID = d.GameID,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<LobbyInvite_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( LobbyInvite_t ) ); };
 			
 			//
@@ -3804,8 +3509,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -3861,10 +3564,11 @@ namespace SteamNative
 		public uint EChatRoomEnterResponse; // m_EChatRoomEnterResponse uint32
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static LobbyEnter_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (LobbyEnter_t.PackSmall) Marshal.PtrToStructure( p, typeof(LobbyEnter_t.PackSmall) );
 			return (LobbyEnter_t) Marshal.PtrToStructure( p, typeof(LobbyEnter_t) );
 		}
 		
@@ -3890,25 +3594,19 @@ namespace SteamNative
 					EChatRoomEnterResponse = d.EChatRoomEnterResponse,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<LobbyEnter_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<LobbyEnter_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( LobbyEnter_t ) ); };
 			
 			//
@@ -3916,8 +3614,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -3956,9 +3652,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -3971,10 +3667,11 @@ namespace SteamNative
 		public byte Success; // m_bSuccess uint8
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static LobbyDataUpdate_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (LobbyDataUpdate_t.PackSmall) Marshal.PtrToStructure( p, typeof(LobbyDataUpdate_t.PackSmall) );
 			return (LobbyDataUpdate_t) Marshal.PtrToStructure( p, typeof(LobbyDataUpdate_t) );
 		}
 		
@@ -3997,25 +3694,18 @@ namespace SteamNative
 					Success = d.Success,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<LobbyDataUpdate_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( LobbyDataUpdate_t ) ); };
 			
 			//
@@ -4023,8 +3713,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -4079,10 +3767,11 @@ namespace SteamNative
 		public uint GfChatMemberStateChange; // m_rgfChatMemberStateChange uint32
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static LobbyChatUpdate_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (LobbyChatUpdate_t.PackSmall) Marshal.PtrToStructure( p, typeof(LobbyChatUpdate_t.PackSmall) );
 			return (LobbyChatUpdate_t) Marshal.PtrToStructure( p, typeof(LobbyChatUpdate_t) );
 		}
 		
@@ -4107,25 +3796,18 @@ namespace SteamNative
 					GfChatMemberStateChange = d.GfChatMemberStateChange,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<LobbyChatUpdate_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( LobbyChatUpdate_t ) ); };
 			
 			//
@@ -4133,8 +3815,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -4189,10 +3869,11 @@ namespace SteamNative
 		public uint ChatID; // m_iChatID uint32
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static LobbyChatMsg_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (LobbyChatMsg_t.PackSmall) Marshal.PtrToStructure( p, typeof(LobbyChatMsg_t.PackSmall) );
 			return (LobbyChatMsg_t) Marshal.PtrToStructure( p, typeof(LobbyChatMsg_t) );
 		}
 		
@@ -4217,25 +3898,18 @@ namespace SteamNative
 					ChatID = d.ChatID,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<LobbyChatMsg_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( LobbyChatMsg_t ) ); };
 			
 			//
@@ -4243,8 +3917,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -4299,10 +3971,11 @@ namespace SteamNative
 		public ushort Port; // m_usPort uint16
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static LobbyGameCreated_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (LobbyGameCreated_t.PackSmall) Marshal.PtrToStructure( p, typeof(LobbyGameCreated_t.PackSmall) );
 			return (LobbyGameCreated_t) Marshal.PtrToStructure( p, typeof(LobbyGameCreated_t) );
 		}
 		
@@ -4327,25 +4000,18 @@ namespace SteamNative
 					Port = d.Port,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<LobbyGameCreated_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( LobbyGameCreated_t ) ); };
 			
 			//
@@ -4353,8 +4019,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -4406,10 +4070,11 @@ namespace SteamNative
 		public uint LobbiesMatching; // m_nLobbiesMatching uint32
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static LobbyMatchList_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (LobbyMatchList_t.PackSmall) Marshal.PtrToStructure( p, typeof(LobbyMatchList_t.PackSmall) );
 			return (LobbyMatchList_t) Marshal.PtrToStructure( p, typeof(LobbyMatchList_t) );
 		}
 		
@@ -4428,25 +4093,19 @@ namespace SteamNative
 					LobbiesMatching = d.LobbiesMatching,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<LobbyMatchList_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<LobbyMatchList_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( LobbyMatchList_t ) ); };
 			
 			//
@@ -4454,8 +4113,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -4494,9 +4151,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -4509,10 +4166,11 @@ namespace SteamNative
 		public byte KickedDueToDisconnect; // m_bKickedDueToDisconnect uint8
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static LobbyKicked_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (LobbyKicked_t.PackSmall) Marshal.PtrToStructure( p, typeof(LobbyKicked_t.PackSmall) );
 			return (LobbyKicked_t) Marshal.PtrToStructure( p, typeof(LobbyKicked_t) );
 		}
 		
@@ -4535,25 +4193,18 @@ namespace SteamNative
 					KickedDueToDisconnect = d.KickedDueToDisconnect,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<LobbyKicked_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( LobbyKicked_t ) ); };
 			
 			//
@@ -4561,8 +4212,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -4615,10 +4264,11 @@ namespace SteamNative
 		public ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static LobbyCreated_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (LobbyCreated_t.PackSmall) Marshal.PtrToStructure( p, typeof(LobbyCreated_t.PackSmall) );
 			return (LobbyCreated_t) Marshal.PtrToStructure( p, typeof(LobbyCreated_t) );
 		}
 		
@@ -4639,25 +4289,19 @@ namespace SteamNative
 					SteamIDLobby = d.SteamIDLobby,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<LobbyCreated_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<LobbyCreated_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( LobbyCreated_t ) ); };
 			
 			//
@@ -4665,8 +4309,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -4705,9 +4347,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -4720,10 +4362,11 @@ namespace SteamNative
 		public ulong SteamIDLobby; // m_steamIDLobby class CSteamID
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static PSNGameBootInviteResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (PSNGameBootInviteResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(PSNGameBootInviteResult_t.PackSmall) );
 			return (PSNGameBootInviteResult_t) Marshal.PtrToStructure( p, typeof(PSNGameBootInviteResult_t) );
 		}
 		
@@ -4745,25 +4388,18 @@ namespace SteamNative
 					SteamIDLobby = d.SteamIDLobby,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<PSNGameBootInviteResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( PSNGameBootInviteResult_t ) ); };
 			
 			//
@@ -4771,8 +4407,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -4824,10 +4458,11 @@ namespace SteamNative
 		public Result Result; // m_eResult enum EResult
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static FavoritesListAccountsUpdated_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (FavoritesListAccountsUpdated_t.PackSmall) Marshal.PtrToStructure( p, typeof(FavoritesListAccountsUpdated_t.PackSmall) );
 			return (FavoritesListAccountsUpdated_t) Marshal.PtrToStructure( p, typeof(FavoritesListAccountsUpdated_t) );
 		}
 		
@@ -4846,25 +4481,18 @@ namespace SteamNative
 					Result = d.Result,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<FavoritesListAccountsUpdated_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( FavoritesListAccountsUpdated_t ) ); };
 			
 			//
@@ -4872,8 +4500,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -4925,10 +4551,11 @@ namespace SteamNative
 		public int NumStrings; // m_nNumStrings int32
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static SteamParamStringArray_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (SteamParamStringArray_t.PackSmall) Marshal.PtrToStructure( p, typeof(SteamParamStringArray_t.PackSmall) );
 			return (SteamParamStringArray_t) Marshal.PtrToStructure( p, typeof(SteamParamStringArray_t) );
 		}
 		
@@ -4949,14 +4576,6 @@ namespace SteamNative
 					NumStrings = d.NumStrings,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 	}
 	
@@ -4969,10 +4588,11 @@ namespace SteamNative
 		public int NumDownloads; // m_unNumDownloads int
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RemoteStorageAppSyncedClient_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RemoteStorageAppSyncedClient_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncedClient_t.PackSmall) );
 			return (RemoteStorageAppSyncedClient_t) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncedClient_t) );
 		}
 		
@@ -4995,25 +4615,18 @@ namespace SteamNative
 					NumDownloads = d.NumDownloads,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageAppSyncedClient_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageAppSyncedClient_t ) ); };
 			
 			//
@@ -5021,8 +4634,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -5076,10 +4687,11 @@ namespace SteamNative
 		public int NumUploads; // m_unNumUploads int
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RemoteStorageAppSyncedServer_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RemoteStorageAppSyncedServer_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncedServer_t.PackSmall) );
 			return (RemoteStorageAppSyncedServer_t) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncedServer_t) );
 		}
 		
@@ -5102,25 +4714,18 @@ namespace SteamNative
 					NumUploads = d.NumUploads,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageAppSyncedServer_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageAppSyncedServer_t ) ); };
 			
 			//
@@ -5128,8 +4733,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -5187,10 +4790,11 @@ namespace SteamNative
 		public bool Uploading; // m_bUploading _Bool
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RemoteStorageAppSyncProgress_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RemoteStorageAppSyncProgress_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncProgress_t.PackSmall) );
 			return (RemoteStorageAppSyncProgress_t) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncProgress_t) );
 		}
 		
@@ -5219,25 +4823,18 @@ namespace SteamNative
 					Uploading = d.Uploading,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageAppSyncProgress_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageAppSyncProgress_t ) ); };
 			
 			//
@@ -5245,8 +4842,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -5299,10 +4894,11 @@ namespace SteamNative
 		public Result Result; // m_eResult enum EResult
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RemoteStorageAppSyncStatusCheck_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RemoteStorageAppSyncStatusCheck_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncStatusCheck_t.PackSmall) );
 			return (RemoteStorageAppSyncStatusCheck_t) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncStatusCheck_t) );
 		}
 		
@@ -5323,25 +4919,18 @@ namespace SteamNative
 					Result = d.Result,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageAppSyncStatusCheck_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageAppSyncStatusCheck_t ) ); };
 			
 			//
@@ -5349,8 +4938,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -5405,10 +4992,11 @@ namespace SteamNative
 		public string Filename; // m_rgchFilename char [260]
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RemoteStorageFileShareResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RemoteStorageFileShareResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageFileShareResult_t.PackSmall) );
 			return (RemoteStorageFileShareResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageFileShareResult_t) );
 		}
 		
@@ -5432,25 +5020,19 @@ namespace SteamNative
 					Filename = d.Filename,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageFileShareResult_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageFileShareResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageFileShareResult_t ) ); };
 			
 			//
@@ -5458,8 +5040,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -5498,9 +5078,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -5514,10 +5094,11 @@ namespace SteamNative
 		public bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RemoteStoragePublishFileResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RemoteStoragePublishFileResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishFileResult_t.PackSmall) );
 			return (RemoteStoragePublishFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishFileResult_t) );
 		}
 		
@@ -5541,25 +5122,18 @@ namespace SteamNative
 					UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStoragePublishFileResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStoragePublishFileResult_t ) ); };
 			
 			//
@@ -5567,8 +5141,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -5621,10 +5193,11 @@ namespace SteamNative
 		public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RemoteStorageDeletePublishedFileResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RemoteStorageDeletePublishedFileResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageDeletePublishedFileResult_t.PackSmall) );
 			return (RemoteStorageDeletePublishedFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageDeletePublishedFileResult_t) );
 		}
 		
@@ -5645,25 +5218,19 @@ namespace SteamNative
 					PublishedFileId = d.PublishedFileId,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageDeletePublishedFileResult_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageDeletePublishedFileResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageDeletePublishedFileResult_t ) ); };
 			
 			//
@@ -5671,8 +5238,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -5711,9 +5276,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -5728,10 +5293,11 @@ namespace SteamNative
 		public ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RemoteStorageEnumerateUserPublishedFilesResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RemoteStorageEnumerateUserPublishedFilesResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserPublishedFilesResult_t.PackSmall) );
 			return (RemoteStorageEnumerateUserPublishedFilesResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserPublishedFilesResult_t) );
 		}
 		
@@ -5757,25 +5323,19 @@ namespace SteamNative
 					GPublishedFileId = d.GPublishedFileId,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageEnumerateUserPublishedFilesResult_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageEnumerateUserPublishedFilesResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageEnumerateUserPublishedFilesResult_t ) ); };
 			
 			//
@@ -5783,8 +5343,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -5823,9 +5381,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -5837,10 +5395,11 @@ namespace SteamNative
 		public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RemoteStorageSubscribePublishedFileResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RemoteStorageSubscribePublishedFileResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageSubscribePublishedFileResult_t.PackSmall) );
 			return (RemoteStorageSubscribePublishedFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageSubscribePublishedFileResult_t) );
 		}
 		
@@ -5861,25 +5420,19 @@ namespace SteamNative
 					PublishedFileId = d.PublishedFileId,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageSubscribePublishedFileResult_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageSubscribePublishedFileResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageSubscribePublishedFileResult_t ) ); };
 			
 			//
@@ -5887,8 +5440,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -5927,9 +5478,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -5946,10 +5497,11 @@ namespace SteamNative
 		public uint[] GRTimeSubscribed; // m_rgRTimeSubscribed uint32 [50]
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RemoteStorageEnumerateUserSubscribedFilesResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RemoteStorageEnumerateUserSubscribedFilesResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserSubscribedFilesResult_t.PackSmall) );
 			return (RemoteStorageEnumerateUserSubscribedFilesResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserSubscribedFilesResult_t) );
 		}
 		
@@ -5978,25 +5530,19 @@ namespace SteamNative
 					GRTimeSubscribed = d.GRTimeSubscribed,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageEnumerateUserSubscribedFilesResult_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageEnumerateUserSubscribedFilesResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageEnumerateUserSubscribedFilesResult_t ) ); };
 			
 			//
@@ -6004,8 +5550,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -6044,9 +5588,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -6058,10 +5602,11 @@ namespace SteamNative
 		public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RemoteStorageUnsubscribePublishedFileResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RemoteStorageUnsubscribePublishedFileResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageUnsubscribePublishedFileResult_t.PackSmall) );
 			return (RemoteStorageUnsubscribePublishedFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageUnsubscribePublishedFileResult_t) );
 		}
 		
@@ -6082,25 +5627,19 @@ namespace SteamNative
 					PublishedFileId = d.PublishedFileId,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageUnsubscribePublishedFileResult_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageUnsubscribePublishedFileResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageUnsubscribePublishedFileResult_t ) ); };
 			
 			//
@@ -6108,8 +5647,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -6148,9 +5685,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -6164,10 +5701,11 @@ namespace SteamNative
 		public bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RemoteStorageUpdatePublishedFileResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RemoteStorageUpdatePublishedFileResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageUpdatePublishedFileResult_t.PackSmall) );
 			return (RemoteStorageUpdatePublishedFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageUpdatePublishedFileResult_t) );
 		}
 		
@@ -6191,25 +5729,19 @@ namespace SteamNative
 					UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageUpdatePublishedFileResult_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageUpdatePublishedFileResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageUpdatePublishedFileResult_t ) ); };
 			
 			//
@@ -6217,8 +5749,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -6257,9 +5787,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -6276,10 +5806,11 @@ namespace SteamNative
 		public ulong SteamIDOwner; // m_ulSteamIDOwner uint64
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RemoteStorageDownloadUGCResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RemoteStorageDownloadUGCResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageDownloadUGCResult_t.PackSmall) );
 			return (RemoteStorageDownloadUGCResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageDownloadUGCResult_t) );
 		}
 		
@@ -6309,25 +5840,19 @@ namespace SteamNative
 					SteamIDOwner = d.SteamIDOwner,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageDownloadUGCResult_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageDownloadUGCResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageDownloadUGCResult_t ) ); };
 			
 			//
@@ -6335,8 +5860,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -6375,9 +5898,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -6416,10 +5939,11 @@ namespace SteamNative
 		public bool AcceptedForUse; // m_bAcceptedForUse _Bool
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RemoteStorageGetPublishedFileDetailsResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RemoteStorageGetPublishedFileDetailsResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageGetPublishedFileDetailsResult_t.PackSmall) );
 			return (RemoteStorageGetPublishedFileDetailsResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageGetPublishedFileDetailsResult_t) );
 		}
 		
@@ -6486,25 +6010,19 @@ namespace SteamNative
 					AcceptedForUse = d.AcceptedForUse,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageGetPublishedFileDetailsResult_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageGetPublishedFileDetailsResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageGetPublishedFileDetailsResult_t ) ); };
 			
 			//
@@ -6512,8 +6030,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -6552,9 +6068,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -6573,10 +6089,11 @@ namespace SteamNative
 		public uint StartIndex; // m_unStartIndex uint32
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RemoteStorageEnumerateWorkshopFilesResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RemoteStorageEnumerateWorkshopFilesResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateWorkshopFilesResult_t.PackSmall) );
 			return (RemoteStorageEnumerateWorkshopFilesResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateWorkshopFilesResult_t) );
 		}
 		
@@ -6609,25 +6126,19 @@ namespace SteamNative
 					StartIndex = d.StartIndex,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageEnumerateWorkshopFilesResult_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageEnumerateWorkshopFilesResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageEnumerateWorkshopFilesResult_t ) ); };
 			
 			//
@@ -6635,8 +6146,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -6675,9 +6184,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -6693,10 +6202,11 @@ namespace SteamNative
 		public float FScore; // m_fScore float
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RemoteStorageGetPublishedItemVoteDetailsResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RemoteStorageGetPublishedItemVoteDetailsResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageGetPublishedItemVoteDetailsResult_t.PackSmall) );
 			return (RemoteStorageGetPublishedItemVoteDetailsResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageGetPublishedItemVoteDetailsResult_t) );
 		}
 		
@@ -6725,25 +6235,19 @@ namespace SteamNative
 					FScore = d.FScore,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageGetPublishedItemVoteDetailsResult_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageGetPublishedItemVoteDetailsResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageGetPublishedItemVoteDetailsResult_t ) ); };
 			
 			//
@@ -6751,8 +6255,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -6791,9 +6293,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -6805,10 +6307,11 @@ namespace SteamNative
 		public uint AppID; // m_nAppID AppId_t
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RemoteStoragePublishedFileSubscribed_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RemoteStoragePublishedFileSubscribed_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileSubscribed_t.PackSmall) );
 			return (RemoteStoragePublishedFileSubscribed_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileSubscribed_t) );
 		}
 		
@@ -6829,25 +6332,18 @@ namespace SteamNative
 					AppID = d.AppID,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStoragePublishedFileSubscribed_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStoragePublishedFileSubscribed_t ) ); };
 			
 			//
@@ -6855,8 +6351,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -6909,10 +6403,11 @@ namespace SteamNative
 		public uint AppID; // m_nAppID AppId_t
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RemoteStoragePublishedFileUnsubscribed_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RemoteStoragePublishedFileUnsubscribed_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileUnsubscribed_t.PackSmall) );
 			return (RemoteStoragePublishedFileUnsubscribed_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileUnsubscribed_t) );
 		}
 		
@@ -6933,25 +6428,18 @@ namespace SteamNative
 					AppID = d.AppID,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStoragePublishedFileUnsubscribed_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStoragePublishedFileUnsubscribed_t ) ); };
 			
 			//
@@ -6959,8 +6447,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -7013,10 +6499,11 @@ namespace SteamNative
 		public uint AppID; // m_nAppID AppId_t
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RemoteStoragePublishedFileDeleted_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RemoteStoragePublishedFileDeleted_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileDeleted_t.PackSmall) );
 			return (RemoteStoragePublishedFileDeleted_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileDeleted_t) );
 		}
 		
@@ -7037,25 +6524,18 @@ namespace SteamNative
 					AppID = d.AppID,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStoragePublishedFileDeleted_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStoragePublishedFileDeleted_t ) ); };
 			
 			//
@@ -7063,8 +6543,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -7117,10 +6595,11 @@ namespace SteamNative
 		public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RemoteStorageUpdateUserPublishedItemVoteResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RemoteStorageUpdateUserPublishedItemVoteResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageUpdateUserPublishedItemVoteResult_t.PackSmall) );
 			return (RemoteStorageUpdateUserPublishedItemVoteResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageUpdateUserPublishedItemVoteResult_t) );
 		}
 		
@@ -7141,25 +6620,19 @@ namespace SteamNative
 					PublishedFileId = d.PublishedFileId,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageUpdateUserPublishedItemVoteResult_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageUpdateUserPublishedItemVoteResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageUpdateUserPublishedItemVoteResult_t ) ); };
 			
 			//
@@ -7167,8 +6640,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -7207,9 +6678,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -7222,10 +6693,11 @@ namespace SteamNative
 		public WorkshopVote Vote; // m_eVote enum EWorkshopVote
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RemoteStorageUserVoteDetails_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RemoteStorageUserVoteDetails_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageUserVoteDetails_t.PackSmall) );
 			return (RemoteStorageUserVoteDetails_t) Marshal.PtrToStructure( p, typeof(RemoteStorageUserVoteDetails_t) );
 		}
 		
@@ -7248,25 +6720,18 @@ namespace SteamNative
 					Vote = d.Vote,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageUserVoteDetails_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageUserVoteDetails_t ) ); };
 			
 			//
@@ -7274,8 +6739,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -7331,10 +6794,11 @@ namespace SteamNative
 		public ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RemoteStorageEnumerateUserSharedWorkshopFilesResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RemoteStorageEnumerateUserSharedWorkshopFilesResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserSharedWorkshopFilesResult_t.PackSmall) );
 			return (RemoteStorageEnumerateUserSharedWorkshopFilesResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserSharedWorkshopFilesResult_t) );
 		}
 		
@@ -7360,25 +6824,18 @@ namespace SteamNative
 					GPublishedFileId = d.GPublishedFileId,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageEnumerateUserSharedWorkshopFilesResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageEnumerateUserSharedWorkshopFilesResult_t ) ); };
 			
 			//
@@ -7386,8 +6843,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -7441,10 +6896,11 @@ namespace SteamNative
 		public WorkshopFileAction Action; // m_eAction enum EWorkshopFileAction
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RemoteStorageSetUserPublishedFileActionResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RemoteStorageSetUserPublishedFileActionResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageSetUserPublishedFileActionResult_t.PackSmall) );
 			return (RemoteStorageSetUserPublishedFileActionResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageSetUserPublishedFileActionResult_t) );
 		}
 		
@@ -7467,25 +6923,19 @@ namespace SteamNative
 					Action = d.Action,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageSetUserPublishedFileActionResult_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageSetUserPublishedFileActionResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageSetUserPublishedFileActionResult_t ) ); };
 			
 			//
@@ -7493,8 +6943,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -7533,9 +6981,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -7553,10 +7001,11 @@ namespace SteamNative
 		public uint[] GRTimeUpdated; // m_rgRTimeUpdated uint32 [50]
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RemoteStorageEnumeratePublishedFilesByUserActionResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RemoteStorageEnumeratePublishedFilesByUserActionResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumeratePublishedFilesByUserActionResult_t.PackSmall) );
 			return (RemoteStorageEnumeratePublishedFilesByUserActionResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumeratePublishedFilesByUserActionResult_t) );
 		}
 		
@@ -7587,25 +7036,19 @@ namespace SteamNative
 					GRTimeUpdated = d.GRTimeUpdated,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageEnumeratePublishedFilesByUserActionResult_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageEnumeratePublishedFilesByUserActionResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageEnumeratePublishedFilesByUserActionResult_t ) ); };
 			
 			//
@@ -7613,8 +7056,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -7653,9 +7094,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -7668,10 +7109,11 @@ namespace SteamNative
 		public bool Preview; // m_bPreview _Bool
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RemoteStoragePublishFileProgress_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RemoteStoragePublishFileProgress_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishFileProgress_t.PackSmall) );
 			return (RemoteStoragePublishFileProgress_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishFileProgress_t) );
 		}
 		
@@ -7693,25 +7135,19 @@ namespace SteamNative
 					Preview = d.Preview,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStoragePublishFileProgress_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStoragePublishFileProgress_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStoragePublishFileProgress_t ) ); };
 			
 			//
@@ -7719,8 +7155,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -7759,9 +7193,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -7774,10 +7208,11 @@ namespace SteamNative
 		public ulong Unused; // m_ulUnused uint64
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RemoteStoragePublishedFileUpdated_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RemoteStoragePublishedFileUpdated_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileUpdated_t.PackSmall) );
 			return (RemoteStoragePublishedFileUpdated_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileUpdated_t) );
 		}
 		
@@ -7800,25 +7235,18 @@ namespace SteamNative
 					Unused = d.Unused,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStoragePublishedFileUpdated_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStoragePublishedFileUpdated_t ) ); };
 			
 			//
@@ -7826,8 +7254,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -7879,10 +7305,11 @@ namespace SteamNative
 		public Result Result; // m_eResult enum EResult
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RemoteStorageFileWriteAsyncComplete_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RemoteStorageFileWriteAsyncComplete_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageFileWriteAsyncComplete_t.PackSmall) );
 			return (RemoteStorageFileWriteAsyncComplete_t) Marshal.PtrToStructure( p, typeof(RemoteStorageFileWriteAsyncComplete_t) );
 		}
 		
@@ -7901,25 +7328,19 @@ namespace SteamNative
 					Result = d.Result,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageFileWriteAsyncComplete_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageFileWriteAsyncComplete_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageFileWriteAsyncComplete_t ) ); };
 			
 			//
@@ -7927,8 +7348,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -7967,9 +7386,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -7983,10 +7402,11 @@ namespace SteamNative
 		public uint Read; // m_cubRead uint32
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RemoteStorageFileReadAsyncComplete_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RemoteStorageFileReadAsyncComplete_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageFileReadAsyncComplete_t.PackSmall) );
 			return (RemoteStorageFileReadAsyncComplete_t) Marshal.PtrToStructure( p, typeof(RemoteStorageFileReadAsyncComplete_t) );
 		}
 		
@@ -8011,25 +7431,19 @@ namespace SteamNative
 					Read = d.Read,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageFileReadAsyncComplete_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageFileReadAsyncComplete_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageFileReadAsyncComplete_t ) ); };
 			
 			//
@@ -8037,8 +7451,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -8077,9 +7489,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -8093,10 +7505,11 @@ namespace SteamNative
 		public ulong UGC; // m_hUGC UGCHandle_t
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static LeaderboardEntry_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (LeaderboardEntry_t.PackSmall) Marshal.PtrToStructure( p, typeof(LeaderboardEntry_t.PackSmall) );
 			return (LeaderboardEntry_t) Marshal.PtrToStructure( p, typeof(LeaderboardEntry_t) );
 		}
 		
@@ -8123,14 +7536,6 @@ namespace SteamNative
 					UGC = d.UGC,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 	}
 	
@@ -8143,10 +7548,11 @@ namespace SteamNative
 		public ulong SteamIDUser; // m_steamIDUser class CSteamID
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static UserStatsReceived_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (UserStatsReceived_t.PackSmall) Marshal.PtrToStructure( p, typeof(UserStatsReceived_t.PackSmall) );
 			return (UserStatsReceived_t) Marshal.PtrToStructure( p, typeof(UserStatsReceived_t) );
 		}
 		
@@ -8169,25 +7575,19 @@ namespace SteamNative
 					SteamIDUser = d.SteamIDUser,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<UserStatsReceived_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<UserStatsReceived_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( UserStatsReceived_t ) ); };
 			
 			//
@@ -8195,8 +7595,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -8235,9 +7633,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -8249,10 +7647,11 @@ namespace SteamNative
 		public Result Result; // m_eResult enum EResult
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static UserStatsStored_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (UserStatsStored_t.PackSmall) Marshal.PtrToStructure( p, typeof(UserStatsStored_t.PackSmall) );
 			return (UserStatsStored_t) Marshal.PtrToStructure( p, typeof(UserStatsStored_t) );
 		}
 		
@@ -8273,25 +7672,18 @@ namespace SteamNative
 					Result = d.Result,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<UserStatsStored_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( UserStatsStored_t ) ); };
 			
 			//
@@ -8299,8 +7691,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -8358,10 +7748,11 @@ namespace SteamNative
 		public uint MaxProgress; // m_nMaxProgress uint32
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static UserAchievementStored_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (UserAchievementStored_t.PackSmall) Marshal.PtrToStructure( p, typeof(UserAchievementStored_t.PackSmall) );
 			return (UserAchievementStored_t) Marshal.PtrToStructure( p, typeof(UserAchievementStored_t) );
 		}
 		
@@ -8390,25 +7781,18 @@ namespace SteamNative
 					MaxProgress = d.MaxProgress,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<UserAchievementStored_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( UserAchievementStored_t ) ); };
 			
 			//
@@ -8416,8 +7800,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -8470,10 +7852,11 @@ namespace SteamNative
 		public byte LeaderboardFound; // m_bLeaderboardFound uint8
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static LeaderboardFindResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (LeaderboardFindResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(LeaderboardFindResult_t.PackSmall) );
 			return (LeaderboardFindResult_t) Marshal.PtrToStructure( p, typeof(LeaderboardFindResult_t) );
 		}
 		
@@ -8494,25 +7877,19 @@ namespace SteamNative
 					LeaderboardFound = d.LeaderboardFound,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<LeaderboardFindResult_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<LeaderboardFindResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( LeaderboardFindResult_t ) ); };
 			
 			//
@@ -8520,8 +7897,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -8560,9 +7935,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -8575,10 +7950,11 @@ namespace SteamNative
 		public int CEntryCount; // m_cEntryCount int
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static LeaderboardScoresDownloaded_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (LeaderboardScoresDownloaded_t.PackSmall) Marshal.PtrToStructure( p, typeof(LeaderboardScoresDownloaded_t.PackSmall) );
 			return (LeaderboardScoresDownloaded_t) Marshal.PtrToStructure( p, typeof(LeaderboardScoresDownloaded_t) );
 		}
 		
@@ -8601,25 +7977,19 @@ namespace SteamNative
 					CEntryCount = d.CEntryCount,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<LeaderboardScoresDownloaded_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<LeaderboardScoresDownloaded_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( LeaderboardScoresDownloaded_t ) ); };
 			
 			//
@@ -8627,8 +7997,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -8667,9 +8035,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -8685,10 +8053,11 @@ namespace SteamNative
 		public int GlobalRankPrevious; // m_nGlobalRankPrevious int
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static LeaderboardScoreUploaded_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (LeaderboardScoreUploaded_t.PackSmall) Marshal.PtrToStructure( p, typeof(LeaderboardScoreUploaded_t.PackSmall) );
 			return (LeaderboardScoreUploaded_t) Marshal.PtrToStructure( p, typeof(LeaderboardScoreUploaded_t) );
 		}
 		
@@ -8717,25 +8086,19 @@ namespace SteamNative
 					GlobalRankPrevious = d.GlobalRankPrevious,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<LeaderboardScoreUploaded_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<LeaderboardScoreUploaded_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( LeaderboardScoreUploaded_t ) ); };
 			
 			//
@@ -8743,8 +8106,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -8783,9 +8144,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -8797,10 +8158,11 @@ namespace SteamNative
 		public int CPlayers; // m_cPlayers int32
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static NumberOfCurrentPlayers_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (NumberOfCurrentPlayers_t.PackSmall) Marshal.PtrToStructure( p, typeof(NumberOfCurrentPlayers_t.PackSmall) );
 			return (NumberOfCurrentPlayers_t) Marshal.PtrToStructure( p, typeof(NumberOfCurrentPlayers_t) );
 		}
 		
@@ -8821,25 +8183,19 @@ namespace SteamNative
 					CPlayers = d.CPlayers,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<NumberOfCurrentPlayers_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<NumberOfCurrentPlayers_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( NumberOfCurrentPlayers_t ) ); };
 			
 			//
@@ -8847,8 +8203,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -8887,9 +8241,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -8900,10 +8254,11 @@ namespace SteamNative
 		public ulong SteamIDUser; // m_steamIDUser class CSteamID
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static UserStatsUnloaded_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (UserStatsUnloaded_t.PackSmall) Marshal.PtrToStructure( p, typeof(UserStatsUnloaded_t.PackSmall) );
 			return (UserStatsUnloaded_t) Marshal.PtrToStructure( p, typeof(UserStatsUnloaded_t) );
 		}
 		
@@ -8922,25 +8277,18 @@ namespace SteamNative
 					SteamIDUser = d.SteamIDUser,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<UserStatsUnloaded_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( UserStatsUnloaded_t ) ); };
 			
 			//
@@ -8948,8 +8296,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -9006,10 +8352,11 @@ namespace SteamNative
 		public int IconHandle; // m_nIconHandle int
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static UserAchievementIconFetched_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (UserAchievementIconFetched_t.PackSmall) Marshal.PtrToStructure( p, typeof(UserAchievementIconFetched_t.PackSmall) );
 			return (UserAchievementIconFetched_t) Marshal.PtrToStructure( p, typeof(UserAchievementIconFetched_t) );
 		}
 		
@@ -9036,25 +8383,18 @@ namespace SteamNative
 					IconHandle = d.IconHandle,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<UserAchievementIconFetched_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( UserAchievementIconFetched_t ) ); };
 			
 			//
@@ -9062,8 +8402,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -9116,10 +8454,11 @@ namespace SteamNative
 		public Result Result; // m_eResult enum EResult
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static GlobalAchievementPercentagesReady_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (GlobalAchievementPercentagesReady_t.PackSmall) Marshal.PtrToStructure( p, typeof(GlobalAchievementPercentagesReady_t.PackSmall) );
 			return (GlobalAchievementPercentagesReady_t) Marshal.PtrToStructure( p, typeof(GlobalAchievementPercentagesReady_t) );
 		}
 		
@@ -9140,25 +8479,19 @@ namespace SteamNative
 					Result = d.Result,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GlobalAchievementPercentagesReady_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<GlobalAchievementPercentagesReady_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GlobalAchievementPercentagesReady_t ) ); };
 			
 			//
@@ -9166,8 +8499,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -9206,9 +8537,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -9220,10 +8551,11 @@ namespace SteamNative
 		public ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static LeaderboardUGCSet_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (LeaderboardUGCSet_t.PackSmall) Marshal.PtrToStructure( p, typeof(LeaderboardUGCSet_t.PackSmall) );
 			return (LeaderboardUGCSet_t) Marshal.PtrToStructure( p, typeof(LeaderboardUGCSet_t) );
 		}
 		
@@ -9244,25 +8576,19 @@ namespace SteamNative
 					SteamLeaderboard = d.SteamLeaderboard,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<LeaderboardUGCSet_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<LeaderboardUGCSet_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( LeaderboardUGCSet_t ) ); };
 			
 			//
@@ -9270,8 +8596,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -9310,9 +8634,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -9325,10 +8649,11 @@ namespace SteamNative
 		public ulong RequiredDiskSpace; // m_ulRequiredDiskSpace uint64
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static PS3TrophiesInstalled_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (PS3TrophiesInstalled_t.PackSmall) Marshal.PtrToStructure( p, typeof(PS3TrophiesInstalled_t.PackSmall) );
 			return (PS3TrophiesInstalled_t) Marshal.PtrToStructure( p, typeof(PS3TrophiesInstalled_t) );
 		}
 		
@@ -9351,25 +8676,18 @@ namespace SteamNative
 					RequiredDiskSpace = d.RequiredDiskSpace,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<PS3TrophiesInstalled_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( PS3TrophiesInstalled_t ) ); };
 			
 			//
@@ -9377,8 +8695,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -9431,10 +8747,11 @@ namespace SteamNative
 		public Result Result; // m_eResult enum EResult
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static GlobalStatsReceived_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (GlobalStatsReceived_t.PackSmall) Marshal.PtrToStructure( p, typeof(GlobalStatsReceived_t.PackSmall) );
 			return (GlobalStatsReceived_t) Marshal.PtrToStructure( p, typeof(GlobalStatsReceived_t) );
 		}
 		
@@ -9455,25 +8772,19 @@ namespace SteamNative
 					Result = d.Result,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GlobalStatsReceived_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<GlobalStatsReceived_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GlobalStatsReceived_t ) ); };
 			
 			//
@@ -9481,8 +8792,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -9521,9 +8830,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -9534,10 +8843,11 @@ namespace SteamNative
 		public uint AppID; // m_nAppID AppId_t
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static DlcInstalled_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (DlcInstalled_t.PackSmall) Marshal.PtrToStructure( p, typeof(DlcInstalled_t.PackSmall) );
 			return (DlcInstalled_t) Marshal.PtrToStructure( p, typeof(DlcInstalled_t) );
 		}
 		
@@ -9556,25 +8866,18 @@ namespace SteamNative
 					AppID = d.AppID,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<DlcInstalled_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( DlcInstalled_t ) ); };
 			
 			//
@@ -9582,8 +8885,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -9636,10 +8937,11 @@ namespace SteamNative
 		public uint PackageRegistered; // m_unPackageRegistered uint32
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static RegisterActivationCodeResponse_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (RegisterActivationCodeResponse_t.PackSmall) Marshal.PtrToStructure( p, typeof(RegisterActivationCodeResponse_t.PackSmall) );
 			return (RegisterActivationCodeResponse_t) Marshal.PtrToStructure( p, typeof(RegisterActivationCodeResponse_t) );
 		}
 		
@@ -9660,25 +8962,18 @@ namespace SteamNative
 					PackageRegistered = d.PackageRegistered,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RegisterActivationCodeResponse_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RegisterActivationCodeResponse_t ) ); };
 			
 			//
@@ -9686,8 +8981,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -9743,10 +9036,11 @@ namespace SteamNative
 		public string Key; // m_rgchKey char [240]
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static AppProofOfPurchaseKeyResponse_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (AppProofOfPurchaseKeyResponse_t.PackSmall) Marshal.PtrToStructure( p, typeof(AppProofOfPurchaseKeyResponse_t.PackSmall) );
 			return (AppProofOfPurchaseKeyResponse_t) Marshal.PtrToStructure( p, typeof(AppProofOfPurchaseKeyResponse_t) );
 		}
 		
@@ -9772,25 +9066,18 @@ namespace SteamNative
 					Key = d.Key,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<AppProofOfPurchaseKeyResponse_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( AppProofOfPurchaseKeyResponse_t ) ); };
 			
 			//
@@ -9798,8 +9085,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -9855,10 +9140,11 @@ namespace SteamNative
 		public uint Flags; // m_unFlags uint32
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static FileDetailsResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (FileDetailsResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(FileDetailsResult_t.PackSmall) );
 			return (FileDetailsResult_t) Marshal.PtrToStructure( p, typeof(FileDetailsResult_t) );
 		}
 		
@@ -9884,25 +9170,19 @@ namespace SteamNative
 					Flags = d.Flags,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<FileDetailsResult_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<FileDetailsResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( FileDetailsResult_t ) ); };
 			
 			//
@@ -9910,8 +9190,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -9950,9 +9228,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -9969,10 +9247,11 @@ namespace SteamNative
 		public ushort RemotePort; // m_nRemotePort uint16
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static P2PSessionState_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (P2PSessionState_t.PackSmall) Marshal.PtrToStructure( p, typeof(P2PSessionState_t.PackSmall) );
 			return (P2PSessionState_t) Marshal.PtrToStructure( p, typeof(P2PSessionState_t) );
 		}
 		
@@ -10005,14 +9284,6 @@ namespace SteamNative
 					RemotePort = d.RemotePort,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 	}
 	
@@ -10023,10 +9294,11 @@ namespace SteamNative
 		public ulong SteamIDRemote; // m_steamIDRemote class CSteamID
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static P2PSessionRequest_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (P2PSessionRequest_t.PackSmall) Marshal.PtrToStructure( p, typeof(P2PSessionRequest_t.PackSmall) );
 			return (P2PSessionRequest_t) Marshal.PtrToStructure( p, typeof(P2PSessionRequest_t) );
 		}
 		
@@ -10045,25 +9317,18 @@ namespace SteamNative
 					SteamIDRemote = d.SteamIDRemote,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<P2PSessionRequest_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( P2PSessionRequest_t ) ); };
 			
 			//
@@ -10071,8 +9336,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -10125,10 +9388,11 @@ namespace SteamNative
 		public byte P2PSessionError; // m_eP2PSessionError uint8
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static P2PSessionConnectFail_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (P2PSessionConnectFail_t.PackSmall) Marshal.PtrToStructure( p, typeof(P2PSessionConnectFail_t.PackSmall) );
 			return (P2PSessionConnectFail_t) Marshal.PtrToStructure( p, typeof(P2PSessionConnectFail_t) );
 		}
 		
@@ -10149,25 +9413,18 @@ namespace SteamNative
 					P2PSessionError = d.P2PSessionError,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<P2PSessionConnectFail_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( P2PSessionConnectFail_t ) ); };
 			
 			//
@@ -10175,8 +9432,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -10231,10 +9486,11 @@ namespace SteamNative
 		public int SNetSocketState; // m_eSNetSocketState int
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static SocketStatusCallback_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (SocketStatusCallback_t.PackSmall) Marshal.PtrToStructure( p, typeof(SocketStatusCallback_t.PackSmall) );
 			return (SocketStatusCallback_t) Marshal.PtrToStructure( p, typeof(SocketStatusCallback_t) );
 		}
 		
@@ -10259,25 +9515,18 @@ namespace SteamNative
 					SNetSocketState = d.SNetSocketState,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<SocketStatusCallback_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SocketStatusCallback_t ) ); };
 			
 			//
@@ -10285,8 +9534,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -10339,10 +9586,11 @@ namespace SteamNative
 		public Result Result; // m_eResult enum EResult
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static ScreenshotReady_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (ScreenshotReady_t.PackSmall) Marshal.PtrToStructure( p, typeof(ScreenshotReady_t.PackSmall) );
 			return (ScreenshotReady_t) Marshal.PtrToStructure( p, typeof(ScreenshotReady_t) );
 		}
 		
@@ -10363,25 +9611,18 @@ namespace SteamNative
 					Result = d.Result,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<ScreenshotReady_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( ScreenshotReady_t ) ); };
 			
 			//
@@ -10389,8 +9630,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -10438,13 +9677,15 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct VolumeHasChanged_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamMusic + 2;
 		public float NewVolume; // m_flNewVolume float
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static VolumeHasChanged_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (VolumeHasChanged_t.PackSmall) Marshal.PtrToStructure( p, typeof(VolumeHasChanged_t.PackSmall) );
 			return (VolumeHasChanged_t) Marshal.PtrToStructure( p, typeof(VolumeHasChanged_t) );
 		}
 		
@@ -10463,28 +9704,82 @@ namespace SteamNative
 					NewVolume = d.NewVolume,
 				};
 			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<VolumeHasChanged_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( VolumeHasChanged_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct MusicPlayerWantsShuffled_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamMusicRemote + 9;
 		[MarshalAs(UnmanagedType.I1)]
 		public bool Shuffled; // m_bShuffled _Bool
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static MusicPlayerWantsShuffled_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (MusicPlayerWantsShuffled_t.PackSmall) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsShuffled_t.PackSmall) );
 			return (MusicPlayerWantsShuffled_t) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsShuffled_t) );
 		}
 		
@@ -10504,28 +9799,82 @@ namespace SteamNative
 					Shuffled = d.Shuffled,
 				};
 			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<MusicPlayerWantsShuffled_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( MusicPlayerWantsShuffled_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct MusicPlayerWantsLooped_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamMusicRemote + 10;
 		[MarshalAs(UnmanagedType.I1)]
 		public bool Looped; // m_bLooped _Bool
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static MusicPlayerWantsLooped_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (MusicPlayerWantsLooped_t.PackSmall) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsLooped_t.PackSmall) );
 			return (MusicPlayerWantsLooped_t) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsLooped_t) );
 		}
 		
@@ -10545,27 +9894,81 @@ namespace SteamNative
 					Looped = d.Looped,
 				};
 			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<MusicPlayerWantsLooped_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( MusicPlayerWantsLooped_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct MusicPlayerWantsVolume_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamMusic + 11;
 		public float NewVolume; // m_flNewVolume float
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static MusicPlayerWantsVolume_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (MusicPlayerWantsVolume_t.PackSmall) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsVolume_t.PackSmall) );
 			return (MusicPlayerWantsVolume_t) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsVolume_t) );
 		}
 		
@@ -10584,27 +9987,81 @@ namespace SteamNative
 					NewVolume = d.NewVolume,
 				};
 			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<MusicPlayerWantsVolume_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( MusicPlayerWantsVolume_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct MusicPlayerSelectsQueueEntry_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamMusic + 12;
 		public int NID; // nID int
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static MusicPlayerSelectsQueueEntry_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (MusicPlayerSelectsQueueEntry_t.PackSmall) Marshal.PtrToStructure( p, typeof(MusicPlayerSelectsQueueEntry_t.PackSmall) );
 			return (MusicPlayerSelectsQueueEntry_t) Marshal.PtrToStructure( p, typeof(MusicPlayerSelectsQueueEntry_t) );
 		}
 		
@@ -10623,27 +10080,81 @@ namespace SteamNative
 					NID = d.NID,
 				};
 			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<MusicPlayerSelectsQueueEntry_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( MusicPlayerSelectsQueueEntry_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct MusicPlayerSelectsPlaylistEntry_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamMusic + 13;
 		public int NID; // nID int
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static MusicPlayerSelectsPlaylistEntry_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (MusicPlayerSelectsPlaylistEntry_t.PackSmall) Marshal.PtrToStructure( p, typeof(MusicPlayerSelectsPlaylistEntry_t.PackSmall) );
 			return (MusicPlayerSelectsPlaylistEntry_t) Marshal.PtrToStructure( p, typeof(MusicPlayerSelectsPlaylistEntry_t) );
 		}
 		
@@ -10662,27 +10173,81 @@ namespace SteamNative
 					NID = d.NID,
 				};
 			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<MusicPlayerSelectsPlaylistEntry_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( MusicPlayerSelectsPlaylistEntry_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct MusicPlayerWantsPlayingRepeatStatus_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamMusicRemote + 14;
 		public int PlayingRepeatStatus; // m_nPlayingRepeatStatus int
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static MusicPlayerWantsPlayingRepeatStatus_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (MusicPlayerWantsPlayingRepeatStatus_t.PackSmall) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsPlayingRepeatStatus_t.PackSmall) );
 			return (MusicPlayerWantsPlayingRepeatStatus_t) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsPlayingRepeatStatus_t) );
 		}
 		
@@ -10701,14 +10266,66 @@ namespace SteamNative
 					PlayingRepeatStatus = d.PlayingRepeatStatus,
 				};
 			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<MusicPlayerWantsPlayingRepeatStatus_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( MusicPlayerWantsPlayingRepeatStatus_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
@@ -10724,10 +10341,11 @@ namespace SteamNative
 		public uint BodySize; // m_unBodySize uint32
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static HTTPRequestCompleted_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (HTTPRequestCompleted_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTTPRequestCompleted_t.PackSmall) );
 			return (HTTPRequestCompleted_t) Marshal.PtrToStructure( p, typeof(HTTPRequestCompleted_t) );
 		}
 		
@@ -10755,25 +10373,18 @@ namespace SteamNative
 					BodySize = d.BodySize,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<HTTPRequestCompleted_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTTPRequestCompleted_t ) ); };
 			
 			//
@@ -10781,8 +10392,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -10835,10 +10444,11 @@ namespace SteamNative
 		public ulong ContextValue; // m_ulContextValue uint64
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static HTTPRequestHeadersReceived_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (HTTPRequestHeadersReceived_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTTPRequestHeadersReceived_t.PackSmall) );
 			return (HTTPRequestHeadersReceived_t) Marshal.PtrToStructure( p, typeof(HTTPRequestHeadersReceived_t) );
 		}
 		
@@ -10859,25 +10469,18 @@ namespace SteamNative
 					ContextValue = d.ContextValue,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<HTTPRequestHeadersReceived_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTTPRequestHeadersReceived_t ) ); };
 			
 			//
@@ -10885,8 +10488,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -10941,10 +10542,11 @@ namespace SteamNative
 		public uint CBytesReceived; // m_cBytesReceived uint32
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static HTTPRequestDataReceived_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (HTTPRequestDataReceived_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTTPRequestDataReceived_t.PackSmall) );
 			return (HTTPRequestDataReceived_t) Marshal.PtrToStructure( p, typeof(HTTPRequestDataReceived_t) );
 		}
 		
@@ -10969,25 +10571,18 @@ namespace SteamNative
 					CBytesReceived = d.CBytesReceived,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<HTTPRequestDataReceived_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTTPRequestDataReceived_t ) ); };
 			
 			//
@@ -10995,8 +10590,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -11051,10 +10644,11 @@ namespace SteamNative
 		public uint ResponseSize; // m_unResponseSize uint32
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static SteamUnifiedMessagesSendMethodResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (SteamUnifiedMessagesSendMethodResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(SteamUnifiedMessagesSendMethodResult_t.PackSmall) );
 			return (SteamUnifiedMessagesSendMethodResult_t) Marshal.PtrToStructure( p, typeof(SteamUnifiedMessagesSendMethodResult_t) );
 		}
 		
@@ -11079,25 +10673,18 @@ namespace SteamNative
 					ResponseSize = d.ResponseSize,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<SteamUnifiedMessagesSendMethodResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamUnifiedMessagesSendMethodResult_t ) ); };
 			
 			//
@@ -11105,8 +10692,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -11161,10 +10746,11 @@ namespace SteamNative
 		public bool BActive; // bActive _Bool
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static ControllerAnalogActionData_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (ControllerAnalogActionData_t.PackSmall) Marshal.PtrToStructure( p, typeof(ControllerAnalogActionData_t.PackSmall) );
 			return (ControllerAnalogActionData_t) Marshal.PtrToStructure( p, typeof(ControllerAnalogActionData_t) );
 		}
 		
@@ -11190,14 +10776,6 @@ namespace SteamNative
 					BActive = d.BActive,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 	}
 	
@@ -11210,10 +10788,11 @@ namespace SteamNative
 		public bool BActive; // bActive _Bool
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static ControllerDigitalActionData_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (ControllerDigitalActionData_t.PackSmall) Marshal.PtrToStructure( p, typeof(ControllerDigitalActionData_t.PackSmall) );
 			return (ControllerDigitalActionData_t) Marshal.PtrToStructure( p, typeof(ControllerDigitalActionData_t) );
 		}
 		
@@ -11236,14 +10815,6 @@ namespace SteamNative
 					BActive = d.BActive,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 	}
 	
@@ -11262,10 +10833,11 @@ namespace SteamNative
 		public float RotVelZ; // rotVelZ float
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static ControllerMotionData_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (ControllerMotionData_t.PackSmall) Marshal.PtrToStructure( p, typeof(ControllerMotionData_t.PackSmall) );
 			return (ControllerMotionData_t) Marshal.PtrToStructure( p, typeof(ControllerMotionData_t) );
 		}
 		
@@ -11301,14 +10873,6 @@ namespace SteamNative
 					RotVelY = d.RotVelY,
 					RotVelZ = d.RotVelZ,
 				};
-			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			}
 		}
 	}
@@ -11352,10 +10916,11 @@ namespace SteamNative
 		public uint NumChildren; // m_unNumChildren uint32
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static SteamUGCDetails_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (SteamUGCDetails_t.PackSmall) Marshal.PtrToStructure( p, typeof(SteamUGCDetails_t.PackSmall) );
 			return (SteamUGCDetails_t) Marshal.PtrToStructure( p, typeof(SteamUGCDetails_t) );
 		}
 		
@@ -11432,14 +10997,6 @@ namespace SteamNative
 					NumChildren = d.NumChildren,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 	}
 	
@@ -11455,10 +11012,11 @@ namespace SteamNative
 		public bool CachedData; // m_bCachedData _Bool
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static SteamUGCQueryCompleted_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (SteamUGCQueryCompleted_t.PackSmall) Marshal.PtrToStructure( p, typeof(SteamUGCQueryCompleted_t.PackSmall) );
 			return (SteamUGCQueryCompleted_t) Marshal.PtrToStructure( p, typeof(SteamUGCQueryCompleted_t) );
 		}
 		
@@ -11486,25 +11044,19 @@ namespace SteamNative
 					CachedData = d.CachedData,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<SteamUGCQueryCompleted_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<SteamUGCQueryCompleted_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamUGCQueryCompleted_t ) ); };
 			
 			//
@@ -11512,8 +11064,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -11552,9 +11102,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -11567,10 +11117,11 @@ namespace SteamNative
 		public bool CachedData; // m_bCachedData _Bool
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static SteamUGCRequestUGCDetailsResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (SteamUGCRequestUGCDetailsResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(SteamUGCRequestUGCDetailsResult_t.PackSmall) );
 			return (SteamUGCRequestUGCDetailsResult_t) Marshal.PtrToStructure( p, typeof(SteamUGCRequestUGCDetailsResult_t) );
 		}
 		
@@ -11592,25 +11143,18 @@ namespace SteamNative
 					CachedData = d.CachedData,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<SteamUGCRequestUGCDetailsResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamUGCRequestUGCDetailsResult_t ) ); };
 			
 			//
@@ -11618,8 +11162,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -11674,10 +11216,11 @@ namespace SteamNative
 		public bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static CreateItemResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (CreateItemResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(CreateItemResult_t.PackSmall) );
 			return (CreateItemResult_t) Marshal.PtrToStructure( p, typeof(CreateItemResult_t) );
 		}
 		
@@ -11701,25 +11244,19 @@ namespace SteamNative
 					UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<CreateItemResult_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<CreateItemResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( CreateItemResult_t ) ); };
 			
 			//
@@ -11727,8 +11264,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -11767,9 +11302,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -11782,10 +11317,11 @@ namespace SteamNative
 		public bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static SubmitItemUpdateResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (SubmitItemUpdateResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(SubmitItemUpdateResult_t.PackSmall) );
 			return (SubmitItemUpdateResult_t) Marshal.PtrToStructure( p, typeof(SubmitItemUpdateResult_t) );
 		}
 		
@@ -11807,25 +11343,19 @@ namespace SteamNative
 					UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<SubmitItemUpdateResult_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<SubmitItemUpdateResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SubmitItemUpdateResult_t ) ); };
 			
 			//
@@ -11833,8 +11363,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -11873,9 +11401,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -11888,10 +11416,11 @@ namespace SteamNative
 		public Result Result; // m_eResult enum EResult
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static DownloadItemResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (DownloadItemResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(DownloadItemResult_t.PackSmall) );
 			return (DownloadItemResult_t) Marshal.PtrToStructure( p, typeof(DownloadItemResult_t) );
 		}
 		
@@ -11914,25 +11443,18 @@ namespace SteamNative
 					Result = d.Result,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<DownloadItemResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( DownloadItemResult_t ) ); };
 			
 			//
@@ -11940,8 +11462,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -11996,10 +11516,11 @@ namespace SteamNative
 		public bool WasAddRequest; // m_bWasAddRequest _Bool
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static UserFavoriteItemsListChanged_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (UserFavoriteItemsListChanged_t.PackSmall) Marshal.PtrToStructure( p, typeof(UserFavoriteItemsListChanged_t.PackSmall) );
 			return (UserFavoriteItemsListChanged_t) Marshal.PtrToStructure( p, typeof(UserFavoriteItemsListChanged_t) );
 		}
 		
@@ -12023,25 +11544,19 @@ namespace SteamNative
 					WasAddRequest = d.WasAddRequest,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<UserFavoriteItemsListChanged_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<UserFavoriteItemsListChanged_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( UserFavoriteItemsListChanged_t ) ); };
 			
 			//
@@ -12049,8 +11564,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -12089,9 +11602,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -12105,10 +11618,11 @@ namespace SteamNative
 		public bool VoteUp; // m_bVoteUp _Bool
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static SetUserItemVoteResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (SetUserItemVoteResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(SetUserItemVoteResult_t.PackSmall) );
 			return (SetUserItemVoteResult_t) Marshal.PtrToStructure( p, typeof(SetUserItemVoteResult_t) );
 		}
 		
@@ -12132,25 +11646,19 @@ namespace SteamNative
 					VoteUp = d.VoteUp,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<SetUserItemVoteResult_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<SetUserItemVoteResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SetUserItemVoteResult_t ) ); };
 			
 			//
@@ -12158,8 +11666,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -12198,9 +11704,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -12218,10 +11724,11 @@ namespace SteamNative
 		public bool VoteSkipped; // m_bVoteSkipped _Bool
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static GetUserItemVoteResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (GetUserItemVoteResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(GetUserItemVoteResult_t.PackSmall) );
 			return (GetUserItemVoteResult_t) Marshal.PtrToStructure( p, typeof(GetUserItemVoteResult_t) );
 		}
 		
@@ -12251,25 +11758,19 @@ namespace SteamNative
 					VoteSkipped = d.VoteSkipped,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GetUserItemVoteResult_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<GetUserItemVoteResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GetUserItemVoteResult_t ) ); };
 			
 			//
@@ -12277,8 +11778,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -12317,9 +11816,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -12330,10 +11829,11 @@ namespace SteamNative
 		public Result Result; // m_eResult enum EResult
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static StartPlaytimeTrackingResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (StartPlaytimeTrackingResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(StartPlaytimeTrackingResult_t.PackSmall) );
 			return (StartPlaytimeTrackingResult_t) Marshal.PtrToStructure( p, typeof(StartPlaytimeTrackingResult_t) );
 		}
 		
@@ -12352,25 +11852,19 @@ namespace SteamNative
 					Result = d.Result,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<StartPlaytimeTrackingResult_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<StartPlaytimeTrackingResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( StartPlaytimeTrackingResult_t ) ); };
 			
 			//
@@ -12378,8 +11872,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -12418,9 +11910,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -12431,10 +11923,11 @@ namespace SteamNative
 		public Result Result; // m_eResult enum EResult
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static StopPlaytimeTrackingResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (StopPlaytimeTrackingResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(StopPlaytimeTrackingResult_t.PackSmall) );
 			return (StopPlaytimeTrackingResult_t) Marshal.PtrToStructure( p, typeof(StopPlaytimeTrackingResult_t) );
 		}
 		
@@ -12453,25 +11946,19 @@ namespace SteamNative
 					Result = d.Result,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<StopPlaytimeTrackingResult_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<StopPlaytimeTrackingResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( StopPlaytimeTrackingResult_t ) ); };
 			
 			//
@@ -12479,8 +11966,99 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
+			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
+			
+			return handle;
+		}
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+	public struct SteamAppInstalled_t
+	{
+		public const int CallbackId = CallbackIdentifiers.SteamAppList + 1;
+		public uint AppID; // m_nAppID AppId_t
+		
+		//
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
+		//
+		public static SteamAppInstalled_t FromPointer( IntPtr p )
+		{
+			if ( Platform.PackSmall ) return (SteamAppInstalled_t.PackSmall) Marshal.PtrToStructure( p, typeof(SteamAppInstalled_t.PackSmall) );
+			return (SteamAppInstalled_t) Marshal.PtrToStructure( p, typeof(SteamAppInstalled_t) );
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct PackSmall
+		{
+			public uint AppID; // m_nAppID AppId_t
+			
+			//
+			// Easily convert from PackSmall to SteamAppInstalled_t
+			//
+			public static implicit operator SteamAppInstalled_t (  SteamAppInstalled_t.PackSmall d )
+			{
+				return new SteamAppInstalled_t()
+				{
+					AppID = d.AppID,
+				};
+			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<SteamAppInstalled_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamAppInstalled_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
+			{
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -12526,54 +12104,17 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct SteamAppInstalled_t
-	{
-		public uint AppID; // m_nAppID AppId_t
-		
-		//
-		// Read this struct from a pointer, usually from Native
-		//
-		public static SteamAppInstalled_t FromPointer( IntPtr p )
-		{
-			return (SteamAppInstalled_t) Marshal.PtrToStructure( p, typeof(SteamAppInstalled_t) );
-		}
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
-		{
-			public uint AppID; // m_nAppID AppId_t
-			
-			//
-			// Easily convert from PackSmall to SteamAppInstalled_t
-			//
-			public static implicit operator SteamAppInstalled_t (  SteamAppInstalled_t.PackSmall d )
-			{
-				return new SteamAppInstalled_t()
-				{
-					AppID = d.AppID,
-				};
-			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
-		}
-	}
-	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct SteamAppUninstalled_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamAppList + 2;
 		public uint AppID; // m_nAppID AppId_t
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static SteamAppUninstalled_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (SteamAppUninstalled_t.PackSmall) Marshal.PtrToStructure( p, typeof(SteamAppUninstalled_t.PackSmall) );
 			return (SteamAppUninstalled_t) Marshal.PtrToStructure( p, typeof(SteamAppUninstalled_t) );
 		}
 		
@@ -12592,27 +12133,81 @@ namespace SteamNative
 					AppID = d.AppID,
 				};
 			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<SteamAppUninstalled_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamAppUninstalled_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct HTML_BrowserReady_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 1;
 		public uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static HTML_BrowserReady_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (HTML_BrowserReady_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_BrowserReady_t.PackSmall) );
 			return (HTML_BrowserReady_t) Marshal.PtrToStructure( p, typeof(HTML_BrowserReady_t) );
 		}
 		
@@ -12631,14 +12226,67 @@ namespace SteamNative
 					UnBrowserHandle = d.UnBrowserHandle,
 				};
 			}
+		}
+		
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<HTML_BrowserReady_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_BrowserReady_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
+			
+			return handle;
 		}
 	}
 	
@@ -12659,10 +12307,11 @@ namespace SteamNative
 		public uint UnPageSerial; // unPageSerial uint32
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static HTML_NeedsPaint_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (HTML_NeedsPaint_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_NeedsPaint_t.PackSmall) );
 			return (HTML_NeedsPaint_t) Marshal.PtrToStructure( p, typeof(HTML_NeedsPaint_t) );
 		}
 		
@@ -12703,14 +12352,6 @@ namespace SteamNative
 					UnPageSerial = d.UnPageSerial,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 	}
 	
@@ -12725,10 +12366,11 @@ namespace SteamNative
 		public bool BIsRedirect; // bIsRedirect _Bool
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static HTML_StartRequest_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (HTML_StartRequest_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_StartRequest_t.PackSmall) );
 			return (HTML_StartRequest_t) Marshal.PtrToStructure( p, typeof(HTML_StartRequest_t) );
 		}
 		
@@ -12756,14 +12398,6 @@ namespace SteamNative
 					BIsRedirect = d.BIsRedirect,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 	}
 	
@@ -12773,10 +12407,11 @@ namespace SteamNative
 		public uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static HTML_CloseBrowser_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (HTML_CloseBrowser_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_CloseBrowser_t.PackSmall) );
 			return (HTML_CloseBrowser_t) Marshal.PtrToStructure( p, typeof(HTML_CloseBrowser_t) );
 		}
 		
@@ -12795,20 +12430,13 @@ namespace SteamNative
 					UnBrowserHandle = d.UnBrowserHandle,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct HTML_URLChanged_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 5;
 		public uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		public string PchURL; // pchURL const char *
 		public string PchPostData; // pchPostData const char *
@@ -12819,10 +12447,11 @@ namespace SteamNative
 		public bool BNewNavigation; // bNewNavigation _Bool
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static HTML_URLChanged_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (HTML_URLChanged_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_URLChanged_t.PackSmall) );
 			return (HTML_URLChanged_t) Marshal.PtrToStructure( p, typeof(HTML_URLChanged_t) );
 		}
 		
@@ -12853,29 +12482,83 @@ namespace SteamNative
 					BNewNavigation = d.BNewNavigation,
 				};
 			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<HTML_URLChanged_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_URLChanged_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct HTML_FinishedRequest_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 6;
 		public uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		public string PchURL; // pchURL const char *
 		public string PchPageTitle; // pchPageTitle const char *
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static HTML_FinishedRequest_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (HTML_FinishedRequest_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_FinishedRequest_t.PackSmall) );
 			return (HTML_FinishedRequest_t) Marshal.PtrToStructure( p, typeof(HTML_FinishedRequest_t) );
 		}
 		
@@ -12898,28 +12581,82 @@ namespace SteamNative
 					PchPageTitle = d.PchPageTitle,
 				};
 			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<HTML_FinishedRequest_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_FinishedRequest_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct HTML_OpenLinkInNewTab_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 7;
 		public uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		public string PchURL; // pchURL const char *
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static HTML_OpenLinkInNewTab_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (HTML_OpenLinkInNewTab_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_OpenLinkInNewTab_t.PackSmall) );
 			return (HTML_OpenLinkInNewTab_t) Marshal.PtrToStructure( p, typeof(HTML_OpenLinkInNewTab_t) );
 		}
 		
@@ -12940,28 +12677,82 @@ namespace SteamNative
 					PchURL = d.PchURL,
 				};
 			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<HTML_OpenLinkInNewTab_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_OpenLinkInNewTab_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct HTML_ChangedTitle_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 8;
 		public uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		public string PchTitle; // pchTitle const char *
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static HTML_ChangedTitle_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (HTML_ChangedTitle_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_ChangedTitle_t.PackSmall) );
 			return (HTML_ChangedTitle_t) Marshal.PtrToStructure( p, typeof(HTML_ChangedTitle_t) );
 		}
 		
@@ -12982,29 +12773,83 @@ namespace SteamNative
 					PchTitle = d.PchTitle,
 				};
 			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<HTML_ChangedTitle_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_ChangedTitle_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct HTML_SearchResults_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 9;
 		public uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		public uint UnResults; // unResults uint32
 		public uint UnCurrentMatch; // unCurrentMatch uint32
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static HTML_SearchResults_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (HTML_SearchResults_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_SearchResults_t.PackSmall) );
 			return (HTML_SearchResults_t) Marshal.PtrToStructure( p, typeof(HTML_SearchResults_t) );
 		}
 		
@@ -13027,20 +12872,73 @@ namespace SteamNative
 					UnCurrentMatch = d.UnCurrentMatch,
 				};
 			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<HTML_SearchResults_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_SearchResults_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct HTML_CanGoBackAndForward_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 10;
 		public uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		[MarshalAs(UnmanagedType.I1)]
 		public bool BCanGoBack; // bCanGoBack _Bool
@@ -13048,10 +12946,11 @@ namespace SteamNative
 		public bool BCanGoForward; // bCanGoForward _Bool
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static HTML_CanGoBackAndForward_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (HTML_CanGoBackAndForward_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_CanGoBackAndForward_t.PackSmall) );
 			return (HTML_CanGoBackAndForward_t) Marshal.PtrToStructure( p, typeof(HTML_CanGoBackAndForward_t) );
 		}
 		
@@ -13076,20 +12975,73 @@ namespace SteamNative
 					BCanGoForward = d.BCanGoForward,
 				};
 			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<HTML_CanGoBackAndForward_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_CanGoBackAndForward_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct HTML_HorizontalScroll_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 11;
 		public uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		public uint UnScrollMax; // unScrollMax uint32
 		public uint UnScrollCurrent; // unScrollCurrent uint32
@@ -13099,10 +13051,11 @@ namespace SteamNative
 		public uint UnPageSize; // unPageSize uint32
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static HTML_HorizontalScroll_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (HTML_HorizontalScroll_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_HorizontalScroll_t.PackSmall) );
 			return (HTML_HorizontalScroll_t) Marshal.PtrToStructure( p, typeof(HTML_HorizontalScroll_t) );
 		}
 		
@@ -13132,20 +13085,73 @@ namespace SteamNative
 					UnPageSize = d.UnPageSize,
 				};
 			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<HTML_HorizontalScroll_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_HorizontalScroll_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct HTML_VerticalScroll_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 12;
 		public uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		public uint UnScrollMax; // unScrollMax uint32
 		public uint UnScrollCurrent; // unScrollCurrent uint32
@@ -13155,10 +13161,11 @@ namespace SteamNative
 		public uint UnPageSize; // unPageSize uint32
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static HTML_VerticalScroll_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (HTML_VerticalScroll_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_VerticalScroll_t.PackSmall) );
 			return (HTML_VerticalScroll_t) Marshal.PtrToStructure( p, typeof(HTML_VerticalScroll_t) );
 		}
 		
@@ -13188,20 +13195,73 @@ namespace SteamNative
 					UnPageSize = d.UnPageSize,
 				};
 			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<HTML_VerticalScroll_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_VerticalScroll_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct HTML_LinkAtPosition_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 13;
 		public uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		public uint X; // x uint32
 		public uint Y; // y uint32
@@ -13212,10 +13272,11 @@ namespace SteamNative
 		public bool BLiveLink; // bLiveLink _Bool
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static HTML_LinkAtPosition_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (HTML_LinkAtPosition_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_LinkAtPosition_t.PackSmall) );
 			return (HTML_LinkAtPosition_t) Marshal.PtrToStructure( p, typeof(HTML_LinkAtPosition_t) );
 		}
 		
@@ -13246,28 +13307,82 @@ namespace SteamNative
 					BLiveLink = d.BLiveLink,
 				};
 			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<HTML_LinkAtPosition_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_LinkAtPosition_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct HTML_JSAlert_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 14;
 		public uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		public string PchMessage; // pchMessage const char *
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static HTML_JSAlert_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (HTML_JSAlert_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_JSAlert_t.PackSmall) );
 			return (HTML_JSAlert_t) Marshal.PtrToStructure( p, typeof(HTML_JSAlert_t) );
 		}
 		
@@ -13288,28 +13403,82 @@ namespace SteamNative
 					PchMessage = d.PchMessage,
 				};
 			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<HTML_JSAlert_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_JSAlert_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct HTML_JSConfirm_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 15;
 		public uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		public string PchMessage; // pchMessage const char *
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static HTML_JSConfirm_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (HTML_JSConfirm_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_JSConfirm_t.PackSmall) );
 			return (HTML_JSConfirm_t) Marshal.PtrToStructure( p, typeof(HTML_JSConfirm_t) );
 		}
 		
@@ -13330,29 +13499,83 @@ namespace SteamNative
 					PchMessage = d.PchMessage,
 				};
 			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<HTML_JSConfirm_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_JSConfirm_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct HTML_FileOpenDialog_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 16;
 		public uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		public string PchTitle; // pchTitle const char *
 		public string PchInitialFile; // pchInitialFile const char *
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static HTML_FileOpenDialog_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (HTML_FileOpenDialog_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_FileOpenDialog_t.PackSmall) );
 			return (HTML_FileOpenDialog_t) Marshal.PtrToStructure( p, typeof(HTML_FileOpenDialog_t) );
 		}
 		
@@ -13375,20 +13598,73 @@ namespace SteamNative
 					PchInitialFile = d.PchInitialFile,
 				};
 			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<HTML_FileOpenDialog_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_FileOpenDialog_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct HTML_NewWindow_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 21;
 		public uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		public string PchURL; // pchURL const char *
 		public uint UnX; // unX uint32
@@ -13398,10 +13674,11 @@ namespace SteamNative
 		public uint UnNewWindow_BrowserHandle; // unNewWindow_BrowserHandle HHTMLBrowser
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static HTML_NewWindow_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (HTML_NewWindow_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_NewWindow_t.PackSmall) );
 			return (HTML_NewWindow_t) Marshal.PtrToStructure( p, typeof(HTML_NewWindow_t) );
 		}
 		
@@ -13432,28 +13709,82 @@ namespace SteamNative
 					UnNewWindow_BrowserHandle = d.UnNewWindow_BrowserHandle,
 				};
 			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<HTML_NewWindow_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_NewWindow_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct HTML_SetCursor_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 22;
 		public uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		public uint EMouseCursor; // eMouseCursor uint32
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static HTML_SetCursor_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (HTML_SetCursor_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_SetCursor_t.PackSmall) );
 			return (HTML_SetCursor_t) Marshal.PtrToStructure( p, typeof(HTML_SetCursor_t) );
 		}
 		
@@ -13474,28 +13805,82 @@ namespace SteamNative
 					EMouseCursor = d.EMouseCursor,
 				};
 			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<HTML_SetCursor_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_SetCursor_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct HTML_StatusText_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 23;
 		public uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		public string PchMsg; // pchMsg const char *
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static HTML_StatusText_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (HTML_StatusText_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_StatusText_t.PackSmall) );
 			return (HTML_StatusText_t) Marshal.PtrToStructure( p, typeof(HTML_StatusText_t) );
 		}
 		
@@ -13516,28 +13901,82 @@ namespace SteamNative
 					PchMsg = d.PchMsg,
 				};
 			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<HTML_StatusText_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_StatusText_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct HTML_ShowToolTip_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 24;
 		public uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		public string PchMsg; // pchMsg const char *
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static HTML_ShowToolTip_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (HTML_ShowToolTip_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_ShowToolTip_t.PackSmall) );
 			return (HTML_ShowToolTip_t) Marshal.PtrToStructure( p, typeof(HTML_ShowToolTip_t) );
 		}
 		
@@ -13558,28 +13997,82 @@ namespace SteamNative
 					PchMsg = d.PchMsg,
 				};
 			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<HTML_ShowToolTip_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_ShowToolTip_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct HTML_UpdateToolTip_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 25;
 		public uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		public string PchMsg; // pchMsg const char *
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static HTML_UpdateToolTip_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (HTML_UpdateToolTip_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_UpdateToolTip_t.PackSmall) );
 			return (HTML_UpdateToolTip_t) Marshal.PtrToStructure( p, typeof(HTML_UpdateToolTip_t) );
 		}
 		
@@ -13600,27 +14093,81 @@ namespace SteamNative
 					PchMsg = d.PchMsg,
 				};
 			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<HTML_UpdateToolTip_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_UpdateToolTip_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct HTML_HideToolTip_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 26;
 		public uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static HTML_HideToolTip_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (HTML_HideToolTip_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_HideToolTip_t.PackSmall) );
 			return (HTML_HideToolTip_t) Marshal.PtrToStructure( p, typeof(HTML_HideToolTip_t) );
 		}
 		
@@ -13639,14 +14186,66 @@ namespace SteamNative
 					UnBrowserHandle = d.UnBrowserHandle,
 				};
 			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<HTML_HideToolTip_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_HideToolTip_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
@@ -13659,10 +14258,11 @@ namespace SteamNative
 		public ushort Flags; // m_unFlags uint16
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static SteamItemDetails_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (SteamItemDetails_t.PackSmall) Marshal.PtrToStructure( p, typeof(SteamItemDetails_t.PackSmall) );
 			return (SteamItemDetails_t) Marshal.PtrToStructure( p, typeof(SteamItemDetails_t) );
 		}
 		
@@ -13687,14 +14287,6 @@ namespace SteamNative
 					Flags = d.Flags,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 	}
 	
@@ -13706,10 +14298,11 @@ namespace SteamNative
 		public Result Esult; // m_result enum EResult
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static SteamInventoryResultReady_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (SteamInventoryResultReady_t.PackSmall) Marshal.PtrToStructure( p, typeof(SteamInventoryResultReady_t.PackSmall) );
 			return (SteamInventoryResultReady_t) Marshal.PtrToStructure( p, typeof(SteamInventoryResultReady_t) );
 		}
 		
@@ -13730,25 +14323,18 @@ namespace SteamNative
 					Esult = d.Esult,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<SteamInventoryResultReady_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamInventoryResultReady_t ) ); };
 			
 			//
@@ -13756,8 +14342,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -13809,10 +14393,11 @@ namespace SteamNative
 		public int Handle; // m_handle SteamInventoryResult_t
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static SteamInventoryFullUpdate_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (SteamInventoryFullUpdate_t.PackSmall) Marshal.PtrToStructure( p, typeof(SteamInventoryFullUpdate_t.PackSmall) );
 			return (SteamInventoryFullUpdate_t) Marshal.PtrToStructure( p, typeof(SteamInventoryFullUpdate_t) );
 		}
 		
@@ -13831,25 +14416,18 @@ namespace SteamNative
 					Handle = d.Handle,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<SteamInventoryFullUpdate_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamInventoryFullUpdate_t ) ); };
 			
 			//
@@ -13857,8 +14435,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -13906,13 +14482,15 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct BroadcastUploadStop_t
 	{
+		public const int CallbackId = CallbackIdentifiers.ClientVideo + 5;
 		public BroadcastUploadResult Result; // m_eResult enum EBroadcastUploadResult
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static BroadcastUploadStop_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (BroadcastUploadStop_t.PackSmall) Marshal.PtrToStructure( p, typeof(BroadcastUploadStop_t.PackSmall) );
 			return (BroadcastUploadStop_t) Marshal.PtrToStructure( p, typeof(BroadcastUploadStop_t) );
 		}
 		
@@ -13931,30 +14509,84 @@ namespace SteamNative
 					Result = d.Result,
 				};
 			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<BroadcastUploadStop_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( BroadcastUploadStop_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct GetVideoURLResult_t
 	{
+		public const int CallbackId = CallbackIdentifiers.ClientVideo + 11;
 		public Result Result; // m_eResult enum EResult
 		public uint VideoAppID; // m_unVideoAppID AppId_t
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 		public string URL; // m_rgchURL char [256]
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static GetVideoURLResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (GetVideoURLResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(GetVideoURLResult_t.PackSmall) );
 			return (GetVideoURLResult_t) Marshal.PtrToStructure( p, typeof(GetVideoURLResult_t) );
 		}
 		
@@ -13978,14 +14610,66 @@ namespace SteamNative
 					URL = d.URL,
 				};
 			}
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GetVideoURLResult_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
-			// Read this struct from a pointer, usually from Native
+			// Create the functions we need for the vtable
 			//
-			public static PackSmall FromPointer( IntPtr p )
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GetVideoURLResult_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
 			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
@@ -13997,10 +14681,11 @@ namespace SteamNative
 		public ulong OwnerSteamID; // m_OwnerSteamID class CSteamID
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static GSClientApprove_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (GSClientApprove_t.PackSmall) Marshal.PtrToStructure( p, typeof(GSClientApprove_t.PackSmall) );
 			return (GSClientApprove_t) Marshal.PtrToStructure( p, typeof(GSClientApprove_t) );
 		}
 		
@@ -14021,25 +14706,18 @@ namespace SteamNative
 					OwnerSteamID = d.OwnerSteamID,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GSClientApprove_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GSClientApprove_t ) ); };
 			
 			//
@@ -14047,8 +14725,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -14103,10 +14779,11 @@ namespace SteamNative
 		public string OptionalText; // m_rgchOptionalText char [128]
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static GSClientDeny_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (GSClientDeny_t.PackSmall) Marshal.PtrToStructure( p, typeof(GSClientDeny_t.PackSmall) );
 			return (GSClientDeny_t) Marshal.PtrToStructure( p, typeof(GSClientDeny_t) );
 		}
 		
@@ -14130,25 +14807,18 @@ namespace SteamNative
 					OptionalText = d.OptionalText,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GSClientDeny_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GSClientDeny_t ) ); };
 			
 			//
@@ -14156,8 +14826,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -14210,10 +14878,11 @@ namespace SteamNative
 		public DenyReason DenyReason; // m_eDenyReason enum EDenyReason
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static GSClientKick_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (GSClientKick_t.PackSmall) Marshal.PtrToStructure( p, typeof(GSClientKick_t.PackSmall) );
 			return (GSClientKick_t) Marshal.PtrToStructure( p, typeof(GSClientKick_t) );
 		}
 		
@@ -14234,25 +14903,18 @@ namespace SteamNative
 					DenyReason = d.DenyReason,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GSClientKick_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GSClientKick_t ) ); };
 			
 			//
@@ -14260,8 +14922,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -14317,10 +14977,11 @@ namespace SteamNative
 		public bool Unlocked; // m_bUnlocked _Bool
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static GSClientAchievementStatus_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (GSClientAchievementStatus_t.PackSmall) Marshal.PtrToStructure( p, typeof(GSClientAchievementStatus_t.PackSmall) );
 			return (GSClientAchievementStatus_t) Marshal.PtrToStructure( p, typeof(GSClientAchievementStatus_t) );
 		}
 		
@@ -14345,25 +15006,18 @@ namespace SteamNative
 					Unlocked = d.Unlocked,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GSClientAchievementStatus_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GSClientAchievementStatus_t ) ); };
 			
 			//
@@ -14371,8 +15025,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -14424,10 +15076,11 @@ namespace SteamNative
 		public byte Secure; // m_bSecure uint8
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static GSPolicyResponse_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (GSPolicyResponse_t.PackSmall) Marshal.PtrToStructure( p, typeof(GSPolicyResponse_t.PackSmall) );
 			return (GSPolicyResponse_t) Marshal.PtrToStructure( p, typeof(GSPolicyResponse_t) );
 		}
 		
@@ -14446,25 +15099,18 @@ namespace SteamNative
 					Secure = d.Secure,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GSPolicyResponse_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GSPolicyResponse_t ) ); };
 			
 			//
@@ -14472,8 +15118,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -14528,10 +15172,11 @@ namespace SteamNative
 		public uint TotalMinutesPlayed; // m_unTotalMinutesPlayed uint32
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static GSGameplayStats_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (GSGameplayStats_t.PackSmall) Marshal.PtrToStructure( p, typeof(GSGameplayStats_t.PackSmall) );
 			return (GSGameplayStats_t) Marshal.PtrToStructure( p, typeof(GSGameplayStats_t) );
 		}
 		
@@ -14556,25 +15201,18 @@ namespace SteamNative
 					TotalMinutesPlayed = d.TotalMinutesPlayed,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GSGameplayStats_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GSGameplayStats_t ) ); };
 			
 			//
@@ -14582,8 +15220,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -14640,10 +15276,11 @@ namespace SteamNative
 		public bool Officer; // m_bOfficer _Bool
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static GSClientGroupStatus_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (GSClientGroupStatus_t.PackSmall) Marshal.PtrToStructure( p, typeof(GSClientGroupStatus_t.PackSmall) );
 			return (GSClientGroupStatus_t) Marshal.PtrToStructure( p, typeof(GSClientGroupStatus_t) );
 		}
 		
@@ -14670,25 +15307,18 @@ namespace SteamNative
 					Officer = d.Officer,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GSClientGroupStatus_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GSClientGroupStatus_t ) ); };
 			
 			//
@@ -14696,8 +15326,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -14756,10 +15384,11 @@ namespace SteamNative
 		public uint BanExpires; // m_unBanExpires uint32
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static GSReputation_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (GSReputation_t.PackSmall) Marshal.PtrToStructure( p, typeof(GSReputation_t.PackSmall) );
 			return (GSReputation_t) Marshal.PtrToStructure( p, typeof(GSReputation_t) );
 		}
 		
@@ -14791,25 +15420,19 @@ namespace SteamNative
 					BanExpires = d.BanExpires,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GSReputation_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<GSReputation_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GSReputation_t ) ); };
 			
 			//
@@ -14817,8 +15440,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -14857,9 +15478,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -14870,10 +15491,11 @@ namespace SteamNative
 		public Result Result; // m_eResult enum EResult
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static AssociateWithClanResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (AssociateWithClanResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(AssociateWithClanResult_t.PackSmall) );
 			return (AssociateWithClanResult_t) Marshal.PtrToStructure( p, typeof(AssociateWithClanResult_t) );
 		}
 		
@@ -14892,25 +15514,19 @@ namespace SteamNative
 					Result = d.Result,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<AssociateWithClanResult_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<AssociateWithClanResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( AssociateWithClanResult_t ) ); };
 			
 			//
@@ -14918,8 +15534,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -14958,9 +15572,9 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
@@ -14975,10 +15589,11 @@ namespace SteamNative
 		public ulong SteamIDCandidate; // m_SteamIDCandidate class CSteamID
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static ComputeNewPlayerCompatibilityResult_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (ComputeNewPlayerCompatibilityResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(ComputeNewPlayerCompatibilityResult_t.PackSmall) );
 			return (ComputeNewPlayerCompatibilityResult_t) Marshal.PtrToStructure( p, typeof(ComputeNewPlayerCompatibilityResult_t) );
 		}
 		
@@ -15005,25 +15620,19 @@ namespace SteamNative
 					SteamIDCandidate = d.SteamIDCandidate,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<ComputeNewPlayerCompatibilityResult_t, bool> CallbackFunction )
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<ComputeNewPlayerCompatibilityResult_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( ComputeNewPlayerCompatibilityResult_t ) ); };
 			
 			//
@@ -15031,8 +15640,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -15071,23 +15678,25 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
 		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct GSStatsReceived_t
 	{
+		public const int CallbackId = CallbackIdentifiers.SteamGameServerStats + 0;
 		public Result Result; // m_eResult enum EResult
 		public ulong SteamIDUser; // m_steamIDUser class CSteamID
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static GSStatsReceived_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (GSStatsReceived_t.PackSmall) Marshal.PtrToStructure( p, typeof(GSStatsReceived_t.PackSmall) );
 			return (GSStatsReceived_t) Marshal.PtrToStructure( p, typeof(GSStatsReceived_t) );
 		}
 		
@@ -15108,77 +15717,26 @@ namespace SteamNative
 					SteamIDUser = d.SteamIDUser,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
-		}
-	}
-	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct GSStatsStored_t
-	{
-		public const int CallbackId = CallbackIdentifiers.SteamGameServerStats + 1;
-		public Result Result; // m_eResult enum EResult
-		public ulong SteamIDUser; // m_steamIDUser class CSteamID
-		
-		//
-		// Read this struct from a pointer, usually from Native
-		//
-		public static GSStatsStored_t FromPointer( IntPtr p )
-		{
-			return (GSStatsStored_t) Marshal.PtrToStructure( p, typeof(GSStatsStored_t) );
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<GSStatsReceived_t, bool> CallbackFunction )
 		{
-			public Result Result; // m_eResult enum EResult
-			public ulong SteamIDUser; // m_steamIDUser class CSteamID
-			
-			//
-			// Easily convert from PackSmall to GSStatsStored_t
-			//
-			public static implicit operator GSStatsStored_t (  GSStatsStored_t.PackSmall d )
-			{
-				return new GSStatsStored_t()
-				{
-					Result = d.Result,
-					SteamIDUser = d.SteamIDUser,
-				};
-			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
-		}
-		
-		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GSStatsStored_t, bool> CallbackFunction )
-		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
 			
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
-			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GSStatsStored_t ) ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GSStatsReceived_t ) ); };
 			
 			//
 			// If this platform is PackSmall, use PackSmall versions of everything instead
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -15217,9 +15775,106 @@ namespace SteamNative
 			//
 			// Register the callback with Steam
 			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
-			steamworks.RegisterCallbackHandle( handle );
+			return handle;
+		}
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	public struct GSStatsStored_t
+	{
+		public const int CallbackId = CallbackIdentifiers.SteamGameServerStats + 1;
+		public Result Result; // m_eResult enum EResult
+		public ulong SteamIDUser; // m_steamIDUser class CSteamID
+		
+		//
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
+		//
+		public static GSStatsStored_t FromPointer( IntPtr p )
+		{
+			if ( Platform.PackSmall ) return (GSStatsStored_t.PackSmall) Marshal.PtrToStructure( p, typeof(GSStatsStored_t.PackSmall) );
+			return (GSStatsStored_t) Marshal.PtrToStructure( p, typeof(GSStatsStored_t) );
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct PackSmall
+		{
+			public Result Result; // m_eResult enum EResult
+			public ulong SteamIDUser; // m_steamIDUser class CSteamID
+			
+			//
+			// Easily convert from PackSmall to GSStatsStored_t
+			//
+			public static implicit operator GSStatsStored_t (  GSStatsStored_t.PackSmall d )
+			{
+				return new GSStatsStored_t()
+				{
+					Result = d.Result,
+					SteamIDUser = d.SteamIDUser,
+				};
+			}
+		}
+		
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<GSStatsStored_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.callHandle = call;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); };
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GSStatsStored_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
+			{
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
+			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+			};
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
+			
+			return handle;
 		}
 	}
 	
@@ -15230,10 +15885,11 @@ namespace SteamNative
 		public ulong SteamIDUser; // m_steamIDUser class CSteamID
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static GSStatsUnloaded_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (GSStatsUnloaded_t.PackSmall) Marshal.PtrToStructure( p, typeof(GSStatsUnloaded_t.PackSmall) );
 			return (GSStatsUnloaded_t) Marshal.PtrToStructure( p, typeof(GSStatsUnloaded_t) );
 		}
 		
@@ -15252,25 +15908,18 @@ namespace SteamNative
 					SteamIDUser = d.SteamIDUser,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GSStatsUnloaded_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GSStatsUnloaded_t ) ); };
 			
 			//
@@ -15278,8 +15927,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			
@@ -15332,10 +15979,11 @@ namespace SteamNative
 		public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		
 		//
-		// Read this struct from a pointer, usually from Native
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
 		public static ItemInstalled_t FromPointer( IntPtr p )
 		{
+			if ( Platform.PackSmall ) return (ItemInstalled_t.PackSmall) Marshal.PtrToStructure( p, typeof(ItemInstalled_t.PackSmall) );
 			return (ItemInstalled_t) Marshal.PtrToStructure( p, typeof(ItemInstalled_t) );
 		}
 		
@@ -15356,25 +16004,18 @@ namespace SteamNative
 					PublishedFileId = d.PublishedFileId,
 				};
 			}
-			
-			//
-			// Read this struct from a pointer, usually from Native
-			//
-			public static PackSmall FromPointer( IntPtr p )
-			{
-				return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			}
 		}
 		
 		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<ItemInstalled_t, bool> CallbackFunction )
 		{
-			var handle = new Callback.Handle();
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
 			
 			//
 			// Create the functions we need for the vtable
 			//
 			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
-			Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => { CallbackFunction( FromPointer( p ), iofailure ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( ItemInstalled_t ) ); };
 			
 			//
@@ -15382,8 +16023,6 @@ namespace SteamNative
 			//
 			if ( Platform.PackSmall )
 			{
-				funcA = ( _, p ) => { CallbackFunction( PackSmall.FromPointer( p ), false ); };
-				funcB = ( _, p, iofailure, call ) => { CallbackFunction( PackSmall.FromPointer( p ), iofailure ); };
 				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
 			}
 			

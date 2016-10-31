@@ -63,10 +63,12 @@ namespace Generator
 
                     WriteLine();
                     WriteLine( "//" );
-                    WriteLine( "// Read this struct from a pointer, usually from Native" );
+                    WriteLine( "// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff." );
                     WriteLine( "//" );
                     StartBlock( $"public static {c.Name} FromPointer( IntPtr p )" );
                     {
+                        WriteLine( $"if ( Platform.PackSmall ) return ({c.Name}.PackSmall) Marshal.PtrToStructure( p, typeof({c.Name}.PackSmall) );" );
+
                         WriteLine( $"return ({c.Name}) Marshal.PtrToStructure( p, typeof({c.Name}) );" );
                     }
                     EndBlock();
@@ -103,20 +105,14 @@ namespace Generator
                         }
                         EndBlock();
 
-                        WriteLine();
-                        WriteLine( "//" );
-                        WriteLine( "// Read this struct from a pointer, usually from Native" );
-                        WriteLine( "//" );
-                        StartBlock( $"public static PackSmall FromPointer( IntPtr p )" );
-                        {
-                            WriteLine( $"return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );" );
-                        }
-                        EndBlock();
-
                     }
                     EndBlock();
 
-                    if ( !string.IsNullOrEmpty( c.CallbackId ) )
+                    if ( c.IsCallResult )
+                    {
+                        CallResult( c );
+                    }
+                    else if ( !string.IsNullOrEmpty( c.CallbackId ) )
                     {
                         Callback( c );
                     }
@@ -199,14 +195,15 @@ namespace Generator
             WriteLine();
             StartBlock( $"public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<{c.Name}, bool> CallbackFunction )" );
             {
-                WriteLine( $"var handle = new Callback.Handle();" );
+                WriteLine( $"var handle = new CallbackHandle();" );
+                WriteLine( $"handle.steamworks = steamworks;" );
                 WriteLine( $"" );
 
                 WriteLine( "//" );
                 WriteLine( "// Create the functions we need for the vtable" );
                 WriteLine( "//" );
                 WriteLine( $"Callback.Result         funcA = ( _, p ) => {{ CallbackFunction( FromPointer( p ), false ); }};" );
-                WriteLine( $"Callback.ResultWithInfo funcB = ( _, p, iofailure, call ) => {{ CallbackFunction( FromPointer( p ), iofailure ); }};" );
+                WriteLine( $"Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => {{ CallbackFunction( FromPointer( p ), bIOFailure ); }};" );
                 WriteLine( $"Callback.GetSize        funcC = ( _ ) => {{ return Marshal.SizeOf( typeof( {c.Name} ) ); }};" );
                 WriteLine();
                 WriteLine( "//" );
@@ -214,8 +211,6 @@ namespace Generator
                 WriteLine( "//" );
                 StartBlock( "if ( Platform.PackSmall )" );
                 {
-                    WriteLine( $"funcA = ( _, p ) => {{ CallbackFunction( PackSmall.FromPointer( p ), false ); }};" );
-                    WriteLine( $"funcB = ( _, p, iofailure, call ) => {{ CallbackFunction( PackSmall.FromPointer( p ), iofailure ); }};" );
                     WriteLine( $"funcC = ( _ ) => {{ return Marshal.SizeOf( typeof( PackSmall ) ); }};" );
                 }
                 EndBlock();
@@ -266,6 +261,82 @@ namespace Generator
 
                 WriteLine();
                 WriteLine( "steamworks.RegisterCallbackHandle( handle );" );
+            }
+            EndBlock();
+        }
+
+        private void CallResult( SteamApiDefinition.StructDef c )
+        {
+            WriteLine();
+            StartBlock( $"public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<{c.Name}, bool> CallbackFunction )" );
+            {
+                WriteLine( $"var handle = new CallbackHandle();" );
+                WriteLine( $"handle.steamworks = steamworks;" );
+                WriteLine( $"handle.callHandle = call;" );
+                WriteLine( $"" );
+
+                WriteLine( "//" );
+                WriteLine( "// Create the functions we need for the vtable" );
+                WriteLine( "//" );
+                WriteLine( $"Callback.Result         funcA = ( _, p ) => {{ CallbackFunction( FromPointer( p ), false ); handle.UnregisterCallResult(); }};" );
+                WriteLine( $"Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => {{ CallbackFunction( FromPointer( p ), bIOFailure ); handle.UnregisterCallResult(); }};" );
+                WriteLine( $"Callback.GetSize        funcC = ( _ ) => {{ return Marshal.SizeOf( typeof( {c.Name} ) ); }};" );
+                WriteLine();
+                WriteLine( "//" );
+                WriteLine( "// If this platform is PackSmall, use PackSmall versions of everything instead" );
+                WriteLine( "//" );
+                StartBlock( "if ( Platform.PackSmall )" );
+                {
+                    WriteLine( $"funcC = ( _ ) => {{ return Marshal.SizeOf( typeof( PackSmall ) ); }};" );
+                }
+                EndBlock();
+
+                WriteLine( "" );
+                WriteLine( "//" );
+                WriteLine( "// Allocate a handle to each function, so they don't get disposed" );
+                WriteLine( "//" );
+                WriteLine( "handle.FuncA = GCHandle.Alloc( funcA );" );
+                WriteLine( "handle.FuncB = GCHandle.Alloc( funcB );" );
+                WriteLine( "handle.FuncC = GCHandle.Alloc( funcC );" );
+                WriteLine();
+
+                WriteLine( "//" );
+                WriteLine( "// Create the VTable by manually allocating the memory and copying across" );
+                WriteLine( "//" );
+                WriteLine( "handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );" );
+                StartBlock( "var vTable = new Callback.VTable()" );
+                {
+                    WriteLine( "ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention" );
+                    WriteLine( "ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first" );
+                    WriteLine( "GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works" );
+                }
+                EndBlock( ";" );
+
+                WriteLine( "Marshal.StructureToPtr( vTable, handle.vTablePtr, false );" );
+
+                WriteLine( "" );
+                WriteLine( "//" );
+                WriteLine( "// Create the callback object" );
+                WriteLine( "//" );
+                WriteLine( $"var cb = new Callback();" );
+                WriteLine( $"cb.vTablePtr = handle.vTablePtr;" );
+                WriteLine( $"cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;" );
+                WriteLine( $"cb.CallbackId = CallbackId;" );
+
+                WriteLine( "" );
+                WriteLine( "//" );
+                WriteLine( "// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native" );
+                WriteLine( "//" );
+                WriteLine( $"handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );" );
+
+                WriteLine( "" );
+                WriteLine( "//" );
+                WriteLine( "// Register the callback with Steam" );
+                WriteLine( "//" );
+                WriteLine( $"steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );" );
+
+                WriteLine();
+                WriteLine( "return handle;" );
             }
             EndBlock();
         }

@@ -53,6 +53,7 @@ namespace Generator
             public StructFields[] Fields { get; set; }
 
             public string CallbackId { get; set; }
+            public bool IsCallResult { get; set; }
         }
 
         public List<StructDef> structs { get; set; }
@@ -75,6 +76,9 @@ namespace Generator
             public string ReturnType { get; set; }
             [JsonProperty( PropertyName = "params" )]
             public ParamType[] Params { get; set; }
+
+            [JsonProperty( PropertyName = "callresult" )]
+            public string CallResult { get; set; }
 
             public bool NeedsSelfPointer = true;
         }

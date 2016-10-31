@@ -25,7 +25,7 @@ namespace Generator
         {
             var cleanNative = NativeType.Trim( '*', ' ' ).Replace( "class ", "" ).Replace( "const ", "" );
 
-            if ( typeDefs.ContainsKey( cleanNative ) )
+            if ( typeDefs != null && typeDefs.ContainsKey( cleanNative ) )
             {
                 TypeDef = typeDefs[cleanNative];
             }

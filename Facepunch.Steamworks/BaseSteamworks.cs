@@ -21,7 +21,7 @@ namespace Facepunch.Steamworks
         {
             foreach ( var h in CallbackHandles )
             {
-                h.Remove( this );
+                h.UnregisterCallback();
             }
             CallbackHandles.Clear();
 
@@ -77,8 +77,8 @@ namespace Facepunch.Steamworks
         public Action<MessageType, string> OnMessage;
 
 
-        private List<SteamNative.Callback.Handle> CallbackHandles = new List<SteamNative.Callback.Handle>();
-        internal void RegisterCallbackHandle( SteamNative.Callback.Handle handle )
+        private List<SteamNative.CallbackHandle> CallbackHandles = new List<SteamNative.CallbackHandle>();
+        internal void RegisterCallbackHandle( SteamNative.CallbackHandle handle )
         {
             CallbackHandles.Add( handle );
         }
@@ -88,59 +88,11 @@ namespace Facepunch.Steamworks
 
         public virtual void Update()
         {
-            RunCallbackQueue();
-
             Inventory.Update();
             Networking.Update();
 
             if ( OnUpdate != null )
                 OnUpdate();
-        }
-
-        List<CallResult> Callbacks = new List<CallResult>();
-
-        /// <summary>
-        /// Call results are results to specific actions
-        /// </summary>
-        internal void AddCallResult( CallResult call )
-        {
-            if ( call == null ) throw new ArgumentNullException( "call" );
-
-            if ( FinishCallback( call ) )
-                return;
-
-            Callbacks.Add( call );
-        }
-
-        void RunCallbackQueue()
-        {
-            for ( int i=0; i< Callbacks.Count(); i++ )
-            {
-                if ( !FinishCallback( Callbacks[i] ) )
-                    continue;
-                
-                Callbacks.RemoveAt( i );
-                i--;
-            }
-        }
-
-        bool FinishCallback( CallResult call )
-        {
-            bool failed = true;
-
-            if ( !native.utils.IsAPICallCompleted( call.Handle, ref failed ) )
-                return false;
-
-            if ( failed )
-            {
-                //
-                // TODO - failure reason?
-                //
-                return true;
-            }
-
-            call.Run( native.utils );
-            return true;
         }
     }
 }

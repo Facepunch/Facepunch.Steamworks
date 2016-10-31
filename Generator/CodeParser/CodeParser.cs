@@ -38,21 +38,47 @@ namespace Generator
                 }
             }
 
+
+
             //
             // Associate callbackIds with structs
             //
             foreach ( var t in def.structs )
             {
-                var r = new Regex( @"struct "+t.Name+@"\n{ ?\n(?:.)+enum { k_iCallback = (.+) \+ ([0-9]+)", RegexOptions.Multiline | RegexOptions.IgnoreCase );
-                var m = r.Match( Content );
-                if ( m.Success )
+                // Standard style
                 {
-                    var kName = m.Groups[1].Value;
-                    var num = m.Groups[2].Value;
+                    var r = new Regex( @"struct "+t.Name+@"\n{ ?\n(?:.)+enum { k_iCallback = (?:(.+) \+ ([0-9]+)|(.+)) };", RegexOptions.Multiline | RegexOptions.IgnoreCase );
+                    var m = r.Match( Content );
+                    if ( m.Success )
+                    {
+                        var kName = m.Groups[1].Value;
+                        var num = m.Groups[2].Value;
 
-                    kName = kName.Replace( "k_i", "CallbackIdentifiers." ).Replace( "Callbacks", "" );
+                        if ( string.IsNullOrEmpty( kName ) )
+                        {
+                            kName = m.Groups[3].Value;
+                            num = "0";
+                        }
 
-                    t.CallbackId = $"{kName} + {num}";
+                        kName = kName.Replace( "k_i", "CallbackIdentifiers." ).Replace( "Callbacks", "" );
+
+                        t.CallbackId = $"{kName} + {num}";
+                    }
+                }
+
+                // New style
+                {
+                    var r = new Regex( @"DEFINE_CALLBACK\( "+t.Name+@", (.+) \+ ([0-9]+) \)" );
+                    var m = r.Match( Content );
+                    if ( m.Success )
+                    {
+                        var kName = m.Groups[1].Value;
+                        var num = m.Groups[2].Value;
+
+                        kName = kName.Replace( "k_i", "CallbackIdentifiers." ).Replace( "Callbacks", "" );
+
+                        t.CallbackId = $"{kName} + {num}";
+                    }
                 }
             }
 
@@ -67,6 +93,25 @@ namespace Generator
                 foreach ( Match m in ma )
                 {
                     def.Defines.Add( m.Groups[1].Value.Replace( "Callbacks", "" ), m.Groups[2].Value );
+                }
+            }
+
+            //
+            // Find CALL_RESULTs
+            //
+            {
+                var r = new Regex( @"CALL_RESULT\( (.+) \)(?:.+)?\n(?:.+)virtual\s+SteamAPICall_t\s+(\w+)\(" );
+                var ma = r.Matches( Content );
+
+                foreach ( Match m in ma )
+                {
+                    var s = def.structs.Single( x => x.Name == m.Groups[1].Value );
+                    s.IsCallResult = true;
+
+                    foreach ( var t in def.methods.Where( x => x.Name == m.Groups[2].Value ) )
+                    {
+                        t.CallResult = s.Name;
+                    }
                 }
             }
 

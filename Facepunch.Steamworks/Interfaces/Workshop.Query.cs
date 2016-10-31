@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Facepunch.Steamworks.Callbacks.Workshop;
 
 namespace Facepunch.Steamworks
 {
@@ -12,7 +11,7 @@ namespace Facepunch.Steamworks
             internal const int SteamResponseSize = 50;
 
             internal SteamNative.UGCQueryHandle_t Handle;
-            internal QueryCompleted Callback;
+            internal SteamNative.CallbackHandle Callback;
 
             /// <summary>
             /// The AppId you're querying. This defaults to this appid.
@@ -107,15 +106,15 @@ namespace Facepunch.Steamworks
                 foreach ( var tag in ExcludeTags )
                     workshop.ugc.AddExcludedTag( Handle, tag );
 
-                Callback = new QueryCompleted();
-                Callback.Handle = workshop.ugc.SendQueryUGCRequest( Handle );
-                Callback.OnResult = OnResult;
-
-                workshop.steamworks.AddCallResult( Callback );
+                Callback = workshop.ugc.SendQueryUGCRequest( Handle, OnResult );
+              //  workshop.steamworks.AddCallResult( Callback );
             }
 
-            void OnResult( SteamNative.SteamUGCQueryCompleted_t data )
+            void OnResult( SteamNative.SteamUGCQueryCompleted_t data, bool bFailed )
             {
+                if ( bFailed )
+                    throw new System.Exception( "bFailed!" );
+
                 var gotFiles = 0;
                 for ( int i = 0; i < data.NumResultsReturned; i++ )
                 {

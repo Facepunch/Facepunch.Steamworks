@@ -3978,6 +3978,14 @@ namespace SteamNative
 			{
 				Native.SteamAPI_UnregisterCallback(pCallback);
 			}
+			public virtual void /*void*/ SteamApi_SteamAPI_RegisterCallResult( IntPtr /*void **/ pCallback, ulong callback )
+			{
+				Native.SteamAPI_RegisterCallResult(pCallback, callback);
+			}
+			public virtual void /*void*/ SteamApi_SteamAPI_UnregisterCallResult( IntPtr /*void **/ pCallback, ulong callback )
+			{
+				Native.SteamAPI_UnregisterCallResult(pCallback, callback);
+			}
 			public virtual bool /*bool*/ SteamApi_SteamInternal_GameServer_Init( uint /*uint32*/ unIP, ushort /*uint16*/ usPort, ushort /*uint16*/ usGamePort, ushort /*uint16*/ usQueryPort, int /*int*/ eServerMode, string /*const char **/ pchVersionString )
 			{
 				return Native.SteamInternal_GameServer_Init(unIP, usPort, usGamePort, usQueryPort, eServerMode, pchVersionString);
@@ -4759,6 +4767,8 @@ namespace SteamNative
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern void /*void*/ SteamGameServer_RunCallbacks();
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern void /*void*/ SteamAPI_RegisterCallback( IntPtr /*void **/ pCallback, int /*int*/ callback );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern void /*void*/ SteamAPI_UnregisterCallback( IntPtr /*void **/ pCallback );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern void /*void*/ SteamAPI_RegisterCallResult( IntPtr /*void **/ pCallback, ulong callback );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern void /*void*/ SteamAPI_UnregisterCallResult( IntPtr /*void **/ pCallback, ulong callback );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamInternal_GameServer_Init( uint /*uint32*/ unIP, ushort /*uint16*/ usPort, ushort /*uint16*/ usGamePort, ushort /*uint16*/ usQueryPort, int /*int*/ eServerMode, string /*const char **/ pchVersionString );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern void /*void*/ SteamAPI_Shutdown();
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern void /*void*/ SteamGameServer_Shutdown();

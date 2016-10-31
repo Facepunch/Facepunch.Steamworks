@@ -30,11 +30,11 @@ namespace Facepunch.Steamworks.Interop
         private HSteamUser hUser;
         private HSteamPipe hPipe;
 
-        internal bool InitClient()
+        internal bool InitClient( BaseSteamworks steamworks )
         {
             isServer = false;
 
-            api = new SteamNative.SteamApi( (IntPtr) 1 );
+            api = new SteamNative.SteamApi( steamworks, (IntPtr) 1 );
 
             if ( !api.SteamAPI_Init() )
                 return false;
@@ -44,7 +44,7 @@ namespace Facepunch.Steamworks.Interop
             if ( hPipe == 0 )
                 return false;
 
-            FillInterfaces( hUser, hPipe );
+            FillInterfaces( steamworks, hUser, hPipe );
 
             // Ensure that the user has logged into Steam. This will always return true if the game is launched
             // from Steam, but if Steam is at the login prompt when you run your game it will return false.
@@ -54,11 +54,11 @@ namespace Facepunch.Steamworks.Interop
             return true;
         }
 
-        internal bool InitServer( uint IpAddress /*uint32*/, ushort usPort /*uint16*/, ushort GamePort /*uint16*/, ushort QueryPort /*uint16*/, int eServerMode /*int*/, string pchVersionString /*const char **/)
+        internal bool InitServer( BaseSteamworks steamworks, uint IpAddress /*uint32*/, ushort usPort /*uint16*/, ushort GamePort /*uint16*/, ushort QueryPort /*uint16*/, int eServerMode /*int*/, string pchVersionString /*const char **/)
         {
             isServer = true;
 
-            api = new SteamNative.SteamApi( (IntPtr)1 );
+            api = new SteamNative.SteamApi( steamworks, ( IntPtr)1 );
 
             if ( !api.SteamInternal_GameServer_Init( IpAddress, usPort, GamePort, QueryPort, eServerMode, pchVersionString ) )
             {
@@ -70,7 +70,7 @@ namespace Facepunch.Steamworks.Interop
             if ( hPipe == 0 )
                 return false;
 
-            FillInterfaces( hPipe, hUser );
+            FillInterfaces( steamworks, hPipe, hUser );
 
             if ( !gameServer.IsValid )
             {
@@ -81,7 +81,7 @@ namespace Facepunch.Steamworks.Interop
             return true;
         }
 
-        public void FillInterfaces( int hpipe, int huser )
+        public void FillInterfaces( BaseSteamworks steamworks, int hpipe, int huser )
         {
             var clientPtr = api.SteamInternal_CreateInterface( "SteamClient017" );
             if ( clientPtr == IntPtr.Zero )
@@ -89,7 +89,7 @@ namespace Facepunch.Steamworks.Interop
                 throw new System.Exception( "Steam Server: Couldn't load SteamClient017" );
             }
 
-            client = new SteamNative.SteamClient( clientPtr );
+            client = new SteamNative.SteamClient( steamworks, clientPtr );
 
             user = client.GetISteamUser( huser, hpipe, SteamNative.Defines.STEAMUSER_INTERFACE_VERSION );
             utils = client.GetISteamUtils( hpipe, SteamNative.Defines.STEAMUTILS_INTERFACE_VERSION );

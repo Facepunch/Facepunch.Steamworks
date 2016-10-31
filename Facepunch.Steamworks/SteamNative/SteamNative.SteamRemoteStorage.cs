@@ -3,232 +3,295 @@ using System.Runtime.InteropServices;
 
 namespace SteamNative
 {
-	public unsafe class SteamRemoteStorage : IDisposable
+	internal unsafe class SteamRemoteStorage : IDisposable
 	{
 		//
 		// Holds a platform specific implentation
 		//
-		internal Platform.Interface _pi;
+		internal Platform.Interface platform;
+		internal Facepunch.Steamworks.BaseSteamworks steamworks;
 		
 		//
 		// Constructor decides which implementation to use based on current platform
 		//
-		public SteamRemoteStorage( IntPtr pointer )
+		public SteamRemoteStorage( Facepunch.Steamworks.BaseSteamworks steamworks, IntPtr pointer )
 		{
-			if ( Platform.IsWindows64 ) _pi = new Platform.Win64( pointer );
-			else if ( Platform.IsWindows32 ) _pi = new Platform.Win32( pointer );
-			else if ( Platform.IsLinux32 ) _pi = new Platform.Linux32( pointer );
-			else if ( Platform.IsLinux64 ) _pi = new Platform.Linux64( pointer );
-			else if ( Platform.IsOsx ) _pi = new Platform.Mac( pointer );
+			this.steamworks = steamworks;
+			
+			if ( Platform.IsWindows64 ) platform = new Platform.Win64( pointer );
+			else if ( Platform.IsWindows32 ) platform = new Platform.Win32( pointer );
+			else if ( Platform.IsLinux32 ) platform = new Platform.Linux32( pointer );
+			else if ( Platform.IsLinux64 ) platform = new Platform.Linux64( pointer );
+			else if ( Platform.IsOsx ) platform = new Platform.Mac( pointer );
 		}
 		
 		//
 		// Class is invalid if we don't have a valid implementation
 		//
-		public bool IsValid{ get{ return _pi != null && _pi.IsValid; } }
+		public bool IsValid{ get{ return platform != null && platform.IsValid; } }
 		
 		//
 		// When shutting down clear all the internals to avoid accidental use
 		//
 		public virtual void Dispose()
 		{
-			 if ( _pi != null )
+			 if ( platform != null )
 			{
-				_pi.Dispose();
-				_pi = null;
+				platform.Dispose();
+				platform = null;
 			}
 		}
 		
 		// SteamAPICall_t
-		public SteamAPICall_t CommitPublishedFileUpdate( PublishedFileUpdateHandle_t updateHandle /*PublishedFileUpdateHandle_t*/ )
+		public CallbackHandle CommitPublishedFileUpdate( PublishedFileUpdateHandle_t updateHandle /*PublishedFileUpdateHandle_t*/, Action<RemoteStorageUpdatePublishedFileResult_t, bool> CallbackFunction = null /*Action<RemoteStorageUpdatePublishedFileResult_t, bool>*/ )
 		{
-			return _pi.ISteamRemoteStorage_CommitPublishedFileUpdate( updateHandle.Value );
+			SteamAPICall_t callback = 0;
+			callback = platform.ISteamRemoteStorage_CommitPublishedFileUpdate( updateHandle.Value );
+			
+			if ( CallbackFunction == null ) return null;
+			
+			return RemoteStorageUpdatePublishedFileResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
 		
 		// PublishedFileUpdateHandle_t
 		public PublishedFileUpdateHandle_t CreatePublishedFileUpdateRequest( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/ )
 		{
-			return _pi.ISteamRemoteStorage_CreatePublishedFileUpdateRequest( unPublishedFileId.Value );
+			return platform.ISteamRemoteStorage_CreatePublishedFileUpdateRequest( unPublishedFileId.Value );
 		}
 		
 		// SteamAPICall_t
-		public SteamAPICall_t DeletePublishedFile( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/ )
+		public CallbackHandle DeletePublishedFile( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/, Action<RemoteStorageDeletePublishedFileResult_t, bool> CallbackFunction = null /*Action<RemoteStorageDeletePublishedFileResult_t, bool>*/ )
 		{
-			return _pi.ISteamRemoteStorage_DeletePublishedFile( unPublishedFileId.Value );
+			SteamAPICall_t callback = 0;
+			callback = platform.ISteamRemoteStorage_DeletePublishedFile( unPublishedFileId.Value );
+			
+			if ( CallbackFunction == null ) return null;
+			
+			return RemoteStorageDeletePublishedFileResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
-		public SteamAPICall_t EnumeratePublishedFilesByUserAction( WorkshopFileAction eAction /*EWorkshopFileAction*/, uint unStartIndex /*uint32*/ )
+		public CallbackHandle EnumeratePublishedFilesByUserAction( WorkshopFileAction eAction /*EWorkshopFileAction*/, uint unStartIndex /*uint32*/, Action<RemoteStorageEnumeratePublishedFilesByUserActionResult_t, bool> CallbackFunction = null /*Action<RemoteStorageEnumeratePublishedFilesByUserActionResult_t, bool>*/ )
 		{
-			return _pi.ISteamRemoteStorage_EnumeratePublishedFilesByUserAction( eAction, unStartIndex );
+			SteamAPICall_t callback = 0;
+			callback = platform.ISteamRemoteStorage_EnumeratePublishedFilesByUserAction( eAction, unStartIndex );
+			
+			if ( CallbackFunction == null ) return null;
+			
+			return RemoteStorageEnumeratePublishedFilesByUserActionResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
 		// using: Detect_StringArray
-		public SteamAPICall_t EnumeratePublishedWorkshopFiles( WorkshopEnumerationType eEnumerationType /*EWorkshopEnumerationType*/, uint unStartIndex /*uint32*/, uint unCount /*uint32*/, uint unDays /*uint32*/, string[] pTags /*struct SteamParamStringArray_t **/, ref SteamParamStringArray_t pUserTags /*struct SteamParamStringArray_t **/ )
+		public CallbackHandle EnumeratePublishedWorkshopFiles( WorkshopEnumerationType eEnumerationType /*EWorkshopEnumerationType*/, uint unStartIndex /*uint32*/, uint unCount /*uint32*/, uint unDays /*uint32*/, string[] pTags /*struct SteamParamStringArray_t **/, ref SteamParamStringArray_t pUserTags /*struct SteamParamStringArray_t **/, Action<RemoteStorageEnumerateWorkshopFilesResult_t, bool> CallbackFunction = null /*Action<RemoteStorageEnumerateWorkshopFilesResult_t, bool>*/ )
 		{
+			SteamAPICall_t callback = 0;
 			// Create strings
 			var nativeStrings = new IntPtr[pTags.Length];
 			for ( int i = 0; i < pTags.Length; i++ )
 			{
 				nativeStrings[i] = Marshal.StringToHGlobalAnsi( pTags[i] );
 			}
+			try
+			{
+				
+				// Create string array
+				var size = Marshal.SizeOf( typeof( IntPtr ) ) * nativeStrings.Length;
+				var nativeArray = Marshal.AllocHGlobal( size );
+				Marshal.Copy( nativeStrings, 0, nativeArray, nativeStrings.Length );
+				
+				// Create SteamParamStringArray_t
+				var tags = new SteamParamStringArray_t();
+				tags.Strings = nativeArray;
+				tags.NumStrings = pTags.Length;
+				callback = platform.ISteamRemoteStorage_EnumeratePublishedWorkshopFiles( eEnumerationType, unStartIndex, unCount, unDays, ref tags, ref pUserTags );
+			}
+			finally
+			{
+				foreach ( var x in nativeStrings )
+				   Marshal.FreeHGlobal( x );
+				
+			}
 			
-			// Create string array
-			var size = Marshal.SizeOf( typeof( IntPtr ) ) * nativeStrings.Length;
-			var nativeArray = Marshal.AllocHGlobal( size );
-			Marshal.Copy( nativeStrings, 0, nativeArray, nativeStrings.Length );
+			if ( CallbackFunction == null ) return null;
 			
-			// Create SteamParamStringArray_t
-			var tags = new SteamParamStringArray_t();
-			tags.Strings = nativeArray;
-			tags.NumStrings = pTags.Length;
-			var result = _pi.ISteamRemoteStorage_EnumeratePublishedWorkshopFiles( eEnumerationType, unStartIndex, unCount, unDays, ref tags, ref pUserTags );
-			foreach ( var x in nativeStrings )
-			   Marshal.FreeHGlobal( x );
-			
-			return result;
+			return RemoteStorageEnumerateWorkshopFilesResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
-		public SteamAPICall_t EnumerateUserPublishedFiles( uint unStartIndex /*uint32*/ )
+		public CallbackHandle EnumerateUserPublishedFiles( uint unStartIndex /*uint32*/, Action<RemoteStorageEnumerateUserPublishedFilesResult_t, bool> CallbackFunction = null /*Action<RemoteStorageEnumerateUserPublishedFilesResult_t, bool>*/ )
 		{
-			return _pi.ISteamRemoteStorage_EnumerateUserPublishedFiles( unStartIndex );
+			SteamAPICall_t callback = 0;
+			callback = platform.ISteamRemoteStorage_EnumerateUserPublishedFiles( unStartIndex );
+			
+			if ( CallbackFunction == null ) return null;
+			
+			return RemoteStorageEnumerateUserPublishedFilesResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
 		// using: Detect_StringArray
-		public SteamAPICall_t EnumerateUserSharedWorkshopFiles( CSteamID steamId /*class CSteamID*/, uint unStartIndex /*uint32*/, string[] pRequiredTags /*struct SteamParamStringArray_t **/, ref SteamParamStringArray_t pExcludedTags /*struct SteamParamStringArray_t **/ )
+		public CallbackHandle EnumerateUserSharedWorkshopFiles( CSteamID steamId /*class CSteamID*/, uint unStartIndex /*uint32*/, string[] pRequiredTags /*struct SteamParamStringArray_t **/, ref SteamParamStringArray_t pExcludedTags /*struct SteamParamStringArray_t **/, Action<RemoteStorageEnumerateUserPublishedFilesResult_t, bool> CallbackFunction = null /*Action<RemoteStorageEnumerateUserPublishedFilesResult_t, bool>*/ )
 		{
+			SteamAPICall_t callback = 0;
 			// Create strings
 			var nativeStrings = new IntPtr[pRequiredTags.Length];
 			for ( int i = 0; i < pRequiredTags.Length; i++ )
 			{
 				nativeStrings[i] = Marshal.StringToHGlobalAnsi( pRequiredTags[i] );
 			}
+			try
+			{
+				
+				// Create string array
+				var size = Marshal.SizeOf( typeof( IntPtr ) ) * nativeStrings.Length;
+				var nativeArray = Marshal.AllocHGlobal( size );
+				Marshal.Copy( nativeStrings, 0, nativeArray, nativeStrings.Length );
+				
+				// Create SteamParamStringArray_t
+				var tags = new SteamParamStringArray_t();
+				tags.Strings = nativeArray;
+				tags.NumStrings = pRequiredTags.Length;
+				callback = platform.ISteamRemoteStorage_EnumerateUserSharedWorkshopFiles( steamId.Value, unStartIndex, ref tags, ref pExcludedTags );
+			}
+			finally
+			{
+				foreach ( var x in nativeStrings )
+				   Marshal.FreeHGlobal( x );
+				
+			}
 			
-			// Create string array
-			var size = Marshal.SizeOf( typeof( IntPtr ) ) * nativeStrings.Length;
-			var nativeArray = Marshal.AllocHGlobal( size );
-			Marshal.Copy( nativeStrings, 0, nativeArray, nativeStrings.Length );
+			if ( CallbackFunction == null ) return null;
 			
-			// Create SteamParamStringArray_t
-			var tags = new SteamParamStringArray_t();
-			tags.Strings = nativeArray;
-			tags.NumStrings = pRequiredTags.Length;
-			var result = _pi.ISteamRemoteStorage_EnumerateUserSharedWorkshopFiles( steamId.Value, unStartIndex, ref tags, ref pExcludedTags );
-			foreach ( var x in nativeStrings )
-			   Marshal.FreeHGlobal( x );
-			
-			return result;
+			return RemoteStorageEnumerateUserPublishedFilesResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
-		public SteamAPICall_t EnumerateUserSubscribedFiles( uint unStartIndex /*uint32*/ )
+		public CallbackHandle EnumerateUserSubscribedFiles( uint unStartIndex /*uint32*/, Action<RemoteStorageEnumerateUserSubscribedFilesResult_t, bool> CallbackFunction = null /*Action<RemoteStorageEnumerateUserSubscribedFilesResult_t, bool>*/ )
 		{
-			return _pi.ISteamRemoteStorage_EnumerateUserSubscribedFiles( unStartIndex );
+			SteamAPICall_t callback = 0;
+			callback = platform.ISteamRemoteStorage_EnumerateUserSubscribedFiles( unStartIndex );
+			
+			if ( CallbackFunction == null ) return null;
+			
+			return RemoteStorageEnumerateUserSubscribedFilesResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
 		public bool FileDelete( string pchFile /*const char **/ )
 		{
-			return _pi.ISteamRemoteStorage_FileDelete( pchFile );
+			return platform.ISteamRemoteStorage_FileDelete( pchFile );
 		}
 		
 		// bool
 		public bool FileExists( string pchFile /*const char **/ )
 		{
-			return _pi.ISteamRemoteStorage_FileExists( pchFile );
+			return platform.ISteamRemoteStorage_FileExists( pchFile );
 		}
 		
 		// bool
 		public bool FileForget( string pchFile /*const char **/ )
 		{
-			return _pi.ISteamRemoteStorage_FileForget( pchFile );
+			return platform.ISteamRemoteStorage_FileForget( pchFile );
 		}
 		
 		// bool
 		public bool FilePersisted( string pchFile /*const char **/ )
 		{
-			return _pi.ISteamRemoteStorage_FilePersisted( pchFile );
+			return platform.ISteamRemoteStorage_FilePersisted( pchFile );
 		}
 		
 		// int
 		public int FileRead( string pchFile /*const char **/, IntPtr pvData /*void **/, int cubDataToRead /*int32*/ )
 		{
-			return _pi.ISteamRemoteStorage_FileRead( pchFile, (IntPtr) pvData, cubDataToRead );
+			return platform.ISteamRemoteStorage_FileRead( pchFile, (IntPtr) pvData, cubDataToRead );
 		}
 		
 		// SteamAPICall_t
-		public SteamAPICall_t FileReadAsync( string pchFile /*const char **/, uint nOffset /*uint32*/, uint cubToRead /*uint32*/ )
+		public CallbackHandle FileReadAsync( string pchFile /*const char **/, uint nOffset /*uint32*/, uint cubToRead /*uint32*/, Action<RemoteStorageFileReadAsyncComplete_t, bool> CallbackFunction = null /*Action<RemoteStorageFileReadAsyncComplete_t, bool>*/ )
 		{
-			return _pi.ISteamRemoteStorage_FileReadAsync( pchFile, nOffset, cubToRead );
+			SteamAPICall_t callback = 0;
+			callback = platform.ISteamRemoteStorage_FileReadAsync( pchFile, nOffset, cubToRead );
+			
+			if ( CallbackFunction == null ) return null;
+			
+			return RemoteStorageFileReadAsyncComplete_t.CallResult( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
 		public bool FileReadAsyncComplete( SteamAPICall_t hReadCall /*SteamAPICall_t*/, IntPtr pvBuffer /*void **/, uint cubToRead /*uint32*/ )
 		{
-			return _pi.ISteamRemoteStorage_FileReadAsyncComplete( hReadCall.Value, (IntPtr) pvBuffer, cubToRead );
+			return platform.ISteamRemoteStorage_FileReadAsyncComplete( hReadCall.Value, (IntPtr) pvBuffer, cubToRead );
 		}
 		
 		// SteamAPICall_t
-		public SteamAPICall_t FileShare( string pchFile /*const char **/ )
+		public CallbackHandle FileShare( string pchFile /*const char **/, Action<RemoteStorageFileShareResult_t, bool> CallbackFunction = null /*Action<RemoteStorageFileShareResult_t, bool>*/ )
 		{
-			return _pi.ISteamRemoteStorage_FileShare( pchFile );
+			SteamAPICall_t callback = 0;
+			callback = platform.ISteamRemoteStorage_FileShare( pchFile );
+			
+			if ( CallbackFunction == null ) return null;
+			
+			return RemoteStorageFileShareResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
 		public bool FileWrite( string pchFile /*const char **/, IntPtr pvData /*const void **/, int cubData /*int32*/ )
 		{
-			return _pi.ISteamRemoteStorage_FileWrite( pchFile, (IntPtr) pvData, cubData );
+			return platform.ISteamRemoteStorage_FileWrite( pchFile, (IntPtr) pvData, cubData );
 		}
 		
 		// SteamAPICall_t
-		public SteamAPICall_t FileWriteAsync( string pchFile /*const char **/, IntPtr pvData /*const void **/, uint cubData /*uint32*/ )
+		public CallbackHandle FileWriteAsync( string pchFile /*const char **/, IntPtr pvData /*const void **/, uint cubData /*uint32*/, Action<RemoteStorageFileWriteAsyncComplete_t, bool> CallbackFunction = null /*Action<RemoteStorageFileWriteAsyncComplete_t, bool>*/ )
 		{
-			return _pi.ISteamRemoteStorage_FileWriteAsync( pchFile, (IntPtr) pvData, cubData );
+			SteamAPICall_t callback = 0;
+			callback = platform.ISteamRemoteStorage_FileWriteAsync( pchFile, (IntPtr) pvData, cubData );
+			
+			if ( CallbackFunction == null ) return null;
+			
+			return RemoteStorageFileWriteAsyncComplete_t.CallResult( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
 		public bool FileWriteStreamCancel( UGCFileWriteStreamHandle_t writeHandle /*UGCFileWriteStreamHandle_t*/ )
 		{
-			return _pi.ISteamRemoteStorage_FileWriteStreamCancel( writeHandle.Value );
+			return platform.ISteamRemoteStorage_FileWriteStreamCancel( writeHandle.Value );
 		}
 		
 		// bool
 		public bool FileWriteStreamClose( UGCFileWriteStreamHandle_t writeHandle /*UGCFileWriteStreamHandle_t*/ )
 		{
-			return _pi.ISteamRemoteStorage_FileWriteStreamClose( writeHandle.Value );
+			return platform.ISteamRemoteStorage_FileWriteStreamClose( writeHandle.Value );
 		}
 		
 		// UGCFileWriteStreamHandle_t
 		public UGCFileWriteStreamHandle_t FileWriteStreamOpen( string pchFile /*const char **/ )
 		{
-			return _pi.ISteamRemoteStorage_FileWriteStreamOpen( pchFile );
+			return platform.ISteamRemoteStorage_FileWriteStreamOpen( pchFile );
 		}
 		
 		// bool
 		public bool FileWriteStreamWriteChunk( UGCFileWriteStreamHandle_t writeHandle /*UGCFileWriteStreamHandle_t*/, IntPtr pvData /*const void **/, int cubData /*int32*/ )
 		{
-			return _pi.ISteamRemoteStorage_FileWriteStreamWriteChunk( writeHandle.Value, (IntPtr) pvData, cubData );
+			return platform.ISteamRemoteStorage_FileWriteStreamWriteChunk( writeHandle.Value, (IntPtr) pvData, cubData );
 		}
 		
 		// int
 		public int GetCachedUGCCount()
 		{
-			return _pi.ISteamRemoteStorage_GetCachedUGCCount();
+			return platform.ISteamRemoteStorage_GetCachedUGCCount();
 		}
 		
 		// UGCHandle_t
 		public UGCHandle_t GetCachedUGCHandle( int iCachedContent /*int32*/ )
 		{
-			return _pi.ISteamRemoteStorage_GetCachedUGCHandle( iCachedContent );
+			return platform.ISteamRemoteStorage_GetCachedUGCHandle( iCachedContent );
 		}
 		
 		// int
 		public int GetFileCount()
 		{
-			return _pi.ISteamRemoteStorage_GetFileCount();
+			return platform.ISteamRemoteStorage_GetFileCount();
 		}
 		
 		// string
@@ -236,44 +299,54 @@ namespace SteamNative
 		public string GetFileNameAndSize( int iFile /*int*/, IntPtr pnFileSizeInBytes /*int32 **/ )
 		{
 			IntPtr string_pointer;
-			string_pointer = _pi.ISteamRemoteStorage_GetFileNameAndSize( iFile, (IntPtr) pnFileSizeInBytes );
+			string_pointer = platform.ISteamRemoteStorage_GetFileNameAndSize( iFile, (IntPtr) pnFileSizeInBytes );
 			return Marshal.PtrToStringAnsi( string_pointer );
 		}
 		
 		// int
 		public int GetFileSize( string pchFile /*const char **/ )
 		{
-			return _pi.ISteamRemoteStorage_GetFileSize( pchFile );
+			return platform.ISteamRemoteStorage_GetFileSize( pchFile );
 		}
 		
 		// long
 		public long GetFileTimestamp( string pchFile /*const char **/ )
 		{
-			return _pi.ISteamRemoteStorage_GetFileTimestamp( pchFile );
+			return platform.ISteamRemoteStorage_GetFileTimestamp( pchFile );
 		}
 		
 		// SteamAPICall_t
-		public SteamAPICall_t GetPublishedFileDetails( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/, uint unMaxSecondsOld /*uint32*/ )
+		public CallbackHandle GetPublishedFileDetails( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/, uint unMaxSecondsOld /*uint32*/, Action<RemoteStorageGetPublishedFileDetailsResult_t, bool> CallbackFunction = null /*Action<RemoteStorageGetPublishedFileDetailsResult_t, bool>*/ )
 		{
-			return _pi.ISteamRemoteStorage_GetPublishedFileDetails( unPublishedFileId.Value, unMaxSecondsOld );
+			SteamAPICall_t callback = 0;
+			callback = platform.ISteamRemoteStorage_GetPublishedFileDetails( unPublishedFileId.Value, unMaxSecondsOld );
+			
+			if ( CallbackFunction == null ) return null;
+			
+			return RemoteStorageGetPublishedFileDetailsResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
-		public SteamAPICall_t GetPublishedItemVoteDetails( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/ )
+		public CallbackHandle GetPublishedItemVoteDetails( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/, Action<RemoteStorageGetPublishedItemVoteDetailsResult_t, bool> CallbackFunction = null /*Action<RemoteStorageGetPublishedItemVoteDetailsResult_t, bool>*/ )
 		{
-			return _pi.ISteamRemoteStorage_GetPublishedItemVoteDetails( unPublishedFileId.Value );
+			SteamAPICall_t callback = 0;
+			callback = platform.ISteamRemoteStorage_GetPublishedItemVoteDetails( unPublishedFileId.Value );
+			
+			if ( CallbackFunction == null ) return null;
+			
+			return RemoteStorageGetPublishedItemVoteDetailsResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
 		public bool GetQuota( IntPtr pnTotalBytes /*uint64 **/, IntPtr puAvailableBytes /*uint64 **/ )
 		{
-			return _pi.ISteamRemoteStorage_GetQuota( (IntPtr) pnTotalBytes, (IntPtr) puAvailableBytes );
+			return platform.ISteamRemoteStorage_GetQuota( (IntPtr) pnTotalBytes, (IntPtr) puAvailableBytes );
 		}
 		
 		// RemoteStoragePlatform
 		public RemoteStoragePlatform GetSyncPlatforms( string pchFile /*const char **/ )
 		{
-			return _pi.ISteamRemoteStorage_GetSyncPlatforms( pchFile );
+			return platform.ISteamRemoteStorage_GetSyncPlatforms( pchFile );
 		}
 		
 		// bool
@@ -284,7 +357,7 @@ namespace SteamNative
 			ppchName = string.Empty;
 			System.Text.StringBuilder ppchName_sb = new System.Text.StringBuilder( 4096 );
 			int pnFileSizeInBytes = 4096;
-			bSuccess = _pi.ISteamRemoteStorage_GetUGCDetails( hContent.Value, ref pnAppID.Value, ppchName_sb, (IntPtr) pnFileSizeInBytes, out pSteamIDOwner.Value );
+			bSuccess = platform.ISteamRemoteStorage_GetUGCDetails( hContent.Value, ref pnAppID.Value, ppchName_sb, (IntPtr) pnFileSizeInBytes, out pSteamIDOwner.Value );
 			if ( !bSuccess ) return bSuccess;
 			ppchName = ppchName_sb.ToString();
 			return bSuccess;
@@ -293,151 +366,201 @@ namespace SteamNative
 		// bool
 		public bool GetUGCDownloadProgress( UGCHandle_t hContent /*UGCHandle_t*/, out int pnBytesDownloaded /*int32 **/, out int pnBytesExpected /*int32 **/ )
 		{
-			return _pi.ISteamRemoteStorage_GetUGCDownloadProgress( hContent.Value, out pnBytesDownloaded, out pnBytesExpected );
+			return platform.ISteamRemoteStorage_GetUGCDownloadProgress( hContent.Value, out pnBytesDownloaded, out pnBytesExpected );
 		}
 		
 		// SteamAPICall_t
-		public SteamAPICall_t GetUserPublishedItemVoteDetails( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/ )
+		public CallbackHandle GetUserPublishedItemVoteDetails( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/, Action<RemoteStorageGetPublishedItemVoteDetailsResult_t, bool> CallbackFunction = null /*Action<RemoteStorageGetPublishedItemVoteDetailsResult_t, bool>*/ )
 		{
-			return _pi.ISteamRemoteStorage_GetUserPublishedItemVoteDetails( unPublishedFileId.Value );
+			SteamAPICall_t callback = 0;
+			callback = platform.ISteamRemoteStorage_GetUserPublishedItemVoteDetails( unPublishedFileId.Value );
+			
+			if ( CallbackFunction == null ) return null;
+			
+			return RemoteStorageGetPublishedItemVoteDetailsResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
 		public bool IsCloudEnabledForAccount()
 		{
-			return _pi.ISteamRemoteStorage_IsCloudEnabledForAccount();
+			return platform.ISteamRemoteStorage_IsCloudEnabledForAccount();
 		}
 		
 		// bool
 		public bool IsCloudEnabledForApp()
 		{
-			return _pi.ISteamRemoteStorage_IsCloudEnabledForApp();
+			return platform.ISteamRemoteStorage_IsCloudEnabledForApp();
 		}
 		
 		// SteamAPICall_t
 		// using: Detect_StringArray
-		public SteamAPICall_t PublishVideo( WorkshopVideoProvider eVideoProvider /*EWorkshopVideoProvider*/, string pchVideoAccount /*const char **/, string pchVideoIdentifier /*const char **/, string pchPreviewFile /*const char **/, AppId_t nConsumerAppId /*AppId_t*/, string pchTitle /*const char **/, string pchDescription /*const char **/, RemoteStoragePublishedFileVisibility eVisibility /*ERemoteStoragePublishedFileVisibility*/, string[] pTags /*struct SteamParamStringArray_t **/ )
+		public CallbackHandle PublishVideo( WorkshopVideoProvider eVideoProvider /*EWorkshopVideoProvider*/, string pchVideoAccount /*const char **/, string pchVideoIdentifier /*const char **/, string pchPreviewFile /*const char **/, AppId_t nConsumerAppId /*AppId_t*/, string pchTitle /*const char **/, string pchDescription /*const char **/, RemoteStoragePublishedFileVisibility eVisibility /*ERemoteStoragePublishedFileVisibility*/, string[] pTags /*struct SteamParamStringArray_t **/, Action<RemoteStoragePublishFileProgress_t, bool> CallbackFunction = null /*Action<RemoteStoragePublishFileProgress_t, bool>*/ )
 		{
+			SteamAPICall_t callback = 0;
 			// Create strings
 			var nativeStrings = new IntPtr[pTags.Length];
 			for ( int i = 0; i < pTags.Length; i++ )
 			{
 				nativeStrings[i] = Marshal.StringToHGlobalAnsi( pTags[i] );
 			}
+			try
+			{
+				
+				// Create string array
+				var size = Marshal.SizeOf( typeof( IntPtr ) ) * nativeStrings.Length;
+				var nativeArray = Marshal.AllocHGlobal( size );
+				Marshal.Copy( nativeStrings, 0, nativeArray, nativeStrings.Length );
+				
+				// Create SteamParamStringArray_t
+				var tags = new SteamParamStringArray_t();
+				tags.Strings = nativeArray;
+				tags.NumStrings = pTags.Length;
+				callback = platform.ISteamRemoteStorage_PublishVideo( eVideoProvider, pchVideoAccount, pchVideoIdentifier, pchPreviewFile, nConsumerAppId.Value, pchTitle, pchDescription, eVisibility, ref tags );
+			}
+			finally
+			{
+				foreach ( var x in nativeStrings )
+				   Marshal.FreeHGlobal( x );
+				
+			}
 			
-			// Create string array
-			var size = Marshal.SizeOf( typeof( IntPtr ) ) * nativeStrings.Length;
-			var nativeArray = Marshal.AllocHGlobal( size );
-			Marshal.Copy( nativeStrings, 0, nativeArray, nativeStrings.Length );
+			if ( CallbackFunction == null ) return null;
 			
-			// Create SteamParamStringArray_t
-			var tags = new SteamParamStringArray_t();
-			tags.Strings = nativeArray;
-			tags.NumStrings = pTags.Length;
-			var result = _pi.ISteamRemoteStorage_PublishVideo( eVideoProvider, pchVideoAccount, pchVideoIdentifier, pchPreviewFile, nConsumerAppId.Value, pchTitle, pchDescription, eVisibility, ref tags );
-			foreach ( var x in nativeStrings )
-			   Marshal.FreeHGlobal( x );
-			
-			return result;
+			return RemoteStoragePublishFileProgress_t.CallResult( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
 		// using: Detect_StringArray
-		public SteamAPICall_t PublishWorkshopFile( string pchFile /*const char **/, string pchPreviewFile /*const char **/, AppId_t nConsumerAppId /*AppId_t*/, string pchTitle /*const char **/, string pchDescription /*const char **/, RemoteStoragePublishedFileVisibility eVisibility /*ERemoteStoragePublishedFileVisibility*/, string[] pTags /*struct SteamParamStringArray_t **/, WorkshopFileType eWorkshopFileType /*EWorkshopFileType*/ )
+		public CallbackHandle PublishWorkshopFile( string pchFile /*const char **/, string pchPreviewFile /*const char **/, AppId_t nConsumerAppId /*AppId_t*/, string pchTitle /*const char **/, string pchDescription /*const char **/, RemoteStoragePublishedFileVisibility eVisibility /*ERemoteStoragePublishedFileVisibility*/, string[] pTags /*struct SteamParamStringArray_t **/, WorkshopFileType eWorkshopFileType /*EWorkshopFileType*/, Action<RemoteStoragePublishFileProgress_t, bool> CallbackFunction = null /*Action<RemoteStoragePublishFileProgress_t, bool>*/ )
 		{
+			SteamAPICall_t callback = 0;
 			// Create strings
 			var nativeStrings = new IntPtr[pTags.Length];
 			for ( int i = 0; i < pTags.Length; i++ )
 			{
 				nativeStrings[i] = Marshal.StringToHGlobalAnsi( pTags[i] );
 			}
+			try
+			{
+				
+				// Create string array
+				var size = Marshal.SizeOf( typeof( IntPtr ) ) * nativeStrings.Length;
+				var nativeArray = Marshal.AllocHGlobal( size );
+				Marshal.Copy( nativeStrings, 0, nativeArray, nativeStrings.Length );
+				
+				// Create SteamParamStringArray_t
+				var tags = new SteamParamStringArray_t();
+				tags.Strings = nativeArray;
+				tags.NumStrings = pTags.Length;
+				callback = platform.ISteamRemoteStorage_PublishWorkshopFile( pchFile, pchPreviewFile, nConsumerAppId.Value, pchTitle, pchDescription, eVisibility, ref tags, eWorkshopFileType );
+			}
+			finally
+			{
+				foreach ( var x in nativeStrings )
+				   Marshal.FreeHGlobal( x );
+				
+			}
 			
-			// Create string array
-			var size = Marshal.SizeOf( typeof( IntPtr ) ) * nativeStrings.Length;
-			var nativeArray = Marshal.AllocHGlobal( size );
-			Marshal.Copy( nativeStrings, 0, nativeArray, nativeStrings.Length );
+			if ( CallbackFunction == null ) return null;
 			
-			// Create SteamParamStringArray_t
-			var tags = new SteamParamStringArray_t();
-			tags.Strings = nativeArray;
-			tags.NumStrings = pTags.Length;
-			var result = _pi.ISteamRemoteStorage_PublishWorkshopFile( pchFile, pchPreviewFile, nConsumerAppId.Value, pchTitle, pchDescription, eVisibility, ref tags, eWorkshopFileType );
-			foreach ( var x in nativeStrings )
-			   Marshal.FreeHGlobal( x );
-			
-			return result;
+			return RemoteStoragePublishFileProgress_t.CallResult( steamworks, callback, CallbackFunction );
 		}
 		
 		// void
 		public void SetCloudEnabledForApp( bool bEnabled /*bool*/ )
 		{
-			_pi.ISteamRemoteStorage_SetCloudEnabledForApp( bEnabled );
+			platform.ISteamRemoteStorage_SetCloudEnabledForApp( bEnabled );
 		}
 		
 		// bool
 		public bool SetSyncPlatforms( string pchFile /*const char **/, RemoteStoragePlatform eRemoteStoragePlatform /*ERemoteStoragePlatform*/ )
 		{
-			return _pi.ISteamRemoteStorage_SetSyncPlatforms( pchFile, eRemoteStoragePlatform );
+			return platform.ISteamRemoteStorage_SetSyncPlatforms( pchFile, eRemoteStoragePlatform );
 		}
 		
 		// SteamAPICall_t
-		public SteamAPICall_t SetUserPublishedFileAction( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/, WorkshopFileAction eAction /*EWorkshopFileAction*/ )
+		public CallbackHandle SetUserPublishedFileAction( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/, WorkshopFileAction eAction /*EWorkshopFileAction*/, Action<RemoteStorageSetUserPublishedFileActionResult_t, bool> CallbackFunction = null /*Action<RemoteStorageSetUserPublishedFileActionResult_t, bool>*/ )
 		{
-			return _pi.ISteamRemoteStorage_SetUserPublishedFileAction( unPublishedFileId.Value, eAction );
+			SteamAPICall_t callback = 0;
+			callback = platform.ISteamRemoteStorage_SetUserPublishedFileAction( unPublishedFileId.Value, eAction );
+			
+			if ( CallbackFunction == null ) return null;
+			
+			return RemoteStorageSetUserPublishedFileActionResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
-		public SteamAPICall_t SubscribePublishedFile( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/ )
+		public CallbackHandle SubscribePublishedFile( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/, Action<RemoteStorageSubscribePublishedFileResult_t, bool> CallbackFunction = null /*Action<RemoteStorageSubscribePublishedFileResult_t, bool>*/ )
 		{
-			return _pi.ISteamRemoteStorage_SubscribePublishedFile( unPublishedFileId.Value );
+			SteamAPICall_t callback = 0;
+			callback = platform.ISteamRemoteStorage_SubscribePublishedFile( unPublishedFileId.Value );
+			
+			if ( CallbackFunction == null ) return null;
+			
+			return RemoteStorageSubscribePublishedFileResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
-		public SteamAPICall_t UGCDownload( UGCHandle_t hContent /*UGCHandle_t*/, uint unPriority /*uint32*/ )
+		public CallbackHandle UGCDownload( UGCHandle_t hContent /*UGCHandle_t*/, uint unPriority /*uint32*/, Action<RemoteStorageDownloadUGCResult_t, bool> CallbackFunction = null /*Action<RemoteStorageDownloadUGCResult_t, bool>*/ )
 		{
-			return _pi.ISteamRemoteStorage_UGCDownload( hContent.Value, unPriority );
+			SteamAPICall_t callback = 0;
+			callback = platform.ISteamRemoteStorage_UGCDownload( hContent.Value, unPriority );
+			
+			if ( CallbackFunction == null ) return null;
+			
+			return RemoteStorageDownloadUGCResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
-		public SteamAPICall_t UGCDownloadToLocation( UGCHandle_t hContent /*UGCHandle_t*/, string pchLocation /*const char **/, uint unPriority /*uint32*/ )
+		public CallbackHandle UGCDownloadToLocation( UGCHandle_t hContent /*UGCHandle_t*/, string pchLocation /*const char **/, uint unPriority /*uint32*/, Action<RemoteStorageDownloadUGCResult_t, bool> CallbackFunction = null /*Action<RemoteStorageDownloadUGCResult_t, bool>*/ )
 		{
-			return _pi.ISteamRemoteStorage_UGCDownloadToLocation( hContent.Value, pchLocation, unPriority );
+			SteamAPICall_t callback = 0;
+			callback = platform.ISteamRemoteStorage_UGCDownloadToLocation( hContent.Value, pchLocation, unPriority );
+			
+			if ( CallbackFunction == null ) return null;
+			
+			return RemoteStorageDownloadUGCResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
 		
 		// int
 		public int UGCRead( UGCHandle_t hContent /*UGCHandle_t*/, IntPtr pvData /*void **/, int cubDataToRead /*int32*/, uint cOffset /*uint32*/, UGCReadAction eAction /*EUGCReadAction*/ )
 		{
-			return _pi.ISteamRemoteStorage_UGCRead( hContent.Value, (IntPtr) pvData, cubDataToRead, cOffset, eAction );
+			return platform.ISteamRemoteStorage_UGCRead( hContent.Value, (IntPtr) pvData, cubDataToRead, cOffset, eAction );
 		}
 		
 		// SteamAPICall_t
-		public SteamAPICall_t UnsubscribePublishedFile( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/ )
+		public CallbackHandle UnsubscribePublishedFile( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/, Action<RemoteStorageUnsubscribePublishedFileResult_t, bool> CallbackFunction = null /*Action<RemoteStorageUnsubscribePublishedFileResult_t, bool>*/ )
 		{
-			return _pi.ISteamRemoteStorage_UnsubscribePublishedFile( unPublishedFileId.Value );
+			SteamAPICall_t callback = 0;
+			callback = platform.ISteamRemoteStorage_UnsubscribePublishedFile( unPublishedFileId.Value );
+			
+			if ( CallbackFunction == null ) return null;
+			
+			return RemoteStorageUnsubscribePublishedFileResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
 		public bool UpdatePublishedFileDescription( PublishedFileUpdateHandle_t updateHandle /*PublishedFileUpdateHandle_t*/, string pchDescription /*const char **/ )
 		{
-			return _pi.ISteamRemoteStorage_UpdatePublishedFileDescription( updateHandle.Value, pchDescription );
+			return platform.ISteamRemoteStorage_UpdatePublishedFileDescription( updateHandle.Value, pchDescription );
 		}
 		
 		// bool
 		public bool UpdatePublishedFileFile( PublishedFileUpdateHandle_t updateHandle /*PublishedFileUpdateHandle_t*/, string pchFile /*const char **/ )
 		{
-			return _pi.ISteamRemoteStorage_UpdatePublishedFileFile( updateHandle.Value, pchFile );
+			return platform.ISteamRemoteStorage_UpdatePublishedFileFile( updateHandle.Value, pchFile );
 		}
 		
 		// bool
 		public bool UpdatePublishedFilePreviewFile( PublishedFileUpdateHandle_t updateHandle /*PublishedFileUpdateHandle_t*/, string pchPreviewFile /*const char **/ )
 		{
-			return _pi.ISteamRemoteStorage_UpdatePublishedFilePreviewFile( updateHandle.Value, pchPreviewFile );
+			return platform.ISteamRemoteStorage_UpdatePublishedFilePreviewFile( updateHandle.Value, pchPreviewFile );
 		}
 		
 		// bool
 		public bool UpdatePublishedFileSetChangeDescription( PublishedFileUpdateHandle_t updateHandle /*PublishedFileUpdateHandle_t*/, string pchChangeDescription /*const char **/ )
 		{
-			return _pi.ISteamRemoteStorage_UpdatePublishedFileSetChangeDescription( updateHandle.Value, pchChangeDescription );
+			return platform.ISteamRemoteStorage_UpdatePublishedFileSetChangeDescription( updateHandle.Value, pchChangeDescription );
 		}
 		
 		// bool
@@ -450,39 +573,49 @@ namespace SteamNative
 			{
 				nativeStrings[i] = Marshal.StringToHGlobalAnsi( pTags[i] );
 			}
-			
-			// Create string array
-			var size = Marshal.SizeOf( typeof( IntPtr ) ) * nativeStrings.Length;
-			var nativeArray = Marshal.AllocHGlobal( size );
-			Marshal.Copy( nativeStrings, 0, nativeArray, nativeStrings.Length );
-			
-			// Create SteamParamStringArray_t
-			var tags = new SteamParamStringArray_t();
-			tags.Strings = nativeArray;
-			tags.NumStrings = pTags.Length;
-			var result = _pi.ISteamRemoteStorage_UpdatePublishedFileTags( updateHandle.Value, ref tags );
-			foreach ( var x in nativeStrings )
-			   Marshal.FreeHGlobal( x );
-			
-			return result;
+			try
+			{
+				
+				// Create string array
+				var size = Marshal.SizeOf( typeof( IntPtr ) ) * nativeStrings.Length;
+				var nativeArray = Marshal.AllocHGlobal( size );
+				Marshal.Copy( nativeStrings, 0, nativeArray, nativeStrings.Length );
+				
+				// Create SteamParamStringArray_t
+				var tags = new SteamParamStringArray_t();
+				tags.Strings = nativeArray;
+				tags.NumStrings = pTags.Length;
+				return platform.ISteamRemoteStorage_UpdatePublishedFileTags( updateHandle.Value, ref tags );
+			}
+			finally
+			{
+				foreach ( var x in nativeStrings )
+				   Marshal.FreeHGlobal( x );
+				
+			}
 		}
 		
 		// bool
 		public bool UpdatePublishedFileTitle( PublishedFileUpdateHandle_t updateHandle /*PublishedFileUpdateHandle_t*/, string pchTitle /*const char **/ )
 		{
-			return _pi.ISteamRemoteStorage_UpdatePublishedFileTitle( updateHandle.Value, pchTitle );
+			return platform.ISteamRemoteStorage_UpdatePublishedFileTitle( updateHandle.Value, pchTitle );
 		}
 		
 		// bool
 		public bool UpdatePublishedFileVisibility( PublishedFileUpdateHandle_t updateHandle /*PublishedFileUpdateHandle_t*/, RemoteStoragePublishedFileVisibility eVisibility /*ERemoteStoragePublishedFileVisibility*/ )
 		{
-			return _pi.ISteamRemoteStorage_UpdatePublishedFileVisibility( updateHandle.Value, eVisibility );
+			return platform.ISteamRemoteStorage_UpdatePublishedFileVisibility( updateHandle.Value, eVisibility );
 		}
 		
 		// SteamAPICall_t
-		public SteamAPICall_t UpdateUserPublishedItemVote( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/, bool bVoteUp /*bool*/ )
+		public CallbackHandle UpdateUserPublishedItemVote( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/, bool bVoteUp /*bool*/, Action<RemoteStorageUpdateUserPublishedItemVoteResult_t, bool> CallbackFunction = null /*Action<RemoteStorageUpdateUserPublishedItemVoteResult_t, bool>*/ )
 		{
-			return _pi.ISteamRemoteStorage_UpdateUserPublishedItemVote( unPublishedFileId.Value, bVoteUp );
+			SteamAPICall_t callback = 0;
+			callback = platform.ISteamRemoteStorage_UpdateUserPublishedItemVote( unPublishedFileId.Value, bVoteUp );
+			
+			if ( CallbackFunction == null ) return null;
+			
+			return RemoteStorageUpdateUserPublishedItemVoteResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
 		
 	}
