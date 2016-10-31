@@ -24,8 +24,10 @@ namespace Generator
 
         internal void ExtendDefinition( SteamApiDefinition def )
         {
+            //
+            // Get a list of CallbackIds
+            //
             def.CallbackIds = new Dictionary<string, int>();
-
             {
                 var r = new Regex( @"enum { (k_i(?:.+)) = ([0-9]+) };" );
                 var ma = r.Matches( Content );
@@ -36,11 +38,11 @@ namespace Generator
                 }
             }
 
-            
+            //
+            // Associate callbackIds with structs
+            //
             foreach ( var t in def.structs )
             {
-                Console.WriteLine( t.Name );
-
                 var r = new Regex( @"struct "+t.Name+@"\n{ ?\n(?:.)+enum { k_iCallback = (.+) \+ ([0-9]+)", RegexOptions.Multiline | RegexOptions.IgnoreCase );
                 var m = r.Match( Content );
                 if ( m.Success )
@@ -54,6 +56,9 @@ namespace Generator
                 }
             }
 
+            //
+            // Find defines
+            //
             def.Defines = new Dictionary<string, string>();
             {
                 var r = new Regex( @"#define ([a-zA-Z_]+) ""(.+)""" );

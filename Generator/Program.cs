@@ -11,12 +11,12 @@ namespace Generator
     {
         static void Main( string[] args )
         {
-            var content = System.IO.File.ReadAllText( "steam_api.json" );
+            var content = System.IO.File.ReadAllText( "steam_sdk/steam_api.json" );
             var def = Newtonsoft.Json.JsonConvert.DeserializeObject<SteamApiDefinition>( content );
 
             AddExtras( def );
 
-            var parser = new CodeParser( @"D:\Dropbox (Facepunch Studios)\Software\SteamWorks\steamworks_sdk_138a\public\steam" );
+            var parser = new CodeParser( @"steam_sdk" );
 
             parser.ExtendDefinition( def );
 
