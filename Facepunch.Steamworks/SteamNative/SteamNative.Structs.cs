@@ -89,7 +89,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamServerConnectFailure_t ) ); };
 			
@@ -190,7 +190,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamServersDisconnected_t ) ); };
 			
@@ -303,7 +303,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( ClientGameServerDeny_t ) ); };
 			
@@ -410,7 +410,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( ValidateAuthTicketResponse_t ) ); };
 			
@@ -517,7 +517,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( MicroTxnAuthorizationResponse_t ) ); };
 			
@@ -732,7 +732,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GetAuthSessionTicketResponse_t ) ); };
 			
@@ -835,7 +835,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GameWebCallback_t ) ); };
 			
@@ -1131,7 +1131,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( PersonaStateChange_t ) ); };
 			
@@ -1232,7 +1232,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GameOverlayActivated_t ) ); };
 			
@@ -1340,7 +1340,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GameServerChangeRequested_t ) ); };
 			
@@ -1444,7 +1444,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GameLobbyJoinRequested_t ) ); };
 			
@@ -1554,7 +1554,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( AvatarImageLoaded_t ) ); };
 			
@@ -1775,7 +1775,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( FriendRichPresenceUpdate_t ) ); };
 			
@@ -1881,7 +1881,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GameRichPresenceJoinRequested_t ) ); };
 			
@@ -1988,7 +1988,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GameConnectedClanChatMsg_t ) ); };
 			
@@ -2092,7 +2092,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GameConnectedChatJoin_t ) ); };
 			
@@ -2206,7 +2206,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GameConnectedChatLeave_t ) ); };
 			
@@ -2309,7 +2309,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( DownloadClanActivityCountsResult_t ) ); };
 			
@@ -2527,7 +2527,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GameConnectedFriendChatMsg_t ) ); };
 			
@@ -3107,7 +3107,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( LowBatteryPower_t ) ); };
 			
@@ -3214,7 +3214,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamAPICallCompleted_t ) ); };
 			
@@ -3431,7 +3431,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GamepadTextInputDismissed_t ) ); };
 			
@@ -3730,7 +3730,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( FavoritesListChanged_t ) ); };
 			
@@ -3837,7 +3837,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( LobbyInvite_t ) ); };
 			
@@ -4066,7 +4066,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( LobbyDataUpdate_t ) ); };
 			
@@ -4176,7 +4176,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( LobbyChatUpdate_t ) ); };
 			
@@ -4286,7 +4286,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( LobbyChatMsg_t ) ); };
 			
@@ -4396,7 +4396,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( LobbyGameCreated_t ) ); };
 			
@@ -4614,7 +4614,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( LobbyKicked_t ) ); };
 			
@@ -4834,7 +4834,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( PSNGameBootInviteResult_t ) ); };
 			
@@ -4935,7 +4935,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( FavoritesListAccountsUpdated_t ) ); };
 			
@@ -5077,7 +5077,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageAppSyncedClient_t ) ); };
 			
@@ -5184,7 +5184,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageAppSyncedServer_t ) ); };
 			
@@ -5301,7 +5301,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageAppSyncProgress_t ) ); };
 			
@@ -5405,7 +5405,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageAppSyncStatusCheck_t ) ); };
 			
@@ -5633,7 +5633,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStoragePublishFileResult_t ) ); };
 			
@@ -7021,7 +7021,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStoragePublishedFileSubscribed_t ) ); };
 			
@@ -7125,7 +7125,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStoragePublishedFileUnsubscribed_t ) ); };
 			
@@ -7229,7 +7229,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStoragePublishedFileDeleted_t ) ); };
 			
@@ -7450,7 +7450,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageUserVoteDetails_t ) ); };
 			
@@ -7562,7 +7562,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageEnumerateUserSharedWorkshopFilesResult_t ) ); };
 			
@@ -8032,7 +8032,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStoragePublishedFileUpdated_t ) ); };
 			
@@ -8528,7 +8528,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( UserStatsStored_t ) ); };
 			
@@ -8645,7 +8645,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( UserAchievementStored_t ) ); };
 			
@@ -9217,7 +9217,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( UserStatsUnloaded_t ) ); };
 			
@@ -9331,7 +9331,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( UserAchievementIconFetched_t ) ); };
 			
@@ -9666,7 +9666,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( PS3TrophiesInstalled_t ) ); };
 			
@@ -9881,7 +9881,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( DlcInstalled_t ) ); };
 			
@@ -9985,7 +9985,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RegisterActivationCodeResponse_t ) ); };
 			
@@ -10097,7 +10097,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( AppProofOfPurchaseKeyResponse_t ) ); };
 			
@@ -10373,7 +10373,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( P2PSessionRequest_t ) ); };
 			
@@ -10477,7 +10477,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( P2PSessionConnectFail_t ) ); };
 			
@@ -10587,7 +10587,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SocketStatusCallback_t ) ); };
 			
@@ -10691,7 +10691,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( ScreenshotReady_t ) ); };
 			
@@ -10792,7 +10792,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( VolumeHasChanged_t ) ); };
 			
@@ -10895,7 +10895,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( MusicPlayerWantsShuffled_t ) ); };
 			
@@ -10998,7 +10998,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( MusicPlayerWantsLooped_t ) ); };
 			
@@ -11099,7 +11099,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( MusicPlayerWantsVolume_t ) ); };
 			
@@ -11200,7 +11200,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( MusicPlayerSelectsQueueEntry_t ) ); };
 			
@@ -11301,7 +11301,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( MusicPlayerSelectsPlaylistEntry_t ) ); };
 			
@@ -11402,7 +11402,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( MusicPlayerWantsPlayingRepeatStatus_t ) ); };
 			
@@ -11517,7 +11517,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTTPRequestCompleted_t ) ); };
 			
@@ -11621,7 +11621,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTTPRequestHeadersReceived_t ) ); };
 			
@@ -11731,7 +11731,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTTPRequestDataReceived_t ) ); };
 			
@@ -11841,7 +11841,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamUnifiedMessagesSendMethodResult_t ) ); };
 			
@@ -12336,7 +12336,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamUGCRequestUGCDetailsResult_t ) ); };
 			
@@ -12678,7 +12678,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( DownloadItemResult_t ) ); };
 			
@@ -13368,7 +13368,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamAppInstalled_t ) ); };
 			
@@ -13469,7 +13469,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamAppUninstalled_t ) ); };
 			
@@ -13843,7 +13843,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_URLChanged_t ) ); };
 			
@@ -13950,7 +13950,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_FinishedRequest_t ) ); };
 			
@@ -14054,7 +14054,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_OpenLinkInNewTab_t ) ); };
 			
@@ -14158,7 +14158,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_ChangedTitle_t ) ); };
 			
@@ -14265,7 +14265,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_SearchResults_t ) ); };
 			
@@ -14376,7 +14376,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_CanGoBackAndForward_t ) ); };
 			
@@ -14494,7 +14494,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_HorizontalScroll_t ) ); };
 			
@@ -14612,7 +14612,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_VerticalScroll_t ) ); };
 			
@@ -14732,7 +14732,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_LinkAtPosition_t ) ); };
 			
@@ -14836,7 +14836,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_JSAlert_t ) ); };
 			
@@ -14940,7 +14940,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_JSConfirm_t ) ); };
 			
@@ -15047,7 +15047,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_FileOpenDialog_t ) ); };
 			
@@ -15166,7 +15166,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_NewWindow_t ) ); };
 			
@@ -15270,7 +15270,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_SetCursor_t ) ); };
 			
@@ -15374,7 +15374,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_StatusText_t ) ); };
 			
@@ -15478,7 +15478,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_ShowToolTip_t ) ); };
 			
@@ -15582,7 +15582,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_UpdateToolTip_t ) ); };
 			
@@ -15683,7 +15683,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_HideToolTip_t ) ); };
 			
@@ -15828,7 +15828,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamInventoryResultReady_t ) ); };
 			
@@ -15929,7 +15929,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamInventoryFullUpdate_t ) ); };
 			
@@ -16030,7 +16030,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( BroadcastUploadStop_t ) ); };
 			
@@ -16139,7 +16139,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GetVideoURLResult_t ) ); };
 			
@@ -16243,7 +16243,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GSClientApprove_t ) ); };
 			
@@ -16352,7 +16352,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GSClientDeny_t ) ); };
 			
@@ -16456,7 +16456,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GSClientKick_t ) ); };
 			
@@ -16567,7 +16567,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GSClientAchievementStatus_t ) ); };
 			
@@ -16668,7 +16668,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GSPolicyResponse_t ) ); };
 			
@@ -16778,7 +16778,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GSGameplayStats_t ) ); };
 			
@@ -16892,7 +16892,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GSClientGroupStatus_t ) ); };
 			
@@ -17586,7 +17586,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GSStatsUnloaded_t ) ); };
 			
@@ -17690,7 +17690,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( ItemInstalled_t ) ); };
 			

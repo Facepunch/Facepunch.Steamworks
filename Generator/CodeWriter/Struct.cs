@@ -245,10 +245,10 @@ namespace Generator
             WriteLine( "//" );
             WriteLine( "// Create the functions we need for the vtable" );
             WriteLine( "//" );
-            WriteLine( $"Callback.Result         funcA = ( _, p ) => {{  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); }};" );
 
             if ( Result )
             {
+                WriteLine( $"Callback.Result         funcA = ( _, p ) => {{  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); }};" );
                 StartBlock( $"Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => " );
                 {
                     WriteLine( "if ( hSteamAPICall != call ) return;" );
@@ -262,6 +262,7 @@ namespace Generator
             }
             else
             {
+                WriteLine( $"Callback.Result         funcA = ( _, p ) => {{ CallbackFunction( FromPointer( p ), false ); }};" );
                 WriteLine( $"Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => {{ CallbackFunction( FromPointer( p ), bIOFailure ); }};" );
             }
 
