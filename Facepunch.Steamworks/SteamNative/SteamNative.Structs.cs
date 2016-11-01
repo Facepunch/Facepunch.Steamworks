@@ -114,10 +114,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -207,10 +215,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -312,10 +328,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -411,10 +435,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -510,10 +542,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -709,10 +749,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -804,10 +852,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -1084,10 +1140,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -1177,10 +1241,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -1277,10 +1349,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -1373,10 +1453,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -1475,10 +1563,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -1680,10 +1776,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -1778,10 +1882,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -1877,10 +1989,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -1973,10 +2093,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -2079,10 +2207,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -2174,10 +2310,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -2376,10 +2520,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -2916,10 +3068,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -3015,10 +3175,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -3216,10 +3384,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -3507,10 +3683,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -3606,10 +3790,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -3819,10 +4011,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -3921,10 +4121,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -4023,10 +4231,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -4125,10 +4341,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -4327,10 +4551,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -4531,10 +4763,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -4624,10 +4864,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -4758,10 +5006,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -4857,10 +5113,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -4966,10 +5230,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -5062,10 +5334,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -5274,10 +5554,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -6574,10 +6862,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -6670,10 +6966,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -6766,10 +7070,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -6971,10 +7283,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -7075,10 +7395,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -7513,10 +7841,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -7977,10 +8313,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -8086,10 +8430,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -8618,10 +8970,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -8724,10 +9084,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -9035,10 +9403,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -9234,10 +9610,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -9330,10 +9714,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -9434,10 +9826,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -9694,10 +10094,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -9790,10 +10198,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -9892,10 +10308,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -9988,10 +10412,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -10081,10 +10513,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -10176,10 +10616,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -10271,10 +10719,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -10364,10 +10820,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -10457,10 +10921,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -10550,10 +11022,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -10643,10 +11123,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -10750,10 +11238,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -10846,10 +11342,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -10948,10 +11452,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -11050,10 +11562,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -11529,10 +12049,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -11610,7 +12138,7 @@ namespace SteamNative
 			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => 
 			{
-				if ( hSteamAPICall.Value != call.Value ) return;
+				if ( hSteamAPICall != call ) return;
 				
 				handle.CallResultHandle = 0;
 				handle.Dispose();
@@ -11847,10 +12375,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -12489,10 +13025,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -12582,10 +13126,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -12940,10 +13492,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -13039,10 +13599,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -13135,10 +13703,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -13231,10 +13807,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -13330,10 +13914,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -13433,10 +14025,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -13543,10 +14143,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -13653,10 +14261,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -13765,10 +14381,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -13861,10 +14485,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -13957,10 +14589,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -14056,10 +14696,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -14167,10 +14815,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -14263,10 +14919,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -14359,10 +15023,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -14455,10 +15127,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -14551,10 +15231,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -14644,10 +15332,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -14781,10 +15477,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -14874,10 +15578,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -14967,10 +15679,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -15068,10 +15788,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -15164,10 +15892,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -15265,10 +16001,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -15361,10 +16105,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -15464,10 +16216,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -15557,10 +16317,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -15659,10 +16427,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -15765,10 +16541,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -16411,10 +17195,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -16507,10 +17299,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//

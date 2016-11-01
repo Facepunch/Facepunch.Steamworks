@@ -43,6 +43,17 @@ namespace Generator
             indent++;
         }
 
+        private void Else( string v = "" )
+        {
+            indent--;
+
+            WriteLine( "}" );
+            WriteLine( "else"+ v );
+            WriteLine( "{" );
+
+            indent++;
+        }
+
         private void WriteLines( List<string> beforeLines )
         {
             foreach ( var line in beforeLines )

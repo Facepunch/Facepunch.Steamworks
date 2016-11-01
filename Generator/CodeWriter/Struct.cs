@@ -230,11 +230,21 @@ namespace Generator
                 WriteLine( "handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );" );
                 StartBlock( "var vTable = new Callback.VTable()" );
                 {
-                    WriteLine( "ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention" );
-                    WriteLine( "ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first" );
-                    WriteLine( "GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works" );
+                    WriteLine( "ResultA = Marshal.GetFunctionPointerForDelegate( funcA )," );
+                    WriteLine( "ResultB = Marshal.GetFunctionPointerForDelegate( funcB )," );
+                    WriteLine( "GetSize = Marshal.GetFunctionPointerForDelegate( funcC )," );
                 }
                 EndBlock( ";" );
+
+                WriteLine( "//" );
+                WriteLine( "// The order of these functions are swapped on Windows" );
+                WriteLine( "//" );
+                StartBlock( "if ( Platform.Os == OperatingSystem.Windows )" );
+                {
+                    WriteLine( "vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );" );
+                    WriteLine( "vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );" );
+                }
+                EndBlock();
 
                 WriteLine( "Marshal.StructureToPtr( vTable, handle.vTablePtr, false );" );
 
