@@ -107,7 +107,6 @@ namespace Facepunch.Steamworks
                     workshop.ugc.AddExcludedTag( Handle, tag );
 
                 Callback = workshop.ugc.SendQueryUGCRequest( Handle, OnResult );
-              //  workshop.steamworks.AddCallResult( Callback );
             }
 
             void OnResult( SteamNative.SteamUGCQueryCompleted_t data, bool bFailed )

@@ -16,7 +16,7 @@ namespace SteamNative
 		//
 		public static CallbackMsg_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (CallbackMsg_t.PackSmall) Marshal.PtrToStructure( p, typeof(CallbackMsg_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (CallbackMsg_t) Marshal.PtrToStructure( p, typeof(CallbackMsg_t) );
 		}
 		
@@ -57,7 +57,7 @@ namespace SteamNative
 		//
 		public static SteamServerConnectFailure_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (SteamServerConnectFailure_t.PackSmall) Marshal.PtrToStructure( p, typeof(SteamServerConnectFailure_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (SteamServerConnectFailure_t) Marshal.PtrToStructure( p, typeof(SteamServerConnectFailure_t) );
 		}
 		
@@ -89,7 +89,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamServerConnectFailure_t ) ); };
 			
@@ -161,7 +161,7 @@ namespace SteamNative
 		//
 		public static SteamServersDisconnected_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (SteamServersDisconnected_t.PackSmall) Marshal.PtrToStructure( p, typeof(SteamServersDisconnected_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (SteamServersDisconnected_t) Marshal.PtrToStructure( p, typeof(SteamServersDisconnected_t) );
 		}
 		
@@ -190,7 +190,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamServersDisconnected_t ) ); };
 			
@@ -266,7 +266,7 @@ namespace SteamNative
 		//
 		public static ClientGameServerDeny_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (ClientGameServerDeny_t.PackSmall) Marshal.PtrToStructure( p, typeof(ClientGameServerDeny_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (ClientGameServerDeny_t) Marshal.PtrToStructure( p, typeof(ClientGameServerDeny_t) );
 		}
 		
@@ -303,7 +303,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( ClientGameServerDeny_t ) ); };
 			
@@ -377,7 +377,7 @@ namespace SteamNative
 		//
 		public static ValidateAuthTicketResponse_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (ValidateAuthTicketResponse_t.PackSmall) Marshal.PtrToStructure( p, typeof(ValidateAuthTicketResponse_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (ValidateAuthTicketResponse_t) Marshal.PtrToStructure( p, typeof(ValidateAuthTicketResponse_t) );
 		}
 		
@@ -410,7 +410,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( ValidateAuthTicketResponse_t ) ); };
 			
@@ -484,7 +484,7 @@ namespace SteamNative
 		//
 		public static MicroTxnAuthorizationResponse_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (MicroTxnAuthorizationResponse_t.PackSmall) Marshal.PtrToStructure( p, typeof(MicroTxnAuthorizationResponse_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (MicroTxnAuthorizationResponse_t) Marshal.PtrToStructure( p, typeof(MicroTxnAuthorizationResponse_t) );
 		}
 		
@@ -517,7 +517,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( MicroTxnAuthorizationResponse_t ) ); };
 			
@@ -589,7 +589,7 @@ namespace SteamNative
 		//
 		public static EncryptedAppTicketResponse_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (EncryptedAppTicketResponse_t.PackSmall) Marshal.PtrToStructure( p, typeof(EncryptedAppTicketResponse_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (EncryptedAppTicketResponse_t) Marshal.PtrToStructure( p, typeof(EncryptedAppTicketResponse_t) );
 		}
 		
@@ -653,10 +653,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -693,7 +701,7 @@ namespace SteamNative
 		//
 		public static GetAuthSessionTicketResponse_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (GetAuthSessionTicketResponse_t.PackSmall) Marshal.PtrToStructure( p, typeof(GetAuthSessionTicketResponse_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (GetAuthSessionTicketResponse_t) Marshal.PtrToStructure( p, typeof(GetAuthSessionTicketResponse_t) );
 		}
 		
@@ -724,7 +732,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GetAuthSessionTicketResponse_t ) ); };
 			
@@ -797,7 +805,7 @@ namespace SteamNative
 		//
 		public static GameWebCallback_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (GameWebCallback_t.PackSmall) Marshal.PtrToStructure( p, typeof(GameWebCallback_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (GameWebCallback_t) Marshal.PtrToStructure( p, typeof(GameWebCallback_t) );
 		}
 		
@@ -827,7 +835,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GameWebCallback_t ) ); };
 			
@@ -900,7 +908,7 @@ namespace SteamNative
 		//
 		public static StoreAuthURLResponse_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (StoreAuthURLResponse_t.PackSmall) Marshal.PtrToStructure( p, typeof(StoreAuthURLResponse_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (StoreAuthURLResponse_t) Marshal.PtrToStructure( p, typeof(StoreAuthURLResponse_t) );
 		}
 		
@@ -965,10 +973,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -1007,7 +1023,7 @@ namespace SteamNative
 		//
 		public static FriendGameInfo_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (FriendGameInfo_t.PackSmall) Marshal.PtrToStructure( p, typeof(FriendGameInfo_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (FriendGameInfo_t) Marshal.PtrToStructure( p, typeof(FriendGameInfo_t) );
 		}
 		
@@ -1048,7 +1064,7 @@ namespace SteamNative
 		//
 		public static FriendSessionStateInfo_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (FriendSessionStateInfo_t.PackSmall) Marshal.PtrToStructure( p, typeof(FriendSessionStateInfo_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (FriendSessionStateInfo_t) Marshal.PtrToStructure( p, typeof(FriendSessionStateInfo_t) );
 		}
 		
@@ -1084,7 +1100,7 @@ namespace SteamNative
 		//
 		public static PersonaStateChange_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (PersonaStateChange_t.PackSmall) Marshal.PtrToStructure( p, typeof(PersonaStateChange_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (PersonaStateChange_t) Marshal.PtrToStructure( p, typeof(PersonaStateChange_t) );
 		}
 		
@@ -1115,7 +1131,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( PersonaStateChange_t ) ); };
 			
@@ -1187,7 +1203,7 @@ namespace SteamNative
 		//
 		public static GameOverlayActivated_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (GameOverlayActivated_t.PackSmall) Marshal.PtrToStructure( p, typeof(GameOverlayActivated_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (GameOverlayActivated_t) Marshal.PtrToStructure( p, typeof(GameOverlayActivated_t) );
 		}
 		
@@ -1216,7 +1232,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GameOverlayActivated_t ) ); };
 			
@@ -1291,7 +1307,7 @@ namespace SteamNative
 		//
 		public static GameServerChangeRequested_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (GameServerChangeRequested_t.PackSmall) Marshal.PtrToStructure( p, typeof(GameServerChangeRequested_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (GameServerChangeRequested_t) Marshal.PtrToStructure( p, typeof(GameServerChangeRequested_t) );
 		}
 		
@@ -1324,7 +1340,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GameServerChangeRequested_t ) ); };
 			
@@ -1397,7 +1413,7 @@ namespace SteamNative
 		//
 		public static GameLobbyJoinRequested_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (GameLobbyJoinRequested_t.PackSmall) Marshal.PtrToStructure( p, typeof(GameLobbyJoinRequested_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (GameLobbyJoinRequested_t) Marshal.PtrToStructure( p, typeof(GameLobbyJoinRequested_t) );
 		}
 		
@@ -1428,7 +1444,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GameLobbyJoinRequested_t ) ); };
 			
@@ -1503,7 +1519,7 @@ namespace SteamNative
 		//
 		public static AvatarImageLoaded_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (AvatarImageLoaded_t.PackSmall) Marshal.PtrToStructure( p, typeof(AvatarImageLoaded_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (AvatarImageLoaded_t) Marshal.PtrToStructure( p, typeof(AvatarImageLoaded_t) );
 		}
 		
@@ -1538,7 +1554,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( AvatarImageLoaded_t ) ); };
 			
@@ -1612,7 +1628,7 @@ namespace SteamNative
 		//
 		public static ClanOfficerListResponse_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (ClanOfficerListResponse_t.PackSmall) Marshal.PtrToStructure( p, typeof(ClanOfficerListResponse_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (ClanOfficerListResponse_t) Marshal.PtrToStructure( p, typeof(ClanOfficerListResponse_t) );
 		}
 		
@@ -1680,10 +1696,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -1720,7 +1744,7 @@ namespace SteamNative
 		//
 		public static FriendRichPresenceUpdate_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (FriendRichPresenceUpdate_t.PackSmall) Marshal.PtrToStructure( p, typeof(FriendRichPresenceUpdate_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (FriendRichPresenceUpdate_t) Marshal.PtrToStructure( p, typeof(FriendRichPresenceUpdate_t) );
 		}
 		
@@ -1751,7 +1775,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( FriendRichPresenceUpdate_t ) ); };
 			
@@ -1825,7 +1849,7 @@ namespace SteamNative
 		//
 		public static GameRichPresenceJoinRequested_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (GameRichPresenceJoinRequested_t.PackSmall) Marshal.PtrToStructure( p, typeof(GameRichPresenceJoinRequested_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (GameRichPresenceJoinRequested_t) Marshal.PtrToStructure( p, typeof(GameRichPresenceJoinRequested_t) );
 		}
 		
@@ -1857,7 +1881,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GameRichPresenceJoinRequested_t ) ); };
 			
@@ -1931,7 +1955,7 @@ namespace SteamNative
 		//
 		public static GameConnectedClanChatMsg_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (GameConnectedClanChatMsg_t.PackSmall) Marshal.PtrToStructure( p, typeof(GameConnectedClanChatMsg_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (GameConnectedClanChatMsg_t) Marshal.PtrToStructure( p, typeof(GameConnectedClanChatMsg_t) );
 		}
 		
@@ -1964,7 +1988,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GameConnectedClanChatMsg_t ) ); };
 			
@@ -2037,7 +2061,7 @@ namespace SteamNative
 		//
 		public static GameConnectedChatJoin_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (GameConnectedChatJoin_t.PackSmall) Marshal.PtrToStructure( p, typeof(GameConnectedChatJoin_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (GameConnectedChatJoin_t) Marshal.PtrToStructure( p, typeof(GameConnectedChatJoin_t) );
 		}
 		
@@ -2068,7 +2092,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GameConnectedChatJoin_t ) ); };
 			
@@ -2145,7 +2169,7 @@ namespace SteamNative
 		//
 		public static GameConnectedChatLeave_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (GameConnectedChatLeave_t.PackSmall) Marshal.PtrToStructure( p, typeof(GameConnectedChatLeave_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (GameConnectedChatLeave_t) Marshal.PtrToStructure( p, typeof(GameConnectedChatLeave_t) );
 		}
 		
@@ -2182,7 +2206,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GameConnectedChatLeave_t ) ); };
 			
@@ -2255,7 +2279,7 @@ namespace SteamNative
 		//
 		public static DownloadClanActivityCountsResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (DownloadClanActivityCountsResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(DownloadClanActivityCountsResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (DownloadClanActivityCountsResult_t) Marshal.PtrToStructure( p, typeof(DownloadClanActivityCountsResult_t) );
 		}
 		
@@ -2285,7 +2309,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( DownloadClanActivityCountsResult_t ) ); };
 			
@@ -2358,7 +2382,7 @@ namespace SteamNative
 		//
 		public static JoinClanChatRoomCompletionResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (JoinClanChatRoomCompletionResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(JoinClanChatRoomCompletionResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (JoinClanChatRoomCompletionResult_t) Marshal.PtrToStructure( p, typeof(JoinClanChatRoomCompletionResult_t) );
 		}
 		
@@ -2424,10 +2448,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -2464,7 +2496,7 @@ namespace SteamNative
 		//
 		public static GameConnectedFriendChatMsg_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (GameConnectedFriendChatMsg_t.PackSmall) Marshal.PtrToStructure( p, typeof(GameConnectedFriendChatMsg_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (GameConnectedFriendChatMsg_t) Marshal.PtrToStructure( p, typeof(GameConnectedFriendChatMsg_t) );
 		}
 		
@@ -2495,7 +2527,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GameConnectedFriendChatMsg_t ) ); };
 			
@@ -2569,7 +2601,7 @@ namespace SteamNative
 		//
 		public static FriendsGetFollowerCount_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (FriendsGetFollowerCount_t.PackSmall) Marshal.PtrToStructure( p, typeof(FriendsGetFollowerCount_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (FriendsGetFollowerCount_t) Marshal.PtrToStructure( p, typeof(FriendsGetFollowerCount_t) );
 		}
 		
@@ -2637,10 +2669,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -2679,7 +2719,7 @@ namespace SteamNative
 		//
 		public static FriendsIsFollowing_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (FriendsIsFollowing_t.PackSmall) Marshal.PtrToStructure( p, typeof(FriendsIsFollowing_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (FriendsIsFollowing_t) Marshal.PtrToStructure( p, typeof(FriendsIsFollowing_t) );
 		}
 		
@@ -2748,10 +2788,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -2791,7 +2839,7 @@ namespace SteamNative
 		//
 		public static FriendsEnumerateFollowingList_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (FriendsEnumerateFollowingList_t.PackSmall) Marshal.PtrToStructure( p, typeof(FriendsEnumerateFollowingList_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (FriendsEnumerateFollowingList_t) Marshal.PtrToStructure( p, typeof(FriendsEnumerateFollowingList_t) );
 		}
 		
@@ -2862,10 +2910,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -2905,7 +2961,7 @@ namespace SteamNative
 		//
 		public static SetPersonaNameResponse_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (SetPersonaNameResponse_t.PackSmall) Marshal.PtrToStructure( p, typeof(SetPersonaNameResponse_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (SetPersonaNameResponse_t) Marshal.PtrToStructure( p, typeof(SetPersonaNameResponse_t) );
 		}
 		
@@ -2975,10 +3031,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -3014,7 +3078,7 @@ namespace SteamNative
 		//
 		public static LowBatteryPower_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (LowBatteryPower_t.PackSmall) Marshal.PtrToStructure( p, typeof(LowBatteryPower_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (LowBatteryPower_t) Marshal.PtrToStructure( p, typeof(LowBatteryPower_t) );
 		}
 		
@@ -3043,7 +3107,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( LowBatteryPower_t ) ); };
 			
@@ -3117,7 +3181,7 @@ namespace SteamNative
 		//
 		public static SteamAPICallCompleted_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (SteamAPICallCompleted_t.PackSmall) Marshal.PtrToStructure( p, typeof(SteamAPICallCompleted_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (SteamAPICallCompleted_t) Marshal.PtrToStructure( p, typeof(SteamAPICallCompleted_t) );
 		}
 		
@@ -3150,7 +3214,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamAPICallCompleted_t ) ); };
 			
@@ -3222,7 +3286,7 @@ namespace SteamNative
 		//
 		public static CheckFileSignature_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (CheckFileSignature_t.PackSmall) Marshal.PtrToStructure( p, typeof(CheckFileSignature_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (CheckFileSignature_t) Marshal.PtrToStructure( p, typeof(CheckFileSignature_t) );
 		}
 		
@@ -3286,10 +3350,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -3327,7 +3399,7 @@ namespace SteamNative
 		//
 		public static GamepadTextInputDismissed_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (GamepadTextInputDismissed_t.PackSmall) Marshal.PtrToStructure( p, typeof(GamepadTextInputDismissed_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (GamepadTextInputDismissed_t) Marshal.PtrToStructure( p, typeof(GamepadTextInputDismissed_t) );
 		}
 		
@@ -3359,7 +3431,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GamepadTextInputDismissed_t ) ); };
 			
@@ -3433,7 +3505,7 @@ namespace SteamNative
 		//
 		public static MatchMakingKeyValuePair_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (MatchMakingKeyValuePair_t.PackSmall) Marshal.PtrToStructure( p, typeof(MatchMakingKeyValuePair_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (MatchMakingKeyValuePair_t) Marshal.PtrToStructure( p, typeof(MatchMakingKeyValuePair_t) );
 		}
 		
@@ -3471,7 +3543,7 @@ namespace SteamNative
 		//
 		public static servernetadr_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (servernetadr_t.PackSmall) Marshal.PtrToStructure( p, typeof(servernetadr_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (servernetadr_t) Marshal.PtrToStructure( p, typeof(servernetadr_t) );
 		}
 		
@@ -3533,7 +3605,7 @@ namespace SteamNative
 		//
 		public static gameserveritem_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (gameserveritem_t.PackSmall) Marshal.PtrToStructure( p, typeof(gameserveritem_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (gameserveritem_t) Marshal.PtrToStructure( p, typeof(gameserveritem_t) );
 		}
 		
@@ -3616,7 +3688,7 @@ namespace SteamNative
 		//
 		public static FavoritesListChanged_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (FavoritesListChanged_t.PackSmall) Marshal.PtrToStructure( p, typeof(FavoritesListChanged_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (FavoritesListChanged_t) Marshal.PtrToStructure( p, typeof(FavoritesListChanged_t) );
 		}
 		
@@ -3658,7 +3730,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( FavoritesListChanged_t ) ); };
 			
@@ -3732,7 +3804,7 @@ namespace SteamNative
 		//
 		public static LobbyInvite_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (LobbyInvite_t.PackSmall) Marshal.PtrToStructure( p, typeof(LobbyInvite_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (LobbyInvite_t) Marshal.PtrToStructure( p, typeof(LobbyInvite_t) );
 		}
 		
@@ -3765,7 +3837,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( LobbyInvite_t ) ); };
 			
@@ -3841,7 +3913,7 @@ namespace SteamNative
 		//
 		public static LobbyEnter_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (LobbyEnter_t.PackSmall) Marshal.PtrToStructure( p, typeof(LobbyEnter_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (LobbyEnter_t) Marshal.PtrToStructure( p, typeof(LobbyEnter_t) );
 		}
 		
@@ -3912,10 +3984,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -3953,7 +4033,7 @@ namespace SteamNative
 		//
 		public static LobbyDataUpdate_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (LobbyDataUpdate_t.PackSmall) Marshal.PtrToStructure( p, typeof(LobbyDataUpdate_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (LobbyDataUpdate_t) Marshal.PtrToStructure( p, typeof(LobbyDataUpdate_t) );
 		}
 		
@@ -3986,7 +4066,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( LobbyDataUpdate_t ) ); };
 			
@@ -4061,7 +4141,7 @@ namespace SteamNative
 		//
 		public static LobbyChatUpdate_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (LobbyChatUpdate_t.PackSmall) Marshal.PtrToStructure( p, typeof(LobbyChatUpdate_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (LobbyChatUpdate_t) Marshal.PtrToStructure( p, typeof(LobbyChatUpdate_t) );
 		}
 		
@@ -4096,7 +4176,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( LobbyChatUpdate_t ) ); };
 			
@@ -4171,7 +4251,7 @@ namespace SteamNative
 		//
 		public static LobbyChatMsg_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (LobbyChatMsg_t.PackSmall) Marshal.PtrToStructure( p, typeof(LobbyChatMsg_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (LobbyChatMsg_t) Marshal.PtrToStructure( p, typeof(LobbyChatMsg_t) );
 		}
 		
@@ -4206,7 +4286,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( LobbyChatMsg_t ) ); };
 			
@@ -4281,7 +4361,7 @@ namespace SteamNative
 		//
 		public static LobbyGameCreated_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (LobbyGameCreated_t.PackSmall) Marshal.PtrToStructure( p, typeof(LobbyGameCreated_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (LobbyGameCreated_t) Marshal.PtrToStructure( p, typeof(LobbyGameCreated_t) );
 		}
 		
@@ -4316,7 +4396,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( LobbyGameCreated_t ) ); };
 			
@@ -4388,7 +4468,7 @@ namespace SteamNative
 		//
 		public static LobbyMatchList_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (LobbyMatchList_t.PackSmall) Marshal.PtrToStructure( p, typeof(LobbyMatchList_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (LobbyMatchList_t) Marshal.PtrToStructure( p, typeof(LobbyMatchList_t) );
 		}
 		
@@ -4452,10 +4532,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -4493,7 +4581,7 @@ namespace SteamNative
 		//
 		public static LobbyKicked_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (LobbyKicked_t.PackSmall) Marshal.PtrToStructure( p, typeof(LobbyKicked_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (LobbyKicked_t) Marshal.PtrToStructure( p, typeof(LobbyKicked_t) );
 		}
 		
@@ -4526,7 +4614,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( LobbyKicked_t ) ); };
 			
@@ -4599,7 +4687,7 @@ namespace SteamNative
 		//
 		public static LobbyCreated_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (LobbyCreated_t.PackSmall) Marshal.PtrToStructure( p, typeof(LobbyCreated_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (LobbyCreated_t) Marshal.PtrToStructure( p, typeof(LobbyCreated_t) );
 		}
 		
@@ -4665,10 +4753,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -4706,7 +4802,7 @@ namespace SteamNative
 		//
 		public static PSNGameBootInviteResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (PSNGameBootInviteResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(PSNGameBootInviteResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (PSNGameBootInviteResult_t) Marshal.PtrToStructure( p, typeof(PSNGameBootInviteResult_t) );
 		}
 		
@@ -4738,7 +4834,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( PSNGameBootInviteResult_t ) ); };
 			
@@ -4810,7 +4906,7 @@ namespace SteamNative
 		//
 		public static FavoritesListAccountsUpdated_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (FavoritesListAccountsUpdated_t.PackSmall) Marshal.PtrToStructure( p, typeof(FavoritesListAccountsUpdated_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (FavoritesListAccountsUpdated_t) Marshal.PtrToStructure( p, typeof(FavoritesListAccountsUpdated_t) );
 		}
 		
@@ -4839,7 +4935,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( FavoritesListAccountsUpdated_t ) ); };
 			
@@ -4911,7 +5007,7 @@ namespace SteamNative
 		//
 		public static SteamParamStringArray_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (SteamParamStringArray_t.PackSmall) Marshal.PtrToStructure( p, typeof(SteamParamStringArray_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (SteamParamStringArray_t) Marshal.PtrToStructure( p, typeof(SteamParamStringArray_t) );
 		}
 		
@@ -4948,7 +5044,7 @@ namespace SteamNative
 		//
 		public static RemoteStorageAppSyncedClient_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RemoteStorageAppSyncedClient_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncedClient_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RemoteStorageAppSyncedClient_t) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncedClient_t) );
 		}
 		
@@ -4981,7 +5077,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageAppSyncedClient_t ) ); };
 			
@@ -5055,7 +5151,7 @@ namespace SteamNative
 		//
 		public static RemoteStorageAppSyncedServer_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RemoteStorageAppSyncedServer_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncedServer_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RemoteStorageAppSyncedServer_t) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncedServer_t) );
 		}
 		
@@ -5088,7 +5184,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageAppSyncedServer_t ) ); };
 			
@@ -5166,7 +5262,7 @@ namespace SteamNative
 		//
 		public static RemoteStorageAppSyncProgress_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RemoteStorageAppSyncProgress_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncProgress_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RemoteStorageAppSyncProgress_t) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncProgress_t) );
 		}
 		
@@ -5205,7 +5301,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageAppSyncProgress_t ) ); };
 			
@@ -5278,7 +5374,7 @@ namespace SteamNative
 		//
 		public static RemoteStorageAppSyncStatusCheck_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RemoteStorageAppSyncStatusCheck_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncStatusCheck_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RemoteStorageAppSyncStatusCheck_t) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncStatusCheck_t) );
 		}
 		
@@ -5309,7 +5405,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageAppSyncStatusCheck_t ) ); };
 			
@@ -5384,7 +5480,7 @@ namespace SteamNative
 		//
 		public static RemoteStorageFileShareResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RemoteStorageFileShareResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageFileShareResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RemoteStorageFileShareResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageFileShareResult_t) );
 		}
 		
@@ -5453,10 +5549,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -5495,7 +5599,7 @@ namespace SteamNative
 		//
 		public static RemoteStoragePublishFileResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RemoteStoragePublishFileResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishFileResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RemoteStoragePublishFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishFileResult_t) );
 		}
 		
@@ -5529,7 +5633,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStoragePublishFileResult_t ) ); };
 			
@@ -5602,7 +5706,7 @@ namespace SteamNative
 		//
 		public static RemoteStorageDeletePublishedFileResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RemoteStorageDeletePublishedFileResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageDeletePublishedFileResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RemoteStorageDeletePublishedFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageDeletePublishedFileResult_t) );
 		}
 		
@@ -5668,10 +5772,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -5711,7 +5823,7 @@ namespace SteamNative
 		//
 		public static RemoteStorageEnumerateUserPublishedFilesResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RemoteStorageEnumerateUserPublishedFilesResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserPublishedFilesResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RemoteStorageEnumerateUserPublishedFilesResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserPublishedFilesResult_t) );
 		}
 		
@@ -5782,10 +5894,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -5822,7 +5942,7 @@ namespace SteamNative
 		//
 		public static RemoteStorageSubscribePublishedFileResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RemoteStorageSubscribePublishedFileResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageSubscribePublishedFileResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RemoteStorageSubscribePublishedFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageSubscribePublishedFileResult_t) );
 		}
 		
@@ -5888,10 +6008,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -5933,7 +6061,7 @@ namespace SteamNative
 		//
 		public static RemoteStorageEnumerateUserSubscribedFilesResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RemoteStorageEnumerateUserSubscribedFilesResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserSubscribedFilesResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RemoteStorageEnumerateUserSubscribedFilesResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserSubscribedFilesResult_t) );
 		}
 		
@@ -6007,10 +6135,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -6047,7 +6183,7 @@ namespace SteamNative
 		//
 		public static RemoteStorageUnsubscribePublishedFileResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RemoteStorageUnsubscribePublishedFileResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageUnsubscribePublishedFileResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RemoteStorageUnsubscribePublishedFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageUnsubscribePublishedFileResult_t) );
 		}
 		
@@ -6113,10 +6249,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -6155,7 +6299,7 @@ namespace SteamNative
 		//
 		public static RemoteStorageUpdatePublishedFileResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RemoteStorageUpdatePublishedFileResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageUpdatePublishedFileResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RemoteStorageUpdatePublishedFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageUpdatePublishedFileResult_t) );
 		}
 		
@@ -6224,10 +6368,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -6269,7 +6421,7 @@ namespace SteamNative
 		//
 		public static RemoteStorageDownloadUGCResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RemoteStorageDownloadUGCResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageDownloadUGCResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RemoteStorageDownloadUGCResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageDownloadUGCResult_t) );
 		}
 		
@@ -6344,10 +6496,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -6411,7 +6571,7 @@ namespace SteamNative
 		//
 		public static RemoteStorageGetPublishedFileDetailsResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RemoteStorageGetPublishedFileDetailsResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageGetPublishedFileDetailsResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RemoteStorageGetPublishedFileDetailsResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageGetPublishedFileDetailsResult_t) );
 		}
 		
@@ -6523,10 +6683,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -6570,7 +6738,7 @@ namespace SteamNative
 		//
 		public static RemoteStorageEnumerateWorkshopFilesResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RemoteStorageEnumerateWorkshopFilesResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateWorkshopFilesResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RemoteStorageEnumerateWorkshopFilesResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateWorkshopFilesResult_t) );
 		}
 		
@@ -6648,10 +6816,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -6692,7 +6868,7 @@ namespace SteamNative
 		//
 		public static RemoteStorageGetPublishedItemVoteDetailsResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RemoteStorageGetPublishedItemVoteDetailsResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageGetPublishedItemVoteDetailsResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RemoteStorageGetPublishedItemVoteDetailsResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageGetPublishedItemVoteDetailsResult_t) );
 		}
 		
@@ -6766,10 +6942,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -6806,7 +6990,7 @@ namespace SteamNative
 		//
 		public static RemoteStoragePublishedFileSubscribed_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RemoteStoragePublishedFileSubscribed_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileSubscribed_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RemoteStoragePublishedFileSubscribed_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileSubscribed_t) );
 		}
 		
@@ -6837,7 +7021,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStoragePublishedFileSubscribed_t ) ); };
 			
@@ -6910,7 +7094,7 @@ namespace SteamNative
 		//
 		public static RemoteStoragePublishedFileUnsubscribed_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RemoteStoragePublishedFileUnsubscribed_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileUnsubscribed_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RemoteStoragePublishedFileUnsubscribed_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileUnsubscribed_t) );
 		}
 		
@@ -6941,7 +7125,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStoragePublishedFileUnsubscribed_t ) ); };
 			
@@ -7014,7 +7198,7 @@ namespace SteamNative
 		//
 		public static RemoteStoragePublishedFileDeleted_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RemoteStoragePublishedFileDeleted_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileDeleted_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RemoteStoragePublishedFileDeleted_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileDeleted_t) );
 		}
 		
@@ -7045,7 +7229,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStoragePublishedFileDeleted_t ) ); };
 			
@@ -7118,7 +7302,7 @@ namespace SteamNative
 		//
 		public static RemoteStorageUpdateUserPublishedItemVoteResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RemoteStorageUpdateUserPublishedItemVoteResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageUpdateUserPublishedItemVoteResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RemoteStorageUpdateUserPublishedItemVoteResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageUpdateUserPublishedItemVoteResult_t) );
 		}
 		
@@ -7184,10 +7368,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -7225,7 +7417,7 @@ namespace SteamNative
 		//
 		public static RemoteStorageUserVoteDetails_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RemoteStorageUserVoteDetails_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageUserVoteDetails_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RemoteStorageUserVoteDetails_t) Marshal.PtrToStructure( p, typeof(RemoteStorageUserVoteDetails_t) );
 		}
 		
@@ -7258,7 +7450,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageUserVoteDetails_t ) ); };
 			
@@ -7334,7 +7526,7 @@ namespace SteamNative
 		//
 		public static RemoteStorageEnumerateUserSharedWorkshopFilesResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RemoteStorageEnumerateUserSharedWorkshopFilesResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserSharedWorkshopFilesResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RemoteStorageEnumerateUserSharedWorkshopFilesResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserSharedWorkshopFilesResult_t) );
 		}
 		
@@ -7370,7 +7562,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStorageEnumerateUserSharedWorkshopFilesResult_t ) ); };
 			
@@ -7444,7 +7636,7 @@ namespace SteamNative
 		//
 		public static RemoteStorageSetUserPublishedFileActionResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RemoteStorageSetUserPublishedFileActionResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageSetUserPublishedFileActionResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RemoteStorageSetUserPublishedFileActionResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageSetUserPublishedFileActionResult_t) );
 		}
 		
@@ -7512,10 +7704,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -7558,7 +7758,7 @@ namespace SteamNative
 		//
 		public static RemoteStorageEnumeratePublishedFilesByUserActionResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RemoteStorageEnumeratePublishedFilesByUserActionResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumeratePublishedFilesByUserActionResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RemoteStorageEnumeratePublishedFilesByUserActionResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumeratePublishedFilesByUserActionResult_t) );
 		}
 		
@@ -7634,10 +7834,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -7675,7 +7883,7 @@ namespace SteamNative
 		//
 		public static RemoteStoragePublishFileProgress_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RemoteStoragePublishFileProgress_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishFileProgress_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RemoteStoragePublishFileProgress_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishFileProgress_t) );
 		}
 		
@@ -7742,10 +7950,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -7783,7 +7999,7 @@ namespace SteamNative
 		//
 		public static RemoteStoragePublishedFileUpdated_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RemoteStoragePublishedFileUpdated_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileUpdated_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RemoteStoragePublishedFileUpdated_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileUpdated_t) );
 		}
 		
@@ -7816,7 +8032,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RemoteStoragePublishedFileUpdated_t ) ); };
 			
@@ -7888,7 +8104,7 @@ namespace SteamNative
 		//
 		public static RemoteStorageFileWriteAsyncComplete_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RemoteStorageFileWriteAsyncComplete_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageFileWriteAsyncComplete_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RemoteStorageFileWriteAsyncComplete_t) Marshal.PtrToStructure( p, typeof(RemoteStorageFileWriteAsyncComplete_t) );
 		}
 		
@@ -7952,10 +8168,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -7994,7 +8218,7 @@ namespace SteamNative
 		//
 		public static RemoteStorageFileReadAsyncComplete_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RemoteStorageFileReadAsyncComplete_t.PackSmall) Marshal.PtrToStructure( p, typeof(RemoteStorageFileReadAsyncComplete_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RemoteStorageFileReadAsyncComplete_t) Marshal.PtrToStructure( p, typeof(RemoteStorageFileReadAsyncComplete_t) );
 		}
 		
@@ -8064,10 +8288,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -8106,7 +8338,7 @@ namespace SteamNative
 		//
 		public static LeaderboardEntry_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (LeaderboardEntry_t.PackSmall) Marshal.PtrToStructure( p, typeof(LeaderboardEntry_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (LeaderboardEntry_t) Marshal.PtrToStructure( p, typeof(LeaderboardEntry_t) );
 		}
 		
@@ -8149,7 +8381,7 @@ namespace SteamNative
 		//
 		public static UserStatsReceived_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (UserStatsReceived_t.PackSmall) Marshal.PtrToStructure( p, typeof(UserStatsReceived_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (UserStatsReceived_t) Marshal.PtrToStructure( p, typeof(UserStatsReceived_t) );
 		}
 		
@@ -8217,10 +8449,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -8257,7 +8497,7 @@ namespace SteamNative
 		//
 		public static UserStatsStored_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (UserStatsStored_t.PackSmall) Marshal.PtrToStructure( p, typeof(UserStatsStored_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (UserStatsStored_t) Marshal.PtrToStructure( p, typeof(UserStatsStored_t) );
 		}
 		
@@ -8288,7 +8528,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( UserStatsStored_t ) ); };
 			
@@ -8366,7 +8606,7 @@ namespace SteamNative
 		//
 		public static UserAchievementStored_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (UserAchievementStored_t.PackSmall) Marshal.PtrToStructure( p, typeof(UserAchievementStored_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (UserAchievementStored_t) Marshal.PtrToStructure( p, typeof(UserAchievementStored_t) );
 		}
 		
@@ -8405,7 +8645,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( UserAchievementStored_t ) ); };
 			
@@ -8478,7 +8718,7 @@ namespace SteamNative
 		//
 		public static LeaderboardFindResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (LeaderboardFindResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(LeaderboardFindResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (LeaderboardFindResult_t) Marshal.PtrToStructure( p, typeof(LeaderboardFindResult_t) );
 		}
 		
@@ -8544,10 +8784,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -8585,7 +8833,7 @@ namespace SteamNative
 		//
 		public static LeaderboardScoresDownloaded_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (LeaderboardScoresDownloaded_t.PackSmall) Marshal.PtrToStructure( p, typeof(LeaderboardScoresDownloaded_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (LeaderboardScoresDownloaded_t) Marshal.PtrToStructure( p, typeof(LeaderboardScoresDownloaded_t) );
 		}
 		
@@ -8653,10 +8901,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -8697,7 +8953,7 @@ namespace SteamNative
 		//
 		public static LeaderboardScoreUploaded_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (LeaderboardScoreUploaded_t.PackSmall) Marshal.PtrToStructure( p, typeof(LeaderboardScoreUploaded_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (LeaderboardScoreUploaded_t) Marshal.PtrToStructure( p, typeof(LeaderboardScoreUploaded_t) );
 		}
 		
@@ -8771,10 +9027,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -8811,7 +9075,7 @@ namespace SteamNative
 		//
 		public static NumberOfCurrentPlayers_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (NumberOfCurrentPlayers_t.PackSmall) Marshal.PtrToStructure( p, typeof(NumberOfCurrentPlayers_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (NumberOfCurrentPlayers_t) Marshal.PtrToStructure( p, typeof(NumberOfCurrentPlayers_t) );
 		}
 		
@@ -8877,10 +9141,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -8916,7 +9188,7 @@ namespace SteamNative
 		//
 		public static UserStatsUnloaded_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (UserStatsUnloaded_t.PackSmall) Marshal.PtrToStructure( p, typeof(UserStatsUnloaded_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (UserStatsUnloaded_t) Marshal.PtrToStructure( p, typeof(UserStatsUnloaded_t) );
 		}
 		
@@ -8945,7 +9217,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( UserStatsUnloaded_t ) ); };
 			
@@ -9022,7 +9294,7 @@ namespace SteamNative
 		//
 		public static UserAchievementIconFetched_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (UserAchievementIconFetched_t.PackSmall) Marshal.PtrToStructure( p, typeof(UserAchievementIconFetched_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (UserAchievementIconFetched_t) Marshal.PtrToStructure( p, typeof(UserAchievementIconFetched_t) );
 		}
 		
@@ -9059,7 +9331,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( UserAchievementIconFetched_t ) ); };
 			
@@ -9132,7 +9404,7 @@ namespace SteamNative
 		//
 		public static GlobalAchievementPercentagesReady_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (GlobalAchievementPercentagesReady_t.PackSmall) Marshal.PtrToStructure( p, typeof(GlobalAchievementPercentagesReady_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (GlobalAchievementPercentagesReady_t) Marshal.PtrToStructure( p, typeof(GlobalAchievementPercentagesReady_t) );
 		}
 		
@@ -9198,10 +9470,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -9238,7 +9518,7 @@ namespace SteamNative
 		//
 		public static LeaderboardUGCSet_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (LeaderboardUGCSet_t.PackSmall) Marshal.PtrToStructure( p, typeof(LeaderboardUGCSet_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (LeaderboardUGCSet_t) Marshal.PtrToStructure( p, typeof(LeaderboardUGCSet_t) );
 		}
 		
@@ -9304,10 +9584,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -9345,7 +9633,7 @@ namespace SteamNative
 		//
 		public static PS3TrophiesInstalled_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (PS3TrophiesInstalled_t.PackSmall) Marshal.PtrToStructure( p, typeof(PS3TrophiesInstalled_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (PS3TrophiesInstalled_t) Marshal.PtrToStructure( p, typeof(PS3TrophiesInstalled_t) );
 		}
 		
@@ -9378,7 +9666,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( PS3TrophiesInstalled_t ) ); };
 			
@@ -9451,7 +9739,7 @@ namespace SteamNative
 		//
 		public static GlobalStatsReceived_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (GlobalStatsReceived_t.PackSmall) Marshal.PtrToStructure( p, typeof(GlobalStatsReceived_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (GlobalStatsReceived_t) Marshal.PtrToStructure( p, typeof(GlobalStatsReceived_t) );
 		}
 		
@@ -9517,10 +9805,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -9556,7 +9852,7 @@ namespace SteamNative
 		//
 		public static DlcInstalled_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (DlcInstalled_t.PackSmall) Marshal.PtrToStructure( p, typeof(DlcInstalled_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (DlcInstalled_t) Marshal.PtrToStructure( p, typeof(DlcInstalled_t) );
 		}
 		
@@ -9585,7 +9881,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( DlcInstalled_t ) ); };
 			
@@ -9658,7 +9954,7 @@ namespace SteamNative
 		//
 		public static RegisterActivationCodeResponse_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (RegisterActivationCodeResponse_t.PackSmall) Marshal.PtrToStructure( p, typeof(RegisterActivationCodeResponse_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (RegisterActivationCodeResponse_t) Marshal.PtrToStructure( p, typeof(RegisterActivationCodeResponse_t) );
 		}
 		
@@ -9689,7 +9985,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( RegisterActivationCodeResponse_t ) ); };
 			
@@ -9765,7 +10061,7 @@ namespace SteamNative
 		//
 		public static AppProofOfPurchaseKeyResponse_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (AppProofOfPurchaseKeyResponse_t.PackSmall) Marshal.PtrToStructure( p, typeof(AppProofOfPurchaseKeyResponse_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (AppProofOfPurchaseKeyResponse_t) Marshal.PtrToStructure( p, typeof(AppProofOfPurchaseKeyResponse_t) );
 		}
 		
@@ -9801,7 +10097,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( AppProofOfPurchaseKeyResponse_t ) ); };
 			
@@ -9877,7 +10173,7 @@ namespace SteamNative
 		//
 		public static FileDetailsResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (FileDetailsResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(FileDetailsResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (FileDetailsResult_t) Marshal.PtrToStructure( p, typeof(FileDetailsResult_t) );
 		}
 		
@@ -9948,10 +10244,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -9993,7 +10297,7 @@ namespace SteamNative
 		//
 		public static P2PSessionState_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (P2PSessionState_t.PackSmall) Marshal.PtrToStructure( p, typeof(P2PSessionState_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (P2PSessionState_t) Marshal.PtrToStructure( p, typeof(P2PSessionState_t) );
 		}
 		
@@ -10040,7 +10344,7 @@ namespace SteamNative
 		//
 		public static P2PSessionRequest_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (P2PSessionRequest_t.PackSmall) Marshal.PtrToStructure( p, typeof(P2PSessionRequest_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (P2PSessionRequest_t) Marshal.PtrToStructure( p, typeof(P2PSessionRequest_t) );
 		}
 		
@@ -10069,7 +10373,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( P2PSessionRequest_t ) ); };
 			
@@ -10142,7 +10446,7 @@ namespace SteamNative
 		//
 		public static P2PSessionConnectFail_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (P2PSessionConnectFail_t.PackSmall) Marshal.PtrToStructure( p, typeof(P2PSessionConnectFail_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (P2PSessionConnectFail_t) Marshal.PtrToStructure( p, typeof(P2PSessionConnectFail_t) );
 		}
 		
@@ -10173,7 +10477,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( P2PSessionConnectFail_t ) ); };
 			
@@ -10248,7 +10552,7 @@ namespace SteamNative
 		//
 		public static SocketStatusCallback_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (SocketStatusCallback_t.PackSmall) Marshal.PtrToStructure( p, typeof(SocketStatusCallback_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (SocketStatusCallback_t) Marshal.PtrToStructure( p, typeof(SocketStatusCallback_t) );
 		}
 		
@@ -10283,7 +10587,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SocketStatusCallback_t ) ); };
 			
@@ -10356,7 +10660,7 @@ namespace SteamNative
 		//
 		public static ScreenshotReady_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (ScreenshotReady_t.PackSmall) Marshal.PtrToStructure( p, typeof(ScreenshotReady_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (ScreenshotReady_t) Marshal.PtrToStructure( p, typeof(ScreenshotReady_t) );
 		}
 		
@@ -10387,7 +10691,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( ScreenshotReady_t ) ); };
 			
@@ -10459,7 +10763,7 @@ namespace SteamNative
 		//
 		public static VolumeHasChanged_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (VolumeHasChanged_t.PackSmall) Marshal.PtrToStructure( p, typeof(VolumeHasChanged_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (VolumeHasChanged_t) Marshal.PtrToStructure( p, typeof(VolumeHasChanged_t) );
 		}
 		
@@ -10488,7 +10792,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( VolumeHasChanged_t ) ); };
 			
@@ -10561,7 +10865,7 @@ namespace SteamNative
 		//
 		public static MusicPlayerWantsShuffled_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (MusicPlayerWantsShuffled_t.PackSmall) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsShuffled_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (MusicPlayerWantsShuffled_t) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsShuffled_t) );
 		}
 		
@@ -10591,7 +10895,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( MusicPlayerWantsShuffled_t ) ); };
 			
@@ -10664,7 +10968,7 @@ namespace SteamNative
 		//
 		public static MusicPlayerWantsLooped_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (MusicPlayerWantsLooped_t.PackSmall) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsLooped_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (MusicPlayerWantsLooped_t) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsLooped_t) );
 		}
 		
@@ -10694,7 +10998,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( MusicPlayerWantsLooped_t ) ); };
 			
@@ -10766,7 +11070,7 @@ namespace SteamNative
 		//
 		public static MusicPlayerWantsVolume_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (MusicPlayerWantsVolume_t.PackSmall) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsVolume_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (MusicPlayerWantsVolume_t) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsVolume_t) );
 		}
 		
@@ -10795,7 +11099,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( MusicPlayerWantsVolume_t ) ); };
 			
@@ -10867,7 +11171,7 @@ namespace SteamNative
 		//
 		public static MusicPlayerSelectsQueueEntry_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (MusicPlayerSelectsQueueEntry_t.PackSmall) Marshal.PtrToStructure( p, typeof(MusicPlayerSelectsQueueEntry_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (MusicPlayerSelectsQueueEntry_t) Marshal.PtrToStructure( p, typeof(MusicPlayerSelectsQueueEntry_t) );
 		}
 		
@@ -10896,7 +11200,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( MusicPlayerSelectsQueueEntry_t ) ); };
 			
@@ -10968,7 +11272,7 @@ namespace SteamNative
 		//
 		public static MusicPlayerSelectsPlaylistEntry_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (MusicPlayerSelectsPlaylistEntry_t.PackSmall) Marshal.PtrToStructure( p, typeof(MusicPlayerSelectsPlaylistEntry_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (MusicPlayerSelectsPlaylistEntry_t) Marshal.PtrToStructure( p, typeof(MusicPlayerSelectsPlaylistEntry_t) );
 		}
 		
@@ -10997,7 +11301,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( MusicPlayerSelectsPlaylistEntry_t ) ); };
 			
@@ -11069,7 +11373,7 @@ namespace SteamNative
 		//
 		public static MusicPlayerWantsPlayingRepeatStatus_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (MusicPlayerWantsPlayingRepeatStatus_t.PackSmall) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsPlayingRepeatStatus_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (MusicPlayerWantsPlayingRepeatStatus_t) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsPlayingRepeatStatus_t) );
 		}
 		
@@ -11098,7 +11402,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( MusicPlayerWantsPlayingRepeatStatus_t ) ); };
 			
@@ -11175,7 +11479,7 @@ namespace SteamNative
 		//
 		public static HTTPRequestCompleted_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (HTTPRequestCompleted_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTTPRequestCompleted_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (HTTPRequestCompleted_t) Marshal.PtrToStructure( p, typeof(HTTPRequestCompleted_t) );
 		}
 		
@@ -11213,7 +11517,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTTPRequestCompleted_t ) ); };
 			
@@ -11286,7 +11590,7 @@ namespace SteamNative
 		//
 		public static HTTPRequestHeadersReceived_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (HTTPRequestHeadersReceived_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTTPRequestHeadersReceived_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (HTTPRequestHeadersReceived_t) Marshal.PtrToStructure( p, typeof(HTTPRequestHeadersReceived_t) );
 		}
 		
@@ -11317,7 +11621,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTTPRequestHeadersReceived_t ) ); };
 			
@@ -11392,7 +11696,7 @@ namespace SteamNative
 		//
 		public static HTTPRequestDataReceived_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (HTTPRequestDataReceived_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTTPRequestDataReceived_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (HTTPRequestDataReceived_t) Marshal.PtrToStructure( p, typeof(HTTPRequestDataReceived_t) );
 		}
 		
@@ -11427,7 +11731,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTTPRequestDataReceived_t ) ); };
 			
@@ -11502,7 +11806,7 @@ namespace SteamNative
 		//
 		public static SteamUnifiedMessagesSendMethodResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (SteamUnifiedMessagesSendMethodResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(SteamUnifiedMessagesSendMethodResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (SteamUnifiedMessagesSendMethodResult_t) Marshal.PtrToStructure( p, typeof(SteamUnifiedMessagesSendMethodResult_t) );
 		}
 		
@@ -11537,7 +11841,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamUnifiedMessagesSendMethodResult_t ) ); };
 			
@@ -11612,7 +11916,7 @@ namespace SteamNative
 		//
 		public static ControllerAnalogActionData_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (ControllerAnalogActionData_t.PackSmall) Marshal.PtrToStructure( p, typeof(ControllerAnalogActionData_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (ControllerAnalogActionData_t) Marshal.PtrToStructure( p, typeof(ControllerAnalogActionData_t) );
 		}
 		
@@ -11654,7 +11958,7 @@ namespace SteamNative
 		//
 		public static ControllerDigitalActionData_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (ControllerDigitalActionData_t.PackSmall) Marshal.PtrToStructure( p, typeof(ControllerDigitalActionData_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (ControllerDigitalActionData_t) Marshal.PtrToStructure( p, typeof(ControllerDigitalActionData_t) );
 		}
 		
@@ -11699,7 +12003,7 @@ namespace SteamNative
 		//
 		public static ControllerMotionData_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (ControllerMotionData_t.PackSmall) Marshal.PtrToStructure( p, typeof(ControllerMotionData_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (ControllerMotionData_t) Marshal.PtrToStructure( p, typeof(ControllerMotionData_t) );
 		}
 		
@@ -11782,7 +12086,7 @@ namespace SteamNative
 		//
 		public static SteamUGCDetails_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (SteamUGCDetails_t.PackSmall) Marshal.PtrToStructure( p, typeof(SteamUGCDetails_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (SteamUGCDetails_t) Marshal.PtrToStructure( p, typeof(SteamUGCDetails_t) );
 		}
 		
@@ -11878,7 +12182,7 @@ namespace SteamNative
 		//
 		public static SteamUGCQueryCompleted_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (SteamUGCQueryCompleted_t.PackSmall) Marshal.PtrToStructure( p, typeof(SteamUGCQueryCompleted_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (SteamUGCQueryCompleted_t) Marshal.PtrToStructure( p, typeof(SteamUGCQueryCompleted_t) );
 		}
 		
@@ -11951,10 +12255,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -11992,7 +12304,7 @@ namespace SteamNative
 		//
 		public static SteamUGCRequestUGCDetailsResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (SteamUGCRequestUGCDetailsResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(SteamUGCRequestUGCDetailsResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (SteamUGCRequestUGCDetailsResult_t) Marshal.PtrToStructure( p, typeof(SteamUGCRequestUGCDetailsResult_t) );
 		}
 		
@@ -12024,7 +12336,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamUGCRequestUGCDetailsResult_t ) ); };
 			
@@ -12099,7 +12411,7 @@ namespace SteamNative
 		//
 		public static CreateItemResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (CreateItemResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(CreateItemResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (CreateItemResult_t) Marshal.PtrToStructure( p, typeof(CreateItemResult_t) );
 		}
 		
@@ -12168,10 +12480,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -12209,7 +12529,7 @@ namespace SteamNative
 		//
 		public static SubmitItemUpdateResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (SubmitItemUpdateResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(SubmitItemUpdateResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (SubmitItemUpdateResult_t) Marshal.PtrToStructure( p, typeof(SubmitItemUpdateResult_t) );
 		}
 		
@@ -12276,10 +12596,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -12317,7 +12645,7 @@ namespace SteamNative
 		//
 		public static DownloadItemResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (DownloadItemResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(DownloadItemResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (DownloadItemResult_t) Marshal.PtrToStructure( p, typeof(DownloadItemResult_t) );
 		}
 		
@@ -12350,7 +12678,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( DownloadItemResult_t ) ); };
 			
@@ -12425,7 +12753,7 @@ namespace SteamNative
 		//
 		public static UserFavoriteItemsListChanged_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (UserFavoriteItemsListChanged_t.PackSmall) Marshal.PtrToStructure( p, typeof(UserFavoriteItemsListChanged_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (UserFavoriteItemsListChanged_t) Marshal.PtrToStructure( p, typeof(UserFavoriteItemsListChanged_t) );
 		}
 		
@@ -12494,10 +12822,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -12536,7 +12872,7 @@ namespace SteamNative
 		//
 		public static SetUserItemVoteResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (SetUserItemVoteResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(SetUserItemVoteResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (SetUserItemVoteResult_t) Marshal.PtrToStructure( p, typeof(SetUserItemVoteResult_t) );
 		}
 		
@@ -12605,10 +12941,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -12651,7 +12995,7 @@ namespace SteamNative
 		//
 		public static GetUserItemVoteResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (GetUserItemVoteResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(GetUserItemVoteResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (GetUserItemVoteResult_t) Marshal.PtrToStructure( p, typeof(GetUserItemVoteResult_t) );
 		}
 		
@@ -12726,10 +13070,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -12765,7 +13117,7 @@ namespace SteamNative
 		//
 		public static StartPlaytimeTrackingResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (StartPlaytimeTrackingResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(StartPlaytimeTrackingResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (StartPlaytimeTrackingResult_t) Marshal.PtrToStructure( p, typeof(StartPlaytimeTrackingResult_t) );
 		}
 		
@@ -12829,10 +13181,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -12868,7 +13228,7 @@ namespace SteamNative
 		//
 		public static StopPlaytimeTrackingResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (StopPlaytimeTrackingResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(StopPlaytimeTrackingResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (StopPlaytimeTrackingResult_t) Marshal.PtrToStructure( p, typeof(StopPlaytimeTrackingResult_t) );
 		}
 		
@@ -12932,10 +13292,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -12971,7 +13339,7 @@ namespace SteamNative
 		//
 		public static SteamAppInstalled_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (SteamAppInstalled_t.PackSmall) Marshal.PtrToStructure( p, typeof(SteamAppInstalled_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (SteamAppInstalled_t) Marshal.PtrToStructure( p, typeof(SteamAppInstalled_t) );
 		}
 		
@@ -13000,7 +13368,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamAppInstalled_t ) ); };
 			
@@ -13072,7 +13440,7 @@ namespace SteamNative
 		//
 		public static SteamAppUninstalled_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (SteamAppUninstalled_t.PackSmall) Marshal.PtrToStructure( p, typeof(SteamAppUninstalled_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (SteamAppUninstalled_t) Marshal.PtrToStructure( p, typeof(SteamAppUninstalled_t) );
 		}
 		
@@ -13101,7 +13469,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamAppUninstalled_t ) ); };
 			
@@ -13173,7 +13541,7 @@ namespace SteamNative
 		//
 		public static HTML_BrowserReady_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (HTML_BrowserReady_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_BrowserReady_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (HTML_BrowserReady_t) Marshal.PtrToStructure( p, typeof(HTML_BrowserReady_t) );
 		}
 		
@@ -13237,10 +13605,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -13286,7 +13662,7 @@ namespace SteamNative
 		//
 		public static HTML_NeedsPaint_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (HTML_NeedsPaint_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_NeedsPaint_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (HTML_NeedsPaint_t) Marshal.PtrToStructure( p, typeof(HTML_NeedsPaint_t) );
 		}
 		
@@ -13345,7 +13721,7 @@ namespace SteamNative
 		//
 		public static HTML_StartRequest_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (HTML_StartRequest_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_StartRequest_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (HTML_StartRequest_t) Marshal.PtrToStructure( p, typeof(HTML_StartRequest_t) );
 		}
 		
@@ -13386,7 +13762,7 @@ namespace SteamNative
 		//
 		public static HTML_CloseBrowser_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (HTML_CloseBrowser_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_CloseBrowser_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (HTML_CloseBrowser_t) Marshal.PtrToStructure( p, typeof(HTML_CloseBrowser_t) );
 		}
 		
@@ -13426,7 +13802,7 @@ namespace SteamNative
 		//
 		public static HTML_URLChanged_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (HTML_URLChanged_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_URLChanged_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (HTML_URLChanged_t) Marshal.PtrToStructure( p, typeof(HTML_URLChanged_t) );
 		}
 		
@@ -13467,7 +13843,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_URLChanged_t ) ); };
 			
@@ -13541,7 +13917,7 @@ namespace SteamNative
 		//
 		public static HTML_FinishedRequest_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (HTML_FinishedRequest_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_FinishedRequest_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (HTML_FinishedRequest_t) Marshal.PtrToStructure( p, typeof(HTML_FinishedRequest_t) );
 		}
 		
@@ -13574,7 +13950,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_FinishedRequest_t ) ); };
 			
@@ -13647,7 +14023,7 @@ namespace SteamNative
 		//
 		public static HTML_OpenLinkInNewTab_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (HTML_OpenLinkInNewTab_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_OpenLinkInNewTab_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (HTML_OpenLinkInNewTab_t) Marshal.PtrToStructure( p, typeof(HTML_OpenLinkInNewTab_t) );
 		}
 		
@@ -13678,7 +14054,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_OpenLinkInNewTab_t ) ); };
 			
@@ -13751,7 +14127,7 @@ namespace SteamNative
 		//
 		public static HTML_ChangedTitle_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (HTML_ChangedTitle_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_ChangedTitle_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (HTML_ChangedTitle_t) Marshal.PtrToStructure( p, typeof(HTML_ChangedTitle_t) );
 		}
 		
@@ -13782,7 +14158,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_ChangedTitle_t ) ); };
 			
@@ -13856,7 +14232,7 @@ namespace SteamNative
 		//
 		public static HTML_SearchResults_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (HTML_SearchResults_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_SearchResults_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (HTML_SearchResults_t) Marshal.PtrToStructure( p, typeof(HTML_SearchResults_t) );
 		}
 		
@@ -13889,7 +14265,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_SearchResults_t ) ); };
 			
@@ -13965,7 +14341,7 @@ namespace SteamNative
 		//
 		public static HTML_CanGoBackAndForward_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (HTML_CanGoBackAndForward_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_CanGoBackAndForward_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (HTML_CanGoBackAndForward_t) Marshal.PtrToStructure( p, typeof(HTML_CanGoBackAndForward_t) );
 		}
 		
@@ -14000,7 +14376,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_CanGoBackAndForward_t ) ); };
 			
@@ -14078,7 +14454,7 @@ namespace SteamNative
 		//
 		public static HTML_HorizontalScroll_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (HTML_HorizontalScroll_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_HorizontalScroll_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (HTML_HorizontalScroll_t) Marshal.PtrToStructure( p, typeof(HTML_HorizontalScroll_t) );
 		}
 		
@@ -14118,7 +14494,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_HorizontalScroll_t ) ); };
 			
@@ -14196,7 +14572,7 @@ namespace SteamNative
 		//
 		public static HTML_VerticalScroll_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (HTML_VerticalScroll_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_VerticalScroll_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (HTML_VerticalScroll_t) Marshal.PtrToStructure( p, typeof(HTML_VerticalScroll_t) );
 		}
 		
@@ -14236,7 +14612,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_VerticalScroll_t ) ); };
 			
@@ -14315,7 +14691,7 @@ namespace SteamNative
 		//
 		public static HTML_LinkAtPosition_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (HTML_LinkAtPosition_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_LinkAtPosition_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (HTML_LinkAtPosition_t) Marshal.PtrToStructure( p, typeof(HTML_LinkAtPosition_t) );
 		}
 		
@@ -14356,7 +14732,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_LinkAtPosition_t ) ); };
 			
@@ -14429,7 +14805,7 @@ namespace SteamNative
 		//
 		public static HTML_JSAlert_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (HTML_JSAlert_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_JSAlert_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (HTML_JSAlert_t) Marshal.PtrToStructure( p, typeof(HTML_JSAlert_t) );
 		}
 		
@@ -14460,7 +14836,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_JSAlert_t ) ); };
 			
@@ -14533,7 +14909,7 @@ namespace SteamNative
 		//
 		public static HTML_JSConfirm_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (HTML_JSConfirm_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_JSConfirm_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (HTML_JSConfirm_t) Marshal.PtrToStructure( p, typeof(HTML_JSConfirm_t) );
 		}
 		
@@ -14564,7 +14940,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_JSConfirm_t ) ); };
 			
@@ -14638,7 +15014,7 @@ namespace SteamNative
 		//
 		public static HTML_FileOpenDialog_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (HTML_FileOpenDialog_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_FileOpenDialog_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (HTML_FileOpenDialog_t) Marshal.PtrToStructure( p, typeof(HTML_FileOpenDialog_t) );
 		}
 		
@@ -14671,7 +15047,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_FileOpenDialog_t ) ); };
 			
@@ -14749,7 +15125,7 @@ namespace SteamNative
 		//
 		public static HTML_NewWindow_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (HTML_NewWindow_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_NewWindow_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (HTML_NewWindow_t) Marshal.PtrToStructure( p, typeof(HTML_NewWindow_t) );
 		}
 		
@@ -14790,7 +15166,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_NewWindow_t ) ); };
 			
@@ -14863,7 +15239,7 @@ namespace SteamNative
 		//
 		public static HTML_SetCursor_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (HTML_SetCursor_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_SetCursor_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (HTML_SetCursor_t) Marshal.PtrToStructure( p, typeof(HTML_SetCursor_t) );
 		}
 		
@@ -14894,7 +15270,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_SetCursor_t ) ); };
 			
@@ -14967,7 +15343,7 @@ namespace SteamNative
 		//
 		public static HTML_StatusText_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (HTML_StatusText_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_StatusText_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (HTML_StatusText_t) Marshal.PtrToStructure( p, typeof(HTML_StatusText_t) );
 		}
 		
@@ -14998,7 +15374,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_StatusText_t ) ); };
 			
@@ -15071,7 +15447,7 @@ namespace SteamNative
 		//
 		public static HTML_ShowToolTip_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (HTML_ShowToolTip_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_ShowToolTip_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (HTML_ShowToolTip_t) Marshal.PtrToStructure( p, typeof(HTML_ShowToolTip_t) );
 		}
 		
@@ -15102,7 +15478,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_ShowToolTip_t ) ); };
 			
@@ -15175,7 +15551,7 @@ namespace SteamNative
 		//
 		public static HTML_UpdateToolTip_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (HTML_UpdateToolTip_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_UpdateToolTip_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (HTML_UpdateToolTip_t) Marshal.PtrToStructure( p, typeof(HTML_UpdateToolTip_t) );
 		}
 		
@@ -15206,7 +15582,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_UpdateToolTip_t ) ); };
 			
@@ -15278,7 +15654,7 @@ namespace SteamNative
 		//
 		public static HTML_HideToolTip_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (HTML_HideToolTip_t.PackSmall) Marshal.PtrToStructure( p, typeof(HTML_HideToolTip_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (HTML_HideToolTip_t) Marshal.PtrToStructure( p, typeof(HTML_HideToolTip_t) );
 		}
 		
@@ -15307,7 +15683,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( HTML_HideToolTip_t ) ); };
 			
@@ -15381,7 +15757,7 @@ namespace SteamNative
 		//
 		public static SteamItemDetails_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (SteamItemDetails_t.PackSmall) Marshal.PtrToStructure( p, typeof(SteamItemDetails_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (SteamItemDetails_t) Marshal.PtrToStructure( p, typeof(SteamItemDetails_t) );
 		}
 		
@@ -15421,7 +15797,7 @@ namespace SteamNative
 		//
 		public static SteamInventoryResultReady_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (SteamInventoryResultReady_t.PackSmall) Marshal.PtrToStructure( p, typeof(SteamInventoryResultReady_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (SteamInventoryResultReady_t) Marshal.PtrToStructure( p, typeof(SteamInventoryResultReady_t) );
 		}
 		
@@ -15452,7 +15828,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamInventoryResultReady_t ) ); };
 			
@@ -15524,7 +15900,7 @@ namespace SteamNative
 		//
 		public static SteamInventoryFullUpdate_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (SteamInventoryFullUpdate_t.PackSmall) Marshal.PtrToStructure( p, typeof(SteamInventoryFullUpdate_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (SteamInventoryFullUpdate_t) Marshal.PtrToStructure( p, typeof(SteamInventoryFullUpdate_t) );
 		}
 		
@@ -15553,7 +15929,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamInventoryFullUpdate_t ) ); };
 			
@@ -15625,7 +16001,7 @@ namespace SteamNative
 		//
 		public static BroadcastUploadStop_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (BroadcastUploadStop_t.PackSmall) Marshal.PtrToStructure( p, typeof(BroadcastUploadStop_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (BroadcastUploadStop_t) Marshal.PtrToStructure( p, typeof(BroadcastUploadStop_t) );
 		}
 		
@@ -15654,7 +16030,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( BroadcastUploadStop_t ) ); };
 			
@@ -15729,7 +16105,7 @@ namespace SteamNative
 		//
 		public static GetVideoURLResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (GetVideoURLResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(GetVideoURLResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (GetVideoURLResult_t) Marshal.PtrToStructure( p, typeof(GetVideoURLResult_t) );
 		}
 		
@@ -15763,7 +16139,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GetVideoURLResult_t ) ); };
 			
@@ -15836,7 +16212,7 @@ namespace SteamNative
 		//
 		public static GSClientApprove_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (GSClientApprove_t.PackSmall) Marshal.PtrToStructure( p, typeof(GSClientApprove_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (GSClientApprove_t) Marshal.PtrToStructure( p, typeof(GSClientApprove_t) );
 		}
 		
@@ -15867,7 +16243,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GSClientApprove_t ) ); };
 			
@@ -15942,7 +16318,7 @@ namespace SteamNative
 		//
 		public static GSClientDeny_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (GSClientDeny_t.PackSmall) Marshal.PtrToStructure( p, typeof(GSClientDeny_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (GSClientDeny_t) Marshal.PtrToStructure( p, typeof(GSClientDeny_t) );
 		}
 		
@@ -15976,7 +16352,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GSClientDeny_t ) ); };
 			
@@ -16049,7 +16425,7 @@ namespace SteamNative
 		//
 		public static GSClientKick_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (GSClientKick_t.PackSmall) Marshal.PtrToStructure( p, typeof(GSClientKick_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (GSClientKick_t) Marshal.PtrToStructure( p, typeof(GSClientKick_t) );
 		}
 		
@@ -16080,7 +16456,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GSClientKick_t ) ); };
 			
@@ -16156,7 +16532,7 @@ namespace SteamNative
 		//
 		public static GSClientAchievementStatus_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (GSClientAchievementStatus_t.PackSmall) Marshal.PtrToStructure( p, typeof(GSClientAchievementStatus_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (GSClientAchievementStatus_t) Marshal.PtrToStructure( p, typeof(GSClientAchievementStatus_t) );
 		}
 		
@@ -16191,7 +16567,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GSClientAchievementStatus_t ) ); };
 			
@@ -16263,7 +16639,7 @@ namespace SteamNative
 		//
 		public static GSPolicyResponse_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (GSPolicyResponse_t.PackSmall) Marshal.PtrToStructure( p, typeof(GSPolicyResponse_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (GSPolicyResponse_t) Marshal.PtrToStructure( p, typeof(GSPolicyResponse_t) );
 		}
 		
@@ -16292,7 +16668,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GSPolicyResponse_t ) ); };
 			
@@ -16367,7 +16743,7 @@ namespace SteamNative
 		//
 		public static GSGameplayStats_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (GSGameplayStats_t.PackSmall) Marshal.PtrToStructure( p, typeof(GSGameplayStats_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (GSGameplayStats_t) Marshal.PtrToStructure( p, typeof(GSGameplayStats_t) );
 		}
 		
@@ -16402,7 +16778,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GSGameplayStats_t ) ); };
 			
@@ -16479,7 +16855,7 @@ namespace SteamNative
 		//
 		public static GSClientGroupStatus_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (GSClientGroupStatus_t.PackSmall) Marshal.PtrToStructure( p, typeof(GSClientGroupStatus_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (GSClientGroupStatus_t) Marshal.PtrToStructure( p, typeof(GSClientGroupStatus_t) );
 		}
 		
@@ -16516,7 +16892,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GSClientGroupStatus_t ) ); };
 			
@@ -16595,7 +16971,7 @@ namespace SteamNative
 		//
 		public static GSReputation_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (GSReputation_t.PackSmall) Marshal.PtrToStructure( p, typeof(GSReputation_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (GSReputation_t) Marshal.PtrToStructure( p, typeof(GSReputation_t) );
 		}
 		
@@ -16672,10 +17048,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -16711,7 +17095,7 @@ namespace SteamNative
 		//
 		public static AssociateWithClanResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (AssociateWithClanResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(AssociateWithClanResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (AssociateWithClanResult_t) Marshal.PtrToStructure( p, typeof(AssociateWithClanResult_t) );
 		}
 		
@@ -16775,10 +17159,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -16818,7 +17210,7 @@ namespace SteamNative
 		//
 		public static ComputeNewPlayerCompatibilityResult_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (ComputeNewPlayerCompatibilityResult_t.PackSmall) Marshal.PtrToStructure( p, typeof(ComputeNewPlayerCompatibilityResult_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (ComputeNewPlayerCompatibilityResult_t) Marshal.PtrToStructure( p, typeof(ComputeNewPlayerCompatibilityResult_t) );
 		}
 		
@@ -16890,10 +17282,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -16930,7 +17330,7 @@ namespace SteamNative
 		//
 		public static GSStatsReceived_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (GSStatsReceived_t.PackSmall) Marshal.PtrToStructure( p, typeof(GSStatsReceived_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (GSStatsReceived_t) Marshal.PtrToStructure( p, typeof(GSStatsReceived_t) );
 		}
 		
@@ -16996,10 +17396,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -17036,7 +17444,7 @@ namespace SteamNative
 		//
 		public static GSStatsStored_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (GSStatsStored_t.PackSmall) Marshal.PtrToStructure( p, typeof(GSStatsStored_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (GSStatsStored_t) Marshal.PtrToStructure( p, typeof(GSStatsStored_t) );
 		}
 		
@@ -17102,10 +17510,18 @@ namespace SteamNative
 			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
 			var vTable = new Callback.VTable()
 			{
-				ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention
-				ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first
-				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
 			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.Os == OperatingSystem.Windows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
 			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
 			
 			//
@@ -17141,7 +17557,7 @@ namespace SteamNative
 		//
 		public static GSStatsUnloaded_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (GSStatsUnloaded_t.PackSmall) Marshal.PtrToStructure( p, typeof(GSStatsUnloaded_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (GSStatsUnloaded_t) Marshal.PtrToStructure( p, typeof(GSStatsUnloaded_t) );
 		}
 		
@@ -17170,7 +17586,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( GSStatsUnloaded_t ) ); };
 			
@@ -17243,7 +17659,7 @@ namespace SteamNative
 		//
 		public static ItemInstalled_t FromPointer( IntPtr p )
 		{
-			if ( Platform.PackSmall ) return (ItemInstalled_t.PackSmall) Marshal.PtrToStructure( p, typeof(ItemInstalled_t.PackSmall) );
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
 			return (ItemInstalled_t) Marshal.PtrToStructure( p, typeof(ItemInstalled_t) );
 		}
 		
@@ -17274,7 +17690,7 @@ namespace SteamNative
 			//
 			// Create the functions we need for the vtable
 			//
-			Callback.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
 			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
 			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( ItemInstalled_t ) ); };
 			

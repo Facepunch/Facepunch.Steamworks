@@ -67,7 +67,7 @@ namespace Generator
                     WriteLine( "//" );
                     StartBlock( $"public static {c.Name} FromPointer( IntPtr p )" );
                     {
-                        WriteLine( $"if ( Platform.PackSmall ) return ({c.Name}.PackSmall) Marshal.PtrToStructure( p, typeof({c.Name}.PackSmall) );" );
+                        WriteLine( $"if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );" );
 
                         WriteLine( $"return ({c.Name}) Marshal.PtrToStructure( p, typeof({c.Name}) );" );
                     }
@@ -199,69 +199,7 @@ namespace Generator
                 WriteLine( $"handle.steamworks = steamworks;" );
                 WriteLine( $"" );
 
-                WriteLine( "//" );
-                WriteLine( "// Create the functions we need for the vtable" );
-                WriteLine( "//" );
-                WriteLine( $"Callback.Result         funcA = ( _, p ) => {{ CallbackFunction( FromPointer( p ), false ); }};" );
-                WriteLine( $"Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => {{ CallbackFunction( FromPointer( p ), bIOFailure ); }};" );
-                WriteLine( $"Callback.GetSize        funcC = ( _ ) => {{ return Marshal.SizeOf( typeof( {c.Name} ) ); }};" );
-                WriteLine();
-                WriteLine( "//" );
-                WriteLine( "// If this platform is PackSmall, use PackSmall versions of everything instead" );
-                WriteLine( "//" );
-                StartBlock( "if ( Platform.PackSmall )" );
-                {
-                    WriteLine( $"funcC = ( _ ) => {{ return Marshal.SizeOf( typeof( PackSmall ) ); }};" );
-                }
-                EndBlock();
-
-                WriteLine( "" );
-                WriteLine( "//" );
-                WriteLine( "// Allocate a handle to each function, so they don't get disposed" );
-                WriteLine( "//" );
-                WriteLine( "handle.FuncA = GCHandle.Alloc( funcA );" );
-                WriteLine( "handle.FuncB = GCHandle.Alloc( funcB );" );
-                WriteLine( "handle.FuncC = GCHandle.Alloc( funcC );" );
-                WriteLine();
-
-                WriteLine( "//" );
-                WriteLine( "// Create the VTable by manually allocating the memory and copying across" );
-                WriteLine( "//" );
-                WriteLine( "handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );" );
-                StartBlock( "var vTable = new Callback.VTable()" );
-                {
-                    WriteLine( "ResultA = Marshal.GetFunctionPointerForDelegate( funcA )," );
-                    WriteLine( "ResultB = Marshal.GetFunctionPointerForDelegate( funcB )," );
-                    WriteLine( "GetSize = Marshal.GetFunctionPointerForDelegate( funcC )," );
-                }
-                EndBlock( ";" );
-
-                WriteLine( "//" );
-                WriteLine( "// The order of these functions are swapped on Windows" );
-                WriteLine( "//" );
-                StartBlock( "if ( Platform.Os == OperatingSystem.Windows )" );
-                {
-                    WriteLine( "vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );" );
-                    WriteLine( "vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );" );
-                }
-                EndBlock();
-
-                WriteLine( "Marshal.StructureToPtr( vTable, handle.vTablePtr, false );" );
-
-                WriteLine( "" );
-                WriteLine( "//" );
-                WriteLine( "// Create the callback object" );
-                WriteLine( "//" );
-                WriteLine( $"var cb = new Callback();" );
-                WriteLine( $"cb.vTablePtr = handle.vTablePtr;" );
-                WriteLine( $"cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;" );
-                WriteLine( $"cb.CallbackId = CallbackId;" );
-
-                WriteLine( "" );
-                WriteLine( "//" );
-                WriteLine( "// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native" );
-                WriteLine( "//" );
-                WriteLine( $"handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );" );
+                CallbackCallresultShared( c, false );
 
                 WriteLine( "" );
                 WriteLine( "//" );
@@ -275,6 +213,7 @@ namespace Generator
             EndBlock();
         }
 
+
         private void CallResult( SteamApiDefinition.StructDef c )
         {
             WriteLine();
@@ -286,68 +225,7 @@ namespace Generator
                 WriteLine( $"handle.CallResult = true;" );
                 WriteLine( $"" );
 
-                WriteLine( "//" );
-                WriteLine( "// Create the functions we need for the vtable" );
-                WriteLine( "//" );
-                WriteLine( $"Callback.Result         funcA = ( _, p ) => {{  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); }};" );
-                StartBlock( $"Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => " );
-                {
-                    WriteLine( "if ( hSteamAPICall != call ) return;" );
-                    WriteLine();
-                    WriteLine( "handle.CallResultHandle = 0;" );
-                    WriteLine( "handle.Dispose();" );
-                    WriteLine();
-                    WriteLine( "CallbackFunction( FromPointer( p ), bIOFailure );" );
-                }
-                EndBlock( ";" );
-                WriteLine( $"Callback.GetSize        funcC = ( _ ) => {{ return Marshal.SizeOf( typeof( {c.Name} ) ); }};" );
-                WriteLine();
-                WriteLine( "//" );
-                WriteLine( "// If this platform is PackSmall, use PackSmall versions of everything instead" );
-                WriteLine( "//" );
-                StartBlock( "if ( Platform.PackSmall )" );
-                {
-                    WriteLine( $"funcC = ( _ ) => {{ return Marshal.SizeOf( typeof( PackSmall ) ); }};" );
-                }
-                EndBlock();
-
-                WriteLine( "" );
-                WriteLine( "//" );
-                WriteLine( "// Allocate a handle to each function, so they don't get disposed" );
-                WriteLine( "//" );
-                WriteLine( "handle.FuncA = GCHandle.Alloc( funcA );" );
-                WriteLine( "handle.FuncB = GCHandle.Alloc( funcB );" );
-                WriteLine( "handle.FuncC = GCHandle.Alloc( funcC );" );
-                WriteLine();
-
-                WriteLine( "//" );
-                WriteLine( "// Create the VTable by manually allocating the memory and copying across" );
-                WriteLine( "//" );
-                WriteLine( "handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );" );
-                StartBlock( "var vTable = new Callback.VTable()" );
-                {
-                    WriteLine( "ResultA = Marshal.GetFunctionPointerForDelegate( funcB ), // The order of these functions is a point of contention" );
-                    WriteLine( "ResultB = Marshal.GetFunctionPointerForDelegate( funcA ), // Doesn't seem to matter win64, but win32 crashes if WithInfo not first" );
-                    WriteLine( "GetSize = Marshal.GetFunctionPointerForDelegate( funcC ), // Which is the opposite of how they are in code, but whatever works" );
-                }
-                EndBlock( ";" );
-
-                WriteLine( "Marshal.StructureToPtr( vTable, handle.vTablePtr, false );" );
-
-                WriteLine( "" );
-                WriteLine( "//" );
-                WriteLine( "// Create the callback object" );
-                WriteLine( "//" );
-                WriteLine( $"var cb = new Callback();" );
-                WriteLine( $"cb.vTablePtr = handle.vTablePtr;" );
-                WriteLine( $"cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;" );
-                WriteLine( $"cb.CallbackId = CallbackId;" );
-
-                WriteLine( "" );
-                WriteLine( "//" );
-                WriteLine( "// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native" );
-                WriteLine( "//" );
-                WriteLine( $"handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );" );
+                CallbackCallresultShared( c, true );
 
                 WriteLine( "" );
                 WriteLine( "//" );
@@ -359,6 +237,92 @@ namespace Generator
                 WriteLine( "return handle;" );
             }
             EndBlock();
+        }
+
+
+        private void CallbackCallresultShared( SteamApiDefinition.StructDef c, bool Result )
+        {
+            WriteLine( "//" );
+            WriteLine( "// Create the functions we need for the vtable" );
+            WriteLine( "//" );
+            WriteLine( $"Callback.Result         funcA = ( _, p ) => {{  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); }};" );
+
+            if ( Result )
+            {
+                StartBlock( $"Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => " );
+                {
+                    WriteLine( "if ( hSteamAPICall != call ) return;" );
+                    WriteLine();
+                    WriteLine( "handle.CallResultHandle = 0;" );
+                    WriteLine( "handle.Dispose();" );
+                    WriteLine();
+                    WriteLine( "CallbackFunction( FromPointer( p ), bIOFailure );" );
+                }
+                EndBlock( ";" );
+            }
+            else
+            {
+                WriteLine( $"Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => {{ CallbackFunction( FromPointer( p ), bIOFailure ); }};" );
+            }
+
+            WriteLine( $"Callback.GetSize        funcC = ( _ ) => {{ return Marshal.SizeOf( typeof( {c.Name} ) ); }};" );
+            WriteLine();
+            WriteLine( "//" );
+            WriteLine( "// If this platform is PackSmall, use PackSmall versions of everything instead" );
+            WriteLine( "//" );
+            StartBlock( "if ( Platform.PackSmall )" );
+            {
+                WriteLine( $"funcC = ( _ ) => {{ return Marshal.SizeOf( typeof( PackSmall ) ); }};" );
+            }
+            EndBlock();
+
+            WriteLine( "" );
+            WriteLine( "//" );
+            WriteLine( "// Allocate a handle to each function, so they don't get disposed" );
+            WriteLine( "//" );
+            WriteLine( "handle.FuncA = GCHandle.Alloc( funcA );" );
+            WriteLine( "handle.FuncB = GCHandle.Alloc( funcB );" );
+            WriteLine( "handle.FuncC = GCHandle.Alloc( funcC );" );
+            WriteLine();
+
+            WriteLine( "//" );
+            WriteLine( "// Create the VTable by manually allocating the memory and copying across" );
+            WriteLine( "//" );
+            WriteLine( "handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );" );
+            StartBlock( "var vTable = new Callback.VTable()" );
+            {
+                WriteLine( "ResultA = Marshal.GetFunctionPointerForDelegate( funcA )," );
+                WriteLine( "ResultB = Marshal.GetFunctionPointerForDelegate( funcB )," );
+                WriteLine( "GetSize = Marshal.GetFunctionPointerForDelegate( funcC )," );
+            }
+            EndBlock( ";" );
+
+            WriteLine( "//" );
+            WriteLine( "// The order of these functions are swapped on Windows" );
+            WriteLine( "//" );
+            StartBlock( "if ( Platform.Os == OperatingSystem.Windows )" );
+            {
+                WriteLine( "vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );" );
+                WriteLine( "vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );" );
+            }
+            EndBlock();
+
+            WriteLine( "Marshal.StructureToPtr( vTable, handle.vTablePtr, false );" );
+
+            WriteLine( "" );
+            WriteLine( "//" );
+            WriteLine( "// Create the callback object" );
+            WriteLine( "//" );
+            WriteLine( $"var cb = new Callback();" );
+            WriteLine( $"cb.vTablePtr = handle.vTablePtr;" );
+            WriteLine( $"cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;" );
+            WriteLine( $"cb.CallbackId = CallbackId;" );
+
+            WriteLine( "" );
+            WriteLine( "//" );
+            WriteLine( "// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native" );
+            WriteLine( "//" );
+            WriteLine( $"handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );" );
         }
     }
 }
