@@ -10,17 +10,17 @@ namespace Generator
     {
         private void Constants()
         {
-            StartBlock( "public static class CallbackIdentifiers" );
+            StartBlock( "internal static class CallbackIdentifiers" );
             foreach ( var o in def.CallbackIds )
             {
                 WriteLine( $"public const int {o.Key} = {o.Value};" );
             }
             EndBlock();
 
-            StartBlock( "public static class Defines" );
+            StartBlock( "internal static class Defines" );
             foreach ( var o in def.Defines )
             {
-                WriteLine( $"public const string {o.Key} = \"{o.Value}\";" );
+                WriteLine( $"internal const string {o.Key} = \"{o.Value}\";" );
             }
             EndBlock();
         }

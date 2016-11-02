@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace SteamNative
 {
-	public struct GID_t
+	internal struct GID_t
 	{
 		public ulong Value;
 		
@@ -18,7 +18,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct JobID_t
+	internal struct JobID_t
 	{
 		public ulong Value;
 		
@@ -33,7 +33,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct TxnID_t
+	internal struct TxnID_t
 	{
 		public GID_t Value;
 		
@@ -48,7 +48,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct PackageId_t
+	internal struct PackageId_t
 	{
 		public uint Value;
 		
@@ -63,7 +63,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct BundleId_t
+	internal struct BundleId_t
 	{
 		public uint Value;
 		
@@ -78,7 +78,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct AppId_t
+	internal struct AppId_t
 	{
 		public uint Value;
 		
@@ -93,7 +93,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct AssetClassId_t
+	internal struct AssetClassId_t
 	{
 		public ulong Value;
 		
@@ -108,7 +108,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct PhysicalItemId_t
+	internal struct PhysicalItemId_t
 	{
 		public uint Value;
 		
@@ -123,7 +123,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct DepotId_t
+	internal struct DepotId_t
 	{
 		public uint Value;
 		
@@ -138,7 +138,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct RTime32
+	internal struct RTime32
 	{
 		public uint Value;
 		
@@ -153,7 +153,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct CellID_t
+	internal struct CellID_t
 	{
 		public uint Value;
 		
@@ -168,7 +168,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct SteamAPICall_t
+	internal struct SteamAPICall_t
 	{
 		public ulong Value;
 		
@@ -183,7 +183,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct AccountID_t
+	internal struct AccountID_t
 	{
 		public uint Value;
 		
@@ -198,7 +198,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct PartnerId_t
+	internal struct PartnerId_t
 	{
 		public uint Value;
 		
@@ -213,7 +213,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct ManifestId_t
+	internal struct ManifestId_t
 	{
 		public ulong Value;
 		
@@ -228,7 +228,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct HAuthTicket
+	internal struct HAuthTicket
 	{
 		public uint Value;
 		
@@ -243,7 +243,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct BREAKPAD_HANDLE
+	internal struct BREAKPAD_HANDLE
 	{
 		public IntPtr Value;
 		
@@ -258,7 +258,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct HSteamPipe
+	internal struct HSteamPipe
 	{
 		public int Value;
 		
@@ -273,7 +273,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct HSteamUser
+	internal struct HSteamUser
 	{
 		public int Value;
 		
@@ -288,7 +288,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct FriendsGroupID_t
+	internal struct FriendsGroupID_t
 	{
 		public short Value;
 		
@@ -303,7 +303,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct HServerListRequest
+	internal struct HServerListRequest
 	{
 		public IntPtr Value;
 		
@@ -318,7 +318,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct HServerQuery
+	internal struct HServerQuery
 	{
 		public int Value;
 		
@@ -333,7 +333,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct UGCHandle_t
+	internal struct UGCHandle_t
 	{
 		public ulong Value;
 		
@@ -348,7 +348,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct PublishedFileUpdateHandle_t
+	internal struct PublishedFileUpdateHandle_t
 	{
 		public ulong Value;
 		
@@ -363,7 +363,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct PublishedFileId_t
+	internal struct PublishedFileId_t
 	{
 		public ulong Value;
 		
@@ -378,7 +378,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct UGCFileWriteStreamHandle_t
+	internal struct UGCFileWriteStreamHandle_t
 	{
 		public ulong Value;
 		
@@ -393,7 +393,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct SteamLeaderboard_t
+	internal struct SteamLeaderboard_t
 	{
 		public ulong Value;
 		
@@ -408,7 +408,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct SteamLeaderboardEntries_t
+	internal struct SteamLeaderboardEntries_t
 	{
 		public ulong Value;
 		
@@ -423,7 +423,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct SNetSocket_t
+	internal struct SNetSocket_t
 	{
 		public uint Value;
 		
@@ -438,7 +438,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct SNetListenSocket_t
+	internal struct SNetListenSocket_t
 	{
 		public uint Value;
 		
@@ -453,7 +453,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct ScreenshotHandle
+	internal struct ScreenshotHandle
 	{
 		public uint Value;
 		
@@ -468,7 +468,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct HTTPRequestHandle
+	internal struct HTTPRequestHandle
 	{
 		public uint Value;
 		
@@ -483,7 +483,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct HTTPCookieContainerHandle
+	internal struct HTTPCookieContainerHandle
 	{
 		public uint Value;
 		
@@ -498,7 +498,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct ClientUnifiedMessageHandle
+	internal struct ClientUnifiedMessageHandle
 	{
 		public ulong Value;
 		
@@ -513,7 +513,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct ControllerHandle_t
+	internal struct ControllerHandle_t
 	{
 		public ulong Value;
 		
@@ -528,7 +528,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct ControllerActionSetHandle_t
+	internal struct ControllerActionSetHandle_t
 	{
 		public ulong Value;
 		
@@ -543,7 +543,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct ControllerDigitalActionHandle_t
+	internal struct ControllerDigitalActionHandle_t
 	{
 		public ulong Value;
 		
@@ -558,7 +558,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct ControllerAnalogActionHandle_t
+	internal struct ControllerAnalogActionHandle_t
 	{
 		public ulong Value;
 		
@@ -573,7 +573,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct UGCQueryHandle_t
+	internal struct UGCQueryHandle_t
 	{
 		public ulong Value;
 		
@@ -588,7 +588,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct UGCUpdateHandle_t
+	internal struct UGCUpdateHandle_t
 	{
 		public ulong Value;
 		
@@ -603,7 +603,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct HHTMLBrowser
+	internal struct HHTMLBrowser
 	{
 		public uint Value;
 		
@@ -618,7 +618,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct SteamItemInstanceID_t
+	internal struct SteamItemInstanceID_t
 	{
 		public ulong Value;
 		
@@ -633,7 +633,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct SteamItemDef_t
+	internal struct SteamItemDef_t
 	{
 		public int Value;
 		
@@ -648,7 +648,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct SteamInventoryResult_t
+	internal struct SteamInventoryResult_t
 	{
 		public int Value;
 		
@@ -663,7 +663,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct CGameID
+	internal struct CGameID
 	{
 		public ulong Value;
 		
@@ -678,7 +678,7 @@ namespace SteamNative
 		}
 	}
 	
-	public struct CSteamID
+	internal struct CSteamID
 	{
 		public ulong Value;
 		

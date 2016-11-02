@@ -15,7 +15,7 @@ namespace Generator
         {
             StartBlock( $"internal static partial class Platform" );
             {
-                StartBlock( $"public interface Interface : IDisposable" );
+                StartBlock( $"internal interface Interface : IDisposable" );
                 {
                     WriteLine( "// Implementation should return true if _ptr is non null" );
                     WriteLine( "bool IsValid { get; } " );

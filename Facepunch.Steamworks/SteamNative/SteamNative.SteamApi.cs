@@ -14,7 +14,7 @@ namespace SteamNative
 		//
 		// Constructor decides which implementation to use based on current platform
 		//
-		public SteamApi( Facepunch.Steamworks.BaseSteamworks steamworks, IntPtr pointer )
+		internal SteamApi( Facepunch.Steamworks.BaseSteamworks steamworks, IntPtr pointer )
 		{
 			this.steamworks = steamworks;
 			

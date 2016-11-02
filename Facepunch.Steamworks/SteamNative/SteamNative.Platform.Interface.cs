@@ -5,7 +5,7 @@ namespace SteamNative
 {
 	internal static partial class Platform
 	{
-		public interface Interface : IDisposable
+		internal interface Interface : IDisposable
 		{
 			// Implementation should return true if _ptr is non null
 			bool IsValid { get; } 

@@ -12,7 +12,7 @@ namespace Facepunch.Steamworks
         {
             internal Inventory inventory;
 
-            public SteamNative.SteamInventoryResult_t Handle { get; private set; }
+            private SteamNative.SteamInventoryResult_t Handle { get; set; }
             public Item[] Items { get; internal set; }
 
             public bool IsPending

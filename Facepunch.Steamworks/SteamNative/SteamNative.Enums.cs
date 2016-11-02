@@ -6,7 +6,7 @@ namespace SteamNative
 	//
 	// EUniverse
 	//
-	public enum Universe : int
+	internal enum Universe : int
 	{
 		Invalid = 0,
 		Public = 1,
@@ -19,7 +19,7 @@ namespace SteamNative
 	//
 	// EResult
 	//
-	public enum Result : int
+	internal enum Result : int
 	{
 		OK = 1,
 		Fail = 2,
@@ -131,7 +131,7 @@ namespace SteamNative
 	//
 	// EVoiceResult
 	//
-	public enum VoiceResult : int
+	internal enum VoiceResult : int
 	{
 		OK = 0,
 		NotInitialized = 1,
@@ -148,7 +148,7 @@ namespace SteamNative
 	//
 	// EDenyReason
 	//
-	public enum DenyReason : int
+	internal enum DenyReason : int
 	{
 		Invalid = 0,
 		InvalidVersion = 1,
@@ -171,7 +171,7 @@ namespace SteamNative
 	//
 	// EBeginAuthSessionResult
 	//
-	public enum BeginAuthSessionResult : int
+	internal enum BeginAuthSessionResult : int
 	{
 		OK = 0,
 		InvalidTicket = 1,
@@ -184,7 +184,7 @@ namespace SteamNative
 	//
 	// EAuthSessionResponse
 	//
-	public enum AuthSessionResponse : int
+	internal enum AuthSessionResponse : int
 	{
 		OK = 0,
 		UserNotConnectedToSteam = 1,
@@ -201,7 +201,7 @@ namespace SteamNative
 	//
 	// EUserHasLicenseForAppResult
 	//
-	public enum UserHasLicenseForAppResult : int
+	internal enum UserHasLicenseForAppResult : int
 	{
 		HasLicense = 0,
 		DoesNotHaveLicense = 1,
@@ -211,7 +211,7 @@ namespace SteamNative
 	//
 	// EAccountType
 	//
-	public enum AccountType : int
+	internal enum AccountType : int
 	{
 		Invalid = 0,
 		Individual = 1,
@@ -230,7 +230,7 @@ namespace SteamNative
 	//
 	// EAppReleaseState
 	//
-	public enum AppReleaseState : int
+	internal enum AppReleaseState : int
 	{
 		Unknown = 0,
 		Unavailable = 1,
@@ -242,7 +242,7 @@ namespace SteamNative
 	//
 	// EAppOwnershipFlags
 	//
-	public enum AppOwnershipFlags : int
+	internal enum AppOwnershipFlags : int
 	{
 		None = 0,
 		OwnsLicense = 1,
@@ -268,7 +268,7 @@ namespace SteamNative
 	//
 	// EAppType
 	//
-	public enum AppType : int
+	internal enum AppType : int
 	{
 		Invalid = 0,
 		Game = 1,
@@ -293,7 +293,7 @@ namespace SteamNative
 	//
 	// ESteamUserStatType
 	//
-	public enum SteamUserStatType : int
+	internal enum SteamUserStatType : int
 	{
 		INVALID = 0,
 		INT = 1,
@@ -307,7 +307,7 @@ namespace SteamNative
 	//
 	// EChatEntryType
 	//
-	public enum ChatEntryType : int
+	internal enum ChatEntryType : int
 	{
 		Invalid = 0,
 		ChatMsg = 1,
@@ -326,7 +326,7 @@ namespace SteamNative
 	//
 	// EChatRoomEnterResponse
 	//
-	public enum ChatRoomEnterResponse : int
+	internal enum ChatRoomEnterResponse : int
 	{
 		Success = 1,
 		DoesntExist = 2,
@@ -344,7 +344,7 @@ namespace SteamNative
 	//
 	// EChatSteamIDInstanceFlags
 	//
-	public enum ChatSteamIDInstanceFlags : int
+	internal enum ChatSteamIDInstanceFlags : int
 	{
 		AccountInstanceMask = 4095,
 		InstanceFlagClan = 524288,
@@ -355,7 +355,7 @@ namespace SteamNative
 	//
 	// EMarketingMessageFlags
 	//
-	public enum MarketingMessageFlags : int
+	internal enum MarketingMessageFlags : int
 	{
 		None = 0,
 		HighPriority = 1,
@@ -368,7 +368,7 @@ namespace SteamNative
 	//
 	// ENotificationPosition
 	//
-	public enum NotificationPosition : int
+	internal enum NotificationPosition : int
 	{
 		TopLeft = 0,
 		TopRight = 1,
@@ -379,7 +379,7 @@ namespace SteamNative
 	//
 	// EBroadcastUploadResult
 	//
-	public enum BroadcastUploadResult : int
+	internal enum BroadcastUploadResult : int
 	{
 		None = 0,
 		OK = 1,
@@ -400,7 +400,7 @@ namespace SteamNative
 	//
 	// ELaunchOptionType
 	//
-	public enum LaunchOptionType : int
+	internal enum LaunchOptionType : int
 	{
 		None = 0,
 		Default = 1,
@@ -424,7 +424,7 @@ namespace SteamNative
 	//
 	// EVRHMDType
 	//
-	public enum VRHMDType : int
+	internal enum VRHMDType : int
 	{
 		None = -1,
 		Unknown = 0,
@@ -441,7 +441,7 @@ namespace SteamNative
 	//
 	// EControllerType
 	//
-	public enum ControllerType : int
+	internal enum ControllerType : int
 	{
 		None = -1,
 		Unknown = 0,
@@ -459,7 +459,7 @@ namespace SteamNative
 	//
 	// CGameID::EGameIDType
 	//
-	public enum GameIDType : int
+	internal enum GameIDType : int
 	{
 		App = 0,
 		GameMod = 1,
@@ -470,7 +470,7 @@ namespace SteamNative
 	//
 	// IPCFailure_t::EFailureType
 	//
-	public enum FailureType : int
+	internal enum FailureType : int
 	{
 		FlushedCallbackQueue = 0,
 		PipeFail = 1,
@@ -479,7 +479,7 @@ namespace SteamNative
 	//
 	// EFriendRelationship
 	//
-	public enum FriendRelationship : int
+	internal enum FriendRelationship : int
 	{
 		None = 0,
 		Blocked = 1,
@@ -495,7 +495,7 @@ namespace SteamNative
 	//
 	// EPersonaState
 	//
-	public enum PersonaState : int
+	internal enum PersonaState : int
 	{
 		Offline = 0,
 		Online = 1,
@@ -510,7 +510,7 @@ namespace SteamNative
 	//
 	// EFriendFlags
 	//
-	public enum FriendFlags : int
+	internal enum FriendFlags : int
 	{
 		None = 0,
 		Blocked = 1,
@@ -530,7 +530,7 @@ namespace SteamNative
 	//
 	// EUserRestriction
 	//
-	public enum UserRestriction : int
+	internal enum UserRestriction : int
 	{
 		None = 0,
 		Unknown = 1,
@@ -545,7 +545,7 @@ namespace SteamNative
 	//
 	// EOverlayToStoreFlag
 	//
-	public enum OverlayToStoreFlag : int
+	internal enum OverlayToStoreFlag : int
 	{
 		None = 0,
 		AddToCart = 1,
@@ -555,7 +555,7 @@ namespace SteamNative
 	//
 	// EPersonaChange
 	//
-	public enum PersonaChange : int
+	internal enum PersonaChange : int
 	{
 		Name = 1,
 		Status = 2,
@@ -576,7 +576,7 @@ namespace SteamNative
 	//
 	// ESteamAPICallFailure
 	//
-	public enum SteamAPICallFailure : int
+	internal enum SteamAPICallFailure : int
 	{
 		None = -1,
 		SteamGone = 0,
@@ -588,7 +588,7 @@ namespace SteamNative
 	//
 	// EGamepadTextInputMode
 	//
-	public enum GamepadTextInputMode : int
+	internal enum GamepadTextInputMode : int
 	{
 		Normal = 0,
 		Password = 1,
@@ -597,7 +597,7 @@ namespace SteamNative
 	//
 	// EGamepadTextInputLineMode
 	//
-	public enum GamepadTextInputLineMode : int
+	internal enum GamepadTextInputLineMode : int
 	{
 		SingleLine = 0,
 		MultipleLines = 1,
@@ -606,7 +606,7 @@ namespace SteamNative
 	//
 	// ECheckFileSignature
 	//
-	public enum CheckFileSignature : int
+	internal enum CheckFileSignature : int
 	{
 		InvalidSignature = 0,
 		ValidSignature = 1,
@@ -618,7 +618,7 @@ namespace SteamNative
 	//
 	// EMatchMakingServerResponse
 	//
-	public enum MatchMakingServerResponse : int
+	internal enum MatchMakingServerResponse : int
 	{
 		ServerResponded = 0,
 		ServerFailedToRespond = 1,
@@ -628,7 +628,7 @@ namespace SteamNative
 	//
 	// ELobbyType
 	//
-	public enum LobbyType : int
+	internal enum LobbyType : int
 	{
 		Private = 0,
 		FriendsOnly = 1,
@@ -639,7 +639,7 @@ namespace SteamNative
 	//
 	// ELobbyComparison
 	//
-	public enum LobbyComparison : int
+	internal enum LobbyComparison : int
 	{
 		EqualToOrLessThan = -2,
 		LessThan = -1,
@@ -652,7 +652,7 @@ namespace SteamNative
 	//
 	// ELobbyDistanceFilter
 	//
-	public enum LobbyDistanceFilter : int
+	internal enum LobbyDistanceFilter : int
 	{
 		Close = 0,
 		Default = 1,
@@ -663,7 +663,7 @@ namespace SteamNative
 	//
 	// EChatMemberStateChange
 	//
-	public enum ChatMemberStateChange : int
+	internal enum ChatMemberStateChange : int
 	{
 		Entered = 1,
 		Left = 2,
@@ -675,7 +675,7 @@ namespace SteamNative
 	//
 	// ERemoteStoragePlatform
 	//
-	public enum RemoteStoragePlatform : int
+	internal enum RemoteStoragePlatform : int
 	{
 		None = 0,
 		Windows = 1,
@@ -689,7 +689,7 @@ namespace SteamNative
 	//
 	// ERemoteStoragePublishedFileVisibility
 	//
-	public enum RemoteStoragePublishedFileVisibility : int
+	internal enum RemoteStoragePublishedFileVisibility : int
 	{
 		Public = 0,
 		FriendsOnly = 1,
@@ -699,7 +699,7 @@ namespace SteamNative
 	//
 	// EWorkshopFileType
 	//
-	public enum WorkshopFileType : int
+	internal enum WorkshopFileType : int
 	{
 		First = 0,
 		Community = 0,
@@ -724,7 +724,7 @@ namespace SteamNative
 	//
 	// EWorkshopVote
 	//
-	public enum WorkshopVote : int
+	internal enum WorkshopVote : int
 	{
 		Unvoted = 0,
 		For = 1,
@@ -735,7 +735,7 @@ namespace SteamNative
 	//
 	// EWorkshopFileAction
 	//
-	public enum WorkshopFileAction : int
+	internal enum WorkshopFileAction : int
 	{
 		Played = 0,
 		Completed = 1,
@@ -744,7 +744,7 @@ namespace SteamNative
 	//
 	// EWorkshopEnumerationType
 	//
-	public enum WorkshopEnumerationType : int
+	internal enum WorkshopEnumerationType : int
 	{
 		RankedByVote = 0,
 		Recent = 1,
@@ -758,7 +758,7 @@ namespace SteamNative
 	//
 	// EWorkshopVideoProvider
 	//
-	public enum WorkshopVideoProvider : int
+	internal enum WorkshopVideoProvider : int
 	{
 		None = 0,
 		Youtube = 1,
@@ -767,7 +767,7 @@ namespace SteamNative
 	//
 	// EUGCReadAction
 	//
-	public enum UGCReadAction : int
+	internal enum UGCReadAction : int
 	{
 		ontinueReadingUntilFinished = 0,
 		ontinueReading = 1,
@@ -777,7 +777,7 @@ namespace SteamNative
 	//
 	// ELeaderboardDataRequest
 	//
-	public enum LeaderboardDataRequest : int
+	internal enum LeaderboardDataRequest : int
 	{
 		Global = 0,
 		GlobalAroundUser = 1,
@@ -788,7 +788,7 @@ namespace SteamNative
 	//
 	// ELeaderboardSortMethod
 	//
-	public enum LeaderboardSortMethod : int
+	internal enum LeaderboardSortMethod : int
 	{
 		None = 0,
 		Ascending = 1,
@@ -798,7 +798,7 @@ namespace SteamNative
 	//
 	// ELeaderboardDisplayType
 	//
-	public enum LeaderboardDisplayType : int
+	internal enum LeaderboardDisplayType : int
 	{
 		None = 0,
 		Numeric = 1,
@@ -809,7 +809,7 @@ namespace SteamNative
 	//
 	// ELeaderboardUploadScoreMethod
 	//
-	public enum LeaderboardUploadScoreMethod : int
+	internal enum LeaderboardUploadScoreMethod : int
 	{
 		None = 0,
 		KeepBest = 1,
@@ -819,7 +819,7 @@ namespace SteamNative
 	//
 	// ERegisterActivationCodeResult
 	//
-	public enum RegisterActivationCodeResult : int
+	internal enum RegisterActivationCodeResult : int
 	{
 		ResultOK = 0,
 		ResultFail = 1,
@@ -831,7 +831,7 @@ namespace SteamNative
 	//
 	// EP2PSessionError
 	//
-	public enum P2PSessionError : int
+	internal enum P2PSessionError : int
 	{
 		None = 0,
 		NotRunningApp = 1,
@@ -844,7 +844,7 @@ namespace SteamNative
 	//
 	// EP2PSend
 	//
-	public enum P2PSend : int
+	internal enum P2PSend : int
 	{
 		Unreliable = 0,
 		UnreliableNoDelay = 1,
@@ -855,7 +855,7 @@ namespace SteamNative
 	//
 	// ESNetSocketState
 	//
-	public enum SNetSocketState : int
+	internal enum SNetSocketState : int
 	{
 		Invalid = 0,
 		Connected = 1,
@@ -873,7 +873,7 @@ namespace SteamNative
 	//
 	// ESNetSocketConnectionType
 	//
-	public enum SNetSocketConnectionType : int
+	internal enum SNetSocketConnectionType : int
 	{
 		NotConnected = 0,
 		UDP = 1,
@@ -883,7 +883,7 @@ namespace SteamNative
 	//
 	// EVRScreenshotType
 	//
-	public enum VRScreenshotType : int
+	internal enum VRScreenshotType : int
 	{
 		None = 0,
 		Mono = 1,
@@ -896,7 +896,7 @@ namespace SteamNative
 	//
 	// AudioPlayback_Status
 	//
-	public enum AudioPlayback_Status : int
+	internal enum AudioPlayback_Status : int
 	{
 		Undefined = 0,
 		Playing = 1,
@@ -907,7 +907,7 @@ namespace SteamNative
 	//
 	// EHTTPMethod
 	//
-	public enum HTTPMethod : int
+	internal enum HTTPMethod : int
 	{
 		Invalid = 0,
 		GET = 1,
@@ -922,7 +922,7 @@ namespace SteamNative
 	//
 	// EHTTPStatusCode
 	//
-	public enum HTTPStatusCode : int
+	internal enum HTTPStatusCode : int
 	{
 		Invalid = 0,
 		HTTPStatusCode100Continue = 100,
@@ -973,7 +973,7 @@ namespace SteamNative
 	//
 	// ESteamControllerPad
 	//
-	public enum SteamControllerPad : int
+	internal enum SteamControllerPad : int
 	{
 		Left = 0,
 		Right = 1,
@@ -982,7 +982,7 @@ namespace SteamNative
 	//
 	// EControllerSource
 	//
-	public enum ControllerSource : int
+	internal enum ControllerSource : int
 	{
 		None = 0,
 		LeftTrackpad = 1,
@@ -999,7 +999,7 @@ namespace SteamNative
 	//
 	// EControllerSourceMode
 	//
-	public enum ControllerSourceMode : int
+	internal enum ControllerSourceMode : int
 	{
 		None = 0,
 		Dpad = 1,
@@ -1021,7 +1021,7 @@ namespace SteamNative
 	//
 	// EControllerActionOrigin
 	//
-	public enum ControllerActionOrigin : int
+	internal enum ControllerActionOrigin : int
 	{
 		None = 0,
 		A = 1,
@@ -1068,7 +1068,7 @@ namespace SteamNative
 	//
 	// EControllerActivationType
 	//
-	public enum ControllerActivationType : int
+	internal enum ControllerActivationType : int
 	{
 		None = 0,
 		FullPress = 1,
@@ -1083,7 +1083,7 @@ namespace SteamNative
 	//
 	// EControllerPressureButton
 	//
-	public enum ControllerPressureButton : int
+	internal enum ControllerPressureButton : int
 	{
 		LeftTrackPad = 0,
 		RightTrackPad = 1,
@@ -1099,7 +1099,7 @@ namespace SteamNative
 	//
 	// EControllerActivatorOutputAxis
 	//
-	public enum ControllerActivatorOutputAxis : int
+	internal enum ControllerActivatorOutputAxis : int
 	{
 		LeftTrigger = 0,
 		RightTrigger = 1,
@@ -1116,7 +1116,7 @@ namespace SteamNative
 	//
 	// EControllerConfigFeature
 	//
-	public enum ControllerConfigFeature : int
+	internal enum ControllerConfigFeature : int
 	{
 		None = 0,
 		Gamepad = 1,
@@ -1132,7 +1132,7 @@ namespace SteamNative
 	//
 	// EControllerPopupMenuActivationType
 	//
-	public enum ControllerPopupMenuActivationType : int
+	internal enum ControllerPopupMenuActivationType : int
 	{
 		ButtonPress = 0,
 		ButtonRelease = 1,
@@ -1143,7 +1143,7 @@ namespace SteamNative
 	//
 	// EUGCMatchingUGCType
 	//
-	public enum UGCMatchingUGCType : int
+	internal enum UGCMatchingUGCType : int
 	{
 		Items = 0,
 		Items_Mtx = 1,
@@ -1164,7 +1164,7 @@ namespace SteamNative
 	//
 	// EUserUGCList
 	//
-	public enum UserUGCList : int
+	internal enum UserUGCList : int
 	{
 		Published = 0,
 		VotedOn = 1,
@@ -1180,7 +1180,7 @@ namespace SteamNative
 	//
 	// EUserUGCListSortOrder
 	//
-	public enum UserUGCListSortOrder : int
+	internal enum UserUGCListSortOrder : int
 	{
 		CreationOrderDesc = 0,
 		CreationOrderAsc = 1,
@@ -1194,7 +1194,7 @@ namespace SteamNative
 	//
 	// EUGCQuery
 	//
-	public enum UGCQuery : int
+	internal enum UGCQuery : int
 	{
 		RankedByVote = 0,
 		RankedByPublicationDate = 1,
@@ -1220,7 +1220,7 @@ namespace SteamNative
 	//
 	// EItemUpdateStatus
 	//
-	public enum ItemUpdateStatus : int
+	internal enum ItemUpdateStatus : int
 	{
 		Invalid = 0,
 		PreparingConfig = 1,
@@ -1233,7 +1233,7 @@ namespace SteamNative
 	//
 	// EItemState
 	//
-	public enum ItemState : int
+	internal enum ItemState : int
 	{
 		None = 0,
 		Subscribed = 1,
@@ -1247,7 +1247,7 @@ namespace SteamNative
 	//
 	// EItemStatistic
 	//
-	public enum ItemStatistic : int
+	internal enum ItemStatistic : int
 	{
 		NumSubscriptions = 0,
 		NumFavorites = 1,
@@ -1265,7 +1265,7 @@ namespace SteamNative
 	//
 	// EItemPreviewType
 	//
-	public enum ItemPreviewType : int
+	internal enum ItemPreviewType : int
 	{
 		Image = 0,
 		YouTubeVideo = 1,
@@ -1278,7 +1278,7 @@ namespace SteamNative
 	//
 	// ISteamHTMLSurface::EHTMLMouseButton
 	//
-	public enum HTMLMouseButton : int
+	internal enum HTMLMouseButton : int
 	{
 		Left = 0,
 		Right = 1,
@@ -1288,7 +1288,7 @@ namespace SteamNative
 	//
 	// ISteamHTMLSurface::EMouseCursor
 	//
-	public enum MouseCursor : int
+	internal enum MouseCursor : int
 	{
 		user = 0,
 		none = 1,
@@ -1337,7 +1337,7 @@ namespace SteamNative
 	//
 	// ISteamHTMLSurface::EHTMLKeyModifiers
 	//
-	public enum HTMLKeyModifiers : int
+	internal enum HTMLKeyModifiers : int
 	{
 		None = 0,
 		AltDown = 1,
@@ -1348,7 +1348,7 @@ namespace SteamNative
 	//
 	// ESteamItemFlags
 	//
-	public enum SteamItemFlags : int
+	internal enum SteamItemFlags : int
 	{
 		NoTrade = 1,
 		Removed = 256,

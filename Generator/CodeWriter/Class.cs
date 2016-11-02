@@ -47,7 +47,7 @@ namespace Generator
                 WriteLine( "//" );
                 WriteLine( "// Constructor decides which implementation to use based on current platform" );
                 WriteLine( "//" );
-                StartBlock( $"public {InterfaceNameToClass( classname )}( Facepunch.Steamworks.BaseSteamworks steamworks, IntPtr pointer )" );
+                StartBlock( $"internal {InterfaceNameToClass( classname )}( Facepunch.Steamworks.BaseSteamworks steamworks, IntPtr pointer )" );
                 {
                     WriteLine( "this.steamworks = steamworks;" );
                     WriteLine( "" );

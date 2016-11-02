@@ -16,7 +16,7 @@ namespace Generator
 
             StartBlock( $"internal static partial class Platform" );
             {
-                StartBlock( $"public class {type} : Interface" );
+                StartBlock( $"internal class {type} : Interface" );
                 {
                     WriteLine( "internal IntPtr _ptr;" );
                     WriteLine( "public bool IsValid { get{ return _ptr != null; } }" );
@@ -25,7 +25,7 @@ namespace Generator
                     WriteLine( "//" );
                     WriteLine( "// Constructor sets pointer to native class" );
                     WriteLine( "//" );
-                    StartBlock( $"public {type}( IntPtr pointer )" );
+                    StartBlock( $"internal {type}( IntPtr pointer )" );
                     {
                         WriteLine( "_ptr = pointer;" );
                     }

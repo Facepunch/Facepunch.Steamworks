@@ -5,7 +5,7 @@ namespace SteamNative
 {
 	internal static partial class Platform
 	{
-		public class Mac : Interface
+		internal class Mac : Interface
 		{
 			internal IntPtr _ptr;
 			public bool IsValid { get{ return _ptr != null; } }
@@ -13,7 +13,7 @@ namespace SteamNative
 			//
 			// Constructor sets pointer to native class
 			//
-			public Mac( IntPtr pointer )
+			internal Mac( IntPtr pointer )
 			{
 				_ptr = pointer;
 			}

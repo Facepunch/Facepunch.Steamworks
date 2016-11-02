@@ -14,16 +14,6 @@
             Called with a message from Steam
             </summary>
         </member>
-        <member name="M:Facepunch.Steamworks.BaseSteamworks.AddCallback``2(System.Action{``0},System.Int32)">
-            <summary>
-            Global callback type
-            </summary>
-        </member>
-        <member name="M:Facepunch.Steamworks.BaseSteamworks.AddCallResult(Facepunch.Steamworks.Interop.CallResult)">
-            <summary>
-            Call results are results to specific actions
-            </summary>
-        </member>
         <member name="T:Facepunch.Steamworks.Inventory.Item">
             <summary>
             An item in your inventory.
@@ -502,11 +492,6 @@
         <member name="T:Facepunch.Steamworks.ServerAuth.Status">
             <summary>
             Steam authetication statuses
-            </summary>
-        </member>
-        <member name="F:Facepunch.Steamworks.ServerAuth.Status.OK">
-            <summary>
-            Steam has verified the user is online, the ticket is valid and ticket has not been reused.
             </summary>
         </member>
         <member name="M:Facepunch.Steamworks.ServerAuth.StartSession(System.Byte[],System.UInt64)">
