@@ -14,16 +14,6 @@
             Called with a message from Steam
             </summary>
         </member>
-        <member name="M:Facepunch.Steamworks.BaseSteamworks.AddCallback``2(System.Action{``0},System.Int32)">
-            <summary>
-            Global callback type
-            </summary>
-        </member>
-        <member name="M:Facepunch.Steamworks.BaseSteamworks.AddCallResult(Facepunch.Steamworks.Interop.CallResult)">
-            <summary>
-            Call results are results to specific actions
-            </summary>
-        </member>
         <member name="T:Facepunch.Steamworks.Inventory.Item">
             <summary>
             An item in your inventory.
@@ -341,11 +331,60 @@
             
             </summary>
         </member>
-        <member name="M:Facepunch.Steamworks.Config.ForcePlatform(SteamNative.OperatingSystem,SteamNative.Architecture)">
+        <member name="M:Facepunch.Steamworks.Config.ForcePlatform(Facepunch.Steamworks.OperatingSystem,Facepunch.Steamworks.Architecture)">
             <summary>
             You can force the platform to a particular one here.
             This is useful if you're on OSX because some versions of mono don't have a way
             to tell which platform we're running
+            </summary>
+        </member>
+        <member name="T:Facepunch.Steamworks.Workshop">
+            <summary>
+            Allows you to interact with Steam's UGC stuff (User Generated Content).
+            To put simply, this allows you to upload a folder of files to Steam.
+            
+            To upload a new file use CreateItem. This returns an Editor object.
+            This object is also used to edit existing items.
+            
+            To get a list of items you can call CreateQuery. From there you can download
+            an item and retrieve the folder that it's downloaded to. 
+            
+            Generally there's no need to compress and decompress your uploads, so you should
+            usually be able to use the content straight from the destination folder.
+            
+            </summary>
+        </member>
+        <member name="E:Facepunch.Steamworks.Workshop.OnFileDownloaded">
+            <summary>
+            Called when an item has been downloaded. This could have been
+            because of a call to Download or because of a subscription triggered
+            via the browser/app.
+            </summary>
+        </member>
+        <member name="E:Facepunch.Steamworks.Workshop.OnItemInstalled">
+            <summary>
+            Called when an item has been installed. This could have been
+            because of a call to Download or because of a subscription triggered
+            via the browser/app.
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.Workshop.Dispose">
+            <summary>
+            You should never have to call this manually
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.Workshop.CreateQuery">
+            <summary>
+            Creates a query object, which is used to get a list of items.
+            
+            This could be a list of the most popular items, or a search, 
+            or just getting a list of the items you've uploaded.
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.Workshop.CreateItem(Facepunch.Steamworks.Workshop.ItemType)">
+            <summary>
+            Create a new Editor object with the intention of creating a new item.
+            Your item won't actually be created until you call Publish() on the object.
             </summary>
         </member>
         <member name="M:Facepunch.Steamworks.Workshop.EditItem(System.UInt64)">
@@ -353,6 +392,24 @@
             Returns a class representing this ItemId. We don't query
             item name, description etc. We don't verify that item exists.
             We don't verify that this item belongs to your app.
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.Workshop.GetItem(System.UInt64)">
+            <summary>
+            Gets an Item object for a specific item. This doesn't currently
+            query the item's name and description. It's only really useful
+            if you know an item's ID and want to download it, or check its
+            current download status.
+            </summary>
+        </member>
+        <member name="T:Facepunch.Steamworks.Workshop.Order">
+            <summary>
+            How a query should be ordered.
+            </summary>
+        </member>
+        <member name="T:Facepunch.Steamworks.Workshop.QueryType">
+            <summary>
+            The type of item you are querying for
             </summary>
         </member>
         <member name="F:Facepunch.Steamworks.Workshop.QueryType.Items">
@@ -368,6 +425,17 @@
         <member name="F:Facepunch.Steamworks.Workshop.QueryType.SubscriptionItems">
             <summary>
             normal Workshop item that can be subscribed to
+            </summary>
+        </member>
+        <member name="T:Facepunch.Steamworks.Workshop.ItemType">
+            <summary>
+            Used to define the item type when creating
+            </summary>
+        </member>
+        <member name="T:Facepunch.Steamworks.Workshop.UserQueryType">
+            <summary>
+            When querying a specific user's items this defines what
+            type of items you're looking for.
             </summary>
         </member>
         <member name="P:Facepunch.Steamworks.Workshop.Item.Url">
@@ -502,11 +570,6 @@
         <member name="T:Facepunch.Steamworks.ServerAuth.Status">
             <summary>
             Steam authetication statuses
-            </summary>
-        </member>
-        <member name="F:Facepunch.Steamworks.ServerAuth.Status.OK">
-            <summary>
-            Steam has verified the user is online, the ticket is valid and ticket has not been reused.
             </summary>
         </member>
         <member name="M:Facepunch.Steamworks.ServerAuth.StartSession(System.Byte[],System.UInt64)">

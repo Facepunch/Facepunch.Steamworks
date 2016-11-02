@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace SteamNative
+namespace Facepunch.Steamworks
 {
     public enum OperatingSystem
     {
@@ -17,34 +17,37 @@ namespace SteamNative
         x86,
         x64
     }
+}
 
+namespace SteamNative
+{
     internal static partial class Platform
     {
-        private static OperatingSystem _os;
-        private static Architecture _arch;
+        private static Facepunch.Steamworks.OperatingSystem _os;
+        private static Facepunch.Steamworks.Architecture _arch;
 
-        internal static OperatingSystem Os
+        internal static Facepunch.Steamworks.OperatingSystem Os
         {
             get
             {
                 //
                 // Work out our platform
                 //
-                if ( _os == OperatingSystem.Unset )
+                if ( _os == Facepunch.Steamworks.OperatingSystem.Unset )
                 {
-                    _os = OperatingSystem.Windows;
+                    _os = Facepunch.Steamworks.OperatingSystem.Windows;
 
                     //
                     // These checks aren't so accurate on older versions of mono
                     //
-                    if ( Environment.OSVersion.Platform == PlatformID.MacOSX ) _os = OperatingSystem.Osx;
-                    if ( Environment.OSVersion.Platform == PlatformID.Unix ) _os = OperatingSystem.Linux;
+                    if ( Environment.OSVersion.Platform == PlatformID.MacOSX ) _os = Facepunch.Steamworks.OperatingSystem.Osx;
+                    if ( Environment.OSVersion.Platform == PlatformID.Unix ) _os = Facepunch.Steamworks.OperatingSystem.Linux;
 
                     //
                     // Edging our bets
                     //
-                    if ( Environment.OSVersion.VersionString.ToLower().Contains( "unix" ) ) _os = OperatingSystem.Linux;
-                    if ( Environment.OSVersion.VersionString.ToLower().Contains( "osx" ) ) _os = OperatingSystem.Osx;
+                    if ( Environment.OSVersion.VersionString.ToLower().Contains( "unix" ) ) _os = Facepunch.Steamworks.OperatingSystem.Linux;
+                    if ( Environment.OSVersion.VersionString.ToLower().Contains( "osx" ) ) _os = Facepunch.Steamworks.OperatingSystem.Osx;
                 }
 
                 return _os;
@@ -56,19 +59,19 @@ namespace SteamNative
             }
         }
 
-        internal static Architecture Arch
+        internal static Facepunch.Steamworks.Architecture Arch
         {
             get
             {
                 //
                 // Work out whether we're 64bit or 32bit
                 //
-                if ( _arch == Architecture.Unset )
+                if ( _arch == Facepunch.Steamworks.Architecture.Unset )
                 {
                     if ( IntPtr.Size == 8 )
-                        _arch = Architecture.x64;
+                        _arch = Facepunch.Steamworks.Architecture.x64;
                     else if ( IntPtr.Size == 4 )
-                        _arch = Architecture.x86;
+                        _arch = Facepunch.Steamworks.Architecture.x86;
                     else
                         throw new System.Exception( "Unsupported Architecture!" );
                 }
@@ -82,16 +85,17 @@ namespace SteamNative
             }
         }
 
-        public static bool IsWindows64 { get { return Arch == Architecture.x64 && Os == OperatingSystem.Windows; } }
-        public static bool IsWindows32 { get { return Arch == Architecture.x86 && Os == OperatingSystem.Windows; } }
-        public static bool IsLinux64 { get { return Arch == Architecture.x64 && Os == OperatingSystem.Linux; } }
-        public static bool IsLinux32 { get { return Arch == Architecture.x86 && Os == OperatingSystem.Linux; } }
-        public static bool IsOsx { get { return Os == OperatingSystem.Osx; } }
+        public static bool IsWindows { get { return Os == Facepunch.Steamworks.OperatingSystem.Windows; } }
+        public static bool IsWindows64 { get { return Arch == Facepunch.Steamworks.Architecture.x64 && IsWindows; } }
+        public static bool IsWindows32 { get { return Arch == Facepunch.Steamworks.Architecture.x86 && IsWindows; } }
+        public static bool IsLinux64 { get { return Arch == Facepunch.Steamworks.Architecture.x64 && Os == Facepunch.Steamworks.OperatingSystem.Linux; } }
+        public static bool IsLinux32 { get { return Arch == Facepunch.Steamworks.Architecture.x86 && Os == Facepunch.Steamworks.OperatingSystem.Linux; } }
+        public static bool IsOsx { get { return Os == Facepunch.Steamworks.OperatingSystem.Osx; } }
 
 
         /// <summary>
         /// We're only Pack = 8 on Windows
         /// </summary>
-        public static bool PackSmall { get { return Os != OperatingSystem.Windows; } }
+        public static bool PackSmall { get { return Os != Facepunch.Steamworks.OperatingSystem.Windows; } }
     }
 }

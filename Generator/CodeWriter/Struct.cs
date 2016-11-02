@@ -301,7 +301,7 @@ namespace Generator
             WriteLine( "//" );
             WriteLine( "// The order of these functions are swapped on Windows" );
             WriteLine( "//" );
-            StartBlock( "if ( Platform.Os == OperatingSystem.Windows )" );
+            StartBlock( "if ( Platform.IsWindows )" );
             {
                 WriteLine( "vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );" );
                 WriteLine( "vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );" );

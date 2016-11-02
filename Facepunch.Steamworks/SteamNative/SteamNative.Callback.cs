@@ -37,7 +37,7 @@ namespace SteamNative
     //
     // Created on registration of a callback
     //
-    public class CallbackHandle : IDisposable
+    internal class CallbackHandle : IDisposable
     {
         internal BaseSteamworks steamworks;
         internal SteamAPICall_t CallResultHandle;

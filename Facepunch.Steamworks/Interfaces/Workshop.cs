@@ -4,6 +4,20 @@ using SteamNative;
 
 namespace Facepunch.Steamworks
 {
+    /// <summary>
+    /// Allows you to interact with Steam's UGC stuff (User Generated Content).
+    /// To put simply, this allows you to upload a folder of files to Steam.
+    /// 
+    /// To upload a new file use CreateItem. This returns an Editor object.
+    /// This object is also used to edit existing items.
+    /// 
+    /// To get a list of items you can call CreateQuery. From there you can download
+    /// an item and retrieve the folder that it's downloaded to. 
+    /// 
+    /// Generally there's no need to compress and decompress your uploads, so you should
+    /// usually be able to use the content straight from the destination folder.
+    /// 
+    /// </summary>
     public partial class Workshop : IDisposable
     {
         internal const ulong InvalidHandle = 0xffffffffffffffff;
@@ -13,7 +27,18 @@ namespace Facepunch.Steamworks
         internal BaseSteamworks steamworks;
         internal SteamNative.SteamRemoteStorage remoteStorage;
 
-        internal event Action<ulong, Callbacks.Result> OnFileDownloaded;
+        /// <summary>
+        /// Called when an item has been downloaded. This could have been
+        /// because of a call to Download or because of a subscription triggered
+        /// via the browser/app.
+        /// </summary>
+        public event Action<ulong, Callbacks.Result> OnFileDownloaded;
+
+        /// <summary>
+        /// Called when an item has been installed. This could have been
+        /// because of a call to Download or because of a subscription triggered
+        /// via the browser/app.
+        /// </summary>
         internal event Action<ulong> OnItemInstalled;
 
         internal Workshop( BaseSteamworks steamworks, SteamNative.SteamUGC ugc, SteamNative.SteamRemoteStorage remoteStorage )
@@ -29,6 +54,9 @@ namespace Facepunch.Steamworks
             // steamworks.AddCallback<ItemInstalled, ItemInstalled.Small>( onItemInstalled, ItemInstalled.CallbackId );
         }
 
+        /// <summary>
+        /// You should never have to call this manually
+        /// </summary>
         public void Dispose()
         {
             ugc = null;
@@ -52,6 +80,12 @@ namespace Facepunch.Steamworks
                 OnFileDownloaded( obj.PublishedFileId, (Callbacks.Result) obj.Result );
         }
 
+        /// <summary>
+        /// Creates a query object, which is used to get a list of items.
+        /// 
+        /// This could be a list of the most popular items, or a search, 
+        /// or just getting a list of the items you've uploaded.
+        /// </summary>
         public Query CreateQuery()
         {
             return new Query()
@@ -62,6 +96,10 @@ namespace Facepunch.Steamworks
             };
         }
 
+        /// <summary>
+        /// Create a new Editor object with the intention of creating a new item.
+        /// Your item won't actually be created until you call Publish() on the object.
+        /// </summary>
         public Editor CreateItem( ItemType type )
         {
             return new Editor() { workshop = this, Type = type };
@@ -77,11 +115,21 @@ namespace Facepunch.Steamworks
             return new Editor() { workshop = this, Id = itemId };
         }
 
+        /// <summary>
+        /// Gets an Item object for a specific item. This doesn't currently
+        /// query the item's name and description. It's only really useful
+        /// if you know an item's ID and want to download it, or check its
+        /// current download status.
+        /// </summary>
         public Item GetItem( ulong itemid )
         {
             return new Item( itemid, this );
         }
 
+
+        /// <summary>
+        /// How a query should be ordered.
+        /// </summary>
         public enum Order
         {
             RankedByVote = 0,
@@ -99,6 +147,9 @@ namespace Facepunch.Steamworks
             RankedByTotalUniqueSubscriptions = 12,
         };
 
+        /// <summary>
+        /// The type of item you are querying for
+        /// </summary>
         public enum QueryType
         {
             /// <summary>
@@ -125,6 +176,9 @@ namespace Facepunch.Steamworks
             GameManagedItems = 12,        // game managed items (not managed by users)
         };
 
+        /// <summary>
+        /// Used to define the item type when creating
+        /// </summary>
         public enum ItemType
         {
             Community = 0,       // normal Workshop item that can be subscribed to
@@ -145,6 +199,10 @@ namespace Facepunch.Steamworks
             GameManagedItem = 15,        // managed completely by the game, not the user, and not shown on the web
         };
 
+        /// <summary>
+        /// When querying a specific user's items this defines what
+        /// type of items you're looking for.
+        /// </summary>
         public enum UserQueryType : uint
         {
             Published = 0,

@@ -121,7 +121,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -222,7 +222,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -335,7 +335,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -442,7 +442,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -549,7 +549,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -660,7 +660,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -764,7 +764,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -867,7 +867,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -980,7 +980,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -1163,7 +1163,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -1264,7 +1264,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -1372,7 +1372,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -1476,7 +1476,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -1586,7 +1586,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -1703,7 +1703,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -1807,7 +1807,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -1913,7 +1913,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -2020,7 +2020,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -2124,7 +2124,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -2238,7 +2238,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -2341,7 +2341,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -2455,7 +2455,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -2559,7 +2559,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -2676,7 +2676,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -2795,7 +2795,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -2917,7 +2917,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -3038,7 +3038,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -3139,7 +3139,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -3246,7 +3246,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -3357,7 +3357,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -3463,7 +3463,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -3762,7 +3762,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -3869,7 +3869,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -3991,7 +3991,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -4098,7 +4098,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -4208,7 +4208,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -4318,7 +4318,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -4428,7 +4428,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -4539,7 +4539,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -4646,7 +4646,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -4760,7 +4760,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -4866,7 +4866,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -4967,7 +4967,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -5109,7 +5109,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -5216,7 +5216,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -5333,7 +5333,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -5437,7 +5437,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -5556,7 +5556,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -5665,7 +5665,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -5779,7 +5779,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -5901,7 +5901,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -6015,7 +6015,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -6142,7 +6142,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -6256,7 +6256,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -6375,7 +6375,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -6503,7 +6503,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -6690,7 +6690,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -6823,7 +6823,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -6949,7 +6949,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -7053,7 +7053,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -7157,7 +7157,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -7261,7 +7261,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -7375,7 +7375,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -7482,7 +7482,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -7594,7 +7594,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -7711,7 +7711,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -7841,7 +7841,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -7957,7 +7957,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -8064,7 +8064,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -8175,7 +8175,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -8295,7 +8295,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -8456,7 +8456,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -8560,7 +8560,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -8677,7 +8677,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -8791,7 +8791,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -8908,7 +8908,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -9034,7 +9034,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -9148,7 +9148,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -9249,7 +9249,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -9363,7 +9363,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -9477,7 +9477,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -9591,7 +9591,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -9698,7 +9698,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -9812,7 +9812,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -9913,7 +9913,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -10017,7 +10017,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -10129,7 +10129,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -10251,7 +10251,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -10405,7 +10405,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -10509,7 +10509,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -10619,7 +10619,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -10723,7 +10723,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -10824,7 +10824,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -10927,7 +10927,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -11030,7 +11030,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -11131,7 +11131,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -11232,7 +11232,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -11333,7 +11333,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -11434,7 +11434,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -11549,7 +11549,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -11653,7 +11653,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -11763,7 +11763,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -11873,7 +11873,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -12262,7 +12262,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -12368,7 +12368,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -12487,7 +12487,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -12603,7 +12603,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -12710,7 +12710,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -12829,7 +12829,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -12948,7 +12948,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -13077,7 +13077,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -13188,7 +13188,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -13299,7 +13299,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -13400,7 +13400,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -13501,7 +13501,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -13612,7 +13612,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -13875,7 +13875,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -13982,7 +13982,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -14086,7 +14086,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -14190,7 +14190,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -14297,7 +14297,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -14408,7 +14408,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -14526,7 +14526,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -14644,7 +14644,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -14764,7 +14764,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -14868,7 +14868,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -14972,7 +14972,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -15079,7 +15079,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -15198,7 +15198,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -15302,7 +15302,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -15406,7 +15406,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -15510,7 +15510,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -15614,7 +15614,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -15715,7 +15715,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -15860,7 +15860,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -15961,7 +15961,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -16062,7 +16062,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -16171,7 +16171,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -16275,7 +16275,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -16384,7 +16384,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -16488,7 +16488,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -16599,7 +16599,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -16700,7 +16700,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -16810,7 +16810,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -16924,7 +16924,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -17055,7 +17055,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -17166,7 +17166,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -17289,7 +17289,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -17403,7 +17403,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -17517,7 +17517,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -17618,7 +17618,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
@@ -17722,7 +17722,7 @@ namespace SteamNative
 			//
 			// The order of these functions are swapped on Windows
 			//
-			if ( Platform.Os == OperatingSystem.Windows )
+			if ( Platform.IsWindows )
 			{
 				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
 				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
