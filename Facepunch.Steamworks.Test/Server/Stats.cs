@@ -17,15 +17,26 @@ namespace Facepunch.Steamworks.Test
 
                 ulong MySteamId = 76561197960279927;
 
-                server.Stats.Refresh( MySteamId );
+                bool GotStats = false;
 
-                // TODO - Callback on complete
+                server.Stats.Refresh( MySteamId, success =>
+                {
+                    GotStats = true;
+                    Assert.IsTrue( success );
 
-                Thread.Sleep( 2000 );
+                    var deathsInCallback = server.Stats.GetInt( MySteamId, "deaths", -1 );
+                    Console.WriteLine( "deathsInCallback: {0}", deathsInCallback );
+                    Assert.IsTrue( deathsInCallback > 0 );
+                } );
+
+                while ( !GotStats )
+                {
+                    server.Update();
+                    Thread.Sleep( 10 );
+                }
 
                 var deaths = server.Stats.GetInt( MySteamId, "deaths", -1 );
-
-                Console.WriteLine( "Deaths: {0}", deaths );
+                Console.WriteLine( "deathsInCallback: {0}", deaths );
                 Assert.IsTrue( deaths > 0 );
             }
         }

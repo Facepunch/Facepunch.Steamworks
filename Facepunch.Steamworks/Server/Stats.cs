@@ -22,6 +22,9 @@ namespace Facepunch.Steamworks
         }
     }
 
+    /// <summary>
+    /// Allows getting and setting stats on users from the gameserver
+    /// </summary>
     public class ServerStats
     {
         internal Server server;
@@ -39,11 +42,22 @@ namespace Facepunch.Steamworks
         }
 
         /// <summary>
-        /// Retrieve the stats for this user
+        /// Retrieve the stats for this user. If you pass a callback function in
+        /// this will be called when the stats are recieved, the bool will signify whether
+        /// it was successful or not.
         /// </summary>
-        public void Refresh( ulong steamid )
+        public void Refresh( ulong steamid, Action<bool> Callback = null )
         {
-            var handle = server.native.gameServerStats.RequestUserStats( steamid );
+            if ( Callback == null )
+            {
+                server.native.gameServerStats.RequestUserStats( steamid );
+                return;
+            }
+
+            server.native.gameServerStats.RequestUserStats( steamid, ( o, failed ) =>
+            {
+                Callback( o.Result == SteamNative.Result.OK && !failed );
+            } );
         }
 
         public void Commit( ulong steamid )

@@ -45,6 +45,8 @@ namespace Generator
             //
             foreach ( var t in def.structs )
             {
+                if ( !string.IsNullOrEmpty(  t.CallbackId ) ) continue;
+
                 // Standard style
                 {
                     var r = new Regex( @"struct "+t.Name+@"\n{ ?\n(?:.)+enum { k_iCallback = (?:(.+) \+ ([0-9]+)|(.+)) };", RegexOptions.Multiline | RegexOptions.IgnoreCase );
@@ -110,6 +112,8 @@ namespace Generator
 
                     foreach ( var t in def.methods.Where( x => x.Name == m.Groups[2].Value ) )
                     {
+                        if ( !string.IsNullOrEmpty( t.CallResult ) ) continue;
+
                         t.CallResult = s.Name;
                     }
                 }

@@ -595,9 +595,16 @@
             We have received a server query on our game port. Pass it to Steam to handle.
             </summary>
         </member>
-        <member name="M:Facepunch.Steamworks.ServerStats.Refresh(System.UInt64)">
+        <member name="T:Facepunch.Steamworks.ServerStats">
             <summary>
-            Retrieve the stats for this user
+            Allows getting and setting stats on users from the gameserver
+            </summary>
+        </member>
+        <member name="M:Facepunch.Steamworks.ServerStats.Refresh(System.UInt64,System.Action{System.Boolean})">
+            <summary>
+            Retrieve the stats for this user. If you pass a callback function in
+            this will be called when the stats are recieved, the bool will signify whether
+            it was successful or not.
             </summary>
         </member>
         <member name="M:Facepunch.Steamworks.ServerStats.Set(System.UInt64,System.String,System.Int32)">

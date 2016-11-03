@@ -67,14 +67,14 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle RequestUserStats( CSteamID steamIDUser /*class CSteamID*/, Action<UserStatsReceived_t, bool> CallbackFunction = null /*Action<UserStatsReceived_t, bool>*/ )
+		public CallbackHandle RequestUserStats( CSteamID steamIDUser /*class CSteamID*/, Action<GSStatsReceived_t, bool> CallbackFunction = null /*Action<GSStatsReceived_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamGameServerStats_RequestUserStats( steamIDUser.Value );
 			
 			if ( CallbackFunction == null ) return null;
 			
-			return UserStatsReceived_t.CallResult( steamworks, callback, CallbackFunction );
+			return GSStatsReceived_t.CallResult( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
