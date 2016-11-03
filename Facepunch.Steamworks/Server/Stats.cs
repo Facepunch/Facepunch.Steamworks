@@ -23,7 +23,8 @@ namespace Facepunch.Steamworks
     }
 
     /// <summary>
-    /// Allows getting and setting stats on users from the gameserver
+    /// Allows getting and setting stats on users from the gameserver. These stats
+    /// should have been set up on the Steamworks website for your app.
     /// </summary>
     public class ServerStats
     {
@@ -60,13 +61,28 @@ namespace Facepunch.Steamworks
             } );
         }
 
-        public void Commit( ulong steamid )
+        /// <summary>
+        /// Once you've set a stat change on a user you need to commit your changes.
+        /// You can do that using this function. The callback will let you know if
+        /// your action succeeded, but most of the time you can fire and forget.
+        /// </summary>
+        public void Commit( ulong steamid, Action<bool> Callback = null )
         {
-            server.native.gameServerStats.StoreUserStats( steamid );
+            if ( Callback == null )
+            {
+                server.native.gameServerStats.StoreUserStats( steamid );
+                return;
+            }
+
+            server.native.gameServerStats.StoreUserStats( steamid, ( o, failed ) =>
+            {
+                Callback( o.Result == SteamNative.Result.OK && !failed );
+            } );
         }
 
         /// <summary>
-        /// Set the named statistic for this user
+        /// Set the named stat for this user. Setting stats should follow the rules
+        /// you defined in Steamworks.
         /// </summary>
         public bool Set( ulong steamid, string name, int stat )
         {
@@ -74,7 +90,8 @@ namespace Facepunch.Steamworks
         }
 
         /// <summary>
-        /// Set the named statistic for this user
+        /// Set the named stat for this user. Setting stats should follow the rules
+        /// you defined in Steamworks.
         /// </summary>
         public bool Set( ulong steamid, string name, float stat )
         {
@@ -82,7 +99,9 @@ namespace Facepunch.Steamworks
         }
 
         /// <summary>
-        /// Set the named stat for this user
+        /// Get the named stat for this user. If getting the stat failed, will return
+        /// defaultValue. You should have called Refresh for this userid - which downloads
+        /// the stats from the backend. If you didn't call it this will always return defaultValue.
         /// </summary>
         public int GetInt( ulong steamid, string name, int defaultValue = 0 )
         {
@@ -95,7 +114,9 @@ namespace Facepunch.Steamworks
         }
 
         /// <summary>
-        /// Set the named stat for this user
+        /// Get the named stat for this user. If getting the stat failed, will return
+        /// defaultValue. You should have called Refresh for this userid - which downloads
+        /// the stats from the backend. If you didn't call it this will always return defaultValue.
         /// </summary>
         public float GetFloat( ulong steamid, string name, float defaultValue = 0 )
         {
