@@ -74,7 +74,8 @@ namespace Facepunch.Steamworks
             native.api.SteamAPI_RunCallbacks();
 
             Voice.Update();
-            base.Update();
+
+            base.Update();            
         }
 
         /// <summary>

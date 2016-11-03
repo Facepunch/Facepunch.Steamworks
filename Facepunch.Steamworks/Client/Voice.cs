@@ -22,6 +22,7 @@ namespace Facepunch.Steamworks
         public Action<IntPtr, int> OnCompressedData;
         public Action<IntPtr, int> OnUncompressedData;
 
+        private System.Diagnostics.Stopwatch UpdateTimer = System.Diagnostics.Stopwatch.StartNew();
 
         /// <summary>
         /// Returns the optimal sample rate for voice - according to Steam
@@ -92,6 +93,11 @@ namespace Facepunch.Steamworks
             if ( OnCompressedData == null && OnUncompressedData == null )
                 return;
 
+            if ( UpdateTimer.Elapsed.TotalSeconds < 1.0f / 10.0f )
+                return;
+
+            UpdateTimer.Reset();
+            UpdateTimer.Start();
 
             uint bufferRegularLastWrite = 0;
             uint bufferCompressedLastWrite = 0;

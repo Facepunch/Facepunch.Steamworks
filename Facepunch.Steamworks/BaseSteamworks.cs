@@ -20,7 +20,7 @@ namespace Facepunch.Steamworks
         public Inventory Inventory { get; internal set; }
         public Workshop Workshop { get; internal set; }
 
-        internal Action OnUpdate;
+        internal event Action OnUpdate;
 
         internal Interop.NativeInterface native;
 
@@ -86,6 +86,7 @@ namespace Facepunch.Steamworks
         public virtual void Update()
         {
             Inventory.Update();
+
             Networking.Update();
 
             if ( OnUpdate != null )

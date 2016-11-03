@@ -15,6 +15,7 @@ namespace Facepunch.Steamworks
         private List<int> ListenChannels = new List<int>();
 
         private MemoryStream ReceiveBuffer = new MemoryStream();
+        private System.Diagnostics.Stopwatch UpdateTimer = System.Diagnostics.Stopwatch.StartNew();
 
         internal SteamNative.SteamNetworking networking;
 
@@ -41,6 +42,13 @@ namespace Facepunch.Steamworks
         {
             if ( OnP2PData == null )
                 return;
+
+            // Update every 60th of a second
+            if ( UpdateTimer.Elapsed.TotalSeconds < 1.0 / 60.0 )
+                return;
+
+            UpdateTimer.Reset();
+            UpdateTimer.Start();
 
             foreach ( var channel in ListenChannels )
             {
