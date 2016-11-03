@@ -25,6 +25,34 @@ namespace Facepunch.Steamworks.Test
         }
 
         [TestMethod]
+        public void PublicIp()
+        {
+            using ( var server = new Facepunch.Steamworks.Server( 252490, 30002, 30003, false, "VersionString" ) )
+            {
+                server.LogOnAnonymous();
+
+                Assert.IsTrue( server.IsValid );
+
+                while ( true )
+                {
+                    var ip = server.PublicIp;
+
+                    if ( ip == null )
+                    {
+                        System.Threading.Thread.Sleep( 100 );
+                        server.Update();
+                        continue;
+                    }
+
+                    Assert.IsNotNull( ip );
+                    Console.WriteLine( ip.ToString() );
+                    break;
+                }
+
+            }
+        }
+
+        [TestMethod]
         public void AuthCallback()
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )

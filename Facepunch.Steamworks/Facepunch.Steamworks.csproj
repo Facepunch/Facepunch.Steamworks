@@ -180,6 +180,7 @@
     <Compile Include="SteamNative\SteamNative.Callback.cs" />
     <Compile Include="SteamNative\SteamNative.Structs.cs" />
     <Compile Include="SteamNative\SteamNative.Types.cs" />
+    <Compile Include="Utility.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

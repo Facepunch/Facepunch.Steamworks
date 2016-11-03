@@ -250,6 +250,9 @@ namespace Facepunch.Steamworks
             get { return native.gameServer.BLoggedOn(); }
         }
 
+        /// <summary>
+        /// Shutdown interface, disconnect from Steam
+        /// </summary>
         public override void Dispose()
         {
             if ( Query != null )
@@ -269,5 +272,23 @@ namespace Facepunch.Steamworks
 
             base.Dispose();
         }
+
+        /// <summary>
+        /// To the best of its ability this tries to get the server's
+        /// current public ip address. Be aware that this is likely to return
+        /// null for the first few seconds after initialization.
+        /// </summary>
+        public System.Net.IPAddress PublicIp
+        {
+            get
+            {
+                var ip = native.gameServer.GetPublicIP();
+                if ( ip == 0 ) return null;
+
+                return new System.Net.IPAddress( Utility.SwapBytes( ip ) );
+            }
+        }
+
+
     }
 }
