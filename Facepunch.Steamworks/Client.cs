@@ -16,7 +16,7 @@ namespace Facepunch.Steamworks
         public ulong SteamId { get; private set; }
 
         /// <summary>
-        /// Current Beta name, if ser
+        /// Current Beta name, if we're using a beta branch.
         /// </summary>
         public string BetaName { get; private set; }
 
@@ -35,12 +35,6 @@ namespace Facepunch.Steamworks
                 native = null;
                 return;
             }
-
-            //
-            // Set up warning hook callback
-            //
-           // SteamAPIWarningMessageHook ptr = InternalOnWarning;
-           // native.client.SetWarningMessageHook( Marshal.GetFunctionPointerForDelegate( ptr ) );
 
             //
             // Setup interfaces that client and server both have
@@ -69,9 +63,6 @@ namespace Facepunch.Steamworks
             Update();
         }
 
-        [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
-        public delegate void SteamAPIWarningMessageHook( int nSeverity, System.Text.StringBuilder pchDebugText );
-
         private void InternalOnWarning( int nSeverity, System.Text.StringBuilder text )
         {
             if ( OnMessage != null )
@@ -94,6 +85,9 @@ namespace Facepunch.Steamworks
             base.Update();
         }
 
+        /// <summary>
+        /// Call when finished to shut down the Steam client.
+        /// </summary>
         public override void Dispose()
         {
             if ( Voice != null )

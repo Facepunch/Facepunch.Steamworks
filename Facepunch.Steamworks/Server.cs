@@ -6,6 +6,11 @@ using System.Runtime.InteropServices;
 
 namespace Facepunch.Steamworks
 {
+    /// <summary>
+    /// Initialize this class for Game Servers.
+    /// 
+    /// Game servers offer a limited amount of Steam functionality - and don't require the Steam client.
+    /// </summary>
     public partial class Server : BaseSteamworks
     {
         /// <summary>
@@ -20,6 +25,15 @@ namespace Facepunch.Steamworks
 
         internal override bool IsGameServer { get { return true; } }
 
+        /// <summary>
+        /// Initialize a Steam Server instance
+        /// </summary>
+        /// <param name="appId">You game's AppId</param>
+        /// <param name="IpAddress">The IP Address to bind to. Can be 0 to mean "any".</param>
+        /// <param name="GamePort">The port you game listens to for connections.</param>
+        /// <param name="QueryPort">The port Steam should use for server queries.</param>
+        /// <param name="Secure">True if you want to use VAC</param>
+        /// <param name="VersionString">A string defining version, ie "1001"</param>
         public Server( uint appId, uint IpAddress, ushort GamePort, ushort QueryPort, bool Secure, string VersionString )
         {
             native = new Interop.NativeInterface();
@@ -33,14 +47,6 @@ namespace Facepunch.Steamworks
                 native = null;
                 return;
             }
-
-            //
-            // Set up warning hook callback
-            //
-          //  SteamAPIWarningMessageHook ptr = InternalOnWarning;
-          //  var d = Marshal.GetFunctionPointerForDelegate( ptr );
-         //   var rr = GCHandle.Alloc( d );
-           // native.utils.SetWarningMessageHook( d );
 
             //
             // Setup interfaces that client and server both have
@@ -68,14 +74,12 @@ namespace Facepunch.Steamworks
 
         /// <summary>
         /// Initialize a server - query port will use the same as GamePort (MASTERSERVERUPDATERPORT_USEGAMESOCKETSHARE)
+        /// This means you'll need to detect and manually process and reply to server queries.
         /// </summary>
         public Server( uint appId, uint IpAddress, ushort GamePort, bool Secure, string VersionString ) : this( appId, IpAddress, GamePort, 0xFFFF, Secure, VersionString )
         {
             
         }
-
-        [UnmanagedFunctionPointer( CallingConvention.Cdecl )]
-        public delegate void SteamAPIWarningMessageHook( int nSeverity, string pchDebugText );
 
         private void InternalOnWarning( int nSeverity, string text )
         {
@@ -143,7 +147,7 @@ namespace Facepunch.Steamworks
         private string _modDir = "";
 
         /// <summary>
-        /// Gets or sets the current Product
+        /// Gets or sets the current product. This isn't really used.
         /// </summary>
         public string Product
         {
@@ -173,7 +177,7 @@ namespace Facepunch.Steamworks
         private string _serverName = "";
 
         /// <summary>
-        /// Gets or sets the current Passworded
+        /// Set whether the server should report itself as passworded
         /// </summary>
         public bool Passworded
         {
@@ -183,7 +187,8 @@ namespace Facepunch.Steamworks
         private bool _passworded;
 
         /// <summary>
-        /// Gets or sets the current GameTags
+        /// Gets or sets the current GameTags. This is a comma seperated list of tags for this server.
+        /// When querying the server list you can filter by these tags.
         /// </summary>
         public string GameTags
         {
@@ -193,7 +198,7 @@ namespace Facepunch.Steamworks
         private string _gametags = "";
 
         /// <summary>
-        /// Log onto Steam anonymously
+        /// Log onto Steam anonymously.
         /// </summary>
         public void LogOnAnonymous()
         {
@@ -203,7 +208,10 @@ namespace Facepunch.Steamworks
         Dictionary<string, string> KeyValue = new Dictionary<string, string>();
 
         /// <summary>
-        /// Sets a Key Value
+        /// Sets a Key Value. These can be anything you like, and are accessible
+        /// when querying servers from the server list.
+        /// 
+        /// Information describing gamemodes are common here.
         /// </summary>
         public void SetKey( string Key, string Value )
         {
@@ -222,11 +230,20 @@ namespace Facepunch.Steamworks
             native.gameServer.SetKeyValue( Key, Value );
         }
 
+        /// <summary>
+        /// Update this connected player's information. You should really call this
+        /// any time a player's name or score changes. This keeps the information shown
+        /// to server queries up to date.
+        /// </summary>
         public void UpdatePlayer( ulong steamid, string name, int score )
         {
             native.gameServer.BUpdateUserData( steamid, name, (uint) score );
         }
 
+        /// <summary>
+        /// Returns true if the server is connected and registered with the Steam master server
+        /// You should have called LogOnAnonymous etc on startup.
+        /// </summary>
         public bool LoggedOn
         {
             get { return native.gameServer.BLoggedOn(); }
