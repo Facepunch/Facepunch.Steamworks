@@ -29,11 +29,8 @@ namespace Facepunch.Steamworks.Test
                     Assert.IsTrue( deathsInCallback > 0 );
                 } );
 
-                while ( !GotStats )
-                {
-                    server.Update();
-                    Thread.Sleep( 10 );
-                }
+
+                server.UpdateWhile( () => !GotStats );
 
                 var deaths = server.Stats.GetInt( MySteamId, "deaths", -1 );
                 Console.WriteLine( "deathsInCallback: {0}", deaths );

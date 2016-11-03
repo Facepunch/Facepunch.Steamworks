@@ -94,5 +94,19 @@ namespace Facepunch.Steamworks
             if ( OnUpdate != null )
                 OnUpdate();
         }
+
+        /// <summary>
+        /// Run Update until func returns false.
+        /// This will cause your program to lock up until it finishes.
+        /// This is useful for things like tests or command line utilities etc.
+        /// </summary>
+        public void UpdateWhile( Func<bool> func )
+        {
+            while ( func() )
+            {
+                Update();
+                System.Threading.Thread.Sleep( 1 );
+            }
+        }
     }
 }

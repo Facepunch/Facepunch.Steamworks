@@ -14,6 +14,13 @@
             Called with a message from Steam
             </summary>
         </member>
+        <member name="M:Facepunch.Steamworks.BaseSteamworks.UpdateWhile(System.Func{System.Boolean})">
+            <summary>
+            Run Update until func returns false.
+            This will cause your program to lock up until it finishes.
+            This is useful for things like tests or command line utilities etc.
+            </summary>
+        </member>
         <member name="T:Facepunch.Steamworks.Inventory.Item">
             <summary>
             An item in your inventory.
