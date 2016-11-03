@@ -5,22 +5,6 @@ using System.Text;
 
 namespace Facepunch.Steamworks
 {
-    public partial class Server
-    {
-        ServerAuth _auth;
-
-        public ServerAuth Auth
-        {
-            get
-            {
-                if ( _auth == null )
-                    _auth = new ServerAuth( this );
-
-                return _auth;
-            }
-        }
-    }
-
     public class ServerAuth
     {
         internal Server server;

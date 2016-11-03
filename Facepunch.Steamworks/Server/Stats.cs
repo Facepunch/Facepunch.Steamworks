@@ -6,22 +6,6 @@ using System.Text;
 
 namespace Facepunch.Steamworks
 {
-    public partial class Server
-    {
-        ServerStats _stats;
-
-        public ServerStats Stats
-        {
-            get
-            {
-                if ( _stats == null )
-                    _stats = new ServerStats( this );
-
-                return _stats;
-            }
-        }
-    }
-
     /// <summary>
     /// Allows getting and setting stats on users from the gameserver. These stats
     /// should have been set up on the Steamworks website for your app.

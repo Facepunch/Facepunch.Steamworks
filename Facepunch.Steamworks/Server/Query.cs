@@ -6,22 +6,9 @@ using System.Text;
 
 namespace Facepunch.Steamworks
 {
-    public partial class Server
-    {
-        ServerQuery _query;
-
-        public ServerQuery Query
-        {
-            get
-            {
-                if ( _query == null )
-                    _query = new ServerQuery( this );
-
-                return _query;
-            }
-        }
-    }
-
+    /// <summary>
+    /// If you're manually processing the server queries, you should use this class.
+    /// </summary>
     public class ServerQuery
     {
         internal Server server;
@@ -32,20 +19,39 @@ namespace Facepunch.Steamworks
             server = s;
         }
 
+        /// <summary>
+        /// A server query packet.
+        /// </summary>
         public struct Packet
         {
+            /// <summary>
+            /// Target IP address
+            /// </summary>
             public uint Address { get; internal set; }
-            public byte[] Data { get; internal set; }
+
+            /// <summary>
+            /// Target port
+            /// </summary>
             public ushort Port { get; internal set; }
+
+            /// <summary>
+            /// This data is pooled. Make a copy if you don't use it immediately.
+            /// This buffer is also quite large - so pay attention to Size.
+            /// </summary>
+            public byte[] Data { get; internal set; }
+
+            /// <summary>
+            /// Size of the data
+            /// </summary>
             public int Size { get; internal set; }
         }
 
         /// <summary>
         /// If true, Steam wants to send a packet. You should respond by sending
-        /// this packet in an unconnected way to the returned Address and Port
+        /// this packet in an unconnected way to the returned Address and Port.
         /// </summary>
-        /// <param name="packet"></param>
-        /// <returns></returns>
+        /// <param name="packet">Packet to send. The Data passed is pooled - so use it immediately.</param>
+        /// <returns>True if we want to send a packet</returns>
         public unsafe bool GetOutgoingPacket( out Packet packet )
         {
             packet = new Packet();

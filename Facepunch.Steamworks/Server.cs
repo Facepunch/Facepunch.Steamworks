@@ -25,6 +25,10 @@ namespace Facepunch.Steamworks
 
         internal override bool IsGameServer { get { return true; } }
 
+        public ServerQuery Query;
+        public ServerStats Stats;
+        public ServerAuth Auth;
+
         /// <summary>
         /// Initialize a Steam Server instance
         /// </summary>
@@ -65,6 +69,13 @@ namespace Facepunch.Steamworks
             MaxPlayers = 32;
             BotCount = 0;
             MapName = "unset";
+
+            //
+            // Child classes
+            //
+            Query = new ServerQuery( this );
+            Stats = new ServerStats( this );
+            Auth = new ServerAuth( this );
 
             //
             // Run update, first call does some initialization
@@ -237,6 +248,26 @@ namespace Facepunch.Steamworks
         public bool LoggedOn
         {
             get { return native.gameServer.BLoggedOn(); }
+        }
+
+        public override void Dispose()
+        {
+            if ( Query != null )
+            {
+                Query = null;
+            }
+
+            if ( Stats != null )
+            {
+                Stats = null;
+            }
+
+            if ( Auth != null )
+            {
+                Auth = null;
+            }
+
+            base.Dispose();
         }
     }
 }
