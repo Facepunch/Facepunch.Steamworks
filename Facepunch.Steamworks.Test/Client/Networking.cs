@@ -21,6 +21,11 @@ namespace Facepunch.Steamworks.Test
                 var OutputReceived = false;
                 var data = Encoding.UTF8.GetBytes( TestString );
 
+                //
+                // Enable listening on this channel
+                //
+                client.Networking.SetListenChannel( 0, true );
+
                 client.Networking.OnP2PData = ( steamid, ms, channel ) =>
                 {
                     var str = Encoding.UTF8.GetString( ms.GetBuffer() );

@@ -12,6 +12,10 @@ namespace Facepunch.Steamworks
         public Func<ulong, bool> OnIncomingConnection;
         public Action<ulong, SessionError> OnConnectionFailed;
 
+        private List<int> ListenChannels = new List<int>();
+
+        private MemoryStream ReceiveBuffer = new MemoryStream();
+
         internal SteamNative.SteamNetworking networking;
 
         internal Networking( BaseSteamworks steamworks, SteamNative.SteamNetworking networking )
@@ -29,20 +33,36 @@ namespace Facepunch.Steamworks
             OnIncomingConnection = null;
             OnConnectionFailed = null;
             OnP2PData = null;
+            ListenChannels.Clear();
         }
+
 
         internal void Update()
         {
-            for ( int i = 0; i < 32; i++ )
+            if ( OnP2PData == null )
+                return;
+
+            foreach ( var channel in ListenChannels )
             {
-                // POOL ME
-                using ( var ms = new MemoryStream() )
+                while ( ReadP2PPacket( channel ) )
                 {
-                    while( ReadP2PPacket( ms, i ) )
-                    {
-                        // Nothing Here.
-                    }
+                    // Nothing Here.
                 }
+            }
+        }
+
+        /// <summary>
+        /// Enable or disable listening on a specific channel.
+        /// If you donp't enable the channel we won't listen to it,
+        /// so you won't be able to receive messages on it.
+        /// </summary>
+        public void SetListenChannel( int ChannelId, bool Listen )
+        {
+            ListenChannels.RemoveAll( x => x == ChannelId );
+
+            if ( Listen  )
+            {
+                ListenChannels.Add( ChannelId );
             }
         }
 
@@ -132,28 +152,28 @@ namespace Facepunch.Steamworks
             }
         }
 
-        private unsafe bool ReadP2PPacket( MemoryStream ms, int channel = 0 )
+        private unsafe bool ReadP2PPacket( int channel )
         {
             uint DataAvailable = 0;
 
             if ( !networking.IsP2PPacketAvailable( out DataAvailable, channel ) || DataAvailable == 0 )
                 return false;
 
-            if ( ms.Capacity < DataAvailable )
-                ms.Capacity = (int) DataAvailable;
+            if ( ReceiveBuffer.Capacity < DataAvailable )
+                ReceiveBuffer.Capacity = (int) DataAvailable;
 
-            ms.Position = 0;
-            ms.SetLength( DataAvailable );
+            ReceiveBuffer.Position = 0;
+            ReceiveBuffer.SetLength( DataAvailable );
 
-            fixed ( byte* p = ms.GetBuffer() )
+            fixed ( byte* p = ReceiveBuffer.GetBuffer() )
             {
                 SteamNative.CSteamID steamid = 1;
                 if ( !networking.ReadP2PPacket( (IntPtr)p, (uint)DataAvailable, out DataAvailable, out steamid, channel ) || DataAvailable == 0 )
                     return false;
 
-                ms.SetLength( DataAvailable );
+                ReceiveBuffer.SetLength( DataAvailable );
 
-                OnP2PData?.Invoke( steamid, ms, channel );
+                OnP2PData?.Invoke( steamid, ReceiveBuffer, channel );
                 return true;
             }
         }

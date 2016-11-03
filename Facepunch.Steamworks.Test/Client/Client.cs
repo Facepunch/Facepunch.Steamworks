@@ -90,11 +90,15 @@ namespace Facepunch.Steamworks.Test
         [TestMethod]
         public void Update()
         {
+            var sw = new Stopwatch();
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {
                 for( int i=0; i<1024; i++ )
                 {
+                    sw.Restart();
                     client.Update();
+                    Console.WriteLine( $"{sw.Elapsed.TotalMilliseconds}ms" );
+
                 }
             }
         }
