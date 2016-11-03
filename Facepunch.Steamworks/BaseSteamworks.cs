@@ -6,6 +6,9 @@ using Facepunch.Steamworks.Interop;
 
 namespace Facepunch.Steamworks
 {
+    /// <summary>
+    /// Implements shared functionality between Steamworks.Client and Steamworks.Server
+    /// </summary>
     public class BaseSteamworks : IDisposable
     {
         /// <summary>
@@ -16,6 +19,12 @@ namespace Facepunch.Steamworks
         public Networking Networking { get; internal set; }
         public Inventory Inventory { get; internal set; }
         public Workshop Workshop { get; internal set; }
+
+        internal Action OnUpdate;
+
+        internal Interop.NativeInterface native;
+
+        private List<SteamNative.CallbackHandle> CallbackHandles = new List<SteamNative.CallbackHandle>();
 
         public virtual void Dispose()
         {
@@ -50,41 +59,29 @@ namespace Facepunch.Steamworks
             }
         }
 
-        public void SetupCommonInterfaces()
+        protected void SetupCommonInterfaces()
         {
             Networking = new Steamworks.Networking( this, native.networking );
             Inventory = new Steamworks.Inventory( native.inventory, IsGameServer );
             Workshop = new Steamworks.Workshop( this, native.ugc, native.remoteStorage );
         }
 
+        /// <summary>
+        /// Returns true if this instance has initialized properly.
+        /// If this returns false you should Dispose and throw an error.
+        /// </summary>
         public bool IsValid
         {
             get { return native != null; }
         }
 
-        internal Interop.NativeInterface native;
+        
         internal virtual bool IsGameServer { get { return false; } }
 
-        public enum MessageType : int
-        {
-            Message = 0,
-            Warning = 1
-        }
-
-        /// <summary>
-        /// Called with a message from Steam
-        /// </summary>
-        public Action<MessageType, string> OnMessage;
-
-
-        private List<SteamNative.CallbackHandle> CallbackHandles = new List<SteamNative.CallbackHandle>();
         internal void RegisterCallbackHandle( SteamNative.CallbackHandle handle )
         {
             CallbackHandles.Add( handle );
         }
-
-        public Action OnUpdate;
-
 
         public virtual void Update()
         {

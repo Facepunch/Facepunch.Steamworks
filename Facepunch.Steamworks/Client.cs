@@ -63,14 +63,6 @@ namespace Facepunch.Steamworks
             Update();
         }
 
-        private void InternalOnWarning( int nSeverity, System.Text.StringBuilder text )
-        {
-            if ( OnMessage != null )
-            {
-                OnMessage( ( MessageType)nSeverity, text.ToString() );
-            }
-        }
-
         /// <summary>
         /// Should be called at least once every frame
         /// </summary>

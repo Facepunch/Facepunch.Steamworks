@@ -81,16 +81,6 @@ namespace Facepunch.Steamworks
             
         }
 
-        private void InternalOnWarning( int nSeverity, string text )
-        {
-            if ( OnMessage != null )
-            {
-                OnMessage( ( MessageType)nSeverity, text.ToString() );
-            }
-
-            Console.WriteLine( "STEAM: {0}", text );
-        }
-
         /// <summary>
         /// Should be called at least once every frame
         /// </summary>
