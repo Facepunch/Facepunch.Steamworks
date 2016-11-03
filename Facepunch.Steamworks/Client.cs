@@ -92,8 +92,6 @@ namespace Facepunch.Steamworks
 
             Voice.Update();
             base.Update();
-
-            native.api.SteamAPI_RunCallbacks();
         }
 
         public override void Dispose()
