@@ -34,18 +34,28 @@ namespace Facepunch.Steamworks
         /// </summary>
         /// <param name="appId">You game's AppId</param>
         /// <param name="IpAddress">The IP Address to bind to. Can be 0 to mean "any".</param>
+        /// <param name="SteamPort">Port to talk to steam on, can be anything as long as it's not used.".</param>
         /// <param name="GamePort">The port you game listens to for connections.</param>
         /// <param name="QueryPort">The port Steam should use for server queries.</param>
         /// <param name="Secure">True if you want to use VAC</param>
         /// <param name="VersionString">A string defining version, ie "1001"</param>
-        public Server( uint appId, uint IpAddress, ushort GamePort, ushort QueryPort, bool Secure, string VersionString )
+        public Server( uint appId, uint IpAddress, ushort SteamPort, ushort GamePort, ushort QueryPort, bool Secure, string VersionString )
         {
             native = new Interop.NativeInterface();
 
             //
+            // If we don't have a SteamPort defined, choose one at 'random'
+            //
+            if ( SteamPort == 0 )
+            {
+                SteamPort = (ushort) new Random().Next( 10000, 60000 );
+            }
+
+
+            //
             // Get other interfaces
             //
-            if ( !native.InitServer( this, IpAddress, 0, GamePort, QueryPort, Secure ? 3 : 2, VersionString ) )
+            if ( !native.InitServer( this, IpAddress, SteamPort, GamePort, QueryPort, Secure ? 3 : 2, VersionString ) )
             {
                 native.Dispose();
                 native = null;
@@ -81,6 +91,20 @@ namespace Facepunch.Steamworks
             // Run update, first call does some initialization
             //
             Update();
+        }
+
+        /// <summary>
+        /// Initialize a Steam Server instance
+        /// </summary>
+        /// <param name="appId">You game's AppId</param>
+        /// <param name="IpAddress">The IP Address to bind to. Can be 0 to mean "any".</param>
+        /// <param name="GamePort">The port you game listens to for connections.</param>
+        /// <param name="QueryPort">The port Steam should use for server queries.</param>
+        /// <param name="Secure">True if you want to use VAC</param>
+        /// <param name="VersionString">A string defining version, ie "1001"</param>
+        public Server( uint appId, uint IpAddress, ushort GamePort, ushort QueryPort, bool Secure, string VersionString ) : this( appId, IpAddress, 0, GamePort, QueryPort, Secure, VersionString )
+        {
+            
         }
 
         /// <summary>
