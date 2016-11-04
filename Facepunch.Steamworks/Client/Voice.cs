@@ -102,7 +102,15 @@ namespace Facepunch.Steamworks
             uint bufferRegularLastWrite = 0;
             uint bufferCompressedLastWrite = 0;
 
-            var result = client.native.user.GetVoice( OnCompressedData != null, ReadCompressedBuffer, ReadBufferSize, out bufferCompressedLastWrite,
+            var result = client.native.user.GetAvailableVoice( out bufferCompressedLastWrite, out bufferRegularLastWrite, DesiredSampleRate == 0 ? OptimalSampleRate : DesiredSampleRate );
+
+            if ( result == SteamNative.VoiceResult.NotRecording || result == SteamNative.VoiceResult.NotInitialized )
+            {
+                IsRecording = false;
+                return;
+            }
+
+            result = client.native.user.GetVoice( OnCompressedData != null, ReadCompressedBuffer, ReadBufferSize, out bufferCompressedLastWrite,
                                                     OnUncompressedData != null, (IntPtr) ReadUncompressedBuffer, ReadBufferSize, out bufferRegularLastWrite, 
                                                     DesiredSampleRate == 0 ? OptimalSampleRate : DesiredSampleRate );
 
