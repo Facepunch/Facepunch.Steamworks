@@ -71,7 +71,7 @@ namespace Facepunch.Steamworks
         /// </summary>
         public uint DesiredSampleRate = 0;
 
-        public Voice( Client client )
+        internal Voice( Client client )
         {
             this.client = client;
 

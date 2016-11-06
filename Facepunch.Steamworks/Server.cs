@@ -13,21 +13,11 @@ namespace Facepunch.Steamworks
     /// </summary>
     public partial class Server : BaseSteamworks
     {
-        /// <summary>
-        /// Current user's Username
-        /// </summary>
-        public string Username { get; private set; }
-
-        /// <summary>
-        /// Current user's SteamId
-        /// </summary>
-        public ulong SteamId { get; private set; }
-
         internal override bool IsGameServer { get { return true; } }
 
-        public ServerQuery Query;
-        public ServerStats Stats;
-        public ServerAuth Auth;
+        public ServerQuery Query { get; internal set; }
+        public ServerStats Stats { get; internal set; }
+        public ServerAuth Auth { get; internal set; }
 
         /// <summary>
         /// Initialize a Steam Server instance
