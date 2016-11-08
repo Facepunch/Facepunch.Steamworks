@@ -31,6 +31,9 @@ namespace SteamNative
             if ( StringBuilderPoolIndex >= StringBuilderPool.Length )
                 StringBuilderPoolIndex = 0;
 
+            StringBuilderPool[StringBuilderPoolIndex].Capacity = 4096;
+            StringBuilderPool[StringBuilderPoolIndex].Length = 0;
+
             return StringBuilderPool[StringBuilderPoolIndex];
         }
     }

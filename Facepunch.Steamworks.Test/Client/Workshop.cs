@@ -20,6 +20,7 @@ namespace Facepunch.Steamworks.Test
                 Assert.IsTrue( client.IsValid );
 
                 var Query = client.Workshop.CreateQuery();
+                Query.Order = Workshop.Order.RankedByTrend;
 
                 Query.Run();
 
@@ -60,6 +61,44 @@ namespace Facepunch.Steamworks.Test
                     Console.WriteLine( "\t WebsiteViews:    {0}", item.WebsiteViews );
                     Console.WriteLine( "\t VotesUp:         {0}", item.VotesUp );
                     Console.WriteLine( "\t PreviewUrl:      {0}", item.PreviewImageUrl );
+
+                    Assert.IsTrue( item.PreviewImageUrl.Contains( "http" ) );
+                }
+            }
+        }
+
+        [TestMethod]
+        public void QueryMyFiles()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                Assert.IsTrue( client.IsValid );
+
+                var Query = client.Workshop.CreateQuery();
+
+                Query.UserId = client.SteamId;
+                Query.UserQueryType = Workshop.UserQueryType.Published;
+
+                Query.Run();
+
+                // Block, wait for result
+                // (don't do this in realtime)
+                Query.Block();
+
+                Assert.IsFalse( Query.IsRunning );
+                Assert.IsTrue( Query.TotalResults > 0 );
+                Assert.IsTrue( Query.Items.Length > 0 );
+
+                Console.WriteLine( "Query.TotalResults: {0}", Query.TotalResults );
+                Console.WriteLine( "Query.Items.Length: {0}", Query.Items.Length );
+
+                foreach ( var item in Query.Items )
+                {
+                    Console.WriteLine( "{0}", item.Title );
+                    Console.WriteLine( "\t WebsiteViews:    {0}", item.WebsiteViews );
+                    Console.WriteLine( "\t VotesUp:         {0}", item.VotesUp );
+                    Console.WriteLine( "\t PreviewUrl:      {0}", item.PreviewImageUrl );
+                    Console.WriteLine( "\t Directory:      {0}", item.Directory );
 
                     Assert.IsTrue( item.PreviewImageUrl.Contains( "http" ) );
                 }
