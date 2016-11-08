@@ -139,7 +139,14 @@ namespace Facepunch.Steamworks
                     workshop.ugc.SetItemDescription( UpdateHandle, Description );
 
                 if ( Folder != null )
+                {
+                    var info = new System.IO.DirectoryInfo( Folder );
+
+                    if ( !info.Exists )
+                        throw new System.Exception( $"Folder doesn't exist ({Folder})" );
+                    
                     workshop.ugc.SetItemContent( UpdateHandle, Folder );
+                }
 
                 if ( Tags != null && Tags.Count > 0 )
                     workshop.ugc.SetItemTags( UpdateHandle, Tags.ToArray() );
@@ -148,7 +155,17 @@ namespace Facepunch.Steamworks
                     workshop.ugc.SetItemVisibility( UpdateHandle, (SteamNative.RemoteStoragePublishedFileVisibility)(uint)Visibility.Value );
 
                 if ( PreviewImage != null )
-                    workshop.ugc.SetItemPreview( UpdateHandle, PreviewImage ); //  change preview image file for this item. pszPreviewFile points to local image file, which must be under 1MB in size
+                {
+                    var info = new System.IO.FileInfo( PreviewImage );
+
+                    if ( !info.Exists )
+                        throw new System.Exception( $"PreviewImage doesn't exist ({PreviewImage})" );
+
+                    if ( info.Length >= 1024 * 1024 )
+                        throw new System.Exception( $"PreviewImage should be under 1MB ({info.Length})" );
+
+                    workshop.ugc.SetItemPreview( UpdateHandle, PreviewImage );
+                }
 
                 /*
                     workshop.ugc.SetItemUpdateLanguage( UpdateId, const char *pchLanguage ) = 0; // specify the language of the title or description that will be set
@@ -179,7 +196,7 @@ namespace Facepunch.Steamworks
                     return;
                 }
 
-                Error = "Error publishing changes: " + obj.Result.ToString();
+                Error = "Error publishing changes: " + obj.Result.ToString() + " ("+ NeedToAgreeToWorkshopLegal + ")";
             }
 
             public void Delete()
