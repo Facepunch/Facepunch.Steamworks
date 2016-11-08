@@ -49,6 +49,8 @@ namespace Facepunch.Steamworks
             {
                 this.Handle = Handle;
                 this.inventory = inventory;
+
+                TryFill();
             }
 
             public bool Block( float maxWait = 5.0f )

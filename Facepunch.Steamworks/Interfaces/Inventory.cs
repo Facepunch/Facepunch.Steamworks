@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using SteamNative;
 
 namespace Facepunch.Steamworks
 {
@@ -33,27 +34,46 @@ namespace Facepunch.Steamworks
 
         internal SteamNative.SteamInventory inventory;
 
-        private Result LocalPlayerRequest;
-
         private bool IsServer { get; set; }
 
-        internal Inventory( SteamNative.SteamInventory c, bool server )
+        internal Inventory( BaseSteamworks steamworks, SteamNative.SteamInventory c, bool server )
         {
             IsServer = server;
             inventory = c;
 
             inventory.LoadItemDefinitions();
             FetchItemDefinitions();
+
+            if ( !server )
+            {
+                SteamNative.SteamInventoryFullUpdate_t.RegisterCallback( steamworks, onFullUpdate );
+                Refresh();
+            }
+        }
+
+        private void onFullUpdate( SteamInventoryFullUpdate_t data, bool error )
+        {
+            if ( error ) return;
+
+            var r = new Result( this, data.Handle );
+
+            SerializedItems = r.Serialize();
+            SerializedExpireTime = DateTime.Now.Add( TimeSpan.FromMinutes( 60 ) );
+
+            Items = r.Items;
+
+            r.Dispose();
+            r = null;
+
+            //
+            // Tell everyone we've got new items!
+            //
+            OnUpdate?.Invoke();
+
         }
 
         public void Dispose()
         {
-            if ( LocalPlayerRequest != null )
-            {
-                LocalPlayerRequest.Dispose();
-                LocalPlayerRequest = null;
-            }
-
             inventory = null;
 
             Items = null;
@@ -80,18 +100,12 @@ namespace Facepunch.Steamworks
         {
             if ( IsServer ) return;
 
-            // Pending
-            if ( LocalPlayerRequest != null )
-                return;
-
             SteamNative.SteamInventoryResult_t request = 0;
             if ( !inventory.GetAllItems( ref request ) || request == -1 )
             {
                 Console.WriteLine( "GetAllItems failed!?" );
                 return;
             }
-
-            LocalPlayerRequest = new Result( this, request );
         }
 
         /// <summary>
@@ -133,52 +147,8 @@ namespace Facepunch.Steamworks
             if ( Definitions == null )
             {
                 FetchItemDefinitions();
-
                 inventory.LoadItemDefinitions();
             }
-
-            UpdateLocalRequest();
-        }
-
-        /// <summary>
-        /// If we have a local player request process it.
-        /// </summary>
-        private void UpdateLocalRequest()
-        {
-            if ( LocalPlayerRequest == null )
-                return;
-
-            if ( LocalPlayerRequest.IsPending )
-                return;
-
-            if ( LocalPlayerRequest.IsSuccess )
-            {
-                // Try again.
-                RetrieveInventory();
-                return;
-            }
-
-            // Some other error
-            // Lets just retry.
-            LocalPlayerRequest.Dispose();
-            LocalPlayerRequest = null;
-            Refresh();
-        }
-
-        private unsafe void RetrieveInventory()
-        {
-            SerializedItems = LocalPlayerRequest.Serialize();
-            SerializedExpireTime = DateTime.Now.Add( TimeSpan.FromMinutes( 60 ) );
-
-            Items = LocalPlayerRequest.Items;
-
-            LocalPlayerRequest.Dispose();
-            LocalPlayerRequest = null;
-
-            //
-            // Tell everyone we've got new items!
-            //
-            OnUpdate?.Invoke();
         }
 
         /// <summary>
@@ -227,6 +197,27 @@ namespace Facepunch.Steamworks
 
                 return new Result( this, resultHandle );
             }
+        }
+
+        /// <summary>
+        /// Crafting! Uses the passed items to buy the target item.
+        /// You need to have set up the appropriate exchange rules in your item
+        /// definitions.
+        /// </summary>
+        public Result CraftItem( Item[] list, Definition target )
+        {
+            SteamNative.SteamInventoryResult_t resultHandle = -1;
+
+            var newItems = new SteamNative.SteamItemDef_t[] { new SteamNative.SteamItemDef_t() { Value = target.Id } };
+            var newItemC = new uint[] { 1 };
+
+            var takeItems = list.Select( x => (SteamNative.SteamItemInstanceID_t)x.Id ).ToArray();
+            var takeItemsC = list.Select( x => (uint)1 ).ToArray();
+
+            if ( !inventory.ExchangeItems( ref resultHandle, newItems, newItemC, 1, takeItems, takeItemsC, (uint)takeItems.Length ) )
+                return null;
+
+            return new Result( this, resultHandle );
         }
     }
 }

@@ -62,7 +62,7 @@ namespace Facepunch.Steamworks
         protected void SetupCommonInterfaces()
         {
             Networking = new Steamworks.Networking( this, native.networking );
-            Inventory = new Steamworks.Inventory( native.inventory, IsGameServer );
+            Inventory = new Steamworks.Inventory( this, native.inventory, IsGameServer );
             Workshop = new Steamworks.Workshop( this, native.ugc, native.remoteStorage );
         }
 

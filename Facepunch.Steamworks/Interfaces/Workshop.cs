@@ -49,9 +49,6 @@ namespace Facepunch.Steamworks
 
             SteamNative.DownloadItemResult_t.RegisterCallback( steamworks, onDownloadResult );
             SteamNative.ItemInstalled_t.RegisterCallback( steamworks, onItemInstalled );
-          //  SteamNative.SteamUGCQueryCompleted_t.RegisterCallback( steamworks, onQueryComplete );
-
-            // steamworks.AddCallback<ItemInstalled, ItemInstalled.Small>( onItemInstalled, ItemInstalled.CallbackId );
         }
 
         /// <summary>
