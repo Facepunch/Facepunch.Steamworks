@@ -100,7 +100,7 @@ namespace SteamNative
 		public string GetEnteredGamepadTextInput()
 		{
 			bool bSuccess = default( bool );
-			System.Text.StringBuilder pchText_sb = new System.Text.StringBuilder( 4096 );
+			System.Text.StringBuilder pchText_sb = Helpers.TakeStringBuilder();
 			uint cchText = 4096;
 			bSuccess = platform.ISteamUtils_GetEnteredGamepadTextInput( pchText_sb, cchText );
 			if ( !bSuccess ) return null;

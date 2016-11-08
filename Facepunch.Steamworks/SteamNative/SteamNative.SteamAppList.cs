@@ -53,7 +53,7 @@ namespace SteamNative
 		public string GetAppInstallDir( AppId_t nAppID /*AppId_t*/ )
 		{
 			int bSuccess = default( int );
-			System.Text.StringBuilder pchDirectory_sb = new System.Text.StringBuilder( 4096 );
+			System.Text.StringBuilder pchDirectory_sb = Helpers.TakeStringBuilder();
 			int cchNameMax = 4096;
 			bSuccess = platform.ISteamAppList_GetAppInstallDir( nAppID.Value, pchDirectory_sb, cchNameMax );
 			if ( bSuccess <= 0 ) return null;
@@ -65,7 +65,7 @@ namespace SteamNative
 		public string GetAppName( AppId_t nAppID /*AppId_t*/ )
 		{
 			int bSuccess = default( int );
-			System.Text.StringBuilder pchName_sb = new System.Text.StringBuilder( 4096 );
+			System.Text.StringBuilder pchName_sb = Helpers.TakeStringBuilder();
 			int cchNameMax = 4096;
 			bSuccess = platform.ISteamAppList_GetAppName( nAppID.Value, pchName_sb, cchNameMax );
 			if ( bSuccess <= 0 ) return null;

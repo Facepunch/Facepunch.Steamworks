@@ -355,7 +355,7 @@ namespace SteamNative
 		{
 			bool bSuccess = default( bool );
 			ppchName = string.Empty;
-			System.Text.StringBuilder ppchName_sb = new System.Text.StringBuilder( 4096 );
+			System.Text.StringBuilder ppchName_sb = Helpers.TakeStringBuilder();
 			int pnFileSizeInBytes = 4096;
 			bSuccess = platform.ISteamRemoteStorage_GetUGCDetails( hContent.Value, ref pnAppID.Value, ppchName_sb, (IntPtr) pnFileSizeInBytes, out pSteamIDOwner.Value );
 			if ( !bSuccess ) return bSuccess;

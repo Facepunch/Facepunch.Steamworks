@@ -48,7 +48,7 @@ namespace SteamNative
 		{
 			bool bSuccess = default( bool );
 			pchName = string.Empty;
-			System.Text.StringBuilder pchName_sb = new System.Text.StringBuilder( 4096 );
+			System.Text.StringBuilder pchName_sb = Helpers.TakeStringBuilder();
 			int cchNameBufferSize = 4096;
 			bSuccess = platform.ISteamApps_BGetDLCDataByIndex( iDLC, ref pAppID.Value, ref pbAvailable, pchName_sb, cchNameBufferSize );
 			if ( !bSuccess ) return bSuccess;
@@ -115,7 +115,7 @@ namespace SteamNative
 		public string GetAppInstallDir( AppId_t appID /*AppId_t*/ )
 		{
 			uint bSuccess = default( uint );
-			System.Text.StringBuilder pchFolder_sb = new System.Text.StringBuilder( 4096 );
+			System.Text.StringBuilder pchFolder_sb = Helpers.TakeStringBuilder();
 			uint cchFolderBufferSize = 4096;
 			bSuccess = platform.ISteamApps_GetAppInstallDir( appID.Value, pchFolder_sb, cchFolderBufferSize );
 			if ( bSuccess <= 0 ) return null;
@@ -142,7 +142,7 @@ namespace SteamNative
 		public string GetCurrentBetaName()
 		{
 			bool bSuccess = default( bool );
-			System.Text.StringBuilder pchName_sb = new System.Text.StringBuilder( 4096 );
+			System.Text.StringBuilder pchName_sb = Helpers.TakeStringBuilder();
 			int cchNameBufferSize = 4096;
 			bSuccess = platform.ISteamApps_GetCurrentBetaName( pchName_sb, cchNameBufferSize );
 			if ( !bSuccess ) return null;

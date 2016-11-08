@@ -208,7 +208,7 @@ namespace SteamNative
 		{
 			int bSuccess = default( int );
 			pchName = string.Empty;
-			System.Text.StringBuilder pchName_sb = new System.Text.StringBuilder( 4096 );
+			System.Text.StringBuilder pchName_sb = Helpers.TakeStringBuilder();
 			uint unNameBufLen = 4096;
 			bSuccess = platform.ISteamUserStats_GetMostAchievedAchievementInfo( pchName_sb, unNameBufLen, out pflPercent, ref pbAchieved );
 			if ( bSuccess <= 0 ) return bSuccess;
@@ -222,7 +222,7 @@ namespace SteamNative
 		{
 			int bSuccess = default( int );
 			pchName = string.Empty;
-			System.Text.StringBuilder pchName_sb = new System.Text.StringBuilder( 4096 );
+			System.Text.StringBuilder pchName_sb = Helpers.TakeStringBuilder();
 			uint unNameBufLen = 4096;
 			bSuccess = platform.ISteamUserStats_GetNextMostAchievedAchievementInfo( iIteratorPrevious, pchName_sb, unNameBufLen, out pflPercent, ref pbAchieved );
 			if ( bSuccess <= 0 ) return bSuccess;

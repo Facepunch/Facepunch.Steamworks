@@ -155,7 +155,7 @@ namespace SteamNative
 		public string GetUserDataFolder()
 		{
 			bool bSuccess = default( bool );
-			System.Text.StringBuilder pchBuffer_sb = new System.Text.StringBuilder( 4096 );
+			System.Text.StringBuilder pchBuffer_sb = Helpers.TakeStringBuilder();
 			int cubBuffer = 4096;
 			bSuccess = platform.ISteamUser_GetUserDataFolder( pchBuffer_sb, cubBuffer );
 			if ( !bSuccess ) return null;

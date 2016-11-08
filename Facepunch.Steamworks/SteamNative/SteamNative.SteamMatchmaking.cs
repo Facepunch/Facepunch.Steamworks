@@ -147,10 +147,10 @@ namespace SteamNative
 		{
 			bool bSuccess = default( bool );
 			pchKey = string.Empty;
-			System.Text.StringBuilder pchKey_sb = new System.Text.StringBuilder( 4096 );
+			System.Text.StringBuilder pchKey_sb = Helpers.TakeStringBuilder();
 			int cchKeyBufferSize = 4096;
 			pchValue = string.Empty;
-			System.Text.StringBuilder pchValue_sb = new System.Text.StringBuilder( 4096 );
+			System.Text.StringBuilder pchValue_sb = Helpers.TakeStringBuilder();
 			int cchValueBufferSize = 4096;
 			bSuccess = platform.ISteamMatchmaking_GetLobbyDataByIndex( steamIDLobby.Value, iLobbyData, pchKey_sb, cchKeyBufferSize, pchValue_sb, cchValueBufferSize );
 			if ( !bSuccess ) return bSuccess;

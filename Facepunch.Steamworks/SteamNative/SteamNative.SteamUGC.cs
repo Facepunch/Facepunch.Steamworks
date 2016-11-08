@@ -147,7 +147,7 @@ namespace SteamNative
 		{
 			bool bSuccess = default( bool );
 			pchFolder = string.Empty;
-			System.Text.StringBuilder pchFolder_sb = new System.Text.StringBuilder( 4096 );
+			System.Text.StringBuilder pchFolder_sb = Helpers.TakeStringBuilder();
 			uint cchFolderSize = 4096;
 			bSuccess = platform.ISteamUGC_GetItemInstallInfo( nPublishedFileID.Value, out punSizeOnDisk, pchFolder_sb, cchFolderSize, out punTimeStamp );
 			if ( !bSuccess ) return bSuccess;
@@ -180,10 +180,10 @@ namespace SteamNative
 		{
 			bool bSuccess = default( bool );
 			pchURLOrVideoID = string.Empty;
-			System.Text.StringBuilder pchURLOrVideoID_sb = new System.Text.StringBuilder( 4096 );
+			System.Text.StringBuilder pchURLOrVideoID_sb = Helpers.TakeStringBuilder();
 			uint cchURLSize = 4096;
 			pchOriginalFileName = string.Empty;
-			System.Text.StringBuilder pchOriginalFileName_sb = new System.Text.StringBuilder( 4096 );
+			System.Text.StringBuilder pchOriginalFileName_sb = Helpers.TakeStringBuilder();
 			uint cchOriginalFileNameSize = 4096;
 			bSuccess = platform.ISteamUGC_GetQueryUGCAdditionalPreview( handle.Value, index, previewIndex, pchURLOrVideoID_sb, cchURLSize, pchOriginalFileName_sb, cchOriginalFileNameSize, out pPreviewType );
 			if ( !bSuccess ) return bSuccess;
@@ -206,10 +206,10 @@ namespace SteamNative
 		{
 			bool bSuccess = default( bool );
 			pchKey = string.Empty;
-			System.Text.StringBuilder pchKey_sb = new System.Text.StringBuilder( 4096 );
+			System.Text.StringBuilder pchKey_sb = Helpers.TakeStringBuilder();
 			uint cchKeySize = 4096;
 			pchValue = string.Empty;
-			System.Text.StringBuilder pchValue_sb = new System.Text.StringBuilder( 4096 );
+			System.Text.StringBuilder pchValue_sb = Helpers.TakeStringBuilder();
 			uint cchValueSize = 4096;
 			bSuccess = platform.ISteamUGC_GetQueryUGCKeyValueTag( handle.Value, index, keyValueTagIndex, pchKey_sb, cchKeySize, pchValue_sb, cchValueSize );
 			if ( !bSuccess ) return bSuccess;
@@ -225,7 +225,7 @@ namespace SteamNative
 		{
 			bool bSuccess = default( bool );
 			pchMetadata = string.Empty;
-			System.Text.StringBuilder pchMetadata_sb = new System.Text.StringBuilder( 4096 );
+			System.Text.StringBuilder pchMetadata_sb = Helpers.TakeStringBuilder();
 			uint cchMetadatasize = 4096;
 			bSuccess = platform.ISteamUGC_GetQueryUGCMetadata( handle.Value, index, pchMetadata_sb, cchMetadatasize );
 			if ( !bSuccess ) return bSuccess;
@@ -251,7 +251,7 @@ namespace SteamNative
 		{
 			bool bSuccess = default( bool );
 			pchURL = string.Empty;
-			System.Text.StringBuilder pchURL_sb = new System.Text.StringBuilder( 4096 );
+			System.Text.StringBuilder pchURL_sb = Helpers.TakeStringBuilder();
 			uint cchURLSize = 4096;
 			bSuccess = platform.ISteamUGC_GetQueryUGCPreviewURL( handle.Value, index, pchURL_sb, cchURLSize );
 			if ( !bSuccess ) return bSuccess;

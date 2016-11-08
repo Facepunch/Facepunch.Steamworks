@@ -340,7 +340,7 @@ namespace Generator
                 if ( !ReturnString )
                     BeforeLines.Add( $"{chr.Name} = string.Empty;" );
 
-                BeforeLines.Add( $"System.Text.StringBuilder {chr.Name}_sb = new System.Text.StringBuilder( 4096 );" );
+                BeforeLines.Add( $"System.Text.StringBuilder {chr.Name}_sb = Helpers.TakeStringBuilder();" );
 
                 if ( ReturnString ) ReturnType = "string";
                 ReturnVar = "bSuccess";
