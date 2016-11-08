@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Facepunch.Steamworks.Test
@@ -219,6 +220,50 @@ namespace Facepunch.Steamworks.Test
                     Console.WriteLine( "  workshopdownload: {0}", i.GetStringProperty( "workshopdownload" ) );
                 }
             }            
+        }
+
+        [TestMethod]
+        public void InventoryDefinitionExchange()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                Assert.IsNotNull( client.Inventory.Definitions );
+                Assert.AreNotEqual( 0, client.Inventory.Definitions.Length );
+
+                foreach ( var i in client.Inventory.Definitions )
+                {
+                    if ( i.Recipes == null ) continue;
+
+                    Console.WriteLine( "Ways To Create " + i.Name );
+
+                    foreach ( var r in i.Recipes )
+                    {
+                        Console.WriteLine( "  " + string.Join( ", ",  r.Ingredients.Select( x => x.Count + " x " + x.Definition.Name  ) ) );
+                    }
+                }
+            }
+        }
+
+        [TestMethod]
+        public void InventoryDefinitionIngredients()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                Assert.IsNotNull( client.Inventory.Definitions );
+                Assert.AreNotEqual( 0, client.Inventory.Definitions.Length );
+
+                foreach ( var i in client.Inventory.Definitions )
+                {
+                    if ( i.IngredientFor == null ) continue;
+
+                    Console.WriteLine( i.Name + " Can Be Used to Make" );
+
+                    foreach ( var r in i.IngredientFor )
+                    {
+                        Console.WriteLine( "  " + r.Result.Name );
+                    }
+                }
+            }
         }
 
         [TestMethod]

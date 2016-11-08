@@ -118,6 +118,11 @@ namespace Facepunch.Steamworks
                 return CreateDefinition( x );
 
             } ).ToArray();
+
+            foreach ( var def in Definitions )
+            {
+                def.Link( Definitions );
+            }
         }
 
         /// <summary>

@@ -18,11 +18,27 @@ namespace Facepunch.Steamworks
             internal SteamNative.SteamInventory inventory;
 
             public int Id { get; private set; }
-            public string Name;
-            public string Description;
+            public string Name { get; set; }
+            public string Description { get; set; }
 
-            public DateTime Created;
-            public DateTime Modified;
+            /// <summary>
+            /// If this item can be created using other items this string will contain a comma seperated 
+            /// list of definition ids that can be used, ie "100,101;102x5;103x3,104x3"
+            /// </summary>
+            public string ExchangeSchema { get; set; }
+
+            /// <summary>
+            /// A list of recepies for creating this item. Can be null if none.
+            /// </summary>
+            public Recipe[] Recipes { get; set; }
+
+            /// <summary>
+            /// A list of recepies we're included in
+            /// </summary>
+            public Recipe[] IngredientFor { get; set; }
+
+            public DateTime Created { get; set; }
+            public DateTime Modified { get; set; }
 
             private Dictionary<string, string> customProperties;
 
@@ -86,6 +102,7 @@ namespace Facepunch.Steamworks
                 Description = GetStringProperty( "description" );
                 Created = GetProperty<DateTime>( "timestamp" );
                 Modified = GetProperty<DateTime>( "modified" );
+                ExchangeSchema = GetStringProperty( "exchange" );
             }
 
             /// <summary>
@@ -99,6 +116,78 @@ namespace Facepunch.Steamworks
                 SteamNative.SteamInventoryResult_t result = 0;
                 inventory.TriggerItemDrop( ref result, Id );
                 inventory.DestroyResult( result );
+            }
+
+            internal void Link( Definition[] definitions )
+            {
+                LinkExchange( definitions );
+            }
+
+            private void LinkExchange( Definition[] definitions )
+            {
+                if ( string.IsNullOrEmpty( ExchangeSchema ) ) return;
+
+                var parts = ExchangeSchema.Split( new[] { ';' }, StringSplitOptions.RemoveEmptyEntries );
+
+                Recipes = parts.Select( x => Recipe.FromString( x, definitions, this ) ).ToArray();
+            }
+
+            internal void InRecipe( Recipe r )
+            {
+                if ( IngredientFor == null )
+                    IngredientFor = new Recipe[0];
+
+                var list = new List<Recipe>( IngredientFor );
+                list.Add( r );
+
+                IngredientFor = list.ToArray();
+            }
+        }
+
+        public struct Recipe
+        {
+            public struct Ingredient
+            {
+                public int DefinitionId;
+                public Definition Definition;
+                public int Count;
+
+                internal static Ingredient FromString( string part, Definition[] definitions )
+                {
+                    var i = new Ingredient();
+                    i.Count = 1;
+
+                    if ( part.Contains( 'x' ) )
+                    {
+                        var idx = part.IndexOf( 'x' );
+                        i.Count = int.Parse( part.Substring( idx ) );
+                        part = part.Substring( 0, idx );
+                    }
+
+                    i.DefinitionId = int.Parse( part );
+                    i.Definition = definitions.FirstOrDefault( x => x.Id == i.DefinitionId );
+
+                    return i;
+                }
+            }
+
+            public Definition Result;
+            public Ingredient[] Ingredients;
+
+            internal static Recipe FromString( string part, Definition[] definitions, Definition Result )
+            {
+                var r = new Recipe();
+                r.Result = Result;
+                var parts = part.Split( new[] { ',' }, StringSplitOptions.RemoveEmptyEntries );
+
+                r.Ingredients = parts.Select( x => Ingredient.FromString( x, definitions ) ).ToArray();
+
+                foreach ( var i in r.Ingredients )
+                {
+                    i.Definition.InRecipe( r );
+                }
+
+                return r;
             }
         }
     }
