@@ -195,7 +195,8 @@ namespace Facepunch.Steamworks
             /// </summary>
             public void Dispose()
             {
-                client.OnUpdate -= Update;
+                if ( client.IsValid )
+                    client.OnUpdate -= Update;
 
                 //
                 // Cancel the query if it's still running
