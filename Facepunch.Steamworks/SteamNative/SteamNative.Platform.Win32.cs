@@ -1826,7 +1826,7 @@ namespace SteamNative
 				
 				return Native.SteamAPI_ISteamUserStats_GetDownloadedLeaderboardEntry(_ptr, hSteamLeaderboardEntries, index, ref pLeaderboardEntry, pDetails, cDetailsMax);
 			}
-			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUserStats_UploadLeaderboardScore( ulong hSteamLeaderboard, LeaderboardUploadScoreMethod /*ELeaderboardUploadScoreMethod*/ eLeaderboardUploadScoreMethod, int /*int32*/ nScore, IntPtr /*const int32 **/ pScoreDetails, int /*int*/ cScoreDetailsCount )
+			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUserStats_UploadLeaderboardScore( ulong hSteamLeaderboard, LeaderboardUploadScoreMethod /*ELeaderboardUploadScoreMethod*/ eLeaderboardUploadScoreMethod, int /*int32*/ nScore, int[] /*const int32 **/ pScoreDetails, int /*int*/ cScoreDetailsCount )
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
@@ -3488,7 +3488,7 @@ namespace SteamNative
 				
 				return Native.SteamAPI_ISteamInventory_GetAllItems(_ptr, ref pResultHandle);
 			}
-			public virtual bool /*bool*/ ISteamInventory_GetItemsByID( ref int pResultHandle, IntPtr /*const SteamItemInstanceID_t **/ pInstanceIDs, uint /*uint32*/ unCountInstanceIDs )
+			public virtual bool /*bool*/ ISteamInventory_GetItemsByID( ref int pResultHandle, ulong[] pInstanceIDs, uint /*uint32*/ unCountInstanceIDs )
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamInventory _ptr is null!" );
 				
@@ -3506,11 +3506,11 @@ namespace SteamNative
 				
 				return Native.SteamAPI_ISteamInventory_DeserializeResult(_ptr, ref pOutResultHandle, pBuffer, unBufferSize, bRESERVED_MUST_BE_FALSE);
 			}
-			public virtual bool /*bool*/ ISteamInventory_GenerateItems( ref int pResultHandle, IntPtr /*const SteamItemDef_t **/ pArrayItemDefs, out uint /*const uint32 **/ punArrayQuantity, uint /*uint32*/ unArrayLength )
+			public virtual bool /*bool*/ ISteamInventory_GenerateItems( ref int pResultHandle, int[] pArrayItemDefs, uint[] /*const uint32 **/ punArrayQuantity, uint /*uint32*/ unArrayLength )
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamInventory _ptr is null!" );
 				
-				return Native.SteamAPI_ISteamInventory_GenerateItems(_ptr, ref pResultHandle, pArrayItemDefs, out punArrayQuantity, unArrayLength);
+				return Native.SteamAPI_ISteamInventory_GenerateItems(_ptr, ref pResultHandle, pArrayItemDefs, punArrayQuantity, unArrayLength);
 			}
 			public virtual bool /*bool*/ ISteamInventory_GrantPromoItems( ref int pResultHandle )
 			{
@@ -3524,7 +3524,7 @@ namespace SteamNative
 				
 				return Native.SteamAPI_ISteamInventory_AddPromoItem(_ptr, ref pResultHandle, itemDef);
 			}
-			public virtual bool /*bool*/ ISteamInventory_AddPromoItems( ref int pResultHandle, IntPtr /*const SteamItemDef_t **/ pArrayItemDefs, uint /*uint32*/ unArrayLength )
+			public virtual bool /*bool*/ ISteamInventory_AddPromoItems( ref int pResultHandle, int[] pArrayItemDefs, uint /*uint32*/ unArrayLength )
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamInventory _ptr is null!" );
 				
@@ -3536,11 +3536,11 @@ namespace SteamNative
 				
 				return Native.SteamAPI_ISteamInventory_ConsumeItem(_ptr, ref pResultHandle, itemConsume, unQuantity);
 			}
-			public virtual bool /*bool*/ ISteamInventory_ExchangeItems( ref int pResultHandle, ref int pArrayGenerate, out uint /*const uint32 **/ punArrayGenerateQuantity, uint /*uint32*/ unArrayGenerateLength, IntPtr /*const SteamItemInstanceID_t **/ pArrayDestroy, IntPtr /*const uint32 **/ punArrayDestroyQuantity, uint /*uint32*/ unArrayDestroyLength )
+			public virtual bool /*bool*/ ISteamInventory_ExchangeItems( ref int pResultHandle, int[] pArrayGenerate, uint[] /*const uint32 **/ punArrayGenerateQuantity, uint /*uint32*/ unArrayGenerateLength, ulong[] pArrayDestroy, uint[] /*const uint32 **/ punArrayDestroyQuantity, uint /*uint32*/ unArrayDestroyLength )
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamInventory _ptr is null!" );
 				
-				return Native.SteamAPI_ISteamInventory_ExchangeItems(_ptr, ref pResultHandle, ref pArrayGenerate, out punArrayGenerateQuantity, unArrayGenerateLength, pArrayDestroy, punArrayDestroyQuantity, unArrayDestroyLength);
+				return Native.SteamAPI_ISteamInventory_ExchangeItems(_ptr, ref pResultHandle, pArrayGenerate, punArrayGenerateQuantity, unArrayGenerateLength, pArrayDestroy, punArrayDestroyQuantity, unArrayDestroyLength);
 			}
 			public virtual bool /*bool*/ ISteamInventory_TransferItemQuantity( ref int pResultHandle, ulong itemIdSource, uint /*uint32*/ unQuantity, ulong itemIdDest )
 			{
@@ -3560,11 +3560,11 @@ namespace SteamNative
 				
 				return Native.SteamAPI_ISteamInventory_TriggerItemDrop(_ptr, ref pResultHandle, dropListDefinition);
 			}
-			public virtual bool /*bool*/ ISteamInventory_TradeItems( ref int pResultHandle, ulong steamIDTradePartner, ref ulong pArrayGive, out uint /*const uint32 **/ pArrayGiveQuantity, uint /*uint32*/ nArrayGiveLength, ref ulong pArrayGet, out uint /*const uint32 **/ pArrayGetQuantity, uint /*uint32*/ nArrayGetLength )
+			public virtual bool /*bool*/ ISteamInventory_TradeItems( ref int pResultHandle, ulong steamIDTradePartner, ulong[] pArrayGive, uint[] /*const uint32 **/ pArrayGiveQuantity, uint /*uint32*/ nArrayGiveLength, ulong[] pArrayGet, uint[] /*const uint32 **/ pArrayGetQuantity, uint /*uint32*/ nArrayGetLength )
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamInventory _ptr is null!" );
 				
-				return Native.SteamAPI_ISteamInventory_TradeItems(_ptr, ref pResultHandle, steamIDTradePartner, ref pArrayGive, out pArrayGiveQuantity, nArrayGiveLength, ref pArrayGet, out pArrayGetQuantity, nArrayGetLength);
+				return Native.SteamAPI_ISteamInventory_TradeItems(_ptr, ref pResultHandle, steamIDTradePartner, pArrayGive, pArrayGiveQuantity, nArrayGiveLength, pArrayGet, pArrayGetQuantity, nArrayGetLength);
 			}
 			public virtual bool /*bool*/ ISteamInventory_LoadItemDefinitions()
 			{
@@ -4317,7 +4317,7 @@ namespace SteamNative
 				[DllImportAttribute( "steam_api.dll" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamUserStats_DownloadLeaderboardEntries( IntPtr ISteamUserStats, ulong hSteamLeaderboard, LeaderboardDataRequest /*ELeaderboardDataRequest*/ eLeaderboardDataRequest, int /*int*/ nRangeStart, int /*int*/ nRangeEnd );
 				[DllImportAttribute( "steam_api.dll" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamUserStats_DownloadLeaderboardEntriesForUsers( IntPtr ISteamUserStats, ulong hSteamLeaderboard, IntPtr /*class CSteamID **/ prgUsers, int /*int*/ cUsers );
 				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamUserStats_GetDownloadedLeaderboardEntry( IntPtr ISteamUserStats, ulong hSteamLeaderboardEntries, int /*int*/ index, ref LeaderboardEntry_t /*struct LeaderboardEntry_t **/ pLeaderboardEntry, IntPtr /*int32 **/ pDetails, int /*int*/ cDetailsMax );
-				[DllImportAttribute( "steam_api.dll" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamUserStats_UploadLeaderboardScore( IntPtr ISteamUserStats, ulong hSteamLeaderboard, LeaderboardUploadScoreMethod /*ELeaderboardUploadScoreMethod*/ eLeaderboardUploadScoreMethod, int /*int32*/ nScore, IntPtr /*const int32 **/ pScoreDetails, int /*int*/ cScoreDetailsCount );
+				[DllImportAttribute( "steam_api.dll" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamUserStats_UploadLeaderboardScore( IntPtr ISteamUserStats, ulong hSteamLeaderboard, LeaderboardUploadScoreMethod /*ELeaderboardUploadScoreMethod*/ eLeaderboardUploadScoreMethod, int /*int32*/ nScore, int[] /*const int32 **/ pScoreDetails, int /*int*/ cScoreDetailsCount );
 				[DllImportAttribute( "steam_api.dll" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamUserStats_AttachLeaderboardUGC( IntPtr ISteamUserStats, ulong hSteamLeaderboard, ulong hUGC );
 				[DllImportAttribute( "steam_api.dll" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamUserStats_GetNumberOfCurrentPlayers( IntPtr ISteamUserStats );
 				[DllImportAttribute( "steam_api.dll" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamUserStats_RequestGlobalAchievementPercentages( IntPtr ISteamUserStats );
@@ -4640,19 +4640,19 @@ namespace SteamNative
 				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_CheckResultSteamID( IntPtr ISteamInventory, int resultHandle, ulong steamIDExpected );
 				[DllImportAttribute( "steam_api.dll" )] internal static extern void /*void*/ SteamAPI_ISteamInventory_DestroyResult( IntPtr ISteamInventory, int resultHandle );
 				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_GetAllItems( IntPtr ISteamInventory, ref int pResultHandle );
-				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_GetItemsByID( IntPtr ISteamInventory, ref int pResultHandle, IntPtr /*const SteamItemInstanceID_t **/ pInstanceIDs, uint /*uint32*/ unCountInstanceIDs );
+				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_GetItemsByID( IntPtr ISteamInventory, ref int pResultHandle, ulong[] pInstanceIDs, uint /*uint32*/ unCountInstanceIDs );
 				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_SerializeResult( IntPtr ISteamInventory, int resultHandle, IntPtr /*void **/ pOutBuffer, out uint /*uint32 **/ punOutBufferSize );
 				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_DeserializeResult( IntPtr ISteamInventory, ref int pOutResultHandle, IntPtr /*const void **/ pBuffer, uint /*uint32*/ unBufferSize, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bRESERVED_MUST_BE_FALSE );
-				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_GenerateItems( IntPtr ISteamInventory, ref int pResultHandle, IntPtr /*const SteamItemDef_t **/ pArrayItemDefs, out uint /*const uint32 **/ punArrayQuantity, uint /*uint32*/ unArrayLength );
+				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_GenerateItems( IntPtr ISteamInventory, ref int pResultHandle, int[] pArrayItemDefs, uint[] /*const uint32 **/ punArrayQuantity, uint /*uint32*/ unArrayLength );
 				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_GrantPromoItems( IntPtr ISteamInventory, ref int pResultHandle );
 				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_AddPromoItem( IntPtr ISteamInventory, ref int pResultHandle, int itemDef );
-				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_AddPromoItems( IntPtr ISteamInventory, ref int pResultHandle, IntPtr /*const SteamItemDef_t **/ pArrayItemDefs, uint /*uint32*/ unArrayLength );
+				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_AddPromoItems( IntPtr ISteamInventory, ref int pResultHandle, int[] pArrayItemDefs, uint /*uint32*/ unArrayLength );
 				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_ConsumeItem( IntPtr ISteamInventory, ref int pResultHandle, ulong itemConsume, uint /*uint32*/ unQuantity );
-				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_ExchangeItems( IntPtr ISteamInventory, ref int pResultHandle, ref int pArrayGenerate, out uint /*const uint32 **/ punArrayGenerateQuantity, uint /*uint32*/ unArrayGenerateLength, IntPtr /*const SteamItemInstanceID_t **/ pArrayDestroy, IntPtr /*const uint32 **/ punArrayDestroyQuantity, uint /*uint32*/ unArrayDestroyLength );
+				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_ExchangeItems( IntPtr ISteamInventory, ref int pResultHandle, int[] pArrayGenerate, uint[] /*const uint32 **/ punArrayGenerateQuantity, uint /*uint32*/ unArrayGenerateLength, ulong[] pArrayDestroy, uint[] /*const uint32 **/ punArrayDestroyQuantity, uint /*uint32*/ unArrayDestroyLength );
 				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_TransferItemQuantity( IntPtr ISteamInventory, ref int pResultHandle, ulong itemIdSource, uint /*uint32*/ unQuantity, ulong itemIdDest );
 				[DllImportAttribute( "steam_api.dll" )] internal static extern void /*void*/ SteamAPI_ISteamInventory_SendItemDropHeartbeat( IntPtr ISteamInventory );
 				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_TriggerItemDrop( IntPtr ISteamInventory, ref int pResultHandle, int dropListDefinition );
-				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_TradeItems( IntPtr ISteamInventory, ref int pResultHandle, ulong steamIDTradePartner, ref ulong pArrayGive, out uint /*const uint32 **/ pArrayGiveQuantity, uint /*uint32*/ nArrayGiveLength, ref ulong pArrayGet, out uint /*const uint32 **/ pArrayGetQuantity, uint /*uint32*/ nArrayGetLength );
+				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_TradeItems( IntPtr ISteamInventory, ref int pResultHandle, ulong steamIDTradePartner, ulong[] pArrayGive, uint[] /*const uint32 **/ pArrayGiveQuantity, uint /*uint32*/ nArrayGiveLength, ulong[] pArrayGet, uint[] /*const uint32 **/ pArrayGetQuantity, uint /*uint32*/ nArrayGetLength );
 				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_LoadItemDefinitions( IntPtr ISteamInventory );
 				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_GetItemDefinitionIDs( IntPtr ISteamInventory, IntPtr /*SteamItemDef_t **/ pItemDefIDs, out uint /*uint32 **/ punItemDefIDsArraySize );
 				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_GetItemDefinitionProperty( IntPtr ISteamInventory, int iDefinition, string /*const char **/ pchPropertyName, System.Text.StringBuilder /*char **/ pchValueBuffer, out uint /*uint32 **/ punValueBufferSizeOut );

@@ -365,10 +365,10 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle UploadLeaderboardScore( SteamLeaderboard_t hSteamLeaderboard /*SteamLeaderboard_t*/, LeaderboardUploadScoreMethod eLeaderboardUploadScoreMethod /*ELeaderboardUploadScoreMethod*/, int nScore /*int32*/, IntPtr pScoreDetails /*const int32 **/, int cScoreDetailsCount /*int*/, Action<LeaderboardScoreUploaded_t, bool> CallbackFunction = null /*Action<LeaderboardScoreUploaded_t, bool>*/ )
+		public CallbackHandle UploadLeaderboardScore( SteamLeaderboard_t hSteamLeaderboard /*SteamLeaderboard_t*/, LeaderboardUploadScoreMethod eLeaderboardUploadScoreMethod /*ELeaderboardUploadScoreMethod*/, int nScore /*int32*/, int[] pScoreDetails /*const int32 **/, int cScoreDetailsCount /*int*/, Action<LeaderboardScoreUploaded_t, bool> CallbackFunction = null /*Action<LeaderboardScoreUploaded_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
-			callback = platform.ISteamUserStats_UploadLeaderboardScore( hSteamLeaderboard.Value, eLeaderboardUploadScoreMethod, nScore, (IntPtr) pScoreDetails, cScoreDetailsCount );
+			callback = platform.ISteamUserStats_UploadLeaderboardScore( hSteamLeaderboard.Value, eLeaderboardUploadScoreMethod, nScore, pScoreDetails, cScoreDetailsCount );
 			
 			if ( CallbackFunction == null ) return null;
 			

@@ -49,9 +49,9 @@ namespace SteamNative
 		}
 		
 		// bool
-		public bool AddPromoItems( ref SteamInventoryResult_t pResultHandle /*SteamInventoryResult_t **/, IntPtr pArrayItemDefs /*const SteamItemDef_t **/, uint unArrayLength /*uint32*/ )
+		public bool AddPromoItems( ref SteamInventoryResult_t pResultHandle /*SteamInventoryResult_t **/, SteamItemDef_t[] pArrayItemDefs /*const SteamItemDef_t **/, uint unArrayLength /*uint32*/ )
 		{
-			return platform.ISteamInventory_AddPromoItems( ref pResultHandle.Value, (IntPtr) pArrayItemDefs, unArrayLength );
+			return platform.ISteamInventory_AddPromoItems( ref pResultHandle.Value, Array.ConvertAll( pArrayItemDefs, p => p.Value ), unArrayLength );
 		}
 		
 		// bool
@@ -79,15 +79,15 @@ namespace SteamNative
 		}
 		
 		// bool
-		public bool ExchangeItems( ref SteamInventoryResult_t pResultHandle /*SteamInventoryResult_t **/, ref SteamItemDef_t pArrayGenerate /*const SteamItemDef_t **/, out uint punArrayGenerateQuantity /*const uint32 **/, uint unArrayGenerateLength /*uint32*/, IntPtr pArrayDestroy /*const SteamItemInstanceID_t **/, IntPtr punArrayDestroyQuantity /*const uint32 **/, uint unArrayDestroyLength /*uint32*/ )
+		public bool ExchangeItems( ref SteamInventoryResult_t pResultHandle /*SteamInventoryResult_t **/, SteamItemDef_t[] pArrayGenerate /*const SteamItemDef_t **/, uint[] punArrayGenerateQuantity /*const uint32 **/, uint unArrayGenerateLength /*uint32*/, SteamItemInstanceID_t[] pArrayDestroy /*const SteamItemInstanceID_t **/, uint[] punArrayDestroyQuantity /*const uint32 **/, uint unArrayDestroyLength /*uint32*/ )
 		{
-			return platform.ISteamInventory_ExchangeItems( ref pResultHandle.Value, ref pArrayGenerate.Value, out punArrayGenerateQuantity, unArrayGenerateLength, (IntPtr) pArrayDestroy, (IntPtr) punArrayDestroyQuantity, unArrayDestroyLength );
+			return platform.ISteamInventory_ExchangeItems( ref pResultHandle.Value, Array.ConvertAll( pArrayGenerate, p => p.Value ), punArrayGenerateQuantity, unArrayGenerateLength, Array.ConvertAll( pArrayDestroy, p => p.Value ), punArrayDestroyQuantity, unArrayDestroyLength );
 		}
 		
 		// bool
-		public bool GenerateItems( ref SteamInventoryResult_t pResultHandle /*SteamInventoryResult_t **/, IntPtr pArrayItemDefs /*const SteamItemDef_t **/, out uint punArrayQuantity /*const uint32 **/, uint unArrayLength /*uint32*/ )
+		public bool GenerateItems( ref SteamInventoryResult_t pResultHandle /*SteamInventoryResult_t **/, SteamItemDef_t[] pArrayItemDefs /*const SteamItemDef_t **/, uint[] punArrayQuantity /*const uint32 **/, uint unArrayLength /*uint32*/ )
 		{
-			return platform.ISteamInventory_GenerateItems( ref pResultHandle.Value, (IntPtr) pArrayItemDefs, out punArrayQuantity, unArrayLength );
+			return platform.ISteamInventory_GenerateItems( ref pResultHandle.Value, Array.ConvertAll( pArrayItemDefs, p => p.Value ), punArrayQuantity, unArrayLength );
 		}
 		
 		// bool
@@ -130,9 +130,9 @@ namespace SteamNative
 		}
 		
 		// bool
-		public bool GetItemsByID( ref SteamInventoryResult_t pResultHandle /*SteamInventoryResult_t **/, IntPtr pInstanceIDs /*const SteamItemInstanceID_t **/, uint unCountInstanceIDs /*uint32*/ )
+		public bool GetItemsByID( ref SteamInventoryResult_t pResultHandle /*SteamInventoryResult_t **/, SteamItemInstanceID_t[] pInstanceIDs /*const SteamItemInstanceID_t **/, uint unCountInstanceIDs /*uint32*/ )
 		{
-			return platform.ISteamInventory_GetItemsByID( ref pResultHandle.Value, (IntPtr) pInstanceIDs, unCountInstanceIDs );
+			return platform.ISteamInventory_GetItemsByID( ref pResultHandle.Value, Array.ConvertAll( pInstanceIDs, p => p.Value ), unCountInstanceIDs );
 		}
 		
 		// bool
@@ -191,9 +191,9 @@ namespace SteamNative
 		}
 		
 		// bool
-		public bool TradeItems( ref SteamInventoryResult_t pResultHandle /*SteamInventoryResult_t **/, CSteamID steamIDTradePartner /*class CSteamID*/, ref SteamItemInstanceID_t pArrayGive /*const SteamItemInstanceID_t **/, out uint pArrayGiveQuantity /*const uint32 **/, uint nArrayGiveLength /*uint32*/, ref SteamItemInstanceID_t pArrayGet /*const SteamItemInstanceID_t **/, out uint pArrayGetQuantity /*const uint32 **/, uint nArrayGetLength /*uint32*/ )
+		public bool TradeItems( ref SteamInventoryResult_t pResultHandle /*SteamInventoryResult_t **/, CSteamID steamIDTradePartner /*class CSteamID*/, SteamItemInstanceID_t[] pArrayGive /*const SteamItemInstanceID_t **/, uint[] pArrayGiveQuantity /*const uint32 **/, uint nArrayGiveLength /*uint32*/, SteamItemInstanceID_t[] pArrayGet /*const SteamItemInstanceID_t **/, uint[] pArrayGetQuantity /*const uint32 **/, uint nArrayGetLength /*uint32*/ )
 		{
-			return platform.ISteamInventory_TradeItems( ref pResultHandle.Value, steamIDTradePartner.Value, ref pArrayGive.Value, out pArrayGiveQuantity, nArrayGiveLength, ref pArrayGet.Value, out pArrayGetQuantity, nArrayGetLength );
+			return platform.ISteamInventory_TradeItems( ref pResultHandle.Value, steamIDTradePartner.Value, Array.ConvertAll( pArrayGive, p => p.Value ), pArrayGiveQuantity, nArrayGiveLength, Array.ConvertAll( pArrayGet, p => p.Value ), pArrayGetQuantity, nArrayGetLength );
 		}
 		
 		// bool

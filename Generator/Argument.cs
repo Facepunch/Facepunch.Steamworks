@@ -38,6 +38,28 @@ namespace Generator
             }
         }
 
+        bool IsInputArray
+        {
+            get
+            {
+                if ( !NativeType.Contains( "const" ) ) return false;
+                if ( !NativeType.EndsWith( "*" ) ) return false;
+
+                if ( NativeType.Contains( "const char" ) ) return false;
+                if ( NativeType.Contains( "const void" ) ) return false;
+                if ( NativeType.Contains( "SteamParamStringArray_t" ) ) return false;
+
+                return true;
+            }
+        }
+
+        bool IsStruct
+        {
+            get
+            {
+                return ManagedType.Contains( "_t" );
+            }
+        }
 
         bool IsStructShouldBePassedAsRef
         {
@@ -64,6 +86,9 @@ namespace Generator
         {
             get
             {
+                if ( IsInputArray )
+                    return false;
+
                 if ( ManagedType.Contains( "SteamUGCDetails_t" ) || ManagedType.Contains( "SteamParamStringArray_t" ) )
                     return false;
 
@@ -138,6 +163,9 @@ namespace Generator
 
         internal string ManagedParameter()
         {
+            if ( IsInputArray )
+                return $"{ManagedType.Trim( '*', ' ' )}[] {Name} /*{NativeType}*/";
+
             if ( ShouldBeIntPtr )
                 return $"IntPtr {Name} /*{NativeType}*/";
 
@@ -152,6 +180,12 @@ namespace Generator
 
         internal string InteropVariable( bool AsRawValues )
         {
+            if ( IsInputArray )
+            {
+                if ( AsRawValues && IsStruct ) return $"Array.ConvertAll( {Name}, p => p.Value )";
+                return $"{Name}";
+            }
+
             if ( ShouldBeIntPtr )
                 return $"{Name}";
 
@@ -183,7 +217,9 @@ namespace Generator
 
                 if ( PassedToNativeAsValue && !ShouldBeIntPtr )
                 {
-                    if ( IsStructShouldBePassedAsRef )
+                    if ( IsInputArray )
+                        return $"{TypeDef.ManagedType}[] {Name}";
+                    else if ( IsStructShouldBePassedAsRef )
                         return $"ref {TypeDef.ManagedType} {Name}";
                     else if ( ShouldBePassedAsOut )
                         return $"out {TypeDef.ManagedType} {Name}";
@@ -193,10 +229,13 @@ namespace Generator
             }
 
             if ( ShouldBeIntPtr )
-            return $"IntPtr /*{NativeType}*/ {Name}".Trim();
+                return $"IntPtr /*{NativeType}*/ {Name}".Trim();
 
             if ( IsStructShouldBePassedAsRef )
                 return $"{marshalling} ref {ManagedType.Trim( '*', ' ' )}{ps} /*{NativeType}*/ {Name}".Trim();
+
+            if ( IsInputArray )
+                return $"{marshalling} {ManagedType.Trim( '*', ' ' )}[] /*{NativeType}*/ {Name}".Trim();
 
             if ( ShouldBePassedAsOut )
                 return $"{marshalling} out {ManagedType.Trim( '*', ' ' )} /*{NativeType}*/ {Name}".Trim();
