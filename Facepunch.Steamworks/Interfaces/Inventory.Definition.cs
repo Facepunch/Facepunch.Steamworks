@@ -176,7 +176,7 @@ namespace Facepunch.Steamworks
                     if ( part.Contains( 'x' ) )
                     {
                         var idx = part.IndexOf( 'x' );
-                        i.Count = int.Parse( part.Substring( idx ) );
+                        i.Count = int.Parse( part.Substring( idx + 1 ) );
                         part = part.Substring( 0, idx );
                     }
 
