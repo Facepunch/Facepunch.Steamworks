@@ -144,12 +144,28 @@ namespace Facepunch.Steamworks
             }
         }
 
+        /// <summary>
+        /// Represents a crafting recepie which was defined using the exchange
+        /// section in the item schema.
+        /// </summary>
         public struct Recipe
         {
             public struct Ingredient
             {
+                /// <summary>
+                /// The definition ID of the ingredient.
+                /// </summary>
                 public int DefinitionId;
+
+                /// <summary>
+                /// If we don't know about this item definition this might be null.
+                /// In which case, DefinitionId should still hold the correct id.
+                /// </summary>
                 public Definition Definition;
+
+                /// <summary>
+                /// The amount of this item needed. Generally this will be 1.
+                /// </summary>
                 public int Count;
 
                 internal static Ingredient FromString( string part, Definition[] definitions )
@@ -171,7 +187,14 @@ namespace Facepunch.Steamworks
                 }
             }
 
+            /// <summary>
+            /// The item that this will create.
+            /// </summary>
             public Definition Result;
+
+            /// <summary>
+            /// The items, with quantity required to create this item.
+            /// </summary>
             public Ingredient[] Ingredients;
 
             internal static Recipe FromString( string part, Definition[] definitions, Definition Result )

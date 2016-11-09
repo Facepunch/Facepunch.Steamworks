@@ -98,6 +98,15 @@ namespace Facepunch.Steamworks
         }
     }
 
+    /// <summary>
+    /// Handles most interactions with people in Steam, not just friends as the name would suggest.
+    /// </summary>
+    /// <example>
+    /// foreach ( var friend in client.Friends.AllFriends )
+    /// {
+    ///     Console.WriteLine( $"{friend.Id}: {friend.Name}" );
+    /// }
+    /// </example>
     public class Friends
     {
         internal Client client;
@@ -133,6 +142,9 @@ namespace Facepunch.Steamworks
             }
         }
 
+        /// <summary>
+        /// Returns only friends
+        /// </summary>
         public IEnumerable<SteamFriend> AllFriends
         {
             get
@@ -146,6 +158,9 @@ namespace Facepunch.Steamworks
             }
         }
 
+        /// <summary>
+        /// Returns all blocked users
+        /// </summary>
         public IEnumerable<SteamFriend> AllBlocked
         {
             get
