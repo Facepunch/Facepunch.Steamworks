@@ -56,20 +56,21 @@ namespace Facepunch.Steamworks
             if ( error ) return;
 
             var r = new Result( this, data.Handle );
+            if ( r.IsSuccess )
+            {
+                SerializedItems = r.Serialize();
+                SerializedExpireTime = DateTime.Now.Add( TimeSpan.FromMinutes( 60 ) );
 
-            SerializedItems = r.Serialize();
-            SerializedExpireTime = DateTime.Now.Add( TimeSpan.FromMinutes( 60 ) );
+                Items = r.Items;
 
-            Items = r.Items;
+                //
+                // Tell everyone we've got new items!
+                //
+                OnUpdate?.Invoke();
+            }
 
             r.Dispose();
             r = null;
-
-            //
-            // Tell everyone we've got new items!
-            //
-            OnUpdate?.Invoke();
-
         }
 
         public void Dispose()
