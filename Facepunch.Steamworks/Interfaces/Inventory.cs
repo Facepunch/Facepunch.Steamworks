@@ -163,6 +163,9 @@ namespace Facepunch.Steamworks
         /// </summary>
         public static float PriceCategoryToFloat( string price )
         {
+            if ( string.IsNullOrEmpty( price ) )
+                return 0.0f;
+
             price = price.Replace( "1;VLV", "" );
 
             int iPrice = 0;
