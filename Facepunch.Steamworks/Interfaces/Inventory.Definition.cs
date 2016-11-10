@@ -20,8 +20,21 @@ namespace Facepunch.Steamworks
             public int Id { get; private set; }
             public string Name { get; set; }
             public string Description { get; set; }
+
+            /// <summary>
+            /// URL to an image specified by the schema, else empty
+            /// </summary>
             public string IconUrl { get; set; }
+
+            /// <summary>
+            /// URL to an image specified by the schema, else empty
+            /// </summary>
             public string IconLargeUrl { get; set; }
+
+            /// <summary>
+            /// Type can be whatever the schema defines. 
+            /// </summary>
+            public string Type { get; set; }
 
             /// <summary>
             /// If this item can be created using other items this string will contain a comma seperated 
@@ -41,6 +54,11 @@ namespace Facepunch.Steamworks
 
             public DateTime Created { get; set; }
             public DateTime Modified { get; set; }
+
+            public bool IsGenerator
+            {
+                get { return Type == "generator"; }
+            }
 
             private Dictionary<string, string> customProperties;
 
@@ -107,6 +125,7 @@ namespace Facepunch.Steamworks
                 ExchangeSchema = GetStringProperty( "exchange" );
                 IconUrl = GetStringProperty( "icon_url" );
                 IconLargeUrl = GetStringProperty( "icon_url_large" );
+                Type = GetStringProperty( "type" );
             }
 
             /// <summary>

@@ -215,7 +215,7 @@ namespace Facepunch.Steamworks.Test
 
                 foreach ( var i in client.Inventory.Definitions )
                 {
-                    Console.WriteLine( "{0}: {1}", i.Id, i.Name );
+                    Console.WriteLine( "{0}: {1} ({2})", i.Id, i.Name, i.Type );
                     Console.WriteLine( "  itemshortname: {0}", i.GetStringProperty( "itemshortname" ) );
                     Console.WriteLine( "  workshopdownload: {0}", i.GetStringProperty( "workshopdownload" ) );
                     Console.WriteLine( "           IconUrl: {0}", i.IconUrl );
