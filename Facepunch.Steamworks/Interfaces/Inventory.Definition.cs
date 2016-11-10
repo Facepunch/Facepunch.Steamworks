@@ -20,6 +20,8 @@ namespace Facepunch.Steamworks
             public int Id { get; private set; }
             public string Name { get; set; }
             public string Description { get; set; }
+            public string IconUrl { get; set; }
+            public string IconLargeUrl { get; set; }
 
             /// <summary>
             /// If this item can be created using other items this string will contain a comma seperated 
@@ -103,6 +105,8 @@ namespace Facepunch.Steamworks
                 Created = GetProperty<DateTime>( "timestamp" );
                 Modified = GetProperty<DateTime>( "modified" );
                 ExchangeSchema = GetStringProperty( "exchange" );
+                IconUrl = GetStringProperty( "icon_url" );
+                IconLargeUrl = GetStringProperty( "icon_url_large" );
             }
 
             /// <summary>
