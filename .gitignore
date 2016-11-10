@@ -69,3 +69,4 @@ mscorlib.dll
 *.nlp
 packages
 Generator/bin
+*.XML
