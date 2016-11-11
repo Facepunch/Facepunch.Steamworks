@@ -3,27 +3,56 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using SteamNative;
 
 namespace Facepunch.Steamworks
 {
-    public partial class Client : IDisposable
+    public partial class ServerList : IDisposable
     {
-        private ServerList _serverlist;
+        internal Client client;
 
-        public ServerList ServerList
+        internal ServerList( Client client )
         {
-            get
-            {
-                if ( _serverlist == null )
-                    _serverlist = new ServerList { client = this };
+            this.client = client;
 
-                return _serverlist;
+            UpdateFavouriteList();
+        }
+
+        HashSet<ulong> FavouriteHash = new HashSet<ulong>();
+        HashSet<ulong> HistoryHash = new HashSet<ulong>();
+
+        internal void UpdateFavouriteList()
+        {
+            FavouriteHash.Clear();
+            HistoryHash.Clear();
+
+            for ( int i=0; i< client.native.matchmaking.GetFavoriteGameCount(); i++ )
+            {
+                AppId_t appid = 0;
+                uint ip;
+                ushort conPort;
+                ushort queryPort;
+                uint lastplayed;
+                uint flags;
+
+                client.native.matchmaking.GetFavoriteGame( i, ref appid, out ip, out conPort, out queryPort, out flags, out lastplayed );
+
+                ulong encoded = ip;
+                encoded = encoded << 32;
+                encoded = encoded | (uint)conPort;
+
+                if ( ( flags & Server.k_unFavoriteFlagFavorite ) == Server.k_unFavoriteFlagFavorite )
+                    FavouriteHash.Add( encoded );
+
+                if ( ( flags & Server.k_unFavoriteFlagFavorite ) == Server.k_unFavoriteFlagFavorite )
+                    HistoryHash.Add( encoded );
             }
         }
-    }
 
-    public partial class ServerList
-    {
+        public void Dispose()
+        {
+            client = null;
+        }
 
         public class Filter : List<KeyValuePair<string, string>>
         {
@@ -35,16 +64,19 @@ namespace Facepunch.Steamworks
             internal IntPtr NativeArray;
             private IntPtr m_pArrayEntries;
 
+            private int AppId = 0;
+
             internal void Start()
             {
                 var filters = this.Select( x =>
                 {
+                    if ( x.Key == "appid" ) AppId = int.Parse( x.Value );
+
                     return new SteamNative.MatchMakingKeyValuePair_t()
                     {
                         Key  = x.Key,
                         Value = x.Value
                     };
-
                 } ).ToArray();
 
                 int sizeOfMMKVP = Marshal.SizeOf(typeof(SteamNative.MatchMakingKeyValuePair_t));
@@ -71,9 +103,17 @@ namespace Facepunch.Steamworks
                     Marshal.FreeHGlobal( NativeArray );
                 }
             }
+
+            internal bool Test( gameserveritem_t info )
+            {
+                if ( AppId != 0 && AppId != info.AppID )
+                    return false;
+
+                return true;
+            }
         }
 
-        internal Client client;
+ 
 
         [StructLayout( LayoutKind.Sequential )]
         private struct MatchPair
@@ -84,11 +124,14 @@ namespace Facepunch.Steamworks
             public string value;
         }
 
+
+
         public Request Internet( Filter filter )
         {
             filter.Start();
 
             var request = new Request( client );
+            request.Filter = filter;
             request.AddRequest( client.native.servers.RequestInternetServerList( client.AppId, filter.NativeArray, (uint) filter.Count, IntPtr.Zero ) );
 
             filter.Free();
@@ -96,6 +139,9 @@ namespace Facepunch.Steamworks
             return request;
         }
 
+        /// <summary>
+        /// Query a list of addresses. No filters applied.
+        /// </summary>
         public Request Custom( IEnumerable<string> serverList )
         {
             var request = new Request( client );
@@ -105,52 +151,87 @@ namespace Facepunch.Steamworks
         }
 
         /// <summary>
-        /// History filters don't seem to work, so we don't bother.
-        /// You should apply them post process'dly
+        /// Request a list of servers we've been on. History isn't applied automatically
+        /// You need to call server.AddtoHistoryList() when you join a server etc.
         /// </summary>
-        public Request History()
+        public Request History( Filter filter )
         {
+            filter.Start();
+
             var request = new Request( client );
-            request.AddRequest( client.native.servers.RequestHistoryServerList( client.AppId, IntPtr.Zero, 0, IntPtr.Zero ) );
+            request.Filter = filter;
+            request.AddRequest( client.native.servers.RequestHistoryServerList( client.AppId, filter.NativeArray, (uint)filter.Count, IntPtr.Zero ) );
+
+            filter.Free();
 
             return request;
         }
 
         /// <summary>
-        /// Favourite filters don't seem to work, so we don't bother.
-        /// You should apply them post process'dly
+        /// Request a list of servers we've favourited
         /// </summary>
-        public Request Favourites()
+        public Request Favourites( Filter filter )
         {
+            filter.Start();
+
             var request = new Request( client );
-            request.AddRequest( client.native.servers.RequestFavoritesServerList( client.AppId, IntPtr.Zero, 0, IntPtr.Zero ) );
+            request.Filter = filter;
+            request.AddRequest( client.native.servers.RequestFavoritesServerList( client.AppId, filter.NativeArray, (uint)filter.Count, IntPtr.Zero ) );
+
+            filter.Free();
 
             return request;
         }
 
-        public void AddToHistory( Server server )
+        /// <summary>
+        /// Request a list of servers that our friends are on
+        /// </summary>
+        public Request Friends( Filter filter )
         {
-            // client.native.matchmaking
+            filter.Start();
+
+            var request = new Request( client );
+            request.Filter = filter;
+            request.AddRequest( client.native.servers.RequestFriendsServerList( client.AppId, filter.NativeArray, (uint)filter.Count, IntPtr.Zero ) );
+
+            filter.Free();
+
+            return request;
         }
 
-        public void RemoveFromHistory( Server server )
+        /// <summary>
+        /// Request a list of servers that are running on our LAN
+        /// </summary>
+        public Request Local( Filter filter )
         {
-            // 
+            filter.Start();
+
+            var request = new Request( client );
+            request.Filter = filter;
+            request.AddRequest( client.native.servers.RequestLANServerList( client.AppId, IntPtr.Zero ) );
+
+            filter.Free();
+
+            return request;
         }
 
-        public void AddToFavourite( Server server )
+
+        internal bool IsFavourite( Server server )
         {
-            // client.native.matchmaking
+            ulong encoded = server.Address;
+            encoded = encoded << 32;
+            encoded = encoded | (uint)server.ConnectionPort;
+
+            return FavouriteHash.Contains( encoded );
         }
 
-        public void RemoveFromFavourite( Server server )
+        internal bool IsHistory( Server server )
         {
-            // 
-        }
+            ulong encoded = server.Address;
+            encoded = encoded << 32;
+            encoded = encoded | (uint)server.ConnectionPort;
 
-        public bool IsFavourite( Server server )
-        {
-            return false;
+            return HistoryHash.Contains( encoded );
         }
     }
 }

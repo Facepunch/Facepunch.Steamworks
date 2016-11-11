@@ -19,11 +19,18 @@ namespace Facepunch.Steamworks
                 internal IntPtr Request;
                 internal int Pointer = 0;
                 internal List<int> WatchList = new List<int>();
+                internal System.Diagnostics.Stopwatch Timer = System.Diagnostics.Stopwatch.StartNew();
 
                 internal bool Update( SteamNative.SteamMatchmakingServers servers, Action<SteamNative.gameserveritem_t> OnServer, Action OnUpdate )
                 {
                     if ( Request == IntPtr.Zero )
                         return true;
+
+                    if ( Timer.Elapsed.TotalSeconds < 0.5f )
+                        return false;
+
+                    Timer.Reset();
+                    Timer.Start();
 
                     bool changes = false;
 
@@ -114,7 +121,7 @@ namespace Facepunch.Steamworks
             }
             
             internal IEnumerable<string> ServerList { get; set; }
-
+            internal Filter Filter { get; set; }
 
             internal void StartCustomQuery()
             {
@@ -181,6 +188,9 @@ namespace Facepunch.Steamworks
             {
                 if ( info.HadSuccessfulResponse )
                 {
+                    if ( Filter != null && !Filter.Test( info ) )
+                        return;
+
                     Responded.Add( Server.FromSteam( client, info ) );
                 }
                 else

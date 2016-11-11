@@ -29,6 +29,17 @@ namespace Facepunch.Steamworks
             public int ConnectionPort { get; set; }
             public int QueryPort { get; set; }
 
+            /// <summary>
+            /// Returns true if this server is in the favourites list
+            /// </summary>
+            public bool Favourite
+            {
+                get
+                {
+                    return Client.ServerList.IsFavourite( this );
+                }
+            }
+
             internal Client Client;
 
             public string AddressString
@@ -110,6 +121,47 @@ namespace Facepunch.Steamworks
 
                 if ( OnReceivedRules != null )
                     OnReceivedRules( Success );
+            }
+
+            internal const uint k_unFavoriteFlagNone           = 0x00;
+            internal const uint k_unFavoriteFlagFavorite       = 0x01; // this game favorite entry is for the favorites list
+            internal const uint k_unFavoriteFlagHistory        = 0x02; // this game favorite entry is for the history list
+
+            /// <summary>
+            /// Add this server to our history list
+            /// If we're already in the history list, weill set the last played time to now
+            /// </summary>
+            public void AddToHistory()
+            {
+                Client.native.matchmaking.AddFavoriteGame( AppId, Address, (ushort)ConnectionPort, (ushort)QueryPort, k_unFavoriteFlagHistory, (uint)Utility.Epoch.Current );
+                Client.ServerList.UpdateFavouriteList();
+            }
+
+            /// <summary>
+            /// Remove this server from our history list
+            /// </summary>
+            public void RemoveFromHistory()
+            {
+                Client.native.matchmaking.RemoveFavoriteGame( AppId, Address, (ushort)ConnectionPort, (ushort)QueryPort, k_unFavoriteFlagHistory );
+                Client.ServerList.UpdateFavouriteList();
+            }
+
+            /// <summary>
+            /// Add this server to our favourite list
+            /// </summary>
+            public void AddToFavourites()
+            {
+                Client.native.matchmaking.AddFavoriteGame( AppId, Address, (ushort)ConnectionPort, (ushort)QueryPort, k_unFavoriteFlagFavorite, (uint)Utility.Epoch.Current );
+                Client.ServerList.UpdateFavouriteList();
+            }
+
+            /// <summary>
+            /// Remove this server from our favourite list
+            /// </summary>
+            public void RemoveFromFavourites()
+            {
+                Client.native.matchmaking.RemoveFavoriteGame( AppId, Address, (ushort)ConnectionPort, (ushort)QueryPort, k_unFavoriteFlagFavorite );
+                Client.ServerList.UpdateFavouriteList();
             }
         }
     }

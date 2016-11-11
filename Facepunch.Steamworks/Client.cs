@@ -20,7 +20,8 @@ namespace Facepunch.Steamworks
         /// </summary>
         public string BetaName { get; private set; }
 
-        public Voice Voice { get; internal set; }
+        public Voice Voice { get; private set; }
+        public ServerList ServerList { get; private set; }
 
         public Client( uint appId )
         {
@@ -45,6 +46,7 @@ namespace Facepunch.Steamworks
             // Client only interfaces
             //
             Voice = new Voice( this );
+            ServerList = new ServerList( this );
 
             Workshop.friends = Friends;
 
@@ -87,6 +89,12 @@ namespace Facepunch.Steamworks
             {
                 Voice.Dispose();
                 Voice = null;
+            }
+
+            if ( ServerList  != null )
+            {
+                ServerList.Dispose();
+                ServerList = null;
             }
 
             base.Dispose();

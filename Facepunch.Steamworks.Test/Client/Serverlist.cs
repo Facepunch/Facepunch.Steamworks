@@ -134,7 +134,90 @@ namespace Facepunch.Steamworks.Test
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {
-                var query = client.ServerList.History();
+                var filter = new Facepunch.Steamworks.ServerList.Filter();
+                filter.Add( "appid", client.AppId.ToString() );
+                filter.Add( "gamedir", "rust" );
+                filter.Add( "secure", "1" );
+
+                var query = client.ServerList.History( filter );
+
+                while ( true )
+                {
+                    client.Update();
+                    System.Threading.Thread.Sleep( 2 );
+
+                    if ( query.Finished )
+                        break;
+                }
+
+                Console.WriteLine( "Responded: " + query.Responded.Count.ToString() );
+                Console.WriteLine( "Unresponsive: " + query.Unresponsive.Count.ToString() );
+
+                foreach ( var x in query.Responded )
+                {
+                    Console.WriteLine( x.Map );
+                }
+
+                query.Dispose();
+
+                for ( int i = 0; i < 100; i++ )
+                {
+                    client.Update();
+                    System.Threading.Thread.Sleep( 1 );
+                }
+            }
+        }
+
+        [TestMethod]
+        public void FavouriteList()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                var filter = new Facepunch.Steamworks.ServerList.Filter();
+                filter.Add( "appid", client.AppId.ToString() );
+                filter.Add( "gamedir", "rust" );
+                filter.Add( "secure", "1" );
+
+                var query = client.ServerList.Favourites( filter );
+
+                while ( true )
+                {
+                    client.Update();
+                    System.Threading.Thread.Sleep( 2 );
+
+                    if ( query.Finished )
+                        break;
+                }
+
+                Console.WriteLine( "Responded: " + query.Responded.Count.ToString() );
+                Console.WriteLine( "Unresponsive: " + query.Unresponsive.Count.ToString() );
+
+                foreach ( var x in query.Responded )
+                {
+                    Console.WriteLine( x.Map );
+                }
+
+                query.Dispose();
+
+                for ( int i = 0; i < 100; i++ )
+                {
+                    client.Update();
+                    System.Threading.Thread.Sleep( 1 );
+                }
+            }
+        }
+
+        [TestMethod]
+        public void LocalList()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                var filter = new Facepunch.Steamworks.ServerList.Filter();
+                filter.Add( "appid", client.AppId.ToString() );
+                filter.Add( "gamedir", "rust" );
+                filter.Add( "secure", "1" );
+
+                var query = client.ServerList.Local( filter );
 
                 while ( true )
                 {
