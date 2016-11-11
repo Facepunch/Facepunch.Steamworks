@@ -11,10 +11,12 @@ namespace Generator
     public partial class CodeWriter
     {
         private SteamApiDefinition def;
+        private WebApiDefinition webdef;
 
-        public CodeWriter( SteamApiDefinition def )
+        public CodeWriter( SteamApiDefinition def, WebApiDefinition webdef )
         {
             this.def = def;
+            this.webdef = webdef;
 
             WorkoutTypes();
         }
@@ -102,6 +104,14 @@ namespace Generator
             }
 
             {
+                sb = new StringBuilder();
+                Header( "Facepunch.SteamApi" );
+                WebApi();
+                Footer();
+                System.IO.File.WriteAllText( $"{folder}SteamApi.cs", sb.ToString() );
+            }
+
+            {
                 GenerateClasses( $"{folder}SteamNative." );
             }
         }
@@ -147,12 +157,12 @@ namespace Generator
             return args;
         }
 
-        private void Header()
+        private void Header( string NamespaceName = "SteamNative" )
         {
             WriteLine( "using System;" );
             WriteLine( "using System.Runtime.InteropServices;" );
             WriteLine();
-            StartBlock( "namespace SteamNative" );
+            StartBlock( "namespace " + NamespaceName );
         }
 
         private void Footer()

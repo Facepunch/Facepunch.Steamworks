@@ -144,6 +144,10 @@
     <Compile Include="Server\Auth.cs" />
     <Compile Include="Server\Query.cs" />
     <Compile Include="Server\Stats.cs" />
+    <Compile Include="SteamNative\SteamApi.cs" />
+    <Compile Include="SteamNative\SteamApi.Config.cs" />
+    <Compile Include="SteamNative\SteamApi.Response.cs" />
+    <Compile Include="SteamNative\SteamApi.Utility.cs" />
     <Compile Include="SteamNative\SteamNative.Helpers.cs" />
     <Compile Include="SteamNative\SteamNative.Constants.cs" />
     <Compile Include="SteamNative\SteamNative.Enums.cs" />

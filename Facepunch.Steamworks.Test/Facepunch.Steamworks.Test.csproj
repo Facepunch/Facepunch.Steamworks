@@ -71,6 +71,10 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.2-beta1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -96,6 +100,7 @@
     <Compile Include="Server\Inventory.cs" />
     <Compile Include="Server\Server.cs" />
     <Compile Include="Server\Stats.cs" />
+    <Compile Include="Web\WebSteamApps.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Facepunch.Steamworks\Facepunch.Steamworks.csproj">
@@ -106,6 +111,9 @@
   <ItemGroup>
     <Compile Include="Client\Serverlist.cs" />
     <Compile Include="Client\Stats.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
