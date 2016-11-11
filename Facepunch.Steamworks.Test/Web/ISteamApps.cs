@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Facepunch.Steamworks.Test
 {
     [TestClass]
-    public partial class WebSteamApps
+    public partial class ISteamApps
     {
         [TestInitialize]
         public void Init()

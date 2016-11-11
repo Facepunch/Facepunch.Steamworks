@@ -8,7 +8,8 @@ namespace Facepunch.SteamApi
 {
     internal class ApiResponse<T>
     {
-        public T Response { get; set; }
+        public T Response;
+        public T Result;
     }
 
     public partial class ISteamApps
@@ -17,10 +18,10 @@ namespace Facepunch.SteamApi
         {
             public class Beta
             {
-                public ulong BuildId { get; set; }
-                public string Description { get; set; }
-                public bool ReqPassword { get; set; }
-                public bool ReqLocalCS { get; set; }
+                public ulong BuildId;
+                public string Description;
+                public bool ReqPassword;
+                public bool ReqLocalCS;
             }
 
             public Dictionary<string, Beta> betas;
@@ -30,23 +31,53 @@ namespace Facepunch.SteamApi
         {
             public class Build
             {
-                public ulong BuildId { get; set; }
-                public string Description { get; set; }
-                public uint CreationTime { get; set; }
-                public ulong AccountIDCreator { get; set; }
+                public ulong BuildId;
+                public string Description;
+                public uint CreationTime;
+                public ulong AccountIDCreator;
 
                 public class Depot
                 {
-                    public ulong DepotId { get; set; }
-                    public ulong DepotVersionGID { get; set; }
-                    public ulong TotalOriginalBytes { get; set; }
-                    public ulong TotalCompressedBytes { get; set; }
+                    public ulong DepotId;
+                    public ulong DepotVersionGID;
+                    public ulong TotalOriginalBytes;
+                    public ulong TotalCompressedBytes;
                 }
 
                 public Dictionary<string, Depot> depots;
             }
 
             public Dictionary<string, Build> builds;
+        }
+    }
+
+    public partial class ISteamEconomy
+    {
+        public class GetMarketPricesResponse
+        {
+            public int total_count;
+            public int start;
+            public int count;
+
+            public class Group
+            {
+                public string name;
+                public string icon_url;
+                public ulong sell_listings;
+                public ulong buy_listings;
+                public ulong listed_property_def_index;
+
+                public class Currency
+                {
+                    public int ECurrencyCode;
+                    public string currency;
+                    public double sell_price;
+                }
+
+                public Currency[] currencies;
+            }
+
+            public Group[] groups;
         }
     }
 

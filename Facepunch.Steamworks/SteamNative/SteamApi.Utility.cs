@@ -12,13 +12,17 @@ namespace Facepunch.SteamApi
         {
             var www = new System.Net.WebClient();
             var data = www.DownloadString( url );
+            www.Dispose();
 
             if ( typeof( T ) == typeof( string ) )
                 return (T)(object)data;
 
             var response = DeserializeJson<ApiResponse<T>>( data );
 
-            www.Dispose();
+
+
+            if ( response.Response == null )
+                return response.Result;
 
             return response.Response;
         }

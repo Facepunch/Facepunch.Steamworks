@@ -12,6 +12,8 @@ namespace Generator
         {
            "ISteamApps.GetAppBetas",
            "ISteamApps.GetAppBuilds",
+
+           "ISteamEconomy.GetMarketPrices"
         };
 
         private void WebApi()

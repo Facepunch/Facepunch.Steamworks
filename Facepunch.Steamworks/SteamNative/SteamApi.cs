@@ -282,10 +282,10 @@ namespace Facepunch.SteamApi
 		}
 		
 		/// <param name="appid">Must be a steam economy app.</param>
-		public static string GetMarketPrices(uint appid)
+		public static GetMarketPricesResponse GetMarketPrices(uint appid)
 		{
 			string url = $"{Url}GetMarketPrices/v0001/?key={Facepunch.SteamApi.Config.Key}&format=json&appid={appid}";
-			return Utility.WebGet<string>( url );
+			return Utility.WebGet<GetMarketPricesResponse>( url );
 		}
 		
 		/// <param name="appid">The app ID the user is buying assets for</param>
