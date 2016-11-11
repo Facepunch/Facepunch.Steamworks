@@ -13,7 +13,9 @@ namespace Generator
            "ISteamApps.GetAppBetas",
            "ISteamApps.GetAppBuilds",
 
-           "ISteamEconomy.GetMarketPrices"
+           "ISteamEconomy.GetMarketPrices",
+
+           "IWorkshopService.GetItemDailyRevenue"
         };
 
         private void WebApi()
@@ -55,13 +57,21 @@ namespace Generator
 
         private void WebApiMethod( string parent, WebApiDefinition.ApiList.Interface.Method m )
         {
+            BeforeLines = new List<string>();
+
             var pars = m.parameters.Where ( x => x.name != "key" );
 
             var parameters = string.Join( ", ", pars.Select( x => FormatParameter( x ) ).Where( x => x != null ) );
 
             foreach ( var p in pars )
             {
-                WriteLine( $"/// <param name=\"{p.name.Replace( "[0]", "[]" ) }\">{p.description}</param>" );
+                var name = p.name;
+                if ( p.type == "uint32" && p.name.Contains( "date" ) )
+                {
+                    name += "_dt";
+                }
+
+                WriteLine( $"/// <param name=\"{name.Replace( "[0]", "[]" ) }\">({p.type}){p.description}</param>" );
             }
 
             var returnType = "string";
@@ -73,16 +83,30 @@ namespace Generator
 
             StartBlock( $"public static {returnType} {m.name}({parameters})" );
             {
+                if ( BeforeLines.Count > 0 )
+                {
+                    WriteLines( BeforeLines );
+                    WriteLine();
+                }
+
                 if ( m.httpmethod == "GET" )
                 {
                     var getParameters = string.Join( "&", pars.Select( x => FormatGetParameter( x ) ).Where( x => x != null ) );
-                    WriteLine( $"string url = $\"{{Url}}{m.name}/v{m.version.ToString( "0000" )}/?key={{Facepunch.SteamApi.Config.Key}}&format=json&{getParameters}\";" );
-                    WriteLine( $"return Utility.WebGet<{returnType}>( url );" );
+                    WriteLine( $"return Utility.WebGet<{returnType}>( $\"{{Url}}{m.name}/v{m.version.ToString( "0000" )}/?key={{Facepunch.SteamApi.Config.Key}}&format=json&{getParameters}\" );" );
                 }
-                else
+                else if ( m.httpmethod == "POST" )
                 {
-                    WriteLine( $"string url = $\"{{Url}}/{m.name}/v{m.version.ToString( "0000" )}/\";" );
-                    WriteLine( $"return url;" );
+                    StartBlock( $"var headers = new System.Collections.Generic.Dictionary<string, object>()" );
+                    {
+                        foreach ( var p in pars )
+                        {
+                            WriteLine( $"{{ \"{p.name}\", {p.name} }}," );
+                        }
+                    }
+                    EndBlock( ";" );
+                    WriteLine();
+
+                    WriteLine( $"return Utility.WebPost<{returnType}>( $\"{{Url}}/{m.name}/v{m.version.ToString( "0000" )}/\", headers );" );
                 }
 
             }
@@ -108,6 +132,14 @@ namespace Generator
             {
                 name = name.Replace( "[0]", "" );
                 type += "[]";
+            }
+
+            if ( type == "uint" && name.Contains( "date" ) )
+            {
+                BeforeLines.Add( $"uint {name} = Facepunch.Steamworks.Utility.Epoch.FromDateTime( {name}_dt );" );
+
+                type = "DateTime";
+                name += "_dt";
             }
 
             return $"{type} {name}";
