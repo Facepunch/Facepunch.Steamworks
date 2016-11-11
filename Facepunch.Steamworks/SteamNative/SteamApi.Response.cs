@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Xml;
 using System.Xml.Serialization;
@@ -81,5 +82,38 @@ namespace Facepunch.SteamApi
         }
     }
 
+
+    public partial class IWorkshopService
+    {
+        public class GetItemDailyRevenueResponse
+        {
+            public class Country
+            {
+                public string country_code;
+                public uint date;
+
+                /// <summary>
+                /// Appears to be the dollar amount multiplied by 10000
+                /// Use Revenue to get the real value as a double
+                /// </summary>
+                public double revenue_usd;
+
+                /// <summary>
+                /// Total dollar revenue, normalised
+                /// </summary>
+                public double Revenue { get { return revenue_usd / 10000.0; } }
+
+                /// <summary>
+                /// Number of units sold
+                /// </summary>
+                public long Units;
+            }
+
+            public Country[] country_revenue;
+
+            public long TotalUnitsSold { get { return country_revenue.Sum( x => x.Units ); } }
+            public double TotalRevenue { get { return country_revenue.Sum( x => x.Revenue ); } }
+        }
+    }
 
 }

@@ -100,6 +100,7 @@
     <Compile Include="Server\Inventory.cs" />
     <Compile Include="Server\Server.cs" />
     <Compile Include="Server\Stats.cs" />
+    <Compile Include="Web\IWorkshopService.cs" />
     <Compile Include="Web\ISteamEconomy.cs" />
     <Compile Include="Web\ISteamApps.cs" />
   </ItemGroup>

@@ -38,6 +38,14 @@ namespace Facepunch.Steamworks
                 return epoch.AddSeconds( (long)unixTime );
             }
 
+            /// <summary>
+            /// Convert a DateTime to a unix time
+            /// </summary>
+            public static uint FromDateTime( DateTime dt )
+            {
+                return (uint)( dt.Subtract( epoch ).TotalSeconds );
+            }
+
         }
     }
 }
