@@ -302,7 +302,7 @@ namespace SteamNative
 			bool /*bool*/ ISteamInventory_GetItemDefinitionIDs( IntPtr /*SteamItemDef_t **/ pItemDefIDs, out uint /*uint32 **/ punItemDefIDsArraySize );
 			bool /*bool*/ ISteamInventory_GetItemDefinitionProperty( int iDefinition, string /*const char **/ pchPropertyName, System.Text.StringBuilder /*char **/ pchValueBuffer, out uint /*uint32 **/ punValueBufferSizeOut );
 			int /*int*/ ISteamMatchmaking_GetFavoriteGameCount();
-			bool /*bool*/ ISteamMatchmaking_GetFavoriteGame( int /*int*/ iGame, ref uint pnAppID, out uint /*uint32 **/ pnIP, out ushort /*uint16 **/ pnConnPort, out ushort /*uint16 **/ pnQueryPort, IntPtr /*uint32 **/ punFlags, out uint /*uint32 **/ pRTime32LastPlayedOnServer );
+			bool /*bool*/ ISteamMatchmaking_GetFavoriteGame( int /*int*/ iGame, ref uint pnAppID, out uint /*uint32 **/ pnIP, out ushort /*uint16 **/ pnConnPort, out ushort /*uint16 **/ pnQueryPort, out uint /*uint32 **/ punFlags, out uint /*uint32 **/ pRTime32LastPlayedOnServer );
 			int /*int*/ ISteamMatchmaking_AddFavoriteGame( uint nAppID, uint /*uint32*/ nIP, ushort /*uint16*/ nConnPort, ushort /*uint16*/ nQueryPort, uint /*uint32*/ unFlags, uint /*uint32*/ rTime32LastPlayedOnServer );
 			bool /*bool*/ ISteamMatchmaking_RemoveFavoriteGame( uint nAppID, uint /*uint32*/ nIP, ushort /*uint16*/ nConnPort, ushort /*uint16*/ nQueryPort, uint /*uint32*/ unFlags );
 			SteamAPICall_t /*(SteamAPICall_t)*/ ISteamMatchmaking_RequestLobbyList();

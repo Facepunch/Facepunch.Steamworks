@@ -108,9 +108,9 @@ namespace SteamNative
 		}
 		
 		// bool
-		public bool GetFavoriteGame( int iGame /*int*/, ref AppId_t pnAppID /*AppId_t **/, out uint pnIP /*uint32 **/, out ushort pnConnPort /*uint16 **/, out ushort pnQueryPort /*uint16 **/, IntPtr punFlags /*uint32 **/, out uint pRTime32LastPlayedOnServer /*uint32 **/ )
+		public bool GetFavoriteGame( int iGame /*int*/, ref AppId_t pnAppID /*AppId_t **/, out uint pnIP /*uint32 **/, out ushort pnConnPort /*uint16 **/, out ushort pnQueryPort /*uint16 **/, out uint punFlags /*uint32 **/, out uint pRTime32LastPlayedOnServer /*uint32 **/ )
 		{
-			return platform.ISteamMatchmaking_GetFavoriteGame( iGame, ref pnAppID.Value, out pnIP, out pnConnPort, out pnQueryPort, (IntPtr) punFlags, out pRTime32LastPlayedOnServer );
+			return platform.ISteamMatchmaking_GetFavoriteGame( iGame, ref pnAppID.Value, out pnIP, out pnConnPort, out pnQueryPort, out punFlags, out pRTime32LastPlayedOnServer );
 		}
 		
 		// int

@@ -986,11 +986,11 @@ namespace SteamNative
 				
 				return Native.SteamAPI_ISteamMatchmaking_GetFavoriteGameCount(_ptr);
 			}
-			public virtual bool /*bool*/ ISteamMatchmaking_GetFavoriteGame( int /*int*/ iGame, ref uint pnAppID, out uint /*uint32 **/ pnIP, out ushort /*uint16 **/ pnConnPort, out ushort /*uint16 **/ pnQueryPort, IntPtr /*uint32 **/ punFlags, out uint /*uint32 **/ pRTime32LastPlayedOnServer )
+			public virtual bool /*bool*/ ISteamMatchmaking_GetFavoriteGame( int /*int*/ iGame, ref uint pnAppID, out uint /*uint32 **/ pnIP, out ushort /*uint16 **/ pnConnPort, out ushort /*uint16 **/ pnQueryPort, out uint /*uint32 **/ punFlags, out uint /*uint32 **/ pRTime32LastPlayedOnServer )
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamMatchmaking _ptr is null!" );
 				
-				return Native.SteamAPI_ISteamMatchmaking_GetFavoriteGame(_ptr, iGame, ref pnAppID, out pnIP, out pnConnPort, out pnQueryPort, punFlags, out pRTime32LastPlayedOnServer);
+				return Native.SteamAPI_ISteamMatchmaking_GetFavoriteGame(_ptr, iGame, ref pnAppID, out pnIP, out pnConnPort, out pnQueryPort, out punFlags, out pRTime32LastPlayedOnServer);
 			}
 			public virtual int /*int*/ ISteamMatchmaking_AddFavoriteGame( uint nAppID, uint /*uint32*/ nIP, ushort /*uint16*/ nConnPort, ushort /*uint16*/ nQueryPort, uint /*uint32*/ unFlags, uint /*uint32*/ rTime32LastPlayedOnServer )
 			{
@@ -4199,7 +4199,7 @@ namespace SteamNative
 				// ISteamMatchmaking 
 				//
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern int /*int*/ SteamAPI_ISteamMatchmaking_GetFavoriteGameCount( IntPtr ISteamMatchmaking );
-				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamMatchmaking_GetFavoriteGame( IntPtr ISteamMatchmaking, int /*int*/ iGame, ref uint pnAppID, out uint /*uint32 **/ pnIP, out ushort /*uint16 **/ pnConnPort, out ushort /*uint16 **/ pnQueryPort, IntPtr /*uint32 **/ punFlags, out uint /*uint32 **/ pRTime32LastPlayedOnServer );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamMatchmaking_GetFavoriteGame( IntPtr ISteamMatchmaking, int /*int*/ iGame, ref uint pnAppID, out uint /*uint32 **/ pnIP, out ushort /*uint16 **/ pnConnPort, out ushort /*uint16 **/ pnQueryPort, out uint /*uint32 **/ punFlags, out uint /*uint32 **/ pRTime32LastPlayedOnServer );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern int /*int*/ SteamAPI_ISteamMatchmaking_AddFavoriteGame( IntPtr ISteamMatchmaking, uint nAppID, uint /*uint32*/ nIP, ushort /*uint16*/ nConnPort, ushort /*uint16*/ nQueryPort, uint /*uint32*/ unFlags, uint /*uint32*/ rTime32LastPlayedOnServer );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamMatchmaking_RemoveFavoriteGame( IntPtr ISteamMatchmaking, uint nAppID, uint /*uint32*/ nIP, ushort /*uint16*/ nConnPort, ushort /*uint16*/ nQueryPort, uint /*uint32*/ unFlags );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamMatchmaking_RequestLobbyList( IntPtr ISteamMatchmaking );

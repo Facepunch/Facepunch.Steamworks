@@ -89,6 +89,9 @@ namespace Generator
                 if ( IsInputArray )
                     return false;
 
+                if ( Name.Contains( "Flags" ) )
+                    return false;
+
                 if ( ManagedType.Contains( "SteamUGCDetails_t" ) || ManagedType.Contains( "SteamParamStringArray_t" ) )
                     return false;
 
