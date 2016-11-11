@@ -115,11 +115,22 @@ namespace Facepunch.Steamworks
         {
             client = c;
         }
+
+        /// <summary>
+        /// Try to get information about this user - which as name and avatar.
+        /// If returns true, we already have this user's information.
+        /// </summary>
+        public bool UpdateInformation( ulong steamid )
+        {
+            return !client.native.friends.RequestUserInformation( steamid, false );
+        }
         
+        /// <summary>
+        /// Get this user's name
+        /// </summary>
         public string GetName( ulong steamid )
         {
             client.native.friends.RequestUserInformation( steamid, true );
-
             return client.native.friends.GetFriendPersonaName( steamid );
         }
 
