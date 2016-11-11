@@ -14,6 +14,7 @@ namespace Facepunch.Steamworks.Interop
         internal SteamNative.SteamApps apps;
         internal SteamNative.SteamFriends friends;
         internal SteamNative.SteamMatchmakingServers servers;
+        internal SteamNative.SteamMatchmaking matchmaking;
         internal SteamNative.SteamInventory inventory;
         internal SteamNative.SteamNetworking networking;
         internal SteamNative.SteamUserStats userstats;
@@ -105,6 +106,7 @@ namespace Facepunch.Steamworks.Interop
             userstats = client.GetISteamUserStats( huser, hpipe, SteamNative.Defines.STEAMUSERSTATS_INTERFACE_VERSION );
             screenshots = client.GetISteamScreenshots( huser, hpipe, SteamNative.Defines.STEAMSCREENSHOTS_INTERFACE_VERSION );
             remoteStorage = client.GetISteamRemoteStorage( huser, hpipe, SteamNative.Defines.STEAMREMOTESTORAGE_INTERFACE_VERSION );
+            matchmaking = client.GetISteamMatchmaking( huser, hpipe, SteamNative.Defines.STEAMMATCHMAKING_INTERFACE_VERSION );
         }
 
         public void Dispose()
