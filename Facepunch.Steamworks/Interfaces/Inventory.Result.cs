@@ -15,6 +15,10 @@ namespace Facepunch.Steamworks
             private SteamNative.SteamInventoryResult_t Handle { get; set; }
             public Item[] Items { get; internal set; }
 
+            public Item[] Removed { get; internal set; }
+
+            public Item[] Consumed { get; internal set; }
+
             public bool IsPending
             {
                 get
@@ -80,7 +84,34 @@ namespace Facepunch.Steamworks
                     throw new System.Exception( "steamItems was null" );
                 }
 
-                Items = steamItems.Select( x =>
+                Items = steamItems.Where( x => ((int)x.Flags & (int)SteamNative.SteamItemFlags.Removed) == 0 && ((int)x.Flags & (int)SteamNative.SteamItemFlags.Consumed ) == 0 )
+                .Select( x =>
+                {
+                    return new Inventory.Item()
+                    {
+                        Quantity = x.Quantity,
+                        Id = x.ItemId,
+                        DefinitionId = x.Definition,
+                        TradeLocked = ( (int)x.Flags & (int)SteamNative.SteamItemFlags.NoTrade ) != 0,
+                        Definition = inventory.FindDefinition( x.Definition )
+                    };
+                } ).ToArray();
+
+                Removed = steamItems.Where( x => ( (int)x.Flags & (int)SteamNative.SteamItemFlags.Removed ) != 0 )
+                .Select( x =>
+                {
+                    return new Inventory.Item()
+                    {
+                        Quantity = x.Quantity,
+                        Id = x.ItemId,
+                        DefinitionId = x.Definition,
+                        TradeLocked = ( (int)x.Flags & (int)SteamNative.SteamItemFlags.NoTrade ) != 0,
+                        Definition = inventory.FindDefinition( x.Definition )
+                    };
+                } ).ToArray();
+
+                Consumed = steamItems.Where( x => ( (int)x.Flags & (int)SteamNative.SteamItemFlags.Consumed ) != 0 )
+                .Select( x =>
                 {
                     return new Inventory.Item()
                     {
