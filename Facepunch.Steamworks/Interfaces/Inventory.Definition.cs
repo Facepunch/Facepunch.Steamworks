@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -55,6 +56,21 @@ namespace Facepunch.Steamworks
             public DateTime Created { get; set; }
             public DateTime Modified { get; set; }
 
+            /// <summary>
+            /// The raw contets of price_category from the schema
+            /// </summary>
+            public string PriceRaw { get; set; }
+
+            /// <summary>
+            /// The dollar price from PriceRaw
+            /// </summary>
+            public double PriceDollars { get; set; }
+            
+            /// <summary>
+            /// Returns true if this item can be sold on the marketplace
+            /// </summary>
+            public bool Marketable { get; set; }
+
             public bool IsGenerator
             {
                 get { return Type == "generator"; }
@@ -86,6 +102,9 @@ namespace Facepunch.Steamworks
                     customProperties[name] = value;
             }
 
+            /// <summary>
+            /// Read a raw property from the definition schema
+            /// </summary>
             public T GetProperty<T>( string name )
             {
                 string val = GetStringProperty( name );
@@ -103,6 +122,9 @@ namespace Facepunch.Steamworks
                 }
             }
 
+            /// <summary>
+            /// Read a raw property from the definition schema
+            /// </summary>
             public string GetStringProperty( string name )
             {
                 string val = string.Empty;
@@ -116,6 +138,19 @@ namespace Facepunch.Steamworks
                 return val;
             }
 
+            /// <summary>
+            /// Read a raw property from the definition schema
+            /// </summary>
+            public bool GetBoolProperty( string name )
+            {
+                string val = GetStringProperty( name );
+
+                if ( val.Length == 0 ) return false;
+                if ( val[0] == '0' || val[0] == 'F'|| val[0] == 'f' ) return false;
+
+                return true;
+            }
+
             internal void SetupCommonProperties()
             {
                 Name = GetStringProperty( "name" );
@@ -126,6 +161,13 @@ namespace Facepunch.Steamworks
                 IconUrl = GetStringProperty( "icon_url" );
                 IconLargeUrl = GetStringProperty( "icon_url_large" );
                 Type = GetStringProperty( "type" );
+                PriceRaw = GetStringProperty( "price_category" );
+                Marketable = GetBoolProperty( "marketable" );
+
+                if ( !string.IsNullOrEmpty( PriceRaw  ) )
+                {
+                    PriceDollars = PriceCategoryToFloat( PriceRaw );
+                }
             }
 
             /// <summary>

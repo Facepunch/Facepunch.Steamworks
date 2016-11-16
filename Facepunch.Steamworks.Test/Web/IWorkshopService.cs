@@ -30,7 +30,7 @@ namespace Facepunch.Steamworks.Test
         [TestMethod]
         public void GetItemDailyRevenue()
         {
-            var response = Facepunch.SteamApi.IWorkshopService.GetItemDailyRevenue( 252490, 20006, DateTime.UtcNow.Subtract( TimeSpan.FromDays( 30 ) ), DateTime.UtcNow.AddDays( 30 )  );
+            var response = SteamApi.IWorkshopService.GetItemDailyRevenue( 252490, 20006, DateTime.Now.Subtract( TimeSpan.FromDays( 30 ) ), DateTime.Now.AddDays( 1 )  );
 
             Console.WriteLine( "Item Sold " + response.TotalUnitsSold + " worldwide" );
             Console.WriteLine( "Item Generated  $" + response.TotalRevenue + " worldwide" );

@@ -213,13 +213,15 @@ namespace Facepunch.Steamworks.Test
                 Assert.IsNotNull( client.Inventory.Definitions );
                 Assert.AreNotEqual( 0, client.Inventory.Definitions.Length );
 
-                foreach ( var i in client.Inventory.Definitions )
+                foreach ( var i in client.Inventory.Definitions.Where( x => x.PriceRaw != "" ) )
                 {
                     Console.WriteLine( "{0}: {1} ({2})", i.Id, i.Name, i.Type );
                     Console.WriteLine( "  itemshortname: {0}", i.GetStringProperty( "itemshortname" ) );
                     Console.WriteLine( "  workshopdownload: {0}", i.GetStringProperty( "workshopdownload" ) );
                     Console.WriteLine( "           IconUrl: {0}", i.IconUrl );
                     Console.WriteLine( "      IconLargeUrl: {0}", i.IconLargeUrl );
+                    Console.WriteLine( "          PriceRaw: {0}", i.PriceRaw );
+                    Console.WriteLine( "      PriceDollars: {0}", i.PriceDollars );
                 }
             }            
         }
