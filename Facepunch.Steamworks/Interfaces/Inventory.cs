@@ -223,5 +223,29 @@ namespace Facepunch.Steamworks
 
             return new Result( this, resultHandle );
         }
+
+        /// <summary>
+        /// Split stack into two items
+        /// </summary>
+        public Result SplitStack( Item item, int quantity = 1 )
+        {
+            SteamNative.SteamInventoryResult_t resultHandle = -1;
+            if ( !inventory.TransferItemQuantity( ref resultHandle, item.Id, (uint)quantity, ulong.MaxValue ) )
+                return null;
+
+            return new Result( this, resultHandle );
+        }
+
+        /// <summary>
+        /// Stack source item onto dest item
+        /// </summary>
+        public Result Stack( Item source, Item dest, int quantity = 1 )
+        {
+            SteamNative.SteamInventoryResult_t resultHandle = -1;
+            if ( !inventory.TransferItemQuantity( ref resultHandle, source.Id, (uint)quantity, dest.Id ) )
+                return null;
+
+            return new Result( this, resultHandle );
+        }
     }
 }
