@@ -11,7 +11,7 @@ namespace Facepunch.Steamworks
         /// <summary>
         /// An item in your inventory.
         /// </summary>
-        public class Item
+        public struct Item : IEquatable<Item>
         {
             public ulong Id;
             public int Quantity;
@@ -24,6 +24,37 @@ namespace Facepunch.Steamworks
             public Definition Definition;
 
             public bool TradeLocked;
+
+            public bool Equals( Item other )
+            {
+                return Equals( other, this );
+            }
+
+            public override bool Equals( object obj )
+            {
+                if ( obj == null || GetType() != obj.GetType() )
+                {
+                    return false;
+                }
+
+                return ((Item)obj).Id == Id;
+            }
+
+            public override int GetHashCode()
+            {
+                return Id.GetHashCode();
+            }
+
+
+            public static bool operator ==( Item c1, Item c2 )
+            {
+                return c1.Equals( c2 );
+            }
+
+            public static bool operator !=( Item c1, Item c2 )
+            {
+                return !c1.Equals( c2 );
+            }
         }
     }
 }

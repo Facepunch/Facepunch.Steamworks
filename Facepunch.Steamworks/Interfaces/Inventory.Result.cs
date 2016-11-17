@@ -42,6 +42,8 @@ namespace Facepunch.Steamworks
                 }
             }
 
+            internal uint Timestamp { get; private set; }
+
             internal Callbacks.Result Status()
             {
                 if ( Handle == -1 ) return Callbacks.Result.InvalidParam;
@@ -75,6 +77,8 @@ namespace Facepunch.Steamworks
                 if ( !IsSuccess )
                     return;
 
+                Timestamp = inventory.inventory.GetResultTimestamp( Handle );
+
                 SteamNative.SteamItemDetails_t[] steamItems = inventory.inventory.GetResultItems( Handle );
                 if ( steamItems == null )
                     return;
@@ -84,7 +88,7 @@ namespace Facepunch.Steamworks
                     throw new System.Exception( "steamItems was null" );
                 }
 
-                Items = steamItems.Where( x => ((int)x.Flags & (int)SteamNative.SteamItemFlags.Removed) == 0 && ((int)x.Flags & (int)SteamNative.SteamItemFlags.Consumed ) == 0 )
+                Items = steamItems.Where( x => ( (int)x.Flags & (int)SteamNative.SteamItemFlags.Removed ) != (int)SteamNative.SteamItemFlags.Removed && ( (int)x.Flags & (int)SteamNative.SteamItemFlags.Consumed ) != (int)SteamNative.SteamItemFlags.Consumed )
                 .Select( x =>
                 {
                     return new Inventory.Item()
@@ -122,6 +126,8 @@ namespace Facepunch.Steamworks
                         Definition = inventory.FindDefinition( x.Definition )
                     };
                 } ).ToArray();
+
+                inventory.ApplyResult( this );
             }
 
             internal unsafe byte[] Serialize()
@@ -133,7 +139,7 @@ namespace Facepunch.Steamworks
 
                 fixed ( byte* ptr = data )
                 {
-                    if ( !inventory.inventory.SerializeResult( Handle, (IntPtr) ptr, out size ) )
+                    if ( !inventory.inventory.SerializeResult( Handle, (IntPtr)ptr, out size ) )
                         return null;
                 }
 
@@ -147,6 +153,5 @@ namespace Facepunch.Steamworks
                 inventory = null;
             }
         }
-
     }
 }

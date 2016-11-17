@@ -32,6 +32,8 @@ namespace Facepunch.Steamworks
         /// </summary>
         public DateTime SerializedExpireTime;
 
+        internal uint LastTimestamp = 0;
+
         internal SteamNative.SteamInventory inventory;
 
         private bool IsServer { get; set; }
@@ -46,6 +48,7 @@ namespace Facepunch.Steamworks
 
             if ( !server )
             {
+               // SteamNative.SteamInventoryResultReady_t.RegisterCallback( steamworks, onResultReady );
                 SteamNative.SteamInventoryFullUpdate_t.RegisterCallback( steamworks, onFullUpdate );
                 Refresh();
             }
@@ -55,22 +58,61 @@ namespace Facepunch.Steamworks
         {
             if ( error ) return;
 
-            var r = new Result( this, data.Handle );
+            onResult( data.Handle, true );
+        }
+
+        private void onResultReady( SteamInventoryResultReady_t data, bool error )
+        {
+            if ( error ) return;
+            if ( data.Esult != SteamNative.Result.OK ) return;
+
+            onResult( data.Handle, false );
+        }
+
+        private void onResult( int Handle, bool serialize )
+        {
+            var r = new Result( this, Handle );
             if ( r.IsSuccess )
             {
-                SerializedItems = r.Serialize();
-                SerializedExpireTime = DateTime.Now.Add( TimeSpan.FromMinutes( 60 ) );
+                if ( serialize )
+                {
+                    if ( r.Timestamp < LastTimestamp )
+                        return;
 
-                Items = r.Items;
+                    LastTimestamp = r.Timestamp;
+
+                    SerializedItems = r.Serialize();
+                    SerializedExpireTime = DateTime.Now.Add( TimeSpan.FromMinutes( 60 ) );
+                }
+
+                ApplyResult( r );
+            }
+
+            r.Dispose();
+            r = null;
+        }
+
+        internal void ApplyResult( Result r )
+        {
+            if ( IsServer ) return;
+
+            if ( r.IsSuccess )
+            {
+                if ( Items == null )
+                    Items = new Item[0];
+
+                Items = Items
+                        .Union( r.Items )
+                        .Distinct()
+                        .Where( x => !r.Removed.Contains( x ) )
+                        .Where( x => !r.Consumed.Contains( x ) )
+                        .ToArray();
 
                 //
                 // Tell everyone we've got new items!
                 //
                 OnUpdate?.Invoke();
             }
-
-            r.Dispose();
-            r = null;
         }
 
         public void Dispose()
