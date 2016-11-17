@@ -96,7 +96,7 @@ namespace Facepunch.Steamworks
         {
             if ( IsServer ) return;
 
-            if ( r.IsSuccess )
+            if ( r.IsSuccess && r.Items != null )
             {
                 if ( Items == null )
                     Items = new Item[0];
