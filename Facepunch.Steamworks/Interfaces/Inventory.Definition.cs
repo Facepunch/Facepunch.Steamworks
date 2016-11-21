@@ -238,15 +238,28 @@ namespace Facepunch.Steamworks
                     var i = new Ingredient();
                     i.Count = 1;
 
-                    if ( part.Contains( 'x' ) )
+                    try
                     {
-                        var idx = part.IndexOf( 'x' );
-                        i.Count = int.Parse( part.Substring( idx + 1 ) );
-                        part = part.Substring( 0, idx );
-                    }
 
-                    i.DefinitionId = int.Parse( part );
-                    i.Definition = definitions.FirstOrDefault( x => x.Id == i.DefinitionId );
+                        if ( part.Contains( 'x' ) )
+                        {
+                            var idx = part.IndexOf( 'x' );
+
+                            int count = 0;
+                            if ( int.TryParse( part.Substring( idx + 1 ), out count ) )
+                                i.Count = count;
+
+                            part = part.Substring( 0, idx );
+                        }
+
+                        i.DefinitionId = int.Parse( part );
+                        i.Definition = definitions.FirstOrDefault( x => x.Id == i.DefinitionId );
+
+                    }
+                    catch ( System.Exception )
+                    {
+                        return i;
+                    }
 
                     return i;
                 }
@@ -268,7 +281,7 @@ namespace Facepunch.Steamworks
                 r.Result = Result;
                 var parts = part.Split( new[] { ',' }, StringSplitOptions.RemoveEmptyEntries );
 
-                r.Ingredients = parts.Select( x => Ingredient.FromString( x, definitions ) ).ToArray();
+                r.Ingredients = parts.Select( x => Ingredient.FromString( x, definitions ) ).Where( x => x.DefinitionId != 0 ).ToArray();
 
                 foreach ( var i in r.Ingredients )
                 {
