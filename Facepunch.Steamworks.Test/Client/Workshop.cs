@@ -244,6 +244,41 @@ namespace Facepunch.Steamworks.Test
         }
 
         [TestMethod]
+        public void QueryCallback()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                Assert.IsTrue( client.IsValid );
+
+                using ( var Query = client.Workshop.CreateQuery() )
+                {
+                    var gotCallback = false;
+
+                    Query.OnResult = ( q ) =>
+                    {
+                        Assert.AreEqual( q.Items.Length, 1 );
+                        Console.WriteLine( "Query.TotalResults: {0}", q.TotalResults );
+                        Console.WriteLine( "Query.Items.Length: {0}", q.Items.Length );
+
+                        gotCallback = true;
+                    };
+
+                    Query.FileId.Add( 751993251 );
+                    Query.Run();
+
+                    Assert.IsTrue( Query.IsRunning );
+
+                    client.UpdateWhile( () => gotCallback == false );
+
+                    Assert.IsFalse( Query.IsRunning );
+                    Assert.AreEqual( Query.TotalResults, 1 );
+
+                    Assert.AreEqual<ulong>( Query.Items[0].Id, 751993251 );
+                }
+            }
+        }
+
+        [TestMethod]
         public void QueryFiles()
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )

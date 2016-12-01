@@ -38,6 +38,11 @@ namespace Facepunch.Steamworks
             public UserQueryType UserQueryType { get; set; } = UserQueryType.Published;
 
             /// <summary>
+            /// Called when the query finishes
+            /// </summary>
+            public Action<Query> OnResult;
+
+            /// <summary>
             /// Page starts at 1 !!
             /// </summary>
             public int Page { get; set; } = 1;
@@ -106,10 +111,10 @@ namespace Facepunch.Steamworks
                 foreach ( var tag in ExcludeTags )
                     workshop.ugc.AddExcludedTag( Handle, tag );
 
-                Callback = workshop.ugc.SendQueryUGCRequest( Handle, OnResult );
+                Callback = workshop.ugc.SendQueryUGCRequest( Handle, ResultCallback );
             }
 
-            void OnResult( SteamNative.SteamUGCQueryCompleted_t data, bool bFailed )
+            void ResultCallback( SteamNative.SteamUGCQueryCompleted_t data, bool bFailed )
             {
                 if ( bFailed )
                     throw new System.Exception( "bFailed!" );
@@ -166,6 +171,11 @@ namespace Facepunch.Steamworks
                 else
                 {
                     Items = _results.ToArray();
+
+                    if ( OnResult != null )
+                    {
+                        OnResult( this );
+                    }
                 }
             }
 
