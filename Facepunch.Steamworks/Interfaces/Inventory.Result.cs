@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using SteamNative;
 
 namespace Facepunch.Steamworks
 {
@@ -10,27 +11,37 @@ namespace Facepunch.Steamworks
     {
         public class Result : IDisposable
         {
+            internal static Dictionary< int, Result > Pending;
             internal Inventory inventory;
 
             private SteamNative.SteamInventoryResult_t Handle { get; set; }
+
+            /// <summary>
+            /// Called when result is successfully returned
+            /// </summary>
+            public Action<Result> OnResult;
+
+            /// <summary>
+            /// Items that exist, or that have been created, or changed
+            /// </summary>
             public Item[] Items { get; internal set; }
 
+            /// <summary>
+            /// Items that have been removed or somehow destroyed
+            /// </summary>
             public Item[] Removed { get; internal set; }
 
+            /// <summary>
+            /// Items that have been consumed, like in a craft or something
+            /// </summary>
             public Item[] Consumed { get; internal set; }
 
-            public bool IsPending
-            {
-                get
-                {
-                    if ( Items != null ) return false;
-                    if ( Handle == -1 ) return false;
-                    if ( Status() == Callbacks.Result.Pending ) return true;
+            /// <summary>
+            /// Returns true if this result is still pending
+            /// </summary>
+            public bool IsPending { get; internal set; }
 
-                    TryFill();
-                    return false;
-                }
-            }
+            internal uint Timestamp { get; private set; }
 
             internal bool IsSuccess
             {
@@ -42,40 +53,29 @@ namespace Facepunch.Steamworks
                 }
             }
 
-            internal uint Timestamp { get; private set; }
-
             internal Callbacks.Result Status()
             {
                 if ( Handle == -1 ) return Callbacks.Result.InvalidParam;
                 return (Callbacks.Result)inventory.inventory.GetResultStatus( Handle );
             }
 
-
-            internal Result( Inventory inventory, int Handle )
+            internal Result( Inventory inventory, int Handle, bool pending )
             {
-                this.Handle = Handle;
-                this.inventory = inventory;
-
-                TryFill();
-            }
-
-            public bool Block( float maxWait = 5.0f )
-            {
-                while ( IsPending )
+                if ( pending )
                 {
-                    System.Threading.Thread.Sleep( 5 );
+                    Pending.Add( Handle, this );
                 }
 
-                return IsSuccess;
+                this.Handle = Handle;
+                this.inventory = inventory;
             }
 
-            internal void TryFill()
+            internal void Fill()
             {
                 if ( Items != null )
                     return;
 
-                if ( !IsSuccess )
-                    return;
+                this.IsPending = false;
 
                 Timestamp = inventory.inventory.GetResultTimestamp( Handle );
 
@@ -127,7 +127,20 @@ namespace Facepunch.Steamworks
                     };
                 } ).ToArray();
 
-                inventory.ApplyResult( this );
+                if ( OnResult != null )
+                {
+                    OnResult( this );
+                }
+            }
+
+            internal void OnSteamResult( SteamInventoryResultReady_t data, bool error )
+            {
+                var success = data.Esult == SteamNative.Result.OK && !error;
+
+                if ( success )
+                {
+                    Fill();
+                }
             }
 
             internal unsafe byte[] Serialize()

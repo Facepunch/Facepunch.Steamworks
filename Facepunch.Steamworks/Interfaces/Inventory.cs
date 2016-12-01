@@ -43,48 +43,76 @@ namespace Facepunch.Steamworks
             IsServer = server;
             inventory = c;
 
+            Result.Pending = new Dictionary<int, Result>();
+
             inventory.LoadItemDefinitions();
             FetchItemDefinitions();
 
             if ( !server )
             {
-               // SteamNative.SteamInventoryResultReady_t.RegisterCallback( steamworks, onResultReady );
+                SteamNative.SteamInventoryResultReady_t.RegisterCallback( steamworks, onResultReady );
                 SteamNative.SteamInventoryFullUpdate_t.RegisterCallback( steamworks, onFullUpdate );
+
+                //
+                // Get a list of our items immediately
+                //
                 Refresh();
             }
         }
 
+        /// <summary>
+        /// We've received a FULL update
+        /// </summary>
         private void onFullUpdate( SteamInventoryFullUpdate_t data, bool error )
         {
             if ( error ) return;
 
-            onResult( data.Handle, true );
+            var result = new Result( this, data.Handle, false );
+            result.Fill();
+
+            onResult( result, true );
         }
 
+        /// <summary>
+        /// A generic result has returned.
+        /// </summary>
         private void onResultReady( SteamInventoryResultReady_t data, bool error )
         {
-            if ( error ) return;
-            if ( data.Esult != SteamNative.Result.OK ) return;
+            if ( Result.Pending.ContainsKey( data.Handle ) )
+            {
+                var result = Result.Pending[data.Handle];
 
-            onResult( data.Handle, false );
+                result.OnSteamResult( data, error );
+
+                if ( !error && data.Esult == SteamNative.Result.OK )
+                {
+                    onResult( result, false );
+                }
+
+                Result.Pending.Remove( data.Handle );
+            }
         }
 
-        private void onResult( int Handle, bool serialize )
+        private void onResult( Result r, bool serialize )
         {
-            var r = new Result( this, Handle );
             if ( r.IsSuccess )
             {
+                //
+                // We only serialize FULL updates
+                //
                 if ( serialize )
                 {
+                    //
+                    // Only serialize if this result is newer than the last one
+                    //
                     if ( r.Timestamp < LastTimestamp )
                         return;
-
-                    LastTimestamp = r.Timestamp;
 
                     SerializedItems = r.Serialize();
                     SerializedExpireTime = DateTime.Now.Add( TimeSpan.FromMinutes( 60 ) );
                 }
 
+                LastTimestamp = r.Timestamp;
                 ApplyResult( r );
             }
 
@@ -92,6 +120,11 @@ namespace Facepunch.Steamworks
             r = null;
         }
 
+        /// <summary>
+        /// Apply this result to our current stack of Items
+        /// Here we're trying to keep our stack up to date with whatever happens
+        /// with the crafting, stacking etc
+        /// </summary>
         internal void ApplyResult( Result r )
         {
             if ( IsServer ) return;
@@ -121,6 +154,8 @@ namespace Facepunch.Steamworks
 
             Items = null;
             SerializedItems = null;
+
+            Result.Pending = null;
         }
 
         /// <summary>
@@ -170,11 +205,7 @@ namespace Facepunch.Steamworks
             if ( ids == null )
                 return;
 
-            Definitions = ids.Select( x =>
-            {
-                return CreateDefinition( x );
-
-            } ).ToArray();
+            Definitions = ids.Select( x => CreateDefinition( x ) ).ToArray();
 
             foreach ( var def in Definitions )
             {
@@ -241,7 +272,9 @@ namespace Facepunch.Steamworks
                 if ( !result || resultHandle == -1 )
                     return null;
 
-                return new Result( this, resultHandle );
+                var r = new Result( this, resultHandle, false );
+                r.Fill();
+                return r;
             }
         }
 
@@ -263,7 +296,7 @@ namespace Facepunch.Steamworks
             if ( !inventory.ExchangeItems( ref resultHandle, newItems, newItemC, 1, takeItems, takeItemsC, (uint)takeItems.Length ) )
                 return null;
 
-            return new Result( this, resultHandle );
+            return new Result( this, resultHandle, true );
         }
 
         /// <summary>
@@ -275,7 +308,7 @@ namespace Facepunch.Steamworks
             if ( !inventory.TransferItemQuantity( ref resultHandle, item.Id, (uint)quantity, ulong.MaxValue ) )
                 return null;
 
-            return new Result( this, resultHandle );
+            return new Result( this, resultHandle, true );
         }
 
         /// <summary>
@@ -287,7 +320,7 @@ namespace Facepunch.Steamworks
             if ( !inventory.TransferItemQuantity( ref resultHandle, source.Id, (uint)quantity, dest.Id ) )
                 return null;
 
-            return new Result( this, resultHandle );
+            return new Result( this, resultHandle, true );
         }
     }
 }
