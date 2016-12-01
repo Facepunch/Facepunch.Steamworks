@@ -14,16 +14,13 @@ namespace Generator
             var content = System.IO.File.ReadAllText( "steam_sdk/steam_api.json" );
             var def = Newtonsoft.Json.JsonConvert.DeserializeObject<SteamApiDefinition>( content );
 
-            var webcontent = System.IO.File.ReadAllText( "steam_sdk/web_api.json" );
-            var webdef = Newtonsoft.Json.JsonConvert.DeserializeObject<WebApiDefinition>( webcontent );
-
             AddExtras( def );
 
             var parser = new CodeParser( @"steam_sdk" );
 
             parser.ExtendDefinition( def );
 
-            var generator = new CodeWriter( def, webdef );
+            var generator = new CodeWriter( def );
 
             generator.ToFolder( "../Facepunch.Steamworks/SteamNative/" );
         }

@@ -51,7 +51,6 @@
     <Compile Include="CodeParser\CodeParser.cs" />
     <Compile Include="CodeWriter\Class.cs" />
     <Compile Include="CodeWriter\Constants.cs" />
-    <Compile Include="CodeWriter\WebApi.cs" />
     <Compile Include="CodeWriter\Writing.cs" />
     <Compile Include="CodeWriter\CodeWriter.cs" />
     <Compile Include="CodeWriter\Enums.cs" />
@@ -61,7 +60,6 @@
     <Compile Include="CodeWriter\Interface.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebApiDefinition.cs" />
     <Compile Include="SteamApiDefinition.cs" />
   </ItemGroup>
   <ItemGroup>
