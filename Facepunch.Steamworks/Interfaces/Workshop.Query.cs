@@ -35,6 +35,12 @@ namespace Facepunch.Steamworks
 
             public ulong? UserId { get; set; }
 
+            /// <summary>
+            /// If order is RankedByTrend, this value represents how many days to take
+            /// into account.
+            /// </summary>
+            public int RankedByTrendDays { get; set; }
+
             public UserQueryType UserQueryType { get; set; } = UserQueryType.Published;
 
             /// <summary>
@@ -107,6 +113,9 @@ namespace Facepunch.Steamworks
 
                 if ( RequireTags.Count > 0 )
                     workshop.ugc.SetMatchAnyTag( Handle, !RequireAllTags );
+
+                if ( RankedByTrendDays > 0 )
+                    workshop.ugc.SetRankedByTrendDays( Handle, (uint) RankedByTrendDays );
 
                 foreach ( var tag in ExcludeTags )
                     workshop.ugc.AddExcludedTag( Handle, tag );
@@ -213,6 +222,8 @@ namespace Facepunch.Steamworks
             /// If you're querying for a particular file or files, add them to this.
             /// </summary>
             public List<ulong> FileId { get; set; } = new List<ulong>();
+
+
 
             /// <summary>
             /// Don't call this in production!
