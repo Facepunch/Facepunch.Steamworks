@@ -36,10 +36,26 @@ namespace Facepunch.Steamworks
             /// </summary>
             public Item[] Consumed { get; internal set; }
 
+            protected bool _gotResult = false;
+
             /// <summary>
             /// Returns true if this result is still pending
             /// </summary>
-            public bool IsPending { get; internal set; }
+            public bool IsPending
+            {
+                get
+                {
+                    if ( _gotResult ) return false;
+
+                    if ( Status() == Callbacks.Result.OK )
+                    {
+                        Fill();
+                        return false;
+                    }
+
+                    return Status() == Callbacks.Result.Pending;
+                }
+            }
 
             internal uint Timestamp { get; private set; }
 
@@ -72,21 +88,23 @@ namespace Facepunch.Steamworks
 
             internal void Fill()
             {
+                if ( _gotResult )
+                    return;
+
                 if ( Items != null )
                     return;
 
-                this.IsPending = false;
+                if ( Status() != Callbacks.Result.OK )
+                    return;
+
+                _gotResult = true;
 
                 Timestamp = inventory.inventory.GetResultTimestamp( Handle );
 
                 SteamNative.SteamItemDetails_t[] steamItems = inventory.inventory.GetResultItems( Handle );
-                if ( steamItems == null )
-                    return;
 
                 if ( steamItems == null )
-                {
-                    throw new System.Exception( "steamItems was null" );
-                }
+                    return;
 
                 Items = steamItems.Where( x => ( (int)x.Flags & (int)SteamNative.SteamItemFlags.Removed ) != (int)SteamNative.SteamItemFlags.Removed && ( (int)x.Flags & (int)SteamNative.SteamItemFlags.Consumed ) != (int)SteamNative.SteamItemFlags.Consumed )
                 .Select( x =>
@@ -146,7 +164,9 @@ namespace Facepunch.Steamworks
             internal unsafe byte[] Serialize()
             {
                 uint size = 0;
-                inventory.inventory.SerializeResult( Handle, IntPtr.Zero, out size );
+
+                if ( !inventory.inventory.SerializeResult( Handle, IntPtr.Zero, out size ) )
+                    return null;
 
                 var data = new byte[size];
 
