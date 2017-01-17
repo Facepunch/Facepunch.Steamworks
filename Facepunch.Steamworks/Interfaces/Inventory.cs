@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -35,6 +36,8 @@ namespace Facepunch.Steamworks
         internal uint LastTimestamp = 0;
 
         internal SteamNative.SteamInventory inventory;
+
+        private Stopwatch fetchRetryTimer;
 
         private bool IsServer { get; set; }
 
@@ -214,12 +217,26 @@ namespace Facepunch.Steamworks
         }
 
         /// <summary>
-        /// Called every frame
+        /// No need to call this manually if you're calling Update
         /// </summary>
-        internal void Update()
+        public void Update()
         {
             if ( Definitions == null )
             {
+                //
+                // Don't try every frame, just try every 10 seconds.
+                //
+                {
+                    if ( fetchRetryTimer != null && fetchRetryTimer.Elapsed.TotalSeconds < 10.0f )
+                        return;
+
+                    if ( fetchRetryTimer == null )
+                        fetchRetryTimer = Stopwatch.StartNew();
+
+                    fetchRetryTimer.Reset();
+                    fetchRetryTimer.Start();
+                }
+
                 FetchItemDefinitions();
                 inventory.LoadItemDefinitions();
             }

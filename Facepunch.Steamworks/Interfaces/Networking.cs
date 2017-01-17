@@ -38,7 +38,10 @@ namespace Facepunch.Steamworks
         }
 
 
-        internal void Update()
+        /// <summary>
+        /// No need to call this manually if you're calling Update()
+        /// </summary>
+        public void Update()
         {
             if ( OnP2PData == null )
                 return;

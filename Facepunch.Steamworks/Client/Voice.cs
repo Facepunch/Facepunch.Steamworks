@@ -88,7 +88,10 @@ namespace Facepunch.Steamworks
             Marshal.FreeHGlobal( UncompressBuffer );
         }
 
-        internal void Update()
+        /// <summary>
+        /// This gets called inside Update - so there's no need to call this manually if you're calling update
+        /// </summary>
+        public void Update()
         {
             if ( OnCompressedData == null && OnUncompressedData == null )
                 return;

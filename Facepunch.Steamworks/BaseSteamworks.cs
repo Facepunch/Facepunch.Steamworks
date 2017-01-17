@@ -89,6 +89,14 @@ namespace Facepunch.Steamworks
 
             Networking.Update();
 
+            RunUpdateCallbacks();
+        }
+
+        /// <summary>
+        /// This gets called automatically in Update. Only call it manually if you know why you're doing it.
+        /// </summary>
+        public void RunUpdateCallbacks()
+        {
             if ( OnUpdate != null )
                 OnUpdate();
         }

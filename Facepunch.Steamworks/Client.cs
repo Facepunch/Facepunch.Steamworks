@@ -73,11 +73,18 @@ namespace Facepunch.Steamworks
             if ( !IsValid )
                 return;
 
-            native.api.SteamAPI_RunCallbacks();
-
+            RunCallbacks();
             Voice.Update();
 
             base.Update();            
+        }
+
+        /// <summary>
+        /// This is called in Update() - there's no need to call it manually unless you're running your own Update
+        /// </summary>
+        public void RunCallbacks()
+        {
+            native.api.SteamAPI_RunCallbacks();
         }
 
         /// <summary>
