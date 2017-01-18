@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using SteamNative;
 
 namespace Facepunch.Steamworks
 {
@@ -43,15 +44,12 @@ namespace Facepunch.Steamworks
                 item.VotesDown = details.VotesDown;
                 item.Modified = new DateTime( details.TimeUpdated );
                 item.Created = new DateTime( details.TimeCreated );
-                item.UpdateState();
 
                 return item;
             }
 
             public void Download( bool highPriority = true )
             {
-                UpdateState();
-
                 if ( Installed ) return;
                 if ( Downloading ) return;
 
@@ -63,8 +61,6 @@ namespace Facepunch.Steamworks
 
                 workshop.OnFileDownloaded += OnFileDownloaded;
                 workshop.OnItemInstalled += OnItemInstalled;
-                UpdateState();
-                Downloading = true;
             }
 
             private void OnFileDownloaded( ulong fileid, Callbacks.Result result )
@@ -72,10 +68,6 @@ namespace Facepunch.Steamworks
                 if ( fileid != Id ) return;
 
                 workshop.OnFileDownloaded -= OnFileDownloaded;
-                UpdateState();
-
-                if ( result == Callbacks.Result.OK )
-                    Downloading = false;
             }
 
             private void OnItemInstalled( ulong fileid )
@@ -83,10 +75,6 @@ namespace Facepunch.Steamworks
                 if ( fileid != Id ) return;
 
                 workshop.OnItemInstalled -= OnItemInstalled;
-                UpdateState();
-
-                Downloading = false;
-                Installed = true;
             }
 
             public ulong BytesDownloaded { get { UpdateDownloadProgress(); return _BytesDownloaded; } }
@@ -102,13 +90,46 @@ namespace Facepunch.Steamworks
                 }
             }
 
-            public bool Installed { get; private set; }
-            public bool Downloading { get; private set; }
-            public bool DownloadPending { get; private set; }
-            public bool Subscribed { get; private set; }
-            public bool NeedsUpdate { get; private set; }
+            public bool Installed { get { return ( State & ItemState.Installed ) != 0; } }
+            public bool Downloading { get { return ( State & ItemState.Downloading ) != 0; } }
+            public bool DownloadPending { get { return ( State & ItemState.DownloadPending ) != 0; } }
+            public bool Subscribed { get { return ( State & ItemState.Subscribed ) != 0; } }
+            public bool NeedsUpdate { get { return ( State & ItemState.NeedsUpdate ) != 0; } }
 
-            public DirectoryInfo Directory { get; private set; }
+            private SteamNative.ItemState State { get { return ( SteamNative.ItemState) workshop.ugc.GetItemState( Id ); } }
+
+
+            private DirectoryInfo _directory;
+
+            public DirectoryInfo Directory
+            {
+                get
+                {
+                    if ( _directory != null )
+                        return _directory;
+
+                    if ( !Installed )
+                        return null;
+
+                    ulong sizeOnDisk;
+                    string folder;
+                    uint timestamp;
+
+                    if ( workshop.ugc.GetItemInstallInfo( Id, out sizeOnDisk, out folder, out timestamp ) )
+                    {
+                        _directory = new DirectoryInfo( folder );
+                        Size = sizeOnDisk;
+
+                        if ( !_directory.Exists )
+                        {
+                         //   Size = 0;
+                         //   _directory = null;
+                        }
+                    }
+
+                    return _directory;
+                }
+            }
 
             public ulong Size { get; private set; }
 
@@ -118,40 +139,6 @@ namespace Facepunch.Steamworks
             {
                workshop.ugc.GetItemDownloadInfo( Id, out _BytesDownloaded, out _BytesTotal );
             }
-
-            internal void UpdateState()
-            {
-                var state = workshop.ugc.GetItemState( Id );
-
-                Installed = ( state & (uint)SteamNative.ItemState.Installed ) != 0;
-                Downloading = ( state & (uint)SteamNative.ItemState.Downloading ) != 0;
-                DownloadPending = ( state & (uint)SteamNative.ItemState.DownloadPending ) != 0;
-                Subscribed = ( state & (uint)SteamNative.ItemState.Subscribed ) != 0;
-                NeedsUpdate = ( state & (uint)SteamNative.ItemState.NeedsUpdate ) != 0;
-
-                if ( Installed && Directory == null )
-                {
-                    Size = 0;
-                    Directory = null;
-
-                    ulong sizeOnDisk;
-                    string folder;
-                    uint timestamp;
-                    if ( workshop.ugc.GetItemInstallInfo( Id, out sizeOnDisk, out folder, out timestamp ) )
-                    {
-                        Directory = new DirectoryInfo( folder );
-                        Size = sizeOnDisk;
-
-                        if ( !Directory.Exists )
-                        {
-                            Size = 0;
-                            Directory = null;
-                            Installed = false;
-                        }
-                    }
-                }
-            }
-
 
             private int YourVote = 0;
 

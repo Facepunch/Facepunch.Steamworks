@@ -394,13 +394,13 @@ namespace Facepunch.Steamworks.Test
             {
                 Assert.IsTrue( client.IsValid );
 
-                var item = client.Workshop.GetItem( 787387588 );
+                var item = client.Workshop.GetItem( 844466101 );
 
                 if ( !item.Installed )
                 {
                     item.Download();
 
-                    while ( item.Downloading )
+                    while ( !item.Installed )
                     {
                         Thread.Sleep( 500 );
                         client.Update();
