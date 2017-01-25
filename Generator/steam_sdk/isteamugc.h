@@ -314,11 +314,11 @@ public:
 	virtual void SuspendDownloads( bool bSuspend ) = 0;
 
 	// usage tracking
-	CALL_RESULT( StartPlaytimeTrackingResult_t );
+	CALL_RESULT( StartPlaytimeTrackingResult_t )
 	virtual SteamAPICall_t StartPlaytimeTracking( PublishedFileId_t *pvecPublishedFileID, uint32 unNumPublishedFileIDs ) = 0;
-	CALL_RESULT( StopPlaytimeTrackingResult_t );
+	CALL_RESULT( StopPlaytimeTrackingResult_t )
 	virtual SteamAPICall_t StopPlaytimeTracking( PublishedFileId_t *pvecPublishedFileID, uint32 unNumPublishedFileIDs ) = 0;
-	CALL_RESULT( StopPlaytimeTrackingResult_t );
+	CALL_RESULT( StopPlaytimeTrackingResult_t )
 	virtual SteamAPICall_t StopPlaytimeTrackingForAllItems() = 0;
 };
 

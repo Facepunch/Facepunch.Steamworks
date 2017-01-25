@@ -951,6 +951,10 @@ internal static extern void SteamAPI_ISteamController_StopAnalogActionMomentum(I
 internal static extern void SteamAPI_ISteamController_TriggerHapticPulse(IntPtr instancePtr, ulong controllerHandle, uint eTargetPad, char usDurationMicroSec);
 [DllImportAttribute("Steam_api", EntryPoint = "SteamAPI_ISteamController_TriggerRepeatedHapticPulse")]
 internal static extern void SteamAPI_ISteamController_TriggerRepeatedHapticPulse(IntPtr instancePtr, ulong controllerHandle, uint eTargetPad, char usDurationMicroSec, char usOffMicroSec, char unRepeat, uint nFlags);
+[DllImportAttribute("Steam_api", EntryPoint = "SteamAPI_ISteamController_TriggerVibration")]
+internal static extern void SteamAPI_ISteamController_TriggerVibration(IntPtr instancePtr, ulong controllerHandle, char usLeftSpeed, char usRightSpeed);
+[DllImportAttribute("Steam_api", EntryPoint = "SteamAPI_ISteamController_SetLEDColor")]
+internal static extern void SteamAPI_ISteamController_SetLEDColor(IntPtr instancePtr, ulong controllerHandle, byte nColorR, byte nColorG, byte nColorB, uint nFlags);
 [DllImportAttribute("Steam_api", EntryPoint = "SteamAPI_ISteamController_GetGamepadIndexForController")]
 internal static extern int SteamAPI_ISteamController_GetGamepadIndexForController(IntPtr instancePtr, ulong ulControllerHandle);
 [DllImportAttribute("Steam_api", EntryPoint = "SteamAPI_ISteamController_GetControllerForGamepadIndex")]
@@ -961,6 +965,10 @@ internal static extern ControllerMotionData_t SteamAPI_ISteamController_GetMotio
 internal static extern bool SteamAPI_ISteamController_ShowDigitalActionOrigins(IntPtr instancePtr, ulong controllerHandle, ulong digitalActionHandle, float flScale, float flXPosition, float flYPosition);
 [DllImportAttribute("Steam_api", EntryPoint = "SteamAPI_ISteamController_ShowAnalogActionOrigins")]
 internal static extern bool SteamAPI_ISteamController_ShowAnalogActionOrigins(IntPtr instancePtr, ulong controllerHandle, ulong analogActionHandle, float flScale, float flXPosition, float flYPosition);
+[DllImportAttribute("Steam_api", EntryPoint = "SteamAPI_ISteamController_GetStringForActionOrigin")]
+internal static extern IntPtr SteamAPI_ISteamController_GetStringForActionOrigin(IntPtr instancePtr, uint eOrigin);
+[DllImportAttribute("Steam_api", EntryPoint = "SteamAPI_ISteamController_GetGlyphForActionOrigin")]
+internal static extern IntPtr SteamAPI_ISteamController_GetGlyphForActionOrigin(IntPtr instancePtr, uint eOrigin);
 [DllImportAttribute("Steam_api", EntryPoint = "SteamAPI_ISteamUGC_CreateQueryUserUGCRequest")]
 internal static extern ulong SteamAPI_ISteamUGC_CreateQueryUserUGCRequest(IntPtr instancePtr, uint unAccountID, uint eListType, uint eMatchingUGCType, uint eSortOrder, uint nCreatorAppID, uint nConsumerAppID, uint unPage);
 [DllImportAttribute("Steam_api", EntryPoint = "SteamAPI_ISteamUGC_CreateQueryAllUGCRequest")]
@@ -1219,6 +1227,10 @@ internal static extern bool SteamAPI_ISteamInventory_LoadItemDefinitions(IntPtr 
 internal static extern bool SteamAPI_ISteamInventory_GetItemDefinitionIDs(IntPtr instancePtr,  [In, Out] int[] pItemDefIDs, ref uint punItemDefIDsArraySize);
 [DllImportAttribute("Steam_api", EntryPoint = "SteamAPI_ISteamInventory_GetItemDefinitionProperty")]
 internal static extern bool SteamAPI_ISteamInventory_GetItemDefinitionProperty(IntPtr instancePtr, int iDefinition, string pchPropertyName, System.Text.StringBuilder pchValueBuffer, ref uint punValueBufferSizeOut);
+[DllImportAttribute("Steam_api", EntryPoint = "SteamAPI_ISteamInventory_RequestEligiblePromoItemDefinitionsIDs")]
+internal static extern ulong SteamAPI_ISteamInventory_RequestEligiblePromoItemDefinitionsIDs(IntPtr instancePtr, ulong steamID);
+[DllImportAttribute("Steam_api", EntryPoint = "SteamAPI_ISteamInventory_GetEligiblePromoItemDefinitionIDs")]
+internal static extern bool SteamAPI_ISteamInventory_GetEligiblePromoItemDefinitionIDs(IntPtr instancePtr, ulong steamID,  [In, Out] int[] pItemDefIDs, ref uint punItemDefIDsArraySize);
 [DllImportAttribute("Steam_api", EntryPoint = "SteamAPI_ISteamVideo_GetVideoURL")]
 internal static extern void SteamAPI_ISteamVideo_GetVideoURL(IntPtr instancePtr, uint unVideoAppID);
 [DllImportAttribute("Steam_api", EntryPoint = "SteamAPI_ISteamVideo_IsBroadcasting")]
@@ -1356,11 +1368,11 @@ public delegate void SteamAPI_GSStatsStored_t_CallResult(GSStatsStored_t pGSStat
 public static extern ulong CGSStatsStored_t_SetCallResult(ulong hAPICall, SteamAPI_GSStatsStored_t_CallResult func);
 [DllImportAttribute("Steam_api", EntryPoint = "CGSStatsStored_t_RemoveCallResult")]
 public static extern ulong CGSStatsStored_t_RemoveCallResult(ulong handle);
-public delegate void SteamAPI_HTML_BrowserReady_t_CallResult(HTML_BrowserReady_t pHTML_BrowserReady_t, bool bIOFailure);
-[DllImportAttribute("Steam_api", EntryPoint = "CHTML_BrowserReady_t_SetCallResult")]
-public static extern ulong CHTML_BrowserReady_t_SetCallResult(ulong hAPICall, SteamAPI_HTML_BrowserReady_t_CallResult func);
-[DllImportAttribute("Steam_api", EntryPoint = "CHTML_BrowserReady_t_RemoveCallResult")]
-public static extern ulong CHTML_BrowserReady_t_RemoveCallResult(ulong handle);
+public delegate void SteamAPI_StartPlaytimeTrackingResult_t_CallResult(StartPlaytimeTrackingResult_t pStartPlaytimeTrackingResult_t, bool bIOFailure);
+[DllImportAttribute("Steam_api", EntryPoint = "CStartPlaytimeTrackingResult_t_SetCallResult")]
+public static extern ulong CStartPlaytimeTrackingResult_t_SetCallResult(ulong hAPICall, SteamAPI_StartPlaytimeTrackingResult_t_CallResult func);
+[DllImportAttribute("Steam_api", EntryPoint = "CStartPlaytimeTrackingResult_t_RemoveCallResult")]
+public static extern ulong CStartPlaytimeTrackingResult_t_RemoveCallResult(ulong handle);
 public delegate void SteamAPI_FriendsGetFollowerCount_t_CallResult(FriendsGetFollowerCount_t pFriendsGetFollowerCount_t, bool bIOFailure);
 [DllImportAttribute("Steam_api", EntryPoint = "CFriendsGetFollowerCount_t_SetCallResult")]
 public static extern ulong CFriendsGetFollowerCount_t_SetCallResult(ulong hAPICall, SteamAPI_FriendsGetFollowerCount_t_CallResult func);
@@ -1441,6 +1453,11 @@ public delegate void SteamAPI_GSStatsReceived_t_CallResult(GSStatsReceived_t pGS
 public static extern ulong CGSStatsReceived_t_SetCallResult(ulong hAPICall, SteamAPI_GSStatsReceived_t_CallResult func);
 [DllImportAttribute("Steam_api", EntryPoint = "CGSStatsReceived_t_RemoveCallResult")]
 public static extern ulong CGSStatsReceived_t_RemoveCallResult(ulong handle);
+public delegate void SteamAPI_HTML_BrowserReady_t_CallResult(HTML_BrowserReady_t pHTML_BrowserReady_t, bool bIOFailure);
+[DllImportAttribute("Steam_api", EntryPoint = "CHTML_BrowserReady_t_SetCallResult")]
+public static extern ulong CHTML_BrowserReady_t_SetCallResult(ulong hAPICall, SteamAPI_HTML_BrowserReady_t_CallResult func);
+[DllImportAttribute("Steam_api", EntryPoint = "CHTML_BrowserReady_t_RemoveCallResult")]
+public static extern ulong CHTML_BrowserReady_t_RemoveCallResult(ulong handle);
 public delegate void SteamAPI_LeaderboardScoresDownloaded_t_CallResult(LeaderboardScoresDownloaded_t pLeaderboardScoresDownloaded_t, bool bIOFailure);
 [DllImportAttribute("Steam_api", EntryPoint = "CLeaderboardScoresDownloaded_t_SetCallResult")]
 public static extern ulong CLeaderboardScoresDownloaded_t_SetCallResult(ulong hAPICall, SteamAPI_LeaderboardScoresDownloaded_t_CallResult func);
@@ -1526,6 +1543,11 @@ public delegate void SteamAPI_RemoteStorageSetUserPublishedFileActionResult_t_Ca
 public static extern ulong CRemoteStorageSetUserPublishedFileActionResult_t_SetCallResult(ulong hAPICall, SteamAPI_RemoteStorageSetUserPublishedFileActionResult_t_CallResult func);
 [DllImportAttribute("Steam_api", EntryPoint = "CRemoteStorageSetUserPublishedFileActionResult_t_RemoveCallResult")]
 public static extern ulong CRemoteStorageSetUserPublishedFileActionResult_t_RemoveCallResult(ulong handle);
+public delegate void SteamAPI_StopPlaytimeTrackingResult_t_CallResult(StopPlaytimeTrackingResult_t pStopPlaytimeTrackingResult_t, bool bIOFailure);
+[DllImportAttribute("Steam_api", EntryPoint = "CStopPlaytimeTrackingResult_t_SetCallResult")]
+public static extern ulong CStopPlaytimeTrackingResult_t_SetCallResult(ulong hAPICall, SteamAPI_StopPlaytimeTrackingResult_t_CallResult func);
+[DllImportAttribute("Steam_api", EntryPoint = "CStopPlaytimeTrackingResult_t_RemoveCallResult")]
+public static extern ulong CStopPlaytimeTrackingResult_t_RemoveCallResult(ulong handle);
 public delegate void SteamAPI_RemoteStorageEnumerateUserPublishedFilesResult_t_CallResult(RemoteStorageEnumerateUserPublishedFilesResult_t pRemoteStorageEnumerateUserPublishedFilesResult_t, bool bIOFailure);
 [DllImportAttribute("Steam_api", EntryPoint = "CRemoteStorageEnumerateUserPublishedFilesResult_t_SetCallResult")]
 public static extern ulong CRemoteStorageEnumerateUserPublishedFilesResult_t_SetCallResult(ulong hAPICall, SteamAPI_RemoteStorageEnumerateUserPublishedFilesResult_t_CallResult func);
@@ -1576,6 +1598,11 @@ public delegate void SteamAPI_UserStatsReceived_t_CallResult(UserStatsReceived_t
 public static extern ulong CUserStatsReceived_t_SetCallResult(ulong hAPICall, SteamAPI_UserStatsReceived_t_CallResult func);
 [DllImportAttribute("Steam_api", EntryPoint = "CUserStatsReceived_t_RemoveCallResult")]
 public static extern ulong CUserStatsReceived_t_RemoveCallResult(ulong handle);
+public delegate void SteamAPI_SteamInventoryEligiblePromoItemDefIDs_t_CallResult(SteamInventoryEligiblePromoItemDefIDs_t pSteamInventoryEligiblePromoItemDefIDs_t, bool bIOFailure);
+[DllImportAttribute("Steam_api", EntryPoint = "CSteamInventoryEligiblePromoItemDefIDs_t_SetCallResult")]
+public static extern ulong CSteamInventoryEligiblePromoItemDefIDs_t_SetCallResult(ulong hAPICall, SteamAPI_SteamInventoryEligiblePromoItemDefIDs_t_CallResult func);
+[DllImportAttribute("Steam_api", EntryPoint = "CSteamInventoryEligiblePromoItemDefIDs_t_RemoveCallResult")]
+public static extern ulong CSteamInventoryEligiblePromoItemDefIDs_t_RemoveCallResult(ulong handle);
 public delegate void SteamAPI_JoinClanChatRoomCompletionResult_t_CallResult(JoinClanChatRoomCompletionResult_t pJoinClanChatRoomCompletionResult_t, bool bIOFailure);
 [DllImportAttribute("Steam_api", EntryPoint = "CJoinClanChatRoomCompletionResult_t_SetCallResult")]
 public static extern ulong CJoinClanChatRoomCompletionResult_t_SetCallResult(ulong hAPICall, SteamAPI_JoinClanChatRoomCompletionResult_t_CallResult func);
@@ -2178,11 +2205,15 @@ namespace Valve.Steamworks
 		public abstract void StopAnalogActionMomentum(ulong controllerHandle,ulong eAction);
 		public abstract void TriggerHapticPulse(ulong controllerHandle,uint eTargetPad,char usDurationMicroSec);
 		public abstract void TriggerRepeatedHapticPulse(ulong controllerHandle,uint eTargetPad,char usDurationMicroSec,char usOffMicroSec,char unRepeat,uint nFlags);
+		public abstract void TriggerVibration(ulong controllerHandle,char usLeftSpeed,char usRightSpeed);
+		public abstract void SetLEDColor(ulong controllerHandle,byte nColorR,byte nColorG,byte nColorB,uint nFlags);
 		public abstract int GetGamepadIndexForController(ulong ulControllerHandle);
 		public abstract ulong GetControllerForGamepadIndex(int nIndex);
 		public abstract ControllerMotionData_t GetMotionData(ulong controllerHandle);
 		public abstract bool ShowDigitalActionOrigins(ulong controllerHandle,ulong digitalActionHandle,float flScale,float flXPosition,float flYPosition);
 		public abstract bool ShowAnalogActionOrigins(ulong controllerHandle,ulong analogActionHandle,float flScale,float flXPosition,float flYPosition);
+		public abstract string GetStringForActionOrigin(uint eOrigin);
+		public abstract string GetGlyphForActionOrigin(uint eOrigin);
 	}
 
 
@@ -2336,6 +2367,8 @@ namespace Valve.Steamworks
 		public abstract bool LoadItemDefinitions();
 		public abstract bool GetItemDefinitionIDs(out int [] pItemDefIDs);
 		public abstract bool GetItemDefinitionProperty(int iDefinition,string pchPropertyName,out string pchValueBuffer);
+		public abstract ulong RequestEligiblePromoItemDefinitionsIDs(ulong steamID);
+		public abstract bool GetEligiblePromoItemDefinitionIDs(ulong steamID,out int [] pItemDefIDs);
 	}
 
 
@@ -5635,6 +5668,16 @@ public override void TriggerRepeatedHapticPulse(ulong controllerHandle,uint eTar
 	CheckIfUsable();
 	NativeEntrypoints.SteamAPI_ISteamController_TriggerRepeatedHapticPulse(m_pSteamController,controllerHandle,eTargetPad,usDurationMicroSec,usOffMicroSec,unRepeat,nFlags);
 }
+public override void TriggerVibration(ulong controllerHandle,char usLeftSpeed,char usRightSpeed)
+{
+	CheckIfUsable();
+	NativeEntrypoints.SteamAPI_ISteamController_TriggerVibration(m_pSteamController,controllerHandle,usLeftSpeed,usRightSpeed);
+}
+public override void SetLEDColor(ulong controllerHandle,byte nColorR,byte nColorG,byte nColorB,uint nFlags)
+{
+	CheckIfUsable();
+	NativeEntrypoints.SteamAPI_ISteamController_SetLEDColor(m_pSteamController,controllerHandle,nColorR,nColorG,nColorB,nFlags);
+}
 public override int GetGamepadIndexForController(ulong ulControllerHandle)
 {
 	CheckIfUsable();
@@ -5664,6 +5707,18 @@ public override bool ShowAnalogActionOrigins(ulong controllerHandle,ulong analog
 	CheckIfUsable();
 	bool result = NativeEntrypoints.SteamAPI_ISteamController_ShowAnalogActionOrigins(m_pSteamController,controllerHandle,analogActionHandle,flScale,flXPosition,flYPosition);
 	return result;
+}
+public override string GetStringForActionOrigin(uint eOrigin)
+{
+	CheckIfUsable();
+	IntPtr result = NativeEntrypoints.SteamAPI_ISteamController_GetStringForActionOrigin(m_pSteamController,eOrigin);
+	return Marshal.PtrToStringAnsi(result);
+}
+public override string GetGlyphForActionOrigin(uint eOrigin)
+{
+	CheckIfUsable();
+	IntPtr result = NativeEntrypoints.SteamAPI_ISteamController_GetGlyphForActionOrigin(m_pSteamController,eOrigin);
+	return Marshal.PtrToStringAnsi(result);
 }
 }
 
@@ -6535,6 +6590,21 @@ public override bool GetItemDefinitionProperty(int iDefinition,string pchPropert
 	pchValueBuffer  = pStrBuffer1.ToString();
 	return result;
 }
+public override ulong RequestEligiblePromoItemDefinitionsIDs(ulong steamID)
+{
+	CheckIfUsable();
+	ulong result = NativeEntrypoints.SteamAPI_ISteamInventory_RequestEligiblePromoItemDefinitionsIDs(m_pSteamInventory,steamID);
+	return result;
+}
+public override bool GetEligiblePromoItemDefinitionIDs(ulong steamID,out int [] pItemDefIDs)
+{
+	CheckIfUsable();
+	uint punItemDefIDsArraySize = 0;
+	bool result = NativeEntrypoints.SteamAPI_ISteamInventory_GetEligiblePromoItemDefinitionIDs(m_pSteamInventory,steamID,null,ref punItemDefIDsArraySize);
+	pItemDefIDs= new int[punItemDefIDsArraySize];
+	 result = NativeEntrypoints.SteamAPI_ISteamInventory_GetEligiblePromoItemDefinitionIDs(m_pSteamInventory,steamID,pItemDefIDs,ref punItemDefIDsArraySize);
+	return result;
+}
 }
 
 
@@ -7014,24 +7084,24 @@ public class CGSStatsStored_t_CallResult
 		m_Handle = Valve.Interop.NativeEntrypoints.CGSStatsStored_t_SetCallResult(hAPICall, func);
   }
 }
-public class CHTML_BrowserReady_t_CallResult
+public class CStartPlaytimeTrackingResult_t_CallResult
 {
-	public CHTML_BrowserReady_t_CallResult() { }
-	~CHTML_BrowserReady_t_CallResult()
+	public CStartPlaytimeTrackingResult_t_CallResult() { }
+	~CStartPlaytimeTrackingResult_t_CallResult()
 	{
 		if(m_Handle != 0)
 		{
-			Valve.Interop.NativeEntrypoints.CHTML_BrowserReady_t_RemoveCallResult(m_Handle);
+			Valve.Interop.NativeEntrypoints.CStartPlaytimeTrackingResult_t_RemoveCallResult(m_Handle);
        }
 	}
 	ulong m_Handle = 0;
-	public void Set(ulong hAPICall, Valve.Interop.NativeEntrypoints.SteamAPI_HTML_BrowserReady_t_CallResult func)
+	public void Set(ulong hAPICall, Valve.Interop.NativeEntrypoints.SteamAPI_StartPlaytimeTrackingResult_t_CallResult func)
 	{
 		if (m_Handle != 0)
 		{
-			Valve.Interop.NativeEntrypoints.CHTML_BrowserReady_t_RemoveCallResult(m_Handle);
+			Valve.Interop.NativeEntrypoints.CStartPlaytimeTrackingResult_t_RemoveCallResult(m_Handle);
 		}
-		m_Handle = Valve.Interop.NativeEntrypoints.CHTML_BrowserReady_t_SetCallResult(hAPICall, func);
+		m_Handle = Valve.Interop.NativeEntrypoints.CStartPlaytimeTrackingResult_t_SetCallResult(hAPICall, func);
   }
 }
 public class CFriendsGetFollowerCount_t_CallResult
@@ -7352,6 +7422,26 @@ public class CGSStatsReceived_t_CallResult
 			Valve.Interop.NativeEntrypoints.CGSStatsReceived_t_RemoveCallResult(m_Handle);
 		}
 		m_Handle = Valve.Interop.NativeEntrypoints.CGSStatsReceived_t_SetCallResult(hAPICall, func);
+  }
+}
+public class CHTML_BrowserReady_t_CallResult
+{
+	public CHTML_BrowserReady_t_CallResult() { }
+	~CHTML_BrowserReady_t_CallResult()
+	{
+		if(m_Handle != 0)
+		{
+			Valve.Interop.NativeEntrypoints.CHTML_BrowserReady_t_RemoveCallResult(m_Handle);
+       }
+	}
+	ulong m_Handle = 0;
+	public void Set(ulong hAPICall, Valve.Interop.NativeEntrypoints.SteamAPI_HTML_BrowserReady_t_CallResult func)
+	{
+		if (m_Handle != 0)
+		{
+			Valve.Interop.NativeEntrypoints.CHTML_BrowserReady_t_RemoveCallResult(m_Handle);
+		}
+		m_Handle = Valve.Interop.NativeEntrypoints.CHTML_BrowserReady_t_SetCallResult(hAPICall, func);
   }
 }
 public class CLeaderboardScoresDownloaded_t_CallResult
@@ -7694,6 +7784,26 @@ public class CRemoteStorageSetUserPublishedFileActionResult_t_CallResult
 		m_Handle = Valve.Interop.NativeEntrypoints.CRemoteStorageSetUserPublishedFileActionResult_t_SetCallResult(hAPICall, func);
   }
 }
+public class CStopPlaytimeTrackingResult_t_CallResult
+{
+	public CStopPlaytimeTrackingResult_t_CallResult() { }
+	~CStopPlaytimeTrackingResult_t_CallResult()
+	{
+		if(m_Handle != 0)
+		{
+			Valve.Interop.NativeEntrypoints.CStopPlaytimeTrackingResult_t_RemoveCallResult(m_Handle);
+       }
+	}
+	ulong m_Handle = 0;
+	public void Set(ulong hAPICall, Valve.Interop.NativeEntrypoints.SteamAPI_StopPlaytimeTrackingResult_t_CallResult func)
+	{
+		if (m_Handle != 0)
+		{
+			Valve.Interop.NativeEntrypoints.CStopPlaytimeTrackingResult_t_RemoveCallResult(m_Handle);
+		}
+		m_Handle = Valve.Interop.NativeEntrypoints.CStopPlaytimeTrackingResult_t_SetCallResult(hAPICall, func);
+  }
+}
 public class CRemoteStorageEnumerateUserPublishedFilesResult_t_CallResult
 {
 	public CRemoteStorageEnumerateUserPublishedFilesResult_t_CallResult() { }
@@ -7892,6 +8002,26 @@ public class CUserStatsReceived_t_CallResult
 			Valve.Interop.NativeEntrypoints.CUserStatsReceived_t_RemoveCallResult(m_Handle);
 		}
 		m_Handle = Valve.Interop.NativeEntrypoints.CUserStatsReceived_t_SetCallResult(hAPICall, func);
+  }
+}
+public class CSteamInventoryEligiblePromoItemDefIDs_t_CallResult
+{
+	public CSteamInventoryEligiblePromoItemDefIDs_t_CallResult() { }
+	~CSteamInventoryEligiblePromoItemDefIDs_t_CallResult()
+	{
+		if(m_Handle != 0)
+		{
+			Valve.Interop.NativeEntrypoints.CSteamInventoryEligiblePromoItemDefIDs_t_RemoveCallResult(m_Handle);
+       }
+	}
+	ulong m_Handle = 0;
+	public void Set(ulong hAPICall, Valve.Interop.NativeEntrypoints.SteamAPI_SteamInventoryEligiblePromoItemDefIDs_t_CallResult func)
+	{
+		if (m_Handle != 0)
+		{
+			Valve.Interop.NativeEntrypoints.CSteamInventoryEligiblePromoItemDefIDs_t_RemoveCallResult(m_Handle);
+		}
+		m_Handle = Valve.Interop.NativeEntrypoints.CSteamInventoryEligiblePromoItemDefIDs_t_SetCallResult(hAPICall, func);
   }
 }
 public class CJoinClanChatRoomCompletionResult_t_CallResult
@@ -8358,20 +8488,6 @@ public enum EVRHMDType
 	k_eEVRHMDType_Oculus_Rift = 23,
 	k_eEVRHMDType_Oculus_Unknown = 40,
 }
-public enum EControllerType
-{
-	k_eControllerType_None = -1,
-	k_eControllerType_Unknown = 0,
-	k_eControllerType_UnknownSteamController = 1,
-	k_eControllerType_SteamController = 2,
-	k_eControllerType_UnknownNonSteamController = 30,
-	k_eControllerType_XBox360Controller = 31,
-	k_eControllerType_XBoxOneController = 32,
-	k_eControllerType_PS3Controller = 33,
-	k_eControllerType_PS4Controller = 34,
-	k_eControllerType_WiiController = 35,
-	k_eControllerType_AppleController = 36,
-}
 public enum EFailureType
 {
 	k_EFailureFlushedCallbackQueue = 0,
@@ -8412,7 +8528,6 @@ public enum EFriendFlags
 	k_EFriendFlagRequestingInfo = 256,
 	k_EFriendFlagIgnored = 512,
 	k_EFriendFlagIgnoredFriend = 1024,
-	k_EFriendFlagSuggested = 2048,
 	k_EFriendFlagChatMember = 4096,
 	k_EFriendFlagAll = 65535,
 }
@@ -8743,7 +8858,10 @@ public enum EControllerSource
 	k_EControllerSource_LeftTrigger = 6,
 	k_EControllerSource_RightTrigger = 7,
 	k_EControllerSource_Gyro = 8,
-	k_EControllerSource_Count = 9,
+	k_EControllerSource_CenterTrackpad = 9,
+	k_EControllerSource_RightJoystick = 10,
+	k_EControllerSource_DPad = 11,
+	k_EControllerSource_Count = 12,
 }
 public enum EControllerSourceMode
 {
@@ -8754,14 +8872,15 @@ public enum EControllerSourceMode
 	k_EControllerSourceMode_AbsoluteMouse = 4,
 	k_EControllerSourceMode_RelativeMouse = 5,
 	k_EControllerSourceMode_JoystickMove = 6,
-	k_EControllerSourceMode_JoystickCamera = 7,
-	k_EControllerSourceMode_ScrollWheel = 8,
-	k_EControllerSourceMode_Trigger = 9,
-	k_EControllerSourceMode_TouchMenu = 10,
-	k_EControllerSourceMode_MouseJoystick = 11,
-	k_EControllerSourceMode_MouseRegion = 12,
-	k_EControllerSourceMode_RadialMenu = 13,
-	k_EControllerSourceMode_Switches = 14,
+	k_EControllerSourceMode_JoystickMouse = 7,
+	k_EControllerSourceMode_JoystickCamera = 8,
+	k_EControllerSourceMode_ScrollWheel = 9,
+	k_EControllerSourceMode_Trigger = 10,
+	k_EControllerSourceMode_TouchMenu = 11,
+	k_EControllerSourceMode_MouseJoystick = 12,
+	k_EControllerSourceMode_MouseRegion = 13,
+	k_EControllerSourceMode_RadialMenu = 14,
+	k_EControllerSourceMode_Switches = 15,
 }
 public enum EControllerActionOrigin
 {
@@ -8804,62 +8923,159 @@ public enum EControllerActionOrigin
 	k_EControllerActionOrigin_Gyro_Pitch = 36,
 	k_EControllerActionOrigin_Gyro_Yaw = 37,
 	k_EControllerActionOrigin_Gyro_Roll = 38,
-	k_EControllerActionOrigin_Count = 39,
+	k_EControllerActionOrigin_PS4_X = 39,
+	k_EControllerActionOrigin_PS4_Circle = 40,
+	k_EControllerActionOrigin_PS4_Triangle = 41,
+	k_EControllerActionOrigin_PS4_Square = 42,
+	k_EControllerActionOrigin_PS4_LeftBumper = 43,
+	k_EControllerActionOrigin_PS4_RightBumper = 44,
+	k_EControllerActionOrigin_PS4_Options = 45,
+	k_EControllerActionOrigin_PS4_Share = 46,
+	k_EControllerActionOrigin_PS4_LeftPad_Touch = 47,
+	k_EControllerActionOrigin_PS4_LeftPad_Swipe = 48,
+	k_EControllerActionOrigin_PS4_LeftPad_Click = 49,
+	k_EControllerActionOrigin_PS4_LeftPad_DPadNorth = 50,
+	k_EControllerActionOrigin_PS4_LeftPad_DPadSouth = 51,
+	k_EControllerActionOrigin_PS4_LeftPad_DPadWest = 52,
+	k_EControllerActionOrigin_PS4_LeftPad_DPadEast = 53,
+	k_EControllerActionOrigin_PS4_RightPad_Touch = 54,
+	k_EControllerActionOrigin_PS4_RightPad_Swipe = 55,
+	k_EControllerActionOrigin_PS4_RightPad_Click = 56,
+	k_EControllerActionOrigin_PS4_RightPad_DPadNorth = 57,
+	k_EControllerActionOrigin_PS4_RightPad_DPadSouth = 58,
+	k_EControllerActionOrigin_PS4_RightPad_DPadWest = 59,
+	k_EControllerActionOrigin_PS4_RightPad_DPadEast = 60,
+	k_EControllerActionOrigin_PS4_CenterPad_Touch = 61,
+	k_EControllerActionOrigin_PS4_CenterPad_Swipe = 62,
+	k_EControllerActionOrigin_PS4_CenterPad_Click = 63,
+	k_EControllerActionOrigin_PS4_CenterPad_DPadNorth = 64,
+	k_EControllerActionOrigin_PS4_CenterPad_DPadSouth = 65,
+	k_EControllerActionOrigin_PS4_CenterPad_DPadWest = 66,
+	k_EControllerActionOrigin_PS4_CenterPad_DPadEast = 67,
+	k_EControllerActionOrigin_PS4_LeftTrigger_Pull = 68,
+	k_EControllerActionOrigin_PS4_LeftTrigger_Click = 69,
+	k_EControllerActionOrigin_PS4_RightTrigger_Pull = 70,
+	k_EControllerActionOrigin_PS4_RightTrigger_Click = 71,
+	k_EControllerActionOrigin_PS4_LeftStick_Move = 72,
+	k_EControllerActionOrigin_PS4_LeftStick_Click = 73,
+	k_EControllerActionOrigin_PS4_LeftStick_DPadNorth = 74,
+	k_EControllerActionOrigin_PS4_LeftStick_DPadSouth = 75,
+	k_EControllerActionOrigin_PS4_LeftStick_DPadWest = 76,
+	k_EControllerActionOrigin_PS4_LeftStick_DPadEast = 77,
+	k_EControllerActionOrigin_PS4_RightStick_Move = 78,
+	k_EControllerActionOrigin_PS4_RightStick_Click = 79,
+	k_EControllerActionOrigin_PS4_RightStick_DPadNorth = 80,
+	k_EControllerActionOrigin_PS4_RightStick_DPadSouth = 81,
+	k_EControllerActionOrigin_PS4_RightStick_DPadWest = 82,
+	k_EControllerActionOrigin_PS4_RightStick_DPadEast = 83,
+	k_EControllerActionOrigin_PS4_DPad_North = 84,
+	k_EControllerActionOrigin_PS4_DPad_South = 85,
+	k_EControllerActionOrigin_PS4_DPad_West = 86,
+	k_EControllerActionOrigin_PS4_DPad_East = 87,
+	k_EControllerActionOrigin_PS4_Gyro_Move = 88,
+	k_EControllerActionOrigin_PS4_Gyro_Pitch = 89,
+	k_EControllerActionOrigin_PS4_Gyro_Yaw = 90,
+	k_EControllerActionOrigin_PS4_Gyro_Roll = 91,
+	k_EControllerActionOrigin_XBoxOne_A = 92,
+	k_EControllerActionOrigin_XBoxOne_B = 93,
+	k_EControllerActionOrigin_XBoxOne_X = 94,
+	k_EControllerActionOrigin_XBoxOne_Y = 95,
+	k_EControllerActionOrigin_XBoxOne_LeftBumper = 96,
+	k_EControllerActionOrigin_XBoxOne_RightBumper = 97,
+	k_EControllerActionOrigin_XBoxOne_Menu = 98,
+	k_EControllerActionOrigin_XBoxOne_View = 99,
+	k_EControllerActionOrigin_XBoxOne_LeftTrigger_Pull = 100,
+	k_EControllerActionOrigin_XBoxOne_LeftTrigger_Click = 101,
+	k_EControllerActionOrigin_XBoxOne_RightTrigger_Pull = 102,
+	k_EControllerActionOrigin_XBoxOne_RightTrigger_Click = 103,
+	k_EControllerActionOrigin_XBoxOne_LeftStick_Move = 104,
+	k_EControllerActionOrigin_XBoxOne_LeftStick_Click = 105,
+	k_EControllerActionOrigin_XBoxOne_LeftStick_DPadNorth = 106,
+	k_EControllerActionOrigin_XBoxOne_LeftStick_DPadSouth = 107,
+	k_EControllerActionOrigin_XBoxOne_LeftStick_DPadWest = 108,
+	k_EControllerActionOrigin_XBoxOne_LeftStick_DPadEast = 109,
+	k_EControllerActionOrigin_XBoxOne_RightStick_Move = 110,
+	k_EControllerActionOrigin_XBoxOne_RightStick_Click = 111,
+	k_EControllerActionOrigin_XBoxOne_RightStick_DPadNorth = 112,
+	k_EControllerActionOrigin_XBoxOne_RightStick_DPadSouth = 113,
+	k_EControllerActionOrigin_XBoxOne_RightStick_DPadWest = 114,
+	k_EControllerActionOrigin_XBoxOne_RightStick_DPadEast = 115,
+	k_EControllerActionOrigin_XBoxOne_DPad_North = 116,
+	k_EControllerActionOrigin_XBoxOne_DPad_South = 117,
+	k_EControllerActionOrigin_XBoxOne_DPad_West = 118,
+	k_EControllerActionOrigin_XBoxOne_DPad_East = 119,
+	k_EControllerActionOrigin_XBox360_A = 120,
+	k_EControllerActionOrigin_XBox360_B = 121,
+	k_EControllerActionOrigin_XBox360_X = 122,
+	k_EControllerActionOrigin_XBox360_Y = 123,
+	k_EControllerActionOrigin_XBox360_LeftBumper = 124,
+	k_EControllerActionOrigin_XBox360_RightBumper = 125,
+	k_EControllerActionOrigin_XBox360_Start = 126,
+	k_EControllerActionOrigin_XBox360_Back = 127,
+	k_EControllerActionOrigin_XBox360_LeftTrigger_Pull = 128,
+	k_EControllerActionOrigin_XBox360_LeftTrigger_Click = 129,
+	k_EControllerActionOrigin_XBox360_RightTrigger_Pull = 130,
+	k_EControllerActionOrigin_XBox360_RightTrigger_Click = 131,
+	k_EControllerActionOrigin_XBox360_LeftStick_Move = 132,
+	k_EControllerActionOrigin_XBox360_LeftStick_Click = 133,
+	k_EControllerActionOrigin_XBox360_LeftStick_DPadNorth = 134,
+	k_EControllerActionOrigin_XBox360_LeftStick_DPadSouth = 135,
+	k_EControllerActionOrigin_XBox360_LeftStick_DPadWest = 136,
+	k_EControllerActionOrigin_XBox360_LeftStick_DPadEast = 137,
+	k_EControllerActionOrigin_XBox360_RightStick_Move = 138,
+	k_EControllerActionOrigin_XBox360_RightStick_Click = 139,
+	k_EControllerActionOrigin_XBox360_RightStick_DPadNorth = 140,
+	k_EControllerActionOrigin_XBox360_RightStick_DPadSouth = 141,
+	k_EControllerActionOrigin_XBox360_RightStick_DPadWest = 142,
+	k_EControllerActionOrigin_XBox360_RightStick_DPadEast = 143,
+	k_EControllerActionOrigin_XBox360_DPad_North = 144,
+	k_EControllerActionOrigin_XBox360_DPad_South = 145,
+	k_EControllerActionOrigin_XBox360_DPad_West = 146,
+	k_EControllerActionOrigin_XBox360_DPad_East = 147,
+	k_EControllerActionOrigin_SteamV2_A = 148,
+	k_EControllerActionOrigin_SteamV2_B = 149,
+	k_EControllerActionOrigin_SteamV2_X = 150,
+	k_EControllerActionOrigin_SteamV2_Y = 151,
+	k_EControllerActionOrigin_SteamV2_LeftBumper = 152,
+	k_EControllerActionOrigin_SteamV2_RightBumper = 153,
+	k_EControllerActionOrigin_SteamV2_LeftGrip = 154,
+	k_EControllerActionOrigin_SteamV2_RightGrip = 155,
+	k_EControllerActionOrigin_SteamV2_Start = 156,
+	k_EControllerActionOrigin_SteamV2_Back = 157,
+	k_EControllerActionOrigin_SteamV2_LeftPad_Touch = 158,
+	k_EControllerActionOrigin_SteamV2_LeftPad_Swipe = 159,
+	k_EControllerActionOrigin_SteamV2_LeftPad_Click = 160,
+	k_EControllerActionOrigin_SteamV2_LeftPad_DPadNorth = 161,
+	k_EControllerActionOrigin_SteamV2_LeftPad_DPadSouth = 162,
+	k_EControllerActionOrigin_SteamV2_LeftPad_DPadWest = 163,
+	k_EControllerActionOrigin_SteamV2_LeftPad_DPadEast = 164,
+	k_EControllerActionOrigin_SteamV2_RightPad_Touch = 165,
+	k_EControllerActionOrigin_SteamV2_RightPad_Swipe = 166,
+	k_EControllerActionOrigin_SteamV2_RightPad_Click = 167,
+	k_EControllerActionOrigin_SteamV2_RightPad_DPadNorth = 168,
+	k_EControllerActionOrigin_SteamV2_RightPad_DPadSouth = 169,
+	k_EControllerActionOrigin_SteamV2_RightPad_DPadWest = 170,
+	k_EControllerActionOrigin_SteamV2_RightPad_DPadEast = 171,
+	k_EControllerActionOrigin_SteamV2_LeftTrigger_Pull = 172,
+	k_EControllerActionOrigin_SteamV2_LeftTrigger_Click = 173,
+	k_EControllerActionOrigin_SteamV2_RightTrigger_Pull = 174,
+	k_EControllerActionOrigin_SteamV2_RightTrigger_Click = 175,
+	k_EControllerActionOrigin_SteamV2_LeftStick_Move = 176,
+	k_EControllerActionOrigin_SteamV2_LeftStick_Click = 177,
+	k_EControllerActionOrigin_SteamV2_LeftStick_DPadNorth = 178,
+	k_EControllerActionOrigin_SteamV2_LeftStick_DPadSouth = 179,
+	k_EControllerActionOrigin_SteamV2_LeftStick_DPadWest = 180,
+	k_EControllerActionOrigin_SteamV2_LeftStick_DPadEast = 181,
+	k_EControllerActionOrigin_SteamV2_Gyro_Move = 182,
+	k_EControllerActionOrigin_SteamV2_Gyro_Pitch = 183,
+	k_EControllerActionOrigin_SteamV2_Gyro_Yaw = 184,
+	k_EControllerActionOrigin_SteamV2_Gyro_Roll = 185,
+	k_EControllerActionOrigin_Count = 186,
 }
-public enum EControllerActivationType
+public enum ESteamControllerLEDFlag
 {
-	k_EControllerActivationType_None = 0,
-	k_EControllerActivationType_FullPress = 1,
-	k_EControllerActivationType_SoftPress = 2,
-	k_EControllerActivationType_StartPress = 3,
-	k_EControllerActivationType_Release = 4,
-	k_EControllerActivationType_LongPress = 5,
-	k_EControllerActivationType_DoublePress = 6,
-	k_EControllerActivationType_Analog = 7,
-}
-public enum EControllerPressureButton
-{
-	k_EControllerPressureButton_LeftTrackPad = 0,
-	k_EControllerPressureButton_RightTrackPad = 1,
-	k_EControllerPressureButton_LeftBumper = 2,
-	k_EControllerPressureButton_RightBumper = 3,
-	k_EControllerPressureButton_LeftGripLower = 4,
-	k_EControllerPressureButton_RightGripLower = 5,
-	k_EControllerPressureButton_LeftGripUpper = 6,
-	k_EControllerPressureButton_RightGripUpper = 7,
-	k_EControllerPressureButton_Invalid = 8,
-}
-public enum EControllerActivatorOutputAxis
-{
-	k_EOutputAxisLeftTrigger = 0,
-	k_EOutputAxisRightTrigger = 1,
-	k_EOutputAxisLeftThumbXPos = 2,
-	k_EOutputAxisLeftThumbXNeg = 3,
-	k_EOutputAxisLeftThumbYPos = 4,
-	k_EOutputAxisLeftThumbYNeg = 5,
-	k_EOutputAxisRightThumbXPos = 6,
-	k_EOutputAxisRightThumbXNeg = 7,
-	k_EOutputAxisRightThumbYPos = 8,
-	k_EOutputAxisRightThumbYNeg = 9,
-}
-public enum EControllerConfigFeature
-{
-	k_EControllerConfigFeature_None = 0,
-	k_EControllerConfigFeature_Gamepad = 1,
-	k_EControllerConfigFeature_Keyboard = 2,
-	k_EControllerConfigFeature_Mouse = 3,
-	k_EControllerConfigFeature_Gyro = 4,
-	k_EControllerConfigFeature_TouchMenu = 5,
-	k_EControllerConfigFeature_ModeShift = 6,
-	k_EControllerConfigFeature_ActionSet = 7,
-	k_EControllerConfigFeature_Activator = 8,
-}
-public enum EControllerPopupMenuActivationType
-{
-	k_EMenuButtonPress = 0,
-	k_EMenuButtonRelease = 1,
-	k_EMenuTouchRelease = 2,
-	k_EMenuTouchAlways = 3,
+	k_ESteamControllerLEDFlag_SetColor = 0,
+	k_ESteamControllerLEDFlag_RestoreUserDefault = 1,
 }
 public enum EUGCMatchingUGCType
 {
@@ -10110,6 +10326,14 @@ public enum ESteamItemFlags
 [StructLayout(LayoutKind.Sequential)] public struct SteamInventoryFullUpdate_t
 {
 	public int m_handle;
+}
+[StructLayout(LayoutKind.Sequential)] public struct SteamInventoryEligiblePromoItemDefIDs_t
+{
+	public EResult m_result;
+	public ulong m_steamID;
+	public int m_numEligiblePromoItemDefs;
+	[MarshalAs(UnmanagedType.I1)]
+	public bool m_bCachedData;
 }
 [StructLayout(LayoutKind.Sequential)] public struct SteamCallback_t
 {

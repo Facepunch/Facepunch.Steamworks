@@ -447,19 +447,6 @@
 	,{"name": "k_eEVRHMDType_Oculus_Rift","value": "23"}
 	,{"name": "k_eEVRHMDType_Oculus_Unknown","value": "40"}
 ]}
-,	{"enumname": "EControllerType","values": [ 
-	{"name": "k_eControllerType_None","value": "-1"}
-	,{"name": "k_eControllerType_Unknown","value": "0"}
-	,{"name": "k_eControllerType_UnknownSteamController","value": "1"}
-	,{"name": "k_eControllerType_SteamController","value": "2"}
-	,{"name": "k_eControllerType_UnknownNonSteamController","value": "30"}
-	,{"name": "k_eControllerType_XBox360Controller","value": "31"}
-	,{"name": "k_eControllerType_XBoxOneController","value": "32"}
-	,{"name": "k_eControllerType_PS3Controller","value": "33"}
-	,{"name": "k_eControllerType_PS4Controller","value": "34"}
-	,{"name": "k_eControllerType_WiiController","value": "35"}
-	,{"name": "k_eControllerType_AppleController","value": "36"}
-]}
 ,	{"enumname": "CGameID::EGameIDType","values": [ 
 	{"name": "k_EGameIDTypeApp","value": "0"}
 	,{"name": "k_EGameIDTypeGameMod","value": "1"}
@@ -502,7 +489,6 @@
 	,{"name": "k_EFriendFlagRequestingInfo","value": "256"}
 	,{"name": "k_EFriendFlagIgnored","value": "512"}
 	,{"name": "k_EFriendFlagIgnoredFriend","value": "1024"}
-	,{"name": "k_EFriendFlagSuggested","value": "2048"}
 	,{"name": "k_EFriendFlagChatMember","value": "4096"}
 	,{"name": "k_EFriendFlagAll","value": "65535"}
 ]}
@@ -798,7 +784,10 @@
 	,{"name": "k_EControllerSource_LeftTrigger","value": "6"}
 	,{"name": "k_EControllerSource_RightTrigger","value": "7"}
 	,{"name": "k_EControllerSource_Gyro","value": "8"}
-	,{"name": "k_EControllerSource_Count","value": "9"}
+	,{"name": "k_EControllerSource_CenterTrackpad","value": "9"}
+	,{"name": "k_EControllerSource_RightJoystick","value": "10"}
+	,{"name": "k_EControllerSource_DPad","value": "11"}
+	,{"name": "k_EControllerSource_Count","value": "12"}
 ]}
 ,	{"enumname": "EControllerSourceMode","values": [ 
 	{"name": "k_EControllerSourceMode_None","value": "0"}
@@ -808,14 +797,15 @@
 	,{"name": "k_EControllerSourceMode_AbsoluteMouse","value": "4"}
 	,{"name": "k_EControllerSourceMode_RelativeMouse","value": "5"}
 	,{"name": "k_EControllerSourceMode_JoystickMove","value": "6"}
-	,{"name": "k_EControllerSourceMode_JoystickCamera","value": "7"}
-	,{"name": "k_EControllerSourceMode_ScrollWheel","value": "8"}
-	,{"name": "k_EControllerSourceMode_Trigger","value": "9"}
-	,{"name": "k_EControllerSourceMode_TouchMenu","value": "10"}
-	,{"name": "k_EControllerSourceMode_MouseJoystick","value": "11"}
-	,{"name": "k_EControllerSourceMode_MouseRegion","value": "12"}
-	,{"name": "k_EControllerSourceMode_RadialMenu","value": "13"}
-	,{"name": "k_EControllerSourceMode_Switches","value": "14"}
+	,{"name": "k_EControllerSourceMode_JoystickMouse","value": "7"}
+	,{"name": "k_EControllerSourceMode_JoystickCamera","value": "8"}
+	,{"name": "k_EControllerSourceMode_ScrollWheel","value": "9"}
+	,{"name": "k_EControllerSourceMode_Trigger","value": "10"}
+	,{"name": "k_EControllerSourceMode_TouchMenu","value": "11"}
+	,{"name": "k_EControllerSourceMode_MouseJoystick","value": "12"}
+	,{"name": "k_EControllerSourceMode_MouseRegion","value": "13"}
+	,{"name": "k_EControllerSourceMode_RadialMenu","value": "14"}
+	,{"name": "k_EControllerSourceMode_Switches","value": "15"}
 ]}
 ,	{"enumname": "EControllerActionOrigin","values": [ 
 	{"name": "k_EControllerActionOrigin_None","value": "0"}
@@ -857,57 +847,158 @@
 	,{"name": "k_EControllerActionOrigin_Gyro_Pitch","value": "36"}
 	,{"name": "k_EControllerActionOrigin_Gyro_Yaw","value": "37"}
 	,{"name": "k_EControllerActionOrigin_Gyro_Roll","value": "38"}
-	,{"name": "k_EControllerActionOrigin_Count","value": "39"}
+	,{"name": "k_EControllerActionOrigin_PS4_X","value": "39"}
+	,{"name": "k_EControllerActionOrigin_PS4_Circle","value": "40"}
+	,{"name": "k_EControllerActionOrigin_PS4_Triangle","value": "41"}
+	,{"name": "k_EControllerActionOrigin_PS4_Square","value": "42"}
+	,{"name": "k_EControllerActionOrigin_PS4_LeftBumper","value": "43"}
+	,{"name": "k_EControllerActionOrigin_PS4_RightBumper","value": "44"}
+	,{"name": "k_EControllerActionOrigin_PS4_Options","value": "45"}
+	,{"name": "k_EControllerActionOrigin_PS4_Share","value": "46"}
+	,{"name": "k_EControllerActionOrigin_PS4_LeftPad_Touch","value": "47"}
+	,{"name": "k_EControllerActionOrigin_PS4_LeftPad_Swipe","value": "48"}
+	,{"name": "k_EControllerActionOrigin_PS4_LeftPad_Click","value": "49"}
+	,{"name": "k_EControllerActionOrigin_PS4_LeftPad_DPadNorth","value": "50"}
+	,{"name": "k_EControllerActionOrigin_PS4_LeftPad_DPadSouth","value": "51"}
+	,{"name": "k_EControllerActionOrigin_PS4_LeftPad_DPadWest","value": "52"}
+	,{"name": "k_EControllerActionOrigin_PS4_LeftPad_DPadEast","value": "53"}
+	,{"name": "k_EControllerActionOrigin_PS4_RightPad_Touch","value": "54"}
+	,{"name": "k_EControllerActionOrigin_PS4_RightPad_Swipe","value": "55"}
+	,{"name": "k_EControllerActionOrigin_PS4_RightPad_Click","value": "56"}
+	,{"name": "k_EControllerActionOrigin_PS4_RightPad_DPadNorth","value": "57"}
+	,{"name": "k_EControllerActionOrigin_PS4_RightPad_DPadSouth","value": "58"}
+	,{"name": "k_EControllerActionOrigin_PS4_RightPad_DPadWest","value": "59"}
+	,{"name": "k_EControllerActionOrigin_PS4_RightPad_DPadEast","value": "60"}
+	,{"name": "k_EControllerActionOrigin_PS4_CenterPad_Touch","value": "61"}
+	,{"name": "k_EControllerActionOrigin_PS4_CenterPad_Swipe","value": "62"}
+	,{"name": "k_EControllerActionOrigin_PS4_CenterPad_Click","value": "63"}
+	,{"name": "k_EControllerActionOrigin_PS4_CenterPad_DPadNorth","value": "64"}
+	,{"name": "k_EControllerActionOrigin_PS4_CenterPad_DPadSouth","value": "65"}
+	,{"name": "k_EControllerActionOrigin_PS4_CenterPad_DPadWest","value": "66"}
+	,{"name": "k_EControllerActionOrigin_PS4_CenterPad_DPadEast","value": "67"}
+	,{"name": "k_EControllerActionOrigin_PS4_LeftTrigger_Pull","value": "68"}
+	,{"name": "k_EControllerActionOrigin_PS4_LeftTrigger_Click","value": "69"}
+	,{"name": "k_EControllerActionOrigin_PS4_RightTrigger_Pull","value": "70"}
+	,{"name": "k_EControllerActionOrigin_PS4_RightTrigger_Click","value": "71"}
+	,{"name": "k_EControllerActionOrigin_PS4_LeftStick_Move","value": "72"}
+	,{"name": "k_EControllerActionOrigin_PS4_LeftStick_Click","value": "73"}
+	,{"name": "k_EControllerActionOrigin_PS4_LeftStick_DPadNorth","value": "74"}
+	,{"name": "k_EControllerActionOrigin_PS4_LeftStick_DPadSouth","value": "75"}
+	,{"name": "k_EControllerActionOrigin_PS4_LeftStick_DPadWest","value": "76"}
+	,{"name": "k_EControllerActionOrigin_PS4_LeftStick_DPadEast","value": "77"}
+	,{"name": "k_EControllerActionOrigin_PS4_RightStick_Move","value": "78"}
+	,{"name": "k_EControllerActionOrigin_PS4_RightStick_Click","value": "79"}
+	,{"name": "k_EControllerActionOrigin_PS4_RightStick_DPadNorth","value": "80"}
+	,{"name": "k_EControllerActionOrigin_PS4_RightStick_DPadSouth","value": "81"}
+	,{"name": "k_EControllerActionOrigin_PS4_RightStick_DPadWest","value": "82"}
+	,{"name": "k_EControllerActionOrigin_PS4_RightStick_DPadEast","value": "83"}
+	,{"name": "k_EControllerActionOrigin_PS4_DPad_North","value": "84"}
+	,{"name": "k_EControllerActionOrigin_PS4_DPad_South","value": "85"}
+	,{"name": "k_EControllerActionOrigin_PS4_DPad_West","value": "86"}
+	,{"name": "k_EControllerActionOrigin_PS4_DPad_East","value": "87"}
+	,{"name": "k_EControllerActionOrigin_PS4_Gyro_Move","value": "88"}
+	,{"name": "k_EControllerActionOrigin_PS4_Gyro_Pitch","value": "89"}
+	,{"name": "k_EControllerActionOrigin_PS4_Gyro_Yaw","value": "90"}
+	,{"name": "k_EControllerActionOrigin_PS4_Gyro_Roll","value": "91"}
+	,{"name": "k_EControllerActionOrigin_XBoxOne_A","value": "92"}
+	,{"name": "k_EControllerActionOrigin_XBoxOne_B","value": "93"}
+	,{"name": "k_EControllerActionOrigin_XBoxOne_X","value": "94"}
+	,{"name": "k_EControllerActionOrigin_XBoxOne_Y","value": "95"}
+	,{"name": "k_EControllerActionOrigin_XBoxOne_LeftBumper","value": "96"}
+	,{"name": "k_EControllerActionOrigin_XBoxOne_RightBumper","value": "97"}
+	,{"name": "k_EControllerActionOrigin_XBoxOne_Menu","value": "98"}
+	,{"name": "k_EControllerActionOrigin_XBoxOne_View","value": "99"}
+	,{"name": "k_EControllerActionOrigin_XBoxOne_LeftTrigger_Pull","value": "100"}
+	,{"name": "k_EControllerActionOrigin_XBoxOne_LeftTrigger_Click","value": "101"}
+	,{"name": "k_EControllerActionOrigin_XBoxOne_RightTrigger_Pull","value": "102"}
+	,{"name": "k_EControllerActionOrigin_XBoxOne_RightTrigger_Click","value": "103"}
+	,{"name": "k_EControllerActionOrigin_XBoxOne_LeftStick_Move","value": "104"}
+	,{"name": "k_EControllerActionOrigin_XBoxOne_LeftStick_Click","value": "105"}
+	,{"name": "k_EControllerActionOrigin_XBoxOne_LeftStick_DPadNorth","value": "106"}
+	,{"name": "k_EControllerActionOrigin_XBoxOne_LeftStick_DPadSouth","value": "107"}
+	,{"name": "k_EControllerActionOrigin_XBoxOne_LeftStick_DPadWest","value": "108"}
+	,{"name": "k_EControllerActionOrigin_XBoxOne_LeftStick_DPadEast","value": "109"}
+	,{"name": "k_EControllerActionOrigin_XBoxOne_RightStick_Move","value": "110"}
+	,{"name": "k_EControllerActionOrigin_XBoxOne_RightStick_Click","value": "111"}
+	,{"name": "k_EControllerActionOrigin_XBoxOne_RightStick_DPadNorth","value": "112"}
+	,{"name": "k_EControllerActionOrigin_XBoxOne_RightStick_DPadSouth","value": "113"}
+	,{"name": "k_EControllerActionOrigin_XBoxOne_RightStick_DPadWest","value": "114"}
+	,{"name": "k_EControllerActionOrigin_XBoxOne_RightStick_DPadEast","value": "115"}
+	,{"name": "k_EControllerActionOrigin_XBoxOne_DPad_North","value": "116"}
+	,{"name": "k_EControllerActionOrigin_XBoxOne_DPad_South","value": "117"}
+	,{"name": "k_EControllerActionOrigin_XBoxOne_DPad_West","value": "118"}
+	,{"name": "k_EControllerActionOrigin_XBoxOne_DPad_East","value": "119"}
+	,{"name": "k_EControllerActionOrigin_XBox360_A","value": "120"}
+	,{"name": "k_EControllerActionOrigin_XBox360_B","value": "121"}
+	,{"name": "k_EControllerActionOrigin_XBox360_X","value": "122"}
+	,{"name": "k_EControllerActionOrigin_XBox360_Y","value": "123"}
+	,{"name": "k_EControllerActionOrigin_XBox360_LeftBumper","value": "124"}
+	,{"name": "k_EControllerActionOrigin_XBox360_RightBumper","value": "125"}
+	,{"name": "k_EControllerActionOrigin_XBox360_Start","value": "126"}
+	,{"name": "k_EControllerActionOrigin_XBox360_Back","value": "127"}
+	,{"name": "k_EControllerActionOrigin_XBox360_LeftTrigger_Pull","value": "128"}
+	,{"name": "k_EControllerActionOrigin_XBox360_LeftTrigger_Click","value": "129"}
+	,{"name": "k_EControllerActionOrigin_XBox360_RightTrigger_Pull","value": "130"}
+	,{"name": "k_EControllerActionOrigin_XBox360_RightTrigger_Click","value": "131"}
+	,{"name": "k_EControllerActionOrigin_XBox360_LeftStick_Move","value": "132"}
+	,{"name": "k_EControllerActionOrigin_XBox360_LeftStick_Click","value": "133"}
+	,{"name": "k_EControllerActionOrigin_XBox360_LeftStick_DPadNorth","value": "134"}
+	,{"name": "k_EControllerActionOrigin_XBox360_LeftStick_DPadSouth","value": "135"}
+	,{"name": "k_EControllerActionOrigin_XBox360_LeftStick_DPadWest","value": "136"}
+	,{"name": "k_EControllerActionOrigin_XBox360_LeftStick_DPadEast","value": "137"}
+	,{"name": "k_EControllerActionOrigin_XBox360_RightStick_Move","value": "138"}
+	,{"name": "k_EControllerActionOrigin_XBox360_RightStick_Click","value": "139"}
+	,{"name": "k_EControllerActionOrigin_XBox360_RightStick_DPadNorth","value": "140"}
+	,{"name": "k_EControllerActionOrigin_XBox360_RightStick_DPadSouth","value": "141"}
+	,{"name": "k_EControllerActionOrigin_XBox360_RightStick_DPadWest","value": "142"}
+	,{"name": "k_EControllerActionOrigin_XBox360_RightStick_DPadEast","value": "143"}
+	,{"name": "k_EControllerActionOrigin_XBox360_DPad_North","value": "144"}
+	,{"name": "k_EControllerActionOrigin_XBox360_DPad_South","value": "145"}
+	,{"name": "k_EControllerActionOrigin_XBox360_DPad_West","value": "146"}
+	,{"name": "k_EControllerActionOrigin_XBox360_DPad_East","value": "147"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_A","value": "148"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_B","value": "149"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_X","value": "150"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_Y","value": "151"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_LeftBumper","value": "152"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_RightBumper","value": "153"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_LeftGrip","value": "154"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_RightGrip","value": "155"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_Start","value": "156"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_Back","value": "157"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_LeftPad_Touch","value": "158"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_LeftPad_Swipe","value": "159"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_LeftPad_Click","value": "160"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_LeftPad_DPadNorth","value": "161"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_LeftPad_DPadSouth","value": "162"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_LeftPad_DPadWest","value": "163"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_LeftPad_DPadEast","value": "164"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_RightPad_Touch","value": "165"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_RightPad_Swipe","value": "166"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_RightPad_Click","value": "167"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_RightPad_DPadNorth","value": "168"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_RightPad_DPadSouth","value": "169"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_RightPad_DPadWest","value": "170"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_RightPad_DPadEast","value": "171"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_LeftTrigger_Pull","value": "172"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_LeftTrigger_Click","value": "173"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_RightTrigger_Pull","value": "174"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_RightTrigger_Click","value": "175"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_LeftStick_Move","value": "176"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_LeftStick_Click","value": "177"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_LeftStick_DPadNorth","value": "178"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_LeftStick_DPadSouth","value": "179"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_LeftStick_DPadWest","value": "180"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_LeftStick_DPadEast","value": "181"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_Gyro_Move","value": "182"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_Gyro_Pitch","value": "183"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_Gyro_Yaw","value": "184"}
+	,{"name": "k_EControllerActionOrigin_SteamV2_Gyro_Roll","value": "185"}
+	,{"name": "k_EControllerActionOrigin_Count","value": "186"}
 ]}
-,	{"enumname": "EControllerActivationType","values": [ 
-	{"name": "k_EControllerActivationType_None","value": "0"}
-	,{"name": "k_EControllerActivationType_FullPress","value": "1"}
-	,{"name": "k_EControllerActivationType_SoftPress","value": "2"}
-	,{"name": "k_EControllerActivationType_StartPress","value": "3"}
-	,{"name": "k_EControllerActivationType_Release","value": "4"}
-	,{"name": "k_EControllerActivationType_LongPress","value": "5"}
-	,{"name": "k_EControllerActivationType_DoublePress","value": "6"}
-	,{"name": "k_EControllerActivationType_Analog","value": "7"}
-]}
-,	{"enumname": "EControllerPressureButton","values": [ 
-	{"name": "k_EControllerPressureButton_LeftTrackPad","value": "0"}
-	,{"name": "k_EControllerPressureButton_RightTrackPad","value": "1"}
-	,{"name": "k_EControllerPressureButton_LeftBumper","value": "2"}
-	,{"name": "k_EControllerPressureButton_RightBumper","value": "3"}
-	,{"name": "k_EControllerPressureButton_LeftGripLower","value": "4"}
-	,{"name": "k_EControllerPressureButton_RightGripLower","value": "5"}
-	,{"name": "k_EControllerPressureButton_LeftGripUpper","value": "6"}
-	,{"name": "k_EControllerPressureButton_RightGripUpper","value": "7"}
-	,{"name": "k_EControllerPressureButton_Invalid","value": "8"}
-]}
-,	{"enumname": "EControllerActivatorOutputAxis","values": [ 
-	{"name": "k_EOutputAxisLeftTrigger","value": "0"}
-	,{"name": "k_EOutputAxisRightTrigger","value": "1"}
-	,{"name": "k_EOutputAxisLeftThumbXPos","value": "2"}
-	,{"name": "k_EOutputAxisLeftThumbXNeg","value": "3"}
-	,{"name": "k_EOutputAxisLeftThumbYPos","value": "4"}
-	,{"name": "k_EOutputAxisLeftThumbYNeg","value": "5"}
-	,{"name": "k_EOutputAxisRightThumbXPos","value": "6"}
-	,{"name": "k_EOutputAxisRightThumbXNeg","value": "7"}
-	,{"name": "k_EOutputAxisRightThumbYPos","value": "8"}
-	,{"name": "k_EOutputAxisRightThumbYNeg","value": "9"}
-]}
-,	{"enumname": "EControllerConfigFeature","values": [ 
-	{"name": "k_EControllerConfigFeature_None","value": "0"}
-	,{"name": "k_EControllerConfigFeature_Gamepad","value": "1"}
-	,{"name": "k_EControllerConfigFeature_Keyboard","value": "2"}
-	,{"name": "k_EControllerConfigFeature_Mouse","value": "3"}
-	,{"name": "k_EControllerConfigFeature_Gyro","value": "4"}
-	,{"name": "k_EControllerConfigFeature_TouchMenu","value": "5"}
-	,{"name": "k_EControllerConfigFeature_ModeShift","value": "6"}
-	,{"name": "k_EControllerConfigFeature_ActionSet","value": "7"}
-	,{"name": "k_EControllerConfigFeature_Activator","value": "8"}
-]}
-,	{"enumname": "EControllerPopupMenuActivationType","values": [ 
-	{"name": "k_EMenuButtonPress","value": "0"}
-	,{"name": "k_EMenuButtonRelease","value": "1"}
-	,{"name": "k_EMenuTouchRelease","value": "2"}
-	,{"name": "k_EMenuTouchAlways","value": "3"}
+,	{"enumname": "ESteamControllerLEDFlag","values": [ 
+	{"name": "k_ESteamControllerLEDFlag_SetColor","value": "0"}
+	,{"name": "k_ESteamControllerLEDFlag_RestoreUserDefault","value": "1"}
 ]}
 ,	{"enumname": "EUGCMatchingUGCType","values": [ 
 	{"name": "k_EUGCMatchingUGCType_Items","value": "0"}
@@ -1865,6 +1956,11 @@
 { "fieldname": "m_result", "fieldtype": "enum EResult"}]}
 ,{"struct": "SteamInventoryFullUpdate_t","fields": [
 { "fieldname": "m_handle", "fieldtype": "SteamInventoryResult_t"}]}
+,{"struct": "SteamInventoryEligiblePromoItemDefIDs_t","fields": [
+{ "fieldname": "m_result", "fieldtype": "enum EResult"},
+{ "fieldname": "m_steamID", "fieldtype": "class CSteamID"},
+{ "fieldname": "m_numEligiblePromoItemDefs", "fieldtype": "int"},
+{ "fieldname": "m_bCachedData", "fieldtype": "_Bool"}]}
 ,{"struct": "BroadcastUploadStop_t","fields": [
 { "fieldname": "m_eResult", "fieldtype": "enum EBroadcastUploadResult"}]}
 ,{"struct": "GetVideoURLResult_t","fields": [
@@ -5888,6 +5984,28 @@
 }
 ,{
 	"classname": "ISteamController",
+	"methodname": "TriggerVibration",
+	"returntype": "void",
+	"params": [ 
+{	"paramname": "controllerHandle" ,"paramtype": "ControllerHandle_t"},
+{	"paramname": "usLeftSpeed" ,"paramtype": "unsigned short"},
+{	"paramname": "usRightSpeed" ,"paramtype": "unsigned short"}
+	 ]
+}
+,{
+	"classname": "ISteamController",
+	"methodname": "SetLEDColor",
+	"returntype": "void",
+	"params": [ 
+{	"paramname": "controllerHandle" ,"paramtype": "ControllerHandle_t"},
+{	"paramname": "nColorR" ,"paramtype": "uint8"},
+{	"paramname": "nColorG" ,"paramtype": "uint8"},
+{	"paramname": "nColorB" ,"paramtype": "uint8"},
+{	"paramname": "nFlags" ,"paramtype": "unsigned int"}
+	 ]
+}
+,{
+	"classname": "ISteamController",
 	"methodname": "GetGamepadIndexForController",
 	"returntype": "int",
 	"params": [ 
@@ -5932,6 +6050,22 @@
 {	"paramname": "flScale" ,"paramtype": "float"},
 {	"paramname": "flXPosition" ,"paramtype": "float"},
 {	"paramname": "flYPosition" ,"paramtype": "float"}
+	 ]
+}
+,{
+	"classname": "ISteamController",
+	"methodname": "GetStringForActionOrigin",
+	"returntype": "const char *",
+	"params": [ 
+{	"paramname": "eOrigin" ,"paramtype": "EControllerActionOrigin"}
+	 ]
+}
+,{
+	"classname": "ISteamController",
+	"methodname": "GetGlyphForActionOrigin",
+	"returntype": "const char *",
+	"params": [ 
+{	"paramname": "eOrigin" ,"paramtype": "EControllerActionOrigin"}
 	 ]
 }
 ,{
@@ -6539,7 +6673,7 @@
 }
 ,{
 	"classname": "ISteamUGC",
-	"methodname": "StartPlaytimeTracking",
+	"methodname": "StartPlaytimeTracking", "callresult": "StartPlaytimeTrackingResult_t",
 	"returntype": "SteamAPICall_t",
 	"params": [ 
 {	"paramname": "pvecPublishedFileID" ,"paramtype": "PublishedFileId_t *"},
@@ -6548,7 +6682,7 @@
 }
 ,{
 	"classname": "ISteamUGC",
-	"methodname": "StopPlaytimeTracking",
+	"methodname": "StopPlaytimeTracking", "callresult": "StopPlaytimeTrackingResult_t",
 	"returntype": "SteamAPICall_t",
 	"params": [ 
 {	"paramname": "pvecPublishedFileID" ,"paramtype": "PublishedFileId_t *"},
@@ -6557,7 +6691,7 @@
 }
 ,{
 	"classname": "ISteamUGC",
-	"methodname": "StopPlaytimeTrackingForAllItems",
+	"methodname": "StopPlaytimeTrackingForAllItems", "callresult": "StopPlaytimeTrackingResult_t",
 	"returntype": "SteamAPICall_t"
 }
 ,{
@@ -7070,7 +7204,7 @@
 }
 ,{
 	"classname": "ISteamInventory",
-	"methodname": "SendItemDropHeartbeat", "desc": "Applications which use timed-drop mechanics should call SendItemDropHeartbeat() when active gameplay begins and at least once every two minutes afterwards.",
+	"methodname": "SendItemDropHeartbeat", "desc": "Deprecated method. Playtime accounting is performed on the Steam servers.",
 	"returntype": "void"
 }
 ,{
@@ -7120,6 +7254,24 @@
 {	"paramname": "pchPropertyName" ,"paramtype": "const char *"},
 {	"paramname": "pchValueBuffer" ,"out_string_count": "punValueBufferSizeOut" ,"paramtype": "char *"},
 {	"paramname": "punValueBufferSizeOut" ,"paramtype": "uint32 *"}
+	 ]
+}
+,{
+	"classname": "ISteamInventory",
+	"methodname": "RequestEligiblePromoItemDefinitionsIDs", "callresult": "SteamInventoryEligiblePromoItemDefIDs_t",
+	"returntype": "SteamAPICall_t",
+	"params": [ 
+{	"paramname": "steamID" ,"paramtype": "class CSteamID"}
+	 ]
+}
+,{
+	"classname": "ISteamInventory",
+	"methodname": "GetEligiblePromoItemDefinitionIDs",
+	"returntype": "bool",
+	"params": [ 
+{	"paramname": "steamID" ,"paramtype": "class CSteamID"},
+{	"paramname": "pItemDefIDs" ,"out_array_count": "punItemDefIDsArraySize" ,"desc": "List of item definition IDs" ,"paramtype": "SteamItemDef_t *"},
+{	"paramname": "punItemDefIDsArraySize" ,"desc": "Size of array is passed in and actual size used is returned in this param" ,"paramtype": "uint32 *"}
 	 ]
 }
 ,{

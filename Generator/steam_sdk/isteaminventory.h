@@ -176,9 +176,11 @@ public:
 	
 	// GenerateItems() creates one or more items and then generates a SteamInventoryCallback_t
 	// notification with a matching nCallbackContext parameter. This API is insecure, and could
-	// be abused by hacked clients. It is, however, very useful as a development cheat or as
-	// a means of prototyping item-related features for your game. The use of GenerateItems can
-	// be restricted to certain item definitions or fully blocked via the Steamworks website.
+	// be abused by hacked clients. This call is normally disabled unless you explicitly enable 
+	// "Development mode" on the Inventory Service section of the Steamworks website.
+	// You should not enable this mode for a shipping game!
+	// Note that Steam accounts that belong to the publisher group for your game are granted
+	// an exception - as a developer, you may use this to generate and test items in your game.
 	// If punArrayQuantity is not NULL, it should be the same length as pArrayItems and should
 	// describe the quantity of each item to generate.
 	virtual bool GenerateItems( SteamInventoryResult_t *pResultHandle, ARRAY_COUNT(unArrayLength) const SteamItemDef_t *pArrayItemDefs, ARRAY_COUNT(unArrayLength) const uint32 *punArrayQuantity, uint32 unArrayLength ) = 0;
@@ -201,20 +203,16 @@ public:
 	// Not for the faint of heart - if your game implements item removal at all, a high-friction
 	// UI confirmation process is highly recommended. Similar to GenerateItems, punArrayQuantity
 	// can be NULL or else an array of the same length as pArrayItems which describe the quantity
-	// of each item to destroy. ConsumeItem can be restricted to certain item definitions or
-	// fully blocked via the Steamworks website to minimize support/abuse issues such as the
-	// clasic "my brother borrowed my laptop and deleted all of my rare items".
+	// of each item to destroy.
 	METHOD_DESC(ConsumeItem() removes items from the inventory permanently.)
 	virtual bool ConsumeItem( SteamInventoryResult_t *pResultHandle, SteamItemInstanceID_t itemConsume, uint32 unQuantity ) = 0;
 
-	// ExchangeItems() is an atomic combination of GenerateItems and DestroyItems. It can be
-	// used to implement crafting recipes or transmutations, or items which unpack themselves
-	// into other items. Like GenerateItems, this is a flexible and dangerous API which is
-	// meant for rapid prototyping. You can configure restrictions on ExchangeItems via the
-	// Steamworks website, such as limiting it to a whitelist of input/output combinations
-	// corresponding to recipes.
-	// (Note: although GenerateItems may be hard or impossible to use securely in your game,
-	// ExchangeItems is perfectly reasonable to use once the whitelists are set accordingly.)
+	// ExchangeItems() is an atomic combination of item generation and consumption. 
+	// It can be used to implement crafting recipes or transmutations, or items which unpack 
+	// themselves into other items (e.g., a chest). 
+	// ExchangeItems requires a whitelist - you must define recipes (lists of the components
+	// required for the exchange) on the target ItemDefinition. Exchanges that do not match
+	// a recipe, or do not provide the required amounts, will fail.
 	virtual bool ExchangeItems( SteamInventoryResult_t *pResultHandle,
 								ARRAY_COUNT(unArrayGenerateLength) const SteamItemDef_t *pArrayGenerate, ARRAY_COUNT(unArrayGenerateLength) const uint32 *punArrayGenerateQuantity, uint32 unArrayGenerateLength,
 								ARRAY_COUNT(unArrayDestroyLength) const SteamItemInstanceID_t *pArrayDestroy, ARRAY_COUNT(unArrayDestroyLength) const uint32 *punArrayDestroyQuantity, uint32 unArrayDestroyLength ) = 0;
@@ -230,21 +228,8 @@ public:
 	// TIMED DROPS AND PLAYTIME CREDIT
 	//
 
-	// Applications which use timed-drop mechanics should call SendItemDropHeartbeat() when
-	// active gameplay begins, and at least once every two minutes afterwards. The backend
-	// performs its own time calculations, so the precise timing of the heartbeat is not
-	// critical as long as you send at least one heartbeat every two minutes. Calling the
-	// function more often than that is not harmful, it will simply have no effect. Note:
-	// players may be able to spoof this message by hacking their client, so you should not
-	// attempt to use this as a mechanism to restrict playtime credits. It is simply meant
-	// to distinguish between being in any kind of gameplay situation vs the main menu or
-	// a pre-game launcher window. (If you are stingy with handing out playtime credit, it
-	// will only encourage players to run bots or use mouse/kb event simulators.)
-	//
-	// Playtime credit accumulation can be capped on a daily or weekly basis through your
-	// Steamworks configuration.
-	//
-	METHOD_DESC(Applications which use timed-drop mechanics should call SendItemDropHeartbeat() when active gameplay begins and at least once every two minutes afterwards.)
+	// Deprecated. Calling this method is not required for proper playtime accounting.
+	METHOD_DESC( Deprecated method. Playtime accounting is performed on the Steam servers. )
 	virtual void SendItemDropHeartbeat() = 0;
 
 	// Playtime credit must be consumed and turned into item drops by your game. Only item
@@ -253,8 +238,9 @@ public:
 	// Your game should call TriggerItemDrop at an appropriate time for the user to receive
 	// new items, such as between rounds or while the player is dead. Note that players who
 	// hack their clients could modify the value of "dropListDefinition", so do not use it
-	// to directly control rarity. It is primarily useful during testing and development,
-	// where you may wish to perform experiments with different types of drops.
+	// to directly control rarity.
+	// See your Steamworks configuration to set playtime drop rates for individual itemdefs.
+	// The client library will suppress too-frequent calls to this method.
 	METHOD_DESC(Playtime credit must be consumed and turned into item drops by your game.)
 	virtual bool TriggerItemDrop( SteamInventoryResult_t *pResultHandle, SteamItemDef_t dropListDefinition ) = 0;
 
@@ -312,6 +298,20 @@ public:
 	// results may be copied.
 	virtual bool GetItemDefinitionProperty( SteamItemDef_t iDefinition, const char *pchPropertyName,
 		OUT_STRING_COUNT(punValueBufferSizeOut) char *pchValueBuffer, uint32 *punValueBufferSizeOut ) = 0;
+
+	// Request the list of "eligible" promo items that can be manually granted to the given
+	// user.  These are promo items of type "manual" that won't be granted automatically.
+	// An example usage of this is an item that becomes available every week.
+	CALL_RESULT( SteamInventoryEligiblePromoItemDefIDs_t )
+	virtual SteamAPICall_t RequestEligiblePromoItemDefinitionsIDs( CSteamID steamID ) = 0;
+
+	// After handling a SteamInventoryEligiblePromoItemDefIDs_t call result, use this
+	// function to pull out the list of item definition ids that the user can be
+	// manually granted via the AddPromoItems() call.
+	virtual bool GetEligiblePromoItemDefinitionIDs(
+		CSteamID steamID,
+		OUT_ARRAY_COUNT(punItemDefIDsArraySize,List of item definition IDs) SteamItemDef_t *pItemDefIDs,
+		DESC(Size of array is passed in and actual size used is returned in this param) uint32 *punItemDefIDsArraySize ) = 0;
 };
 
 #define STEAMINVENTORY_INTERFACE_VERSION "STEAMINVENTORY_INTERFACE_V001"
@@ -350,6 +350,17 @@ struct SteamInventoryDefinitionUpdate_t
 {
 	enum { k_iCallback = k_iClientInventoryCallbacks + 2 };
 };
+
+// Returned 
+struct SteamInventoryEligiblePromoItemDefIDs_t
+{
+	enum { k_iCallback = k_iClientInventoryCallbacks + 3 };
+	EResult m_result;
+	CSteamID m_steamID;
+	int m_numEligiblePromoItemDefs;
+	bool m_bCachedData;	// indicates that the data was retrieved from the cache and not the server
+};
+
 
 #pragma pack( pop )
 

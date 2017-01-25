@@ -21,7 +21,7 @@
 #define REFERENCE(arg) ((void)arg)
 #endif
 
-#if defined(STEAM_API_EXPORTS) && !defined(API_GEN)
+#if ( defined(STEAM_API_EXPORTS) || defined(STEAM_API_NODLL) ) && !defined(API_GEN)
 #define STEAM_PRIVATE_API( ... ) __VA_ARGS__
 #elif defined(STEAM_API_EXPORTS) && defined(API_GEN)
 #define STEAM_PRIVATE_API( ... )

@@ -80,7 +80,7 @@ enum EFriendFlags
 	k_EFriendFlagRequestingInfo = 0x100,
 	k_EFriendFlagIgnored		= 0x200,
 	k_EFriendFlagIgnoredFriend	= 0x400,
-	k_EFriendFlagSuggested		= 0x800,
+	// k_EFriendFlagSuggested		= 0x800,	// not used
 	k_EFriendFlagChatMember		= 0x1000,
 	k_EFriendFlagAll			= 0xFFFF,
 };

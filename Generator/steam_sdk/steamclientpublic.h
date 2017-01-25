@@ -505,29 +505,6 @@ enum EVRHMDType
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Steam Controller models 
-// WARNING: DO NOT RENUMBER EXISTING VALUES - STORED IN A DATABASE
-//-----------------------------------------------------------------------------
-enum EControllerType
-{
-	k_eControllerType_None = -1,
-	k_eControllerType_Unknown = 0,
-
-	// Steam Controllers
-	k_eControllerType_UnknownSteamController = 1,
-	k_eControllerType_SteamController = 2,
-
-	// Other Controllers
-	k_eControllerType_UnknownNonSteamController = 30,
-	k_eControllerType_XBox360Controller = 31,
-	k_eControllerType_XBoxOneController = 32,
-	k_eControllerType_PS3Controller = 33,
-	k_eControllerType_PS4Controller = 34,
-	k_eControllerType_WiiController = 35,
-	k_eControllerType_AppleController = 36
-};
-
-//-----------------------------------------------------------------------------
 // Purpose: true if this is from an Oculus HMD
 //-----------------------------------------------------------------------------
 static inline bool BIsOculusHMD( EVRHMDType eType )
