@@ -18,7 +18,7 @@ namespace Facepunch.Steamworks.Test
         [TestMethod]
         public void Init()
         {
-            using ( var server = new Facepunch.Steamworks.Server( 252490, 30002, 30003, false, "VersionString" ) )
+            using ( var server = new Facepunch.Steamworks.Server( 252490, 0, 30003, 30004, 30005, false, "VersionString" ) )
             {
                 Assert.IsTrue( server.IsValid );
             }
@@ -27,7 +27,7 @@ namespace Facepunch.Steamworks.Test
         [TestMethod]
         public void PublicIp()
         {
-            using ( var server = new Facepunch.Steamworks.Server( 252490, 30002, 30003, false, "VersionString" ) )
+            using ( var server = new Facepunch.Steamworks.Server( 252490, 0, 30003, 30004, 30005, false, "VersionString" ) )
             {
                 server.LogOnAnonymous();
 
@@ -61,7 +61,7 @@ namespace Facepunch.Steamworks.Test
                 var ticket = client.Auth.GetAuthSessionTicket();
                 var ticketBinary = ticket.Data;
 
-                using ( var server = new Facepunch.Steamworks.Server( 252490, 30002, 30003, true, "VersionString" ) )
+                using ( var server = new Facepunch.Steamworks.Server( 252490, 0, 30002, 30003, 30004, true, "VersionString" ) )
                 {
                     server.LogOnAnonymous();
 
