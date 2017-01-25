@@ -2804,6 +2804,18 @@ namespace SteamNative
 				
 				Native.SteamAPI_ISteamController_TriggerRepeatedHapticPulse(_ptr, controllerHandle, eTargetPad, usDurationMicroSec, usOffMicroSec, unRepeat, nFlags);
 			}
+			public virtual void /*void*/ ISteamController_TriggerVibration( ulong controllerHandle, ushort /*unsigned short*/ usLeftSpeed, ushort /*unsigned short*/ usRightSpeed )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamController _ptr is null!" );
+				
+				Native.SteamAPI_ISteamController_TriggerVibration(_ptr, controllerHandle, usLeftSpeed, usRightSpeed);
+			}
+			public virtual void /*void*/ ISteamController_SetLEDColor( ulong controllerHandle, byte /*uint8*/ nColorR, byte /*uint8*/ nColorG, byte /*uint8*/ nColorB, uint /*unsigned int*/ nFlags )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamController _ptr is null!" );
+				
+				Native.SteamAPI_ISteamController_SetLEDColor(_ptr, controllerHandle, nColorR, nColorG, nColorB, nFlags);
+			}
 			public virtual int /*int*/ ISteamController_GetGamepadIndexForController( ulong ulControllerHandle )
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamController _ptr is null!" );
@@ -2833,6 +2845,18 @@ namespace SteamNative
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamController _ptr is null!" );
 				
 				return Native.SteamAPI_ISteamController_ShowAnalogActionOrigins(_ptr, controllerHandle, analogActionHandle, flScale, flXPosition, flYPosition);
+			}
+			public virtual IntPtr ISteamController_GetStringForActionOrigin( ControllerActionOrigin /*EControllerActionOrigin*/ eOrigin )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamController _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamController_GetStringForActionOrigin(_ptr, eOrigin);
+			}
+			public virtual IntPtr ISteamController_GetGlyphForActionOrigin( ControllerActionOrigin /*EControllerActionOrigin*/ eOrigin )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamController _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamController_GetGlyphForActionOrigin(_ptr, eOrigin);
 			}
 			
 			public virtual UGCQueryHandle_t /*(UGCQueryHandle_t)*/ ISteamUGC_CreateQueryUserUGCRequest( uint unAccountID, UserUGCList /*EUserUGCList*/ eListType, UGCMatchingUGCType /*EUGCMatchingUGCType*/ eMatchingUGCType, UserUGCListSortOrder /*EUserUGCListSortOrder*/ eSortOrder, uint nCreatorAppID, uint nConsumerAppID, uint /*uint32*/ unPage )
@@ -3617,6 +3641,18 @@ namespace SteamNative
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamInventory _ptr is null!" );
 				
 				return Native.SteamAPI_ISteamInventory_GetItemDefinitionProperty(_ptr, iDefinition, pchPropertyName, pchValueBuffer, out punValueBufferSizeOut);
+			}
+			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamInventory_RequestEligiblePromoItemDefinitionsIDs( ulong steamID )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamInventory _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamInventory_RequestEligiblePromoItemDefinitionsIDs(_ptr, steamID);
+			}
+			public virtual bool /*bool*/ ISteamInventory_GetEligiblePromoItemDefinitionIDs( ulong steamID, IntPtr /*SteamItemDef_t **/ pItemDefIDs, out uint /*uint32 **/ punItemDefIDsArraySize )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamInventory _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamInventory_GetEligiblePromoItemDefinitionIDs(_ptr, steamID, pItemDefIDs, out punItemDefIDsArraySize);
 			}
 			
 			public virtual void /*void*/ ISteamVideo_GetVideoURL( uint unVideoAppID )
@@ -4540,11 +4576,15 @@ namespace SteamNative
 				[DllImportAttribute( "libsteam_api64.so" )] internal static extern void /*void*/ SteamAPI_ISteamController_StopAnalogActionMomentum( IntPtr ISteamController, ulong controllerHandle, ulong eAction );
 				[DllImportAttribute( "libsteam_api64.so" )] internal static extern void /*void*/ SteamAPI_ISteamController_TriggerHapticPulse( IntPtr ISteamController, ulong controllerHandle, SteamControllerPad /*ESteamControllerPad*/ eTargetPad, ushort /*unsigned short*/ usDurationMicroSec );
 				[DllImportAttribute( "libsteam_api64.so" )] internal static extern void /*void*/ SteamAPI_ISteamController_TriggerRepeatedHapticPulse( IntPtr ISteamController, ulong controllerHandle, SteamControllerPad /*ESteamControllerPad*/ eTargetPad, ushort /*unsigned short*/ usDurationMicroSec, ushort /*unsigned short*/ usOffMicroSec, ushort /*unsigned short*/ unRepeat, uint /*unsigned int*/ nFlags );
+				[DllImportAttribute( "libsteam_api64.so" )] internal static extern void /*void*/ SteamAPI_ISteamController_TriggerVibration( IntPtr ISteamController, ulong controllerHandle, ushort /*unsigned short*/ usLeftSpeed, ushort /*unsigned short*/ usRightSpeed );
+				[DllImportAttribute( "libsteam_api64.so" )] internal static extern void /*void*/ SteamAPI_ISteamController_SetLEDColor( IntPtr ISteamController, ulong controllerHandle, byte /*uint8*/ nColorR, byte /*uint8*/ nColorG, byte /*uint8*/ nColorB, uint /*unsigned int*/ nFlags );
 				[DllImportAttribute( "libsteam_api64.so" )] internal static extern int /*int*/ SteamAPI_ISteamController_GetGamepadIndexForController( IntPtr ISteamController, ulong ulControllerHandle );
 				[DllImportAttribute( "libsteam_api64.so" )] internal static extern ControllerHandle_t /*(ControllerHandle_t)*/ SteamAPI_ISteamController_GetControllerForGamepadIndex( IntPtr ISteamController, int /*int*/ nIndex );
 				[DllImportAttribute( "libsteam_api64.so" )] internal static extern ControllerMotionData_t /*struct ControllerMotionData_t*/ SteamAPI_ISteamController_GetMotionData( IntPtr ISteamController, ulong controllerHandle );
 				[DllImportAttribute( "libsteam_api64.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamController_ShowDigitalActionOrigins( IntPtr ISteamController, ulong controllerHandle, ulong digitalActionHandle, float /*float*/ flScale, float /*float*/ flXPosition, float /*float*/ flYPosition );
 				[DllImportAttribute( "libsteam_api64.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamController_ShowAnalogActionOrigins( IntPtr ISteamController, ulong controllerHandle, ulong analogActionHandle, float /*float*/ flScale, float /*float*/ flXPosition, float /*float*/ flYPosition );
+				[DllImportAttribute( "libsteam_api64.so" )] internal static extern IntPtr SteamAPI_ISteamController_GetStringForActionOrigin( IntPtr ISteamController, ControllerActionOrigin /*EControllerActionOrigin*/ eOrigin );
+				[DllImportAttribute( "libsteam_api64.so" )] internal static extern IntPtr SteamAPI_ISteamController_GetGlyphForActionOrigin( IntPtr ISteamController, ControllerActionOrigin /*EControllerActionOrigin*/ eOrigin );
 				
 				//
 				// ISteamUGC 
@@ -4690,6 +4730,8 @@ namespace SteamNative
 				[DllImportAttribute( "libsteam_api64.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_LoadItemDefinitions( IntPtr ISteamInventory );
 				[DllImportAttribute( "libsteam_api64.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_GetItemDefinitionIDs( IntPtr ISteamInventory, IntPtr /*SteamItemDef_t **/ pItemDefIDs, out uint /*uint32 **/ punItemDefIDsArraySize );
 				[DllImportAttribute( "libsteam_api64.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_GetItemDefinitionProperty( IntPtr ISteamInventory, int iDefinition, string /*const char **/ pchPropertyName, System.Text.StringBuilder /*char **/ pchValueBuffer, out uint /*uint32 **/ punValueBufferSizeOut );
+				[DllImportAttribute( "libsteam_api64.so" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamInventory_RequestEligiblePromoItemDefinitionsIDs( IntPtr ISteamInventory, ulong steamID );
+				[DllImportAttribute( "libsteam_api64.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_GetEligiblePromoItemDefinitionIDs( IntPtr ISteamInventory, ulong steamID, IntPtr /*SteamItemDef_t **/ pItemDefIDs, out uint /*uint32 **/ punItemDefIDsArraySize );
 				
 				//
 				// ISteamVideo 

@@ -101,13 +101,6 @@ namespace Generator
             }
 
             {
-                sb = new StringBuilder();
-                Header( "Facepunch.SteamApi" );
-                Footer();
-                System.IO.File.WriteAllText( $"{folder}SteamApi.cs", sb.ToString() );
-            }
-
-            {
                 GenerateClasses( $"{folder}SteamNative." );
             }
         }

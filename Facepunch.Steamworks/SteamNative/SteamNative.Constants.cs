@@ -58,7 +58,7 @@ namespace SteamNative
 		internal const string STEAMAPPLIST_INTERFACE_VERSION = "STEAMAPPLIST_INTERFACE_VERSION001";
 		internal const string STEAMAPPS_INTERFACE_VERSION = "STEAMAPPS_INTERFACE_VERSION008";
 		internal const string STEAMAPPTICKET_INTERFACE_VERSION = "STEAMAPPTICKET_INTERFACE_VERSION001";
-		internal const string STEAMCONTROLLER_INTERFACE_VERSION = "SteamController004";
+		internal const string STEAMCONTROLLER_INTERFACE_VERSION = "SteamController005";
 		internal const string STEAMFRIENDS_INTERFACE_VERSION = "SteamFriends015";
 		internal const string STEAMGAMECOORDINATOR_INTERFACE_VERSION = "SteamGameCoordinator001";
 		internal const string STEAMGAMESERVER_INTERFACE_VERSION = "SteamGameServer012";

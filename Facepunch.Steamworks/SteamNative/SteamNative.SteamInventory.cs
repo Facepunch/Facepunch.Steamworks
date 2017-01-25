@@ -98,6 +98,25 @@ namespace SteamNative
 		
 		// bool
 		// using: Detect_MultiSizeArrayReturn
+		public SteamItemDef_t[] GetEligiblePromoItemDefinitionIDs( CSteamID steamID /*class CSteamID*/ )
+		{
+			uint punItemDefIDsArraySize = 0;
+			
+			bool success = false;
+			success = platform.ISteamInventory_GetEligiblePromoItemDefinitionIDs( steamID.Value, IntPtr.Zero, out punItemDefIDsArraySize );
+			if ( !success || punItemDefIDsArraySize == 0) return null;
+			
+			var pItemDefIDs = new SteamItemDef_t[punItemDefIDsArraySize];
+			fixed ( void* pItemDefIDs_ptr = pItemDefIDs )
+			{
+				success = platform.ISteamInventory_GetEligiblePromoItemDefinitionIDs( steamID.Value, (IntPtr) pItemDefIDs_ptr, out punItemDefIDsArraySize );
+				if ( !success ) return null;
+				return pItemDefIDs;
+			}
+		}
+		
+		// bool
+		// using: Detect_MultiSizeArrayReturn
 		public SteamItemDef_t[] GetItemDefinitionIDs()
 		{
 			uint punItemDefIDsArraySize = 0;
@@ -176,6 +195,17 @@ namespace SteamNative
 		public bool LoadItemDefinitions()
 		{
 			return platform.ISteamInventory_LoadItemDefinitions();
+		}
+		
+		// SteamAPICall_t
+		public CallbackHandle RequestEligiblePromoItemDefinitionsIDs( CSteamID steamID /*class CSteamID*/, Action<SteamInventoryEligiblePromoItemDefIDs_t, bool> CallbackFunction = null /*Action<SteamInventoryEligiblePromoItemDefIDs_t, bool>*/ )
+		{
+			SteamAPICall_t callback = 0;
+			callback = platform.ISteamInventory_RequestEligiblePromoItemDefinitionsIDs( steamID.Value );
+			
+			if ( CallbackFunction == null ) return null;
+			
+			return SteamInventoryEligiblePromoItemDefIDs_t.CallResult( steamworks, callback, CallbackFunction );
 		}
 		
 		// void

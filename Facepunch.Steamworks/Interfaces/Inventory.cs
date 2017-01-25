@@ -167,9 +167,9 @@ namespace Facepunch.Steamworks
         /// IE - your player is alive, and playing.
         /// Don't stress on it too much tho cuz it's super hijackable anyway.
         /// </summary>
+        [Obsolete( "No longer required, will be removed in a later version" )]
         public void PlaytimeHeartbeat()
         {
-            inventory.SendItemDropHeartbeat();
         }
 
         /// <summary>

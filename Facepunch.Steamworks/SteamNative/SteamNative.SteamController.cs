@@ -114,10 +114,28 @@ namespace SteamNative
 			return platform.ISteamController_GetGamepadIndexForController( ulControllerHandle.Value );
 		}
 		
+		// string
+		// with: Detect_StringReturn
+		public string GetGlyphForActionOrigin( ControllerActionOrigin eOrigin /*EControllerActionOrigin*/ )
+		{
+			IntPtr string_pointer;
+			string_pointer = platform.ISteamController_GetGlyphForActionOrigin( eOrigin );
+			return Marshal.PtrToStringAnsi( string_pointer );
+		}
+		
 		// ControllerMotionData_t
 		public ControllerMotionData_t GetMotionData( ControllerHandle_t controllerHandle /*ControllerHandle_t*/ )
 		{
 			return platform.ISteamController_GetMotionData( controllerHandle.Value );
+		}
+		
+		// string
+		// with: Detect_StringReturn
+		public string GetStringForActionOrigin( ControllerActionOrigin eOrigin /*EControllerActionOrigin*/ )
+		{
+			IntPtr string_pointer;
+			string_pointer = platform.ISteamController_GetStringForActionOrigin( eOrigin );
+			return Marshal.PtrToStringAnsi( string_pointer );
 		}
 		
 		// bool
@@ -130,6 +148,12 @@ namespace SteamNative
 		public void RunFrame()
 		{
 			platform.ISteamController_RunFrame();
+		}
+		
+		// void
+		public void SetLEDColor( ControllerHandle_t controllerHandle /*ControllerHandle_t*/, byte nColorR /*uint8*/, byte nColorG /*uint8*/, byte nColorB /*uint8*/, uint nFlags /*unsigned int*/ )
+		{
+			platform.ISteamController_SetLEDColor( controllerHandle.Value, nColorR, nColorG, nColorB, nFlags );
 		}
 		
 		// bool
@@ -172,6 +196,12 @@ namespace SteamNative
 		public void TriggerRepeatedHapticPulse( ControllerHandle_t controllerHandle /*ControllerHandle_t*/, SteamControllerPad eTargetPad /*ESteamControllerPad*/, ushort usDurationMicroSec /*unsigned short*/, ushort usOffMicroSec /*unsigned short*/, ushort unRepeat /*unsigned short*/, uint nFlags /*unsigned int*/ )
 		{
 			platform.ISteamController_TriggerRepeatedHapticPulse( controllerHandle.Value, eTargetPad, usDurationMicroSec, usOffMicroSec, unRepeat, nFlags );
+		}
+		
+		// void
+		public void TriggerVibration( ControllerHandle_t controllerHandle /*ControllerHandle_t*/, ushort usLeftSpeed /*unsigned short*/, ushort usRightSpeed /*unsigned short*/ )
+		{
+			platform.ISteamController_TriggerVibration( controllerHandle.Value, usLeftSpeed, usRightSpeed );
 		}
 		
 	}

@@ -15990,6 +15990,128 @@ namespace SteamNative
 		}
 	}
 	
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	internal struct SteamInventoryEligiblePromoItemDefIDs_t
+	{
+		public const int CallbackId = CallbackIdentifiers.ClientInventory + 3;
+		public Result Esult; // m_result enum EResult
+		public ulong SteamID; // m_steamID class CSteamID
+		public int UmEligiblePromoItemDefs; // m_numEligiblePromoItemDefs int
+		[MarshalAs(UnmanagedType.I1)]
+		public bool CachedData; // m_bCachedData _Bool
+		
+		//
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
+		//
+		public static SteamInventoryEligiblePromoItemDefIDs_t FromPointer( IntPtr p )
+		{
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+			return (SteamInventoryEligiblePromoItemDefIDs_t) Marshal.PtrToStructure( p, typeof(SteamInventoryEligiblePromoItemDefIDs_t) );
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		internal struct PackSmall
+		{
+			public Result Esult; // m_result enum EResult
+			public ulong SteamID; // m_steamID class CSteamID
+			public int UmEligiblePromoItemDefs; // m_numEligiblePromoItemDefs int
+			[MarshalAs(UnmanagedType.I1)]
+			public bool CachedData; // m_bCachedData _Bool
+			
+			//
+			// Easily convert from PackSmall to SteamInventoryEligiblePromoItemDefIDs_t
+			//
+			public static implicit operator SteamInventoryEligiblePromoItemDefIDs_t (  SteamInventoryEligiblePromoItemDefIDs_t.PackSmall d )
+			{
+				return new SteamInventoryEligiblePromoItemDefIDs_t()
+				{
+					Esult = d.Esult,
+					SteamID = d.SteamID,
+					UmEligiblePromoItemDefs = d.UmEligiblePromoItemDefs,
+					CachedData = d.CachedData,
+				};
+			}
+		}
+		
+		public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<SteamInventoryEligiblePromoItemDefIDs_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			handle.CallResultHandle = call;
+			handle.CallResult = true;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			Callback.Result         funcA = ( _, p ) => {  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); };
+			Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => 
+			{
+				if ( hSteamAPICall != call ) return;
+				
+				handle.CallResultHandle = 0;
+				handle.Dispose();
+				
+				CallbackFunction( FromPointer( p ), bIOFailure );
+			};
+			Callback.GetSize        funcC = ( _ ) => { return Marshal.SizeOf( typeof( SteamInventoryEligiblePromoItemDefIDs_t ) ); };
+			
+			//
+			// If this platform is PackSmall, use PackSmall versions of everything instead
+			//
+			if ( Platform.PackSmall )
+			{
+				funcC = ( _ ) => { return Marshal.SizeOf( typeof( PackSmall ) ); };
+			}
+			
+			//
+			// Allocate a handle to each function, so they don't get disposed
+			//
+			handle.FuncA = GCHandle.Alloc( funcA );
+			handle.FuncB = GCHandle.Alloc( funcB );
+			handle.FuncC = GCHandle.Alloc( funcC );
+			
+			//
+			// Create the VTable by manually allocating the memory and copying across
+			//
+			handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+			var vTable = new Callback.VTable()
+			{
+				ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+				ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+				GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+			};
+			//
+			// The order of these functions are swapped on Windows
+			//
+			if ( Platform.IsWindows )
+			{
+				vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+				vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+			}
+			Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
+			
+			return handle;
+		}
+	}
+	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct BroadcastUploadStop_t
 	{

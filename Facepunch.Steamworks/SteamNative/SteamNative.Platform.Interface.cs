@@ -90,11 +90,15 @@ namespace SteamNative
 			void /*void*/ ISteamController_StopAnalogActionMomentum( ulong controllerHandle, ulong eAction );
 			void /*void*/ ISteamController_TriggerHapticPulse( ulong controllerHandle, SteamControllerPad /*ESteamControllerPad*/ eTargetPad, ushort /*unsigned short*/ usDurationMicroSec );
 			void /*void*/ ISteamController_TriggerRepeatedHapticPulse( ulong controllerHandle, SteamControllerPad /*ESteamControllerPad*/ eTargetPad, ushort /*unsigned short*/ usDurationMicroSec, ushort /*unsigned short*/ usOffMicroSec, ushort /*unsigned short*/ unRepeat, uint /*unsigned int*/ nFlags );
+			void /*void*/ ISteamController_TriggerVibration( ulong controllerHandle, ushort /*unsigned short*/ usLeftSpeed, ushort /*unsigned short*/ usRightSpeed );
+			void /*void*/ ISteamController_SetLEDColor( ulong controllerHandle, byte /*uint8*/ nColorR, byte /*uint8*/ nColorG, byte /*uint8*/ nColorB, uint /*unsigned int*/ nFlags );
 			int /*int*/ ISteamController_GetGamepadIndexForController( ulong ulControllerHandle );
 			ControllerHandle_t /*(ControllerHandle_t)*/ ISteamController_GetControllerForGamepadIndex( int /*int*/ nIndex );
 			ControllerMotionData_t /*struct ControllerMotionData_t*/ ISteamController_GetMotionData( ulong controllerHandle );
 			bool /*bool*/ ISteamController_ShowDigitalActionOrigins( ulong controllerHandle, ulong digitalActionHandle, float /*float*/ flScale, float /*float*/ flXPosition, float /*float*/ flYPosition );
 			bool /*bool*/ ISteamController_ShowAnalogActionOrigins( ulong controllerHandle, ulong analogActionHandle, float /*float*/ flScale, float /*float*/ flXPosition, float /*float*/ flYPosition );
+			IntPtr ISteamController_GetStringForActionOrigin( ControllerActionOrigin /*EControllerActionOrigin*/ eOrigin );
+			IntPtr ISteamController_GetGlyphForActionOrigin( ControllerActionOrigin /*EControllerActionOrigin*/ eOrigin );
 			IntPtr ISteamFriends_GetPersonaName();
 			SteamAPICall_t /*(SteamAPICall_t)*/ ISteamFriends_SetPersonaName( string /*const char **/ pchPersonaName );
 			PersonaState /*EPersonaState*/ ISteamFriends_GetPersonaState();
@@ -301,6 +305,8 @@ namespace SteamNative
 			bool /*bool*/ ISteamInventory_LoadItemDefinitions();
 			bool /*bool*/ ISteamInventory_GetItemDefinitionIDs( IntPtr /*SteamItemDef_t **/ pItemDefIDs, out uint /*uint32 **/ punItemDefIDsArraySize );
 			bool /*bool*/ ISteamInventory_GetItemDefinitionProperty( int iDefinition, string /*const char **/ pchPropertyName, System.Text.StringBuilder /*char **/ pchValueBuffer, out uint /*uint32 **/ punValueBufferSizeOut );
+			SteamAPICall_t /*(SteamAPICall_t)*/ ISteamInventory_RequestEligiblePromoItemDefinitionsIDs( ulong steamID );
+			bool /*bool*/ ISteamInventory_GetEligiblePromoItemDefinitionIDs( ulong steamID, IntPtr /*SteamItemDef_t **/ pItemDefIDs, out uint /*uint32 **/ punItemDefIDsArraySize );
 			int /*int*/ ISteamMatchmaking_GetFavoriteGameCount();
 			bool /*bool*/ ISteamMatchmaking_GetFavoriteGame( int /*int*/ iGame, ref uint pnAppID, out uint /*uint32 **/ pnIP, out ushort /*uint16 **/ pnConnPort, out ushort /*uint16 **/ pnQueryPort, out uint /*uint32 **/ punFlags, out uint /*uint32 **/ pRTime32LastPlayedOnServer );
 			int /*int*/ ISteamMatchmaking_AddFavoriteGame( uint nAppID, uint /*uint32*/ nIP, ushort /*uint16*/ nConnPort, ushort /*uint16*/ nQueryPort, uint /*uint32*/ unFlags, uint /*uint32*/ rTime32LastPlayedOnServer );

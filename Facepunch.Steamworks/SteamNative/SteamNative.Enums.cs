@@ -439,24 +439,6 @@ namespace SteamNative
 	}
 	
 	//
-	// EControllerType
-	//
-	internal enum ControllerType : int
-	{
-		None = -1,
-		Unknown = 0,
-		UnknownSteamController = 1,
-		SteamController = 2,
-		UnknownNonSteamController = 30,
-		XBox360Controller = 31,
-		XBoxOneController = 32,
-		PS3Controller = 33,
-		PS4Controller = 34,
-		WiiController = 35,
-		AppleController = 36,
-	}
-	
-	//
 	// CGameID::EGameIDType
 	//
 	internal enum GameIDType : int
@@ -522,7 +504,6 @@ namespace SteamNative
 		RequestingInfo = 256,
 		Ignored = 512,
 		IgnoredFriend = 1024,
-		Suggested = 2048,
 		ChatMember = 4096,
 		All = 65535,
 	}
@@ -993,7 +974,10 @@ namespace SteamNative
 		LeftTrigger = 6,
 		RightTrigger = 7,
 		Gyro = 8,
-		Count = 9,
+		CenterTrackpad = 9,
+		RightJoystick = 10,
+		DPad = 11,
+		Count = 12,
 	}
 	
 	//
@@ -1008,14 +992,15 @@ namespace SteamNative
 		AbsoluteMouse = 4,
 		RelativeMouse = 5,
 		JoystickMove = 6,
-		JoystickCamera = 7,
-		ScrollWheel = 8,
-		Trigger = 9,
-		TouchMenu = 10,
-		MouseJoystick = 11,
-		MouseRegion = 12,
-		RadialMenu = 13,
-		Switches = 14,
+		JoystickMouse = 7,
+		JoystickCamera = 8,
+		ScrollWheel = 9,
+		Trigger = 10,
+		TouchMenu = 11,
+		MouseJoystick = 12,
+		MouseRegion = 13,
+		RadialMenu = 14,
+		Switches = 15,
 	}
 	
 	//
@@ -1062,82 +1047,163 @@ namespace SteamNative
 		Gyro_Pitch = 36,
 		Gyro_Yaw = 37,
 		Gyro_Roll = 38,
-		Count = 39,
+		PS4_X = 39,
+		PS4_Circle = 40,
+		PS4_Triangle = 41,
+		PS4_Square = 42,
+		PS4_LeftBumper = 43,
+		PS4_RightBumper = 44,
+		PS4_Options = 45,
+		PS4_Share = 46,
+		PS4_LeftPad_Touch = 47,
+		PS4_LeftPad_Swipe = 48,
+		PS4_LeftPad_Click = 49,
+		PS4_LeftPad_DPadNorth = 50,
+		PS4_LeftPad_DPadSouth = 51,
+		PS4_LeftPad_DPadWest = 52,
+		PS4_LeftPad_DPadEast = 53,
+		PS4_RightPad_Touch = 54,
+		PS4_RightPad_Swipe = 55,
+		PS4_RightPad_Click = 56,
+		PS4_RightPad_DPadNorth = 57,
+		PS4_RightPad_DPadSouth = 58,
+		PS4_RightPad_DPadWest = 59,
+		PS4_RightPad_DPadEast = 60,
+		PS4_CenterPad_Touch = 61,
+		PS4_CenterPad_Swipe = 62,
+		PS4_CenterPad_Click = 63,
+		PS4_CenterPad_DPadNorth = 64,
+		PS4_CenterPad_DPadSouth = 65,
+		PS4_CenterPad_DPadWest = 66,
+		PS4_CenterPad_DPadEast = 67,
+		PS4_LeftTrigger_Pull = 68,
+		PS4_LeftTrigger_Click = 69,
+		PS4_RightTrigger_Pull = 70,
+		PS4_RightTrigger_Click = 71,
+		PS4_LeftStick_Move = 72,
+		PS4_LeftStick_Click = 73,
+		PS4_LeftStick_DPadNorth = 74,
+		PS4_LeftStick_DPadSouth = 75,
+		PS4_LeftStick_DPadWest = 76,
+		PS4_LeftStick_DPadEast = 77,
+		PS4_RightStick_Move = 78,
+		PS4_RightStick_Click = 79,
+		PS4_RightStick_DPadNorth = 80,
+		PS4_RightStick_DPadSouth = 81,
+		PS4_RightStick_DPadWest = 82,
+		PS4_RightStick_DPadEast = 83,
+		PS4_DPad_North = 84,
+		PS4_DPad_South = 85,
+		PS4_DPad_West = 86,
+		PS4_DPad_East = 87,
+		PS4_Gyro_Move = 88,
+		PS4_Gyro_Pitch = 89,
+		PS4_Gyro_Yaw = 90,
+		PS4_Gyro_Roll = 91,
+		XBoxOne_A = 92,
+		XBoxOne_B = 93,
+		XBoxOne_X = 94,
+		XBoxOne_Y = 95,
+		XBoxOne_LeftBumper = 96,
+		XBoxOne_RightBumper = 97,
+		XBoxOne_Menu = 98,
+		XBoxOne_View = 99,
+		XBoxOne_LeftTrigger_Pull = 100,
+		XBoxOne_LeftTrigger_Click = 101,
+		XBoxOne_RightTrigger_Pull = 102,
+		XBoxOne_RightTrigger_Click = 103,
+		XBoxOne_LeftStick_Move = 104,
+		XBoxOne_LeftStick_Click = 105,
+		XBoxOne_LeftStick_DPadNorth = 106,
+		XBoxOne_LeftStick_DPadSouth = 107,
+		XBoxOne_LeftStick_DPadWest = 108,
+		XBoxOne_LeftStick_DPadEast = 109,
+		XBoxOne_RightStick_Move = 110,
+		XBoxOne_RightStick_Click = 111,
+		XBoxOne_RightStick_DPadNorth = 112,
+		XBoxOne_RightStick_DPadSouth = 113,
+		XBoxOne_RightStick_DPadWest = 114,
+		XBoxOne_RightStick_DPadEast = 115,
+		XBoxOne_DPad_North = 116,
+		XBoxOne_DPad_South = 117,
+		XBoxOne_DPad_West = 118,
+		XBoxOne_DPad_East = 119,
+		XBox360_A = 120,
+		XBox360_B = 121,
+		XBox360_X = 122,
+		XBox360_Y = 123,
+		XBox360_LeftBumper = 124,
+		XBox360_RightBumper = 125,
+		XBox360_Start = 126,
+		XBox360_Back = 127,
+		XBox360_LeftTrigger_Pull = 128,
+		XBox360_LeftTrigger_Click = 129,
+		XBox360_RightTrigger_Pull = 130,
+		XBox360_RightTrigger_Click = 131,
+		XBox360_LeftStick_Move = 132,
+		XBox360_LeftStick_Click = 133,
+		XBox360_LeftStick_DPadNorth = 134,
+		XBox360_LeftStick_DPadSouth = 135,
+		XBox360_LeftStick_DPadWest = 136,
+		XBox360_LeftStick_DPadEast = 137,
+		XBox360_RightStick_Move = 138,
+		XBox360_RightStick_Click = 139,
+		XBox360_RightStick_DPadNorth = 140,
+		XBox360_RightStick_DPadSouth = 141,
+		XBox360_RightStick_DPadWest = 142,
+		XBox360_RightStick_DPadEast = 143,
+		XBox360_DPad_North = 144,
+		XBox360_DPad_South = 145,
+		XBox360_DPad_West = 146,
+		XBox360_DPad_East = 147,
+		SteamV2_A = 148,
+		SteamV2_B = 149,
+		SteamV2_X = 150,
+		SteamV2_Y = 151,
+		SteamV2_LeftBumper = 152,
+		SteamV2_RightBumper = 153,
+		SteamV2_LeftGrip = 154,
+		SteamV2_RightGrip = 155,
+		SteamV2_Start = 156,
+		SteamV2_Back = 157,
+		SteamV2_LeftPad_Touch = 158,
+		SteamV2_LeftPad_Swipe = 159,
+		SteamV2_LeftPad_Click = 160,
+		SteamV2_LeftPad_DPadNorth = 161,
+		SteamV2_LeftPad_DPadSouth = 162,
+		SteamV2_LeftPad_DPadWest = 163,
+		SteamV2_LeftPad_DPadEast = 164,
+		SteamV2_RightPad_Touch = 165,
+		SteamV2_RightPad_Swipe = 166,
+		SteamV2_RightPad_Click = 167,
+		SteamV2_RightPad_DPadNorth = 168,
+		SteamV2_RightPad_DPadSouth = 169,
+		SteamV2_RightPad_DPadWest = 170,
+		SteamV2_RightPad_DPadEast = 171,
+		SteamV2_LeftTrigger_Pull = 172,
+		SteamV2_LeftTrigger_Click = 173,
+		SteamV2_RightTrigger_Pull = 174,
+		SteamV2_RightTrigger_Click = 175,
+		SteamV2_LeftStick_Move = 176,
+		SteamV2_LeftStick_Click = 177,
+		SteamV2_LeftStick_DPadNorth = 178,
+		SteamV2_LeftStick_DPadSouth = 179,
+		SteamV2_LeftStick_DPadWest = 180,
+		SteamV2_LeftStick_DPadEast = 181,
+		SteamV2_Gyro_Move = 182,
+		SteamV2_Gyro_Pitch = 183,
+		SteamV2_Gyro_Yaw = 184,
+		SteamV2_Gyro_Roll = 185,
+		Count = 186,
 	}
 	
 	//
-	// EControllerActivationType
+	// ESteamControllerLEDFlag
 	//
-	internal enum ControllerActivationType : int
+	internal enum SteamControllerLEDFlag : int
 	{
-		None = 0,
-		FullPress = 1,
-		SoftPress = 2,
-		StartPress = 3,
-		Release = 4,
-		LongPress = 5,
-		DoublePress = 6,
-		Analog = 7,
-	}
-	
-	//
-	// EControllerPressureButton
-	//
-	internal enum ControllerPressureButton : int
-	{
-		LeftTrackPad = 0,
-		RightTrackPad = 1,
-		LeftBumper = 2,
-		RightBumper = 3,
-		LeftGripLower = 4,
-		RightGripLower = 5,
-		LeftGripUpper = 6,
-		RightGripUpper = 7,
-		Invalid = 8,
-	}
-	
-	//
-	// EControllerActivatorOutputAxis
-	//
-	internal enum ControllerActivatorOutputAxis : int
-	{
-		LeftTrigger = 0,
-		RightTrigger = 1,
-		LeftThumbXPos = 2,
-		LeftThumbXNeg = 3,
-		LeftThumbYPos = 4,
-		LeftThumbYNeg = 5,
-		RightThumbXPos = 6,
-		RightThumbXNeg = 7,
-		RightThumbYPos = 8,
-		RightThumbYNeg = 9,
-	}
-	
-	//
-	// EControllerConfigFeature
-	//
-	internal enum ControllerConfigFeature : int
-	{
-		None = 0,
-		Gamepad = 1,
-		Keyboard = 2,
-		Mouse = 3,
-		Gyro = 4,
-		TouchMenu = 5,
-		ModeShift = 6,
-		ActionSet = 7,
-		Activator = 8,
-	}
-	
-	//
-	// EControllerPopupMenuActivationType
-	//
-	internal enum ControllerPopupMenuActivationType : int
-	{
-		ButtonPress = 0,
-		ButtonRelease = 1,
-		TouchRelease = 2,
-		TouchAlways = 3,
+		SetColor = 0,
+		RestoreUserDefault = 1,
 	}
 	
 	//
