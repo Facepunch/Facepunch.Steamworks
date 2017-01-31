@@ -80,9 +80,6 @@ namespace Facepunch.Steamworks
                 _resultPage = (int) Math.Floor( (float) actualOffset / (float)SteamResponseSize );
                 _results = new List<Item>();
 
-                Console.WriteLine( "_resultPage = " + _resultPage );
-                Console.WriteLine( "_resultSkip = " + _resultSkip );
-
                 RunInternal();
             }
 
