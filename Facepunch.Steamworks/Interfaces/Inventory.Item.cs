@@ -13,6 +13,12 @@ namespace Facepunch.Steamworks
         /// </summary>
         public struct Item : IEquatable<Item>
         {
+            public struct Amount
+            {
+                public Item Item;
+                public int Quantity;
+            }
+
             public ulong Id;
             public int Quantity;
 

@@ -298,7 +298,7 @@ namespace Facepunch.Steamworks
         /// <summary>
         /// Crafting! Uses the passed items to buy the target item.
         /// You need to have set up the appropriate exchange rules in your item
-        /// definitions.
+        /// definitions. This assumes all the items passed in aren't stacked.
         /// </summary>
         public Result CraftItem( Item[] list, Definition target )
         {
@@ -309,6 +309,27 @@ namespace Facepunch.Steamworks
 
             var takeItems = list.Select( x => (SteamNative.SteamItemInstanceID_t)x.Id ).ToArray();
             var takeItemsC = list.Select( x => (uint)1 ).ToArray();
+
+            if ( !inventory.ExchangeItems( ref resultHandle, newItems, newItemC, 1, takeItems, takeItemsC, (uint)takeItems.Length ) )
+                return null;
+
+            return new Result( this, resultHandle, true );
+        }
+
+        /// <summary>
+        /// Crafting! Uses the passed items to buy the target item.
+        /// You need to have set up the appropriate exchange rules in your item
+        /// definitions.
+        /// </summary>
+        public Result CraftItem( Item.Amount[] list, Definition target )
+        {
+            SteamNative.SteamInventoryResult_t resultHandle = -1;
+
+            var newItems = new SteamNative.SteamItemDef_t[] { new SteamNative.SteamItemDef_t() { Value = target.Id } };
+            var newItemC = new uint[] { 1 };
+
+            var takeItems = list.Select( x => (SteamNative.SteamItemInstanceID_t)x.Item.Id ).ToArray();
+            var takeItemsC = list.Select( x => (uint)x.Quantity ).ToArray();
 
             if ( !inventory.ExchangeItems( ref resultHandle, newItems, newItemC, 1, takeItems, takeItemsC, (uint)takeItems.Length ) )
                 return null;
