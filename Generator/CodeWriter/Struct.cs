@@ -248,8 +248,8 @@ namespace Generator
 
             if ( Result )
             {
-                WriteLine( $"Callback.Result         funcA = ( _, p ) => {{  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); }};" );
-                StartBlock( $"Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => " );
+                WriteLine( $"Callback.ThisCall.Result         funcA = ( _, p ) => {{  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); }};" );
+                StartBlock( $"Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => " );
                 {
                     WriteLine( "if ( hSteamAPICall != call ) return;" );
                     WriteLine();
@@ -262,11 +262,11 @@ namespace Generator
             }
             else
             {
-                WriteLine( $"Callback.Result         funcA = ( _, p ) => {{ CallbackFunction( FromPointer( p ), false ); }};" );
-                WriteLine( $"Callback.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => {{ CallbackFunction( FromPointer( p ), bIOFailure ); }};" );
+                WriteLine( $"Callback.ThisCall.Result         funcA = ( _, p ) => {{ CallbackFunction( FromPointer( p ), false ); }};" );
+                WriteLine( $"Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => {{ CallbackFunction( FromPointer( p ), bIOFailure ); }};" );
             }
 
-            WriteLine( $"Callback.GetSize        funcC = ( _ ) => {{ return Marshal.SizeOf( typeof( {c.Name} ) ); }};" );
+            WriteLine( $"Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( {c.Name} ) );" );
             WriteLine();
             WriteLine( "//" );
             WriteLine( "// If this platform is PackSmall, use PackSmall versions of everything instead" );
