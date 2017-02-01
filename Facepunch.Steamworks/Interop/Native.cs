@@ -47,6 +47,9 @@ namespace Facepunch.Steamworks.Interop
 
             FillInterfaces( steamworks, hUser, hPipe );
 
+            if ( !user.IsValid )
+                return false;
+
             // Ensure that the user has logged into Steam. This will always return true if the game is launched
             // from Steam, but if Steam is at the login prompt when you run your game it will return false.
             if ( !user.BLoggedOn() )

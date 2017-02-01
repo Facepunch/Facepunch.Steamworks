@@ -19,7 +19,7 @@ namespace Generator
                 StartBlock( $"internal class {type} : Interface" );
                 {
                     WriteLine( "internal IntPtr _ptr;" );
-                    WriteLine( "public bool IsValid { get{ return _ptr != null; } }" );
+                    WriteLine( "public bool IsValid { get{ return _ptr != IntPtr.Zero; } }" );
                     WriteLine();
 
                     WriteLine( "//" );
