@@ -8,6 +8,27 @@ namespace Facepunch.Steamworks
     public static class Config
     {
         /// <summary>
+        /// Should be called before creating any interfaces, to configure Steam for Unity.
+        /// </summary>
+        /// <param name="platform">Please pass in Application.platform.ToString()</param>
+        public static void ForUnity( string platform )
+        {
+            //
+            // Windows Config
+            //
+            if ( platform == "WindowsEditor" || platform == "Windows" )
+            {
+                //
+                // 32bit windows unity uses a stdcall
+                //
+                if ( IntPtr.Size == 4 ) UseThisCall = false;
+
+                ForcePlatform( OperatingSystem.Windows, IntPtr.Size == 4 ? Architecture.x86 : Architecture.x64 );
+            }
+
+        }
+
+        /// <summary>
         /// Some platforms allow/need CallingConvention.ThisCall. If you're crashing with argument null
         /// errors on certain platforms, try flipping this to true.
         /// 
