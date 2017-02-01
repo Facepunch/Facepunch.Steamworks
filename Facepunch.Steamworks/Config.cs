@@ -16,16 +16,29 @@ namespace Facepunch.Steamworks
             //
             // Windows Config
             //
-            if ( platform == "WindowsEditor" || platform == "Windows" )
+            if ( platform == "WindowsEditor" || platform == "WindowsPlayer" )
             {
                 //
                 // 32bit windows unity uses a stdcall
                 //
                 if ( IntPtr.Size == 4 ) UseThisCall = false;
 
-                ForcePlatform( OperatingSystem.Windows, IntPtr.Size == 4 ? Architecture.x86 : Architecture.x64 );
+                ForcePlatform( OperatingSystem.Windows, IntPtr.Size == 4 ? Architecture.x86 : Architecture.x64 );                
             }
 
+            if ( platform == "OSXEditor" || platform == "OSXPlayer" || platform == "OSXDashboardPlayer" )
+            {
+                ForcePlatform( OperatingSystem.Osx, IntPtr.Size == 4 ? Architecture.x86 : Architecture.x64 );
+            }
+
+            if ( platform == "LinuxPlayer" || platform == "LinuxEditor" )
+            {
+                ForcePlatform( OperatingSystem.Linux, IntPtr.Size == 4 ? Architecture.x86 : Architecture.x64 );
+            }
+
+            Console.WriteLine( "Facepunch.Steamworks Unity: " + platform );
+            Console.WriteLine( "Facepunch.Steamworks Os: " + SteamNative.Platform.Os );
+            Console.WriteLine( "Facepunch.Steamworks Arch: " + SteamNative.Platform.Arch );
         }
 
         /// <summary>

@@ -30,9 +30,16 @@ namespace SteamNative
         //
         internal class ThisCall
         {
-            [UnmanagedFunctionPointer( CallingConvention.StdCall )]    public delegate void Result( IntPtr thisptr, IntPtr pvParam );
-            [UnmanagedFunctionPointer( CallingConvention.StdCall )]    public delegate void ResultWithInfo( IntPtr thisptr, IntPtr pvParam, bool bIOFailure, SteamNative.SteamAPICall_t hSteamAPICall );
-            [UnmanagedFunctionPointer( CallingConvention.StdCall )]    public delegate int GetSize( IntPtr thisptr );
+            [UnmanagedFunctionPointer( CallingConvention.ThisCall )]    public delegate void Result( IntPtr thisptr, IntPtr pvParam );
+            [UnmanagedFunctionPointer( CallingConvention.ThisCall )]    public delegate void ResultWithInfo( IntPtr thisptr, IntPtr pvParam, bool bIOFailure, SteamNative.SteamAPICall_t hSteamAPICall );
+            [UnmanagedFunctionPointer( CallingConvention.ThisCall )]    public delegate int GetSize( IntPtr thisptr );
+        }
+
+        internal class StdCall
+        {
+            [UnmanagedFunctionPointer( CallingConvention.StdCall )]    public delegate void Result( IntPtr pvParam );
+            [UnmanagedFunctionPointer( CallingConvention.StdCall )]    public delegate void ResultWithInfo( IntPtr pvParam, bool bIOFailure, SteamNative.SteamAPICall_t hSteamAPICall );
+            [UnmanagedFunctionPointer( CallingConvention.StdCall )]    public delegate int GetSize();
         }
 
 

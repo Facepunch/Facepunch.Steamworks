@@ -8,7 +8,7 @@ namespace SteamNative
 		internal class Mac : Interface
 		{
 			internal IntPtr _ptr;
-			public bool IsValid { get{ return _ptr != null; } }
+			public bool IsValid { get{ return _ptr != IntPtr.Zero; } }
 			
 			//
 			// Constructor sets pointer to native class

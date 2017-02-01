@@ -8,7 +8,7 @@ namespace SteamNative
 		internal class Win64 : Interface
 		{
 			internal IntPtr _ptr;
-			public bool IsValid { get{ return _ptr != null; } }
+			public bool IsValid { get{ return _ptr != IntPtr.Zero; } }
 			
 			//
 			// Constructor sets pointer to native class
