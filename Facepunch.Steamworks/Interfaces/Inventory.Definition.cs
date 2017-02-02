@@ -285,6 +285,9 @@ namespace Facepunch.Steamworks
 
                 foreach ( var i in r.Ingredients )
                 {
+                    if ( i.Definition == null )
+                        continue;
+
                     i.Definition.InRecipe( r );
                 }
 
