@@ -38,7 +38,7 @@ namespace Facepunch.Steamworks
                 item.Title = details.Title;
                 item.Description = details.Description;
                 item.OwnerId = details.SteamIDOwner;
-                item.Tags = details.Tags.Split( ',' );
+                item.Tags = details.Tags.Split( ',' ).Select( x=> x.ToLower() ).ToArray();
                 item.Score = details.Score;
                 item.VotesUp = details.VotesUp;
                 item.VotesDown = details.VotesDown;

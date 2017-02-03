@@ -134,7 +134,7 @@ namespace Facepunch.Steamworks.Test
                         Console.WriteLine( "{0}", item.Title );
                         Console.WriteLine( "\t{0}", string.Join( ";", item.Tags ) );
 
-                        Assert.IsTrue( item.Tags.Contains( "LongTShirt Skin" ) );
+                        Assert.IsTrue( item.Tags.Contains( "longtshirt skin" ) );
                     }
                 }
             }
@@ -171,7 +171,7 @@ namespace Facepunch.Steamworks.Test
                         Console.WriteLine( "{0}", item.Title );
                         Console.WriteLine( "\t{0}", string.Join( ";", item.Tags ) );
 
-                        Assert.IsTrue( item.Tags.Contains( "LongTShirt Skin" ) );
+                        Assert.IsTrue( item.Tags.Contains( "longtshirt skin" ) );
                         Assert.IsTrue( item.Tags.Contains( "version2" ) );
                     }
                 }
@@ -208,7 +208,7 @@ namespace Facepunch.Steamworks.Test
                         Console.WriteLine( "{0}", item.Title );
                         Console.WriteLine( "\t{0}", string.Join( ";", item.Tags ) );
 
-                        Assert.IsTrue( item.Tags.Contains( "LongTShirt Skin" ) );
+                        Assert.IsTrue( item.Tags.Contains( "longtshirt skin" ) );
                         Assert.IsFalse( item.Tags.Contains( "version2" ) );
                     }
                 }
@@ -461,8 +461,8 @@ namespace Facepunch.Steamworks.Test
                         Assert.AreEqual( itemInfo.Id, item.Id );
                         Assert.AreEqual( itemInfo.OwnerId, client.SteamId );
                         Assert.AreEqual( itemInfo.Title, item.Title );
-                        Assert.IsTrue( itemInfo.Tags.Contains( "Apple" ), "Missing Tag" );
-                        Assert.IsTrue( itemInfo.Tags.Contains( "Banana" ), "Missing Tag" );
+                        Assert.IsTrue( itemInfo.Tags.Contains( "apple" ), "Missing Tag" );
+                        Assert.IsTrue( itemInfo.Tags.Contains( "banana" ), "Missing Tag" );
                     }
                 }
                 finally
