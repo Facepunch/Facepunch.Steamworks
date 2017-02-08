@@ -115,6 +115,7 @@
   <ItemGroup>
     <Compile Include="BaseSteamworks.cs" />
     <Compile Include="Callbacks\Index.cs" />
+    <Compile Include="Client\Leaderboard.cs" />
     <Compile Include="Interfaces\Inventory.Item.cs" />
     <Compile Include="Interfaces\Inventory.Result.cs" />
     <Compile Include="Interfaces\Networking.cs" />

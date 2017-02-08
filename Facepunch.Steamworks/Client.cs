@@ -106,5 +106,28 @@ namespace Facepunch.Steamworks
 
             base.Dispose();
         }
+
+        public enum LeaderboardSortMethod
+        {
+            None = 0,
+            Ascending = 1,  // top-score is lowest number
+            Descending = 2, // top-score is highest number
+        };
+
+        // the display type (used by the Steam Community web site) for a leaderboard
+        public enum LeaderboardDisplayType
+        {
+            None = 0,
+            Numeric = 1,           // simple numerical score
+            TimeSeconds = 2,       // the score represents a time, in seconds
+            TimeMilliSeconds = 3,  // the score represents a time, in milliseconds
+        };
+
+        public Leaderboard GetLeaderboard( string name, LeaderboardSortMethod sortMethod = LeaderboardSortMethod.None, LeaderboardDisplayType displayType = LeaderboardDisplayType.None )
+        {
+            var board = new Leaderboard( this );
+            native.userstats.FindOrCreateLeaderboard( name, (SteamNative.LeaderboardSortMethod)sortMethod, (SteamNative.LeaderboardDisplayType)displayType, board.OnBoardCreated );
+            return board;
+        }
     }
 }
