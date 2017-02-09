@@ -126,8 +126,14 @@ namespace Facepunch.Steamworks
 
 
 
-        public Request Internet( Filter filter )
+        public Request Internet( Filter filter = null )
         {
+            if ( filter == null )
+            {
+                filter = new Filter();
+                filter.Add( "appid", client.AppId.ToString() );
+            }
+
             filter.Start();
 
             var request = new Request( client );
@@ -154,8 +160,14 @@ namespace Facepunch.Steamworks
         /// Request a list of servers we've been on. History isn't applied automatically
         /// You need to call server.AddtoHistoryList() when you join a server etc.
         /// </summary>
-        public Request History( Filter filter )
+        public Request History( Filter filter = null )
         {
+            if ( filter == null )
+            {
+                filter = new Filter();
+                filter.Add( "appid", client.AppId.ToString() );
+            }
+
             filter.Start();
 
             var request = new Request( client );
@@ -170,8 +182,14 @@ namespace Facepunch.Steamworks
         /// <summary>
         /// Request a list of servers we've favourited
         /// </summary>
-        public Request Favourites( Filter filter )
+        public Request Favourites( Filter filter = null )
         {
+            if ( filter == null )
+            {
+                filter = new Filter();
+                filter.Add( "appid", client.AppId.ToString() );
+            }
+
             filter.Start();
 
             var request = new Request( client );
@@ -186,8 +204,14 @@ namespace Facepunch.Steamworks
         /// <summary>
         /// Request a list of servers that our friends are on
         /// </summary>
-        public Request Friends( Filter filter )
+        public Request Friends( Filter filter = null )
         {
+            if ( filter == null )
+            {
+                filter = new Filter();
+                filter.Add( "appid", client.AppId.ToString() );
+            }
+
             filter.Start();
 
             var request = new Request( client );
@@ -202,8 +226,14 @@ namespace Facepunch.Steamworks
         /// <summary>
         /// Request a list of servers that are running on our LAN
         /// </summary>
-        public Request Local( Filter filter )
+        public Request Local( Filter filter = null )
         {
+            if ( filter == null )
+            {
+                filter = new Filter();
+                filter.Add( "appid", client.AppId.ToString() );
+            }
+
             filter.Start();
 
             var request = new Request( client );
