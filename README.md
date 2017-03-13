@@ -45,7 +45,9 @@ Compile and add the library to your project. To create a client you can do this.
 var client = new Facepunch.Steamworks.Client( 252490 );
 ```
 
-Replace 252490 with the appid of your game. The client is disposable, so when you're done you should probably call..
+Replace 252490 with the appid of your game. This should be a singleton - you should only create one client, right at the start of your game.
+
+The client is disposable, so when you're closing your game should probably call..
 
 ```csharp
 client.Dispose();
