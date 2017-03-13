@@ -5,23 +5,7 @@ using System.Text;
 
 namespace Facepunch.Steamworks
 {
-    public partial class Client : IDisposable
-    {
-        App _app;
-
-        public App App
-        {
-            get
-            {
-                if ( _app == null )
-                    _app = new App( this );
-
-                return _app;
-            }
-        }
-    }
-
-    public class App
+    public class App : IDisposable
     {
         internal Client client;
 
@@ -30,23 +14,63 @@ namespace Facepunch.Steamworks
             client = c;
         }
 
+        public void Dispose()
+        {
+            client = null;
+        }
+
+        /// <summary>
+        /// Mark the content as corrupt, so it will validate the downloaded files
+        /// once the app is closed. This is good to call when you detect a crash happening
+        /// or a file is missing that is meant to be there.
+        /// </summary>
         public void MarkContentCorrupt( bool missingFilesOnly = false )
         {
             client.native.apps.MarkContentCorrupt( missingFilesOnly );
         }
 
         /// <summary>
-        /// Returns the current BuildId of the game. 
-        /// This is pretty useless, as it isn't guarenteed to return
-        /// the build id you're playing, or the latest build id.
+        /// Tell steam to install the Dlc specified by the AppId
         /// </summary>
-        public int BuildId
+        public void InstallDlc( uint appId )
         {
-            get
-            {
-                return client.native.apps.GetAppBuildId();
-            }
+            client.native.apps.InstallDLC( appId );
         }
 
+        /// <summary>
+        /// Tell steam to uninstall the Dlc specified by the AppId
+        /// </summary>
+        public void UninstallDlc(uint appId)
+        {
+            client.native.apps.UninstallDLC( appId );
+        }
+
+        /// <summary>
+        /// Get the purchase time for this appid. Will return DateTime.MinValue if none.
+        /// </summary>
+        public DateTime PurchaseTime(uint appId)
+        {
+            var time = client.native.apps.GetEarliestPurchaseUnixTime(appId);
+            if ( time == 0 ) return DateTime.MinValue;
+
+            return Utility.Epoch.ToDateTime( time );
+        }
+
+        /// <summary>
+        /// Returns true if this user is subscribed to the specific appid
+        /// ie. If the user owns this game specified.
+        /// </summary>
+        public bool IsSubscribed(uint appId)
+        {
+            return client.native.apps.BIsSubscribedApp(appId);
+        }
+
+        /// <summary>
+        /// Returns true if specified app is installed.
+        /// </summary>
+        public bool IsInstalled(uint appId)
+        {
+            return client.native.apps.BIsAppInstalled(appId);
+        }
     }
 }

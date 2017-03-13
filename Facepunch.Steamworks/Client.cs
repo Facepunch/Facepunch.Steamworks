@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.InteropServices;
 
 namespace Facepunch.Steamworks
@@ -16,12 +17,28 @@ namespace Facepunch.Steamworks
         public ulong SteamId { get; private set; }
 
         /// <summary>
+        /// If we're sharing this game, this is the owner of it.
+        /// </summary>
+        public ulong OwnerSteamId { get; private set; }
+
+        /// <summary>
         /// Current Beta name, if we're using a beta branch.
         /// </summary>
         public string BetaName { get; private set; }
 
+        /// <summary>
+        /// The BuildId of the current build 
+        /// </summary>
+        public int BuildId { get; private set; }
+
+        /// <summary>
+        /// The folder in which this app is installed
+        /// </summary>
+        public DirectoryInfo InstallFolder { get; private set; }
+
         public Voice Voice { get; private set; }
         public ServerList ServerList { get; private set; }
+        public App App { get; private set; }
 
         public Client( uint appId )
         {
@@ -47,6 +64,7 @@ namespace Facepunch.Steamworks
             //
             Voice = new Voice( this );
             ServerList = new ServerList( this );
+            App = new App( this );
 
             Workshop.friends = Friends;
 
@@ -58,6 +76,9 @@ namespace Facepunch.Steamworks
             Username = native.friends.GetPersonaName();
             SteamId = native.user.GetSteamID();
             BetaName = native.apps.GetCurrentBetaName();
+            OwnerSteamId = native.apps.GetAppOwner();
+            InstallFolder = new DirectoryInfo( native.apps.GetAppInstallDir( AppId ) );
+            BuildId = native.apps.GetAppBuildId();
 
             //
             // Run update, first call does some initialization
@@ -104,6 +125,12 @@ namespace Facepunch.Steamworks
                 ServerList = null;
             }
 
+            if ( App != null )
+            {
+                App.Dispose();
+                App = null;
+            }
+
             base.Dispose();
         }
 
@@ -129,5 +156,27 @@ namespace Facepunch.Steamworks
             native.userstats.FindOrCreateLeaderboard( name, (SteamNative.LeaderboardSortMethod)sortMethod, (SteamNative.LeaderboardDisplayType)displayType, board.OnBoardCreated );
             return board;
         }
+
+
+        /// <summary>
+        /// True if we're subscribed/authorised to be running this app
+        /// </summary>
+        public bool IsSubscribed => native.apps.BIsSubscribed();
+
+        /// <summary>
+        /// True if we're a cybercafe account
+        /// </summary>
+        public bool IsCybercafe => native.apps.BIsCybercafe();
+
+        /// <summary>
+        /// True if we're subscribed/authorised to be running this app, but only temporarily
+        /// due to a free weekend etc.
+        /// </summary>
+        public bool IsSubscribedFromFreeWeekend => native.apps.BIsSubscribedFromFreeWeekend();
+
+        /// <summary>
+        /// True if we're in low violence mode (germans are only allowed to see the insides of bodies in porn)
+        /// </summary>
+        public bool IsLowViolence => native.apps.BIsLowViolence();
     }
 }
