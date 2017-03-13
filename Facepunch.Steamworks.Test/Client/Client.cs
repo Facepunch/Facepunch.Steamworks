@@ -93,5 +93,62 @@ namespace Facepunch.Steamworks.Test
                 }
             }
         }
+
+        [TestMethod]
+        public void Subscribed()
+        {
+            var sw = new Stopwatch();
+            using (var client = new Facepunch.Steamworks.Client(252490))
+            {
+                Assert.IsTrue(client.IsValid);
+                Assert.IsTrue(client.IsSubscribed);
+            }
+        }
+
+        [TestMethod]
+        public void Owner()
+        {
+            var sw = new Stopwatch();
+            using (var client = new Facepunch.Steamworks.Client(252490))
+            {
+                Assert.IsTrue(client.IsValid);
+                Assert.AreEqual(client.OwnerSteamId, client.SteamId);
+            }
+        }
+
+        [TestMethod]
+        public void InstallFolder()
+        {
+            var sw = new Stopwatch();
+            using (var client = new Facepunch.Steamworks.Client(252490))
+            {
+                Assert.IsTrue(client.IsValid);
+                Assert.IsTrue(client.InstallFolder.Exists);
+
+                Console.Write($"Install Folder: {client.InstallFolder}");
+            }
+        }
+
+        [TestMethod]
+        public void Cybercafe()
+        {
+            var sw = new Stopwatch();
+            using (var client = new Facepunch.Steamworks.Client(252490))
+            {
+                Assert.IsTrue(client.IsValid);
+                Assert.IsFalse(client.IsCybercafe);
+            }
+        }
+
+        [TestMethod]
+        public void LowViolence()
+        {
+            var sw = new Stopwatch();
+            using (var client = new Facepunch.Steamworks.Client(252490))
+            {
+                Assert.IsTrue(client.IsValid);
+                Assert.IsFalse(client.IsLowViolence);
+            }
+        }
     }
 }
