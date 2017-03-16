@@ -8,7 +8,5 @@ node {
 		bat "\"${tool 'MSBuild'}\" Facepunch.Steamworks/Facepunch.Steamworks.csproj /p:Configuration=Debug /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
 
 	stage 'Archive'
-		archiveArtifacts Release: 'Facepunch.Steamworks/bin/Release/**'
-		archiveArtifacts Debug: 'Facepunch.Steamworks/bin/Debug/**'
-
+		archiveArtifacts artifacts: 'Facepunch.Steamworks/bin/**/*'
 }
