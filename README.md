@@ -66,6 +66,20 @@ var server = new Facepunch.Steamworks.Server( 252490, 0, 28015, true, "MyGame453
 
 This will register a secure server for game 252490, any ip, port 28015. Again, more usage in the Facepunch.Steamworks.Test project.
 
+# Unity
+
+Yeah this works under Unity. That's half the point of it.
+
+There's another repo with an example project with it working in Unity. You can find it [here](https://github.com/Facepunch/Facepunch.Steamworks.Unity/blob/master/Assets/Scripts/SteamTest.cs).
+
+The TLDR is before you create the Client or the Server, call this to let Facepunch.Steamworks know which platform we're on - because it can't tell the difference between osx and linux by itself.
+
+```csharp
+Facepunch.Steamworks.Config.ForUnity( Application.platform.ToString() );
+```
+
+You'll also want to put steam_api64.dll and steam_appid.txt (on windows 64) in your project root next to Assets.
+
 # Help
 
 Wanna help? Go for it, pull requests, bug reports, yes, do it.
