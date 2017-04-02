@@ -36,6 +36,18 @@ namespace Facepunch.Steamworks
         /// </summary>
         public DirectoryInfo InstallFolder { get; private set; }
 
+
+        /// <summary>
+        /// The currently selected language
+        /// </summary>
+        public string CurrentLanguage { get; }
+
+
+        /// <summary>
+        /// List of languages available to the game
+        /// </summary>
+        public string[] AvailableLanguages { get; }
+
         public Voice Voice { get; private set; }
         public ServerList ServerList { get; private set; }
         public App App { get; private set; }
@@ -79,6 +91,8 @@ namespace Facepunch.Steamworks
             OwnerSteamId = native.apps.GetAppOwner();
             InstallFolder = new DirectoryInfo( native.apps.GetAppInstallDir( AppId ) );
             BuildId = native.apps.GetAppBuildId();
+            CurrentLanguage = native.apps.GetCurrentGameLanguage();
+            AvailableLanguages = native.apps.GetAvailableGameLanguages().Split( new[] {';'}, StringSplitOptions.RemoveEmptyEntries ); // TODO: Assumed colon separated
 
             //
             // Run update, first call does some initialization

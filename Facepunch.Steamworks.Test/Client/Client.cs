@@ -130,6 +130,38 @@ namespace Facepunch.Steamworks.Test
         }
 
         [TestMethod]
+        public void CurrentLanguage()
+        {
+            var sw = new Stopwatch();
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                Assert.IsTrue( client.IsValid );
+                Assert.IsTrue( client.CurrentLanguage != null );
+                Assert.IsTrue( client.CurrentLanguage.Length > 0 );
+
+                Console.Write( $"CurrentLanguage: {client.CurrentLanguage}" );
+            }
+        }
+
+        [TestMethod]
+        public void AvailableLanguages()
+        {
+            var sw = new Stopwatch();
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                Assert.IsTrue( client.IsValid );
+                Assert.IsTrue( client.AvailableLanguages != null );
+                Assert.IsTrue( client.AvailableLanguages.Length > 0 );
+
+                foreach ( var lang in client.AvailableLanguages )
+                {
+                    Console.Write( $"AvailableLanguages: {lang}" );
+                }
+                
+            }
+        }
+
+        [TestMethod]
         public void Cybercafe()
         {
             var sw = new Stopwatch();
