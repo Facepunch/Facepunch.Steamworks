@@ -31,7 +31,7 @@ namespace Facepunch.Steamworks.Test
                 Console.WriteLine( $"Board name is \"{board.Name}\"" );
                 Console.WriteLine( $"Board has \"{board.TotalEntries}\" entries" );
 
-                board.AddScore( true, false, 86275309, 7, 8, 9 );
+                board.AddScore( true, 86275309, 7, 8, 9 );
 
                 board.FetchScores( Steamworks.Leaderboard.RequestType.Global, 0, 20 );
 
@@ -67,23 +67,22 @@ namespace Facepunch.Steamworks.Test
                 Assert.IsTrue( board.IsValid );
                 Assert.IsFalse( board.IsError );
 
-
-                board.AddScore( true, false, 1234 );
-
-                Thread.Sleep( 10 );
-                client.Update();
-
-                board.AddScore( true, true, 34566 );
+                board.AddScore( true, 1234 );
 
                 Thread.Sleep( 10 );
                 client.Update();
 
-                board.AddScore( true, false, 86275309, 7, 8, 9, 7, 4, 7, 98, 24, 5, 76, 124, 6 );
+                board.AddScore( true, 34566 );
 
                 Thread.Sleep( 10 );
                 client.Update();
 
-                board.AddScore( false, true, 86275309, 7, 8, 9, 7, 4, 7, 98, 24, 5, 76, 124, 6 );
+                board.AddScore( true, 86275309, 7, 8, 9, 7, 4, 7, 98, 24, 5, 76, 124, 6 );
+
+                Thread.Sleep( 10 );
+                client.Update();
+
+                board.AddScore( false, 86275309, 7, 8, 9, 7, 4, 7, 98, 24, 5, 76, 124, 6 );
 
                 Thread.Sleep( 10 );
                 client.Update();
