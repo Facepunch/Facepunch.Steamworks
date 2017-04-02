@@ -93,18 +93,18 @@ namespace Facepunch.Steamworks
         }
 
         /// <summary>
-        ///     Add a score to this leaderboard.
-        ///     Subscores are totally optional, and can be used for other game defined data such as laps etc.. although
-        ///     they have no bearing on sorting at all.
+        /// Add a score to this leaderboard.
+        /// Subscores are totally optional, and can be used for other game defined data such as laps etc.. although
+        /// they have no bearing on sorting at all
+        /// If onlyIfBeatsOldScore is true, the score will only be updated if it beats the existing score, else it will always
+        /// be updated.
         /// </summary>
-        public void AddScore( bool replaceOldScore, bool onlyIfBeatsOldScore, int score, params int[] subscores )
+        public void AddScore( bool onlyIfBeatsOldScore, int score, params int[] subscores )
         {
             if ( !IsValid ) return;
 
-            var flags = LeaderboardUploadScoreMethod.None;
-
-            if ( replaceOldScore ) flags |= LeaderboardUploadScoreMethod.ForceUpdate;
-            if ( onlyIfBeatsOldScore ) flags |= LeaderboardUploadScoreMethod.KeepBest;
+            var flags = LeaderboardUploadScoreMethod.ForceUpdate;
+            if ( onlyIfBeatsOldScore ) flags = LeaderboardUploadScoreMethod.KeepBest;
 
             client.native.userstats.UploadLeaderboardScore( BoardId, flags, score, subscores, subscores.Length );
         }
