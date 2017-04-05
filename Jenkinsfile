@@ -12,10 +12,13 @@ node {
 		bat "\"${tool 'MSBuild'}\" Facepunch.Steamworks/Facepunch.Steamworks.csproj /p:Configuration=Debug /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
 		
 	stage 'Build Release NetCore'
-		bat "\"${tool 'MSBuild'}\" Facepunch.Steamworks/Facepunch.Steamworks.NetCore.csproj /p:Configuration=Release /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
+		bat "dotnet restore Facepunch.Steamworks/Facepunch.Steamworks.NetCore.csproj"
+		
+	stage 'Build Release NetCore'
+		bat "dotnet build Facepunch.Steamworks/Facepunch.Steamworks.NetCore.csproj --configuration Release"
 		
 	stage 'Build Debug NetCore'
-		bat "\"${tool 'MSBuild'}\" Facepunch.Steamworks/Facepunch.Steamworks.NetCore.csproj /p:Configuration=Debug /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
+		bat "dotnet build Facepunch.Steamworks/Facepunch.Steamworks.NetCore.csproj --configuration Debug"
 
 	stage 'Archive'
 		archiveArtifacts artifacts: 'Facepunch.Steamworks/bin/**/*'
