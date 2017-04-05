@@ -97,7 +97,7 @@ internal class SourceServerQuery :IDisposable
 
             return pr;
         }
-        catch ( SocketException e )
+        catch ( SocketException )
         {
             return null;
         }
@@ -347,7 +347,7 @@ internal class SourceServerQuery :IDisposable
     }
 
     /// <summary>
-    /// Invert the Byte-order Mark of an value, used for compatibility between Little <-> Large BOM
+    /// Invert the Byte-order Mark of an value, used for compatibility between Little Large BOM
     /// </summary>
     /// <param name="value">The value to invert</param>
     /// <returns>BOM-inversed value (if needed), otherwise the original value</returns>

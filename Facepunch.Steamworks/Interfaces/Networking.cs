@@ -138,7 +138,7 @@ namespace Facepunch.Steamworks
             /// </summary>
             UnreliableNoDelay = 1,
 
-            //// <summary>
+            /// <summary>
             /// Reliable message send. Can send up to 1MB of data in a single message.
             /// Does fragmentation/re-assembly of messages under the hood, as well as a sliding window for efficient sends of large chunks of data.
             /// </summary>
