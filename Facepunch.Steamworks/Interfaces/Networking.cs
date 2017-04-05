@@ -8,13 +8,16 @@ namespace Facepunch.Steamworks
 {
     public class Networking : IDisposable
     {
-        public Action<ulong, MemoryStream, int> OnP2PData;
+        private static byte[] ReceiveBuffer = new byte[1024 * 64];
+
+        public delegate void OnRecievedP2PData( ulong steamid, byte[] data, int dataLength, int channel );
+
+        public OnRecievedP2PData OnP2PData;
         public Func<ulong, bool> OnIncomingConnection;
         public Action<ulong, SessionError> OnConnectionFailed;
 
         private List<int> ListenChannels = new List<int>();
 
-        private MemoryStream ReceiveBuffer = new MemoryStream();
         private System.Diagnostics.Stopwatch UpdateTimer = System.Diagnostics.Stopwatch.StartNew();
 
         internal SteamNative.SteamNetworking networking;
@@ -170,21 +173,16 @@ namespace Facepunch.Steamworks
             if ( !networking.IsP2PPacketAvailable( out DataAvailable, channel ) || DataAvailable == 0 )
                 return false;
 
-            if ( ReceiveBuffer.Capacity < DataAvailable )
-                ReceiveBuffer.Capacity = (int) DataAvailable;
+            if ( ReceiveBuffer.Length < DataAvailable )
+                ReceiveBuffer = new byte[ DataAvailable + 1024 ];
 
-            ReceiveBuffer.Position = 0;
-            ReceiveBuffer.SetLength( DataAvailable );
-
-            fixed ( byte* p = ReceiveBuffer.GetBuffer() )
+            fixed ( byte* p = ReceiveBuffer )
             {
                 SteamNative.CSteamID steamid = 1;
-                if ( !networking.ReadP2PPacket( (IntPtr)p, (uint)DataAvailable, out DataAvailable, out steamid, channel ) || DataAvailable == 0 )
+                if ( !networking.ReadP2PPacket( (IntPtr)p, DataAvailable, out DataAvailable, out steamid, channel ) || DataAvailable == 0 )
                     return false;
 
-                ReceiveBuffer.SetLength( DataAvailable );
-
-                OnP2PData?.Invoke( steamid, ReceiveBuffer, channel );
+                OnP2PData?.Invoke( steamid, ReceiveBuffer, (int) DataAvailable, channel );
                 return true;
             }
         }

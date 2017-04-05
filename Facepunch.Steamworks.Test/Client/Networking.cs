@@ -26,12 +26,14 @@ namespace Facepunch.Steamworks.Test
                 //
                 client.Networking.SetListenChannel( 0, true );
 
-                client.Networking.OnP2PData = ( steamid, ms, channel ) =>
+                client.Networking.OnP2PData = ( steamid, bytes, length, channel ) =>
                 {
-                    var str = Encoding.UTF8.GetString( ms.GetBuffer() );
+                    var str = Encoding.UTF8.GetString( bytes, 0, length );
                     Assert.AreEqual( str, TestString );
                     Assert.AreEqual( steamid, client.SteamId );
                     OutputReceived = true;
+
+                    Console.WriteLine( "Got: " + str );
                 };
 
                 client.Networking.OnIncomingConnection = ( steamid ) =>
