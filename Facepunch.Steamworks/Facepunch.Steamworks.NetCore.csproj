@@ -9,6 +9,8 @@
     <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
     <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
     <RootNamespace>Facepunch.Steamworks</RootNamespace>
+    <Description />
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -20,5 +22,9 @@
     <DefineConstants>TRACE;RELEASE;NETSTANDARD1_6;NETCORE</DefineConstants>
     <NoWarn>1701;1702;1705;618;1591</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Threading.Thread" Version="4.3.0" />
+  </ItemGroup>
 
 </Project>

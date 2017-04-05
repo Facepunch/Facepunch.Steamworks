@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.IO;
 
+#if !NETCORE
+
 internal class SourceServerQuery :IDisposable
 {
     public class PlayersResponse
@@ -507,3 +509,5 @@ internal class SourceServerQuery :IDisposable
         return output;
     }
 }
+
+#endif

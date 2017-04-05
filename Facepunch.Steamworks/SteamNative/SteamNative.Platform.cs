@@ -37,6 +37,7 @@ namespace SteamNative
                 {
                     _os = Facepunch.Steamworks.OperatingSystem.Windows;
 
+#if !NETCORE
                     //
                     // These checks aren't so accurate on older versions of mono
                     //
@@ -48,6 +49,7 @@ namespace SteamNative
                     //
                     if ( Environment.OSVersion.VersionString.ToLower().Contains( "unix" ) ) _os = Facepunch.Steamworks.OperatingSystem.Linux;
                     if ( Environment.OSVersion.VersionString.ToLower().Contains( "osx" ) ) _os = Facepunch.Steamworks.OperatingSystem.Osx;
+#endif
                 }
 
                 return _os;
