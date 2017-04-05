@@ -185,7 +185,7 @@ namespace Generator
         {
             if ( IsInputArray )
             {
-                if ( AsRawValues && IsStruct ) return $"Array.ConvertAll( {Name}, p => p.Value )";
+                if ( AsRawValues && IsStruct ) return $"{Name}.Select( x => x.Value ).ToArray()";
                 return $"{Name}";
             }
 

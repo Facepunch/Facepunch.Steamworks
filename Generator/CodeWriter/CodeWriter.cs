@@ -150,6 +150,7 @@ namespace Generator
         {
             WriteLine( "using System;" );
             WriteLine( "using System.Runtime.InteropServices;" );
+            WriteLine( "using System.Linq;" );
             WriteLine();
             StartBlock( "namespace " + NamespaceName );
         }
