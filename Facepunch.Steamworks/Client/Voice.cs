@@ -10,14 +10,13 @@ namespace Facepunch.Steamworks
     public class Voice : IDisposable
     {
         const int ReadBufferSize = 1024 * 128;
-        const int UncompressBufferSize = 1024 * 256;
 
         internal Client client;
 
         internal IntPtr ReadCompressedBuffer;
         internal IntPtr ReadUncompressedBuffer;
 
-        internal IntPtr UncompressBuffer;
+        internal byte[] UncompressBuffer = new byte[1024 * 256];
 
         public Action<IntPtr, int> OnCompressedData;
         public Action<IntPtr, int> OnUncompressedData;
@@ -77,15 +76,12 @@ namespace Facepunch.Steamworks
 
             ReadCompressedBuffer = Marshal.AllocHGlobal( ReadBufferSize );
             ReadUncompressedBuffer = Marshal.AllocHGlobal( ReadBufferSize );
-            UncompressBuffer = Marshal.AllocHGlobal( UncompressBufferSize );
         }
 
         public void Dispose()
         {
             Marshal.FreeHGlobal( ReadCompressedBuffer );
             Marshal.FreeHGlobal( ReadUncompressedBuffer );
-
-            Marshal.FreeHGlobal( UncompressBuffer );
         }
 
         /// <summary>
@@ -154,24 +150,22 @@ namespace Facepunch.Steamworks
                 samepleRate = OptimalSampleRate;
 
             uint bytesOut = 0;
-            var result = client.native.user.DecompressVoice( (IntPtr)( ((byte*)input) + inputoffset ), (uint) inputsize, UncompressBuffer, UncompressBufferSize, out bytesOut, samepleRate );
 
-            if ( bytesOut > 0 )
-                output.SetLength( bytesOut );
+            SteamNative.VoiceResult result = SteamNative.VoiceResult.NoData;
 
-            if (  result == SteamNative.VoiceResult.OK )
+            fixed ( byte* outBuf = UncompressBuffer )
             {
-                if ( output.Capacity < bytesOut )
-                    output.Capacity = (int) bytesOut;
+                result = client.native.user.DecompressVoice( (IntPtr)(((byte*)input) + inputoffset), (uint)inputsize, (IntPtr)outBuf, (uint)UncompressBuffer.Length, out bytesOut, samepleRate );
+            }
 
-                output.SetLength( bytesOut );
-                Marshal.Copy( UncompressBuffer, output.GetBuffer(), 0, (int) bytesOut );
-                
+            if ( result == SteamNative.VoiceResult.OK )
+            {
+                output.Write( (byte[])UncompressBuffer, 0, (int)bytesOut );
+
                 return true;
             }
 
             return false;
-            
         }
     }
 }
