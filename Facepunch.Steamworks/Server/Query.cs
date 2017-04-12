@@ -12,7 +12,7 @@ namespace Facepunch.Steamworks
     public class ServerQuery
     {
         internal Server server;
-        internal static byte[] buffer = new byte[16*1024];
+        internal static byte[] buffer = new byte[64*1024];
 
         internal ServerQuery( Server s )
         {
