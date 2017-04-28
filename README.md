@@ -1,6 +1,8 @@
 # Facepunch.Steamworks
 Another fucking c# Steamworks implementation
 
+[![Build Status](http://build.facepunch.com/buildStatus/icon?job=Facepunch/Facepunch.Steamworks/master)](http://build.facepunch.com/job/Facepunch/job/Facepunch.Steamworks/job/master/)
+
 ## Why
 
 The Steamworks C# implementations I found that were compatible with Unity have worked for a long time. But I hate them all. For a number of different reasons.
@@ -83,6 +85,8 @@ You'll also want to put steam_api64.dll and steam_appid.txt (on windows 64) in y
 # Help
 
 Wanna help? Go for it, pull requests, bug reports, yes, do it.
+
+You can also hit up the [Steamworks Thread](http://steamcommunity.com/groups/steamworks/discussions/0/1319961618833314524/) for help/discussion.
 
 # License
 
