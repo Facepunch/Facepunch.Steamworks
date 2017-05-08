@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SteamNative;
 
 namespace Facepunch.Steamworks
 {
@@ -11,10 +12,15 @@ namespace Facepunch.Steamworks
 
         public Achievement[] All { get; private set; }
 
+        public event Action OnUpdated;
+
         internal Achievements( Client c )
         {
             client = c;
-            Refresh();
+
+            All = new Achievement[0];
+
+            SteamNative.UserStatsReceived_t.RegisterCallback( c, UserStatsReceived );
         }
 
         public void Refresh()
@@ -29,6 +35,14 @@ namespace Facepunch.Steamworks
             client = null;
         }
 
+        private void UserStatsReceived( UserStatsReceived_t stats, bool isError )
+        {
+            if ( isError ) return;
+
+            Refresh();
+
+            OnUpdated?.Invoke();
+        }
     }
 
     public class Achievement

@@ -960,6 +960,118 @@ namespace SteamNative
 			
 			return handle;
 		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<EncryptedAppTicketResponse_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( EncryptedAppTicketResponse_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( EncryptedAppTicketResponse_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
@@ -1419,6 +1531,118 @@ namespace SteamNative
 			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
 			return handle;
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<StoreAuthURLResponse_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( StoreAuthURLResponse_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( StoreAuthURLResponse_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
@@ -2414,6 +2638,118 @@ namespace SteamNative
 			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
 			return handle;
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<ClanOfficerListResponse_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( ClanOfficerListResponse_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( ClanOfficerListResponse_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
@@ -3483,6 +3819,118 @@ namespace SteamNative
 			
 			return handle;
 		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<JoinClanChatRoomCompletionResult_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( JoinClanChatRoomCompletionResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( JoinClanChatRoomCompletionResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
@@ -3800,6 +4248,118 @@ namespace SteamNative
 			
 			return handle;
 		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<FriendsGetFollowerCount_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( FriendsGetFollowerCount_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( FriendsGetFollowerCount_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
@@ -3970,6 +4530,118 @@ namespace SteamNative
 			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
 			return handle;
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<FriendsIsFollowing_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( FriendsIsFollowing_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( FriendsIsFollowing_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
@@ -4145,6 +4817,118 @@ namespace SteamNative
 			
 			return handle;
 		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<FriendsEnumerateFollowingList_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( FriendsEnumerateFollowingList_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( FriendsEnumerateFollowingList_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
@@ -4317,6 +5101,118 @@ namespace SteamNative
 			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
 			return handle;
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<SetPersonaNameResponse_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( SetPersonaNameResponse_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( SetPersonaNameResponse_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
@@ -4776,6 +5672,118 @@ namespace SteamNative
 			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
 			return handle;
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<CheckFileSignature_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( CheckFileSignature_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( CheckFileSignature_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
@@ -5595,6 +6603,118 @@ namespace SteamNative
 			
 			return handle;
 		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<LobbyEnter_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( LobbyEnter_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( LobbyEnter_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
@@ -6371,6 +7491,118 @@ namespace SteamNative
 			
 			return handle;
 		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<LobbyMatchList_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( LobbyMatchList_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( LobbyMatchList_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
@@ -6687,6 +7919,118 @@ namespace SteamNative
 			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
 			return handle;
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<LobbyCreated_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( LobbyCreated_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( LobbyCreated_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
@@ -7800,6 +9144,118 @@ namespace SteamNative
 			
 			return handle;
 		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageFileShareResult_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( RemoteStorageFileShareResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( RemoteStorageFileShareResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
@@ -8119,6 +9575,118 @@ namespace SteamNative
 			
 			return handle;
 		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageDeletePublishedFileResult_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( RemoteStorageDeletePublishedFileResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( RemoteStorageDeletePublishedFileResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
@@ -8293,6 +9861,118 @@ namespace SteamNative
 			
 			return handle;
 		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageEnumerateUserPublishedFilesResult_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( RemoteStorageEnumerateUserPublishedFilesResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( RemoteStorageEnumerateUserPublishedFilesResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
@@ -8458,6 +10138,118 @@ namespace SteamNative
 			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
 			return handle;
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageSubscribePublishedFileResult_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( RemoteStorageSubscribePublishedFileResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( RemoteStorageSubscribePublishedFileResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
@@ -8638,6 +10430,118 @@ namespace SteamNative
 			
 			return handle;
 		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageEnumerateUserSubscribedFilesResult_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( RemoteStorageEnumerateUserSubscribedFilesResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( RemoteStorageEnumerateUserSubscribedFilesResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
@@ -8803,6 +10707,118 @@ namespace SteamNative
 			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
 			return handle;
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageUnsubscribePublishedFileResult_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( RemoteStorageUnsubscribePublishedFileResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( RemoteStorageUnsubscribePublishedFileResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
@@ -8974,6 +10990,118 @@ namespace SteamNative
 			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
 			return handle;
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageUpdatePublishedFileResult_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( RemoteStorageUpdatePublishedFileResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( RemoteStorageUpdatePublishedFileResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
@@ -9154,6 +11282,118 @@ namespace SteamNative
 			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
 			return handle;
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageDownloadUGCResult_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( RemoteStorageDownloadUGCResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( RemoteStorageDownloadUGCResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
@@ -9394,6 +11634,118 @@ namespace SteamNative
 			
 			return handle;
 		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageGetPublishedFileDetailsResult_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( RemoteStorageGetPublishedFileDetailsResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( RemoteStorageGetPublishedFileDetailsResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
@@ -9579,6 +11931,118 @@ namespace SteamNative
 			
 			return handle;
 		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageEnumerateWorkshopFilesResult_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( RemoteStorageEnumerateWorkshopFilesResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( RemoteStorageEnumerateWorkshopFilesResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
@@ -9756,6 +12220,118 @@ namespace SteamNative
 			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
 			return handle;
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageGetPublishedItemVoteDetailsResult_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( RemoteStorageGetPublishedItemVoteDetailsResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( RemoteStorageGetPublishedItemVoteDetailsResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
@@ -10367,6 +12943,118 @@ namespace SteamNative
 			
 			return handle;
 		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageUpdateUserPublishedItemVoteResult_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( RemoteStorageUpdateUserPublishedItemVoteResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( RemoteStorageUpdateUserPublishedItemVoteResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
@@ -10843,6 +13531,118 @@ namespace SteamNative
 			
 			return handle;
 		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageSetUserPublishedFileActionResult_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( RemoteStorageSetUserPublishedFileActionResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( RemoteStorageSetUserPublishedFileActionResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
@@ -11025,6 +13825,118 @@ namespace SteamNative
 			
 			return handle;
 		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageEnumeratePublishedFilesByUserActionResult_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( RemoteStorageEnumeratePublishedFilesByUserActionResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( RemoteStorageEnumeratePublishedFilesByUserActionResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
@@ -11192,6 +14104,118 @@ namespace SteamNative
 			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
 			return handle;
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStoragePublishFileProgress_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( RemoteStoragePublishFileProgress_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( RemoteStoragePublishFileProgress_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
@@ -11507,6 +14531,118 @@ namespace SteamNative
 			
 			return handle;
 		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageFileWriteAsyncComplete_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( RemoteStorageFileWriteAsyncComplete_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( RemoteStorageFileWriteAsyncComplete_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
@@ -11678,6 +14814,118 @@ namespace SteamNative
 			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
 			return handle;
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<RemoteStorageFileReadAsyncComplete_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( RemoteStorageFileReadAsyncComplete_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( RemoteStorageFileReadAsyncComplete_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
@@ -11891,6 +15139,118 @@ namespace SteamNative
 			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
 			return handle;
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<UserStatsReceived_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( UserStatsReceived_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( UserStatsReceived_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
@@ -12367,6 +15727,118 @@ namespace SteamNative
 			
 			return handle;
 		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<LeaderboardFindResult_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( LeaderboardFindResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( LeaderboardFindResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
@@ -12535,6 +16007,118 @@ namespace SteamNative
 			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
 			return handle;
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<LeaderboardScoresDownloaded_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( LeaderboardScoresDownloaded_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( LeaderboardScoresDownloaded_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
@@ -12714,6 +16298,118 @@ namespace SteamNative
 			
 			return handle;
 		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<LeaderboardScoreUploaded_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( LeaderboardScoreUploaded_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( LeaderboardScoreUploaded_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
@@ -12879,6 +16575,118 @@ namespace SteamNative
 			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
 			return handle;
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<NumberOfCurrentPlayers_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( NumberOfCurrentPlayers_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( NumberOfCurrentPlayers_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
@@ -13349,6 +17157,118 @@ namespace SteamNative
 			
 			return handle;
 		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GlobalAchievementPercentagesReady_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( GlobalAchievementPercentagesReady_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( GlobalAchievementPercentagesReady_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
@@ -13514,6 +17434,118 @@ namespace SteamNative
 			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
 			return handle;
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<LeaderboardUGCSet_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( LeaderboardUGCSet_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( LeaderboardUGCSet_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
@@ -13831,6 +17863,118 @@ namespace SteamNative
 			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
 			return handle;
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GlobalStatsReceived_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( GlobalStatsReceived_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( GlobalStatsReceived_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
@@ -14454,6 +18598,118 @@ namespace SteamNative
 			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
 			return handle;
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<FileDetailsResult_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( FileDetailsResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( FileDetailsResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
@@ -17178,6 +21434,118 @@ namespace SteamNative
 			
 			return handle;
 		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<SteamUGCQueryCompleted_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( SteamUGCQueryCompleted_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( SteamUGCQueryCompleted_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
@@ -17499,6 +21867,118 @@ namespace SteamNative
 			
 			return handle;
 		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<CreateItemResult_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( CreateItemResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( CreateItemResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
@@ -17666,6 +22146,118 @@ namespace SteamNative
 			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
 			return handle;
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<SubmitItemUpdateResult_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( SubmitItemUpdateResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( SubmitItemUpdateResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
@@ -17989,6 +22581,118 @@ namespace SteamNative
 			
 			return handle;
 		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<UserFavoriteItemsListChanged_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( UserFavoriteItemsListChanged_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( UserFavoriteItemsListChanged_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
@@ -18159,6 +22863,118 @@ namespace SteamNative
 			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
 			return handle;
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<SetUserItemVoteResult_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( SetUserItemVoteResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( SetUserItemVoteResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
@@ -18341,6 +23157,118 @@ namespace SteamNative
 			
 			return handle;
 		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GetUserItemVoteResult_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( GetUserItemVoteResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( GetUserItemVoteResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
@@ -18504,6 +23432,118 @@ namespace SteamNative
 			
 			return handle;
 		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<StartPlaytimeTrackingResult_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( StartPlaytimeTrackingResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( StartPlaytimeTrackingResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
@@ -18666,6 +23706,118 @@ namespace SteamNative
 			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
 			return handle;
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<StopPlaytimeTrackingResult_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( StopPlaytimeTrackingResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( StopPlaytimeTrackingResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
@@ -19119,6 +24271,118 @@ namespace SteamNative
 			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
 			return handle;
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<HTML_BrowserReady_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( HTML_BrowserReady_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( HTML_BrowserReady_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
@@ -22523,6 +27787,118 @@ namespace SteamNative
 			
 			return handle;
 		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<SteamInventoryEligiblePromoItemDefIDs_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( SteamInventoryEligiblePromoItemDefIDs_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( SteamInventoryEligiblePromoItemDefIDs_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
@@ -24065,6 +29441,118 @@ namespace SteamNative
 			
 			return handle;
 		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GSReputation_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( GSReputation_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( GSReputation_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
@@ -24227,6 +29715,118 @@ namespace SteamNative
 			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
 			return handle;
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<AssociateWithClanResult_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( AssociateWithClanResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( AssociateWithClanResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	
@@ -24403,6 +30003,118 @@ namespace SteamNative
 			
 			return handle;
 		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<ComputeNewPlayerCompatibilityResult_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( ComputeNewPlayerCompatibilityResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( ComputeNewPlayerCompatibilityResult_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
@@ -24569,6 +30281,118 @@ namespace SteamNative
 			
 			return handle;
 		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GSStatsReceived_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( GSStatsReceived_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( GSStatsReceived_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
@@ -24734,6 +30558,118 @@ namespace SteamNative
 			steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );
 			
 			return handle;
+		}
+		
+		public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<GSStatsStored_t, bool> CallbackFunction )
+		{
+			var handle = new CallbackHandle();
+			handle.steamworks = steamworks;
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				Callback.ThisCall.Result         funcA = ( _, p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.ThisCall.ResultWithInfo funcB = ( _, p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.ThisCall.GetSize        funcC = ( _ ) => Marshal.SizeOf( typeof( GSStatsStored_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = ( _ ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			else
+			{
+				Callback.StdCall.Result         funcA = ( p ) => { CallbackFunction( FromPointer( p ), false ); };
+				Callback.StdCall.ResultWithInfo funcB = ( p, bIOFailure, hSteamAPICall ) => { CallbackFunction( FromPointer( p ), bIOFailure ); };
+				Callback.StdCall.GetSize        funcC = (  ) => Marshal.SizeOf( typeof( GSStatsStored_t ) );
+				
+				//
+				// If this platform is PackSmall, use PackSmall versions of everything instead
+				//
+				if ( Platform.PackSmall )
+				{
+					funcC = (  ) => Marshal.SizeOf( typeof( PackSmall ) );
+				}
+				
+				//
+				// Allocate a handle to each function, so they don't get disposed
+				//
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
+				
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				var vTable = new Callback.VTable()
+				{
+					ResultA = Marshal.GetFunctionPointerForDelegate( funcA ),
+					ResultB = Marshal.GetFunctionPointerForDelegate( funcB ),
+					GetSize = Marshal.GetFunctionPointerForDelegate( funcC ),
+				};
+				//
+				// The order of these functions are swapped on Windows
+				//
+				if ( Platform.IsWindows )
+				{
+					vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );
+					vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );
+				}
+				Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
 		}
 	}
 	

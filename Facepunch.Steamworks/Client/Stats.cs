@@ -12,8 +12,6 @@ namespace Facepunch.Steamworks
         internal Stats( Client c )
         {
             client = c;
-
-            UpdateStats();
         }
 
         public void UpdateStats()

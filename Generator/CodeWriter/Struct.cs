@@ -112,7 +112,8 @@ namespace Generator
                     {
                         CallResult( c );
                     }
-                    else if ( !string.IsNullOrEmpty( c.CallbackId ) )
+
+                    if ( !string.IsNullOrEmpty( c.CallbackId ) )
                     {
                         Callback( c );
                     }

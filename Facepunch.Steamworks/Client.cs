@@ -84,6 +84,8 @@ namespace Facepunch.Steamworks
 
             Workshop.friends = Friends;
 
+            Stats.UpdateStats();
+
             //
             // Cache common, unchanging info
             //
