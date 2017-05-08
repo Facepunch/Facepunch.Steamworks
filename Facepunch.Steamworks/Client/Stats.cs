@@ -5,29 +5,15 @@ using System.Text;
 
 namespace Facepunch.Steamworks
 {
-    public partial class Client : IDisposable
-    {
-        Stats _stats;
-
-        public Stats Stats
-        {
-            get
-            {
-                if ( _stats == null )
-                    _stats = new Stats( this );
-
-                return _stats;
-            }
-        }
-    }
-
-    public class Stats
+    public class Stats : IDisposable
     {
         internal Client client;
 
         internal Stats( Client c )
         {
             client = c;
+
+            UpdateStats();
         }
 
         public void UpdateStats()
@@ -70,5 +56,9 @@ namespace Facepunch.Steamworks
             return data;
         }
 
+        public void Dispose()
+        {
+            client = null;
+        }
     }
 }

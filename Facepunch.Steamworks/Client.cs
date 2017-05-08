@@ -51,6 +51,8 @@ namespace Facepunch.Steamworks
         public Voice Voice { get; private set; }
         public ServerList ServerList { get; private set; }
         public App App { get; private set; }
+        public Achievements Achievements { get; private set; }
+        public Stats Stats { get; private set; }
 
         public Client( uint appId )
         {
@@ -77,9 +79,10 @@ namespace Facepunch.Steamworks
             Voice = new Voice( this );
             ServerList = new ServerList( this );
             App = new App( this );
+            Stats = new Stats( this );
+            Achievements = new Achievements( this );
 
             Workshop.friends = Friends;
-
 
             //
             // Cache common, unchanging info
@@ -143,6 +146,18 @@ namespace Facepunch.Steamworks
             {
                 App.Dispose();
                 App = null;
+            }
+
+            if ( Stats  != null )
+            {
+                Stats.Dispose();
+                Stats = null;
+            }
+
+            if ( Achievements != null )
+            {
+                Achievements.Dispose();
+                Achievements = null;
             }
 
             base.Dispose();
