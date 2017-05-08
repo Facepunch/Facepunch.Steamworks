@@ -43,6 +43,17 @@ namespace SteamNative
 			}
 		}
 		
+		// SteamAPICall_t
+		public CallbackHandle AddDependency( PublishedFileId_t nParentPublishedFileID /*PublishedFileId_t*/, PublishedFileId_t nChildPublishedFileID /*PublishedFileId_t*/, Action<AddUGCDependencyResult_t, bool> CallbackFunction = null /*Action<AddUGCDependencyResult_t, bool>*/ )
+		{
+			SteamAPICall_t callback = 0;
+			callback = platform.ISteamUGC_AddDependency( nParentPublishedFileID.Value, nChildPublishedFileID.Value );
+			
+			if ( CallbackFunction == null ) return null;
+			
+			return AddUGCDependencyResult_t.CallResult( steamworks, callback, CallbackFunction );
+		}
+		
 		// bool
 		public bool AddExcludedTag( UGCQueryHandle_t handle /*UGCQueryHandle_t*/, string pTagName /*const char **/ )
 		{
@@ -296,6 +307,17 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
+		public CallbackHandle RemoveDependency( PublishedFileId_t nParentPublishedFileID /*PublishedFileId_t*/, PublishedFileId_t nChildPublishedFileID /*PublishedFileId_t*/, Action<RemoveUGCDependencyResult_t, bool> CallbackFunction = null /*Action<RemoveUGCDependencyResult_t, bool>*/ )
+		{
+			SteamAPICall_t callback = 0;
+			callback = platform.ISteamUGC_RemoveDependency( nParentPublishedFileID.Value, nChildPublishedFileID.Value );
+			
+			if ( CallbackFunction == null ) return null;
+			
+			return RemoveUGCDependencyResult_t.CallResult( steamworks, callback, CallbackFunction );
+		}
+		
+		// SteamAPICall_t
 		public CallbackHandle RemoveItemFromFavorites( AppId_t nAppId /*AppId_t*/, PublishedFileId_t nPublishedFileID /*PublishedFileId_t*/, Action<UserFavoriteItemsListChanged_t, bool> CallbackFunction = null /*Action<UserFavoriteItemsListChanged_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
@@ -473,6 +495,12 @@ namespace SteamNative
 		public bool SetReturnOnlyIDs( UGCQueryHandle_t handle /*UGCQueryHandle_t*/, bool bReturnOnlyIDs /*bool*/ )
 		{
 			return platform.ISteamUGC_SetReturnOnlyIDs( handle.Value, bReturnOnlyIDs );
+		}
+		
+		// bool
+		public bool SetReturnPlaytimeStats( UGCQueryHandle_t handle /*UGCQueryHandle_t*/, uint unDays /*uint32*/ )
+		{
+			return platform.ISteamUGC_SetReturnPlaytimeStats( handle.Value, unDays );
 		}
 		
 		// bool

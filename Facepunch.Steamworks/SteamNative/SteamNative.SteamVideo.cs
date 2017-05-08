@@ -44,6 +44,24 @@ namespace SteamNative
 		}
 		
 		// void
+		public void GetOPFSettings( AppId_t unVideoAppID /*AppId_t*/ )
+		{
+			platform.ISteamVideo_GetOPFSettings( unVideoAppID.Value );
+		}
+		
+		// bool
+		// with: Detect_StringFetch True
+		public string GetOPFStringForApp( AppId_t unVideoAppID /*AppId_t*/ )
+		{
+			bool bSuccess = default( bool );
+			System.Text.StringBuilder pchBuffer_sb = Helpers.TakeStringBuilder();
+			int pnBufferSize = 4096;
+			bSuccess = platform.ISteamVideo_GetOPFStringForApp( unVideoAppID.Value, pchBuffer_sb, out pnBufferSize );
+			if ( !bSuccess ) return null;
+			return pchBuffer_sb.ToString();
+		}
+		
+		// void
 		public void GetVideoURL( AppId_t unVideoAppID /*AppId_t*/ )
 		{
 			platform.ISteamVideo_GetVideoURL( unVideoAppID.Value );

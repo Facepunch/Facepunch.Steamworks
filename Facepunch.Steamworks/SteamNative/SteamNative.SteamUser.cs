@@ -116,9 +116,9 @@ namespace SteamNative
 		}
 		
 		// VoiceResult
-		public VoiceResult GetAvailableVoice( out uint pcbCompressed /*uint32 **/, out uint pcbUncompressed /*uint32 **/, uint nUncompressedVoiceDesiredSampleRate /*uint32*/ )
+		public VoiceResult GetAvailableVoice( out uint pcbCompressed /*uint32 **/, out uint pcbUncompressed_Deprecated /*uint32 **/, uint nUncompressedVoiceDesiredSampleRate_Deprecated /*uint32*/ )
 		{
-			return platform.ISteamUser_GetAvailableVoice( out pcbCompressed, out pcbUncompressed, nUncompressedVoiceDesiredSampleRate );
+			return platform.ISteamUser_GetAvailableVoice( out pcbCompressed, out pcbUncompressed_Deprecated, nUncompressedVoiceDesiredSampleRate_Deprecated );
 		}
 		
 		// bool
@@ -164,9 +164,9 @@ namespace SteamNative
 		}
 		
 		// VoiceResult
-		public VoiceResult GetVoice( bool bWantCompressed /*bool*/, IntPtr pDestBuffer /*void **/, uint cbDestBufferSize /*uint32*/, out uint nBytesWritten /*uint32 **/, bool bWantUncompressed /*bool*/, IntPtr pUncompressedDestBuffer /*void **/, uint cbUncompressedDestBufferSize /*uint32*/, out uint nUncompressBytesWritten /*uint32 **/, uint nUncompressedVoiceDesiredSampleRate /*uint32*/ )
+		public VoiceResult GetVoice( bool bWantCompressed /*bool*/, IntPtr pDestBuffer /*void **/, uint cbDestBufferSize /*uint32*/, out uint nBytesWritten /*uint32 **/, bool bWantUncompressed_Deprecated /*bool*/, IntPtr pUncompressedDestBuffer_Deprecated /*void **/, uint cbUncompressedDestBufferSize_Deprecated /*uint32*/, out uint nUncompressBytesWritten_Deprecated /*uint32 **/, uint nUncompressedVoiceDesiredSampleRate_Deprecated /*uint32*/ )
 		{
-			return platform.ISteamUser_GetVoice( bWantCompressed, (IntPtr) pDestBuffer, cbDestBufferSize, out nBytesWritten, bWantUncompressed, (IntPtr) pUncompressedDestBuffer, cbUncompressedDestBufferSize, out nUncompressBytesWritten, nUncompressedVoiceDesiredSampleRate );
+			return platform.ISteamUser_GetVoice( bWantCompressed, (IntPtr) pDestBuffer, cbDestBufferSize, out nBytesWritten, bWantUncompressed_Deprecated, (IntPtr) pUncompressedDestBuffer_Deprecated, cbUncompressedDestBufferSize_Deprecated, out nUncompressBytesWritten_Deprecated, nUncompressedVoiceDesiredSampleRate_Deprecated );
 		}
 		
 		// uint

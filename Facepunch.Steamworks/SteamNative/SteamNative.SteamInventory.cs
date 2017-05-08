@@ -156,6 +156,20 @@ namespace SteamNative
 		}
 		
 		// bool
+		// with: Detect_StringFetch False
+		public bool GetResultItemProperty( SteamInventoryResult_t resultHandle /*SteamInventoryResult_t*/, uint unItemIndex /*uint32*/, string pchPropertyName /*const char **/, out string pchValueBuffer /*char **/ )
+		{
+			bool bSuccess = default( bool );
+			pchValueBuffer = string.Empty;
+			System.Text.StringBuilder pchValueBuffer_sb = Helpers.TakeStringBuilder();
+			uint punValueBufferSizeOut = 4096;
+			bSuccess = platform.ISteamInventory_GetResultItemProperty( resultHandle.Value, unItemIndex, pchPropertyName, pchValueBuffer_sb, out punValueBufferSizeOut );
+			if ( !bSuccess ) return bSuccess;
+			pchValueBuffer = pchValueBuffer_sb.ToString();
+			return bSuccess;
+		}
+		
+		// bool
 		// using: Detect_MultiSizeArrayReturn
 		public SteamItemDetails_t[] GetResultItems( SteamInventoryResult_t resultHandle /*SteamInventoryResult_t*/ )
 		{

@@ -273,17 +273,17 @@ namespace SteamNative
 				
 				Native.SteamAPI_ISteamUser_StopVoiceRecording(_ptr);
 			}
-			public virtual VoiceResult /*EVoiceResult*/ ISteamUser_GetAvailableVoice( out uint /*uint32 **/ pcbCompressed, out uint /*uint32 **/ pcbUncompressed, uint /*uint32*/ nUncompressedVoiceDesiredSampleRate )
+			public virtual VoiceResult /*EVoiceResult*/ ISteamUser_GetAvailableVoice( out uint /*uint32 **/ pcbCompressed, out uint /*uint32 **/ pcbUncompressed_Deprecated, uint /*uint32*/ nUncompressedVoiceDesiredSampleRate_Deprecated )
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamUser _ptr is null!" );
 				
-				return Native.SteamAPI_ISteamUser_GetAvailableVoice(_ptr, out pcbCompressed, out pcbUncompressed, nUncompressedVoiceDesiredSampleRate);
+				return Native.SteamAPI_ISteamUser_GetAvailableVoice(_ptr, out pcbCompressed, out pcbUncompressed_Deprecated, nUncompressedVoiceDesiredSampleRate_Deprecated);
 			}
-			public virtual VoiceResult /*EVoiceResult*/ ISteamUser_GetVoice( [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bWantCompressed, IntPtr /*void **/ pDestBuffer, uint /*uint32*/ cbDestBufferSize, out uint /*uint32 **/ nBytesWritten, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bWantUncompressed, IntPtr /*void **/ pUncompressedDestBuffer, uint /*uint32*/ cbUncompressedDestBufferSize, out uint /*uint32 **/ nUncompressBytesWritten, uint /*uint32*/ nUncompressedVoiceDesiredSampleRate )
+			public virtual VoiceResult /*EVoiceResult*/ ISteamUser_GetVoice( [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bWantCompressed, IntPtr /*void **/ pDestBuffer, uint /*uint32*/ cbDestBufferSize, out uint /*uint32 **/ nBytesWritten, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bWantUncompressed_Deprecated, IntPtr /*void **/ pUncompressedDestBuffer_Deprecated, uint /*uint32*/ cbUncompressedDestBufferSize_Deprecated, out uint /*uint32 **/ nUncompressBytesWritten_Deprecated, uint /*uint32*/ nUncompressedVoiceDesiredSampleRate_Deprecated )
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamUser _ptr is null!" );
 				
-				return Native.SteamAPI_ISteamUser_GetVoice(_ptr, bWantCompressed, pDestBuffer, cbDestBufferSize, out nBytesWritten, bWantUncompressed, pUncompressedDestBuffer, cbUncompressedDestBufferSize, out nUncompressBytesWritten, nUncompressedVoiceDesiredSampleRate);
+				return Native.SteamAPI_ISteamUser_GetVoice(_ptr, bWantCompressed, pDestBuffer, cbDestBufferSize, out nBytesWritten, bWantUncompressed_Deprecated, pUncompressedDestBuffer_Deprecated, cbUncompressedDestBufferSize_Deprecated, out nUncompressBytesWritten_Deprecated, nUncompressedVoiceDesiredSampleRate_Deprecated);
 			}
 			public virtual VoiceResult /*EVoiceResult*/ ISteamUser_DecompressVoice( IntPtr /*const void **/ pCompressed, uint /*uint32*/ cbCompressed, IntPtr /*void **/ pDestBuffer, uint /*uint32*/ cbDestBufferSize, out uint /*uint32 **/ nBytesWritten, uint /*uint32*/ nDesiredSampleRate )
 			{
@@ -976,6 +976,18 @@ namespace SteamNative
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamUtils _ptr is null!" );
 				
 				Native.SteamAPI_ISteamUtils_StartVRDashboard(_ptr);
+			}
+			public virtual bool /*bool*/ ISteamUtils_IsVRHeadsetStreamingEnabled()
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamUtils _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamUtils_IsVRHeadsetStreamingEnabled(_ptr);
+			}
+			public virtual void /*void*/ ISteamUtils_SetVRHeadsetStreamingEnabled( [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bEnabled )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamUtils _ptr is null!" );
+				
+				Native.SteamAPI_ISteamUtils_SetVRHeadsetStreamingEnabled(_ptr, bEnabled);
 			}
 			
 			public virtual int /*int*/ ISteamMatchmaking_GetFavoriteGameCount()
@@ -2970,6 +2982,12 @@ namespace SteamNative
 				
 				return Native.SteamAPI_ISteamUGC_SetReturnTotalOnly(_ptr, handle, bReturnTotalOnly);
 			}
+			public virtual bool /*bool*/ ISteamUGC_SetReturnPlaytimeStats( ulong handle, uint /*uint32*/ unDays )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamUGC _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamUGC_SetReturnPlaytimeStats(_ptr, handle, unDays);
+			}
 			public virtual bool /*bool*/ ISteamUGC_SetLanguage( ulong handle, string /*const char **/ pchLanguage )
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamUGC _ptr is null!" );
@@ -3234,6 +3252,18 @@ namespace SteamNative
 				
 				return Native.SteamAPI_ISteamUGC_StopPlaytimeTrackingForAllItems(_ptr);
 			}
+			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUGC_AddDependency( ulong nParentPublishedFileID, ulong nChildPublishedFileID )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamUGC _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamUGC_AddDependency(_ptr, nParentPublishedFileID, nChildPublishedFileID);
+			}
+			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUGC_RemoveDependency( ulong nParentPublishedFileID, ulong nChildPublishedFileID )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamUGC _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamUGC_RemoveDependency(_ptr, nParentPublishedFileID, nChildPublishedFileID);
+			}
 			
 			public virtual uint /*uint32*/ ISteamAppList_GetNumInstalledApps()
 			{
@@ -3489,6 +3519,12 @@ namespace SteamNative
 				
 				return Native.SteamAPI_ISteamInventory_GetResultItems(_ptr, resultHandle, pOutItemsArray, out punOutItemsArraySize);
 			}
+			public virtual bool /*bool*/ ISteamInventory_GetResultItemProperty( int resultHandle, uint /*uint32*/ unItemIndex, string /*const char **/ pchPropertyName, System.Text.StringBuilder /*char **/ pchValueBuffer, out uint /*uint32 **/ punValueBufferSizeOut )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamInventory _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamInventory_GetResultItemProperty(_ptr, resultHandle, unItemIndex, pchPropertyName, pchValueBuffer, out punValueBufferSizeOut);
+			}
 			public virtual uint /*uint32*/ ISteamInventory_GetResultTimestamp( int resultHandle )
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamInventory _ptr is null!" );
@@ -3633,6 +3669,18 @@ namespace SteamNative
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamVideo _ptr is null!" );
 				
 				return Native.SteamAPI_ISteamVideo_IsBroadcasting(_ptr, pnNumViewers);
+			}
+			public virtual void /*void*/ ISteamVideo_GetOPFSettings( uint unVideoAppID )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamVideo _ptr is null!" );
+				
+				Native.SteamAPI_ISteamVideo_GetOPFSettings(_ptr, unVideoAppID);
+			}
+			public virtual bool /*bool*/ ISteamVideo_GetOPFStringForApp( uint unVideoAppID, System.Text.StringBuilder /*char **/ pchBuffer, out int /*int32 **/ pnBufferSize )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamVideo _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamVideo_GetOPFStringForApp(_ptr, unVideoAppID, pchBuffer, out pnBufferSize);
 			}
 			
 			public virtual bool /*bool*/ ISteamGameServer_InitGameServer( uint /*uint32*/ unIP, ushort /*uint16*/ usGamePort, ushort /*uint16*/ usQueryPort, uint /*uint32*/ unFlags, uint nGameAppId, string /*const char **/ pchVersionString )
@@ -4072,8 +4120,8 @@ namespace SteamNative
 				[DllImportAttribute( "steam_api64.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamUser_GetUserDataFolder( IntPtr ISteamUser, System.Text.StringBuilder /*char **/ pchBuffer, int /*int*/ cubBuffer );
 				[DllImportAttribute( "steam_api64.dll" )] internal static extern void /*void*/ SteamAPI_ISteamUser_StartVoiceRecording( IntPtr ISteamUser );
 				[DllImportAttribute( "steam_api64.dll" )] internal static extern void /*void*/ SteamAPI_ISteamUser_StopVoiceRecording( IntPtr ISteamUser );
-				[DllImportAttribute( "steam_api64.dll" )] internal static extern VoiceResult /*EVoiceResult*/ SteamAPI_ISteamUser_GetAvailableVoice( IntPtr ISteamUser, out uint /*uint32 **/ pcbCompressed, out uint /*uint32 **/ pcbUncompressed, uint /*uint32*/ nUncompressedVoiceDesiredSampleRate );
-				[DllImportAttribute( "steam_api64.dll" )] internal static extern VoiceResult /*EVoiceResult*/ SteamAPI_ISteamUser_GetVoice( IntPtr ISteamUser, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bWantCompressed, IntPtr /*void **/ pDestBuffer, uint /*uint32*/ cbDestBufferSize, out uint /*uint32 **/ nBytesWritten, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bWantUncompressed, IntPtr /*void **/ pUncompressedDestBuffer, uint /*uint32*/ cbUncompressedDestBufferSize, out uint /*uint32 **/ nUncompressBytesWritten, uint /*uint32*/ nUncompressedVoiceDesiredSampleRate );
+				[DllImportAttribute( "steam_api64.dll" )] internal static extern VoiceResult /*EVoiceResult*/ SteamAPI_ISteamUser_GetAvailableVoice( IntPtr ISteamUser, out uint /*uint32 **/ pcbCompressed, out uint /*uint32 **/ pcbUncompressed_Deprecated, uint /*uint32*/ nUncompressedVoiceDesiredSampleRate_Deprecated );
+				[DllImportAttribute( "steam_api64.dll" )] internal static extern VoiceResult /*EVoiceResult*/ SteamAPI_ISteamUser_GetVoice( IntPtr ISteamUser, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bWantCompressed, IntPtr /*void **/ pDestBuffer, uint /*uint32*/ cbDestBufferSize, out uint /*uint32 **/ nBytesWritten, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bWantUncompressed_Deprecated, IntPtr /*void **/ pUncompressedDestBuffer_Deprecated, uint /*uint32*/ cbUncompressedDestBufferSize_Deprecated, out uint /*uint32 **/ nUncompressBytesWritten_Deprecated, uint /*uint32*/ nUncompressedVoiceDesiredSampleRate_Deprecated );
 				[DllImportAttribute( "steam_api64.dll" )] internal static extern VoiceResult /*EVoiceResult*/ SteamAPI_ISteamUser_DecompressVoice( IntPtr ISteamUser, IntPtr /*const void **/ pCompressed, uint /*uint32*/ cbCompressed, IntPtr /*void **/ pDestBuffer, uint /*uint32*/ cbDestBufferSize, out uint /*uint32 **/ nBytesWritten, uint /*uint32*/ nDesiredSampleRate );
 				[DllImportAttribute( "steam_api64.dll" )] internal static extern uint /*uint32*/ SteamAPI_ISteamUser_GetVoiceOptimalSampleRate( IntPtr ISteamUser );
 				[DllImportAttribute( "steam_api64.dll" )] internal static extern HAuthTicket /*(HAuthTicket)*/ SteamAPI_ISteamUser_GetAuthSessionTicket( IntPtr ISteamUser, IntPtr /*void **/ pTicket, int /*int*/ cbMaxTicket, out uint /*uint32 **/ pcbTicket );
@@ -4197,6 +4245,8 @@ namespace SteamNative
 				[DllImportAttribute( "steam_api64.dll" )] internal static extern void /*void*/ SteamAPI_ISteamUtils_SetOverlayNotificationInset( IntPtr ISteamUtils, int /*int*/ nHorizontalInset, int /*int*/ nVerticalInset );
 				[DllImportAttribute( "steam_api64.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamUtils_IsSteamInBigPictureMode( IntPtr ISteamUtils );
 				[DllImportAttribute( "steam_api64.dll" )] internal static extern void /*void*/ SteamAPI_ISteamUtils_StartVRDashboard( IntPtr ISteamUtils );
+				[DllImportAttribute( "steam_api64.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamUtils_IsVRHeadsetStreamingEnabled( IntPtr ISteamUtils );
+				[DllImportAttribute( "steam_api64.dll" )] internal static extern void /*void*/ SteamAPI_ISteamUtils_SetVRHeadsetStreamingEnabled( IntPtr ISteamUtils, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bEnabled );
 				
 				//
 				// ISteamMatchmaking 
@@ -4579,6 +4629,7 @@ namespace SteamNative
 				[DllImportAttribute( "steam_api64.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamUGC_SetReturnChildren( IntPtr ISteamUGC, ulong handle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bReturnChildren );
 				[DllImportAttribute( "steam_api64.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamUGC_SetReturnAdditionalPreviews( IntPtr ISteamUGC, ulong handle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bReturnAdditionalPreviews );
 				[DllImportAttribute( "steam_api64.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamUGC_SetReturnTotalOnly( IntPtr ISteamUGC, ulong handle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bReturnTotalOnly );
+				[DllImportAttribute( "steam_api64.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamUGC_SetReturnPlaytimeStats( IntPtr ISteamUGC, ulong handle, uint /*uint32*/ unDays );
 				[DllImportAttribute( "steam_api64.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamUGC_SetLanguage( IntPtr ISteamUGC, ulong handle, string /*const char **/ pchLanguage );
 				[DllImportAttribute( "steam_api64.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamUGC_SetAllowCachedResponse( IntPtr ISteamUGC, ulong handle, uint /*uint32*/ unMaxAgeSeconds );
 				[DllImportAttribute( "steam_api64.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamUGC_SetCloudFileNameFilter( IntPtr ISteamUGC, ulong handle, string /*const char **/ pMatchCloudFileName );
@@ -4623,6 +4674,8 @@ namespace SteamNative
 				[DllImportAttribute( "steam_api64.dll" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamUGC_StartPlaytimeTracking( IntPtr ISteamUGC, IntPtr /*PublishedFileId_t **/ pvecPublishedFileID, uint /*uint32*/ unNumPublishedFileIDs );
 				[DllImportAttribute( "steam_api64.dll" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamUGC_StopPlaytimeTracking( IntPtr ISteamUGC, IntPtr /*PublishedFileId_t **/ pvecPublishedFileID, uint /*uint32*/ unNumPublishedFileIDs );
 				[DllImportAttribute( "steam_api64.dll" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamUGC_StopPlaytimeTrackingForAllItems( IntPtr ISteamUGC );
+				[DllImportAttribute( "steam_api64.dll" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamUGC_AddDependency( IntPtr ISteamUGC, ulong nParentPublishedFileID, ulong nChildPublishedFileID );
+				[DllImportAttribute( "steam_api64.dll" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamUGC_RemoveDependency( IntPtr ISteamUGC, ulong nParentPublishedFileID, ulong nChildPublishedFileID );
 				
 				//
 				// ISteamAppList 
@@ -4677,6 +4730,7 @@ namespace SteamNative
 				//
 				[DllImportAttribute( "steam_api64.dll" )] internal static extern Result /*EResult*/ SteamAPI_ISteamInventory_GetResultStatus( IntPtr ISteamInventory, int resultHandle );
 				[DllImportAttribute( "steam_api64.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_GetResultItems( IntPtr ISteamInventory, int resultHandle, IntPtr /*struct SteamItemDetails_t **/ pOutItemsArray, out uint /*uint32 **/ punOutItemsArraySize );
+				[DllImportAttribute( "steam_api64.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_GetResultItemProperty( IntPtr ISteamInventory, int resultHandle, uint /*uint32*/ unItemIndex, string /*const char **/ pchPropertyName, System.Text.StringBuilder /*char **/ pchValueBuffer, out uint /*uint32 **/ punValueBufferSizeOut );
 				[DllImportAttribute( "steam_api64.dll" )] internal static extern uint /*uint32*/ SteamAPI_ISteamInventory_GetResultTimestamp( IntPtr ISteamInventory, int resultHandle );
 				[DllImportAttribute( "steam_api64.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_CheckResultSteamID( IntPtr ISteamInventory, int resultHandle, ulong steamIDExpected );
 				[DllImportAttribute( "steam_api64.dll" )] internal static extern void /*void*/ SteamAPI_ISteamInventory_DestroyResult( IntPtr ISteamInventory, int resultHandle );
@@ -4705,6 +4759,8 @@ namespace SteamNative
 				//
 				[DllImportAttribute( "steam_api64.dll" )] internal static extern void /*void*/ SteamAPI_ISteamVideo_GetVideoURL( IntPtr ISteamVideo, uint unVideoAppID );
 				[DllImportAttribute( "steam_api64.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamVideo_IsBroadcasting( IntPtr ISteamVideo, IntPtr /*int **/ pnNumViewers );
+				[DllImportAttribute( "steam_api64.dll" )] internal static extern void /*void*/ SteamAPI_ISteamVideo_GetOPFSettings( IntPtr ISteamVideo, uint unVideoAppID );
+				[DllImportAttribute( "steam_api64.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamVideo_GetOPFStringForApp( IntPtr ISteamVideo, uint unVideoAppID, System.Text.StringBuilder /*char **/ pchBuffer, out int /*int32 **/ pnBufferSize );
 				
 				//
 				// ISteamGameServer 

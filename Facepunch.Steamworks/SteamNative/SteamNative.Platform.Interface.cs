@@ -286,6 +286,7 @@ namespace SteamNative
 			bool /*bool*/ ISteamHTTP_GetHTTPRequestWasTimedOut( uint hRequest, [MarshalAs(UnmanagedType.U1)] ref bool /*bool **/ pbWasTimedOut );
 			Result /*EResult*/ ISteamInventory_GetResultStatus( int resultHandle );
 			bool /*bool*/ ISteamInventory_GetResultItems( int resultHandle, IntPtr /*struct SteamItemDetails_t **/ pOutItemsArray, out uint /*uint32 **/ punOutItemsArraySize );
+			bool /*bool*/ ISteamInventory_GetResultItemProperty( int resultHandle, uint /*uint32*/ unItemIndex, string /*const char **/ pchPropertyName, System.Text.StringBuilder /*char **/ pchValueBuffer, out uint /*uint32 **/ punValueBufferSizeOut );
 			uint /*uint32*/ ISteamInventory_GetResultTimestamp( int resultHandle );
 			bool /*bool*/ ISteamInventory_CheckResultSteamID( int resultHandle, ulong steamIDExpected );
 			void /*void*/ ISteamInventory_DestroyResult( int resultHandle );
@@ -513,6 +514,7 @@ namespace SteamNative
 			bool /*bool*/ ISteamUGC_SetReturnChildren( ulong handle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bReturnChildren );
 			bool /*bool*/ ISteamUGC_SetReturnAdditionalPreviews( ulong handle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bReturnAdditionalPreviews );
 			bool /*bool*/ ISteamUGC_SetReturnTotalOnly( ulong handle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bReturnTotalOnly );
+			bool /*bool*/ ISteamUGC_SetReturnPlaytimeStats( ulong handle, uint /*uint32*/ unDays );
 			bool /*bool*/ ISteamUGC_SetLanguage( ulong handle, string /*const char **/ pchLanguage );
 			bool /*bool*/ ISteamUGC_SetAllowCachedResponse( ulong handle, uint /*uint32*/ unMaxAgeSeconds );
 			bool /*bool*/ ISteamUGC_SetCloudFileNameFilter( ulong handle, string /*const char **/ pMatchCloudFileName );
@@ -557,6 +559,8 @@ namespace SteamNative
 			SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUGC_StartPlaytimeTracking( IntPtr /*PublishedFileId_t **/ pvecPublishedFileID, uint /*uint32*/ unNumPublishedFileIDs );
 			SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUGC_StopPlaytimeTracking( IntPtr /*PublishedFileId_t **/ pvecPublishedFileID, uint /*uint32*/ unNumPublishedFileIDs );
 			SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUGC_StopPlaytimeTrackingForAllItems();
+			SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUGC_AddDependency( ulong nParentPublishedFileID, ulong nChildPublishedFileID );
+			SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUGC_RemoveDependency( ulong nParentPublishedFileID, ulong nChildPublishedFileID );
 			ClientUnifiedMessageHandle /*(ClientUnifiedMessageHandle)*/ ISteamUnifiedMessages_SendMethod( string /*const char **/ pchServiceMethod, IntPtr /*const void **/ pRequestBuffer, uint /*uint32*/ unRequestBufferSize, ulong /*uint64*/ unContext );
 			bool /*bool*/ ISteamUnifiedMessages_GetMethodResponseInfo( ulong hHandle, out uint /*uint32 **/ punResponseSize, out Result /*EResult **/ peResult );
 			bool /*bool*/ ISteamUnifiedMessages_GetMethodResponseData( ulong hHandle, IntPtr /*void **/ pResponseBuffer, uint /*uint32*/ unResponseBufferSize, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bAutoRelease );
@@ -571,8 +575,8 @@ namespace SteamNative
 			bool /*bool*/ ISteamUser_GetUserDataFolder( System.Text.StringBuilder /*char **/ pchBuffer, int /*int*/ cubBuffer );
 			void /*void*/ ISteamUser_StartVoiceRecording();
 			void /*void*/ ISteamUser_StopVoiceRecording();
-			VoiceResult /*EVoiceResult*/ ISteamUser_GetAvailableVoice( out uint /*uint32 **/ pcbCompressed, out uint /*uint32 **/ pcbUncompressed, uint /*uint32*/ nUncompressedVoiceDesiredSampleRate );
-			VoiceResult /*EVoiceResult*/ ISteamUser_GetVoice( [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bWantCompressed, IntPtr /*void **/ pDestBuffer, uint /*uint32*/ cbDestBufferSize, out uint /*uint32 **/ nBytesWritten, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bWantUncompressed, IntPtr /*void **/ pUncompressedDestBuffer, uint /*uint32*/ cbUncompressedDestBufferSize, out uint /*uint32 **/ nUncompressBytesWritten, uint /*uint32*/ nUncompressedVoiceDesiredSampleRate );
+			VoiceResult /*EVoiceResult*/ ISteamUser_GetAvailableVoice( out uint /*uint32 **/ pcbCompressed, out uint /*uint32 **/ pcbUncompressed_Deprecated, uint /*uint32*/ nUncompressedVoiceDesiredSampleRate_Deprecated );
+			VoiceResult /*EVoiceResult*/ ISteamUser_GetVoice( [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bWantCompressed, IntPtr /*void **/ pDestBuffer, uint /*uint32*/ cbDestBufferSize, out uint /*uint32 **/ nBytesWritten, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bWantUncompressed_Deprecated, IntPtr /*void **/ pUncompressedDestBuffer_Deprecated, uint /*uint32*/ cbUncompressedDestBufferSize_Deprecated, out uint /*uint32 **/ nUncompressBytesWritten_Deprecated, uint /*uint32*/ nUncompressedVoiceDesiredSampleRate_Deprecated );
 			VoiceResult /*EVoiceResult*/ ISteamUser_DecompressVoice( IntPtr /*const void **/ pCompressed, uint /*uint32*/ cbCompressed, IntPtr /*void **/ pDestBuffer, uint /*uint32*/ cbDestBufferSize, out uint /*uint32 **/ nBytesWritten, uint /*uint32*/ nDesiredSampleRate );
 			uint /*uint32*/ ISteamUser_GetVoiceOptimalSampleRate();
 			HAuthTicket /*(HAuthTicket)*/ ISteamUser_GetAuthSessionTicket( IntPtr /*void **/ pTicket, int /*int*/ cbMaxTicket, out uint /*uint32 **/ pcbTicket );
@@ -661,8 +665,12 @@ namespace SteamNative
 			void /*void*/ ISteamUtils_SetOverlayNotificationInset( int /*int*/ nHorizontalInset, int /*int*/ nVerticalInset );
 			bool /*bool*/ ISteamUtils_IsSteamInBigPictureMode();
 			void /*void*/ ISteamUtils_StartVRDashboard();
+			bool /*bool*/ ISteamUtils_IsVRHeadsetStreamingEnabled();
+			void /*void*/ ISteamUtils_SetVRHeadsetStreamingEnabled( [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bEnabled );
 			void /*void*/ ISteamVideo_GetVideoURL( uint unVideoAppID );
 			bool /*bool*/ ISteamVideo_IsBroadcasting( IntPtr /*int **/ pnNumViewers );
+			void /*void*/ ISteamVideo_GetOPFSettings( uint unVideoAppID );
+			bool /*bool*/ ISteamVideo_GetOPFStringForApp( uint unVideoAppID, System.Text.StringBuilder /*char **/ pchBuffer, out int /*int32 **/ pnBufferSize );
 			bool /*bool*/ SteamApi_SteamAPI_Init();
 			void /*void*/ SteamApi_SteamAPI_RunCallbacks();
 			void /*void*/ SteamApi_SteamGameServer_RunCallbacks();
