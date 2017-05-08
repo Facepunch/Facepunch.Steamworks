@@ -92,6 +92,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Client\Achievements.cs" />
     <Compile Include="Client\Client.cs" />
     <Compile Include="Client\Leaderboard.cs" />
     <Compile Include="Client\App.cs" />
