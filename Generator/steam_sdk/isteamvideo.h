@@ -36,9 +36,14 @@ public:
 
 	// returns true if user is uploading a live broadcast
 	virtual bool IsBroadcasting( int *pnNumViewers ) = 0;
+
+	// Get the OPF Details for 360 Video Playback
+	CALL_BACK( GetOPFSettingsResult_t )
+	virtual void GetOPFSettings( AppId_t unVideoAppID ) = 0;
+	virtual bool GetOPFStringForApp( AppId_t unVideoAppID, char *pchBuffer, int32 *pnBufferSize ) = 0;
 };
 
-#define STEAMVIDEO_INTERFACE_VERSION "STEAMVIDEO_INTERFACE_V001"
+#define STEAMVIDEO_INTERFACE_VERSION "STEAMVIDEO_INTERFACE_V002"
 
 DEFINE_CALLBACK( BroadcastUploadStart_t, k_iClientVideoCallbacks + 4 )
 END_DEFINE_CALLBACK_0()
@@ -51,7 +56,13 @@ DEFINE_CALLBACK( GetVideoURLResult_t, k_iClientVideoCallbacks + 11 )
 	CALLBACK_MEMBER( 0, EResult, m_eResult )
 	CALLBACK_MEMBER( 1, AppId_t, m_unVideoAppID )
 	CALLBACK_MEMBER( 2, char, m_rgchURL[256] )
-END_DEFINE_CALLBACK_1()
+END_DEFINE_CALLBACK_3()
+
+
+DEFINE_CALLBACK( GetOPFSettingsResult_t, k_iClientVideoCallbacks + 24 )
+	CALLBACK_MEMBER( 0, EResult, m_eResult )
+	CALLBACK_MEMBER( 1, AppId_t, m_unVideoAppID )
+END_DEFINE_CALLBACK_2()
 
 
 #pragma pack( pop )

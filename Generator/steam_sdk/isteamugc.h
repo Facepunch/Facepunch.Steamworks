@@ -123,17 +123,19 @@ enum EItemState
 
 enum EItemStatistic
 {
-	k_EItemStatistic_NumSubscriptions		= 0,
-	k_EItemStatistic_NumFavorites			= 1,
-	k_EItemStatistic_NumFollowers			= 2,
-	k_EItemStatistic_NumUniqueSubscriptions = 3,
-	k_EItemStatistic_NumUniqueFavorites		= 4,
-	k_EItemStatistic_NumUniqueFollowers		= 5,
-	k_EItemStatistic_NumUniqueWebsiteViews	= 6,
-	k_EItemStatistic_ReportScore			= 7,
-	k_EItemStatistic_NumSecondsPlayed		= 8,
-	k_EItemStatistic_NumPlaytimeSessions	= 9,
-	k_EItemStatistic_NumComments			= 10,
+	k_EItemStatistic_NumSubscriptions					 = 0,
+	k_EItemStatistic_NumFavorites						 = 1,
+	k_EItemStatistic_NumFollowers						 = 2,
+	k_EItemStatistic_NumUniqueSubscriptions				 = 3,
+	k_EItemStatistic_NumUniqueFavorites					 = 4,
+	k_EItemStatistic_NumUniqueFollowers					 = 5,
+	k_EItemStatistic_NumUniqueWebsiteViews				 = 6,
+	k_EItemStatistic_ReportScore						 = 7,
+	k_EItemStatistic_NumSecondsPlayed					 = 8,
+	k_EItemStatistic_NumPlaytimeSessions				 = 9,
+	k_EItemStatistic_NumComments						 = 10,
+	k_EItemStatistic_NumSecondsPlayedDuringTimePeriod	 = 11,
+	k_EItemStatistic_NumPlaytimeSessionsDuringTimePeriod = 12,
 };
 
 enum EItemPreviewType
@@ -234,6 +236,7 @@ public:
 	virtual bool SetReturnChildren( UGCQueryHandle_t handle, bool bReturnChildren ) = 0;
 	virtual bool SetReturnAdditionalPreviews( UGCQueryHandle_t handle, bool bReturnAdditionalPreviews ) = 0;
 	virtual bool SetReturnTotalOnly( UGCQueryHandle_t handle, bool bReturnTotalOnly ) = 0;
+	virtual bool SetReturnPlaytimeStats( UGCQueryHandle_t handle, uint32 unDays ) = 0;
 	virtual bool SetLanguage( UGCQueryHandle_t handle, const char *pchLanguage ) = 0;
 	virtual bool SetAllowCachedResponse( UGCQueryHandle_t handle, uint32 unMaxAgeSeconds ) = 0;
 
@@ -320,9 +323,15 @@ public:
 	virtual SteamAPICall_t StopPlaytimeTracking( PublishedFileId_t *pvecPublishedFileID, uint32 unNumPublishedFileIDs ) = 0;
 	CALL_RESULT( StopPlaytimeTrackingResult_t )
 	virtual SteamAPICall_t StopPlaytimeTrackingForAllItems() = 0;
+
+	// parent-child relationship or dependency management
+	CALL_RESULT( AddUGCDependencyResult_t )
+	virtual SteamAPICall_t AddDependency( PublishedFileId_t nParentPublishedFileID, PublishedFileId_t nChildPublishedFileID ) = 0;
+	CALL_RESULT( RemoveUGCDependencyResult_t )
+	virtual SteamAPICall_t RemoveDependency( PublishedFileId_t nParentPublishedFileID, PublishedFileId_t nChildPublishedFileID ) = 0;
 };
 
-#define STEAMUGC_INTERFACE_VERSION "STEAMUGC_INTERFACE_VERSION009"
+#define STEAMUGC_INTERFACE_VERSION "STEAMUGC_INTERFACE_VERSION010"
 
 //-----------------------------------------------------------------------------
 // Purpose: Callback for querying UGC
@@ -445,6 +454,28 @@ struct StopPlaytimeTrackingResult_t
 {
 	enum { k_iCallback = k_iClientUGCCallbacks + 11 };
 	EResult m_eResult;
+};
+
+//-----------------------------------------------------------------------------
+// Purpose: The result of a call to AddDependency
+//-----------------------------------------------------------------------------
+struct AddUGCDependencyResult_t
+{
+	enum { k_iCallback = k_iClientUGCCallbacks + 12 };
+	EResult m_eResult;
+	PublishedFileId_t m_nPublishedFileId;
+	PublishedFileId_t m_nChildPublishedFileId;
+};
+
+//-----------------------------------------------------------------------------
+// Purpose: The result of a call to RemoveDependency
+//-----------------------------------------------------------------------------
+struct RemoveUGCDependencyResult_t
+{
+	enum { k_iCallback = k_iClientUGCCallbacks + 13 };
+	EResult m_eResult;
+	PublishedFileId_t m_nPublishedFileId;
+	PublishedFileId_t m_nChildPublishedFileId;
 };
 
 

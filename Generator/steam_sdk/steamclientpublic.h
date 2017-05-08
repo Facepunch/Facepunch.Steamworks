@@ -131,6 +131,8 @@ enum EResult
 	k_EResultInvalidItemType = 104,				// the type of thing we were requested to act on is invalid
 	k_EResultIPBanned = 105,					// the ip address has been banned from taking this action
 	k_EResultGSLTExpired = 106,					// this token has expired from disuse; can be reset for use
+	k_EResultInsufficientFunds = 107,			// user doesn't have enough wallet funds to complete the action
+	k_EResultTooManyPending = 108,				// There are too many of this thing pending already
 };
 
 // Error codes for use with the voice functions
@@ -267,6 +269,7 @@ enum EAppOwnershipFlags
 	k_EAppOwnershipFlags_PendingGift		= 0x8000,	// user has pending gift to redeem
 	k_EAppOwnershipFlags_RentalNotActivated	= 0x10000,	// Rental hasn't been activated yet
 	k_EAppOwnershipFlags_Rental				= 0x20000,	// Is a rental
+	k_EAppOwnershipFlags_SiteLicense		= 0x40000,	// Is from a site license
 };
 
 
