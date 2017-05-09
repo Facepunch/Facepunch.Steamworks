@@ -1,4 +1,5 @@
-node {
+node ( 'vs2017' )
+{
 	stage 'Checkout'
 		checkout scm
 
