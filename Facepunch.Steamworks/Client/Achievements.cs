@@ -87,6 +87,8 @@ namespace Facepunch.Steamworks
         /// </summary>
         public DateTime UnlockTime { get; private set; }
 
+        private int iconId { get; set; } = -1;
+
         /// <summary>
         /// If this achievement is linked to a stat this will return the progress.
         /// </summary>
@@ -106,6 +108,30 @@ namespace Facepunch.Steamworks
             }
         }
 
+        private Image _icon;
+
+        public Image Icon
+        {
+            get
+            {
+                if ( iconId  <= 0 ) return null;
+
+                if ( _icon == null )
+                {
+                    _icon = new Image();
+                    _icon.Id = iconId;
+                }
+
+                if ( _icon.IsLoaded )
+                    return _icon;
+
+                if ( !_icon.TryLoad( client.native.utils ) )
+                    return null;
+
+                return _icon;
+            }
+        }
+
         public Achievement( Client client, int index )
         {
             this.client = client;
@@ -113,6 +139,8 @@ namespace Facepunch.Steamworks
             Id = client.native.userstats.GetAchievementName( (uint) index );
             Name = client.native.userstats.GetAchievementDisplayAttribute( Id, "name" );
             Description = client.native.userstats.GetAchievementDisplayAttribute( Id, "desc" );
+
+            iconId = client.native.userstats.GetAchievementIcon( Id );
 
             Refresh();
         }
