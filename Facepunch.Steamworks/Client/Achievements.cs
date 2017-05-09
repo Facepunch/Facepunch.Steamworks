@@ -35,6 +35,30 @@ namespace Facepunch.Steamworks
             client = null;
         }
 
+        /// <summary>
+        /// Find an achievement by name. Will be null if not found, or not ready.
+        /// </summary>
+        public Achievement Find( string identifier )
+        {
+            return All.FirstOrDefault( x => x.Id == identifier );
+        }
+
+        /// <summary>
+        /// Unlock an achievement by identifier
+        /// </summary>
+        public bool Trigger( string identifier )
+        {
+            return client.native.userstats.SetAchievement( identifier );
+        }
+
+        /// <summary>
+        /// Reset an achievement by identifier
+        /// </summary>
+        public bool Reset( string identifier )
+        {
+            return client.native.userstats.ClearAchievement( identifier );
+        }
+
         private void UserStatsReceived( UserStatsReceived_t stats, bool isError )
         {
             if ( isError ) return;
