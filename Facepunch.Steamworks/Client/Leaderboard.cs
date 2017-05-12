@@ -18,7 +18,7 @@ namespace Facepunch.Steamworks
             Global = LeaderboardDataRequest.Global,
 
             /// <summary>
-            ///     Query only users that are close to you geographically
+            ///     Query entries near to this user's rank
             /// </summary>
             GlobalAroundUser = LeaderboardDataRequest.GlobalAroundUser,
 
