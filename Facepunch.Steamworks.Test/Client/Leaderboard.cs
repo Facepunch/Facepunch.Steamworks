@@ -158,6 +158,8 @@ namespace Facepunch.Steamworks.Test
                     Assert.IsTrue( success );
                     Assert.IsTrue( result.ScoreChanged );
                     Assert.AreEqual( result.Score, score );
+
+                    done = true;
                 } );
 
                 while ( !done )
