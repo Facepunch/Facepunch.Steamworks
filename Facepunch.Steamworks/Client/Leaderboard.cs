@@ -99,14 +99,66 @@ namespace Facepunch.Steamworks
         /// If onlyIfBeatsOldScore is true, the score will only be updated if it beats the existing score, else it will always
         /// be updated.
         /// </summary>
-        public void AddScore( bool onlyIfBeatsOldScore, int score, params int[] subscores )
+        public bool AddScore( bool onlyIfBeatsOldScore, int score, params int[] subscores )
         {
-            if ( !IsValid ) return;
+            if ( !IsValid ) return false;
 
             var flags = LeaderboardUploadScoreMethod.ForceUpdate;
             if ( onlyIfBeatsOldScore ) flags = LeaderboardUploadScoreMethod.KeepBest;
 
             client.native.userstats.UploadLeaderboardScore( BoardId, flags, score, subscores, subscores.Length );
+
+            return true;
+        }
+
+        /// <summary>
+        /// Callback invoked by <see cref="AddScore(bool, int, int[], AddScoreCallback)"/> when score submission
+        /// is complete.
+        /// </summary>
+        /// <param name="success">If true, the score was submitted</param>
+        /// <param name="result">If successful, information about the new entry</param>
+        public delegate void AddScoreCallback( bool success, AddScoreResult result );
+
+        /// <summary>
+        /// Information about a newly submitted score.
+        /// </summary>
+        public struct AddScoreResult
+        {
+            public int Score;
+            public bool ScoreChanged;
+            public int GlobalRankNew;
+            public int GlobalRankPrevious;
+        }
+
+        /// <summary>
+        /// Add a score to this leaderboard.
+        /// Subscores are totally optional, and can be used for other game defined data such as laps etc.. although
+        /// they have no bearing on sorting at all
+        /// If onlyIfBeatsOldScore is true, the score will only be updated if it beats the existing score, else it will always
+        /// be updated.
+        /// Information about the newly submitted score is passed to the optional <paramref name="callback"/>.
+        /// </summary>
+        public bool AddScore( bool onlyIfBeatsOldScore, int score, int[] subscores = null, AddScoreCallback callback = null )
+        {
+            if ( !IsValid ) return false;
+
+            if ( subscores == null ) subscores = new int[0];
+
+            var flags = LeaderboardUploadScoreMethod.ForceUpdate;
+            if ( onlyIfBeatsOldScore ) flags = LeaderboardUploadScoreMethod.KeepBest;
+
+            client.native.userstats.UploadLeaderboardScore( BoardId, flags, score, subscores, subscores.Length, callback != null ? (Action<LeaderboardScoreUploaded_t, bool>) (( result, error ) =>
+            {
+                callback( !error && result.Success != 0, new AddScoreResult
+                {
+                    Score = result.Score,
+                    ScoreChanged = result.ScoreChanged != 0,
+                    GlobalRankNew = result.GlobalRankNew,
+                    GlobalRankPrevious = result.GlobalRankPrevious
+                } );
+            }) : null );
+
+            return true;
         }
 
         /// <summary>
@@ -145,6 +197,10 @@ namespace Facepunch.Steamworks
 
         [ThreadStatic] private static List<Entry> _sEntryBuffer;
 
+        /// <summary>
+        /// Callback invoked by <see cref="FetchScores(RequestType, int, int, FetchScoresCallback)"/> when
+        /// a query is complete.
+        /// </summary>
         public delegate void FetchScoresCallback( bool success, Entry[] results );
 
         /// <summary>
@@ -174,14 +230,12 @@ namespace Facepunch.Steamworks
             return true;
         }
 
-        private unsafe void OnScores( LeaderboardScoresDownloaded_t result, bool error )
+        private void OnScores( LeaderboardScoresDownloaded_t result, bool error )
         {
             IsQuerying = false;
 
             if ( client == null ) return;
-
-            if ( error )
-                return;
+            if ( error ) return;
 
             var list = new List<Entry>();
             ReadScores( result, list );

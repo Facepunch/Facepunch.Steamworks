@@ -68,9 +68,6 @@ namespace Facepunch.Steamworks.Test
                 Assert.IsFalse( board.IsError );
                 Assert.IsNotNull( board.Name );
 
-                Console.WriteLine( $"Board name is \"{board.Name}\"" );
-                Console.WriteLine( $"Board has \"{board.TotalEntries}\" entries" );
-
                 board.AddScore( true, 86275309, 7, 8, 9 );
 
                 var done = false;
@@ -79,7 +76,7 @@ namespace Facepunch.Steamworks.Test
                 {
                     Assert.IsTrue( success );
 
-                    foreach ( var entry in board.Results )
+                    foreach ( var entry in results )
                     {
                         Console.WriteLine( $"{entry.GlobalRank}: {entry.SteamId} ({entry.Name}) with {entry.Score}" );
 
@@ -133,6 +130,41 @@ namespace Facepunch.Steamworks.Test
 
                 Thread.Sleep( 10 );
                 client.Update();
+            }
+        }
+
+        [TestMethod]
+        public void AddScoresCallback()
+        {
+            using ( var client = new Steamworks.Client( 252490 ) )
+            {
+                var board = client.GetLeaderboard( "TestLeaderboard", Steamworks.Client.LeaderboardSortMethod.Ascending, Steamworks.Client.LeaderboardDisplayType.Numeric );
+
+                while ( !board.IsValid )
+                {
+                    Thread.Sleep( 10 );
+                    client.Update();
+                }
+
+                Assert.IsTrue( board.IsValid );
+                Assert.IsFalse( board.IsError );
+
+                var done = false;
+
+                const int score = 5678;
+
+                board.AddScore( false, score, null, ( success, result ) =>
+                {
+                    Assert.IsTrue( success );
+                    Assert.IsTrue( result.ScoreChanged );
+                    Assert.AreEqual( result.Score, score );
+                } );
+
+                while ( !done )
+                {
+                    Thread.Sleep( 10 );
+                    client.Update();
+                }
             }
         }
     }
