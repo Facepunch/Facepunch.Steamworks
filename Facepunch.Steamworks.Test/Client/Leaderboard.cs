@@ -52,6 +52,53 @@ namespace Facepunch.Steamworks.Test
         }
 
         [TestMethod]
+        public void GetLeaderboardCallback()
+        {
+            using ( var client = new Steamworks.Client( 252490 ) )
+            {
+                var board = client.GetLeaderboard( "TestLeaderboard", Steamworks.Client.LeaderboardSortMethod.Ascending, Steamworks.Client.LeaderboardDisplayType.Numeric );
+
+                while ( !board.IsValid )
+                {
+                    Thread.Sleep( 10 );
+                    client.Update();
+                }
+
+                Assert.IsTrue( board.IsValid );
+                Assert.IsFalse( board.IsError );
+                Assert.IsNotNull( board.Name );
+
+                Console.WriteLine( $"Board name is \"{board.Name}\"" );
+                Console.WriteLine( $"Board has \"{board.TotalEntries}\" entries" );
+
+                board.AddScore( true, 86275309, 7, 8, 9 );
+
+                var done = false;
+
+                board.FetchScores( Steamworks.Leaderboard.RequestType.Global, 0, 20, ( success, results ) =>
+                {
+                    Assert.IsTrue( success );
+
+                    foreach ( var entry in board.Results )
+                    {
+                        Console.WriteLine( $"{entry.GlobalRank}: {entry.SteamId} ({entry.Name}) with {entry.Score}" );
+
+                        if ( entry.SubScores != null )
+                            Console.WriteLine( " - " + string.Join( ";", entry.SubScores.Select( x => x.ToString() ).ToArray() ) );
+                    }
+
+                    done = true;
+                } );
+
+                while ( !done )
+                {
+                    Thread.Sleep( 10 );
+                    client.Update();
+                }
+            }
+        }
+
+        [TestMethod]
         public void AddScores()
         {
             using ( var client = new Steamworks.Client( 252490 ) )

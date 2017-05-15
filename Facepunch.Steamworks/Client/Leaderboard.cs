@@ -125,6 +125,55 @@ namespace Facepunch.Steamworks
             return true;
         }
 
+        private unsafe void ReadScores( LeaderboardScoresDownloaded_t result, List<Entry> dest )
+        {
+            for ( var i = 0; i < result.CEntryCount; i++ )
+                fixed ( int* ptr = subEntriesBuffer )
+                {
+                    var entry = new LeaderboardEntry_t();
+                    if ( client.native.userstats.GetDownloadedLeaderboardEntry( result.SteamLeaderboardEntries, i, ref entry, (IntPtr) ptr, subEntriesBuffer.Length ) )
+                        dest.Add( new Entry
+                        {
+                            GlobalRank = entry.GlobalRank,
+                            Score = entry.Score,
+                            SteamId = entry.SteamIDUser,
+                            SubScores = entry.CDetails == 0 ? null : subEntriesBuffer.Take( entry.CDetails ).ToArray(),
+                            Name = client.Friends.GetName( entry.SteamIDUser )
+                        } );
+                }
+        }
+
+        [ThreadStatic] private static List<Entry> _sEntryBuffer;
+
+        public delegate void FetchScoresCallback( bool success, Entry[] results );
+
+        /// <summary>
+        ///     Fetch a subset of scores. The scores are passed to <paramref name="callback"/>.
+        /// </summary>
+        /// <returns>Returns true if we have started the query</returns>
+        public bool FetchScores( RequestType RequestType, int start, int end, FetchScoresCallback callback )
+        {
+            if ( !IsValid ) return false;
+
+            client.native.userstats.DownloadLeaderboardEntries( BoardId, (LeaderboardDataRequest) RequestType, start, end, ( result, error ) =>
+            {
+                if ( error )
+                {
+                    callback( false, null );
+                }
+                else
+                {
+                    if ( _sEntryBuffer == null ) _sEntryBuffer = new List<Entry>();
+                    else _sEntryBuffer.Clear();
+
+                    ReadScores( result, _sEntryBuffer );
+                    callback( true, _sEntryBuffer.ToArray() );
+                }
+            } );
+
+            return true;
+        }
+
         private unsafe void OnScores( LeaderboardScoresDownloaded_t result, bool error )
         {
             IsQuerying = false;
@@ -135,21 +184,7 @@ namespace Facepunch.Steamworks
                 return;
 
             var list = new List<Entry>();
-
-            for ( var i = 0; i < result.CEntryCount; i++ )
-                fixed ( int* ptr = subEntriesBuffer )
-                {
-                    var entry = new LeaderboardEntry_t();
-                    if ( client.native.userstats.GetDownloadedLeaderboardEntry( result.SteamLeaderboardEntries, i, ref entry, (IntPtr) ptr, subEntriesBuffer.Length ) )
-                        list.Add( new Entry
-                        {
-                            GlobalRank = entry.GlobalRank,
-                            Score = entry.Score,
-                            SteamId = entry.SteamIDUser,
-                            SubScores = entry.CDetails == 0 ? null : subEntriesBuffer.Take( entry.CDetails ).ToArray(),
-                            Name = client.Friends.GetName( entry.SteamIDUser )
-                        } );
-                }
+            ReadScores( result, list );
 
             Results = list.ToArray();
         }
