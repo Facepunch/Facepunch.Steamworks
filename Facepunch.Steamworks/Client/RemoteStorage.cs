@@ -113,6 +113,9 @@ namespace Facepunch.Steamworks
         private ulong _ownerId;
 
         public bool Exists { get; internal set; }
+        public bool IsShared { get { return _handle.Value != 0; } }
+
+        internal UGCHandle_t UGCHandle { get { return _handle; } }
 
         public string FileName
         {

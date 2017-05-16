@@ -161,6 +161,32 @@ namespace Facepunch.Steamworks
             return true;
         }
 
+        public delegate void AttachRemoteFileCallback( bool success );
+
+        public bool AttachRemoteFile( RemoteFile file, AttachRemoteFileCallback callback = null )
+        {
+            if ( file.IsShared )
+            {
+                client.native.userstats.AttachLeaderboardUGC( BoardId, file.UGCHandle, ( result, error ) =>
+                {
+                    callback?.Invoke( !error && result.Result == Result.OK );
+                } );
+                return true;
+            }
+
+            file.Share( success =>
+            {
+                if ( !success || !file.IsShared )
+                {
+                    callback?.Invoke( false );
+                    return;
+                }
+
+                AttachRemoteFile( file, callback );
+            } );
+            return true;
+        }
+
         /// <summary>
         ///     Fetch a subset of scores. The scores end up in Results.
         /// </summary>
