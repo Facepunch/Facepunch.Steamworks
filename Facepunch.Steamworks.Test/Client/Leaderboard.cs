@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -161,6 +162,73 @@ namespace Facepunch.Steamworks.Test
 
                     done = true;
                 } );
+
+                while ( !done )
+                {
+                    Thread.Sleep( 10 );
+                    client.Update();
+                }
+            }
+        }
+
+        [TestMethod]
+        public void AddFileAttachment()
+        {
+            using ( var client = new Steamworks.Client( 252490 ) )
+            {
+                var board = client.GetLeaderboard( "TestLeaderboard", Steamworks.Client.LeaderboardSortMethod.Ascending, Steamworks.Client.LeaderboardDisplayType.Numeric );
+
+                while ( !board.IsValid )
+                {
+                    Thread.Sleep( 10 );
+                    client.Update();
+                }
+
+                Assert.IsTrue( board.IsValid );
+                Assert.IsFalse( board.IsError );
+
+                var done = false;
+
+                const int score = 5678;
+                const string attachment = "Hello world!";
+
+                var file = client.RemoteStorage.CreateFile( "score/example.txt" );
+                file.WriteAllText( attachment );
+
+                Assert.IsTrue( board.AddScore( false, score, null, ( success, result ) =>
+                {
+                    Assert.IsTrue( success );
+                    Assert.IsTrue( result.ScoreChanged );
+
+                    Assert.IsTrue( board.AttachRemoteFile( file, attached =>
+                    {
+                        Assert.IsTrue( attached );
+
+                        done = true;
+                    } ) );
+                } ) );
+
+                while ( !done )
+                {
+                    Thread.Sleep( 10 );
+                    client.Update();
+                }
+
+                done = false;
+
+                Assert.IsTrue( board.FetchScores( Steamworks.Leaderboard.RequestType.GlobalAroundUser, 0, 0, ( success, entries ) =>
+                {
+                    Assert.AreEqual( 1, entries.Length );
+                    Assert.IsNotNull( entries[0].AttachedFile );
+
+                    Assert.IsTrue( entries[0].AttachedFile.Download( downloaded =>
+                    {
+                        Assert.IsTrue( downloaded );
+                        Assert.AreEqual( attachment, entries[0].AttachedFile.ReadAllText() );
+
+                        done = true;
+                    } ) );
+                } ) );
 
                 while ( !done )
                 {

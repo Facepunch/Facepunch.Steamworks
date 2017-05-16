@@ -14929,7 +14929,7 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct LeaderboardEntry_t
 	{
 		public ulong SteamIDUser; // m_steamIDUser class CSteamID

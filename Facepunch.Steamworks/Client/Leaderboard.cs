@@ -177,22 +177,20 @@ namespace Facepunch.Steamworks
 
             if ( file.IsShared )
             {
-                client.native.userstats.AttachLeaderboardUGC( BoardId, file.UGCHandle, ( result, error ) =>
+                var handle = client.native.userstats.AttachLeaderboardUGC( BoardId, file.UGCHandle, ( result, error ) =>
                 {
                     callback?.Invoke( !error && result.Result == Result.OK );
                 } );
-                return true;
+
+                return handle.CallResultHandle != 0;
             }
 
             file.Share( success =>
             {
-                if ( !success || !file.IsShared )
+                if ( !success || !file.IsShared || !AttachRemoteFile( file, callback ) )
                 {
                     callback?.Invoke( false );
-                    return;
                 }
-
-                AttachRemoteFile( file, callback );
             } );
             return true;
         }
@@ -226,7 +224,8 @@ namespace Facepunch.Steamworks
                             Score = entry.Score,
                             SteamId = entry.SteamIDUser,
                             SubScores = entry.CDetails == 0 ? null : subEntriesBuffer.Take( entry.CDetails ).ToArray(),
-                            Name = client.Friends.GetName( entry.SteamIDUser )
+                            Name = client.Friends.GetName( entry.SteamIDUser ),
+                            AttachedFile = (entry.UGC >> 32) == 0xffffffff ? null : new RemoteFile( client.RemoteStorage, entry.UGC )
                         } );
                 }
         }
@@ -288,7 +287,7 @@ namespace Facepunch.Steamworks
             public int Score;
             public int[] SubScores;
             public int GlobalRank;
-
+            public RemoteFile AttachedFile;
 
             /// <summary>
             ///     Note that the player's name might not be immediately available.

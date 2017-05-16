@@ -30,6 +30,11 @@ namespace Generator
             "CCallbackBase"
         };
 
+        public readonly static string[] ForceLargePackStructs = new string[]
+        {
+            "LeaderboardEntry_t"
+        };
+
         void Structs()
         {
             foreach ( var c in def.structs )
@@ -42,7 +47,7 @@ namespace Generator
 
                 int defaultPack = 8;
 
-                if ( c.Fields.Any( x => x.Type.Contains( "class CSteamID" ) ) )
+                if ( c.Fields.Any( x => x.Type.Contains( "class CSteamID" ) ) && !ForceLargePackStructs.Contains( c.Name ) )
                     defaultPack = 4;
 
                 //

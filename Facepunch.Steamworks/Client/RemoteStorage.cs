@@ -125,10 +125,17 @@ namespace Facepunch.Steamworks
         private UGCHandle_t _handle;
         private ulong _ownerId;
 
+        private bool _isDownloading;
+        private byte[] _downloadedData;
+
         /// <summary>
         /// Check if the file exists.
         /// </summary>
         public bool Exists { get; internal set; }
+
+        public bool IsDownloading { get { return _isUgc && _isDownloading && _downloadedData == null; } }
+
+        public bool IsDownloaded { get { return !_isUgc || _downloadedData != null; } }
 
         /// <summary>
         /// If true, the file is available for other users to download.
@@ -136,6 +143,8 @@ namespace Facepunch.Steamworks
         public bool IsShared { get { return _handle.Value != 0; } }
 
         internal UGCHandle_t UGCHandle { get { return _handle; } }
+
+        public ulong SharingId { get { return UGCHandle.Value; } }
 
         /// <summary>
         /// Name and path of the file.
@@ -201,7 +210,6 @@ namespace Facepunch.Steamworks
         /// <summary>
         /// Creates a <see cref="RemoteFileWriteStream"/> used to write to this file.
         /// </summary>
-        /// <returns></returns>
         public RemoteFileWriteStream OpenWrite()
         {
             return new RemoteFileWriteStream( remoteStorage, this );
@@ -228,6 +236,62 @@ namespace Facepunch.Steamworks
         }
 
         /// <summary>
+        /// Callback invoked by <see cref="RemoteFile.Download"/> when a file download is complete.
+        /// </summary>
+        public delegate void DownloadCallback( bool success );
+
+        /// <summary>
+        /// Gets the number of bytes downloaded and the total number of bytes expected while
+        /// this file is downloading.
+        /// </summary>
+        /// <returns>True if the file is downloading</returns>
+        public bool GetDownloadProgress( out int bytesDownloaded, out int bytesExpected )
+        {
+            return remoteStorage.native.GetUGCDownloadProgress( _handle, out bytesDownloaded, out bytesExpected );
+        }
+
+        /// <summary>
+        /// Attempts to start downloading a shared file.
+        /// </summary>
+        /// <returns>True if the download has successfully started</returns>
+        public bool Download( DownloadCallback callback = null )
+        {
+            if ( !_isUgc ) return false;
+            if ( _isDownloading ) return false;
+            if ( IsDownloaded ) return false;
+
+            _isDownloading = true;
+
+            remoteStorage.native.UGCDownload( _handle, 1000, ( result, error ) =>
+            {
+                _isDownloading = false;
+
+                if ( error || result.Result != Result.OK )
+                {
+                    callback?.Invoke( false );
+                    return;
+                }
+
+                _ownerId = result.SteamIDOwner;
+                _sizeInBytes = result.SizeInBytes;
+                _fileName = result.PchFileName;
+
+                unsafe
+                {
+                    _downloadedData = new byte[_sizeInBytes];
+                    fixed ( byte* bufferPtr = _downloadedData )
+                    {
+                        remoteStorage.native.UGCRead( _handle, (IntPtr) bufferPtr, _sizeInBytes, 0, UGCReadAction.ontinueReading );
+                    }
+                }
+
+                callback?.Invoke( true );
+            } );
+
+            return true;
+        }
+
+        /// <summary>
         /// Opens a stream used to read from this file.
         /// </summary>
         /// <returns></returns>
@@ -243,8 +307,8 @@ namespace Facepunch.Steamworks
         {
             if ( _isUgc )
             {
-                // Need to download
-                throw new NotImplementedException();
+                if ( !IsDownloaded ) throw new Exception( "Cannot read a file that hasn't been downloaded." );
+                return _downloadedData;
             }
 
             var size = SizeInBytes;
