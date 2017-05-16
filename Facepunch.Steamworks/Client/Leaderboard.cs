@@ -161,10 +161,20 @@ namespace Facepunch.Steamworks
             return true;
         }
 
+        /// <summary>
+        /// Callback invoked by <see cref="Leaderboard.AttachRemoteFile"/> when file attachment is complete.
+        /// </summary>
         public delegate void AttachRemoteFileCallback( bool success );
 
+        /// <summary>
+        /// Attempt to attach a <see cref="RemoteStorage"/> file to the current user's leaderboard entry.
+        /// Can be useful for storing replays along with scores.
+        /// </summary>
+        /// <returns>True if the file attachment process has started</returns>
         public bool AttachRemoteFile( RemoteFile file, AttachRemoteFileCallback callback = null )
         {
+            if ( !IsValid ) return false;
+
             if ( file.IsShared )
             {
                 client.native.userstats.AttachLeaderboardUGC( BoardId, file.UGCHandle, ( result, error ) =>

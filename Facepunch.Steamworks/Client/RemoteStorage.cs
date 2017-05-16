@@ -23,7 +23,10 @@ namespace Facepunch.Steamworks
         }
     }
 
-    internal class RemoteFileWriteStream : Stream
+    /// <summary>
+    /// Stream used to write to a <see cref="RemoteFile"/>.
+    /// </summary>
+    public class RemoteFileWriteStream : Stream
     {
         internal readonly RemoteStorage remoteStorage;
 
@@ -77,6 +80,9 @@ namespace Facepunch.Steamworks
         public override long Length => _written;
         public override long Position { get { return _written; } set { throw new NotImplementedException(); } }
 
+        /// <summary>
+        /// Close the stream without saving the file to remote storage.
+        /// </summary>
         public void Cancel()
         {
             if ( _closed ) return;
@@ -85,7 +91,11 @@ namespace Facepunch.Steamworks
             remoteStorage.native.FileWriteStreamCancel( _handle );
         }
 
+#if NETCORE
         public void Close()
+#else
+        public override void Close()
+#endif
         {
             if ( _closed ) return;
 
@@ -102,6 +112,9 @@ namespace Facepunch.Steamworks
         }
     }
 
+    /// <summary>
+    /// Represents a file stored in a user's Steam Cloud.
+    /// </summary>
     public class RemoteFile
     {
         internal readonly RemoteStorage remoteStorage;
@@ -112,11 +125,21 @@ namespace Facepunch.Steamworks
         private UGCHandle_t _handle;
         private ulong _ownerId;
 
+        /// <summary>
+        /// Check if the file exists.
+        /// </summary>
         public bool Exists { get; internal set; }
+
+        /// <summary>
+        /// If true, the file is available for other users to download.
+        /// </summary>
         public bool IsShared { get { return _handle.Value != 0; } }
 
         internal UGCHandle_t UGCHandle { get { return _handle; } }
 
+        /// <summary>
+        /// Name and path of the file.
+        /// </summary>
         public string FileName
         {
             get
@@ -127,6 +150,9 @@ namespace Facepunch.Steamworks
             }
         }
 
+        /// <summary>
+        /// Steam ID of the file's owner.
+        /// </summary>
         public ulong OwnerId
         {
             get
@@ -137,6 +163,9 @@ namespace Facepunch.Steamworks
             }
         }
 
+        /// <summary>
+        /// Total size of the file in bytes.
+        /// </summary>
         public int SizeInBytes
         {
             get
@@ -169,11 +198,18 @@ namespace Facepunch.Steamworks
             _sizeInBytes = sizeInBytes;
         }
 
-        public Stream OpenWrite()
+        /// <summary>
+        /// Creates a <see cref="RemoteFileWriteStream"/> used to write to this file.
+        /// </summary>
+        /// <returns></returns>
+        public RemoteFileWriteStream OpenWrite()
         {
             return new RemoteFileWriteStream( remoteStorage, this );
         }
 
+        /// <summary>
+        /// Write a byte array to this file, replacing any existing contents.
+        /// </summary>
         public void WriteAllBytes( byte[] buffer )
         {
             using ( var stream = OpenWrite() )
@@ -182,17 +218,27 @@ namespace Facepunch.Steamworks
             }
         }
 
+        /// <summary>
+        /// Write a string to this file, replacing any existing contents.
+        /// </summary>
         public void WriteAllText( string text, Encoding encoding = null )
         {
             if ( encoding == null ) encoding = Encoding.UTF8;
             WriteAllBytes( encoding.GetBytes( text ) );
         }
 
+        /// <summary>
+        /// Opens a stream used to read from this file.
+        /// </summary>
+        /// <returns></returns>
         public Stream OpenRead()
         {
             return new MemoryStream( ReadAllBytes(), false );
         }
 
+        /// <summary>
+        /// Reads the entire contents of the file as a byte array.
+        /// </summary>
         public unsafe byte[] ReadAllBytes()
         {
             if ( _isUgc )
@@ -212,13 +258,24 @@ namespace Facepunch.Steamworks
             return buffer;
         }
 
+        /// <summary>
+        /// Reads the entire contents of the file as a string.
+        /// </summary>
         public string ReadAllText( Encoding encoding = null )
         {
             if ( encoding == null ) encoding = Encoding.UTF8;
             return encoding.GetString( ReadAllBytes() );
         }
 
+        /// <summary>
+        /// Callback invoked by <see cref="RemoteFile.Share"/> when file sharing is complete.
+        /// </summary>
         public delegate void ShareCallback( bool success );
+
+        /// <summary>
+        /// Attempt to publish this file for other users to download.
+        /// </summary>
+        /// <returns>True if we have started attempting to share</returns>
         public bool Share( ShareCallback callback = null )
         {
             if ( _isUgc ) return false;
@@ -240,6 +297,10 @@ namespace Facepunch.Steamworks
             return true;
         }
 
+        /// <summary>
+        /// Delete this file from remote storage.
+        /// </summary>
+        /// <returns>True if the file could be deleted</returns>
         public bool Delete()
         {
             if ( !Exists ) return false;
@@ -303,11 +364,17 @@ namespace Facepunch.Steamworks
             get { return native.IsCloudEnabledForApp(); }
         }
 
+        /// <summary>
+        /// Gets the total number of files in the current user's remote storage for the current game.
+        /// </summary>
         public int FileCount
         {
             get { return native.GetFileCount(); }
         }
 
+        /// <summary>
+        /// Gets all files in the current user's remote storage for the current game.
+        /// </summary>
         public IEnumerable<RemoteFile> Files
         {
             get
@@ -317,6 +384,10 @@ namespace Facepunch.Steamworks
             }
         }
 
+        /// <summary>
+        /// Creates a new <see cref="RemoteFile"/> with the given <paramref name="path"/>.
+        /// If a file exists at that path it will be overwritten.
+        /// </summary>
         public RemoteFile CreateFile( string path )
         {
             path = NormalizePath( path );
@@ -377,6 +448,9 @@ namespace Facepunch.Steamworks
             }
         }
 
+        /// <summary>
+        /// Gets whether a file exists in remote storage at the given <paramref name="path"/>.
+        /// </summary>
         public bool FileExists( string path )
         {
             return native.FileExists( path );
