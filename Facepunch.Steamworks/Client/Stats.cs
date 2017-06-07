@@ -14,6 +14,11 @@ namespace Facepunch.Steamworks
             client = c;
         }
 
+		public bool StoreStats()
+		{
+			return client.native.userstats.StoreStats();
+		}
+
         public void UpdateStats()
         {
             client.native.userstats.RequestCurrentStats();
