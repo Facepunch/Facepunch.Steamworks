@@ -360,5 +360,24 @@ namespace Facepunch.Steamworks
 
             return new Result( this, resultHandle, true );
         }
+
+        /// <summary>
+        /// This is used to grant a specific item to the user. This should 
+        /// only be used for development prototyping, from a trusted server, 
+        /// or if you don't care about hacked clients granting arbitrary items. 
+        /// This call can be disabled by a setting on Steamworks.
+        /// </summary>
+        public Result GenerateItem( Definition target, int amount )
+        {
+            SteamNative.SteamInventoryResult_t resultHandle = -1;
+
+            var newItems = new SteamNative.SteamItemDef_t[] { new SteamNative.SteamItemDef_t() { Value = target.Id } };
+            var newItemC = new uint[] { (uint) amount };
+
+            if ( !inventory.GenerateItems( ref resultHandle, newItems, newItemC, 1 ) )
+                return null;
+
+            return new Result( this, resultHandle, true );
+        }
     }
 }
