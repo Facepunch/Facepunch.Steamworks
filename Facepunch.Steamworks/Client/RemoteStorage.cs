@@ -78,6 +78,62 @@ namespace Facepunch.Steamworks
             return existing ?? new RemoteFile( this, path, client.SteamId, 0 );
         }
 
+        /// <summary>
+        /// Opens the file if it exists, else returns null;
+        /// </summary>
+        public RemoteFile OpenFile( string path )
+        {
+            path = NormalizePath( path );
+
+            InvalidateFiles();
+            var existing = Files.FirstOrDefault( x => x.FileName == path );
+            return existing;
+        }
+
+        /// <summary>
+        /// Write all text to the file at the specified path. This
+        /// overwrites the contents - it does not append.
+        /// </summary>
+        public bool WriteString( string path, string text, Encoding encoding = null )
+        {
+            var file = CreateFile( path );
+            file.WriteAllText( text, encoding );
+            return file.Exists;
+        }
+
+        /// <summary>
+        /// Write all data to the file at the specified path. This
+        /// overwrites the contents - it does not append.
+        /// </summary>
+        public bool WriteBytes( string path, byte[] data )
+        {
+            var file = CreateFile( path );
+            file.WriteAllBytes( data );
+            return file.Exists;
+        }
+
+        /// <summary>
+        /// Read the entire contents of the file as a string.
+        /// Returns null if the file isn't found.
+        /// </summary>
+        public string ReadString( string path, Encoding encoding = null )
+        {
+            var file = OpenFile( path );
+            if ( file == null ) return null;
+            return file.ReadAllText( encoding );
+        }
+
+        /// <summary>
+        /// Read the entire contents of the file as raw data.
+        /// Returns null if the file isn't found.
+        /// </summary>
+        public byte[] ReadBytes( string path )
+        {
+            var file = OpenFile( path );
+            if ( file == null ) return null;
+            return file.ReadAllBytes();
+        }
+
         internal void OnWrittenNewFile( RemoteFile file )
         {
             if ( _files.Any( x => x.FileName == file.FileName ) ) return;

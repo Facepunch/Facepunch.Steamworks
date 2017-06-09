@@ -41,6 +41,28 @@ namespace Facepunch.Steamworks.Test
         }
 
         [TestMethod]
+        public void ReadText()
+        {
+            using ( var client = new Steamworks.Client( 252490 ) )
+            {
+                var text = client.RemoteStorage.ReadString( "test.txt" );
+
+                Assert.IsNotNull( text );
+                Assert.AreEqual( text, "Hello world!" );
+            }
+        }
+
+        [TestMethod]
+        public void WriteText()
+        {
+            using ( var client = new Steamworks.Client( 252490 ) )
+            {
+                var result = client.RemoteStorage.WriteString( "test.txt", "Hello world!" );
+                Assert.IsTrue( result );
+            }
+        }
+
+        [TestMethod]
         public void WriteFiles()
         {
             using ( var client = new Steamworks.Client( 252490 ) )
