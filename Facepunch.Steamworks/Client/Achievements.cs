@@ -44,11 +44,20 @@ namespace Facepunch.Steamworks
         }
 
         /// <summary>
-        /// Unlock an achievement by identifier
+        /// Unlock an achievement by identifier. If apply is true this will happen as expected
+        /// and the achievement overlay will popup etc. If it's false then you'll have to manually
+        /// call Stats.StoreStats() to actually trigger it.
         /// </summary>
-        public bool Trigger( string identifier )
+        public bool Trigger( string identifier, bool apply = true )
         {
-            return client.native.userstats.SetAchievement( identifier );
+            var r = client.native.userstats.SetAchievement( identifier );
+
+            if ( apply )
+            {
+                client.Stats.StoreStats();
+            }
+
+            return r;
         }
 
         /// <summary>
@@ -148,12 +157,19 @@ namespace Facepunch.Steamworks
         /// <summary>
         /// Make this achievement earned
         /// </summary>
-        public bool Trigger()
+        public bool Trigger( bool apply = true )
         {
             State = true;
             UnlockTime = DateTime.Now;
 
-            return client.native.userstats.SetAchievement( Id );
+            var r = client.native.userstats.SetAchievement( Id );
+
+            if ( apply )
+            {
+                client.Stats.StoreStats();
+            }
+
+            return r;
         }
 
         /// <summary>
