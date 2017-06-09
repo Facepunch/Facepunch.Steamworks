@@ -7,6 +7,11 @@ namespace Facepunch.Steamworks
     public partial class Client : BaseSteamworks
     {
         /// <summary>
+        /// A singleton accessor to get the current client instance.
+        /// </summary>
+        public static Client Instance { get; private set; }
+
+        /// <summary>
         /// Current user's Username
         /// </summary>
         public string Username { get; private set; }
@@ -56,6 +61,7 @@ namespace Facepunch.Steamworks
 
         public Client( uint appId )
         {
+            Instance = this;
             native = new Interop.NativeInterface();
 
             //
@@ -160,6 +166,11 @@ namespace Facepunch.Steamworks
             {
                 Achievements.Dispose();
                 Achievements = null;
+            }
+
+            if ( Instance == this )
+            {
+                Instance = null;
             }
 
             base.Dispose();

@@ -13,6 +13,11 @@ namespace Facepunch.Steamworks
     /// </summary>
     public partial class Server : BaseSteamworks
     {
+        /// <summary>
+        /// A singleton accessor to get the current client instance.
+        /// </summary>
+        public static Server Instance { get; private set; }
+
         internal override bool IsGameServer { get { return true; } }
 
         public ServerQuery Query { get; internal set; }
@@ -31,6 +36,7 @@ namespace Facepunch.Steamworks
         /// <param name="VersionString">A string defining version, ie "1001"</param>
         public Server( uint appId, uint IpAddress, ushort SteamPort, ushort GamePort, ushort QueryPort, bool Secure, string VersionString )
         {
+            Instance = this;
             native = new Interop.NativeInterface();
 
             //
@@ -282,6 +288,11 @@ namespace Facepunch.Steamworks
             if ( Auth != null )
             {
                 Auth = null;
+            }
+
+            if ( Instance == this )
+            {
+                Instance = null;
             }
 
             base.Dispose();
