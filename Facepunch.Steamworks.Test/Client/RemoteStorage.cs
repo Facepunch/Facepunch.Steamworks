@@ -14,8 +14,8 @@ namespace Facepunch.Steamworks.Test
         {
             using ( var client = new Steamworks.Client( 252490 ) )
             {
-                ulong total, available;
-                client.RemoteStorage.GetQuota( out total, out available );
+                ulong total = client.RemoteStorage.QuotaTotal;
+                var available = client.RemoteStorage.QuotaRemaining;
 
                 Console.WriteLine( $"Total quota: {total} bytes" );
                 Console.WriteLine( $"Available: {available} bytes" );

@@ -1436,17 +1436,17 @@ namespace SteamNative
 				
 				return Native.SteamAPI_ISteamRemoteStorage_GetFileCount(_ptr);
 			}
-			public virtual IntPtr ISteamRemoteStorage_GetFileNameAndSize( int /*int*/ iFile, IntPtr /*int32 **/ pnFileSizeInBytes )
+			public virtual IntPtr ISteamRemoteStorage_GetFileNameAndSize( int /*int*/ iFile, out int /*int32 **/ pnFileSizeInBytes )
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.SteamAPI_ISteamRemoteStorage_GetFileNameAndSize(_ptr, iFile, pnFileSizeInBytes);
+				return Native.SteamAPI_ISteamRemoteStorage_GetFileNameAndSize(_ptr, iFile, out pnFileSizeInBytes);
 			}
-			public virtual bool /*bool*/ ISteamRemoteStorage_GetQuota( IntPtr /*uint64 **/ pnTotalBytes, IntPtr /*uint64 **/ puAvailableBytes )
+			public virtual bool /*bool*/ ISteamRemoteStorage_GetQuota( out ulong /*uint64 **/ pnTotalBytes, out ulong /*uint64 **/ puAvailableBytes )
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.SteamAPI_ISteamRemoteStorage_GetQuota(_ptr, pnTotalBytes, puAvailableBytes);
+				return Native.SteamAPI_ISteamRemoteStorage_GetQuota(_ptr, out pnTotalBytes, out puAvailableBytes);
 			}
 			public virtual bool /*bool*/ ISteamRemoteStorage_IsCloudEnabledForAccount()
 			{
@@ -1478,11 +1478,11 @@ namespace SteamNative
 				
 				return Native.SteamAPI_ISteamRemoteStorage_GetUGCDownloadProgress(_ptr, hContent, out pnBytesDownloaded, out pnBytesExpected);
 			}
-			public virtual bool /*bool*/ ISteamRemoteStorage_GetUGCDetails( ulong hContent, ref uint pnAppID, System.Text.StringBuilder /*char ***/ ppchName, IntPtr /*int32 **/ pnFileSizeInBytes, out ulong pSteamIDOwner )
+			public virtual bool /*bool*/ ISteamRemoteStorage_GetUGCDetails( ulong hContent, ref uint pnAppID, System.Text.StringBuilder /*char ***/ ppchName, out int /*int32 **/ pnFileSizeInBytes, out ulong pSteamIDOwner )
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				return Native.SteamAPI_ISteamRemoteStorage_GetUGCDetails(_ptr, hContent, ref pnAppID, ppchName, pnFileSizeInBytes, out pSteamIDOwner);
+				return Native.SteamAPI_ISteamRemoteStorage_GetUGCDetails(_ptr, hContent, ref pnAppID, ppchName, out pnFileSizeInBytes, out pSteamIDOwner);
 			}
 			public virtual int /*int32*/ ISteamRemoteStorage_UGCRead( ulong hContent, IntPtr /*void **/ pvData, int /*int32*/ cubDataToRead, uint /*uint32*/ cOffset, UGCReadAction /*EUGCReadAction*/ eAction )
 			{
@@ -4333,14 +4333,14 @@ namespace SteamNative
 				[DllImportAttribute( "steam_api.dll" )] internal static extern long /*int64*/ SteamAPI_ISteamRemoteStorage_GetFileTimestamp( IntPtr ISteamRemoteStorage, string /*const char **/ pchFile );
 				[DllImportAttribute( "steam_api.dll" )] internal static extern RemoteStoragePlatform /*ERemoteStoragePlatform*/ SteamAPI_ISteamRemoteStorage_GetSyncPlatforms( IntPtr ISteamRemoteStorage, string /*const char **/ pchFile );
 				[DllImportAttribute( "steam_api.dll" )] internal static extern int /*int32*/ SteamAPI_ISteamRemoteStorage_GetFileCount( IntPtr ISteamRemoteStorage );
-				[DllImportAttribute( "steam_api.dll" )] internal static extern IntPtr SteamAPI_ISteamRemoteStorage_GetFileNameAndSize( IntPtr ISteamRemoteStorage, int /*int*/ iFile, IntPtr /*int32 **/ pnFileSizeInBytes );
-				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamRemoteStorage_GetQuota( IntPtr ISteamRemoteStorage, IntPtr /*uint64 **/ pnTotalBytes, IntPtr /*uint64 **/ puAvailableBytes );
+				[DllImportAttribute( "steam_api.dll" )] internal static extern IntPtr SteamAPI_ISteamRemoteStorage_GetFileNameAndSize( IntPtr ISteamRemoteStorage, int /*int*/ iFile, out int /*int32 **/ pnFileSizeInBytes );
+				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamRemoteStorage_GetQuota( IntPtr ISteamRemoteStorage, out ulong /*uint64 **/ pnTotalBytes, out ulong /*uint64 **/ puAvailableBytes );
 				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamRemoteStorage_IsCloudEnabledForAccount( IntPtr ISteamRemoteStorage );
 				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamRemoteStorage_IsCloudEnabledForApp( IntPtr ISteamRemoteStorage );
 				[DllImportAttribute( "steam_api.dll" )] internal static extern void /*void*/ SteamAPI_ISteamRemoteStorage_SetCloudEnabledForApp( IntPtr ISteamRemoteStorage, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bEnabled );
 				[DllImportAttribute( "steam_api.dll" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamRemoteStorage_UGCDownload( IntPtr ISteamRemoteStorage, ulong hContent, uint /*uint32*/ unPriority );
 				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamRemoteStorage_GetUGCDownloadProgress( IntPtr ISteamRemoteStorage, ulong hContent, out int /*int32 **/ pnBytesDownloaded, out int /*int32 **/ pnBytesExpected );
-				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamRemoteStorage_GetUGCDetails( IntPtr ISteamRemoteStorage, ulong hContent, ref uint pnAppID, System.Text.StringBuilder /*char ***/ ppchName, IntPtr /*int32 **/ pnFileSizeInBytes, out ulong pSteamIDOwner );
+				[DllImportAttribute( "steam_api.dll" )] internal static extern bool /*bool*/ SteamAPI_ISteamRemoteStorage_GetUGCDetails( IntPtr ISteamRemoteStorage, ulong hContent, ref uint pnAppID, System.Text.StringBuilder /*char ***/ ppchName, out int /*int32 **/ pnFileSizeInBytes, out ulong pSteamIDOwner );
 				[DllImportAttribute( "steam_api.dll" )] internal static extern int /*int32*/ SteamAPI_ISteamRemoteStorage_UGCRead( IntPtr ISteamRemoteStorage, ulong hContent, IntPtr /*void **/ pvData, int /*int32*/ cubDataToRead, uint /*uint32*/ cOffset, UGCReadAction /*EUGCReadAction*/ eAction );
 				[DllImportAttribute( "steam_api.dll" )] internal static extern int /*int32*/ SteamAPI_ISteamRemoteStorage_GetCachedUGCCount( IntPtr ISteamRemoteStorage );
 				[DllImportAttribute( "steam_api.dll" )] internal static extern UGCHandle_t /*(UGCHandle_t)*/ SteamAPI_ISteamRemoteStorage_GetCachedUGCHandle( IntPtr ISteamRemoteStorage, int /*int32*/ iCachedContent );

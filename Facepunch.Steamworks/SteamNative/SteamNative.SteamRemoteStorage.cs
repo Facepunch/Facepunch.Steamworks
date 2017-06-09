@@ -297,10 +297,10 @@ namespace SteamNative
 		
 		// string
 		// with: Detect_StringReturn
-		public string GetFileNameAndSize( int iFile /*int*/, IntPtr pnFileSizeInBytes /*int32 **/ )
+		public string GetFileNameAndSize( int iFile /*int*/, out int pnFileSizeInBytes /*int32 **/ )
 		{
 			IntPtr string_pointer;
-			string_pointer = platform.ISteamRemoteStorage_GetFileNameAndSize( iFile, (IntPtr) pnFileSizeInBytes );
+			string_pointer = platform.ISteamRemoteStorage_GetFileNameAndSize( iFile, out pnFileSizeInBytes );
 			return Marshal.PtrToStringAnsi( string_pointer );
 		}
 		
@@ -339,9 +339,9 @@ namespace SteamNative
 		}
 		
 		// bool
-		public bool GetQuota( IntPtr pnTotalBytes /*uint64 **/, IntPtr puAvailableBytes /*uint64 **/ )
+		public bool GetQuota( out ulong pnTotalBytes /*uint64 **/, out ulong puAvailableBytes /*uint64 **/ )
 		{
-			return platform.ISteamRemoteStorage_GetQuota( (IntPtr) pnTotalBytes, (IntPtr) puAvailableBytes );
+			return platform.ISteamRemoteStorage_GetQuota( out pnTotalBytes, out puAvailableBytes );
 		}
 		
 		// RemoteStoragePlatform
@@ -358,7 +358,7 @@ namespace SteamNative
 			ppchName = string.Empty;
 			System.Text.StringBuilder ppchName_sb = Helpers.TakeStringBuilder();
 			int pnFileSizeInBytes = 4096;
-			bSuccess = platform.ISteamRemoteStorage_GetUGCDetails( hContent.Value, ref pnAppID.Value, ppchName_sb, (IntPtr) pnFileSizeInBytes, out pSteamIDOwner.Value );
+			bSuccess = platform.ISteamRemoteStorage_GetUGCDetails( hContent.Value, ref pnAppID.Value, ppchName_sb, out pnFileSizeInBytes, out pSteamIDOwner.Value );
 			if ( !bSuccess ) return bSuccess;
 			ppchName = ppchName_sb.ToString();
 			return bSuccess;

@@ -7,401 +7,18 @@ using SteamNative;
 
 namespace Facepunch.Steamworks
 {
-    partial class Client
-    {
-        RemoteStorage _remoteStorage;
-
-        public RemoteStorage RemoteStorage
-        {
-            get
-            {
-                if ( _remoteStorage == null )
-                    _remoteStorage = new RemoteStorage( this );
-
-                return _remoteStorage;
-            }
-        }
-    }
-
-    /// <summary>
-    /// Stream used to write to a <see cref="RemoteFile"/>.
-    /// </summary>
-    public class RemoteFileWriteStream : Stream
-    {
-        internal readonly RemoteStorage remoteStorage;
-
-        private readonly UGCFileWriteStreamHandle_t _handle;
-        private readonly RemoteFile _file;
-
-        private int _written;
-        private bool _closed;
-
-        internal RemoteFileWriteStream( RemoteStorage r, RemoteFile file )
-        {
-            remoteStorage = r;
-
-            _handle = remoteStorage.native.FileWriteStreamOpen( file.FileName );
-            _file = file;
-        }
-
-        public override void Flush() { }
-
-        public override int Read( byte[] buffer, int offset, int count )
-        {
-            throw new NotImplementedException();
-        }
-
-        public override long Seek( long offset, SeekOrigin origin )
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void SetLength( long value )
-        {
-            throw new NotImplementedException();
-        }
-
-        public override unsafe void Write( byte[] buffer, int offset, int count )
-        {
-            if ( _closed ) throw new ObjectDisposedException( ToString() );
-
-            fixed ( byte* bufferPtr = buffer )
-            {
-                if ( remoteStorage.native.FileWriteStreamWriteChunk( _handle, (IntPtr) (bufferPtr + offset), count ) )
-                {
-                    _written += count;
-                }
-            }
-        }
-
-        public override bool CanRead => false;
-        public override bool CanSeek => false;
-        public override bool CanWrite => true;
-        public override long Length => _written;
-        public override long Position { get { return _written; } set { throw new NotImplementedException(); } }
-
-        /// <summary>
-        /// Close the stream without saving the file to remote storage.
-        /// </summary>
-        public void Cancel()
-        {
-            if ( _closed ) return;
-
-            _closed = true;
-            remoteStorage.native.FileWriteStreamCancel( _handle );
-        }
-
-#if NETCORE
-        public void Close()
-#else
-        public override void Close()
-#endif
-        {
-            if ( _closed ) return;
-
-            _closed = true;
-            remoteStorage.native.FileWriteStreamClose( _handle );
-
-            _file.remoteStorage.OnWrittenNewFile( _file );
-        }
-
-        protected override void Dispose( bool disposing )
-        {
-            if ( disposing ) Close();
-            base.Dispose( disposing );
-        }
-    }
-
-    /// <summary>
-    /// Represents a file stored in a user's Steam Cloud.
-    /// </summary>
-    public class RemoteFile
-    {
-        internal readonly RemoteStorage remoteStorage;
-
-        private readonly bool _isUgc;
-        private string _fileName;
-        private int _sizeInBytes = -1;
-        private UGCHandle_t _handle;
-        private ulong _ownerId;
-
-        private bool _isDownloading;
-        private byte[] _downloadedData;
-
-        /// <summary>
-        /// Check if the file exists.
-        /// </summary>
-        public bool Exists { get; internal set; }
-
-        public bool IsDownloading { get { return _isUgc && _isDownloading && _downloadedData == null; } }
-
-        public bool IsDownloaded { get { return !_isUgc || _downloadedData != null; } }
-
-        /// <summary>
-        /// If true, the file is available for other users to download.
-        /// </summary>
-        public bool IsShared { get { return _handle.Value != 0; } }
-
-        internal UGCHandle_t UGCHandle { get { return _handle; } }
-
-        public ulong SharingId { get { return UGCHandle.Value; } }
-
-        /// <summary>
-        /// Name and path of the file.
-        /// </summary>
-        public string FileName
-        {
-            get
-            {
-                if ( _fileName != null ) return _fileName;
-                GetUGCDetails();
-                return _fileName;
-            }
-        }
-
-        /// <summary>
-        /// Steam ID of the file's owner.
-        /// </summary>
-        public ulong OwnerId
-        {
-            get
-            {
-                if ( _ownerId != 0 ) return _ownerId;
-                GetUGCDetails();
-                return _ownerId;
-            }
-        }
-
-        /// <summary>
-        /// Total size of the file in bytes.
-        /// </summary>
-        public int SizeInBytes
-        {
-            get
-            {
-                if ( _sizeInBytes != -1 ) return _sizeInBytes;
-                if ( _isUgc ) throw new NotImplementedException();
-                _sizeInBytes = remoteStorage.native.GetFileSize( FileName );
-                return _sizeInBytes;
-            }
-            internal set { _sizeInBytes = value; }
-        }
-
-        internal RemoteFile( RemoteStorage r, UGCHandle_t handle )
-        {
-            Exists = true;
-
-            remoteStorage = r;
-
-            _isUgc = true;
-            _handle = handle;
-        }
-
-        internal RemoteFile( RemoteStorage r, string name, ulong ownerId, int sizeInBytes = -1 )
-        {
-            remoteStorage = r;
-
-            _isUgc = false;
-            _fileName = name;
-            _ownerId = ownerId;
-            _sizeInBytes = sizeInBytes;
-        }
-
-        /// <summary>
-        /// Creates a <see cref="RemoteFileWriteStream"/> used to write to this file.
-        /// </summary>
-        public RemoteFileWriteStream OpenWrite()
-        {
-            return new RemoteFileWriteStream( remoteStorage, this );
-        }
-
-        /// <summary>
-        /// Write a byte array to this file, replacing any existing contents.
-        /// </summary>
-        public void WriteAllBytes( byte[] buffer )
-        {
-            using ( var stream = OpenWrite() )
-            {
-                stream.Write( buffer, 0, buffer.Length );
-            }
-        }
-
-        /// <summary>
-        /// Write a string to this file, replacing any existing contents.
-        /// </summary>
-        public void WriteAllText( string text, Encoding encoding = null )
-        {
-            if ( encoding == null ) encoding = Encoding.UTF8;
-            WriteAllBytes( encoding.GetBytes( text ) );
-        }
-
-        /// <summary>
-        /// Callback invoked by <see cref="RemoteFile.Download"/> when a file download is complete.
-        /// </summary>
-        public delegate void DownloadCallback( bool success );
-
-        /// <summary>
-        /// Gets the number of bytes downloaded and the total number of bytes expected while
-        /// this file is downloading.
-        /// </summary>
-        /// <returns>True if the file is downloading</returns>
-        public bool GetDownloadProgress( out int bytesDownloaded, out int bytesExpected )
-        {
-            return remoteStorage.native.GetUGCDownloadProgress( _handle, out bytesDownloaded, out bytesExpected );
-        }
-
-        /// <summary>
-        /// Attempts to start downloading a shared file.
-        /// </summary>
-        /// <returns>True if the download has successfully started</returns>
-        public bool Download( DownloadCallback callback = null )
-        {
-            if ( !_isUgc ) return false;
-            if ( _isDownloading ) return false;
-            if ( IsDownloaded ) return false;
-
-            _isDownloading = true;
-
-            remoteStorage.native.UGCDownload( _handle, 1000, ( result, error ) =>
-            {
-                _isDownloading = false;
-
-                if ( error || result.Result != Result.OK )
-                {
-                    callback?.Invoke( false );
-                    return;
-                }
-
-                _ownerId = result.SteamIDOwner;
-                _sizeInBytes = result.SizeInBytes;
-                _fileName = result.PchFileName;
-
-                unsafe
-                {
-                    _downloadedData = new byte[_sizeInBytes];
-                    fixed ( byte* bufferPtr = _downloadedData )
-                    {
-                        remoteStorage.native.UGCRead( _handle, (IntPtr) bufferPtr, _sizeInBytes, 0, UGCReadAction.ontinueReading );
-                    }
-                }
-
-                callback?.Invoke( true );
-            } );
-
-            return true;
-        }
-
-        /// <summary>
-        /// Opens a stream used to read from this file.
-        /// </summary>
-        /// <returns></returns>
-        public Stream OpenRead()
-        {
-            return new MemoryStream( ReadAllBytes(), false );
-        }
-
-        /// <summary>
-        /// Reads the entire contents of the file as a byte array.
-        /// </summary>
-        public unsafe byte[] ReadAllBytes()
-        {
-            if ( _isUgc )
-            {
-                if ( !IsDownloaded ) throw new Exception( "Cannot read a file that hasn't been downloaded." );
-                return _downloadedData;
-            }
-
-            var size = SizeInBytes;
-            var buffer = new byte[size];
-
-            fixed ( byte* bufferPtr = buffer )
-            {
-                remoteStorage.native.FileRead( FileName, (IntPtr) bufferPtr, size );
-            }
-
-            return buffer;
-        }
-
-        /// <summary>
-        /// Reads the entire contents of the file as a string.
-        /// </summary>
-        public string ReadAllText( Encoding encoding = null )
-        {
-            if ( encoding == null ) encoding = Encoding.UTF8;
-            return encoding.GetString( ReadAllBytes() );
-        }
-
-        /// <summary>
-        /// Callback invoked by <see cref="RemoteFile.Share"/> when file sharing is complete.
-        /// </summary>
-        public delegate void ShareCallback( bool success );
-
-        /// <summary>
-        /// Attempt to publish this file for other users to download.
-        /// </summary>
-        /// <returns>True if we have started attempting to share</returns>
-        public bool Share( ShareCallback callback = null )
-        {
-            if ( _isUgc ) return false;
-
-            // Already shared
-            if ( _handle.Value != 0 ) return false;
-
-            remoteStorage.native.FileShare( FileName, ( result, error ) =>
-            {
-                var success = !error && result.Result == Result.OK;
-                if ( success )
-                {
-                    _handle.Value = result.File;
-                }
-
-                callback?.Invoke( success );
-            } );
-
-            return true;
-        }
-
-        /// <summary>
-        /// Delete this file from remote storage.
-        /// </summary>
-        /// <returns>True if the file could be deleted</returns>
-        public bool Delete()
-        {
-            if ( !Exists ) return false;
-            if ( _isUgc ) return false;
-            if ( !remoteStorage.native.FileDelete( FileName ) ) return false;
-
-            Exists = false;
-            remoteStorage.InvalidateFiles();
-
-            return true;
-        }
-
-        private void GetUGCDetails()
-        {
-            if ( !_isUgc ) throw new InvalidOperationException();
-
-            var appId = new AppId_t { Value = remoteStorage.native.steamworks.AppId };
-
-            CSteamID ownerId;
-            remoteStorage.native.GetUGCDetails( _handle, ref appId, out _fileName, out ownerId );
-
-            _ownerId = ownerId.Value;
-        }
-    }
-
     /// <summary>
     /// Handles Steam Cloud related actions.
     /// </summary>
-    public class RemoteStorage
+    public class RemoteStorage : IDisposable
     {
         private static string NormalizePath( string path )
         {
             return new FileInfo( $"x:/{path}" ).FullName.Substring( 3 );
         }
 
-        internal readonly Client client;
-        internal readonly SteamNative.SteamRemoteStorage native;
+        internal Client client;
+        internal SteamNative.SteamRemoteStorage native;
 
         private bool _filesInvalid = true;
         private readonly List<RemoteFile> _files = new List<RemoteFile>();
@@ -490,7 +107,7 @@ namespace Facepunch.Steamworks
             for ( var i = 0; i < count; ++i )
             {
                 int size;
-                var name = NormalizePath( GetFileNameAndSize( i, out size ) );
+                var name = NormalizePath( native.GetFileNameAndSize( i, out size ) );
 
                 var existing = _files.FirstOrDefault( x => x.FileName == name );
                 if ( existing == null )
@@ -520,24 +137,61 @@ namespace Facepunch.Steamworks
             return native.FileExists( path );
         }
 
-        /// <summary>
-        /// Gets both the total and available remote storage in bytes for this user and app.
-        /// </summary>
-        /// <returns>True if successful</returns>
-        public unsafe bool GetQuota( out ulong totalBytes, out ulong availableBytes )
+        public void Dispose()
         {
-            fixed ( ulong* totalPtr = &totalBytes)
-            fixed ( ulong* availablePtr = &availableBytes )
+            client = null;
+            native = null;
+        }
+
+        /// <summary>
+        /// Number of bytes used out of the user's total quota
+        /// </summary>
+        public ulong QuotaUsed
+        {
+            get
             {
-                return native.GetQuota( (IntPtr) totalPtr, (IntPtr) availablePtr );
+                ulong totalBytes = 0;
+                ulong availableBytes = 0;
+
+                if ( !native.GetQuota( out totalBytes, out availableBytes ) )
+                    return 0;
+
+                return totalBytes - availableBytes;
             }
         }
 
-        private unsafe string GetFileNameAndSize( int file, out int size )
+        /// <summary>
+        /// Total quota size in bytes
+        /// </summary>
+        public ulong QuotaTotal
         {
-            fixed ( int* sizePtr = &size )
+            get
             {
-                return native.GetFileNameAndSize( file, (IntPtr) sizePtr );
+                ulong totalBytes = 0;
+                ulong availableBytes = 0;
+
+                if ( !native.GetQuota( out totalBytes, out availableBytes ) )
+                    return 0;
+
+                return totalBytes;
+            }
+        }
+
+
+        /// <summary>
+        /// Number of bytes remaining out of the user's total quota
+        /// </summary>
+        public ulong QuotaRemaining
+        {
+            get
+            {
+                ulong totalBytes = 0;
+                ulong availableBytes = 0;
+
+                if ( !native.GetQuota( out totalBytes, out availableBytes ) )
+                    return 0;
+
+                return availableBytes;
             }
         }
     }

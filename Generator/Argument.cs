@@ -101,8 +101,10 @@ namespace Generator
                 if ( Name.Contains( "Dest" ) && ManagedType.EndsWith( "*" ) )
                     return true;
 
-                if ( Name.EndsWith( "s" ) && ManagedType.EndsWith( "*" ) )
-                    return true;
+                if ( ManagedType.EndsWith( "*" ) )
+                {
+                    if ( Name.EndsWith( "s" ) && !Name.EndsWith( "Bytes" ) ) return true;
+                }
 
                 return false;
             }

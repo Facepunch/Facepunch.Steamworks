@@ -446,14 +446,14 @@ namespace SteamNative
 			long /*int64*/ ISteamRemoteStorage_GetFileTimestamp( string /*const char **/ pchFile );
 			RemoteStoragePlatform /*ERemoteStoragePlatform*/ ISteamRemoteStorage_GetSyncPlatforms( string /*const char **/ pchFile );
 			int /*int32*/ ISteamRemoteStorage_GetFileCount();
-			IntPtr ISteamRemoteStorage_GetFileNameAndSize( int /*int*/ iFile, IntPtr /*int32 **/ pnFileSizeInBytes );
-			bool /*bool*/ ISteamRemoteStorage_GetQuota( IntPtr /*uint64 **/ pnTotalBytes, IntPtr /*uint64 **/ puAvailableBytes );
+			IntPtr ISteamRemoteStorage_GetFileNameAndSize( int /*int*/ iFile, out int /*int32 **/ pnFileSizeInBytes );
+			bool /*bool*/ ISteamRemoteStorage_GetQuota( out ulong /*uint64 **/ pnTotalBytes, out ulong /*uint64 **/ puAvailableBytes );
 			bool /*bool*/ ISteamRemoteStorage_IsCloudEnabledForAccount();
 			bool /*bool*/ ISteamRemoteStorage_IsCloudEnabledForApp();
 			void /*void*/ ISteamRemoteStorage_SetCloudEnabledForApp( [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bEnabled );
 			SteamAPICall_t /*(SteamAPICall_t)*/ ISteamRemoteStorage_UGCDownload( ulong hContent, uint /*uint32*/ unPriority );
 			bool /*bool*/ ISteamRemoteStorage_GetUGCDownloadProgress( ulong hContent, out int /*int32 **/ pnBytesDownloaded, out int /*int32 **/ pnBytesExpected );
-			bool /*bool*/ ISteamRemoteStorage_GetUGCDetails( ulong hContent, ref uint pnAppID, System.Text.StringBuilder /*char ***/ ppchName, IntPtr /*int32 **/ pnFileSizeInBytes, out ulong pSteamIDOwner );
+			bool /*bool*/ ISteamRemoteStorage_GetUGCDetails( ulong hContent, ref uint pnAppID, System.Text.StringBuilder /*char ***/ ppchName, out int /*int32 **/ pnFileSizeInBytes, out ulong pSteamIDOwner );
 			int /*int32*/ ISteamRemoteStorage_UGCRead( ulong hContent, IntPtr /*void **/ pvData, int /*int32*/ cubDataToRead, uint /*uint32*/ cOffset, UGCReadAction /*EUGCReadAction*/ eAction );
 			int /*int32*/ ISteamRemoteStorage_GetCachedUGCCount();
 			UGCHandle_t /*(UGCHandle_t)*/ ISteamRemoteStorage_GetCachedUGCHandle( int /*int32*/ iCachedContent );
