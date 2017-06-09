@@ -32,8 +32,6 @@ namespace Facepunch.Steamworks
             {
                 OnAuthorizationResponse( arg1.Authorized == 1, (int) arg1.AppID, arg1.OrderID );
             }
-
-            throw new NotImplementedException();
         }
 
         public void Dispose()
