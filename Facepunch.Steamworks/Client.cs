@@ -58,6 +58,7 @@ namespace Facepunch.Steamworks
         public App App { get; private set; }
         public Achievements Achievements { get; private set; }
         public Stats Stats { get; private set; }
+        public MicroTransactions MicroTransactions { get; private set; }
 
         public Client( uint appId )
         {
@@ -87,6 +88,7 @@ namespace Facepunch.Steamworks
             App = new App( this );
             Stats = new Stats( this );
             Achievements = new Achievements( this );
+            MicroTransactions = new MicroTransactions( this );
 
             Workshop.friends = Friends;
 
@@ -104,6 +106,8 @@ namespace Facepunch.Steamworks
             BuildId = native.apps.GetAppBuildId();
             CurrentLanguage = native.apps.GetCurrentGameLanguage();
             AvailableLanguages = native.apps.GetAvailableGameLanguages().Split( new[] {';'}, StringSplitOptions.RemoveEmptyEntries ); // TODO: Assumed colon separated
+
+            
 
             //
             // Run update, first call does some initialization
@@ -166,6 +170,12 @@ namespace Facepunch.Steamworks
             {
                 Achievements.Dispose();
                 Achievements = null;
+            }
+
+            if ( MicroTransactions != null )
+            {
+                MicroTransactions.Dispose();
+                MicroTransactions = null;
             }
 
             if ( Instance == this )
