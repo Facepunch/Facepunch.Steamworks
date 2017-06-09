@@ -71,6 +71,19 @@ namespace Facepunch.Steamworks
 
         internal Client Client { get; set; }
 
+        /// <summary>
+        /// Returns null if the value doesn't exist
+        /// </summary>
+        public string GetRichPresence( string key )
+        {
+            var val = Client.native.friends.GetFriendRichPresence( Id, key );
+            if ( string.IsNullOrEmpty( val ) ) return null;
+            return val;
+        }
+
+        /// <summary>
+        /// Update this friend, request the latest data from Steam's servers
+        /// </summary>
         public void Refresh()
         {
             Name = Client.native.friends.GetFriendPersonaName( Id );
@@ -95,6 +108,8 @@ namespace Facepunch.Steamworks
                 ServerQueryPort = gameInfo.QueryPort;
                 ServerLobbyId = gameInfo.SteamIDLobby;
             }
+
+            Client.native.friends.RequestFriendRichPresence( Id );
         }
     }
 
