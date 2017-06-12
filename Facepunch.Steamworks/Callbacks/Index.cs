@@ -5,6 +5,8 @@ using System.Text;
 
 namespace Facepunch.Steamworks.Callbacks
 {
+    public delegate void FailureCallback( Result reason );
+
     public enum Result : int
     {
         OK = 1,                            // success

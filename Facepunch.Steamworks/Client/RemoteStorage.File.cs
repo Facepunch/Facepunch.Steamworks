@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Facepunch.Steamworks.Callbacks;
 using SteamNative;
+using Result = SteamNative.Result;
 
 namespace Facepunch.Steamworks
 {
@@ -133,7 +135,7 @@ namespace Facepunch.Steamworks
         /// <summary>
         /// Callback invoked by <see cref="RemoteFile.Download"/> when a file download is complete.
         /// </summary>
-        public delegate void DownloadCallback( bool success );
+        public delegate void DownloadCallback();
 
         /// <summary>
         /// Gets the number of bytes downloaded and the total number of bytes expected while
@@ -149,7 +151,7 @@ namespace Facepunch.Steamworks
         /// Attempts to start downloading a shared file.
         /// </summary>
         /// <returns>True if the download has successfully started</returns>
-        public bool Download( DownloadCallback callback = null )
+        public bool Download( DownloadCallback onSuccess = null, FailureCallback onFailure = null )
         {
             if ( !_isUgc ) return false;
             if ( _isDownloading ) return false;
@@ -163,7 +165,7 @@ namespace Facepunch.Steamworks
 
                 if ( error || result.Result != Result.OK )
                 {
-                    callback?.Invoke( false );
+                    onFailure?.Invoke( result.Result == 0 ? Callbacks.Result.IOFailure : (Callbacks.Result) result.Result );
                     return;
                 }
 
@@ -180,7 +182,7 @@ namespace Facepunch.Steamworks
                     }
                 }
 
-                callback?.Invoke( true );
+                onSuccess?.Invoke();
             } );
 
             return true;
@@ -229,13 +231,13 @@ namespace Facepunch.Steamworks
         /// <summary>
         /// Callback invoked by <see cref="RemoteFile.Share"/> when file sharing is complete.
         /// </summary>
-        public delegate void ShareCallback( bool success );
+        public delegate void ShareCallback();
 
         /// <summary>
         /// Attempt to publish this file for other users to download.
         /// </summary>
         /// <returns>True if we have started attempting to share</returns>
-        public bool Share( ShareCallback callback = null )
+        public bool Share( ShareCallback onSuccess = null, FailureCallback onFailure = null )
         {
             if ( _isUgc ) return false;
 
@@ -244,13 +246,15 @@ namespace Facepunch.Steamworks
 
             remoteStorage.native.FileShare( FileName, ( result, error ) =>
             {
-                var success = !error && result.Result == Result.OK;
-                if ( success )
+                if ( !error && result.Result == Result.OK )
                 {
                     _handle.Value = result.File;
+                    onSuccess?.Invoke();
                 }
-
-                callback?.Invoke( success );
+                else
+                {
+                    onFailure?.Invoke( result.Result == 0 ? Callbacks.Result.IOFailure : (Callbacks.Result) result.Result );
+                }
             } );
 
             return true;

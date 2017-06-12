@@ -42,6 +42,9 @@ namespace Facepunch.Steamworks.Test
                     client.Update();
                 }
 
+                Assert.IsFalse( board.IsError );
+                Assert.IsNotNull( board.Results );
+
                 foreach ( var entry in board.Results )
                 {
                     Console.WriteLine( $"{entry.GlobalRank}: {entry.SteamId} ({entry.Name}) with {entry.Score}" );
@@ -73,10 +76,8 @@ namespace Facepunch.Steamworks.Test
 
                 var done = false;
 
-                board.FetchScores( Steamworks.Leaderboard.RequestType.Global, 0, 20, ( success, results ) =>
+                board.FetchScores( Steamworks.Leaderboard.RequestType.Global, 0, 20, results =>
                 {
-                    Assert.IsTrue( success );
-
                     foreach ( var entry in results )
                     {
                         Console.WriteLine( $"{entry.GlobalRank}: {entry.SteamId} ({entry.Name}) with {entry.Score}" );
@@ -86,7 +87,7 @@ namespace Facepunch.Steamworks.Test
                     }
 
                     done = true;
-                } );
+                }, error => Assert.Fail( error.ToString() ) );
 
                 while ( !done )
                 {
@@ -154,14 +155,13 @@ namespace Facepunch.Steamworks.Test
 
                 const int score = 5678;
 
-                board.AddScore( false, score, null, ( success, result ) =>
+                board.AddScore( false, score, null, result =>
                 {
-                    Assert.IsTrue( success );
                     Assert.IsTrue( result.ScoreChanged );
                     Assert.AreEqual( result.Score, score );
 
                     done = true;
-                } );
+                }, error => Assert.Fail( error.ToString() ) );
 
                 while ( !done )
                 {
@@ -195,18 +195,15 @@ namespace Facepunch.Steamworks.Test
                 var file = client.RemoteStorage.CreateFile( "score/example.txt" );
                 file.WriteAllText( attachment );
 
-                Assert.IsTrue( board.AddScore( false, score, null, ( success, result ) =>
+                Assert.IsTrue( board.AddScore( false, score, null, result =>
                 {
-                    Assert.IsTrue( success );
                     Assert.IsTrue( result.ScoreChanged );
 
-                    Assert.IsTrue( board.AttachRemoteFile( file, attached =>
+                    Assert.IsTrue( board.AttachRemoteFile( file, () =>
                     {
-                        Assert.IsTrue( attached );
-
                         done = true;
-                    } ) );
-                } ) );
+                    }, error => Assert.Fail( error.ToString() ) ) );
+                }, error => Assert.Fail( error.ToString() ) ) );
 
                 while ( !done )
                 {
@@ -216,19 +213,18 @@ namespace Facepunch.Steamworks.Test
 
                 done = false;
 
-                Assert.IsTrue( board.FetchScores( Steamworks.Leaderboard.RequestType.GlobalAroundUser, 0, 0, ( success, entries ) =>
+                Assert.IsTrue( board.FetchScores( Steamworks.Leaderboard.RequestType.GlobalAroundUser, 0, 0, entries =>
                 {
                     Assert.AreEqual( 1, entries.Length );
                     Assert.IsNotNull( entries[0].AttachedFile );
 
-                    Assert.IsTrue( entries[0].AttachedFile.Download( downloaded =>
+                    Assert.IsTrue( entries[0].AttachedFile.Download( () =>
                     {
-                        Assert.IsTrue( downloaded );
                         Assert.AreEqual( attachment, entries[0].AttachedFile.ReadAllText() );
 
                         done = true;
-                    } ) );
-                } ) );
+                    }, error => Assert.Fail( error.ToString() ) ) );
+                }, error => Assert.Fail( error.ToString() ) ) );
 
                 while ( !done )
                 {

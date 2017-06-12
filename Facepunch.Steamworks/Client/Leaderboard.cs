@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Facepunch.Steamworks.Callbacks;
 using SteamNative;
+using Result = SteamNative.Result;
 
 namespace Facepunch.Steamworks
 {
@@ -117,7 +119,7 @@ namespace Facepunch.Steamworks
         /// </summary>
         /// <param name="success">If true, the score was submitted</param>
         /// <param name="result">If successful, information about the new entry</param>
-        public delegate void AddScoreCallback( bool success, AddScoreResult result );
+        public delegate void AddScoreCallback( AddScoreResult result );
 
         /// <summary>
         /// Information about a newly submitted score.
@@ -136,9 +138,9 @@ namespace Facepunch.Steamworks
         /// they have no bearing on sorting at all
         /// If onlyIfBeatsOldScore is true, the score will only be updated if it beats the existing score, else it will always
         /// be updated.
-        /// Information about the newly submitted score is passed to the optional <paramref name="callback"/>.
+        /// Information about the newly submitted score is passed to the optional <paramref name="onSuccess"/>.
         /// </summary>
-        public bool AddScore( bool onlyIfBeatsOldScore, int score, int[] subscores = null, AddScoreCallback callback = null )
+        public bool AddScore( bool onlyIfBeatsOldScore, int score, int[] subscores = null, AddScoreCallback onSuccess = null, FailureCallback onFailure = null )
         {
             if ( !IsValid ) return false;
 
@@ -147,16 +149,23 @@ namespace Facepunch.Steamworks
             var flags = LeaderboardUploadScoreMethod.ForceUpdate;
             if ( onlyIfBeatsOldScore ) flags = LeaderboardUploadScoreMethod.KeepBest;
 
-            client.native.userstats.UploadLeaderboardScore( BoardId, flags, score, subscores, subscores.Length, callback != null ? (Action<LeaderboardScoreUploaded_t, bool>) (( result, error ) =>
+            client.native.userstats.UploadLeaderboardScore( BoardId, flags, score, subscores, subscores.Length, ( result, error ) =>
             {
-                callback( !error && result.Success != 0, new AddScoreResult
+                if ( !error && result.Success != 0 )
                 {
-                    Score = result.Score,
-                    ScoreChanged = result.ScoreChanged != 0,
-                    GlobalRankNew = result.GlobalRankNew,
-                    GlobalRankPrevious = result.GlobalRankPrevious
-                } );
-            }) : null );
+                    onSuccess?.Invoke( new AddScoreResult
+                    {
+                        Score = result.Score,
+                        ScoreChanged = result.ScoreChanged != 0,
+                        GlobalRankNew = result.GlobalRankNew,
+                        GlobalRankPrevious = result.GlobalRankPrevious
+                    } );
+                }
+                else
+                {
+                    onFailure?.Invoke( error ? Callbacks.Result.IOFailure : Callbacks.Result.Fail );
+                }
+            } );
 
             return true;
         }
@@ -164,14 +173,14 @@ namespace Facepunch.Steamworks
         /// <summary>
         /// Callback invoked by <see cref="Leaderboard.AttachRemoteFile"/> when file attachment is complete.
         /// </summary>
-        public delegate void AttachRemoteFileCallback( bool success );
+        public delegate void AttachRemoteFileCallback();
 
         /// <summary>
         /// Attempt to attach a <see cref="RemoteStorage"/> file to the current user's leaderboard entry.
         /// Can be useful for storing replays along with scores.
         /// </summary>
         /// <returns>True if the file attachment process has started</returns>
-        public bool AttachRemoteFile( RemoteFile file, AttachRemoteFileCallback callback = null )
+        public bool AttachRemoteFile( RemoteFile file, AttachRemoteFileCallback onSuccess = null, FailureCallback onFailure = null )
         {
             if ( !IsValid ) return false;
 
@@ -179,19 +188,26 @@ namespace Facepunch.Steamworks
             {
                 var handle = client.native.userstats.AttachLeaderboardUGC( BoardId, file.UGCHandle, ( result, error ) =>
                 {
-                    callback?.Invoke( !error && result.Result == Result.OK );
+                    if ( !error && result.Result == Result.OK )
+                    {
+                        onSuccess?.Invoke();
+                    }
+                    else
+                    {
+                        onFailure?.Invoke( result.Result == 0 ? Callbacks.Result.IOFailure : (Callbacks.Result) result.Result );
+                    }
                 } );
 
                 return handle.CallResultHandle != 0;
             }
 
-            file.Share( success =>
+            file.Share( () =>
             {
-                if ( !success || !file.IsShared || !AttachRemoteFile( file, callback ) )
+                if ( !file.IsShared || !AttachRemoteFile( file, onSuccess, onFailure ) )
                 {
-                    callback?.Invoke( false );
+                    onFailure?.Invoke( Callbacks.Result.Fail );
                 }
-            } );
+            }, onFailure );
             return true;
         }
 
@@ -236,13 +252,13 @@ namespace Facepunch.Steamworks
         /// Callback invoked by <see cref="FetchScores(RequestType, int, int, FetchScoresCallback)"/> when
         /// a query is complete.
         /// </summary>
-        public delegate void FetchScoresCallback( bool success, Entry[] results );
+        public delegate void FetchScoresCallback( Entry[] results );
 
         /// <summary>
         ///     Fetch a subset of scores. The scores are passed to <paramref name="callback"/>.
         /// </summary>
         /// <returns>Returns true if we have started the query</returns>
-        public bool FetchScores( RequestType RequestType, int start, int end, FetchScoresCallback callback )
+        public bool FetchScores( RequestType RequestType, int start, int end, FetchScoresCallback onSuccess, FailureCallback onFailure = null )
         {
             if ( !IsValid ) return false;
 
@@ -250,7 +266,7 @@ namespace Facepunch.Steamworks
             {
                 if ( error )
                 {
-                    callback( false, null );
+                    onFailure?.Invoke( Callbacks.Result.IOFailure );
                 }
                 else
                 {
@@ -258,7 +274,7 @@ namespace Facepunch.Steamworks
                     else _sEntryBuffer.Clear();
 
                     ReadScores( result, _sEntryBuffer );
-                    callback( true, _sEntryBuffer.ToArray() );
+                    onSuccess( _sEntryBuffer.ToArray() );
                 }
             } );
 
