@@ -65,7 +65,7 @@ namespace Facepunch.Steamworks
         /// </summary>
         public bool SetInt( string name, int data )
         {
-            return client.native.userstats.SetStat(name, data);
+            return client.native.userstats.SetStat( name, data );
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Facepunch.Steamworks
         /// </summary>
         public bool SetFloat( string name, float data )
         {
-            return client.native.userstats.SetStat0(name, data);
+            return client.native.userstats.SetStat0( name, data );
         }
 
         /// <summary>
