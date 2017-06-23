@@ -67,6 +67,7 @@ namespace Facepunch.Steamworks
         {
             return client.native.userstats.SetStat(name, data);
         }
+
         /// <summary>
         /// Sets client stat float
         /// You should call StoreStats() manually after this
