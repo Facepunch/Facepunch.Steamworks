@@ -59,6 +59,16 @@ namespace Facepunch.Steamworks
             return data;
         }
 
+        public bool SetInt(string name, int data)
+        {
+            return client.native.userstats.SetStat(name, data);
+        }
+
+        public bool SetFloat(string name, float data)
+        {
+            return client.native.userstats.SetStat0(name, data);
+        }
+
         public void Dispose()
         {
             client = null;
