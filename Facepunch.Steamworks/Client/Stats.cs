@@ -59,6 +59,38 @@ namespace Facepunch.Steamworks
             return data;
         }
 
+        /// <summary>
+        /// Set a stat value. This will automatically call StoreStats() after a successful call
+        /// unless you pass false as the last argument.
+        /// </summary>
+        public bool Set( string name, int value, bool store = true )
+        {
+            var r = client.native.userstats.SetStat( name, value );
+
+            if ( store )
+            {
+                return r && client.native.userstats.StoreStats();
+            }
+
+            return r;
+        }
+
+        /// <summary>
+        /// Set a stat value. This will automatically call StoreStats() after a successful call
+        /// unless you pass false as the last argument.
+        /// </summary>
+        public bool Set( string name, float value, bool store = true )
+        {
+            var r = client.native.userstats.SetStat0( name, value );
+
+            if ( store )
+            {
+                return r && client.native.userstats.StoreStats();
+            }
+
+            return r;
+        }
+
         public void Dispose()
         {
             client = null;
