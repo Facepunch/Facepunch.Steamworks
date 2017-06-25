@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SteamNative;
 
 namespace Facepunch.Steamworks
 {
@@ -32,12 +33,12 @@ namespace Facepunch.Steamworks
         /// <summary>
         ///  Return true if blocked
         /// </summary>
-        public bool IsBlocked { get; internal set; }
+        public bool IsBlocked => relationship == FriendRelationship.Blocked;
 
         /// <summary>
         ///  Return true if is a friend. Returns false if blocked, request etc.
         /// </summary>
-        public bool IsFriend { get; internal set; }
+        public bool IsFriend => relationship == FriendRelationship.Friend;
 
         /// <summary>
         /// Their current display name
@@ -47,17 +48,32 @@ namespace Facepunch.Steamworks
         /// <summary>
         /// Returns true if this friend is online
         /// </summary>
-        public bool IsOnline { get; internal set; }
+        public bool IsOnline => personaState != PersonaState.Offline;
+
+        /// <summary>
+        /// Returns true if this friend is marked as away
+        /// </summary>
+        public bool IsAway => personaState == PersonaState.Away; 
+
+        /// <summary>
+        /// Returns true if this friend is marked as busy
+        /// </summary>
+        public bool IsBusy => personaState == PersonaState.Busy;
+
+        /// <summary>
+        /// Returns true if this friend is marked as snoozing
+        /// </summary>
+        public bool IsSnoozing => personaState == PersonaState.Snooze;
 
         /// <summary>
         /// Returns true if this friend is online and playing this game
         /// </summary>
-        public bool IsPlayingThisGame { get { return CurrentAppId == Client.AppId; } }
+        public bool IsPlayingThisGame => CurrentAppId == Client.AppId;
 
         /// <summary>
         /// Returns true if this friend is online and playing this game
         /// </summary>
-        public bool IsPlaying { get { return CurrentAppId != 0; } }
+        public bool IsPlaying => CurrentAppId != 0;
 
         /// <summary>
         /// The AppId this guy is playing
@@ -70,6 +86,8 @@ namespace Facepunch.Steamworks
         public ulong ServerLobbyId { get; internal set; }
 
         internal Client Client { get; set; }
+        private PersonaState personaState;
+        private FriendRelationship relationship;
 
         /// <summary>
         /// Returns null if the value doesn't exist
@@ -88,10 +106,8 @@ namespace Facepunch.Steamworks
         {
             Name = Client.native.friends.GetFriendPersonaName( Id );
 
-            SteamNative.FriendRelationship relationship = (SteamNative.FriendRelationship) Client.native.friends.GetFriendRelationship( Id );
-
-            IsBlocked = relationship == SteamNative.FriendRelationship.Blocked;
-            IsFriend = relationship == SteamNative.FriendRelationship.Friend;
+            relationship = Client.native.friends.GetFriendRelationship( Id );
+            personaState = Client.native.friends.GetFriendPersonaState( Id );
 
             CurrentAppId = 0;
             ServerIp = 0;
