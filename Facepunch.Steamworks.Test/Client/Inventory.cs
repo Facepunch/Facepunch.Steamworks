@@ -134,7 +134,7 @@ namespace Facepunch.Steamworks.Test
                 Assert.IsNotNull( client.Inventory.SerializedItems );
                 Assert.IsTrue( client.Inventory.SerializedItems.Length > 4 );
 
-                using ( var server = new Facepunch.Steamworks.Server( 252490, 0, 30002, true, "VersionString" ) )
+                using ( var server = new Facepunch.Steamworks.Server( 252490, new ServerInit( "rust", "Rust" ) ) )
                 {
                     server.LogOnAnonymous();
                     Assert.IsTrue( server.IsValid );

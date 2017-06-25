@@ -1,8 +1,5 @@
-﻿
-
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 
 namespace Facepunch.Steamworks
 {
@@ -27,31 +24,17 @@ namespace Facepunch.Steamworks
         /// <summary>
         /// Initialize a Steam Server instance
         /// </summary>
-        /// <param name="appId">You game's AppId</param>
-        /// <param name="IpAddress">The IP Address to bind to. Can be 0 to mean "any".</param>
-        /// <param name="SteamPort">Port to talk to steam on, can be anything as long as it's not used.".</param>
-        /// <param name="GamePort">The port you game listens to for connections.</param>
-        /// <param name="QueryPort">The port Steam should use for server queries.</param>
-        /// <param name="Secure">True if you want to use VAC</param>
-        /// <param name="VersionString">A string defining version, ie "1001"</param>
-        public Server( uint appId, uint IpAddress, ushort SteamPort, ushort GamePort, ushort QueryPort, bool Secure, string VersionString )
+        public Server( uint appId, ServerInit init )
         {
             Instance = this;
             native = new Interop.NativeInterface();
 
-            //
-            // If we don't have a SteamPort defined, choose one at 'random'
-            //
-            if ( SteamPort == 0 )
-            {
-                SteamPort = (ushort) new Random().Next( 10000, 60000 );
-            }
-
+            if ( init.SteamPort == 0 ) init.RandomSteamPort();
 
             //
             // Get other interfaces
             //
-            if ( !native.InitServer( this, IpAddress, SteamPort, GamePort, QueryPort, Secure ? 3 : 2, VersionString ) )
+            if ( !native.InitServer( this, init.IpAddress, init.SteamPort, init.GamePort, init.QueryPort, init.Secure ? 3 : 2, init.VersionString ) )
             {
                 native.Dispose();
                 native = null;
@@ -74,7 +57,11 @@ namespace Facepunch.Steamworks
             native.gameServer.EnableHeartbeats( true );
             MaxPlayers = 32;
             BotCount = 0;
-            MapName = "unset";
+            Product = $"{AppId}";
+            ModDir = init.ModDir;
+            GameDescription = init.GameDescription;
+            Passworded = false;
+            DedicatedServer = true;
 
             //
             // Child classes
@@ -90,29 +77,6 @@ namespace Facepunch.Steamworks
         }
 
         /// <summary>
-        /// Initialize a Steam Server instance
-        /// </summary>
-        /// <param name="appId">You game's AppId</param>
-        /// <param name="IpAddress">The IP Address to bind to. Can be 0 to mean "any".</param>
-        /// <param name="GamePort">The port you game listens to for connections.</param>
-        /// <param name="QueryPort">The port Steam should use for server queries.</param>
-        /// <param name="Secure">True if you want to use VAC</param>
-        /// <param name="VersionString">A string defining version, ie "1001"</param>
-        public Server( uint appId, uint IpAddress, ushort GamePort, ushort QueryPort, bool Secure, string VersionString ) : this( appId, IpAddress, 0, GamePort, QueryPort, Secure, VersionString )
-        {
-            
-        }
-
-        /// <summary>
-        /// Initialize a server - query port will use the same as GamePort (MASTERSERVERUPDATERPORT_USEGAMESOCKETSHARE)
-        /// This means you'll need to detect and manually process and reply to server queries.
-        /// </summary>
-        public Server( uint appId, uint IpAddress, ushort GamePort, bool Secure, string VersionString ) : this( appId, IpAddress, GamePort, 0xFFFF, Secure, VersionString )
-        {
-            
-        }
-
-        /// <summary>
         /// Should be called at least once every frame
         /// </summary>
         public override void Update()
@@ -124,6 +88,17 @@ namespace Facepunch.Steamworks
 
             base.Update();
         }
+
+        /// <summary>
+        /// Sets whether this should be marked as a dedicated server.
+        /// If not, it is assumed to be a listen server.
+        /// </summary>
+        public bool DedicatedServer
+        {
+            get { return _dedicatedServer; }
+            set { if ( _dedicatedServer == value ) return; native.gameServer.SetDedicatedServer( value ); _dedicatedServer = value; }
+        }
+        private bool _dedicatedServer;
 
         /// <summary>
         /// Gets or sets the current MaxPlayers. 
@@ -163,17 +138,17 @@ namespace Facepunch.Steamworks
         public string ModDir
         {
             get { return _modDir; }
-            set { if ( _modDir == value ) return; native.gameServer.SetModDir( value ); _modDir = value; }
+            internal set { if ( _modDir == value ) return; native.gameServer.SetModDir( value ); _modDir = value; }
         }
         private string _modDir = "";
 
         /// <summary>
-        /// Gets or sets the current product. This isn't really used.
+        /// Gets the current product
         /// </summary>
         public string Product
         {
             get { return _product; }
-            set { if ( _product == value ) return; native.gameServer.SetProduct( value ); _product = value; }
+            internal set { if ( _product == value ) return; native.gameServer.SetProduct( value ); _product = value; }
         }
         private string _product = "";
 
@@ -183,7 +158,7 @@ namespace Facepunch.Steamworks
         public string GameDescription
         {
             get { return _gameDescription; }
-            set { if ( _gameDescription == value ) return; native.gameServer.SetGameDescription( value ); _gameDescription = value; }
+            internal set { if ( _gameDescription == value ) return; native.gameServer.SetGameDescription( value ); _gameDescription = value; }
         }
         private string _gameDescription = "";
 
@@ -224,7 +199,14 @@ namespace Facepunch.Steamworks
         public void LogOnAnonymous()
         {
             native.gameServer.LogOnAnonymous();
+            ForceHeartbeat();
         }
+
+        /// <summary>
+        /// Returns true if the server is connected and registered with the Steam master server
+        /// You should have called LogOnAnonymous etc on startup.
+        /// </summary>
+        public bool LoggedOn => native.gameServer.BLoggedOn();
 
         Dictionary<string, string> KeyValue = new Dictionary<string, string>();
 
@@ -261,14 +243,6 @@ namespace Facepunch.Steamworks
             native.gameServer.BUpdateUserData( steamid, name, (uint) score );
         }
 
-        /// <summary>
-        /// Returns true if the server is connected and registered with the Steam master server
-        /// You should have called LogOnAnonymous etc on startup.
-        /// </summary>
-        public bool LoggedOn
-        {
-            get { return native.gameServer.BLoggedOn(); }
-        }
 
         /// <summary>
         /// Shutdown interface, disconnect from Steam
@@ -312,6 +286,33 @@ namespace Facepunch.Steamworks
 
                 return new System.Net.IPAddress( Utility.SwapBytes( ip ) );
             }
+        }
+
+        /// <summary>
+        /// Enable or disable heartbeats, which are sent regularly to the master server.
+        /// Enabled by default.
+        /// </summary>
+        public bool AutomaticHeartbeats
+        {
+            set { native.gameServer.EnableHeartbeats( value ); }
+        }
+
+        /// <summary>
+        /// Set heartbeat interval, if automatic heartbeats are enabled.
+        /// You can leave this at the default.
+        /// </summary>
+        public int AutomaticHeartbeatRate
+        {
+            set { native.gameServer.SetHeartbeatInterval( value ); }
+        }
+
+        /// <summary>
+        /// Force send a heartbeat to the master server instead of waiting
+        /// for the next automatic update (if you've left them enabled)
+        /// </summary>
+        public void ForceHeartbeat()
+        {
+            native.gameServer.ForceHeartbeat();
         }
 
 
