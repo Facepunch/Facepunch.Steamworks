@@ -38,6 +38,7 @@ namespace Facepunch.Steamworks
             {
                 native.Dispose();
                 native = null;
+                Instance = null;
                 return;
             }
 
