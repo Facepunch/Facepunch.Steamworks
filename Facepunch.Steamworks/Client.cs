@@ -247,5 +247,24 @@ namespace Facepunch.Steamworks
         /// True if we're in low violence mode (germans are only allowed to see the insides of bodies in porn)
         /// </summary>
         public bool IsLowViolence => native.apps.BIsLowViolence();
+
+        /// <summary>
+        /// Checks if your executable was launched through Steam and relaunches it through Steam if it wasn't.
+        /// If this returns true then it starts the Steam client if required and launches your game again through it, 
+        /// and you should quit your process as soon as possible. This effectively runs steam://run/AppId so it may 
+        /// not relaunch the exact executable that called it, as it will always relaunch from the version installed 
+        /// in your Steam library folder.
+        /// If it returns false, then your game was launched by the Steam client and no action needs to be taken.
+        /// One exception is if a steam_appid.txt file is present then this will return false regardless. This allows
+        /// you to develop and test without launching your game through the Steam client. Make sure to remove the 
+        /// steam_appid.txt file when uploading the game to your Steam depot!
+        /// </summary>
+        public static bool RestartIfNecessary( uint appid )
+        {
+            using ( var api = new SteamNative.SteamApi() )
+            {
+                return api.SteamAPI_RestartAppIfNecessary( appid );
+            }
+        }
     }
 }
