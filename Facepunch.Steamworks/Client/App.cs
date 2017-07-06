@@ -57,8 +57,8 @@ namespace Facepunch.Steamworks
         }
 
         /// <summary>
-        /// Returns true if this user is subscribed to the specific appid
-        /// ie. If the user owns this game specified.
+        /// Checks if the active user is subscribed to a specified AppId.
+        /// Only use this if you need to check ownership of another game related to yours, a demo for example.
         /// </summary>
         public bool IsSubscribed(uint appId)
         {
