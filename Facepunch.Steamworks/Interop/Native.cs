@@ -36,7 +36,7 @@ namespace Facepunch.Steamworks.Interop
         {
             isServer = false;
 
-            api = new SteamNative.SteamApi( steamworks, (IntPtr) 1 );
+            api = new SteamNative.SteamApi();
 
             if ( !api.SteamAPI_Init() )
                 return false;
@@ -63,7 +63,7 @@ namespace Facepunch.Steamworks.Interop
         {
             isServer = true;
 
-            api = new SteamNative.SteamApi( steamworks, ( IntPtr)1 );
+            api = new SteamNative.SteamApi();
 
             if ( !api.SteamInternal_GameServer_Init( IpAddress, usPort, GamePort, QueryPort, eServerMode, pchVersionString ) )
             {

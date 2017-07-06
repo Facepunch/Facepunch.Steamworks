@@ -10,20 +10,18 @@ namespace SteamNative
 		// Holds a platform specific implentation
 		//
 		internal Platform.Interface platform;
-		internal Facepunch.Steamworks.BaseSteamworks steamworks;
 		
 		//
 		// Constructor decides which implementation to use based on current platform
 		//
-		internal SteamApi( Facepunch.Steamworks.BaseSteamworks steamworks, IntPtr pointer )
+		internal SteamApi()
 		{
-			this.steamworks = steamworks;
 			
-			if ( Platform.IsWindows64 ) platform = new Platform.Win64( pointer );
-			else if ( Platform.IsWindows32 ) platform = new Platform.Win32( pointer );
-			else if ( Platform.IsLinux32 ) platform = new Platform.Linux32( pointer );
-			else if ( Platform.IsLinux64 ) platform = new Platform.Linux64( pointer );
-			else if ( Platform.IsOsx ) platform = new Platform.Mac( pointer );
+			if ( Platform.IsWindows64 ) platform = new Platform.Win64( ((IntPtr)1) );
+			else if ( Platform.IsWindows32 ) platform = new Platform.Win32( ((IntPtr)1) );
+			else if ( Platform.IsLinux32 ) platform = new Platform.Linux32( ((IntPtr)1) );
+			else if ( Platform.IsLinux64 ) platform = new Platform.Linux64( ((IntPtr)1) );
+			else if ( Platform.IsOsx ) platform = new Platform.Mac( ((IntPtr)1) );
 		}
 		
 		//
