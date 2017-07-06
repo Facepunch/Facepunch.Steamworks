@@ -4103,6 +4103,10 @@ namespace SteamNative
 			{
 				return Native.SteamInternal_CreateInterface(version);
 			}
+			public virtual bool /*bool*/ SteamApi_SteamAPI_RestartAppIfNecessary( uint /*uint32*/ unOwnAppID )
+			{
+				return Native.SteamAPI_RestartAppIfNecessary(unOwnAppID);
+			}
 			
 			internal static unsafe class Native
 			{
@@ -4876,6 +4880,7 @@ namespace SteamNative
 				[DllImportAttribute( "libsteam_api64.so" )] internal static extern HSteamUser /*(HSteamUser)*/ SteamGameServer_GetHSteamUser();
 				[DllImportAttribute( "libsteam_api64.so" )] internal static extern HSteamPipe /*(HSteamPipe)*/ SteamGameServer_GetHSteamPipe();
 				[DllImportAttribute( "libsteam_api64.so" )] internal static extern IntPtr /*void **/ SteamInternal_CreateInterface( string /*const char **/ version );
+				[DllImportAttribute( "libsteam_api64.so" )] internal static extern bool /*bool*/ SteamAPI_RestartAppIfNecessary( uint /*uint32*/ unOwnAppID );
 				
 			}
 		}

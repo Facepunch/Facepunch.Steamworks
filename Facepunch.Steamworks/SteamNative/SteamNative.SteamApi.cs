@@ -73,6 +73,12 @@ namespace SteamNative
 			platform.SteamApi_SteamAPI_RegisterCallResult( (IntPtr) pCallback, callback.Value );
 		}
 		
+		// bool
+		public bool SteamAPI_RestartAppIfNecessary( uint unOwnAppID /*uint32*/ )
+		{
+			return platform.SteamApi_SteamAPI_RestartAppIfNecessary( unOwnAppID );
+		}
+		
 		// void
 		public void SteamAPI_RunCallbacks()
 		{

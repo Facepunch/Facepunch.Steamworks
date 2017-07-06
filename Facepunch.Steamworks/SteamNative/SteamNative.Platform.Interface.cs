@@ -686,6 +686,7 @@ namespace SteamNative
 			HSteamUser /*(HSteamUser)*/ SteamApi_SteamGameServer_GetHSteamUser();
 			HSteamPipe /*(HSteamPipe)*/ SteamApi_SteamGameServer_GetHSteamPipe();
 			IntPtr /*void **/ SteamApi_SteamInternal_CreateInterface( string /*const char **/ version );
+			bool /*bool*/ SteamApi_SteamAPI_RestartAppIfNecessary( uint /*uint32*/ unOwnAppID );
 		}
 	}
 }

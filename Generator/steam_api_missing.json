@@ -210,6 +210,20 @@
 			  paramtype: "const char *"
 			}
 		  ],
-		}
+		},
+		
+		{
+		  NeedsSelfPointer: false,
+		  classname: "SteamApi",
+		  methodname: "SteamAPI_RestartAppIfNecessary",
+		  returntype: "bool",
+		  params: 
+		  [
+			{
+			  paramname: "unOwnAppID",
+			  paramtype: "uint32"
+			}
+		  ],
+		},
 	]
 }
