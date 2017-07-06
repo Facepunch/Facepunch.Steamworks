@@ -70,3 +70,5 @@ mscorlib.dll
 packages
 Generator/bin
 *.XML
+
+.idea
