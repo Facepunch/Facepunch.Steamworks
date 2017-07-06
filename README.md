@@ -1,5 +1,5 @@
 # Facepunch.Steamworks
-Another fucking c# Steamworks implementation
+Another family-friendly c# Steamworks implementation
 
 [![Build Status](http://build.facepunch.com/buildStatus/icon?job=Facepunch/Facepunch.Steamworks/master)](http://build.facepunch.com/job/Facepunch/job/Facepunch.Steamworks/job/master/)
 
