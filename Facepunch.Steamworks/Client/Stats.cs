@@ -91,6 +91,18 @@ namespace Facepunch.Steamworks
             return r;
         }
 
+        /// <summary>
+        /// Adds this amount to the named stat. Internally this calls Get() and adds 
+        /// to that value. Steam doesn't provide a mechanism for atomically increasing
+        /// stats like this, this functionality is added here as a convenience.
+        /// </summary>
+        public bool Add( string name, int amount = 1, bool store = true )
+        {
+            var val = GetInt( name );
+            val += amount;
+            return Set( name, val, store );
+        }
+
         public void Dispose()
         {
             client = null;
