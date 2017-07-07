@@ -109,6 +109,8 @@ namespace Facepunch.Steamworks
         /// </summary>
         public RemoteFileWriteStream OpenWrite()
         {
+            if (_isUgc) throw new InvalidOperationException("Cannot write to a shared file.");
+
             return new RemoteFileWriteStream( remoteStorage, this );
         }
 
