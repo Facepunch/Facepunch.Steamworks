@@ -91,6 +91,15 @@ namespace Facepunch.Steamworks
         }
 
         /// <summary>
+        /// Opens a previously shared <see cref="RemoteFile"/>
+        /// with the given <paramref name="sharingId"/>.
+        /// </summary>
+        public RemoteFile OpenSharedFile( ulong sharingId )
+        {
+            return new RemoteFile( this, sharingId );
+        }
+
+        /// <summary>
         /// Write all text to the file at the specified path. This
         /// overwrites the contents - it does not append.
         /// </summary>
