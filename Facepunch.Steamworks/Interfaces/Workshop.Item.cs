@@ -42,8 +42,8 @@ namespace Facepunch.Steamworks
                 item.Score = details.Score;
                 item.VotesUp = details.VotesUp;
                 item.VotesDown = details.VotesDown;
-                item.Modified = new DateTime( details.TimeUpdated );
-                item.Created = new DateTime( details.TimeCreated );
+                item.Modified = Utility.Epoch.ToDateTime( details.TimeUpdated );
+                item.Created = Utility.Epoch.ToDateTime( details.TimeCreated );
 
                 return item;
             }
