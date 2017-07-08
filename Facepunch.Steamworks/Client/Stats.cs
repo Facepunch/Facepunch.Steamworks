@@ -103,6 +103,16 @@ namespace Facepunch.Steamworks
             return Set( name, val, store );
         }
 
+        /// <summary>
+        /// Practically wipes the slate clean for this user. If includeAchievements is true, will wipe
+        /// any achievements too.
+        /// </summary>
+        /// <returns></returns>
+        public bool ResetAll( bool includeAchievements )
+        {
+            return client.native.userstats.ResetAllStats( includeAchievements );
+        }
+
         public void Dispose()
         {
             client = null;
