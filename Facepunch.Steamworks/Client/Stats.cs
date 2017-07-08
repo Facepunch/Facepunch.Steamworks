@@ -102,6 +102,14 @@ namespace Facepunch.Steamworks
             val += amount;
             return Set( name, val, store );
         }
+        
+        /// <summary>
+        /// Reset all stats for a user, and optionally remove all achievements.
+        /// </summary>
+        public bool ResetAllUserStats(bool shouldResetAchievementsToo)
+        {
+            return client.native.userstats.ResetAllStats(shouldResetAchievementsToo);
+        }
 
         /// <summary>
         /// Practically wipes the slate clean for this user. If includeAchievements is true, will wipe
