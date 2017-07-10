@@ -284,12 +284,9 @@ namespace SteamNative
 		}
 		
 		// uint
-		public uint GetSubscribedItems( PublishedFileId_t[] pvecPublishedFileID /*PublishedFileId_t **/, uint cMaxEntries /*uint32*/ )
+		public uint GetSubscribedItems( PublishedFileId_t* pvecPublishedFileID /*PublishedFileId_t **/, uint cMaxEntries /*uint32*/ )
 		{
-            fixed (PublishedFileId_t* pvecPublishedFileID_ptr = pvecPublishedFileID)
-            {
-                return platform.ISteamUGC_GetSubscribedItems((IntPtr)pvecPublishedFileID_ptr, cMaxEntries);
-            }
+			return platform.ISteamUGC_GetSubscribedItems( (IntPtr) pvecPublishedFileID, cMaxEntries );
 		}
 		
 		// SteamAPICall_t
