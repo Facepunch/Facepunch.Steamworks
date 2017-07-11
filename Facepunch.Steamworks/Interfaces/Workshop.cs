@@ -73,7 +73,7 @@ namespace Facepunch.Steamworks
 
         private void onDownloadResult( SteamNative.DownloadItemResult_t obj, bool failed )
         {
-            if ( OnFileDownloaded != null )
+            if ( OnFileDownloaded != null && obj.AppID == Client.Instance.AppId )
                 OnFileDownloaded( obj.PublishedFileId, (Callbacks.Result) obj.Result );
         }
 
