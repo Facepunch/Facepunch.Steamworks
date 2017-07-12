@@ -67,7 +67,7 @@ namespace Facepunch.Steamworks
 
         private void onItemInstalled( SteamNative.ItemInstalled_t obj, bool failed )
         {
-            if ( OnItemInstalled != null )
+            if ( OnItemInstalled != null && obj.AppID == Client.Instance.AppId )
                 OnItemInstalled( obj.PublishedFileId );
         }
 
