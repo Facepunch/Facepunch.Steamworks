@@ -39,7 +39,7 @@ namespace Facepunch.Steamworks
         /// because of a call to Download or because of a subscription triggered
         /// via the browser/app.
         /// </summary>
-        internal event Action<ulong> OnItemInstalled;
+        public event Action<ulong> OnItemInstalled;
 
         internal Workshop( BaseSteamworks steamworks, SteamNative.SteamUGC ugc, SteamNative.SteamRemoteStorage remoteStorage )
         {
