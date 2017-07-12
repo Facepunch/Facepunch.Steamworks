@@ -124,36 +124,6 @@ namespace Facepunch.Steamworks
         }
 
         /// <summary>
-        /// Creates a list of all item's that the user is currently subscribed
-        /// to for this App. This does not query titles or descriptions but
-        /// allows you to get the directories, state and ID of any subscribed Item.
-        /// This is mostly useful for getting all subscribed items install location
-        /// on initial load to load all workshop content
-        /// </summary>
-        public unsafe Item[] GetSubscribedItems()
-        {
-            Item[] items;
-            uint subAmount;
-            var amount = ugc.GetNumSubscribedItems();
-            PublishedFileId_t[] vecSubscribedItems = new PublishedFileId_t[amount];
-            fixed (PublishedFileId_t* vecSubscribedItems_ptr = vecSubscribedItems)
-            {
-                subAmount = ugc.GetSubscribedItems(vecSubscribedItems_ptr, amount);
-            }
-            if (subAmount < amount)
-                items = new Item[subAmount];
-            else
-                items = new Item[amount];
-
-            for(int i =0, length = items.Length; i<length; i++)
-            {
-                items[i] = new Item(vecSubscribedItems[i].Value, this);
-            }
-
-            return items;
-        }
-
-        /// <summary>
         /// How a query should be ordered.
         /// </summary>
         public enum Order
