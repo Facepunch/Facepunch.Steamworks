@@ -29,8 +29,7 @@ namespace Facepunch.Steamworks
 
         /// <summary>
         /// Called when an item has been downloaded. This could have been
-        /// because of a call to Download or because of a subscription triggered
-        /// via the browser/app.
+        /// because of a call to Download.
         /// </summary>
         public event Action<ulong, Callbacks.Result> OnFileDownloaded;
 
