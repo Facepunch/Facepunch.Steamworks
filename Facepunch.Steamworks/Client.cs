@@ -55,6 +55,7 @@ namespace Facepunch.Steamworks
 
         public Voice Voice { get; private set; }
         public ServerList ServerList { get; private set; }
+        public LobbyList LobbyList { get; private set; }
         public App App { get; private set; }
         public Achievements Achievements { get; private set; }
         public Stats Stats { get; private set; }
@@ -88,6 +89,7 @@ namespace Facepunch.Steamworks
             //
             Voice = new Voice( this );
             ServerList = new ServerList( this );
+            LobbyList = new LobbyList(this);
             App = new App( this );
             Stats = new Stats( this );
             Achievements = new Achievements( this );
@@ -157,6 +159,12 @@ namespace Facepunch.Steamworks
             {
                 ServerList.Dispose();
                 ServerList = null;
+            }
+
+            if (LobbyList != null)
+            {
+                LobbyList.Dispose();
+                LobbyList = null;
             }
 
             if ( App != null )
