@@ -15,36 +15,42 @@ namespace Facepunch.Steamworks
             this.client = client;
         }
 
-        public void Refresh ( LobbyFilter filter = null)
+        public void Refresh ( Filter filter = null)
         {
-            if(filter != null)
+            if(filter == null)
             {
-                client.native.matchmaking.AddRequestLobbyListDistanceFilter((SteamNative.LobbyDistanceFilter)filter.DistanceFilter);
-                client.native.matchmaking.AddRequestLobbyListFilterSlotsAvailable(filter.SlotsAvailable);
-                client.native.matchmaking.AddRequestLobbyListResultCountFilter(filter.MaxResults);
-                foreach (KeyValuePair<string, string> fil in filter.StringFilters)
-                {
-                    client.native.matchmaking.AddRequestLobbyListStringFilter(fil.Key, fil.Value, SteamNative.LobbyComparison.Equal);
-                }
-                foreach (KeyValuePair<string, int> fil in filter.NearFilters)
-                {
-                    client.native.matchmaking.AddRequestLobbyListNearValueFilter(fil.Key, fil.Value);
-                }
-                foreach (KeyValuePair<string, KeyValuePair<LobbyFilter.Comparison, int>> fil in filter.NumericalFilters)
-                {
-                    client.native.matchmaking.AddRequestLobbyListNumericalFilter(fil.Key, fil.Value.Value, (SteamNative.LobbyComparison)fil.Value.Key);
-                }
+                filter = new Filter();
+                filter.StringFilters.Add("appid", client.AppId.ToString());
             }
+
+            client.native.matchmaking.AddRequestLobbyListDistanceFilter((SteamNative.LobbyDistanceFilter)filter.DistanceFilter);
+
+            if(filter.SlotsAvailable != null)
+            {
+                client.native.matchmaking.AddRequestLobbyListFilterSlotsAvailable((int)filter.SlotsAvailable);
+            }
+
+            if (filter.MaxResults != null)
+            {
+                client.native.matchmaking.AddRequestLobbyListResultCountFilter((int)filter.MaxResults);
+            }
+
+            foreach (KeyValuePair<string, string> fil in filter.StringFilters)
+            {
+                client.native.matchmaking.AddRequestLobbyListStringFilter(fil.Key, fil.Value, SteamNative.LobbyComparison.Equal);
+            }
+            foreach (KeyValuePair<string, int> fil in filter.NearFilters)
+            {
+                client.native.matchmaking.AddRequestLobbyListNearValueFilter(fil.Key, fil.Value);
+            }
+            foreach (KeyValuePair<string, KeyValuePair<Filter.Comparison, int>> fil in filter.NumericalFilters)
+            {
+                client.native.matchmaking.AddRequestLobbyListNumericalFilter(fil.Key, fil.Value.Value, (SteamNative.LobbyComparison)fil.Value.Key);
+            }
+
 
             // this will never return lobbies that are full (via the actual api)
             client.native.matchmaking.RequestLobbyList(OnLobbyList);
-            
-            /*
-            if (filter == null) may need this if we are getting too many lobbies
-            {
-                filter = new Filter();
-                //filter.Add("appid", client.AppId.ToString());
-            }*/
 
         }
 
@@ -69,14 +75,19 @@ namespace Facepunch.Steamworks
                 }
 
             }
+
+            if (OnLobbiesRefreshed != null) { OnLobbiesRefreshed(); }
         }
+
+        
+        public Action OnLobbiesRefreshed;
 
         public void Dispose()
         {
             client = null;
         }
 
-        public class LobbyFilter
+        public class Filter
         {
             // Filters that match actual metadata keys exactly
             public Dictionary<string, string> StringFilters = new Dictionary<string, string>();
@@ -84,9 +95,9 @@ namespace Facepunch.Steamworks
             public Dictionary<string, int> NearFilters = new Dictionary<string, int>();
             //Filters that are of string key and int value, with a comparison filter to say how we should relate to the value
             public Dictionary<string, KeyValuePair<Comparison, int>> NumericalFilters = new Dictionary<string, KeyValuePair<Comparison, int>>();
-            public Distance DistanceFilter { get; set; }
-            public int SlotsAvailable { get; set; }
-            public int MaxResults { get; set; }
+            public Distance DistanceFilter = Distance.Worldwide;
+            public int? SlotsAvailable { get; set; }
+            public int? MaxResults { get; set; }
 
             public enum Distance : int
             {
@@ -104,13 +115,6 @@ namespace Facepunch.Steamworks
                 GreaterThan = SteamNative.LobbyComparison.GreaterThan,
                 EqualToOrGreaterThan = SteamNative.LobbyComparison.EqualToOrGreaterThan,
                 NotEqual = SteamNative.LobbyComparison.NotEqual
-            }
-
-            public LobbyFilter(Distance distanceFilter, int slotsAvailable, int maxResults)
-            {
-                DistanceFilter = distanceFilter;
-                SlotsAvailable = slotsAvailable;
-                MaxResults = maxResults;
             }
         }
     }

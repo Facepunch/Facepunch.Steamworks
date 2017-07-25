@@ -18,9 +18,18 @@ namespace Facepunch.Steamworks
             //TODO:
         }
 
-
+        // Create a lobby, auto joins the created lobby
+        public Lobby CreateLobby(Lobby.Type lobbyType, int maxMembers)
+        {
+            var lobby = new Lobby(this, lobbyType);
+            native.matchmaking.CreateLobby((SteamNative.LobbyType)lobbyType, maxMembers, lobby.OnLobbyCreatedAPI);
+            return lobby;
+        }
+    }
+    public class Lobby : IDisposable
+    {
         //The type of lobby you are creating
-        public enum LobbyType : int
+        public enum Type : int
         {
             Private = SteamNative.LobbyType.Private,
             FriendsOnly = SteamNative.LobbyType.FriendsOnly,
@@ -28,22 +37,6 @@ namespace Facepunch.Steamworks
             Invisible = SteamNative.LobbyType.Invisible
         }
 
-        // Create a lobby, auto joins the created lobby
-        public Lobby CreateLobby(LobbyType lobbyType, int maxMembers, string name)
-        {
-            var lobby = new Lobby(this);
-            native.matchmaking.CreateLobby((SteamNative.LobbyType)lobbyType, maxMembers, lobby.OnLobbyCreated);
-            if (lobby.IsValid)
-            {
-                lobby.Name = name;
-                lobby.MaxMembers = maxMembers;
-                lobby.LobbyType = lobbyType;
-            }
-            return lobby;
-        }
-    }
-    public class Lobby : IDisposable
-    {
         internal Client client;
 
         /// <summary>
@@ -68,16 +61,23 @@ namespace Facepunch.Steamworks
         /// </summary>
         public string Name
         {
-            get { return LobbyData["name"]; }
-            set { SetLobbyData("name", value); }
+            get { return _name; }
+            set { if (_name == value) return; SetLobbyData("name", value); }
         }
+        string _name = "";
 
-        public Lobby(Client c)
+        /// <summary>
+        /// Callback for when lobby is created
+        /// </summary>
+        public Action OnLobbyCreated;
+
+        public Lobby(Client c, Type type)
         {
             client = c;
+            LobbyType = type;
         }
 
-        internal void OnLobbyCreated(LobbyCreated_t callback, bool error)
+        internal void OnLobbyCreatedAPI(LobbyCreated_t callback, bool error)
         {
             //from SpaceWarClient.cpp 793
             if (error || (callback.Result != Result.OK))
@@ -88,6 +88,10 @@ namespace Facepunch.Steamworks
 
             Owner = client.SteamId; //this is implicitly set on creation but need to cache it here
             LobbyID = callback.SteamIDLobby;
+            MaxMembers = client.native.matchmaking.GetLobbyMemberLimit(LobbyID);
+            SetLobbyData("appid", client.AppId.ToString());
+
+            if (OnLobbyCreated != null) { OnLobbyCreated(); }
         }
 
         Dictionary<string, string> LobbyData = new Dictionary<string, string>();
@@ -118,12 +122,21 @@ namespace Facepunch.Steamworks
             client.native.matchmaking.DeleteLobbyData(LobbyID, key);
         }
 
-        public Client.LobbyType LobbyType
+        public Type LobbyType
         {
             get { return _lobbyType; }
-            set { if (_lobbyType == value) return; client.native.matchmaking.SetLobbyType(LobbyID, (SteamNative.LobbyType)value); _lobbyType = value; } //returns bool
+            set
+            {
+                if (_lobbyType == value) return;
+                //only call the proper method if the lobby is valid, otherwise cache the value
+                if(IsValid)
+                {
+                    client.native.matchmaking.SetLobbyType(LobbyID, (SteamNative.LobbyType)value); //returns bool?
+                }
+                _lobbyType = value;
+            }
         }
-        Client.LobbyType _lobbyType;
+        Type _lobbyType;
 
 
         //Must be the owner to change the owner
@@ -158,6 +171,13 @@ namespace Facepunch.Steamworks
         }
         int _maxMembers = 0;
 
+        //How many people are currently in the lobby
+        public int NumMembers
+        {
+            get { return client.native.matchmaking.GetNumLobbyMembers(LobbyID);}
+        }
+
+        //leave the current lobby
         public void Leave()
         {
             client.native.matchmaking.LeaveLobby(LobbyID);
