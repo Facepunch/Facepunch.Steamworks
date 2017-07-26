@@ -63,6 +63,19 @@ namespace Facepunch.Steamworks
                 workshop.OnItemInstalled += OnItemInstalled;
             }
 
+            public void Subscribe()
+            {
+                workshop.ugc.SubscribeItem(Id);
+                SubscriptionCount++;
+            }
+
+            public void UnSubscribe()
+            {
+                workshop.ugc.UnsubscribeItem(Id);
+                SubscriptionCount--;
+            }
+
+
             private void OnFileDownloaded( ulong fileid, Callbacks.Result result )
             {
                 if ( fileid != Id ) return;

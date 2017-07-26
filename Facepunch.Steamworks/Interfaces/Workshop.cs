@@ -122,7 +122,6 @@ namespace Facepunch.Steamworks
             return new Item( itemid, this );
         }
 
-
         /// <summary>
         /// How a query should be ordered.
         /// </summary>
