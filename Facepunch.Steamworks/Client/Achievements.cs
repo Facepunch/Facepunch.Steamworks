@@ -13,23 +13,52 @@ namespace Facepunch.Steamworks
         public Achievement[] All { get; private set; }
 
         public event Action OnUpdated;
+        public event Action<Achievement> OnAchievementStateChanged;
+
+        private List<Achievement> unlockedRecently = new List<Achievement>();
 
         internal Achievements( Client c )
         {
             client = c;
 
             All = new Achievement[0];
-
             SteamNative.UserStatsReceived_t.RegisterCallback( c, UserStatsReceived );
+            SteamNative.UserStatsStored_t.RegisterCallback( c, UserStatsStored );
 
             Refresh();
         }
 
         public void Refresh()
         {
+            var old = All;
+
             All = Enumerable.Range( 0, (int)client.native.userstats.GetNumAchievements() )
-                .Select( x => new Achievement( client, x ) )
+                .Select( x =>
+                {
+                    if ( old != null )
+                    {
+                        var name = client.native.userstats.GetAchievementName( (uint)x );
+                        var found = old.FirstOrDefault( y => y.Id == name );
+                        if ( found != null )
+                        {
+                            if ( found.Refresh() )
+                            {
+                                unlockedRecently.Add( found );
+                            }
+                            return found;
+                        }
+                    }
+
+                    return new Achievement( client, x );
+                } )
                 .ToArray();
+
+            foreach ( var i in unlockedRecently )
+            {
+                OnAchievementStateChanged?.Invoke( i );
+            }
+
+            unlockedRecently.Clear();
         }
 
         public void Dispose()
@@ -74,6 +103,15 @@ namespace Facepunch.Steamworks
 
             OnUpdated?.Invoke();
         }
+
+        private void UserStatsStored( UserStatsStored_t stats, bool isError )
+        {
+            if ( isError ) return;
+
+            Refresh();
+
+            OnUpdated?.Invoke();
+        }
     }
 
     public class Achievement
@@ -95,6 +133,7 @@ namespace Facepunch.Steamworks
         public DateTime UnlockTime { get; private set; }
 
         private int iconId { get; set; } = -1;
+        private int refreshCount = 0;
 
         /// <summary>
         /// If this achievement is linked to a stat this will return the progress.
@@ -186,10 +225,12 @@ namespace Facepunch.Steamworks
 
         /// <summary>
         /// Refresh the unlock state. You shouldn't need to call this manually
-        /// but it's here if you have to for some reason.
+        /// but it's here if you have to for some reason. Retuns true if state changed (meaning, probably unlocked)
         /// </summary>
-        public void Refresh()
+        public bool Refresh()
         {
+            bool previousState = State;
+
             bool state = false;
             uint unlockTime;
 
@@ -200,6 +241,15 @@ namespace Facepunch.Steamworks
                 State = state;
                 UnlockTime = Utility.Epoch.ToDateTime( unlockTime );
             }
+
+            refreshCount++;
+
+            if ( previousState != State && refreshCount > 1 )
+            {
+                return true;
+            }
+
+            return false;            
         }
     }
 
