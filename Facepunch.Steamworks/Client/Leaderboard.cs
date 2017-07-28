@@ -35,6 +35,8 @@ namespace Facepunch.Steamworks
         internal ulong BoardId;
         internal Client client;
 
+        private readonly Queue<Action> _onCreated = new Queue<Action>();
+
         /// <summary>
         ///     The results from the last query. Can be null.
         /// </summary>
@@ -77,21 +79,45 @@ namespace Facepunch.Steamworks
             client = null;
         }
 
+        private void DispatchOnCreatedCallbacks()
+        {
+            while ( _onCreated.Count > 0 )
+            {
+                _onCreated.Dequeue()();
+            }
+        }
+
+        private bool DeferOnCreated( Action onValid, FailureCallback onFailure = null )
+        {
+            if ( IsValid || IsError ) return false;
+
+            _onCreated.Enqueue( () =>
+            {
+                if ( IsValid ) onValid();
+                else onFailure?.Invoke( Callbacks.Result.Fail );
+            } );
+
+            return true;
+        }
+
         internal void OnBoardCreated( LeaderboardFindResult_t result, bool error )
         {
             if ( error || ( result.LeaderboardFound == 0 ) )
             {
                 IsError = true;
-                return;
             }
-
-            BoardId = result.SteamLeaderboard;
-
-            if ( IsValid )
+            else
             {
-                Name = client.native.userstats.GetLeaderboardName( BoardId );
-                TotalEntries = client.native.userstats.GetLeaderboardEntryCount( BoardId );
+                BoardId = result.SteamLeaderboard;
+
+                if ( IsValid )
+                {
+                    Name = client.native.userstats.GetLeaderboardName( BoardId );
+                    TotalEntries = client.native.userstats.GetLeaderboardEntryCount( BoardId );
+                }
             }
+
+            DispatchOnCreatedCallbacks();
         }
 
         /// <summary>
@@ -103,7 +129,8 @@ namespace Facepunch.Steamworks
         /// </summary>
         public bool AddScore( bool onlyIfBeatsOldScore, int score, params int[] subscores )
         {
-            if ( !IsValid ) return false;
+            if ( IsError ) return false;
+            if ( !IsValid ) return DeferOnCreated( () => AddScore( onlyIfBeatsOldScore, score, subscores ) );
 
             var flags = LeaderboardUploadScoreMethod.ForceUpdate;
             if ( onlyIfBeatsOldScore ) flags = LeaderboardUploadScoreMethod.KeepBest;
@@ -142,7 +169,8 @@ namespace Facepunch.Steamworks
         /// </summary>
         public bool AddScore( bool onlyIfBeatsOldScore, int score, int[] subscores = null, AddScoreCallback onSuccess = null, FailureCallback onFailure = null )
         {
-            if ( !IsValid ) return false;
+            if ( IsError ) return false;
+            if ( !IsValid ) return DeferOnCreated( () => AddScore( onlyIfBeatsOldScore, score, subscores, onSuccess, onFailure ), onFailure );
 
             if ( subscores == null ) subscores = new int[0];
 
@@ -182,7 +210,8 @@ namespace Facepunch.Steamworks
         /// <returns>True if the file attachment process has started</returns>
         public bool AttachRemoteFile( RemoteFile file, AttachRemoteFileCallback onSuccess = null, FailureCallback onFailure = null )
         {
-            if ( !IsValid ) return false;
+            if ( IsError ) return false;
+            if ( !IsValid ) return DeferOnCreated( () => AttachRemoteFile( file, onSuccess, onFailure ), onFailure );
 
             if ( file.IsShared )
             {
@@ -260,7 +289,8 @@ namespace Facepunch.Steamworks
         /// <returns>Returns true if we have started the query</returns>
         public bool FetchScores( RequestType RequestType, int start, int end, FetchScoresCallback onSuccess, FailureCallback onFailure = null )
         {
-            if ( !IsValid ) return false;
+            if ( IsError ) return false;
+            if ( !IsValid ) return DeferOnCreated( () => FetchScores( RequestType, start, end, onSuccess, onFailure ), onFailure );
 
             client.native.userstats.DownloadLeaderboardEntries( BoardId, (LeaderboardDataRequest) RequestType, start, end, ( result, error ) =>
             {
