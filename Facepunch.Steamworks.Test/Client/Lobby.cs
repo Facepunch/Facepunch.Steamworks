@@ -1,32 +1,41 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Facepunch.Steamworks.Test
 {
+    [TestClass]
     [DeploymentItem("steam_api.dll")]
     [DeploymentItem("steam_api64.dll")]
     [DeploymentItem("steam_appid.txt")]
-    [TestClass]
-    class Lobby
+    public class Lobby
     {
         [TestMethod]
-        public void FriendList()
+        public void CreateLobby()
         {
-            /*
             using (var client = new Facepunch.Steamworks.Client(252490))
             {
                 Assert.IsTrue(client.IsValid);
 
-                client.Friends.Refresh();
+                client.Lobby.Create(Steamworks.Lobby.Type.Public, 10);
 
-                Assert.IsNotNull(client.Friends.All);
-
-                foreach (var friend in client.Friends.All)
+                client.Lobby.OnLobbyCreated = (success) =>
                 {
-                    Console.WriteLine("{0}: {1} (Friend:{2}) (Blocked:{3})", friend.Id, friend.Name, friend.IsFriend, friend.IsBlocked);
+                    Assert.IsTrue(success);
+                    Assert.IsTrue(client.Lobby.IsValid);
+                    Console.WriteLine(client.Lobby.CurrentLobby);
+                    client.Lobby.Leave();
+                };
+
+                var sw = Stopwatch.StartNew();
+
+                while (sw.Elapsed.TotalSeconds < 3)
+                {
+                    client.Update();
+                    System.Threading.Thread.Sleep(10);
                 }
+
             }
-            */
         }
     }
 }

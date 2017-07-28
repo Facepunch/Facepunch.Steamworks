@@ -70,17 +70,32 @@ namespace Facepunch.Steamworks
                 }
                 else
                 {
-                    //need to sub the lobbyid to the request func
-                    //client.native.matchmaking.RequestLobbyData(lobby)
+                    //need to get the info for the missing lobby
+                    client.native.matchmaking.RequestLobbyData(lobby);
+                    SteamNative.LobbyDataUpdate_t.RegisterCallback(client, OnLobbyDataUpdated);
                 }
 
             }
 
-            if (OnLobbiesRefreshed != null) { OnLobbiesRefreshed(); }
+            if (OnLobbiesUpdated != null) { OnLobbiesUpdated(); }
         }
 
-        
-        public Action OnLobbiesRefreshed;
+        void OnLobbyDataUpdated(LobbyDataUpdate_t callback, bool error)
+        {
+            if (callback.Success == 1) //1 if success, 0 if failure
+            {
+                Lobby lobby = Lobbies.Find(x => x.LobbyID == callback.SteamIDLobby);
+                if (lobby == null) //need to add this lobby to the list
+                {
+                    Lobbies.Add(lobby);
+                }
+
+                //otherwise lobby data in general was updated and you should listen to see what changed
+                if (OnLobbiesUpdated != null) { OnLobbiesUpdated(); }
+            }
+        }
+
+        public Action OnLobbiesUpdated;
 
         public void Dispose()
         {
