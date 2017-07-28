@@ -21,6 +21,8 @@ namespace Facepunch.Steamworks
             All = new Achievement[0];
 
             SteamNative.UserStatsReceived_t.RegisterCallback( c, UserStatsReceived );
+
+            Refresh();
         }
 
         public void Refresh()
