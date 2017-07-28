@@ -98,6 +98,7 @@ namespace Facepunch.Steamworks
         private void UserStatsReceived( UserStatsReceived_t stats, bool isError )
         {
             if ( isError ) return;
+            if ( stats.GameID != client.AppId ) return;
 
             Refresh();
 
@@ -107,6 +108,7 @@ namespace Facepunch.Steamworks
         private void UserStatsStored( UserStatsStored_t stats, bool isError )
         {
             if ( isError ) return;
+            if ( stats.GameID != client.AppId ) return;
 
             Refresh();
 
