@@ -50,14 +50,10 @@ namespace Facepunch.Steamworks
         /// </summary>
         public bool Trigger( string identifier, bool apply = true )
         {
-            var r = client.native.userstats.SetAchievement( identifier );
+            var a = Find( identifier );
+            if ( a == null ) return false;
 
-            if ( apply )
-            {
-                client.Stats.StoreStats();
-            }
-
-            return r;
+            return a.Trigger( apply );
         }
 
         /// <summary>
@@ -159,6 +155,9 @@ namespace Facepunch.Steamworks
         /// </summary>
         public bool Trigger( bool apply = true )
         {
+            if ( State )
+                return false;
+
             State = true;
             UnlockTime = DateTime.Now;
 
