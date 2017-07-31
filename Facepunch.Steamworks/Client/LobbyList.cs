@@ -8,16 +8,36 @@ namespace Facepunch.Steamworks
     public partial class LobbyList : IDisposable
     {
         internal Client client;
-        public List<Lobby> Lobbies = new List<Lobby>();
+
+        //The list of retrieved lobbies
+        public List<Lobby> Lobbies { get; private set; }
+
+        //True when all the possible lobbies have had their data updated
+        //if the number of lobbies is now equal to the initial request number, we've found all lobbies
+        public bool Finished { get; private set; }
+
+        //The number of possible lobbies we can get data from
+        internal List<ulong> requests;
 
         internal LobbyList(Client client)
         {
             this.client = client;
+            Lobbies = new List<Lobby>();
+            requests = new List<ulong>();
         }
 
+        /// <summary>
+        /// Refresh the List of Lobbies. If no filter is passed in, a default one is created that filters based on AppId ("appid").
+        /// </summary>
+        /// <param name="filter"></param>
         public void Refresh ( Filter filter = null)
         {
-            if(filter == null)
+            //init out values
+            Lobbies.Clear();
+            requests.Clear();
+            Finished = false;
+
+            if (filter == null)
             {
                 filter = new Filter();
                 filter.StringFilters.Add("appid", client.AppId.ToString());
@@ -25,7 +45,7 @@ namespace Facepunch.Steamworks
 
             client.native.matchmaking.AddRequestLobbyListDistanceFilter((SteamNative.LobbyDistanceFilter)filter.DistanceFilter);
 
-            if(filter.SlotsAvailable != null)
+            if (filter.SlotsAvailable != null)
             {
                 client.native.matchmaking.AddRequestLobbyListFilterSlotsAvailable((int)filter.SlotsAvailable);
             }
@@ -43,10 +63,10 @@ namespace Facepunch.Steamworks
             {
                 client.native.matchmaking.AddRequestLobbyListNearValueFilter(fil.Key, fil.Value);
             }
-            foreach (KeyValuePair<string, KeyValuePair<Filter.Comparison, int>> fil in filter.NumericalFilters)
-            {
-                client.native.matchmaking.AddRequestLobbyListNumericalFilter(fil.Key, fil.Value.Value, (SteamNative.LobbyComparison)fil.Value.Key);
-            }
+            //foreach (KeyValuePair<string, KeyValuePair<Filter.Comparison, int>> fil in filter.NumericalFilters)
+            //{
+            //    client.native.matchmaking.AddRequestLobbyListNumericalFilter(fil.Key, fil.Value.Value, (SteamNative.LobbyComparison)fil.Value.Key);
+            //}
 
 
             // this will never return lobbies that are full (via the actual api)
@@ -54,23 +74,32 @@ namespace Facepunch.Steamworks
 
         }
 
+
         void OnLobbyList(LobbyMatchList_t callback, bool error)
         {
             if (error) return;
-            Lobbies.Clear();
+
+            //how many lobbies matched
             uint lobbiesMatching = callback.LobbiesMatching;
+
             // lobbies are returned in order of closeness to the user, so add them to the list in that order
             for (int i = 0; i < lobbiesMatching; i++)
             {
+                //add the lobby to the list of requests
                 ulong lobby = client.native.matchmaking.GetLobbyByIndex(i);
+                requests.Add(lobby);
+
+                //cast to a LobbyList.Lobby
                 Lobby newLobby = Lobby.FromSteam(client, lobby);
                 if (newLobby.Name != "")
                 {
+                    //if the lobby is valid add it to the valid return lobbies
                     Lobbies.Add(newLobby);
+                    checkFinished();
                 }
                 else
                 {
-                    //need to get the info for the missing lobby
+                    //else we need to get the info for the missing lobby
                     client.native.matchmaking.RequestLobbyData(lobby);
                     SteamNative.LobbyDataUpdate_t.RegisterCallback(client, OnLobbyDataUpdated);
                 }
@@ -80,19 +109,35 @@ namespace Facepunch.Steamworks
             if (OnLobbiesUpdated != null) { OnLobbiesUpdated(); }
         }
 
+        void checkFinished()
+        {
+            if (Lobbies.Count == requests.Count)
+            {
+                Finished = true;
+                return;
+            }
+            Finished = false;
+        }
+
         void OnLobbyDataUpdated(LobbyDataUpdate_t callback, bool error)
         {
             if (callback.Success == 1) //1 if success, 0 if failure
             {
+                //find the lobby that has been updated
                 Lobby lobby = Lobbies.Find(x => x.LobbyID == callback.SteamIDLobby);
-                if (lobby == null) //need to add this lobby to the list
+
+                //if this lobby isn't yet in the list of lobbies, we know that we should add it
+                if (lobby == null)
                 {
                     Lobbies.Add(lobby);
+                    checkFinished();
                 }
 
                 //otherwise lobby data in general was updated and you should listen to see what changed
                 if (OnLobbiesUpdated != null) { OnLobbiesUpdated(); }
             }
+
+            
         }
 
         public Action OnLobbiesUpdated;
@@ -109,7 +154,7 @@ namespace Facepunch.Steamworks
             // Filters that are of string key and int value for that key to be close to
             public Dictionary<string, int> NearFilters = new Dictionary<string, int>();
             //Filters that are of string key and int value, with a comparison filter to say how we should relate to the value
-            public Dictionary<string, KeyValuePair<Comparison, int>> NumericalFilters = new Dictionary<string, KeyValuePair<Comparison, int>>();
+            //public Dictionary<string, KeyValuePair<Comparison, int>> NumericalFilters = new Dictionary<string, KeyValuePair<Comparison, int>>();
             public Distance DistanceFilter = Distance.Worldwide;
             public int? SlotsAvailable { get; set; }
             public int? MaxResults { get; set; }
