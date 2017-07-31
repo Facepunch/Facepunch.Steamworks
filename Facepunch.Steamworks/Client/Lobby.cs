@@ -29,7 +29,7 @@ namespace Facepunch.Steamworks
             FriendsOnly = SteamNative.LobbyType.FriendsOnly,
             Public = SteamNative.LobbyType.Public,
             Invisible = SteamNative.LobbyType.Invisible,
-            None
+            Error //happens if you try to get this when you aren't in a valid lobby
         }
 
         internal Client client;
@@ -37,7 +37,7 @@ namespace Facepunch.Steamworks
         public Lobby(Client c)
         {
             client = c;
-            SteamNative.LobbyDataUpdate_t.RegisterCallback(client, OnLobbyDataUpdated);
+            SteamNative.LobbyDataUpdate_t.RegisterCallback(client, OnLobbyDataUpdatedAPI);
         }
 
         /// <summary>
@@ -84,8 +84,10 @@ namespace Facepunch.Steamworks
         public void Create(Lobby.Type lobbyType, int maxMembers)
         {
             client.native.matchmaking.CreateLobby((SteamNative.LobbyType)lobbyType, maxMembers, OnLobbyCreatedAPI);
-            LobbyType = lobbyType;
+            createdLobbyType = lobbyType;
         }
+
+        internal Type createdLobbyType;
 
         internal void OnLobbyCreatedAPI(LobbyCreated_t callback, bool error)
         {
@@ -102,7 +104,9 @@ namespace Facepunch.Steamworks
             CurrentLobbyData = new LobbyData(client, CurrentLobby);
             Name = client.Username + "'s Lobby";
             CurrentLobbyData.SetData("appid", client.AppId.ToString());
+            LobbyType = createdLobbyType;
             CurrentLobbyData.SetData("lobbytype", LobbyType.ToString());
+            Joinable = true;
             if (OnLobbyCreated != null) { OnLobbyCreated(true); }
         }
 
@@ -115,7 +119,7 @@ namespace Facepunch.Steamworks
         {
             internal Client client;
             internal ulong lobby;
-            internal Dictionary<string, string> data; 
+            internal Dictionary<string, string> data;
 
             public LobbyData(Client c, ulong l)
             {
@@ -132,6 +136,16 @@ namespace Facepunch.Steamworks
                 }
 
                 return "ERROR: key not found";
+            }
+
+            public List<KeyValuePair<string,string>> GetAllData()
+            {
+                List<KeyValuePair<string, string>> returnData = new List<KeyValuePair<string, string>>();
+                foreach(KeyValuePair<string, string> item in data)
+                {
+                    returnData.Add(new KeyValuePair<string, string>(item.Key, item.Value));
+                }
+                return returnData;
             }
 
             public bool SetData(string k, string v)
@@ -173,7 +187,7 @@ namespace Facepunch.Steamworks
 
         }
 
-        internal void OnLobbyDataUpdated(LobbyDataUpdate_t callback, bool error)
+        internal void OnLobbyDataUpdatedAPI(LobbyDataUpdate_t callback, bool error)
         {
             if(error) { return; }
             if(callback.SteamIDLobby == CurrentLobby) //actual lobby data was updated by owner
@@ -198,13 +212,19 @@ namespace Facepunch.Steamworks
                     CurrentLobbyData.SetData(key, value);
                 }
             }
+
+            if(OnLobbyDataUpdated != null) { OnLobbyDataUpdated(); }
         }
+
+        //Called when the lobby data itself has been updated. This callback is slower than the actual setting/getting of LobbyData, but it ensures safety.
+        public Action OnLobbyDataUpdated;
+
 
         public Type LobbyType
         {
             get
             {
-                if (!IsValid) { return Type.None; } //if we're currently in a valid server
+                if (!IsValid) { return Type.Error; } //if we're currently in a valid server
                 
                 //we know that we've set the lobby type via the lobbydata in the creation function
                 //ps this is important because steam doesn't have an easy way to get lobby type (why idk)
@@ -220,12 +240,12 @@ namespace Facepunch.Steamworks
                     case "Public":
                         return Type.Public;
                     default:
-                        return Type.None;
+                        return Type.Error;
                 }
             }
             set
             {
-                if(!IsValid) { return; }
+                if(!IsValid) { return; } 
                 if(client.native.matchmaking.SetLobbyType(CurrentLobby, (SteamNative.LobbyType)value))
                 {
                     CurrentLobbyData.SetData("lobbytype", value.ToString());
