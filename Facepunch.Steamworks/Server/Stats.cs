@@ -31,7 +31,7 @@ namespace Facepunch.Steamworks
         /// this will be called when the stats are recieved, the bool will signify whether
         /// it was successful or not.
         /// </summary>
-        public void Refresh( ulong steamid, Action<bool> Callback = null )
+        public void Refresh( ulong steamid, Action<ulong, bool> Callback = null )
         {
             if ( Callback == null )
             {
@@ -41,7 +41,7 @@ namespace Facepunch.Steamworks
 
             server.native.gameServerStats.RequestUserStats( steamid, ( o, failed ) =>
             {
-                Callback( o.Result == SteamNative.Result.OK && !failed );
+                Callback( steamid, o.Result == SteamNative.Result.OK && !failed );
             } );
         }
 
@@ -50,7 +50,7 @@ namespace Facepunch.Steamworks
         /// You can do that using this function. The callback will let you know if
         /// your action succeeded, but most of the time you can fire and forget.
         /// </summary>
-        public void Commit( ulong steamid, Action<bool> Callback = null )
+        public void Commit( ulong steamid, Action<ulong, bool> Callback = null )
         {
             if ( Callback == null )
             {
@@ -60,7 +60,7 @@ namespace Facepunch.Steamworks
 
             server.native.gameServerStats.StoreUserStats( steamid, ( o, failed ) =>
             {
-                Callback( o.Result == SteamNative.Result.OK && !failed );
+                Callback( steamid, o.Result == SteamNative.Result.OK && !failed );
             } );
         }
 
