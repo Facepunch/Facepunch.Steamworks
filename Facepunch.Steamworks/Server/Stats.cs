@@ -68,7 +68,7 @@ namespace Facepunch.Steamworks
         /// Set the named stat for this user. Setting stats should follow the rules
         /// you defined in Steamworks.
         /// </summary>
-        public bool Set( ulong steamid, string name, int stat )
+        public bool SetInt( ulong steamid, string name, int stat )
         {
             return server.native.gameServerStats.SetUserStat( steamid, name, stat );
         }
@@ -77,7 +77,7 @@ namespace Facepunch.Steamworks
         /// Set the named stat for this user. Setting stats should follow the rules
         /// you defined in Steamworks.
         /// </summary>
-        public bool Set( ulong steamid, string name, float stat )
+        public bool SetFloat( ulong steamid, string name, float stat )
         {
             return server.native.gameServerStats.SetUserStat0( steamid, name, stat );
         }
