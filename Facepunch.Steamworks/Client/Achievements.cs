@@ -55,10 +55,15 @@ namespace Facepunch.Steamworks
 
             foreach ( var i in unlockedRecently )
             {
-                OnAchievementStateChanged?.Invoke( i );
+                OnUnlocked( i );
             }
 
             unlockedRecently.Clear();
+        }
+
+        internal void OnUnlocked( Achievement a )
+        {
+            OnAchievementStateChanged?.Invoke( a );
         }
 
         public void Dispose()
@@ -210,6 +215,8 @@ namespace Facepunch.Steamworks
             {
                 client.Stats.StoreStats();
             }
+
+            client.Achievements.OnUnlocked( this );
 
             return r;
         }
