@@ -106,6 +106,8 @@ namespace Facepunch.Steamworks
 
             }
 
+            checkFinished();
+
             if (OnLobbiesUpdated != null) { OnLobbiesUpdated(); }
         }
 
