@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using SteamNative;
-using Result = SteamNative.Result;
 
 namespace Facepunch.Steamworks
 {
@@ -38,6 +37,11 @@ namespace Facepunch.Steamworks
         {
             client = c;
             SteamNative.LobbyDataUpdate_t.RegisterCallback(client, OnLobbyDataUpdatedAPI);
+            SteamNative.LobbyChatMsg_t.RegisterCallback(client, OnLobbyChatMessageRecievedAPI);
+            SteamNative.LobbyChatUpdate_t.RegisterCallback(client, OnLobbyStateUpdatedAPI);
+            SteamNative.GameLobbyJoinRequested_t.RegisterCallback(client, OnLobbyJoinRequestedAPI);
+            SteamNative.LobbyInvite_t.RegisterCallback(client, OnUserInvitedToLobbyAPI);
+            SteamNative.PersonaStateChange_t.RegisterCallback(client, OnLobbyMemberPersonaChangeAPI);
         }
 
         /// <summary>
@@ -53,11 +57,12 @@ namespace Facepunch.Steamworks
         public bool IsValid => CurrentLobby != 0;
 
         /// <summary>
-        /// Join a Lobby through its LobbyID. LobbyJoined is called when the lobby has successfully been joined.
+        /// Join a Lobby through its LobbyID. OnLobbyJoined is called with the result of the Join attempt.
         /// </summary>
         /// <param name="lobbyID">CSteamID of lobby to join</param>
         public void Join(ulong lobbyID)
         {
+            Leave();
             client.native.matchmaking.JoinLobby(lobbyID, OnLobbyJoinedAPI);
         }
 
@@ -74,6 +79,9 @@ namespace Facepunch.Steamworks
             if (OnLobbyJoined != null) { OnLobbyJoined(true); }
         }
 
+        /// <summary>
+        /// Called when a lobby has been attempted joined. Returns true if lobby was successfuly joined, false if not.
+        /// </summary>
         public Action<bool> OnLobbyJoined;
 
         /// <summary>
@@ -216,8 +224,20 @@ namespace Facepunch.Steamworks
             if(OnLobbyDataUpdated != null) { OnLobbyDataUpdated(); }
         }
 
-        //Called when the lobby data itself has been updated. This callback is slower than the actual setting/getting of LobbyData, but it ensures safety.
+        internal void UpdateLobbyMemberData()
+        {
+            if (OnLobbyMemberDataUpdated != null) { OnLobbyMemberDataUpdated(); }
+        }
+
+        /// <summary>
+        /// Called when the lobby data itself has been updated. Called when someone has joined/Owner has updated data
+        /// </summary>
         public Action OnLobbyDataUpdated;
+
+        /// <summary>
+        /// Called when a member of the lobby has updated either their personal Lobby metadata or someone's global steam state has changed (like a display name)
+        /// </summary>
+        public Action OnLobbyMemberDataUpdated;
 
 
         public Type LobbyType
@@ -252,6 +272,74 @@ namespace Facepunch.Steamworks
                 }
             }
         }
+
+        private unsafe void OnLobbyChatMessageRecievedAPI(LobbyChatMsg_t callback, bool error)
+        {
+            //from Client.Networking
+            if(error || callback.SteamIDLobby != CurrentLobby) { return; }
+
+            byte[] ReceiveBuffer = new byte[1024];
+            SteamNative.CSteamID steamid = 1;
+            ChatEntryType chatEntryType; //not used
+            int readData = 0;
+            fixed (byte* p = ReceiveBuffer)
+            {
+                readData = client.native.matchmaking.GetLobbyChatEntry(CurrentLobby, (int)callback.ChatID, out steamid, (IntPtr)p, ReceiveBuffer.Length, out chatEntryType);
+                while (ReceiveBuffer.Length < readData)
+                {
+                    ReceiveBuffer = new byte[readData + 1024];
+                    readData = client.native.matchmaking.GetLobbyChatEntry(CurrentLobby, (int)callback.ChatID, out steamid, (IntPtr)p, ReceiveBuffer.Length, out chatEntryType);
+                }
+                
+            }
+
+            if (OnChatMessageRecieved != null) { OnChatMessageRecieved(steamid, ReceiveBuffer, readData); }
+
+        }
+
+        /// <summary>
+        /// Callback to get chat messages.
+        /// </summary>
+        public Action<ulong, byte[], int> OnChatMessageRecieved;
+
+        /// <summary>
+        /// Broadcasts a chat message to the all the users in the lobby users in the lobby (including the local user) will receive a LobbyChatMsg_t callback.
+        /// </summary>
+        /// <returns>True if message successfully sent</returns>
+        public unsafe bool SendChatMessage(string message)
+        {
+            var data = Encoding.UTF8.GetBytes(message);
+            fixed (byte* p = data)
+            {
+                // pvMsgBody can be binary or text data, up to 4k
+                // if pvMsgBody is text, cubMsgBody should be strlen( text ) + 1, to include the null terminator
+                return client.native.matchmaking.SendLobbyChatMsg(CurrentLobby, (IntPtr)p, data.Length);
+            }
+        }
+
+        public enum MemberStateChange
+        {
+            Entered = ChatMemberStateChange.Entered,
+            Left = ChatMemberStateChange.Left,
+            Disconnected = ChatMemberStateChange.Disconnected,
+            Kicked = ChatMemberStateChange.Kicked,
+            Banned = ChatMemberStateChange.Banned,
+        }
+
+        internal void OnLobbyStateUpdatedAPI(LobbyChatUpdate_t callback, bool error)
+        {
+            if (error || callback.SteamIDLobby != CurrentLobby) { return; }
+            MemberStateChange change = (MemberStateChange)callback.GfChatMemberStateChange;
+            ulong initiator = callback.SteamIDMakingChange;
+            ulong affected = callback.SteamIDUserChanged;
+
+            if (OnLobbyStateChanged != null) { OnLobbyStateChanged(change, initiator, affected); }
+        }
+
+        /// <summary>
+        /// Called when the state of the Lobby is somehow shifted. Usually when someone joins or leaves the lobby.
+        /// </summary>
+        public Action<MemberStateChange, ulong, ulong> OnLobbyStateChanged;
 
         /// <summary>
         /// The name of the lobby as a property for easy getting/setting. Note that this is setting LobbyData, which you cannot do unless you are the Owner of the lobby
@@ -291,7 +379,9 @@ namespace Facepunch.Steamworks
         }
         ulong _owner = 0;
 
-        // Can the lobby be joined by other people
+        /// <summary>
+        /// Is the Lobby joinable by other people? Defaults to true;
+        /// </summary>
         public bool Joinable
         {
             get
@@ -318,7 +408,9 @@ namespace Facepunch.Steamworks
             }
         }
 
-        // How many people can be in the Lobby
+        /// <summary>
+        /// How many people can be in the Lobby
+        /// </summary>
         public int MaxMembers
         {
             get
@@ -333,16 +425,21 @@ namespace Facepunch.Steamworks
             }
         }
 
-        //How many people are currently in the lobby
+        /// <summary>
+        /// How many people are currently in the Lobby
+        /// </summary>
         public int NumMembers
         {
             get { return client.native.matchmaking.GetNumLobbyMembers(CurrentLobby);}
         }
 
-        //leave the current lobby
+        /// <summary>
+        /// Leave the CurrentLobby.
+        /// </summary>
         public void Leave()
         {
-            client.native.matchmaking.LeaveLobby(CurrentLobby);
+            if (CurrentLobby != 0) { client.native.matchmaking.LeaveLobby(CurrentLobby); }
+            CurrentLobby = 0;
             _owner = 0;
             CurrentLobbyData = null;
         }
@@ -350,6 +447,60 @@ namespace Facepunch.Steamworks
         public void Dispose()
         {
             client = null;
+        }
+
+        /// <summary>
+        /// Get an array of all the CSteamIDs in the CurrentLobby.
+        /// Note that you must be in the Lobby you are trying to request the MemberIDs from
+        /// </summary>
+        /// <returns></returns>
+        public ulong[] GetMemberIDs()
+        {
+            ulong[] memIDs = new ulong[NumMembers];
+            for (int i = 0; i < NumMembers; i++)
+            {
+                memIDs[i] = client.native.matchmaking.GetLobbyMemberByIndex(CurrentLobby, i);
+            }
+            return memIDs;
+        }
+
+        /// <summary>
+        /// Invites the specified user to the CurrentLobby the user is in.
+        /// </summary>
+        /// <param name="friendID">ulong ID of person to invite</param>
+        public bool InviteUserToLobby(ulong friendID)
+        {
+            return client.native.matchmaking.InviteUserToLobby(CurrentLobby, friendID);
+        }
+
+        internal void OnUserInvitedToLobbyAPI(LobbyInvite_t callback, bool error)
+        {
+            if (error || (callback.GameID != client.AppId)) { return; }
+            if (OnUserInvitedToLobby != null) { OnUserInvitedToLobby(callback.SteamIDLobby, callback.SteamIDUser); }
+
+        }
+
+        /// <summary>
+        /// Called when a user invites the current user to a lobby. The first parameter is the lobby the user was invited to, the second is the CSteamID of the person who invited this user
+        /// </summary>
+        public Action<ulong, ulong> OnUserInvitedToLobby;
+
+        /// <summary>
+        /// Joins a lobby is a request was made to join the lobby through the friends list or an invite
+        /// </summary>
+        internal void OnLobbyJoinRequestedAPI(GameLobbyJoinRequested_t callback, bool error)
+        {
+            if (error) { return; }
+            Join(callback.SteamIDLobby);
+        }
+
+        /// <summary>
+        /// Makes sure we send an update callback if a Lobby user updates their information
+        /// </summary>
+        internal void OnLobbyMemberPersonaChangeAPI(PersonaStateChange_t callback, bool error)
+        {
+            if (error || !client.native.friends.IsUserInSource(callback.SteamID, CurrentLobby)) { return; }
+            UpdateLobbyMemberData();
         }
 
         /*not implemented
@@ -362,16 +513,8 @@ namespace Facepunch.Steamworks
         client.native.matchmaking.SetLobbyMemberData; //local user
         client.native.matchmaking.GetLobbyMemberData; //any user in this lobby
 
-        // returns steamid of member
-        // note that the current user must be in a lobby to retrieve CSteamIDs of other users in that lobby
-        client.native.matchmaking.GetLobbyMemberByIndex;
-
-        //chat functions
-        client.native.matchmaking.SendLobbyChatMsg;
-        client.native.matchmaking.GetLobbyChatEntry;
-
-        //invite your frans
-        client.native.matchmaking.InviteUserToLobby //this invites the user the current lobby the invitee is in
+        //used with game server stuff
+        SteamNative.LobbyGameCreated_t
         */
     }
 }

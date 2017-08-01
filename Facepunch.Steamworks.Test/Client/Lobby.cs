@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Facepunch.Steamworks;
+using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Facepunch.Steamworks.Test
@@ -197,7 +198,7 @@ namespace Facepunch.Steamworks.Test
         [TestMethod]
         public void RefreshLobbyListWithFilter()
         {
-            using (var client = new Facepunch.Steamworks.Client(480))
+            using (var client = new Facepunch.Steamworks.Client(252490))
             {
                 Assert.IsTrue(client.IsValid);
 
@@ -247,5 +248,45 @@ namespace Facepunch.Steamworks.Test
 
             }
         }
+
+        [TestMethod]
+        public void SendChatMessage()
+        {
+            using (var client = new Facepunch.Steamworks.Client(252490))
+            {
+                Assert.IsTrue(client.IsValid);
+                string testString = "Hello, World";
+
+                client.Lobby.OnLobbyCreated = (success) =>
+                {
+                    Assert.IsTrue(success);
+                    Assert.IsTrue(client.Lobby.IsValid);
+                    Console.WriteLine("lobby created: " + client.Lobby.CurrentLobby);
+                    client.Lobby.CurrentLobbyData.SetData("testkey", "testvalue");
+                    client.Lobby.SendChatMessage(testString);
+                };
+
+                client.Lobby.OnChatMessageRecieved = (steamID, bytes, length) =>
+                {
+                    string message = Encoding.UTF8.GetString(bytes, 0, length);
+                    Console.WriteLine("message recieved");
+                    Assert.IsTrue(message == testString);
+                };
+
+                client.Lobby.Create(Steamworks.Lobby.Type.Public, 10);
+
+                var sw = Stopwatch.StartNew();
+
+                while (sw.Elapsed.TotalSeconds < 5)
+                {
+                    client.Update();
+                    System.Threading.Thread.Sleep(10);
+                }
+
+                client.Lobby.Leave();
+
+            }
+        }
+
     }
 }
