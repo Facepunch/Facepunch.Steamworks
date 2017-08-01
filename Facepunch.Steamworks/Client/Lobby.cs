@@ -123,6 +123,9 @@ namespace Facepunch.Steamworks
         /// </summary>
         public Action<bool> OnLobbyCreated;
 
+        /// <summary>
+        /// Class to hold global lobby data. This is stuff like maps/modes/etc. Data set here can be filtered by LobbyList.
+        /// </summary>
         public class LobbyData
         {
             internal Client client;
@@ -195,15 +198,39 @@ namespace Facepunch.Steamworks
 
         }
 
+        /// <summary>
+        /// Sets user data for the Lobby. Things like Character, Skin, Ready, etc. Can only set your own member data
+        /// </summary>
+        public void SetMemberData(string key, string value)
+        {
+            if(CurrentLobby == 0) { return; }
+            client.native.matchmaking.SetLobbyMemberData(CurrentLobby, key, value);
+        }
+
+        /// <summary>
+        /// Get the per-user metadata from this lobby. Can get data from any user
+        /// </summary>
+        /// <param name="steamID">ulong SteamID of the user you want to get data from</param>
+        /// <param name="key">String key of the type of data you want to get</param>
+        /// <returns></returns>
+        public string GetMemberData(ulong steamID, string key)
+        {
+            if (CurrentLobby == 0) { return "ERROR: NOT IN ANY LOBBY"; }
+            return client.native.matchmaking.GetLobbyMemberData(CurrentLobby, steamID, key);
+        }
+
         internal void OnLobbyDataUpdatedAPI(LobbyDataUpdate_t callback, bool error)
         {
-            if(error) { return; }
+            if(error || (callback.SteamIDLobby != CurrentLobby)) { return; }
             if(callback.SteamIDLobby == CurrentLobby) //actual lobby data was updated by owner
             {
                 UpdateLobbyData();
             }
 
-            //TODO: need to check and see if the updated member is in this lobby
+            if(UserIsInCurrentLobby(callback.SteamIDMember)) //some member of this lobby updated their information
+            {
+                if (OnLobbyMemberDataUpdated != null) { OnLobbyMemberDataUpdated(callback.SteamIDMember); }
+            }
         }
 
         /// <summary>
@@ -224,20 +251,15 @@ namespace Facepunch.Steamworks
             if(OnLobbyDataUpdated != null) { OnLobbyDataUpdated(); }
         }
 
-        internal void UpdateLobbyMemberData()
-        {
-            if (OnLobbyMemberDataUpdated != null) { OnLobbyMemberDataUpdated(); }
-        }
-
         /// <summary>
-        /// Called when the lobby data itself has been updated. Called when someone has joined/Owner has updated data
+        /// Called when the lobby data itself has been updated. Called when someone has joined/left, Owner has updated data, etc.
         /// </summary>
         public Action OnLobbyDataUpdated;
 
         /// <summary>
-        /// Called when a member of the lobby has updated either their personal Lobby metadata or someone's global steam state has changed (like a display name)
+        /// Called when a member of the lobby has updated either their personal Lobby metadata or someone's global steam state has changed (like a display name). Parameter is the user who changed.
         /// </summary>
-        public Action OnLobbyMemberDataUpdated;
+        public Action<ulong> OnLobbyMemberDataUpdated;
 
 
         public Type LobbyType
@@ -456,12 +478,28 @@ namespace Facepunch.Steamworks
         /// <returns></returns>
         public ulong[] GetMemberIDs()
         {
+
             ulong[] memIDs = new ulong[NumMembers];
             for (int i = 0; i < NumMembers; i++)
             {
                 memIDs[i] = client.native.matchmaking.GetLobbyMemberByIndex(CurrentLobby, i);
             }
             return memIDs;
+        }
+
+        public bool UserIsInCurrentLobby(ulong steamID)
+        {
+            if(CurrentLobby == 0) { return false; }
+            ulong[] mems = GetMemberIDs();
+            for (int i = 0; i < mems.Length; i++)
+            {
+                if(mems[i] == steamID)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -499,8 +537,8 @@ namespace Facepunch.Steamworks
         /// </summary>
         internal void OnLobbyMemberPersonaChangeAPI(PersonaStateChange_t callback, bool error)
         {
-            if (error || !client.native.friends.IsUserInSource(callback.SteamID, CurrentLobby)) { return; }
-            UpdateLobbyMemberData();
+            if (error || !UserIsInCurrentLobby(callback.SteamID)) { return; }
+            if (OnLobbyMemberDataUpdated != null) { OnLobbyMemberDataUpdated(callback.SteamID); }
         }
 
         /*not implemented
@@ -508,10 +546,6 @@ namespace Facepunch.Steamworks
         //set the game server of the lobby
         client.native.matchmaking.GetLobbyGameServer;
         client.native.matchmaking.SetLobbyGameServer;
-
-        //data for people in the actual lobby - scores/elo/characters/etc.
-        client.native.matchmaking.SetLobbyMemberData; //local user
-        client.native.matchmaking.GetLobbyMemberData; //any user in this lobby
 
         //used with game server stuff
         SteamNative.LobbyGameCreated_t

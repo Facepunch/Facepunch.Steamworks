@@ -288,5 +288,43 @@ namespace Facepunch.Steamworks.Test
             }
         }
 
+        [TestMethod]
+        public void SetGetUserMetadata()
+        {
+            using (var client = new Facepunch.Steamworks.Client(252490))
+            {
+                Assert.IsTrue(client.IsValid);
+
+                client.Lobby.OnLobbyCreated = (success) =>
+                {
+                    Assert.IsTrue(success);
+                    Assert.IsTrue(client.Lobby.IsValid);
+                    Console.WriteLine("lobby created: " + client.Lobby.CurrentLobby);
+                    client.Lobby.SetMemberData("testkey", "testvalue");
+                };
+
+                client.Lobby.OnLobbyMemberDataUpdated = (steamID) =>
+                {
+                    string name = client.Friends.GetName(steamID);
+                    Console.WriteLine(name + " updated data");
+                    Assert.IsTrue(client.Lobby.GetMemberData(steamID, "testkey") == "testvalue");
+                    Console.WriteLine("testkey is now: " + client.Lobby.GetMemberData(steamID, "testkey"));
+                };
+
+                client.Lobby.Create(Steamworks.Lobby.Type.Public, 10);
+
+                var sw = Stopwatch.StartNew();
+
+                while (sw.Elapsed.TotalSeconds < 5)
+                {
+                    client.Update();
+                    System.Threading.Thread.Sleep(10);
+                }
+
+                client.Lobby.Leave();
+
+            }
+        }
+
     }
 }
