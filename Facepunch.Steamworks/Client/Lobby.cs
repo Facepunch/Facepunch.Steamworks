@@ -119,7 +119,7 @@ namespace Facepunch.Steamworks
         }
 
         /// <summary>
-        /// Callback for when lobby is created
+        /// Callback for when lobby is created. Parameter resolves true when the Lobby was successfully created
         /// </summary>
         public Action<bool> OnLobbyCreated;
 
@@ -320,7 +320,7 @@ namespace Facepunch.Steamworks
         }
 
         /// <summary>
-        /// Callback to get chat messages.
+        /// Callback to get chat messages. Use Encoding.UTF8.GetString to retrive the message.
         /// </summary>
         public Action<ulong, byte[], int> OnChatMessageRecieved;
 
@@ -360,6 +360,8 @@ namespace Facepunch.Steamworks
 
         /// <summary>
         /// Called when the state of the Lobby is somehow shifted. Usually when someone joins or leaves the lobby.
+        /// The first ulong is the SteamID of the user that initiated the change.
+        /// The second ulong is the person that was affected
         /// </summary>
         public Action<MemberStateChange, ulong, ulong> OnLobbyStateChanged;
 
@@ -473,9 +475,9 @@ namespace Facepunch.Steamworks
 
         /// <summary>
         /// Get an array of all the CSteamIDs in the CurrentLobby.
-        /// Note that you must be in the Lobby you are trying to request the MemberIDs from
+        /// Note that you must be in the Lobby you are trying to request the MemberIDs from.
+        /// Returns an empty array if you aren't in a lobby.
         /// </summary>
-        /// <returns></returns>
         public ulong[] GetMemberIDs()
         {
 
