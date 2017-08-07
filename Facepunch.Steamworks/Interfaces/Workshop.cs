@@ -29,8 +29,7 @@ namespace Facepunch.Steamworks
 
         /// <summary>
         /// Called when an item has been downloaded. This could have been
-        /// because of a call to Download or because of a subscription triggered
-        /// via the browser/app.
+        /// because of a call to Download.
         /// </summary>
         public event Action<ulong, Callbacks.Result> OnFileDownloaded;
 
@@ -39,7 +38,7 @@ namespace Facepunch.Steamworks
         /// because of a call to Download or because of a subscription triggered
         /// via the browser/app.
         /// </summary>
-        internal event Action<ulong> OnItemInstalled;
+        public event Action<ulong> OnItemInstalled;
 
         internal Workshop( BaseSteamworks steamworks, SteamNative.SteamUGC ugc, SteamNative.SteamRemoteStorage remoteStorage )
         {
@@ -67,7 +66,7 @@ namespace Facepunch.Steamworks
 
         private void onItemInstalled( SteamNative.ItemInstalled_t obj, bool failed )
         {
-            if ( OnItemInstalled != null )
+            if ( OnItemInstalled != null && obj.AppID == Client.Instance.AppId )
                 OnItemInstalled( obj.PublishedFileId );
         }
 
@@ -122,7 +121,6 @@ namespace Facepunch.Steamworks
         {
             return new Item( itemid, this );
         }
-
 
         /// <summary>
         /// How a query should be ordered.

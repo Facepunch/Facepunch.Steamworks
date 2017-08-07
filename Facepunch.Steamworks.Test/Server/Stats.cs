@@ -19,7 +19,7 @@ namespace Facepunch.Steamworks.Test
 
                 bool GotStats = false;
 
-                server.Stats.Refresh( MySteamId, success =>
+                server.Stats.Refresh( MySteamId, (steamid, success) =>
                 {
                     GotStats = true;
                     Assert.IsTrue( success );
