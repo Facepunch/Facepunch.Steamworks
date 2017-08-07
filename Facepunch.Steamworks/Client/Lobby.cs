@@ -49,6 +49,9 @@ namespace Facepunch.Steamworks
         /// </summary>
         public ulong CurrentLobby { get; private set; }
 
+        /// <summary>
+        /// The LobbyData of the CurrentLobby. Note this is the global data for the lobby. Use SetMemberData to set specific member data.
+        /// </summary>
         public LobbyData CurrentLobbyData { get; private set; }
 
         /// <summary>
@@ -139,6 +142,11 @@ namespace Facepunch.Steamworks
                 data = new Dictionary<string, string>();
             }
 
+            /// <summary>
+            /// Get the lobby value for the specific key
+            /// </summary>
+            /// <param name="k">The key to find</param>
+            /// <returns>The value at key</returns>
             public string GetData(string k)
             {
                 if (data.ContainsKey(k))
@@ -149,16 +157,26 @@ namespace Facepunch.Steamworks
                 return "ERROR: key not found";
             }
 
-            public List<KeyValuePair<string,string>> GetAllData()
+            /// <summary>
+            /// Get a list of all the data in the Lobby
+            /// </summary>
+            /// <returns>Dictionary of all the key/value pairs in the data</returns>
+            public Dictionary<string,string> GetAllData()
             {
-                List<KeyValuePair<string, string>> returnData = new List<KeyValuePair<string, string>>();
+                Dictionary<string, string> returnData = new Dictionary<string, string>();
                 foreach(KeyValuePair<string, string> item in data)
                 {
-                    returnData.Add(new KeyValuePair<string, string>(item.Key, item.Value));
+                    returnData.Add(item.Key, item.Value);
                 }
                 return returnData;
             }
 
+            /// <summary>
+            /// Set the value for specified Key. Note that the keys "joinable", "appid", "name", and "lobbytype" are reserved for internal library use.
+            /// </summary>
+            /// <param name="k">The key to set the value for</param>
+            /// <param name="v">The value of the Key</param>
+            /// <returns>True if data successfully set</returns>
             public bool SetData(string k, string v)
             {
                 if (data.ContainsKey(k))
@@ -182,6 +200,11 @@ namespace Facepunch.Steamworks
                 return false;
             }
 
+            /// <summary>
+            /// Remove the key from the LobbyData. Note that the keys "joinable", "appid", "name", and "lobbytype" are reserved for internal library use.
+            /// </summary>
+            /// <param name="k">The key to remove</param>
+            /// <returns>True if Key successfully removed</returns>
             public bool RemoveData(string k)
             {
                 if (data.ContainsKey(k))
@@ -339,6 +362,9 @@ namespace Facepunch.Steamworks
             }
         }
 
+        /// <summary>
+        /// Enums to catch the state of a user when their state has changed
+        /// </summary>
         public enum MemberStateChange
         {
             Entered = ChatMemberStateChange.Entered,
@@ -490,6 +516,11 @@ namespace Facepunch.Steamworks
             return memIDs;
         }
 
+        /// <summary>
+        /// Check to see if a user is in your CurrentLobby
+        /// </summary>
+        /// <param name="steamID">SteamID of the user to check for</param>
+        /// <returns></returns>
         public bool UserIsInCurrentLobby(ulong steamID)
         {
             if(CurrentLobby == 0) { return false; }
@@ -527,7 +558,7 @@ namespace Facepunch.Steamworks
         public Action<ulong, ulong> OnUserInvitedToLobby;
 
         /// <summary>
-        /// Joins a lobby is a request was made to join the lobby through the friends list or an invite
+        /// Joins a lobby if a request was made to join the lobby through the friends list or an invite
         /// </summary>
         internal void OnLobbyJoinRequestedAPI(GameLobbyJoinRequested_t callback, bool error)
         {
