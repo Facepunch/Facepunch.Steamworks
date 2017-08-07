@@ -254,7 +254,7 @@ namespace Facepunch.Steamworks.Test
                 {
                     var gotCallback = false;
 
-                    Query.OnResult = ( q ) =>
+                    Query.OnResult += ( q ) =>
                     {
                         Assert.AreEqual( q.Items.Length, 1 );
                         Console.WriteLine( "Query.TotalResults: {0}", q.TotalResults );

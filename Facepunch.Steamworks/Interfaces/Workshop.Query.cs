@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using SteamNative;
 
 namespace Facepunch.Steamworks
 {
@@ -44,9 +45,15 @@ namespace Facepunch.Steamworks
             public UserQueryType UserQueryType { get; set; } = UserQueryType.Published;
 
             /// <summary>
-            /// Called when the query finishes
+            /// Called when the query succeeds
             /// </summary>
-            public Action<Query> OnResult;
+            public event Action<Query> OnResult;
+
+            /// <summary>
+            /// Called when the query fails. An exception will be thrown on IO failure
+            /// if no callbacks are added to this event.
+            /// </summary>
+            public event Action<Query, Callbacks.Result> OnFailure;
 
             /// <summary>
             /// Page starts at 1 !!
@@ -105,14 +112,26 @@ namespace Facepunch.Steamworks
                 if ( !string.IsNullOrEmpty( SearchText ) )
                     workshop.ugc.SetSearchText( Handle, SearchText );
 
-                foreach ( var tag in RequireTags )
-                    workshop.ugc.AddRequiredTag( Handle, tag );
+                if ( RequireTags != null )
+                {
+                    foreach ( var tag in RequireTags )
+                        workshop.ugc.AddRequiredTag( Handle, tag );
 
-                if ( RequireTags.Count > 0 )
-                    workshop.ugc.SetMatchAnyTag( Handle, !RequireAllTags );
+                    if ( RequireTags.Count > 0 )
+                        workshop.ugc.SetMatchAnyTag( Handle, !RequireAllTags );
+                }
+
+                if ( RequireKeyValueTags != null )
+                {
+                    foreach ( var keyValue in RequireKeyValueTags )
+                        workshop.ugc.AddRequiredKeyValueTag( Handle, keyValue.Key, keyValue.Value );
+                }
 
                 if ( RankedByTrendDays > 0 )
                     workshop.ugc.SetRankedByTrendDays( Handle, (uint) RankedByTrendDays );
+
+                if ( MaxCachedAge > TimeSpan.Zero )
+                    workshop.ugc.SetAllowCachedResponse( Handle, (uint) MaxCachedAge.TotalSeconds );
 
                 foreach ( var tag in ExcludeTags )
                     workshop.ugc.AddExcludedTag( Handle, tag );
@@ -122,8 +141,14 @@ namespace Facepunch.Steamworks
 
             void ResultCallback( SteamNative.SteamUGCQueryCompleted_t data, bool bFailed )
             {
-                if ( bFailed )
-                    throw new System.Exception( "bFailed!" );
+                if ( bFailed || OnFailure != null && data.Result != Result.OK )
+                {
+                    // This used to always throw (before OnFailure was added), so for backwards
+                    // compatibility it will still throw if OnFailure isn't subscribed to.
+
+                    if ( OnFailure != null ) OnFailure( this, bFailed ? Callbacks.Result.IOFailure : (Callbacks.Result) data.Result );
+                    else if ( bFailed ) throw new System.Exception( "bFailed!" );
+                }
 
                 var gotFiles = 0;
                 for ( int i = 0; i < data.NumResultsReturned; i++ )
@@ -177,6 +202,7 @@ namespace Facepunch.Steamworks
                 else
                 {
                     Items = _results.ToArray();
+                    IsCachedData = data.CachedData;
 
                     if ( OnResult != null )
                     {
@@ -199,10 +225,17 @@ namespace Facepunch.Steamworks
                 get { return Callback != null; }
             }
 
+            public bool IsCachedData { get; private set; }
+
             /// <summary>
             /// Only return items with these tags
             /// </summary>
             public List<string> RequireTags { get; set; } = new List<string>();
+
+            /// <summary>
+            /// Only return items with these key-value tags
+            /// </summary>
+            public Dictionary<string, string> RequireKeyValueTags { get; set; } = new Dictionary<string, string>();
 
             /// <summary>
             /// If true, return items that have all RequireTags
@@ -220,7 +253,10 @@ namespace Facepunch.Steamworks
             /// </summary>
             public List<ulong> FileId { get; set; } = new List<ulong>();
 
-
+            /// <summary>
+            /// Maximum age of a previously cached item. Zero by default, so items are not cached.
+            /// </summary>
+            public TimeSpan MaxCachedAge { get; set; } = TimeSpan.Zero;
 
             /// <summary>
             /// Don't call this in production!

@@ -20,6 +20,7 @@ namespace Facepunch.Steamworks
             public string Folder { get; set; } = null;
             public string PreviewImage { get; set; } = null;
             public List<string> Tags { get; set; } = new List<string>();
+            public Dictionary<string, string> KeyValueTags { get; set; } = new Dictionary<string, string>();
             public bool Publishing { get; internal set; }
             public ItemType? Type { get; set; }
             public string Error { get; internal set; } = null;
@@ -36,58 +37,61 @@ namespace Facepunch.Steamworks
 
             public bool NeedToAgreeToWorkshopLegal { get; internal set; }
 
+            public event Action<Editor> PublishSucceeded;
+            public event Action<Editor> PublishFailed;
 
+            private PublishStatus _publishStatus;
+            public PublishStatus PublishStatus
+            {
+                get
+                {
+                    UpdatePublishProgress();
+                    return _publishStatus;
+                }
+            }
 
             public double Progress
             {
                 get
                 {
-                    if ( !Publishing ) return 1.0;
-                    if ( CreateItem != null ) return 0.0;
-                    if ( SubmitItemUpdate == null ) return 1.0;
+                    if ( CreateItem != null ) return 0d;
+                    if ( SubmitItemUpdate == null ) return 1d;
+                    if ( !Publishing ) return 1d;
 
-                    ulong b = 0;
-                    ulong t = 0;
-
-                    workshop.steamworks.native.ugc.GetItemUpdateProgress( UpdateHandle, out b, out t );
-
-                    if ( t == 0 )
-                        return 0;
-
-                    return (double)b / (double) t;
+                    UpdatePublishProgress();
+                    return _bytesTotal > 0 ? _bytesUploaded / (double) _bytesTotal : 0d;
                 }
             }
 
+            private ulong _bytesUploaded;
             public int BytesUploaded
             {
                 get
                 {
-                    if ( !Publishing ) return 0;
-                    if ( CreateItem != null ) return 0;
-                    if ( SubmitItemUpdate == null ) return 0;
-
-                    ulong b = 0;
-                    ulong t = 0;
-
-                    workshop.steamworks.native.ugc.GetItemUpdateProgress( UpdateHandle, out b, out t );
-                    return (int) b;
+                    UpdatePublishProgress();
+                    return (int) _bytesUploaded;
                 }
             }
 
+            private ulong _bytesTotal;
             public int BytesTotal
             {
                 get
                 {
-                    if ( !Publishing ) return 0;
-                    if ( CreateItem != null ) return 0;
-                    if ( SubmitItemUpdate == null ) return 0;
-
-                    ulong b = 0;
-                    ulong t = 0;
-
-                    workshop.steamworks.native.ugc.GetItemUpdateProgress( UpdateHandle, out b, out t );
-                    return (int)t;
+                    UpdatePublishProgress();
+                    return (int) _bytesTotal;
                 }
+            }
+
+            private void UpdatePublishProgress()
+            {
+                if ( SubmitItemUpdate == null )
+                {
+                    _publishStatus = PublishStatus.Invalid;
+                    return;
+                }
+
+                _publishStatus = (PublishStatus) workshop.steamworks.native.ugc.GetItemUpdateProgress( UpdateHandle, out _bytesUploaded, out _bytesTotal );
             }
 
             public void Publish()
@@ -109,13 +113,17 @@ namespace Facepunch.Steamworks
                 if ( !Type.HasValue )
                     throw new System.Exception( "Editor.Type must be set when creating a new item!" );
 
+                System.Diagnostics.Debug.WriteLine( "StartCreatingItem()" );
                 CreateItem = workshop.ugc.CreateItem( workshop.steamworks.AppId, (SteamNative.WorkshopFileType)(uint)Type, OnItemCreated );
             }
 
             private void OnItemCreated( SteamNative.CreateItemResult_t obj, bool Failed )
             {
+                System.Diagnostics.Debug.WriteLine( $"OnItemCreated({obj.PublishedFileId}, {Failed})" );
+
                 NeedToAgreeToWorkshopLegal = obj.UserNeedsToAcceptWorkshopLegalAgreement;
                 CreateItem.Dispose();
+                CreateItem = null;
 
                 if ( obj.Result == SteamNative.Result.OK && !Failed )
                 {
@@ -126,6 +134,8 @@ namespace Facepunch.Steamworks
 
                 Error = "Error creating new file: " + obj.Result.ToString() + "("+ obj.PublishedFileId+ ")";
                 Publishing = false;
+
+                PublishFailed?.Invoke( this );
             }
 
             private void PublishChanges()
@@ -150,6 +160,14 @@ namespace Facepunch.Steamworks
 
                 if ( Tags != null && Tags.Count > 0 )
                     workshop.ugc.SetItemTags( UpdateHandle, Tags.ToArray() );
+
+                if ( KeyValueTags != null )
+                {
+                    foreach ( var keyValue in KeyValueTags )
+                    {
+                        workshop.ugc.AddItemKeyValueTag( UpdateHandle, keyValue.Key, keyValue.Value );
+                    }
+                }
 
                 if ( Visibility.HasValue )
                     workshop.ugc.SetItemVisibility( UpdateHandle, (SteamNative.RemoteStoragePublishedFileVisibility)(uint)Visibility.Value );
@@ -185,7 +203,10 @@ namespace Facepunch.Steamworks
             private void OnChangesSubmitted( SteamNative.SubmitItemUpdateResult_t obj, bool Failed )
             {
                 if ( Failed )
-                    throw new System.Exception( "CreateItemResult_t Failed" );
+                {
+                    if ( PublishFailed != null ) PublishFailed( this );
+                    else throw new System.Exception( "CreateItemResult_t Failed" );
+                }
 
                 SubmitItemUpdate = null;
                 NeedToAgreeToWorkshopLegal = obj.UserNeedsToAcceptWorkshopLegalAgreement;
@@ -193,10 +214,12 @@ namespace Facepunch.Steamworks
 
                 if ( obj.Result == SteamNative.Result.OK )
                 {
+                    PublishSucceeded?.Invoke( this );
                     return;
                 }
 
                 Error = "Error publishing changes: " + obj.Result.ToString() + " ("+ NeedToAgreeToWorkshopLegal + ")";
+                PublishFailed?.Invoke( this );
             }
 
             public void Delete()
@@ -204,6 +227,16 @@ namespace Facepunch.Steamworks
                 workshop.remoteStorage.DeletePublishedFile( Id );
                 Id = 0;
             }
+        }
+
+        public enum PublishStatus : int
+        {
+            Invalid = 0,
+            PreparingConfig = 1,
+            PreparingContent = 2,
+            UploadingContent = 3,
+            UploadingPreviewFile = 4,
+            CommittingChanges = 5,
         }
     }
 }

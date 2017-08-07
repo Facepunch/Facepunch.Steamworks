@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Runtime.InteropServices;
 using SteamNative;
 
 namespace Facepunch.Steamworks
@@ -40,6 +43,12 @@ namespace Facepunch.Steamworks
         /// </summary>
         public event Action<ulong> OnItemInstalled;
 
+        /// <summary>
+        /// Gets the total number of items the current user is subscribed to for
+        /// the game or application. Returns 0 if called from a game server.
+        /// </summary>
+        public int NumSubscribedItems => (int) ugc.GetNumSubscribedItems();
+
         internal Workshop( BaseSteamworks steamworks, SteamNative.SteamUGC ugc, SteamNative.SteamRemoteStorage remoteStorage )
         {
             this.ugc = ugc;
@@ -74,6 +83,50 @@ namespace Facepunch.Steamworks
         {
             if ( OnFileDownloaded != null && obj.AppID == Client.Instance.AppId )
                 OnFileDownloaded( obj.PublishedFileId, (Callbacks.Result) obj.Result );
+        }
+
+        [ThreadStatic]
+        private static ulong[] _sItemBuffer;
+
+        /// <summary>
+        /// Gets a list of all of the items the current user is subscribed to for the current game. The
+        /// IDs for each item are written into <paramref name="destIds"/>.
+        /// </summary>
+        /// <param name="destIds">
+        /// Destination array to write the item IDs to. Should typically be large enough to fit
+        /// <see cref="NumSubscribedItems"/>.</param>
+        /// <returns>
+        /// The number of subscribed workshop items that were populated into <paramref name="destIds"/>.
+        /// </returns>
+        public unsafe int GetSubscribedItems( ulong[] destIds )
+        {
+            var count = Math.Min( destIds.Length, NumSubscribedItems );
+
+            fixed ( ulong* ptr = destIds )
+            {
+                ugc.GetSubscribedItems( (PublishedFileId_t*) ptr, (uint) count );
+            }
+
+            return count;
+        }
+
+        /// <summary>
+        /// Gets a list of all of the items the current user is subscribed to for the current game. The
+        /// IDs for each item are appended to <paramref name="destIds"/>.
+        /// </summary>
+        /// <param name="destIds">
+        /// Destination list to append the item IDs to.</param>
+        /// <returns>
+        /// The number of subscribed workshop items that were populated into <paramref name="destIds"/>.
+        /// </returns>
+        public int GetSubscribedItems( List<ulong> destIds )
+        {
+            var items = Utility.EnsureBufferCapacity( ref _sItemBuffer, NumSubscribedItems );
+            var count = GetSubscribedItems( items );
+
+            destIds.AddRange( items.Take( count ) );
+
+            return count;
         }
 
         /// <summary>

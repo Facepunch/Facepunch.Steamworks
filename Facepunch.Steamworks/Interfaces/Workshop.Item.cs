@@ -48,19 +48,20 @@ namespace Facepunch.Steamworks
                 return item;
             }
 
-            public void Download( bool highPriority = true )
+            public bool Download( bool highPriority = true )
             {
-                if ( Installed ) return;
-                if ( Downloading ) return;
+                if ( Installed ) return false;
+                if ( Downloading ) return false;
 
                 if ( !workshop.ugc.DownloadItem( Id, highPriority ) )
                 {
-                    Console.WriteLine( "Download Failed" );
-                    return;
+                    return false;
                 }
 
                 workshop.OnFileDownloaded += OnFileDownloaded;
                 workshop.OnItemInstalled += OnItemInstalled;
+
+                return true;
             }
 
             public void Subscribe()
@@ -109,8 +110,7 @@ namespace Facepunch.Steamworks
             public bool Subscribed { get { return ( State & ItemState.Subscribed ) != 0; } }
             public bool NeedsUpdate { get { return ( State & ItemState.NeedsUpdate ) != 0; } }
 
-            private SteamNative.ItemState State { get { return ( SteamNative.ItemState) workshop.ugc.GetItemState( Id ); } }
-
+            public ItemState State { get { return (ItemState) workshop.ugc.GetItemState( Id ); } }
 
             private DirectoryInfo _directory;
 
@@ -118,33 +118,55 @@ namespace Facepunch.Steamworks
             {
                 get
                 {
-                    if ( _directory != null )
-                        return _directory;
-
-                    if ( !Installed )
-                        return null;
-
-                    ulong sizeOnDisk;
-                    string folder;
-                    uint timestamp;
-
-                    if ( workshop.ugc.GetItemInstallInfo( Id, out sizeOnDisk, out folder, out timestamp ) )
-                    {
-                        _directory = new DirectoryInfo( folder );
-                        Size = sizeOnDisk;
-
-                        if ( !_directory.Exists )
-                        {
-                         //   Size = 0;
-                         //   _directory = null;
-                        }
-                    }
-
+                    UpdateInstallInfo();
                     return _directory;
                 }
             }
 
-            public ulong Size { get; private set; }
+            private ulong _size;
+
+            public ulong Size
+            {
+                get
+                {
+                    UpdateInstallInfo();
+                    return _size;
+                }
+            }
+
+            private DateTime _timestamp;
+
+            public DateTime Timestamp
+            {
+                get
+                {
+                    UpdateInstallInfo();
+                    return _timestamp;
+                }
+            }
+
+            internal void UpdateInstallInfo()
+            {
+                if ( _directory != null ) return;
+                if ( !Installed ) return;
+
+                ulong sizeOnDisk;
+                string folder;
+                uint timestamp;
+
+                if ( workshop.ugc.GetItemInstallInfo( Id, out sizeOnDisk, out folder, out timestamp ) )
+                {
+                    _directory = new DirectoryInfo( folder );
+                    _size = sizeOnDisk;
+                    _timestamp = Utility.Epoch.ToDateTime( timestamp );
+
+                    if ( !_directory.Exists )
+                    {
+                        //   Size = 0;
+                        //   _directory = null;
+                    }
+                }
+            }
 
             private ulong _BytesDownloaded, _BytesTotal;
 
@@ -226,6 +248,18 @@ namespace Facepunch.Steamworks
                     return _ownerName;
                 }
             }
+        }
+
+        [Flags]
+        public enum ItemState
+        {
+            None = 0,
+            Subscribed = 1,
+            LegacyItem = 2,
+            Installed = 4,
+            NeedsUpdate = 8,
+            Downloading = 16,
+            DownloadPending = 32
         }
     }
 }

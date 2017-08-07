@@ -15,6 +15,19 @@ namespace Facepunch.Steamworks
                    ( ( x & 0xff000000 ) >> 24 );
         }
 
+        static internal int NextPowerOf2( int x )
+        {
+            var po2 = 1;
+            while ( po2 < x ) po2 <<= 1;
+            return po2;
+        }
+
+        static internal T[] EnsureBufferCapacity<T>( ref T[] buffer, int size )
+        {
+            if ( buffer == null || buffer.Length < size ) buffer = new T[NextPowerOf2( size )];
+            return buffer;
+        }
+
         static internal class Epoch
         {
             private static readonly DateTime epoch = new DateTime( 1970, 1, 1, 0, 0, 0, DateTimeKind.Utc );

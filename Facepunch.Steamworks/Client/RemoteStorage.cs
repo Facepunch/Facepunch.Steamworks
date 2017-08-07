@@ -27,7 +27,23 @@ namespace Facepunch.Steamworks
         {
             client = c;
             native = client.native.remoteStorage;
+
+            RemoteStoragePublishedFileSubscribed_t.RegisterCallback( c, onRemoteStoragePublishedFileSubscribed );
+            RemoteStoragePublishedFileUnsubscribed_t.RegisterCallback( c, onRemoteStoragePublishedFileUnsubscribed );
         }
+
+        private void onRemoteStoragePublishedFileSubscribed( RemoteStoragePublishedFileSubscribed_t value, bool ioFailure )
+        {
+            if ( ItemSubscribed != null && value.AppID == client.AppId ) ItemSubscribed( value.PublishedFileId );
+        }
+
+        private void onRemoteStoragePublishedFileUnsubscribed( RemoteStoragePublishedFileUnsubscribed_t value, bool ioFailure )
+        {
+            if ( ItemUnsubscribed != null && value.AppID == client.AppId ) ItemUnsubscribed( value.PublishedFileId );
+        }
+
+        public event Action<ulong> ItemSubscribed;
+        public event Action<ulong> ItemUnsubscribed;
 
         /// <summary>
         /// True if Steam Cloud is currently enabled by the current user.
