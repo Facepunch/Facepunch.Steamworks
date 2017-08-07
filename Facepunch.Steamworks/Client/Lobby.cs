@@ -478,6 +478,7 @@ namespace Facepunch.Steamworks
         /// Note that you must be in the Lobby you are trying to request the MemberIDs from.
         /// Returns an empty array if you aren't in a lobby.
         /// </summary>
+        /// <returns>Array of member SteamIDs</returns>
         public ulong[] GetMemberIDs()
         {
 
