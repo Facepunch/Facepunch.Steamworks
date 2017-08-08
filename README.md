@@ -41,7 +41,7 @@ You can view examples of everything in the Facepunch.Steamworks.Test project.
 
 ## Client
 
-Compile and add the library to your project. To create a client you can do this.
+Compile the Facepunch.Steamworks project and add the library to your Unity project. To create a client you can do this.
 
 ```csharp
 var client = new Facepunch.Steamworks.Client( 252490 );
@@ -67,6 +67,34 @@ var server = new Facepunch.Steamworks.Server( 252490, 0, 28015, true, "MyGame453
 ```
 
 This will register a secure server for game 252490, any ip, port 28015. Again, more usage in the Facepunch.Steamworks.Test project.
+
+## Lobby
+
+To create a Lobby do this.
+```csharp
+client.Lobby.Create(Steamworks.Lobby.Type.Public, 10);
+```
+
+Created lobbies are auto-joined, but if you want to find a friend's lobby, you'd call
+```csharp
+client.LobbyList.Refresh();
+//wait for the callback
+client.LobbyList.OnLobbiesUpdated = () =>
+{
+    if (client.LobbyList.Finished)
+    {
+        foreach (LobbyList.Lobby lobby in client.LobbyList.Lobbies)
+        {
+            Console.WriteLine($"Found Lobby: {lobby.Name}");
+        }
+    }
+};
+//join a lobby you found
+client.Lobby.Join(LobbyList.Lobbies[0]);
+```
+
+Your can find more examples of Lobby functionality in the Lobby.cs file in the test project. Sending chat messages, assinging lobby data and member data, etc.
+
 
 # Unity
 
