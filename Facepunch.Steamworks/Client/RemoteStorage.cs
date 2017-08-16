@@ -14,7 +14,11 @@ namespace Facepunch.Steamworks
     {
         private static string NormalizePath( string path )
         {
-            return new FileInfo( $"x:/{path}" ).FullName.Substring( 3 );
+            // TODO: DUMB HACK ALERT
+
+            return SteamNative.Platform.IsWindows
+                ? new FileInfo( $"x:/{path}" ).FullName.Substring( 3 )
+                : new FileInfo( $"/x/{path}" ).FullName.Substring( 3 );
         }
 
         internal Client client;
