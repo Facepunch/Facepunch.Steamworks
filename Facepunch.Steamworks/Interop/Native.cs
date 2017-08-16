@@ -116,27 +116,6 @@ namespace Facepunch.Steamworks.Interop
 
         public void Dispose()
         {
-            if ( client != null )
-            {
-                if ( hPipe != 0 )
-                {
-                    if ( hUser != 0 )
-                    {
-                        client.ReleaseUser( hPipe, hUser );
-                        hUser = 0;
-                    }
-
-                    client.BReleaseSteamPipe( hPipe );
-                    hPipe = 0;
-                }
-
-                if ( !client.BShutdownIfAllPipesClosed() )
-                    Console.WriteLine( "BShutdownIfAllPipesClosed returned false" );
-
-                client.Dispose();
-                client = null;
-            }
-
             if ( user != null )
             {
                 user.Dispose();
@@ -186,12 +165,7 @@ namespace Facepunch.Steamworks.Interop
             }
 
             if ( gameServer != null )
-            {
-                //
-                // Calling this can cause the process to hang
-                //
-                //gameServer.LogOff();
-                
+            {              
                 gameServer.Dispose();
                 gameServer = null;
             }
@@ -232,12 +206,28 @@ namespace Facepunch.Steamworks.Interop
                 applist = null;
             }
 
+            if ( client != null )
+            {
+                client.Dispose();
+                client = null;
+            }
+
             if ( api != null )
             {
                 if ( isServer )
                     api.SteamGameServer_Shutdown();
                 else
                     api.SteamAPI_Shutdown();
+
+                //
+                // The functions above destroy the pipeline handles
+                // and all of the classes. Trying to call a steam function
+                // at this point will result in a crash - because any
+                // pointers we stored are not invalid.
+                //
+
+                hPipe = 0;
+                hUser = 0;
 
                 api.Dispose();
                 api = null;
