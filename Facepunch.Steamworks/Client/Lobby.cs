@@ -421,7 +421,7 @@ namespace Facepunch.Steamworks
                 }
                 return _owner;
             }
-            private set
+            set
             {
                 if (_owner == value) return;
                 if (client.native.matchmaking.SetLobbyOwner(CurrentLobby, value)) { _owner = value; }
