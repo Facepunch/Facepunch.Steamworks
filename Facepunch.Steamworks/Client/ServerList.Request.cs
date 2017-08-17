@@ -91,6 +91,8 @@ namespace Facepunch.Steamworks
             }
 
             public Action OnUpdate;
+            public Action<Server> OnServerResponded;
+            public Action OnFinished;
 
             /// <summary>
             /// A list of servers that responded. If you're only interested in servers that responded since you
@@ -181,6 +183,8 @@ namespace Facepunch.Steamworks
                 {
                     Finished = true;
                     client.OnUpdate -= Update;
+
+                    OnFinished?.Invoke();
                 }
             }
 
@@ -191,7 +195,10 @@ namespace Facepunch.Steamworks
                     if ( Filter != null && !Filter.Test( info ) )
                         return;
 
-                    Responded.Add( Server.FromSteam( client, info ) );
+                    var s = Server.FromSteam( client, info );
+                    Responded.Add( s );
+
+                    OnServerResponded?.Invoke( s );
                 }
                 else
                 {
