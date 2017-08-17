@@ -47,7 +47,7 @@ namespace Facepunch.Steamworks.Test
 
                 foreach ( var server in query.Responded.Take( 20 ) )
                 {
-                    Console.WriteLine( "{0} {1}", server.AddressString, server.Name );
+                    Console.WriteLine( "{0} {1}", server.Address, server.Name );
                 }
 
                 query.Dispose();
@@ -370,7 +370,9 @@ namespace Facepunch.Steamworks.Test
 
                 foreach ( var s in query.Responded )
                 {
-                    Console.WriteLine( "{0} - {1}", s.AddressString, s.Name );
+                    Console.WriteLine( "{0} - {1}", s.Address, s.Name );
+
+                    Assert.IsTrue( servers.Contains( $"{s.Address}:{s.QueryPort}" ) );
                 }
 
                 query.Dispose();

@@ -248,7 +248,7 @@ namespace Facepunch.Steamworks
 
         internal bool IsFavourite( Server server )
         {
-            ulong encoded = server.Address;
+            ulong encoded = Utility.IpToInt32( server.Address );
             encoded = encoded << 32;
             encoded = encoded | (uint)server.ConnectionPort;
 
@@ -257,7 +257,7 @@ namespace Facepunch.Steamworks
 
         internal bool IsHistory( Server server )
         {
-            ulong encoded = server.Address;
+            ulong encoded = Utility.IpToInt32( server.Address );
             encoded = encoded << 32;
             encoded = encoded | (uint)server.ConnectionPort;
 

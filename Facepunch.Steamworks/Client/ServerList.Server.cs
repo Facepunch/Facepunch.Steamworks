@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -25,7 +26,7 @@ namespace Facepunch.Steamworks
             public int Version { get; set; }
             public string[] Tags { get; set; }
             public ulong SteamId { get; set; }
-            public uint Address { get; set; }
+            public IPAddress Address { get; set; }
             public int ConnectionPort { get; set; }
             public int QueryPort { get; set; }
 
@@ -42,27 +43,13 @@ namespace Facepunch.Steamworks
 
             internal Client Client;
 
-            public string AddressString
-            {
-                get
-                {
-                    return string.Format( "{0}.{1}.{2}.{3}", ( Address >> 24 ) & 0xFFul, ( Address >> 16 ) & 0xFFul, ( Address >> 8 ) & 0xFFul, Address & 0xFFul );
-                }
-            }
-            public string ConnectionAddress
-            {
-                get
-                {
-                    return string.Format( "{0}.{1}.{2}.{3}:{4}", ( Address >> 24 ) & 0xFFul, ( Address >> 16 ) & 0xFFul, ( Address >> 8 ) & 0xFFul, Address & 0xFFul, ConnectionPort );
-                }
-            }
 
             internal static Server FromSteam( Client client, SteamNative.gameserveritem_t item )
             {
                 return new Server()
                 {
                     Client = client,
-                    Address = item.NetAdr.IP,
+                    Address = Utility.Int32ToIp( item.NetAdr.IP ), 
                     ConnectionPort = item.NetAdr.ConnectionPort,
                     QueryPort = item.NetAdr.QueryPort,
                     Name = item.ServerName,
@@ -133,7 +120,7 @@ namespace Facepunch.Steamworks
             /// </summary>
             public void AddToHistory()
             {
-                Client.native.matchmaking.AddFavoriteGame( AppId, Address, (ushort)ConnectionPort, (ushort)QueryPort, k_unFavoriteFlagHistory, (uint)Utility.Epoch.Current );
+                Client.native.matchmaking.AddFavoriteGame( AppId, Utility.IpToInt32( Address ), (ushort)ConnectionPort, (ushort)QueryPort, k_unFavoriteFlagHistory, (uint)Utility.Epoch.Current );
                 Client.ServerList.UpdateFavouriteList();
             }
 
@@ -142,7 +129,7 @@ namespace Facepunch.Steamworks
             /// </summary>
             public void RemoveFromHistory()
             {
-                Client.native.matchmaking.RemoveFavoriteGame( AppId, Address, (ushort)ConnectionPort, (ushort)QueryPort, k_unFavoriteFlagHistory );
+                Client.native.matchmaking.RemoveFavoriteGame( AppId, Utility.IpToInt32( Address ), (ushort)ConnectionPort, (ushort)QueryPort, k_unFavoriteFlagHistory );
                 Client.ServerList.UpdateFavouriteList();
             }
 
@@ -151,7 +138,7 @@ namespace Facepunch.Steamworks
             /// </summary>
             public void AddToFavourites()
             {
-                Client.native.matchmaking.AddFavoriteGame( AppId, Address, (ushort)ConnectionPort, (ushort)QueryPort, k_unFavoriteFlagFavorite, (uint)Utility.Epoch.Current );
+                Client.native.matchmaking.AddFavoriteGame( AppId, Utility.IpToInt32( Address ), (ushort)ConnectionPort, (ushort)QueryPort, k_unFavoriteFlagFavorite, (uint)Utility.Epoch.Current );
                 Client.ServerList.UpdateFavouriteList();
             }
 
@@ -160,7 +147,7 @@ namespace Facepunch.Steamworks
             /// </summary>
             public void RemoveFromFavourites()
             {
-                Client.native.matchmaking.RemoveFavoriteGame( AppId, Address, (ushort)ConnectionPort, (ushort)QueryPort, k_unFavoriteFlagFavorite );
+                Client.native.matchmaking.RemoveFavoriteGame( AppId, Utility.IpToInt32( Address ), (ushort)ConnectionPort, (ushort)QueryPort, k_unFavoriteFlagFavorite );
                 Client.ServerList.UpdateFavouriteList();
             }
         }
