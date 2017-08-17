@@ -65,6 +65,11 @@ namespace Facepunch.Steamworks
 
         public Client( uint appId )
         {
+            if ( Instance != null )
+            {
+                throw new System.Exception( "Only one Facepunch.Steamworks.Client can exist - dispose the old one before trying to create a new one." );
+            }
+
             Instance = this;
             native = new Interop.NativeInterface();
 

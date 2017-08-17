@@ -26,6 +26,11 @@ namespace Facepunch.Steamworks
         /// </summary>
         public Server( uint appId, ServerInit init )
         {
+            if ( Instance != null )
+            {
+                throw new System.Exception( "Only one Facepunch.Steamworks.Server can exist - dispose the old one before trying to create a new one." );
+            }
+
             Instance = this;
             native = new Interop.NativeInterface();
 
