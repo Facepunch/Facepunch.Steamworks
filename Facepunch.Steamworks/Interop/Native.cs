@@ -39,22 +39,34 @@ namespace Facepunch.Steamworks.Interop
             api = new SteamNative.SteamApi();
 
             if ( !api.SteamAPI_Init() )
+            {
+                Console.Error.WriteLine( "InitClient: SteamAPI_Init returned false" );
                 return false;
+            }
 
             hUser = api.SteamAPI_GetHSteamUser();
             hPipe = api.SteamAPI_GetHSteamPipe();
             if ( hPipe == 0 )
+            {
+                Console.Error.WriteLine( "InitClient: hPipe == 0" );
                 return false;
+            }
 
             FillInterfaces( steamworks, hUser, hPipe );
 
             if ( !user.IsValid )
+            {
+                Console.Error.WriteLine( "InitClient: ISteamUser is null" );
                 return false;
+            }
 
             // Ensure that the user has logged into Steam. This will always return true if the game is launched
             // from Steam, but if Steam is at the login prompt when you run your game it will return false.
             if ( !user.BLoggedOn() )
+            {
+                Console.Error.WriteLine( "InitClient: Not Logged On" );
                 return false;
+            }
 
             return true;
         }
@@ -67,13 +79,17 @@ namespace Facepunch.Steamworks.Interop
 
             if ( !api.SteamInternal_GameServer_Init( IpAddress, usPort, GamePort, QueryPort, eServerMode, pchVersionString ) )
             {
+                Console.Error.WriteLine( "InitServer: GameServer_Init returned false" );
                 return false;
             }
 
             hUser = api.SteamGameServer_GetHSteamUser();
             hPipe = api.SteamGameServer_GetHSteamPipe();
             if ( hPipe == 0 )
+            {
+                Console.Error.WriteLine( "InitServer: hPipe == 0" );
                 return false;
+            }
 
             FillInterfaces( steamworks, hPipe, hUser );
 
