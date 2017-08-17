@@ -415,19 +415,18 @@ namespace Facepunch.Steamworks
         {
             get
             {
-                if (_owner == 0 && IsValid)
+                if (IsValid)
                 {
-                    _owner = client.native.matchmaking.GetLobbyOwner(CurrentLobby);
+                    return client.native.matchmaking.GetLobbyOwner(CurrentLobby);
                 }
-                return _owner;
+                return 0;
             }
             set
             {
-                if (_owner == value) return;
-                if (client.native.matchmaking.SetLobbyOwner(CurrentLobby, value)) { _owner = value; }
+                if (Owner == value) return;
+                client.native.matchmaking.SetLobbyOwner(CurrentLobby, value);
             }
         }
-        ulong _owner = 0;
 
         /// <summary>
         /// Is the Lobby joinable by other people? Defaults to true;
@@ -490,7 +489,6 @@ namespace Facepunch.Steamworks
         {
             if (CurrentLobby != 0) { client.native.matchmaking.LeaveLobby(CurrentLobby); }
             CurrentLobby = 0;
-            _owner = 0;
             CurrentLobbyData = null;
         }
 
