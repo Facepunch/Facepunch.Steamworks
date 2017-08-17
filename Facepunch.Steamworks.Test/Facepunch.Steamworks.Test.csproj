@@ -94,6 +94,7 @@
   <ItemGroup>
     <Compile Include="Client\Achievements.cs" />
     <Compile Include="Client\Client.cs" />
+    <Compile Include="Client\Lobby.cs" />
     <Compile Include="Client\RichPresence.cs" />
     <Compile Include="Client\Leaderboard.cs" />
     <Compile Include="Client\App.cs" />
