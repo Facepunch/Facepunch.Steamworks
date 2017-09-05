@@ -114,7 +114,8 @@ namespace Facepunch.Steamworks
             SteamId = native.user.GetSteamID();
             BetaName = native.apps.GetCurrentBetaName();
             OwnerSteamId = native.apps.GetAppOwner();
-            InstallFolder = new DirectoryInfo( native.apps.GetAppInstallDir( AppId ) );
+            if (!String.IsNullOrEmpty(native.apps.GetAppInstallDir(AppId)) && Directory.Exists(native.apps.GetAppInstallDir(AppId)))
+                InstallFolder = new DirectoryInfo( native.apps.GetAppInstallDir( AppId ) );
             BuildId = native.apps.GetAppBuildId();
             CurrentLanguage = native.apps.GetCurrentGameLanguage();
             AvailableLanguages = native.apps.GetAvailableGameLanguages().Split( new[] {';'}, StringSplitOptions.RemoveEmptyEntries ); // TODO: Assumed colon separated
