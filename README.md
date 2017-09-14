@@ -63,7 +63,11 @@ Or use it in a using block if you can.
 To create a server do this.
 
 ```csharp
-var server = new Facepunch.Steamworks.Server( 252490, 0, 28015, true, "MyGame453" );
+ServerInit options = new ServerInit("GameDirectoryName", "GameDescription");
+```
+
+```csharp
+var server = new Facepunch.Steamworks.Server(252490, options);
 ```
 
 This will register a secure server for game 252490, any ip, port 28015. Again, more usage in the Facepunch.Steamworks.Test project.
