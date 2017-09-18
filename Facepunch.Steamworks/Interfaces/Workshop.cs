@@ -151,9 +151,20 @@ namespace Facepunch.Steamworks
         /// </summary>
         public Editor CreateItem( ItemType type )
         {
-            return new Editor() { workshop = this, Type = type };
+        	return CreateItem(this.steamworks.AppId, type);
         }
-
+        
+        /// <summary>
+        /// Create a new Editor object with the intention of creating a new item.
+        /// Your item won't actually be created until you call Publish() on the object.
+        /// Your item will be published to the provided appId.
+        /// </summary>
+        /// <remarks>You need to add app publish permissions for cross app uploading to work.</remarks> 
+        public Editor CreateItem( uint workshopUploadAppId, ItemType type )
+        {
+        	return new Editor() { workshop = this, WorkshopUploadAppId = workshopUploadAppId, Type = type };
+        }
+        
         /// <summary>
         /// Returns a class representing this ItemId. We don't query
         /// item name, description etc. We don't verify that item exists.

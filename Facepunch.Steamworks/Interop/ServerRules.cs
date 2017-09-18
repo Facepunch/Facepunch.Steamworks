@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -20,7 +21,7 @@ namespace Facepunch.Steamworks.Interop
         // The server that called us
         private ServerList.Server Server;
 
-        public ServerRules( ServerList.Server server, uint address, int queryPort )
+        public ServerRules( ServerList.Server server, IPAddress address, int queryPort )
         {
             Server = server;
 
@@ -32,7 +33,7 @@ namespace Facepunch.Steamworks.Interop
             //
             // Ask Steam to get the server rules, respond to our fake vtable
             //
-            Server.Client.native.servers.ServerRules( address, (ushort)queryPort, GetPtr() );
+            Server.Client.native.servers.ServerRules( Utility.IpToInt32( address ), (ushort)queryPort, GetPtr() );
         }
 
         public void Dispose()

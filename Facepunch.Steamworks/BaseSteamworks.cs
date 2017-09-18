@@ -111,7 +111,13 @@ namespace Facepunch.Steamworks
             while ( func() )
             {
                 Update();
-                System.Threading.Thread.Sleep( 1 );
+
+                const int waitPeriodMillis = 1;
+#if NETCORE
+                System.Threading.Tasks.Task.Delay( waitPeriodMillis ).Wait();
+#else
+                System.Threading.Thread.Sleep( waitPeriodMillis );
+#endif
             }
         }
     }

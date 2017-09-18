@@ -267,7 +267,12 @@ namespace Facepunch.Steamworks
 
                 while ( IsRunning )
                 {
-                    System.Threading.Thread.Sleep( 10 );
+                    const int waitPeriodMillis = 10;
+#if NETCORE
+                    System.Threading.Tasks.Task.Delay( waitPeriodMillis ).Wait();
+#else
+                    System.Threading.Thread.Sleep( waitPeriodMillis );
+#endif
                     workshop.steamworks.Update();
                 }
             }

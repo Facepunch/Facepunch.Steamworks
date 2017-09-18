@@ -1,23 +1,40 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net3.5</TargetFramework>
+  
+    <TargetFrameworks>netstandard2.0;net45;net35;net40</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>Facepunch.Steamworks</AssemblyName>
-    <PackageId>Facepunch.Steamworks</PackageId>
-    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
-    <RootNamespace>Facepunch.Steamworks</RootNamespace>
+	
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>TRACE;DEBUG;NETSTANDARD1_6;NETCORE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <NoWarn>1701;1702;1705;618;1591</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DefineConstants>TRACE;RELEASE;NETSTANDARD1_6;NETCORE</DefineConstants>
+    <DefineConstants>TRACE;RELEASE</DefineConstants>
     <NoWarn>1701;1702;1705;618;1591</NoWarn>
   </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <DefineConstants>$(DefineConstants);NETCORE</DefineConstants>
+  </PropertyGroup>
+  
+  <ItemGroup>
+	<Compile Remove="*AssemblyInfo.cs"/>
+  </ItemGroup>
+  
+  <PropertyGroup>
+	<FrameworkPathOverride Condition="'$(TargetFramework)' == 'net35'">C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v3.5\Profile\Client</FrameworkPathOverride>
+  </PropertyGroup>
+  
+ <PropertyGroup>
+	<FrameworkPathOverride Condition="'$(TargetFramework)' == 'net40'">C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\Profile\Client</FrameworkPathOverride>
+ </PropertyGroup>
 
 </Project>

@@ -94,6 +94,7 @@
   <ItemGroup>
     <Compile Include="Client\Achievements.cs" />
     <Compile Include="Client\Client.cs" />
+    <Compile Include="Client\Lobby.cs" />
     <Compile Include="Client\RichPresence.cs" />
     <Compile Include="Client\Leaderboard.cs" />
     <Compile Include="Client\App.cs" />
@@ -108,17 +109,17 @@
     <Compile Include="Server\Stats.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Facepunch.Steamworks\Facepunch.Steamworks.csproj">
-      <Project>{dc2d9fa9-f005-468f-8581-85c79f4e0034}</Project>
-      <Name>Facepunch.Steamworks</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Client\Serverlist.cs" />
     <Compile Include="Client\Stats.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Facepunch.Steamworks\Facepunch.Steamworks.csproj">
+      <Project>{91962664-eb42-472a-94c8-c4ffeb44cc4b}</Project>
+      <Name>Facepunch.Steamworks</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

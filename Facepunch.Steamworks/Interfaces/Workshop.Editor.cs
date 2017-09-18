@@ -25,6 +25,7 @@ namespace Facepunch.Steamworks
             public ItemType? Type { get; set; }
             public string Error { get; internal set; } = null;
             public string ChangeNote { get; set; } = "";
+            public uint WorkshopUploadAppId { get; set; }
 
             public enum VisibilityType : int
             {
@@ -113,8 +114,7 @@ namespace Facepunch.Steamworks
                 if ( !Type.HasValue )
                     throw new System.Exception( "Editor.Type must be set when creating a new item!" );
 
-                System.Diagnostics.Debug.WriteLine( "StartCreatingItem()" );
-                CreateItem = workshop.ugc.CreateItem( workshop.steamworks.AppId, (SteamNative.WorkshopFileType)(uint)Type, OnItemCreated );
+                CreateItem = workshop.ugc.CreateItem( WorkshopUploadAppId, (SteamNative.WorkshopFileType)(uint)Type, OnItemCreated );
             }
 
             private void OnItemCreated( SteamNative.CreateItemResult_t obj, bool Failed )
@@ -140,7 +140,7 @@ namespace Facepunch.Steamworks
 
             private void PublishChanges()
             {
-                UpdateHandle = workshop.ugc.StartItemUpdate( workshop.steamworks.AppId, Id );
+                UpdateHandle = workshop.ugc.StartItemUpdate(WorkshopUploadAppId, Id );
 
                 if ( Title != null )
                     workshop.ugc.SetItemTitle( UpdateHandle, Title );

@@ -55,11 +55,14 @@ Facepunch.Steamworks.Test/bin/Release/Facepunch.Steamworks.Test.dll
 Facepunch.Steamworks.Test/bin/Release/Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
 *.user
 *.cache
+*.idea
+*.vscode
 TestResults
 obj
 Facepunch.Steamworks/bin/Debug/Facepunch.Steamworks.Api.dll
 Facepunch.Steamworks/bin/Debug/Facepunch.Steamworks.dll
 Facepunch.Steamworks/bin/Release/Facepunch.Steamworks.dll
+Facepunch.Steamworks/bin
 *.opendb
 *.db
 Facepunch.Steamworks.dll
@@ -70,3 +73,4 @@ mscorlib.dll
 packages
 Generator/bin
 *.XML
+.vs
