@@ -7,19 +7,19 @@ using System.Text;
 
 namespace Facepunch.Steamworks
 {
-    public class Voice : IDisposable
+    public class Voice
     {
         const int ReadBufferSize = 1024 * 128;
 
         internal Client client;
 
-        internal IntPtr ReadCompressedBuffer;
-        internal IntPtr ReadUncompressedBuffer;
+        internal byte[] ReadCompressedBuffer = new byte[ReadBufferSize];
+        internal byte[] ReadUncompressedBuffer = new byte[ReadBufferSize];
 
         internal byte[] UncompressBuffer = new byte[1024 * 256];
 
-        public Action<IntPtr, int> OnCompressedData;
-        public Action<IntPtr, int> OnUncompressedData;
+        public Action<byte[], int> OnCompressedData;
+        public Action<byte[], int> OnUncompressedData;
 
         private System.Diagnostics.Stopwatch UpdateTimer = System.Diagnostics.Stopwatch.StartNew();
 
@@ -73,21 +73,12 @@ namespace Facepunch.Steamworks
         internal Voice( Client client )
         {
             this.client = client;
-
-            ReadCompressedBuffer = Marshal.AllocHGlobal( ReadBufferSize );
-            ReadUncompressedBuffer = Marshal.AllocHGlobal( ReadBufferSize );
-        }
-
-        public void Dispose()
-        {
-            Marshal.FreeHGlobal( ReadCompressedBuffer );
-            Marshal.FreeHGlobal( ReadUncompressedBuffer );
         }
 
         /// <summary>
         /// This gets called inside Update - so there's no need to call this manually if you're calling update
         /// </summary>
-        public void Update()
+        public unsafe void Update()
         {
             if ( OnCompressedData == null && OnUncompressedData == null )
                 return;
@@ -109,9 +100,13 @@ namespace Facepunch.Steamworks
                 return;
             }
 
-            result = client.native.user.GetVoice( OnCompressedData != null, ReadCompressedBuffer, ReadBufferSize, out bufferCompressedLastWrite,
-                                                    OnUncompressedData != null, (IntPtr) ReadUncompressedBuffer, ReadBufferSize, out bufferRegularLastWrite, 
-                                                    DesiredSampleRate == 0 ? OptimalSampleRate : DesiredSampleRate );
+            fixed (byte* compressedPtr = ReadCompressedBuffer)
+            fixed (byte* uncompressedPtr = ReadUncompressedBuffer)
+            {
+                result = client.native.user.GetVoice( OnCompressedData != null, (IntPtr) compressedPtr, ReadBufferSize, out bufferCompressedLastWrite,
+                                                        OnUncompressedData != null, (IntPtr) uncompressedPtr, ReadBufferSize, out bufferRegularLastWrite, 
+                                                        DesiredSampleRate == 0 ? OptimalSampleRate : DesiredSampleRate );
+            }
 
             IsRecording = true;
 
@@ -136,15 +131,31 @@ namespace Facepunch.Steamworks
             
         }
 
-        public unsafe bool Decompress( byte[] input, MemoryStream output, uint samepleRate = 0 )
+        public bool Decompress( byte[] input, MemoryStream output, uint samepleRate = 0 )
         {
+            return Decompress( input, 0, input.Length, output, samepleRate );
+        }
+
+        public bool Decompress( byte[] input, int inputsize, MemoryStream output, uint samepleRate = 0 )
+        {
+            return Decompress( input, 0, inputsize, output, samepleRate );
+        }
+
+        public unsafe bool Decompress( byte[] input, int inputoffset, int inputsize, MemoryStream output, uint samepleRate = 0 )
+        {
+            if ( inputoffset < 0 || inputoffset >= input.Length )
+                throw new ArgumentOutOfRangeException( "inputoffset" );
+
+            if ( inputsize <= 0 || inputoffset + inputsize > input.Length )
+                throw new ArgumentOutOfRangeException( "inputsize" );
+
             fixed ( byte* p = input )
             {
-                return Decompress( (IntPtr)p, 0, input.Length, output, samepleRate );
+                return Decompress( (IntPtr)p, inputoffset, inputsize, output, samepleRate );
             }
         }
 
-        public unsafe bool Decompress( IntPtr input, int inputoffset, int inputsize, MemoryStream output, uint samepleRate = 0 )
+        private unsafe bool Decompress( IntPtr input, int inputoffset, int inputsize, MemoryStream output, uint samepleRate = 0 )
         {
             if ( samepleRate == 0 )
                 samepleRate = OptimalSampleRate;

@@ -158,7 +158,6 @@ namespace Facepunch.Steamworks
         {
             if ( Voice != null )
             {
-                Voice.Dispose();
                 Voice = null;
             }
 
