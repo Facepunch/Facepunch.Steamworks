@@ -108,10 +108,16 @@ namespace Facepunch.Steamworks
         /// </summary>
         public void UpdateWhile( Func<bool> func )
         {
+            const int sleepMs = 1;
+
             while ( func() )
             {
                 Update();
-                System.Threading.Thread.Sleep( 1 );
+#if NET_CORE
+                System.Threading.Tasks.Task.Delay( sleepMs ).Wait();
+#else
+                System.Threading.Thread.Sleep( sleepMs );
+#endif
             }
         }
     }

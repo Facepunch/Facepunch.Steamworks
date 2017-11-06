@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.IO;
 
-#if !NETCORE
+#if !NET_CORE
 
 internal class SourceServerQuery :IDisposable
 {

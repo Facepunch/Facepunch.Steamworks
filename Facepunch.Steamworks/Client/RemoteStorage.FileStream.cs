@@ -75,7 +75,7 @@ namespace Facepunch.Steamworks
             remoteStorage.native.FileWriteStreamCancel( _handle );
         }
 
-#if NETCORE
+#if NET_CORE
         public void Close()
 #else
         public override void Close()

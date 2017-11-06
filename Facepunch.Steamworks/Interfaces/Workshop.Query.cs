@@ -227,11 +227,17 @@ namespace Facepunch.Steamworks
             /// </summary>
             public void Block()
             {
+                const int sleepMs = 10;
+
                 workshop.steamworks.Update();
 
                 while ( IsRunning )
                 {
-                    System.Threading.Thread.Sleep( 10 );
+#if NET_CORE
+                    System.Threading.Tasks.Task.Delay( sleepMs ).Wait();
+#else
+                    System.Threading.Thread.Sleep( sleepMs );
+#endif
                     workshop.steamworks.Update();
                 }
             }
