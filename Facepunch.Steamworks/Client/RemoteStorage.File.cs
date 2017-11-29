@@ -278,6 +278,19 @@ namespace Facepunch.Steamworks
             return true;
         }
 
+        /// <summary>
+        /// Remove this file from remote storage, while keeping a local copy.
+        /// Writing to this file again will re-add it to the cloud.
+        /// </summary>
+        /// <returns>True if the file was forgotten</returns>
+        public bool Forget()
+        {
+            if ( !Exists ) return false;
+            if ( _isUgc ) return false;
+
+            return remoteStorage.native.FileForget( FileName );
+        }
+
         private void GetUGCDetails()
         {
             if ( !_isUgc ) throw new InvalidOperationException();

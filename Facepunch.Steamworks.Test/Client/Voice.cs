@@ -21,17 +21,17 @@ namespace Facepunch.Steamworks.Test
                 int unCompressed = 0;
                 int compressed = 0;
 
-                client.Voice.OnCompressedData = ( ptr, length ) =>
+                client.Voice.OnCompressedData = ( buffer, length ) =>
                 {
                     compressed += length;
 
-                    if ( !client.Voice.Decompress( ptr, 0, length, decompressStream ) )
+                    if ( !client.Voice.Decompress( buffer, length, decompressStream ) )
                     {
                         Assert.Fail( "Decompress returned false" );
                     }
                 };
 
-                client.Voice.OnUncompressedData = ( ptr, length ) =>
+                client.Voice.OnUncompressedData = ( buffer, length ) =>
                 {
                     unCompressed += length;
                 };
@@ -62,7 +62,7 @@ namespace Facepunch.Steamworks.Test
             {
                 int compressed = 0;
 
-                client.Voice.OnCompressedData = ( ptr, length ) =>
+                client.Voice.OnCompressedData = ( buffer, length ) =>
                 {
                     compressed += length;
                 };
@@ -89,7 +89,7 @@ namespace Facepunch.Steamworks.Test
             {
                 int unCompressed = 0;
 
-                client.Voice.OnUncompressedData = ( ptr, length ) =>
+                client.Voice.OnUncompressedData = ( buffer, length ) =>
                 {
                     unCompressed += length;
                 };

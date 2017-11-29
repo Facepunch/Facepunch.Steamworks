@@ -263,15 +263,16 @@ namespace Facepunch.Steamworks
             /// </summary>
             public void Block()
             {
+                const int sleepMs = 10;
+
                 workshop.steamworks.Update();
 
                 while ( IsRunning )
                 {
-                    const int waitPeriodMillis = 10;
-#if NETCORE
-                    System.Threading.Tasks.Task.Delay( waitPeriodMillis ).Wait();
+#if NET_CORE
+                    System.Threading.Tasks.Task.Delay( sleepMs ).Wait();
 #else
-                    System.Threading.Thread.Sleep( waitPeriodMillis );
+                    System.Threading.Thread.Sleep( sleepMs );
 #endif
                     workshop.steamworks.Update();
                 }

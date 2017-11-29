@@ -63,7 +63,11 @@ Or use it in a using block if you can.
 To create a server do this.
 
 ```csharp
-var server = new Facepunch.Steamworks.Server( 252490, 0, 28015, true, "MyGame453" );
+ServerInit options = new ServerInit("GameDirectoryName", "GameDescription");
+```
+
+```csharp
+var server = new Facepunch.Steamworks.Server(252490, options);
 ```
 
 This will register a secure server for game 252490, any ip, port 28015. Again, more usage in the Facepunch.Steamworks.Test project.
@@ -108,7 +112,7 @@ The TLDR is before you create the Client or the Server, call this to let Facepun
 Facepunch.Steamworks.Config.ForUnity( Application.platform.ToString() );
 ```
 
-You'll also want to put steam_api64.dll and steam_appid.txt (on windows 64) in your project root next to Assets.
+You'll also want to put steam_api64.dll and steam_appid.txt (on windows 64) in your project root next to Assets, and use an editor script like [this](https://github.com/Facepunch/Facepunch.Steamworks.Unity/blob/master/Assets/Scripts/Editor/CopySteamLibraries.cs) to copy them into standalone builds.
 
 # Help
 

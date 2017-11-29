@@ -37,7 +37,7 @@ namespace SteamNative
                 {
                     _os = Facepunch.Steamworks.OperatingSystem.Windows;
 
-#if !NETCORE
+#if !NET_CORE
                     //
                     // These checks aren't so accurate on older versions of mono
                     //
