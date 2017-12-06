@@ -127,6 +127,15 @@ namespace Facepunch.Steamworks
 
             Client.native.friends.RequestFriendRichPresence( Id );
         }
+
+        /// <summary>
+        /// This will return null if you don't have the target user's avatar in your cache.
+        /// Which usually happens for people not on your friends list.
+        /// </summary>
+        public Image GetAvatar( Friends.AvatarSize size )
+        {
+            return Client.Friends.GetCachedAvatar( size, Id );
+        }
     }
 
     /// <summary>

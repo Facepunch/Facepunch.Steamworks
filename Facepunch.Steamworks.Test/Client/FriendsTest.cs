@@ -24,6 +24,8 @@ namespace Facepunch.Steamworks.Test
                 foreach ( var friend in client.Friends.All )
                 {
                     Console.WriteLine( "{0}: {1} (Friend:{2}) (Blocked:{3})", friend.Id, friend.Name, friend.IsFriend, friend.IsBlocked );
+
+                    Assert.IsNotNull(friend.GetAvatar( Steamworks.Friends.AvatarSize.Medium ));
                 }
             }
         }
