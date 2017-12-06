@@ -317,9 +317,9 @@ namespace Generator
             WriteLine( "//" );
             WriteLine( "// Allocate a handle to each function, so they don't get disposed" );
             WriteLine( "//" );
-            WriteLine( "handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );" );
-            WriteLine( "handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );" );
-            WriteLine( "handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );" );
+            WriteLine( "handle.FuncA = GCHandle.Alloc( funcA );" );
+            WriteLine( "handle.FuncB = GCHandle.Alloc( funcB );" );
+            WriteLine( "handle.FuncC = GCHandle.Alloc( funcC );" );
             WriteLine();
 
             WriteLine( "//" );
