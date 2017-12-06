@@ -145,6 +145,8 @@ namespace Facepunch.Steamworks
         internal Friends( Client c )
         {
             client = c;
+
+            SteamNative.PersonaStateChange_t.RegisterCallback( client, OnPersonaStateChange );
         }
 
         /// <summary>
@@ -253,20 +255,23 @@ namespace Facepunch.Steamworks
             Large
         }
 
-        public Image GetAvatar( AvatarSize size, ulong steamid )
+        /// <summary>
+        /// Try to get the avatar immediately. This should work for people on your friends list.
+        /// </summary>
+        public Image GetCachedAvatar( AvatarSize size, ulong steamid )
         {
             var imageid = 0;
 
-            switch ( size )
+            switch (size)
             {
                 case AvatarSize.Small:
-                    imageid = client.native.friends.GetSmallFriendAvatar( steamid );
+                    imageid = client.native.friends.GetSmallFriendAvatar(steamid);
                     break;
                 case AvatarSize.Medium:
-                    imageid = client.native.friends.GetMediumFriendAvatar( steamid );
+                    imageid = client.native.friends.GetMediumFriendAvatar(steamid);
                     break;
                 case AvatarSize.Large:
-                    imageid = client.native.friends.GetLargeFriendAvatar( steamid );
+                    imageid = client.native.friends.GetLargeFriendAvatar(steamid);
                     break;
             }
 
@@ -275,18 +280,52 @@ namespace Facepunch.Steamworks
                 Id = imageid
             };
 
-            if ( imageid == 0 )
+            if (imageid != 0 && img.TryLoad(client.native.utils))
                 return img;
 
-            if ( img.TryLoad( client.native.utils ) )
-                return img;
-
-            throw new System.NotImplementedException( "Deferred Avatar Loading Todo" );
-            // Add to image loading list
-
-            //return img;
+            return null;
         }
 
+
+        /// <summary>
+        /// Callback will be called when the avatar is ready. If we fail to get an
+        /// avatar, it'll be called with a null Image.
+        /// </summary>
+        public void GetAvatar( AvatarSize size, ulong steamid, Action<Image> callback )
+        {
+            // Maybe we already have it downloaded?
+            var image = GetCachedAvatar(size, steamid);
+            if ( image != null )
+            {
+                callback(image);
+                return;
+            }
+
+            // Lets request it from Steam
+            if (!client.native.friends.RequestUserInformation(steamid, false))
+            {
+                // Steam told us to get fucked
+                callback(null);
+                return;
+            }
+
+            PersonaCallbacks.Add( new PersonaCallback
+            {
+                SteamId = steamid,
+                Callback = () =>
+                {
+                    callback( GetCachedAvatar(size, steamid) );
+                }
+            });
+        }
+
+        private class PersonaCallback
+        {
+            public ulong SteamId;
+            public Action Callback;
+        }
+
+        List<PersonaCallback> PersonaCallbacks = new List<PersonaCallback>();
 
         public SteamFriend Get( ulong steamid )
         {
@@ -300,5 +339,11 @@ namespace Facepunch.Steamworks
 
             return f;
         }
+
+        private void OnPersonaStateChange( PersonaStateChange_t data, bool error )
+        {
+            
+        }
+
     }
 }

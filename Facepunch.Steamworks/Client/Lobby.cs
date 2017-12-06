@@ -377,12 +377,14 @@ namespace Facepunch.Steamworks
 
         internal void OnLobbyStateUpdatedAPI(LobbyChatUpdate_t callback, bool error)
         {
-            if (error || callback.SteamIDLobby != CurrentLobby) { return; }
+            if (error || callback.SteamIDLobby != CurrentLobby)
+                return;
+
             MemberStateChange change = (MemberStateChange)callback.GfChatMemberStateChange;
             ulong initiator = callback.SteamIDMakingChange;
             ulong affected = callback.SteamIDUserChanged;
 
-            if (OnLobbyStateChanged != null) { OnLobbyStateChanged(change, initiator, affected); }
+            OnLobbyStateChanged?.Invoke(change, initiator, affected);
         }
 
         /// <summary>

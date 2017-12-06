@@ -50,21 +50,43 @@ namespace Facepunch.Steamworks.Test
                 Assert.IsTrue( client.IsValid );
 
                 var friend = client.Friends.All.First();
+                bool passed = false;
 
-                var img = client.Friends.GetAvatar( Steamworks.Friends.AvatarSize.Medium, friend.Id );
+                client.Friends.GetAvatar( Steamworks.Friends.AvatarSize.Medium, friend.Id, (avatar) =>
+                {
+                    Assert.AreEqual(avatar.Width, 64);
+                    Assert.AreEqual(avatar.Height, 64);
+                    Assert.AreEqual(avatar.Data.Length, avatar.Width * avatar.Height * 4);
 
-                Assert.AreEqual( img.Width, 64 );
-                Assert.AreEqual( img.Height, 64 );
+                    DrawImage(avatar);
+                    passed = true;
+                });
 
-                while ( !img.IsLoaded && !img.IsError )
+                while (passed == false )
                 {
                     client.Update();
                     System.Threading.Thread.Sleep( 10 );
                 }
+            }
+        }
 
-                Assert.AreEqual( img.Data.Length, img.Width * img.Height * 4 );
+        [TestMethod]
+        public void CachedAvatar()
+        {
+            using (var client = new Facepunch.Steamworks.Client(252490))
+            {
+                Assert.IsTrue(client.IsValid);
 
-                DrawImage( img );
+                var friend = client.Friends.All.First();
+
+                var image = client.Friends.GetCachedAvatar( Steamworks.Friends.AvatarSize.Medium, friend.Id );
+
+                if (image != null)
+                {
+                    Assert.AreEqual(image.Width, 64);
+                    Assert.AreEqual(image.Height, 64);
+                    Assert.AreEqual(image.Data.Length, image.Width * image.Height * 4);
+                }
             }
         }
 
