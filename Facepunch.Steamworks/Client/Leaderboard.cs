@@ -132,7 +132,8 @@ namespace Facepunch.Steamworks
         /// Subscores are totally optional, and can be used for other game defined data such as laps etc.. although
         /// they have no bearing on sorting at all
         /// If onlyIfBeatsOldScore is true, the score will only be updated if it beats the existing score, else it will always
-        /// be updated.
+        /// be updated. Beating the existing score is subjective - and depends on how your leaderboard was set up as to whether
+        /// that means higher or lower.
         /// </summary>
         public bool AddScore( bool onlyIfBeatsOldScore, int score, params int[] subscores )
         {

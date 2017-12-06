@@ -490,7 +490,11 @@ namespace Facepunch.Steamworks
         /// </summary>
         public void Leave()
         {
-            if (CurrentLobby != 0) { client.native.matchmaking.LeaveLobby(CurrentLobby); }
+            if (CurrentLobby != 0)
+            {
+                client.native.matchmaking.LeaveLobby(CurrentLobby);
+            }
+
             CurrentLobby = 0;
             CurrentLobbyData = null;
         }
@@ -508,7 +512,6 @@ namespace Facepunch.Steamworks
         /// <returns>Array of member SteamIDs</returns>
         public ulong[] GetMemberIDs()
         {
-
             ulong[] memIDs = new ulong[NumMembers];
             for (int i = 0; i < NumMembers; i++)
             {
@@ -524,14 +527,15 @@ namespace Facepunch.Steamworks
         /// <returns></returns>
         public bool UserIsInCurrentLobby(ulong steamID)
         {
-            if(CurrentLobby == 0) { return false; }
+            if ( CurrentLobby == 0 )
+                return false;
+
             ulong[] mems = GetMemberIDs();
+
             for (int i = 0; i < mems.Length; i++)
             {
-                if(mems[i] == steamID)
-                {
+                if ( mems[i] == steamID )
                     return true;
-                }
             }
 
             return false;
