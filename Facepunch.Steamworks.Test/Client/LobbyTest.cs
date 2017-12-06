@@ -273,6 +273,12 @@ namespace Facepunch.Steamworks.Test
                     Assert.IsTrue(message == testString);
                 };
 
+                client.Lobby.OnChatStringRecieved = (steamID, message) =>
+                {
+                    Console.WriteLine("message recieved");
+                    Assert.IsTrue(message == testString);
+                };
+
                 client.Lobby.Create(Steamworks.Lobby.Type.Public, 10);
 
                 var sw = Stopwatch.StartNew();

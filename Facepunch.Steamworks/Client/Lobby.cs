@@ -318,34 +318,35 @@ namespace Facepunch.Steamworks
             }
         }
 
+        private static byte[] chatMessageData = new byte[1024 * 4];
+
         private unsafe void OnLobbyChatMessageRecievedAPI(LobbyChatMsg_t callback, bool error)
         {
             //from Client.Networking
-            if(error || callback.SteamIDLobby != CurrentLobby) { return; }
+            if(error || callback.SteamIDLobby != CurrentLobby)
+                return;
 
-            byte[] ReceiveBuffer = new byte[1024];
             SteamNative.CSteamID steamid = 1;
-            ChatEntryType chatEntryType; //not used
+            ChatEntryType chatEntryType; // "If set then this will just always return k_EChatEntryTypeChatMsg. This can usually just be set to NULL."
             int readData = 0;
-            fixed (byte* p = ReceiveBuffer)
+            fixed (byte* p = chatMessageData)
             {
-                readData = client.native.matchmaking.GetLobbyChatEntry(CurrentLobby, (int)callback.ChatID, out steamid, (IntPtr)p, ReceiveBuffer.Length, out chatEntryType);
-                while (ReceiveBuffer.Length < readData)
-                {
-                    ReceiveBuffer = new byte[readData + 1024];
-                    readData = client.native.matchmaking.GetLobbyChatEntry(CurrentLobby, (int)callback.ChatID, out steamid, (IntPtr)p, ReceiveBuffer.Length, out chatEntryType);
-                }
-                
+                readData = client.native.matchmaking.GetLobbyChatEntry(CurrentLobby, (int)callback.ChatID, out steamid, (IntPtr)p, chatMessageData.Length, out chatEntryType);                
             }
 
-            if (OnChatMessageRecieved != null) { OnChatMessageRecieved(steamid, ReceiveBuffer, readData); }
-
+            OnChatMessageRecieved?.Invoke(steamid, chatMessageData, readData);
+            OnChatStringRecieved?.Invoke(steamid, Encoding.UTF8.GetString(chatMessageData));
         }
 
         /// <summary>
         /// Callback to get chat messages. Use Encoding.UTF8.GetString to retrive the message.
         /// </summary>
         public Action<ulong, byte[], int> OnChatMessageRecieved;
+
+        /// <summary>
+        /// Like OnChatMessageRecieved but the data is converted to a string
+        /// </summary>
+        public Action<ulong, string> OnChatStringRecieved;
 
         /// <summary>
         /// Broadcasts a chat message to the all the users in the lobby users in the lobby (including the local user) will receive a LobbyChatMsg_t callback.
@@ -376,12 +377,14 @@ namespace Facepunch.Steamworks
 
         internal void OnLobbyStateUpdatedAPI(LobbyChatUpdate_t callback, bool error)
         {
-            if (error || callback.SteamIDLobby != CurrentLobby) { return; }
+            if (error || callback.SteamIDLobby != CurrentLobby)
+                return;
+
             MemberStateChange change = (MemberStateChange)callback.GfChatMemberStateChange;
             ulong initiator = callback.SteamIDMakingChange;
             ulong affected = callback.SteamIDUserChanged;
 
-            if (OnLobbyStateChanged != null) { OnLobbyStateChanged(change, initiator, affected); }
+            OnLobbyStateChanged?.Invoke(change, initiator, affected);
         }
 
         /// <summary>
@@ -487,7 +490,11 @@ namespace Facepunch.Steamworks
         /// </summary>
         public void Leave()
         {
-            if (CurrentLobby != 0) { client.native.matchmaking.LeaveLobby(CurrentLobby); }
+            if (CurrentLobby != 0)
+            {
+                client.native.matchmaking.LeaveLobby(CurrentLobby);
+            }
+
             CurrentLobby = 0;
             CurrentLobbyData = null;
         }
@@ -505,7 +512,6 @@ namespace Facepunch.Steamworks
         /// <returns>Array of member SteamIDs</returns>
         public ulong[] GetMemberIDs()
         {
-
             ulong[] memIDs = new ulong[NumMembers];
             for (int i = 0; i < NumMembers; i++)
             {
@@ -521,14 +527,15 @@ namespace Facepunch.Steamworks
         /// <returns></returns>
         public bool UserIsInCurrentLobby(ulong steamID)
         {
-            if(CurrentLobby == 0) { return false; }
+            if ( CurrentLobby == 0 )
+                return false;
+
             ulong[] mems = GetMemberIDs();
+
             for (int i = 0; i < mems.Length; i++)
             {
-                if(mems[i] == steamID)
-                {
+                if ( mems[i] == steamID )
                     return true;
-                }
             }
 
             return false;

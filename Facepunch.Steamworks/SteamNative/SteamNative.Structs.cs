@@ -107,9 +107,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -148,9 +148,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -252,9 +252,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -293,9 +293,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -409,9 +409,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -450,9 +450,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -560,9 +560,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -601,9 +601,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -711,9 +711,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -752,9 +752,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -866,9 +866,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -915,9 +915,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -986,9 +986,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -1027,9 +1027,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -1134,9 +1134,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -1175,9 +1175,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -1281,9 +1281,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -1322,9 +1322,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -1438,9 +1438,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -1487,9 +1487,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -1558,9 +1558,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -1599,9 +1599,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -1785,9 +1785,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -1826,9 +1826,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -1930,9 +1930,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -1971,9 +1971,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -2082,9 +2082,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -2123,9 +2123,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -2230,9 +2230,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -2271,9 +2271,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -2384,9 +2384,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -2425,9 +2425,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -2545,9 +2545,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -2594,9 +2594,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -2665,9 +2665,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -2706,9 +2706,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -2813,9 +2813,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -2854,9 +2854,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -2963,9 +2963,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -3004,9 +3004,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -3114,9 +3114,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -3155,9 +3155,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -3262,9 +3262,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -3303,9 +3303,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -3420,9 +3420,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -3461,9 +3461,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -3567,9 +3567,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -3608,9 +3608,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -3725,9 +3725,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -3774,9 +3774,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -3845,9 +3845,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -3886,9 +3886,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -3993,9 +3993,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -4034,9 +4034,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -4154,9 +4154,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -4203,9 +4203,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -4274,9 +4274,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -4315,9 +4315,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -4437,9 +4437,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -4486,9 +4486,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -4557,9 +4557,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -4598,9 +4598,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -4723,9 +4723,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -4772,9 +4772,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -4843,9 +4843,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -4884,9 +4884,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -5008,9 +5008,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -5057,9 +5057,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -5128,9 +5128,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -5169,9 +5169,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -5273,9 +5273,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -5314,9 +5314,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -5424,9 +5424,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -5465,9 +5465,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -5579,9 +5579,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -5628,9 +5628,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -5699,9 +5699,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -5740,9 +5740,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -5849,9 +5849,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -5890,9 +5890,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -6192,9 +6192,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -6233,9 +6233,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -6343,9 +6343,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -6384,9 +6384,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -6509,9 +6509,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -6558,9 +6558,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -6629,9 +6629,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -6670,9 +6670,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -6780,9 +6780,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -6821,9 +6821,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -6934,9 +6934,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -6975,9 +6975,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -7088,9 +7088,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -7129,9 +7129,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -7242,9 +7242,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -7283,9 +7283,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -7397,9 +7397,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -7446,9 +7446,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -7517,9 +7517,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -7558,9 +7558,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -7668,9 +7668,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -7709,9 +7709,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -7826,9 +7826,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -7875,9 +7875,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -7946,9 +7946,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -7987,9 +7987,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -8096,9 +8096,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -8137,9 +8137,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -8241,9 +8241,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -8282,9 +8282,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -8427,9 +8427,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -8468,9 +8468,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -8578,9 +8578,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -8619,9 +8619,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -8739,9 +8739,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -8780,9 +8780,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -8887,9 +8887,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -8928,9 +8928,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -9050,9 +9050,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -9099,9 +9099,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -9170,9 +9170,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -9211,9 +9211,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -9323,9 +9323,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -9364,9 +9364,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -9481,9 +9481,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -9530,9 +9530,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -9601,9 +9601,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -9642,9 +9642,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -9767,9 +9767,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -9816,9 +9816,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -9887,9 +9887,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -9928,9 +9928,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -10045,9 +10045,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -10094,9 +10094,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -10165,9 +10165,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -10206,9 +10206,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -10336,9 +10336,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -10385,9 +10385,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -10456,9 +10456,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -10497,9 +10497,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -10614,9 +10614,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -10663,9 +10663,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -10734,9 +10734,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -10775,9 +10775,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -10897,9 +10897,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -10946,9 +10946,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -11017,9 +11017,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -11058,9 +11058,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -11189,9 +11189,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -11238,9 +11238,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -11309,9 +11309,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -11350,9 +11350,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -11540,9 +11540,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -11589,9 +11589,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -11660,9 +11660,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -11701,9 +11701,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -11837,9 +11837,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -11886,9 +11886,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -11957,9 +11957,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -11998,9 +11998,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -12127,9 +12127,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -12176,9 +12176,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -12247,9 +12247,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -12288,9 +12288,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -12395,9 +12395,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -12436,9 +12436,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -12543,9 +12543,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -12584,9 +12584,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -12691,9 +12691,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -12732,9 +12732,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -12849,9 +12849,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -12898,9 +12898,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -12969,9 +12969,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -13010,9 +13010,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -13120,9 +13120,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -13161,9 +13161,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -13276,9 +13276,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -13317,9 +13317,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -13437,9 +13437,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -13486,9 +13486,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -13557,9 +13557,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -13598,9 +13598,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -13731,9 +13731,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -13780,9 +13780,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -13851,9 +13851,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -13892,9 +13892,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -14011,9 +14011,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -14060,9 +14060,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -14131,9 +14131,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -14172,9 +14172,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -14282,9 +14282,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -14323,9 +14323,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -14437,9 +14437,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -14486,9 +14486,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -14557,9 +14557,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -14598,9 +14598,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -14721,9 +14721,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -14770,9 +14770,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -14841,9 +14841,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -14882,9 +14882,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -15046,9 +15046,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -15095,9 +15095,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -15166,9 +15166,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -15207,9 +15207,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -15314,9 +15314,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -15355,9 +15355,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -15475,9 +15475,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -15516,9 +15516,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -15633,9 +15633,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -15682,9 +15682,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -15753,9 +15753,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -15794,9 +15794,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -15914,9 +15914,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -15963,9 +15963,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -16034,9 +16034,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -16075,9 +16075,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -16204,9 +16204,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -16253,9 +16253,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -16324,9 +16324,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -16365,9 +16365,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -16482,9 +16482,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -16531,9 +16531,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -16602,9 +16602,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -16643,9 +16643,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -16747,9 +16747,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -16788,9 +16788,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -16905,9 +16905,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -16946,9 +16946,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -17063,9 +17063,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -17112,9 +17112,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -17183,9 +17183,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -17224,9 +17224,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -17341,9 +17341,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -17390,9 +17390,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -17461,9 +17461,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -17502,9 +17502,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -17612,9 +17612,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -17653,9 +17653,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -17770,9 +17770,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -17819,9 +17819,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -17890,9 +17890,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -17931,9 +17931,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -18035,9 +18035,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -18076,9 +18076,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -18183,9 +18183,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -18224,9 +18224,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -18339,9 +18339,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -18380,9 +18380,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -18505,9 +18505,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -18554,9 +18554,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -18625,9 +18625,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -18666,9 +18666,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -18823,9 +18823,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -18864,9 +18864,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -18971,9 +18971,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -19012,9 +19012,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -19125,9 +19125,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -19166,9 +19166,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -19273,9 +19273,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -19314,9 +19314,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -19418,9 +19418,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -19459,9 +19459,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -19565,9 +19565,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -19606,9 +19606,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -19712,9 +19712,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -19753,9 +19753,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -19857,9 +19857,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -19898,9 +19898,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -20002,9 +20002,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -20043,9 +20043,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -20147,9 +20147,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -20188,9 +20188,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -20292,9 +20292,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -20333,9 +20333,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -20451,9 +20451,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -20492,9 +20492,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -20599,9 +20599,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -20640,9 +20640,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -20753,9 +20753,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -20794,9 +20794,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -20907,9 +20907,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -20948,9 +20948,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -21340,9 +21340,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -21389,9 +21389,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -21460,9 +21460,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -21501,9 +21501,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -21610,9 +21610,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -21651,9 +21651,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -21773,9 +21773,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -21822,9 +21822,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -21893,9 +21893,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -21934,9 +21934,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -22053,9 +22053,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -22102,9 +22102,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -22173,9 +22173,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -22214,9 +22214,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -22324,9 +22324,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -22365,9 +22365,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -22487,9 +22487,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -22536,9 +22536,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -22607,9 +22607,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -22648,9 +22648,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -22770,9 +22770,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -22819,9 +22819,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -22890,9 +22890,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -22931,9 +22931,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -23063,9 +23063,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -23112,9 +23112,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -23183,9 +23183,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -23224,9 +23224,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -23338,9 +23338,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -23387,9 +23387,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -23458,9 +23458,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -23499,9 +23499,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -23613,9 +23613,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -23662,9 +23662,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -23733,9 +23733,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -23774,9 +23774,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -23894,9 +23894,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -23943,9 +23943,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -24014,9 +24014,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -24055,9 +24055,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -24175,9 +24175,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -24224,9 +24224,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -24295,9 +24295,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -24336,9 +24336,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -24440,9 +24440,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -24481,9 +24481,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -24585,9 +24585,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -24626,9 +24626,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -24740,9 +24740,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -24789,9 +24789,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -24860,9 +24860,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -24901,9 +24901,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -25167,9 +25167,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -25208,9 +25208,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -25318,9 +25318,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -25359,9 +25359,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -25466,9 +25466,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -25507,9 +25507,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -25614,9 +25614,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -25655,9 +25655,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -25765,9 +25765,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -25806,9 +25806,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -25920,9 +25920,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -25961,9 +25961,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -26082,9 +26082,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -26123,9 +26123,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -26244,9 +26244,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -26285,9 +26285,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -26408,9 +26408,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -26449,9 +26449,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -26556,9 +26556,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -26597,9 +26597,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -26704,9 +26704,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -26745,9 +26745,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -26855,9 +26855,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -26896,9 +26896,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -27018,9 +27018,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -27059,9 +27059,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -27166,9 +27166,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -27207,9 +27207,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -27314,9 +27314,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -27355,9 +27355,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -27462,9 +27462,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -27503,9 +27503,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -27610,9 +27610,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -27651,9 +27651,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -27755,9 +27755,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -27796,9 +27796,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -27944,9 +27944,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -27985,9 +27985,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -28089,9 +28089,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -28130,9 +28130,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -28255,9 +28255,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -28304,9 +28304,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -28375,9 +28375,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -28416,9 +28416,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -28520,9 +28520,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -28561,9 +28561,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -28673,9 +28673,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -28714,9 +28714,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -28821,9 +28821,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -28862,9 +28862,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -28969,9 +28969,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -29010,9 +29010,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -29122,9 +29122,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -29163,9 +29163,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -29270,9 +29270,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -29311,9 +29311,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -29425,9 +29425,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -29466,9 +29466,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -29570,9 +29570,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -29611,9 +29611,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -29724,9 +29724,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -29765,9 +29765,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -29882,9 +29882,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -29923,9 +29923,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -30057,9 +30057,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -30106,9 +30106,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -30177,9 +30177,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -30218,9 +30218,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -30332,9 +30332,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -30381,9 +30381,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -30452,9 +30452,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -30493,9 +30493,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -30619,9 +30619,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -30668,9 +30668,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -30739,9 +30739,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -30780,9 +30780,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -30897,9 +30897,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -30946,9 +30946,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -31017,9 +31017,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -31058,9 +31058,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -31175,9 +31175,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -31224,9 +31224,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -31295,9 +31295,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -31336,9 +31336,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -31440,9 +31440,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -31481,9 +31481,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -31588,9 +31588,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across
@@ -31629,9 +31629,9 @@ namespace SteamNative
 				//
 				// Allocate a handle to each function, so they don't get disposed
 				//
-				handle.FuncA = GCHandle.Alloc( funcA, GCHandleType.Pinned );
-				handle.FuncB = GCHandle.Alloc( funcB, GCHandleType.Pinned );
-				handle.FuncC = GCHandle.Alloc( funcC, GCHandleType.Pinned );
+				handle.FuncA = GCHandle.Alloc( funcA );
+				handle.FuncB = GCHandle.Alloc( funcB );
+				handle.FuncC = GCHandle.Alloc( funcC );
 				
 				//
 				// Create the VTable by manually allocating the memory and copying across

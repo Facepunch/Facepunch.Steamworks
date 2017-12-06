@@ -433,6 +433,21 @@ namespace Facepunch.Steamworks.Test
                 item.Tags.Add( "Apple" );
                 item.Tags.Add( "Banana" );
 
+                // Make a folder
+                var testFolder = new System.IO.DirectoryInfo("BlahBlah");
+                if (!testFolder.Exists) testFolder.Create();
+
+                item.Folder = testFolder.FullName;
+
+                // Upload a file of random bytes
+                var rand = new Random();
+                var testFile = new byte[1024 * 1024 * 32];
+                rand.NextBytes(testFile);
+                System.IO.File.WriteAllBytes( testFolder.FullName + "/testfile1.bin", testFile);
+
+
+                Console.WriteLine(item.Folder);
+
                 try
                 {
                     item.Publish();
@@ -440,7 +455,11 @@ namespace Facepunch.Steamworks.Test
                     while ( item.Publishing )
                     {
                         client.Update();
-                        Thread.Sleep( 100 );
+                        Thread.Sleep( 10 );
+
+                        Console.WriteLine("Progress: " + item.Progress);
+                        Console.WriteLine("BytesUploaded: " + item.BytesUploaded);
+                        Console.WriteLine("BytesTotal: " + item.BytesTotal);
                     }
 
                     Assert.IsFalse( item.Publishing );
@@ -469,6 +488,8 @@ namespace Facepunch.Steamworks.Test
                 {
                     Console.WriteLine( "Deleting: {0}", item.Id );
                     item.Delete();
+
+                    System.IO.File.Delete(testFolder.FullName + "/testfile.bin");
                 }
             }
         }

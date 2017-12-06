@@ -208,6 +208,7 @@ namespace Facepunch.Steamworks
                     else throw new System.Exception( "CreateItemResult_t Failed" );
                 }
 
+                UpdateHandle = 0;
                 SubmitItemUpdate = null;
                 NeedToAgreeToWorkshopLegal = obj.UserNeedsToAcceptWorkshopLegalAgreement;
                 Publishing = false;

@@ -71,9 +71,9 @@ namespace Facepunch.Steamworks.Interop
                 ThisVTable.InternalRulesFailedToRespond db = ( _ ) => InternalOnRulesFailedToRespond();
                 ThisVTable.InternalRulesRefreshComplete dc = ( _ ) => InternalOnRulesRefreshComplete();
 
-                RulesRespondPin = GCHandle.Alloc( da, GCHandleType.Pinned );
-                FailedRespondPin = GCHandle.Alloc( db, GCHandleType.Pinned );
-                CompletePin = GCHandle.Alloc( dc, GCHandleType.Pinned );
+                RulesRespondPin = GCHandle.Alloc( da );
+                FailedRespondPin = GCHandle.Alloc( db );
+                CompletePin = GCHandle.Alloc( dc );
 
                 var t = new ThisVTable()
                 {
@@ -93,9 +93,9 @@ namespace Facepunch.Steamworks.Interop
                 StdVTable.InternalRulesFailedToRespond db = InternalOnRulesFailedToRespond;
                 StdVTable.InternalRulesRefreshComplete dc = InternalOnRulesRefreshComplete;
 
-                RulesRespondPin = GCHandle.Alloc( da, GCHandleType.Pinned );
-                FailedRespondPin = GCHandle.Alloc( db, GCHandleType.Pinned );
-                CompletePin = GCHandle.Alloc( dc, GCHandleType.Pinned );
+                RulesRespondPin = GCHandle.Alloc( da );
+                FailedRespondPin = GCHandle.Alloc( db );
+                CompletePin = GCHandle.Alloc( dc );
 
                 var t = new StdVTable()
                 {
