@@ -100,6 +100,11 @@ namespace Facepunch.Steamworks
             return true;
         }
 
+        /// <summary>
+        /// Called when the leaderboard information is successfully recieved from Steam
+        /// </summary>
+        public Action OnBoardInformation;
+
         internal void OnBoardCreated( LeaderboardFindResult_t result, bool error )
         {
             if ( error || ( result.LeaderboardFound == 0 ) )
@@ -114,6 +119,8 @@ namespace Facepunch.Steamworks
                 {
                     Name = client.native.userstats.GetLeaderboardName( BoardId );
                     TotalEntries = client.native.userstats.GetLeaderboardEntryCount( BoardId );
+
+                    OnBoardInformation?.Invoke();
                 }
             }
 
