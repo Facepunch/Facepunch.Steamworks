@@ -43,56 +43,54 @@ namespace Facepunch.Steamworks
             {
                 get
                 {
-                    if ( !Publishing ) return 1.0;
-                    if ( CreateItem != null ) return 0.0;
-                    if ( SubmitItemUpdate == null ) return 1.0;
+                    var bt = BytesTotal;
+                    if (bt == 0) return 0;
 
-                    ulong b = 0;
-                    ulong t = 0;
-
-                    workshop.steamworks.native.ugc.GetItemUpdateProgress( UpdateHandle, out b, out t );
-
-                    if ( t == 0 )
-                        return 0;
-
-                    return (double)b / (double) t;
+                    return (double)BytesUploaded / (double)bt;
                 }
             }
+
+            private int bytesUploaded = 0;
 
             public int BytesUploaded
             {
                 get
                 {
-                    if ( !Publishing ) return 0;
-                    if ( CreateItem != null ) return 0;
-                    if ( SubmitItemUpdate == null ) return 0;
+                    if ( !Publishing ) return bytesUploaded;
+                    if (UpdateHandle == 0) return bytesUploaded;
 
                     ulong b = 0;
                     ulong t = 0;
 
                     workshop.steamworks.native.ugc.GetItemUpdateProgress( UpdateHandle, out b, out t );
-                    return (int) b;
+                    bytesUploaded = Math.Max( bytesUploaded, (int) b );
+                    return (int)bytesUploaded;
                 }
             }
+
+            private int bytesTotal = 0;
 
             public int BytesTotal
             {
                 get
                 {
-                    if ( !Publishing ) return 0;
-                    if ( CreateItem != null ) return 0;
-                    if ( SubmitItemUpdate == null ) return 0;
+                    if ( !Publishing ) return bytesTotal;
+                    if (UpdateHandle == 0 ) return bytesTotal;
 
                     ulong b = 0;
                     ulong t = 0;
 
                     workshop.steamworks.native.ugc.GetItemUpdateProgress( UpdateHandle, out b, out t );
-                    return (int)t;
+                    bytesTotal = Math.Max(bytesTotal, (int)t);
+                    return (int)bytesTotal;
                 }
             }
 
             public void Publish()
             {
+                bytesUploaded = 0;
+                bytesTotal = 0;
+
                 Publishing = true;
                 Error = null;
 
@@ -117,6 +115,7 @@ namespace Facepunch.Steamworks
             {
                 NeedToAgreeToWorkshopLegal = obj.UserNeedsToAcceptWorkshopLegalAgreement;
                 CreateItem.Dispose();
+                CreateItem = null;
 
                 if ( obj.Result == SteamNative.Result.OK && !Failed )
                 {
@@ -188,6 +187,7 @@ namespace Facepunch.Steamworks
                 if ( Failed )
                     throw new System.Exception( "CreateItemResult_t Failed" );
 
+                UpdateHandle = 0;
                 SubmitItemUpdate = null;
                 NeedToAgreeToWorkshopLegal = obj.UserNeedsToAcceptWorkshopLegalAgreement;
                 Publishing = false;
