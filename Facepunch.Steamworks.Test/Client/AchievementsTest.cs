@@ -56,7 +56,7 @@ namespace Facepunch.Steamworks.Test
                     Console.WriteLine( " - - " + ach.Description );
                     Console.WriteLine( " - - " + ach.State );
                     Console.WriteLine( " - - " + ach.UnlockTime );
-                    Console.WriteLine( " - - " + ach.Percentage );
+                    Console.WriteLine( " - - " + ach.GlobalUnlockedPercentage );
 
                     if ( ach.Icon != null )
                     {

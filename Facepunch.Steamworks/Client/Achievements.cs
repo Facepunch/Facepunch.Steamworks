@@ -143,9 +143,9 @@ namespace Facepunch.Steamworks
         private int refreshCount = 0;
 
         /// <summary>
-        /// If this achievement is linked to a stat this will return the progress.
+        /// Returns the percentage of users who have unlocked the specified achievement, or -1 if no data available.
         /// </summary>
-        public float Percentage
+        public float GlobalUnlockedPercentage
         {
             get
             {
