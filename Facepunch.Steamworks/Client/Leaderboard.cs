@@ -141,10 +141,9 @@ namespace Facepunch.Steamworks
         }
 
         /// <summary>
-        /// Callback invoked by <see cref="AddScore(bool, int, int[], AddScoreCallback)"/> when score submission
+        /// Callback invoked by <see cref="AddScore(bool, int, int[], AddScoreCallback, FailureCallback)"/> when score submission
         /// is complete.
         /// </summary>
-        /// <param name="success">If true, the score was submitted</param>
         /// <param name="result">If successful, information about the new entry</param>
         public delegate void AddScoreCallback( AddScoreResult result );
 
@@ -278,13 +277,13 @@ namespace Facepunch.Steamworks
         [ThreadStatic] private static List<Entry> _sEntryBuffer;
 
         /// <summary>
-        /// Callback invoked by <see cref="FetchScores(RequestType, int, int, FetchScoresCallback)"/> when
+        /// Callback invoked by <see cref="FetchScores(RequestType, int, int, FetchScoresCallback, FailureCallback)"/> when
         /// a query is complete.
         /// </summary>
         public delegate void FetchScoresCallback( Entry[] results );
 
         /// <summary>
-        ///     Fetch a subset of scores. The scores are passed to <paramref name="callback"/>.
+        ///     Fetch a subset of scores. The scores are passed to <paramref name="onSuccess"/>.
         /// </summary>
         /// <returns>Returns true if we have started the query</returns>
         public bool FetchScores( RequestType RequestType, int start, int end, FetchScoresCallback onSuccess, FailureCallback onFailure = null )
