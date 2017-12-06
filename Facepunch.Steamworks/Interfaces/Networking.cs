@@ -170,7 +170,7 @@ namespace Facepunch.Steamworks
         {
             uint DataAvailable = 0;
 
-            if ( !networking.IsP2PPacketAvailable( out DataAvailable, channel ) || DataAvailable == 0 )
+            if ( !networking.IsP2PPacketAvailable( out DataAvailable, channel ) )
                 return false;
 
             if ( ReceiveBuffer.Length < DataAvailable )
