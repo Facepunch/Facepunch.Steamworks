@@ -19,6 +19,7 @@ namespace Facepunch.Steamworks
         private readonly bool _isUgc;
         private string _fileName;
         private int _sizeInBytes = -1;
+        private long _timestamp = 0;
         private UGCHandle_t _handle;
         private ulong _ownerId;
 
@@ -84,6 +85,21 @@ namespace Facepunch.Steamworks
             internal set { _sizeInBytes = value; }
         }
 
+        /// <summary>
+        /// Date modified timestamp in epoch format.
+        /// </summary>
+        public long FileTimestamp
+        {
+            get
+            {
+                if ( _timestamp != 0 ) return _timestamp;
+                if (_isUgc) throw new NotImplementedException();
+                _timestamp = remoteStorage.native.GetFileTimestamp(FileName);
+                return _timestamp;
+            }
+            internal set { _timestamp = value; }
+        }
+
         internal RemoteFile( RemoteStorage r, UGCHandle_t handle )
         {
             Exists = true;
@@ -94,7 +110,7 @@ namespace Facepunch.Steamworks
             _handle = handle;
         }
 
-        internal RemoteFile( RemoteStorage r, string name, ulong ownerId, int sizeInBytes = -1 )
+        internal RemoteFile( RemoteStorage r, string name, ulong ownerId, int sizeInBytes = -1, long timestamp = 0 )
         {
             remoteStorage = r;
 
@@ -102,6 +118,7 @@ namespace Facepunch.Steamworks
             _fileName = name;
             _ownerId = ownerId;
             _sizeInBytes = sizeInBytes;
+            _timestamp = timestamp;
         }
 
         /// <summary>

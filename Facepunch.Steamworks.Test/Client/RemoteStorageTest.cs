@@ -78,7 +78,8 @@ namespace Facepunch.Steamworks.Test
 
                 foreach ( var file in client.RemoteStorage.Files )
                 {
-                    Console.WriteLine( $"- {file.FileName} ({file.SizeInBytes} bytes)" );
+                    DateTime t = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds(file.FileTimestamp);
+                    Console.WriteLine( $"- {file.FileName} ({file.SizeInBytes} bytes), modified {t:O}" );
                 }
             }
         }
