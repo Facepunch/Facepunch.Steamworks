@@ -132,9 +132,14 @@ namespace Facepunch.Steamworks
         {
             if ( IsServer ) return;
 
-            if ( r.IsSuccess && r.Items != null )
+            if ( r.IsSuccess)
             {
-                if ( Items == null )
+                if(r.Items == null)
+                {
+                    OnUpdate?.Invoke(); // that fix handler fire when update is success but items count 0
+                    return;
+                }
+                if ( Items == null)
                     Items = new Item[0];
 
                 Items = Items
