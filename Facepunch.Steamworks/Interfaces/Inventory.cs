@@ -379,5 +379,17 @@ namespace Facepunch.Steamworks
 
             return new Result( this, resultHandle, true );
         }
+
+        /// <summary>
+        /// This is used to consume a specific item from the user inventory.
+        /// </summary>
+        public Result ConsumeItem(Item item, int amount)
+        {
+            SteamNative.SteamInventoryResult_t resultHandle = -1;
+            if (!inventory.ConsumeItem(ref resultHandle, item.Id, (uint)amount))
+                return null;
+
+            return new Result(this, resultHandle, true);
+        }
     }
 }
