@@ -6,7 +6,6 @@ namespace Facepunch.Steamworks.Test
 {
     [DeploymentItem( "steam_api.dll" )]
     [DeploymentItem( "steam_api64.dll" )]
-    [DeploymentItem( "steam_appid.txt" )]
     [TestClass]
     public class Friends
     {

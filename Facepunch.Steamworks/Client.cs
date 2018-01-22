@@ -63,7 +63,7 @@ namespace Facepunch.Steamworks
         public User User { get; private set; }
         public RemoteStorage RemoteStorage { get; private set; }
 
-        public Client( uint appId )
+        public Client( uint appId ) : base( appId )
         {
             if ( Instance != null )
             {

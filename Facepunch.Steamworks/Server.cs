@@ -24,7 +24,7 @@ namespace Facepunch.Steamworks
         /// <summary>
         /// Initialize a Steam Server instance
         /// </summary>
-        public Server( uint appId, ServerInit init )
+        public Server( uint appId, ServerInit init) : base( appId )
         {
             if ( Instance != null )
             {

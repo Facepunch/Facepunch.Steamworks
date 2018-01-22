@@ -5,7 +5,6 @@ namespace Facepunch.Steamworks.Test
 {
     [DeploymentItem( "steam_api.dll" )]
     [DeploymentItem( "steam_api64.dll" )]
-    [DeploymentItem( "steam_appid.txt" )]
     [DeploymentItem( "tier0_s.dll" )]
     [DeploymentItem( "vstdlib_s.dll" )]
     [DeploymentItem( "steamclient.dll" )]

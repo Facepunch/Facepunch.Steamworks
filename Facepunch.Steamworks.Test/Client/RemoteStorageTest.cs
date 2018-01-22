@@ -6,7 +6,6 @@ namespace Facepunch.Steamworks.Test
     [TestClass]
     [DeploymentItem( "steam_api.dll" )]
     [DeploymentItem( "steam_api64.dll" )]
-    [DeploymentItem( "steam_appid.txt" )]
     public class RemoteStorage
     {
         [TestMethod]

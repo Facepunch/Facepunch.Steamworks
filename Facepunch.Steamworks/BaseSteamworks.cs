@@ -26,6 +26,18 @@ namespace Facepunch.Steamworks
 
         private List<SteamNative.CallbackHandle> CallbackHandles = new List<SteamNative.CallbackHandle>();
 
+
+        protected BaseSteamworks( uint appId )
+        {
+            AppId = appId;
+
+            //
+            // No need for the "steam_appid.txt" file any more
+            //
+            System.Environment.SetEnvironmentVariable("SteamAppId", AppId.ToString());
+            System.Environment.SetEnvironmentVariable("SteamGameId", AppId.ToString());
+        }
+
         public virtual void Dispose()
         {
             foreach ( var h in CallbackHandles )
@@ -57,6 +69,9 @@ namespace Facepunch.Steamworks
                 native.Dispose();
                 native = null;
             }
+
+            System.Environment.SetEnvironmentVariable("SteamAppId", null );
+            System.Environment.SetEnvironmentVariable("SteamGameId", null );
         }
 
         protected void SetupCommonInterfaces()
