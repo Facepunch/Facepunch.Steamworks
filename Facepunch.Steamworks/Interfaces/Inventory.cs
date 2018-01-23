@@ -132,9 +132,14 @@ namespace Facepunch.Steamworks
         {
             if ( IsServer ) return;
 
-            if ( r.IsSuccess && r.Items != null )
+            if ( r.IsSuccess)
             {
-                if ( Items == null )
+                if(r.Items == null)
+                {
+                    OnUpdate?.Invoke(); // that fix handler fire when update is success but items count 0
+                    return;
+                }
+                if ( Items == null)
                     Items = new Item[0];
 
                 Items = Items
@@ -378,6 +383,18 @@ namespace Facepunch.Steamworks
                 return null;
 
             return new Result( this, resultHandle, true );
+        }
+
+        /// <summary>
+        /// This is used to consume a specific item from the user inventory.
+        /// </summary>
+        public Result ConsumeItem(Item item, int amount)
+        {
+            SteamNative.SteamInventoryResult_t resultHandle = -1;
+            if (!inventory.ConsumeItem(ref resultHandle, item.Id, (uint)amount))
+                return null;
+
+            return new Result(this, resultHandle, true);
         }
     }
 }
