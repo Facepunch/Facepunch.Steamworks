@@ -18,10 +18,16 @@ namespace Facepunch.Steamworks.Test
             {
                 var board = client.GetLeaderboard( "TestLeaderboard", Steamworks.Client.LeaderboardSortMethod.Ascending, Steamworks.Client.LeaderboardDisplayType.Numeric );
 
+                var time = Stopwatch.StartNew();
                 while ( !board.IsValid )
                 {
                     Thread.Sleep( 10 );
                     client.Update();
+
+                    if (time.Elapsed.TotalSeconds > 10 )
+                    {
+                        throw new Exception("board.IsValid took too long");
+                    }
                 }
 
                 Assert.IsTrue( board.IsValid );
@@ -35,10 +41,16 @@ namespace Facepunch.Steamworks.Test
 
                 board.FetchScores( Steamworks.Leaderboard.RequestType.Global, 0, 20 );
 
+                time = Stopwatch.StartNew();
                 while ( board.IsQuerying )
                 {
                     Thread.Sleep( 10 );
                     client.Update();
+
+                    if (time.Elapsed.TotalSeconds > 10)
+                    {
+                        throw new Exception("board.IsQuerying took too long");
+                    }
                 }
 
                 Assert.IsFalse( board.IsError );

@@ -3,6 +3,7 @@ using System.Text;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using System.Diagnostics;
 
 namespace Facepunch.Steamworks.Test
 {
@@ -395,6 +396,7 @@ namespace Facepunch.Steamworks.Test
 
                 var item = client.Workshop.GetItem( 844466101 );
 
+                var time = Stopwatch.StartNew();
                 if ( !item.Installed )
                 {
                     item.Download();
@@ -404,6 +406,9 @@ namespace Facepunch.Steamworks.Test
                         Thread.Sleep( 500 );
                         client.Update();
                         Console.WriteLine( "Download Progress: {0}", item.DownloadProgress );
+
+                        if (time.Elapsed.Seconds > 30)
+                            throw new Exception("item.Installed Took Too Long");
                     }
                 }
 
