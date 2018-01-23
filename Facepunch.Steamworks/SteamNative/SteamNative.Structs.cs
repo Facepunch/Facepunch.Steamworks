@@ -24800,7 +24800,8 @@ namespace SteamNative
 		public const int CallbackId = CallbackIdentifiers.ClientUGC + 16;
 		public Result Result; // m_eResult enum EResult
 		public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-		public AppId_t [32] GAppIDs; // m_rgAppIDs AppId_t [32]
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 32, ArraySubType = UnmanagedType.U4)]
+		public AppId_t[] GAppIDs; // m_rgAppIDs AppId_t [32]
 		public uint NumAppDependencies; // m_nNumAppDependencies uint32
 		public uint TotalNumAppDependencies; // m_nTotalNumAppDependencies uint32
 		
@@ -24818,7 +24819,8 @@ namespace SteamNative
 		{
 			public Result Result; // m_eResult enum EResult
 			public ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			public AppId_t [32] GAppIDs; // m_rgAppIDs AppId_t [32]
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 32, ArraySubType = UnmanagedType.U4)]
+			public AppId_t[] GAppIDs; // m_rgAppIDs AppId_t [32]
 			public uint NumAppDependencies; // m_nNumAppDependencies uint32
 			public uint TotalNumAppDependencies; // m_nTotalNumAppDependencies uint32
 			

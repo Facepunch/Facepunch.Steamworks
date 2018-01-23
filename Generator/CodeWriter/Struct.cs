@@ -192,6 +192,13 @@ namespace Generator
                     t = "IntPtr";
                 }
 
+                if (t.StartsWith("AppId_t ") && t.Contains("["))
+                {
+                    var num = t.Replace("AppId_t", "").Trim('[', ']', ' ');
+                    t = $"AppId_t[]";
+                    WriteLine($"[MarshalAs(UnmanagedType.ByValArray, SizeConst = {num}, ArraySubType = UnmanagedType.U4)]");
+                }
+
                 WriteLine( $"public {t} {CleanMemberName( m.Name )}; // {m.Name} {m.Type}" );
             }
         }
