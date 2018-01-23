@@ -164,12 +164,6 @@ namespace SteamNative
 				
 				return Native.SteamAPI_ISteamClient_GetISteamHTTP(_ptr, hSteamuser, hSteamPipe, pchVersion);
 			}
-			public virtual IntPtr /*class ISteamUnifiedMessages **/ ISteamClient_GetISteamUnifiedMessages( int hSteamuser, int hSteamPipe, string /*const char **/ pchVersion )
-			{
-				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamClient _ptr is null!" );
-				
-				return Native.SteamAPI_ISteamClient_GetISteamUnifiedMessages(_ptr, hSteamuser, hSteamPipe, pchVersion);
-			}
 			public virtual IntPtr /*class ISteamController **/ ISteamClient_GetISteamController( int hSteamUser, int hSteamPipe, string /*const char **/ pchVersion )
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamClient _ptr is null!" );
@@ -217,6 +211,12 @@ namespace SteamNative
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamClient _ptr is null!" );
 				
 				return Native.SteamAPI_ISteamClient_GetISteamVideo(_ptr, hSteamuser, hSteamPipe, pchVersion);
+			}
+			public virtual IntPtr /*class ISteamParentalSettings **/ ISteamClient_GetISteamParentalSettings( int hSteamuser, int hSteamPipe, string /*const char **/ pchVersion )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamClient _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamClient_GetISteamParentalSettings(_ptr, hSteamuser, hSteamPipe, pchVersion);
 			}
 			
 			public virtual HSteamUser /*(HSteamUser)*/ ISteamUser_GetHSteamUser()
@@ -816,6 +816,18 @@ namespace SteamNative
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
 				return Native.SteamAPI_ISteamFriends_EnumerateFollowingList(_ptr, unStartIndex);
+			}
+			public virtual bool /*bool*/ ISteamFriends_IsClanPublic( ulong steamIDClan )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamFriends _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamFriends_IsClanPublic(_ptr, steamIDClan);
+			}
+			public virtual bool /*bool*/ ISteamFriends_IsClanOfficialGameGroup( ulong steamIDClan )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamFriends _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamFriends_IsClanOfficialGameGroup(_ptr, steamIDClan);
 			}
 			
 			public virtual uint /*uint32*/ ISteamUtils_GetSecondsSinceAppActive()
@@ -2684,37 +2696,6 @@ namespace SteamNative
 				return Native.SteamAPI_ISteamHTTP_GetHTTPRequestWasTimedOut(_ptr, hRequest, ref pbWasTimedOut);
 			}
 			
-			public virtual ClientUnifiedMessageHandle /*(ClientUnifiedMessageHandle)*/ ISteamUnifiedMessages_SendMethod( string /*const char **/ pchServiceMethod, IntPtr /*const void **/ pRequestBuffer, uint /*uint32*/ unRequestBufferSize, ulong /*uint64*/ unContext )
-			{
-				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamUnifiedMessages _ptr is null!" );
-				
-				return Native.SteamAPI_ISteamUnifiedMessages_SendMethod(_ptr, pchServiceMethod, pRequestBuffer, unRequestBufferSize, unContext);
-			}
-			public virtual bool /*bool*/ ISteamUnifiedMessages_GetMethodResponseInfo( ulong hHandle, out uint /*uint32 **/ punResponseSize, out Result /*EResult **/ peResult )
-			{
-				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamUnifiedMessages _ptr is null!" );
-				
-				return Native.SteamAPI_ISteamUnifiedMessages_GetMethodResponseInfo(_ptr, hHandle, out punResponseSize, out peResult);
-			}
-			public virtual bool /*bool*/ ISteamUnifiedMessages_GetMethodResponseData( ulong hHandle, IntPtr /*void **/ pResponseBuffer, uint /*uint32*/ unResponseBufferSize, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bAutoRelease )
-			{
-				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamUnifiedMessages _ptr is null!" );
-				
-				return Native.SteamAPI_ISteamUnifiedMessages_GetMethodResponseData(_ptr, hHandle, pResponseBuffer, unResponseBufferSize, bAutoRelease);
-			}
-			public virtual bool /*bool*/ ISteamUnifiedMessages_ReleaseMethod( ulong hHandle )
-			{
-				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamUnifiedMessages _ptr is null!" );
-				
-				return Native.SteamAPI_ISteamUnifiedMessages_ReleaseMethod(_ptr, hHandle);
-			}
-			public virtual bool /*bool*/ ISteamUnifiedMessages_SendNotification( string /*const char **/ pchServiceNotification, IntPtr /*const void **/ pNotificationBuffer, uint /*uint32*/ unNotificationBufferSize )
-			{
-				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamUnifiedMessages _ptr is null!" );
-				
-				return Native.SteamAPI_ISteamUnifiedMessages_SendNotification(_ptr, pchServiceNotification, pNotificationBuffer, unNotificationBufferSize);
-			}
-			
 			public virtual bool /*bool*/ ISteamController_Init()
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamController _ptr is null!" );
@@ -2762,6 +2743,30 @@ namespace SteamNative
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamController _ptr is null!" );
 				
 				return Native.SteamAPI_ISteamController_GetCurrentActionSet(_ptr, controllerHandle);
+			}
+			public virtual void /*void*/ ISteamController_ActivateActionSetLayer( ulong controllerHandle, ulong actionSetLayerHandle )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamController _ptr is null!" );
+				
+				Native.SteamAPI_ISteamController_ActivateActionSetLayer(_ptr, controllerHandle, actionSetLayerHandle);
+			}
+			public virtual void /*void*/ ISteamController_DeactivateActionSetLayer( ulong controllerHandle, ulong actionSetLayerHandle )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamController _ptr is null!" );
+				
+				Native.SteamAPI_ISteamController_DeactivateActionSetLayer(_ptr, controllerHandle, actionSetLayerHandle);
+			}
+			public virtual void /*void*/ ISteamController_DeactivateAllActionSetLayers( ulong controllerHandle )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamController _ptr is null!" );
+				
+				Native.SteamAPI_ISteamController_DeactivateAllActionSetLayers(_ptr, controllerHandle);
+			}
+			public virtual int /*int*/ ISteamController_GetActiveActionSetLayers( ulong controllerHandle, IntPtr /*ControllerActionSetHandle_t **/ handlesOut )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamController _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamController_GetActiveActionSetLayers(_ptr, controllerHandle, handlesOut);
 			}
 			public virtual ControllerDigitalActionHandle_t /*(ControllerDigitalActionHandle_t)*/ ISteamController_GetDigitalActionHandle( string /*const char **/ pszActionName )
 			{
@@ -2870,6 +2875,12 @@ namespace SteamNative
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamController _ptr is null!" );
 				
 				return Native.SteamAPI_ISteamController_GetGlyphForActionOrigin(_ptr, eOrigin);
+			}
+			public virtual SteamInputType /*ESteamInputType*/ ISteamController_GetInputTypeForHandle( ulong controllerHandle )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamController _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamController_GetInputTypeForHandle(_ptr, controllerHandle);
 			}
 			
 			public virtual UGCQueryHandle_t /*(UGCQueryHandle_t)*/ ISteamUGC_CreateQueryUserUGCRequest( uint unAccountID, UserUGCList /*EUserUGCList*/ eListType, UGCMatchingUGCType /*EUGCMatchingUGCType*/ eMatchingUGCType, UserUGCListSortOrder /*EUserUGCListSortOrder*/ eSortOrder, uint nCreatorAppID, uint nConsumerAppID, uint /*uint32*/ unPage )
@@ -3298,6 +3309,30 @@ namespace SteamNative
 				
 				return Native.SteamAPI_ISteamUGC_RemoveDependency(_ptr, nParentPublishedFileID, nChildPublishedFileID);
 			}
+			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUGC_AddAppDependency( ulong nPublishedFileID, uint nAppID )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamUGC _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamUGC_AddAppDependency(_ptr, nPublishedFileID, nAppID);
+			}
+			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUGC_RemoveAppDependency( ulong nPublishedFileID, uint nAppID )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamUGC _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamUGC_RemoveAppDependency(_ptr, nPublishedFileID, nAppID);
+			}
+			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUGC_GetAppDependencies( ulong nPublishedFileID )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamUGC _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamUGC_GetAppDependencies(_ptr, nPublishedFileID);
+			}
+			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamUGC_DeleteItem( ulong nPublishedFileID )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamUGC _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamUGC_DeleteItem(_ptr, nPublishedFileID);
+			}
 			
 			public virtual uint /*uint32*/ ISteamAppList_GetNumInstalledApps()
 			{
@@ -3528,6 +3563,12 @@ namespace SteamNative
 				
 				Native.SteamAPI_ISteamHTMLSurface_SetBackgroundMode(_ptr, unBrowserHandle, bBackgroundMode);
 			}
+			public virtual void /*void*/ ISteamHTMLSurface_SetDPIScalingFactor( uint unBrowserHandle, float /*float*/ flDPIScaling )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
+				
+				Native.SteamAPI_ISteamHTMLSurface_SetDPIScalingFactor(_ptr, unBrowserHandle, flDPIScaling);
+			}
 			public virtual void /*void*/ ISteamHTMLSurface_AllowStartRequest( uint unBrowserHandle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bAllowed )
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamHTMLSurface _ptr is null!" );
@@ -3691,6 +3732,78 @@ namespace SteamNative
 				
 				return Native.SteamAPI_ISteamInventory_GetEligiblePromoItemDefinitionIDs(_ptr, steamID, pItemDefIDs, out punItemDefIDsArraySize);
 			}
+			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamInventory_StartPurchase( int[] pArrayItemDefs, uint[] /*const uint32 **/ punArrayQuantity, uint /*uint32*/ unArrayLength )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamInventory _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamInventory_StartPurchase(_ptr, pArrayItemDefs, punArrayQuantity, unArrayLength);
+			}
+			public virtual SteamAPICall_t /*(SteamAPICall_t)*/ ISteamInventory_RequestPrices()
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamInventory _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamInventory_RequestPrices(_ptr);
+			}
+			public virtual uint /*uint32*/ ISteamInventory_GetNumItemsWithPrices()
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamInventory _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamInventory_GetNumItemsWithPrices(_ptr);
+			}
+			public virtual bool /*bool*/ ISteamInventory_GetItemsWithPrices( IntPtr /*SteamItemDef_t **/ pArrayItemDefs, IntPtr /*uint64 **/ pPrices, uint /*uint32*/ unArrayLength )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamInventory _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamInventory_GetItemsWithPrices(_ptr, pArrayItemDefs, pPrices, unArrayLength);
+			}
+			public virtual bool /*bool*/ ISteamInventory_GetItemPrice( int iDefinition, out ulong /*uint64 **/ pPrice )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamInventory _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamInventory_GetItemPrice(_ptr, iDefinition, out pPrice);
+			}
+			public virtual SteamInventoryUpdateHandle_t /*(SteamInventoryUpdateHandle_t)*/ ISteamInventory_StartUpdateProperties()
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamInventory _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamInventory_StartUpdateProperties(_ptr);
+			}
+			public virtual bool /*bool*/ ISteamInventory_RemoveProperty( ulong handle, ulong nItemID, string /*const char **/ pchPropertyName )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamInventory _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamInventory_RemoveProperty(_ptr, handle, nItemID, pchPropertyName);
+			}
+			public virtual bool /*bool*/ ISteamInventory_SetProperty( ulong handle, ulong nItemID, string /*const char **/ pchPropertyName, string /*const char **/ pchPropertyValue )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamInventory _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamInventory_SetProperty(_ptr, handle, nItemID, pchPropertyName, pchPropertyValue);
+			}
+			public virtual bool /*bool*/ ISteamInventory_SetProperty0( ulong handle, ulong nItemID, string /*const char **/ pchPropertyName, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bValue )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamInventory _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamInventory_SetProperty0(_ptr, handle, nItemID, pchPropertyName, bValue);
+			}
+			public virtual bool /*bool*/ ISteamInventory_SetProperty0( ulong handle, ulong nItemID, string /*const char **/ pchPropertyName, long /*int64*/ nValue )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamInventory _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamInventory_SetProperty0(_ptr, handle, nItemID, pchPropertyName, nValue);
+			}
+			public virtual bool /*bool*/ ISteamInventory_SetProperty0( ulong handle, ulong nItemID, string /*const char **/ pchPropertyName, float /*float*/ flValue )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamInventory _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamInventory_SetProperty0(_ptr, handle, nItemID, pchPropertyName, flValue);
+			}
+			public virtual bool /*bool*/ ISteamInventory_SubmitUpdateProperties( ulong handle, ref int pResultHandle )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamInventory _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamInventory_SubmitUpdateProperties(_ptr, handle, ref pResultHandle);
+			}
 			
 			public virtual void /*void*/ ISteamVideo_GetVideoURL( uint unVideoAppID )
 			{
@@ -3715,6 +3828,43 @@ namespace SteamNative
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamVideo _ptr is null!" );
 				
 				return Native.SteamAPI_ISteamVideo_GetOPFStringForApp(_ptr, unVideoAppID, pchBuffer, out pnBufferSize);
+			}
+			
+			public virtual bool /*bool*/ ISteamParentalSettings_BIsParentalLockEnabled()
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamParentalSettings _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamParentalSettings_BIsParentalLockEnabled(_ptr);
+			}
+			public virtual bool /*bool*/ ISteamParentalSettings_BIsParentalLockLocked()
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamParentalSettings _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamParentalSettings_BIsParentalLockLocked(_ptr);
+			}
+			public virtual bool /*bool*/ ISteamParentalSettings_BIsAppBlocked( uint nAppID )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamParentalSettings _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamParentalSettings_BIsAppBlocked(_ptr, nAppID);
+			}
+			public virtual bool /*bool*/ ISteamParentalSettings_BIsAppInBlockList( uint nAppID )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamParentalSettings _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamParentalSettings_BIsAppInBlockList(_ptr, nAppID);
+			}
+			public virtual bool /*bool*/ ISteamParentalSettings_BIsFeatureBlocked( ParentalFeature /*EParentalFeature*/ eFeature )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamParentalSettings _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamParentalSettings_BIsFeatureBlocked(_ptr, eFeature);
+			}
+			public virtual bool /*bool*/ ISteamParentalSettings_BIsFeatureInBlockList( ParentalFeature /*EParentalFeature*/ eFeature )
+			{
+				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamParentalSettings _ptr is null!" );
+				
+				return Native.SteamAPI_ISteamParentalSettings_BIsFeatureInBlockList(_ptr, eFeature);
 			}
 			
 			public virtual bool /*bool*/ ISteamGameServer_InitGameServer( uint /*uint32*/ unIP, ushort /*uint16*/ usGamePort, ushort /*uint16*/ usQueryPort, uint /*uint32*/ unFlags, uint nGameAppId, string /*const char **/ pchVersionString )
@@ -4136,7 +4286,6 @@ namespace SteamNative
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern void /*void*/ SteamAPI_ISteamClient_SetWarningMessageHook( IntPtr ISteamClient, IntPtr /*SteamAPIWarningMessageHook_t*/ pFunction );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamClient_BShutdownIfAllPipesClosed( IntPtr ISteamClient );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern IntPtr /*class ISteamHTTP **/ SteamAPI_ISteamClient_GetISteamHTTP( IntPtr ISteamClient, int hSteamuser, int hSteamPipe, string /*const char **/ pchVersion );
-				[DllImportAttribute( "libsteam_api.so" )] internal static extern IntPtr /*class ISteamUnifiedMessages **/ SteamAPI_ISteamClient_GetISteamUnifiedMessages( IntPtr ISteamClient, int hSteamuser, int hSteamPipe, string /*const char **/ pchVersion );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern IntPtr /*class ISteamController **/ SteamAPI_ISteamClient_GetISteamController( IntPtr ISteamClient, int hSteamUser, int hSteamPipe, string /*const char **/ pchVersion );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern IntPtr /*class ISteamUGC **/ SteamAPI_ISteamClient_GetISteamUGC( IntPtr ISteamClient, int hSteamUser, int hSteamPipe, string /*const char **/ pchVersion );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern IntPtr /*class ISteamAppList **/ SteamAPI_ISteamClient_GetISteamAppList( IntPtr ISteamClient, int hSteamUser, int hSteamPipe, string /*const char **/ pchVersion );
@@ -4145,6 +4294,7 @@ namespace SteamNative
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern IntPtr /*class ISteamHTMLSurface **/ SteamAPI_ISteamClient_GetISteamHTMLSurface( IntPtr ISteamClient, int hSteamuser, int hSteamPipe, string /*const char **/ pchVersion );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern IntPtr /*class ISteamInventory **/ SteamAPI_ISteamClient_GetISteamInventory( IntPtr ISteamClient, int hSteamuser, int hSteamPipe, string /*const char **/ pchVersion );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern IntPtr /*class ISteamVideo **/ SteamAPI_ISteamClient_GetISteamVideo( IntPtr ISteamClient, int hSteamuser, int hSteamPipe, string /*const char **/ pchVersion );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern IntPtr /*class ISteamParentalSettings **/ SteamAPI_ISteamClient_GetISteamParentalSettings( IntPtr ISteamClient, int hSteamuser, int hSteamPipe, string /*const char **/ pchVersion );
 				
 				//
 				// ISteamUser 
@@ -4252,6 +4402,8 @@ namespace SteamNative
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamFriends_GetFollowerCount( IntPtr ISteamFriends, ulong steamID );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamFriends_IsFollowing( IntPtr ISteamFriends, ulong steamID );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamFriends_EnumerateFollowingList( IntPtr ISteamFriends, uint /*uint32*/ unStartIndex );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamFriends_IsClanPublic( IntPtr ISteamFriends, ulong steamIDClan );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamFriends_IsClanOfficialGameGroup( IntPtr ISteamFriends, ulong steamIDClan );
 				
 				//
 				// ISteamUtils 
@@ -4603,15 +4755,6 @@ namespace SteamNative
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamHTTP_GetHTTPRequestWasTimedOut( IntPtr ISteamHTTP, uint hRequest, [MarshalAs(UnmanagedType.U1)] ref bool /*bool **/ pbWasTimedOut );
 				
 				//
-				// ISteamUnifiedMessages 
-				//
-				[DllImportAttribute( "libsteam_api.so" )] internal static extern ClientUnifiedMessageHandle /*(ClientUnifiedMessageHandle)*/ SteamAPI_ISteamUnifiedMessages_SendMethod( IntPtr ISteamUnifiedMessages, string /*const char **/ pchServiceMethod, IntPtr /*const void **/ pRequestBuffer, uint /*uint32*/ unRequestBufferSize, ulong /*uint64*/ unContext );
-				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamUnifiedMessages_GetMethodResponseInfo( IntPtr ISteamUnifiedMessages, ulong hHandle, out uint /*uint32 **/ punResponseSize, out Result /*EResult **/ peResult );
-				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamUnifiedMessages_GetMethodResponseData( IntPtr ISteamUnifiedMessages, ulong hHandle, IntPtr /*void **/ pResponseBuffer, uint /*uint32*/ unResponseBufferSize, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bAutoRelease );
-				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamUnifiedMessages_ReleaseMethod( IntPtr ISteamUnifiedMessages, ulong hHandle );
-				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamUnifiedMessages_SendNotification( IntPtr ISteamUnifiedMessages, string /*const char **/ pchServiceNotification, IntPtr /*const void **/ pNotificationBuffer, uint /*uint32*/ unNotificationBufferSize );
-				
-				//
 				// ISteamController 
 				//
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamController_Init( IntPtr ISteamController );
@@ -4622,6 +4765,10 @@ namespace SteamNative
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern ControllerActionSetHandle_t /*(ControllerActionSetHandle_t)*/ SteamAPI_ISteamController_GetActionSetHandle( IntPtr ISteamController, string /*const char **/ pszActionSetName );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern void /*void*/ SteamAPI_ISteamController_ActivateActionSet( IntPtr ISteamController, ulong controllerHandle, ulong actionSetHandle );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern ControllerActionSetHandle_t /*(ControllerActionSetHandle_t)*/ SteamAPI_ISteamController_GetCurrentActionSet( IntPtr ISteamController, ulong controllerHandle );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern void /*void*/ SteamAPI_ISteamController_ActivateActionSetLayer( IntPtr ISteamController, ulong controllerHandle, ulong actionSetLayerHandle );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern void /*void*/ SteamAPI_ISteamController_DeactivateActionSetLayer( IntPtr ISteamController, ulong controllerHandle, ulong actionSetLayerHandle );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern void /*void*/ SteamAPI_ISteamController_DeactivateAllActionSetLayers( IntPtr ISteamController, ulong controllerHandle );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern int /*int*/ SteamAPI_ISteamController_GetActiveActionSetLayers( IntPtr ISteamController, ulong controllerHandle, IntPtr /*ControllerActionSetHandle_t **/ handlesOut );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern ControllerDigitalActionHandle_t /*(ControllerDigitalActionHandle_t)*/ SteamAPI_ISteamController_GetDigitalActionHandle( IntPtr ISteamController, string /*const char **/ pszActionName );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern ControllerDigitalActionData_t /*struct ControllerDigitalActionData_t*/ SteamAPI_ISteamController_GetDigitalActionData( IntPtr ISteamController, ulong controllerHandle, ulong digitalActionHandle );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern int /*int*/ SteamAPI_ISteamController_GetDigitalActionOrigins( IntPtr ISteamController, ulong controllerHandle, ulong actionSetHandle, ulong digitalActionHandle, out ControllerActionOrigin /*EControllerActionOrigin **/ originsOut );
@@ -4640,6 +4787,7 @@ namespace SteamNative
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamController_ShowAnalogActionOrigins( IntPtr ISteamController, ulong controllerHandle, ulong analogActionHandle, float /*float*/ flScale, float /*float*/ flXPosition, float /*float*/ flYPosition );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern IntPtr SteamAPI_ISteamController_GetStringForActionOrigin( IntPtr ISteamController, ControllerActionOrigin /*EControllerActionOrigin*/ eOrigin );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern IntPtr SteamAPI_ISteamController_GetGlyphForActionOrigin( IntPtr ISteamController, ControllerActionOrigin /*EControllerActionOrigin*/ eOrigin );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern SteamInputType /*ESteamInputType*/ SteamAPI_ISteamController_GetInputTypeForHandle( IntPtr ISteamController, ulong controllerHandle );
 				
 				//
 				// ISteamUGC 
@@ -4714,6 +4862,10 @@ namespace SteamNative
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamUGC_StopPlaytimeTrackingForAllItems( IntPtr ISteamUGC );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamUGC_AddDependency( IntPtr ISteamUGC, ulong nParentPublishedFileID, ulong nChildPublishedFileID );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamUGC_RemoveDependency( IntPtr ISteamUGC, ulong nParentPublishedFileID, ulong nChildPublishedFileID );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamUGC_AddAppDependency( IntPtr ISteamUGC, ulong nPublishedFileID, uint nAppID );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamUGC_RemoveAppDependency( IntPtr ISteamUGC, ulong nPublishedFileID, uint nAppID );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamUGC_GetAppDependencies( IntPtr ISteamUGC, ulong nPublishedFileID );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamUGC_DeleteItem( IntPtr ISteamUGC, ulong nPublishedFileID );
 				
 				//
 				// ISteamAppList 
@@ -4760,6 +4912,7 @@ namespace SteamNative
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern void /*void*/ SteamAPI_ISteamHTMLSurface_SetCookie( IntPtr ISteamHTMLSurface, string /*const char **/ pchHostname, string /*const char **/ pchKey, string /*const char **/ pchValue, string /*const char **/ pchPath, uint nExpires, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bSecure, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bHTTPOnly );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern void /*void*/ SteamAPI_ISteamHTMLSurface_SetPageScaleFactor( IntPtr ISteamHTMLSurface, uint unBrowserHandle, float /*float*/ flZoom, int /*int*/ nPointX, int /*int*/ nPointY );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern void /*void*/ SteamAPI_ISteamHTMLSurface_SetBackgroundMode( IntPtr ISteamHTMLSurface, uint unBrowserHandle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bBackgroundMode );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern void /*void*/ SteamAPI_ISteamHTMLSurface_SetDPIScalingFactor( IntPtr ISteamHTMLSurface, uint unBrowserHandle, float /*float*/ flDPIScaling );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern void /*void*/ SteamAPI_ISteamHTMLSurface_AllowStartRequest( IntPtr ISteamHTMLSurface, uint unBrowserHandle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bAllowed );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern void /*void*/ SteamAPI_ISteamHTMLSurface_JSDialogResponse( IntPtr ISteamHTMLSurface, uint unBrowserHandle, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bResult );
 				
@@ -4791,6 +4944,18 @@ namespace SteamNative
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_GetItemDefinitionProperty( IntPtr ISteamInventory, int iDefinition, string /*const char **/ pchPropertyName, System.Text.StringBuilder /*char **/ pchValueBuffer, out uint /*uint32 **/ punValueBufferSizeOut );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamInventory_RequestEligiblePromoItemDefinitionsIDs( IntPtr ISteamInventory, ulong steamID );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_GetEligiblePromoItemDefinitionIDs( IntPtr ISteamInventory, ulong steamID, IntPtr /*SteamItemDef_t **/ pItemDefIDs, out uint /*uint32 **/ punItemDefIDsArraySize );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamInventory_StartPurchase( IntPtr ISteamInventory, int[] pArrayItemDefs, uint[] /*const uint32 **/ punArrayQuantity, uint /*uint32*/ unArrayLength );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamInventory_RequestPrices( IntPtr ISteamInventory );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern uint /*uint32*/ SteamAPI_ISteamInventory_GetNumItemsWithPrices( IntPtr ISteamInventory );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_GetItemsWithPrices( IntPtr ISteamInventory, IntPtr /*SteamItemDef_t **/ pArrayItemDefs, IntPtr /*uint64 **/ pPrices, uint /*uint32*/ unArrayLength );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_GetItemPrice( IntPtr ISteamInventory, int iDefinition, out ulong /*uint64 **/ pPrice );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern SteamInventoryUpdateHandle_t /*(SteamInventoryUpdateHandle_t)*/ SteamAPI_ISteamInventory_StartUpdateProperties( IntPtr ISteamInventory );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_RemoveProperty( IntPtr ISteamInventory, ulong handle, ulong nItemID, string /*const char **/ pchPropertyName );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_SetProperty( IntPtr ISteamInventory, ulong handle, ulong nItemID, string /*const char **/ pchPropertyName, string /*const char **/ pchPropertyValue );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_SetProperty0( IntPtr ISteamInventory, ulong handle, ulong nItemID, string /*const char **/ pchPropertyName, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bValue );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_SetProperty0( IntPtr ISteamInventory, ulong handle, ulong nItemID, string /*const char **/ pchPropertyName, long /*int64*/ nValue );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_SetProperty0( IntPtr ISteamInventory, ulong handle, ulong nItemID, string /*const char **/ pchPropertyName, float /*float*/ flValue );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamInventory_SubmitUpdateProperties( IntPtr ISteamInventory, ulong handle, ref int pResultHandle );
 				
 				//
 				// ISteamVideo 
@@ -4799,6 +4964,16 @@ namespace SteamNative
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamVideo_IsBroadcasting( IntPtr ISteamVideo, IntPtr /*int **/ pnNumViewers );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern void /*void*/ SteamAPI_ISteamVideo_GetOPFSettings( IntPtr ISteamVideo, uint unVideoAppID );
 				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamVideo_GetOPFStringForApp( IntPtr ISteamVideo, uint unVideoAppID, System.Text.StringBuilder /*char **/ pchBuffer, out int /*int32 **/ pnBufferSize );
+				
+				//
+				// ISteamParentalSettings 
+				//
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamParentalSettings_BIsParentalLockEnabled( IntPtr ISteamParentalSettings );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamParentalSettings_BIsParentalLockLocked( IntPtr ISteamParentalSettings );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamParentalSettings_BIsAppBlocked( IntPtr ISteamParentalSettings, uint nAppID );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamParentalSettings_BIsAppInBlockList( IntPtr ISteamParentalSettings, uint nAppID );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamParentalSettings_BIsFeatureBlocked( IntPtr ISteamParentalSettings, ParentalFeature /*EParentalFeature*/ eFeature );
+				[DllImportAttribute( "libsteam_api.so" )] internal static extern bool /*bool*/ SteamAPI_ISteamParentalSettings_BIsFeatureInBlockList( IntPtr ISteamParentalSettings, ParentalFeature /*EParentalFeature*/ eFeature );
 				
 				//
 				// ISteamGameServer 

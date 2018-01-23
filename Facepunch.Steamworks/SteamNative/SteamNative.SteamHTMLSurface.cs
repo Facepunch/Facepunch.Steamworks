@@ -205,6 +205,12 @@ namespace SteamNative
 		}
 		
 		// void
+		public void SetDPIScalingFactor( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, float flDPIScaling /*float*/ )
+		{
+			platform.ISteamHTMLSurface_SetDPIScalingFactor( unBrowserHandle.Value, flDPIScaling );
+		}
+		
+		// void
 		public void SetHorizontalScroll( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, uint nAbsolutePixelScroll /*uint32*/ )
 		{
 			platform.ISteamHTMLSurface_SetHorizontalScroll( unBrowserHandle.Value, nAbsolutePixelScroll );

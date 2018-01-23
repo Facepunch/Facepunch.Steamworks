@@ -197,6 +197,14 @@ namespace SteamNative
 			return new SteamNetworking( steamworks, interface_pointer );
 		}
 		
+		// ISteamParentalSettings *
+		public SteamParentalSettings GetISteamParentalSettings( HSteamUser hSteamuser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
+		{
+			IntPtr interface_pointer;
+			interface_pointer = platform.ISteamClient_GetISteamParentalSettings( hSteamuser.Value, hSteamPipe.Value, pchVersion );
+			return new SteamParentalSettings( steamworks, interface_pointer );
+		}
+		
 		// ISteamRemoteStorage *
 		public SteamRemoteStorage GetISteamRemoteStorage( HSteamUser hSteamuser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
@@ -219,14 +227,6 @@ namespace SteamNative
 			IntPtr interface_pointer;
 			interface_pointer = platform.ISteamClient_GetISteamUGC( hSteamUser.Value, hSteamPipe.Value, pchVersion );
 			return new SteamUGC( steamworks, interface_pointer );
-		}
-		
-		// ISteamUnifiedMessages *
-		public SteamUnifiedMessages GetISteamUnifiedMessages( HSteamUser hSteamuser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
-		{
-			IntPtr interface_pointer;
-			interface_pointer = platform.ISteamClient_GetISteamUnifiedMessages( hSteamuser.Value, hSteamPipe.Value, pchVersion );
-			return new SteamUnifiedMessages( steamworks, interface_pointer );
 		}
 		
 		// ISteamUser *

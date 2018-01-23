@@ -410,6 +410,18 @@ namespace SteamNative
 			return platform.ISteamFriends_IsClanChatWindowOpenInSteam( steamIDClanChat.Value );
 		}
 		
+		// bool
+		public bool IsClanOfficialGameGroup( CSteamID steamIDClan /*class CSteamID*/ )
+		{
+			return platform.ISteamFriends_IsClanOfficialGameGroup( steamIDClan.Value );
+		}
+		
+		// bool
+		public bool IsClanPublic( CSteamID steamIDClan /*class CSteamID*/ )
+		{
+			return platform.ISteamFriends_IsClanPublic( steamIDClan.Value );
+		}
+		
 		// SteamAPICall_t
 		public CallbackHandle IsFollowing( CSteamID steamID /*class CSteamID*/, Action<FriendsIsFollowing_t, bool> CallbackFunction = null /*Action<FriendsIsFollowing_t, bool>*/ )
 		{

@@ -49,10 +49,34 @@ namespace SteamNative
 			platform.ISteamController_ActivateActionSet( controllerHandle.Value, actionSetHandle.Value );
 		}
 		
+		// void
+		public void ActivateActionSetLayer( ControllerHandle_t controllerHandle /*ControllerHandle_t*/, ControllerActionSetHandle_t actionSetLayerHandle /*ControllerActionSetHandle_t*/ )
+		{
+			platform.ISteamController_ActivateActionSetLayer( controllerHandle.Value, actionSetLayerHandle.Value );
+		}
+		
+		// void
+		public void DeactivateActionSetLayer( ControllerHandle_t controllerHandle /*ControllerHandle_t*/, ControllerActionSetHandle_t actionSetLayerHandle /*ControllerActionSetHandle_t*/ )
+		{
+			platform.ISteamController_DeactivateActionSetLayer( controllerHandle.Value, actionSetLayerHandle.Value );
+		}
+		
+		// void
+		public void DeactivateAllActionSetLayers( ControllerHandle_t controllerHandle /*ControllerHandle_t*/ )
+		{
+			platform.ISteamController_DeactivateAllActionSetLayers( controllerHandle.Value );
+		}
+		
 		// ControllerActionSetHandle_t
 		public ControllerActionSetHandle_t GetActionSetHandle( string pszActionSetName /*const char **/ )
 		{
 			return platform.ISteamController_GetActionSetHandle( pszActionSetName );
+		}
+		
+		// int
+		public int GetActiveActionSetLayers( ControllerHandle_t controllerHandle /*ControllerHandle_t*/, IntPtr handlesOut /*ControllerActionSetHandle_t **/ )
+		{
+			return platform.ISteamController_GetActiveActionSetLayers( controllerHandle.Value, (IntPtr) handlesOut );
 		}
 		
 		// ControllerAnalogActionData_t
@@ -122,6 +146,12 @@ namespace SteamNative
 			IntPtr string_pointer;
 			string_pointer = platform.ISteamController_GetGlyphForActionOrigin( eOrigin );
 			return Marshal.PtrToStringAnsi( string_pointer );
+		}
+		
+		// SteamInputType
+		public SteamInputType GetInputTypeForHandle( ControllerHandle_t controllerHandle /*ControllerHandle_t*/ )
+		{
+			return platform.ISteamController_GetInputTypeForHandle( controllerHandle.Value );
 		}
 		
 		// ControllerMotionData_t

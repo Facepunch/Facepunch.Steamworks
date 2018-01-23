@@ -44,6 +44,17 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
+		public CallbackHandle AddAppDependency( PublishedFileId_t nPublishedFileID /*PublishedFileId_t*/, AppId_t nAppID /*AppId_t*/, Action<AddAppDependencyResult_t, bool> CallbackFunction = null /*Action<AddAppDependencyResult_t, bool>*/ )
+		{
+			SteamAPICall_t callback = 0;
+			callback = platform.ISteamUGC_AddAppDependency( nPublishedFileID.Value, nAppID.Value );
+			
+			if ( CallbackFunction == null ) return null;
+			
+			return AddAppDependencyResult_t.CallResult( steamworks, callback, CallbackFunction );
+		}
+		
+		// SteamAPICall_t
 		public CallbackHandle AddDependency( PublishedFileId_t nParentPublishedFileID /*PublishedFileId_t*/, PublishedFileId_t nChildPublishedFileID /*PublishedFileId_t*/, Action<AddUGCDependencyResult_t, bool> CallbackFunction = null /*Action<AddUGCDependencyResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
@@ -141,10 +152,32 @@ namespace SteamNative
 			return platform.ISteamUGC_CreateQueryUserUGCRequest( unAccountID.Value, eListType, eMatchingUGCType, eSortOrder, nCreatorAppID.Value, nConsumerAppID.Value, unPage );
 		}
 		
+		// SteamAPICall_t
+		public CallbackHandle DeleteItem( PublishedFileId_t nPublishedFileID /*PublishedFileId_t*/, Action<DeleteItemResult_t, bool> CallbackFunction = null /*Action<DeleteItemResult_t, bool>*/ )
+		{
+			SteamAPICall_t callback = 0;
+			callback = platform.ISteamUGC_DeleteItem( nPublishedFileID.Value );
+			
+			if ( CallbackFunction == null ) return null;
+			
+			return DeleteItemResult_t.CallResult( steamworks, callback, CallbackFunction );
+		}
+		
 		// bool
 		public bool DownloadItem( PublishedFileId_t nPublishedFileID /*PublishedFileId_t*/, bool bHighPriority /*bool*/ )
 		{
 			return platform.ISteamUGC_DownloadItem( nPublishedFileID.Value, bHighPriority );
+		}
+		
+		// SteamAPICall_t
+		public CallbackHandle GetAppDependencies( PublishedFileId_t nPublishedFileID /*PublishedFileId_t*/, Action<GetAppDependenciesResult_t, bool> CallbackFunction = null /*Action<GetAppDependenciesResult_t, bool>*/ )
+		{
+			SteamAPICall_t callback = 0;
+			callback = platform.ISteamUGC_GetAppDependencies( nPublishedFileID.Value );
+			
+			if ( CallbackFunction == null ) return null;
+			
+			return GetAppDependenciesResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
@@ -304,6 +337,17 @@ namespace SteamNative
 		public bool ReleaseQueryUGCRequest( UGCQueryHandle_t handle /*UGCQueryHandle_t*/ )
 		{
 			return platform.ISteamUGC_ReleaseQueryUGCRequest( handle.Value );
+		}
+		
+		// SteamAPICall_t
+		public CallbackHandle RemoveAppDependency( PublishedFileId_t nPublishedFileID /*PublishedFileId_t*/, AppId_t nAppID /*AppId_t*/, Action<RemoveAppDependencyResult_t, bool> CallbackFunction = null /*Action<RemoveAppDependencyResult_t, bool>*/ )
+		{
+			SteamAPICall_t callback = 0;
+			callback = platform.ISteamUGC_RemoveAppDependency( nPublishedFileID.Value, nAppID.Value );
+			
+			if ( CallbackFunction == null ) return null;
+			
+			return RemoveAppDependencyResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t

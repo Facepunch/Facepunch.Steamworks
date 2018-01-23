@@ -129,6 +129,10 @@ namespace SteamNative
 		GSLTExpired = 106,
 		InsufficientFunds = 107,
 		TooManyPending = 108,
+		NoSiteLicensesFound = 109,
+		WGNetworkSendExceeded = 110,
+		AccountNotFriends = 111,
+		LimitedUserAccount = 112,
 	}
 	
 	//
@@ -290,6 +294,7 @@ namespace SteamNative
 		Plugin = 4096,
 		Music = 8192,
 		Series = 16384,
+		Comic = 32768,
 		Shortcut = 1073741824,
 		DepotOnly = -2147483648,
 	}
@@ -343,6 +348,7 @@ namespace SteamNative
 		CommunityBan = 9,
 		MemberBlockedYou = 10,
 		YouBlockedMember = 11,
+		RatelimitExceeded = 15,
 	}
 	
 	//
@@ -440,6 +446,18 @@ namespace SteamNative
 		Oculus_DK2 = 22,
 		Oculus_Rift = 23,
 		Oculus_Unknown = 40,
+		Acer_Unknown = 50,
+		Acer_WindowsMR = 51,
+		Dell_Unknown = 60,
+		Dell_Visor = 61,
+		Lenovo_Unknown = 70,
+		Lenovo_Explorer = 71,
+		HP_Unknown = 80,
+		HP_WindowsMR = 81,
+		Samsung_Unknown = 90,
+		Samsung_Odyssey = 91,
+		Unannounced_Unknown = 100,
+		Unannounced_WindowsMR = 101,
 	}
 	
 	//
@@ -981,7 +999,9 @@ namespace SteamNative
 		CenterTrackpad = 9,
 		RightJoystick = 10,
 		DPad = 11,
-		Count = 12,
+		Key = 12,
+		Mouse = 13,
+		Count = 14,
 	}
 	
 	//
@@ -1222,6 +1242,19 @@ namespace SteamNative
 	}
 	
 	//
+	// ESteamInputType
+	//
+	internal enum SteamInputType : int
+	{
+		Unknown = 0,
+		SteamController = 1,
+		XBox360Controller = 2,
+		XBoxOneController = 3,
+		GenericXInput = 4,
+		PS4Controller = 5,
+	}
+	
+	//
 	// EUGCMatchingUGCType
 	//
 	internal enum UGCMatchingUGCType : int
@@ -1436,6 +1469,27 @@ namespace SteamNative
 		NoTrade = 1,
 		Removed = 256,
 		Consumed = 512,
+	}
+	
+	//
+	// EParentalFeature
+	//
+	internal enum ParentalFeature : int
+	{
+		Invalid = 0,
+		Store = 1,
+		Community = 2,
+		Profile = 3,
+		Friends = 4,
+		News = 5,
+		Trading = 6,
+		Settings = 7,
+		Console = 8,
+		Browser = 9,
+		ParentalSetup = 10,
+		Library = 11,
+		Test = 12,
+		Max = 13,
 	}
 	
 }

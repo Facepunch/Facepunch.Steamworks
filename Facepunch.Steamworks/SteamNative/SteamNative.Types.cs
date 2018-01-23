@@ -229,6 +229,21 @@ namespace SteamNative
 		}
 	}
 	
+	internal struct SiteId_t
+	{
+		public ulong Value;
+		
+		public static implicit operator SiteId_t( ulong value )
+		{
+			return new SiteId_t(){ Value = value };
+		}
+		
+		public static implicit operator ulong( SiteId_t value )
+		{
+			return value.Value;
+		}
+	}
+	
 	internal struct HAuthTicket
 	{
 		public uint Value;
@@ -499,21 +514,6 @@ namespace SteamNative
 		}
 	}
 	
-	internal struct ClientUnifiedMessageHandle
-	{
-		public ulong Value;
-		
-		public static implicit operator ClientUnifiedMessageHandle( ulong value )
-		{
-			return new ClientUnifiedMessageHandle(){ Value = value };
-		}
-		
-		public static implicit operator ulong( ClientUnifiedMessageHandle value )
-		{
-			return value.Value;
-		}
-	}
-	
 	internal struct ControllerHandle_t
 	{
 		public ulong Value;
@@ -659,6 +659,21 @@ namespace SteamNative
 		}
 		
 		public static implicit operator int( SteamInventoryResult_t value )
+		{
+			return value.Value;
+		}
+	}
+	
+	internal struct SteamInventoryUpdateHandle_t
+	{
+		public ulong Value;
+		
+		public static implicit operator SteamInventoryUpdateHandle_t( ulong value )
+		{
+			return new SteamInventoryUpdateHandle_t(){ Value = value };
+		}
+		
+		public static implicit operator ulong( SteamInventoryUpdateHandle_t value )
 		{
 			return value.Value;
 		}

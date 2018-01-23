@@ -150,9 +150,27 @@ namespace SteamNative
 		}
 		
 		// bool
+		public bool GetItemPrice( SteamItemDef_t iDefinition /*SteamItemDef_t*/, out ulong pPrice /*uint64 **/ )
+		{
+			return platform.ISteamInventory_GetItemPrice( iDefinition.Value, out pPrice );
+		}
+		
+		// bool
 		public bool GetItemsByID( ref SteamInventoryResult_t pResultHandle /*SteamInventoryResult_t **/, SteamItemInstanceID_t[] pInstanceIDs /*const SteamItemInstanceID_t **/, uint unCountInstanceIDs /*uint32*/ )
 		{
 			return platform.ISteamInventory_GetItemsByID( ref pResultHandle.Value, pInstanceIDs.Select( x => x.Value ).ToArray(), unCountInstanceIDs );
+		}
+		
+		// bool
+		public bool GetItemsWithPrices( IntPtr pArrayItemDefs /*SteamItemDef_t **/, IntPtr pPrices /*uint64 **/, uint unArrayLength /*uint32*/ )
+		{
+			return platform.ISteamInventory_GetItemsWithPrices( (IntPtr) pArrayItemDefs, (IntPtr) pPrices, unArrayLength );
+		}
+		
+		// uint
+		public uint GetNumItemsWithPrices()
+		{
+			return platform.ISteamInventory_GetNumItemsWithPrices();
 		}
 		
 		// bool
@@ -212,6 +230,12 @@ namespace SteamNative
 			return platform.ISteamInventory_LoadItemDefinitions();
 		}
 		
+		// bool
+		public bool RemoveProperty( SteamInventoryUpdateHandle_t handle /*SteamInventoryUpdateHandle_t*/, SteamItemInstanceID_t nItemID /*SteamItemInstanceID_t*/, string pchPropertyName /*const char **/ )
+		{
+			return platform.ISteamInventory_RemoveProperty( handle.Value, nItemID.Value, pchPropertyName );
+		}
+		
 		// SteamAPICall_t
 		public CallbackHandle RequestEligiblePromoItemDefinitionsIDs( CSteamID steamID /*class CSteamID*/, Action<SteamInventoryEligiblePromoItemDefIDs_t, bool> CallbackFunction = null /*Action<SteamInventoryEligiblePromoItemDefIDs_t, bool>*/ )
 		{
@@ -221,6 +245,17 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			
 			return SteamInventoryEligiblePromoItemDefIDs_t.CallResult( steamworks, callback, CallbackFunction );
+		}
+		
+		// SteamAPICall_t
+		public CallbackHandle RequestPrices( Action<SteamInventoryRequestPricesResult_t, bool> CallbackFunction = null /*Action<SteamInventoryRequestPricesResult_t, bool>*/ )
+		{
+			SteamAPICall_t callback = 0;
+			callback = platform.ISteamInventory_RequestPrices();
+			
+			if ( CallbackFunction == null ) return null;
+			
+			return SteamInventoryRequestPricesResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
 		
 		// void
@@ -233,6 +268,53 @@ namespace SteamNative
 		public bool SerializeResult( SteamInventoryResult_t resultHandle /*SteamInventoryResult_t*/, IntPtr pOutBuffer /*void **/, out uint punOutBufferSize /*uint32 **/ )
 		{
 			return platform.ISteamInventory_SerializeResult( resultHandle.Value, (IntPtr) pOutBuffer, out punOutBufferSize );
+		}
+		
+		// bool
+		public bool SetProperty( SteamInventoryUpdateHandle_t handle /*SteamInventoryUpdateHandle_t*/, SteamItemInstanceID_t nItemID /*SteamItemInstanceID_t*/, string pchPropertyName /*const char **/, string pchPropertyValue /*const char **/ )
+		{
+			return platform.ISteamInventory_SetProperty( handle.Value, nItemID.Value, pchPropertyName, pchPropertyValue );
+		}
+		
+		// bool
+		public bool SetProperty0( SteamInventoryUpdateHandle_t handle /*SteamInventoryUpdateHandle_t*/, SteamItemInstanceID_t nItemID /*SteamItemInstanceID_t*/, string pchPropertyName /*const char **/, bool bValue /*bool*/ )
+		{
+			return platform.ISteamInventory_SetProperty0( handle.Value, nItemID.Value, pchPropertyName, bValue );
+		}
+		
+		// bool
+		public bool SetProperty0( SteamInventoryUpdateHandle_t handle /*SteamInventoryUpdateHandle_t*/, SteamItemInstanceID_t nItemID /*SteamItemInstanceID_t*/, string pchPropertyName /*const char **/, long nValue /*int64*/ )
+		{
+			return platform.ISteamInventory_SetProperty0( handle.Value, nItemID.Value, pchPropertyName, nValue );
+		}
+		
+		// bool
+		public bool SetProperty0( SteamInventoryUpdateHandle_t handle /*SteamInventoryUpdateHandle_t*/, SteamItemInstanceID_t nItemID /*SteamItemInstanceID_t*/, string pchPropertyName /*const char **/, float flValue /*float*/ )
+		{
+			return platform.ISteamInventory_SetProperty0( handle.Value, nItemID.Value, pchPropertyName, flValue );
+		}
+		
+		// SteamAPICall_t
+		public CallbackHandle StartPurchase( SteamItemDef_t[] pArrayItemDefs /*const SteamItemDef_t **/, uint[] punArrayQuantity /*const uint32 **/, uint unArrayLength /*uint32*/, Action<SteamInventoryStartPurchaseResult_t, bool> CallbackFunction = null /*Action<SteamInventoryStartPurchaseResult_t, bool>*/ )
+		{
+			SteamAPICall_t callback = 0;
+			callback = platform.ISteamInventory_StartPurchase( pArrayItemDefs.Select( x => x.Value ).ToArray(), punArrayQuantity, unArrayLength );
+			
+			if ( CallbackFunction == null ) return null;
+			
+			return SteamInventoryStartPurchaseResult_t.CallResult( steamworks, callback, CallbackFunction );
+		}
+		
+		// SteamInventoryUpdateHandle_t
+		public SteamInventoryUpdateHandle_t StartUpdateProperties()
+		{
+			return platform.ISteamInventory_StartUpdateProperties();
+		}
+		
+		// bool
+		public bool SubmitUpdateProperties( SteamInventoryUpdateHandle_t handle /*SteamInventoryUpdateHandle_t*/, ref SteamInventoryResult_t pResultHandle /*SteamInventoryResult_t **/ )
+		{
+			return platform.ISteamInventory_SubmitUpdateProperties( handle.Value, ref pResultHandle.Value );
 		}
 		
 		// bool
