@@ -10262,7 +10262,7 @@ namespace SteamNative
 		public int TotalResultCount; // m_nTotalResultCount int32
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
 		public ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U4)]
 		public uint[] GRTimeSubscribed; // m_rgRTimeSubscribed uint32 [50]
 		
 		//
@@ -10282,7 +10282,7 @@ namespace SteamNative
 			public int TotalResultCount; // m_nTotalResultCount int32
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
 			public ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U4)]
 			public uint[] GRTimeSubscribed; // m_rgRTimeSubscribed uint32 [50]
 			
 			//
@@ -13655,7 +13655,7 @@ namespace SteamNative
 		public int TotalResultCount; // m_nTotalResultCount int32
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
 		public ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U4)]
 		public uint[] GRTimeUpdated; // m_rgRTimeUpdated uint32 [50]
 		
 		//
@@ -13676,7 +13676,7 @@ namespace SteamNative
 			public int TotalResultCount; // m_nTotalResultCount int32
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
 			public ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U4)]
 			public uint[] GRTimeUpdated; // m_rgRTimeUpdated uint32 [50]
 			
 			//

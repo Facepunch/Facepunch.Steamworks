@@ -177,7 +177,7 @@ namespace Generator
                 {
                     var num = t.Replace( "uint32", "" ).Trim( '[', ']', ' ' );
                     t = $"uint[]";
-                    WriteLine( $"[MarshalAs(UnmanagedType.ByValArray, SizeConst = {num}, ArraySubType = UnmanagedType.U8)]" );
+                    WriteLine( $"[MarshalAs(UnmanagedType.ByValArray, SizeConst = {num}, ArraySubType = UnmanagedType.U4)]" );
                 }
 
                 if ( t.StartsWith( "float " ) && t.Contains( "[" ) )
