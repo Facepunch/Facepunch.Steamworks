@@ -46,6 +46,8 @@ enum EControllerSource
 	k_EControllerSource_CenterTrackpad,		// PS4
 	k_EControllerSource_RightJoystick,		// Traditional Controllers
 	k_EControllerSource_DPad,				// Traditional Controllers
+	k_EControllerSource_Key,                // Keyboards with scan codes
+	k_EControllerSource_Mouse,              // Traditional mouse
 	k_EControllerSource_Count
 };
 
@@ -287,6 +289,16 @@ enum ESteamControllerLEDFlag
 	k_ESteamControllerLEDFlag_RestoreUserDefault
 };
 
+enum ESteamInputType
+{
+	k_ESteamInputType_Unknown,
+	k_ESteamInputType_SteamController,
+	k_ESteamInputType_XBox360Controller,
+	k_ESteamInputType_XBoxOneController,
+	k_ESteamInputType_GenericXInput,
+	k_ESteamInputType_PS4Controller,
+};
+
 // ControllerHandle_t is used to refer to a specific controller.
 // This handle will consistently identify a controller, even if it is disconnected and re-connected
 typedef uint64 ControllerHandle_t;
@@ -377,6 +389,12 @@ public:
 	// your state loops, instead of trying to place it in all of your state transitions.
 	virtual void ActivateActionSet( ControllerHandle_t controllerHandle, ControllerActionSetHandle_t actionSetHandle ) = 0;
 	virtual ControllerActionSetHandle_t GetCurrentActionSet( ControllerHandle_t controllerHandle ) = 0;
+
+	virtual void ActivateActionSetLayer( ControllerHandle_t controllerHandle, ControllerActionSetHandle_t actionSetLayerHandle ) = 0;
+	virtual void DeactivateActionSetLayer( ControllerHandle_t controllerHandle, ControllerActionSetHandle_t actionSetLayerHandle ) = 0;
+	virtual void DeactivateAllActionSetLayers( ControllerHandle_t controllerHandle ) = 0;
+	virtual int GetActiveActionSetLayers( ControllerHandle_t controllerHandle, ControllerActionSetHandle_t *handlesOut ) = 0;
+
 	
 	// ACTIONS
 	// Lookup the handle for a digital action. Best to do this once on startup, and store the handles for all future API calls.
@@ -433,8 +451,11 @@ public:
 
 	// Get a local path to art for on-screen glyph for a particular origin 
 	virtual const char *GetGlyphForActionOrigin( EControllerActionOrigin eOrigin ) = 0;
+
+	// Returns the input type for a particular handle
+	virtual ESteamInputType GetInputTypeForHandle( ControllerHandle_t controllerHandle ) = 0;
 };
 
-#define STEAMCONTROLLER_INTERFACE_VERSION "SteamController005"
+#define STEAMCONTROLLER_INTERFACE_VERSION "SteamController006"
 
 #endif // ISTEAMCONTROLLER_H

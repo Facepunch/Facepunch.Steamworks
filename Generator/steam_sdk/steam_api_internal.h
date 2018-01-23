@@ -44,7 +44,6 @@ inline ISteamNetworking *SteamNetworking()					{ return SteamInternal_ModuleCont
 inline ISteamRemoteStorage *SteamRemoteStorage()			{ return SteamInternal_ModuleContext().SteamRemoteStorage(); }
 inline ISteamScreenshots *SteamScreenshots()				{ return SteamInternal_ModuleContext().SteamScreenshots(); }
 inline ISteamHTTP *SteamHTTP()								{ return SteamInternal_ModuleContext().SteamHTTP(); }
-inline ISteamUnifiedMessages *SteamUnifiedMessages()		{ return SteamInternal_ModuleContext().SteamUnifiedMessages(); }
 inline ISteamController *SteamController()					{ return SteamInternal_ModuleContext().SteamController(); }
 inline ISteamUGC *SteamUGC()								{ return SteamInternal_ModuleContext().SteamUGC(); }
 inline ISteamAppList *SteamAppList()						{ return SteamInternal_ModuleContext().SteamAppList(); }
@@ -53,6 +52,7 @@ inline ISteamMusicRemote *SteamMusicRemote()				{ return SteamInternal_ModuleCon
 inline ISteamHTMLSurface *SteamHTMLSurface()				{ return SteamInternal_ModuleContext().SteamHTMLSurface(); }
 inline ISteamInventory *SteamInventory()					{ return SteamInternal_ModuleContext().SteamInventory(); }
 inline ISteamVideo *SteamVideo()							{ return SteamInternal_ModuleContext().SteamVideo(); }
+inline ISteamParentalSettings *SteamParentalSettings()		{ return SteamInternal_ModuleContext().SteamParentalSettings(); }
 
 #endif // !defined( STEAM_API_EXPORTS )
 
@@ -72,7 +72,6 @@ inline void CSteamAPIContext::Clear()
 	m_pSteamHTTP = NULL;
 	m_pSteamScreenshots = NULL;
 	m_pSteamMusic = NULL;
-	m_pSteamUnifiedMessages = NULL;
 	m_pController = NULL;
 	m_pSteamUGC = NULL;
 	m_pSteamAppList = NULL;
@@ -80,6 +79,8 @@ inline void CSteamAPIContext::Clear()
 	m_pSteamMusicRemote = NULL;
 	m_pSteamHTMLSurface = NULL;
 	m_pSteamInventory = NULL;
+	m_pSteamVideo = NULL;
+	m_pSteamParentalSettings = NULL;
 }
 
 
@@ -139,10 +140,6 @@ inline bool CSteamAPIContext::Init()
 	if ( !m_pSteamHTTP )
 		return false;
 
-	m_pSteamUnifiedMessages = m_pSteamClient->GetISteamUnifiedMessages( hSteamUser, hSteamPipe, STEAMUNIFIEDMESSAGES_INTERFACE_VERSION );
-	if ( !m_pSteamUnifiedMessages )
-		return false;
-
 	m_pController = m_pSteamClient->GetISteamController( hSteamUser, hSteamPipe, STEAMCONTROLLER_INTERFACE_VERSION );
 	if ( !m_pController )
 		return false;
@@ -173,6 +170,10 @@ inline bool CSteamAPIContext::Init()
 
 	m_pSteamVideo = m_pSteamClient->GetISteamVideo( hSteamUser, hSteamPipe, STEAMVIDEO_INTERFACE_VERSION );
 	if ( !m_pSteamVideo )
+		return false;
+
+	m_pSteamParentalSettings = m_pSteamClient->GetISteamParentalSettings( hSteamUser, hSteamPipe, STEAMPARENTALSETTINGS_INTERFACE_VERSION );
+	if ( !m_pSteamParentalSettings )
 		return false;
 
 	return true;

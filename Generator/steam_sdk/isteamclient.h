@@ -100,13 +100,13 @@ class ISteamMusicRemote;
 class ISteamGameServerStats;
 class ISteamPS3OverlayRender;
 class ISteamHTTP;
-class ISteamUnifiedMessages;
 class ISteamController;
 class ISteamUGC;
 class ISteamAppList;
 class ISteamHTMLSurface;
 class ISteamInventory;
 class ISteamVideo;
+class ISteamParentalSettings;
 
 //-----------------------------------------------------------------------------
 // Purpose: Interface to creating a new steam instance, or to
@@ -206,8 +206,8 @@ public:
 	// Expose HTTP interface
 	virtual ISteamHTTP *GetISteamHTTP( HSteamUser hSteamuser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
 
-	// Exposes the ISteamUnifiedMessages interface
-	virtual ISteamUnifiedMessages *GetISteamUnifiedMessages( HSteamUser hSteamuser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
+	// Deprecated - the ISteamUnifiedMessages interface is no longer intended for public consumption.
+	STEAM_PRIVATE_API( virtual void *DEPRECATED_GetISteamUnifiedMessages( HSteamUser hSteamuser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0 ; )
 
 	// Exposes the ISteamController interface
 	virtual ISteamController *GetISteamController( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
@@ -237,6 +237,9 @@ public:
 
 	// Video
 	virtual ISteamVideo *GetISteamVideo( HSteamUser hSteamuser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
+
+	// Parental controls
+	virtual ISteamParentalSettings *GetISteamParentalSettings( HSteamUser hSteamuser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
 };
 
 
@@ -294,6 +297,9 @@ enum { k_iSteamHTMLSurfaceCallbacks = 4500 };
 enum { k_iClientVideoCallbacks = 4600 };
 enum { k_iClientInventoryCallbacks = 4700 };
 enum { k_iClientBluetoothManagerCallbacks = 4800 };
+enum { k_iClientSharedConnectionCallbacks = 4900 };
+enum { k_ISteamParentalSettingsCallbacks = 5000 };
+enum { k_iClientShaderCallbacks = 5100 };
 
 //-----------------------------------------------------------------------------
 // The CALLBACK macros are for client side callback logging enabled with

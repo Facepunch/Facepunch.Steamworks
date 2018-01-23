@@ -23,13 +23,13 @@
 #include "isteammusic.h"
 #include "isteammusicremote.h"
 #include "isteamhttp.h"
-#include "isteamunifiedmessages.h"
 #include "isteamcontroller.h"
 #include "isteamugc.h"
 #include "isteamapplist.h"
 #include "isteamhtmlsurface.h"
 #include "isteaminventory.h"
 #include "isteamvideo.h"
+#include "isteamparentalsettings.h"
 
 
 // Steam API export macro
@@ -114,7 +114,6 @@ inline ISteamMatchmakingServers *SteamMatchmakingServers();
 inline ISteamRemoteStorage *SteamRemoteStorage();
 inline ISteamScreenshots *SteamScreenshots();
 inline ISteamHTTP *SteamHTTP();
-inline ISteamUnifiedMessages *SteamUnifiedMessages();
 inline ISteamController *SteamController();
 inline ISteamUGC *SteamUGC();
 inline ISteamAppList *SteamAppList();
@@ -123,6 +122,7 @@ inline ISteamMusicRemote *SteamMusicRemote();
 inline ISteamHTMLSurface *SteamHTMLSurface();
 inline ISteamInventory *SteamInventory();
 inline ISteamVideo *SteamVideo();
+inline ISteamParentalSettings *SteamParentalSettings();
 #endif // VERSION_SAFE_STEAM_API_INTERFACES
 
 
@@ -147,7 +147,6 @@ public:
 	ISteamRemoteStorage* SteamRemoteStorage() const			{ return m_pSteamRemoteStorage; }
 	ISteamScreenshots*	SteamScreenshots() const			{ return m_pSteamScreenshots; }
 	ISteamHTTP*			SteamHTTP() const					{ return m_pSteamHTTP; }
-	ISteamUnifiedMessages* SteamUnifiedMessages() const		{ return m_pSteamUnifiedMessages; }
 	ISteamController*	SteamController() const				{ return m_pController; }
 	ISteamUGC*			SteamUGC() const					{ return m_pSteamUGC; }
 	ISteamAppList*		SteamAppList() const				{ return m_pSteamAppList; }
@@ -156,6 +155,7 @@ public:
 	ISteamHTMLSurface*	SteamHTMLSurface() const			{ return m_pSteamHTMLSurface; }
 	ISteamInventory*	SteamInventory() const				{ return m_pSteamInventory; }
 	ISteamVideo*		SteamVideo() const					{ return m_pSteamVideo; }
+	ISteamParentalSettings* SteamParentalSettings() const	{ return m_pSteamParentalSettings; }
 	// DEPRECATED - there is no benefit to using this over the global accessors
 private:
 	ISteamClient		*m_pSteamClient;
@@ -170,7 +170,6 @@ private:
 	ISteamRemoteStorage *m_pSteamRemoteStorage;
 	ISteamScreenshots	*m_pSteamScreenshots;
 	ISteamHTTP			*m_pSteamHTTP;
-	ISteamUnifiedMessages *m_pSteamUnifiedMessages;
 	ISteamController	*m_pController;
 	ISteamUGC			*m_pSteamUGC;
 	ISteamAppList		*m_pSteamAppList;
@@ -179,6 +178,7 @@ private:
 	ISteamHTMLSurface	*m_pSteamHTMLSurface;
 	ISteamInventory		*m_pSteamInventory;
 	ISteamVideo			*m_pSteamVideo;
+	ISteamParentalSettings *m_pSteamParentalSettings;
 };
 
 

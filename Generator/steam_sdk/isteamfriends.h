@@ -388,6 +388,9 @@ public:
 	virtual SteamAPICall_t IsFollowing( CSteamID steamID ) = 0;
 	CALL_RESULT( FriendsEnumerateFollowingList_t )
 	virtual SteamAPICall_t EnumerateFollowingList( uint32 unStartIndex ) = 0;
+
+	virtual bool IsClanPublic( CSteamID steamIDClan ) = 0;
+	virtual bool IsClanOfficialGameGroup( CSteamID steamIDClan ) = 0;
 };
 
 #define STEAMFRIENDS_INTERFACE_VERSION "SteamFriends015"

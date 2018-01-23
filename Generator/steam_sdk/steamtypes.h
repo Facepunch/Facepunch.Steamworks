@@ -24,7 +24,7 @@ typedef unsigned char uint8;
 	#define POSIX 1
 #endif
 
-#if defined(__x86_64__) || defined(_WIN64)
+#if defined(__x86_64__) || defined(_WIN64) || defined(__aarch64__)
 #define X64BITS
 #endif
 
@@ -176,6 +176,9 @@ const PartnerId_t k_uPartnerIdInvalid = 0;
 typedef uint64 ManifestId_t; 
 const ManifestId_t k_uManifestIdInvalid = 0;
 
+// ID for cafe sites
+typedef uint64 SiteId_t;
+const SiteId_t k_ulSiteIdInvalid = 0;
 
 
 #endif // STEAMTYPES_H

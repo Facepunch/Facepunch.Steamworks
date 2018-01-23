@@ -329,6 +329,20 @@ public:
 	virtual SteamAPICall_t AddDependency( PublishedFileId_t nParentPublishedFileID, PublishedFileId_t nChildPublishedFileID ) = 0;
 	CALL_RESULT( RemoveUGCDependencyResult_t )
 	virtual SteamAPICall_t RemoveDependency( PublishedFileId_t nParentPublishedFileID, PublishedFileId_t nChildPublishedFileID ) = 0;
+
+	// add/remove app dependence/requirements (usually DLC)
+	CALL_RESULT( AddAppDependencyResult_t )
+	virtual SteamAPICall_t AddAppDependency( PublishedFileId_t nPublishedFileID, AppId_t nAppID ) = 0;
+	CALL_RESULT( RemoveAppDependencyResult_t )
+	virtual SteamAPICall_t RemoveAppDependency( PublishedFileId_t nPublishedFileID, AppId_t nAppID ) = 0;
+	// request app dependencies. note that whatever callback you register for GetAppDependenciesResult_t may be called multiple times
+	// until all app dependencies have been returned
+	CALL_RESULT( GetAppDependenciesResult_t )
+	virtual SteamAPICall_t GetAppDependencies( PublishedFileId_t nPublishedFileID ) = 0;
+	
+	// delete the item without prompting the user
+	CALL_RESULT( DeleteItemResult_t )
+	virtual SteamAPICall_t DeleteItem( PublishedFileId_t nPublishedFileID ) = 0;
 };
 
 #define STEAMUGC_INTERFACE_VERSION "STEAMUGC_INTERFACE_VERSION010"
@@ -378,6 +392,7 @@ struct SubmitItemUpdateResult_t
 	enum { k_iCallback = k_iClientUGCCallbacks + 4 };
 	EResult m_eResult;
 	bool m_bUserNeedsToAcceptWorkshopLegalAgreement;
+	PublishedFileId_t m_nPublishedFileId;
 };
 
 
@@ -478,6 +493,52 @@ struct RemoveUGCDependencyResult_t
 	PublishedFileId_t m_nChildPublishedFileId;
 };
 
+
+//-----------------------------------------------------------------------------
+// Purpose: The result of a call to AddAppDependency
+//-----------------------------------------------------------------------------
+struct AddAppDependencyResult_t
+{
+	enum { k_iCallback = k_iClientUGCCallbacks + 14 };
+	EResult m_eResult;
+	PublishedFileId_t m_nPublishedFileId;
+	AppId_t m_nAppID;
+};
+
+//-----------------------------------------------------------------------------
+// Purpose: The result of a call to RemoveAppDependency
+//-----------------------------------------------------------------------------
+struct RemoveAppDependencyResult_t
+{
+	enum { k_iCallback = k_iClientUGCCallbacks + 15 };
+	EResult m_eResult;
+	PublishedFileId_t m_nPublishedFileId;
+	AppId_t m_nAppID;
+};
+
+//-----------------------------------------------------------------------------
+// Purpose: The result of a call to GetAppDependencies.  Callback may be called
+//			multiple times until all app dependencies have been returned.
+//-----------------------------------------------------------------------------
+struct GetAppDependenciesResult_t
+{
+	enum { k_iCallback = k_iClientUGCCallbacks + 16 };
+	EResult m_eResult;
+	PublishedFileId_t m_nPublishedFileId;
+	AppId_t m_rgAppIDs[32];
+	uint32 m_nNumAppDependencies;		// number returned in this struct
+	uint32 m_nTotalNumAppDependencies;	// total found
+};
+
+//-----------------------------------------------------------------------------
+// Purpose: The result of a call to DeleteItem
+//-----------------------------------------------------------------------------
+struct DeleteItemResult_t
+{
+	enum { k_iCallback = k_iClientUGCCallbacks + 17 };
+	EResult m_eResult;
+	PublishedFileId_t m_nPublishedFileId;
+};
 
 #pragma pack( pop )
 
