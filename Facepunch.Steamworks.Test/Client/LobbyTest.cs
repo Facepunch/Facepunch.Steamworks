@@ -249,6 +249,61 @@ namespace Facepunch.Steamworks.Test
         }
 
         [TestMethod]
+        public void RefreshLobbyListWithFilterAndGetLobbyDataFromListLobby()
+        {
+            using (var client = new Facepunch.Steamworks.Client(755870))
+            {
+                Assert.IsTrue(client.IsValid);
+
+                client.Lobby.OnLobbyCreated = (success) =>
+                {
+                    Assert.IsTrue(success);
+                    Assert.IsTrue(client.Lobby.IsValid);
+                    Console.WriteLine("lobby created: " + client.Lobby.CurrentLobby);
+                    client.Lobby.CurrentLobbyData.SetData("testkey", "testvalue");
+                };
+
+                client.Lobby.OnLobbyDataUpdated = () =>
+                {
+                    var filter = new LobbyList.Filter();
+                    filter.StringFilters.Add("testkey", "testvalue");
+                    client.LobbyList.Refresh(filter);
+                };
+
+                client.LobbyList.OnLobbiesUpdated = () =>
+                {
+                    Console.WriteLine("lobbies updating");
+                    if (client.LobbyList.Finished)
+                    {
+                        Console.WriteLine("lobbies finished updating");
+                        Console.WriteLine($"found {client.LobbyList.Lobbies.Count} lobbies");
+
+                        foreach (LobbyList.Lobby lobby in client.LobbyList.Lobbies)
+                        {
+                            foreach (var pair in lobby.GetAllData())
+                            {
+                                Console.WriteLine(string.Format("Key: {0,-36} Value: {1}", pair.Key, pair.Value));
+                            }
+                        }
+                    }
+                };
+
+                client.Lobby.Create(Steamworks.Lobby.Type.Public, 10);
+
+                var sw = Stopwatch.StartNew();
+
+                while (sw.Elapsed.TotalSeconds < 5)
+                {
+                    client.Update();
+                    System.Threading.Thread.Sleep(10);
+                }
+
+                client.Lobby.Leave();
+
+            }
+        }
+
+        [TestMethod]
         public void SendChatMessage()
         {
             using (var client = new Facepunch.Steamworks.Client(252490))
