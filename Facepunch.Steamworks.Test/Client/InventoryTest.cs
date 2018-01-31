@@ -18,14 +18,14 @@ namespace Facepunch.Steamworks.Test
                 Assert.IsNotNull( client.Inventory.Definitions );
                 Assert.AreNotEqual( 0, client.Inventory.Definitions.Length );
 
-                foreach ( var i in client.Inventory.Definitions.Where( x => x.PriceRaw != "" ) )
+                foreach ( var i in client.Inventory.Definitions.Where( x => x.PriceCategory != "" ) )
                 {
                     Console.WriteLine( "{0}: {1} ({2})", i.Id, i.Name, i.Type );
                     Console.WriteLine( "  itemshortname: {0}", i.GetStringProperty( "itemshortname" ) );
                     Console.WriteLine( "  workshopdownload: {0}", i.GetStringProperty( "workshopdownload" ) );
                     Console.WriteLine( "           IconUrl: {0}", i.IconUrl );
                     Console.WriteLine( "      IconLargeUrl: {0}", i.IconLargeUrl );
-                    Console.WriteLine( "          PriceRaw: {0}", i.PriceRaw );
+                    Console.WriteLine( "          PriceRaw: {0}", i.PriceCategory );
                     Console.WriteLine( "      PriceDollars: {0}", i.PriceDollars );
                 }
             }
@@ -119,6 +119,8 @@ namespace Facepunch.Steamworks.Test
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {
                 Assert.IsTrue( client.IsValid );
+                Assert.IsNotNull(client.Inventory.Definitions);
+                Assert.AreNotEqual(0, client.Inventory.Definitions.Length);
 
                 client.Inventory.Refresh();
 
@@ -163,6 +165,59 @@ namespace Facepunch.Steamworks.Test
                         Console.WriteLine( "Item: {0} ({1})", item.Id, item.DefinitionId );
                         Console.WriteLine( "Item: {0} ({1})", item.Id, item.DefinitionId );
                     }
+                }
+            }
+        }
+
+        [TestMethod]
+        public void PurchaseItems()
+        {
+            using (var client = new Facepunch.Steamworks.Client(252490))
+            {
+                Assert.IsNotNull(client.Inventory.Definitions);
+                Assert.AreNotEqual(0, client.Inventory.Definitions.Length);
+
+                while ( client.Inventory.Currency == null )
+                {
+                    client.Update();
+                }
+
+                var shoppingList = client.Inventory.DefinitionsWithPrices.Take(2).ToArray();
+                bool waitingForCallback = true;
+
+                if ( !client.Inventory.StartPurchase(shoppingList, ( order, tran ) =>
+                {
+                    Console.WriteLine($"Order: {order}, Transaction {tran}");
+                    waitingForCallback = false;
+
+                } ) )
+                {
+                    throw new Exception("Couldn't Buy!");
+                }       
+                
+                while ( waitingForCallback )
+                {
+                    client.Update();
+                }
+            }
+        }
+
+        [TestMethod]
+        public void ListPrices()
+        {
+            using (var client = new Facepunch.Steamworks.Client(252490))
+            {
+                Assert.IsNotNull(client.Inventory.Definitions);
+                Assert.AreNotEqual(0, client.Inventory.Definitions.Length);
+
+                while (client.Inventory.Currency == null)
+                {
+                    client.Update();
+                }
+
+                foreach ( var i in client.Inventory.Definitions.Where( x => x.LocalPrice > 0 ) )
+                {
+                    Console.WriteLine( $" {i.Name} - {i.LocalPriceFormatted} ({client.Inventory.Currency})" );
                 }
             }
         }
