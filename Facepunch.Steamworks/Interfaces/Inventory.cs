@@ -399,6 +399,37 @@ namespace Facepunch.Steamworks
 
             return new Result( this, resultHandle, true );
         }
+
+        public delegate void StartPurchaseSuccess( ulong orderId, ulong transactionId );
+
+        /// <summary>
+        /// Starts the purchase process for the user, given a "shopping cart" of item definitions that the user would like to buy. 
+        /// The user will be prompted in the Steam Overlay to complete the purchase in their local currency, funding their Steam Wallet if necessary, etc.
+        /// 
+        /// If was succesful the callback orderId and transactionId will be non 0
+        /// </summary>
+        public bool StartPurchase( Definition[] items, StartPurchaseSuccess callback = null )
+        {
+            var itemGroup = items.GroupBy(x => x.Id);
+
+            var newItems = itemGroup.Select( x => new SteamItemDef_t { Value = x.Key } ).ToArray();
+            var newItemC = itemGroup.Select( x => (uint) x.Count() ).ToArray();
+
+            var h = inventory.StartPurchase( newItems, newItemC, (uint) newItemC.Length, ( result, error ) =>
+            {
+                if ( error )
+                {
+                    callback?.Invoke(0, 0);
+                }
+                else
+                {
+                    callback?.Invoke(result.OrderID, result.TransID);
+                }
+            });
+
+            return h != null;
+        }
+
         /// <summary>
         /// This might be null until Steam has actually recieved the prices.
         /// </summary>
