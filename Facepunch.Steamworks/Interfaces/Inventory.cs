@@ -249,6 +249,21 @@ namespace Facepunch.Steamworks
         public Definition[] Definitions;
 
         /// <summary>
+        /// A list of item definitions that have prices and so can be bought.
+        /// </summary>
+        public IEnumerable<Definition> DefinitionsWithPrices
+        {
+            get
+            {
+                for( int i=0; i< Definitions.Length; i++ )
+                {
+                    if (Definitions[i].LocalPrice > 0)
+                        yield return Definitions[i];
+                }
+            }
+        }
+
+        /// <summary>
         /// Utility, given a "1;VLV250" string, convert it to a 2.5
         /// </summary>
         public static float PriceCategoryToFloat( string price )
