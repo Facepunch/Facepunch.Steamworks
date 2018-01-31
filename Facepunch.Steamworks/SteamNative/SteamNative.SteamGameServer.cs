@@ -50,6 +50,7 @@ namespace SteamNative
 			callback = platform.ISteamGameServer_AssociateWithClan( steamIDClan.Value );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return AssociateWithClanResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -97,6 +98,7 @@ namespace SteamNative
 			callback = platform.ISteamGameServer_ComputeNewPlayerCompatibility( steamIDNewPlayer.Value );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return ComputeNewPlayerCompatibilityResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -156,6 +158,7 @@ namespace SteamNative
 			callback = platform.ISteamGameServer_GetServerReputation();
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return GSReputation_t.CallResult( steamworks, callback, CallbackFunction );
 		}

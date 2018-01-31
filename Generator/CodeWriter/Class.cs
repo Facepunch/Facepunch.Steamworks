@@ -175,6 +175,7 @@ namespace Generator
 
             AfterLines.Add( "" );
             AfterLines.Add( "if ( CallbackFunction == null ) return null;" );
+            AfterLines.Add("if ( callback == 0 ) return null;");
             AfterLines.Add( "" );
 
             AfterLines.Add( $"return {MethodDef.CallResult}.CallResult( steamworks, callback, CallbackFunction );" );

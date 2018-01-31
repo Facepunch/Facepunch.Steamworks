@@ -50,6 +50,7 @@ namespace SteamNative
 			callback = platform.ISteamUserStats_AttachLeaderboardUGC( hSteamLeaderboard.Value, hUGC.Value );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return LeaderboardUGCSet_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -67,6 +68,7 @@ namespace SteamNative
 			callback = platform.ISteamUserStats_DownloadLeaderboardEntries( hSteamLeaderboard.Value, eLeaderboardDataRequest, nRangeStart, nRangeEnd );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return LeaderboardScoresDownloaded_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -78,6 +80,7 @@ namespace SteamNative
 			callback = platform.ISteamUserStats_DownloadLeaderboardEntriesForUsers( hSteamLeaderboard.Value, (IntPtr) prgUsers, cUsers );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return LeaderboardScoresDownloaded_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -89,6 +92,7 @@ namespace SteamNative
 			callback = platform.ISteamUserStats_FindLeaderboard( pchLeaderboardName );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return LeaderboardFindResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -100,6 +104,7 @@ namespace SteamNative
 			callback = platform.ISteamUserStats_FindOrCreateLeaderboard( pchLeaderboardName, eLeaderboardSortMethod, eLeaderboardDisplayType );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return LeaderboardFindResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -244,6 +249,7 @@ namespace SteamNative
 			callback = platform.ISteamUserStats_GetNumberOfCurrentPlayers();
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return NumberOfCurrentPlayers_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -303,6 +309,7 @@ namespace SteamNative
 			callback = platform.ISteamUserStats_RequestGlobalAchievementPercentages();
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return GlobalAchievementPercentagesReady_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -314,6 +321,7 @@ namespace SteamNative
 			callback = platform.ISteamUserStats_RequestGlobalStats( nHistoryDays );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return GlobalStatsReceived_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -325,6 +333,7 @@ namespace SteamNative
 			callback = platform.ISteamUserStats_RequestUserStats( steamIDUser.Value );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return UserStatsReceived_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -372,6 +381,7 @@ namespace SteamNative
 			callback = platform.ISteamUserStats_UploadLeaderboardScore( hSteamLeaderboard.Value, eLeaderboardUploadScoreMethod, nScore, pScoreDetails, cScoreDetailsCount );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return LeaderboardScoreUploaded_t.CallResult( steamworks, callback, CallbackFunction );
 		}

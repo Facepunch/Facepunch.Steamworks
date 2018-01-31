@@ -56,6 +56,7 @@ namespace SteamNative
 			callback = platform.ISteamUtils_CheckFileSignature( szFileName );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return CheckFileSignature_t.CallResult( steamworks, callback, CallbackFunction );
 		}

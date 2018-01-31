@@ -98,6 +98,7 @@ namespace SteamNative
 			callback = platform.ISteamMatchmaking_CreateLobby( eLobbyType, cMaxMembers );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return LobbyCreated_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -219,6 +220,7 @@ namespace SteamNative
 			callback = platform.ISteamMatchmaking_JoinLobby( steamIDLobby.Value );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return LobbyEnter_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -248,6 +250,7 @@ namespace SteamNative
 			callback = platform.ISteamMatchmaking_RequestLobbyList();
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return LobbyMatchList_t.CallResult( steamworks, callback, CallbackFunction );
 		}

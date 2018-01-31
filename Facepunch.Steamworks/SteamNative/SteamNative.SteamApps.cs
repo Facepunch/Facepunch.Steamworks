@@ -184,6 +184,7 @@ namespace SteamNative
 			callback = platform.ISteamApps_GetFileDetails( pszFileName );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return FileDetailsResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}

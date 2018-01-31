@@ -68,6 +68,7 @@ namespace SteamNative
 			callback = platform.ISteamHTMLSurface_CreateBrowser( pchUserAgent, pchUserCSS );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return HTML_BrowserReady_t.CallResult( steamworks, callback, CallbackFunction );
 		}

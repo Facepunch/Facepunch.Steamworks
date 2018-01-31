@@ -243,6 +243,7 @@ namespace SteamNative
 			callback = platform.ISteamInventory_RequestEligiblePromoItemDefinitionsIDs( steamID.Value );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return SteamInventoryEligiblePromoItemDefIDs_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -254,6 +255,7 @@ namespace SteamNative
 			callback = platform.ISteamInventory_RequestPrices();
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return SteamInventoryRequestPricesResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -301,6 +303,7 @@ namespace SteamNative
 			callback = platform.ISteamInventory_StartPurchase( pArrayItemDefs.Select( x => x.Value ).ToArray(), punArrayQuantity, unArrayLength );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return SteamInventoryStartPurchaseResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}

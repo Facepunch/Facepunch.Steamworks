@@ -188,6 +188,7 @@ namespace SteamNative
 			callback = platform.ISteamUser_RequestEncryptedAppTicket( (IntPtr) pDataToInclude, cbDataToInclude );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return EncryptedAppTicketResponse_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -199,6 +200,7 @@ namespace SteamNative
 			callback = platform.ISteamUser_RequestStoreAuthURL( pchRedirectURL );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return StoreAuthURLResponse_t.CallResult( steamworks, callback, CallbackFunction );
 		}

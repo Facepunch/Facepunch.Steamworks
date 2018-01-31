@@ -74,6 +74,7 @@ namespace SteamNative
 			callback = platform.ISteamGameServerStats_RequestUserStats( steamIDUser.Value );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return GSStatsReceived_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -103,6 +104,7 @@ namespace SteamNative
 			callback = platform.ISteamGameServerStats_StoreUserStats( steamIDUser.Value );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return GSStatsStored_t.CallResult( steamworks, callback, CallbackFunction );
 		}

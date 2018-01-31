@@ -98,6 +98,7 @@ namespace SteamNative
 			callback = platform.ISteamFriends_EnumerateFollowingList( unStartIndex );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return FriendsEnumerateFollowingList_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -193,6 +194,7 @@ namespace SteamNative
 			callback = platform.ISteamFriends_GetFollowerCount( steamID.Value );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return FriendsGetFollowerCount_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -429,6 +431,7 @@ namespace SteamNative
 			callback = platform.ISteamFriends_IsFollowing( steamID.Value );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return FriendsIsFollowing_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -446,6 +449,7 @@ namespace SteamNative
 			callback = platform.ISteamFriends_JoinClanChatRoom( steamIDClan.Value );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return JoinClanChatRoomCompletionResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -475,6 +479,7 @@ namespace SteamNative
 			callback = platform.ISteamFriends_RequestClanOfficerList( steamIDClan.Value );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return ClanOfficerListResponse_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -516,6 +521,7 @@ namespace SteamNative
 			callback = platform.ISteamFriends_SetPersonaName( pchPersonaName );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return SetPersonaNameResponse_t.CallResult( steamworks, callback, CallbackFunction );
 		}

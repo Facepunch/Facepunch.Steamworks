@@ -50,6 +50,7 @@ namespace SteamNative
 			callback = platform.ISteamRemoteStorage_CommitPublishedFileUpdate( updateHandle.Value );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return RemoteStorageUpdatePublishedFileResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -67,6 +68,7 @@ namespace SteamNative
 			callback = platform.ISteamRemoteStorage_DeletePublishedFile( unPublishedFileId.Value );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return RemoteStorageDeletePublishedFileResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -78,6 +80,7 @@ namespace SteamNative
 			callback = platform.ISteamRemoteStorage_EnumeratePublishedFilesByUserAction( eAction, unStartIndex );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return RemoteStorageEnumeratePublishedFilesByUserActionResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -115,6 +118,7 @@ namespace SteamNative
 			}
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return RemoteStorageEnumerateWorkshopFilesResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -126,6 +130,7 @@ namespace SteamNative
 			callback = platform.ISteamRemoteStorage_EnumerateUserPublishedFiles( unStartIndex );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return RemoteStorageEnumerateUserPublishedFilesResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -163,6 +168,7 @@ namespace SteamNative
 			}
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return RemoteStorageEnumerateUserPublishedFilesResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -174,6 +180,7 @@ namespace SteamNative
 			callback = platform.ISteamRemoteStorage_EnumerateUserSubscribedFiles( unStartIndex );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return RemoteStorageEnumerateUserSubscribedFilesResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -215,6 +222,7 @@ namespace SteamNative
 			callback = platform.ISteamRemoteStorage_FileReadAsync( pchFile, nOffset, cubToRead );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return RemoteStorageFileReadAsyncComplete_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -232,6 +240,7 @@ namespace SteamNative
 			callback = platform.ISteamRemoteStorage_FileShare( pchFile );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return RemoteStorageFileShareResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -249,6 +258,7 @@ namespace SteamNative
 			callback = platform.ISteamRemoteStorage_FileWriteAsync( pchFile, (IntPtr) pvData, cubData );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return RemoteStorageFileWriteAsyncComplete_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -323,6 +333,7 @@ namespace SteamNative
 			callback = platform.ISteamRemoteStorage_GetPublishedFileDetails( unPublishedFileId.Value, unMaxSecondsOld );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return RemoteStorageGetPublishedFileDetailsResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -334,6 +345,7 @@ namespace SteamNative
 			callback = platform.ISteamRemoteStorage_GetPublishedItemVoteDetails( unPublishedFileId.Value );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return RemoteStorageGetPublishedItemVoteDetailsResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -377,6 +389,7 @@ namespace SteamNative
 			callback = platform.ISteamRemoteStorage_GetUserPublishedItemVoteDetails( unPublishedFileId.Value );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return RemoteStorageGetPublishedItemVoteDetailsResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -426,6 +439,7 @@ namespace SteamNative
 			}
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return RemoteStoragePublishFileProgress_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -463,6 +477,7 @@ namespace SteamNative
 			}
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return RemoteStoragePublishFileProgress_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -486,6 +501,7 @@ namespace SteamNative
 			callback = platform.ISteamRemoteStorage_SetUserPublishedFileAction( unPublishedFileId.Value, eAction );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return RemoteStorageSetUserPublishedFileActionResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -497,6 +513,7 @@ namespace SteamNative
 			callback = platform.ISteamRemoteStorage_SubscribePublishedFile( unPublishedFileId.Value );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return RemoteStorageSubscribePublishedFileResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -508,6 +525,7 @@ namespace SteamNative
 			callback = platform.ISteamRemoteStorage_UGCDownload( hContent.Value, unPriority );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return RemoteStorageDownloadUGCResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -519,6 +537,7 @@ namespace SteamNative
 			callback = platform.ISteamRemoteStorage_UGCDownloadToLocation( hContent.Value, pchLocation, unPriority );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return RemoteStorageDownloadUGCResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -536,6 +555,7 @@ namespace SteamNative
 			callback = platform.ISteamRemoteStorage_UnsubscribePublishedFile( unPublishedFileId.Value );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return RemoteStorageUnsubscribePublishedFileResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
@@ -615,6 +635,7 @@ namespace SteamNative
 			callback = platform.ISteamRemoteStorage_UpdateUserPublishedItemVote( unPublishedFileId.Value, bVoteUp );
 			
 			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
 			
 			return RemoteStorageUpdateUserPublishedItemVoteResult_t.CallResult( steamworks, callback, CallbackFunction );
 		}
