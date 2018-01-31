@@ -50,6 +50,7 @@ namespace Facepunch.Steamworks
 
             inventory.LoadItemDefinitions();
             FetchItemDefinitions();
+            UpdatePrices();
 
             if ( !server )
             {
@@ -87,12 +88,13 @@ namespace Facepunch.Steamworks
 
                 result.OnSteamResult( data, error );
 
-                if ( !error && data.Esult == SteamNative.Result.OK )
+                if ( !error && data.Result == SteamNative.Result.OK )
                 {
                     onResult( result, false );
                 }
 
                 Result.Pending.Remove( data.Handle );
+                result.Dispose();
             }
         }
 
@@ -195,7 +197,7 @@ namespace Facepunch.Steamworks
         /// </summary>
         public Definition CreateDefinition( int id )
         {
-            return new Definition( inventory, id );
+            return new Definition( this, id );
         }
 
         internal void FetchItemDefinitions()
@@ -293,6 +295,9 @@ namespace Facepunch.Steamworks
 
         public unsafe Result Deserialize( byte[] data, int dataLength = -1 )
         {
+            if (data == null)
+                throw new ArgumentException("data should nto be null");
+
             if ( dataLength == -1 )
                 dataLength = data.Length;
 
@@ -393,6 +398,36 @@ namespace Facepunch.Steamworks
                 return null;
 
             return new Result( this, resultHandle, true );
+        }
+        /// <summary>
+        /// This might be null until Steam has actually recieved the prices.
+        /// </summary>
+        public string Currency { get; private set; }
+
+        public void UpdatePrices()
+        {
+            if (IsServer)
+                return;
+
+            inventory.RequestPrices((result, b) =>
+           {
+               Currency = result.Currency;
+
+               for (int i = 0; i < Definitions.Length; i++)
+               {
+                   if (inventory.GetItemPrice(Definitions[i].Id, out ulong price))
+                   {
+                       Definitions[i].LocalPrice = price / 100.0;
+                       Definitions[i].LocalPriceFormatted = Utility.FormatPrice( Currency, price );
+                   }
+                   else
+                   {
+                       Definitions[i].LocalPrice = 0;
+                       Definitions[i].LocalPriceFormatted = null;
+                   }
+               }
+
+           });
         }
     }
 }
