@@ -4939,7 +4939,7 @@ namespace SteamNative
 		public bool Success; // m_bSuccess _Bool
 		[MarshalAs(UnmanagedType.I1)]
 		public bool LocalSuccess; // m_bLocalSuccess _Bool
-		public Result Esult; // m_result enum EResult
+		public Result Result; // m_result enum EResult
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
@@ -4957,7 +4957,7 @@ namespace SteamNative
 			public bool Success; // m_bSuccess _Bool
 			[MarshalAs(UnmanagedType.I1)]
 			public bool LocalSuccess; // m_bLocalSuccess _Bool
-			public Result Esult; // m_result enum EResult
+			public Result Result; // m_result enum EResult
 			
 			//
 			// Easily convert from PackSmall to SetPersonaNameResponse_t
@@ -4968,7 +4968,7 @@ namespace SteamNative
 				{
 					Success = d.Success,
 					LocalSuccess = d.LocalSuccess,
-					Esult = d.Esult,
+					Result = d.Result,
 				};
 			}
 		}
@@ -29015,7 +29015,7 @@ namespace SteamNative
 	{
 		public const int CallbackId = CallbackIdentifiers.ClientInventory + 0;
 		public int Handle; // m_handle SteamInventoryResult_t
-		public Result Esult; // m_result enum EResult
+		public Result Result; // m_result enum EResult
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
@@ -29030,7 +29030,7 @@ namespace SteamNative
 		internal struct PackSmall
 		{
 			public int Handle; // m_handle SteamInventoryResult_t
-			public Result Esult; // m_result enum EResult
+			public Result Result; // m_result enum EResult
 			
 			//
 			// Easily convert from PackSmall to SteamInventoryResultReady_t
@@ -29040,7 +29040,7 @@ namespace SteamNative
 				return new SteamInventoryResultReady_t()
 				{
 					Handle = d.Handle,
-					Esult = d.Esult,
+					Result = d.Result,
 				};
 			}
 		}
@@ -29307,7 +29307,7 @@ namespace SteamNative
 	internal struct SteamInventoryEligiblePromoItemDefIDs_t
 	{
 		public const int CallbackId = CallbackIdentifiers.ClientInventory + 3;
-		public Result Esult; // m_result enum EResult
+		public Result Result; // m_result enum EResult
 		public ulong SteamID; // m_steamID class CSteamID
 		public int UmEligiblePromoItemDefs; // m_numEligiblePromoItemDefs int
 		[MarshalAs(UnmanagedType.I1)]
@@ -29325,7 +29325,7 @@ namespace SteamNative
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		internal struct PackSmall
 		{
-			public Result Esult; // m_result enum EResult
+			public Result Result; // m_result enum EResult
 			public ulong SteamID; // m_steamID class CSteamID
 			public int UmEligiblePromoItemDefs; // m_numEligiblePromoItemDefs int
 			[MarshalAs(UnmanagedType.I1)]
@@ -29338,7 +29338,7 @@ namespace SteamNative
 			{
 				return new SteamInventoryEligiblePromoItemDefIDs_t()
 				{
-					Esult = d.Esult,
+					Result = d.Result,
 					SteamID = d.SteamID,
 					UmEligiblePromoItemDefs = d.UmEligiblePromoItemDefs,
 					CachedData = d.CachedData,
@@ -29593,7 +29593,7 @@ namespace SteamNative
 	internal struct SteamInventoryStartPurchaseResult_t
 	{
 		public const int CallbackId = CallbackIdentifiers.ClientInventory + 4;
-		public Result Esult; // m_result enum EResult
+		public Result Result; // m_result enum EResult
 		public ulong OrderID; // m_ulOrderID uint64
 		public ulong TransID; // m_ulTransID uint64
 		
@@ -29609,7 +29609,7 @@ namespace SteamNative
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		internal struct PackSmall
 		{
-			public Result Esult; // m_result enum EResult
+			public Result Result; // m_result enum EResult
 			public ulong OrderID; // m_ulOrderID uint64
 			public ulong TransID; // m_ulTransID uint64
 			
@@ -29620,7 +29620,7 @@ namespace SteamNative
 			{
 				return new SteamInventoryStartPurchaseResult_t()
 				{
-					Esult = d.Esult,
+					Result = d.Result,
 					OrderID = d.OrderID,
 					TransID = d.TransID,
 				};
@@ -29874,7 +29874,7 @@ namespace SteamNative
 	internal struct SteamInventoryRequestPricesResult_t
 	{
 		public const int CallbackId = CallbackIdentifiers.ClientInventory + 5;
-		public Result Esult; // m_result enum EResult
+		public Result Result; // m_result enum EResult
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
 		public string Currency; // m_rgchCurrency char [4]
 		
@@ -29890,7 +29890,7 @@ namespace SteamNative
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		internal struct PackSmall
 		{
-			public Result Esult; // m_result enum EResult
+			public Result Result; // m_result enum EResult
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
 			public string Currency; // m_rgchCurrency char [4]
 			
@@ -29901,7 +29901,7 @@ namespace SteamNative
 			{
 				return new SteamInventoryRequestPricesResult_t()
 				{
-					Esult = d.Esult,
+					Result = d.Result,
 					Currency = d.Currency,
 				};
 			}

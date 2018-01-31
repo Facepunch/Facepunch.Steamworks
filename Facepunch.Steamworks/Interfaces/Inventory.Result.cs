@@ -153,7 +153,7 @@ namespace Facepunch.Steamworks
 
             internal void OnSteamResult( SteamInventoryResultReady_t data, bool error )
             {
-                var success = data.Esult == SteamNative.Result.OK && !error;
+                var success = data.Result == SteamNative.Result.OK && !error;
 
                 if ( success )
                 {

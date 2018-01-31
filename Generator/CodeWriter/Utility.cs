@@ -36,6 +36,7 @@ namespace Generator
             if ( m == "m_cubParam" ) return "ParamCount";
             if ( m == "m_itemId" ) return "ItemId";
             if ( m == "m_handle" ) return "Handle";
+            if (m == "m_result") return "Result";
 
             var cleanName = m.Replace( "m_un", "" )
                     .Replace( "m_us", "" )
@@ -55,6 +56,8 @@ namespace Generator
                     .Replace( "m_rgch", "" )
                     .Replace( "m_r", "" )
                     .Replace( "m_", "" );
+
+   
 
             return cleanName.Substring( 0, 1 ).ToUpper() + cleanName.Substring( 1 );
         }
