@@ -59,5 +59,26 @@ namespace Facepunch.Steamworks
             }
 
         }
+
+        internal static string FormatPrice(string currency, ulong price)
+        {
+            var decimaled = (price / 100.0).ToString("0.00");
+
+            switch (currency )
+            {
+                case "GBP": return $"£{decimaled}";
+                case "USD": return $"${decimaled}";
+                case "CAD": return $"${decimaled} CAD";
+                case "EUR": return $"€{decimaled}";
+                case "RUB": return $"₽{decimaled}";
+                case "NZD": return $"${decimaled} NZD";
+
+                // TODO - all of them
+
+                default: return $"{decimaled}{currency}";
+            }
+
+            
+        }
     }
 }
