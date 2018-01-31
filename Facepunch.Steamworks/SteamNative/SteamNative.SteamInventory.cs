@@ -285,13 +285,13 @@ namespace SteamNative
 		}
 		
 		// bool
-		public bool SetProperty0( SteamInventoryUpdateHandle_t handle /*SteamInventoryUpdateHandle_t*/, SteamItemInstanceID_t nItemID /*SteamItemInstanceID_t*/, string pchPropertyName /*const char **/, long nValue /*int64*/ )
+		public bool SetProperty1( SteamInventoryUpdateHandle_t handle /*SteamInventoryUpdateHandle_t*/, SteamItemInstanceID_t nItemID /*SteamItemInstanceID_t*/, string pchPropertyName /*const char **/, long nValue /*int64*/ )
 		{
 			return platform.ISteamInventory_SetProperty0( handle.Value, nItemID.Value, pchPropertyName, nValue );
 		}
 		
 		// bool
-		public bool SetProperty0( SteamInventoryUpdateHandle_t handle /*SteamInventoryUpdateHandle_t*/, SteamItemInstanceID_t nItemID /*SteamItemInstanceID_t*/, string pchPropertyName /*const char **/, float flValue /*float*/ )
+		public bool SetProperty2( SteamInventoryUpdateHandle_t handle /*SteamInventoryUpdateHandle_t*/, SteamItemInstanceID_t nItemID /*SteamItemInstanceID_t*/, string pchPropertyName /*const char **/, float flValue /*float*/ )
 		{
 			return platform.ISteamInventory_SetProperty0( handle.Value, nItemID.Value, pchPropertyName, flValue );
 		}

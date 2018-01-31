@@ -9,6 +9,7 @@ namespace Generator
     public partial class CodeWriter
     {
         string LastMethodName;
+        int MethodNameCount;
         List<string> BeforeLines;
         List<string> AfterLines;
         string ReturnType;
@@ -143,8 +144,15 @@ namespace Generator
 
             var methodName = m.Name;
 
-            if ( LastMethodName == methodName )
-                methodName += "0";
+            if (LastMethodName == methodName)
+            {
+                methodName += MethodNameCount.ToString();
+                MethodNameCount++;
+            }
+            else
+            {
+                MethodNameCount = 0;
+            }
 
             var argString = string.Join( ", ", argList.Select( x => x.ManagedParameter() ) );
             if ( argString != "" ) argString = " " + argString + " ";
