@@ -122,12 +122,17 @@ namespace Facepunch.Steamworks.Test
 
                 client.Inventory.Refresh();
 
+                var stopwatch = Stopwatch.StartNew();
+
                 //
                 // Block until we have the items
                 //
                 while ( client.Inventory.SerializedItems == null )
                 {
                     client.Update();
+
+                    if (stopwatch.Elapsed.Seconds > 10)
+                        throw new System.Exception("Getting SerializedItems took too long");
                 }
 
                 Assert.IsNotNull( client.Inventory.SerializedItems );
@@ -140,7 +145,15 @@ namespace Facepunch.Steamworks.Test
 
                     var result = server.Inventory.Deserialize( client.Inventory.SerializedItems );
 
-                    server.UpdateWhile( () => result.IsPending );
+                    stopwatch = Stopwatch.StartNew();
+
+                    while (result.IsPending)
+                    {
+                        server.Update();
+
+                        if (stopwatch.Elapsed.Seconds > 10)
+                            throw new System.Exception("result took too long");
+                    }
 
                     Assert.IsFalse( result.IsPending );
                     Assert.IsNotNull( result.Items );

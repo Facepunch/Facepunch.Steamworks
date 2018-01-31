@@ -73,10 +73,16 @@ namespace Facepunch.Steamworks.Test
             {
                 var board = client.GetLeaderboard( "TestLeaderboard", Steamworks.Client.LeaderboardSortMethod.Ascending, Steamworks.Client.LeaderboardDisplayType.Numeric );
 
+                var time = Stopwatch.StartNew();
                 while ( !board.IsValid )
                 {
                     Thread.Sleep( 10 );
                     client.Update();
+
+                    if (time.Elapsed.TotalSeconds > 10)
+                    {
+                        throw new Exception("board.IsValid took too long");
+                    }
                 }
 
                 Assert.IsTrue( board.IsValid );
@@ -115,10 +121,16 @@ namespace Facepunch.Steamworks.Test
             {
                 var board = client.GetLeaderboard( "TestLeaderboard", Steamworks.Client.LeaderboardSortMethod.Ascending, Steamworks.Client.LeaderboardDisplayType.Numeric );
 
-                while ( !board.IsValid )
+                var time = Stopwatch.StartNew();
+                while (!board.IsValid)
                 {
-                    Thread.Sleep( 10 );
+                    Thread.Sleep(10);
                     client.Update();
+
+                    if (time.Elapsed.TotalSeconds > 10)
+                    {
+                        throw new Exception("board.IsValid took too long");
+                    }
                 }
 
                 Assert.IsTrue( board.IsValid );
@@ -153,10 +165,16 @@ namespace Facepunch.Steamworks.Test
             {
                 var board = client.GetLeaderboard( "TestLeaderboard", Steamworks.Client.LeaderboardSortMethod.Ascending, Steamworks.Client.LeaderboardDisplayType.Numeric );
 
-                while ( !board.IsValid )
+                var time = Stopwatch.StartNew();
+                while (!board.IsValid)
                 {
-                    Thread.Sleep( 10 );
+                    Thread.Sleep(10);
                     client.Update();
+
+                    if (time.Elapsed.TotalSeconds > 10)
+                    {
+                        throw new Exception("board.IsValid took too long");
+                    }
                 }
 
                 Assert.IsTrue( board.IsValid );
@@ -189,10 +207,16 @@ namespace Facepunch.Steamworks.Test
             {
                 var board = client.GetLeaderboard( "TestLeaderboard", Steamworks.Client.LeaderboardSortMethod.Ascending, Steamworks.Client.LeaderboardDisplayType.Numeric );
 
-                while ( !board.IsValid )
+                var time = Stopwatch.StartNew();
+                while (!board.IsValid)
                 {
-                    Thread.Sleep( 10 );
+                    Thread.Sleep(10);
                     client.Update();
+
+                    if (time.Elapsed.TotalSeconds > 10)
+                    {
+                        throw new Exception("board.IsValid took too long");
+                    }
                 }
 
                 Assert.IsTrue( board.IsValid );
