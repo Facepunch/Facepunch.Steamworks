@@ -24,6 +24,8 @@ namespace Facepunch.Steamworks
 
             public int DefinitionId;
 
+            public Dictionary<string, string> Properties { get; internal set; }
+
             /// <summary>
             /// Careful, this might not be available. Especially on a game server.
             /// </summary>

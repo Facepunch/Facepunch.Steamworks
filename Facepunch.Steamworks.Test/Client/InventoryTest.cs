@@ -114,6 +114,34 @@ namespace Facepunch.Steamworks.Test
         }
 
         [TestMethod]
+        public void InventoryItemProperties()
+        {
+            using (var client = new Facepunch.Steamworks.Client(252490))
+            {
+                while ( true )
+                {
+                    client.Update();
+
+                    if (client.Inventory.Items == null) continue;
+
+                    foreach (var item in client.Inventory.Items)
+                    {
+                        Console.WriteLine($"{item.Id} ({item.Definition.Name})");
+
+                        foreach (var property in item.Properties)
+                        {
+                            Console.WriteLine($"  {property.Key} = {property.Value}");
+                        }
+
+                        Console.WriteLine("");
+                    }
+
+                    return;
+                }
+            }
+        }
+
+        [TestMethod]
         public void Deserialize()
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
