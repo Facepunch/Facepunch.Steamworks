@@ -202,7 +202,7 @@ namespace Facepunch.Steamworks
 
             public void Delete()
             {
-                workshop.remoteStorage.DeletePublishedFile( Id );
+                workshop.ugc.DeleteItem( Id );
                 Id = 0;
             }
         }
