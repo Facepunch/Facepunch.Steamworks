@@ -63,6 +63,70 @@ namespace Facepunch.Steamworks
             {
                 return !c1.Equals( c2 );
             }
+
+            SteamNative.SteamInventoryUpdateHandle_t updateHandle;
+
+            private void UpdatingProperties()
+            {
+                if (updateHandle != 0) return;
+
+                updateHandle = Definition.inventory.inventory.StartUpdateProperties();
+            }
+
+            public bool SetProperty( string name, string value )
+            {
+                UpdatingProperties();
+                Properties[name] = value.ToString();
+                return Definition.inventory.inventory.SetProperty(updateHandle, Id, name, value);
+            }
+
+            public bool SetProperty(string name, bool value)
+            {
+                UpdatingProperties();
+                Properties[name] = value.ToString();
+                return Definition.inventory.inventory.SetProperty0(updateHandle, Id, name, value);
+            }
+
+            public bool SetProperty(string name, long value)
+            {
+                UpdatingProperties();
+                Properties[name] = value.ToString();
+                return Definition.inventory.inventory.SetProperty1(updateHandle, Id, name, value);
+            }
+
+            public bool SetProperty(string name, float value)
+            {
+                UpdatingProperties();
+                Properties[name] = value.ToString();
+                return Definition.inventory.inventory.SetProperty2(updateHandle, Id, name, value);
+            }
+
+            /// <summary>
+            /// Called to finalize any changes made using SetProperty
+            /// </summary>
+            public bool SubmitProperties()
+            {
+                if (updateHandle == 0)
+                    throw new Exception("SubmitProperties called without updating properties");
+
+                try
+                {
+                    SteamNative.SteamInventoryResult_t result = -1;
+
+                    if (!Definition.inventory.inventory.SubmitUpdateProperties(updateHandle, ref result))
+                    {
+                        return false;
+                    }
+
+                    Definition.inventory.inventory.DestroyResult(result);
+
+                    return true;
+                }
+                finally
+                {
+                    updateHandle = 0;
+                }
+            }
         }
     }
 }
