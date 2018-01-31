@@ -57,9 +57,9 @@ namespace Facepunch.Steamworks
             public DateTime Modified { get; set; }
 
             /// <summary>
-            /// The raw contets of price_category from the schema
+            /// The raw contents of price_category from the schema
             /// </summary>
-            public string PriceRaw { get; set; }
+            public string PriceCategory { get; set; }
 
             /// <summary>
             /// The dollar price from PriceRaw
@@ -74,7 +74,7 @@ namespace Facepunch.Steamworks
             public double LocalPrice { get; internal set; }
 
             /// <summary>
-            /// Local Price but probably how you want to display it (ie, $3.99, ï¿½1.99 etc )
+            /// Local Price but probably how you want to display it (ie, $3.99, £1.99 etc )
             /// </summary>
             public string LocalPriceFormatted { get; internal set; }
             
