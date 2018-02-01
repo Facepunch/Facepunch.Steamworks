@@ -66,5 +66,15 @@ namespace Facepunch.Steamworks
                 client.native.screenshots.WriteScreenshot( (IntPtr) ptr, (uint) rgbData.Length, width, height );
             }
         }
+        
+        public unsafe void AddScreenshotToLibrary( string filename, string thumbnailFilename, int width, int height) 
+        {
+            client.native.screenshots.AddScreenshotToLibrary(filename, thumbnailFilename, width, height);
+        }
+
+        public unsafe void AddScreenshotToLibrary( string filename, int width, int height) 
+        {
+            client.native.screenshots.AddScreenshotToLibrary(filename, null, width, height);
+        }
     }
 }
