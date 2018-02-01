@@ -8,7 +8,7 @@ namespace Facepunch.Steamworks
     {
         public class Lobby 
         {
-            private Dictionary<string, string> m_lobbyData;
+            private Dictionary<string, string> lobbyData;
             internal Client Client;
             public string Name { get; private set; }
             public ulong LobbyID { get; private set; }
@@ -24,12 +24,10 @@ namespace Facepunch.Steamworks
             /// <returns>The value at key</returns>
             public string GetData(string k)
             {
-                if (m_lobbyData.ContainsKey(k))
-                {
-                    return m_lobbyData[k];
-                }
+                if (lobbyData.TryGetValue(k, out var v))
+                    return v;
 
-                return "ERROR: key not found";
+                return string.Empty;
             }
 
             /// <summary>
@@ -38,27 +36,29 @@ namespace Facepunch.Steamworks
             /// <returns>Dictionary of all the key/value pairs in the data</returns>
             public Dictionary<string, string> GetAllData()
             {
-                Dictionary<string, string> returnData = new Dictionary<string, string>();
-                foreach (KeyValuePair<string, string> item in m_lobbyData)
+                var returnData = new Dictionary<string, string>();
+
+                foreach ( var item in lobbyData)
                 {
                     returnData.Add(item.Key, item.Value);
                 }
+
                 return returnData;
             }
 
             internal static Lobby FromSteam(Client client, ulong lobby)
             {
-                Dictionary<string, string> lobbyData = new Dictionary<string, string>();
+                var lobbyData = new Dictionary<string, string>();
                 int dataCount = client.native.matchmaking.GetLobbyDataCount(lobby);
+
                 for (int i = 0; i < dataCount; i++)
                 {
-                    string datakey = string.Empty;
-                    string datavalue = string.Empty;
-                    if (client.native.matchmaking.GetLobbyDataByIndex(lobby, i, out datakey, out datavalue))
+                    if (client.native.matchmaking.GetLobbyDataByIndex(lobby, i, out var datakey, out var datavalue))
                     {
                         lobbyData.Add(datakey, datavalue);
                     }
                 }
+
                 return new Lobby()
                 {
                     Client = client,
@@ -68,7 +68,7 @@ namespace Facepunch.Steamworks
                     MemberLimit = client.native.matchmaking.GetLobbyMemberLimit(lobby),
                     Owner = client.native.matchmaking.GetLobbyOwner(lobby),
                     NumMembers = client.native.matchmaking.GetNumLobbyMembers(lobby),
-                    m_lobbyData = lobbyData
+                    lobbyData = lobbyData
                 };
                 
             }
