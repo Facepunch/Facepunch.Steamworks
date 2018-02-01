@@ -96,6 +96,7 @@ namespace Facepunch.Steamworks
                 Id = id;
 
                 SetupCommonProperties();
+                UpdatePrice();
             }
 
             /// <summary>
@@ -218,6 +219,20 @@ namespace Facepunch.Steamworks
                 list.Add( r );
 
                 IngredientFor = list.ToArray();
+            }
+
+            internal void UpdatePrice()
+            {
+                if ( inventory.inventory.GetItemPrice( Id, out ulong price) )
+                {
+                    LocalPrice = price / 100.0;
+                    LocalPriceFormatted = Utility.FormatPrice( inventory.Currency, price );
+                }
+                else
+                {
+                    LocalPrice = 0;
+                    LocalPriceFormatted = null;
+                }
             }
         }
 

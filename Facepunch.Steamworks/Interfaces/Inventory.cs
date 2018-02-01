@@ -440,22 +440,16 @@ namespace Facepunch.Steamworks
             if (IsServer)
                 return;
 
-            inventory.RequestPrices((result, b) =>
+           inventory.RequestPrices((result, b) =>
            {
                Currency = result.Currency;
 
+               if ( Definitions == null )
+                   return;
+
                for (int i = 0; i < Definitions.Length; i++)
                {
-                   if (inventory.GetItemPrice(Definitions[i].Id, out ulong price))
-                   {
-                       Definitions[i].LocalPrice = price / 100.0;
-                       Definitions[i].LocalPriceFormatted = Utility.FormatPrice( Currency, price );
-                   }
-                   else
-                   {
-                       Definitions[i].LocalPrice = 0;
-                       Definitions[i].LocalPriceFormatted = null;
-                   }
+                   Definitions[i].UpdatePrice();
                }
 
            });
