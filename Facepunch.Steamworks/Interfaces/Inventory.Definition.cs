@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
+using SteamNative;
 
 namespace Facepunch.Steamworks
 {
@@ -191,9 +192,16 @@ namespace Facepunch.Steamworks
             /// </summary>
             public void TriggerItemDrop()
             {
-                SteamNative.SteamInventoryResult_t result = 0;
-                inventory.inventory.TriggerItemDrop( ref result, Id );
-                inventory.inventory.DestroyResult( result );
+                inventory.TriggerItemDrop( Id );
+            }
+
+            /// <summary>
+            /// Trigger a promo item drop. You can call this at startup, it won't
+            /// give users multiple promo drops.
+            /// </summary>
+            public void TriggerPromoDrop()
+            {
+                inventory.TriggerPromoDrop( Id );            
             }
 
             internal void Link( Definition[] definitions )
@@ -234,6 +242,38 @@ namespace Facepunch.Steamworks
                     LocalPriceFormatted = null;
                 }
             }
+        }
+
+        /// <summary>
+        /// Trigger a promo item drop. You can call this at startup, it won't
+        /// give users multiple promo drops.
+        /// </summary>
+        public void TriggerPromoDrop( int definitionId )
+        {
+            SteamNative.SteamInventoryResult_t result = 0;
+            inventory.AddPromoItem( ref result, definitionId );
+            inventory.DestroyResult( result );
+        }
+
+        /// <summary>
+        /// Trigger an item drop for this user. This is for timed drops. For promo
+        /// drops use TriggerPromoDrop.
+        /// </summary>
+        public void TriggerItemDrop( int definitionId )
+        {
+            SteamNative.SteamInventoryResult_t result = 0;
+            inventory.TriggerItemDrop( ref result, definitionId );
+            inventory.DestroyResult( result );
+        }
+
+        /// <summary>
+        /// Grant all promotional items the user is eligible for.
+        /// </summary>
+        public void GrantAllPromoItems()
+        {
+            SteamNative.SteamInventoryResult_t result = 0;
+            inventory.GrantPromoItems( ref result );
+            inventory.DestroyResult( result );
         }
 
         /// <summary>
