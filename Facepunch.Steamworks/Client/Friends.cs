@@ -136,6 +136,14 @@ namespace Facepunch.Steamworks
         {
             return Client.Friends.GetCachedAvatar( size, Id );
         }
+        
+        /// <summary>
+        /// Invite this friend to the game that we are playing
+        /// </summary>
+        public bool InviteToGame(string Text)
+        {
+            return Client.native.friends.InviteUserToGame(Id, Text);
+        }
     }
 
     /// <summary>
