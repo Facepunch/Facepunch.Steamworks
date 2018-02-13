@@ -25,6 +25,11 @@ namespace Facepunch.Steamworks
     {
         internal Client client;
 
+        public bool Enabled
+        {
+            get { return client.native.utils.IsOverlayEnabled(); }
+        }
+
         public void OpenUserPage( string name, ulong steamid ) { client.native.friends.ActivateGameOverlayToUser( name, steamid ); }
 
         public void OpenProfile( ulong steamid ) { OpenUserPage( "steamid", steamid ); }
