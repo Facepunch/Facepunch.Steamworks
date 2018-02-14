@@ -50,21 +50,23 @@ namespace SteamNative
     //
     internal class CallbackHandle : IDisposable
     {
-        internal BaseSteamworks steamworks;
-        internal SteamAPICall_t CallResultHandle;
-        internal bool CallResult;
+        internal BaseSteamworks Steamworks;
+
+        // Get Rid
         internal GCHandle FuncA;
         internal GCHandle FuncB;
         internal GCHandle FuncC;
         internal IntPtr vTablePtr;
         internal GCHandle PinnedCallback;
 
+        internal CallbackHandle( Facepunch.Steamworks.BaseSteamworks steamworks )
+        {
+            Steamworks = steamworks;
+        }
+
         public void Dispose()
         {
-            if ( CallResult )
-                UnregisterCallResult();
-            else
-                UnregisterCallback();
+            UnregisterCallback();
 
             if ( FuncA.IsAllocated )
                 FuncA.Free();
@@ -90,19 +92,81 @@ namespace SteamNative
             if ( !PinnedCallback.IsAllocated )
                 return;
 
-            steamworks.native.api.SteamAPI_UnregisterCallback( PinnedCallback.AddrOfPinnedObject() );
+            Steamworks.native.api.SteamAPI_UnregisterCallback( PinnedCallback.AddrOfPinnedObject() );
         }
 
-        private void UnregisterCallResult()
-        {
-            if ( CallResultHandle == 0 )
-                return;
-
-            if ( !PinnedCallback.IsAllocated )
-                return;
-
-            steamworks.native.api.SteamAPI_UnregisterCallResult( PinnedCallback.AddrOfPinnedObject(), CallResultHandle );
-        }
+        public virtual bool IsValid { get { return true; } }
     }
 
+    internal abstract class CallResult : CallbackHandle
+    {
+        internal SteamAPICall_t Call;
+        public override bool IsValid { get { return Call > 0; } }
+
+
+        internal CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call ) : base( steamworks )
+        {
+            Call = call;
+        }
+
+        internal void Try()
+        {
+            bool failed = false;
+
+            if ( !Steamworks.native.utils.IsAPICallCompleted( Call, ref failed ))
+                return;
+
+            Steamworks.UnregisterCallResult( this );
+
+            RunCallback();
+        }
+
+        internal abstract void RunCallback();
+    }
+
+
+    internal class CallResult<T> : CallResult
+    {
+        private static byte[] resultBuffer = new byte[1024 * 16];
+
+        internal delegate T ConvertFromPointer( IntPtr p );
+
+        Action<T, bool> CallbackFunction;
+        ConvertFromPointer ConvertFromPointerFunction;
+
+        internal int ResultSize = -1;
+        internal int CallbackId = 0;
+
+        internal CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<T, bool> callbackFunction, ConvertFromPointer fromPointer, int resultSize, int callbackId ) : base( steamworks, call )
+        {
+            ResultSize = resultSize;
+            CallbackId = callbackId;
+            CallbackFunction = callbackFunction;
+            ConvertFromPointerFunction = fromPointer;
+
+            Steamworks.RegisterCallResult( this );
+        }
+
+        public override string ToString()
+        {
+            return $"CallResult( {typeof(T).Name}, {CallbackId}, {ResultSize}b )";
+        }
+
+        unsafe internal override void RunCallback()
+        {
+            bool failed = false;
+
+            fixed ( byte* ptr = resultBuffer )
+            {
+                if ( !Steamworks.native.utils.GetAPICallResult( Call, (IntPtr)ptr, resultBuffer.Length, CallbackId, ref failed ) || failed )
+                {
+                    CallbackFunction( default(T), true );
+                    return;
+                }
+
+                var val = ConvertFromPointerFunction( (IntPtr)ptr );
+                CallbackFunction( val, false );
+            }
+        }
+    }
 }

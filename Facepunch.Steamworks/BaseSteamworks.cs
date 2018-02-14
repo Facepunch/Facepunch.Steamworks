@@ -25,6 +25,7 @@ namespace Facepunch.Steamworks
         internal Interop.NativeInterface native;
 
         private List<SteamNative.CallbackHandle> CallbackHandles = new List<SteamNative.CallbackHandle>();
+        private List<SteamNative.CallResult> CallResults = new List<SteamNative.CallResult>();
 
 
         protected BaseSteamworks( uint appId )
@@ -45,6 +46,12 @@ namespace Facepunch.Steamworks
                 h.Dispose();
             }
             CallbackHandles.Clear();
+
+            foreach ( var h in CallResults )
+            {
+                h.Dispose();
+            }
+            CallResults.Clear();
 
             if ( Workshop != null )
             {
@@ -98,6 +105,16 @@ namespace Facepunch.Steamworks
             CallbackHandles.Add( handle );
         }
 
+        internal void RegisterCallResult( SteamNative.CallResult handle )
+        {
+            CallResults.Add( handle );
+        }
+
+        internal void UnregisterCallResult( SteamNative.CallResult handle )
+        {
+            CallResults.Remove( handle );
+        }
+
         public virtual void Update()
         {
             Inventory.Update();
@@ -114,6 +131,11 @@ namespace Facepunch.Steamworks
         {
             if ( OnUpdate != null )
                 OnUpdate();
+
+            for( int i=0; i < CallResults.Count; i++ )
+            {
+                CallResults[i].Try();
+            }
         }
 
         /// <summary>

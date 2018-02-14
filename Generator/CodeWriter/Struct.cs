@@ -58,7 +58,7 @@ namespace Generator
                 {
                     if ( !string.IsNullOrEmpty( c.CallbackId ) )
                     {
-                        WriteLine( "public const int CallbackId = " + c.CallbackId + ";" );
+                        WriteLine( "internal const int CallbackId = " + c.CallbackId + ";" );
                     }
 
                     //
@@ -70,11 +70,23 @@ namespace Generator
                     WriteLine( "//" );
                     WriteLine( "// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff." );
                     WriteLine( "//" );
-                    StartBlock( $"public static {c.Name} FromPointer( IntPtr p )" );
+                    StartBlock( $"internal static {c.Name} FromPointer( IntPtr p )" );
                     {
                         WriteLine( $"if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );" );
 
                         WriteLine( $"return ({c.Name}) Marshal.PtrToStructure( p, typeof({c.Name}) );" );
+                    }
+                    EndBlock();
+
+                    WriteLine();
+                    WriteLine( "//" );
+                    WriteLine( "// Get the size of the structure we're going to be using." );
+                    WriteLine( "//" );
+                    StartBlock( $"internal static int StructSize()" );
+                    {
+                        WriteLine( $"if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );" );
+
+                        WriteLine( $"return System.Runtime.InteropServices.Marshal.SizeOf( typeof({c.Name}) );" );
                     }
                     EndBlock();
 
@@ -199,17 +211,16 @@ namespace Generator
                     WriteLine($"[MarshalAs(UnmanagedType.ByValArray, SizeConst = {num}, ArraySubType = UnmanagedType.U4)]");
                 }
 
-                WriteLine( $"public {t} {CleanMemberName( m.Name )}; // {m.Name} {m.Type}" );
+                WriteLine( $"internal {t} {CleanMemberName( m.Name )}; // {m.Name} {m.Type}" );
             }
         }
 
         private void Callback( SteamApiDefinition.StructDef c )
         {
             WriteLine();
-            StartBlock( $"public static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<{c.Name}, bool> CallbackFunction )" );
+            StartBlock( $"internal static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<{c.Name}, bool> CallbackFunction )" );
             {
-                WriteLine( $"var handle = new CallbackHandle();" );
-                WriteLine( $"handle.steamworks = steamworks;" );
+                WriteLine( $"var handle = new CallbackHandle( steamworks );" );
                 WriteLine( $"" );
 
                 CallbackCallresultShared( c, false );
@@ -230,24 +241,21 @@ namespace Generator
         private void CallResult( SteamApiDefinition.StructDef c )
         {
             WriteLine();
-            StartBlock( $"public static CallbackHandle CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<{c.Name}, bool> CallbackFunction )" );
+            StartBlock( $"internal static CallResult<{c.Name}> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<{c.Name}, bool> CallbackFunction )" );
             {
-                WriteLine( $"var handle = new CallbackHandle();" );
-                WriteLine( $"handle.steamworks = steamworks;" );
-                WriteLine( $"handle.CallResultHandle = call;" );
-                WriteLine( $"handle.CallResult = true;" );
-                WriteLine( $"" );
+                WriteLine( $"return new CallResult<{c.Name}>( steamworks, call, CallbackFunction, FromPointer, StructSize(), CallbackId );" );
+               // WriteLine( $"" );
 
-                CallbackCallresultShared( c, true );
+               // CallbackCallresultShared( c, true );
 
-                WriteLine( "" );
-                WriteLine( "//" );
-                WriteLine( "// Register the callback with Steam" );
-                WriteLine( "//" );
-                WriteLine( $"steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );" );
+              //  WriteLine( "" );
+              //  WriteLine( "//" );
+              //  WriteLine( "// Register the callback with Steam" );
+              //  WriteLine( "//" );
+              //  WriteLine( $"steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );" );
 
-                WriteLine();
-                WriteLine( "return handle;" );
+               // WriteLine();
+                //WriteLine( "return handle;" );
             }
             EndBlock();
         }
