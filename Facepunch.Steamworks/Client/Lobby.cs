@@ -13,8 +13,8 @@ namespace Facepunch.Steamworks
         {
             get
             {
-                if (_lobby == null)
-                    _lobby = new Steamworks.Lobby(this);
+                if ( _lobby == null )
+                    _lobby = new Steamworks.Lobby( this );
                 return _lobby;
             }
         }
@@ -33,15 +33,15 @@ namespace Facepunch.Steamworks
 
         internal Client client;
 
-        public Lobby(Client c)
+        public Lobby( Client c )
         {
             client = c;
-            SteamNative.LobbyDataUpdate_t.RegisterCallback(client, OnLobbyDataUpdatedAPI);
-            SteamNative.LobbyChatMsg_t.RegisterCallback(client, OnLobbyChatMessageRecievedAPI);
-            SteamNative.LobbyChatUpdate_t.RegisterCallback(client, OnLobbyStateUpdatedAPI);
-            SteamNative.GameLobbyJoinRequested_t.RegisterCallback(client, OnLobbyJoinRequestedAPI);
-            SteamNative.LobbyInvite_t.RegisterCallback(client, OnUserInvitedToLobbyAPI);
-            SteamNative.PersonaStateChange_t.RegisterCallback(client, OnLobbyMemberPersonaChangeAPI);
+            SteamNative.LobbyDataUpdate_t.RegisterCallback( client, OnLobbyDataUpdatedAPI );
+            SteamNative.LobbyChatMsg_t.RegisterCallback( client, OnLobbyChatMessageRecievedAPI );
+            SteamNative.LobbyChatUpdate_t.RegisterCallback( client, OnLobbyStateUpdatedAPI );
+            SteamNative.GameLobbyJoinRequested_t.RegisterCallback( client, OnLobbyJoinRequestedAPI );
+            SteamNative.LobbyInvite_t.RegisterCallback( client, OnUserInvitedToLobbyAPI );
+            SteamNative.PersonaStateChange_t.RegisterCallback( client, OnLobbyMemberPersonaChangeAPI );
         }
 
         /// <summary>
@@ -63,23 +63,23 @@ namespace Facepunch.Steamworks
         /// Join a Lobby through its LobbyID. OnLobbyJoined is called with the result of the Join attempt.
         /// </summary>
         /// <param name="lobbyID">CSteamID of lobby to join</param>
-        public void Join(ulong lobbyID)
+        public void Join( ulong lobbyID )
         {
             Leave();
-            client.native.matchmaking.JoinLobby(lobbyID, OnLobbyJoinedAPI);
+            client.native.matchmaking.JoinLobby( lobbyID, OnLobbyJoinedAPI );
         }
 
-        void OnLobbyJoinedAPI(LobbyEnter_t callback, bool error)
+        void OnLobbyJoinedAPI( LobbyEnter_t callback, bool error )
         {
-            if (error || (callback.EChatRoomEnterResponse != (uint)(SteamNative.ChatRoomEnterResponse.Success))) 
+            if ( error || (callback.EChatRoomEnterResponse != (uint)(SteamNative.ChatRoomEnterResponse.Success)) )
             {
-                if (OnLobbyJoined != null) { OnLobbyJoined(false); }
+                if ( OnLobbyJoined != null ) { OnLobbyJoined( false ); }
                 return;
             }
 
             CurrentLobby = callback.SteamIDLobby;
             UpdateLobbyData();
-            if (OnLobbyJoined != null) { OnLobbyJoined(true); }
+            if ( OnLobbyJoined != null ) { OnLobbyJoined( true ); }
         }
 
         /// <summary>
@@ -92,33 +92,33 @@ namespace Facepunch.Steamworks
         /// </summary>
         /// <param name="lobbyType">The Lobby.Type of Lobby to be created</param>
         /// <param name="maxMembers">The maximum amount of people you want to be able to be in this lobby, including yourself</param>
-        public void Create(Lobby.Type lobbyType, int maxMembers)
+        public void Create( Lobby.Type lobbyType, int maxMembers )
         {
-            client.native.matchmaking.CreateLobby((SteamNative.LobbyType)lobbyType, maxMembers, OnLobbyCreatedAPI);
+            client.native.matchmaking.CreateLobby( (SteamNative.LobbyType)lobbyType, maxMembers, OnLobbyCreatedAPI );
             createdLobbyType = lobbyType;
         }
 
         internal Type createdLobbyType;
 
-        internal void OnLobbyCreatedAPI(LobbyCreated_t callback, bool error)
+        internal void OnLobbyCreatedAPI( LobbyCreated_t callback, bool error )
         {
             //from SpaceWarClient.cpp 793
-            if (error || (callback.Result != Result.OK))
+            if ( error || (callback.Result != Result.OK) )
             {
-                if ( OnLobbyCreated != null) { OnLobbyCreated(false); }
+                if ( OnLobbyCreated != null ) { OnLobbyCreated( false ); }
                 return;
             }
 
             //set owner specific properties
             Owner = client.SteamId;
             CurrentLobby = callback.SteamIDLobby;
-            CurrentLobbyData = new LobbyData(client, CurrentLobby);
+            CurrentLobbyData = new LobbyData( client, CurrentLobby );
             Name = client.Username + "'s Lobby";
-            CurrentLobbyData.SetData("appid", client.AppId.ToString());
+            CurrentLobbyData.SetData( "appid", client.AppId.ToString() );
             LobbyType = createdLobbyType;
-            CurrentLobbyData.SetData("lobbytype", LobbyType.ToString());
+            CurrentLobbyData.SetData( "lobbytype", LobbyType.ToString() );
             Joinable = true;
-            if (OnLobbyCreated != null) { OnLobbyCreated(true); }
+            if ( OnLobbyCreated != null ) { OnLobbyCreated( true ); }
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Facepunch.Steamworks
             internal ulong lobby;
             internal Dictionary<string, string> data;
 
-            public LobbyData(Client c, ulong l)
+            public LobbyData( Client c, ulong l )
             {
                 client = c;
                 lobby = l;
@@ -147,9 +147,9 @@ namespace Facepunch.Steamworks
             /// </summary>
             /// <param name="k">The key to find</param>
             /// <returns>The value at key</returns>
-            public string GetData(string k)
+            public string GetData( string k )
             {
-                if (data.ContainsKey(k))
+                if ( data.ContainsKey( k ) )
                 {
                     return data[k];
                 }
@@ -161,12 +161,12 @@ namespace Facepunch.Steamworks
             /// Get a list of all the data in the Lobby
             /// </summary>
             /// <returns>Dictionary of all the key/value pairs in the data</returns>
-            public Dictionary<string,string> GetAllData()
+            public Dictionary<string, string> GetAllData()
             {
                 Dictionary<string, string> returnData = new Dictionary<string, string>();
-                foreach(KeyValuePair<string, string> item in data)
+                foreach ( KeyValuePair<string, string> item in data )
                 {
-                    returnData.Add(item.Key, item.Value);
+                    returnData.Add( item.Key, item.Value );
                 }
                 return returnData;
             }
@@ -177,12 +177,12 @@ namespace Facepunch.Steamworks
             /// <param name="k">The key to set the value for</param>
             /// <param name="v">The value of the Key</param>
             /// <returns>True if data successfully set</returns>
-            public bool SetData(string k, string v)
+            public bool SetData( string k, string v )
             {
-                if (data.ContainsKey(k))
+                if ( data.ContainsKey( k ) )
                 {
-                    if (data[k] == v) { return true; }
-                    if (client.native.matchmaking.SetLobbyData(lobby, k, v))
+                    if ( data[k] == v ) { return true; }
+                    if ( client.native.matchmaking.SetLobbyData( lobby, k, v ) )
                     {
                         data[k] = v;
                         return true;
@@ -190,9 +190,9 @@ namespace Facepunch.Steamworks
                 }
                 else
                 {
-                    if (client.native.matchmaking.SetLobbyData(lobby, k, v))
+                    if ( client.native.matchmaking.SetLobbyData( lobby, k, v ) )
                     {
-                        data.Add(k, v);
+                        data.Add( k, v );
                         return true;
                     }
                 }
@@ -205,13 +205,13 @@ namespace Facepunch.Steamworks
             /// </summary>
             /// <param name="k">The key to remove</param>
             /// <returns>True if Key successfully removed</returns>
-            public bool RemoveData(string k)
+            public bool RemoveData( string k )
             {
-                if (data.ContainsKey(k))
+                if ( data.ContainsKey( k ) )
                 {
-                    if (client.native.matchmaking.DeleteLobbyData(lobby, k))
+                    if ( client.native.matchmaking.DeleteLobbyData( lobby, k ) )
                     {
-                        data.Remove(k);
+                        data.Remove( k );
                         return true;
                     }
                 }
@@ -224,10 +224,10 @@ namespace Facepunch.Steamworks
         /// <summary>
         /// Sets user data for the Lobby. Things like Character, Skin, Ready, etc. Can only set your own member data
         /// </summary>
-        public void SetMemberData(string key, string value)
+        public void SetMemberData( string key, string value )
         {
-            if(CurrentLobby == 0) { return; }
-            client.native.matchmaking.SetLobbyMemberData(CurrentLobby, key, value);
+            if ( CurrentLobby == 0 ) { return; }
+            client.native.matchmaking.SetLobbyMemberData( CurrentLobby, key, value );
         }
 
         /// <summary>
@@ -236,23 +236,23 @@ namespace Facepunch.Steamworks
         /// <param name="steamID">ulong SteamID of the user you want to get data from</param>
         /// <param name="key">String key of the type of data you want to get</param>
         /// <returns></returns>
-        public string GetMemberData(ulong steamID, string key)
+        public string GetMemberData( ulong steamID, string key )
         {
-            if (CurrentLobby == 0) { return "ERROR: NOT IN ANY LOBBY"; }
-            return client.native.matchmaking.GetLobbyMemberData(CurrentLobby, steamID, key);
+            if ( CurrentLobby == 0 ) { return "ERROR: NOT IN ANY LOBBY"; }
+            return client.native.matchmaking.GetLobbyMemberData( CurrentLobby, steamID, key );
         }
 
-        internal void OnLobbyDataUpdatedAPI(LobbyDataUpdate_t callback, bool error)
+        internal void OnLobbyDataUpdatedAPI( LobbyDataUpdate_t callback, bool error )
         {
-            if(error || (callback.SteamIDLobby != CurrentLobby)) { return; }
-            if(callback.SteamIDLobby == CurrentLobby) //actual lobby data was updated by owner
+            if ( error || (callback.SteamIDLobby != CurrentLobby) ) { return; }
+            if ( callback.SteamIDLobby == CurrentLobby ) //actual lobby data was updated by owner
             {
                 UpdateLobbyData();
             }
 
-            if(UserIsInCurrentLobby(callback.SteamIDMember)) //some member of this lobby updated their information
+            if ( UserIsInCurrentLobby( callback.SteamIDMember ) ) //some member of this lobby updated their information
             {
-                if (OnLobbyMemberDataUpdated != null) { OnLobbyMemberDataUpdated(callback.SteamIDMember); }
+                if ( OnLobbyMemberDataUpdated != null ) { OnLobbyMemberDataUpdated( callback.SteamIDMember ); }
             }
         }
 
@@ -261,17 +261,17 @@ namespace Facepunch.Steamworks
         /// </summary>
         internal void UpdateLobbyData()
         {
-            int dataCount = client.native.matchmaking.GetLobbyDataCount(CurrentLobby);
-            CurrentLobbyData = new LobbyData(client, CurrentLobby);
-            for (int i = 0; i < dataCount; i++)
+            int dataCount = client.native.matchmaking.GetLobbyDataCount( CurrentLobby );
+            CurrentLobbyData = new LobbyData( client, CurrentLobby );
+            for ( int i = 0; i < dataCount; i++ )
             {
-                if (client.native.matchmaking.GetLobbyDataByIndex(CurrentLobby, i, out string key, out string value))
+                if ( client.native.matchmaking.GetLobbyDataByIndex( CurrentLobby, i, out string key, out string value ) )
                 {
-                    CurrentLobbyData.SetData(key, value);
+                    CurrentLobbyData.SetData( key, value );
                 }
             }
 
-            if(OnLobbyDataUpdated != null) { OnLobbyDataUpdated(); }
+            if ( OnLobbyDataUpdated != null ) { OnLobbyDataUpdated(); }
         }
 
         /// <summary>
@@ -289,12 +289,12 @@ namespace Facepunch.Steamworks
         {
             get
             {
-                if (!IsValid) { return Type.Error; } //if we're currently in a valid server
-                
+                if ( !IsValid ) { return Type.Error; } //if we're currently in a valid server
+
                 //we know that we've set the lobby type via the lobbydata in the creation function
                 //ps this is important because steam doesn't have an easy way to get lobby type (why idk)
-                string lobbyType = CurrentLobbyData.GetData("lobbytype");
-                switch (lobbyType)
+                string lobbyType = CurrentLobbyData.GetData( "lobbytype" );
+                switch ( lobbyType )
                 {
                     case "Private":
                         return Type.Private;
@@ -310,32 +310,37 @@ namespace Facepunch.Steamworks
             }
             set
             {
-                if(!IsValid) { return; } 
-                if(client.native.matchmaking.SetLobbyType(CurrentLobby, (SteamNative.LobbyType)value))
+                if ( !IsValid ) { return; }
+                if ( client.native.matchmaking.SetLobbyType( CurrentLobby, (SteamNative.LobbyType)value ) )
                 {
-                    CurrentLobbyData.SetData("lobbytype", value.ToString());
+                    CurrentLobbyData.SetData( "lobbytype", value.ToString() );
                 }
             }
         }
 
         private static byte[] chatMessageData = new byte[1024 * 4];
 
-        private unsafe void OnLobbyChatMessageRecievedAPI(LobbyChatMsg_t callback, bool error)
+        private unsafe void OnLobbyChatMessageRecievedAPI( LobbyChatMsg_t callback, bool error )
         {
             //from Client.Networking
-            if(error || callback.SteamIDLobby != CurrentLobby)
+            if ( error || callback.SteamIDLobby != CurrentLobby )
                 return;
 
             SteamNative.CSteamID steamid = 1;
             ChatEntryType chatEntryType; // "If set then this will just always return k_EChatEntryTypeChatMsg. This can usually just be set to NULL."
             int readData = 0;
-            fixed (byte* p = chatMessageData)
+            fixed ( byte* p = chatMessageData )
             {
-                readData = client.native.matchmaking.GetLobbyChatEntry(CurrentLobby, (int)callback.ChatID, out steamid, (IntPtr)p, chatMessageData.Length, out chatEntryType);                
+                readData = client.native.matchmaking.GetLobbyChatEntry( CurrentLobby, (int)callback.ChatID, out steamid, (IntPtr)p, chatMessageData.Length, out chatEntryType );
             }
 
-            OnChatMessageRecieved?.Invoke(steamid, chatMessageData, readData);
-            OnChatStringRecieved?.Invoke(steamid, Encoding.UTF8.GetString(chatMessageData));
+
+            OnChatMessageRecieved?.Invoke( steamid, chatMessageData, readData );
+
+            if ( readData > 0 )
+            {
+                OnChatStringRecieved?.Invoke( steamid, Encoding.UTF8.GetString( chatMessageData, 0, readData ) );
+            }
         }
 
         /// <summary>
@@ -352,14 +357,14 @@ namespace Facepunch.Steamworks
         /// Broadcasts a chat message to the all the users in the lobby users in the lobby (including the local user) will receive a LobbyChatMsg_t callback.
         /// </summary>
         /// <returns>True if message successfully sent</returns>
-        public unsafe bool SendChatMessage(string message)
+        public unsafe bool SendChatMessage( string message )
         {
-            var data = Encoding.UTF8.GetBytes(message);
-            fixed (byte* p = data)
+            var data = Encoding.UTF8.GetBytes( message );
+            fixed ( byte* p = data )
             {
                 // pvMsgBody can be binary or text data, up to 4k
                 // if pvMsgBody is text, cubMsgBody should be strlen( text ) + 1, to include the null terminator
-                return client.native.matchmaking.SendLobbyChatMsg(CurrentLobby, (IntPtr)p, data.Length);
+                return client.native.matchmaking.SendLobbyChatMsg( CurrentLobby, (IntPtr)p, data.Length );
             }
         }
 
@@ -375,16 +380,16 @@ namespace Facepunch.Steamworks
             Banned = ChatMemberStateChange.Banned,
         }
 
-        internal void OnLobbyStateUpdatedAPI(LobbyChatUpdate_t callback, bool error)
+        internal void OnLobbyStateUpdatedAPI( LobbyChatUpdate_t callback, bool error )
         {
-            if (error || callback.SteamIDLobby != CurrentLobby)
+            if ( error || callback.SteamIDLobby != CurrentLobby )
                 return;
 
             MemberStateChange change = (MemberStateChange)callback.GfChatMemberStateChange;
             ulong initiator = callback.SteamIDMakingChange;
             ulong affected = callback.SteamIDUserChanged;
 
-            OnLobbyStateChanged?.Invoke(change, initiator, affected);
+            OnLobbyStateChanged?.Invoke( change, initiator, affected );
         }
 
         /// <summary>
@@ -401,13 +406,13 @@ namespace Facepunch.Steamworks
         {
             get
             {
-                if (!IsValid) { return ""; }
-                return CurrentLobbyData.GetData("name");
+                if ( !IsValid ) { return ""; }
+                return CurrentLobbyData.GetData( "name" );
             }
             set
             {
-                if (!IsValid) { return; }
-                CurrentLobbyData.SetData("name", value);
+                if ( !IsValid ) { return; }
+                CurrentLobbyData.SetData( "name", value );
             }
         }
 
@@ -418,16 +423,16 @@ namespace Facepunch.Steamworks
         {
             get
             {
-                if (IsValid)
+                if ( IsValid )
                 {
-                    return client.native.matchmaking.GetLobbyOwner(CurrentLobby);
+                    return client.native.matchmaking.GetLobbyOwner( CurrentLobby );
                 }
                 return 0;
             }
             set
             {
-                if (Owner == value) return;
-                client.native.matchmaking.SetLobbyOwner(CurrentLobby, value);
+                if ( Owner == value ) return;
+                client.native.matchmaking.SetLobbyOwner( CurrentLobby, value );
             }
         }
 
@@ -438,9 +443,9 @@ namespace Facepunch.Steamworks
         {
             get
             {
-                if (!IsValid) { return false; }
-                string joinable = CurrentLobbyData.GetData("joinable");
-                switch (joinable)
+                if ( !IsValid ) { return false; }
+                string joinable = CurrentLobbyData.GetData( "joinable" );
+                switch ( joinable )
                 {
                     case "true":
                         return true;
@@ -452,10 +457,10 @@ namespace Facepunch.Steamworks
             }
             set
             {
-                if (!IsValid) { return; }
-                if (client.native.matchmaking.SetLobbyJoinable(CurrentLobby, value))
+                if ( !IsValid ) { return; }
+                if ( client.native.matchmaking.SetLobbyJoinable( CurrentLobby, value ) )
                 {
-                    CurrentLobbyData.SetData("joinable", value.ToString());
+                    CurrentLobbyData.SetData( "joinable", value.ToString() );
                 }
             }
         }
@@ -467,13 +472,13 @@ namespace Facepunch.Steamworks
         {
             get
             {
-                if (!IsValid) { return 0; } //0 is default, but value is inited when lobby is created. 
-                return client.native.matchmaking.GetLobbyMemberLimit(CurrentLobby);
+                if ( !IsValid ) { return 0; } //0 is default, but value is inited when lobby is created. 
+                return client.native.matchmaking.GetLobbyMemberLimit( CurrentLobby );
             }
             set
             {
-                if (!IsValid) { return; }
-                client.native.matchmaking.SetLobbyMemberLimit(CurrentLobby, value);
+                if ( !IsValid ) { return; }
+                client.native.matchmaking.SetLobbyMemberLimit( CurrentLobby, value );
             }
         }
 
@@ -482,7 +487,7 @@ namespace Facepunch.Steamworks
         /// </summary>
         public int NumMembers
         {
-            get { return client.native.matchmaking.GetNumLobbyMembers(CurrentLobby);}
+            get { return client.native.matchmaking.GetNumLobbyMembers( CurrentLobby ); }
         }
 
         /// <summary>
@@ -490,9 +495,9 @@ namespace Facepunch.Steamworks
         /// </summary>
         public void Leave()
         {
-            if (CurrentLobby != 0)
+            if ( CurrentLobby != 0 )
             {
-                client.native.matchmaking.LeaveLobby(CurrentLobby);
+                client.native.matchmaking.LeaveLobby( CurrentLobby );
             }
 
             CurrentLobby = 0;
@@ -513,9 +518,9 @@ namespace Facepunch.Steamworks
         public ulong[] GetMemberIDs()
         {
             ulong[] memIDs = new ulong[NumMembers];
-            for (int i = 0; i < NumMembers; i++)
+            for ( int i = 0; i < NumMembers; i++ )
             {
-                memIDs[i] = client.native.matchmaking.GetLobbyMemberByIndex(CurrentLobby, i);
+                memIDs[i] = client.native.matchmaking.GetLobbyMemberByIndex( CurrentLobby, i );
             }
             return memIDs;
         }
@@ -525,14 +530,14 @@ namespace Facepunch.Steamworks
         /// </summary>
         /// <param name="steamID">SteamID of the user to check for</param>
         /// <returns></returns>
-        public bool UserIsInCurrentLobby(ulong steamID)
+        public bool UserIsInCurrentLobby( ulong steamID )
         {
             if ( CurrentLobby == 0 )
                 return false;
 
             ulong[] mems = GetMemberIDs();
 
-            for (int i = 0; i < mems.Length; i++)
+            for ( int i = 0; i < mems.Length; i++ )
             {
                 if ( mems[i] == steamID )
                     return true;
@@ -545,15 +550,15 @@ namespace Facepunch.Steamworks
         /// Invites the specified user to the CurrentLobby the user is in.
         /// </summary>
         /// <param name="friendID">ulong ID of person to invite</param>
-        public bool InviteUserToLobby(ulong friendID)
+        public bool InviteUserToLobby( ulong friendID )
         {
-            return client.native.matchmaking.InviteUserToLobby(CurrentLobby, friendID);
+            return client.native.matchmaking.InviteUserToLobby( CurrentLobby, friendID );
         }
 
-        internal void OnUserInvitedToLobbyAPI(LobbyInvite_t callback, bool error)
+        internal void OnUserInvitedToLobbyAPI( LobbyInvite_t callback, bool error )
         {
-            if (error || (callback.GameID != client.AppId)) { return; }
-            if (OnUserInvitedToLobby != null) { OnUserInvitedToLobby(callback.SteamIDLobby, callback.SteamIDUser); }
+            if ( error || (callback.GameID != client.AppId) ) { return; }
+            if ( OnUserInvitedToLobby != null ) { OnUserInvitedToLobby( callback.SteamIDLobby, callback.SteamIDUser ); }
 
         }
 
@@ -565,19 +570,19 @@ namespace Facepunch.Steamworks
         /// <summary>
         /// Joins a lobby if a request was made to join the lobby through the friends list or an invite
         /// </summary>
-        internal void OnLobbyJoinRequestedAPI(GameLobbyJoinRequested_t callback, bool error)
+        internal void OnLobbyJoinRequestedAPI( GameLobbyJoinRequested_t callback, bool error )
         {
-            if (error) { return; }
-            Join(callback.SteamIDLobby);
+            if ( error ) { return; }
+            Join( callback.SteamIDLobby );
         }
 
         /// <summary>
         /// Makes sure we send an update callback if a Lobby user updates their information
         /// </summary>
-        internal void OnLobbyMemberPersonaChangeAPI(PersonaStateChange_t callback, bool error)
+        internal void OnLobbyMemberPersonaChangeAPI( PersonaStateChange_t callback, bool error )
         {
-            if (error || !UserIsInCurrentLobby(callback.SteamID)) { return; }
-            if (OnLobbyMemberDataUpdated != null) { OnLobbyMemberDataUpdated(callback.SteamID); }
+            if ( error || !UserIsInCurrentLobby( callback.SteamID ) ) { return; }
+            if ( OnLobbyMemberDataUpdated != null ) { OnLobbyMemberDataUpdated( callback.SteamID ); }
         }
 
         /*not implemented
