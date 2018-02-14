@@ -90,6 +90,12 @@ namespace Facepunch.Steamworks
             SetupCommonInterfaces();
 
             //
+            // Register Callbacks
+            //
+
+            SteamNative.Callbacks.RegisterCallbacks( this );
+
+            //
             // Client only interfaces
             //
             Voice = new Voice( this );
@@ -120,8 +126,6 @@ namespace Facepunch.Steamworks
             BuildId = native.apps.GetAppBuildId();
             CurrentLanguage = native.apps.GetCurrentGameLanguage();
             AvailableLanguages = native.apps.GetAvailableGameLanguages().Split( new[] {';'}, StringSplitOptions.RemoveEmptyEntries ); // TODO: Assumed colon separated
-
-            
 
             //
             // Run update, first call does some initialization

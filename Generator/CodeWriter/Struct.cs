@@ -37,6 +37,8 @@ namespace Generator
 
         void Structs()
         {
+            var callbackList = new List<SteamApiDefinition.StructDef>();
+
             foreach ( var c in def.structs )
             {
                 if ( SkipStructs.Contains( c.Name ) )
@@ -133,12 +135,24 @@ namespace Generator
                     if ( !string.IsNullOrEmpty( c.CallbackId ) )
                     {
                         Callback( c );
+                        callbackList.Add( c );
                     }
 
                 }
                 EndBlock();
                 WriteLine();
             }
+
+            StartBlock( $"internal static class Callbacks" );
+            StartBlock( $"internal static void RegisterCallbacks( Facepunch.Steamworks.BaseSteamworks steamworks )" );
+            {
+                foreach ( var c in callbackList )
+                {
+                    WriteLine( $"{c.Name}.Register( steamworks );" );
+                }
+            }
+            EndBlock();
+            EndBlock();
         }
 
         private void StructFields( SteamApiDefinition.StructDef.StructFields[] fields )
@@ -216,14 +230,14 @@ namespace Generator
         }
 
         private void Callback( SteamApiDefinition.StructDef c )
-        {
+        {           
             WriteLine();
-            StartBlock( $"internal static void RegisterCallback( Facepunch.Steamworks.BaseSteamworks steamworks, Action<{c.Name}, bool> CallbackFunction )" );
+            StartBlock( $"internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )" );
             {
                 WriteLine( $"var handle = new CallbackHandle( steamworks );" );
                 WriteLine( $"" );
 
-                CallbackCallresultShared( c, false );
+                CallbackCall( c );
 
                 WriteLine( "" );
                 WriteLine( "//" );
@@ -235,6 +249,42 @@ namespace Generator
                 WriteLine( "steamworks.RegisterCallbackHandle( handle );" );
             }
             EndBlock();
+
+            WriteLine();
+            WriteLine( "[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]" );
+            WriteLine( "internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }" );
+            WriteLine( "[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]" );
+            WriteLine( "internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }" );
+            WriteLine( "[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]" );
+            WriteLine( "internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }" );
+            WriteLine( "[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]" );
+            WriteLine( "internal static int OnGetSize(){ return StructSize(); }" );
+
+            WriteLine();
+            WriteLine( "[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]" );
+            StartBlock( "internal static void OnResult( IntPtr param )" );
+            {
+                WriteLine( $"OnResultWithInfo( param, false, 0 );" );
+            }
+            EndBlock();
+
+            WriteLine();
+            WriteLine( "[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]" );
+            StartBlock( "internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )" );
+            {
+                WriteLine( $"if ( failure ) return;" );
+                WriteLine();
+                WriteLine( "var value = FromPointer( param );" );
+
+                WriteLine();
+                WriteLine( "if ( Facepunch.Steamworks.Client.Instance != null )" );
+                WriteLine( $"    Facepunch.Steamworks.Client.Instance.OnCallback<{c.Name}>( value );" );
+
+                WriteLine();
+                WriteLine( "if ( Facepunch.Steamworks.Server.Instance != null )" );
+                WriteLine( $"    Facepunch.Steamworks.Server.Instance.OnCallback<{c.Name}>( value );" );
+            }
+            EndBlock();
         }
 
 
@@ -244,24 +294,12 @@ namespace Generator
             StartBlock( $"internal static CallResult<{c.Name}> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<{c.Name}, bool> CallbackFunction )" );
             {
                 WriteLine( $"return new CallResult<{c.Name}>( steamworks, call, CallbackFunction, FromPointer, StructSize(), CallbackId );" );
-               // WriteLine( $"" );
-
-               // CallbackCallresultShared( c, true );
-
-              //  WriteLine( "" );
-              //  WriteLine( "//" );
-              //  WriteLine( "// Register the callback with Steam" );
-              //  WriteLine( "//" );
-              //  WriteLine( $"steamworks.native.api.SteamAPI_RegisterCallResult( handle.PinnedCallback.AddrOfPinnedObject(), call );" );
-
-               // WriteLine();
-                //WriteLine( "return handle;" );
             }
             EndBlock();
         }
 
 
-        private void CallbackCallresultShared( SteamApiDefinition.StructDef c, bool Result )
+        private void CallbackCall( SteamApiDefinition.StructDef c )
         {
             WriteLine( "//" );
             WriteLine( "// Create the functions we need for the vtable" );
@@ -269,11 +307,11 @@ namespace Generator
 
             StartBlock( "if ( Facepunch.Steamworks.Config.UseThisCall )" );
             {
-                CallresultFunctions( c, Result, "ThisCall", "_" );
+                CallFunctions( c, "ThisCall", "_" );
             }
             Else();
             {
-                CallresultFunctions( c, Result, "StdCall", "" );
+                CallFunctions( c, "StdCall", "" );
             }
             EndBlock();
 
@@ -293,73 +331,51 @@ namespace Generator
             WriteLine( $"handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );" );
         }
 
-        private void CallresultFunctions( SteamApiDefinition.StructDef c, bool Result, string ThisCall, string ThisArg )
+        private void CallFunctions( SteamApiDefinition.StructDef c, string ThisCall, string ThisArg )
         {
             var ThisArgC = ThisArg.Length > 0 ? $"{ThisArg}, " : "";
-
-            if ( Result )
-            {
-                WriteLine( $"Callback.{ThisCall}.Result         funcA = ( {ThisArgC}p ) => {{  handle.Dispose(); CallbackFunction( FromPointer( p ), false ); }};" );
-                StartBlock( $"Callback.{ThisCall}.ResultWithInfo funcB = ( {ThisArgC}p, bIOFailure, hSteamAPICall ) => " );
-                {
-                    WriteLine( "if ( hSteamAPICall != call ) return;" );
-                    WriteLine();
-                    WriteLine( "handle.CallResultHandle = 0;" );
-                    WriteLine( "handle.Dispose();" );
-                    WriteLine();
-                    WriteLine( "CallbackFunction( FromPointer( p ), bIOFailure );" );
-                }
-                EndBlock( ";" );
-            }
-            else
-            {
-                WriteLine( $"Callback.{ThisCall}.Result         funcA = ( {ThisArgC}p ) => {{ CallbackFunction( FromPointer( p ), false ); }};" );
-                WriteLine( $"Callback.{ThisCall}.ResultWithInfo funcB = ( {ThisArgC}p, bIOFailure, hSteamAPICall ) => {{ CallbackFunction( FromPointer( p ), bIOFailure ); }};" );
-            }
-
-            WriteLine( $"Callback.{ThisCall}.GetSize        funcC = ( {ThisArg} ) => Marshal.SizeOf( typeof( {c.Name} ) );" );
-            WriteLine();
-            WriteLine( "//" );
-            WriteLine( "// If this platform is PackSmall, use PackSmall versions of everything instead" );
-            WriteLine( "//" );
-            StartBlock( "if ( Platform.PackSmall )" );
-            {
-                WriteLine( $"funcC = ( {ThisArg} ) => Marshal.SizeOf( typeof( PackSmall ) );" );
-            }
-            EndBlock();
-
-            WriteLine( "" );
-            WriteLine( "//" );
-            WriteLine( "// Allocate a handle to each function, so they don't get disposed" );
-            WriteLine( "//" );
-            WriteLine( "handle.FuncA = GCHandle.Alloc( funcA );" );
-            WriteLine( "handle.FuncB = GCHandle.Alloc( funcB );" );
-            WriteLine( "handle.FuncC = GCHandle.Alloc( funcC );" );
-            WriteLine();
+            var This = ThisArg.Length > 0 ? "This" : "";
 
             WriteLine( "//" );
             WriteLine( "// Create the VTable by manually allocating the memory and copying across" );
             WriteLine( "//" );
-            WriteLine( "handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );" );
-            StartBlock( "var vTable = new Callback.VTable()" );
-            {
-                WriteLine( "ResultA = Marshal.GetFunctionPointerForDelegate( funcA )," );
-                WriteLine( "ResultB = Marshal.GetFunctionPointerForDelegate( funcB )," );
-                WriteLine( "GetSize = Marshal.GetFunctionPointerForDelegate( funcC )," );
-            }
-            EndBlock( ";" );
-
-            WriteLine( "//" );
-            WriteLine( "// The order of these functions are swapped on Windows" );
-            WriteLine( "//" );
             StartBlock( "if ( Platform.IsWindows )" );
             {
-                WriteLine( "vTable.ResultA = Marshal.GetFunctionPointerForDelegate( funcB );" );
-                WriteLine( "vTable.ResultB = Marshal.GetFunctionPointerForDelegate( funcA );" );
+                WriteLine( $"handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin{This} ) ) );" );
+                StartBlock( $"var vTable = new Callback.VTableWin{This}" );
+                {
+                    WriteLine( $"ResultA = OnResult{This}," );
+                    WriteLine( $"ResultB = OnResultWithInfo{This}," );
+                    WriteLine( $"GetSize = OnGetSize{This}," );
+                }
+                EndBlock( ";" );
+
+                WriteLine( "handle.FuncA = GCHandle.Alloc( vTable.ResultA );" );
+                WriteLine( "handle.FuncB = GCHandle.Alloc( vTable.ResultB );" );
+                WriteLine( "handle.FuncC = GCHandle.Alloc( vTable.GetSize );" );
+
+                WriteLine( "Marshal.StructureToPtr( vTable, handle.vTablePtr, false );" );
+            }
+            Else();
+            {
+                WriteLine( $"handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable{This} ) ) );" );
+                StartBlock( $"var vTable = new Callback.VTable{This}" );
+                {
+                    WriteLine( $"ResultA = OnResult{This}," );
+                    WriteLine( $"ResultB = OnResultWithInfo{This}," );
+                    WriteLine( $"GetSize = OnGetSize{This}," );
+                }
+                EndBlock( ";" );
+
+                WriteLine( "handle.FuncA = GCHandle.Alloc( vTable.ResultA );" );
+                WriteLine( "handle.FuncB = GCHandle.Alloc( vTable.ResultB );" );
+                WriteLine( "handle.FuncC = GCHandle.Alloc( vTable.GetSize );" );
+
+                WriteLine( "Marshal.StructureToPtr( vTable, handle.vTablePtr, false );" );
             }
             EndBlock();
 
-            WriteLine( "Marshal.StructureToPtr( vTable, handle.vTablePtr, false );" );
+            
         }
     }
 }

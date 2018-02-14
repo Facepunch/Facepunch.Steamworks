@@ -46,8 +46,8 @@ namespace Facepunch.Steamworks
             this.steamworks = steamworks;
             this.remoteStorage = remoteStorage;
 
-            SteamNative.DownloadItemResult_t.RegisterCallback( steamworks, onDownloadResult );
-            SteamNative.ItemInstalled_t.RegisterCallback( steamworks, onItemInstalled );
+            steamworks.RegisterCallback<SteamNative.DownloadItemResult_t>( onDownloadResult );
+            steamworks.RegisterCallback<SteamNative.ItemInstalled_t>( onItemInstalled );
         }
 
         /// <summary>
@@ -64,13 +64,13 @@ namespace Facepunch.Steamworks
             OnItemInstalled = null;
         }
 
-        private void onItemInstalled( SteamNative.ItemInstalled_t obj, bool failed )
+        private void onItemInstalled( SteamNative.ItemInstalled_t obj )
         {
             if ( OnItemInstalled != null && obj.AppID == Client.Instance.AppId )
                 OnItemInstalled( obj.PublishedFileId );
         }
 
-        private void onDownloadResult( SteamNative.DownloadItemResult_t obj, bool failed )
+        private void onDownloadResult( SteamNative.DownloadItemResult_t obj )
         {
             if ( OnFileDownloaded != null && obj.AppID == Client.Instance.AppId )
                 OnFileDownloaded( obj.PublishedFileId, (Callbacks.Result) obj.Result );

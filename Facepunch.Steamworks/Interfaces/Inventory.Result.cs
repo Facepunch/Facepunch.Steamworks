@@ -139,9 +139,9 @@ namespace Facepunch.Steamworks
                 }
             }
 
-            internal void OnSteamResult( SteamInventoryResultReady_t data, bool error )
+            internal void OnSteamResult( SteamInventoryResultReady_t data )
             {
-                var success = data.Result == SteamNative.Result.OK && !error;
+                var success = data.Result == SteamNative.Result.OK;
 
                 if ( success )
                 {

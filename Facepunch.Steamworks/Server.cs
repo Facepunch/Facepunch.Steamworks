@@ -53,9 +53,10 @@ namespace Facepunch.Steamworks
             SetupCommonInterfaces();
 
             //
-            // Cache common, unchanging info
+            // Register Callbacks
             //
-            AppId = appId;
+
+            SteamNative.Callbacks.RegisterCallbacks( this );
 
             //
             // Initial settings

@@ -20,29 +20,50 @@ namespace SteamNative
         [StructLayout( LayoutKind.Sequential, Pack = 1 )]
         public class VTable
         {
-            public IntPtr ResultA;
-            public IntPtr ResultB;
-            public IntPtr GetSize;
+            [UnmanagedFunctionPointer( CallingConvention.StdCall )] public delegate void ResultD( IntPtr pvParam );
+            [UnmanagedFunctionPointer( CallingConvention.StdCall )] public delegate void ResultWithInfoD( IntPtr pvParam, bool bIOFailure, SteamNative.SteamAPICall_t hSteamAPICall );
+            [UnmanagedFunctionPointer( CallingConvention.StdCall )] public delegate int GetSizeD();
+
+            public ResultD ResultA;
+            public ResultWithInfoD ResultB;
+            public GetSizeD GetSize;
         }
 
-        //
-        // All possible functions
-        //
-        internal class ThisCall
+        [StructLayout( LayoutKind.Sequential, Pack = 1 )]
+        public class VTableWin
         {
-            [UnmanagedFunctionPointer( CallingConvention.ThisCall )]    public delegate void Result( IntPtr thisptr, IntPtr pvParam );
-            [UnmanagedFunctionPointer( CallingConvention.ThisCall )]    public delegate void ResultWithInfo( IntPtr thisptr, IntPtr pvParam, bool bIOFailure, SteamNative.SteamAPICall_t hSteamAPICall );
-            [UnmanagedFunctionPointer( CallingConvention.ThisCall )]    public delegate int GetSize( IntPtr thisptr );
+            [UnmanagedFunctionPointer( CallingConvention.StdCall )] public delegate void ResultD( IntPtr pvParam );
+            [UnmanagedFunctionPointer( CallingConvention.StdCall )] public delegate void ResultWithInfoD( IntPtr pvParam, bool bIOFailure, SteamNative.SteamAPICall_t hSteamAPICall );
+            [UnmanagedFunctionPointer( CallingConvention.StdCall )] public delegate int GetSizeD();
+
+            public ResultWithInfoD ResultB;
+            public ResultD ResultA;
+            public GetSizeD GetSize;
         }
 
-        internal class StdCall
+        [StructLayout( LayoutKind.Sequential, Pack = 1 )]
+        public class VTableThis
         {
-            [UnmanagedFunctionPointer( CallingConvention.StdCall )]    public delegate void Result( IntPtr pvParam );
-            [UnmanagedFunctionPointer( CallingConvention.StdCall )]    public delegate void ResultWithInfo( IntPtr pvParam, bool bIOFailure, SteamNative.SteamAPICall_t hSteamAPICall );
-            [UnmanagedFunctionPointer( CallingConvention.StdCall )]    public delegate int GetSize();
+            [UnmanagedFunctionPointer( CallingConvention.ThisCall )] public delegate void ResultD( IntPtr thisptr, IntPtr pvParam );
+            [UnmanagedFunctionPointer( CallingConvention.ThisCall )] public delegate void ResultWithInfoD( IntPtr thisptr, IntPtr pvParam, bool bIOFailure, SteamNative.SteamAPICall_t hSteamAPICall );
+            [UnmanagedFunctionPointer( CallingConvention.ThisCall )] public delegate int GetSizeD( IntPtr thisptr );
+
+            public ResultD ResultA;
+            public ResultWithInfoD ResultB;
+            public GetSizeD GetSize;
         }
 
+        [StructLayout( LayoutKind.Sequential, Pack = 1 )]
+        public class VTableWinThis
+        {
+            [UnmanagedFunctionPointer( CallingConvention.ThisCall )] public delegate void ResultD( IntPtr thisptr, IntPtr pvParam );
+            [UnmanagedFunctionPointer( CallingConvention.ThisCall )] public delegate void ResultWithInfoD( IntPtr thisptr, IntPtr pvParam, bool bIOFailure, SteamNative.SteamAPICall_t hSteamAPICall );
+            [UnmanagedFunctionPointer( CallingConvention.ThisCall )] public delegate int GetSizeD( IntPtr thisptr );
 
+            public ResultWithInfoD ResultB;
+            public ResultD ResultA;
+            public GetSizeD GetSize;
+        }
     };
 
     //
@@ -168,5 +189,10 @@ namespace SteamNative
                 CallbackFunction( val, false );
             }
         }
+    }
+
+    internal class MonoPInvokeCallbackAttribute : Attribute
+    {
+        public MonoPInvokeCallbackAttribute( Type t ) { }
     }
 }

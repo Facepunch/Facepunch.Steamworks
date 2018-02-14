@@ -54,8 +54,8 @@ namespace Facepunch.Steamworks
 
             if ( !server )
             {
-                SteamNative.SteamInventoryResultReady_t.RegisterCallback( steamworks, onResultReady );
-                SteamNative.SteamInventoryFullUpdate_t.RegisterCallback( steamworks, onFullUpdate );
+                steamworks.RegisterCallback<SteamNative.SteamInventoryResultReady_t>( onResultReady );
+                steamworks.RegisterCallback<SteamNative.SteamInventoryFullUpdate_t>( onFullUpdate );
 
                 //
                 // Get a list of our items immediately
@@ -67,10 +67,8 @@ namespace Facepunch.Steamworks
         /// <summary>
         /// We've received a FULL update
         /// </summary>
-        private void onFullUpdate( SteamInventoryFullUpdate_t data, bool error )
+        private void onFullUpdate( SteamInventoryFullUpdate_t data )
         {
-            if ( error ) return;
-
             var result = new Result( this, data.Handle, false );
             result.Fill();
 
@@ -80,15 +78,15 @@ namespace Facepunch.Steamworks
         /// <summary>
         /// A generic result has returned.
         /// </summary>
-        private void onResultReady( SteamInventoryResultReady_t data, bool error )
+        private void onResultReady( SteamInventoryResultReady_t data )
         {
             if ( Result.Pending.ContainsKey( data.Handle ) )
             {
                 var result = Result.Pending[data.Handle];
 
-                result.OnSteamResult( data, error );
+                result.OnSteamResult( data );
 
-                if ( !error && data.Result == SteamNative.Result.OK )
+                if ( data.Result == SteamNative.Result.OK )
                 {
                     onResult( result, false );
                 }

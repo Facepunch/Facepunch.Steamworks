@@ -163,7 +163,7 @@ namespace Facepunch.Steamworks
         {
             client = c;
 
-            SteamNative.PersonaStateChange_t.RegisterCallback( client, OnPersonaStateChange );
+            client.RegisterCallback<SteamNative.PersonaStateChange_t>( OnPersonaStateChange );
         }
 
         /// <summary>
@@ -357,9 +357,9 @@ namespace Facepunch.Steamworks
             return f;
         }
 
-        private void OnPersonaStateChange( PersonaStateChange_t data, bool error )
+        private void OnPersonaStateChange( PersonaStateChange_t data )
         {
-            
+            // HUH
         }
 
     }

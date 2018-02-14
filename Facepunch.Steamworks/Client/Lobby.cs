@@ -36,12 +36,13 @@ namespace Facepunch.Steamworks
         public Lobby( Client c )
         {
             client = c;
-            SteamNative.LobbyDataUpdate_t.RegisterCallback( client, OnLobbyDataUpdatedAPI );
-            SteamNative.LobbyChatMsg_t.RegisterCallback( client, OnLobbyChatMessageRecievedAPI );
-            SteamNative.LobbyChatUpdate_t.RegisterCallback( client, OnLobbyStateUpdatedAPI );
-            SteamNative.GameLobbyJoinRequested_t.RegisterCallback( client, OnLobbyJoinRequestedAPI );
-            SteamNative.LobbyInvite_t.RegisterCallback( client, OnUserInvitedToLobbyAPI );
-            SteamNative.PersonaStateChange_t.RegisterCallback( client, OnLobbyMemberPersonaChangeAPI );
+
+            client.RegisterCallback<SteamNative.LobbyDataUpdate_t>( OnLobbyDataUpdatedAPI );
+            client.RegisterCallback<SteamNative.LobbyChatMsg_t>( OnLobbyChatMessageRecievedAPI );
+            client.RegisterCallback<SteamNative.LobbyChatUpdate_t>( OnLobbyStateUpdatedAPI );
+            client.RegisterCallback<SteamNative.GameLobbyJoinRequested_t>( OnLobbyJoinRequestedAPI );
+            client.RegisterCallback<SteamNative.LobbyInvite_t>( OnUserInvitedToLobbyAPI );
+            client.RegisterCallback<SteamNative.PersonaStateChange_t>( OnLobbyMemberPersonaChangeAPI );
         }
 
         /// <summary>
@@ -242,9 +243,10 @@ namespace Facepunch.Steamworks
             return client.native.matchmaking.GetLobbyMemberData( CurrentLobby, steamID, key );
         }
 
-        internal void OnLobbyDataUpdatedAPI( LobbyDataUpdate_t callback, bool error )
+        internal void OnLobbyDataUpdatedAPI( LobbyDataUpdate_t callback )
         {
-            if ( error || (callback.SteamIDLobby != CurrentLobby) ) { return; }
+            if ( callback.SteamIDLobby != CurrentLobby ) return;
+
             if ( callback.SteamIDLobby == CurrentLobby ) //actual lobby data was updated by owner
             {
                 UpdateLobbyData();
@@ -320,10 +322,10 @@ namespace Facepunch.Steamworks
 
         private static byte[] chatMessageData = new byte[1024 * 4];
 
-        private unsafe void OnLobbyChatMessageRecievedAPI( LobbyChatMsg_t callback, bool error )
+        private unsafe void OnLobbyChatMessageRecievedAPI( LobbyChatMsg_t callback )
         {
             //from Client.Networking
-            if ( error || callback.SteamIDLobby != CurrentLobby )
+            if ( callback.SteamIDLobby != CurrentLobby )
                 return;
 
             SteamNative.CSteamID steamid = 1;
@@ -380,9 +382,9 @@ namespace Facepunch.Steamworks
             Banned = ChatMemberStateChange.Banned,
         }
 
-        internal void OnLobbyStateUpdatedAPI( LobbyChatUpdate_t callback, bool error )
+        internal void OnLobbyStateUpdatedAPI( LobbyChatUpdate_t callback )
         {
-            if ( error || callback.SteamIDLobby != CurrentLobby )
+            if ( callback.SteamIDLobby != CurrentLobby )
                 return;
 
             MemberStateChange change = (MemberStateChange)callback.GfChatMemberStateChange;
@@ -555,9 +557,9 @@ namespace Facepunch.Steamworks
             return client.native.matchmaking.InviteUserToLobby( CurrentLobby, friendID );
         }
 
-        internal void OnUserInvitedToLobbyAPI( LobbyInvite_t callback, bool error )
+        internal void OnUserInvitedToLobbyAPI( LobbyInvite_t callback )
         {
-            if ( error || (callback.GameID != client.AppId) ) { return; }
+            if ( callback.GameID != client.AppId ) return;
             if ( OnUserInvitedToLobby != null ) { OnUserInvitedToLobby( callback.SteamIDLobby, callback.SteamIDUser ); }
 
         }
@@ -570,18 +572,17 @@ namespace Facepunch.Steamworks
         /// <summary>
         /// Joins a lobby if a request was made to join the lobby through the friends list or an invite
         /// </summary>
-        internal void OnLobbyJoinRequestedAPI( GameLobbyJoinRequested_t callback, bool error )
+        internal void OnLobbyJoinRequestedAPI( GameLobbyJoinRequested_t callback )
         {
-            if ( error ) { return; }
             Join( callback.SteamIDLobby );
         }
 
         /// <summary>
         /// Makes sure we send an update callback if a Lobby user updates their information
         /// </summary>
-        internal void OnLobbyMemberPersonaChangeAPI( PersonaStateChange_t callback, bool error )
+        internal void OnLobbyMemberPersonaChangeAPI( PersonaStateChange_t callback )
         {
-            if ( error || !UserIsInCurrentLobby( callback.SteamID ) ) { return; }
+            if ( !UserIsInCurrentLobby( callback.SteamID ) ) return;
             if ( OnLobbyMemberDataUpdated != null ) { OnLobbyMemberDataUpdated( callback.SteamID ); }
         }
 

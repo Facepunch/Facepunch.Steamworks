@@ -22,8 +22,8 @@ namespace Facepunch.Steamworks
             client = c;
 
             All = new Achievement[0];
-            SteamNative.UserStatsReceived_t.RegisterCallback( c, UserStatsReceived );
-            SteamNative.UserStatsStored_t.RegisterCallback( c, UserStatsStored );
+            c.RegisterCallback<UserStatsReceived_t>( UserStatsReceived );
+            c.RegisterCallback<UserStatsStored_t>( UserStatsStored );
 
             Refresh();
         }
@@ -100,9 +100,8 @@ namespace Facepunch.Steamworks
             return client.native.userstats.ClearAchievement( identifier );
         }
 
-        private void UserStatsReceived( UserStatsReceived_t stats, bool isError )
+        private void UserStatsReceived( UserStatsReceived_t stats )
         {
-            if ( isError ) return;
             if ( stats.GameID != client.AppId ) return;
 
             Refresh();
@@ -110,9 +109,8 @@ namespace Facepunch.Steamworks
             OnUpdated?.Invoke();
         }
 
-        private void UserStatsStored( UserStatsStored_t stats, bool isError )
+        private void UserStatsStored( UserStatsStored_t stats )
         {
-            if ( isError ) return;
             if ( stats.GameID != client.AppId ) return;
 
             Refresh();

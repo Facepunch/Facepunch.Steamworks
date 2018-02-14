@@ -23,10 +23,10 @@ namespace Facepunch.Steamworks
         {
             client = c;
 
-            SteamNative.MicroTxnAuthorizationResponse_t.RegisterCallback( client, onMicroTxnAuthorizationResponse );
+            client.RegisterCallback<SteamNative.MicroTxnAuthorizationResponse_t>( onMicroTxnAuthorizationResponse );
         }
 
-        private void onMicroTxnAuthorizationResponse( MicroTxnAuthorizationResponse_t arg1, bool arg2 )
+        private void onMicroTxnAuthorizationResponse( MicroTxnAuthorizationResponse_t arg1 )
         {
             if ( OnAuthorizationResponse  != null )
             {

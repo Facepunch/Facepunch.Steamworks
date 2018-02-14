@@ -18,11 +18,6 @@ namespace Facepunch.Steamworks
             //
             if ( platform == "WindowsEditor" || platform == "WindowsPlayer" )
             {
-                //
-                // 32bit windows unity uses a stdcall
-                //
-                if ( IntPtr.Size == 4 ) UseThisCall = false;
-
                 ForcePlatform( OperatingSystem.Windows, IntPtr.Size == 4 ? Architecture.x86 : Architecture.x64 );                
             }
 
@@ -35,6 +30,8 @@ namespace Facepunch.Steamworks
             {
                 ForcePlatform( OperatingSystem.Linux, IntPtr.Size == 4 ? Architecture.x86 : Architecture.x64 );
             }
+
+            IsUnity = true;
 
             Console.WriteLine( "Facepunch.Steamworks Unity: " + platform );
             Console.WriteLine( "Facepunch.Steamworks Os: " + SteamNative.Platform.Os );
@@ -50,7 +47,13 @@ namespace Facepunch.Steamworks
         /// for releasing his shit open source under the MIT license so we can all learn and iterate.
         /// 
         /// </summary>
-        public static bool UseThisCall { get; set; } = true;
+        internal static bool UseThisCall { get { return SteamNative.Platform.Os == OperatingSystem.Windows && !IsUnity; } }
+
+
+        /// <summary>
+        /// Should be true if we're using Unity
+        /// </summary>
+        internal static bool IsUnity { get; set; }
 
 
         /// <summary>

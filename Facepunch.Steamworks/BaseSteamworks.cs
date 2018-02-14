@@ -41,6 +41,8 @@ namespace Facepunch.Steamworks
 
         public virtual void Dispose()
         {
+            Callbacks.Clear();
+
             foreach ( var h in CallbackHandles )
             {
                 h.Dispose();
@@ -157,5 +159,37 @@ namespace Facepunch.Steamworks
 #endif
             }
         }
+
+        Dictionary<Type, List<Action<object>>> Callbacks = new Dictionary<Type, List<Action<object>>>();
+
+        internal List<Action<object>> CallbackList( Type T )
+        {
+            List<Action<object>> list = null;
+
+            if ( !Callbacks.TryGetValue( T, out list ) )
+            {
+                list = new List<Action<object>>();
+                Callbacks[T] = list;
+            }
+
+            return list;
+        }
+
+        internal void OnCallback<T>( T data )
+        {
+            var list = CallbackList( typeof( T ) );
+
+            foreach ( var i in list )
+            {
+                i( data );
+            }
+        }
+
+        internal void RegisterCallback<T>( Action<T> func )
+        {
+            var list = CallbackList( typeof( T ) );
+            list.Add( ( o ) => func( (T) o ) );
+        }
+
     }
 }
