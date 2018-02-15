@@ -145,6 +145,7 @@ namespace Facepunch.Steamworks
 
             RunCallbacks();
             Voice.Update();
+            Friends.Cycle();
 
             base.Update();            
         }

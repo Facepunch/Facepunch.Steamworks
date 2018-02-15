@@ -292,21 +292,24 @@ namespace Facepunch.Steamworks
                     break;
             }
 
+            if ( imageid == 0 || imageid == 2 )
+                return null;
+
             var img = new Image()
             {
                 Id = imageid
             };
 
-            if (imageid != 0 && img.TryLoad(client.native.utils))
-                return img;
+            if ( !img.TryLoad( client.native.utils ) )
+                return null;
 
-            return null;
+            return img;
         }
 
 
         /// <summary>
         /// Callback will be called when the avatar is ready. If we fail to get an
-        /// avatar, it'll be called with a null Image.
+        /// avatar, might be called with a null Image.
         /// </summary>
         public void GetAvatar( AvatarSize size, ulong steamid, Action<Image> callback )
         {
@@ -329,17 +332,18 @@ namespace Facepunch.Steamworks
             PersonaCallbacks.Add( new PersonaCallback
             {
                 SteamId = steamid,
-                Callback = () =>
-                {
-                    callback( GetCachedAvatar(size, steamid) );
-                }
+                Size = size,
+                Callback = callback,
+                Time = DateTime.Now
             });
         }
 
         private class PersonaCallback
         {
             public ulong SteamId;
-            public Action Callback;
+            public AvatarSize Size;
+            public Action<Image> Callback;
+            public DateTime Time;
         }
 
         List<PersonaCallback> PersonaCallbacks = new List<PersonaCallback>();
@@ -357,9 +361,49 @@ namespace Facepunch.Steamworks
             return f;
         }
 
+        internal void Cycle()
+        {
+            if ( PersonaCallbacks.Count == 0 ) return;
+
+            var timeOut = DateTime.Now.AddSeconds( -10 );
+
+            for ( int i = 0; i < PersonaCallbacks.Count; i++ )
+            {
+                var cb = PersonaCallbacks[i];
+
+                // Timeout
+                if ( cb.Time < timeOut )
+                {
+                    if ( cb.Callback != null )
+                    {
+                        cb.Callback( null );
+                    }
+
+                    PersonaCallbacks.Remove( cb );
+                    continue;
+                }
+            }
+        }
+
         private void OnPersonaStateChange( PersonaStateChange_t data )
         {
-            // HUH
+            if ( (data.ChangeFlags & 0x0040) != 0x0040 ) return; // wait for k_EPersonaChangeAvatar	
+
+            for ( int i=0; i< PersonaCallbacks.Count; i++ )
+            {
+                var cb = PersonaCallbacks[i];
+                if ( cb.SteamId != data.SteamID ) continue;
+
+                var image = GetCachedAvatar( cb.Size, cb.SteamId );
+                if ( image == null ) continue;
+
+                PersonaCallbacks.Remove( cb );
+
+                if ( cb.Callback != null )
+                {
+                    cb.Callback( image );
+                }
+            }
         }
 
     }

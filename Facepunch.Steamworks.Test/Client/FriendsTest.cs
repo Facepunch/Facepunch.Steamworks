@@ -50,16 +50,23 @@ namespace Facepunch.Steamworks.Test
             {
                 Assert.IsTrue( client.IsValid );
 
-                var friend = client.Friends.All.First();
+                ulong id = (ulong)( 76561197960279927 + (new Random().Next() % 10000));
                 bool passed = false;
 
-                client.Friends.GetAvatar( Steamworks.Friends.AvatarSize.Medium, friend.Id, (avatar) =>
+                client.Friends.GetAvatar( Steamworks.Friends.AvatarSize.Medium, id, ( avatar) =>
                 {
-                    Assert.AreEqual(avatar.Width, 64);
-                    Assert.AreEqual(avatar.Height, 64);
-                    Assert.AreEqual(avatar.Data.Length, avatar.Width * avatar.Height * 4);
+                    if ( avatar == null )
+                    {
+                        Console.WriteLine( "No Avatar" );
+                    }
+                    else
+                    {
+                        Assert.AreEqual( avatar.Width, 64 );
+                        Assert.AreEqual( avatar.Height, 64 );
+                        Assert.AreEqual( avatar.Data.Length, avatar.Width * avatar.Height * 4 );
 
-                    DrawImage(avatar);
+                        DrawImage( avatar );
+                    }
                     passed = true;
                 });
 
@@ -105,6 +112,7 @@ namespace Facepunch.Steamworks.Test
 
                     var brightness = 1 - ((float)(p.r + p.g + p.b) / (255.0f * 3.0f));
                     var c = (int) ((grad.Length) * brightness);
+                    if ( c > 3 ) c = 3;
                     str += grad[c];
     
                 }
