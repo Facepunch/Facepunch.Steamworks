@@ -64,6 +64,33 @@ namespace Facepunch.Steamworks
                 return !c1.Equals( c2 );
             }
 
+            /// <summary>
+            /// Consumes items from a user's inventory. If the quantity of the given item goes to zero, it is permanently removed.
+            /// Once an item is removed it cannot be recovered.This is not for the faint of heart - if your game implements item removal at all, 
+            /// a high-friction UI confirmation process is highly recommended.ConsumeItem can be restricted to certain item definitions or fully
+            /// blocked via the Steamworks website to minimize support/abuse issues such as the classic "my brother borrowed my laptop and deleted all of my rare items".
+            /// </summary>
+            public Result Consume( int amount = 1 )
+            {
+                SteamNative.SteamInventoryResult_t resultHandle = -1;
+                if ( !Definition.inventory.inventory.ConsumeItem( ref resultHandle, Id, (uint)amount ) )
+                    return null;
+
+                return new Result( Definition.inventory, resultHandle, true );
+            }
+
+            /// <summary>
+            /// Split stack into two items
+            /// </summary>
+            public Result SplitStack( int quantity = 1 )
+            {
+                SteamNative.SteamInventoryResult_t resultHandle = -1;
+                if ( !Definition.inventory.inventory.TransferItemQuantity( ref resultHandle, Id, (uint)quantity, ulong.MaxValue ) )
+                    return null;
+
+                return new Result( Definition.inventory, resultHandle, true );
+            }
+
             SteamNative.SteamInventoryUpdateHandle_t updateHandle;
 
             private void UpdatingProperties()

@@ -360,11 +360,7 @@ namespace Facepunch.Steamworks
         /// </summary>
         public Result SplitStack( Item item, int quantity = 1 )
         {
-            SteamNative.SteamInventoryResult_t resultHandle = -1;
-            if ( !inventory.TransferItemQuantity( ref resultHandle, item.Id, (uint)quantity, ulong.MaxValue ) )
-                return null;
-
-            return new Result( this, resultHandle, true );
+            return item.SplitStack( quantity );
         }
 
         /// <summary>
