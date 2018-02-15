@@ -40,6 +40,23 @@ namespace Facepunch.Steamworks
             client = c;
 
             client.RegisterCallback<SteamNative.PersonaStateChange_t>( OnPersonaStateChange );
+            client.RegisterCallback<SteamNative.GameRichPresenceJoinRequested_t>( OnGameJoinRequested );
+        }
+
+        public delegate void JoinRequestedDelegate( SteamFriend friend, string connect );
+
+        //
+        // Called when a friend has invited you to their game (using InviteToGame)
+        //
+        public event JoinRequestedDelegate OnInvitedToGame;
+
+
+        private void OnGameJoinRequested( GameRichPresenceJoinRequested_t data )
+        {
+            if ( OnInvitedToGame != null )
+            {
+                OnInvitedToGame( Get( data.SteamIDFriend ), data.Connect );
+            }
         }
 
         /// <summary>
@@ -226,6 +243,9 @@ namespace Facepunch.Steamworks
 
         public SteamFriend Get( ulong steamid )
         {
+            var friend = All.Where( x => x.Id == steamid ).FirstOrDefault();
+            if ( friend != null ) return friend;
+
             var f = new SteamFriend()
             {
                 Id = steamid,
