@@ -26,7 +26,7 @@ namespace Facepunch.Steamworks
         {
             Private = SteamNative.LobbyType.Private,
             FriendsOnly = SteamNative.LobbyType.FriendsOnly,
-            Public = SteamNative.LobbyType.Public,
+            Public = SteamNative.LobbyType.Public, 
             Invisible = SteamNative.LobbyType.Invisible,
             Error //happens if you try to get this when you aren't in a valid lobby
         }
@@ -324,6 +324,17 @@ namespace Facepunch.Steamworks
         }
 
         /// <summary>
+        /// returns true if we're the current owner
+        /// </summary>
+        public bool IsOwner
+        {
+            get
+            {
+                return Owner == client.SteamId;
+            }
+        }
+
+        /// <summary>
         /// The Owner of the current lobby. Returns 0 if you are not in a valid lobby.
         /// </summary>
         public ulong Owner
@@ -489,6 +500,74 @@ namespace Facepunch.Steamworks
         {
             if ( !UserIsInCurrentLobby( callback.SteamID ) ) return;
             if ( OnLobbyMemberDataUpdated != null ) { OnLobbyMemberDataUpdated( callback.SteamID ); }
+        }
+
+        /// <summary>
+        /// Sets the game server associated with the lobby.
+        /// This can only be set by the owner of the lobby.
+        /// Either the IP/Port or the Steam ID of the game server must be valid, depending on how you want the clients to be able to connect.
+        /// </summary>
+        public bool SetGameServer( System.Net.IPAddress ip, int port, ulong serverSteamId = 0 )
+        {
+            if ( !IsValid || !IsOwner ) return false;
+
+            var ipint = System.Net.IPAddress.NetworkToHostOrder( ip.Address );
+            client.native.matchmaking.SetLobbyGameServer( CurrentLobby, (uint)ipint, (ushort)port, serverSteamId );
+            return true;
+        }
+
+        /// <summary>
+        /// Gets the details of a game server set in a lobby.
+        /// </summary>
+        public System.Net.IPAddress GameServerIp
+        {
+            get
+            {
+                uint ip;
+                ushort port;
+                CSteamID steamid;
+
+                if ( !client.native.matchmaking.GetLobbyGameServer( CurrentLobby, out ip, out port, out steamid ) || ip == 0 )
+                    return null;
+
+                return new System.Net.IPAddress( System.Net.IPAddress.HostToNetworkOrder( ip ) );
+            }
+        }
+
+        /// <summary>
+        /// Gets the details of a game server set in a lobby.
+        /// </summary>
+        public int GameServerPort
+        {
+            get
+            {
+                uint ip;
+                ushort port;
+                CSteamID steamid;
+
+                if ( !client.native.matchmaking.GetLobbyGameServer( CurrentLobby, out ip, out port, out steamid ) )
+                    return 0;
+
+                return (int)port;
+            }
+        }
+
+        /// <summary>
+        /// Gets the details of a game server set in a lobby.
+        /// </summary>
+        public ulong GameServerSteamId
+        {
+            get
+            {
+                uint ip;
+                ushort port;
+                CSteamID steamid;
+
+                if ( !client.native.matchmaking.GetLobbyGameServer( CurrentLobby, out ip, out port, out steamid ) )
+                    return 0;
+
+                return steamid;
+            }
         }
 
         /*not implemented
