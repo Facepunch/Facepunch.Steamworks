@@ -186,5 +186,14 @@ namespace Facepunch.Steamworks
                 return true;
             }
         }
+
+        /// <summary>
+        /// This should be called when you're done communicating with a user, as this will free up all of the resources allocated for the connection under-the-hood.
+        /// If the remote user tries to send data to you again, a new onP2PConnectionRequest callback will be posted.
+        /// </summary>
+        public bool CloseSession( ulong steamId )
+        {
+            return networking.CloseP2PSessionWithUser( steamId );
+        }
     }
 }
