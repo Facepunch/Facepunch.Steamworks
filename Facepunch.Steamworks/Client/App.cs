@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SteamNative;
 
 namespace Facepunch.Steamworks
 {
@@ -12,6 +13,23 @@ namespace Facepunch.Steamworks
         internal App( Client c )
         {
             client = c;
+
+            client.RegisterCallback<SteamNative.DlcInstalled_t>( DlcInstalled );
+        }
+
+        public delegate void DlcInstalledDelegate( uint appid );
+
+        /// <summary>
+        /// Triggered after the current user gains ownership of DLC and that DLC is installed.
+        /// </summary>
+        public event DlcInstalledDelegate OnDlcInstalled;
+
+        private void DlcInstalled( DlcInstalled_t data )
+        {
+            if ( OnDlcInstalled  != null )
+            {
+                OnDlcInstalled( data.AppID );
+            }
         }
 
         public void Dispose()
