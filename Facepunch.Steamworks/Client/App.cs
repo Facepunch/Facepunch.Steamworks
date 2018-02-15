@@ -72,5 +72,34 @@ namespace Facepunch.Steamworks
         {
             return client.native.apps.BIsAppInstalled(appId);
         }
+
+        /// <summary>
+        /// Returns the appid's name
+        /// Returns error if the current app Id does not have permission to use this interface
+        /// </summary>
+        public string GetName( uint appId )
+        {
+            var str = client.native.applist.GetAppName( appId );
+            if ( str == null ) return "error";
+            return str;
+        }
+
+        /// <summary>
+        /// Returns the app's install folder
+        /// Returns error if the current app Id does not have permission to use this interface
+        /// </summary>
+        public string GetInstallFolder( uint appId )
+        {
+            return client.native.applist.GetAppInstallDir( appId );
+        }
+
+        /// <summary>
+        /// Returns the app's current build id
+        /// Returns 0 if the current app Id does not have permission to use this interface
+        /// </summary>
+        public int GetBuildId( uint appId )
+        {
+            return client.native.applist.GetAppBuildId( appId );
+        }
     }
 }
