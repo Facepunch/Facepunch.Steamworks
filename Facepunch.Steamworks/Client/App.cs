@@ -74,6 +74,14 @@ namespace Facepunch.Steamworks
         }
 
         /// <summary>
+        /// Returns true if specified app is installed.
+        /// </summary>
+        public bool IsDlcInstalled( uint appId )
+        {
+            return client.native.apps.BIsDlcInstalled( appId );
+        }
+
+        /// <summary>
         /// Returns the appid's name
         /// Returns error if the current app Id does not have permission to use this interface
         /// </summary>
