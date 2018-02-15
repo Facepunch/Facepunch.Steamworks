@@ -251,17 +251,17 @@ namespace Generator
             EndBlock();
 
             WriteLine();
-            WriteLine( "[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]" );
+            WriteLine( "[MonoPInvokeCallback]" );
             WriteLine( "internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }" );
-            WriteLine( "[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]" );
+            WriteLine( "[MonoPInvokeCallback]" );
             WriteLine( "internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }" );
-            WriteLine( "[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]" );
+            WriteLine( "[MonoPInvokeCallback]" );
             WriteLine( "internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }" );
-            WriteLine( "[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]" );
+            WriteLine( "[MonoPInvokeCallback]" );
             WriteLine( "internal static int OnGetSize(){ return StructSize(); }" );
 
             WriteLine();
-            WriteLine( "[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]" );
+            WriteLine( "[MonoPInvokeCallback]" );
             StartBlock( "internal static void OnResult( IntPtr param )" );
             {
                 WriteLine( $"OnResultWithInfo( param, false, 0 );" );
@@ -269,7 +269,7 @@ namespace Generator
             EndBlock();
 
             WriteLine();
-            WriteLine( "[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]" );
+            WriteLine( "[MonoPInvokeCallback]" );
             StartBlock( "internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )" );
             {
                 WriteLine( $"if ( failure ) return;" );

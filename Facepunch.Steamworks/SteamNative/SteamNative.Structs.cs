@@ -197,22 +197,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -365,22 +365,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -545,22 +545,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -719,22 +719,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -893,22 +893,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -1066,22 +1066,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -1237,22 +1237,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -1407,22 +1407,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -1582,22 +1582,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -1850,22 +1850,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -2018,22 +2018,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -2193,22 +2193,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -2364,22 +2364,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -2541,22 +2541,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -2720,22 +2720,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -2891,22 +2891,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -3064,22 +3064,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -3238,22 +3238,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -3409,22 +3409,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -3590,22 +3590,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -3760,22 +3760,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -3936,22 +3936,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -4107,22 +4107,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -4286,22 +4286,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -4467,22 +4467,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -4651,22 +4651,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -4834,22 +4834,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -5002,22 +5002,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -5176,22 +5176,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -5349,22 +5349,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -5522,22 +5522,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -5915,22 +5915,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -6089,22 +6089,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -6273,22 +6273,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -6447,22 +6447,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -6624,22 +6624,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -6801,22 +6801,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -6978,22 +6978,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -7151,22 +7151,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -7325,22 +7325,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -7501,22 +7501,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -7674,22 +7674,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -7842,22 +7842,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -8060,22 +8060,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -8234,22 +8234,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -8418,22 +8418,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -8589,22 +8589,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -8770,22 +8770,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -8946,22 +8946,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -9122,22 +9122,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -9306,22 +9306,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -9482,22 +9482,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -9671,22 +9671,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -9847,22 +9847,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -10028,22 +10028,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -10218,22 +10218,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -10467,22 +10467,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -10662,22 +10662,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -10850,22 +10850,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -11021,22 +11021,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -11192,22 +11192,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -11363,22 +11363,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -11539,22 +11539,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -11713,22 +11713,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -11892,22 +11892,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -12071,22 +12071,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -12263,22 +12263,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -12441,22 +12441,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -12615,22 +12615,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -12788,22 +12788,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -12970,22 +12970,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -13202,22 +13202,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -13373,22 +13373,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -13557,22 +13557,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -13733,22 +13733,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -13912,22 +13912,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -14100,22 +14100,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -14276,22 +14276,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -14444,22 +14444,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -14625,22 +14625,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -14801,22 +14801,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -14977,22 +14977,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -15151,22 +15151,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -15327,22 +15327,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -15495,22 +15495,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -15666,22 +15666,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -15845,22 +15845,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -16029,22 +16029,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -16259,22 +16259,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -16430,22 +16430,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -16607,22 +16607,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -16778,22 +16778,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -16946,22 +16946,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -17116,22 +17116,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -17286,22 +17286,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -17454,22 +17454,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -17622,22 +17622,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -17790,22 +17790,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -17958,22 +17958,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -18140,22 +18140,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -18311,22 +18311,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -18488,22 +18488,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -18975,22 +18975,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -19148,22 +19148,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -19329,22 +19329,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -19510,22 +19510,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -19684,22 +19684,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -19865,22 +19865,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -20046,22 +20046,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -20237,22 +20237,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -20410,22 +20410,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -20583,22 +20583,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -20762,22 +20762,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -20941,22 +20941,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -21120,22 +21120,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -21299,22 +21299,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -21486,22 +21486,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -21662,22 +21662,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -21830,22 +21830,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -21998,22 +21998,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -22171,22 +22171,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -22528,22 +22528,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -22702,22 +22702,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -22873,22 +22873,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -23044,22 +23044,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -23218,22 +23218,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -23396,22 +23396,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -23581,22 +23581,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -23766,22 +23766,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -23953,22 +23953,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -24124,22 +24124,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -24295,22 +24295,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -24469,22 +24469,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -24655,22 +24655,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -24826,22 +24826,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -24997,22 +24997,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -25168,22 +25168,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -25339,22 +25339,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -25507,22 +25507,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -25678,22 +25678,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -25899,22 +25899,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -26067,22 +26067,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -26251,22 +26251,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -26430,22 +26430,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -26608,22 +26608,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -26776,22 +26776,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -26952,22 +26952,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -27123,22 +27123,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -27294,22 +27294,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -27470,22 +27470,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -27641,22 +27641,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -27819,22 +27819,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -27987,22 +27987,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -28164,22 +28164,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -28345,22 +28345,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -28538,22 +28538,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -28711,22 +28711,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -28896,22 +28896,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -29072,22 +29072,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -29248,22 +29248,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -29416,22 +29416,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
@@ -29587,22 +29587,22 @@ namespace SteamNative
 			steamworks.RegisterCallbackHandle( handle );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static int OnGetSize(){ return StructSize(); }
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResult( IntPtr param )
 		{
 			OnResultWithInfo( param, false, 0 );
 		}
 		
-		[MonoPInvokeCallback( typeof( SteamNative.Callback.VTableThis.ResultD ) )]
+		[MonoPInvokeCallback]
 		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
 		{
 			if ( failure ) return;
