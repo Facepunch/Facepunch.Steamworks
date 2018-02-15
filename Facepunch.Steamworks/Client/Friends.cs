@@ -43,6 +43,28 @@ namespace Facepunch.Steamworks
             client.RegisterCallback<SteamNative.GameRichPresenceJoinRequested_t>( OnGameJoinRequested );
         }
 
+        private bool _listenForFriendsMessages;
+
+        /// <summary>
+        /// Listens for Steam friends chat messages.
+        /// You can then show these chats inline in the game. For example with a Blizzard style chat message system or the chat system in Dota 2.
+        /// After enabling this you will receive callbacks when ever the user receives a chat message.
+        /// </summary>
+        public bool ListenForFriendsMessages
+        {
+            get
+            {
+                return _listenForFriendsMessages;
+            }
+
+            set
+            {
+                _listenForFriendsMessages = value;
+                client.native.friends.SetListenForFriendsMessages( value );
+            }
+        }
+
+
         public delegate void JoinRequestedDelegate( SteamFriend friend, string connect );
 
         //
