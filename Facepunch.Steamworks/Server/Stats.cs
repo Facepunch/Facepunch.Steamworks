@@ -111,5 +111,26 @@ namespace Facepunch.Steamworks
 
             return data;
         }
+
+        /// <summary>
+        /// Resets the unlock status of an achievement for the specified user. Must have called Refresh on a steamid first.
+        /// </summary>
+        public bool ClearAchievement( ulong steamid, string name )
+        {
+            return server.native.gameServerStats.ClearUserAchievement( steamid, name );
+        }
+
+        /// <summary>
+        /// Return true if available, exists and unlocked
+        /// </summary>
+        public bool GetAchievement( ulong steamid, string name )
+        {
+            bool achieved = false;
+
+            if ( !server.native.gameServerStats.GetUserAchievement( steamid, name, ref achieved ) )
+                return false;
+
+            return achieved;
+        }
     }
 }
