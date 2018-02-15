@@ -124,5 +124,13 @@ namespace Facepunch.Steamworks
         {
             return Client.native.friends.InviteUserToGame(Id, Text);
         }
+
+        /// <summary>
+        /// Sends a message to a Steam friend. Returns true if success
+        /// </summary>
+        public bool SendMessage( string message )
+        {
+            return Client.native.friends.ReplyToFriendMessage( Id, message );
+        }
     }
 }
