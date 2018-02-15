@@ -14,7 +14,7 @@ namespace Facepunch.Steamworks
             internal static Dictionary< int, Result > Pending;
             internal Inventory inventory;
 
-            private SteamNative.SteamInventoryResult_t Handle { get; set; }
+            private SteamNative.SteamInventoryResult_t Handle { get; set; } = -1;
 
             /// <summary>
             /// Called when result is successfully returned
@@ -169,8 +169,12 @@ namespace Facepunch.Steamworks
 
             public void Dispose()
             {
-                inventory.inventory.DestroyResult( Handle );
-                Handle = -1;
+                if ( Handle != -1 && inventory != null )
+                {
+                    inventory.inventory.DestroyResult( Handle );
+                    Handle = -1;
+                }
+
                 inventory = null;
             }
         }
