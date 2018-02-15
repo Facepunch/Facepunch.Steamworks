@@ -34,13 +34,43 @@ namespace Facepunch.Steamworks
     public class Friends
     {
         internal Client client;
+        private byte[] buffer = new byte[1024 * 128];
 
         internal Friends( Client c )
         {
             client = c;
 
-            client.RegisterCallback<SteamNative.PersonaStateChange_t>( OnPersonaStateChange );
-            client.RegisterCallback<SteamNative.GameRichPresenceJoinRequested_t>( OnGameJoinRequested );
+            client.RegisterCallback<PersonaStateChange_t>( OnPersonaStateChange );
+            client.RegisterCallback<GameRichPresenceJoinRequested_t>( OnGameJoinRequested );
+            client.RegisterCallback<GameConnectedFriendChatMsg_t>( OnFriendChatMessage );
+        }
+
+        public delegate void ChatMessageDelegate( SteamFriend friend, string type, string message );
+
+        /// <summary>
+        /// Called when chat message has been received from a friend. You'll need to turn on
+        /// ListenForFriendsMessages to recieve this.
+        /// </summary>
+        public event ChatMessageDelegate OnChatMessage;
+
+        private unsafe void OnFriendChatMessage( GameConnectedFriendChatMsg_t data )
+        {
+            if ( OnChatMessage == null ) return;
+
+            var friend = Get( data.SteamIDUser );
+            var type = ChatEntryType.ChatMsg;
+            fixed ( byte* ptr = buffer )
+            {
+                var len = client.native.friends.GetFriendMessage( data.SteamIDUser, data.MessageID, (IntPtr)ptr, buffer.Length, out type );
+
+                if ( len == 0 && type == ChatEntryType.Invalid )
+                    return;
+
+                var typeName = type.ToString();
+                var message = Encoding.UTF8.GetString( buffer, 0, len );
+
+                OnChatMessage( friend, typeName, message );
+            }
         }
 
         private bool _listenForFriendsMessages;
