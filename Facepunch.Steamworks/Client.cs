@@ -135,6 +135,11 @@ namespace Facepunch.Steamworks
             Update();
         }
 
+        ~Client()
+        {
+            Dispose();
+        }
+
         /// <summary>
         /// Should be called at least once every frame
         /// </summary>
@@ -163,6 +168,8 @@ namespace Facepunch.Steamworks
         /// </summary>
         public override void Dispose()
         {
+            if ( disposed ) return;
+
             if ( Voice != null )
             {
                 Voice = null;

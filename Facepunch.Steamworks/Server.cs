@@ -83,6 +83,11 @@ namespace Facepunch.Steamworks
             Update();
         }
 
+        ~Server()
+        {
+            Dispose();
+        }
+
         /// <summary>
         /// Should be called at least once every frame
         /// </summary>
@@ -256,6 +261,8 @@ namespace Facepunch.Steamworks
         /// </summary>
         public override void Dispose()
         {
+            if ( disposed ) return;
+
             if ( Query != null )
             {
                 Query = null;

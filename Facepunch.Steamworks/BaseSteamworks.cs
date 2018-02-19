@@ -26,6 +26,7 @@ namespace Facepunch.Steamworks
 
         private List<SteamNative.CallbackHandle> CallbackHandles = new List<SteamNative.CallbackHandle>();
         private List<SteamNative.CallResult> CallResults = new List<SteamNative.CallResult>();
+        protected bool disposed = false;
 
 
         protected BaseSteamworks( uint appId )
@@ -39,8 +40,15 @@ namespace Facepunch.Steamworks
             System.Environment.SetEnvironmentVariable("SteamGameId", AppId.ToString());
         }
 
+        ~BaseSteamworks()
+        {
+            Dispose();
+        }
+
         public virtual void Dispose()
         {
+            if ( disposed ) return;
+
             Callbacks.Clear();
 
             foreach ( var h in CallbackHandles )
@@ -81,6 +89,7 @@ namespace Facepunch.Steamworks
 
             System.Environment.SetEnvironmentVariable("SteamAppId", null );
             System.Environment.SetEnvironmentVariable("SteamGameId", null );
+            disposed = true;
         }
 
         protected void SetupCommonInterfaces()
