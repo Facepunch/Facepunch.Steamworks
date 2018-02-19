@@ -32,10 +32,13 @@ namespace Facepunch.Steamworks
             }
 
             IsUnity = true;
+            UseThisCall = SteamNative.Platform.Os == OperatingSystem.Windows;
 
             Console.WriteLine( "Facepunch.Steamworks Unity: " + platform );
             Console.WriteLine( "Facepunch.Steamworks Os: " + SteamNative.Platform.Os );
             Console.WriteLine( "Facepunch.Steamworks Arch: " + SteamNative.Platform.Arch );
+
+            
         }
 
         /// <summary>
@@ -47,7 +50,7 @@ namespace Facepunch.Steamworks
         /// for releasing his shit open source under the MIT license so we can all learn and iterate.
         /// 
         /// </summary>
-        internal static bool UseThisCall { get { return SteamNative.Platform.Os == OperatingSystem.Windows && !IsUnity; } }
+        public static bool UseThisCall { get; set; } = SteamNative.Platform.Os == OperatingSystem.Windows;
 
 
         /// <summary>

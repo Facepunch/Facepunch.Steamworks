@@ -237,7 +237,7 @@ namespace Facepunch.Steamworks
                     break;
             }
 
-            if ( imageid == 0 || imageid == 2 )
+            if ( imageid >= 0 && imageid <= 10 )
                 return null;
 
             var img = new Image()
@@ -333,6 +333,7 @@ namespace Facepunch.Steamworks
             }
         }
 
+        
         private void OnPersonaStateChange( PersonaStateChange_t data )
         {
             if ( (data.ChangeFlags & 0x0040) != 0x0040 ) return; // wait for k_EPersonaChangeAvatar	

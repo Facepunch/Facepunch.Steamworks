@@ -29,7 +29,7 @@ namespace Facepunch.Steamworks
             if ( utils.GetImageSize( Id, out width, out height ) == false )
             {
                 IsError = true;
-                return true;
+                return false;
             }
 
             var buffer = new byte[ width * height * 4 ];
@@ -39,7 +39,7 @@ namespace Facepunch.Steamworks
                 if ( utils.GetImageRGBA( Id, (IntPtr) ptr, buffer.Length ) == false )
                 {
                     IsError = true;
-                    return true;
+                    return false;
                 }
             }
 
