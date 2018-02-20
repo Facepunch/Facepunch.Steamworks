@@ -481,6 +481,14 @@ namespace Facepunch.Steamworks
         }
 
         /// <summary>
+        /// Activates the steam overlay to invite friends to the CurrentLobby the user is in.
+        /// </summary>
+        public void OpenFriendInviteOverlay()
+        {
+            client.native.friends.ActivateGameOverlayInviteDialog(CurrentLobby);
+        }
+
+        /// <summary>
         /// Called when a user invites the current user to a lobby. The first parameter is the lobby the user was invited to, the second is the CSteamID of the person who invited this user
         /// </summary>
         public Action<ulong, ulong> OnUserInvitedToLobby;
