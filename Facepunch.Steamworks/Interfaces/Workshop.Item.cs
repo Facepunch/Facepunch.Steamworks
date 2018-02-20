@@ -48,19 +48,20 @@ namespace Facepunch.Steamworks
                 return item;
             }
 
-            public void Download( bool highPriority = true )
+            public bool Download( bool highPriority = true )
             {
-                if ( Installed ) return;
-                if ( Downloading ) return;
+                if ( Installed ) return true;
+                if ( Downloading ) return true;
 
                 if ( !workshop.ugc.DownloadItem( Id, highPriority ) )
                 {
                     Console.WriteLine( "Download Failed" );
-                    return;
+                    return false;
                 }
 
                 workshop.OnFileDownloaded += OnFileDownloaded;
                 workshop.OnItemInstalled += OnItemInstalled;
+                return true;
             }
 
             public void Subscribe()
