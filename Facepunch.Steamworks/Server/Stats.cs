@@ -113,7 +113,17 @@ namespace Facepunch.Steamworks
         }
 
         /// <summary>
+        /// Unlocks the specified achievement for the specified user. Must have called Refresh on a steamid first.
+        /// Remember to use Commit after use.
+        /// </summary>
+        public bool SetAchievement( ulong steamid, string name )
+        {
+            return server.native.gameServerStats.SetUserAchievement( steamid, name );
+        }
+
+        /// <summary>
         /// Resets the unlock status of an achievement for the specified user. Must have called Refresh on a steamid first.
+        /// Remember to use Commit after use.
         /// </summary>
         public bool ClearAchievement( ulong steamid, string name )
         {
