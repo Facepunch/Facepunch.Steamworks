@@ -37,6 +37,9 @@ namespace Facepunch.Steamworks
         {
             client = c;
 
+            // For backwards compatibility
+            OnLobbyJoinRequested = Join;
+
             client.RegisterCallback<SteamNative.LobbyDataUpdate_t>( OnLobbyDataUpdatedAPI );
             client.RegisterCallback<SteamNative.LobbyChatMsg_t>( OnLobbyChatMessageRecievedAPI );
             client.RegisterCallback<SteamNative.LobbyChatUpdate_t>( OnLobbyStateUpdatedAPI );
@@ -494,11 +497,16 @@ namespace Facepunch.Steamworks
         public Action<ulong, ulong> OnUserInvitedToLobby;
 
         /// <summary>
+        /// Called when a user accepts an invitation to a lobby while the game is running. The parameter is a lobby id.
+        /// </summary>
+        public Action<ulong> OnLobbyJoinRequested;
+
+        /// <summary>
         /// Joins a lobby if a request was made to join the lobby through the friends list or an invite
         /// </summary>
         internal void OnLobbyJoinRequestedAPI( GameLobbyJoinRequested_t callback )
         {
-            Join( callback.SteamIDLobby );
+            if (OnLobbyJoinRequested != null) { OnLobbyJoinRequested(callback.SteamIDLobby); }
         }
 
         /// <summary>
