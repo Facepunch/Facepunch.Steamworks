@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -40,6 +41,31 @@ namespace Facepunch.Steamworks
         {
             ModDir = modDir;
             GameDescription = gameDesc;
+        }
+
+        public ServerInit(IPAddress ip, string modDir, string gameDesc)
+        {
+            IpAddress = ip.IpToInt32();
+            ModDir = modDir;
+            GameDescription = gameDesc;
+        }
+
+        /// <summary>
+        /// set the server ip
+        /// </summary>
+        public ServerInit Ip(string ip)
+        {
+            IpAddress = IPAddress.Parse(ip).IpToInt32();
+            return this;
+        }
+
+        /// <summary>
+        /// set the server ip
+        /// </summary>
+        public ServerInit Ip(IPAddress ip)
+        {
+            IpAddress = ip.IpToInt32();
+            return this;
         }
 
         /// <summary>

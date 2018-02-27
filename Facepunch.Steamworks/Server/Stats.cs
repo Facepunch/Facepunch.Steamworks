@@ -111,5 +111,42 @@ namespace Facepunch.Steamworks
 
             return data;
         }
+
+        /// <summary>
+        /// Resets the unlock state of an achievement for the given user. Useful mainly for testing purposes.
+        /// If the "set by" field says "Official GS", only a registerd server IP may do this.
+        /// You should have called Refresh for this userid - which downloads the stats from the backend. 
+        /// If you didn't call it this will always return false.
+        /// </summary>
+        public bool ClearUserAchievement(ulong steamid, string name)
+        {
+            return server.native.gameServerStats.ClearUserAchievement(steamid, name);
+        }
+
+        /// <summary>
+        /// Awards an achievement for the given user. The achievement must have been set up in the steam backand.
+        /// If the "set by" field says "Official GS", only a registerd server IP may do this.
+        /// You should have called Refresh for this userid - which downloads the stats from the backend. 
+        /// If you didn't call it this will always return false.
+        /// </summary>
+        public bool SetUserAchievement(ulong steamid, string name)
+        {
+            return server.native.gameServerStats.SetUserAchievement(steamid, name);
+        }
+
+        /// <summary>
+        /// Returns true if the given user has the given achievement unlocked. The achievement must have been set up in the steam backand.
+        /// You should have called Refresh for this userid - which downloads the stats from the backend. 
+        /// If you didn't call it this will always return false.
+        /// </summary>
+        public bool GetUserAchievement(ulong steamid, string name)
+        {
+            bool result = false;
+            if(!server.native.gameServerStats.GetUserAchievement(steamid, name, ref result))
+                return false;
+
+            return result;
+        }
+
     }
 }

@@ -25,9 +25,16 @@ namespace Facepunch.Steamworks
     {
         internal Client client;
 
+        /// <summary>
+        /// Returns true if the Steam Overlay is actually available, false if it was not injected properly.
+        /// Note that it may take some time after Steam_Init() until the overlay injection is complete.
+        /// Also note that the overlay will only work if the Steam API is initialized before the rendering device is initialized. That means that 
+        /// for Unity3D games the overlay is only available if the game was launched directly through Steam. Calling Steam_Init() from Mono
+        /// code is too late.  
+        /// </summary>
         public bool Enabled
         {
-            get { return client.native.utils.IsOverlayEnabled(); }
+            get { return client.native != null ? client.native.utils.IsOverlayEnabled() : false; }
         }
 
         public void OpenUserPage( string name, ulong steamid ) { client.native.friends.ActivateGameOverlayToUser( name, steamid ); }
