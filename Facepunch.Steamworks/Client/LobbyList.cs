@@ -30,20 +30,23 @@ namespace Facepunch.Steamworks
         /// Refresh the List of Lobbies. If no filter is passed in, a default one is created that filters based on AppId ("appid").
         /// </summary>
         /// <param name="filter"></param>
-        public void Refresh ( Filter filter = null)
+        public void Refresh(Filter filter = null)
         {
             //init out values
             Lobbies.Clear();
             requests.Clear();
             Finished = false;
+            
+            if (filter != null)
+            {
+                client.native.matchmaking.AddRequestLobbyListDistanceFilter((SteamNative.LobbyDistanceFilter)filter.DistanceFilter);
+            }
 
             if (filter == null)
             {
                 filter = new Filter();
                 filter.StringFilters.Add("appid", client.AppId.ToString());
             }
-
-            client.native.matchmaking.AddRequestLobbyListDistanceFilter((SteamNative.LobbyDistanceFilter)filter.DistanceFilter);
 
             if (filter.SlotsAvailable != null)
             {
