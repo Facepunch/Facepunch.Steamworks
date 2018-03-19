@@ -48,7 +48,6 @@ namespace Facepunch.Steamworks
 
             Result.Pending = new Dictionary<int, Result>();
 
-            inventory.LoadItemDefinitions();
             FetchItemDefinitions();
             UpdatePrices();
 
@@ -198,11 +197,16 @@ namespace Facepunch.Steamworks
             return new Definition( this, id );
         }
 
-        internal void FetchItemDefinitions()
+        /// <summary>
+        /// Fetch item definitions in case new ones have been added since we've initialized
+        /// </summary>
+        public void FetchItemDefinitions()
         {
             //
             // Make sure item definitions are loaded, because we're going to be using them.
             //
+
+            inventory.LoadItemDefinitions();
 
             var ids = inventory.GetItemDefinitionIDs();
             if ( ids == null )
@@ -238,7 +242,6 @@ namespace Facepunch.Steamworks
                 }
 
                 FetchItemDefinitions();
-                inventory.LoadItemDefinitions();
             }
         }
 
