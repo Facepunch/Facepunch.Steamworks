@@ -41,6 +41,8 @@ namespace Facepunch.Steamworks
             {
                 filter = new Filter();
                 filter.StringFilters.Add("appid", client.AppId.ToString());
+                client.native.matchmaking.RequestLobbyList(OnLobbyList);
+                return;
             }
 
             client.native.matchmaking.AddRequestLobbyListDistanceFilter((SteamNative.LobbyDistanceFilter)filter.DistanceFilter);
