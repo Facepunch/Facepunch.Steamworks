@@ -11,8 +11,16 @@ namespace Facepunch.Steamworks
         /// <summary>
         /// An item in your inventory.
         /// </summary>
-        public struct Item : IEquatable<Item>
+        public class Item : IEquatable<Item>
         {
+            internal Item( Inventory Inventory, ulong Id, int Quantity, int DefinitionId )
+            {
+                this.Inventory = Inventory;
+                this.Id = Id;
+                this.Quantity = Quantity;
+                this.DefinitionId = DefinitionId;
+            }
+
             public struct Amount
             {
                 public Item Item;
@@ -24,12 +32,26 @@ namespace Facepunch.Steamworks
 
             public int DefinitionId;
 
+            internal Inventory Inventory;
+
             public Dictionary<string, string> Properties { get; internal set; }
+
+            private Definition _cachedDefinition;
 
             /// <summary>
             /// Careful, this might not be available. Especially on a game server.
             /// </summary>
-            public Definition Definition;
+            public Definition Definition
+            {
+                get
+                {
+                    if ( _cachedDefinition != null )
+                        return _cachedDefinition;
+
+                    _cachedDefinition = Inventory.FindDefinition( DefinitionId );
+                    return _cachedDefinition;
+                }
+            }
 
             public bool TradeLocked;
 
@@ -73,10 +95,10 @@ namespace Facepunch.Steamworks
             public Result Consume( int amount = 1 )
             {
                 SteamNative.SteamInventoryResult_t resultHandle = -1;
-                if ( !Definition.inventory.inventory.ConsumeItem( ref resultHandle, Id, (uint)amount ) )
+                if ( !Inventory.inventory.ConsumeItem( ref resultHandle, Id, (uint)amount ) )
                     return null;
 
-                return new Result( Definition.inventory, resultHandle, true );
+                return new Result( Inventory, resultHandle, true );
             }
 
             /// <summary>
@@ -85,10 +107,10 @@ namespace Facepunch.Steamworks
             public Result SplitStack( int quantity = 1 )
             {
                 SteamNative.SteamInventoryResult_t resultHandle = -1;
-                if ( !Definition.inventory.inventory.TransferItemQuantity( ref resultHandle, Id, (uint)quantity, ulong.MaxValue ) )
+                if ( !Inventory.inventory.TransferItemQuantity( ref resultHandle, Id, (uint)quantity, ulong.MaxValue ) )
                     return null;
 
-                return new Result( Definition.inventory, resultHandle, true );
+                return new Result( Inventory, resultHandle, true );
             }
 
             SteamNative.SteamInventoryUpdateHandle_t updateHandle;
@@ -97,35 +119,35 @@ namespace Facepunch.Steamworks
             {
                 if (updateHandle != 0) return;
 
-                updateHandle = Definition.inventory.inventory.StartUpdateProperties();
+                updateHandle = Inventory.inventory.StartUpdateProperties();
             }
 
             public bool SetProperty( string name, string value )
             {
                 UpdatingProperties();
                 Properties[name] = value.ToString();
-                return Definition.inventory.inventory.SetProperty(updateHandle, Id, name, value);
+                return Inventory.inventory.SetProperty(updateHandle, Id, name, value);
             }
 
             public bool SetProperty(string name, bool value)
             {
                 UpdatingProperties();
                 Properties[name] = value.ToString();
-                return Definition.inventory.inventory.SetProperty0(updateHandle, Id, name, value);
+                return Inventory.inventory.SetProperty0(updateHandle, Id, name, value);
             }
 
             public bool SetProperty(string name, long value)
             {
                 UpdatingProperties();
                 Properties[name] = value.ToString();
-                return Definition.inventory.inventory.SetProperty1(updateHandle, Id, name, value);
+                return Inventory.inventory.SetProperty1(updateHandle, Id, name, value);
             }
 
             public bool SetProperty(string name, float value)
             {
                 UpdatingProperties();
                 Properties[name] = value.ToString();
-                return Definition.inventory.inventory.SetProperty2(updateHandle, Id, name, value);
+                return Inventory.inventory.SetProperty2(updateHandle, Id, name, value);
             }
 
             /// <summary>
@@ -140,12 +162,12 @@ namespace Facepunch.Steamworks
                 {
                     SteamNative.SteamInventoryResult_t result = -1;
 
-                    if (!Definition.inventory.inventory.SubmitUpdateProperties(updateHandle, ref result))
+                    if (!Inventory.inventory.SubmitUpdateProperties(updateHandle, ref result))
                     {
                         return false;
                     }
 
-                    Definition.inventory.inventory.DestroyResult(result);
+                    Inventory.inventory.DestroyResult(result);
 
                     return true;
                 }

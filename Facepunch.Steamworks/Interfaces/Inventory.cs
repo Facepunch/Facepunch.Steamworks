@@ -50,7 +50,9 @@ namespace Facepunch.Steamworks
 
             Result.Pending = new Dictionary<int, Result>();
 
-            FetchItemDefinitions(); // onDefinitionsUpdated should get called on next Update 
+            FetchItemDefinitions();
+            LoadDefinitions();
+            UpdatePrices();
 
             if ( !server )
             {
@@ -287,14 +289,19 @@ namespace Facepunch.Steamworks
         }
 
         /// <summary>
-        /// You really need me to explain what this does?
-        /// Use your brains.
+        /// We might be better off using a dictionary for this, once there's 1000+ definitions
         /// </summary>
         public Definition FindDefinition( int DefinitionId )
         {
             if ( Definitions == null ) return null;
 
-            return Definitions.FirstOrDefault( x => x.Id == DefinitionId );
+            for( int i=0; i< Definitions.Length; i++ )
+            {
+                if ( Definitions[i].Id == DefinitionId )
+                    return Definitions[i];
+            }
+
+            return null;
         }
 
         public unsafe Result Deserialize( byte[] data, int dataLength = -1 )

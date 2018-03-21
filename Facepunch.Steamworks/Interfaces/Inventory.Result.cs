@@ -194,15 +194,8 @@ namespace Facepunch.Steamworks
                 }
             }
 
-            var item = new Item()
-            {
-                Quantity = detail.Quantity,
-                Id = detail.ItemId,
-                DefinitionId = detail.Definition,
-                TradeLocked = ((int)detail.Flags & (int)SteamNative.SteamItemFlags.NoTrade) != 0,
-                Definition = FindDefinition(detail.Definition),
-                Properties = props
-            };
+            var item = new Item( this, detail.ItemId, detail.Quantity, detail.Definition );
+            item.Properties = props;
 
             return item;
         }
