@@ -49,7 +49,7 @@ namespace Generator
 
                 int defaultPack = 8;
 
-                if ( c.Fields.Any( x => x.Type.Contains( "class CSteamID" ) ) && !ForceLargePackStructs.Contains( c.Name ) )
+                if (  c.Fields.Any( x => x.Type.Contains( "class CSteamID" ) ) && !ForceLargePackStructs.Contains( c.Name ) )
                     defaultPack = 4;
 
                 //
@@ -60,7 +60,7 @@ namespace Generator
                 {
                     if ( !string.IsNullOrEmpty( c.CallbackId ) )
                     {
-                        WriteLine( "internal const int CallbackId = " + c.CallbackId + ";" );
+                        WriteLine( "internal const int CallbackId = " + c.CallbackId  + ";" );
                     }
 
                     //

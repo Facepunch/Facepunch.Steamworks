@@ -41,6 +41,7 @@ namespace SteamNative
 		public const int ClientRemoteClientManager = 3300;
 		public const int ClientUGC = 3400;
 		public const int SteamStreamClient = 3500;
+		public const int ClientProductBuilder = 3600;
 		public const int ClientShortcuts = 3700;
 		public const int ClientRemoteControlManager = 3800;
 		public const int SteamAppList = 3900;
@@ -54,6 +55,7 @@ namespace SteamNative
 		public const int ClientInventory = 4700;
 		public const int ClientBluetoothManager = 4800;
 		public const int ClientSharedConnection = 4900;
+		public const int SteamParentalSettings = 5000;
 		public const int ClientShader = 5100;
 	}
 	internal static class Defines
