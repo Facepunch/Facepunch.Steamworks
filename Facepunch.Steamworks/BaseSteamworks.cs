@@ -128,8 +128,6 @@ namespace Facepunch.Steamworks
 
         public virtual void Update()
         {
-            Inventory.Update();
-
             Networking.Update();
 
             RunUpdateCallbacks();
@@ -169,6 +167,11 @@ namespace Facepunch.Steamworks
             }
         }
 
+        /// <summary>
+        /// Debug function, called for every callback. Only really used to confirm that callbacks are working properly.
+        /// </summary>
+        public Action<object> OnAnyCallback;
+
         Dictionary<Type, List<Action<object>>> Callbacks = new Dictionary<Type, List<Action<object>>>();
 
         internal List<Action<object>> CallbackList( Type T )
@@ -191,6 +194,11 @@ namespace Facepunch.Steamworks
             foreach ( var i in list )
             {
                 i( data );
+            }
+
+            if ( OnAnyCallback != null )
+            {
+                OnAnyCallback.Invoke( data );
             }
         }
 

@@ -15,6 +15,12 @@ namespace Facepunch.Steamworks.Test
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {
+               while ( client.Inventory.Definitions == null )
+               {
+                    client.Update();
+                    System.Threading.Thread.Sleep( 10 );
+               }
+
                 Assert.IsNotNull( client.Inventory.Definitions );
                 Assert.AreNotEqual( 0, client.Inventory.Definitions.Length );
 
@@ -36,6 +42,12 @@ namespace Facepunch.Steamworks.Test
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {
+                while ( client.Inventory.Definitions == null )
+                {
+                    client.Update();
+                    System.Threading.Thread.Sleep( 10 );
+                }
+
                 Assert.IsNotNull( client.Inventory.Definitions );
                 Assert.AreNotEqual( 0, client.Inventory.Definitions.Length );
 
@@ -58,6 +70,12 @@ namespace Facepunch.Steamworks.Test
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {
+                while ( client.Inventory.Definitions == null )
+                {
+                    client.Update();
+                    System.Threading.Thread.Sleep( 10 );
+                }
+
                 Assert.IsNotNull( client.Inventory.Definitions );
                 Assert.AreNotEqual( 0, client.Inventory.Definitions.Length );
 
@@ -80,6 +98,12 @@ namespace Facepunch.Steamworks.Test
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {
+                while ( client.Inventory.Definitions == null )
+                {
+                    client.Update();
+                    System.Threading.Thread.Sleep( 10 );
+                }
+
                 bool CallbackCalled = false;
 
                 // OnUpdate hsould be called when we receive a list of our items
@@ -146,6 +170,12 @@ namespace Facepunch.Steamworks.Test
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {
+                while ( client.Inventory.Definitions == null )
+                {
+                    client.Update();
+                    System.Threading.Thread.Sleep( 10 );
+                }
+
                 Assert.IsTrue( client.IsValid );
                 Assert.IsNotNull(client.Inventory.Definitions);
                 Assert.AreNotEqual(0, client.Inventory.Definitions.Length);
@@ -202,6 +232,12 @@ namespace Facepunch.Steamworks.Test
         {
             using (var client = new Facepunch.Steamworks.Client(252490))
             {
+                while ( client.Inventory.Definitions == null )
+                {
+                    client.Update();
+                    System.Threading.Thread.Sleep( 10 );
+                }
+
                 Assert.IsNotNull(client.Inventory.Definitions);
                 Assert.AreNotEqual(0, client.Inventory.Definitions.Length);
 
@@ -235,6 +271,12 @@ namespace Facepunch.Steamworks.Test
         {
             using (var client = new Facepunch.Steamworks.Client(252490))
             {
+                while ( client.Inventory.Definitions == null )
+                {
+                    client.Update();
+                    System.Threading.Thread.Sleep( 10 );
+                }
+
                 Assert.IsNotNull(client.Inventory.Definitions);
                 Assert.AreNotEqual(0, client.Inventory.Definitions.Length);
 
