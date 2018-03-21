@@ -48,15 +48,17 @@ namespace Facepunch.Steamworks
             }
 
             //
-            // Setup interfaces that client and server both have
-            //
-            SetupCommonInterfaces();
-
-            //
             // Register Callbacks
             //
 
             SteamNative.Callbacks.RegisterCallbacks( this );
+
+            //
+            // Setup interfaces that client and server both have
+            //
+            SetupCommonInterfaces();
+
+
 
             //
             // Initial settings
