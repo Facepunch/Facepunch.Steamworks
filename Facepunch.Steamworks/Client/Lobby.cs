@@ -92,7 +92,7 @@ namespace Facepunch.Steamworks
         public Action<bool> OnLobbyJoined;
 
         /// <summary>
-        /// Creates a lobby and returns the created lobby. You auto join the created lobby. The lobby is stored in Client.CurrentLobby if successful.
+        /// Creates a lobby and returns the created lobby. You auto join the created lobby. The lobby is stored in Client.Lobby.CurrentLobby if successful.
         /// </summary>
         /// <param name="lobbyType">The Lobby.Type of Lobby to be created</param>
         /// <param name="maxMembers">The maximum amount of people you want to be able to be in this lobby, including yourself</param>
