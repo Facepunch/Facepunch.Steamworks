@@ -1,14 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-  
-    <TargetFrameworks>netstandard2.0;net45;net35;net40</TargetFrameworks>
+
+    <TargetFrameworks>net35;net40;net45;netstandard2.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AssemblyName>Facepunch.Steamworks</AssemblyName>
-	
-	<GenerateDocumentationFile>true</GenerateDocumentationFile>
-	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-	
+
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+
+    <PackOnBuild>true</PackOnBuild>
+    <PackageId>Facepunch.Steamworks</PackageId>
+    <PackageTags>steam;steamworks</PackageTags>
+    <PackageVersion>0.7</PackageVersion>
+    <PackageIconUrl>https://avatars2.githubusercontent.com/u/3371040</PackageIconUrl>
+    <PackageLicenseUrl>https://github.com/Facepunch/Facepunch.Steamworks/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/Facepunch/Facepunch.Steamworks</PackageProjectUrl>
+
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -24,22 +32,26 @@
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
     <DefineConstants>$(DefineConstants);NET_CORE</DefineConstants>
   </PropertyGroup>
-  
+
   <ItemGroup>
-	<Compile Remove="*AssemblyInfo.cs" />
+    <Compile Remove="*AssemblyInfo.cs" />
   </ItemGroup>
-  
+
+  <ItemGroup>
+    <PackageReference Include="NuGet.Build.Packaging" Version="0.2.0" />
+  </ItemGroup>
+
   <PropertyGroup>
-	<FrameworkPathOverride Condition="'$(TargetFramework)' == 'net35'">C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v3.5\Profile\Client</FrameworkPathOverride>
+    <FrameworkPathOverride Condition="'$(TargetFramework)' == 'net35'">C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v3.5\Profile\Client</FrameworkPathOverride>
   </PropertyGroup>
-  
- <PropertyGroup>
-	<FrameworkPathOverride Condition="'$(TargetFramework)' == 'net40'">C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\Profile\Client</FrameworkPathOverride>
- </PropertyGroup>
-  
- <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
-   <DebugType>full</DebugType>
-   <DebugSymbols>true</DebugSymbols>
- </PropertyGroup>
+
+  <PropertyGroup>
+    <FrameworkPathOverride Condition="'$(TargetFramework)' == 'net40'">C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\Profile\Client</FrameworkPathOverride>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
 
 </Project>
