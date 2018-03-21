@@ -70,7 +70,6 @@ namespace Facepunch.Steamworks
         /// </summary>
         private void onDefinitionsUpdated( SteamInventoryDefinitionUpdate_t obj )
         {
-            Console.WriteLine( "onDefinitionsUpdated" );
             LoadDefinitions();
             UpdatePrices();
 

@@ -6,25 +6,24 @@ using System.Text;
 
 namespace Facepunch.Steamworks
 {
-    internal static class Utility
+    public static class Utility
     {
-        static internal uint SwapBytes( uint x )
+        static internal uint Swap( uint x )
         {
-            return ( ( x & 0x000000ff ) << 24 ) +
-                   ( ( x & 0x0000ff00 ) << 8 ) +
-                   ( ( x & 0x00ff0000 ) >> 8 ) +
-                   ( ( x & 0xff000000 ) >> 24 );
+            return ((x & 0x000000ff) << 24) +
+                   ((x & 0x0000ff00) << 8) +
+                   ((x & 0x00ff0000) >> 8) +
+                   ((x & 0xff000000) >> 24);
         }
 
-
-        static internal uint IpToInt32( this IPAddress ipAddress )
+        static public uint IpToInt32( this IPAddress ipAddress )
         {
-            return BitConverter.ToUInt32( ipAddress.GetAddressBytes().Reverse().ToArray(), 0 );
+            return Swap( (uint) ipAddress.Address );
         }
 
-        static internal IPAddress Int32ToIp( uint ipAddress )
+        static public IPAddress Int32ToIp( uint ipAddress )
         {
-            return new IPAddress( BitConverter.GetBytes( ipAddress ).Reverse().ToArray() );
+            return new IPAddress( Swap( ipAddress ) );
         }
 
         static internal class Epoch

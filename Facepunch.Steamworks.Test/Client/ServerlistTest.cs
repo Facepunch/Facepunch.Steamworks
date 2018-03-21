@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -12,6 +13,23 @@ namespace Facepunch.Steamworks.Test
     [DeploymentItem( "steam_api64.dll" )]
     public partial class ServerList
     {
+        [TestMethod]
+        public void IpAddressConversions()
+        {
+            var ipstr = "185.38.150.40";
+            var ip = IPAddress.Parse( ipstr );
+
+            var ip_int = Facepunch.Steamworks.Utility.IpToInt32( ip );
+
+            var ip_back = Facepunch.Steamworks.Utility.Int32ToIp( ip_int );
+
+            Console.WriteLine( "ipstr: " + ipstr );
+            Console.WriteLine( "ip: " + ip );
+            Console.WriteLine( "ip int: " + ip_int );
+            Console.WriteLine( "ip_back: " + ip_back );
+        }
+
+
         [TestMethod]
         public void InternetList()
         {

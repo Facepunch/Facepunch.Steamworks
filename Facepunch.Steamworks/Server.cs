@@ -33,13 +33,15 @@ namespace Facepunch.Steamworks
 
             Instance = this;
             native = new Interop.NativeInterface();
+            uint ipaddress = 0; // Any Port
 
             if ( init.SteamPort == 0 ) init.RandomSteamPort();
+            if ( init.IpAddress != null ) ipaddress = Utility.IpToInt32( init.IpAddress );
 
             //
             // Get other interfaces
             //
-            if ( !native.InitServer( this, init.IpAddress, init.SteamPort, init.GamePort, init.QueryPort, init.Secure ? 3 : 2, init.VersionString ) )
+            if ( !native.InitServer( this, ipaddress, init.SteamPort, init.GamePort, init.QueryPort, init.Secure ? 3 : 2, init.VersionString ) )
             {
                 native.Dispose();
                 native = null;
@@ -300,7 +302,7 @@ namespace Facepunch.Steamworks
                 var ip = native.gameServer.GetPublicIP();
                 if ( ip == 0 ) return null;
 
-                return new System.Net.IPAddress( Utility.SwapBytes( ip ) );
+                return Utility.Int32ToIp( ip );
             }
         }
 
