@@ -338,13 +338,24 @@ namespace Facepunch.Steamworks
         
         private void OnPersonaStateChange( PersonaStateChange_t data )
         {
-            if ( (data.ChangeFlags & 0x0040) != 0x0040 ) return; // wait for k_EPersonaChangeAvatar	
+            // k_EPersonaChangeAvatar	
+            if ( (data.ChangeFlags & 0x0040) == 0x0040 )
+            {
+                LoadAvatarForSteamId( data.SteamID );
+            }
 
-            LoadForSteamid( data.SteamID );
+            //
+            // Find and refresh this friend's status
+            //
+            foreach ( var friend in All )
+            {
+                if ( friend.Id != data.SteamID ) continue;
 
+                friend.Refresh();
+            }
         }
 
-        void LoadForSteamid( ulong Steamid )
+        void LoadAvatarForSteamId( ulong Steamid )
         {
             for ( int i = PersonaCallbacks.Count - 1; i >= 0; i-- )
             {
@@ -365,7 +376,7 @@ namespace Facepunch.Steamworks
 
         private void OnAvatarImageLoaded( AvatarImageLoaded_t data )
         {
-            LoadForSteamid( data.SteamID );
+            LoadAvatarForSteamId( data.SteamID );
         }
 
     }
