@@ -45,7 +45,7 @@ namespace Facepunch.Steamworks.Test
                 for ( int i = 0; i < 1000; i++ )
                 {
                     client.Update();
-                    System.Threading.Thread.Sleep( 5 );
+                    System.Threading.Thread.Sleep( 100 );
 
                     foreach ( var s in query.Responded )
                     {
@@ -425,20 +425,21 @@ namespace Facepunch.Steamworks.Test
 
                     query.Dispose();
 
-                   foreach ( var server in query.Responded.Take( 20 ) )
-                    {
-                        GC.Collect();
-                        server.FetchRules();
-                        GC.Collect();
+                    var servers = query.Responded.Take( 10 );
 
+                    foreach ( var server in servers )
+                    {
+                        server.FetchRules();
+                    }
+
+                   foreach ( var server in servers )
+                    {
                         int i = 0;
                         while ( !server.HasRules )
                         {
                             i++;
-                            GC.Collect();
                             client.Update();
-                            GC.Collect();
-                            System.Threading.Thread.Sleep( 2 );
+                            System.Threading.Thread.Sleep( 10 );
 
                             if ( i > 100 )
                                 break;
@@ -446,10 +447,16 @@ namespace Facepunch.Steamworks.Test
 
                         if ( server.HasRules )
                         {
+                            Console.WriteLine( "SERVER HAS RULES :D" );
+
                             foreach ( var rule in server.Rules )
                             {
                                 Console.WriteLine( rule.Key + " = " + rule.Value );
                             }
+                        }
+                        else
+                        {
+                            Console.WriteLine( "SERVER HAS NO RULES :(" );
                         }
                     }
 

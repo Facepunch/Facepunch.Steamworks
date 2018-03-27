@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
 
 namespace Facepunch.Steamworks
 {
-    public static class Utility
+    public static partial class Utility
     {
         static internal uint Swap( uint x )
         {
@@ -76,8 +77,23 @@ namespace Facepunch.Steamworks
 
                 default: return $"{decimaled}{currency}";
             }
-
-            
         }
+
+        public static string ReadAnsiString( this BinaryReader br, byte[] buffer = null )
+        {
+            if ( buffer == null )
+                buffer = new byte[1024];
+
+            byte chr;
+            int i = 0;
+            while ( (chr = br.ReadByte()) != 0 && i < buffer.Length )
+            {
+                buffer[i] = chr;
+                i++;
+            }
+
+            return Encoding.ASCII.GetString( buffer, 0, i );
+        }
+        
     }
 }

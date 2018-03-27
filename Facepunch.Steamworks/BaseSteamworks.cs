@@ -145,6 +145,13 @@ namespace Facepunch.Steamworks
             {
                 CallResults[i].Try();
             }
+
+            //
+            // The SourceServerQuery's happen in another thread, so we 
+            // query them to see if they're finished, and if so post a callback
+            // in our main thread. This will all suck less once we have async.
+            //
+            Facepunch.Steamworks.SourceServerQuery.Cycle();
         }
 
         /// <summary>

@@ -86,7 +86,7 @@ namespace Facepunch.Steamworks
             /// </summary>
             public bool HasRules { get { return Rules != null && Rules.Count > 0; } }
 
-           internal Interop.ServerRules RulesRequest;
+           internal SourceServerQuery RulesRequest;
 
             /// <summary>
             /// Populates Rules for this server
@@ -96,18 +96,23 @@ namespace Facepunch.Steamworks
                 if ( RulesRequest != null )
                     return;
 
-                Rules = new Dictionary<string, string>();
-
-                RulesRequest = new Interop.ServerRules( this, Address, QueryPort );
+                Rules = null;
+                RulesRequest = new SourceServerQuery( this, Address, QueryPort );
             }
 
-            internal void OnServerRulesReceiveFinished( bool Success )
+            internal void OnServerRulesReceiveFinished( Dictionary<string, string> rules, bool Success )
             {
-                RulesRequest.Dispose();
                 RulesRequest = null;
 
+                if ( Success )
+                {
+                    Rules = rules;
+                }
+
                 if ( OnReceivedRules != null )
+                {
                     OnReceivedRules( Success );
+                }
             }
 
             internal const uint k_unFavoriteFlagNone           = 0x00;
