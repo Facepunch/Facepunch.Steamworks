@@ -79,7 +79,7 @@ namespace Facepunch.Steamworks
             }
         }
 
-        public static string ReadAnsiString( this BinaryReader br, byte[] buffer = null )
+        public static string ReadNullTerminatedUTF8String( this BinaryReader br, byte[] buffer = null )
         {
             if ( buffer == null )
                 buffer = new byte[1024];
@@ -92,7 +92,7 @@ namespace Facepunch.Steamworks
                 i++;
             }
 
-            return Encoding.ASCII.GetString( buffer, 0, i );
+            return Encoding.UTF8.GetString( buffer, 0, i );
         }
         
     }

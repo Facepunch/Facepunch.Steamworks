@@ -100,7 +100,7 @@ namespace Facepunch.Steamworks
                 var numRules = br.ReadUInt16();
                 for ( int index = 0; index < numRules; index++ )
                 {
-                    rules.Add( br.ReadAnsiString( readBuffer ), br.ReadAnsiString( readBuffer ) );
+                    rules.Add( br.ReadNullTerminatedUTF8String( readBuffer ), br.ReadNullTerminatedUTF8String( readBuffer ) );
                 }
             }
 

@@ -406,9 +406,10 @@ namespace Facepunch.Steamworks.Test
                 filter.Add( "gamedir", "rust" );
                 filter.Add( "secure", "1" );
 
+                filter.Add( "addr", "185.97.254.146" );
+
                 using ( var query = client.ServerList.Internet( filter ) )
                 {
-
                     for ( int i = 0; i < 1000; i++ )
                     {
                         GC.Collect();
@@ -416,8 +417,8 @@ namespace Facepunch.Steamworks.Test
                         GC.Collect();
                         System.Threading.Thread.Sleep( 10 );
 
-                        if ( query.Responded.Count > 20 )
-                            break;
+                    //    if ( query.Responded.Count > 20 )
+                     //       break;
 
                         if ( query.Finished )
                             break;
@@ -425,15 +426,12 @@ namespace Facepunch.Steamworks.Test
 
                     query.Dispose();
 
-                    var servers = query.Responded.Take( 10 );
-
-                    foreach ( var server in servers )
-                    {
-                        server.FetchRules();
-                    }
+                    var servers = query.Responded.Take( 100 );
 
                    foreach ( var server in servers )
                     {
+                        server.FetchRules();
+
                         int i = 0;
                         while ( !server.HasRules )
                         {
@@ -447,7 +445,10 @@ namespace Facepunch.Steamworks.Test
 
                         if ( server.HasRules )
                         {
-                            Console.WriteLine( "SERVER HAS RULES :D" );
+                            Console.WriteLine( "" );
+                            Console.WriteLine( "" );
+                            Console.WriteLine( server.Address );
+                            Console.WriteLine( "" );
 
                             foreach ( var rule in server.Rules )
                             {
