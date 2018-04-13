@@ -51,5 +51,15 @@ namespace Facepunch.Steamworks.Test
             }
         }
 
+        [TestMethod]
+        public void AppName()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                var name = client.App.GetName( 4000 );
+                Console.WriteLine( name );
+            }
+        }
+
     }
 }

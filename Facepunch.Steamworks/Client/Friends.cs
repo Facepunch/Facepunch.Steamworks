@@ -22,130 +22,6 @@ namespace Facepunch.Steamworks
         }
     }
 
-    public class SteamFriend
-    {
-        /// <summary>
-        /// Steam Id
-        /// </summary>
-        public ulong Id { get; internal set; }
-
-
-        /// <summary>
-        ///  Return true if blocked
-        /// </summary>
-        public bool IsBlocked => relationship == FriendRelationship.Blocked;
-
-        /// <summary>
-        ///  Return true if is a friend. Returns false if blocked, request etc.
-        /// </summary>
-        public bool IsFriend => relationship == FriendRelationship.Friend;
-
-        /// <summary>
-        /// Their current display name
-        /// </summary>
-        public string Name;
-
-        /// <summary>
-        /// Returns true if this friend is online
-        /// </summary>
-        public bool IsOnline => personaState != PersonaState.Offline;
-
-        /// <summary>
-        /// Returns true if this friend is marked as away
-        /// </summary>
-        public bool IsAway => personaState == PersonaState.Away; 
-
-        /// <summary>
-        /// Returns true if this friend is marked as busy
-        /// </summary>
-        public bool IsBusy => personaState == PersonaState.Busy;
-
-        /// <summary>
-        /// Returns true if this friend is marked as snoozing
-        /// </summary>
-        public bool IsSnoozing => personaState == PersonaState.Snooze;
-
-        /// <summary>
-        /// Returns true if this friend is online and playing this game
-        /// </summary>
-        public bool IsPlayingThisGame => CurrentAppId == Client.AppId;
-
-        /// <summary>
-        /// Returns true if this friend is online and playing this game
-        /// </summary>
-        public bool IsPlaying => CurrentAppId != 0;
-
-        /// <summary>
-        /// The AppId this guy is playing
-        /// </summary>
-        public ulong CurrentAppId { get; internal set; }
-
-        public uint ServerIp { get; internal set; }
-        public int ServerGamePort { get; internal set; }
-        public int ServerQueryPort { get; internal set; }
-        public ulong ServerLobbyId { get; internal set; }
-
-        internal Client Client { get; set; }
-        private PersonaState personaState;
-        private FriendRelationship relationship;
-
-        /// <summary>
-        /// Returns null if the value doesn't exist
-        /// </summary>
-        public string GetRichPresence( string key )
-        {
-            var val = Client.native.friends.GetFriendRichPresence( Id, key );
-            if ( string.IsNullOrEmpty( val ) ) return null;
-            return val;
-        }
-
-        /// <summary>
-        /// Update this friend, request the latest data from Steam's servers
-        /// </summary>
-        public void Refresh()
-        {
-            Name = Client.native.friends.GetFriendPersonaName( Id );
-
-            relationship = Client.native.friends.GetFriendRelationship( Id );
-            personaState = Client.native.friends.GetFriendPersonaState( Id );
-
-            CurrentAppId = 0;
-            ServerIp = 0;
-            ServerGamePort = 0;
-            ServerQueryPort = 0;
-            ServerLobbyId = 0;
-
-            var gameInfo = new SteamNative.FriendGameInfo_t();
-            if ( Client.native.friends.GetFriendGamePlayed( Id, ref gameInfo ) && gameInfo.GameID > 0 )
-            {
-                CurrentAppId = gameInfo.GameID;
-                ServerIp = gameInfo.GameIP;
-                ServerGamePort = gameInfo.GamePort;
-                ServerQueryPort = gameInfo.QueryPort;
-                ServerLobbyId = gameInfo.SteamIDLobby;
-            }
-
-            Client.native.friends.RequestFriendRichPresence( Id );
-        }
-
-        /// <summary>
-        /// This will return null if you don't have the target user's avatar in your cache.
-        /// Which usually happens for people not on your friends list.
-        /// </summary>
-        public Image GetAvatar( Friends.AvatarSize size )
-        {
-            return Client.Friends.GetCachedAvatar( size, Id );
-        }
-        
-        /// <summary>
-        /// Invite this friend to the game that we are playing
-        /// </summary>
-        public bool InviteToGame(string Text)
-        {
-            return Client.native.friends.InviteUserToGame(Id, Text);
-        }
-    }
-
     /// <summary>
     /// Handles most interactions with people in Steam, not just friends as the name would suggest.
     /// </summary>
@@ -158,12 +34,82 @@ namespace Facepunch.Steamworks
     public class Friends
     {
         internal Client client;
+        private byte[] buffer = new byte[1024 * 128];
 
         internal Friends( Client c )
         {
             client = c;
 
-            SteamNative.PersonaStateChange_t.RegisterCallback( client, OnPersonaStateChange );
+            client.RegisterCallback<AvatarImageLoaded_t>( OnAvatarImageLoaded );
+            client.RegisterCallback<PersonaStateChange_t>( OnPersonaStateChange );
+            client.RegisterCallback<GameRichPresenceJoinRequested_t>( OnGameJoinRequested );
+            client.RegisterCallback<GameConnectedFriendChatMsg_t>( OnFriendChatMessage );
+        }
+
+        public delegate void ChatMessageDelegate( SteamFriend friend, string type, string message );
+
+        /// <summary>
+        /// Called when chat message has been received from a friend. You'll need to turn on
+        /// ListenForFriendsMessages to recieve this.
+        /// </summary>
+        public event ChatMessageDelegate OnChatMessage;
+
+        private unsafe void OnFriendChatMessage( GameConnectedFriendChatMsg_t data )
+        {
+            if ( OnChatMessage == null ) return;
+
+            var friend = Get( data.SteamIDUser );
+            var type = ChatEntryType.ChatMsg;
+            fixed ( byte* ptr = buffer )
+            {
+                var len = client.native.friends.GetFriendMessage( data.SteamIDUser, data.MessageID, (IntPtr)ptr, buffer.Length, out type );
+
+                if ( len == 0 && type == ChatEntryType.Invalid )
+                    return;
+
+                var typeName = type.ToString();
+                var message = Encoding.UTF8.GetString( buffer, 0, len );
+
+                OnChatMessage( friend, typeName, message );
+            }
+        }
+
+        private bool _listenForFriendsMessages;
+
+        /// <summary>
+        /// Listens for Steam friends chat messages.
+        /// You can then show these chats inline in the game. For example with a Blizzard style chat message system or the chat system in Dota 2.
+        /// After enabling this you will receive callbacks when ever the user receives a chat message.
+        /// </summary>
+        public bool ListenForFriendsMessages
+        {
+            get
+            {
+                return _listenForFriendsMessages;
+            }
+
+            set
+            {
+                _listenForFriendsMessages = value;
+                client.native.friends.SetListenForFriendsMessages( value );
+            }
+        }
+
+
+        public delegate void JoinRequestedDelegate( SteamFriend friend, string connect );
+
+        //
+        // Called when a friend has invited you to their game (using InviteToGame)
+        //
+        public event JoinRequestedDelegate OnInvitedToGame;
+
+
+        private void OnGameJoinRequested( GameRichPresenceJoinRequested_t data )
+        {
+            if ( OnInvitedToGame != null )
+            {
+                OnInvitedToGame( Get( data.SteamIDFriend ), data.Connect );
+            }
         }
 
         /// <summary>
@@ -292,21 +238,25 @@ namespace Facepunch.Steamworks
                     break;
             }
 
+            if ( imageid == 1 ) return null; // Placeholder large
+            if ( imageid == 2 ) return null; // Placeholder medium
+            if ( imageid == 3 ) return null; // Placeholder small
+
             var img = new Image()
             {
                 Id = imageid
             };
 
-            if (imageid != 0 && img.TryLoad(client.native.utils))
-                return img;
+            if ( !img.TryLoad( client.native.utils ) )
+                return null;
 
-            return null;
+            return img;
         }
 
 
         /// <summary>
         /// Callback will be called when the avatar is ready. If we fail to get an
-        /// avatar, it'll be called with a null Image.
+        /// avatar, might be called with a null Image.
         /// </summary>
         public void GetAvatar( AvatarSize size, ulong steamid, Action<Image> callback )
         {
@@ -329,23 +279,27 @@ namespace Facepunch.Steamworks
             PersonaCallbacks.Add( new PersonaCallback
             {
                 SteamId = steamid,
-                Callback = () =>
-                {
-                    callback( GetCachedAvatar(size, steamid) );
-                }
+                Size = size,
+                Callback = callback,
+                Time = DateTime.Now
             });
         }
 
         private class PersonaCallback
         {
             public ulong SteamId;
-            public Action Callback;
+            public AvatarSize Size;
+            public Action<Image> Callback;
+            public DateTime Time;
         }
 
         List<PersonaCallback> PersonaCallbacks = new List<PersonaCallback>();
 
         public SteamFriend Get( ulong steamid )
         {
+            var friend = All.Where( x => x.Id == steamid ).FirstOrDefault();
+            if ( friend != null ) return friend;
+
             var f = new SteamFriend()
             {
                 Id = steamid,
@@ -357,9 +311,72 @@ namespace Facepunch.Steamworks
             return f;
         }
 
-        private void OnPersonaStateChange( PersonaStateChange_t data, bool error )
+        internal void Cycle()
         {
-            
+            if ( PersonaCallbacks.Count == 0 ) return;
+
+            var timeOut = DateTime.Now.AddSeconds( -10 );
+
+            for ( int i = PersonaCallbacks.Count-1; i >= 0; i-- )
+            {
+                var cb = PersonaCallbacks[i];
+
+                // Timeout
+                if ( cb.Time < timeOut )
+                {
+                    if ( cb.Callback != null )
+                    {
+                        cb.Callback( null );
+                    }
+
+                    PersonaCallbacks.Remove( cb );
+                    continue;
+                }
+            }
+        }
+
+        
+        private void OnPersonaStateChange( PersonaStateChange_t data )
+        {
+            // k_EPersonaChangeAvatar	
+            if ( (data.ChangeFlags & 0x0040) == 0x0040 )
+            {
+                LoadAvatarForSteamId( data.SteamID );
+            }
+
+            //
+            // Find and refresh this friend's status
+            //
+            foreach ( var friend in All )
+            {
+                if ( friend.Id != data.SteamID ) continue;
+
+                friend.Refresh();
+            }
+        }
+
+        void LoadAvatarForSteamId( ulong Steamid )
+        {
+            for ( int i = PersonaCallbacks.Count - 1; i >= 0; i-- )
+            {
+                var cb = PersonaCallbacks[i];
+                if ( cb.SteamId != Steamid ) continue;
+
+                var image = GetCachedAvatar( cb.Size, cb.SteamId );
+                if ( image == null ) continue;
+
+                PersonaCallbacks.Remove( cb );
+
+                if ( cb.Callback != null )
+                {
+                    cb.Callback( image );
+                }
+            }
+        }
+
+        private void OnAvatarImageLoaded( AvatarImageLoaded_t data )
+        {
+            LoadAvatarForSteamId( data.SteamID );
         }
 
     }

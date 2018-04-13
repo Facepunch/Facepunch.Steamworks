@@ -32,6 +32,11 @@ namespace Generator
 
             output.structs.AddRange( missing.structs );
             output.methods.AddRange( missing.methods );
+
+            foreach ( var s in output.structs )
+            {
+                if ( s.Fields == null ) s.Fields = new SteamApiDefinition.StructDef.StructFields[0];
+            }
         }
     }
 }

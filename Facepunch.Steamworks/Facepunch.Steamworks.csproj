@@ -8,6 +8,7 @@
 	
 	<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	
   </PropertyGroup>
 
@@ -26,7 +27,7 @@
   </PropertyGroup>
   
   <ItemGroup>
-	<Compile Remove="*AssemblyInfo.cs"/>
+	<Compile Remove="*AssemblyInfo.cs" />
   </ItemGroup>
   
   <PropertyGroup>
@@ -35,6 +36,18 @@
   
  <PropertyGroup>
 	<FrameworkPathOverride Condition="'$(TargetFramework)' == 'net40'">C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\Profile\Client</FrameworkPathOverride>
+	<Authors>Garry Newman</Authors>
+	<PackageId>Facepunch.Steamworks</PackageId>
+	<PackageProjectUrl>https://github.com/Facepunch/Facepunch.Steamworks</PackageProjectUrl>
+	<PackageLicenseUrl>https://github.com/Facepunch/Facepunch.Steamworks/blob/master/LICENSE</PackageLicenseUrl>
+	<PackageIconUrl>https://avatars2.githubusercontent.com/u/3371040</PackageIconUrl>
+	<PackageTags>facepunch;steam;unity;steamworks;valve</PackageTags>
+	<PackageVersion>0.7.5</PackageVersion>
+ </PropertyGroup>
+  
+ <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+   <DebugType>full</DebugType>
+   <DebugSymbols>true</DebugSymbols>
  </PropertyGroup>
 
 </Project>

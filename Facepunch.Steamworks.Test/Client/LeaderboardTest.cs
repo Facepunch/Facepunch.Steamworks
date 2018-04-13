@@ -171,6 +171,11 @@ namespace Facepunch.Steamworks.Test
                     Thread.Sleep(10);
                     client.Update();
 
+                    if ( board.IsError )
+                    {
+                        throw new Exception( "Board is Error" );
+                    }
+
                     if (time.Elapsed.TotalSeconds > 10)
                     {
                         throw new Exception("board.IsValid took too long");

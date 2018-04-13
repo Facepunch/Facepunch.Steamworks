@@ -113,40 +113,34 @@ namespace Facepunch.Steamworks
         }
 
         /// <summary>
-        /// Resets the unlock state of an achievement for the given user. Useful mainly for testing purposes.
-        /// If the "set by" field says "Official GS", only a registerd server IP may do this.
-        /// You should have called Refresh for this userid - which downloads the stats from the backend. 
-        /// If you didn't call it this will always return false.
+        /// Unlocks the specified achievement for the specified user. Must have called Refresh on a steamid first.
+        /// Remember to use Commit after use.
         /// </summary>
-        public bool ClearUserAchievement(ulong steamid, string name)
+        public bool SetAchievement( ulong steamid, string name )
         {
-            return server.native.gameServerStats.ClearUserAchievement(steamid, name);
+            return server.native.gameServerStats.SetUserAchievement( steamid, name );
         }
 
         /// <summary>
-        /// Awards an achievement for the given user. The achievement must have been set up in the steam backand.
-        /// If the "set by" field says "Official GS", only a registerd server IP may do this.
-        /// You should have called Refresh for this userid - which downloads the stats from the backend. 
-        /// If you didn't call it this will always return false.
+        /// Resets the unlock status of an achievement for the specified user. Must have called Refresh on a steamid first.
+        /// Remember to use Commit after use.
         /// </summary>
-        public bool SetUserAchievement(ulong steamid, string name)
+        public bool ClearAchievement( ulong steamid, string name )
         {
-            return server.native.gameServerStats.SetUserAchievement(steamid, name);
+            return server.native.gameServerStats.ClearUserAchievement( steamid, name );
         }
 
         /// <summary>
-        /// Returns true if the given user has the given achievement unlocked. The achievement must have been set up in the steam backand.
-        /// You should have called Refresh for this userid - which downloads the stats from the backend. 
-        /// If you didn't call it this will always return false.
+        /// Return true if available, exists and unlocked
         /// </summary>
-        public bool GetUserAchievement(ulong steamid, string name)
+        public bool GetAchievement( ulong steamid, string name )
         {
-            bool result = false;
-            if(!server.native.gameServerStats.GetUserAchievement(steamid, name, ref result))
+            bool achieved = false;
+
+            if ( !server.native.gameServerStats.GetUserAchievement( steamid, name, ref achieved ) )
                 return false;
 
-            return result;
+            return achieved;
         }
-
     }
 }

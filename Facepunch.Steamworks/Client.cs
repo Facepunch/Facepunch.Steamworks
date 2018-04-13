@@ -85,6 +85,12 @@ namespace Facepunch.Steamworks
             }
 
             //
+            // Register Callbacks
+            //
+
+            SteamNative.Callbacks.RegisterCallbacks( this );
+
+            //
             // Setup interfaces that client and server both have
             //
             SetupCommonInterfaces();
@@ -115,18 +121,23 @@ namespace Facepunch.Steamworks
             BetaName = native.apps.GetCurrentBetaName();
             OwnerSteamId = native.apps.GetAppOwner();
             var appInstallDir = native.apps.GetAppInstallDir(AppId);
+
             if (!String.IsNullOrEmpty(appInstallDir) && Directory.Exists(appInstallDir))
                 InstallFolder = new DirectoryInfo(appInstallDir);
+
             BuildId = native.apps.GetAppBuildId();
             CurrentLanguage = native.apps.GetCurrentGameLanguage();
             AvailableLanguages = native.apps.GetAvailableGameLanguages().Split( new[] {';'}, StringSplitOptions.RemoveEmptyEntries ); // TODO: Assumed colon separated
-
-            
 
             //
             // Run update, first call does some initialization
             //
             Update();
+        }
+
+        ~Client()
+        {
+            Dispose();
         }
 
         /// <summary>
@@ -139,6 +150,7 @@ namespace Facepunch.Steamworks
 
             RunCallbacks();
             Voice.Update();
+            Friends.Cycle();
 
             base.Update();            
         }
@@ -156,6 +168,8 @@ namespace Facepunch.Steamworks
         /// </summary>
         public override void Dispose()
         {
+            if ( disposed ) return;
+
             if ( Voice != null )
             {
                 Voice = null;

@@ -14,7 +14,7 @@ namespace Facepunch.Steamworks
             internal static Dictionary< int, Result > Pending;
             internal Inventory inventory;
 
-            private SteamNative.SteamInventoryResult_t Handle { get; set; }
+            private SteamNative.SteamInventoryResult_t Handle { get; set; } = -1;
 
             /// <summary>
             /// Called when result is successfully returned
@@ -139,9 +139,9 @@ namespace Facepunch.Steamworks
                 }
             }
 
-            internal void OnSteamResult( SteamInventoryResultReady_t data, bool error )
+            internal void OnSteamResult( SteamInventoryResultReady_t data )
             {
-                var success = data.Result == SteamNative.Result.OK && !error;
+                var success = data.Result == SteamNative.Result.OK;
 
                 if ( success )
                 {
@@ -169,8 +169,12 @@ namespace Facepunch.Steamworks
 
             public void Dispose()
             {
-                inventory.inventory.DestroyResult( Handle );
-                Handle = -1;
+                if ( Handle != -1 && inventory != null )
+                {
+                    inventory.inventory.DestroyResult( Handle );
+                    Handle = -1;
+                }
+
                 inventory = null;
             }
         }
@@ -190,15 +194,8 @@ namespace Facepunch.Steamworks
                 }
             }
 
-            var item = new Item()
-            {
-                Quantity = detail.Quantity,
-                Id = detail.ItemId,
-                DefinitionId = detail.Definition,
-                TradeLocked = ((int)detail.Flags & (int)SteamNative.SteamItemFlags.NoTrade) != 0,
-                Definition = FindDefinition(detail.Definition),
-                Properties = props
-            };
+            var item = new Item( this, detail.ItemId, detail.Quantity, detail.Definition );
+            item.Properties = props;
 
             return item;
         }

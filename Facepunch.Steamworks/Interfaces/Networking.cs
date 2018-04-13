@@ -26,8 +26,8 @@ namespace Facepunch.Steamworks
         {
             this.networking = networking;
 
-            SteamNative.P2PSessionRequest_t.RegisterCallback( steamworks, onP2PConnectionRequest );
-            SteamNative.P2PSessionConnectFail_t.RegisterCallback( steamworks, onP2PConnectionFailed );
+            steamworks.RegisterCallback<SteamNative.P2PSessionRequest_t>( onP2PConnectionRequest );
+            steamworks.RegisterCallback<SteamNative.P2PSessionConnectFail_t>( onP2PConnectionFailed );
         }
 
         public void Dispose()
@@ -80,7 +80,7 @@ namespace Facepunch.Steamworks
             }
         }
 
-        private void onP2PConnectionRequest( SteamNative.P2PSessionRequest_t o, bool b )
+        private void onP2PConnectionRequest( SteamNative.P2PSessionRequest_t o )
         {
             if ( OnIncomingConnection != null )
             {
@@ -116,7 +116,7 @@ namespace Facepunch.Steamworks
             Max = 5
         };
 
-        private void onP2PConnectionFailed( SteamNative.P2PSessionConnectFail_t o, bool b )
+        private void onP2PConnectionFailed( SteamNative.P2PSessionConnectFail_t o )
         {
             if ( OnConnectionFailed  != null )
             {
@@ -185,6 +185,15 @@ namespace Facepunch.Steamworks
                 OnP2PData?.Invoke( steamid, ReceiveBuffer, (int) DataAvailable, channel );
                 return true;
             }
+        }
+
+        /// <summary>
+        /// This should be called when you're done communicating with a user, as this will free up all of the resources allocated for the connection under-the-hood.
+        /// If the remote user tries to send data to you again, a new onP2PConnectionRequest callback will be posted.
+        /// </summary>
+        public bool CloseSession( ulong steamId )
+        {
+            return networking.CloseP2PSessionWithUser( steamId );
         }
     }
 }

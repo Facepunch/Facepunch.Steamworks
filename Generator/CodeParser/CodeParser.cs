@@ -29,12 +29,12 @@ namespace Generator
             //
             def.CallbackIds = new Dictionary<string, int>();
             {
-                var r = new Regex( @"enum { (k_i(?:.+)) = ([0-9]+) };" );
+                var r = new Regex( @"enum { (k_[i|I](?:.+)) = ([0-9]+) };" );
                 var ma = r.Matches( Content );
 
                 foreach ( Match m in ma )
                 {
-                    def.CallbackIds.Add( m.Groups[1].Value.Replace( "k_i", "" ).Replace( "Callbacks", "" ), int.Parse( m.Groups[2].Value ) );
+                    def.CallbackIds.Add( m.Groups[1].Value.Substring( 3 ).Replace( "Callbacks", "" ), int.Parse( m.Groups[2].Value ) );
                 }
             }
 
@@ -62,7 +62,7 @@ namespace Generator
                             num = "0";
                         }
 
-                        kName = kName.Replace( "k_i", "CallbackIdentifiers." ).Replace( "Callbacks", "" );
+                        kName = "CallbackIdentifiers." + kName.Substring( 3 ).Replace( "Callbacks", "" );
 
                         t.CallbackId = $"{kName} + {num}";
                     }
@@ -77,7 +77,8 @@ namespace Generator
                         var kName = m.Groups[1].Value;
                         var num = m.Groups[2].Value;
 
-                        kName = kName.Replace( "k_i", "CallbackIdentifiers." ).Replace( "Callbacks", "" );
+                        //kName = kName.Replace( "k_i", "CallbackIdentifiers." ).Replace( "Callbacks", "" );
+                        kName = "CallbackIdentifiers." + kName.Substring( 3 ).Replace( "Callbacks", "" );
 
                         t.CallbackId = $"{kName} + {num}";
                     }
@@ -117,6 +118,25 @@ namespace Generator
                         t.CallResult = s.Name;
                     }
                 }
+            }
+
+            //
+            // Find missing structs
+            //
+            {
+                var r = new Regex( @"struct ([a-zA-Z]+_t)" );
+                var ma = r.Matches( Content );
+
+                foreach ( Match m in ma )
+                {
+                    var s = def.structs.SingleOrDefault( x => x.Name == m.Groups[1].Value );
+                    if ( s == null )
+                    {
+                        Console.WriteLine( "Missing Struct: " + m.Groups[1].Value );
+                    }
+                }
+
+                //Console.ReadKey();
             }
 
         }

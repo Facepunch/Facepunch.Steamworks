@@ -20,29 +20,50 @@ namespace SteamNative
         [StructLayout( LayoutKind.Sequential, Pack = 1 )]
         public class VTable
         {
-            public IntPtr ResultA;
-            public IntPtr ResultB;
-            public IntPtr GetSize;
+            [UnmanagedFunctionPointer( CallingConvention.StdCall )] public delegate void ResultD( IntPtr pvParam );
+            [UnmanagedFunctionPointer( CallingConvention.StdCall )] public delegate void ResultWithInfoD( IntPtr pvParam, bool bIOFailure, SteamNative.SteamAPICall_t hSteamAPICall );
+            [UnmanagedFunctionPointer( CallingConvention.StdCall )] public delegate int GetSizeD();
+
+            public ResultD ResultA;
+            public ResultWithInfoD ResultB;
+            public GetSizeD GetSize;
         }
 
-        //
-        // All possible functions
-        //
-        internal class ThisCall
+        [StructLayout( LayoutKind.Sequential, Pack = 1 )]
+        public class VTableWin
         {
-            [UnmanagedFunctionPointer( CallingConvention.ThisCall )]    public delegate void Result( IntPtr thisptr, IntPtr pvParam );
-            [UnmanagedFunctionPointer( CallingConvention.ThisCall )]    public delegate void ResultWithInfo( IntPtr thisptr, IntPtr pvParam, bool bIOFailure, SteamNative.SteamAPICall_t hSteamAPICall );
-            [UnmanagedFunctionPointer( CallingConvention.ThisCall )]    public delegate int GetSize( IntPtr thisptr );
+            [UnmanagedFunctionPointer( CallingConvention.StdCall )] public delegate void ResultD( IntPtr pvParam );
+            [UnmanagedFunctionPointer( CallingConvention.StdCall )] public delegate void ResultWithInfoD( IntPtr pvParam, bool bIOFailure, SteamNative.SteamAPICall_t hSteamAPICall );
+            [UnmanagedFunctionPointer( CallingConvention.StdCall )] public delegate int GetSizeD();
+
+            public ResultWithInfoD ResultB;
+            public ResultD ResultA;
+            public GetSizeD GetSize;
         }
 
-        internal class StdCall
+        [StructLayout( LayoutKind.Sequential, Pack = 1 )]
+        public class VTableThis
         {
-            [UnmanagedFunctionPointer( CallingConvention.StdCall )]    public delegate void Result( IntPtr pvParam );
-            [UnmanagedFunctionPointer( CallingConvention.StdCall )]    public delegate void ResultWithInfo( IntPtr pvParam, bool bIOFailure, SteamNative.SteamAPICall_t hSteamAPICall );
-            [UnmanagedFunctionPointer( CallingConvention.StdCall )]    public delegate int GetSize();
+            [UnmanagedFunctionPointer( CallingConvention.ThisCall )] public delegate void ResultD( IntPtr thisptr, IntPtr pvParam );
+            [UnmanagedFunctionPointer( CallingConvention.ThisCall )] public delegate void ResultWithInfoD( IntPtr thisptr, IntPtr pvParam, bool bIOFailure, SteamNative.SteamAPICall_t hSteamAPICall );
+            [UnmanagedFunctionPointer( CallingConvention.ThisCall )] public delegate int GetSizeD( IntPtr thisptr );
+
+            public ResultD ResultA;
+            public ResultWithInfoD ResultB;
+            public GetSizeD GetSize;
         }
 
+        [StructLayout( LayoutKind.Sequential, Pack = 1 )]
+        public class VTableWinThis
+        {
+            [UnmanagedFunctionPointer( CallingConvention.ThisCall )] public delegate void ResultD( IntPtr thisptr, IntPtr pvParam );
+            [UnmanagedFunctionPointer( CallingConvention.ThisCall )] public delegate void ResultWithInfoD( IntPtr thisptr, IntPtr pvParam, bool bIOFailure, SteamNative.SteamAPICall_t hSteamAPICall );
+            [UnmanagedFunctionPointer( CallingConvention.ThisCall )] public delegate int GetSizeD( IntPtr thisptr );
 
+            public ResultWithInfoD ResultB;
+            public ResultD ResultA;
+            public GetSizeD GetSize;
+        }
     };
 
     //
@@ -50,21 +71,23 @@ namespace SteamNative
     //
     internal class CallbackHandle : IDisposable
     {
-        internal BaseSteamworks steamworks;
-        internal SteamAPICall_t CallResultHandle;
-        internal bool CallResult;
+        internal BaseSteamworks Steamworks;
+
+        // Get Rid
         internal GCHandle FuncA;
         internal GCHandle FuncB;
         internal GCHandle FuncC;
         internal IntPtr vTablePtr;
         internal GCHandle PinnedCallback;
 
+        internal CallbackHandle( Facepunch.Steamworks.BaseSteamworks steamworks )
+        {
+            Steamworks = steamworks;
+        }
+
         public void Dispose()
         {
-            if ( CallResult )
-                UnregisterCallResult();
-            else
-                UnregisterCallback();
+            UnregisterCallback();
 
             if ( FuncA.IsAllocated )
                 FuncA.Free();
@@ -90,19 +113,86 @@ namespace SteamNative
             if ( !PinnedCallback.IsAllocated )
                 return;
 
-            steamworks.native.api.SteamAPI_UnregisterCallback( PinnedCallback.AddrOfPinnedObject() );
+            Steamworks.native.api.SteamAPI_UnregisterCallback( PinnedCallback.AddrOfPinnedObject() );
         }
 
-        private void UnregisterCallResult()
+        public virtual bool IsValid { get { return true; } }
+    }
+
+    internal abstract class CallResult : CallbackHandle
+    {
+        internal SteamAPICall_t Call;
+        public override bool IsValid { get { return Call > 0; } }
+
+
+        internal CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call ) : base( steamworks )
         {
-            if ( CallResultHandle == 0 )
+            Call = call;
+        }
+
+        internal void Try()
+        {
+            bool failed = false;
+
+            if ( !Steamworks.native.utils.IsAPICallCompleted( Call, ref failed ))
                 return;
 
-            if ( !PinnedCallback.IsAllocated )
-                return;
+            Steamworks.UnregisterCallResult( this );
 
-            steamworks.native.api.SteamAPI_UnregisterCallResult( PinnedCallback.AddrOfPinnedObject(), CallResultHandle );
+            RunCallback();
+        }
+
+        internal abstract void RunCallback();
+    }
+
+
+    internal class CallResult<T> : CallResult
+    {
+        private static byte[] resultBuffer = new byte[1024 * 16];
+
+        internal delegate T ConvertFromPointer( IntPtr p );
+
+        Action<T, bool> CallbackFunction;
+        ConvertFromPointer ConvertFromPointerFunction;
+
+        internal int ResultSize = -1;
+        internal int CallbackId = 0;
+
+        internal CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<T, bool> callbackFunction, ConvertFromPointer fromPointer, int resultSize, int callbackId ) : base( steamworks, call )
+        {
+            ResultSize = resultSize;
+            CallbackId = callbackId;
+            CallbackFunction = callbackFunction;
+            ConvertFromPointerFunction = fromPointer;
+
+            Steamworks.RegisterCallResult( this );
+        }
+
+        public override string ToString()
+        {
+            return $"CallResult( {typeof(T).Name}, {CallbackId}, {ResultSize}b )";
+        }
+
+        unsafe internal override void RunCallback()
+        {
+            bool failed = false;
+
+            fixed ( byte* ptr = resultBuffer )
+            {
+                if ( !Steamworks.native.utils.GetAPICallResult( Call, (IntPtr)ptr, resultBuffer.Length, CallbackId, ref failed ) || failed )
+                {
+                    CallbackFunction( default(T), true );
+                    return;
+                }
+
+                var val = ConvertFromPointerFunction( (IntPtr)ptr );
+                CallbackFunction( val, false );
+            }
         }
     }
 
+    internal class MonoPInvokeCallbackAttribute : Attribute
+    {
+        public MonoPInvokeCallbackAttribute() { }
+    }
 }

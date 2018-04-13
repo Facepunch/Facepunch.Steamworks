@@ -41,6 +41,8 @@ namespace Facepunch.Steamworks
             {
                 filter = new Filter();
                 filter.StringFilters.Add("appid", client.AppId.ToString());
+                client.native.matchmaking.RequestLobbyList(OnLobbyList);
+                return;
             }
 
             client.native.matchmaking.AddRequestLobbyListDistanceFilter((SteamNative.LobbyDistanceFilter)filter.DistanceFilter);
@@ -101,7 +103,7 @@ namespace Facepunch.Steamworks
                 {
                     //else we need to get the info for the missing lobby
                     client.native.matchmaking.RequestLobbyData(lobby);
-                    SteamNative.LobbyDataUpdate_t.RegisterCallback(client, OnLobbyDataUpdated);
+                    client.RegisterCallback<SteamNative.LobbyDataUpdate_t>( OnLobbyDataUpdated );
                 }
 
             }
@@ -121,7 +123,7 @@ namespace Facepunch.Steamworks
             Finished = false;
         }
 
-        void OnLobbyDataUpdated(LobbyDataUpdate_t callback, bool error)
+        void OnLobbyDataUpdated(LobbyDataUpdate_t callback)
         {
             if (callback.Success == 1) //1 if success, 0 if failure
             {

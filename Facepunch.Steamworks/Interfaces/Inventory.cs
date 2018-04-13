@@ -37,25 +37,28 @@ namespace Facepunch.Steamworks
 
         internal SteamNative.SteamInventory inventory;
 
-        private Stopwatch fetchRetryTimer;
-
         private bool IsServer { get; set; }
+
+        public event Action OnDefinitionsUpdated;
 
         internal Inventory( BaseSteamworks steamworks, SteamNative.SteamInventory c, bool server )
         {
             IsServer = server;
             inventory = c;
 
+            steamworks.RegisterCallback<SteamNative.SteamInventoryDefinitionUpdate_t>( onDefinitionsUpdated );
+
             Result.Pending = new Dictionary<int, Result>();
 
-            inventory.LoadItemDefinitions();
             FetchItemDefinitions();
+            LoadDefinitions();
             UpdatePrices();
 
             if ( !server )
             {
-                SteamNative.SteamInventoryResultReady_t.RegisterCallback( steamworks, onResultReady );
-                SteamNative.SteamInventoryFullUpdate_t.RegisterCallback( steamworks, onFullUpdate );
+                steamworks.RegisterCallback<SteamNative.SteamInventoryResultReady_t>( onResultReady );
+                steamworks.RegisterCallback<SteamNative.SteamInventoryFullUpdate_t>( onFullUpdate );
+                
 
                 //
                 // Get a list of our items immediately
@@ -65,12 +68,40 @@ namespace Facepunch.Steamworks
         }
 
         /// <summary>
+        /// Should get called when the definitions get updated from Steam.
+        /// </summary>
+        private void onDefinitionsUpdated( SteamInventoryDefinitionUpdate_t obj )
+        {
+            LoadDefinitions();
+            UpdatePrices();
+
+            if ( OnDefinitionsUpdated != null )
+            {
+                OnDefinitionsUpdated.Invoke();
+            }
+        }
+
+        private bool LoadDefinitions()
+        {
+            var ids = inventory.GetItemDefinitionIDs();
+            if ( ids == null )
+                return false;
+
+            Definitions = ids.Select( x => CreateDefinition( x ) ).ToArray();
+
+            foreach ( var def in Definitions )
+            {
+                def.Link( Definitions );
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// We've received a FULL update
         /// </summary>
-        private void onFullUpdate( SteamInventoryFullUpdate_t data, bool error )
+        private void onFullUpdate( SteamInventoryFullUpdate_t data )
         {
-            if ( error ) return;
-
             var result = new Result( this, data.Handle, false );
             result.Fill();
 
@@ -80,15 +111,15 @@ namespace Facepunch.Steamworks
         /// <summary>
         /// A generic result has returned.
         /// </summary>
-        private void onResultReady( SteamInventoryResultReady_t data, bool error )
+        private void onResultReady( SteamInventoryResultReady_t data )
         {
             if ( Result.Pending.ContainsKey( data.Handle ) )
             {
                 var result = Result.Pending[data.Handle];
 
-                result.OnSteamResult( data, error );
+                result.OnSteamResult( data );
 
-                if ( !error && data.Result == SteamNative.Result.OK )
+                if ( data.Result == SteamNative.Result.OK )
                 {
                     onResult( result, false );
                 }
@@ -200,22 +231,12 @@ namespace Facepunch.Steamworks
             return new Definition( this, id );
         }
 
-        internal void FetchItemDefinitions()
+        /// <summary>
+        /// Fetch item definitions in case new ones have been added since we've initialized
+        /// </summary>
+        public void FetchItemDefinitions()
         {
-            //
-            // Make sure item definitions are loaded, because we're going to be using them.
-            //
-
-            var ids = inventory.GetItemDefinitionIDs();
-            if ( ids == null )
-                return;
-
-            Definitions = ids.Select( x => CreateDefinition( x ) ).ToArray();
-
-            foreach ( var def in Definitions )
-            {
-                def.Link( Definitions );
-            }
+            inventory.LoadItemDefinitions();
         }
 
         /// <summary>
@@ -223,25 +244,7 @@ namespace Facepunch.Steamworks
         /// </summary>
         public void Update()
         {
-            if ( Definitions == null )
-            {
-                //
-                // Don't try every frame, just try every 10 seconds.
-                //
-                {
-                    if ( fetchRetryTimer != null && fetchRetryTimer.Elapsed.TotalSeconds < 10.0f )
-                        return;
 
-                    if ( fetchRetryTimer == null )
-                        fetchRetryTimer = Stopwatch.StartNew();
-
-                    fetchRetryTimer.Reset();
-                    fetchRetryTimer.Start();
-                }
-
-                FetchItemDefinitions();
-                inventory.LoadItemDefinitions();
-            }
         }
 
         /// <summary>
@@ -257,7 +260,10 @@ namespace Facepunch.Steamworks
         {
             get
             {
-                for( int i=0; i< Definitions.Length; i++ )
+                if ( Definitions == null )
+                    yield break;
+
+                for ( int i=0; i< Definitions.Length; i++ )
                 {
                     if (Definitions[i].LocalPrice > 0)
                         yield return Definitions[i];
@@ -283,14 +289,19 @@ namespace Facepunch.Steamworks
         }
 
         /// <summary>
-        /// You really need me to explain what this does?
-        /// Use your brains.
+        /// We might be better off using a dictionary for this, once there's 1000+ definitions
         /// </summary>
         public Definition FindDefinition( int DefinitionId )
         {
             if ( Definitions == null ) return null;
 
-            return Definitions.FirstOrDefault( x => x.Id == DefinitionId );
+            for( int i=0; i< Definitions.Length; i++ )
+            {
+                if ( Definitions[i].Id == DefinitionId )
+                    return Definitions[i];
+            }
+
+            return null;
         }
 
         public unsafe Result Deserialize( byte[] data, int dataLength = -1 )
@@ -362,11 +373,7 @@ namespace Facepunch.Steamworks
         /// </summary>
         public Result SplitStack( Item item, int quantity = 1 )
         {
-            SteamNative.SteamInventoryResult_t resultHandle = -1;
-            if ( !inventory.TransferItemQuantity( ref resultHandle, item.Id, (uint)quantity, ulong.MaxValue ) )
-                return null;
-
-            return new Result( this, resultHandle, true );
+            return item.SplitStack( quantity );
         }
 
         /// <summary>

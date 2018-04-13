@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SteamNative;
 
 namespace Facepunch.Steamworks
 {
@@ -12,6 +13,23 @@ namespace Facepunch.Steamworks
         internal App( Client c )
         {
             client = c;
+
+            client.RegisterCallback<SteamNative.DlcInstalled_t>( DlcInstalled );
+        }
+
+        public delegate void DlcInstalledDelegate( uint appid );
+
+        /// <summary>
+        /// Triggered after the current user gains ownership of DLC and that DLC is installed.
+        /// </summary>
+        public event DlcInstalledDelegate OnDlcInstalled;
+
+        private void DlcInstalled( DlcInstalled_t data )
+        {
+            if ( OnDlcInstalled  != null )
+            {
+                OnDlcInstalled( data.AppID );
+            }
         }
 
         public void Dispose()
@@ -71,6 +89,43 @@ namespace Facepunch.Steamworks
         public bool IsInstalled(uint appId)
         {
             return client.native.apps.BIsAppInstalled(appId);
+        }
+
+        /// <summary>
+        /// Returns true if specified app is installed.
+        /// </summary>
+        public bool IsDlcInstalled( uint appId )
+        {
+            return client.native.apps.BIsDlcInstalled( appId );
+        }
+
+        /// <summary>
+        /// Returns the appid's name
+        /// Returns error if the current app Id does not have permission to use this interface
+        /// </summary>
+        public string GetName( uint appId )
+        {
+            var str = client.native.applist.GetAppName( appId );
+            if ( str == null ) return "error";
+            return str;
+        }
+
+        /// <summary>
+        /// Returns the app's install folder
+        /// Returns error if the current app Id does not have permission to use this interface
+        /// </summary>
+        public string GetInstallFolder( uint appId )
+        {
+            return client.native.applist.GetAppInstallDir( appId );
+        }
+
+        /// <summary>
+        /// Returns the app's current build id
+        /// Returns 0 if the current app Id does not have permission to use this interface
+        /// </summary>
+        public int GetBuildId( uint appId )
+        {
+            return client.native.applist.GetAppBuildId( appId );
         }
     }
 }

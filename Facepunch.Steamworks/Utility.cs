@@ -1,30 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
 
 namespace Facepunch.Steamworks
 {
-    internal static class Utility
+    public static partial class Utility
     {
-        static internal uint SwapBytes( uint x )
+        static internal uint Swap( uint x )
         {
-            return ( ( x & 0x000000ff ) << 24 ) +
-                   ( ( x & 0x0000ff00 ) << 8 ) +
-                   ( ( x & 0x00ff0000 ) >> 8 ) +
-                   ( ( x & 0xff000000 ) >> 24 );
+            return ((x & 0x000000ff) << 24) +
+                   ((x & 0x0000ff00) << 8) +
+                   ((x & 0x00ff0000) >> 8) +
+                   ((x & 0xff000000) >> 24);
         }
 
-
-        static internal uint IpToInt32( this IPAddress ipAddress )
+        static public uint IpToInt32( this IPAddress ipAddress )
         {
-            return BitConverter.ToUInt32( ipAddress.GetAddressBytes().Reverse().ToArray(), 0 );
+            return Swap( (uint) ipAddress.Address );
         }
 
-        static internal IPAddress Int32ToIp( uint ipAddress )
+        static public IPAddress Int32ToIp( uint ipAddress )
         {
-            return new IPAddress( BitConverter.GetBytes( ipAddress ).Reverse().ToArray() );
+            return new IPAddress( Swap( ipAddress ) );
         }
 
         static internal class Epoch
@@ -77,8 +77,23 @@ namespace Facepunch.Steamworks
 
                 default: return $"{decimaled}{currency}";
             }
-
-            
         }
+
+        public static string ReadNullTerminatedUTF8String( this BinaryReader br, byte[] buffer = null )
+        {
+            if ( buffer == null )
+                buffer = new byte[1024];
+
+            byte chr;
+            int i = 0;
+            while ( (chr = br.ReadByte()) != 0 && i < buffer.Length )
+            {
+                buffer[i] = chr;
+                i++;
+            }
+
+            return Encoding.UTF8.GetString( buffer, 0, i );
+        }
+        
     }
 }

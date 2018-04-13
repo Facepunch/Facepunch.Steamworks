@@ -107,6 +107,9 @@ namespace Facepunch.Steamworks
 
         internal void OnBoardCreated( LeaderboardFindResult_t result, bool error )
         {
+            Console.WriteLine( $"result.LeaderboardFound: {result.LeaderboardFound}" );
+            Console.WriteLine( $"result.SteamLeaderboard: {result.SteamLeaderboard}" );
+
             if ( error || ( result.LeaderboardFound == 0 ) )
             {
                 IsError = true;
@@ -234,7 +237,7 @@ namespace Facepunch.Steamworks
                     }
                 } );
 
-                return handle.CallResultHandle != 0;
+                return handle.IsValid;
             }
 
             file.Share( () =>

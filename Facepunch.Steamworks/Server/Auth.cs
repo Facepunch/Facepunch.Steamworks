@@ -35,10 +35,10 @@ namespace Facepunch.Steamworks
         {
             server = s;
 
-            SteamNative.ValidateAuthTicketResponse_t.RegisterCallback( server, OnAuthTicketValidate );
+            server.RegisterCallback<SteamNative.ValidateAuthTicketResponse_t>( OnAuthTicketValidate );
         }
 
-        void OnAuthTicketValidate( SteamNative.ValidateAuthTicketResponse_t data, bool b )
+        void OnAuthTicketValidate( SteamNative.ValidateAuthTicketResponse_t data )
         {
             if ( OnAuthChange != null )
                 OnAuthChange( data.SteamID, data.OwnerSteamID, (Status) data.AuthSessionResponse );

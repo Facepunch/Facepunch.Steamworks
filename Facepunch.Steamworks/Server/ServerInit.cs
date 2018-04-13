@@ -13,7 +13,7 @@ namespace Facepunch.Steamworks
     /// </summary>
     public class ServerInit
     {
-        public uint IpAddress = 0;
+        public IPAddress IpAddress;
         public ushort SteamPort;
         public ushort GamePort = 27015;
         public ushort QueryPort = 27016;
