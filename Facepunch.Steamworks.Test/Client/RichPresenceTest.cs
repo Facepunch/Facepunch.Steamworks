@@ -26,7 +26,8 @@ namespace Facepunch.Steamworks.Test
         {
             using ( var client = new Steamworks.Client( 252490 ) )
             {
-                client.User.SetRichPresence( "One", "Two" );
+                var success = client.User.SetRichPresence( "One", "Two" );
+                Assert.IsTrue( success );
 
                 var value = client.User.GetRichPresence( "One" );
                 Assert.IsNotNull( value );
@@ -39,7 +40,8 @@ namespace Facepunch.Steamworks.Test
         {
             using ( var client = new Steamworks.Client( 252490 ) )
             {
-                client.User.SetRichPresence( "One", "Two" );
+                var success = client.User.SetRichPresence( "One", "Two" );
+                Assert.IsTrue( success );
 
                 var value = client.User.GetRichPresence( "One" );
                 Assert.IsNotNull( value );
