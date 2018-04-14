@@ -26,7 +26,7 @@ namespace Facepunch.Steamworks
         }
 
         /// <summary>
-        /// Find a rich presence data by key for current user. Will be null if not found.
+        /// Find a rich presence value by key for current user. Will be null if not found.
         /// </summary>
         public string GetRichPresence( string key )
         {
@@ -37,7 +37,7 @@ namespace Facepunch.Steamworks
         }
 
         /// <summary>
-        /// Sets rich presence value by key for current user.
+        /// Sets a rich presence value by key for current user.
         /// </summary>
         public bool SetRichPresence( string key, string value )
         {
