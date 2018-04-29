@@ -33,6 +33,10 @@ namespace Facepunch.Steamworks
         private static readonly int[] subEntriesBuffer = new int[512];
 
         internal ulong BoardId;
+        public ulong GetBoardId()
+        {
+            return BoardId;
+        }
         internal Client client;
 
         private readonly Queue<Action> _onCreated = new Queue<Action>();
