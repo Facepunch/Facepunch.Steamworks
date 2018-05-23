@@ -321,6 +321,34 @@ namespace Facepunch.Steamworks
             return true;
         }
 
+        public unsafe bool FetchUsersScores( RequestType RequestType, UInt64[] steamIds, FetchScoresCallback onSuccess, FailureCallback onFailure = null )
+        {
+
+            if ( IsError ) return false;
+            if ( !IsValid ) return DeferOnCreated( () => FetchUsersScores( RequestType, steamIds, onSuccess, onFailure ), onFailure );
+
+            fixed(ulong* pointer = steamIds){
+
+                client.native.userstats.DownloadLeaderboardEntriesForUsers(BoardId, (IntPtr)pointer, steamIds.Length, (result, error) =>
+                {
+                    if (error)
+                    {
+                        onFailure?.Invoke(Callbacks.Result.IOFailure);
+                    }
+                    else
+                    {
+                        if (_sEntryBuffer == null) _sEntryBuffer = new List<Entry>();
+                        else _sEntryBuffer.Clear();
+
+                        ReadScores(result, _sEntryBuffer);
+                        onSuccess(_sEntryBuffer.ToArray());
+                    }
+                });
+            }
+
+            return true;
+        }
+
         private void OnScores( LeaderboardScoresDownloaded_t result, bool error )
         {
             IsQuerying = false;
