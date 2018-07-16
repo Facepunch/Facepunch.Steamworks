@@ -4,6 +4,7 @@ using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using System.Diagnostics;
+using Facepunch.Steamworks.Callbacks;
 
 namespace Facepunch.Steamworks.Test
 {
@@ -451,6 +452,12 @@ namespace Facepunch.Steamworks.Test
 
 
                 Console.WriteLine(item.Folder);
+
+                item.OnChangesSubmitted += result =>
+                {
+                    Console.WriteLine( "OnChangesSubmitted called: " + result );
+                    Assert.AreEqual( Result.OK, result );
+                };
 
                 try
                 {

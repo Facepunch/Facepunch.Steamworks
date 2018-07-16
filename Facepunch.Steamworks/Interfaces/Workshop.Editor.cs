@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SteamNative;
+using Result = Facepunch.Steamworks.Callbacks.Result;
 
 namespace Facepunch.Steamworks
 {
@@ -37,7 +38,10 @@ namespace Facepunch.Steamworks
 
             public bool NeedToAgreeToWorkshopLegal { get; internal set; }
 
-
+            /// <summary>
+            /// Called when published changes have finished being submitted.
+            /// </summary>
+            public event Action<Result> OnChangesSubmitted;
 
             public double Progress
             {
@@ -119,13 +123,16 @@ namespace Facepunch.Steamworks
 
                 if ( obj.Result == SteamNative.Result.OK && !Failed )
                 {
+                    Error = null;
                     Id = obj.PublishedFileId;
                     PublishChanges();
                     return;
                 }
 
-                Error = "Error creating new file: " + obj.Result.ToString() + "("+ obj.PublishedFileId+ ")";
+                Error = $"Error creating new file: {obj.Result} ({obj.PublishedFileId})";
                 Publishing = false;
+                
+                OnChangesSubmitted?.Invoke( (Result) obj.Result );
             }
 
             private void PublishChanges()
@@ -179,10 +186,10 @@ namespace Facepunch.Steamworks
                     workshop.ugc.RemoveItemPreview( UpdateId, uint32 index ) = 0; // remove a preview by index starting at 0 (previews are sorted)
                  */
 
-                SubmitItemUpdate = workshop.ugc.SubmitItemUpdate( UpdateHandle, ChangeNote, OnChangesSubmitted );
+                SubmitItemUpdate = workshop.ugc.SubmitItemUpdate( UpdateHandle, ChangeNote, OnChangesSubmittedInternal );
             }
 
-            private void OnChangesSubmitted( SteamNative.SubmitItemUpdateResult_t obj, bool Failed )
+            private void OnChangesSubmittedInternal( SteamNative.SubmitItemUpdateResult_t obj, bool Failed )
             {
                 if ( Failed )
                     throw new System.Exception( "CreateItemResult_t Failed" );
@@ -192,12 +199,11 @@ namespace Facepunch.Steamworks
                 NeedToAgreeToWorkshopLegal = obj.UserNeedsToAcceptWorkshopLegalAgreement;
                 Publishing = false;
 
-                if ( obj.Result == SteamNative.Result.OK )
-                {
-                    return;
-                }
+                Error = obj.Result != SteamNative.Result.OK
+                    ? $"Error publishing changes: {obj.Result} ({NeedToAgreeToWorkshopLegal})"
+                    : null;
 
-                Error = "Error publishing changes: " + obj.Result.ToString() + " ("+ NeedToAgreeToWorkshopLegal + ")";
+                OnChangesSubmitted?.Invoke( (Result) obj.Result );
             }
 
             public void Delete()
