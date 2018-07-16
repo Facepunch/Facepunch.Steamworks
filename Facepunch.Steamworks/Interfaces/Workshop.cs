@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 using SteamNative;
 
 namespace Facepunch.Steamworks
@@ -20,6 +22,12 @@ namespace Facepunch.Steamworks
     /// </summary>
     public partial class Workshop : IDisposable
     {
+        static Workshop()
+        {
+            Debug.Assert( Marshal.SizeOf( typeof(PublishedFileId_t) ) == Marshal.SizeOf( typeof(ulong) ),
+                $"sizeof({nameof(PublishedFileId_t)}) != sizeof({nameof(UInt64)})" );
+        }
+
         internal const ulong InvalidHandle = 0xffffffffffffffff;
 
         internal SteamNative.SteamUGC ugc;
@@ -74,6 +82,60 @@ namespace Facepunch.Steamworks
         {
             if ( OnFileDownloaded != null && obj.AppID == Client.Instance.AppId )
                 OnFileDownloaded( obj.PublishedFileId, (Callbacks.Result) obj.Result );
+        }
+
+        /// <summary>
+        /// Get the IDs of all subscribed workshop items. Not all items may be currently installed.
+        /// </summary>
+        public unsafe ulong[] GetSubscribedItemIds()
+        {
+            var count = ugc.GetNumSubscribedItems();
+            var array = new ulong[count];
+
+            fixed ( ulong* ptr = array )
+            {
+                ugc.GetSubscribedItems( (PublishedFileId_t*) ptr, count );
+            }
+
+            return array;
+        }
+
+        [ThreadStatic]
+        private static ulong[] _sSubscribedItemBuffer;
+
+        /// <summary>
+        /// Get the IDs of all subscribed workshop items, avoiding repeated allocations.
+        /// Not all items may be currently installed.
+        /// </summary>
+        public unsafe int GetSubscribedItemIds( List<ulong> destList )
+        {
+            const int bufferSize = 1024;
+
+            var count = ugc.GetNumSubscribedItems();
+
+            if ( count >= bufferSize )
+            {
+                // Fallback for exceptional cases
+                destList.AddRange( GetSubscribedItemIds() );
+                return (int) count;
+            }
+
+            if ( _sSubscribedItemBuffer == null )
+            {
+                _sSubscribedItemBuffer = new ulong[bufferSize];
+            }
+
+            fixed ( ulong* ptr = _sSubscribedItemBuffer)
+            {
+                count = ugc.GetSubscribedItems( (PublishedFileId_t*) ptr, bufferSize );
+            }
+
+            for ( var i = 0; i < count; ++i )
+            {
+                destList.Add( _sSubscribedItemBuffer[i] );
+            }
+
+            return (int) count;
         }
 
         /// <summary>
