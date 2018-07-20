@@ -112,6 +112,9 @@ namespace Facepunch.Steamworks
                 if ( !Type.HasValue )
                     throw new System.Exception( "Editor.Type must be set when creating a new item!" );
 
+                if ( WorkshopUploadAppId == 0 )
+                    throw new Exception( "WorkshopUploadAppId should not be 0" );
+
                 CreateItem = workshop.ugc.CreateItem( WorkshopUploadAppId, (SteamNative.WorkshopFileType)(uint)Type, OnItemCreated );
             }
 
@@ -137,6 +140,9 @@ namespace Facepunch.Steamworks
 
             private void PublishChanges()
             {
+                if ( WorkshopUploadAppId == 0 )
+                    throw new Exception( "WorkshopUploadAppId should not be 0" );
+
                 UpdateHandle = workshop.ugc.StartItemUpdate(WorkshopUploadAppId, Id );
 
                 if ( Title != null )
