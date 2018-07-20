@@ -26,6 +26,7 @@ namespace Facepunch.Steamworks
             public string Error { get; internal set; } = null;
             public string ChangeNote { get; set; } = "";
             public uint WorkshopUploadAppId { get; set; }
+            public string MetaData { get; set; } = null;
 
             public enum VisibilityType : int
             {
@@ -180,9 +181,13 @@ namespace Facepunch.Steamworks
                     workshop.ugc.SetItemPreview( UpdateHandle, PreviewImage );
                 }
 
+                if ( MetaData != null )
+                {
+                    workshop.ugc.SetItemMetadata( UpdateHandle, MetaData );
+                }
+
                 /*
                     workshop.ugc.SetItemUpdateLanguage( UpdateId, const char *pchLanguage ) = 0; // specify the language of the title or description that will be set
-                    workshop.ugc.SetItemMetadata( UpdateId, const char *pchMetaData ) = 0; // change the metadata of an UGC item (max = k_cchDeveloperMetadataMax)
                     workshop.ugc.RemoveItemKeyValueTags( UpdateId, const char *pchKey ) = 0; // remove any existing key-value tags with the specified key
                     workshop.ugc.AddItemKeyValueTag( UpdateId, const char *pchKey, const char *pchValue ) = 0; // add new key-value tags for the item. Note that there can be multiple values for a tag.
                     workshop.ugc.AddItemPreviewFile( UpdateId, const char *pszPreviewFile, EItemPreviewType type ) = 0; //  add preview file for this item. pszPreviewFile points to local file, which must be under 1MB in size
