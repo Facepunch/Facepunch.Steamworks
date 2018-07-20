@@ -31,14 +31,11 @@ namespace Facepunch.Steamworks
                 ForcePlatform( OperatingSystem.Linux, IntPtr.Size == 4 ? Architecture.x86 : Architecture.x64 );
             }
 
-            IsUnity = true;
             UseThisCall = true;
 
             Console.WriteLine( "Facepunch.Steamworks Unity: " + platform );
             Console.WriteLine( "Facepunch.Steamworks Os: " + SteamNative.Platform.Os );
             Console.WriteLine( "Facepunch.Steamworks Arch: " + SteamNative.Platform.Arch );
-
-            
         }
 
         /// <summary>
@@ -51,12 +48,6 @@ namespace Facepunch.Steamworks
         /// 
         /// </summary>
         public static bool UseThisCall { get; set; } = SteamNative.Platform.Os == OperatingSystem.Windows;
-
-
-        /// <summary>
-        /// Should be true if we're using Unity
-        /// </summary>
-        internal static bool IsUnity { get; set; }
 
 
         /// <summary>
