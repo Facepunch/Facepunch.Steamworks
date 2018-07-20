@@ -181,7 +181,7 @@ namespace Facepunch.Steamworks
         /// </summary>
         public Editor EditItem( ulong itemId )
         {
-            return new Editor() { workshop = this, Id = itemId };
+            return new Editor() { workshop = this, Id = itemId, WorkshopUploadAppId = steamworks.AppId };
         }
 
         /// <summary>
