@@ -24,7 +24,7 @@ namespace Facepunch.Steamworks
         }
 
         private static readonly byte[] A2S_SERVERQUERY_GETCHALLENGE = { 0x55, 0xFF, 0xFF, 0xFF, 0xFF };
-        private static readonly byte A2S_PLAYER = 0x55;
+  //      private static readonly byte A2S_PLAYER = 0x55;
         private static readonly byte A2S_RULES = 0x56;
 
         public volatile bool IsRunning;
