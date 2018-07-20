@@ -158,7 +158,7 @@ namespace Facepunch.Steamworks
         /// Create a new Editor object with the intention of creating a new item.
         /// Your item won't actually be created until you call Publish() on the object.
         /// </summary>
-        public Editor CreateItem( ItemType type )
+        public Editor CreateItem( ItemType type = ItemType.Community )
         {
         	return CreateItem(this.steamworks.AppId, type);
         }
@@ -169,7 +169,7 @@ namespace Facepunch.Steamworks
         /// Your item will be published to the provided appId.
         /// </summary>
         /// <remarks>You need to add app publish permissions for cross app uploading to work.</remarks> 
-        public Editor CreateItem( uint workshopUploadAppId, ItemType type )
+        public Editor CreateItem( uint workshopUploadAppId, ItemType type = ItemType.Community )
         {
         	return new Editor() { workshop = this, WorkshopUploadAppId = workshopUploadAppId, Type = type };
         }
