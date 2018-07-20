@@ -27,6 +27,7 @@ namespace Facepunch.Steamworks
             public string ChangeNote { get; set; } = "";
             public uint WorkshopUploadAppId { get; set; }
             public string MetaData { get; set; } = null;
+            public Dictionary<string, string[]> KeyValues { get; set; } = new Dictionary<string, string[]>();
 
             public enum VisibilityType : int
             {
@@ -186,10 +187,20 @@ namespace Facepunch.Steamworks
                     workshop.ugc.SetItemMetadata( UpdateHandle, MetaData );
                 }
 
+                if ( KeyValues != null )
+                {
+                    foreach ( var key in KeyValues )
+                    {
+                        foreach ( var value in key.Value )
+                        {
+                            workshop.ugc.AddItemKeyValueTag( UpdateHandle, key.Key, value );
+                        }
+                    }
+                }
+
                 /*
                     workshop.ugc.SetItemUpdateLanguage( UpdateId, const char *pchLanguage ) = 0; // specify the language of the title or description that will be set
                     workshop.ugc.RemoveItemKeyValueTags( UpdateId, const char *pchKey ) = 0; // remove any existing key-value tags with the specified key
-                    workshop.ugc.AddItemKeyValueTag( UpdateId, const char *pchKey, const char *pchValue ) = 0; // add new key-value tags for the item. Note that there can be multiple values for a tag.
                     workshop.ugc.AddItemPreviewFile( UpdateId, const char *pszPreviewFile, EItemPreviewType type ) = 0; //  add preview file for this item. pszPreviewFile points to local file, which must be under 1MB in size
                     workshop.ugc.AddItemPreviewVideo( UpdateId, const char *pszVideoID ) = 0; //  add preview video for this item
                     workshop.ugc.UpdateItemPreviewFile( UpdateId, uint32 index, const char *pszPreviewFile ) = 0; //  updates an existing preview file for this item. pszPreviewFile points to local file, which must be under 1MB in size
