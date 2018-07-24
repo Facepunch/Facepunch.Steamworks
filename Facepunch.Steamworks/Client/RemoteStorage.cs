@@ -177,16 +177,18 @@ namespace Facepunch.Steamworks
             {
                 int size;
                 var name = NormalizePath( native.GetFileNameAndSize( i, out size ) );
+                var timestamp = native.GetFileTimestamp(name);
 
                 var existing = _files.FirstOrDefault( x => x.FileName == name );
                 if ( existing == null )
                 {
-                    existing = new RemoteFile( this, name, client.SteamId, size );
+                    existing = new RemoteFile( this, name, client.SteamId, size, timestamp );
                     _files.Add( existing );
                 }
                 else
                 {
                     existing.SizeInBytes = size;
+                    existing.FileTimestamp = timestamp;
                 }
 
                 existing.Exists = true;
