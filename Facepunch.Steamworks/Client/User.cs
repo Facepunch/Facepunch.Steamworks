@@ -25,22 +25,29 @@ namespace Facepunch.Steamworks
             client = null;
         }
 
+        /// <summary>
+        /// Find a rich presence value by key for current user. Will be null if not found.
+        /// </summary>
         public string GetRichPresence( string key )
         {
-            string val = null;
-
-            if ( richPresence.TryGetValue( key, out val ) )
+            if ( richPresence.TryGetValue( key, out var val ) )
                 return val;
 
             return null;
         }
 
-        public void SetRichPresence( string key, string value )
+        /// <summary>
+        /// Sets a rich presence value by key for current user.
+        /// </summary>
+        public bool SetRichPresence( string key, string value )
         {
             richPresence[key] = value;
-            client.native.friends.SetRichPresence( key, value );
+            return client.native.friends.SetRichPresence( key, value );
         }
 
+        /// <summary>
+        /// Clears all of the current user's rich presence data.
+        /// </summary>
         public void ClearRichPresence()
         {
             richPresence.Clear();
