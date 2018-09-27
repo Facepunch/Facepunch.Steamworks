@@ -60,14 +60,6 @@ namespace Facepunch.Steamworks.Interop
                 return false;
             }
 
-            // Ensure that the user has logged into Steam. This will always return true if the game is launched
-            // from Steam, but if Steam is at the login prompt when you run your game it will return false.
-            if ( !user.BLoggedOn() )
-            {
-                Console.Error.WriteLine( "InitClient: Not Logged On" );
-                return false;
-            }
-
             return true;
         }
 
