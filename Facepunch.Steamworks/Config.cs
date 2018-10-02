@@ -23,7 +23,7 @@ namespace Facepunch.Steamworks
 
             if ( platform == "OSXEditor" || platform == "OSXPlayer" || platform == "OSXDashboardPlayer" )
             {
-                ForcePlatform( OperatingSystem.Osx, IntPtr.Size == 4 ? Architecture.x86 : Architecture.x64 );
+                ForcePlatform( OperatingSystem.macOS, IntPtr.Size == 4 ? Architecture.x86 : Architecture.x64 );
             }
 
             if ( platform == "LinuxPlayer" || platform == "LinuxEditor" )

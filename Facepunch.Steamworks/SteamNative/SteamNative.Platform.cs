@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Runtime.InteropServices;
 
 namespace Facepunch.Steamworks
@@ -8,7 +9,7 @@ namespace Facepunch.Steamworks
         Unset,
         Windows,
         Linux,
-        Osx,
+        macOS,
     }
 
     public enum Architecture
@@ -26,6 +27,24 @@ namespace SteamNative
         private static Facepunch.Steamworks.OperatingSystem _os;
         private static Facepunch.Steamworks.Architecture _arch;
 
+        public static Facepunch.Steamworks.OperatingSystem RunningPlatform()
+        {
+            switch (Environment.OSVersion.Platform)
+            {
+                case PlatformID.Unix:                    
+                    // macOS sometimes reports to .NET as Unix. Fix is to check against macOS root folders
+                    if (Directory.Exists("/Applications") && Directory.Exists("/System") && Directory.Exists("/Users") && Directory.Exists("/Volumes"))
+                        return Facepunch.Steamworks.OperatingSystem.macOS;
+                    else
+                        return Facepunch.Steamworks.OperatingSystem.Linux;
+                case PlatformID.MacOSX:
+                    return Facepunch.Steamworks.OperatingSystem.macOS;
+
+                default:
+                    return Facepunch.Steamworks.OperatingSystem.Windows;
+            }
+        }
+
         internal static Facepunch.Steamworks.OperatingSystem Os
         {
             get
@@ -38,17 +57,8 @@ namespace SteamNative
                     _os = Facepunch.Steamworks.OperatingSystem.Windows;
 
 #if !NET_CORE
-                    //
-                    // These checks aren't so accurate on older versions of mono
-                    //
-                    if ( Environment.OSVersion.Platform == PlatformID.MacOSX ) _os = Facepunch.Steamworks.OperatingSystem.Osx;
-                    if ( Environment.OSVersion.Platform == PlatformID.Unix ) _os = Facepunch.Steamworks.OperatingSystem.Linux;
-
-                    //
-                    // Edging our bets
-                    //
-                    if ( Environment.OSVersion.VersionString.ToLower().Contains( "unix" ) ) _os = Facepunch.Steamworks.OperatingSystem.Linux;
-                    if ( Environment.OSVersion.VersionString.ToLower().Contains( "osx" ) ) _os = Facepunch.Steamworks.OperatingSystem.Osx;
+                    // Fixed Bet
+                    _os = RunningPlatform();                   
 #endif
                 }
 
@@ -92,7 +102,7 @@ namespace SteamNative
         public static bool IsWindows32 { get { return Arch == Facepunch.Steamworks.Architecture.x86 && IsWindows; } }
         public static bool IsLinux64 { get { return Arch == Facepunch.Steamworks.Architecture.x64 && Os == Facepunch.Steamworks.OperatingSystem.Linux; } }
         public static bool IsLinux32 { get { return Arch == Facepunch.Steamworks.Architecture.x86 && Os == Facepunch.Steamworks.OperatingSystem.Linux; } }
-        public static bool IsOsx { get { return Os == Facepunch.Steamworks.OperatingSystem.Osx; } }
+        public static bool IsOsx { get { return Os == Facepunch.Steamworks.OperatingSystem.macOS; } }
 
 
         /// <summary>
