@@ -271,9 +271,19 @@ namespace Facepunch.Steamworks
             // Lets request it from Steam
             if (!client.native.friends.RequestUserInformation(steamid, false))
             {
-                // Steam told us to get fucked
-                callback(null);
-                return;
+                // from docs: false means that we already have all the details about that user, and functions that require this information can be used immediately
+                // but that's probably not true because we just checked the cache
+
+                // check again in case it was just a race
+                image = GetCachedAvatar(size, steamid);
+                if ( image != null )
+                {
+                    callback(image);
+                    return;
+                }
+
+                // maybe Steam returns false if it was already requested? just add another callback and hope it comes
+                // if not it'll time out anyway
             }
 
             PersonaCallbacks.Add( new PersonaCallback
@@ -326,7 +336,10 @@ namespace Facepunch.Steamworks
                 {
                     if ( cb.Callback != null )
                     {
-                        cb.Callback( null );
+                        // final attempt, will be null unless the callback was missed somehow
+                        var image = GetCachedAvatar( cb.Size, cb.SteamId );
+
+                        cb.Callback( image );
                     }
 
                     PersonaCallbacks.Remove( cb );
