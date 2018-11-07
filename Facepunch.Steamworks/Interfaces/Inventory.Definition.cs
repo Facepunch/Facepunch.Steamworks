@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -75,7 +75,7 @@ namespace Facepunch.Steamworks
             public double LocalPrice { get; internal set; }
 
             /// <summary>
-            /// Local Price but probably how you want to display it (ie, $3.99, �1.99 etc )
+            /// Local Price but probably how you want to display it (ie, $3.99, £1.99 etc )
             /// </summary>
             public string LocalPriceFormatted { get; internal set; }
             
