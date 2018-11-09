@@ -94,6 +94,11 @@ namespace Facepunch.Steamworks
 
             return Encoding.UTF8.GetString( buffer, 0, i );
         }
-        
+
+	    public static byte[] GetUtf8Bytes(string s)
+        {
+            return null == s ? null : Encoding.UTF8.GetBytes(s);
+        }
+
     }
 }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using System.Linq;
 
@@ -655,7 +655,7 @@ namespace SteamNative
 				
 				return Native.SteamAPI_ISteamFriends_GetUserRestrictions(_ptr);
 			}
-			public virtual bool /*bool*/ ISteamFriends_SetRichPresence( string /*const char **/ pchKey, string /*const char **/ pchValue )
+			public virtual bool /*bool*/ ISteamFriends_SetRichPresence( byte[] /*const char **/ pchKey, byte[] /*const char **/ pchValue )
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
@@ -4375,7 +4375,7 @@ namespace SteamNative
 				[DllImport( "libsteam_api.dylib" )] internal static extern int /*int*/ SteamAPI_ISteamFriends_GetClanOfficerCount( IntPtr ISteamFriends, ulong steamIDClan );
 				[DllImport( "libsteam_api.dylib" )] internal static extern CSteamID /*(class CSteamID)*/ SteamAPI_ISteamFriends_GetClanOfficerByIndex( IntPtr ISteamFriends, ulong steamIDClan, int /*int*/ iOfficer );
 				[DllImport( "libsteam_api.dylib" )] internal static extern uint /*uint32*/ SteamAPI_ISteamFriends_GetUserRestrictions( IntPtr ISteamFriends );
-				[DllImport( "libsteam_api.dylib" )] internal static extern bool /*bool*/ SteamAPI_ISteamFriends_SetRichPresence( IntPtr ISteamFriends, string /*const char **/ pchKey, string /*const char **/ pchValue );
+				[DllImport( "libsteam_api.dylib" )] internal static extern bool /*bool*/ SteamAPI_ISteamFriends_SetRichPresence( IntPtr ISteamFriends, byte[] /*const char **/ pchKey, byte[] /*const char **/ pchValue );
 				[DllImport( "libsteam_api.dylib" )] internal static extern void /*void*/ SteamAPI_ISteamFriends_ClearRichPresence( IntPtr ISteamFriends );
 				[DllImport( "libsteam_api.dylib" )] internal static extern IntPtr SteamAPI_ISteamFriends_GetFriendRichPresence( IntPtr ISteamFriends, ulong steamIDFriend, string /*const char **/ pchKey );
 				[DllImport( "libsteam_api.dylib" )] internal static extern int /*int*/ SteamAPI_ISteamFriends_GetFriendRichPresenceKeyCount( IntPtr ISteamFriends, ulong steamIDFriend );

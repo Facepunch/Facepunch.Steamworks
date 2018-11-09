@@ -1,6 +1,6 @@
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
-using System.Linq;
+using Facepunch.Steamworks;
 
 namespace SteamNative
 {
@@ -535,7 +535,7 @@ namespace SteamNative
 		// bool
 		public bool SetRichPresence( string pchKey /*const char **/, string pchValue /*const char **/ )
 		{
-			return platform.ISteamFriends_SetRichPresence( pchKey, pchValue );
+			return platform.ISteamFriends_SetRichPresence( Utility.GetUtf8Bytes(pchKey), Utility.GetUtf8Bytes(pchValue) );
 		}
 		
 	}

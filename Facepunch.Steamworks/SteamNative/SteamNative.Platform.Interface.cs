@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using System.Linq;
 
@@ -148,7 +148,7 @@ namespace SteamNative
 			int /*int*/ ISteamFriends_GetClanOfficerCount( ulong steamIDClan );
 			CSteamID /*(class CSteamID)*/ ISteamFriends_GetClanOfficerByIndex( ulong steamIDClan, int /*int*/ iOfficer );
 			uint /*uint32*/ ISteamFriends_GetUserRestrictions();
-			bool /*bool*/ ISteamFriends_SetRichPresence( string /*const char **/ pchKey, string /*const char **/ pchValue );
+			bool /*bool*/ ISteamFriends_SetRichPresence( byte[] /*const char **/ pchKey, byte[] /*const char **/ pchValue );
 			void /*void*/ ISteamFriends_ClearRichPresence();
 			IntPtr ISteamFriends_GetFriendRichPresence( ulong steamIDFriend, string /*const char **/ pchKey );
 			int /*int*/ ISteamFriends_GetFriendRichPresenceKeyCount( ulong steamIDFriend );
