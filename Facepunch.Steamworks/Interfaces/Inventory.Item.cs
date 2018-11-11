@@ -55,19 +55,19 @@ namespace Facepunch.Steamworks
 
             public bool TradeLocked;
 
-            public bool Equals( Item other )
+            public bool Equals(Item other)
             {
-                return Equals( other, this );
+                if (ReferenceEquals(null, other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return Id == other.Id;
             }
 
-            public override bool Equals( object obj )
+            public override bool Equals(object obj)
             {
-                if ( obj == null || GetType() != obj.GetType() )
-                {
-                    return false;
-                }
-
-                return ((Item)obj).Id == Id;
+                if (ReferenceEquals(null, obj)) return false;
+                if (ReferenceEquals(this, obj)) return true;
+                if (obj.GetType() != this.GetType()) return false;
+                return Equals((Item)obj);
             }
 
             public override int GetHashCode()
@@ -75,15 +75,14 @@ namespace Facepunch.Steamworks
                 return Id.GetHashCode();
             }
 
-
-            public static bool operator ==( Item c1, Item c2 )
+            public static bool operator ==(Item left, Item right)
             {
-                return c1.Equals( c2 );
+                return Equals(left, right);
             }
 
-            public static bool operator !=( Item c1, Item c2 )
+            public static bool operator !=(Item left, Item right)
             {
-                return !c1.Equals( c2 );
+                return !Equals(left, right);
             }
 
             /// <summary>

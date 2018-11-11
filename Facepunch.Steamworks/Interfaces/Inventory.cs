@@ -129,14 +129,14 @@ namespace Facepunch.Steamworks
             }
         }
 
-        private void onResult( Result r, bool serialize )
+        private void onResult( Result r, bool isFullUpdate )
         {
             if ( r.IsSuccess )
             {
                 //
                 // We only serialize FULL updates
                 //
-                if ( serialize )
+                if ( isFullUpdate )
                 {
                     //
                     // Only serialize if this result is newer than the last one
@@ -149,7 +149,7 @@ namespace Facepunch.Steamworks
                 }
 
                 LastTimestamp = r.Timestamp;
-                ApplyResult( r );
+                ApplyResult( r, isFullUpdate );
             }
 
             r.Dispose();
@@ -161,7 +161,7 @@ namespace Facepunch.Steamworks
         /// Here we're trying to keep our stack up to date with whatever happens
         /// with the crafting, stacking etc
         /// </summary>
-        internal void ApplyResult( Result r )
+        internal void ApplyResult( Result r, bool isFullUpdate )
         {
             if ( IsServer ) return;
 
@@ -170,12 +170,19 @@ namespace Facepunch.Steamworks
                 if ( Items == null )
                     Items = new Item[0];
 
-                Items = Items
-                        .Union( r.Items )
-                        .Distinct()
-                        .Where( x => !r.Removed.Contains( x ) )
-                        .Where( x => !r.Consumed.Contains( x ) )
+                if (isFullUpdate)
+                {
+                    Items = r.Items;
+                }
+                else
+                {
+                    // keep the new item instance because it might have a different quantity, properties, etc
+                    Items = Items
+                        .UnionSelect(r.Items, (oldItem, newItem) => newItem)
+                        .Where(x => !r.Removed.Contains(x))
+                        .Where(x => !r.Consumed.Contains(x))
                         .ToArray();
+                }
 
                 //
                 // Tell everyone we've got new items!
