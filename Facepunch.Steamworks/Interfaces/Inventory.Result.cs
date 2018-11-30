@@ -114,6 +114,10 @@ namespace Facepunch.Steamworks
                 for ( int i=0; i< steamItems.Length; i++ )
                 {
                     var item = inventory.ItemFrom( Handle, steamItems[i], i );
+                    if ( item == null )
+                    {
+                        continue;
+                    }
 
                     if ( ( steamItems[i].Flags & (int)SteamNative.SteamItemFlags.Removed ) != 0 )
                     {
@@ -189,6 +193,13 @@ namespace Facepunch.Steamworks
                 {
                     if ( inventory.GetResultItemProperty(handle, (uint)index, propertyName, out string propertyValue ) )
                     {
+                        if (propertyName == "error")
+                        {
+                            Console.Write("Steam item error: ");
+                            Console.WriteLine(propertyValue);
+                            return null;
+                        }
+
                         props.Add(propertyName, propertyValue);
                     }
                 }
