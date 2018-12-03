@@ -60,9 +60,14 @@ namespace Facepunch.Steamworks
 
         }
 
-        public static string FormatPrice(string currency, ulong price)
+        internal static string FormatPrice(string currency, ulong price)
         {
-            var decimaled = (price / 100.0).ToString("0.00");
+            return FormatPrice(currency, price / 100.0);
+        }
+
+        public static string FormatPrice(string currency, double price)
+        {
+            var decimaled = price.ToString("0.00");
 
             switch (currency)
             {

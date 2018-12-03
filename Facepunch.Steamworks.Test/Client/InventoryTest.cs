@@ -107,7 +107,7 @@ namespace Facepunch.Steamworks.Test
                 bool CallbackCalled = false;
 
                 // OnUpdate hsould be called when we receive a list of our items
-                client.Inventory.OnUpdate = () => { CallbackCalled = true; };
+                client.Inventory.OnUpdate += () => { CallbackCalled = true; };
 
                 // tell steam to download the items
                 client.Inventory.Refresh();

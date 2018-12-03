@@ -14,7 +14,7 @@ namespace Facepunch.Steamworks
         /// Called when the local client's items are first retrieved, and when they change.
         /// Obviously not called on the server.
         /// </summary>
-        public Action OnUpdate;
+        public event Action OnUpdate;
 
         /// <summary>
         /// A list of items owned by this user. You should call Refresh() before trying to access this, 
@@ -466,6 +466,7 @@ namespace Facepunch.Steamworks
                    Definitions[i].UpdatePrice();
                }
 
+               OnUpdate?.Invoke();
            });
         }
     }
