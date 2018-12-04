@@ -62,6 +62,7 @@ namespace Facepunch.Steamworks
         public MicroTransactions MicroTransactions { get; private set; }
         public User User { get; private set; }
         public RemoteStorage RemoteStorage { get; private set; }
+        public Overlay Overlay { get; private set; }
 
         public Client( uint appId ) : base( appId )
         {
@@ -107,6 +108,7 @@ namespace Facepunch.Steamworks
             MicroTransactions = new MicroTransactions( this );
             User = new User( this );
             RemoteStorage = new RemoteStorage( this );
+            Overlay = new Overlay( this );
 
             Workshop.friends = Friends;
 

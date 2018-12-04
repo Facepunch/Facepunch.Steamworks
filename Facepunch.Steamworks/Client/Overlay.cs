@@ -2,25 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SteamNative;
 
 namespace Facepunch.Steamworks
 {
-    public partial class Client : IDisposable
-    {
-        private Overlay _overlay;
-
-        public Overlay Overlay
-        {
-            get
-            {
-                if ( _overlay == null )
-                    _overlay = new Overlay { client = this };
-
-                return _overlay;
-            }
-        }
-    }
-
     public class Overlay
     {
         internal Client client;
@@ -28,6 +13,20 @@ namespace Facepunch.Steamworks
         public bool Enabled
         {
             get { return client.native.utils.IsOverlayEnabled(); }
+        }
+
+        public bool IsOpen { get; private set; }
+
+        internal Overlay( Client c )
+        {
+            client = c;
+
+            c.RegisterCallback<GameOverlayActivated_t>( OverlayStateChange );
+        }
+
+        private void OverlayStateChange( GameOverlayActivated_t activation )
+        {
+            IsOpen = activation.Active == 1;
         }
 
         public void OpenUserPage( string name, ulong steamid ) { client.native.friends.ActivateGameOverlayToUser( name, steamid ); }
