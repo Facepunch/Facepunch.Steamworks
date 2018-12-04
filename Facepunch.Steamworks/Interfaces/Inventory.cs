@@ -41,6 +41,8 @@ namespace Facepunch.Steamworks
 
         public event Action OnDefinitionsUpdated;
 
+        public event Action<Result> OnInventoryResultReady;
+
         internal Inventory( BaseSteamworks steamworks, SteamNative.SteamInventory c, bool server )
         {
             IsServer = server;
@@ -113,10 +115,9 @@ namespace Facepunch.Steamworks
         /// </summary>
         private void onResultReady( SteamInventoryResultReady_t data )
         {
-            if ( Result.Pending.ContainsKey( data.Handle ) )
+            Result result;
+            if ( Result.Pending.TryGetValue( data.Handle, out result ) )
             {
-                var result = Result.Pending[data.Handle];
-
                 result.OnSteamResult( data );
 
                 if ( data.Result == SteamNative.Result.OK )
@@ -127,6 +128,13 @@ namespace Facepunch.Steamworks
                 Result.Pending.Remove( data.Handle );
                 result.Dispose();
             }
+            else
+            {
+                result = new Result(this, data.Handle, false);
+                result.Fill();
+            }
+
+            OnInventoryResultReady?.Invoke(result);
         }
 
         private void onResult( Result r, bool isFullUpdate )
