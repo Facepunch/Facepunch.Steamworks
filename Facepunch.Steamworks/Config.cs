@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Facepunch.Steamworks
 {
@@ -31,7 +28,7 @@ namespace Facepunch.Steamworks
                 ForcePlatform( OperatingSystem.Linux, IntPtr.Size == 4 ? Architecture.x86 : Architecture.x64 );
             }
 
-            UseThisCall = true;
+            UseThisCall = SteamNative.Platform.Os != OperatingSystem.Windows;
 
             Console.WriteLine( "Facepunch.Steamworks Unity: " + platform );
             Console.WriteLine( "Facepunch.Steamworks Os: " + SteamNative.Platform.Os );
@@ -47,7 +44,7 @@ namespace Facepunch.Steamworks
         /// for releasing his shit open source under the MIT license so we can all learn and iterate.
         /// 
         /// </summary>
-        public static bool UseThisCall { get; set; } = SteamNative.Platform.Os == OperatingSystem.Windows;
+        public static bool UseThisCall { get; set; } = true;
 
 
         /// <summary>
