@@ -256,6 +256,13 @@ namespace Facepunch.Steamworks
             return board;
         }
 
+        /// <summary>
+        /// Checks if the current user's Steam client is connected and logged on to the Steam servers.
+        /// If it's not then no real-time services provided by the Steamworks API will be enabled. 
+        /// The Steam client will automatically be trying to recreate the connection as often as possible.
+        /// All of the API calls that rely on this will check internally.
+        /// </summary>
+        public bool IsLoggedOn => native.user.BLoggedOn();
 
         /// <summary>
         /// True if we're subscribed/authorised to be running this app
