@@ -185,10 +185,12 @@ namespace Facepunch.Steamworks
 
         internal Item ItemFrom( SteamInventoryResult_t handle, SteamItemDetails_t detail, int index )
         {
-            var props = new Dictionary<string, string>();
+            Dictionary<string, string> props = null;
 
-            if ( inventory.GetResultItemProperty(handle, (uint) index, null, out string propertyNames) )
+            if ( EnableItemProperties && inventory.GetResultItemProperty(handle, (uint) index, null, out string propertyNames) )
             {
+                props = new Dictionary<string, string>();
+
                 foreach ( var propertyName in propertyNames.Split( ',' ) )
                 {
                     if ( inventory.GetResultItemProperty(handle, (uint)index, propertyName, out string propertyValue ) )

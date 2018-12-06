@@ -33,6 +33,12 @@ namespace Facepunch.Steamworks
         /// </summary>
         public DateTime SerializedExpireTime;
 
+        /// <summary>
+        /// Controls whether per-item properties (<see cref="Item.Properties"/>) are available or not. Default true.
+        /// This can improve performance of full inventory updates.
+        /// </summary>
+        public bool EnableItemProperties = true;
+
         internal uint LastTimestamp = 0;
 
         internal SteamNative.SteamInventory inventory;
