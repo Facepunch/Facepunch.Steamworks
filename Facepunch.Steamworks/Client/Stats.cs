@@ -8,6 +8,7 @@ namespace Facepunch.Steamworks
     public class Stats : IDisposable
     {
         internal Client client;
+        private int currentPlayerCount;
 
         internal Stats( Client c )
         {
@@ -112,6 +113,27 @@ namespace Facepunch.Steamworks
         {
             return client.native.userstats.ResetAllStats( includeAchievements );
         }
+        
+        /// <summary>
+        /// Returns currently stored Player Count, if update is set to true, it will also run an update. 
+        /// This will not return the updated number immediately.
+        /// </summary>
+        /// <param name="update">Will call UpdateCurrentPlayerCount() if true</param>
+        /// <returns></returns>
+        public int GetNumberOfCurrentPlayers(bool update = true) 
+        {
+            if (update) 
+            {
+                client.native.userstats.GetNumberOfCurrentPlayers( ( players, failed ) => 
+                {
+                    if (players.Success == 1 && !failed) {
+                        currentPlayerCount = players.CPlayers;
+                    }
+                });
+            }
+            return currentPlayerCount;
+        }
+
 
         public void Dispose()
         {
