@@ -366,7 +366,7 @@ namespace Facepunch.Steamworks
             {
                 if ( !IsValid ) { return false; }
                 string joinable = CurrentLobbyData.GetData( "joinable" );
-                switch ( joinable )
+                switch ( joinable.ToLowerInvariant() )
                 {
                     case "true":
                         return true;
