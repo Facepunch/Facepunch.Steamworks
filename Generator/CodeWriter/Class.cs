@@ -154,7 +154,7 @@ namespace Generator
                 MethodNameCount = 0;
             }
 
-            var argString = string.Join(", ", argList.Select(x => x.ManagedParameter().Replace("byte[]", "string")));
+            var argString = string.Join(", ", argList.Select(x => x.ManagedParameter()));
             if ( argString != "" ) argString = " " + argString + " ";
             StartBlock( $"public{statc} {ReturnType} {methodName}({argString})" );
 

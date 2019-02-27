@@ -168,19 +168,21 @@ namespace Generator
 
         internal string ManagedParameter()
         {
+            var managedTypeT = ManagedType == "byte[]" ? "string" : ManagedType;
+
             if ( IsInputArray )
-                return $"{ManagedType.Trim( '*', ' ' )}[] {Name} /*{NativeType}*/";
+                return $"{managedTypeT.Trim( '*', ' ' )}[] {Name} /*{NativeType}*/";
 
             if ( ShouldBeIntPtr )
                 return $"IntPtr {Name} /*{NativeType}*/";
 
             if ( IsStructShouldBePassedAsRef )
-                return $"ref {ManagedType.Trim( '*', ' ' )} {Name} /*{NativeType}*/";
+                return $"ref {managedTypeT.Trim( '*', ' ' )} {Name} /*{NativeType}*/";
 
             if ( ShouldBePassedAsOut )
-                return $"out {ManagedType.Trim( '*', ' ' )} {Name} /*{NativeType}*/";
+                return $"out {managedTypeT.Trim( '*', ' ' )} {Name} /*{NativeType}*/";
 
-            return $"{ManagedType} {Name} /*{NativeType}*/";
+            return $"{managedTypeT} {Name} /*{NativeType}*/";
         }
 
         internal string InteropVariable( bool AsRawValues )
