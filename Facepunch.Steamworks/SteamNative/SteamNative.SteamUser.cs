@@ -1,6 +1,8 @@
+using Facepunch.Steamworks;
 using System;
-using System.Runtime.InteropServices;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace SteamNative
 {
@@ -197,7 +199,7 @@ namespace SteamNative
 		public CallbackHandle RequestStoreAuthURL( string pchRedirectURL /*const char **/, Action<StoreAuthURLResponse_t, bool> CallbackFunction = null /*Action<StoreAuthURLResponse_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
-			callback = platform.ISteamUser_RequestStoreAuthURL( pchRedirectURL );
+			callback = platform.ISteamUser_RequestStoreAuthURL( Utility.GetUtf8Bytes(pchRedirectURL) );
 			
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
@@ -226,7 +228,7 @@ namespace SteamNative
 		// void
 		public void TrackAppUsageEvent( CGameID gameID /*class CGameID*/, int eAppUsageEvent /*int*/, string pchExtraInfo /*const char **/ )
 		{
-			platform.ISteamUser_TrackAppUsageEvent( gameID.Value, eAppUsageEvent, pchExtraInfo );
+			platform.ISteamUser_TrackAppUsageEvent( gameID.Value, eAppUsageEvent, Utility.GetUtf8Bytes(pchExtraInfo) );
 		}
 		
 		// UserHasLicenseForAppResult

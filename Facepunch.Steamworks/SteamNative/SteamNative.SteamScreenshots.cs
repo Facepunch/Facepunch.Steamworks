@@ -1,6 +1,8 @@
+using Facepunch.Steamworks;
 using System;
-using System.Runtime.InteropServices;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace SteamNative
 {
@@ -46,13 +48,13 @@ namespace SteamNative
 		// ScreenshotHandle
 		public ScreenshotHandle AddScreenshotToLibrary( string pchFilename /*const char **/, string pchThumbnailFilename /*const char **/, int nWidth /*int*/, int nHeight /*int*/ )
 		{
-			return platform.ISteamScreenshots_AddScreenshotToLibrary( pchFilename, pchThumbnailFilename, nWidth, nHeight );
+			return platform.ISteamScreenshots_AddScreenshotToLibrary( Utility.GetUtf8Bytes(pchFilename), Utility.GetUtf8Bytes(pchThumbnailFilename), nWidth, nHeight );
 		}
 		
 		// ScreenshotHandle
 		public ScreenshotHandle AddVRScreenshotToLibrary( VRScreenshotType eType /*EVRScreenshotType*/, string pchFilename /*const char **/, string pchVRFilename /*const char **/ )
 		{
-			return platform.ISteamScreenshots_AddVRScreenshotToLibrary( eType, pchFilename, pchVRFilename );
+			return platform.ISteamScreenshots_AddVRScreenshotToLibrary( eType, Utility.GetUtf8Bytes(pchFilename), Utility.GetUtf8Bytes(pchVRFilename) );
 		}
 		
 		// void
@@ -70,7 +72,7 @@ namespace SteamNative
 		// bool
 		public bool SetLocation( ScreenshotHandle hScreenshot /*ScreenshotHandle*/, string pchLocation /*const char **/ )
 		{
-			return platform.ISteamScreenshots_SetLocation( hScreenshot.Value, pchLocation );
+			return platform.ISteamScreenshots_SetLocation( hScreenshot.Value, Utility.GetUtf8Bytes(pchLocation) );
 		}
 		
 		// bool

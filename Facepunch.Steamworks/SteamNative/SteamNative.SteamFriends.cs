@@ -1,6 +1,8 @@
-﻿using System;
-using System.Runtime.InteropServices;
 using Facepunch.Steamworks;
+using System;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace SteamNative
 {
@@ -46,7 +48,7 @@ namespace SteamNative
 		// void
 		public void ActivateGameOverlay( string pchDialog /*const char **/ )
 		{
-			platform.ISteamFriends_ActivateGameOverlay( pchDialog );
+			platform.ISteamFriends_ActivateGameOverlay( Utility.GetUtf8Bytes(pchDialog) );
 		}
 		
 		// void
@@ -64,13 +66,13 @@ namespace SteamNative
 		// void
 		public void ActivateGameOverlayToUser( string pchDialog /*const char **/, CSteamID steamID /*class CSteamID*/ )
 		{
-			platform.ISteamFriends_ActivateGameOverlayToUser( pchDialog, steamID.Value );
+			platform.ISteamFriends_ActivateGameOverlayToUser( Utility.GetUtf8Bytes(pchDialog), steamID.Value );
 		}
 		
 		// void
 		public void ActivateGameOverlayToWebPage( string pchURL /*const char **/ )
 		{
-			platform.ISteamFriends_ActivateGameOverlayToWebPage( pchURL );
+			platform.ISteamFriends_ActivateGameOverlayToWebPage( Utility.GetUtf8Bytes(pchURL) );
 		}
 		
 		// void
@@ -145,7 +147,11 @@ namespace SteamNative
 		{
 			IntPtr string_pointer;
 			string_pointer = platform.ISteamFriends_GetClanName( steamIDClan.Value );
-			return Marshal.PtrToStringAnsi( string_pointer );
+			var len = 0;
+			while (Marshal.ReadByte(string_pointer, len) != 0) ++len;
+			var buffer = new byte[len];
+			Marshal.Copy(string_pointer, buffer, 0, buffer.Length);
+			return Encoding.UTF8.GetString(buffer);
 		}
 		
 		// ulong
@@ -172,7 +178,11 @@ namespace SteamNative
 		{
 			IntPtr string_pointer;
 			string_pointer = platform.ISteamFriends_GetClanTag( steamIDClan.Value );
-			return Marshal.PtrToStringAnsi( string_pointer );
+			var len = 0;
+			while (Marshal.ReadByte(string_pointer, len) != 0) ++len;
+			var buffer = new byte[len];
+			Marshal.Copy(string_pointer, buffer, 0, buffer.Length);
+			return Encoding.UTF8.GetString(buffer);
 		}
 		
 		// ulong
@@ -253,7 +263,11 @@ namespace SteamNative
 		{
 			IntPtr string_pointer;
 			string_pointer = platform.ISteamFriends_GetFriendPersonaName( steamIDFriend.Value );
-			return Marshal.PtrToStringAnsi( string_pointer );
+			var len = 0;
+			while (Marshal.ReadByte(string_pointer, len) != 0) ++len;
+			var buffer = new byte[len];
+			Marshal.Copy(string_pointer, buffer, 0, buffer.Length);
+			return Encoding.UTF8.GetString(buffer);
 		}
 		
 		// string
@@ -262,7 +276,11 @@ namespace SteamNative
 		{
 			IntPtr string_pointer;
 			string_pointer = platform.ISteamFriends_GetFriendPersonaNameHistory( steamIDFriend.Value, iPersonaName );
-			return Marshal.PtrToStringAnsi( string_pointer );
+			var len = 0;
+			while (Marshal.ReadByte(string_pointer, len) != 0) ++len;
+			var buffer = new byte[len];
+			Marshal.Copy(string_pointer, buffer, 0, buffer.Length);
+			return Encoding.UTF8.GetString(buffer);
 		}
 		
 		// PersonaState
@@ -282,8 +300,12 @@ namespace SteamNative
 		public string GetFriendRichPresence( CSteamID steamIDFriend /*class CSteamID*/, string pchKey /*const char **/ )
 		{
 			IntPtr string_pointer;
-			string_pointer = platform.ISteamFriends_GetFriendRichPresence( steamIDFriend.Value, pchKey );
-			return Marshal.PtrToStringAnsi( string_pointer );
+			string_pointer = platform.ISteamFriends_GetFriendRichPresence( steamIDFriend.Value, Utility.GetUtf8Bytes(pchKey) );
+			var len = 0;
+			while (Marshal.ReadByte(string_pointer, len) != 0) ++len;
+			var buffer = new byte[len];
+			Marshal.Copy(string_pointer, buffer, 0, buffer.Length);
+			return Encoding.UTF8.GetString(buffer);
 		}
 		
 		// string
@@ -292,7 +314,11 @@ namespace SteamNative
 		{
 			IntPtr string_pointer;
 			string_pointer = platform.ISteamFriends_GetFriendRichPresenceKeyByIndex( steamIDFriend.Value, iKey );
-			return Marshal.PtrToStringAnsi( string_pointer );
+			var len = 0;
+			while (Marshal.ReadByte(string_pointer, len) != 0) ++len;
+			var buffer = new byte[len];
+			Marshal.Copy(string_pointer, buffer, 0, buffer.Length);
+			return Encoding.UTF8.GetString(buffer);
 		}
 		
 		// int
@@ -331,7 +357,11 @@ namespace SteamNative
 		{
 			IntPtr string_pointer;
 			string_pointer = platform.ISteamFriends_GetFriendsGroupName( friendsGroupID.Value );
-			return Marshal.PtrToStringAnsi( string_pointer );
+			var len = 0;
+			while (Marshal.ReadByte(string_pointer, len) != 0) ++len;
+			var buffer = new byte[len];
+			Marshal.Copy(string_pointer, buffer, 0, buffer.Length);
+			return Encoding.UTF8.GetString(buffer);
 		}
 		
 		// int
@@ -358,7 +388,11 @@ namespace SteamNative
 		{
 			IntPtr string_pointer;
 			string_pointer = platform.ISteamFriends_GetPersonaName();
-			return Marshal.PtrToStringAnsi( string_pointer );
+			var len = 0;
+			while (Marshal.ReadByte(string_pointer, len) != 0) ++len;
+			var buffer = new byte[len];
+			Marshal.Copy(string_pointer, buffer, 0, buffer.Length);
+			return Encoding.UTF8.GetString(buffer);
 		}
 		
 		// PersonaState
@@ -373,7 +407,11 @@ namespace SteamNative
 		{
 			IntPtr string_pointer;
 			string_pointer = platform.ISteamFriends_GetPlayerNickname( steamIDPlayer.Value );
-			return Marshal.PtrToStringAnsi( string_pointer );
+			var len = 0;
+			while (Marshal.ReadByte(string_pointer, len) != 0) ++len;
+			var buffer = new byte[len];
+			Marshal.Copy(string_pointer, buffer, 0, buffer.Length);
+			return Encoding.UTF8.GetString(buffer);
 		}
 		
 		// int
@@ -397,7 +435,7 @@ namespace SteamNative
 		// bool
 		public bool InviteUserToGame( CSteamID steamIDFriend /*class CSteamID*/, string pchConnectString /*const char **/ )
 		{
-			return platform.ISteamFriends_InviteUserToGame( steamIDFriend.Value, pchConnectString );
+			return platform.ISteamFriends_InviteUserToGame( steamIDFriend.Value, Utility.GetUtf8Bytes(pchConnectString) );
 		}
 		
 		// bool
@@ -469,7 +507,7 @@ namespace SteamNative
 		// bool
 		public bool ReplyToFriendMessage( CSteamID steamIDFriend /*class CSteamID*/, string pchMsgToSend /*const char **/ )
 		{
-			return platform.ISteamFriends_ReplyToFriendMessage( steamIDFriend.Value, pchMsgToSend );
+			return platform.ISteamFriends_ReplyToFriendMessage( steamIDFriend.Value, Utility.GetUtf8Bytes(pchMsgToSend) );
 		}
 		
 		// SteamAPICall_t
@@ -499,7 +537,7 @@ namespace SteamNative
 		// bool
 		public bool SendClanChatMessage( CSteamID steamIDClanChat /*class CSteamID*/, string pchText /*const char **/ )
 		{
-			return platform.ISteamFriends_SendClanChatMessage( steamIDClanChat.Value, pchText );
+			return platform.ISteamFriends_SendClanChatMessage( steamIDClanChat.Value, Utility.GetUtf8Bytes(pchText) );
 		}
 		
 		// void
@@ -518,7 +556,7 @@ namespace SteamNative
 		public CallbackHandle SetPersonaName( string pchPersonaName /*const char **/, Action<SetPersonaNameResponse_t, bool> CallbackFunction = null /*Action<SetPersonaNameResponse_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
-			callback = platform.ISteamFriends_SetPersonaName( pchPersonaName );
+			callback = platform.ISteamFriends_SetPersonaName( Utility.GetUtf8Bytes(pchPersonaName) );
 			
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;

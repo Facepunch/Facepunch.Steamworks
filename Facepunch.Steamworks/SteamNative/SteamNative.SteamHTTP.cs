@@ -1,6 +1,8 @@
+using Facepunch.Steamworks;
 using System;
-using System.Runtime.InteropServices;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace SteamNative
 {
@@ -52,7 +54,7 @@ namespace SteamNative
 		// HTTPRequestHandle
 		public HTTPRequestHandle CreateHTTPRequest( HTTPMethod eHTTPRequestMethod /*EHTTPMethod*/, string pchAbsoluteURL /*const char **/ )
 		{
-			return platform.ISteamHTTP_CreateHTTPRequest( eHTTPRequestMethod, pchAbsoluteURL );
+			return platform.ISteamHTTP_CreateHTTPRequest( eHTTPRequestMethod, Utility.GetUtf8Bytes(pchAbsoluteURL) );
 		}
 		
 		// bool
@@ -88,13 +90,13 @@ namespace SteamNative
 		// bool
 		public bool GetHTTPResponseHeaderSize( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, string pchHeaderName /*const char **/, out uint unResponseHeaderSize /*uint32 **/ )
 		{
-			return platform.ISteamHTTP_GetHTTPResponseHeaderSize( hRequest.Value, pchHeaderName, out unResponseHeaderSize );
+			return platform.ISteamHTTP_GetHTTPResponseHeaderSize( hRequest.Value, Utility.GetUtf8Bytes(pchHeaderName), out unResponseHeaderSize );
 		}
 		
 		// bool
 		public bool GetHTTPResponseHeaderValue( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, string pchHeaderName /*const char **/, out byte pHeaderValueBuffer /*uint8 **/, uint unBufferSize /*uint32*/ )
 		{
-			return platform.ISteamHTTP_GetHTTPResponseHeaderValue( hRequest.Value, pchHeaderName, out pHeaderValueBuffer, unBufferSize );
+			return platform.ISteamHTTP_GetHTTPResponseHeaderValue( hRequest.Value, Utility.GetUtf8Bytes(pchHeaderName), out pHeaderValueBuffer, unBufferSize );
 		}
 		
 		// bool
@@ -136,7 +138,7 @@ namespace SteamNative
 		// bool
 		public bool SetCookie( HTTPCookieContainerHandle hCookieContainer /*HTTPCookieContainerHandle*/, string pchHost /*const char **/, string pchUrl /*const char **/, string pchCookie /*const char **/ )
 		{
-			return platform.ISteamHTTP_SetCookie( hCookieContainer.Value, pchHost, pchUrl, pchCookie );
+			return platform.ISteamHTTP_SetCookie( hCookieContainer.Value, Utility.GetUtf8Bytes(pchHost), Utility.GetUtf8Bytes(pchUrl), Utility.GetUtf8Bytes(pchCookie) );
 		}
 		
 		// bool
@@ -160,13 +162,13 @@ namespace SteamNative
 		// bool
 		public bool SetHTTPRequestGetOrPostParameter( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, string pchParamName /*const char **/, string pchParamValue /*const char **/ )
 		{
-			return platform.ISteamHTTP_SetHTTPRequestGetOrPostParameter( hRequest.Value, pchParamName, pchParamValue );
+			return platform.ISteamHTTP_SetHTTPRequestGetOrPostParameter( hRequest.Value, Utility.GetUtf8Bytes(pchParamName), Utility.GetUtf8Bytes(pchParamValue) );
 		}
 		
 		// bool
 		public bool SetHTTPRequestHeaderValue( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, string pchHeaderName /*const char **/, string pchHeaderValue /*const char **/ )
 		{
-			return platform.ISteamHTTP_SetHTTPRequestHeaderValue( hRequest.Value, pchHeaderName, pchHeaderValue );
+			return platform.ISteamHTTP_SetHTTPRequestHeaderValue( hRequest.Value, Utility.GetUtf8Bytes(pchHeaderName), Utility.GetUtf8Bytes(pchHeaderValue) );
 		}
 		
 		// bool
@@ -178,7 +180,7 @@ namespace SteamNative
 		// bool
 		public bool SetHTTPRequestRawPostBody( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, string pchContentType /*const char **/, out byte pubBody /*uint8 **/, uint unBodyLen /*uint32*/ )
 		{
-			return platform.ISteamHTTP_SetHTTPRequestRawPostBody( hRequest.Value, pchContentType, out pubBody, unBodyLen );
+			return platform.ISteamHTTP_SetHTTPRequestRawPostBody( hRequest.Value, Utility.GetUtf8Bytes(pchContentType), out pubBody, unBodyLen );
 		}
 		
 		// bool
@@ -190,7 +192,7 @@ namespace SteamNative
 		// bool
 		public bool SetHTTPRequestUserAgentInfo( HTTPRequestHandle hRequest /*HTTPRequestHandle*/, string pchUserAgentInfo /*const char **/ )
 		{
-			return platform.ISteamHTTP_SetHTTPRequestUserAgentInfo( hRequest.Value, pchUserAgentInfo );
+			return platform.ISteamHTTP_SetHTTPRequestUserAgentInfo( hRequest.Value, Utility.GetUtf8Bytes(pchUserAgentInfo) );
 		}
 		
 	}

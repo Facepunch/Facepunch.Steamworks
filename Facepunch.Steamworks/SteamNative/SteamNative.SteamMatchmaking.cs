@@ -1,6 +1,8 @@
+using Facepunch.Steamworks;
 using System;
-using System.Runtime.InteropServices;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace SteamNative
 {
@@ -70,13 +72,13 @@ namespace SteamNative
 		// void
 		public void AddRequestLobbyListNearValueFilter( string pchKeyToMatch /*const char **/, int nValueToBeCloseTo /*int*/ )
 		{
-			platform.ISteamMatchmaking_AddRequestLobbyListNearValueFilter( pchKeyToMatch, nValueToBeCloseTo );
+			platform.ISteamMatchmaking_AddRequestLobbyListNearValueFilter( Utility.GetUtf8Bytes(pchKeyToMatch), nValueToBeCloseTo );
 		}
 		
 		// void
 		public void AddRequestLobbyListNumericalFilter( string pchKeyToMatch /*const char **/, int nValueToMatch /*int*/, LobbyComparison eComparisonType /*ELobbyComparison*/ )
 		{
-			platform.ISteamMatchmaking_AddRequestLobbyListNumericalFilter( pchKeyToMatch, nValueToMatch, eComparisonType );
+			platform.ISteamMatchmaking_AddRequestLobbyListNumericalFilter( Utility.GetUtf8Bytes(pchKeyToMatch), nValueToMatch, eComparisonType );
 		}
 		
 		// void
@@ -88,7 +90,7 @@ namespace SteamNative
 		// void
 		public void AddRequestLobbyListStringFilter( string pchKeyToMatch /*const char **/, string pchValueToMatch /*const char **/, LobbyComparison eComparisonType /*ELobbyComparison*/ )
 		{
-			platform.ISteamMatchmaking_AddRequestLobbyListStringFilter( pchKeyToMatch, pchValueToMatch, eComparisonType );
+			platform.ISteamMatchmaking_AddRequestLobbyListStringFilter( Utility.GetUtf8Bytes(pchKeyToMatch), Utility.GetUtf8Bytes(pchValueToMatch), eComparisonType );
 		}
 		
 		// SteamAPICall_t
@@ -106,7 +108,7 @@ namespace SteamNative
 		// bool
 		public bool DeleteLobbyData( CSteamID steamIDLobby /*class CSteamID*/, string pchKey /*const char **/ )
 		{
-			return platform.ISteamMatchmaking_DeleteLobbyData( steamIDLobby.Value, pchKey );
+			return platform.ISteamMatchmaking_DeleteLobbyData( steamIDLobby.Value, Utility.GetUtf8Bytes(pchKey) );
 		}
 		
 		// bool
@@ -138,8 +140,12 @@ namespace SteamNative
 		public string GetLobbyData( CSteamID steamIDLobby /*class CSteamID*/, string pchKey /*const char **/ )
 		{
 			IntPtr string_pointer;
-			string_pointer = platform.ISteamMatchmaking_GetLobbyData( steamIDLobby.Value, pchKey );
-			return Marshal.PtrToStringAnsi( string_pointer );
+			string_pointer = platform.ISteamMatchmaking_GetLobbyData( steamIDLobby.Value, Utility.GetUtf8Bytes(pchKey) );
+			var len = 0;
+			while (Marshal.ReadByte(string_pointer, len) != 0) ++len;
+			var buffer = new byte[len];
+			Marshal.Copy(string_pointer, buffer, 0, buffer.Length);
+			return Encoding.UTF8.GetString(buffer);
 		}
 		
 		// bool
@@ -185,8 +191,12 @@ namespace SteamNative
 		public string GetLobbyMemberData( CSteamID steamIDLobby /*class CSteamID*/, CSteamID steamIDUser /*class CSteamID*/, string pchKey /*const char **/ )
 		{
 			IntPtr string_pointer;
-			string_pointer = platform.ISteamMatchmaking_GetLobbyMemberData( steamIDLobby.Value, steamIDUser.Value, pchKey );
-			return Marshal.PtrToStringAnsi( string_pointer );
+			string_pointer = platform.ISteamMatchmaking_GetLobbyMemberData( steamIDLobby.Value, steamIDUser.Value, Utility.GetUtf8Bytes(pchKey) );
+			var len = 0;
+			while (Marshal.ReadByte(string_pointer, len) != 0) ++len;
+			var buffer = new byte[len];
+			Marshal.Copy(string_pointer, buffer, 0, buffer.Length);
+			return Encoding.UTF8.GetString(buffer);
 		}
 		
 		// int
@@ -270,7 +280,7 @@ namespace SteamNative
 		// bool
 		public bool SetLobbyData( CSteamID steamIDLobby /*class CSteamID*/, string pchKey /*const char **/, string pchValue /*const char **/ )
 		{
-			return platform.ISteamMatchmaking_SetLobbyData( steamIDLobby.Value, pchKey, pchValue );
+			return platform.ISteamMatchmaking_SetLobbyData( steamIDLobby.Value, Utility.GetUtf8Bytes(pchKey), Utility.GetUtf8Bytes(pchValue) );
 		}
 		
 		// void
@@ -288,7 +298,7 @@ namespace SteamNative
 		// void
 		public void SetLobbyMemberData( CSteamID steamIDLobby /*class CSteamID*/, string pchKey /*const char **/, string pchValue /*const char **/ )
 		{
-			platform.ISteamMatchmaking_SetLobbyMemberData( steamIDLobby.Value, pchKey, pchValue );
+			platform.ISteamMatchmaking_SetLobbyMemberData( steamIDLobby.Value, Utility.GetUtf8Bytes(pchKey), Utility.GetUtf8Bytes(pchValue) );
 		}
 		
 		// bool

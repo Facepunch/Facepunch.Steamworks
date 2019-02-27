@@ -1,6 +1,8 @@
+using Facepunch.Steamworks;
 using System;
-using System.Runtime.InteropServices;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace SteamNative
 {
@@ -143,7 +145,7 @@ namespace SteamNative
 			pchValueBuffer = string.Empty;
 			System.Text.StringBuilder pchValueBuffer_sb = Helpers.TakeStringBuilder();
 			uint punValueBufferSizeOut = 4096;
-			bSuccess = platform.ISteamInventory_GetItemDefinitionProperty( iDefinition.Value, pchPropertyName, pchValueBuffer_sb, out punValueBufferSizeOut );
+			bSuccess = platform.ISteamInventory_GetItemDefinitionProperty( iDefinition.Value, Utility.GetUtf8Bytes(pchPropertyName), pchValueBuffer_sb, out punValueBufferSizeOut );
 			if ( !bSuccess ) return bSuccess;
 			pchValueBuffer = pchValueBuffer_sb.ToString();
 			return bSuccess;
@@ -181,7 +183,7 @@ namespace SteamNative
 			pchValueBuffer = string.Empty;
 			System.Text.StringBuilder pchValueBuffer_sb = Helpers.TakeStringBuilder();
 			uint punValueBufferSizeOut = 4096;
-			bSuccess = platform.ISteamInventory_GetResultItemProperty( resultHandle.Value, unItemIndex, pchPropertyName, pchValueBuffer_sb, out punValueBufferSizeOut );
+			bSuccess = platform.ISteamInventory_GetResultItemProperty( resultHandle.Value, unItemIndex, Utility.GetUtf8Bytes(pchPropertyName), pchValueBuffer_sb, out punValueBufferSizeOut );
 			if ( !bSuccess ) return bSuccess;
 			pchValueBuffer = pchValueBuffer_sb.ToString();
 			return bSuccess;
@@ -233,7 +235,7 @@ namespace SteamNative
 		// bool
 		public bool RemoveProperty( SteamInventoryUpdateHandle_t handle /*SteamInventoryUpdateHandle_t*/, SteamItemInstanceID_t nItemID /*SteamItemInstanceID_t*/, string pchPropertyName /*const char **/ )
 		{
-			return platform.ISteamInventory_RemoveProperty( handle.Value, nItemID.Value, pchPropertyName );
+			return platform.ISteamInventory_RemoveProperty( handle.Value, nItemID.Value, Utility.GetUtf8Bytes(pchPropertyName) );
 		}
 		
 		// SteamAPICall_t
@@ -275,25 +277,25 @@ namespace SteamNative
 		// bool
 		public bool SetProperty( SteamInventoryUpdateHandle_t handle /*SteamInventoryUpdateHandle_t*/, SteamItemInstanceID_t nItemID /*SteamItemInstanceID_t*/, string pchPropertyName /*const char **/, string pchPropertyValue /*const char **/ )
 		{
-			return platform.ISteamInventory_SetProperty( handle.Value, nItemID.Value, pchPropertyName, pchPropertyValue );
+			return platform.ISteamInventory_SetProperty( handle.Value, nItemID.Value, Utility.GetUtf8Bytes(pchPropertyName), Utility.GetUtf8Bytes(pchPropertyValue) );
 		}
 		
 		// bool
 		public bool SetProperty0( SteamInventoryUpdateHandle_t handle /*SteamInventoryUpdateHandle_t*/, SteamItemInstanceID_t nItemID /*SteamItemInstanceID_t*/, string pchPropertyName /*const char **/, bool bValue /*bool*/ )
 		{
-			return platform.ISteamInventory_SetProperty0( handle.Value, nItemID.Value, pchPropertyName, bValue );
+			return platform.ISteamInventory_SetProperty0( handle.Value, nItemID.Value, Utility.GetUtf8Bytes(pchPropertyName), bValue );
 		}
 		
 		// bool
 		public bool SetProperty1( SteamInventoryUpdateHandle_t handle /*SteamInventoryUpdateHandle_t*/, SteamItemInstanceID_t nItemID /*SteamItemInstanceID_t*/, string pchPropertyName /*const char **/, long nValue /*int64*/ )
 		{
-			return platform.ISteamInventory_SetProperty0( handle.Value, nItemID.Value, pchPropertyName, nValue );
+			return platform.ISteamInventory_SetProperty0( handle.Value, nItemID.Value, Utility.GetUtf8Bytes(pchPropertyName), nValue );
 		}
 		
 		// bool
 		public bool SetProperty2( SteamInventoryUpdateHandle_t handle /*SteamInventoryUpdateHandle_t*/, SteamItemInstanceID_t nItemID /*SteamItemInstanceID_t*/, string pchPropertyName /*const char **/, float flValue /*float*/ )
 		{
-			return platform.ISteamInventory_SetProperty0( handle.Value, nItemID.Value, pchPropertyName, flValue );
+			return platform.ISteamInventory_SetProperty0( handle.Value, nItemID.Value, Utility.GetUtf8Bytes(pchPropertyName), flValue );
 		}
 		
 		// SteamAPICall_t

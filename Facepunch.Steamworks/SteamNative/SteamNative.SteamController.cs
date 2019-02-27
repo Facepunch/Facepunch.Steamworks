@@ -1,6 +1,8 @@
+using Facepunch.Steamworks;
 using System;
-using System.Runtime.InteropServices;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace SteamNative
 {
@@ -70,7 +72,7 @@ namespace SteamNative
 		// ControllerActionSetHandle_t
 		public ControllerActionSetHandle_t GetActionSetHandle( string pszActionSetName /*const char **/ )
 		{
-			return platform.ISteamController_GetActionSetHandle( pszActionSetName );
+			return platform.ISteamController_GetActionSetHandle( Utility.GetUtf8Bytes(pszActionSetName) );
 		}
 		
 		// int
@@ -88,7 +90,7 @@ namespace SteamNative
 		// ControllerAnalogActionHandle_t
 		public ControllerAnalogActionHandle_t GetAnalogActionHandle( string pszActionName /*const char **/ )
 		{
-			return platform.ISteamController_GetAnalogActionHandle( pszActionName );
+			return platform.ISteamController_GetAnalogActionHandle( Utility.GetUtf8Bytes(pszActionName) );
 		}
 		
 		// int
@@ -124,7 +126,7 @@ namespace SteamNative
 		// ControllerDigitalActionHandle_t
 		public ControllerDigitalActionHandle_t GetDigitalActionHandle( string pszActionName /*const char **/ )
 		{
-			return platform.ISteamController_GetDigitalActionHandle( pszActionName );
+			return platform.ISteamController_GetDigitalActionHandle( Utility.GetUtf8Bytes(pszActionName) );
 		}
 		
 		// int
@@ -145,7 +147,11 @@ namespace SteamNative
 		{
 			IntPtr string_pointer;
 			string_pointer = platform.ISteamController_GetGlyphForActionOrigin( eOrigin );
-			return Marshal.PtrToStringAnsi( string_pointer );
+			var len = 0;
+			while (Marshal.ReadByte(string_pointer, len) != 0) ++len;
+			var buffer = new byte[len];
+			Marshal.Copy(string_pointer, buffer, 0, buffer.Length);
+			return Encoding.UTF8.GetString(buffer);
 		}
 		
 		// SteamInputType
@@ -166,7 +172,11 @@ namespace SteamNative
 		{
 			IntPtr string_pointer;
 			string_pointer = platform.ISteamController_GetStringForActionOrigin( eOrigin );
-			return Marshal.PtrToStringAnsi( string_pointer );
+			var len = 0;
+			while (Marshal.ReadByte(string_pointer, len) != 0) ++len;
+			var buffer = new byte[len];
+			Marshal.Copy(string_pointer, buffer, 0, buffer.Length);
+			return Encoding.UTF8.GetString(buffer);
 		}
 		
 		// bool

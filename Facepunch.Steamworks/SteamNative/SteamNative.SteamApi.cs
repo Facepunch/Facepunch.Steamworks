@@ -1,6 +1,8 @@
+using Facepunch.Steamworks;
 using System;
-using System.Runtime.InteropServices;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace SteamNative
 {
@@ -128,13 +130,13 @@ namespace SteamNative
 		// IntPtr
 		public IntPtr SteamInternal_CreateInterface( string version /*const char **/ )
 		{
-			return platform.SteamApi_SteamInternal_CreateInterface( version );
+			return platform.SteamApi_SteamInternal_CreateInterface( Utility.GetUtf8Bytes(version) );
 		}
 		
 		// bool
 		public bool SteamInternal_GameServer_Init( uint unIP /*uint32*/, ushort usPort /*uint16*/, ushort usGamePort /*uint16*/, ushort usQueryPort /*uint16*/, int eServerMode /*int*/, string pchVersionString /*const char **/ )
 		{
-			return platform.SteamApi_SteamInternal_GameServer_Init( unIP, usPort, usGamePort, usQueryPort, eServerMode, pchVersionString );
+			return platform.SteamApi_SteamInternal_GameServer_Init( unIP, usPort, usGamePort, usQueryPort, eServerMode, Utility.GetUtf8Bytes(pchVersionString) );
 		}
 		
 	}

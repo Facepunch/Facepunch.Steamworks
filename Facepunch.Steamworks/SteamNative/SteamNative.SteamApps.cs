@@ -1,6 +1,8 @@
+using Facepunch.Steamworks;
 using System;
-using System.Runtime.InteropServices;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace SteamNative
 {
@@ -135,7 +137,11 @@ namespace SteamNative
 		{
 			IntPtr string_pointer;
 			string_pointer = platform.ISteamApps_GetAvailableGameLanguages();
-			return Marshal.PtrToStringAnsi( string_pointer );
+			var len = 0;
+			while (Marshal.ReadByte(string_pointer, len) != 0) ++len;
+			var buffer = new byte[len];
+			Marshal.Copy(string_pointer, buffer, 0, buffer.Length);
+			return Encoding.UTF8.GetString(buffer);
 		}
 		
 		// bool
@@ -156,7 +162,11 @@ namespace SteamNative
 		{
 			IntPtr string_pointer;
 			string_pointer = platform.ISteamApps_GetCurrentGameLanguage();
-			return Marshal.PtrToStringAnsi( string_pointer );
+			var len = 0;
+			while (Marshal.ReadByte(string_pointer, len) != 0) ++len;
+			var buffer = new byte[len];
+			Marshal.Copy(string_pointer, buffer, 0, buffer.Length);
+			return Encoding.UTF8.GetString(buffer);
 		}
 		
 		// int
@@ -181,7 +191,7 @@ namespace SteamNative
 		public CallbackHandle GetFileDetails( string pszFileName /*const char **/, Action<FileDetailsResult_t, bool> CallbackFunction = null /*Action<FileDetailsResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
-			callback = platform.ISteamApps_GetFileDetails( pszFileName );
+			callback = platform.ISteamApps_GetFileDetails( Utility.GetUtf8Bytes(pszFileName) );
 			
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
@@ -200,8 +210,12 @@ namespace SteamNative
 		public string GetLaunchQueryParam( string pchKey /*const char **/ )
 		{
 			IntPtr string_pointer;
-			string_pointer = platform.ISteamApps_GetLaunchQueryParam( pchKey );
-			return Marshal.PtrToStringAnsi( string_pointer );
+			string_pointer = platform.ISteamApps_GetLaunchQueryParam( Utility.GetUtf8Bytes(pchKey) );
+			var len = 0;
+			while (Marshal.ReadByte(string_pointer, len) != 0) ++len;
+			var buffer = new byte[len];
+			Marshal.Copy(string_pointer, buffer, 0, buffer.Length);
+			return Encoding.UTF8.GetString(buffer);
 		}
 		
 		// void

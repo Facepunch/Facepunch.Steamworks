@@ -144,7 +144,7 @@ namespace Generator
                 case "unsigned short": return "ushort";
                 case "unsigned int": return "uint";
                 case "uint16": return "ushort";
-                case "const char *": return "string";
+                case "const char *": return "byte[]";
 
                 case "SteamAPIWarningMessageHook_t": return "IntPtr";
             }
@@ -185,6 +185,9 @@ namespace Generator
 
         internal string InteropVariable( bool AsRawValues )
         {
+            if (ManagedType == "byte[]" && AsRawValues)
+                return $"Utility.GetUtf8Bytes({Name})";
+
             if ( IsInputArray )
             {
                 if ( AsRawValues && IsStruct ) return $"{Name}.Select( x => x.Value ).ToArray()";
@@ -283,7 +286,7 @@ namespace Generator
                 return $"{TypeDef.Name} /*({NativeType})*/";
             }
 
-            if ( ManagedType == "string" )
+            if ( ManagedType == "byte[]")
                 return "IntPtr";
 
             return $"{ManagedType} /*{NativeType}*/";

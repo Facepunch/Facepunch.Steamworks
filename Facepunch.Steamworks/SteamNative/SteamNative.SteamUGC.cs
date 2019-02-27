@@ -1,6 +1,8 @@
+using Facepunch.Steamworks;
 using System;
-using System.Runtime.InteropServices;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace SteamNative
 {
@@ -70,25 +72,25 @@ namespace SteamNative
 		// bool
 		public bool AddExcludedTag( UGCQueryHandle_t handle /*UGCQueryHandle_t*/, string pTagName /*const char **/ )
 		{
-			return platform.ISteamUGC_AddExcludedTag( handle.Value, pTagName );
+			return platform.ISteamUGC_AddExcludedTag( handle.Value, Utility.GetUtf8Bytes(pTagName) );
 		}
 		
 		// bool
 		public bool AddItemKeyValueTag( UGCUpdateHandle_t handle /*UGCUpdateHandle_t*/, string pchKey /*const char **/, string pchValue /*const char **/ )
 		{
-			return platform.ISteamUGC_AddItemKeyValueTag( handle.Value, pchKey, pchValue );
+			return platform.ISteamUGC_AddItemKeyValueTag( handle.Value, Utility.GetUtf8Bytes(pchKey), Utility.GetUtf8Bytes(pchValue) );
 		}
 		
 		// bool
 		public bool AddItemPreviewFile( UGCUpdateHandle_t handle /*UGCUpdateHandle_t*/, string pszPreviewFile /*const char **/, ItemPreviewType type /*EItemPreviewType*/ )
 		{
-			return platform.ISteamUGC_AddItemPreviewFile( handle.Value, pszPreviewFile, type );
+			return platform.ISteamUGC_AddItemPreviewFile( handle.Value, Utility.GetUtf8Bytes(pszPreviewFile), type );
 		}
 		
 		// bool
 		public bool AddItemPreviewVideo( UGCUpdateHandle_t handle /*UGCUpdateHandle_t*/, string pszVideoID /*const char **/ )
 		{
-			return platform.ISteamUGC_AddItemPreviewVideo( handle.Value, pszVideoID );
+			return platform.ISteamUGC_AddItemPreviewVideo( handle.Value, Utility.GetUtf8Bytes(pszVideoID) );
 		}
 		
 		// SteamAPICall_t
@@ -106,19 +108,19 @@ namespace SteamNative
 		// bool
 		public bool AddRequiredKeyValueTag( UGCQueryHandle_t handle /*UGCQueryHandle_t*/, string pKey /*const char **/, string pValue /*const char **/ )
 		{
-			return platform.ISteamUGC_AddRequiredKeyValueTag( handle.Value, pKey, pValue );
+			return platform.ISteamUGC_AddRequiredKeyValueTag( handle.Value, Utility.GetUtf8Bytes(pKey), Utility.GetUtf8Bytes(pValue) );
 		}
 		
 		// bool
 		public bool AddRequiredTag( UGCQueryHandle_t handle /*UGCQueryHandle_t*/, string pTagName /*const char **/ )
 		{
-			return platform.ISteamUGC_AddRequiredTag( handle.Value, pTagName );
+			return platform.ISteamUGC_AddRequiredTag( handle.Value, Utility.GetUtf8Bytes(pTagName) );
 		}
 		
 		// bool
 		public bool BInitWorkshopForGameServer( DepotId_t unWorkshopDepotID /*DepotId_t*/, string pszFolder /*const char **/ )
 		{
-			return platform.ISteamUGC_BInitWorkshopForGameServer( unWorkshopDepotID.Value, pszFolder );
+			return platform.ISteamUGC_BInitWorkshopForGameServer( unWorkshopDepotID.Value, Utility.GetUtf8Bytes(pszFolder) );
 		}
 		
 		// SteamAPICall_t
@@ -385,7 +387,7 @@ namespace SteamNative
 		// bool
 		public bool RemoveItemKeyValueTags( UGCUpdateHandle_t handle /*UGCUpdateHandle_t*/, string pchKey /*const char **/ )
 		{
-			return platform.ISteamUGC_RemoveItemKeyValueTags( handle.Value, pchKey );
+			return platform.ISteamUGC_RemoveItemKeyValueTags( handle.Value, Utility.GetUtf8Bytes(pchKey) );
 		}
 		
 		// bool
@@ -421,31 +423,31 @@ namespace SteamNative
 		// bool
 		public bool SetCloudFileNameFilter( UGCQueryHandle_t handle /*UGCQueryHandle_t*/, string pMatchCloudFileName /*const char **/ )
 		{
-			return platform.ISteamUGC_SetCloudFileNameFilter( handle.Value, pMatchCloudFileName );
+			return platform.ISteamUGC_SetCloudFileNameFilter( handle.Value, Utility.GetUtf8Bytes(pMatchCloudFileName) );
 		}
 		
 		// bool
 		public bool SetItemContent( UGCUpdateHandle_t handle /*UGCUpdateHandle_t*/, string pszContentFolder /*const char **/ )
 		{
-			return platform.ISteamUGC_SetItemContent( handle.Value, pszContentFolder );
+			return platform.ISteamUGC_SetItemContent( handle.Value, Utility.GetUtf8Bytes(pszContentFolder) );
 		}
 		
 		// bool
 		public bool SetItemDescription( UGCUpdateHandle_t handle /*UGCUpdateHandle_t*/, string pchDescription /*const char **/ )
 		{
-			return platform.ISteamUGC_SetItemDescription( handle.Value, pchDescription );
+			return platform.ISteamUGC_SetItemDescription( handle.Value, Utility.GetUtf8Bytes(pchDescription) );
 		}
 		
 		// bool
 		public bool SetItemMetadata( UGCUpdateHandle_t handle /*UGCUpdateHandle_t*/, string pchMetaData /*const char **/ )
 		{
-			return platform.ISteamUGC_SetItemMetadata( handle.Value, pchMetaData );
+			return platform.ISteamUGC_SetItemMetadata( handle.Value, Utility.GetUtf8Bytes(pchMetaData) );
 		}
 		
 		// bool
 		public bool SetItemPreview( UGCUpdateHandle_t handle /*UGCUpdateHandle_t*/, string pszPreviewFile /*const char **/ )
 		{
-			return platform.ISteamUGC_SetItemPreview( handle.Value, pszPreviewFile );
+			return platform.ISteamUGC_SetItemPreview( handle.Value, Utility.GetUtf8Bytes(pszPreviewFile) );
 		}
 		
 		// bool
@@ -483,13 +485,13 @@ namespace SteamNative
 		// bool
 		public bool SetItemTitle( UGCUpdateHandle_t handle /*UGCUpdateHandle_t*/, string pchTitle /*const char **/ )
 		{
-			return platform.ISteamUGC_SetItemTitle( handle.Value, pchTitle );
+			return platform.ISteamUGC_SetItemTitle( handle.Value, Utility.GetUtf8Bytes(pchTitle) );
 		}
 		
 		// bool
 		public bool SetItemUpdateLanguage( UGCUpdateHandle_t handle /*UGCUpdateHandle_t*/, string pchLanguage /*const char **/ )
 		{
-			return platform.ISteamUGC_SetItemUpdateLanguage( handle.Value, pchLanguage );
+			return platform.ISteamUGC_SetItemUpdateLanguage( handle.Value, Utility.GetUtf8Bytes(pchLanguage) );
 		}
 		
 		// bool
@@ -501,7 +503,7 @@ namespace SteamNative
 		// bool
 		public bool SetLanguage( UGCQueryHandle_t handle /*UGCQueryHandle_t*/, string pchLanguage /*const char **/ )
 		{
-			return platform.ISteamUGC_SetLanguage( handle.Value, pchLanguage );
+			return platform.ISteamUGC_SetLanguage( handle.Value, Utility.GetUtf8Bytes(pchLanguage) );
 		}
 		
 		// bool
@@ -567,7 +569,7 @@ namespace SteamNative
 		// bool
 		public bool SetSearchText( UGCQueryHandle_t handle /*UGCQueryHandle_t*/, string pSearchText /*const char **/ )
 		{
-			return platform.ISteamUGC_SetSearchText( handle.Value, pSearchText );
+			return platform.ISteamUGC_SetSearchText( handle.Value, Utility.GetUtf8Bytes(pSearchText) );
 		}
 		
 		// SteamAPICall_t
@@ -638,7 +640,7 @@ namespace SteamNative
 		public CallbackHandle SubmitItemUpdate( UGCUpdateHandle_t handle /*UGCUpdateHandle_t*/, string pchChangeNote /*const char **/, Action<SubmitItemUpdateResult_t, bool> CallbackFunction = null /*Action<SubmitItemUpdateResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
-			callback = platform.ISteamUGC_SubmitItemUpdate( handle.Value, pchChangeNote );
+			callback = platform.ISteamUGC_SubmitItemUpdate( handle.Value, Utility.GetUtf8Bytes(pchChangeNote) );
 			
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
@@ -679,13 +681,13 @@ namespace SteamNative
 		// bool
 		public bool UpdateItemPreviewFile( UGCUpdateHandle_t handle /*UGCUpdateHandle_t*/, uint index /*uint32*/, string pszPreviewFile /*const char **/ )
 		{
-			return platform.ISteamUGC_UpdateItemPreviewFile( handle.Value, index, pszPreviewFile );
+			return platform.ISteamUGC_UpdateItemPreviewFile( handle.Value, index, Utility.GetUtf8Bytes(pszPreviewFile) );
 		}
 		
 		// bool
 		public bool UpdateItemPreviewVideo( UGCUpdateHandle_t handle /*UGCUpdateHandle_t*/, uint index /*uint32*/, string pszVideoID /*const char **/ )
 		{
-			return platform.ISteamUGC_UpdateItemPreviewVideo( handle.Value, index, pszVideoID );
+			return platform.ISteamUGC_UpdateItemPreviewVideo( handle.Value, index, Utility.GetUtf8Bytes(pszVideoID) );
 		}
 		
 	}

@@ -1,6 +1,8 @@
+using Facepunch.Steamworks;
 using System;
-using System.Runtime.InteropServices;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace SteamNative
 {
@@ -58,7 +60,7 @@ namespace SteamNative
 		// bool
 		public bool ClearAchievement( string pchName /*const char **/ )
 		{
-			return platform.ISteamUserStats_ClearAchievement( pchName );
+			return platform.ISteamUserStats_ClearAchievement( Utility.GetUtf8Bytes(pchName) );
 		}
 		
 		// SteamAPICall_t
@@ -89,7 +91,7 @@ namespace SteamNative
 		public CallbackHandle FindLeaderboard( string pchLeaderboardName /*const char **/, Action<LeaderboardFindResult_t, bool> CallbackFunction = null /*Action<LeaderboardFindResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
-			callback = platform.ISteamUserStats_FindLeaderboard( pchLeaderboardName );
+			callback = platform.ISteamUserStats_FindLeaderboard( Utility.GetUtf8Bytes(pchLeaderboardName) );
 			
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
@@ -101,7 +103,7 @@ namespace SteamNative
 		public CallbackHandle FindOrCreateLeaderboard( string pchLeaderboardName /*const char **/, LeaderboardSortMethod eLeaderboardSortMethod /*ELeaderboardSortMethod*/, LeaderboardDisplayType eLeaderboardDisplayType /*ELeaderboardDisplayType*/, Action<LeaderboardFindResult_t, bool> CallbackFunction = null /*Action<LeaderboardFindResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
-			callback = platform.ISteamUserStats_FindOrCreateLeaderboard( pchLeaderboardName, eLeaderboardSortMethod, eLeaderboardDisplayType );
+			callback = platform.ISteamUserStats_FindOrCreateLeaderboard( Utility.GetUtf8Bytes(pchLeaderboardName), eLeaderboardSortMethod, eLeaderboardDisplayType );
 			
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
@@ -112,19 +114,19 @@ namespace SteamNative
 		// bool
 		public bool GetAchievement( string pchName /*const char **/, ref bool pbAchieved /*bool **/ )
 		{
-			return platform.ISteamUserStats_GetAchievement( pchName, ref pbAchieved );
+			return platform.ISteamUserStats_GetAchievement( Utility.GetUtf8Bytes(pchName), ref pbAchieved );
 		}
 		
 		// bool
 		public bool GetAchievementAchievedPercent( string pchName /*const char **/, out float pflPercent /*float **/ )
 		{
-			return platform.ISteamUserStats_GetAchievementAchievedPercent( pchName, out pflPercent );
+			return platform.ISteamUserStats_GetAchievementAchievedPercent( Utility.GetUtf8Bytes(pchName), out pflPercent );
 		}
 		
 		// bool
 		public bool GetAchievementAndUnlockTime( string pchName /*const char **/, ref bool pbAchieved /*bool **/, out uint punUnlockTime /*uint32 **/ )
 		{
-			return platform.ISteamUserStats_GetAchievementAndUnlockTime( pchName, ref pbAchieved, out punUnlockTime );
+			return platform.ISteamUserStats_GetAchievementAndUnlockTime( Utility.GetUtf8Bytes(pchName), ref pbAchieved, out punUnlockTime );
 		}
 		
 		// string
@@ -132,14 +134,18 @@ namespace SteamNative
 		public string GetAchievementDisplayAttribute( string pchName /*const char **/, string pchKey /*const char **/ )
 		{
 			IntPtr string_pointer;
-			string_pointer = platform.ISteamUserStats_GetAchievementDisplayAttribute( pchName, pchKey );
-			return Marshal.PtrToStringAnsi( string_pointer );
+			string_pointer = platform.ISteamUserStats_GetAchievementDisplayAttribute( Utility.GetUtf8Bytes(pchName), Utility.GetUtf8Bytes(pchKey) );
+			var len = 0;
+			while (Marshal.ReadByte(string_pointer, len) != 0) ++len;
+			var buffer = new byte[len];
+			Marshal.Copy(string_pointer, buffer, 0, buffer.Length);
+			return Encoding.UTF8.GetString(buffer);
 		}
 		
 		// int
 		public int GetAchievementIcon( string pchName /*const char **/ )
 		{
-			return platform.ISteamUserStats_GetAchievementIcon( pchName );
+			return platform.ISteamUserStats_GetAchievementIcon( Utility.GetUtf8Bytes(pchName) );
 		}
 		
 		// string
@@ -148,7 +154,11 @@ namespace SteamNative
 		{
 			IntPtr string_pointer;
 			string_pointer = platform.ISteamUserStats_GetAchievementName( iAchievement );
-			return Marshal.PtrToStringAnsi( string_pointer );
+			var len = 0;
+			while (Marshal.ReadByte(string_pointer, len) != 0) ++len;
+			var buffer = new byte[len];
+			Marshal.Copy(string_pointer, buffer, 0, buffer.Length);
+			return Encoding.UTF8.GetString(buffer);
 		}
 		
 		// bool
@@ -160,25 +170,25 @@ namespace SteamNative
 		// bool
 		public bool GetGlobalStat( string pchStatName /*const char **/, out long pData /*int64 **/ )
 		{
-			return platform.ISteamUserStats_GetGlobalStat( pchStatName, out pData );
+			return platform.ISteamUserStats_GetGlobalStat( Utility.GetUtf8Bytes(pchStatName), out pData );
 		}
 		
 		// bool
 		public bool GetGlobalStat0( string pchStatName /*const char **/, out double pData /*double **/ )
 		{
-			return platform.ISteamUserStats_GetGlobalStat0( pchStatName, out pData );
+			return platform.ISteamUserStats_GetGlobalStat0( Utility.GetUtf8Bytes(pchStatName), out pData );
 		}
 		
 		// int
 		public int GetGlobalStatHistory( string pchStatName /*const char **/, out long pData /*int64 **/, uint cubData /*uint32*/ )
 		{
-			return platform.ISteamUserStats_GetGlobalStatHistory( pchStatName, out pData, cubData );
+			return platform.ISteamUserStats_GetGlobalStatHistory( Utility.GetUtf8Bytes(pchStatName), out pData, cubData );
 		}
 		
 		// int
 		public int GetGlobalStatHistory0( string pchStatName /*const char **/, out double pData /*double **/, uint cubData /*uint32*/ )
 		{
-			return platform.ISteamUserStats_GetGlobalStatHistory0( pchStatName, out pData, cubData );
+			return platform.ISteamUserStats_GetGlobalStatHistory0( Utility.GetUtf8Bytes(pchStatName), out pData, cubData );
 		}
 		
 		// LeaderboardDisplayType
@@ -199,7 +209,11 @@ namespace SteamNative
 		{
 			IntPtr string_pointer;
 			string_pointer = platform.ISteamUserStats_GetLeaderboardName( hSteamLeaderboard.Value );
-			return Marshal.PtrToStringAnsi( string_pointer );
+			var len = 0;
+			while (Marshal.ReadByte(string_pointer, len) != 0) ++len;
+			var buffer = new byte[len];
+			Marshal.Copy(string_pointer, buffer, 0, buffer.Length);
+			return Encoding.UTF8.GetString(buffer);
 		}
 		
 		// LeaderboardSortMethod
@@ -257,43 +271,43 @@ namespace SteamNative
 		// bool
 		public bool GetStat( string pchName /*const char **/, out int pData /*int32 **/ )
 		{
-			return platform.ISteamUserStats_GetStat( pchName, out pData );
+			return platform.ISteamUserStats_GetStat( Utility.GetUtf8Bytes(pchName), out pData );
 		}
 		
 		// bool
 		public bool GetStat0( string pchName /*const char **/, out float pData /*float **/ )
 		{
-			return platform.ISteamUserStats_GetStat0( pchName, out pData );
+			return platform.ISteamUserStats_GetStat0( Utility.GetUtf8Bytes(pchName), out pData );
 		}
 		
 		// bool
 		public bool GetUserAchievement( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/, ref bool pbAchieved /*bool **/ )
 		{
-			return platform.ISteamUserStats_GetUserAchievement( steamIDUser.Value, pchName, ref pbAchieved );
+			return platform.ISteamUserStats_GetUserAchievement( steamIDUser.Value, Utility.GetUtf8Bytes(pchName), ref pbAchieved );
 		}
 		
 		// bool
 		public bool GetUserAchievementAndUnlockTime( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/, ref bool pbAchieved /*bool **/, out uint punUnlockTime /*uint32 **/ )
 		{
-			return platform.ISteamUserStats_GetUserAchievementAndUnlockTime( steamIDUser.Value, pchName, ref pbAchieved, out punUnlockTime );
+			return platform.ISteamUserStats_GetUserAchievementAndUnlockTime( steamIDUser.Value, Utility.GetUtf8Bytes(pchName), ref pbAchieved, out punUnlockTime );
 		}
 		
 		// bool
 		public bool GetUserStat( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/, out int pData /*int32 **/ )
 		{
-			return platform.ISteamUserStats_GetUserStat( steamIDUser.Value, pchName, out pData );
+			return platform.ISteamUserStats_GetUserStat( steamIDUser.Value, Utility.GetUtf8Bytes(pchName), out pData );
 		}
 		
 		// bool
 		public bool GetUserStat0( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/, out float pData /*float **/ )
 		{
-			return platform.ISteamUserStats_GetUserStat0( steamIDUser.Value, pchName, out pData );
+			return platform.ISteamUserStats_GetUserStat0( steamIDUser.Value, Utility.GetUtf8Bytes(pchName), out pData );
 		}
 		
 		// bool
 		public bool IndicateAchievementProgress( string pchName /*const char **/, uint nCurProgress /*uint32*/, uint nMaxProgress /*uint32*/ )
 		{
-			return platform.ISteamUserStats_IndicateAchievementProgress( pchName, nCurProgress, nMaxProgress );
+			return platform.ISteamUserStats_IndicateAchievementProgress( Utility.GetUtf8Bytes(pchName), nCurProgress, nMaxProgress );
 		}
 		
 		// bool
@@ -347,19 +361,19 @@ namespace SteamNative
 		// bool
 		public bool SetAchievement( string pchName /*const char **/ )
 		{
-			return platform.ISteamUserStats_SetAchievement( pchName );
+			return platform.ISteamUserStats_SetAchievement( Utility.GetUtf8Bytes(pchName) );
 		}
 		
 		// bool
 		public bool SetStat( string pchName /*const char **/, int nData /*int32*/ )
 		{
-			return platform.ISteamUserStats_SetStat( pchName, nData );
+			return platform.ISteamUserStats_SetStat( Utility.GetUtf8Bytes(pchName), nData );
 		}
 		
 		// bool
 		public bool SetStat0( string pchName /*const char **/, float fData /*float*/ )
 		{
-			return platform.ISteamUserStats_SetStat0( pchName, fData );
+			return platform.ISteamUserStats_SetStat0( Utility.GetUtf8Bytes(pchName), fData );
 		}
 		
 		// bool
@@ -371,7 +385,7 @@ namespace SteamNative
 		// bool
 		public bool UpdateAvgRateStat( string pchName /*const char **/, float flCountThisSession /*float*/, double dSessionLength /*double*/ )
 		{
-			return platform.ISteamUserStats_UpdateAvgRateStat( pchName, flCountThisSession, dSessionLength );
+			return platform.ISteamUserStats_UpdateAvgRateStat( Utility.GetUtf8Bytes(pchName), flCountThisSession, dSessionLength );
 		}
 		
 		// SteamAPICall_t

@@ -1,6 +1,8 @@
+using Facepunch.Steamworks;
 using System;
-using System.Runtime.InteropServices;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace SteamNative
 {
@@ -53,7 +55,7 @@ namespace SteamNative
 		public CallbackHandle CheckFileSignature( string szFileName /*const char **/, Action<CheckFileSignature_t, bool> CallbackFunction = null /*Action<CheckFileSignature_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
-			callback = platform.ISteamUtils_CheckFileSignature( szFileName );
+			callback = platform.ISteamUtils_CheckFileSignature( Utility.GetUtf8Bytes(szFileName) );
 			
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
@@ -139,7 +141,11 @@ namespace SteamNative
 		{
 			IntPtr string_pointer;
 			string_pointer = platform.ISteamUtils_GetIPCountry();
-			return Marshal.PtrToStringAnsi( string_pointer );
+			var len = 0;
+			while (Marshal.ReadByte(string_pointer, len) != 0) ++len;
+			var buffer = new byte[len];
+			Marshal.Copy(string_pointer, buffer, 0, buffer.Length);
+			return Encoding.UTF8.GetString(buffer);
 		}
 		
 		// uint
@@ -166,7 +172,11 @@ namespace SteamNative
 		{
 			IntPtr string_pointer;
 			string_pointer = platform.ISteamUtils_GetSteamUILanguage();
-			return Marshal.PtrToStringAnsi( string_pointer );
+			var len = 0;
+			while (Marshal.ReadByte(string_pointer, len) != 0) ++len;
+			var buffer = new byte[len];
+			Marshal.Copy(string_pointer, buffer, 0, buffer.Length);
+			return Encoding.UTF8.GetString(buffer);
 		}
 		
 		// bool
@@ -226,7 +236,7 @@ namespace SteamNative
 		// bool
 		public bool ShowGamepadTextInput( GamepadTextInputMode eInputMode /*EGamepadTextInputMode*/, GamepadTextInputLineMode eLineInputMode /*EGamepadTextInputLineMode*/, string pchDescription /*const char **/, uint unCharMax /*uint32*/, string pchExistingText /*const char **/ )
 		{
-			return platform.ISteamUtils_ShowGamepadTextInput( eInputMode, eLineInputMode, pchDescription, unCharMax, pchExistingText );
+			return platform.ISteamUtils_ShowGamepadTextInput( eInputMode, eLineInputMode, Utility.GetUtf8Bytes(pchDescription), unCharMax, Utility.GetUtf8Bytes(pchExistingText) );
 		}
 		
 		// void

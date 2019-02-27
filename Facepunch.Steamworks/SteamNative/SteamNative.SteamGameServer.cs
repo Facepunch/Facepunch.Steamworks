@@ -1,6 +1,8 @@
+using Facepunch.Steamworks;
 using System;
-using System.Runtime.InteropServices;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace SteamNative
 {
@@ -76,7 +78,7 @@ namespace SteamNative
 		// bool
 		public bool BUpdateUserData( CSteamID steamIDUser /*class CSteamID*/, string pchPlayerName /*const char **/, uint uScore /*uint32*/ )
 		{
-			return platform.ISteamGameServer_BUpdateUserData( steamIDUser.Value, pchPlayerName, uScore );
+			return platform.ISteamGameServer_BUpdateUserData( steamIDUser.Value, Utility.GetUtf8Bytes(pchPlayerName), uScore );
 		}
 		
 		// void
@@ -178,7 +180,7 @@ namespace SteamNative
 		// bool
 		public bool InitGameServer( uint unIP /*uint32*/, ushort usGamePort /*uint16*/, ushort usQueryPort /*uint16*/, uint unFlags /*uint32*/, AppId_t nGameAppId /*AppId_t*/, string pchVersionString /*const char **/ )
 		{
-			return platform.ISteamGameServer_InitGameServer( unIP, usGamePort, usQueryPort, unFlags, nGameAppId.Value, pchVersionString );
+			return platform.ISteamGameServer_InitGameServer( unIP, usGamePort, usQueryPort, unFlags, nGameAppId.Value, Utility.GetUtf8Bytes(pchVersionString) );
 		}
 		
 		// void
@@ -190,7 +192,7 @@ namespace SteamNative
 		// void
 		public void LogOn( string pszToken /*const char **/ )
 		{
-			platform.ISteamGameServer_LogOn( pszToken );
+			platform.ISteamGameServer_LogOn( Utility.GetUtf8Bytes(pszToken) );
 		}
 		
 		// void
@@ -232,19 +234,19 @@ namespace SteamNative
 		// void
 		public void SetGameData( string pchGameData /*const char **/ )
 		{
-			platform.ISteamGameServer_SetGameData( pchGameData );
+			platform.ISteamGameServer_SetGameData( Utility.GetUtf8Bytes(pchGameData) );
 		}
 		
 		// void
 		public void SetGameDescription( string pszGameDescription /*const char **/ )
 		{
-			platform.ISteamGameServer_SetGameDescription( pszGameDescription );
+			platform.ISteamGameServer_SetGameDescription( Utility.GetUtf8Bytes(pszGameDescription) );
 		}
 		
 		// void
 		public void SetGameTags( string pchGameTags /*const char **/ )
 		{
-			platform.ISteamGameServer_SetGameTags( pchGameTags );
+			platform.ISteamGameServer_SetGameTags( Utility.GetUtf8Bytes(pchGameTags) );
 		}
 		
 		// void
@@ -256,13 +258,13 @@ namespace SteamNative
 		// void
 		public void SetKeyValue( string pKey /*const char **/, string pValue /*const char **/ )
 		{
-			platform.ISteamGameServer_SetKeyValue( pKey, pValue );
+			platform.ISteamGameServer_SetKeyValue( Utility.GetUtf8Bytes(pKey), Utility.GetUtf8Bytes(pValue) );
 		}
 		
 		// void
 		public void SetMapName( string pszMapName /*const char **/ )
 		{
-			platform.ISteamGameServer_SetMapName( pszMapName );
+			platform.ISteamGameServer_SetMapName( Utility.GetUtf8Bytes(pszMapName) );
 		}
 		
 		// void
@@ -274,7 +276,7 @@ namespace SteamNative
 		// void
 		public void SetModDir( string pszModDir /*const char **/ )
 		{
-			platform.ISteamGameServer_SetModDir( pszModDir );
+			platform.ISteamGameServer_SetModDir( Utility.GetUtf8Bytes(pszModDir) );
 		}
 		
 		// void
@@ -286,19 +288,19 @@ namespace SteamNative
 		// void
 		public void SetProduct( string pszProduct /*const char **/ )
 		{
-			platform.ISteamGameServer_SetProduct( pszProduct );
+			platform.ISteamGameServer_SetProduct( Utility.GetUtf8Bytes(pszProduct) );
 		}
 		
 		// void
 		public void SetRegion( string pszRegion /*const char **/ )
 		{
-			platform.ISteamGameServer_SetRegion( pszRegion );
+			platform.ISteamGameServer_SetRegion( Utility.GetUtf8Bytes(pszRegion) );
 		}
 		
 		// void
 		public void SetServerName( string pszServerName /*const char **/ )
 		{
-			platform.ISteamGameServer_SetServerName( pszServerName );
+			platform.ISteamGameServer_SetServerName( Utility.GetUtf8Bytes(pszServerName) );
 		}
 		
 		// void
@@ -310,7 +312,7 @@ namespace SteamNative
 		// void
 		public void SetSpectatorServerName( string pszSpectatorServerName /*const char **/ )
 		{
-			platform.ISteamGameServer_SetSpectatorServerName( pszSpectatorServerName );
+			platform.ISteamGameServer_SetSpectatorServerName( Utility.GetUtf8Bytes(pszSpectatorServerName) );
 		}
 		
 		// UserHasLicenseForAppResult

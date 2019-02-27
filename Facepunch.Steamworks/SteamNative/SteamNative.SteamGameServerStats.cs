@@ -1,6 +1,8 @@
+using Facepunch.Steamworks;
 using System;
-using System.Runtime.InteropServices;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace SteamNative
 {
@@ -46,25 +48,25 @@ namespace SteamNative
 		// bool
 		public bool ClearUserAchievement( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/ )
 		{
-			return platform.ISteamGameServerStats_ClearUserAchievement( steamIDUser.Value, pchName );
+			return platform.ISteamGameServerStats_ClearUserAchievement( steamIDUser.Value, Utility.GetUtf8Bytes(pchName) );
 		}
 		
 		// bool
 		public bool GetUserAchievement( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/, ref bool pbAchieved /*bool **/ )
 		{
-			return platform.ISteamGameServerStats_GetUserAchievement( steamIDUser.Value, pchName, ref pbAchieved );
+			return platform.ISteamGameServerStats_GetUserAchievement( steamIDUser.Value, Utility.GetUtf8Bytes(pchName), ref pbAchieved );
 		}
 		
 		// bool
 		public bool GetUserStat( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/, out int pData /*int32 **/ )
 		{
-			return platform.ISteamGameServerStats_GetUserStat( steamIDUser.Value, pchName, out pData );
+			return platform.ISteamGameServerStats_GetUserStat( steamIDUser.Value, Utility.GetUtf8Bytes(pchName), out pData );
 		}
 		
 		// bool
 		public bool GetUserStat0( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/, out float pData /*float **/ )
 		{
-			return platform.ISteamGameServerStats_GetUserStat0( steamIDUser.Value, pchName, out pData );
+			return platform.ISteamGameServerStats_GetUserStat0( steamIDUser.Value, Utility.GetUtf8Bytes(pchName), out pData );
 		}
 		
 		// SteamAPICall_t
@@ -82,19 +84,19 @@ namespace SteamNative
 		// bool
 		public bool SetUserAchievement( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/ )
 		{
-			return platform.ISteamGameServerStats_SetUserAchievement( steamIDUser.Value, pchName );
+			return platform.ISteamGameServerStats_SetUserAchievement( steamIDUser.Value, Utility.GetUtf8Bytes(pchName) );
 		}
 		
 		// bool
 		public bool SetUserStat( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/, int nData /*int32*/ )
 		{
-			return platform.ISteamGameServerStats_SetUserStat( steamIDUser.Value, pchName, nData );
+			return platform.ISteamGameServerStats_SetUserStat( steamIDUser.Value, Utility.GetUtf8Bytes(pchName), nData );
 		}
 		
 		// bool
 		public bool SetUserStat0( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/, float fData /*float*/ )
 		{
-			return platform.ISteamGameServerStats_SetUserStat0( steamIDUser.Value, pchName, fData );
+			return platform.ISteamGameServerStats_SetUserStat0( steamIDUser.Value, Utility.GetUtf8Bytes(pchName), fData );
 		}
 		
 		// SteamAPICall_t
@@ -112,7 +114,7 @@ namespace SteamNative
 		// bool
 		public bool UpdateUserAvgRateStat( CSteamID steamIDUser /*class CSteamID*/, string pchName /*const char **/, float flCountThisSession /*float*/, double dSessionLength /*double*/ )
 		{
-			return platform.ISteamGameServerStats_UpdateUserAvgRateStat( steamIDUser.Value, pchName, flCountThisSession, dSessionLength );
+			return platform.ISteamGameServerStats_UpdateUserAvgRateStat( steamIDUser.Value, Utility.GetUtf8Bytes(pchName), flCountThisSession, dSessionLength );
 		}
 		
 	}

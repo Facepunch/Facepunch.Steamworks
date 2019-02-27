@@ -1,6 +1,8 @@
+using Facepunch.Steamworks;
 using System;
-using System.Runtime.InteropServices;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace SteamNative
 {
@@ -142,7 +144,7 @@ namespace SteamNative
 		// bool
 		public bool RegisterSteamMusicRemote( string pchName /*const char **/ )
 		{
-			return platform.ISteamMusicRemote_RegisterSteamMusicRemote( pchName );
+			return platform.ISteamMusicRemote_RegisterSteamMusicRemote( Utility.GetUtf8Bytes(pchName) );
 		}
 		
 		// bool
@@ -172,13 +174,13 @@ namespace SteamNative
 		// bool
 		public bool SetDisplayName( string pchDisplayName /*const char **/ )
 		{
-			return platform.ISteamMusicRemote_SetDisplayName( pchDisplayName );
+			return platform.ISteamMusicRemote_SetDisplayName( Utility.GetUtf8Bytes(pchDisplayName) );
 		}
 		
 		// bool
 		public bool SetPlaylistEntry( int nID /*int*/, int nPosition /*int*/, string pchEntryText /*const char **/ )
 		{
-			return platform.ISteamMusicRemote_SetPlaylistEntry( nID, nPosition, pchEntryText );
+			return platform.ISteamMusicRemote_SetPlaylistEntry( nID, nPosition, Utility.GetUtf8Bytes(pchEntryText) );
 		}
 		
 		// bool
@@ -190,7 +192,7 @@ namespace SteamNative
 		// bool
 		public bool SetQueueEntry( int nID /*int*/, int nPosition /*int*/, string pchEntryText /*const char **/ )
 		{
-			return platform.ISteamMusicRemote_SetQueueEntry( nID, nPosition, pchEntryText );
+			return platform.ISteamMusicRemote_SetQueueEntry( nID, nPosition, Utility.GetUtf8Bytes(pchEntryText) );
 		}
 		
 		// bool
@@ -208,7 +210,7 @@ namespace SteamNative
 		// bool
 		public bool UpdateCurrentEntryText( string pchText /*const char **/ )
 		{
-			return platform.ISteamMusicRemote_UpdateCurrentEntryText( pchText );
+			return platform.ISteamMusicRemote_UpdateCurrentEntryText( Utility.GetUtf8Bytes(pchText) );
 		}
 		
 		// bool

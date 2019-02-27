@@ -1,6 +1,8 @@
+using Facepunch.Steamworks;
 using System;
-using System.Runtime.InteropServices;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace SteamNative
 {
@@ -188,38 +190,38 @@ namespace SteamNative
 		// bool
 		public bool FileDelete( string pchFile /*const char **/ )
 		{
-			return platform.ISteamRemoteStorage_FileDelete( pchFile );
+			return platform.ISteamRemoteStorage_FileDelete( Utility.GetUtf8Bytes(pchFile) );
 		}
 		
 		// bool
 		public bool FileExists( string pchFile /*const char **/ )
 		{
-			return platform.ISteamRemoteStorage_FileExists( pchFile );
+			return platform.ISteamRemoteStorage_FileExists( Utility.GetUtf8Bytes(pchFile) );
 		}
 		
 		// bool
 		public bool FileForget( string pchFile /*const char **/ )
 		{
-			return platform.ISteamRemoteStorage_FileForget( pchFile );
+			return platform.ISteamRemoteStorage_FileForget( Utility.GetUtf8Bytes(pchFile) );
 		}
 		
 		// bool
 		public bool FilePersisted( string pchFile /*const char **/ )
 		{
-			return platform.ISteamRemoteStorage_FilePersisted( pchFile );
+			return platform.ISteamRemoteStorage_FilePersisted( Utility.GetUtf8Bytes(pchFile) );
 		}
 		
 		// int
 		public int FileRead( string pchFile /*const char **/, IntPtr pvData /*void **/, int cubDataToRead /*int32*/ )
 		{
-			return platform.ISteamRemoteStorage_FileRead( pchFile, (IntPtr) pvData, cubDataToRead );
+			return platform.ISteamRemoteStorage_FileRead( Utility.GetUtf8Bytes(pchFile), (IntPtr) pvData, cubDataToRead );
 		}
 		
 		// SteamAPICall_t
 		public CallbackHandle FileReadAsync( string pchFile /*const char **/, uint nOffset /*uint32*/, uint cubToRead /*uint32*/, Action<RemoteStorageFileReadAsyncComplete_t, bool> CallbackFunction = null /*Action<RemoteStorageFileReadAsyncComplete_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
-			callback = platform.ISteamRemoteStorage_FileReadAsync( pchFile, nOffset, cubToRead );
+			callback = platform.ISteamRemoteStorage_FileReadAsync( Utility.GetUtf8Bytes(pchFile), nOffset, cubToRead );
 			
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
@@ -237,7 +239,7 @@ namespace SteamNative
 		public CallbackHandle FileShare( string pchFile /*const char **/, Action<RemoteStorageFileShareResult_t, bool> CallbackFunction = null /*Action<RemoteStorageFileShareResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
-			callback = platform.ISteamRemoteStorage_FileShare( pchFile );
+			callback = platform.ISteamRemoteStorage_FileShare( Utility.GetUtf8Bytes(pchFile) );
 			
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
@@ -248,14 +250,14 @@ namespace SteamNative
 		// bool
 		public bool FileWrite( string pchFile /*const char **/, IntPtr pvData /*const void **/, int cubData /*int32*/ )
 		{
-			return platform.ISteamRemoteStorage_FileWrite( pchFile, (IntPtr) pvData, cubData );
+			return platform.ISteamRemoteStorage_FileWrite( Utility.GetUtf8Bytes(pchFile), (IntPtr) pvData, cubData );
 		}
 		
 		// SteamAPICall_t
 		public CallbackHandle FileWriteAsync( string pchFile /*const char **/, IntPtr pvData /*const void **/, uint cubData /*uint32*/, Action<RemoteStorageFileWriteAsyncComplete_t, bool> CallbackFunction = null /*Action<RemoteStorageFileWriteAsyncComplete_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
-			callback = platform.ISteamRemoteStorage_FileWriteAsync( pchFile, (IntPtr) pvData, cubData );
+			callback = platform.ISteamRemoteStorage_FileWriteAsync( Utility.GetUtf8Bytes(pchFile), (IntPtr) pvData, cubData );
 			
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
@@ -278,7 +280,7 @@ namespace SteamNative
 		// UGCFileWriteStreamHandle_t
 		public UGCFileWriteStreamHandle_t FileWriteStreamOpen( string pchFile /*const char **/ )
 		{
-			return platform.ISteamRemoteStorage_FileWriteStreamOpen( pchFile );
+			return platform.ISteamRemoteStorage_FileWriteStreamOpen( Utility.GetUtf8Bytes(pchFile) );
 		}
 		
 		// bool
@@ -311,19 +313,23 @@ namespace SteamNative
 		{
 			IntPtr string_pointer;
 			string_pointer = platform.ISteamRemoteStorage_GetFileNameAndSize( iFile, out pnFileSizeInBytes );
-			return Marshal.PtrToStringAnsi( string_pointer );
+			var len = 0;
+			while (Marshal.ReadByte(string_pointer, len) != 0) ++len;
+			var buffer = new byte[len];
+			Marshal.Copy(string_pointer, buffer, 0, buffer.Length);
+			return Encoding.UTF8.GetString(buffer);
 		}
 		
 		// int
 		public int GetFileSize( string pchFile /*const char **/ )
 		{
-			return platform.ISteamRemoteStorage_GetFileSize( pchFile );
+			return platform.ISteamRemoteStorage_GetFileSize( Utility.GetUtf8Bytes(pchFile) );
 		}
 		
 		// long
 		public long GetFileTimestamp( string pchFile /*const char **/ )
 		{
-			return platform.ISteamRemoteStorage_GetFileTimestamp( pchFile );
+			return platform.ISteamRemoteStorage_GetFileTimestamp( Utility.GetUtf8Bytes(pchFile) );
 		}
 		
 		// SteamAPICall_t
@@ -359,7 +365,7 @@ namespace SteamNative
 		// RemoteStoragePlatform
 		public RemoteStoragePlatform GetSyncPlatforms( string pchFile /*const char **/ )
 		{
-			return platform.ISteamRemoteStorage_GetSyncPlatforms( pchFile );
+			return platform.ISteamRemoteStorage_GetSyncPlatforms( Utility.GetUtf8Bytes(pchFile) );
 		}
 		
 		// bool
@@ -429,7 +435,7 @@ namespace SteamNative
 				var tags = new SteamParamStringArray_t();
 				tags.Strings = nativeArray;
 				tags.NumStrings = pTags.Length;
-				callback = platform.ISteamRemoteStorage_PublishVideo( eVideoProvider, pchVideoAccount, pchVideoIdentifier, pchPreviewFile, nConsumerAppId.Value, pchTitle, pchDescription, eVisibility, ref tags );
+				callback = platform.ISteamRemoteStorage_PublishVideo( eVideoProvider, Utility.GetUtf8Bytes(pchVideoAccount), Utility.GetUtf8Bytes(pchVideoIdentifier), Utility.GetUtf8Bytes(pchPreviewFile), nConsumerAppId.Value, Utility.GetUtf8Bytes(pchTitle), Utility.GetUtf8Bytes(pchDescription), eVisibility, ref tags );
 			}
 			finally
 			{
@@ -467,7 +473,7 @@ namespace SteamNative
 				var tags = new SteamParamStringArray_t();
 				tags.Strings = nativeArray;
 				tags.NumStrings = pTags.Length;
-				callback = platform.ISteamRemoteStorage_PublishWorkshopFile( pchFile, pchPreviewFile, nConsumerAppId.Value, pchTitle, pchDescription, eVisibility, ref tags, eWorkshopFileType );
+				callback = platform.ISteamRemoteStorage_PublishWorkshopFile( Utility.GetUtf8Bytes(pchFile), Utility.GetUtf8Bytes(pchPreviewFile), nConsumerAppId.Value, Utility.GetUtf8Bytes(pchTitle), Utility.GetUtf8Bytes(pchDescription), eVisibility, ref tags, eWorkshopFileType );
 			}
 			finally
 			{
@@ -491,7 +497,7 @@ namespace SteamNative
 		// bool
 		public bool SetSyncPlatforms( string pchFile /*const char **/, RemoteStoragePlatform eRemoteStoragePlatform /*ERemoteStoragePlatform*/ )
 		{
-			return platform.ISteamRemoteStorage_SetSyncPlatforms( pchFile, eRemoteStoragePlatform );
+			return platform.ISteamRemoteStorage_SetSyncPlatforms( Utility.GetUtf8Bytes(pchFile), eRemoteStoragePlatform );
 		}
 		
 		// SteamAPICall_t
@@ -534,7 +540,7 @@ namespace SteamNative
 		public CallbackHandle UGCDownloadToLocation( UGCHandle_t hContent /*UGCHandle_t*/, string pchLocation /*const char **/, uint unPriority /*uint32*/, Action<RemoteStorageDownloadUGCResult_t, bool> CallbackFunction = null /*Action<RemoteStorageDownloadUGCResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
-			callback = platform.ISteamRemoteStorage_UGCDownloadToLocation( hContent.Value, pchLocation, unPriority );
+			callback = platform.ISteamRemoteStorage_UGCDownloadToLocation( hContent.Value, Utility.GetUtf8Bytes(pchLocation), unPriority );
 			
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
@@ -563,25 +569,25 @@ namespace SteamNative
 		// bool
 		public bool UpdatePublishedFileDescription( PublishedFileUpdateHandle_t updateHandle /*PublishedFileUpdateHandle_t*/, string pchDescription /*const char **/ )
 		{
-			return platform.ISteamRemoteStorage_UpdatePublishedFileDescription( updateHandle.Value, pchDescription );
+			return platform.ISteamRemoteStorage_UpdatePublishedFileDescription( updateHandle.Value, Utility.GetUtf8Bytes(pchDescription) );
 		}
 		
 		// bool
 		public bool UpdatePublishedFileFile( PublishedFileUpdateHandle_t updateHandle /*PublishedFileUpdateHandle_t*/, string pchFile /*const char **/ )
 		{
-			return platform.ISteamRemoteStorage_UpdatePublishedFileFile( updateHandle.Value, pchFile );
+			return platform.ISteamRemoteStorage_UpdatePublishedFileFile( updateHandle.Value, Utility.GetUtf8Bytes(pchFile) );
 		}
 		
 		// bool
 		public bool UpdatePublishedFilePreviewFile( PublishedFileUpdateHandle_t updateHandle /*PublishedFileUpdateHandle_t*/, string pchPreviewFile /*const char **/ )
 		{
-			return platform.ISteamRemoteStorage_UpdatePublishedFilePreviewFile( updateHandle.Value, pchPreviewFile );
+			return platform.ISteamRemoteStorage_UpdatePublishedFilePreviewFile( updateHandle.Value, Utility.GetUtf8Bytes(pchPreviewFile) );
 		}
 		
 		// bool
 		public bool UpdatePublishedFileSetChangeDescription( PublishedFileUpdateHandle_t updateHandle /*PublishedFileUpdateHandle_t*/, string pchChangeDescription /*const char **/ )
 		{
-			return platform.ISteamRemoteStorage_UpdatePublishedFileSetChangeDescription( updateHandle.Value, pchChangeDescription );
+			return platform.ISteamRemoteStorage_UpdatePublishedFileSetChangeDescription( updateHandle.Value, Utility.GetUtf8Bytes(pchChangeDescription) );
 		}
 		
 		// bool
@@ -619,7 +625,7 @@ namespace SteamNative
 		// bool
 		public bool UpdatePublishedFileTitle( PublishedFileUpdateHandle_t updateHandle /*PublishedFileUpdateHandle_t*/, string pchTitle /*const char **/ )
 		{
-			return platform.ISteamRemoteStorage_UpdatePublishedFileTitle( updateHandle.Value, pchTitle );
+			return platform.ISteamRemoteStorage_UpdatePublishedFileTitle( updateHandle.Value, Utility.GetUtf8Bytes(pchTitle) );
 		}
 		
 		// bool

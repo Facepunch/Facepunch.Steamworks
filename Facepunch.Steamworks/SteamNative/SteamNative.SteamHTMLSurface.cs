@@ -1,6 +1,8 @@
+using Facepunch.Steamworks;
 using System;
-using System.Runtime.InteropServices;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace SteamNative
 {
@@ -46,7 +48,7 @@ namespace SteamNative
 		// void
 		public void AddHeader( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, string pchKey /*const char **/, string pchValue /*const char **/ )
 		{
-			platform.ISteamHTMLSurface_AddHeader( unBrowserHandle.Value, pchKey, pchValue );
+			platform.ISteamHTMLSurface_AddHeader( unBrowserHandle.Value, Utility.GetUtf8Bytes(pchKey), Utility.GetUtf8Bytes(pchValue) );
 		}
 		
 		// void
@@ -65,7 +67,7 @@ namespace SteamNative
 		public CallbackHandle CreateBrowser( string pchUserAgent /*const char **/, string pchUserCSS /*const char **/, Action<HTML_BrowserReady_t, bool> CallbackFunction = null /*Action<HTML_BrowserReady_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
-			callback = platform.ISteamHTMLSurface_CreateBrowser( pchUserAgent, pchUserCSS );
+			callback = platform.ISteamHTMLSurface_CreateBrowser( Utility.GetUtf8Bytes(pchUserAgent), Utility.GetUtf8Bytes(pchUserCSS) );
 			
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
@@ -82,13 +84,13 @@ namespace SteamNative
 		// void
 		public void ExecuteJavascript( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, string pchScript /*const char **/ )
 		{
-			platform.ISteamHTMLSurface_ExecuteJavascript( unBrowserHandle.Value, pchScript );
+			platform.ISteamHTMLSurface_ExecuteJavascript( unBrowserHandle.Value, Utility.GetUtf8Bytes(pchScript) );
 		}
 		
 		// void
 		public void Find( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, string pchSearchStr /*const char **/, bool bCurrentlyInFind /*bool*/, bool bReverse /*bool*/ )
 		{
-			platform.ISteamHTMLSurface_Find( unBrowserHandle.Value, pchSearchStr, bCurrentlyInFind, bReverse );
+			platform.ISteamHTMLSurface_Find( unBrowserHandle.Value, Utility.GetUtf8Bytes(pchSearchStr), bCurrentlyInFind, bReverse );
 		}
 		
 		// void
@@ -142,7 +144,7 @@ namespace SteamNative
 		// void
 		public void LoadURL( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, string pchURL /*const char **/, string pchPostData /*const char **/ )
 		{
-			platform.ISteamHTMLSurface_LoadURL( unBrowserHandle.Value, pchURL, pchPostData );
+			platform.ISteamHTMLSurface_LoadURL( unBrowserHandle.Value, Utility.GetUtf8Bytes(pchURL), Utility.GetUtf8Bytes(pchPostData) );
 		}
 		
 		// void
@@ -202,7 +204,7 @@ namespace SteamNative
 		// void
 		public void SetCookie( string pchHostname /*const char **/, string pchKey /*const char **/, string pchValue /*const char **/, string pchPath /*const char **/, RTime32 nExpires /*RTime32*/, bool bSecure /*bool*/, bool bHTTPOnly /*bool*/ )
 		{
-			platform.ISteamHTMLSurface_SetCookie( pchHostname, pchKey, pchValue, pchPath, nExpires.Value, bSecure, bHTTPOnly );
+			platform.ISteamHTMLSurface_SetCookie( Utility.GetUtf8Bytes(pchHostname), Utility.GetUtf8Bytes(pchKey), Utility.GetUtf8Bytes(pchValue), Utility.GetUtf8Bytes(pchPath), nExpires.Value, bSecure, bHTTPOnly );
 		}
 		
 		// void

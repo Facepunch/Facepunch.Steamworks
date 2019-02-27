@@ -154,7 +154,7 @@ namespace Generator
                 MethodNameCount = 0;
             }
 
-            var argString = string.Join( ", ", argList.Select( x => x.ManagedParameter() ) );
+            var argString = string.Join(", ", argList.Select(x => x.ManagedParameter().Replace("byte[]", "string")));
             if ( argString != "" ) argString = " " + argString + " ";
             StartBlock( $"public{statc} {ReturnType} {methodName}({argString})" );
 
@@ -332,7 +332,11 @@ namespace Generator
             BeforeLines.Add( "IntPtr string_pointer;" );
             ReturnVar = "string_pointer";
 
-            AfterLines.Add( "return Marshal.PtrToStringAnsi( string_pointer );" );
+            AfterLines.Add("var len = 0;");
+            AfterLines.Add("while (Marshal.ReadByte(string_pointer, len) != 0) ++len;");
+            AfterLines.Add("var buffer = new byte[len];");
+            AfterLines.Add("Marshal.Copy(string_pointer, buffer, 0, buffer.Length);");
+            AfterLines.Add("return Encoding.UTF8.GetString(buffer);");
         }
 
         private void Detect_StringFetch( List<Argument> argList, List<Argument> callargs )

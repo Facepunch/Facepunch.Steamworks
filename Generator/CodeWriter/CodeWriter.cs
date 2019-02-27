@@ -148,9 +148,11 @@ namespace Generator
 
         private void Header( string NamespaceName = "SteamNative" )
         {
+            WriteLine( "using Facepunch.Steamworks;");
             WriteLine( "using System;" );
+            WriteLine( "using System.Linq;");
             WriteLine( "using System.Runtime.InteropServices;" );
-            WriteLine( "using System.Linq;" );
+            WriteLine( "using System.Text;");
             WriteLine();
             StartBlock( "namespace " + NamespaceName );
         }
