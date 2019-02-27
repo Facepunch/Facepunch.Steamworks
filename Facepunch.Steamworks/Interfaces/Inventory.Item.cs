@@ -116,6 +116,9 @@ namespace Facepunch.Steamworks
 
             private void UpdatingProperties()
             {
+                if (!Inventory.EnableItemProperties)
+                    throw new InvalidOperationException("Item properties are disabled.");
+
                 if (updateHandle != 0) return;
 
                 updateHandle = Inventory.inventory.StartUpdateProperties();

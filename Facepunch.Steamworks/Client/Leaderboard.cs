@@ -360,6 +360,9 @@ namespace Facepunch.Steamworks
             if ( client == null ) return;
             if ( error ) return;
 
+            // Entry count may have changed
+            TotalEntries = client.native.userstats.GetLeaderboardEntryCount(BoardId);
+
             var list = new List<Entry>();
             ReadScores( result, list );
 

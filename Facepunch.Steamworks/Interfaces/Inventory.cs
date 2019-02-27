@@ -14,7 +14,7 @@ namespace Facepunch.Steamworks
         /// Called when the local client's items are first retrieved, and when they change.
         /// Obviously not called on the server.
         /// </summary>
-        public Action OnUpdate;
+        public event Action OnUpdate;
 
         /// <summary>
         /// A list of items owned by this user. You should call Refresh() before trying to access this, 
@@ -33,6 +33,12 @@ namespace Facepunch.Steamworks
         /// </summary>
         public DateTime SerializedExpireTime;
 
+        /// <summary>
+        /// Controls whether per-item properties (<see cref="Item.Properties"/>) are available or not. Default true.
+        /// This can improve performance of full inventory updates.
+        /// </summary>
+        public bool EnableItemProperties = true;
+
         internal uint LastTimestamp = 0;
 
         internal SteamNative.SteamInventory inventory;
@@ -40,6 +46,8 @@ namespace Facepunch.Steamworks
         private bool IsServer { get; set; }
 
         public event Action OnDefinitionsUpdated;
+
+        public event Action<Result> OnInventoryResultReady;
 
         internal Inventory( BaseSteamworks steamworks, SteamNative.SteamInventory c, bool server )
         {
@@ -113,10 +121,9 @@ namespace Facepunch.Steamworks
         /// </summary>
         private void onResultReady( SteamInventoryResultReady_t data )
         {
-            if ( Result.Pending.ContainsKey( data.Handle ) )
+            Result result;
+            if ( Result.Pending.TryGetValue( data.Handle, out result ) )
             {
-                var result = Result.Pending[data.Handle];
-
                 result.OnSteamResult( data );
 
                 if ( data.Result == SteamNative.Result.OK )
@@ -127,6 +134,13 @@ namespace Facepunch.Steamworks
                 Result.Pending.Remove( data.Handle );
                 result.Dispose();
             }
+            else
+            {
+                result = new Result(this, data.Handle, false);
+                result.Fill();
+            }
+
+            OnInventoryResultReady?.Invoke(result);
         }
 
         private void onResult( Result r, bool isFullUpdate )
@@ -466,6 +480,7 @@ namespace Facepunch.Steamworks
                    Definitions[i].UpdatePrice();
                }
 
+               OnUpdate?.Invoke();
            });
         }
     }
