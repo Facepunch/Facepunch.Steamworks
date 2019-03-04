@@ -43,6 +43,11 @@ namespace Facepunch.Steamworks
 
 
         /// <summary>
+        /// The 2 digit ISO 3166-1-alpha-2 format country code (e.g. "US" or "UK")
+        /// </summary>
+        public string CurrentCountry { get; }
+
+        /// <summary>
         /// The currently selected language
         /// </summary>
         public string CurrentLanguage { get; }
@@ -128,6 +133,7 @@ namespace Facepunch.Steamworks
                 InstallFolder = new DirectoryInfo(appInstallDir);
 
             BuildId = native.apps.GetAppBuildId();
+            CurrentCountry = native.utils.GetIPCountry();
             CurrentLanguage = native.apps.GetCurrentGameLanguage();
             AvailableLanguages = native.apps.GetAvailableGameLanguages().Split( new[] {';'}, StringSplitOptions.RemoveEmptyEntries ); // TODO: Assumed colon separated
 
