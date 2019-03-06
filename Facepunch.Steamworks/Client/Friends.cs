@@ -22,6 +22,45 @@ namespace Facepunch.Steamworks
         }
     }
 
+    public class Game
+    {
+        public string Name { get; protected set; }
+        public string StoreLink { get; protected set; }
+        public string ImageLink { get; protected set; }
+        public double? Price { get; protected set; }
+        public Friends.SaleType SaleType { get; protected set; }
+        public int AppId { get; protected set; }
+
+        /// <summary>
+        /// Handles splitting the data for GetGame method of Friends
+        /// </summary>
+        public Game(string listingData)
+        {
+            Name = listingData.Split('>')[2].Split('<')[0];
+            StoreLink = listingData.Split('=')[3].Replace("\"", "").Split('?')[0];
+            AppId = int.Parse(listingData.Split('=')[1].Replace("\"", "").Split(' ')[0]);
+            ImageLink = listingData.Split('>')[4].Replace("\"", "").Split('=')[1];
+            if (ImageLink.Contains("?"))
+                ImageLink = ImageLink.Split('?')[0];
+            string priceCandidate = listingData.Split('>')[7].Split('<')[0];
+            if (priceCandidate == null || priceCandidate.Length < 2)
+            {
+                Price = null;
+                SaleType = Friends.SaleType.NotAvailable;
+            }
+            else if (priceCandidate.IndexOf("free", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                Price = null;
+                SaleType = Friends.SaleType.FreeToPlay;
+            }
+            else
+            {
+                Price = double.Parse(priceCandidate.Substring(1), System.Globalization.CultureInfo.InvariantCulture);
+                SaleType = Friends.SaleType.CostsMoney;
+            }
+        }
+    }
+
     /// <summary>
     /// Handles most interactions with people in Steam, not just friends as the name would suggest.
     /// </summary>
@@ -128,6 +167,35 @@ namespace Facepunch.Steamworks
         {
             client.native.friends.RequestUserInformation( steamid, true );
             return client.native.friends.GetFriendPersonaName( steamid );
+        }
+
+        /// <summary>
+        /// Whether the game costs money or not
+        /// </summary>
+        public enum SaleType
+        {
+            CostsMoney,
+            FreeToPlay,
+            NotAvailable
+        }
+
+        /// <summary>
+        /// Get the game information for the AppId
+        /// </summary>
+        /// <param name="appid"></param>
+        public Game GetGame(ulong appid)
+        {
+            Game result = null;
+
+            string response = new System.Net.WebClient().DownloadString($"https://store.steampowered.com/search/suggest?term={appid}&f=games&cc={client.CurrentCountry}&lang=english&v=2286217");
+            if (!response.Contains("match ds_collapse_flag "))
+                return result;
+
+            foreach (string s in response.Split(new string[] { "match ds_collapse_flag " }, StringSplitOptions.None))
+                if (s.Contains("match_name") && s.Contains("match_price"))
+                    result = new Game(s);
+
+            return result;
         }
 
         private List<SteamFriend> _allFriends;
