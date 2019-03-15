@@ -153,6 +153,25 @@ namespace Facepunch.Steamworks
             }
 
             /// <summary>
+            /// Read and cache a raw property from the definition schema to make accessing it faster in the future
+            /// </summary>
+            public string GetCachedStringProperty( string name )
+            {
+                string val = string.Empty;
+
+                if ( customProperties == null )
+                    customProperties = new Dictionary<string, string>();
+
+                if ( !customProperties.TryGetValue( name, out val ) )
+                {
+                    inventory.inventory.GetItemDefinitionProperty( Id, name, out val );
+                    customProperties.Add( name, val );
+                }
+
+                return val;
+            }
+
+            /// <summary>
             /// Read a raw property from the definition schema
             /// </summary>
             public bool GetBoolProperty( string name )
