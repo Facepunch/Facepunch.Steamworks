@@ -11,6 +11,7 @@ namespace Facepunch.Steamworks
         {
             _server = server;
             _server.RegisterCallback<SteamNative.ValidateAuthTicketResponse_t>( OnAuthTicketValidate );
+            _server.RegisterCallback<SteamNative.GetAuthSessionTicketResponse_t>( OnGetAuthSessionTicketResponseThing );
         }
 
         public unsafe override Ticket GetAuthSessionTicket()

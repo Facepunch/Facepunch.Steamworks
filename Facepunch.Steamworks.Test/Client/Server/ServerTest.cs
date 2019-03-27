@@ -182,5 +182,45 @@ namespace Facepunch.Steamworks.Test
                 Assert.IsFalse( isAuthed );
             }
         }
+
+        [TestMethod]
+        public void WaitForAuthTicketValidation()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            using ( var server = new Facepunch.Steamworks.Server( 252490, new ServerInit( "rust", "Rust" ) ) )
+            {
+                Assert.IsTrue( client.IsValid );
+                Assert.IsTrue( server.IsValid );
+
+                server.LogOnAnonymous();
+
+                bool clientAuthed = false;
+                bool serverAuthed = false;
+
+                client.Auth.OnGetAuthSessionTicketResponse += ( uint handle, bool authed ) => {
+                    clientAuthed = authed;
+                };
+
+                server.Auth.OnGetAuthSessionTicketResponse += ( uint handle, bool authed ) => {
+                    serverAuthed = authed;
+                };
+
+                var clientTicket = client.Auth.GetAuthSessionTicket();
+                var serverTicket = server.Auth.GetAuthSessionTicket();
+
+                for ( int i = 0; i < 100; i++ )
+                {
+                    System.Threading.Thread.Sleep( 16 );
+                    server.Update();
+                    client.Update();
+
+                    if ( clientAuthed && serverAuthed )
+                        break;
+                }
+
+                Assert.IsTrue( clientAuthed );
+                Assert.IsTrue( serverAuthed );
+            }
+        }
     }
 }

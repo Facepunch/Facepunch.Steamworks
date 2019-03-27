@@ -46,6 +46,17 @@ namespace Facepunch.Steamworks
         }
 
         /// <summary>
+        /// This is called when your locally generated auth ticket has been validated by Steam
+        /// </summary>
+        public Action<uint, bool> OnGetAuthSessionTicketResponse;
+
+        internal void OnGetAuthSessionTicketResponseThing( SteamNative.GetAuthSessionTicketResponse_t data )
+        {
+            if ( OnGetAuthSessionTicketResponse != null )
+                OnGetAuthSessionTicketResponse( data.AuthTicket, data.Result == SteamNative.Result.OK );
+        }
+
+        /// <summary>
         /// An auth ticket for the local client/server (never remote)
         /// You should not cancel this ticket until you are disconnected from the remote user
         /// </summary>
