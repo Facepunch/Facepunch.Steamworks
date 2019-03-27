@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SteamNative;
 
 namespace Facepunch.Steamworks
 {
@@ -14,6 +15,11 @@ namespace Facepunch.Steamworks
         /// A singleton accessor to get the current client instance.
         /// </summary>
         public static Server Instance { get; private set; }
+
+        /// <summary>
+        /// Serversd 's SteamId. Only set once logged in with Steam
+        /// </summary>
+        public ulong? SteamId { get; internal set; }
 
         internal override bool IsGameServer { get { return true; } }
 
@@ -77,6 +83,8 @@ namespace Facepunch.Steamworks
             Auth = new ServerAuth( this );
             Query = new ServerQuery( this );
             Stats = new ServerStats( this );
+
+            RegisterCallback<SteamNative.SteamServersConnected_t>( OnSteamServersConnected );
 
             //
             // Run update, first call does some initialization
@@ -330,6 +338,9 @@ namespace Facepunch.Steamworks
             native.gameServer.ForceHeartbeat();
         }
 
-
+        private void OnSteamServersConnected( SteamServersConnected_t p )
+        {
+            SteamId = native.gameServer.GetSteamID();
+        }
     }
 }

@@ -60,92 +60,126 @@ namespace Facepunch.Steamworks.Test
         }
 
         [TestMethod]
-        public void AuthCallback()
+        public void AuthenticateAClient()
         {
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            using ( var server = new Facepunch.Steamworks.Server( 252490, new ServerInit( "rust", "Rust" ) ) )
             {
                 Assert.IsTrue( client.IsValid );
-                var ticket = client.Auth.GetAuthSessionTicket();
-                var ticketBinary = ticket.Data;
+                Assert.IsTrue( server.IsValid );
 
-                using ( var server = new Facepunch.Steamworks.Server( 252490, new ServerInit( "rust", "Rust" ) ) )
+                server.LogOnAnonymous();
+
+                for ( int i = 0; i < 100; i++ )
                 {
-                    server.LogOnAnonymous();
+                    System.Threading.Thread.Sleep( 16 );
+                    server.Update();
+                    client.Update();
 
-                    Assert.IsTrue( server.IsValid );
-
-                    var auth = server.Auth;
-
-                    var Authed = false;
-
-                    server.Auth.OnAuthChange = ( steamid, ownerid, status ) =>
-                    {
-                        Authed = status == Auth.AuthStatus.OK;
-
-                        Assert.AreEqual( steamid, client.SteamId );
-                        Assert.AreEqual( steamid, ownerid );
-
-                        Console.WriteLine( "steamid: {0}", steamid );
-                        Console.WriteLine( "ownerid: {0}", ownerid );
-                        Console.WriteLine( "status: {0}", status );
-                    };
-
-                    for ( int i = 0; i < 16; i++ )
-                    {
-                        System.Threading.Thread.Sleep( 10 );
-                        GC.Collect();
-                        server.Update();
-                        GC.Collect();
-                        client.Update();
-                        GC.Collect();
-                    }
-
-                    GC.Collect();
-                    var startStatus = server.Auth.StartSession( ticketBinary, client.SteamId );
-                    Assert.IsTrue( startStatus == Auth.StartAuthResult.OK );
-                    GC.Collect();
-
-                    //
-                    // Server should receive a ServerAuth.Status.OK 
-                    // message via the OnAuthChange callback
-                    //
-
-                    for ( int i = 0; i< 100; i++ )
-                    {
-                        GC.Collect();
-                        System.Threading.Thread.Sleep( 100 );
-                        GC.Collect();
-                        server.Update();
-                        client.Update();
-
-                        if ( Authed )
-                            break;
-                    }
-
-                    Assert.IsTrue( Authed );
-
-                    //
-                    // Client cancels ticket
-                    //
-                    ticket.Cancel();
-
-                    //
-                    // Server should receive a ticket cancelled message
-                    //
-
-                    for ( int i = 0; i < 100; i++ )
-                    {
-                        System.Threading.Thread.Sleep( 100 );
-                        server.Update();
-                        client.Update();
-
-                        if ( !Authed )
-                            break;
-                    }
-
-                    Assert.IsTrue( !Authed );
-
+                    if ( server.SteamId != null )
+                        break;
                 }
+
+                Assert.IsNotNull( server.SteamId );
+
+                var ticket = client.Auth.GetAuthSessionTicket();
+                var status = server.Auth.StartSession( ticket.Data, client.SteamId );
+
+                Assert.IsTrue( status == Auth.StartAuthResult.OK );
+
+                bool isAuthed = false;
+
+                server.Auth.OnAuthChange += ( steamId, ownerId, authStatus ) => {
+                    isAuthed = authStatus == Auth.AuthStatus.OK;
+                };
+
+                for ( int i = 0; i < 100; i++ )
+                {
+                    System.Threading.Thread.Sleep( 16 );
+                    server.Update();
+                    client.Update();
+
+                    if ( isAuthed )
+                        break;
+                }
+
+                Assert.IsTrue( isAuthed );
+
+                ticket.Cancel();
+
+                for ( int i = 0; i < 100; i++ )
+                {
+                    System.Threading.Thread.Sleep( 16 );
+                    server.Update();
+                    client.Update();
+
+                    if ( !isAuthed )
+                        break;
+                }
+
+                Assert.IsFalse( isAuthed );
+            }
+        }
+
+        [TestMethod]
+        public void AuthenticateAServer()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            using ( var server = new Facepunch.Steamworks.Server( 4000, new ServerInit( "rust", "Rust" ) ) )
+            {
+                Assert.IsTrue( client.IsValid );
+                Assert.IsTrue( server.IsValid );
+
+                server.LogOnAnonymous();
+
+                for ( int i = 0; i < 100; i++ )
+                {
+                    System.Threading.Thread.Sleep( 16 );
+                    server.Update();
+                    client.Update();
+
+                    if ( server.SteamId != null )
+                        break;
+                }
+
+                Assert.IsNotNull( server.SteamId );
+
+                var ticket = server.Auth.GetAuthSessionTicket();
+                var status = client.Auth.StartSession( ticket.Data, server.SteamId.Value );
+
+                Assert.IsTrue( status == Auth.StartAuthResult.OK );
+
+                bool isAuthed = false;
+
+                client.Auth.OnAuthChange += ( steamId, ownerId, authStatus ) => {
+                    isAuthed = authStatus == Auth.AuthStatus.OK;
+                };
+
+                for ( int i = 0; i < 100; i++ )
+                {
+                    System.Threading.Thread.Sleep( 16 );
+                    server.Update();
+                    client.Update();
+
+                    if ( isAuthed )
+                        break;
+                }
+
+                Assert.IsTrue( isAuthed );
+
+                ticket.Cancel();
+
+                for ( int i = 0; i < 100; i++ )
+                {
+                    System.Threading.Thread.Sleep( 16 );
+                    server.Update();
+                    client.Update();
+
+                    if ( !isAuthed )
+                        break;
+                }
+
+                Assert.IsFalse( isAuthed );
             }
         }
     }

@@ -19,7 +19,7 @@ namespace Facepunch.Steamworks
         /// <summary>
         /// Current user's SteamId
         /// </summary>
-        public ulong SteamId { get; private set; }
+        public ulong SteamId { get; internal set; }
 
         /// <summary>
         /// If we're sharing this game, this is the owner of it.
@@ -123,7 +123,6 @@ namespace Facepunch.Steamworks
             //
             // Cache common, unchanging info
             //
-            AppId = appId;
             Username = native.friends.GetPersonaName();
             SteamId = native.user.GetSteamID();
             BetaName = native.apps.GetCurrentBetaName();

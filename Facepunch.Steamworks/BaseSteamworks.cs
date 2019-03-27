@@ -14,7 +14,7 @@ namespace Facepunch.Steamworks
         /// <summary>
         /// Current running program's AppId
         /// </summary>
-        public uint AppId { get; internal set; }
+        public uint AppId { get; private set; }
 
         public Auth Auth { get; internal set; }
         public Networking Networking { get; internal set; }
