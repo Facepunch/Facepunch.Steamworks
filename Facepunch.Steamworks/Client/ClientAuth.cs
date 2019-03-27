@@ -7,11 +7,9 @@ namespace Facepunch.Steamworks
     {
         private Client _client;
 
-        public ClientAuth( Client client )
+        public ClientAuth( Client client ) : base( client )
         {
             _client = client;
-            _client.RegisterCallback<SteamNative.ValidateAuthTicketResponse_t>( OnAuthTicketValidate );
-            _client.RegisterCallback<SteamNative.GetAuthSessionTicketResponse_t>( OnGetAuthSessionTicketResponseThing );
         }
 
         public unsafe override Ticket GetAuthSessionTicket()

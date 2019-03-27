@@ -33,6 +33,12 @@ namespace Facepunch.Steamworks
             PublisherIssuedBan = SteamNative.AuthSessionResponse.PublisherIssuedBan
         }
 
+        public Auth( BaseSteamworks instance )
+        {
+            instance.RegisterCallback<SteamNative.ValidateAuthTicketResponse_t>( OnAuthTicketValidate );
+            instance.RegisterCallback<SteamNative.GetAuthSessionTicketResponse_t>( OnGetAuthSessionTicketResponseThing );
+        }
+
         /// <summary>
         /// This is ran whenever the status of an ongoing session changes
         /// SteamId, OwnerSteamId, Status
