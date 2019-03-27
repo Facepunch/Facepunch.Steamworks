@@ -104,6 +104,7 @@ namespace Facepunch.Steamworks
             //
             // Client only interfaces
             //
+            Auth = new ClientAuth( this );
             Voice = new Voice( this );
             ServerList = new ServerList( this );
             LobbyList = new LobbyList(this);
@@ -177,6 +178,11 @@ namespace Facepunch.Steamworks
         public override void Dispose()
         {
             if ( disposed ) return;
+
+            if ( Auth != null )
+            {
+                Auth = null;
+            }
 
             if ( Voice != null )
             {

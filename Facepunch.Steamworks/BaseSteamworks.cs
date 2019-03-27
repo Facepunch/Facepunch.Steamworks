@@ -16,6 +16,7 @@ namespace Facepunch.Steamworks
         /// </summary>
         public uint AppId { get; internal set; }
 
+        public Auth Auth { get; internal set; }
         public Networking Networking { get; internal set; }
         public Inventory Inventory { get; internal set; }
         public Workshop Workshop { get; internal set; }

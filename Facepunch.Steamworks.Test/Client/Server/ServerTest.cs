@@ -80,7 +80,7 @@ namespace Facepunch.Steamworks.Test
 
                     server.Auth.OnAuthChange = ( steamid, ownerid, status ) =>
                     {
-                        Authed = status == ServerAuth.Status.OK;
+                        Authed = status == Auth.AuthStatus.OK;
 
                         Assert.AreEqual( steamid, client.SteamId );
                         Assert.AreEqual( steamid, ownerid );
@@ -101,10 +101,8 @@ namespace Facepunch.Steamworks.Test
                     }
 
                     GC.Collect();
-                    if ( !server.Auth.StartSession( ticketBinary, client.SteamId ) )
-                    {
-                        Assert.Fail( "Start Session returned false" );
-                    }
+                    var startStatus = server.Auth.StartSession( ticketBinary, client.SteamId );
+                    Assert.IsTrue( startStatus == Auth.StartAuthResult.OK );
                     GC.Collect();
 
                     //

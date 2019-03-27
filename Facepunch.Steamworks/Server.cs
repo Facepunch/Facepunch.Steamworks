@@ -19,7 +19,6 @@ namespace Facepunch.Steamworks
 
         public ServerQuery Query { get; internal set; }
         public ServerStats Stats { get; internal set; }
-        public ServerAuth Auth { get; internal set; }
 
         /// <summary>
         /// Initialize a Steam Server instance
@@ -60,8 +59,6 @@ namespace Facepunch.Steamworks
             //
             SetupCommonInterfaces();
 
-
-
             //
             // Initial settings
             //
@@ -77,9 +74,9 @@ namespace Facepunch.Steamworks
             //
             // Child classes
             //
+            Auth = new ServerAuth( this );
             Query = new ServerQuery( this );
             Stats = new ServerStats( this );
-            Auth = new ServerAuth( this );
 
             //
             // Run update, first call does some initialization
@@ -267,6 +264,11 @@ namespace Facepunch.Steamworks
         {
             if ( disposed ) return;
 
+            if ( Auth != null )
+            {
+                Auth = null;
+            }
+
             if ( Query != null )
             {
                 Query = null;
@@ -275,11 +277,6 @@ namespace Facepunch.Steamworks
             if ( Stats != null )
             {
                 Stats = null;
-            }
-
-            if ( Auth != null )
-            {
-                Auth = null;
             }
 
             if ( Instance == this )
