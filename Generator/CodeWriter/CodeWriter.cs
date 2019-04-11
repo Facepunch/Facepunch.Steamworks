@@ -71,7 +71,7 @@ namespace Generator
             {
                 sb = new StringBuilder();
                 Header();
-                PlatformClass( "Linux", "libsteam_api64.so", false );
+                PlatformClass( "Linux", "libsteam_api.so", false );
                 Footer();
                 System.IO.File.WriteAllText( $"{folder}SteamNative.Platform.Linux64.cs", sb.ToString() );
             }
