@@ -96,11 +96,9 @@ namespace Facepunch.Steamworks.Interop
 
         public void FillInterfaces( BaseSteamworks steamworks, int hpipe, int huser )
         {
-            var clientPtr = api.SteamInternal_CreateInterface( "SteamClient017" );
+            var clientPtr = api.SteamInternal_CreateInterface( "SteamClient018" );
             if ( clientPtr == IntPtr.Zero )
-            {
-                throw new System.Exception( "Steam Server: Couldn't load SteamClient017" );
-            }
+                throw new System.Exception( "Steam Server: Couldn't load SteamClient018" );
 
             client = new SteamNative.SteamClient( steamworks, clientPtr );
 
