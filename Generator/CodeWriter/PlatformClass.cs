@@ -9,12 +9,10 @@ namespace Generator
     public partial class CodeWriter
     {
         bool LargePack;
-        bool X86;
 
         private void PlatformClass( string type, string libraryName, bool LargePack )
         {
             this.LargePack = LargePack;
-            X86 = type.EndsWith( "32" );
 
             StartBlock( $"internal static partial class Platform" );
             {
@@ -189,12 +187,8 @@ namespace Generator
 
             if ( argstring != "" ) argstring = $" {argstring} ";
 
-            if ( X86 )
-                Write( $"[DllImport( \"{library}\", CallingConvention = CallingConvention.Cdecl )] " );
-            else
-                Write( $"[DllImport( \"{library}\" )] " );
-
-            if ( ret.Return() == "bool" ) WriteLine( "[return: MarshalAs(UnmanagedType.U1)]" );
+			if ( ret.Return().StartsWith( "bool " ) ) WriteLine( "[return: MarshalAs(UnmanagedType.U1)]" );
+			WriteLine( $"[DllImport( \"{library}\" )]" );            
 
             WriteLine( $"internal static extern {ret.Return()} {flatName}({argstring});" );
             LastMethodName = methodDef.Name;
