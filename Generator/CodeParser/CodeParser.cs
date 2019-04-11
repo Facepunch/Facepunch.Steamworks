@@ -28,6 +28,8 @@ namespace Generator
             // Get a list of CallbackIds
             //
             def.CallbackIds = new Dictionary<string, int>();
+
+			//v1
             {
                 var r = new Regex( @"enum { (k_[i|I](?:.+)) = ([0-9]+) };" );
                 var ma = r.Matches( Content );
@@ -38,12 +40,10 @@ namespace Generator
                 }
             }
 
-
-
-            //
-            // Associate callbackIds with structs
-            //
-            foreach ( var t in def.structs )
+			//
+			// Associate callbackIds with structs
+			//
+			foreach ( var t in def.structs )
             {
                 if ( !string.IsNullOrEmpty(  t.CallbackId ) ) continue;
 
@@ -83,7 +83,23 @@ namespace Generator
                         t.CallbackId = $"{kName} + {num}";
                     }
                 }
-            }
+
+				// Even Newer Style
+				{
+					var r = new Regex( @"STEAM_CALLBACK_BEGIN\( " + t.Name + @", (.+) \+ ([0-9]+) \)" );
+					var m = r.Match( Content );
+					if ( m.Success )
+					{
+						var kName = m.Groups[1].Value;
+						var num = m.Groups[2].Value;
+
+						//kName = kName.Replace( "k_i", "CallbackIdentifiers." ).Replace( "Callbacks", "" );
+						kName = "CallbackIdentifiers." + kName.Substring( 3 ).Replace( "Callbacks", "" );
+
+						t.CallbackId = $"{kName} + {num}";
+					}
+				}
+			}
 
             //
             // Find defines
