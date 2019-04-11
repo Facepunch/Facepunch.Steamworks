@@ -31,6 +31,9 @@ namespace Facepunch.Steamworks
 
         protected BaseSteamworks( uint appId )
         {
+			if ( IntPtr.Size == 4 )
+				throw new System.Exception( "Sorry - 32bit processes aren't supported. It's 2019 or later, come on!" );
+
             AppId = appId;
 
             //
