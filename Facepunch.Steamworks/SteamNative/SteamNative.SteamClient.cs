@@ -27,7 +27,7 @@ namespace SteamNative
 		//
 		// Class is invalid if we don't have a valid implementation
 		//
-		public bool IsValid{ get{ return platform != null && platform.IsValid; } }
+		public bool IsValid => platform != null && platform.IsValid;
 		
 		//
 		// When shutting down clear all the internals to avoid accidental use
@@ -82,6 +82,7 @@ namespace SteamNative
 		{
 			IntPtr interface_pointer;
 			interface_pointer = platform.ISteamClient_GetISteamAppList( hSteamUser.Value, hSteamPipe.Value, pchVersion );
+			if ( interface_pointer == IntPtr.Zero ) throw new System.Exception( $"Error getting interface {pchVersion}");
 			return new SteamAppList( steamworks, interface_pointer );
 		}
 		
@@ -90,6 +91,7 @@ namespace SteamNative
 		{
 			IntPtr interface_pointer;
 			interface_pointer = platform.ISteamClient_GetISteamApps( hSteamUser.Value, hSteamPipe.Value, pchVersion );
+			if ( interface_pointer == IntPtr.Zero ) throw new System.Exception( $"Error getting interface {pchVersion}");
 			return new SteamApps( steamworks, interface_pointer );
 		}
 		
@@ -98,6 +100,7 @@ namespace SteamNative
 		{
 			IntPtr interface_pointer;
 			interface_pointer = platform.ISteamClient_GetISteamController( hSteamUser.Value, hSteamPipe.Value, pchVersion );
+			if ( interface_pointer == IntPtr.Zero ) throw new System.Exception( $"Error getting interface {pchVersion}");
 			return new SteamController( steamworks, interface_pointer );
 		}
 		
@@ -106,6 +109,7 @@ namespace SteamNative
 		{
 			IntPtr interface_pointer;
 			interface_pointer = platform.ISteamClient_GetISteamFriends( hSteamUser.Value, hSteamPipe.Value, pchVersion );
+			if ( interface_pointer == IntPtr.Zero ) throw new System.Exception( $"Error getting interface {pchVersion}");
 			return new SteamFriends( steamworks, interface_pointer );
 		}
 		
@@ -114,6 +118,7 @@ namespace SteamNative
 		{
 			IntPtr interface_pointer;
 			interface_pointer = platform.ISteamClient_GetISteamGameSearch( hSteamuser.Value, hSteamPipe.Value, pchVersion );
+			if ( interface_pointer == IntPtr.Zero ) throw new System.Exception( $"Error getting interface {pchVersion}");
 			return new SteamGameSearch( steamworks, interface_pointer );
 		}
 		
@@ -122,6 +127,7 @@ namespace SteamNative
 		{
 			IntPtr interface_pointer;
 			interface_pointer = platform.ISteamClient_GetISteamGameServer( hSteamUser.Value, hSteamPipe.Value, pchVersion );
+			if ( interface_pointer == IntPtr.Zero ) throw new System.Exception( $"Error getting interface {pchVersion}");
 			return new SteamGameServer( steamworks, interface_pointer );
 		}
 		
@@ -130,6 +136,7 @@ namespace SteamNative
 		{
 			IntPtr interface_pointer;
 			interface_pointer = platform.ISteamClient_GetISteamGameServerStats( hSteamuser.Value, hSteamPipe.Value, pchVersion );
+			if ( interface_pointer == IntPtr.Zero ) throw new System.Exception( $"Error getting interface {pchVersion}");
 			return new SteamGameServerStats( steamworks, interface_pointer );
 		}
 		
@@ -144,6 +151,7 @@ namespace SteamNative
 		{
 			IntPtr interface_pointer;
 			interface_pointer = platform.ISteamClient_GetISteamHTMLSurface( hSteamuser.Value, hSteamPipe.Value, pchVersion );
+			if ( interface_pointer == IntPtr.Zero ) throw new System.Exception( $"Error getting interface {pchVersion}");
 			return new SteamHTMLSurface( steamworks, interface_pointer );
 		}
 		
@@ -152,6 +160,7 @@ namespace SteamNative
 		{
 			IntPtr interface_pointer;
 			interface_pointer = platform.ISteamClient_GetISteamHTTP( hSteamuser.Value, hSteamPipe.Value, pchVersion );
+			if ( interface_pointer == IntPtr.Zero ) throw new System.Exception( $"Error getting interface {pchVersion}");
 			return new SteamHTTP( steamworks, interface_pointer );
 		}
 		
@@ -160,6 +169,7 @@ namespace SteamNative
 		{
 			IntPtr interface_pointer;
 			interface_pointer = platform.ISteamClient_GetISteamInput( hSteamUser.Value, hSteamPipe.Value, pchVersion );
+			if ( interface_pointer == IntPtr.Zero ) throw new System.Exception( $"Error getting interface {pchVersion}");
 			return new SteamInput( steamworks, interface_pointer );
 		}
 		
@@ -168,6 +178,7 @@ namespace SteamNative
 		{
 			IntPtr interface_pointer;
 			interface_pointer = platform.ISteamClient_GetISteamInventory( hSteamuser.Value, hSteamPipe.Value, pchVersion );
+			if ( interface_pointer == IntPtr.Zero ) throw new System.Exception( $"Error getting interface {pchVersion}");
 			return new SteamInventory( steamworks, interface_pointer );
 		}
 		
@@ -176,6 +187,7 @@ namespace SteamNative
 		{
 			IntPtr interface_pointer;
 			interface_pointer = platform.ISteamClient_GetISteamMatchmaking( hSteamUser.Value, hSteamPipe.Value, pchVersion );
+			if ( interface_pointer == IntPtr.Zero ) throw new System.Exception( $"Error getting interface {pchVersion}");
 			return new SteamMatchmaking( steamworks, interface_pointer );
 		}
 		
@@ -184,6 +196,7 @@ namespace SteamNative
 		{
 			IntPtr interface_pointer;
 			interface_pointer = platform.ISteamClient_GetISteamMatchmakingServers( hSteamUser.Value, hSteamPipe.Value, pchVersion );
+			if ( interface_pointer == IntPtr.Zero ) throw new System.Exception( $"Error getting interface {pchVersion}");
 			return new SteamMatchmakingServers( steamworks, interface_pointer );
 		}
 		
@@ -192,6 +205,7 @@ namespace SteamNative
 		{
 			IntPtr interface_pointer;
 			interface_pointer = platform.ISteamClient_GetISteamMusic( hSteamuser.Value, hSteamPipe.Value, pchVersion );
+			if ( interface_pointer == IntPtr.Zero ) throw new System.Exception( $"Error getting interface {pchVersion}");
 			return new SteamMusic( steamworks, interface_pointer );
 		}
 		
@@ -200,6 +214,7 @@ namespace SteamNative
 		{
 			IntPtr interface_pointer;
 			interface_pointer = platform.ISteamClient_GetISteamMusicRemote( hSteamuser.Value, hSteamPipe.Value, pchVersion );
+			if ( interface_pointer == IntPtr.Zero ) throw new System.Exception( $"Error getting interface {pchVersion}");
 			return new SteamMusicRemote( steamworks, interface_pointer );
 		}
 		
@@ -208,6 +223,7 @@ namespace SteamNative
 		{
 			IntPtr interface_pointer;
 			interface_pointer = platform.ISteamClient_GetISteamNetworking( hSteamUser.Value, hSteamPipe.Value, pchVersion );
+			if ( interface_pointer == IntPtr.Zero ) throw new System.Exception( $"Error getting interface {pchVersion}");
 			return new SteamNetworking( steamworks, interface_pointer );
 		}
 		
@@ -216,6 +232,7 @@ namespace SteamNative
 		{
 			IntPtr interface_pointer;
 			interface_pointer = platform.ISteamClient_GetISteamParentalSettings( hSteamuser.Value, hSteamPipe.Value, pchVersion );
+			if ( interface_pointer == IntPtr.Zero ) throw new System.Exception( $"Error getting interface {pchVersion}");
 			return new SteamParentalSettings( steamworks, interface_pointer );
 		}
 		
@@ -224,6 +241,7 @@ namespace SteamNative
 		{
 			IntPtr interface_pointer;
 			interface_pointer = platform.ISteamClient_GetISteamParties( hSteamUser.Value, hSteamPipe.Value, pchVersion );
+			if ( interface_pointer == IntPtr.Zero ) throw new System.Exception( $"Error getting interface {pchVersion}");
 			return new SteamParties( steamworks, interface_pointer );
 		}
 		
@@ -232,6 +250,7 @@ namespace SteamNative
 		{
 			IntPtr interface_pointer;
 			interface_pointer = platform.ISteamClient_GetISteamRemoteStorage( hSteamuser.Value, hSteamPipe.Value, pchVersion );
+			if ( interface_pointer == IntPtr.Zero ) throw new System.Exception( $"Error getting interface {pchVersion}");
 			return new SteamRemoteStorage( steamworks, interface_pointer );
 		}
 		
@@ -240,6 +259,7 @@ namespace SteamNative
 		{
 			IntPtr interface_pointer;
 			interface_pointer = platform.ISteamClient_GetISteamScreenshots( hSteamuser.Value, hSteamPipe.Value, pchVersion );
+			if ( interface_pointer == IntPtr.Zero ) throw new System.Exception( $"Error getting interface {pchVersion}");
 			return new SteamScreenshots( steamworks, interface_pointer );
 		}
 		
@@ -248,6 +268,7 @@ namespace SteamNative
 		{
 			IntPtr interface_pointer;
 			interface_pointer = platform.ISteamClient_GetISteamUGC( hSteamUser.Value, hSteamPipe.Value, pchVersion );
+			if ( interface_pointer == IntPtr.Zero ) throw new System.Exception( $"Error getting interface {pchVersion}");
 			return new SteamUGC( steamworks, interface_pointer );
 		}
 		
@@ -256,6 +277,7 @@ namespace SteamNative
 		{
 			IntPtr interface_pointer;
 			interface_pointer = platform.ISteamClient_GetISteamUser( hSteamUser.Value, hSteamPipe.Value, pchVersion );
+			if ( interface_pointer == IntPtr.Zero ) throw new System.Exception( $"Error getting interface {pchVersion}");
 			return new SteamUser( steamworks, interface_pointer );
 		}
 		
@@ -264,6 +286,7 @@ namespace SteamNative
 		{
 			IntPtr interface_pointer;
 			interface_pointer = platform.ISteamClient_GetISteamUserStats( hSteamUser.Value, hSteamPipe.Value, pchVersion );
+			if ( interface_pointer == IntPtr.Zero ) throw new System.Exception( $"Error getting interface {pchVersion}");
 			return new SteamUserStats( steamworks, interface_pointer );
 		}
 		
@@ -272,6 +295,7 @@ namespace SteamNative
 		{
 			IntPtr interface_pointer;
 			interface_pointer = platform.ISteamClient_GetISteamUtils( hSteamPipe.Value, pchVersion );
+			if ( interface_pointer == IntPtr.Zero ) throw new System.Exception( $"Error getting interface {pchVersion}");
 			return new SteamUtils( steamworks, interface_pointer );
 		}
 		
@@ -280,6 +304,7 @@ namespace SteamNative
 		{
 			IntPtr interface_pointer;
 			interface_pointer = platform.ISteamClient_GetISteamVideo( hSteamuser.Value, hSteamPipe.Value, pchVersion );
+			if ( interface_pointer == IntPtr.Zero ) throw new System.Exception( $"Error getting interface {pchVersion}");
 			return new SteamVideo( steamworks, interface_pointer );
 		}
 		

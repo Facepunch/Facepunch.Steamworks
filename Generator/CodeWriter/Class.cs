@@ -82,7 +82,7 @@ namespace Generator
                 WriteLine( "//" );
                 WriteLine( "// Class is invalid if we don't have a valid implementation" );
                 WriteLine( "//" );
-                WriteLine( "public bool IsValid{ get{ return platform != null && platform.IsValid; } }" );
+                WriteLine( "public bool IsValid => platform != null && platform.IsValid;" );
                 WriteLine();
 
                 WriteLine( "//" );

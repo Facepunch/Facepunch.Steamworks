@@ -27,7 +27,7 @@ namespace SteamNative
 		//
 		// Class is invalid if we don't have a valid implementation
 		//
-		public bool IsValid{ get{ return platform != null && platform.IsValid; } }
+		public bool IsValid => platform != null && platform.IsValid;
 		
 		//
 		// When shutting down clear all the internals to avoid accidental use
