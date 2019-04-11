@@ -430,7 +430,8 @@ namespace Generator
             ReturnVar = "interface_pointer";
             ReturnType = ReturnType.Substring( 1 ).Trim( '*', ' ' );
 
-            AfterLines.Add( $"return new {ReturnType}( steamworks, interface_pointer );" );
+			AfterLines.Add( $"if ( interface_pointer == IntPtr.Zero ) throw new System.Exception( $\"Error getting interface {{pchVersion}}\");" );
+			AfterLines.Add( $"return new {ReturnType}( steamworks, interface_pointer );" );
         }
 
         private void Detect_VectorReturn( List<Argument> argList, List<Argument> callArgs )
