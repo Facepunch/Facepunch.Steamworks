@@ -98,7 +98,6 @@ namespace SteamNative
 			System.Text.StringBuilder pchConnectionDetails_sb = Helpers.TakeStringBuilder();
 			int cubConnectionDetails = 4096;
 			bSuccess = platform.ISteamGameSearch_RetrieveConnectionDetails( steamIDHost.Value, pchConnectionDetails_sb, cubConnectionDetails );
-			if ( !bSuccess ) return bSuccess;
 			pchConnectionDetails = pchConnectionDetails_sb.ToString();
 			return bSuccess;
 		}

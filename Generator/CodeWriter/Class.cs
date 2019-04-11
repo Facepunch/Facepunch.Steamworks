@@ -349,8 +349,9 @@ namespace Generator
                 var num = argList[i+1];
 
                 var IntReturn = ReturnType.Contains( "int" );
+                var intReturn = ReturnType.Contains( "int" );
 
-                if ( num.ManagedType.Trim( '*' ) != "int" && num.ManagedType.Trim( '*' ) != "uint" ) continue;
+				if ( num.ManagedType.Trim( '*' ) != "int" && num.ManagedType.Trim( '*' ) != "uint" ) continue;
 
                 argList.Remove( num );
 
@@ -382,8 +383,11 @@ namespace Generator
                 if ( ReturnString ) AfterLines.Insert( 0, $"return {chr.Name}_sb.ToString();" );
                 else AfterLines.Insert( 0, $"{chr.Name} = {chr.Name}_sb.ToString();" );
 
-
-                if ( IntReturn )
+				if ( enumReturn )
+				{
+					// Fuck all
+				}
+                else if ( intReturn )
                 {
                     if ( ReturnString ) AfterLines.Insert( 0, "if ( bSuccess <= 0 ) return null;" );
                     else AfterLines.Insert( 0, "if ( bSuccess <= 0 ) return bSuccess;" );
