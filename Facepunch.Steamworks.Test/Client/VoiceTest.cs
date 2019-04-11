@@ -5,7 +5,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Facepunch.Steamworks.Test
 {
-    [DeploymentItem( "steam_api.dll" )]
     [DeploymentItem( "steam_api64.dll" )]
     [TestClass]
     public class Voice

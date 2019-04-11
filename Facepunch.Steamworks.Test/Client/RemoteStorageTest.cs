@@ -4,7 +4,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Facepunch.Steamworks.Test
 {
     [TestClass]
-    [DeploymentItem( "steam_api.dll" )]
     [DeploymentItem( "steam_api64.dll" )]
     public class RemoteStorage
     {

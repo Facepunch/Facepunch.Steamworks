@@ -3,11 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Facepunch.Steamworks.Test
 {
-    [DeploymentItem( "steam_api.dll" )]
     [DeploymentItem( "steam_api64.dll" )]
-    [DeploymentItem( "tier0_s.dll" )]
-    [DeploymentItem( "vstdlib_s.dll" )]
-    [DeploymentItem( "steamclient.dll" )]
     [DeploymentItem( "tier0_s64.dll" )]
     [DeploymentItem( "vstdlib_s64.dll" )]
     [DeploymentItem( "steamclient64.dll" )]
