@@ -1394,7 +1394,7 @@ namespace SteamNative
 				
 				return Native.SteamAPI_ISteamGameSearch_DeclineGame(_ptr);
 			}
-			public virtual GameSearchErrorCode_t /*EGameSearchErrorCode_t*/ ISteamGameSearch_RetrieveConnectionDetails( ulong steamIDHost, IntPtr /*char **/ pchConnectionDetails, int /*int*/ cubConnectionDetails )
+			public virtual GameSearchErrorCode_t /*EGameSearchErrorCode_t*/ ISteamGameSearch_RetrieveConnectionDetails( ulong steamIDHost, System.Text.StringBuilder /*char **/ pchConnectionDetails, int /*int*/ cubConnectionDetails )
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamGameSearch _ptr is null!" );
 				
@@ -4909,7 +4909,7 @@ namespace SteamNative
 				[DllImport( "steam_api64.dll" )] internal static extern GameSearchErrorCode_t /*EGameSearchErrorCode_t*/ SteamAPI_ISteamGameSearch_SearchForGameSolo( IntPtr ISteamGameSearch, int /*int*/ nPlayerMin, int /*int*/ nPlayerMax );
 				[DllImport( "steam_api64.dll" )] internal static extern GameSearchErrorCode_t /*EGameSearchErrorCode_t*/ SteamAPI_ISteamGameSearch_AcceptGame( IntPtr ISteamGameSearch );
 				[DllImport( "steam_api64.dll" )] internal static extern GameSearchErrorCode_t /*EGameSearchErrorCode_t*/ SteamAPI_ISteamGameSearch_DeclineGame( IntPtr ISteamGameSearch );
-				[DllImport( "steam_api64.dll" )] internal static extern GameSearchErrorCode_t /*EGameSearchErrorCode_t*/ SteamAPI_ISteamGameSearch_RetrieveConnectionDetails( IntPtr ISteamGameSearch, ulong steamIDHost, IntPtr /*char **/ pchConnectionDetails, int /*int*/ cubConnectionDetails );
+				[DllImport( "steam_api64.dll" )] internal static extern GameSearchErrorCode_t /*EGameSearchErrorCode_t*/ SteamAPI_ISteamGameSearch_RetrieveConnectionDetails( IntPtr ISteamGameSearch, ulong steamIDHost, System.Text.StringBuilder /*char **/ pchConnectionDetails, int /*int*/ cubConnectionDetails );
 				[DllImport( "steam_api64.dll" )] internal static extern GameSearchErrorCode_t /*EGameSearchErrorCode_t*/ SteamAPI_ISteamGameSearch_EndGameSearch( IntPtr ISteamGameSearch );
 				[DllImport( "steam_api64.dll" )] internal static extern GameSearchErrorCode_t /*EGameSearchErrorCode_t*/ SteamAPI_ISteamGameSearch_SetGameHostParams( IntPtr ISteamGameSearch, string /*const char **/ pchKey, string /*const char **/ pchValue );
 				[DllImport( "steam_api64.dll" )] internal static extern GameSearchErrorCode_t /*EGameSearchErrorCode_t*/ SteamAPI_ISteamGameSearch_SetConnectionDetails( IntPtr ISteamGameSearch, string /*const char **/ pchConnectionDetails, int /*int*/ cubConnectionDetails );

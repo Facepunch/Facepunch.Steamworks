@@ -190,7 +190,7 @@ namespace SteamNative
 			GameSearchErrorCode_t /*EGameSearchErrorCode_t*/ ISteamGameSearch_SearchForGameSolo( int /*int*/ nPlayerMin, int /*int*/ nPlayerMax );
 			GameSearchErrorCode_t /*EGameSearchErrorCode_t*/ ISteamGameSearch_AcceptGame();
 			GameSearchErrorCode_t /*EGameSearchErrorCode_t*/ ISteamGameSearch_DeclineGame();
-			GameSearchErrorCode_t /*EGameSearchErrorCode_t*/ ISteamGameSearch_RetrieveConnectionDetails( ulong steamIDHost, IntPtr /*char **/ pchConnectionDetails, int /*int*/ cubConnectionDetails );
+			GameSearchErrorCode_t /*EGameSearchErrorCode_t*/ ISteamGameSearch_RetrieveConnectionDetails( ulong steamIDHost, System.Text.StringBuilder /*char **/ pchConnectionDetails, int /*int*/ cubConnectionDetails );
 			GameSearchErrorCode_t /*EGameSearchErrorCode_t*/ ISteamGameSearch_EndGameSearch();
 			GameSearchErrorCode_t /*EGameSearchErrorCode_t*/ ISteamGameSearch_SetGameHostParams( string /*const char **/ pchKey, string /*const char **/ pchValue );
 			GameSearchErrorCode_t /*EGameSearchErrorCode_t*/ ISteamGameSearch_SetConnectionDetails( string /*const char **/ pchConnectionDetails, int /*int*/ cubConnectionDetails );

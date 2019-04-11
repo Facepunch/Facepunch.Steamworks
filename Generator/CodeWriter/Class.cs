@@ -348,8 +348,8 @@ namespace Generator
                 var chr = argList[i];
                 var num = argList[i+1];
 
-                var IntReturn = ReturnType.Contains( "int" );
                 var intReturn = ReturnType.Contains( "int" );
+				var enumReturn = ReturnType.EndsWith( "_t" );
 
 				if ( num.ManagedType.Trim( '*' ) != "int" && num.ManagedType.Trim( '*' ) != "uint" ) continue;
 

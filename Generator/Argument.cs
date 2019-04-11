@@ -233,7 +233,12 @@ namespace Generator
                 }
             }
 
-            if ( ShouldBeIntPtr )
+			if ( NativeType == "char *" || NativeType == "char **" )
+			{
+				return $"System.Text.StringBuilder /*{NativeType}*/ {Name}".Trim();
+			}
+
+			if ( ShouldBeIntPtr )
                 return $"IntPtr /*{NativeType}*/ {Name}".Trim();
 
             if ( IsStructShouldBePassedAsRef )
@@ -245,10 +250,7 @@ namespace Generator
             if ( ShouldBePassedAsOut )
                 return $"{marshalling} out {ManagedType.Trim( '*', ' ' )} /*{NativeType}*/ {Name}".Trim();
 
-            if ( NativeType == "char *"  || NativeType == "char **" )
-            {
-                return $"System.Text.StringBuilder /*{NativeType}*/ {Name}".Trim();
-            }
+
 
             if ( TypeDef != null )
             {
