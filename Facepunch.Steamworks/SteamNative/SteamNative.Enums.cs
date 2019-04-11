@@ -133,6 +133,7 @@ namespace SteamNative
 		WGNetworkSendExceeded = 110,
 		AccountNotFriends = 111,
 		LimitedUserAccount = 112,
+		CantRemoveItem = 113,
 	}
 	
 	//
@@ -405,6 +406,16 @@ namespace SteamNative
 		MissingAudio = 11,
 		TooFarBehind = 12,
 		TranscodeBehind = 13,
+		NotAllowedToPlay = 14,
+		Busy = 15,
+		Banned = 16,
+		AlreadyActive = 17,
+		ForcedOff = 18,
+		AudioBehind = 19,
+		Shutdown = 20,
+		Disconnect = 21,
+		VideoInitFailed = 22,
+		AudioInitFailed = 23,
 	}
 	
 	//
@@ -441,6 +452,7 @@ namespace SteamNative
 		HTC_Dev = 1,
 		HTC_VivePre = 2,
 		HTC_Vive = 3,
+		HTC_VivePro = 4,
 		HTC_Unknown = 20,
 		Oculus_DK1 = 21,
 		Oculus_DK2 = 22,
@@ -458,6 +470,34 @@ namespace SteamNative
 		Samsung_Odyssey = 91,
 		Unannounced_Unknown = 100,
 		Unannounced_WindowsMR = 101,
+		vridge = 110,
+		Huawei_Unknown = 120,
+		Huawei_VR2 = 121,
+		Huawei_Unannounced = 129,
+	}
+	
+	//
+	// EMarketNotAllowedReasonFlags
+	//
+	internal enum MarketNotAllowedReasonFlags : int
+	{
+		None = 0,
+		TemporaryFailure = 1,
+		AccountDisabled = 2,
+		AccountLockedDown = 4,
+		AccountLimited = 8,
+		TradeBanned = 16,
+		AccountNotTrusted = 32,
+		SteamGuardNotEnabled = 64,
+		SteamGuardOnlyRecentlyEnabled = 128,
+		RecentPasswordReset = 256,
+		NewPaymentMethod = 512,
+		InvalidCookie = 1024,
+		UsingNewDevice = 2048,
+		RecentSelfRefund = 4096,
+		NewPaymentMethodCannotBeVerified = 8192,
+		NoRecentPurchases = 16384,
+		AcceptedWalletGift = 32768,
 	}
 	
 	//
@@ -469,6 +509,34 @@ namespace SteamNative
 		GameMod = 1,
 		Shortcut = 2,
 		P2P = 3,
+	}
+	
+	//
+	// EGameSearchErrorCode_t
+	//
+	internal enum GameSearchErrorCode_t : int
+	{
+		OK = 1,
+		Failed_Search_Already_In_Progress = 2,
+		Failed_No_Search_In_Progress = 3,
+		Failed_Not_Lobby_Leader = 4,
+		Failed_No_Host_Available = 5,
+		Failed_Search_Params_Invalid = 6,
+		Failed_Offline = 7,
+		Failed_NotAuthorized = 8,
+		Failed_Unknown_Error = 9,
+	}
+	
+	//
+	// EPlayerResult_t
+	//
+	internal enum PlayerResult_t : int
+	{
+		FailedToConnect = 1,
+		Abandoned = 2,
+		Kicked = 3,
+		Incomplete = 4,
+		Completed = 5,
 	}
 	
 	//
@@ -508,7 +576,8 @@ namespace SteamNative
 		Snooze = 4,
 		LookingToTrade = 5,
 		LookingToPlay = 6,
-		Max = 7,
+		Invisible = 7,
+		Max = 8,
 	}
 	
 	//
@@ -556,6 +625,15 @@ namespace SteamNative
 	}
 	
 	//
+	// EActivateGameOverlayToWebPageMode
+	//
+	internal enum ActivateGameOverlayToWebPageMode : int
+	{
+		Default = 0,
+		Modal = 1,
+	}
+	
+	//
 	// EPersonaChange
 	//
 	internal enum PersonaChange : int
@@ -571,9 +649,10 @@ namespace SteamNative
 		LeftSource = 256,
 		RelationshipChanged = 512,
 		NameFirstSet = 1024,
-		FacebookInfo = 2048,
+		Broadcast = 2048,
 		Nickname = 4096,
 		SteamLevel = 8192,
+		RichPresence = 16384,
 	}
 	
 	//
@@ -676,6 +755,38 @@ namespace SteamNative
 	}
 	
 	//
+	// ESteamPartyBeaconLocationType
+	//
+	internal enum SteamPartyBeaconLocationType : int
+	{
+		Invalid = 0,
+		ChatGroup = 1,
+		Max = 2,
+	}
+	
+	//
+	// ESteamPartyBeaconLocationData
+	//
+	internal enum SteamPartyBeaconLocationData : int
+	{
+		Invalid = 0,
+		Name = 1,
+		IconURLSmall = 2,
+		IconURLMedium = 3,
+		IconURLLarge = 4,
+	}
+	
+	//
+	// RequestPlayersForGameResultCallback_t::PlayerAcceptState_t
+	//
+	internal enum PlayerAcceptState_t : int
+	{
+		Unknown = 0,
+		PlayerAccepted = 1,
+		PlayerDeclined = 2,
+	}
+	
+	//
 	// ERemoteStoragePlatform
 	//
 	internal enum RemoteStoragePlatform : int
@@ -686,6 +797,7 @@ namespace SteamNative
 		PS3 = 4,
 		Linux = 8,
 		Reserved2 = 16,
+		Android = 32,
 		All = -1,
 	}
 	
@@ -974,12 +1086,395 @@ namespace SteamNative
 	}
 	
 	//
+	// EInputSource
+	//
+	internal enum InputSource : int
+	{
+		None = 0,
+		LeftTrackpad = 1,
+		RightTrackpad = 2,
+		Joystick = 3,
+		ABXY = 4,
+		Switch = 5,
+		LeftTrigger = 6,
+		RightTrigger = 7,
+		LeftBumper = 8,
+		RightBumper = 9,
+		Gyro = 10,
+		CenterTrackpad = 11,
+		RightJoystick = 12,
+		DPad = 13,
+		Key = 14,
+		Mouse = 15,
+		LeftGyro = 16,
+		Count = 17,
+	}
+	
+	//
+	// EInputSourceMode
+	//
+	internal enum InputSourceMode : int
+	{
+		None = 0,
+		Dpad = 1,
+		Buttons = 2,
+		FourButtons = 3,
+		AbsoluteMouse = 4,
+		RelativeMouse = 5,
+		JoystickMove = 6,
+		JoystickMouse = 7,
+		JoystickCamera = 8,
+		ScrollWheel = 9,
+		Trigger = 10,
+		TouchMenu = 11,
+		MouseJoystick = 12,
+		MouseRegion = 13,
+		RadialMenu = 14,
+		SingleButton = 15,
+		Switches = 16,
+	}
+	
+	//
+	// EInputActionOrigin
+	//
+	internal enum InputActionOrigin : int
+	{
+		None = 0,
+		SteamController_A = 1,
+		SteamController_B = 2,
+		SteamController_X = 3,
+		SteamController_Y = 4,
+		SteamController_LeftBumper = 5,
+		SteamController_RightBumper = 6,
+		SteamController_LeftGrip = 7,
+		SteamController_RightGrip = 8,
+		SteamController_Start = 9,
+		SteamController_Back = 10,
+		SteamController_LeftPad_Touch = 11,
+		SteamController_LeftPad_Swipe = 12,
+		SteamController_LeftPad_Click = 13,
+		SteamController_LeftPad_DPadNorth = 14,
+		SteamController_LeftPad_DPadSouth = 15,
+		SteamController_LeftPad_DPadWest = 16,
+		SteamController_LeftPad_DPadEast = 17,
+		SteamController_RightPad_Touch = 18,
+		SteamController_RightPad_Swipe = 19,
+		SteamController_RightPad_Click = 20,
+		SteamController_RightPad_DPadNorth = 21,
+		SteamController_RightPad_DPadSouth = 22,
+		SteamController_RightPad_DPadWest = 23,
+		SteamController_RightPad_DPadEast = 24,
+		SteamController_LeftTrigger_Pull = 25,
+		SteamController_LeftTrigger_Click = 26,
+		SteamController_RightTrigger_Pull = 27,
+		SteamController_RightTrigger_Click = 28,
+		SteamController_LeftStick_Move = 29,
+		SteamController_LeftStick_Click = 30,
+		SteamController_LeftStick_DPadNorth = 31,
+		SteamController_LeftStick_DPadSouth = 32,
+		SteamController_LeftStick_DPadWest = 33,
+		SteamController_LeftStick_DPadEast = 34,
+		SteamController_Gyro_Move = 35,
+		SteamController_Gyro_Pitch = 36,
+		SteamController_Gyro_Yaw = 37,
+		SteamController_Gyro_Roll = 38,
+		SteamController_Reserved0 = 39,
+		SteamController_Reserved1 = 40,
+		SteamController_Reserved2 = 41,
+		SteamController_Reserved3 = 42,
+		SteamController_Reserved4 = 43,
+		SteamController_Reserved5 = 44,
+		SteamController_Reserved6 = 45,
+		SteamController_Reserved7 = 46,
+		SteamController_Reserved8 = 47,
+		SteamController_Reserved9 = 48,
+		SteamController_Reserved10 = 49,
+		PS4_X = 50,
+		PS4_Circle = 51,
+		PS4_Triangle = 52,
+		PS4_Square = 53,
+		PS4_LeftBumper = 54,
+		PS4_RightBumper = 55,
+		PS4_Options = 56,
+		PS4_Share = 57,
+		PS4_LeftPad_Touch = 58,
+		PS4_LeftPad_Swipe = 59,
+		PS4_LeftPad_Click = 60,
+		PS4_LeftPad_DPadNorth = 61,
+		PS4_LeftPad_DPadSouth = 62,
+		PS4_LeftPad_DPadWest = 63,
+		PS4_LeftPad_DPadEast = 64,
+		PS4_RightPad_Touch = 65,
+		PS4_RightPad_Swipe = 66,
+		PS4_RightPad_Click = 67,
+		PS4_RightPad_DPadNorth = 68,
+		PS4_RightPad_DPadSouth = 69,
+		PS4_RightPad_DPadWest = 70,
+		PS4_RightPad_DPadEast = 71,
+		PS4_CenterPad_Touch = 72,
+		PS4_CenterPad_Swipe = 73,
+		PS4_CenterPad_Click = 74,
+		PS4_CenterPad_DPadNorth = 75,
+		PS4_CenterPad_DPadSouth = 76,
+		PS4_CenterPad_DPadWest = 77,
+		PS4_CenterPad_DPadEast = 78,
+		PS4_LeftTrigger_Pull = 79,
+		PS4_LeftTrigger_Click = 80,
+		PS4_RightTrigger_Pull = 81,
+		PS4_RightTrigger_Click = 82,
+		PS4_LeftStick_Move = 83,
+		PS4_LeftStick_Click = 84,
+		PS4_LeftStick_DPadNorth = 85,
+		PS4_LeftStick_DPadSouth = 86,
+		PS4_LeftStick_DPadWest = 87,
+		PS4_LeftStick_DPadEast = 88,
+		PS4_RightStick_Move = 89,
+		PS4_RightStick_Click = 90,
+		PS4_RightStick_DPadNorth = 91,
+		PS4_RightStick_DPadSouth = 92,
+		PS4_RightStick_DPadWest = 93,
+		PS4_RightStick_DPadEast = 94,
+		PS4_DPad_North = 95,
+		PS4_DPad_South = 96,
+		PS4_DPad_West = 97,
+		PS4_DPad_East = 98,
+		PS4_Gyro_Move = 99,
+		PS4_Gyro_Pitch = 100,
+		PS4_Gyro_Yaw = 101,
+		PS4_Gyro_Roll = 102,
+		PS4_Reserved0 = 103,
+		PS4_Reserved1 = 104,
+		PS4_Reserved2 = 105,
+		PS4_Reserved3 = 106,
+		PS4_Reserved4 = 107,
+		PS4_Reserved5 = 108,
+		PS4_Reserved6 = 109,
+		PS4_Reserved7 = 110,
+		PS4_Reserved8 = 111,
+		PS4_Reserved9 = 112,
+		PS4_Reserved10 = 113,
+		XBoxOne_A = 114,
+		XBoxOne_B = 115,
+		XBoxOne_X = 116,
+		XBoxOne_Y = 117,
+		XBoxOne_LeftBumper = 118,
+		XBoxOne_RightBumper = 119,
+		XBoxOne_Menu = 120,
+		XBoxOne_View = 121,
+		XBoxOne_LeftTrigger_Pull = 122,
+		XBoxOne_LeftTrigger_Click = 123,
+		XBoxOne_RightTrigger_Pull = 124,
+		XBoxOne_RightTrigger_Click = 125,
+		XBoxOne_LeftStick_Move = 126,
+		XBoxOne_LeftStick_Click = 127,
+		XBoxOne_LeftStick_DPadNorth = 128,
+		XBoxOne_LeftStick_DPadSouth = 129,
+		XBoxOne_LeftStick_DPadWest = 130,
+		XBoxOne_LeftStick_DPadEast = 131,
+		XBoxOne_RightStick_Move = 132,
+		XBoxOne_RightStick_Click = 133,
+		XBoxOne_RightStick_DPadNorth = 134,
+		XBoxOne_RightStick_DPadSouth = 135,
+		XBoxOne_RightStick_DPadWest = 136,
+		XBoxOne_RightStick_DPadEast = 137,
+		XBoxOne_DPad_North = 138,
+		XBoxOne_DPad_South = 139,
+		XBoxOne_DPad_West = 140,
+		XBoxOne_DPad_East = 141,
+		XBoxOne_Reserved0 = 142,
+		XBoxOne_Reserved1 = 143,
+		XBoxOne_Reserved2 = 144,
+		XBoxOne_Reserved3 = 145,
+		XBoxOne_Reserved4 = 146,
+		XBoxOne_Reserved5 = 147,
+		XBoxOne_Reserved6 = 148,
+		XBoxOne_Reserved7 = 149,
+		XBoxOne_Reserved8 = 150,
+		XBoxOne_Reserved9 = 151,
+		XBoxOne_Reserved10 = 152,
+		XBox360_A = 153,
+		XBox360_B = 154,
+		XBox360_X = 155,
+		XBox360_Y = 156,
+		XBox360_LeftBumper = 157,
+		XBox360_RightBumper = 158,
+		XBox360_Start = 159,
+		XBox360_Back = 160,
+		XBox360_LeftTrigger_Pull = 161,
+		XBox360_LeftTrigger_Click = 162,
+		XBox360_RightTrigger_Pull = 163,
+		XBox360_RightTrigger_Click = 164,
+		XBox360_LeftStick_Move = 165,
+		XBox360_LeftStick_Click = 166,
+		XBox360_LeftStick_DPadNorth = 167,
+		XBox360_LeftStick_DPadSouth = 168,
+		XBox360_LeftStick_DPadWest = 169,
+		XBox360_LeftStick_DPadEast = 170,
+		XBox360_RightStick_Move = 171,
+		XBox360_RightStick_Click = 172,
+		XBox360_RightStick_DPadNorth = 173,
+		XBox360_RightStick_DPadSouth = 174,
+		XBox360_RightStick_DPadWest = 175,
+		XBox360_RightStick_DPadEast = 176,
+		XBox360_DPad_North = 177,
+		XBox360_DPad_South = 178,
+		XBox360_DPad_West = 179,
+		XBox360_DPad_East = 180,
+		XBox360_Reserved0 = 181,
+		XBox360_Reserved1 = 182,
+		XBox360_Reserved2 = 183,
+		XBox360_Reserved3 = 184,
+		XBox360_Reserved4 = 185,
+		XBox360_Reserved5 = 186,
+		XBox360_Reserved6 = 187,
+		XBox360_Reserved7 = 188,
+		XBox360_Reserved8 = 189,
+		XBox360_Reserved9 = 190,
+		XBox360_Reserved10 = 191,
+		Switch_A = 192,
+		Switch_B = 193,
+		Switch_X = 194,
+		Switch_Y = 195,
+		Switch_LeftBumper = 196,
+		Switch_RightBumper = 197,
+		Switch_Plus = 198,
+		Switch_Minus = 199,
+		Switch_Capture = 200,
+		Switch_LeftTrigger_Pull = 201,
+		Switch_LeftTrigger_Click = 202,
+		Switch_RightTrigger_Pull = 203,
+		Switch_RightTrigger_Click = 204,
+		Switch_LeftStick_Move = 205,
+		Switch_LeftStick_Click = 206,
+		Switch_LeftStick_DPadNorth = 207,
+		Switch_LeftStick_DPadSouth = 208,
+		Switch_LeftStick_DPadWest = 209,
+		Switch_LeftStick_DPadEast = 210,
+		Switch_RightStick_Move = 211,
+		Switch_RightStick_Click = 212,
+		Switch_RightStick_DPadNorth = 213,
+		Switch_RightStick_DPadSouth = 214,
+		Switch_RightStick_DPadWest = 215,
+		Switch_RightStick_DPadEast = 216,
+		Switch_DPad_North = 217,
+		Switch_DPad_South = 218,
+		Switch_DPad_West = 219,
+		Switch_DPad_East = 220,
+		Switch_ProGyro_Move = 221,
+		Switch_ProGyro_Pitch = 222,
+		Switch_ProGyro_Yaw = 223,
+		Switch_ProGyro_Roll = 224,
+		Switch_Reserved0 = 225,
+		Switch_Reserved1 = 226,
+		Switch_Reserved2 = 227,
+		Switch_Reserved3 = 228,
+		Switch_Reserved4 = 229,
+		Switch_Reserved5 = 230,
+		Switch_Reserved6 = 231,
+		Switch_Reserved7 = 232,
+		Switch_Reserved8 = 233,
+		Switch_Reserved9 = 234,
+		Switch_Reserved10 = 235,
+		Switch_RightGyro_Move = 236,
+		Switch_RightGyro_Pitch = 237,
+		Switch_RightGyro_Yaw = 238,
+		Switch_RightGyro_Roll = 239,
+		Switch_LeftGyro_Move = 240,
+		Switch_LeftGyro_Pitch = 241,
+		Switch_LeftGyro_Yaw = 242,
+		Switch_LeftGyro_Roll = 243,
+		Switch_LeftGrip_Lower = 244,
+		Switch_LeftGrip_Upper = 245,
+		Switch_RightGrip_Lower = 246,
+		Switch_RightGrip_Upper = 247,
+		Switch_Reserved11 = 248,
+		Switch_Reserved12 = 249,
+		Switch_Reserved13 = 250,
+		Switch_Reserved14 = 251,
+		Switch_Reserved15 = 252,
+		Switch_Reserved16 = 253,
+		Switch_Reserved17 = 254,
+		Switch_Reserved18 = 255,
+		Switch_Reserved19 = 256,
+		Switch_Reserved20 = 257,
+		Count = 258,
+		MaximumPossibleValue = 32767,
+	}
+	
+	//
+	// EXboxOrigin
+	//
+	internal enum XboxOrigin : int
+	{
+		A = 0,
+		B = 1,
+		X = 2,
+		Y = 3,
+		LeftBumper = 4,
+		RightBumper = 5,
+		Menu = 6,
+		View = 7,
+		LeftTrigger_Pull = 8,
+		LeftTrigger_Click = 9,
+		RightTrigger_Pull = 10,
+		RightTrigger_Click = 11,
+		LeftStick_Move = 12,
+		LeftStick_Click = 13,
+		LeftStick_DPadNorth = 14,
+		LeftStick_DPadSouth = 15,
+		LeftStick_DPadWest = 16,
+		LeftStick_DPadEast = 17,
+		RightStick_Move = 18,
+		RightStick_Click = 19,
+		RightStick_DPadNorth = 20,
+		RightStick_DPadSouth = 21,
+		RightStick_DPadWest = 22,
+		RightStick_DPadEast = 23,
+		DPad_North = 24,
+		DPad_South = 25,
+		DPad_West = 26,
+		DPad_East = 27,
+		Count = 28,
+	}
+	
+	//
 	// ESteamControllerPad
 	//
 	internal enum SteamControllerPad : int
 	{
 		Left = 0,
 		Right = 1,
+	}
+	
+	//
+	// ESteamInputType
+	//
+	internal enum SteamInputType : int
+	{
+		Unknown = 0,
+		SteamController = 1,
+		XBox360Controller = 2,
+		XBoxOneController = 3,
+		GenericGamepad = 4,
+		PS4Controller = 5,
+		AppleMFiController = 6,
+		AndroidController = 7,
+		SwitchJoyConPair = 8,
+		SwitchJoyConSingle = 9,
+		SwitchProController = 10,
+		MobileTouch = 11,
+		PS3Controller = 12,
+		Count = 13,
+		MaximumPossibleValue = 255,
+	}
+	
+	//
+	// ESteamInputLEDFlag
+	//
+	internal enum SteamInputLEDFlag : int
+	{
+		SetColor = 0,
+		RestoreUserDefault = 1,
 	}
 	
 	//
@@ -995,13 +1490,16 @@ namespace SteamNative
 		Switch = 5,
 		LeftTrigger = 6,
 		RightTrigger = 7,
-		Gyro = 8,
-		CenterTrackpad = 9,
-		RightJoystick = 10,
-		DPad = 11,
-		Key = 12,
-		Mouse = 13,
-		Count = 14,
+		LeftBumper = 8,
+		RightBumper = 9,
+		Gyro = 10,
+		CenterTrackpad = 11,
+		RightJoystick = 12,
+		DPad = 13,
+		Key = 14,
+		Mouse = 15,
+		LeftGyro = 16,
+		Count = 17,
 	}
 	
 	//
@@ -1187,9 +1685,9 @@ namespace SteamNative
 		SteamV2_Y = 151,
 		SteamV2_LeftBumper = 152,
 		SteamV2_RightBumper = 153,
-		SteamV2_LeftGrip = 154,
-		SteamV2_RightGrip = 155,
-		SteamV2_LeftGrip_Upper = 156,
+		SteamV2_LeftGrip_Lower = 154,
+		SteamV2_LeftGrip_Upper = 155,
+		SteamV2_RightGrip_Lower = 156,
 		SteamV2_RightGrip_Upper = 157,
 		SteamV2_LeftBumper_Pressure = 158,
 		SteamV2_RightBumper_Pressure = 159,
@@ -1229,7 +1727,53 @@ namespace SteamNative
 		SteamV2_Gyro_Pitch = 193,
 		SteamV2_Gyro_Yaw = 194,
 		SteamV2_Gyro_Roll = 195,
-		Count = 196,
+		Switch_A = 196,
+		Switch_B = 197,
+		Switch_X = 198,
+		Switch_Y = 199,
+		Switch_LeftBumper = 200,
+		Switch_RightBumper = 201,
+		Switch_Plus = 202,
+		Switch_Minus = 203,
+		Switch_Capture = 204,
+		Switch_LeftTrigger_Pull = 205,
+		Switch_LeftTrigger_Click = 206,
+		Switch_RightTrigger_Pull = 207,
+		Switch_RightTrigger_Click = 208,
+		Switch_LeftStick_Move = 209,
+		Switch_LeftStick_Click = 210,
+		Switch_LeftStick_DPadNorth = 211,
+		Switch_LeftStick_DPadSouth = 212,
+		Switch_LeftStick_DPadWest = 213,
+		Switch_LeftStick_DPadEast = 214,
+		Switch_RightStick_Move = 215,
+		Switch_RightStick_Click = 216,
+		Switch_RightStick_DPadNorth = 217,
+		Switch_RightStick_DPadSouth = 218,
+		Switch_RightStick_DPadWest = 219,
+		Switch_RightStick_DPadEast = 220,
+		Switch_DPad_North = 221,
+		Switch_DPad_South = 222,
+		Switch_DPad_West = 223,
+		Switch_DPad_East = 224,
+		Switch_ProGyro_Move = 225,
+		Switch_ProGyro_Pitch = 226,
+		Switch_ProGyro_Yaw = 227,
+		Switch_ProGyro_Roll = 228,
+		Switch_RightGyro_Move = 229,
+		Switch_RightGyro_Pitch = 230,
+		Switch_RightGyro_Yaw = 231,
+		Switch_RightGyro_Roll = 232,
+		Switch_LeftGyro_Move = 233,
+		Switch_LeftGyro_Pitch = 234,
+		Switch_LeftGyro_Yaw = 235,
+		Switch_LeftGyro_Roll = 236,
+		Switch_LeftGrip_Lower = 237,
+		Switch_LeftGrip_Upper = 238,
+		Switch_RightGrip_Lower = 239,
+		Switch_RightGrip_Upper = 240,
+		Count = 241,
+		MaximumPossibleValue = 32767,
 	}
 	
 	//
@@ -1239,19 +1783,6 @@ namespace SteamNative
 	{
 		SetColor = 0,
 		RestoreUserDefault = 1,
-	}
-	
-	//
-	// ESteamInputType
-	//
-	internal enum SteamInputType : int
-	{
-		Unknown = 0,
-		SteamController = 1,
-		XBox360Controller = 2,
-		XBoxOneController = 3,
-		GenericXInput = 4,
-		PS4Controller = 5,
 	}
 	
 	//

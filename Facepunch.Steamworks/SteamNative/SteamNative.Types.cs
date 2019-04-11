@@ -244,6 +244,21 @@ namespace SteamNative
 		}
 	}
 	
+	internal struct PartyBeaconID_t
+	{
+		public ulong Value;
+		
+		public static implicit operator PartyBeaconID_t( ulong value )
+		{
+			return new PartyBeaconID_t(){ Value = value };
+		}
+		
+		public static implicit operator ulong( PartyBeaconID_t value )
+		{
+			return value.Value;
+		}
+	}
+	
 	internal struct HAuthTicket
 	{
 		public uint Value;
@@ -509,6 +524,66 @@ namespace SteamNative
 		}
 		
 		public static implicit operator uint( HTTPCookieContainerHandle value )
+		{
+			return value.Value;
+		}
+	}
+	
+	internal struct InputHandle_t
+	{
+		public ulong Value;
+		
+		public static implicit operator InputHandle_t( ulong value )
+		{
+			return new InputHandle_t(){ Value = value };
+		}
+		
+		public static implicit operator ulong( InputHandle_t value )
+		{
+			return value.Value;
+		}
+	}
+	
+	internal struct InputActionSetHandle_t
+	{
+		public ulong Value;
+		
+		public static implicit operator InputActionSetHandle_t( ulong value )
+		{
+			return new InputActionSetHandle_t(){ Value = value };
+		}
+		
+		public static implicit operator ulong( InputActionSetHandle_t value )
+		{
+			return value.Value;
+		}
+	}
+	
+	internal struct InputDigitalActionHandle_t
+	{
+		public ulong Value;
+		
+		public static implicit operator InputDigitalActionHandle_t( ulong value )
+		{
+			return new InputDigitalActionHandle_t(){ Value = value };
+		}
+		
+		public static implicit operator ulong( InputDigitalActionHandle_t value )
+		{
+			return value.Value;
+		}
+	}
+	
+	internal struct InputAnalogActionHandle_t
+	{
+		public ulong Value;
+		
+		public static implicit operator InputAnalogActionHandle_t( ulong value )
+		{
+			return new InputAnalogActionHandle_t(){ Value = value };
+		}
+		
+		public static implicit operator ulong( InputAnalogActionHandle_t value )
 		{
 			return value.Value;
 		}

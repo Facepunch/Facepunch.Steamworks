@@ -137,6 +137,18 @@ namespace SteamNative
 			return platform.ISteamUser_GetHSteamUser();
 		}
 		
+		// SteamAPICall_t
+		public CallbackHandle GetMarketEligibility( Action<MarketEligibilityResponse_t, bool> CallbackFunction = null /*Action<MarketEligibilityResponse_t, bool>*/ )
+		{
+			SteamAPICall_t callback = 0;
+			callback = platform.ISteamUser_GetMarketEligibility();
+			
+			if ( CallbackFunction == null ) return null;
+			if ( callback == 0 ) return null;
+			
+			return MarketEligibilityResponse_t.CallResult( steamworks, callback, CallbackFunction );
+		}
+		
 		// int
 		public int GetPlayerSteamLevel()
 		{

@@ -1612,6 +1612,193 @@ namespace SteamNative
 		}
 	}
 	
+	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+	internal struct MarketEligibilityResponse_t
+	{
+		internal const int CallbackId = CallbackIdentifiers.SteamUser + 66;
+		[MarshalAs(UnmanagedType.I1)]
+		internal bool Allowed; // m_bAllowed _Bool
+		internal MarketNotAllowedReasonFlags NotAllowedReason; // m_eNotAllowedReason enum EMarketNotAllowedReasonFlags
+		internal uint TAllowedAtTime; // m_rtAllowedAtTime RTime32
+		internal int CdaySteamGuardRequiredDays; // m_cdaySteamGuardRequiredDays int
+		internal int CdayNewDeviceCooldown; // m_cdayNewDeviceCooldown int
+		
+		//
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
+		//
+		internal static MarketEligibilityResponse_t FromPointer( IntPtr p )
+		{
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+			return (MarketEligibilityResponse_t) Marshal.PtrToStructure( p, typeof(MarketEligibilityResponse_t) );
+		}
+		
+		//
+		// Get the size of the structure we're going to be using.
+		//
+		internal static int StructSize()
+		{
+			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(MarketEligibilityResponse_t) );
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		internal struct PackSmall
+		{
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool Allowed; // m_bAllowed _Bool
+			internal MarketNotAllowedReasonFlags NotAllowedReason; // m_eNotAllowedReason enum EMarketNotAllowedReasonFlags
+			internal uint TAllowedAtTime; // m_rtAllowedAtTime RTime32
+			internal int CdaySteamGuardRequiredDays; // m_cdaySteamGuardRequiredDays int
+			internal int CdayNewDeviceCooldown; // m_cdayNewDeviceCooldown int
+			
+			//
+			// Easily convert from PackSmall to MarketEligibilityResponse_t
+			//
+			public static implicit operator MarketEligibilityResponse_t (  MarketEligibilityResponse_t.PackSmall d )
+			{
+				return new MarketEligibilityResponse_t()
+				{
+					Allowed = d.Allowed,
+					NotAllowedReason = d.NotAllowedReason,
+					TAllowedAtTime = d.TAllowedAtTime,
+					CdaySteamGuardRequiredDays = d.CdaySteamGuardRequiredDays,
+					CdayNewDeviceCooldown = d.CdayNewDeviceCooldown,
+				};
+			}
+		}
+		
+		internal static CallResult<MarketEligibilityResponse_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<MarketEligibilityResponse_t, bool> CallbackFunction )
+		{
+			return new CallResult<MarketEligibilityResponse_t>( steamworks, call, CallbackFunction, FromPointer, StructSize(), CallbackId );
+		}
+		
+		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
+		{
+			var handle = new CallbackHandle( steamworks );
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				if ( Platform.IsWindows )
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
+					var vTable = new Callback.VTableWinThis
+					{
+						ResultA = OnResultThis,
+						ResultB = OnResultWithInfoThis,
+						GetSize = OnGetSizeThis,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+				else
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
+					var vTable = new Callback.VTableThis
+					{
+						ResultA = OnResultThis,
+						ResultB = OnResultWithInfoThis,
+						GetSize = OnGetSizeThis,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+			}
+			else
+			{
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				if ( Platform.IsWindows )
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
+					var vTable = new Callback.VTableWin
+					{
+						ResultA = OnResult,
+						ResultB = OnResultWithInfo,
+						GetSize = OnGetSize,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+				else
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+					var vTable = new Callback.VTable
+					{
+						ResultA = OnResult,
+						ResultB = OnResultWithInfo,
+						GetSize = OnGetSize,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
+		
+		[MonoPInvokeCallback]
+		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
+		[MonoPInvokeCallback]
+		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
+		[MonoPInvokeCallback]
+		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
+		[MonoPInvokeCallback]
+		internal static int OnGetSize(){ return StructSize(); }
+		
+		[MonoPInvokeCallback]
+		internal static void OnResult( IntPtr param )
+		{
+			OnResultWithInfo( param, false, 0 );
+		}
+		
+		[MonoPInvokeCallback]
+		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
+		{
+			if ( failure ) return;
+			
+			var value = FromPointer( param );
+			
+			if ( Facepunch.Steamworks.Client.Instance != null )
+			    Facepunch.Steamworks.Client.Instance.OnCallback<MarketEligibilityResponse_t>( value );
+			
+			if ( Facepunch.Steamworks.Server.Instance != null )
+			    Facepunch.Steamworks.Server.Instance.OnCallback<MarketEligibilityResponse_t>( value );
+		}
+	}
+	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	internal struct FriendGameInfo_t
 	{
@@ -5758,6 +5945,50 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+	internal struct SteamPartyBeaconLocation_t
+	{
+		internal SteamPartyBeaconLocationType Type; // m_eType enum ESteamPartyBeaconLocationType
+		internal ulong LocationID; // m_ulLocationID uint64
+		
+		//
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
+		//
+		internal static SteamPartyBeaconLocation_t FromPointer( IntPtr p )
+		{
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+			return (SteamPartyBeaconLocation_t) Marshal.PtrToStructure( p, typeof(SteamPartyBeaconLocation_t) );
+		}
+		
+		//
+		// Get the size of the structure we're going to be using.
+		//
+		internal static int StructSize()
+		{
+			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamPartyBeaconLocation_t) );
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		internal struct PackSmall
+		{
+			internal SteamPartyBeaconLocationType Type; // m_eType enum ESteamPartyBeaconLocationType
+			internal ulong LocationID; // m_ulLocationID uint64
+			
+			//
+			// Easily convert from PackSmall to SteamPartyBeaconLocation_t
+			//
+			public static implicit operator SteamPartyBeaconLocation_t (  SteamPartyBeaconLocation_t.PackSmall d )
+			{
+				return new SteamPartyBeaconLocation_t()
+				{
+					Type = d.Type,
+					LocationID = d.LocationID,
+				};
+			}
+		}
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct FavoritesListChanged_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMatchmaking + 2;
@@ -7869,6 +8100,1963 @@ namespace SteamNative
 			
 			if ( Facepunch.Steamworks.Server.Instance != null )
 			    Facepunch.Steamworks.Server.Instance.OnCallback<FavoritesListAccountsUpdated_t>( value );
+		}
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	internal struct SearchForGameProgressCallback_t
+	{
+		internal const int CallbackId = CallbackIdentifiers.SteamGameSearch + 1;
+		internal ulong LSearchID; // m_ullSearchID uint64
+		internal Result Result; // m_eResult enum EResult
+		internal ulong LobbyID; // m_lobbyID class CSteamID
+		internal ulong SteamIDEndedSearch; // m_steamIDEndedSearch class CSteamID
+		internal int SecondsRemainingEstimate; // m_nSecondsRemainingEstimate int32
+		internal int CPlayersSearching; // m_cPlayersSearching int32
+		
+		//
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
+		//
+		internal static SearchForGameProgressCallback_t FromPointer( IntPtr p )
+		{
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+			return (SearchForGameProgressCallback_t) Marshal.PtrToStructure( p, typeof(SearchForGameProgressCallback_t) );
+		}
+		
+		//
+		// Get the size of the structure we're going to be using.
+		//
+		internal static int StructSize()
+		{
+			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SearchForGameProgressCallback_t) );
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		internal struct PackSmall
+		{
+			internal ulong LSearchID; // m_ullSearchID uint64
+			internal Result Result; // m_eResult enum EResult
+			internal ulong LobbyID; // m_lobbyID class CSteamID
+			internal ulong SteamIDEndedSearch; // m_steamIDEndedSearch class CSteamID
+			internal int SecondsRemainingEstimate; // m_nSecondsRemainingEstimate int32
+			internal int CPlayersSearching; // m_cPlayersSearching int32
+			
+			//
+			// Easily convert from PackSmall to SearchForGameProgressCallback_t
+			//
+			public static implicit operator SearchForGameProgressCallback_t (  SearchForGameProgressCallback_t.PackSmall d )
+			{
+				return new SearchForGameProgressCallback_t()
+				{
+					LSearchID = d.LSearchID,
+					Result = d.Result,
+					LobbyID = d.LobbyID,
+					SteamIDEndedSearch = d.SteamIDEndedSearch,
+					SecondsRemainingEstimate = d.SecondsRemainingEstimate,
+					CPlayersSearching = d.CPlayersSearching,
+				};
+			}
+		}
+		
+		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
+		{
+			var handle = new CallbackHandle( steamworks );
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				if ( Platform.IsWindows )
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
+					var vTable = new Callback.VTableWinThis
+					{
+						ResultA = OnResultThis,
+						ResultB = OnResultWithInfoThis,
+						GetSize = OnGetSizeThis,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+				else
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
+					var vTable = new Callback.VTableThis
+					{
+						ResultA = OnResultThis,
+						ResultB = OnResultWithInfoThis,
+						GetSize = OnGetSizeThis,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+			}
+			else
+			{
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				if ( Platform.IsWindows )
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
+					var vTable = new Callback.VTableWin
+					{
+						ResultA = OnResult,
+						ResultB = OnResultWithInfo,
+						GetSize = OnGetSize,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+				else
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+					var vTable = new Callback.VTable
+					{
+						ResultA = OnResult,
+						ResultB = OnResultWithInfo,
+						GetSize = OnGetSize,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
+		
+		[MonoPInvokeCallback]
+		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
+		[MonoPInvokeCallback]
+		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
+		[MonoPInvokeCallback]
+		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
+		[MonoPInvokeCallback]
+		internal static int OnGetSize(){ return StructSize(); }
+		
+		[MonoPInvokeCallback]
+		internal static void OnResult( IntPtr param )
+		{
+			OnResultWithInfo( param, false, 0 );
+		}
+		
+		[MonoPInvokeCallback]
+		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
+		{
+			if ( failure ) return;
+			
+			var value = FromPointer( param );
+			
+			if ( Facepunch.Steamworks.Client.Instance != null )
+			    Facepunch.Steamworks.Client.Instance.OnCallback<SearchForGameProgressCallback_t>( value );
+			
+			if ( Facepunch.Steamworks.Server.Instance != null )
+			    Facepunch.Steamworks.Server.Instance.OnCallback<SearchForGameProgressCallback_t>( value );
+		}
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	internal struct SearchForGameResultCallback_t
+	{
+		internal const int CallbackId = CallbackIdentifiers.SteamGameSearch + 2;
+		internal ulong LSearchID; // m_ullSearchID uint64
+		internal Result Result; // m_eResult enum EResult
+		internal int CountPlayersInGame; // m_nCountPlayersInGame int32
+		internal int CountAcceptedGame; // m_nCountAcceptedGame int32
+		internal ulong SteamIDHost; // m_steamIDHost class CSteamID
+		[MarshalAs(UnmanagedType.I1)]
+		internal bool FinalCallback; // m_bFinalCallback _Bool
+		
+		//
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
+		//
+		internal static SearchForGameResultCallback_t FromPointer( IntPtr p )
+		{
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+			return (SearchForGameResultCallback_t) Marshal.PtrToStructure( p, typeof(SearchForGameResultCallback_t) );
+		}
+		
+		//
+		// Get the size of the structure we're going to be using.
+		//
+		internal static int StructSize()
+		{
+			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SearchForGameResultCallback_t) );
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		internal struct PackSmall
+		{
+			internal ulong LSearchID; // m_ullSearchID uint64
+			internal Result Result; // m_eResult enum EResult
+			internal int CountPlayersInGame; // m_nCountPlayersInGame int32
+			internal int CountAcceptedGame; // m_nCountAcceptedGame int32
+			internal ulong SteamIDHost; // m_steamIDHost class CSteamID
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool FinalCallback; // m_bFinalCallback _Bool
+			
+			//
+			// Easily convert from PackSmall to SearchForGameResultCallback_t
+			//
+			public static implicit operator SearchForGameResultCallback_t (  SearchForGameResultCallback_t.PackSmall d )
+			{
+				return new SearchForGameResultCallback_t()
+				{
+					LSearchID = d.LSearchID,
+					Result = d.Result,
+					CountPlayersInGame = d.CountPlayersInGame,
+					CountAcceptedGame = d.CountAcceptedGame,
+					SteamIDHost = d.SteamIDHost,
+					FinalCallback = d.FinalCallback,
+				};
+			}
+		}
+		
+		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
+		{
+			var handle = new CallbackHandle( steamworks );
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				if ( Platform.IsWindows )
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
+					var vTable = new Callback.VTableWinThis
+					{
+						ResultA = OnResultThis,
+						ResultB = OnResultWithInfoThis,
+						GetSize = OnGetSizeThis,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+				else
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
+					var vTable = new Callback.VTableThis
+					{
+						ResultA = OnResultThis,
+						ResultB = OnResultWithInfoThis,
+						GetSize = OnGetSizeThis,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+			}
+			else
+			{
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				if ( Platform.IsWindows )
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
+					var vTable = new Callback.VTableWin
+					{
+						ResultA = OnResult,
+						ResultB = OnResultWithInfo,
+						GetSize = OnGetSize,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+				else
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+					var vTable = new Callback.VTable
+					{
+						ResultA = OnResult,
+						ResultB = OnResultWithInfo,
+						GetSize = OnGetSize,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
+		
+		[MonoPInvokeCallback]
+		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
+		[MonoPInvokeCallback]
+		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
+		[MonoPInvokeCallback]
+		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
+		[MonoPInvokeCallback]
+		internal static int OnGetSize(){ return StructSize(); }
+		
+		[MonoPInvokeCallback]
+		internal static void OnResult( IntPtr param )
+		{
+			OnResultWithInfo( param, false, 0 );
+		}
+		
+		[MonoPInvokeCallback]
+		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
+		{
+			if ( failure ) return;
+			
+			var value = FromPointer( param );
+			
+			if ( Facepunch.Steamworks.Client.Instance != null )
+			    Facepunch.Steamworks.Client.Instance.OnCallback<SearchForGameResultCallback_t>( value );
+			
+			if ( Facepunch.Steamworks.Server.Instance != null )
+			    Facepunch.Steamworks.Server.Instance.OnCallback<SearchForGameResultCallback_t>( value );
+		}
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+	internal struct RequestPlayersForGameProgressCallback_t
+	{
+		internal const int CallbackId = CallbackIdentifiers.SteamGameSearch + 11;
+		internal Result Result; // m_eResult enum EResult
+		internal ulong LSearchID; // m_ullSearchID uint64
+		
+		//
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
+		//
+		internal static RequestPlayersForGameProgressCallback_t FromPointer( IntPtr p )
+		{
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+			return (RequestPlayersForGameProgressCallback_t) Marshal.PtrToStructure( p, typeof(RequestPlayersForGameProgressCallback_t) );
+		}
+		
+		//
+		// Get the size of the structure we're going to be using.
+		//
+		internal static int StructSize()
+		{
+			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RequestPlayersForGameProgressCallback_t) );
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		internal struct PackSmall
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong LSearchID; // m_ullSearchID uint64
+			
+			//
+			// Easily convert from PackSmall to RequestPlayersForGameProgressCallback_t
+			//
+			public static implicit operator RequestPlayersForGameProgressCallback_t (  RequestPlayersForGameProgressCallback_t.PackSmall d )
+			{
+				return new RequestPlayersForGameProgressCallback_t()
+				{
+					Result = d.Result,
+					LSearchID = d.LSearchID,
+				};
+			}
+		}
+		
+		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
+		{
+			var handle = new CallbackHandle( steamworks );
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				if ( Platform.IsWindows )
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
+					var vTable = new Callback.VTableWinThis
+					{
+						ResultA = OnResultThis,
+						ResultB = OnResultWithInfoThis,
+						GetSize = OnGetSizeThis,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+				else
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
+					var vTable = new Callback.VTableThis
+					{
+						ResultA = OnResultThis,
+						ResultB = OnResultWithInfoThis,
+						GetSize = OnGetSizeThis,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+			}
+			else
+			{
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				if ( Platform.IsWindows )
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
+					var vTable = new Callback.VTableWin
+					{
+						ResultA = OnResult,
+						ResultB = OnResultWithInfo,
+						GetSize = OnGetSize,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+				else
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+					var vTable = new Callback.VTable
+					{
+						ResultA = OnResult,
+						ResultB = OnResultWithInfo,
+						GetSize = OnGetSize,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
+		
+		[MonoPInvokeCallback]
+		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
+		[MonoPInvokeCallback]
+		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
+		[MonoPInvokeCallback]
+		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
+		[MonoPInvokeCallback]
+		internal static int OnGetSize(){ return StructSize(); }
+		
+		[MonoPInvokeCallback]
+		internal static void OnResult( IntPtr param )
+		{
+			OnResultWithInfo( param, false, 0 );
+		}
+		
+		[MonoPInvokeCallback]
+		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
+		{
+			if ( failure ) return;
+			
+			var value = FromPointer( param );
+			
+			if ( Facepunch.Steamworks.Client.Instance != null )
+			    Facepunch.Steamworks.Client.Instance.OnCallback<RequestPlayersForGameProgressCallback_t>( value );
+			
+			if ( Facepunch.Steamworks.Server.Instance != null )
+			    Facepunch.Steamworks.Server.Instance.OnCallback<RequestPlayersForGameProgressCallback_t>( value );
+		}
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	internal struct RequestPlayersForGameResultCallback_t
+	{
+		internal const int CallbackId = CallbackIdentifiers.SteamGameSearch + 12;
+		internal Result Result; // m_eResult enum EResult
+		internal ulong LSearchID; // m_ullSearchID uint64
+		internal ulong SteamIDPlayerFound; // m_SteamIDPlayerFound class CSteamID
+		internal ulong SteamIDLobby; // m_SteamIDLobby class CSteamID
+		internal PlayerAcceptState_t PlayerAcceptState; // m_ePlayerAcceptState PlayerAcceptState_t
+		internal int PlayerIndex; // m_nPlayerIndex int32
+		internal int TotalPlayersFound; // m_nTotalPlayersFound int32
+		internal int TotalPlayersAcceptedGame; // m_nTotalPlayersAcceptedGame int32
+		internal int SuggestedTeamIndex; // m_nSuggestedTeamIndex int32
+		internal ulong LUniqueGameID; // m_ullUniqueGameID uint64
+		
+		//
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
+		//
+		internal static RequestPlayersForGameResultCallback_t FromPointer( IntPtr p )
+		{
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+			return (RequestPlayersForGameResultCallback_t) Marshal.PtrToStructure( p, typeof(RequestPlayersForGameResultCallback_t) );
+		}
+		
+		//
+		// Get the size of the structure we're going to be using.
+		//
+		internal static int StructSize()
+		{
+			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RequestPlayersForGameResultCallback_t) );
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		internal struct PackSmall
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong LSearchID; // m_ullSearchID uint64
+			internal ulong SteamIDPlayerFound; // m_SteamIDPlayerFound class CSteamID
+			internal ulong SteamIDLobby; // m_SteamIDLobby class CSteamID
+			internal PlayerAcceptState_t PlayerAcceptState; // m_ePlayerAcceptState PlayerAcceptState_t
+			internal int PlayerIndex; // m_nPlayerIndex int32
+			internal int TotalPlayersFound; // m_nTotalPlayersFound int32
+			internal int TotalPlayersAcceptedGame; // m_nTotalPlayersAcceptedGame int32
+			internal int SuggestedTeamIndex; // m_nSuggestedTeamIndex int32
+			internal ulong LUniqueGameID; // m_ullUniqueGameID uint64
+			
+			//
+			// Easily convert from PackSmall to RequestPlayersForGameResultCallback_t
+			//
+			public static implicit operator RequestPlayersForGameResultCallback_t (  RequestPlayersForGameResultCallback_t.PackSmall d )
+			{
+				return new RequestPlayersForGameResultCallback_t()
+				{
+					Result = d.Result,
+					LSearchID = d.LSearchID,
+					SteamIDPlayerFound = d.SteamIDPlayerFound,
+					SteamIDLobby = d.SteamIDLobby,
+					PlayerAcceptState = d.PlayerAcceptState,
+					PlayerIndex = d.PlayerIndex,
+					TotalPlayersFound = d.TotalPlayersFound,
+					TotalPlayersAcceptedGame = d.TotalPlayersAcceptedGame,
+					SuggestedTeamIndex = d.SuggestedTeamIndex,
+					LUniqueGameID = d.LUniqueGameID,
+				};
+			}
+		}
+		
+		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
+		{
+			var handle = new CallbackHandle( steamworks );
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				if ( Platform.IsWindows )
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
+					var vTable = new Callback.VTableWinThis
+					{
+						ResultA = OnResultThis,
+						ResultB = OnResultWithInfoThis,
+						GetSize = OnGetSizeThis,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+				else
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
+					var vTable = new Callback.VTableThis
+					{
+						ResultA = OnResultThis,
+						ResultB = OnResultWithInfoThis,
+						GetSize = OnGetSizeThis,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+			}
+			else
+			{
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				if ( Platform.IsWindows )
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
+					var vTable = new Callback.VTableWin
+					{
+						ResultA = OnResult,
+						ResultB = OnResultWithInfo,
+						GetSize = OnGetSize,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+				else
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+					var vTable = new Callback.VTable
+					{
+						ResultA = OnResult,
+						ResultB = OnResultWithInfo,
+						GetSize = OnGetSize,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
+		
+		[MonoPInvokeCallback]
+		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
+		[MonoPInvokeCallback]
+		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
+		[MonoPInvokeCallback]
+		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
+		[MonoPInvokeCallback]
+		internal static int OnGetSize(){ return StructSize(); }
+		
+		[MonoPInvokeCallback]
+		internal static void OnResult( IntPtr param )
+		{
+			OnResultWithInfo( param, false, 0 );
+		}
+		
+		[MonoPInvokeCallback]
+		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
+		{
+			if ( failure ) return;
+			
+			var value = FromPointer( param );
+			
+			if ( Facepunch.Steamworks.Client.Instance != null )
+			    Facepunch.Steamworks.Client.Instance.OnCallback<RequestPlayersForGameResultCallback_t>( value );
+			
+			if ( Facepunch.Steamworks.Server.Instance != null )
+			    Facepunch.Steamworks.Server.Instance.OnCallback<RequestPlayersForGameResultCallback_t>( value );
+		}
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+	internal struct RequestPlayersForGameFinalResultCallback_t
+	{
+		internal const int CallbackId = CallbackIdentifiers.SteamGameSearch + 13;
+		internal Result Result; // m_eResult enum EResult
+		internal ulong LSearchID; // m_ullSearchID uint64
+		internal ulong LUniqueGameID; // m_ullUniqueGameID uint64
+		
+		//
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
+		//
+		internal static RequestPlayersForGameFinalResultCallback_t FromPointer( IntPtr p )
+		{
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+			return (RequestPlayersForGameFinalResultCallback_t) Marshal.PtrToStructure( p, typeof(RequestPlayersForGameFinalResultCallback_t) );
+		}
+		
+		//
+		// Get the size of the structure we're going to be using.
+		//
+		internal static int StructSize()
+		{
+			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RequestPlayersForGameFinalResultCallback_t) );
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		internal struct PackSmall
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong LSearchID; // m_ullSearchID uint64
+			internal ulong LUniqueGameID; // m_ullUniqueGameID uint64
+			
+			//
+			// Easily convert from PackSmall to RequestPlayersForGameFinalResultCallback_t
+			//
+			public static implicit operator RequestPlayersForGameFinalResultCallback_t (  RequestPlayersForGameFinalResultCallback_t.PackSmall d )
+			{
+				return new RequestPlayersForGameFinalResultCallback_t()
+				{
+					Result = d.Result,
+					LSearchID = d.LSearchID,
+					LUniqueGameID = d.LUniqueGameID,
+				};
+			}
+		}
+		
+		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
+		{
+			var handle = new CallbackHandle( steamworks );
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				if ( Platform.IsWindows )
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
+					var vTable = new Callback.VTableWinThis
+					{
+						ResultA = OnResultThis,
+						ResultB = OnResultWithInfoThis,
+						GetSize = OnGetSizeThis,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+				else
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
+					var vTable = new Callback.VTableThis
+					{
+						ResultA = OnResultThis,
+						ResultB = OnResultWithInfoThis,
+						GetSize = OnGetSizeThis,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+			}
+			else
+			{
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				if ( Platform.IsWindows )
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
+					var vTable = new Callback.VTableWin
+					{
+						ResultA = OnResult,
+						ResultB = OnResultWithInfo,
+						GetSize = OnGetSize,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+				else
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+					var vTable = new Callback.VTable
+					{
+						ResultA = OnResult,
+						ResultB = OnResultWithInfo,
+						GetSize = OnGetSize,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
+		
+		[MonoPInvokeCallback]
+		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
+		[MonoPInvokeCallback]
+		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
+		[MonoPInvokeCallback]
+		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
+		[MonoPInvokeCallback]
+		internal static int OnGetSize(){ return StructSize(); }
+		
+		[MonoPInvokeCallback]
+		internal static void OnResult( IntPtr param )
+		{
+			OnResultWithInfo( param, false, 0 );
+		}
+		
+		[MonoPInvokeCallback]
+		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
+		{
+			if ( failure ) return;
+			
+			var value = FromPointer( param );
+			
+			if ( Facepunch.Steamworks.Client.Instance != null )
+			    Facepunch.Steamworks.Client.Instance.OnCallback<RequestPlayersForGameFinalResultCallback_t>( value );
+			
+			if ( Facepunch.Steamworks.Server.Instance != null )
+			    Facepunch.Steamworks.Server.Instance.OnCallback<RequestPlayersForGameFinalResultCallback_t>( value );
+		}
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	internal struct SubmitPlayerResultResultCallback_t
+	{
+		internal const int CallbackId = CallbackIdentifiers.SteamGameSearch + 14;
+		internal Result Result; // m_eResult enum EResult
+		internal ulong UllUniqueGameID; // ullUniqueGameID uint64
+		internal ulong SteamIDPlayer; // steamIDPlayer class CSteamID
+		
+		//
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
+		//
+		internal static SubmitPlayerResultResultCallback_t FromPointer( IntPtr p )
+		{
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+			return (SubmitPlayerResultResultCallback_t) Marshal.PtrToStructure( p, typeof(SubmitPlayerResultResultCallback_t) );
+		}
+		
+		//
+		// Get the size of the structure we're going to be using.
+		//
+		internal static int StructSize()
+		{
+			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SubmitPlayerResultResultCallback_t) );
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		internal struct PackSmall
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong UllUniqueGameID; // ullUniqueGameID uint64
+			internal ulong SteamIDPlayer; // steamIDPlayer class CSteamID
+			
+			//
+			// Easily convert from PackSmall to SubmitPlayerResultResultCallback_t
+			//
+			public static implicit operator SubmitPlayerResultResultCallback_t (  SubmitPlayerResultResultCallback_t.PackSmall d )
+			{
+				return new SubmitPlayerResultResultCallback_t()
+				{
+					Result = d.Result,
+					UllUniqueGameID = d.UllUniqueGameID,
+					SteamIDPlayer = d.SteamIDPlayer,
+				};
+			}
+		}
+		
+		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
+		{
+			var handle = new CallbackHandle( steamworks );
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				if ( Platform.IsWindows )
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
+					var vTable = new Callback.VTableWinThis
+					{
+						ResultA = OnResultThis,
+						ResultB = OnResultWithInfoThis,
+						GetSize = OnGetSizeThis,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+				else
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
+					var vTable = new Callback.VTableThis
+					{
+						ResultA = OnResultThis,
+						ResultB = OnResultWithInfoThis,
+						GetSize = OnGetSizeThis,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+			}
+			else
+			{
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				if ( Platform.IsWindows )
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
+					var vTable = new Callback.VTableWin
+					{
+						ResultA = OnResult,
+						ResultB = OnResultWithInfo,
+						GetSize = OnGetSize,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+				else
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+					var vTable = new Callback.VTable
+					{
+						ResultA = OnResult,
+						ResultB = OnResultWithInfo,
+						GetSize = OnGetSize,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
+		
+		[MonoPInvokeCallback]
+		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
+		[MonoPInvokeCallback]
+		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
+		[MonoPInvokeCallback]
+		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
+		[MonoPInvokeCallback]
+		internal static int OnGetSize(){ return StructSize(); }
+		
+		[MonoPInvokeCallback]
+		internal static void OnResult( IntPtr param )
+		{
+			OnResultWithInfo( param, false, 0 );
+		}
+		
+		[MonoPInvokeCallback]
+		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
+		{
+			if ( failure ) return;
+			
+			var value = FromPointer( param );
+			
+			if ( Facepunch.Steamworks.Client.Instance != null )
+			    Facepunch.Steamworks.Client.Instance.OnCallback<SubmitPlayerResultResultCallback_t>( value );
+			
+			if ( Facepunch.Steamworks.Server.Instance != null )
+			    Facepunch.Steamworks.Server.Instance.OnCallback<SubmitPlayerResultResultCallback_t>( value );
+		}
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+	internal struct EndGameResultCallback_t
+	{
+		internal const int CallbackId = CallbackIdentifiers.SteamGameSearch + 15;
+		internal Result Result; // m_eResult enum EResult
+		internal ulong UllUniqueGameID; // ullUniqueGameID uint64
+		
+		//
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
+		//
+		internal static EndGameResultCallback_t FromPointer( IntPtr p )
+		{
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+			return (EndGameResultCallback_t) Marshal.PtrToStructure( p, typeof(EndGameResultCallback_t) );
+		}
+		
+		//
+		// Get the size of the structure we're going to be using.
+		//
+		internal static int StructSize()
+		{
+			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(EndGameResultCallback_t) );
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		internal struct PackSmall
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong UllUniqueGameID; // ullUniqueGameID uint64
+			
+			//
+			// Easily convert from PackSmall to EndGameResultCallback_t
+			//
+			public static implicit operator EndGameResultCallback_t (  EndGameResultCallback_t.PackSmall d )
+			{
+				return new EndGameResultCallback_t()
+				{
+					Result = d.Result,
+					UllUniqueGameID = d.UllUniqueGameID,
+				};
+			}
+		}
+		
+		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
+		{
+			var handle = new CallbackHandle( steamworks );
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				if ( Platform.IsWindows )
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
+					var vTable = new Callback.VTableWinThis
+					{
+						ResultA = OnResultThis,
+						ResultB = OnResultWithInfoThis,
+						GetSize = OnGetSizeThis,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+				else
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
+					var vTable = new Callback.VTableThis
+					{
+						ResultA = OnResultThis,
+						ResultB = OnResultWithInfoThis,
+						GetSize = OnGetSizeThis,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+			}
+			else
+			{
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				if ( Platform.IsWindows )
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
+					var vTable = new Callback.VTableWin
+					{
+						ResultA = OnResult,
+						ResultB = OnResultWithInfo,
+						GetSize = OnGetSize,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+				else
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+					var vTable = new Callback.VTable
+					{
+						ResultA = OnResult,
+						ResultB = OnResultWithInfo,
+						GetSize = OnGetSize,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
+		
+		[MonoPInvokeCallback]
+		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
+		[MonoPInvokeCallback]
+		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
+		[MonoPInvokeCallback]
+		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
+		[MonoPInvokeCallback]
+		internal static int OnGetSize(){ return StructSize(); }
+		
+		[MonoPInvokeCallback]
+		internal static void OnResult( IntPtr param )
+		{
+			OnResultWithInfo( param, false, 0 );
+		}
+		
+		[MonoPInvokeCallback]
+		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
+		{
+			if ( failure ) return;
+			
+			var value = FromPointer( param );
+			
+			if ( Facepunch.Steamworks.Client.Instance != null )
+			    Facepunch.Steamworks.Client.Instance.OnCallback<EndGameResultCallback_t>( value );
+			
+			if ( Facepunch.Steamworks.Server.Instance != null )
+			    Facepunch.Steamworks.Server.Instance.OnCallback<EndGameResultCallback_t>( value );
+		}
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	internal struct JoinPartyCallback_t
+	{
+		internal const int CallbackId = CallbackIdentifiers.SteamParties + 1;
+		internal Result Result; // m_eResult enum EResult
+		internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
+		internal ulong SteamIDBeaconOwner; // m_SteamIDBeaconOwner class CSteamID
+		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+		internal string ConnectString; // m_rgchConnectString char [256]
+		
+		//
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
+		//
+		internal static JoinPartyCallback_t FromPointer( IntPtr p )
+		{
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+			return (JoinPartyCallback_t) Marshal.PtrToStructure( p, typeof(JoinPartyCallback_t) );
+		}
+		
+		//
+		// Get the size of the structure we're going to be using.
+		//
+		internal static int StructSize()
+		{
+			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(JoinPartyCallback_t) );
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		internal struct PackSmall
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
+			internal ulong SteamIDBeaconOwner; // m_SteamIDBeaconOwner class CSteamID
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+			internal string ConnectString; // m_rgchConnectString char [256]
+			
+			//
+			// Easily convert from PackSmall to JoinPartyCallback_t
+			//
+			public static implicit operator JoinPartyCallback_t (  JoinPartyCallback_t.PackSmall d )
+			{
+				return new JoinPartyCallback_t()
+				{
+					Result = d.Result,
+					BeaconID = d.BeaconID,
+					SteamIDBeaconOwner = d.SteamIDBeaconOwner,
+					ConnectString = d.ConnectString,
+				};
+			}
+		}
+		
+		internal static CallResult<JoinPartyCallback_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<JoinPartyCallback_t, bool> CallbackFunction )
+		{
+			return new CallResult<JoinPartyCallback_t>( steamworks, call, CallbackFunction, FromPointer, StructSize(), CallbackId );
+		}
+		
+		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
+		{
+			var handle = new CallbackHandle( steamworks );
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				if ( Platform.IsWindows )
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
+					var vTable = new Callback.VTableWinThis
+					{
+						ResultA = OnResultThis,
+						ResultB = OnResultWithInfoThis,
+						GetSize = OnGetSizeThis,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+				else
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
+					var vTable = new Callback.VTableThis
+					{
+						ResultA = OnResultThis,
+						ResultB = OnResultWithInfoThis,
+						GetSize = OnGetSizeThis,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+			}
+			else
+			{
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				if ( Platform.IsWindows )
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
+					var vTable = new Callback.VTableWin
+					{
+						ResultA = OnResult,
+						ResultB = OnResultWithInfo,
+						GetSize = OnGetSize,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+				else
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+					var vTable = new Callback.VTable
+					{
+						ResultA = OnResult,
+						ResultB = OnResultWithInfo,
+						GetSize = OnGetSize,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
+		
+		[MonoPInvokeCallback]
+		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
+		[MonoPInvokeCallback]
+		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
+		[MonoPInvokeCallback]
+		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
+		[MonoPInvokeCallback]
+		internal static int OnGetSize(){ return StructSize(); }
+		
+		[MonoPInvokeCallback]
+		internal static void OnResult( IntPtr param )
+		{
+			OnResultWithInfo( param, false, 0 );
+		}
+		
+		[MonoPInvokeCallback]
+		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
+		{
+			if ( failure ) return;
+			
+			var value = FromPointer( param );
+			
+			if ( Facepunch.Steamworks.Client.Instance != null )
+			    Facepunch.Steamworks.Client.Instance.OnCallback<JoinPartyCallback_t>( value );
+			
+			if ( Facepunch.Steamworks.Server.Instance != null )
+			    Facepunch.Steamworks.Server.Instance.OnCallback<JoinPartyCallback_t>( value );
+		}
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+	internal struct CreateBeaconCallback_t
+	{
+		internal const int CallbackId = CallbackIdentifiers.SteamParties + 2;
+		internal Result Result; // m_eResult enum EResult
+		internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
+		
+		//
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
+		//
+		internal static CreateBeaconCallback_t FromPointer( IntPtr p )
+		{
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+			return (CreateBeaconCallback_t) Marshal.PtrToStructure( p, typeof(CreateBeaconCallback_t) );
+		}
+		
+		//
+		// Get the size of the structure we're going to be using.
+		//
+		internal static int StructSize()
+		{
+			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(CreateBeaconCallback_t) );
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		internal struct PackSmall
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
+			
+			//
+			// Easily convert from PackSmall to CreateBeaconCallback_t
+			//
+			public static implicit operator CreateBeaconCallback_t (  CreateBeaconCallback_t.PackSmall d )
+			{
+				return new CreateBeaconCallback_t()
+				{
+					Result = d.Result,
+					BeaconID = d.BeaconID,
+				};
+			}
+		}
+		
+		internal static CallResult<CreateBeaconCallback_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<CreateBeaconCallback_t, bool> CallbackFunction )
+		{
+			return new CallResult<CreateBeaconCallback_t>( steamworks, call, CallbackFunction, FromPointer, StructSize(), CallbackId );
+		}
+		
+		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
+		{
+			var handle = new CallbackHandle( steamworks );
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				if ( Platform.IsWindows )
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
+					var vTable = new Callback.VTableWinThis
+					{
+						ResultA = OnResultThis,
+						ResultB = OnResultWithInfoThis,
+						GetSize = OnGetSizeThis,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+				else
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
+					var vTable = new Callback.VTableThis
+					{
+						ResultA = OnResultThis,
+						ResultB = OnResultWithInfoThis,
+						GetSize = OnGetSizeThis,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+			}
+			else
+			{
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				if ( Platform.IsWindows )
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
+					var vTable = new Callback.VTableWin
+					{
+						ResultA = OnResult,
+						ResultB = OnResultWithInfo,
+						GetSize = OnGetSize,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+				else
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+					var vTable = new Callback.VTable
+					{
+						ResultA = OnResult,
+						ResultB = OnResultWithInfo,
+						GetSize = OnGetSize,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
+		
+		[MonoPInvokeCallback]
+		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
+		[MonoPInvokeCallback]
+		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
+		[MonoPInvokeCallback]
+		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
+		[MonoPInvokeCallback]
+		internal static int OnGetSize(){ return StructSize(); }
+		
+		[MonoPInvokeCallback]
+		internal static void OnResult( IntPtr param )
+		{
+			OnResultWithInfo( param, false, 0 );
+		}
+		
+		[MonoPInvokeCallback]
+		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
+		{
+			if ( failure ) return;
+			
+			var value = FromPointer( param );
+			
+			if ( Facepunch.Steamworks.Client.Instance != null )
+			    Facepunch.Steamworks.Client.Instance.OnCallback<CreateBeaconCallback_t>( value );
+			
+			if ( Facepunch.Steamworks.Server.Instance != null )
+			    Facepunch.Steamworks.Server.Instance.OnCallback<CreateBeaconCallback_t>( value );
+		}
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	internal struct ReservationNotificationCallback_t
+	{
+		internal const int CallbackId = CallbackIdentifiers.SteamParties + 3;
+		internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
+		internal ulong SteamIDJoiner; // m_steamIDJoiner class CSteamID
+		
+		//
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
+		//
+		internal static ReservationNotificationCallback_t FromPointer( IntPtr p )
+		{
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+			return (ReservationNotificationCallback_t) Marshal.PtrToStructure( p, typeof(ReservationNotificationCallback_t) );
+		}
+		
+		//
+		// Get the size of the structure we're going to be using.
+		//
+		internal static int StructSize()
+		{
+			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(ReservationNotificationCallback_t) );
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		internal struct PackSmall
+		{
+			internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
+			internal ulong SteamIDJoiner; // m_steamIDJoiner class CSteamID
+			
+			//
+			// Easily convert from PackSmall to ReservationNotificationCallback_t
+			//
+			public static implicit operator ReservationNotificationCallback_t (  ReservationNotificationCallback_t.PackSmall d )
+			{
+				return new ReservationNotificationCallback_t()
+				{
+					BeaconID = d.BeaconID,
+					SteamIDJoiner = d.SteamIDJoiner,
+				};
+			}
+		}
+		
+		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
+		{
+			var handle = new CallbackHandle( steamworks );
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				if ( Platform.IsWindows )
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
+					var vTable = new Callback.VTableWinThis
+					{
+						ResultA = OnResultThis,
+						ResultB = OnResultWithInfoThis,
+						GetSize = OnGetSizeThis,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+				else
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
+					var vTable = new Callback.VTableThis
+					{
+						ResultA = OnResultThis,
+						ResultB = OnResultWithInfoThis,
+						GetSize = OnGetSizeThis,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+			}
+			else
+			{
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				if ( Platform.IsWindows )
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
+					var vTable = new Callback.VTableWin
+					{
+						ResultA = OnResult,
+						ResultB = OnResultWithInfo,
+						GetSize = OnGetSize,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+				else
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+					var vTable = new Callback.VTable
+					{
+						ResultA = OnResult,
+						ResultB = OnResultWithInfo,
+						GetSize = OnGetSize,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
+		
+		[MonoPInvokeCallback]
+		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
+		[MonoPInvokeCallback]
+		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
+		[MonoPInvokeCallback]
+		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
+		[MonoPInvokeCallback]
+		internal static int OnGetSize(){ return StructSize(); }
+		
+		[MonoPInvokeCallback]
+		internal static void OnResult( IntPtr param )
+		{
+			OnResultWithInfo( param, false, 0 );
+		}
+		
+		[MonoPInvokeCallback]
+		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
+		{
+			if ( failure ) return;
+			
+			var value = FromPointer( param );
+			
+			if ( Facepunch.Steamworks.Client.Instance != null )
+			    Facepunch.Steamworks.Client.Instance.OnCallback<ReservationNotificationCallback_t>( value );
+			
+			if ( Facepunch.Steamworks.Server.Instance != null )
+			    Facepunch.Steamworks.Server.Instance.OnCallback<ReservationNotificationCallback_t>( value );
+		}
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+	internal struct ChangeNumOpenSlotsCallback_t
+	{
+		internal const int CallbackId = CallbackIdentifiers.SteamParties + 4;
+		internal Result Result; // m_eResult enum EResult
+		
+		//
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
+		//
+		internal static ChangeNumOpenSlotsCallback_t FromPointer( IntPtr p )
+		{
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+			return (ChangeNumOpenSlotsCallback_t) Marshal.PtrToStructure( p, typeof(ChangeNumOpenSlotsCallback_t) );
+		}
+		
+		//
+		// Get the size of the structure we're going to be using.
+		//
+		internal static int StructSize()
+		{
+			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(ChangeNumOpenSlotsCallback_t) );
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		internal struct PackSmall
+		{
+			internal Result Result; // m_eResult enum EResult
+			
+			//
+			// Easily convert from PackSmall to ChangeNumOpenSlotsCallback_t
+			//
+			public static implicit operator ChangeNumOpenSlotsCallback_t (  ChangeNumOpenSlotsCallback_t.PackSmall d )
+			{
+				return new ChangeNumOpenSlotsCallback_t()
+				{
+					Result = d.Result,
+				};
+			}
+		}
+		
+		internal static CallResult<ChangeNumOpenSlotsCallback_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<ChangeNumOpenSlotsCallback_t, bool> CallbackFunction )
+		{
+			return new CallResult<ChangeNumOpenSlotsCallback_t>( steamworks, call, CallbackFunction, FromPointer, StructSize(), CallbackId );
+		}
+		
+		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
+		{
+			var handle = new CallbackHandle( steamworks );
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				if ( Platform.IsWindows )
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
+					var vTable = new Callback.VTableWinThis
+					{
+						ResultA = OnResultThis,
+						ResultB = OnResultWithInfoThis,
+						GetSize = OnGetSizeThis,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+				else
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
+					var vTable = new Callback.VTableThis
+					{
+						ResultA = OnResultThis,
+						ResultB = OnResultWithInfoThis,
+						GetSize = OnGetSizeThis,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+			}
+			else
+			{
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				if ( Platform.IsWindows )
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
+					var vTable = new Callback.VTableWin
+					{
+						ResultA = OnResult,
+						ResultB = OnResultWithInfo,
+						GetSize = OnGetSize,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+				else
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+					var vTable = new Callback.VTable
+					{
+						ResultA = OnResult,
+						ResultB = OnResultWithInfo,
+						GetSize = OnGetSize,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
+		
+		[MonoPInvokeCallback]
+		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
+		[MonoPInvokeCallback]
+		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
+		[MonoPInvokeCallback]
+		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
+		[MonoPInvokeCallback]
+		internal static int OnGetSize(){ return StructSize(); }
+		
+		[MonoPInvokeCallback]
+		internal static void OnResult( IntPtr param )
+		{
+			OnResultWithInfo( param, false, 0 );
+		}
+		
+		[MonoPInvokeCallback]
+		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
+		{
+			if ( failure ) return;
+			
+			var value = FromPointer( param );
+			
+			if ( Facepunch.Steamworks.Client.Instance != null )
+			    Facepunch.Steamworks.Client.Instance.OnCallback<ChangeNumOpenSlotsCallback_t>( value );
+			
+			if ( Facepunch.Steamworks.Server.Instance != null )
+			    Facepunch.Steamworks.Server.Instance.OnCallback<ChangeNumOpenSlotsCallback_t>( value );
 		}
 	}
 	
@@ -16811,7 +18999,6 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct VolumeHasChanged_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamMusic + 2;
 		internal float NewVolume; // m_flNewVolume float
 		
 		//
@@ -16848,138 +19035,11 @@ namespace SteamNative
 				};
 			}
 		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<VolumeHasChanged_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<VolumeHasChanged_t>( value );
-		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct MusicPlayerWantsShuffled_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamMusicRemote + 9;
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool Shuffled; // m_bShuffled _Bool
 		
@@ -17018,138 +19078,11 @@ namespace SteamNative
 				};
 			}
 		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<MusicPlayerWantsShuffled_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<MusicPlayerWantsShuffled_t>( value );
-		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct MusicPlayerWantsLooped_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamMusicRemote + 10;
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool Looped; // m_bLooped _Bool
 		
@@ -17188,138 +19121,11 @@ namespace SteamNative
 				};
 			}
 		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<MusicPlayerWantsLooped_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<MusicPlayerWantsLooped_t>( value );
-		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct MusicPlayerWantsVolume_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamMusic + 11;
 		internal float NewVolume; // m_flNewVolume float
 		
 		//
@@ -17356,138 +19162,11 @@ namespace SteamNative
 				};
 			}
 		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<MusicPlayerWantsVolume_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<MusicPlayerWantsVolume_t>( value );
-		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct MusicPlayerSelectsQueueEntry_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamMusic + 12;
 		internal int NID; // nID int
 		
 		//
@@ -17524,138 +19203,11 @@ namespace SteamNative
 				};
 			}
 		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<MusicPlayerSelectsQueueEntry_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<MusicPlayerSelectsQueueEntry_t>( value );
-		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct MusicPlayerSelectsPlaylistEntry_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamMusic + 13;
 		internal int NID; // nID int
 		
 		//
@@ -17692,138 +19244,11 @@ namespace SteamNative
 				};
 			}
 		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<MusicPlayerSelectsPlaylistEntry_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<MusicPlayerSelectsPlaylistEntry_t>( value );
-		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct MusicPlayerWantsPlayingRepeatStatus_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamMusicRemote + 14;
 		internal int PlayingRepeatStatus; // m_nPlayingRepeatStatus int
 		
 		//
@@ -17859,132 +19284,6 @@ namespace SteamNative
 					PlayingRepeatStatus = d.PlayingRepeatStatus,
 				};
 			}
-		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<MusicPlayerWantsPlayingRepeatStatus_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<MusicPlayerWantsPlayingRepeatStatus_t>( value );
 		}
 	}
 	
@@ -18519,174 +19818,6 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct ControllerAnalogActionData_t
-	{
-		internal ControllerSourceMode EMode; // eMode enum EControllerSourceMode
-		internal float X; // x float
-		internal float Y; // y float
-		[MarshalAs(UnmanagedType.I1)]
-		internal bool BActive; // bActive _Bool
-		
-		//
-		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
-		//
-		internal static ControllerAnalogActionData_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (ControllerAnalogActionData_t) Marshal.PtrToStructure( p, typeof(ControllerAnalogActionData_t) );
-		}
-		
-		//
-		// Get the size of the structure we're going to be using.
-		//
-		internal static int StructSize()
-		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(ControllerAnalogActionData_t) );
-		}
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
-		{
-			internal ControllerSourceMode EMode; // eMode enum EControllerSourceMode
-			internal float X; // x float
-			internal float Y; // y float
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool BActive; // bActive _Bool
-			
-			//
-			// Easily convert from PackSmall to ControllerAnalogActionData_t
-			//
-			public static implicit operator ControllerAnalogActionData_t (  ControllerAnalogActionData_t.PackSmall d )
-			{
-				return new ControllerAnalogActionData_t()
-				{
-					EMode = d.EMode,
-					X = d.X,
-					Y = d.Y,
-					BActive = d.BActive,
-				};
-			}
-		}
-	}
-	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct ControllerDigitalActionData_t
-	{
-		[MarshalAs(UnmanagedType.I1)]
-		internal bool BState; // bState _Bool
-		[MarshalAs(UnmanagedType.I1)]
-		internal bool BActive; // bActive _Bool
-		
-		//
-		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
-		//
-		internal static ControllerDigitalActionData_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (ControllerDigitalActionData_t) Marshal.PtrToStructure( p, typeof(ControllerDigitalActionData_t) );
-		}
-		
-		//
-		// Get the size of the structure we're going to be using.
-		//
-		internal static int StructSize()
-		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(ControllerDigitalActionData_t) );
-		}
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
-		{
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool BState; // bState _Bool
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool BActive; // bActive _Bool
-			
-			//
-			// Easily convert from PackSmall to ControllerDigitalActionData_t
-			//
-			public static implicit operator ControllerDigitalActionData_t (  ControllerDigitalActionData_t.PackSmall d )
-			{
-				return new ControllerDigitalActionData_t()
-				{
-					BState = d.BState,
-					BActive = d.BActive,
-				};
-			}
-		}
-	}
-	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct ControllerMotionData_t
-	{
-		internal float RotQuatX; // rotQuatX float
-		internal float RotQuatY; // rotQuatY float
-		internal float RotQuatZ; // rotQuatZ float
-		internal float RotQuatW; // rotQuatW float
-		internal float PosAccelX; // posAccelX float
-		internal float PosAccelY; // posAccelY float
-		internal float PosAccelZ; // posAccelZ float
-		internal float RotVelX; // rotVelX float
-		internal float RotVelY; // rotVelY float
-		internal float RotVelZ; // rotVelZ float
-		
-		//
-		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
-		//
-		internal static ControllerMotionData_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (ControllerMotionData_t) Marshal.PtrToStructure( p, typeof(ControllerMotionData_t) );
-		}
-		
-		//
-		// Get the size of the structure we're going to be using.
-		//
-		internal static int StructSize()
-		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(ControllerMotionData_t) );
-		}
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
-		{
-			internal float RotQuatX; // rotQuatX float
-			internal float RotQuatY; // rotQuatY float
-			internal float RotQuatZ; // rotQuatZ float
-			internal float RotQuatW; // rotQuatW float
-			internal float PosAccelX; // posAccelX float
-			internal float PosAccelY; // posAccelY float
-			internal float PosAccelZ; // posAccelZ float
-			internal float RotVelX; // rotVelX float
-			internal float RotVelY; // rotVelY float
-			internal float RotVelZ; // rotVelZ float
-			
-			//
-			// Easily convert from PackSmall to ControllerMotionData_t
-			//
-			public static implicit operator ControllerMotionData_t (  ControllerMotionData_t.PackSmall d )
-			{
-				return new ControllerMotionData_t()
-				{
-					RotQuatX = d.RotQuatX,
-					RotQuatY = d.RotQuatY,
-					RotQuatZ = d.RotQuatZ,
-					RotQuatW = d.RotQuatW,
-					PosAccelX = d.PosAccelX,
-					PosAccelY = d.PosAccelY,
-					PosAccelZ = d.PosAccelZ,
-					RotVelX = d.RotVelX,
-					RotVelY = d.RotVelY,
-					RotVelZ = d.RotVelZ,
-				};
-			}
-		}
-	}
-	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct SteamUGCDetails_t
 	{
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -18828,6 +19959,8 @@ namespace SteamNative
 		internal uint TotalMatchingResults; // m_unTotalMatchingResults uint32
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool CachedData; // m_bCachedData _Bool
+		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+		internal string NextCursor; // m_rgchNextCursor char [256]
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
@@ -18856,6 +19989,8 @@ namespace SteamNative
 			internal uint TotalMatchingResults; // m_unTotalMatchingResults uint32
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool CachedData; // m_bCachedData _Bool
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+			internal string NextCursor; // m_rgchNextCursor char [256]
 			
 			//
 			// Easily convert from PackSmall to SteamUGCQueryCompleted_t
@@ -18869,6 +20004,7 @@ namespace SteamNative
 					NumResultsReturned = d.NumResultsReturned,
 					TotalMatchingResults = d.TotalMatchingResults,
 					CachedData = d.CachedData,
+					NextCursor = d.NextCursor,
 				};
 			}
 		}
@@ -21695,7 +22831,6 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct SteamAppInstalled_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamAppList + 1;
 		internal uint AppID; // m_nAppID AppId_t
 		
 		//
@@ -21732,138 +22867,11 @@ namespace SteamNative
 				};
 			}
 		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<SteamAppInstalled_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<SteamAppInstalled_t>( value );
-		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct SteamAppUninstalled_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamAppList + 2;
 		internal uint AppID; // m_nAppID AppId_t
 		
 		//
@@ -21900,138 +22908,11 @@ namespace SteamNative
 				};
 			}
 		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<SteamAppUninstalled_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<SteamAppUninstalled_t>( value );
-		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct HTML_BrowserReady_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 1;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		
 		//
@@ -22072,132 +22953,6 @@ namespace SteamNative
 		internal static CallResult<HTML_BrowserReady_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<HTML_BrowserReady_t, bool> CallbackFunction )
 		{
 			return new CallResult<HTML_BrowserReady_t>( steamworks, call, CallbackFunction, FromPointer, StructSize(), CallbackId );
-		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<HTML_BrowserReady_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<HTML_BrowserReady_t>( value );
 		}
 	}
 	
@@ -22374,7 +23129,6 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct HTML_URLChanged_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 5;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchURL; // pchURL const char *
 		internal string PchPostData; // pchPostData const char *
@@ -22430,138 +23184,11 @@ namespace SteamNative
 				};
 			}
 		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<HTML_URLChanged_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<HTML_URLChanged_t>( value );
-		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct HTML_FinishedRequest_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 6;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchURL; // pchURL const char *
 		internal string PchPageTitle; // pchPageTitle const char *
@@ -22604,138 +23231,11 @@ namespace SteamNative
 				};
 			}
 		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<HTML_FinishedRequest_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<HTML_FinishedRequest_t>( value );
-		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct HTML_OpenLinkInNewTab_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 7;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchURL; // pchURL const char *
 		
@@ -22775,138 +23275,11 @@ namespace SteamNative
 				};
 			}
 		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<HTML_OpenLinkInNewTab_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<HTML_OpenLinkInNewTab_t>( value );
-		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct HTML_ChangedTitle_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 8;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchTitle; // pchTitle const char *
 		
@@ -22946,138 +23319,11 @@ namespace SteamNative
 				};
 			}
 		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<HTML_ChangedTitle_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<HTML_ChangedTitle_t>( value );
-		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct HTML_SearchResults_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 9;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal uint UnResults; // unResults uint32
 		internal uint UnCurrentMatch; // unCurrentMatch uint32
@@ -23120,138 +23366,11 @@ namespace SteamNative
 				};
 			}
 		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<HTML_SearchResults_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<HTML_SearchResults_t>( value );
-		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct HTML_CanGoBackAndForward_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 10;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool BCanGoBack; // bCanGoBack _Bool
@@ -23298,138 +23417,11 @@ namespace SteamNative
 				};
 			}
 		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<HTML_CanGoBackAndForward_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<HTML_CanGoBackAndForward_t>( value );
-		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct HTML_HorizontalScroll_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 11;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal uint UnScrollMax; // unScrollMax uint32
 		internal uint UnScrollCurrent; // unScrollCurrent uint32
@@ -23483,138 +23475,11 @@ namespace SteamNative
 				};
 			}
 		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<HTML_HorizontalScroll_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<HTML_HorizontalScroll_t>( value );
-		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct HTML_VerticalScroll_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 12;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal uint UnScrollMax; // unScrollMax uint32
 		internal uint UnScrollCurrent; // unScrollCurrent uint32
@@ -23668,138 +23533,11 @@ namespace SteamNative
 				};
 			}
 		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<HTML_VerticalScroll_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<HTML_VerticalScroll_t>( value );
-		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct HTML_LinkAtPosition_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 13;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal uint X; // x uint32
 		internal uint Y; // y uint32
@@ -23855,138 +23593,11 @@ namespace SteamNative
 				};
 			}
 		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<HTML_LinkAtPosition_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<HTML_LinkAtPosition_t>( value );
-		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct HTML_JSAlert_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 14;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchMessage; // pchMessage const char *
 		
@@ -24026,138 +23637,11 @@ namespace SteamNative
 				};
 			}
 		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<HTML_JSAlert_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<HTML_JSAlert_t>( value );
-		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct HTML_JSConfirm_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 15;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchMessage; // pchMessage const char *
 		
@@ -24197,138 +23681,11 @@ namespace SteamNative
 				};
 			}
 		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<HTML_JSConfirm_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<HTML_JSConfirm_t>( value );
-		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct HTML_FileOpenDialog_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 16;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchTitle; // pchTitle const char *
 		internal string PchInitialFile; // pchInitialFile const char *
@@ -24371,145 +23728,18 @@ namespace SteamNative
 				};
 			}
 		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<HTML_FileOpenDialog_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<HTML_FileOpenDialog_t>( value );
-		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct HTML_NewWindow_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 21;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchURL; // pchURL const char *
 		internal uint UnX; // unX uint32
 		internal uint UnY; // unY uint32
 		internal uint UnWide; // unWide uint32
 		internal uint UnTall; // unTall uint32
-		internal uint UnNewWindow_BrowserHandle; // unNewWindow_BrowserHandle HHTMLBrowser
+		internal uint UnNewWindow_BrowserHandle_IGNORE; // unNewWindow_BrowserHandle_IGNORE HHTMLBrowser
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
@@ -24538,7 +23768,7 @@ namespace SteamNative
 			internal uint UnY; // unY uint32
 			internal uint UnWide; // unWide uint32
 			internal uint UnTall; // unTall uint32
-			internal uint UnNewWindow_BrowserHandle; // unNewWindow_BrowserHandle HHTMLBrowser
+			internal uint UnNewWindow_BrowserHandle_IGNORE; // unNewWindow_BrowserHandle_IGNORE HHTMLBrowser
 			
 			//
 			// Easily convert from PackSmall to HTML_NewWindow_t
@@ -24553,142 +23783,15 @@ namespace SteamNative
 					UnY = d.UnY,
 					UnWide = d.UnWide,
 					UnTall = d.UnTall,
-					UnNewWindow_BrowserHandle = d.UnNewWindow_BrowserHandle,
+					UnNewWindow_BrowserHandle_IGNORE = d.UnNewWindow_BrowserHandle_IGNORE,
 				};
 			}
-		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<HTML_NewWindow_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<HTML_NewWindow_t>( value );
 		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct HTML_SetCursor_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 22;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal uint EMouseCursor; // eMouseCursor uint32
 		
@@ -24728,138 +23831,11 @@ namespace SteamNative
 				};
 			}
 		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<HTML_SetCursor_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<HTML_SetCursor_t>( value );
-		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct HTML_StatusText_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 23;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchMsg; // pchMsg const char *
 		
@@ -24899,138 +23875,11 @@ namespace SteamNative
 				};
 			}
 		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<HTML_StatusText_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<HTML_StatusText_t>( value );
-		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct HTML_ShowToolTip_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 24;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchMsg; // pchMsg const char *
 		
@@ -25070,138 +23919,11 @@ namespace SteamNative
 				};
 			}
 		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<HTML_ShowToolTip_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<HTML_ShowToolTip_t>( value );
-		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct HTML_UpdateToolTip_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 25;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchMsg; // pchMsg const char *
 		
@@ -25241,138 +23963,11 @@ namespace SteamNative
 				};
 			}
 		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<HTML_UpdateToolTip_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<HTML_UpdateToolTip_t>( value );
-		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct HTML_HideToolTip_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 26;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		
 		//
@@ -25409,138 +24004,11 @@ namespace SteamNative
 				};
 			}
 		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<HTML_HideToolTip_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<HTML_HideToolTip_t>( value );
-		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct HTML_BrowserRestarted_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 27;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal uint UnOldBrowserHandle; // unOldBrowserHandle HHTMLBrowser
 		
@@ -25579,132 +24047,6 @@ namespace SteamNative
 					UnOldBrowserHandle = d.UnOldBrowserHandle,
 				};
 			}
-		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<HTML_BrowserRestarted_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<HTML_BrowserRestarted_t>( value );
 		}
 	}
 	
@@ -26641,7 +24983,6 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct BroadcastUploadStop_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.ClientVideo + 5;
 		internal BroadcastUploadResult Result; // m_eResult enum EBroadcastUploadResult
 		
 		//
@@ -26678,138 +25019,11 @@ namespace SteamNative
 				};
 			}
 		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<BroadcastUploadStop_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<BroadcastUploadStop_t>( value );
-		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct GetVideoURLResult_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.ClientVideo + 11;
 		internal Result Result; // m_eResult enum EResult
 		internal uint VideoAppID; // m_unVideoAppID AppId_t
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
@@ -26854,138 +25068,11 @@ namespace SteamNative
 				};
 			}
 		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<GetVideoURLResult_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<GetVideoURLResult_t>( value );
-		}
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct GetOPFSettingsResult_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.ClientVideo + 24;
 		internal Result Result; // m_eResult enum EResult
 		internal uint VideoAppID; // m_unVideoAppID AppId_t
 		
@@ -27024,132 +25111,6 @@ namespace SteamNative
 					VideoAppID = d.VideoAppID,
 				};
 			}
-		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<GetOPFSettingsResult_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<GetOPFSettingsResult_t>( value );
 		}
 	}
 	
@@ -29618,6 +27579,162 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+	internal struct InputAnalogActionData_t
+	{
+		internal InputSourceMode EMode; // eMode EInputSourceMode
+		internal float X; // x float
+		internal float Y; // y float
+		[MarshalAs(UnmanagedType.I1)]
+		internal bool BActive; // bActive bool
+		
+		//
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
+		//
+		internal static InputAnalogActionData_t FromPointer( IntPtr p )
+		{
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+			return (InputAnalogActionData_t) Marshal.PtrToStructure( p, typeof(InputAnalogActionData_t) );
+		}
+		
+		//
+		// Get the size of the structure we're going to be using.
+		//
+		internal static int StructSize()
+		{
+			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(InputAnalogActionData_t) );
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		internal struct PackSmall
+		{
+			internal InputSourceMode EMode; // eMode EInputSourceMode
+			internal float X; // x float
+			internal float Y; // y float
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool BActive; // bActive bool
+			
+			//
+			// Easily convert from PackSmall to InputAnalogActionData_t
+			//
+			public static implicit operator InputAnalogActionData_t (  InputAnalogActionData_t.PackSmall d )
+			{
+				return new InputAnalogActionData_t()
+				{
+					EMode = d.EMode,
+					X = d.X,
+					Y = d.Y,
+					BActive = d.BActive,
+				};
+			}
+		}
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+	internal struct InputMotionData_t
+	{
+		internal InputSourceMode EMode; // eMode EInputSourceMode
+		internal float X; // x float
+		internal float Y; // y float
+		[MarshalAs(UnmanagedType.I1)]
+		internal bool BActive; // bActive bool
+		
+		//
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
+		//
+		internal static InputMotionData_t FromPointer( IntPtr p )
+		{
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+			return (InputMotionData_t) Marshal.PtrToStructure( p, typeof(InputMotionData_t) );
+		}
+		
+		//
+		// Get the size of the structure we're going to be using.
+		//
+		internal static int StructSize()
+		{
+			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(InputMotionData_t) );
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		internal struct PackSmall
+		{
+			internal InputSourceMode EMode; // eMode EInputSourceMode
+			internal float X; // x float
+			internal float Y; // y float
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool BActive; // bActive bool
+			
+			//
+			// Easily convert from PackSmall to InputMotionData_t
+			//
+			public static implicit operator InputMotionData_t (  InputMotionData_t.PackSmall d )
+			{
+				return new InputMotionData_t()
+				{
+					EMode = d.EMode,
+					X = d.X,
+					Y = d.Y,
+					BActive = d.BActive,
+				};
+			}
+		}
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+	internal struct InputDigitalActionData_t
+	{
+		internal InputSourceMode EMode; // eMode EInputSourceMode
+		internal float X; // x float
+		internal float Y; // y float
+		[MarshalAs(UnmanagedType.I1)]
+		internal bool BActive; // bActive bool
+		
+		//
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
+		//
+		internal static InputDigitalActionData_t FromPointer( IntPtr p )
+		{
+			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
+			return (InputDigitalActionData_t) Marshal.PtrToStructure( p, typeof(InputDigitalActionData_t) );
+		}
+		
+		//
+		// Get the size of the structure we're going to be using.
+		//
+		internal static int StructSize()
+		{
+			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(InputDigitalActionData_t) );
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		internal struct PackSmall
+		{
+			internal InputSourceMode EMode; // eMode EInputSourceMode
+			internal float X; // x float
+			internal float Y; // y float
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool BActive; // bActive bool
+			
+			//
+			// Easily convert from PackSmall to InputDigitalActionData_t
+			//
+			public static implicit operator InputDigitalActionData_t (  InputDigitalActionData_t.PackSmall d )
+			{
+				return new InputDigitalActionData_t()
+				{
+					EMode = d.EMode,
+					X = d.X,
+					Y = d.Y,
+					BActive = d.BActive,
+				};
+			}
+		}
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct SteamInventoryDefinitionUpdate_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientInventory + 2;
@@ -30115,7 +28232,6 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct NewLaunchQueryParameters_t
 	{
-		internal const int CallbackId = CallbackIdentifiers.SteamApps + 14;
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
@@ -30148,132 +28264,6 @@ namespace SteamNative
 				{
 				};
 			}
-		}
-		
-		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
-		{
-			var handle = new CallbackHandle( steamworks );
-			
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
-					var vTable = new Callback.VTableWinThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
-					var vTable = new Callback.VTableThis
-					{
-						ResultA = OnResultThis,
-						ResultB = OnResultWithInfoThis,
-						GetSize = OnGetSizeThis,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Platform.IsWindows )
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
-					var vTable = new Callback.VTableWin
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-				else
-				{
-					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
-					var vTable = new Callback.VTable
-					{
-						ResultA = OnResult,
-						ResultB = OnResultWithInfo,
-						GetSize = OnGetSize,
-					};
-					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
-					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
-					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
-					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
-				}
-			}
-			
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = handle.vTablePtr;
-			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
-			cb.CallbackId = CallbackId;
-			
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-			
-			//
-			// Register the callback with Steam
-			//
-			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
-			
-			steamworks.RegisterCallbackHandle( handle );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
-		[MonoPInvokeCallback]
-		internal static int OnGetSize(){ return StructSize(); }
-		
-		[MonoPInvokeCallback]
-		internal static void OnResult( IntPtr param )
-		{
-			OnResultWithInfo( param, false, 0 );
-		}
-		
-		[MonoPInvokeCallback]
-		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
-		{
-			if ( failure ) return;
-			
-			var value = FromPointer( param );
-			
-			if ( Facepunch.Steamworks.Client.Instance != null )
-			    Facepunch.Steamworks.Client.Instance.OnCallback<NewLaunchQueryParameters_t>( value );
-			
-			if ( Facepunch.Steamworks.Server.Instance != null )
-			    Facepunch.Steamworks.Server.Instance.OnCallback<NewLaunchQueryParameters_t>( value );
 		}
 	}
 	
@@ -31451,6 +29441,7 @@ namespace SteamNative
 			GetAuthSessionTicketResponse_t.Register( steamworks );
 			GameWebCallback_t.Register( steamworks );
 			StoreAuthURLResponse_t.Register( steamworks );
+			MarketEligibilityResponse_t.Register( steamworks );
 			PersonaStateChange_t.Register( steamworks );
 			GameOverlayActivated_t.Register( steamworks );
 			GameServerChangeRequested_t.Register( steamworks );
@@ -31485,6 +29476,17 @@ namespace SteamNative
 			LobbyCreated_t.Register( steamworks );
 			PSNGameBootInviteResult_t.Register( steamworks );
 			FavoritesListAccountsUpdated_t.Register( steamworks );
+			SearchForGameProgressCallback_t.Register( steamworks );
+			SearchForGameResultCallback_t.Register( steamworks );
+			RequestPlayersForGameProgressCallback_t.Register( steamworks );
+			RequestPlayersForGameResultCallback_t.Register( steamworks );
+			RequestPlayersForGameFinalResultCallback_t.Register( steamworks );
+			SubmitPlayerResultResultCallback_t.Register( steamworks );
+			EndGameResultCallback_t.Register( steamworks );
+			JoinPartyCallback_t.Register( steamworks );
+			CreateBeaconCallback_t.Register( steamworks );
+			ReservationNotificationCallback_t.Register( steamworks );
+			ChangeNumOpenSlotsCallback_t.Register( steamworks );
 			RemoteStorageAppSyncedClient_t.Register( steamworks );
 			RemoteStorageAppSyncedServer_t.Register( steamworks );
 			RemoteStorageAppSyncProgress_t.Register( steamworks );
@@ -31534,13 +29536,6 @@ namespace SteamNative
 			P2PSessionConnectFail_t.Register( steamworks );
 			SocketStatusCallback_t.Register( steamworks );
 			ScreenshotReady_t.Register( steamworks );
-			VolumeHasChanged_t.Register( steamworks );
-			MusicPlayerWantsShuffled_t.Register( steamworks );
-			MusicPlayerWantsLooped_t.Register( steamworks );
-			MusicPlayerWantsVolume_t.Register( steamworks );
-			MusicPlayerSelectsQueueEntry_t.Register( steamworks );
-			MusicPlayerSelectsPlaylistEntry_t.Register( steamworks );
-			MusicPlayerWantsPlayingRepeatStatus_t.Register( steamworks );
 			HTTPRequestCompleted_t.Register( steamworks );
 			HTTPRequestHeadersReceived_t.Register( steamworks );
 			HTTPRequestDataReceived_t.Register( steamworks );
@@ -31560,36 +29555,11 @@ namespace SteamNative
 			RemoveAppDependencyResult_t.Register( steamworks );
 			GetAppDependenciesResult_t.Register( steamworks );
 			DeleteItemResult_t.Register( steamworks );
-			SteamAppInstalled_t.Register( steamworks );
-			SteamAppUninstalled_t.Register( steamworks );
-			HTML_BrowserReady_t.Register( steamworks );
-			HTML_URLChanged_t.Register( steamworks );
-			HTML_FinishedRequest_t.Register( steamworks );
-			HTML_OpenLinkInNewTab_t.Register( steamworks );
-			HTML_ChangedTitle_t.Register( steamworks );
-			HTML_SearchResults_t.Register( steamworks );
-			HTML_CanGoBackAndForward_t.Register( steamworks );
-			HTML_HorizontalScroll_t.Register( steamworks );
-			HTML_VerticalScroll_t.Register( steamworks );
-			HTML_LinkAtPosition_t.Register( steamworks );
-			HTML_JSAlert_t.Register( steamworks );
-			HTML_JSConfirm_t.Register( steamworks );
-			HTML_FileOpenDialog_t.Register( steamworks );
-			HTML_NewWindow_t.Register( steamworks );
-			HTML_SetCursor_t.Register( steamworks );
-			HTML_StatusText_t.Register( steamworks );
-			HTML_ShowToolTip_t.Register( steamworks );
-			HTML_UpdateToolTip_t.Register( steamworks );
-			HTML_HideToolTip_t.Register( steamworks );
-			HTML_BrowserRestarted_t.Register( steamworks );
 			SteamInventoryResultReady_t.Register( steamworks );
 			SteamInventoryFullUpdate_t.Register( steamworks );
 			SteamInventoryEligiblePromoItemDefIDs_t.Register( steamworks );
 			SteamInventoryStartPurchaseResult_t.Register( steamworks );
 			SteamInventoryRequestPricesResult_t.Register( steamworks );
-			BroadcastUploadStop_t.Register( steamworks );
-			GetVideoURLResult_t.Register( steamworks );
-			GetOPFSettingsResult_t.Register( steamworks );
 			GSClientApprove_t.Register( steamworks );
 			GSClientDeny_t.Register( steamworks );
 			GSClientKick_t.Register( steamworks );
@@ -31607,7 +29577,6 @@ namespace SteamNative
 			SteamInventoryDefinitionUpdate_t.Register( steamworks );
 			SteamParentalSettingsChanged_t.Register( steamworks );
 			SteamServersConnected_t.Register( steamworks );
-			NewLaunchQueryParameters_t.Register( steamworks );
 			GCMessageAvailable_t.Register( steamworks );
 			GCMessageFailed_t.Register( steamworks );
 			ScreenshotRequested_t.Register( steamworks );

@@ -109,6 +109,14 @@ namespace SteamNative
 			return new SteamFriends( steamworks, interface_pointer );
 		}
 		
+		// ISteamGameSearch *
+		public SteamGameSearch GetISteamGameSearch( HSteamUser hSteamuser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
+		{
+			IntPtr interface_pointer;
+			interface_pointer = platform.ISteamClient_GetISteamGameSearch( hSteamuser.Value, hSteamPipe.Value, pchVersion );
+			return new SteamGameSearch( steamworks, interface_pointer );
+		}
+		
 		// ISteamGameServer *
 		public SteamGameServer GetISteamGameServer( HSteamUser hSteamUser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
 		{
@@ -145,6 +153,14 @@ namespace SteamNative
 			IntPtr interface_pointer;
 			interface_pointer = platform.ISteamClient_GetISteamHTTP( hSteamuser.Value, hSteamPipe.Value, pchVersion );
 			return new SteamHTTP( steamworks, interface_pointer );
+		}
+		
+		// ISteamInput *
+		public SteamInput GetISteamInput( HSteamUser hSteamUser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
+		{
+			IntPtr interface_pointer;
+			interface_pointer = platform.ISteamClient_GetISteamInput( hSteamUser.Value, hSteamPipe.Value, pchVersion );
+			return new SteamInput( steamworks, interface_pointer );
 		}
 		
 		// ISteamInventory *
@@ -201,6 +217,14 @@ namespace SteamNative
 			IntPtr interface_pointer;
 			interface_pointer = platform.ISteamClient_GetISteamParentalSettings( hSteamuser.Value, hSteamPipe.Value, pchVersion );
 			return new SteamParentalSettings( steamworks, interface_pointer );
+		}
+		
+		// ISteamParties *
+		public SteamParties GetISteamParties( HSteamUser hSteamUser /*HSteamUser*/, HSteamPipe hSteamPipe /*HSteamPipe*/, string pchVersion /*const char **/ )
+		{
+			IntPtr interface_pointer;
+			interface_pointer = platform.ISteamClient_GetISteamParties( hSteamUser.Value, hSteamPipe.Value, pchVersion );
+			return new SteamParties( steamworks, interface_pointer );
 		}
 		
 		// ISteamRemoteStorage *

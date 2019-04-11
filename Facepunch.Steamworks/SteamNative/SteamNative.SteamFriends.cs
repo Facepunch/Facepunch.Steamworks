@@ -66,9 +66,9 @@ namespace SteamNative
 		}
 		
 		// void
-		public void ActivateGameOverlayToWebPage( string pchURL /*const char **/ )
+		public void ActivateGameOverlayToWebPage( string pchURL /*const char **/, ActivateGameOverlayToWebPageMode eMode /*EActivateGameOverlayToWebPageMode*/ )
 		{
-			platform.ISteamFriends_ActivateGameOverlayToWebPage( pchURL );
+			platform.ISteamFriends_ActivateGameOverlayToWebPage( pchURL, eMode );
 		}
 		
 		// void
@@ -348,6 +348,12 @@ namespace SteamNative
 		public int GetMediumFriendAvatar( CSteamID steamIDFriend /*class CSteamID*/ )
 		{
 			return platform.ISteamFriends_GetMediumFriendAvatar( steamIDFriend.Value );
+		}
+		
+		// int
+		public int GetNumChatsWithUnreadPriorityMessages()
+		{
+			return platform.ISteamFriends_GetNumChatsWithUnreadPriorityMessages();
 		}
 		
 		// string

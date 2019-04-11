@@ -250,7 +250,7 @@ namespace Facepunch.Steamworks
 
             internal void UpdatePrice()
             {
-                if ( inventory.inventory.GetItemPrice( Id, out ulong price) )
+                if ( inventory.inventory.GetItemPrice( Id, out ulong price, out ulong basePrice ) )
                 {
                     LocalPrice = price / 100.0;
                     LocalPriceFormatted = Utility.FormatPrice( inventory.Currency, price );

@@ -126,9 +126,9 @@ namespace SteamNative
 		}
 		
 		// void
-		public void KeyDown( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, uint nNativeKeyCode /*uint32*/, HTMLKeyModifiers eHTMLKeyModifiers /*ISteamHTMLSurface::EHTMLKeyModifiers*/ )
+		public void KeyDown( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, uint nNativeKeyCode /*uint32*/, HTMLKeyModifiers eHTMLKeyModifiers /*ISteamHTMLSurface::EHTMLKeyModifiers*/, bool bIsSystemKey /*bool*/ )
 		{
-			platform.ISteamHTMLSurface_KeyDown( unBrowserHandle.Value, nNativeKeyCode, eHTMLKeyModifiers );
+			platform.ISteamHTMLSurface_KeyDown( unBrowserHandle.Value, nNativeKeyCode, eHTMLKeyModifiers, bIsSystemKey );
 		}
 		
 		// void
@@ -171,6 +171,12 @@ namespace SteamNative
 		public void MouseWheel( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/, int nDelta /*int32*/ )
 		{
 			platform.ISteamHTMLSurface_MouseWheel( unBrowserHandle.Value, nDelta );
+		}
+		
+		// void
+		public void OpenDeveloperTools( HHTMLBrowser unBrowserHandle /*HHTMLBrowser*/ )
+		{
+			platform.ISteamHTMLSurface_OpenDeveloperTools( unBrowserHandle.Value );
 		}
 		
 		// void

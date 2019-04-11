@@ -65,6 +65,12 @@ namespace SteamNative
 			platform.ISteamController_DeactivateAllActionSetLayers( controllerHandle.Value );
 		}
 		
+		// ControllerActionOrigin
+		public ControllerActionOrigin GetActionOriginFromXboxOrigin( ControllerHandle_t controllerHandle /*ControllerHandle_t*/, XboxOrigin eOrigin /*EXboxOrigin*/ )
+		{
+			return platform.ISteamController_GetActionOriginFromXboxOrigin( controllerHandle.Value, eOrigin );
+		}
+		
 		// ControllerActionSetHandle_t
 		public ControllerActionSetHandle_t GetActionSetHandle( string pszActionSetName /*const char **/ )
 		{
@@ -77,8 +83,8 @@ namespace SteamNative
 			return platform.ISteamController_GetActiveActionSetLayers( controllerHandle.Value, (IntPtr) handlesOut );
 		}
 		
-		// ControllerAnalogActionData_t
-		public ControllerAnalogActionData_t GetAnalogActionData( ControllerHandle_t controllerHandle /*ControllerHandle_t*/, ControllerAnalogActionHandle_t analogActionHandle /*ControllerAnalogActionHandle_t*/ )
+		// InputAnalogActionData_t
+		public InputAnalogActionData_t GetAnalogActionData( ControllerHandle_t controllerHandle /*ControllerHandle_t*/, ControllerAnalogActionHandle_t analogActionHandle /*ControllerAnalogActionHandle_t*/ )
 		{
 			return platform.ISteamController_GetAnalogActionData( controllerHandle.Value, analogActionHandle.Value );
 		}
@@ -113,8 +119,8 @@ namespace SteamNative
 			return platform.ISteamController_GetCurrentActionSet( controllerHandle.Value );
 		}
 		
-		// ControllerDigitalActionData_t
-		public ControllerDigitalActionData_t GetDigitalActionData( ControllerHandle_t controllerHandle /*ControllerHandle_t*/, ControllerDigitalActionHandle_t digitalActionHandle /*ControllerDigitalActionHandle_t*/ )
+		// InputDigitalActionData_t
+		public InputDigitalActionData_t GetDigitalActionData( ControllerHandle_t controllerHandle /*ControllerHandle_t*/, ControllerDigitalActionHandle_t digitalActionHandle /*ControllerDigitalActionHandle_t*/ )
 		{
 			return platform.ISteamController_GetDigitalActionData( controllerHandle.Value, digitalActionHandle.Value );
 		}
@@ -146,14 +152,23 @@ namespace SteamNative
 			return Marshal.PtrToStringAnsi( string_pointer );
 		}
 		
+		// string
+		// with: Detect_StringReturn
+		public string GetGlyphForXboxOrigin( XboxOrigin eOrigin /*EXboxOrigin*/ )
+		{
+			IntPtr string_pointer;
+			string_pointer = platform.ISteamController_GetGlyphForXboxOrigin( eOrigin );
+			return Marshal.PtrToStringAnsi( string_pointer );
+		}
+		
 		// SteamInputType
 		public SteamInputType GetInputTypeForHandle( ControllerHandle_t controllerHandle /*ControllerHandle_t*/ )
 		{
 			return platform.ISteamController_GetInputTypeForHandle( controllerHandle.Value );
 		}
 		
-		// ControllerMotionData_t
-		public ControllerMotionData_t GetMotionData( ControllerHandle_t controllerHandle /*ControllerHandle_t*/ )
+		// InputMotionData_t
+		public InputMotionData_t GetMotionData( ControllerHandle_t controllerHandle /*ControllerHandle_t*/ )
 		{
 			return platform.ISteamController_GetMotionData( controllerHandle.Value );
 		}
@@ -164,6 +179,15 @@ namespace SteamNative
 		{
 			IntPtr string_pointer;
 			string_pointer = platform.ISteamController_GetStringForActionOrigin( eOrigin );
+			return Marshal.PtrToStringAnsi( string_pointer );
+		}
+		
+		// string
+		// with: Detect_StringReturn
+		public string GetStringForXboxOrigin( XboxOrigin eOrigin /*EXboxOrigin*/ )
+		{
+			IntPtr string_pointer;
+			string_pointer = platform.ISteamController_GetStringForXboxOrigin( eOrigin );
 			return Marshal.PtrToStringAnsi( string_pointer );
 		}
 		
@@ -186,21 +210,9 @@ namespace SteamNative
 		}
 		
 		// bool
-		public bool ShowAnalogActionOrigins( ControllerHandle_t controllerHandle /*ControllerHandle_t*/, ControllerAnalogActionHandle_t analogActionHandle /*ControllerAnalogActionHandle_t*/, float flScale /*float*/, float flXPosition /*float*/, float flYPosition /*float*/ )
-		{
-			return platform.ISteamController_ShowAnalogActionOrigins( controllerHandle.Value, analogActionHandle.Value, flScale, flXPosition, flYPosition );
-		}
-		
-		// bool
 		public bool ShowBindingPanel( ControllerHandle_t controllerHandle /*ControllerHandle_t*/ )
 		{
 			return platform.ISteamController_ShowBindingPanel( controllerHandle.Value );
-		}
-		
-		// bool
-		public bool ShowDigitalActionOrigins( ControllerHandle_t controllerHandle /*ControllerHandle_t*/, ControllerDigitalActionHandle_t digitalActionHandle /*ControllerDigitalActionHandle_t*/, float flScale /*float*/, float flXPosition /*float*/, float flYPosition /*float*/ )
-		{
-			return platform.ISteamController_ShowDigitalActionOrigins( controllerHandle.Value, digitalActionHandle.Value, flScale, flXPosition, flYPosition );
 		}
 		
 		// bool
@@ -213,6 +225,12 @@ namespace SteamNative
 		public void StopAnalogActionMomentum( ControllerHandle_t controllerHandle /*ControllerHandle_t*/, ControllerAnalogActionHandle_t eAction /*ControllerAnalogActionHandle_t*/ )
 		{
 			platform.ISteamController_StopAnalogActionMomentum( controllerHandle.Value, eAction.Value );
+		}
+		
+		// ControllerActionOrigin
+		public ControllerActionOrigin TranslateActionOrigin( SteamInputType eDestinationInputType /*ESteamInputType*/, ControllerActionOrigin eSourceOrigin /*EControllerActionOrigin*/ )
+		{
+			return platform.ISteamController_TranslateActionOrigin( eDestinationInputType, eSourceOrigin );
 		}
 		
 		// void

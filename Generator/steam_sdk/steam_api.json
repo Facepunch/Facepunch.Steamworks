@@ -2072,8 +2072,11 @@
 { "fieldname": "m_ullSearchID", "fieldtype": "uint64"},
 { "fieldname": "m_SteamIDPlayerFound", "fieldtype": "class CSteamID"},
 { "fieldname": "m_SteamIDLobby", "fieldtype": "class CSteamID"},
-{ "fieldname": "m_ePlayerAcceptState", "fieldtype": "enum RequestPlayersForGameResultCallback_t::PlayerAcceptState_t"},
-{ "fieldname": "m_nPlayerIndex", "fieldtype": "int32"},
+{ "fieldname": "m_ePlayerAcceptState", "fieldtype": "PlayerAcceptState_t"},
+  {
+    "fieldname": "m_nPlayerIndex",
+    "fieldtype": "int32"
+  },
 { "fieldname": "m_nTotalPlayersFound", "fieldtype": "int32"},
 { "fieldname": "m_nTotalPlayersAcceptedGame", "fieldtype": "int32"},
 { "fieldname": "m_nSuggestedTeamIndex", "fieldtype": "int32"},

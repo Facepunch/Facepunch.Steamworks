@@ -16,6 +16,74 @@
       ]
     },
 
+    {
+      "struct": "InputAnalogActionData_t",
+      "fields":
+      [
+        {
+          "fieldname": "eMode",
+          "fieldtype": "EInputSourceMode"
+        },
+        {
+          "fieldname": "x",
+          "fieldtype": "float"
+        },
+        {
+          "fieldname": "y",
+          "fieldtype": "float"
+        },
+        {
+          "fieldname": "bActive",
+          "fieldtype": "bool"
+        }
+      ]
+    },
+
+    {
+      "struct": "InputMotionData_t",
+      "fields":
+      [
+        {
+          "fieldname": "eMode",
+          "fieldtype": "EInputSourceMode"
+        },
+        {
+          "fieldname": "x",
+          "fieldtype": "float"
+        },
+        {
+          "fieldname": "y",
+          "fieldtype": "float"
+        },
+        {
+          "fieldname": "bActive",
+          "fieldtype": "bool"
+        }
+      ]
+    },
+
+    {
+      "struct": "InputDigitalActionData_t",
+      "fields":
+      [
+        {
+          "fieldname": "eMode",
+          "fieldtype": "EInputSourceMode"
+        },
+        {
+          "fieldname": "x",
+          "fieldtype": "float"
+        },
+        {
+          "fieldname": "y",
+          "fieldtype": "float"
+        },
+        {
+          "fieldname": "bActive",
+          "fieldtype": "bool"
+        }
+      ]
+    },
 
     {
       "struct": "SteamInventoryDefinitionUpdate_t"

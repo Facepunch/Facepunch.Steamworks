@@ -92,6 +92,12 @@ namespace SteamNative
 		}
 		
 		// bool
+		public bool BIsSubscribedFromFamilySharing()
+		{
+			return platform.ISteamApps_BIsSubscribedFromFamilySharing();
+		}
+		
+		// bool
 		public bool BIsSubscribedFromFreeWeekend()
 		{
 			return platform.ISteamApps_BIsSubscribedFromFreeWeekend();
@@ -191,6 +197,18 @@ namespace SteamNative
 		public uint GetInstalledDepots( AppId_t appID /*AppId_t*/, IntPtr pvecDepots /*DepotId_t **/, uint cMaxDepots /*uint32*/ )
 		{
 			return platform.ISteamApps_GetInstalledDepots( appID.Value, (IntPtr) pvecDepots, cMaxDepots );
+		}
+		
+		// int
+		// with: Detect_StringFetch True
+		public string GetLaunchCommandLine()
+		{
+			int bSuccess = default( int );
+			System.Text.StringBuilder pszCommandLine_sb = Helpers.TakeStringBuilder();
+			int cubCommandLine = 4096;
+			bSuccess = platform.ISteamApps_GetLaunchCommandLine( pszCommandLine_sb, cubCommandLine );
+			if ( bSuccess <= 0 ) return null;
+			return pszCommandLine_sb.ToString();
 		}
 		
 		// string

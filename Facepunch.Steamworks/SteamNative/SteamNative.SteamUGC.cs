@@ -137,6 +137,12 @@ namespace SteamNative
 			return platform.ISteamUGC_CreateQueryAllUGCRequest( eQueryType, eMatchingeMatchingUGCTypeFileType, nCreatorAppID.Value, nConsumerAppID.Value, unPage );
 		}
 		
+		// UGCQueryHandle_t
+		public UGCQueryHandle_t CreateQueryAllUGCRequest0( UGCQuery eQueryType /*EUGCQuery*/, UGCMatchingUGCType eMatchingeMatchingUGCTypeFileType /*EUGCMatchingUGCType*/, AppId_t nCreatorAppID /*AppId_t*/, AppId_t nConsumerAppID /*AppId_t*/, string pchCursor /*const char **/ )
+		{
+			return platform.ISteamUGC_CreateQueryAllUGCRequest0( eQueryType, eMatchingeMatchingUGCTypeFileType, nCreatorAppID.Value, nConsumerAppID.Value, pchCursor );
+		}
+		
 		// with: Detect_VectorReturn
 		// UGCQueryHandle_t
 		public UGCQueryHandle_t CreateQueryUGCDetailsRequest( PublishedFileId_t[] pvecPublishedFileID /*PublishedFileId_t **/ )
@@ -414,6 +420,12 @@ namespace SteamNative
 		public bool SetAllowCachedResponse( UGCQueryHandle_t handle /*UGCQueryHandle_t*/, uint unMaxAgeSeconds /*uint32*/ )
 		{
 			return platform.ISteamUGC_SetAllowCachedResponse( handle.Value, unMaxAgeSeconds );
+		}
+		
+		// bool
+		public bool SetAllowLegacyUpload( UGCUpdateHandle_t handle /*UGCUpdateHandle_t*/, bool bAllowLegacyUpload /*bool*/ )
+		{
+			return platform.ISteamUGC_SetAllowLegacyUpload( handle.Value, bAllowLegacyUpload );
 		}
 		
 		// bool

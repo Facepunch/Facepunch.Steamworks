@@ -148,9 +148,9 @@ namespace SteamNative
 		}
 		
 		// bool
-		public bool GetItemPrice( SteamItemDef_t iDefinition /*SteamItemDef_t*/, out ulong pPrice /*uint64 **/ )
+		public bool GetItemPrice( SteamItemDef_t iDefinition /*SteamItemDef_t*/, out ulong pCurrentPrice /*uint64 **/, out ulong pBasePrice /*uint64 **/ )
 		{
-			return platform.ISteamInventory_GetItemPrice( iDefinition.Value, out pPrice );
+			return platform.ISteamInventory_GetItemPrice( iDefinition.Value, out pCurrentPrice, out pBasePrice );
 		}
 		
 		// bool
@@ -160,9 +160,9 @@ namespace SteamNative
 		}
 		
 		// bool
-		public bool GetItemsWithPrices( IntPtr pArrayItemDefs /*SteamItemDef_t **/, IntPtr pPrices /*uint64 **/, uint unArrayLength /*uint32*/ )
+		public bool GetItemsWithPrices( IntPtr pArrayItemDefs /*SteamItemDef_t **/, IntPtr pCurrentPrices /*uint64 **/, IntPtr pBasePrices /*uint64 **/, uint unArrayLength /*uint32*/ )
 		{
-			return platform.ISteamInventory_GetItemsWithPrices( (IntPtr) pArrayItemDefs, (IntPtr) pPrices, unArrayLength );
+			return platform.ISteamInventory_GetItemsWithPrices( (IntPtr) pArrayItemDefs, (IntPtr) pCurrentPrices, (IntPtr) pBasePrices, unArrayLength );
 		}
 		
 		// uint

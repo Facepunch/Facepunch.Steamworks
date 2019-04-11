@@ -27,8 +27,9 @@ namespace Generator
             "CCallResult",
             "CCallback",
             "ValvePackingSentinel_t",
-            "CCallbackBase"
-        };
+            "CCallbackBase",
+			"CSteamGameServerAPIContext"
+		};
 
         public readonly static string[] ForceLargePackStructs = new string[]
         {
