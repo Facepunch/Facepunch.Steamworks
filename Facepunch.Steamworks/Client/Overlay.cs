@@ -41,6 +41,6 @@ namespace Facepunch.Steamworks
         public void AcceptFriendRequest( ulong steamid ) { OpenUserPage( "friendrequestaccept", steamid ); }
         public void IgnoreFriendRequest( ulong steamid ) { OpenUserPage( "friendrequestignore", steamid ); }
 
-        public void OpenUrl( string url ) { client.native.friends.ActivateGameOverlayToWebPage( url ); }
+        public void OpenUrl( string url, bool modal = false ) { client.native.friends.ActivateGameOverlayToWebPage( url, modal ? ActivateGameOverlayToWebPageMode.Modal : ActivateGameOverlayToWebPageMode.Default ); }
     }
 }
