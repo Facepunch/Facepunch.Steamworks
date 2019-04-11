@@ -20,22 +20,21 @@ namespace Facepunch.Steamworks
                 //
                 if (IntPtr.Size == 4) UseThisCall = false;
 
-                ForcePlatform( OperatingSystem.Windows, IntPtr.Size == 4 ? Architecture.x86 : Architecture.x64 );                
+                ForcePlatform( OperatingSystem.Windows );                
             }
 
             if ( platform == "OSXEditor" || platform == "OSXPlayer" || platform == "OSXDashboardPlayer" )
             {
-                ForcePlatform( OperatingSystem.macOS, IntPtr.Size == 4 ? Architecture.x86 : Architecture.x64 );
+                ForcePlatform( OperatingSystem.macOS );
             }
 
             if ( platform == "LinuxPlayer" || platform == "LinuxEditor" )
             {
-                ForcePlatform( OperatingSystem.Linux, IntPtr.Size == 4 ? Architecture.x86 : Architecture.x64 );
+                ForcePlatform( OperatingSystem.Linux );
             }
 
             Console.WriteLine( "Facepunch.Steamworks Unity: " + platform );
             Console.WriteLine( "Facepunch.Steamworks Os: " + SteamNative.Platform.Os );
-            Console.WriteLine( "Facepunch.Steamworks Arch: " + SteamNative.Platform.Arch );
         }
 
         /// <summary>
@@ -55,10 +54,9 @@ namespace Facepunch.Steamworks
         /// This is useful if you're on OSX because some versions of mono don't have a way
         /// to tell which platform we're running
         /// </summary>
-        public static void ForcePlatform( Facepunch.Steamworks.OperatingSystem os, Facepunch.Steamworks.Architecture arch )
+        public static void ForcePlatform( Facepunch.Steamworks.OperatingSystem os )
         {
             SteamNative.Platform.Os = os;
-            SteamNative.Platform.Arch = arch;
         }
 
     }

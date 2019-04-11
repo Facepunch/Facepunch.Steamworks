@@ -6,7 +6,7 @@ namespace SteamNative
 {
 	internal static partial class Platform
 	{
-		internal class Linux64 : Interface
+		internal class Linux : Interface
 		{
 			internal IntPtr _ptr;
 			public bool IsValid { get{ return _ptr != IntPtr.Zero; } }
@@ -14,7 +14,7 @@ namespace SteamNative
 			//
 			// Constructor sets pointer to native class
 			//
-			internal Linux64( IntPtr pointer )
+			internal Linux( IntPtr pointer )
 			{
 				_ptr = pointer;
 			}

@@ -58,10 +58,8 @@ namespace Generator
                     StartBlock( $"internal {InterfaceNameToClass( classname )}()" );
                     {
                         WriteLine( "" );
-                        WriteLine( "if ( Platform.IsWindows64 ) platform = new Platform.Win64( ((IntPtr)1) );" );
-                        WriteLine( "else if ( Platform.IsWindows32 ) platform = new Platform.Win32( ((IntPtr)1) );" );
-                        WriteLine( "else if ( Platform.IsLinux32 ) platform = new Platform.Linux32( ((IntPtr)1) );" );
-                        WriteLine( "else if ( Platform.IsLinux64 ) platform = new Platform.Linux64( ((IntPtr)1) );" );
+                        WriteLine( "if ( Platform.IsWindows ) platform = new Platform.Windows( ((IntPtr)1) );" );
+                        WriteLine( "else if ( Platform.IsLinux ) platform = new Platform.Linux( ((IntPtr)1) );" );
                         WriteLine( "else if ( Platform.IsOsx ) platform = new Platform.Mac( ((IntPtr)1) );" );
                     }
                     EndBlock();
@@ -72,10 +70,8 @@ namespace Generator
                     {
                         WriteLine( "this.steamworks = steamworks;" );
                         WriteLine( "" );
-                        WriteLine( "if ( Platform.IsWindows64 ) platform = new Platform.Win64( pointer );" );
-                        WriteLine( "else if ( Platform.IsWindows32 ) platform = new Platform.Win32( pointer );" );
-                        WriteLine( "else if ( Platform.IsLinux32 ) platform = new Platform.Linux32( pointer );" );
-                        WriteLine( "else if ( Platform.IsLinux64 ) platform = new Platform.Linux64( pointer );" );
+                        WriteLine( "if ( Platform.IsWindows ) platform = new Platform.Windows( pointer );" );
+                        WriteLine( "else if ( Platform.IsLinux ) platform = new Platform.Linux( pointer );" );
                         WriteLine( "else if ( Platform.IsOsx ) platform = new Platform.Mac( pointer );" );
                     }
                     EndBlock();

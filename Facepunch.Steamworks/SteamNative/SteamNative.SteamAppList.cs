@@ -19,10 +19,8 @@ namespace SteamNative
 		{
 			this.steamworks = steamworks;
 			
-			if ( Platform.IsWindows64 ) platform = new Platform.Win64( pointer );
-			else if ( Platform.IsWindows32 ) platform = new Platform.Win32( pointer );
-			else if ( Platform.IsLinux32 ) platform = new Platform.Linux32( pointer );
-			else if ( Platform.IsLinux64 ) platform = new Platform.Linux64( pointer );
+			if ( Platform.IsWindows ) platform = new Platform.Windows( pointer );
+			else if ( Platform.IsLinux ) platform = new Platform.Linux( pointer );
 			else if ( Platform.IsOsx ) platform = new Platform.Mac( pointer );
 		}
 		

@@ -17,10 +17,8 @@ namespace SteamNative
 		internal SteamApi()
 		{
 			
-			if ( Platform.IsWindows64 ) platform = new Platform.Win64( ((IntPtr)1) );
-			else if ( Platform.IsWindows32 ) platform = new Platform.Win32( ((IntPtr)1) );
-			else if ( Platform.IsLinux32 ) platform = new Platform.Linux32( ((IntPtr)1) );
-			else if ( Platform.IsLinux64 ) platform = new Platform.Linux64( ((IntPtr)1) );
+			if ( Platform.IsWindows ) platform = new Platform.Windows( ((IntPtr)1) );
+			else if ( Platform.IsLinux ) platform = new Platform.Linux( ((IntPtr)1) );
 			else if ( Platform.IsOsx ) platform = new Platform.Mac( ((IntPtr)1) );
 		}
 		
