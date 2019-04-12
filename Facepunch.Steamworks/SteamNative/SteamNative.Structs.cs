@@ -5,7 +5,7 @@ using System.Linq;
 namespace SteamNative
 {
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct CallbackMsg_t
+	public struct CallbackMsg_t
 	{
 		internal int SteamUser; // m_hSteamUser HSteamUser
 		internal int Callback; // m_iCallback int
@@ -31,7 +31,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal int SteamUser; // m_hSteamUser HSteamUser
 			internal int Callback; // m_iCallback int
@@ -55,7 +55,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct SteamServerConnectFailure_t
+	public struct SteamServerConnectFailure_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUser + 2;
 		internal Result Result; // m_eResult enum EResult
@@ -81,7 +81,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			[MarshalAs(UnmanagedType.I1)]
@@ -228,7 +228,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct SteamServersDisconnected_t
+	public struct SteamServersDisconnected_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUser + 3;
 		internal Result Result; // m_eResult enum EResult
@@ -252,7 +252,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			
@@ -396,7 +396,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct ClientGameServerDeny_t
+	public struct ClientGameServerDeny_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUser + 13;
 		internal uint AppID; // m_uAppID uint32
@@ -424,7 +424,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint AppID; // m_uAppID uint32
 			internal uint GameServerIP; // m_unGameServerIP uint32
@@ -576,7 +576,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct ValidateAuthTicketResponse_t
+	public struct ValidateAuthTicketResponse_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUser + 43;
 		internal ulong SteamID; // m_SteamID class CSteamID
@@ -602,7 +602,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamID; // m_SteamID class CSteamID
 			internal AuthSessionResponse AuthSessionResponse; // m_eAuthSessionResponse enum EAuthSessionResponse
@@ -750,7 +750,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct MicroTxnAuthorizationResponse_t
+	public struct MicroTxnAuthorizationResponse_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUser + 52;
 		internal uint AppID; // m_unAppID uint32
@@ -776,7 +776,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint AppID; // m_unAppID uint32
 			internal ulong OrderID; // m_ulOrderID uint64
@@ -924,7 +924,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct EncryptedAppTicketResponse_t
+	public struct EncryptedAppTicketResponse_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUser + 54;
 		internal Result Result; // m_eResult enum EResult
@@ -948,7 +948,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			
@@ -1097,7 +1097,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct GetAuthSessionTicketResponse_t
+	public struct GetAuthSessionTicketResponse_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUser + 63;
 		internal uint AuthTicket; // m_hAuthTicket HAuthTicket
@@ -1122,7 +1122,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint AuthTicket; // m_hAuthTicket HAuthTicket
 			internal Result Result; // m_eResult enum EResult
@@ -1268,7 +1268,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct GameWebCallback_t
+	public struct GameWebCallback_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUser + 64;
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
@@ -1293,7 +1293,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 			internal string URL; // m_szURL char [256]
@@ -1438,7 +1438,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct StoreAuthURLResponse_t
+	public struct StoreAuthURLResponse_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUser + 65;
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
@@ -1463,7 +1463,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
 			internal string URL; // m_szURL char [512]
@@ -1613,7 +1613,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct MarketEligibilityResponse_t
+	public struct MarketEligibilityResponse_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUser + 66;
 		[MarshalAs(UnmanagedType.I1)]
@@ -1642,7 +1642,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool Allowed; // m_bAllowed _Bool
@@ -1800,7 +1800,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct FriendGameInfo_t
+	public struct FriendGameInfo_t
 	{
 		internal ulong GameID; // m_gameID class CGameID
 		internal uint GameIP; // m_unGameIP uint32
@@ -1827,7 +1827,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong GameID; // m_gameID class CGameID
 			internal uint GameIP; // m_unGameIP uint32
@@ -1853,7 +1853,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct FriendSessionStateInfo_t
+	public struct FriendSessionStateInfo_t
 	{
 		internal uint IOnlineSessionInstances; // m_uiOnlineSessionInstances uint32
 		internal byte IPublishedToFriendsSessionInstance; // m_uiPublishedToFriendsSessionInstance uint8
@@ -1877,7 +1877,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint IOnlineSessionInstances; // m_uiOnlineSessionInstances uint32
 			internal byte IPublishedToFriendsSessionInstance; // m_uiPublishedToFriendsSessionInstance uint8
@@ -1897,7 +1897,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct PersonaStateChange_t
+	public struct PersonaStateChange_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 4;
 		internal ulong SteamID; // m_ulSteamID uint64
@@ -1922,7 +1922,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamID; // m_ulSteamID uint64
 			internal int ChangeFlags; // m_nChangeFlags int
@@ -2068,7 +2068,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct GameOverlayActivated_t
+	public struct GameOverlayActivated_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 31;
 		internal byte Active; // m_bActive uint8
@@ -2092,7 +2092,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal byte Active; // m_bActive uint8
 			
@@ -2236,7 +2236,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct GameServerChangeRequested_t
+	public struct GameServerChangeRequested_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 32;
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
@@ -2263,7 +2263,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
 			internal string Server; // m_rgchServer char [64]
@@ -2411,7 +2411,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct GameLobbyJoinRequested_t
+	public struct GameLobbyJoinRequested_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 33;
 		internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
@@ -2436,7 +2436,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
 			internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
@@ -2582,7 +2582,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct AvatarImageLoaded_t
+	public struct AvatarImageLoaded_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 34;
 		internal ulong SteamID; // m_steamID class CSteamID
@@ -2609,7 +2609,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamID; // m_steamID class CSteamID
 			internal int Image; // m_iImage int
@@ -2759,7 +2759,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct ClanOfficerListResponse_t
+	public struct ClanOfficerListResponse_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 35;
 		internal ulong SteamIDClan; // m_steamIDClan class CSteamID
@@ -2785,7 +2785,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamIDClan; // m_steamIDClan class CSteamID
 			internal int COfficers; // m_cOfficers int
@@ -2938,7 +2938,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct FriendRichPresenceUpdate_t
+	public struct FriendRichPresenceUpdate_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 36;
 		internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
@@ -2963,7 +2963,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
 			internal uint AppID; // m_nAppID AppId_t
@@ -3109,7 +3109,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct GameRichPresenceJoinRequested_t
+	public struct GameRichPresenceJoinRequested_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 37;
 		internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
@@ -3135,7 +3135,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
@@ -3282,7 +3282,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct GameConnectedClanChatMsg_t
+	public struct GameConnectedClanChatMsg_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 38;
 		internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
@@ -3308,7 +3308,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
 			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
@@ -3456,7 +3456,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct GameConnectedChatJoin_t
+	public struct GameConnectedChatJoin_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 39;
 		internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
@@ -3481,7 +3481,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
 			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
@@ -3627,7 +3627,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct GameConnectedChatLeave_t
+	public struct GameConnectedChatLeave_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 40;
 		internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
@@ -3656,7 +3656,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
 			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
@@ -3808,7 +3808,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct DownloadClanActivityCountsResult_t
+	public struct DownloadClanActivityCountsResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 41;
 		[MarshalAs(UnmanagedType.I1)]
@@ -3833,7 +3833,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool Success; // m_bSuccess _Bool
@@ -3978,7 +3978,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct JoinClanChatRoomCompletionResult_t
+	public struct JoinClanChatRoomCompletionResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 42;
 		internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
@@ -4003,7 +4003,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
 			internal ChatRoomEnterResponse ChatRoomEnterResponse; // m_eChatRoomEnterResponse enum EChatRoomEnterResponse
@@ -4154,7 +4154,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct GameConnectedFriendChatMsg_t
+	public struct GameConnectedFriendChatMsg_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 43;
 		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
@@ -4179,7 +4179,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			internal int MessageID; // m_iMessageID int
@@ -4325,7 +4325,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct FriendsGetFollowerCount_t
+	public struct FriendsGetFollowerCount_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 44;
 		internal Result Result; // m_eResult enum EResult
@@ -4351,7 +4351,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong SteamID; // m_steamID class CSteamID
@@ -4504,7 +4504,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct FriendsIsFollowing_t
+	public struct FriendsIsFollowing_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 45;
 		internal Result Result; // m_eResult enum EResult
@@ -4531,7 +4531,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong SteamID; // m_steamID class CSteamID
@@ -4685,7 +4685,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct FriendsEnumerateFollowingList_t
+	public struct FriendsEnumerateFollowingList_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 46;
 		internal Result Result; // m_eResult enum EResult
@@ -4713,7 +4713,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
@@ -4869,7 +4869,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct SetPersonaNameResponse_t
+	public struct SetPersonaNameResponse_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 47;
 		[MarshalAs(UnmanagedType.I1)]
@@ -4897,7 +4897,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool Success; // m_bSuccess _Bool
@@ -5052,7 +5052,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct LowBatteryPower_t
+	public struct LowBatteryPower_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUtils + 2;
 		internal byte MinutesBatteryLeft; // m_nMinutesBatteryLeft uint8
@@ -5076,7 +5076,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal byte MinutesBatteryLeft; // m_nMinutesBatteryLeft uint8
 			
@@ -5220,7 +5220,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct SteamAPICallCompleted_t
+	public struct SteamAPICallCompleted_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUtils + 3;
 		internal ulong AsyncCall; // m_hAsyncCall SteamAPICall_t
@@ -5246,7 +5246,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong AsyncCall; // m_hAsyncCall SteamAPICall_t
 			internal int Callback; // m_iCallback int
@@ -5394,7 +5394,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct CheckFileSignature_t
+	public struct CheckFileSignature_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUtils + 5;
 		internal CheckFileSignature CheckFileSignature; // m_eCheckFileSignature enum ECheckFileSignature
@@ -5418,7 +5418,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal CheckFileSignature CheckFileSignature; // m_eCheckFileSignature enum ECheckFileSignature
 			
@@ -5567,7 +5567,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct GamepadTextInputDismissed_t
+	public struct GamepadTextInputDismissed_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUtils + 14;
 		[MarshalAs(UnmanagedType.I1)]
@@ -5593,7 +5593,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool Submitted; // m_bSubmitted _Bool
@@ -5740,7 +5740,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct MatchMakingKeyValuePair_t
+	public struct MatchMakingKeyValuePair_t
 	{
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 		internal string Key; // m_szKey char [256]
@@ -5766,7 +5766,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 			internal string Key; // m_szKey char [256]
@@ -5788,7 +5788,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct servernetadr_t
+	public struct servernetadr_t
 	{
 		internal ushort ConnectionPort; // m_usConnectionPort uint16
 		internal ushort QueryPort; // m_usQueryPort uint16
@@ -5813,7 +5813,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ushort ConnectionPort; // m_usConnectionPort uint16
 			internal ushort QueryPort; // m_usQueryPort uint16
@@ -5835,7 +5835,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct gameserveritem_t
+	public struct gameserveritem_t
 	{
 		internal servernetadr_t NetAdr; // m_NetAdr class servernetadr_t
 		internal int Ping; // m_nPing int
@@ -5884,7 +5884,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal servernetadr_t NetAdr; // m_NetAdr class servernetadr_t
 			internal int Ping; // m_nPing int
@@ -5945,7 +5945,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct SteamPartyBeaconLocation_t
+	public struct SteamPartyBeaconLocation_t
 	{
 		internal SteamPartyBeaconLocationType Type; // m_eType enum ESteamPartyBeaconLocationType
 		internal ulong LocationID; // m_ulLocationID uint64
@@ -5969,7 +5969,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal SteamPartyBeaconLocationType Type; // m_eType enum ESteamPartyBeaconLocationType
 			internal ulong LocationID; // m_ulLocationID uint64
@@ -5989,7 +5989,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct FavoritesListChanged_t
+	public struct FavoritesListChanged_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMatchmaking + 2;
 		internal uint IP; // m_nIP uint32
@@ -6020,7 +6020,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint IP; // m_nIP uint32
 			internal uint QueryPort; // m_nQueryPort uint32
@@ -6177,7 +6177,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct LobbyInvite_t
+	public struct LobbyInvite_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMatchmaking + 3;
 		internal ulong SteamIDUser; // m_ulSteamIDUser uint64
@@ -6203,7 +6203,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamIDUser; // m_ulSteamIDUser uint64
 			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
@@ -6351,7 +6351,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct LobbyEnter_t
+	public struct LobbyEnter_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMatchmaking + 4;
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
@@ -6379,7 +6379,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 			internal uint GfChatPermissions; // m_rgfChatPermissions uint32
@@ -6535,7 +6535,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct LobbyDataUpdate_t
+	public struct LobbyDataUpdate_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMatchmaking + 5;
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
@@ -6561,7 +6561,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 			internal ulong SteamIDMember; // m_ulSteamIDMember uint64
@@ -6709,7 +6709,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct LobbyChatUpdate_t
+	public struct LobbyChatUpdate_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMatchmaking + 6;
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
@@ -6736,7 +6736,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 			internal ulong SteamIDUserChanged; // m_ulSteamIDUserChanged uint64
@@ -6886,7 +6886,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct LobbyChatMsg_t
+	public struct LobbyChatMsg_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMatchmaking + 7;
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
@@ -6913,7 +6913,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 			internal ulong SteamIDUser; // m_ulSteamIDUser uint64
@@ -7063,7 +7063,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct LobbyGameCreated_t
+	public struct LobbyGameCreated_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMatchmaking + 9;
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
@@ -7090,7 +7090,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 			internal ulong SteamIDGameServer; // m_ulSteamIDGameServer uint64
@@ -7240,7 +7240,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct LobbyMatchList_t
+	public struct LobbyMatchList_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMatchmaking + 10;
 		internal uint LobbiesMatching; // m_nLobbiesMatching uint32
@@ -7264,7 +7264,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint LobbiesMatching; // m_nLobbiesMatching uint32
 			
@@ -7413,7 +7413,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct LobbyKicked_t
+	public struct LobbyKicked_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMatchmaking + 12;
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
@@ -7439,7 +7439,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 			internal ulong SteamIDAdmin; // m_ulSteamIDAdmin uint64
@@ -7587,7 +7587,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct LobbyCreated_t
+	public struct LobbyCreated_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMatchmaking + 13;
 		internal Result Result; // m_eResult enum EResult
@@ -7612,7 +7612,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
@@ -7763,7 +7763,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct PSNGameBootInviteResult_t
+	public struct PSNGameBootInviteResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMatchmaking + 15;
 		[MarshalAs(UnmanagedType.I1)]
@@ -7789,7 +7789,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool GameBootInviteExists; // m_bGameBootInviteExists _Bool
@@ -7936,7 +7936,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct FavoritesListAccountsUpdated_t
+	public struct FavoritesListAccountsUpdated_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMatchmaking + 16;
 		internal Result Result; // m_eResult enum EResult
@@ -7960,7 +7960,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			
@@ -8104,7 +8104,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct SearchForGameProgressCallback_t
+	public struct SearchForGameProgressCallback_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameSearch + 1;
 		internal ulong LSearchID; // m_ullSearchID uint64
@@ -8133,7 +8133,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong LSearchID; // m_ullSearchID uint64
 			internal Result Result; // m_eResult enum EResult
@@ -8287,7 +8287,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct SearchForGameResultCallback_t
+	public struct SearchForGameResultCallback_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameSearch + 2;
 		internal ulong LSearchID; // m_ullSearchID uint64
@@ -8317,7 +8317,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong LSearchID; // m_ullSearchID uint64
 			internal Result Result; // m_eResult enum EResult
@@ -8472,7 +8472,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RequestPlayersForGameProgressCallback_t
+	public struct RequestPlayersForGameProgressCallback_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameSearch + 11;
 		internal Result Result; // m_eResult enum EResult
@@ -8497,7 +8497,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong LSearchID; // m_ullSearchID uint64
@@ -8643,7 +8643,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct RequestPlayersForGameResultCallback_t
+	public struct RequestPlayersForGameResultCallback_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameSearch + 12;
 		internal Result Result; // m_eResult enum EResult
@@ -8676,7 +8676,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong LSearchID; // m_ullSearchID uint64
@@ -8838,7 +8838,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RequestPlayersForGameFinalResultCallback_t
+	public struct RequestPlayersForGameFinalResultCallback_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameSearch + 13;
 		internal Result Result; // m_eResult enum EResult
@@ -8864,7 +8864,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong LSearchID; // m_ullSearchID uint64
@@ -9012,7 +9012,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct SubmitPlayerResultResultCallback_t
+	public struct SubmitPlayerResultResultCallback_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameSearch + 14;
 		internal Result Result; // m_eResult enum EResult
@@ -9038,7 +9038,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong UllUniqueGameID; // ullUniqueGameID uint64
@@ -9186,7 +9186,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct EndGameResultCallback_t
+	public struct EndGameResultCallback_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameSearch + 15;
 		internal Result Result; // m_eResult enum EResult
@@ -9211,7 +9211,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong UllUniqueGameID; // ullUniqueGameID uint64
@@ -9357,7 +9357,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct JoinPartyCallback_t
+	public struct JoinPartyCallback_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamParties + 1;
 		internal Result Result; // m_eResult enum EResult
@@ -9385,7 +9385,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
@@ -9541,7 +9541,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct CreateBeaconCallback_t
+	public struct CreateBeaconCallback_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamParties + 2;
 		internal Result Result; // m_eResult enum EResult
@@ -9566,7 +9566,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
@@ -9717,7 +9717,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct ReservationNotificationCallback_t
+	public struct ReservationNotificationCallback_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamParties + 3;
 		internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
@@ -9742,7 +9742,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
 			internal ulong SteamIDJoiner; // m_steamIDJoiner class CSteamID
@@ -9888,7 +9888,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct ChangeNumOpenSlotsCallback_t
+	public struct ChangeNumOpenSlotsCallback_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamParties + 4;
 		internal Result Result; // m_eResult enum EResult
@@ -9912,7 +9912,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			
@@ -10061,7 +10061,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct SteamParamStringArray_t
+	public struct SteamParamStringArray_t
 	{
 		internal IntPtr Strings; // m_ppStrings const char **
 		internal int NumStrings; // m_nNumStrings int32
@@ -10085,7 +10085,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal IntPtr Strings; // m_ppStrings const char **
 			internal int NumStrings; // m_nNumStrings int32
@@ -10105,7 +10105,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoteStorageAppSyncedClient_t
+	public struct RemoteStorageAppSyncedClient_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 1;
 		internal uint AppID; // m_nAppID AppId_t
@@ -10131,7 +10131,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint AppID; // m_nAppID AppId_t
 			internal Result Result; // m_eResult enum EResult
@@ -10279,7 +10279,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoteStorageAppSyncedServer_t
+	public struct RemoteStorageAppSyncedServer_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 2;
 		internal uint AppID; // m_nAppID AppId_t
@@ -10305,7 +10305,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint AppID; // m_nAppID AppId_t
 			internal Result Result; // m_eResult enum EResult
@@ -10453,7 +10453,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoteStorageAppSyncProgress_t
+	public struct RemoteStorageAppSyncProgress_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 3;
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
@@ -10483,7 +10483,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
 			internal string CurrentFile; // m_rgchCurrentFile char [260]
@@ -10637,7 +10637,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoteStorageAppSyncStatusCheck_t
+	public struct RemoteStorageAppSyncStatusCheck_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 5;
 		internal uint AppID; // m_nAppID AppId_t
@@ -10662,7 +10662,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint AppID; // m_nAppID AppId_t
 			internal Result Result; // m_eResult enum EResult
@@ -10808,7 +10808,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoteStorageFileShareResult_t
+	public struct RemoteStorageFileShareResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 7;
 		internal Result Result; // m_eResult enum EResult
@@ -10835,7 +10835,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong File; // m_hFile UGCHandle_t
@@ -10989,7 +10989,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoteStoragePublishFileResult_t
+	public struct RemoteStoragePublishFileResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 9;
 		internal Result Result; // m_eResult enum EResult
@@ -11016,7 +11016,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -11165,7 +11165,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoteStorageDeletePublishedFileResult_t
+	public struct RemoteStorageDeletePublishedFileResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 11;
 		internal Result Result; // m_eResult enum EResult
@@ -11190,7 +11190,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -11341,7 +11341,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoteStorageEnumerateUserPublishedFilesResult_t
+	public struct RemoteStorageEnumerateUserPublishedFilesResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 12;
 		internal Result Result; // m_eResult enum EResult
@@ -11369,7 +11369,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal int ResultsReturned; // m_nResultsReturned int32
@@ -11525,7 +11525,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoteStorageSubscribePublishedFileResult_t
+	public struct RemoteStorageSubscribePublishedFileResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 13;
 		internal Result Result; // m_eResult enum EResult
@@ -11550,7 +11550,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -11701,7 +11701,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoteStorageEnumerateUserSubscribedFilesResult_t
+	public struct RemoteStorageEnumerateUserSubscribedFilesResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 14;
 		internal Result Result; // m_eResult enum EResult
@@ -11731,7 +11731,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal int ResultsReturned; // m_nResultsReturned int32
@@ -11890,7 +11890,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoteStorageUnsubscribePublishedFileResult_t
+	public struct RemoteStorageUnsubscribePublishedFileResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 15;
 		internal Result Result; // m_eResult enum EResult
@@ -11915,7 +11915,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -12066,7 +12066,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoteStorageUpdatePublishedFileResult_t
+	public struct RemoteStorageUpdatePublishedFileResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 16;
 		internal Result Result; // m_eResult enum EResult
@@ -12093,7 +12093,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -12247,7 +12247,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoteStorageDownloadUGCResult_t
+	public struct RemoteStorageDownloadUGCResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 17;
 		internal Result Result; // m_eResult enum EResult
@@ -12277,7 +12277,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong File; // m_hFile UGCHandle_t
@@ -12437,7 +12437,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoteStorageGetPublishedFileDetailsResult_t
+	public struct RemoteStorageGetPublishedFileDetailsResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 18;
 		internal Result Result; // m_eResult enum EResult
@@ -12489,7 +12489,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -12686,7 +12686,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoteStorageEnumerateWorkshopFilesResult_t
+	public struct RemoteStorageEnumerateWorkshopFilesResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 19;
 		internal Result Result; // m_eResult enum EResult
@@ -12718,7 +12718,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal int ResultsReturned; // m_nResultsReturned int32
@@ -12881,7 +12881,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoteStorageGetPublishedItemVoteDetailsResult_t
+	public struct RemoteStorageGetPublishedItemVoteDetailsResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 20;
 		internal Result Result; // m_eResult enum EResult
@@ -12910,7 +12910,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_unPublishedFileId PublishedFileId_t
@@ -13069,7 +13069,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoteStoragePublishedFileSubscribed_t
+	public struct RemoteStoragePublishedFileSubscribed_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 21;
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -13094,7 +13094,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal uint AppID; // m_nAppID AppId_t
@@ -13240,7 +13240,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoteStoragePublishedFileUnsubscribed_t
+	public struct RemoteStoragePublishedFileUnsubscribed_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 22;
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -13265,7 +13265,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal uint AppID; // m_nAppID AppId_t
@@ -13411,7 +13411,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoteStoragePublishedFileDeleted_t
+	public struct RemoteStoragePublishedFileDeleted_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 23;
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -13436,7 +13436,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal uint AppID; // m_nAppID AppId_t
@@ -13582,7 +13582,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoteStorageUpdateUserPublishedItemVoteResult_t
+	public struct RemoteStorageUpdateUserPublishedItemVoteResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 24;
 		internal Result Result; // m_eResult enum EResult
@@ -13607,7 +13607,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -13758,7 +13758,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoteStorageUserVoteDetails_t
+	public struct RemoteStorageUserVoteDetails_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 25;
 		internal Result Result; // m_eResult enum EResult
@@ -13784,7 +13784,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -13932,7 +13932,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoteStorageEnumerateUserSharedWorkshopFilesResult_t
+	public struct RemoteStorageEnumerateUserSharedWorkshopFilesResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 26;
 		internal Result Result; // m_eResult enum EResult
@@ -13960,7 +13960,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal int ResultsReturned; // m_nResultsReturned int32
@@ -14111,7 +14111,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoteStorageSetUserPublishedFileActionResult_t
+	public struct RemoteStorageSetUserPublishedFileActionResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 27;
 		internal Result Result; // m_eResult enum EResult
@@ -14137,7 +14137,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -14290,7 +14290,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoteStorageEnumeratePublishedFilesByUserActionResult_t
+	public struct RemoteStorageEnumeratePublishedFilesByUserActionResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 28;
 		internal Result Result; // m_eResult enum EResult
@@ -14321,7 +14321,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal WorkshopFileAction Action; // m_eAction enum EWorkshopFileAction
@@ -14482,7 +14482,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoteStoragePublishFileProgress_t
+	public struct RemoteStoragePublishFileProgress_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 29;
 		internal double DPercentFile; // m_dPercentFile double
@@ -14508,7 +14508,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal double DPercentFile; // m_dPercentFile double
 			[MarshalAs(UnmanagedType.I1)]
@@ -14660,7 +14660,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoteStoragePublishedFileUpdated_t
+	public struct RemoteStoragePublishedFileUpdated_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 30;
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -14686,7 +14686,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal uint AppID; // m_nAppID AppId_t
@@ -14834,7 +14834,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoteStorageFileWriteAsyncComplete_t
+	public struct RemoteStorageFileWriteAsyncComplete_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 31;
 		internal Result Result; // m_eResult enum EResult
@@ -14858,7 +14858,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			
@@ -15007,7 +15007,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoteStorageFileReadAsyncComplete_t
+	public struct RemoteStorageFileReadAsyncComplete_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 32;
 		internal ulong FileReadAsync; // m_hFileReadAsync SteamAPICall_t
@@ -15034,7 +15034,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong FileReadAsync; // m_hFileReadAsync SteamAPICall_t
 			internal Result Result; // m_eResult enum EResult
@@ -15189,7 +15189,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct LeaderboardEntry_t
+	public struct LeaderboardEntry_t
 	{
 		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 		internal int GlobalRank; // m_nGlobalRank int32
@@ -15216,7 +15216,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			internal int GlobalRank; // m_nGlobalRank int32
@@ -15242,7 +15242,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct UserStatsReceived_t
+	public struct UserStatsReceived_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUserStats + 1;
 		internal ulong GameID; // m_nGameID uint64
@@ -15268,7 +15268,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong GameID; // m_nGameID uint64
 			internal Result Result; // m_eResult enum EResult
@@ -15421,7 +15421,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct UserStatsStored_t
+	public struct UserStatsStored_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUserStats + 2;
 		internal ulong GameID; // m_nGameID uint64
@@ -15446,7 +15446,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong GameID; // m_nGameID uint64
 			internal Result Result; // m_eResult enum EResult
@@ -15592,7 +15592,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct UserAchievementStored_t
+	public struct UserAchievementStored_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUserStats + 3;
 		internal ulong GameID; // m_nGameID uint64
@@ -15622,7 +15622,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong GameID; // m_nGameID uint64
 			[MarshalAs(UnmanagedType.I1)]
@@ -15776,7 +15776,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct LeaderboardFindResult_t
+	public struct LeaderboardFindResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUserStats + 4;
 		internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
@@ -15801,7 +15801,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
 			internal byte LeaderboardFound; // m_bLeaderboardFound uint8
@@ -15952,7 +15952,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct LeaderboardScoresDownloaded_t
+	public struct LeaderboardScoresDownloaded_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUserStats + 5;
 		internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
@@ -15978,7 +15978,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
 			internal ulong SteamLeaderboardEntries; // m_hSteamLeaderboardEntries SteamLeaderboardEntries_t
@@ -16131,7 +16131,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct LeaderboardScoreUploaded_t
+	public struct LeaderboardScoreUploaded_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUserStats + 6;
 		internal byte Success; // m_bSuccess uint8
@@ -16160,7 +16160,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal byte Success; // m_bSuccess uint8
 			internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
@@ -16319,7 +16319,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct NumberOfCurrentPlayers_t
+	public struct NumberOfCurrentPlayers_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUserStats + 7;
 		internal byte Success; // m_bSuccess uint8
@@ -16344,7 +16344,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal byte Success; // m_bSuccess uint8
 			internal int CPlayers; // m_cPlayers int32
@@ -16495,7 +16495,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct UserStatsUnloaded_t
+	public struct UserStatsUnloaded_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUserStats + 8;
 		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
@@ -16519,7 +16519,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			
@@ -16663,7 +16663,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct UserAchievementIconFetched_t
+	public struct UserAchievementIconFetched_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUserStats + 9;
 		internal ulong GameID; // m_nGameID class CGameID
@@ -16692,7 +16692,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong GameID; // m_nGameID class CGameID
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
@@ -16844,7 +16844,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct GlobalAchievementPercentagesReady_t
+	public struct GlobalAchievementPercentagesReady_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUserStats + 10;
 		internal ulong GameID; // m_nGameID uint64
@@ -16869,7 +16869,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong GameID; // m_nGameID uint64
 			internal Result Result; // m_eResult enum EResult
@@ -17020,7 +17020,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct LeaderboardUGCSet_t
+	public struct LeaderboardUGCSet_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUserStats + 11;
 		internal Result Result; // m_eResult enum EResult
@@ -17045,7 +17045,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
@@ -17196,7 +17196,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct PS3TrophiesInstalled_t
+	public struct PS3TrophiesInstalled_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUserStats + 12;
 		internal ulong GameID; // m_nGameID uint64
@@ -17222,7 +17222,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong GameID; // m_nGameID uint64
 			internal Result Result; // m_eResult enum EResult
@@ -17370,7 +17370,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct GlobalStatsReceived_t
+	public struct GlobalStatsReceived_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUserStats + 12;
 		internal ulong GameID; // m_nGameID uint64
@@ -17395,7 +17395,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong GameID; // m_nGameID uint64
 			internal Result Result; // m_eResult enum EResult
@@ -17546,7 +17546,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct DlcInstalled_t
+	public struct DlcInstalled_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamApps + 5;
 		internal uint AppID; // m_nAppID AppId_t
@@ -17570,7 +17570,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint AppID; // m_nAppID AppId_t
 			
@@ -17714,7 +17714,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RegisterActivationCodeResponse_t
+	public struct RegisterActivationCodeResponse_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamApps + 8;
 		internal RegisterActivationCodeResult Result; // m_eResult enum ERegisterActivationCodeResult
@@ -17739,7 +17739,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal RegisterActivationCodeResult Result; // m_eResult enum ERegisterActivationCodeResult
 			internal uint PackageRegistered; // m_unPackageRegistered uint32
@@ -17885,7 +17885,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct AppProofOfPurchaseKeyResponse_t
+	public struct AppProofOfPurchaseKeyResponse_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamApps + 21;
 		internal Result Result; // m_eResult enum EResult
@@ -17913,7 +17913,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal uint AppID; // m_nAppID uint32
@@ -18064,7 +18064,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct FileDetailsResult_t
+	public struct FileDetailsResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamApps + 23;
 		internal Result Result; // m_eResult enum EResult
@@ -18092,7 +18092,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong FileSize; // m_ulFileSize uint64
@@ -18248,7 +18248,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct P2PSessionState_t
+	public struct P2PSessionState_t
 	{
 		internal byte ConnectionActive; // m_bConnectionActive uint8
 		internal byte Connecting; // m_bConnecting uint8
@@ -18278,7 +18278,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal byte ConnectionActive; // m_bConnectionActive uint8
 			internal byte Connecting; // m_bConnecting uint8
@@ -18310,7 +18310,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct P2PSessionRequest_t
+	public struct P2PSessionRequest_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamNetworking + 2;
 		internal ulong SteamIDRemote; // m_steamIDRemote class CSteamID
@@ -18334,7 +18334,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamIDRemote; // m_steamIDRemote class CSteamID
 			
@@ -18478,7 +18478,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct P2PSessionConnectFail_t
+	public struct P2PSessionConnectFail_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamNetworking + 3;
 		internal ulong SteamIDRemote; // m_steamIDRemote class CSteamID
@@ -18503,7 +18503,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamIDRemote; // m_steamIDRemote class CSteamID
 			internal byte P2PSessionError; // m_eP2PSessionError uint8
@@ -18649,7 +18649,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct SocketStatusCallback_t
+	public struct SocketStatusCallback_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamNetworking + 1;
 		internal uint Socket; // m_hSocket SNetSocket_t
@@ -18676,7 +18676,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint Socket; // m_hSocket SNetSocket_t
 			internal uint ListenSocket; // m_hListenSocket SNetListenSocket_t
@@ -18826,7 +18826,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct ScreenshotReady_t
+	public struct ScreenshotReady_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamScreenshots + 1;
 		internal uint Local; // m_hLocal ScreenshotHandle
@@ -18851,7 +18851,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint Local; // m_hLocal ScreenshotHandle
 			internal Result Result; // m_eResult enum EResult
@@ -18997,7 +18997,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct VolumeHasChanged_t
+	public struct VolumeHasChanged_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMusic + 2;
 		internal float NewVolume; // m_flNewVolume float
@@ -19021,7 +19021,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal float NewVolume; // m_flNewVolume float
 			
@@ -19165,7 +19165,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct MusicPlayerWantsShuffled_t
+	public struct MusicPlayerWantsShuffled_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMusicRemote + 9;
 		[MarshalAs(UnmanagedType.I1)]
@@ -19190,7 +19190,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool Shuffled; // m_bShuffled _Bool
@@ -19335,7 +19335,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct MusicPlayerWantsLooped_t
+	public struct MusicPlayerWantsLooped_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMusicRemote + 10;
 		[MarshalAs(UnmanagedType.I1)]
@@ -19360,7 +19360,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool Looped; // m_bLooped _Bool
@@ -19505,7 +19505,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct MusicPlayerWantsVolume_t
+	public struct MusicPlayerWantsVolume_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMusic + 11;
 		internal float NewVolume; // m_flNewVolume float
@@ -19529,7 +19529,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal float NewVolume; // m_flNewVolume float
 			
@@ -19673,7 +19673,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct MusicPlayerSelectsQueueEntry_t
+	public struct MusicPlayerSelectsQueueEntry_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMusic + 12;
 		internal int NID; // nID int
@@ -19697,7 +19697,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal int NID; // nID int
 			
@@ -19841,7 +19841,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct MusicPlayerSelectsPlaylistEntry_t
+	public struct MusicPlayerSelectsPlaylistEntry_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMusic + 13;
 		internal int NID; // nID int
@@ -19865,7 +19865,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal int NID; // nID int
 			
@@ -20009,7 +20009,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct MusicPlayerWantsPlayingRepeatStatus_t
+	public struct MusicPlayerWantsPlayingRepeatStatus_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMusicRemote + 14;
 		internal int PlayingRepeatStatus; // m_nPlayingRepeatStatus int
@@ -20033,7 +20033,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal int PlayingRepeatStatus; // m_nPlayingRepeatStatus int
 			
@@ -20177,7 +20177,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct HTTPRequestCompleted_t
+	public struct HTTPRequestCompleted_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientHTTP + 1;
 		internal uint Request; // m_hRequest HTTPRequestHandle
@@ -20206,7 +20206,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint Request; // m_hRequest HTTPRequestHandle
 			internal ulong ContextValue; // m_ulContextValue uint64
@@ -20359,7 +20359,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct HTTPRequestHeadersReceived_t
+	public struct HTTPRequestHeadersReceived_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientHTTP + 2;
 		internal uint Request; // m_hRequest HTTPRequestHandle
@@ -20384,7 +20384,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint Request; // m_hRequest HTTPRequestHandle
 			internal ulong ContextValue; // m_ulContextValue uint64
@@ -20530,7 +20530,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct HTTPRequestDataReceived_t
+	public struct HTTPRequestDataReceived_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientHTTP + 3;
 		internal uint Request; // m_hRequest HTTPRequestHandle
@@ -20557,7 +20557,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint Request; // m_hRequest HTTPRequestHandle
 			internal ulong ContextValue; // m_ulContextValue uint64
@@ -20707,7 +20707,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct SteamUGCDetails_t
+	public struct SteamUGCDetails_t
 	{
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal Result Result; // m_eResult enum EResult
@@ -20763,7 +20763,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal Result Result; // m_eResult enum EResult
@@ -20839,7 +20839,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct SteamUGCQueryCompleted_t
+	public struct SteamUGCQueryCompleted_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 1;
 		internal ulong Handle; // m_handle UGCQueryHandle_t
@@ -20870,7 +20870,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong Handle; // m_handle UGCQueryHandle_t
 			internal Result Result; // m_eResult enum EResult
@@ -21031,7 +21031,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct SteamUGCRequestUGCDetailsResult_t
+	public struct SteamUGCRequestUGCDetailsResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 2;
 		internal SteamUGCDetails_t Details; // m_details struct SteamUGCDetails_t
@@ -21057,7 +21057,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal SteamUGCDetails_t Details; // m_details struct SteamUGCDetails_t
 			[MarshalAs(UnmanagedType.I1)]
@@ -21204,7 +21204,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct CreateItemResult_t
+	public struct CreateItemResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 3;
 		internal Result Result; // m_eResult enum EResult
@@ -21231,7 +21231,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -21385,7 +21385,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct SubmitItemUpdateResult_t
+	public struct SubmitItemUpdateResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 4;
 		internal Result Result; // m_eResult enum EResult
@@ -21412,7 +21412,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			[MarshalAs(UnmanagedType.I1)]
@@ -21566,7 +21566,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct DownloadItemResult_t
+	public struct DownloadItemResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 6;
 		internal uint AppID; // m_unAppID AppId_t
@@ -21592,7 +21592,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint AppID; // m_unAppID AppId_t
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -21740,7 +21740,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct UserFavoriteItemsListChanged_t
+	public struct UserFavoriteItemsListChanged_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 7;
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -21767,7 +21767,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal Result Result; // m_eResult enum EResult
@@ -21921,7 +21921,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct SetUserItemVoteResult_t
+	public struct SetUserItemVoteResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 8;
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -21948,7 +21948,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal Result Result; // m_eResult enum EResult
@@ -22102,7 +22102,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct GetUserItemVoteResult_t
+	public struct GetUserItemVoteResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 9;
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -22133,7 +22133,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal Result Result; // m_eResult enum EResult
@@ -22293,7 +22293,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct StartPlaytimeTrackingResult_t
+	public struct StartPlaytimeTrackingResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 10;
 		internal Result Result; // m_eResult enum EResult
@@ -22317,7 +22317,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			
@@ -22466,7 +22466,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct StopPlaytimeTrackingResult_t
+	public struct StopPlaytimeTrackingResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 11;
 		internal Result Result; // m_eResult enum EResult
@@ -22490,7 +22490,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			
@@ -22639,7 +22639,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct AddUGCDependencyResult_t
+	public struct AddUGCDependencyResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 12;
 		internal Result Result; // m_eResult enum EResult
@@ -22665,7 +22665,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -22818,7 +22818,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoveUGCDependencyResult_t
+	public struct RemoveUGCDependencyResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 13;
 		internal Result Result; // m_eResult enum EResult
@@ -22844,7 +22844,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -22997,7 +22997,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct AddAppDependencyResult_t
+	public struct AddAppDependencyResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 14;
 		internal Result Result; // m_eResult enum EResult
@@ -23023,7 +23023,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -23176,7 +23176,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct RemoveAppDependencyResult_t
+	public struct RemoveAppDependencyResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 15;
 		internal Result Result; // m_eResult enum EResult
@@ -23202,7 +23202,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -23355,7 +23355,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct GetAppDependenciesResult_t
+	public struct GetAppDependenciesResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 16;
 		internal Result Result; // m_eResult enum EResult
@@ -23384,7 +23384,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -23542,7 +23542,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct DeleteItemResult_t
+	public struct DeleteItemResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 17;
 		internal Result Result; // m_eResult enum EResult
@@ -23567,7 +23567,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -23718,7 +23718,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct SteamAppInstalled_t
+	public struct SteamAppInstalled_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamAppList + 1;
 		internal uint AppID; // m_nAppID AppId_t
@@ -23742,7 +23742,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint AppID; // m_nAppID AppId_t
 			
@@ -23886,7 +23886,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct SteamAppUninstalled_t
+	public struct SteamAppUninstalled_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamAppList + 2;
 		internal uint AppID; // m_nAppID AppId_t
@@ -23910,7 +23910,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint AppID; // m_nAppID AppId_t
 			
@@ -24054,7 +24054,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct HTML_BrowserReady_t
+	public struct HTML_BrowserReady_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 1;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -24078,7 +24078,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			
@@ -24227,7 +24227,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct HTML_NeedsPaint_t
+	public struct HTML_NeedsPaint_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PBGRA; // pBGRA const char *
@@ -24261,7 +24261,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal string PBGRA; // pBGRA const char *
@@ -24301,7 +24301,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct HTML_StartRequest_t
+	public struct HTML_StartRequest_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchURL; // pchURL const char *
@@ -24329,7 +24329,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal string PchURL; // pchURL const char *
@@ -24356,7 +24356,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct HTML_CloseBrowser_t
+	public struct HTML_CloseBrowser_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		
@@ -24379,7 +24379,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			
@@ -24397,7 +24397,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct HTML_URLChanged_t
+	public struct HTML_URLChanged_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 5;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -24428,7 +24428,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal string PchURL; // pchURL const char *
@@ -24584,7 +24584,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct HTML_FinishedRequest_t
+	public struct HTML_FinishedRequest_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 6;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -24610,7 +24610,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal string PchURL; // pchURL const char *
@@ -24758,7 +24758,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct HTML_OpenLinkInNewTab_t
+	public struct HTML_OpenLinkInNewTab_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 7;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -24783,7 +24783,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal string PchURL; // pchURL const char *
@@ -24929,7 +24929,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct HTML_ChangedTitle_t
+	public struct HTML_ChangedTitle_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 8;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -24954,7 +24954,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal string PchTitle; // pchTitle const char *
@@ -25100,7 +25100,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct HTML_SearchResults_t
+	public struct HTML_SearchResults_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 9;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -25126,7 +25126,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal uint UnResults; // unResults uint32
@@ -25274,7 +25274,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct HTML_CanGoBackAndForward_t
+	public struct HTML_CanGoBackAndForward_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 10;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -25302,7 +25302,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			[MarshalAs(UnmanagedType.I1)]
@@ -25452,7 +25452,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct HTML_HorizontalScroll_t
+	public struct HTML_HorizontalScroll_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 11;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -25482,7 +25482,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal uint UnScrollMax; // unScrollMax uint32
@@ -25637,7 +25637,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct HTML_VerticalScroll_t
+	public struct HTML_VerticalScroll_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 12;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -25667,7 +25667,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal uint UnScrollMax; // unScrollMax uint32
@@ -25822,7 +25822,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct HTML_LinkAtPosition_t
+	public struct HTML_LinkAtPosition_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 13;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -25853,7 +25853,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal uint X; // x uint32
@@ -26009,7 +26009,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct HTML_JSAlert_t
+	public struct HTML_JSAlert_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 14;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -26034,7 +26034,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal string PchMessage; // pchMessage const char *
@@ -26180,7 +26180,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct HTML_JSConfirm_t
+	public struct HTML_JSConfirm_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 15;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -26205,7 +26205,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal string PchMessage; // pchMessage const char *
@@ -26351,7 +26351,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct HTML_FileOpenDialog_t
+	public struct HTML_FileOpenDialog_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 16;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -26377,7 +26377,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal string PchTitle; // pchTitle const char *
@@ -26525,7 +26525,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct HTML_NewWindow_t
+	public struct HTML_NewWindow_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 21;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -26555,7 +26555,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal string PchURL; // pchURL const char *
@@ -26711,7 +26711,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct HTML_SetCursor_t
+	public struct HTML_SetCursor_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 22;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -26736,7 +26736,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal uint EMouseCursor; // eMouseCursor uint32
@@ -26882,7 +26882,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct HTML_StatusText_t
+	public struct HTML_StatusText_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 23;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -26907,7 +26907,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal string PchMsg; // pchMsg const char *
@@ -27053,7 +27053,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct HTML_ShowToolTip_t
+	public struct HTML_ShowToolTip_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 24;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -27078,7 +27078,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal string PchMsg; // pchMsg const char *
@@ -27224,7 +27224,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct HTML_UpdateToolTip_t
+	public struct HTML_UpdateToolTip_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 25;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -27249,7 +27249,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal string PchMsg; // pchMsg const char *
@@ -27395,7 +27395,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct HTML_HideToolTip_t
+	public struct HTML_HideToolTip_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 26;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -27419,7 +27419,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			
@@ -27563,7 +27563,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct HTML_BrowserRestarted_t
+	public struct HTML_BrowserRestarted_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 27;
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -27588,7 +27588,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal uint UnOldBrowserHandle; // unOldBrowserHandle HHTMLBrowser
@@ -27734,7 +27734,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct SteamItemDetails_t
+	public struct SteamItemDetails_t
 	{
 		internal ulong ItemId; // m_itemId SteamItemInstanceID_t
 		internal int Definition; // m_iDefinition SteamItemDef_t
@@ -27760,7 +27760,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong ItemId; // m_itemId SteamItemInstanceID_t
 			internal int Definition; // m_iDefinition SteamItemDef_t
@@ -27784,7 +27784,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct SteamInventoryResultReady_t
+	public struct SteamInventoryResultReady_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientInventory + 0;
 		internal int Handle; // m_handle SteamInventoryResult_t
@@ -27809,7 +27809,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal int Handle; // m_handle SteamInventoryResult_t
 			internal Result Result; // m_result enum EResult
@@ -27955,7 +27955,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct SteamInventoryFullUpdate_t
+	public struct SteamInventoryFullUpdate_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientInventory + 1;
 		internal int Handle; // m_handle SteamInventoryResult_t
@@ -27979,7 +27979,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal int Handle; // m_handle SteamInventoryResult_t
 			
@@ -28123,7 +28123,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct SteamInventoryEligiblePromoItemDefIDs_t
+	public struct SteamInventoryEligiblePromoItemDefIDs_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientInventory + 3;
 		internal Result Result; // m_result enum EResult
@@ -28151,7 +28151,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_result enum EResult
 			internal ulong SteamID; // m_steamID class CSteamID
@@ -28307,7 +28307,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct SteamInventoryStartPurchaseResult_t
+	public struct SteamInventoryStartPurchaseResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientInventory + 4;
 		internal Result Result; // m_result enum EResult
@@ -28333,7 +28333,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_result enum EResult
 			internal ulong OrderID; // m_ulOrderID uint64
@@ -28486,7 +28486,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct SteamInventoryRequestPricesResult_t
+	public struct SteamInventoryRequestPricesResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientInventory + 5;
 		internal Result Result; // m_result enum EResult
@@ -28512,7 +28512,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_result enum EResult
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
@@ -28664,7 +28664,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct BroadcastUploadStop_t
+	public struct BroadcastUploadStop_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientVideo + 5;
 		internal BroadcastUploadResult Result; // m_eResult enum EBroadcastUploadResult
@@ -28688,7 +28688,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal BroadcastUploadResult Result; // m_eResult enum EBroadcastUploadResult
 			
@@ -28832,7 +28832,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct GetVideoURLResult_t
+	public struct GetVideoURLResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientVideo + 11;
 		internal Result Result; // m_eResult enum EResult
@@ -28859,7 +28859,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal uint VideoAppID; // m_unVideoAppID AppId_t
@@ -29008,7 +29008,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct GetOPFSettingsResult_t
+	public struct GetOPFSettingsResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientVideo + 24;
 		internal Result Result; // m_eResult enum EResult
@@ -29033,7 +29033,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal uint VideoAppID; // m_unVideoAppID AppId_t
@@ -29179,7 +29179,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct GSClientApprove_t
+	public struct GSClientApprove_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameServer + 1;
 		internal ulong SteamID; // m_SteamID class CSteamID
@@ -29204,7 +29204,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamID; // m_SteamID class CSteamID
 			internal ulong OwnerSteamID; // m_OwnerSteamID class CSteamID
@@ -29350,7 +29350,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct GSClientDeny_t
+	public struct GSClientDeny_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameServer + 2;
 		internal ulong SteamID; // m_SteamID class CSteamID
@@ -29377,7 +29377,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamID; // m_SteamID class CSteamID
 			internal DenyReason DenyReason; // m_eDenyReason enum EDenyReason
@@ -29526,7 +29526,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct GSClientKick_t
+	public struct GSClientKick_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameServer + 3;
 		internal ulong SteamID; // m_SteamID class CSteamID
@@ -29551,7 +29551,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamID; // m_SteamID class CSteamID
 			internal DenyReason DenyReason; // m_eDenyReason enum EDenyReason
@@ -29697,7 +29697,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct GSClientAchievementStatus_t
+	public struct GSClientAchievementStatus_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameServer + 6;
 		internal ulong SteamID; // m_SteamID uint64
@@ -29725,7 +29725,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamID; // m_SteamID uint64
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
@@ -29875,7 +29875,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct GSPolicyResponse_t
+	public struct GSPolicyResponse_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUser + 15;
 		internal byte Secure; // m_bSecure uint8
@@ -29899,7 +29899,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal byte Secure; // m_bSecure uint8
 			
@@ -30043,7 +30043,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct GSGameplayStats_t
+	public struct GSGameplayStats_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameServer + 7;
 		internal Result Result; // m_eResult enum EResult
@@ -30070,7 +30070,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal int Rank; // m_nRank int32
@@ -30220,7 +30220,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct GSClientGroupStatus_t
+	public struct GSClientGroupStatus_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameServer + 8;
 		internal ulong SteamIDUser; // m_SteamIDUser class CSteamID
@@ -30249,7 +30249,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamIDUser; // m_SteamIDUser class CSteamID
 			internal ulong SteamIDGroup; // m_SteamIDGroup class CSteamID
@@ -30401,7 +30401,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct GSReputation_t
+	public struct GSReputation_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameServer + 9;
 		internal Result Result; // m_eResult enum EResult
@@ -30432,7 +30432,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal uint ReputationScore; // m_unReputationScore uint32
@@ -30594,7 +30594,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct AssociateWithClanResult_t
+	public struct AssociateWithClanResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameServer + 10;
 		internal Result Result; // m_eResult enum EResult
@@ -30618,7 +30618,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			
@@ -30767,7 +30767,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct ComputeNewPlayerCompatibilityResult_t
+	public struct ComputeNewPlayerCompatibilityResult_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameServer + 11;
 		internal Result Result; // m_eResult enum EResult
@@ -30795,7 +30795,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal int CPlayersThatDontLikeCandidate; // m_cPlayersThatDontLikeCandidate int
@@ -30952,7 +30952,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct GSStatsReceived_t
+	public struct GSStatsReceived_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameServerStats + 0;
 		internal Result Result; // m_eResult enum EResult
@@ -30977,7 +30977,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
@@ -31128,7 +31128,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct GSStatsStored_t
+	public struct GSStatsStored_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameServerStats + 1;
 		internal Result Result; // m_eResult enum EResult
@@ -31153,7 +31153,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
@@ -31304,7 +31304,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	internal struct GSStatsUnloaded_t
+	public struct GSStatsUnloaded_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUserStats + 8;
 		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
@@ -31328,7 +31328,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			
@@ -31472,7 +31472,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct ItemInstalled_t
+	public struct ItemInstalled_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 5;
 		internal uint AppID; // m_unAppID AppId_t
@@ -31497,7 +31497,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint AppID; // m_unAppID AppId_t
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -31643,7 +31643,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct InputAnalogActionData_t
+	public struct InputAnalogActionData_t
 	{
 		internal InputSourceMode EMode; // eMode EInputSourceMode
 		internal float X; // x float
@@ -31670,7 +31670,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal InputSourceMode EMode; // eMode EInputSourceMode
 			internal float X; // x float
@@ -31695,7 +31695,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct InputMotionData_t
+	public struct InputMotionData_t
 	{
 		internal float RotQuatX; // rotQuatX float
 		internal float RotQuatY; // rotQuatY float
@@ -31727,7 +31727,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal float RotQuatX; // rotQuatX float
 			internal float RotQuatY; // rotQuatY float
@@ -31763,7 +31763,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct InputDigitalActionData_t
+	public struct InputDigitalActionData_t
 	{
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool BState; // bState bool
@@ -31789,7 +31789,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool BState; // bState bool
@@ -31811,7 +31811,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct SteamInventoryDefinitionUpdate_t
+	public struct SteamInventoryDefinitionUpdate_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientInventory + 2;
 		
@@ -31834,7 +31834,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			
 			//
@@ -31976,7 +31976,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct SteamParentalSettingsChanged_t
+	public struct SteamParentalSettingsChanged_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamParentalSettings + 1;
 		
@@ -31999,7 +31999,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			
 			//
@@ -32141,7 +32141,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct SteamServersConnected_t
+	public struct SteamServersConnected_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUser + 1;
 		
@@ -32164,7 +32164,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			
 			//
@@ -32306,7 +32306,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct NewLaunchQueryParameters_t
+	public struct NewLaunchQueryParameters_t
 	{
 		
 		//
@@ -32328,7 +32328,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			
 			//
@@ -32344,7 +32344,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct GCMessageAvailable_t
+	public struct GCMessageAvailable_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameCoordinator + 1;
 		internal uint MessageSize; // m_nMessageSize uint32
@@ -32368,7 +32368,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal uint MessageSize; // m_nMessageSize uint32
 			
@@ -32512,7 +32512,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct GCMessageFailed_t
+	public struct GCMessageFailed_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameCoordinator + 2;
 		
@@ -32535,7 +32535,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			
 			//
@@ -32677,7 +32677,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct ScreenshotRequested_t
+	public struct ScreenshotRequested_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamScreenshots + 2;
 		
@@ -32700,7 +32700,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			
 			//
@@ -32842,7 +32842,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct LicensesUpdated_t
+	public struct LicensesUpdated_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUser + 25;
 		
@@ -32865,7 +32865,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			
 			//
@@ -33007,7 +33007,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct SteamShutdown_t
+	public struct SteamShutdown_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUtils + 4;
 		
@@ -33030,7 +33030,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			
 			//
@@ -33172,7 +33172,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct IPCountry_t
+	public struct IPCountry_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUtils + 1;
 		
@@ -33195,7 +33195,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			
 			//
@@ -33337,7 +33337,7 @@ namespace SteamNative
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	internal struct IPCFailure_t
+	public struct IPCFailure_t
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUser + 17;
 		internal byte FailureType; // m_eFailureType uint8
@@ -33361,7 +33361,7 @@ namespace SteamNative
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		internal struct PackSmall
+		public struct PackSmall
 		{
 			internal byte FailureType; // m_eFailureType uint8
 			

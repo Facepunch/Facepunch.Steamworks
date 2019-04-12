@@ -57,7 +57,7 @@ namespace Generator
                 // Main struct
                 //
                 WriteLine( $"[StructLayout( LayoutKind.Sequential, Pack = {defaultPack} )]" );
-                StartBlock( $"internal struct {c.Name}" );
+                StartBlock( $"public struct {c.Name}" );
                 {
                     if ( !string.IsNullOrEmpty( c.CallbackId ) )
                     {
@@ -101,7 +101,7 @@ namespace Generator
                     //
                     WriteLine();
                     WriteLine( $"[StructLayout( LayoutKind.Sequential, Pack = {defaultPack} )]" );
-                    StartBlock( $"internal struct PackSmall" );
+                    StartBlock( $"public struct PackSmall" );
                     {
                         StructFields( c.Fields );
 

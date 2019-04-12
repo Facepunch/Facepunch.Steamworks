@@ -11,10 +11,13 @@ namespace Generator
     public partial class CodeWriter
     {
         private SteamApiDefinition def;
+		public CodeParser Parser;
 
-        public CodeWriter( SteamApiDefinition def )
+		public CodeWriter( CodeParser parser, SteamApiDefinition def )
         {
-            this.def = def;
+			Parser = parser;
+
+			this.def = def;
             WorkoutTypes();
         }
 
@@ -87,7 +90,11 @@ namespace Generator
             {
                 GenerateClasses( $"{folder}SteamNative." );
             }
-        }
+
+			{
+				GenerateVTableClass( "ISteamApps", $"{folder}../Generated/Interfaces/ISteamApps.cs" );
+			}
+		}
 
         void WorkoutTypes()
         {

@@ -18,9 +18,10 @@ namespace Generator
 
             var parser = new CodeParser( @"steam_sdk" );
 
-            parser.ExtendDefinition( def );
+			parser.ParseClasses();
+			parser.ExtendDefinition( def );
 
-            var generator = new CodeWriter( def );
+            var generator = new CodeWriter( parser, def );
 
             generator.ToFolder( "../Facepunch.Steamworks/SteamNative/" );
         }

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
   
-    <TargetFrameworks>netstandard2.0;net45;net40</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net46</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AssemblyName>Facepunch.Steamworks</AssemblyName>
 	
@@ -40,6 +40,10 @@
     <None Update="steam_api64.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Generated\Interfaces\" />
   </ItemGroup>
     
  <PropertyGroup>

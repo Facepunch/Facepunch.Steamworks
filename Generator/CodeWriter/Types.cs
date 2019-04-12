@@ -43,7 +43,7 @@ namespace Generator
                 if ( SkipTypesStartingWith.Any( x => o.Name.StartsWith( x ) ) )
                     continue;
 
-                StartBlock( $"internal struct {o.Name}" );
+                StartBlock( $"public struct {o.Name}" );
                 {
                     WriteLine( $"public {ToManagedType( o.Type )} Value;" );
                     WriteLine();
