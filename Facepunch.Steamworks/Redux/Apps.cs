@@ -48,7 +48,7 @@ namespace Steamworks
 		/// Gets the current language that the user has set.
 		/// This falls back to the Steam UI language if the user hasn't explicitly picked a language for the title.
 		/// </summary>
-		public static string GameLangauge => steamapps.GetCurrentGameLanguage();
+		public static string GameLanguage => steamapps.GetCurrentGameLanguage();
 
 		/// <summary>
 		/// Gets a list of the languages the current app supports.
@@ -84,11 +84,12 @@ namespace Steamworks
 		public static IEnumerable<DlcInformation> DlcInformation()
 		{
 			var appid = default( SteamNative.AppId_t );
-			var sb = new StringBuilder( 512 );
 			var available = false;
 
 			for ( int i = 0; i < steamapps.GetDLCCount(); i++ )
 			{
+				var sb = SteamNative.Helpers.TakeStringBuilder();
+
 				if ( !steamapps.BGetDLCDataByIndex( i, ref appid, ref available, sb, sb.Capacity ) )
 					continue;
 
@@ -110,6 +111,46 @@ namespace Steamworks
 		/// Install/Uninstall control for optional DLC
 		/// </summary>
 		public static void UninstallDlc( AppId appid ) => steamapps.UninstallDLC( appid.Value );
+
+		/// <summary>
+		/// Returns null if we're not on a beta branch, else the name of the branch
+		/// </summary>
+		public static string CurrentBetaName
+		{
+			get
+			{
+				var sb = SteamNative.Helpers.TakeStringBuilder();
+
+				if ( !steamapps.GetCurrentBetaName( sb, sb.Capacity ) )
+					return null;
+
+				return sb.ToString();
+			}
+		}
+
+		/// <summary>
+		/// Allows you to force verify game content on next launch.
+		///
+		/// If you detect the game is out-of-date(for example, by having the client detect a version mismatch with a server),
+		/// you can call use MarkContentCorrupt to force a verify, show a message to the user, and then quit.
+		/// </summary>
+		public static void MarkContentCorrupt( bool missingFilesOnly ) => steamapps.MarkContentCorrupt( missingFilesOnly );
+
+		/// <summary>
+		/// Gets a list of all installed depots for a given App ID in mount order
+		/// </summary>
+		public static IEnumerable<DepotId> InstalledDepots( AppId appid )
+		{
+			var depots = new SteamNative.DepotId_t[32];
+			uint count = 0;
+
+			count = steamapps.GetInstalledDepots( appid.Value, depots, (uint) depots.Length );
+
+			for ( int i = 0; i < count; i++ )
+			{
+				yield return new DepotId { Value = depots[i].Value };
+			}
+		}
 
 	}
 }

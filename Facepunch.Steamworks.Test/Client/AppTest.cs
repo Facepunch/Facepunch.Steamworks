@@ -1,64 +1,46 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Facepunch.Steamworks.Test
+namespace Steamworks
 {
     [TestClass]
     [DeploymentItem( "steam_api64.dll" )]
-    public class App
+    public class AppTest
     {
-        [TestMethod]
-        public void IsSubscribed()
+		[AssemblyInitialize]
+		public static void AssemblyInit( TestContext context )
+		{
+			Steamworks.Steam.Init( 4000 );
+		}
+
+		[TestMethod]
+        public void GameLangauge()
         {
-            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
-            {
-                Console.WriteLine("This test assumes you own Garry's Mod and not Charles III of Spain and the antiquity");
+			var gl = Apps.GameLanguage;
+			Assert.IsNotNull( gl );
+			Assert.IsTrue( gl.Length > 3 );
 
-                Assert.IsTrue( client.App.IsSubscribed( 4000 ) );
-                Assert.IsFalse( client.App.IsSubscribed( 590440 ));
-            }
-        }
+			Console.WriteLine( $"{gl}" );
+		}
 
-        [TestMethod]
-        public void IsInstalled()
-        {
-            using (var client = new Facepunch.Steamworks.Client(252490))
-            {
-                Console.WriteLine("This test assumes you have Garry's Mod installed but not Charles III of Spain and the antiquity");
+		[TestMethod]
+		public void InstalledDepots()
+		{
+			var depots = Apps.InstalledDepots( 4000 ).ToArray();
 
-                Assert.IsTrue(client.App.IsInstalled(4000));
-                Assert.IsFalse(client.App.IsInstalled(590440));
-            }
-        }
+			Assert.IsNotNull( depots );
+			Assert.IsTrue( depots.Length > 0 );
 
-        [TestMethod]
-        public void PurchaseTime()
-        {
-            using (var client = new Facepunch.Steamworks.Client(252490))
-            {
-                Console.WriteLine("This test assumes you own Garry's Mod but not Charles III of Spain and the antiquity");
+			foreach ( var depot in depots )
+			{
+				Console.WriteLine( $"{depot.Value}" );
+			}
 
-                var gmodBuyTime = client.App.PurchaseTime( 4000 );
-                Assert.AreNotEqual( gmodBuyTime, DateTime.MinValue );
+			
+		}
+	}
 
-                Console.WriteLine($"You bought Garry's Mod {gmodBuyTime}");
-
-                var otherBuyTime = client.App.PurchaseTime(590440);
-                Assert.AreEqual(otherBuyTime, DateTime.MinValue);
-            }
-        }
-
-        [TestMethod]
-        public void AppName()
-        {
-            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
-            {
-                var name = client.App.GetName( 4000 );
-                Console.WriteLine( name );
-            }
-        }
-
-    }
 }

@@ -239,13 +239,13 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate uint GetInstalledDepotsDelegate( IntPtr self, AppId_t appID, ref DepotId_t pvecDepots, uint cMaxDepots );
+		public delegate uint GetInstalledDepotsDelegate( IntPtr self, AppId_t appID, [In,Out] DepotId_t[]  pvecDepots, uint cMaxDepots );
 		private GetInstalledDepotsDelegate GetInstalledDepotsDelegatePointer;
 		
 		#endregion
-		public uint GetInstalledDepots( AppId_t appID, ref DepotId_t pvecDepots, uint cMaxDepots )
+		public uint GetInstalledDepots( AppId_t appID, [In,Out] DepotId_t[]  pvecDepots, uint cMaxDepots )
 		{
-			return GetInstalledDepotsDelegatePointer( Self, appID, ref pvecDepots, cMaxDepots );
+			return GetInstalledDepotsDelegatePointer( Self, appID, pvecDepots, cMaxDepots );
 		}
 		
 		#region FunctionMeta

@@ -20,7 +20,7 @@ internal class BaseType
 		var basicType = type.Trim( ' ', '*' );
 
 		
-		if ( basicType == "int32" ) return new IntType { NativeType = type, VarName = varname };
+		if ( basicType == "int32" || basicType == "int" ) return new IntType { NativeType = type, VarName = varname };
 		if ( basicType == "uint32" ) return new UIntType { NativeType = type, VarName = varname };
 		if ( basicType == "CSteamID" ) return new CSteamIdType { NativeType = type, VarName = varname };
 		if ( basicType == "uint64" ) return new ULongType { NativeType = type, VarName = varname };
@@ -31,13 +31,14 @@ internal class BaseType
 		return new BaseType { NativeType = type, VarName = varname };
 	}
 
-	public virtual string AsArgument() =>  $"{Ref}{TypeName} {VarName}";
+	public virtual string AsArgument() => IsVector? $"[In,Out] {TypeName}[]  {VarName}" : $"{Ref}{TypeName} {VarName}";
 	public virtual string AsCallArgument() => $"{Ref}{VarName}";
 
 	public virtual string Return( string varname ) => $"return {varname};";
 	public virtual string ReturnAttribute => null;
 
-	public virtual string Ref => NativeType.EndsWith( "*" ) ? "ref " : "";
+	public virtual string Ref => !IsVector && NativeType.EndsWith( "*" ) ? "ref " : "";
+	public virtual bool IsVector => NativeType.EndsWith( "*" ) && VarName.Contains( "pvec" );
 
 	public virtual bool IsVoid => false;
 	public virtual bool IsReturnedWeird => false;
