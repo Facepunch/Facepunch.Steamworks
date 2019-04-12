@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Generator
 {
-    class CodeParser
+    public partial class CodeParser
     {
         public string Content;
 
