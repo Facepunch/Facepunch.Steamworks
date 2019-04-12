@@ -26,6 +26,10 @@ namespace Generator
 			{
 				StartBlock( $"public class {clss.Name} : BaseSteamInterface" );
 				{
+
+					WriteLine( $"public override string InterfaceName => \"{clss.InterfaceString}\";" );
+					WriteLine();
+
 					WriteFunctionPointerReader( clss );
 
 					WriteLine();

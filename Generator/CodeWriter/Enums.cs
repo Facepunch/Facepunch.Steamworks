@@ -25,7 +25,7 @@ namespace Generator
                 if ( name[0] == 'E' )
                     name = name.Substring( 1 );
 
-                StartBlock( $"internal enum {name} : int" );
+                StartBlock( $"public enum {name} : int" );
                 {
                     //
                     // If all the enum values start with the same 

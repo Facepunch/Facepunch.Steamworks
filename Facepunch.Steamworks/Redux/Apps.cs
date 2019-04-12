@@ -204,5 +204,23 @@ namespace Steamworks
 		/// </summary>
 		public static int BuildId => steamapps.GetAppBuildId();
 
+
+		/// <summary>
+		/// Asynchronously retrieves metadata details about a specific file in the depot manifest.
+		/// Currently provides:
+		/// </summary>
+		public static async Task<FileDetails> GetFileDetails( string filename )
+		{
+			var call = steamapps.GetFileDetails( filename );
+
+			while ( !Utils.IsCallComplete( call, out bool failed ) )
+			{
+				await Task.Delay( 1 );
+			}
+
+
+			return new FileDetails();
+		}
+
 	}
 }

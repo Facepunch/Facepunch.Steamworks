@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Steamworks
@@ -58,6 +59,12 @@ namespace Steamworks
 			{
 				Console.WriteLine( $"{depot.Value}" );
 			}
+		}
+
+		[TestMethod]
+		public async Task GetFileDetails()
+		{
+			var fileinfo = await Apps.GetFileDetails( "hl2.exe" );
 		}
 	}
 
