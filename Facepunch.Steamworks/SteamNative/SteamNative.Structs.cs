@@ -31697,11 +31697,16 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct InputMotionData_t
 	{
-		internal InputSourceMode EMode; // eMode EInputSourceMode
-		internal float X; // x float
-		internal float Y; // y float
-		[MarshalAs(UnmanagedType.I1)]
-		internal bool BActive; // bActive bool
+		internal float RotQuatX; // rotQuatX float
+		internal float RotQuatY; // rotQuatY float
+		internal float RotQuatZ; // rotQuatZ float
+		internal float RotQuatW; // rotQuatW float
+		internal float PosAccelX; // posAccelX float
+		internal float PosAccelY; // posAccelY float
+		internal float PosAccelZ; // posAccelZ float
+		internal float RotVelX; // rotVelX float
+		internal float RotVelY; // rotVelY float
+		internal float RotVelZ; // rotVelZ float
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
@@ -31724,11 +31729,16 @@ namespace SteamNative
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		internal struct PackSmall
 		{
-			internal InputSourceMode EMode; // eMode EInputSourceMode
-			internal float X; // x float
-			internal float Y; // y float
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool BActive; // bActive bool
+			internal float RotQuatX; // rotQuatX float
+			internal float RotQuatY; // rotQuatY float
+			internal float RotQuatZ; // rotQuatZ float
+			internal float RotQuatW; // rotQuatW float
+			internal float PosAccelX; // posAccelX float
+			internal float PosAccelY; // posAccelY float
+			internal float PosAccelZ; // posAccelZ float
+			internal float RotVelX; // rotVelX float
+			internal float RotVelY; // rotVelY float
+			internal float RotVelZ; // rotVelZ float
 			
 			//
 			// Easily convert from PackSmall to InputMotionData_t
@@ -31737,10 +31747,16 @@ namespace SteamNative
 			{
 				return new InputMotionData_t()
 				{
-					EMode = d.EMode,
-					X = d.X,
-					Y = d.Y,
-					BActive = d.BActive,
+					RotQuatX = d.RotQuatX,
+					RotQuatY = d.RotQuatY,
+					RotQuatZ = d.RotQuatZ,
+					RotQuatW = d.RotQuatW,
+					PosAccelX = d.PosAccelX,
+					PosAccelY = d.PosAccelY,
+					PosAccelZ = d.PosAccelZ,
+					RotVelX = d.RotVelX,
+					RotVelY = d.RotVelY,
+					RotVelZ = d.RotVelZ,
 				};
 			}
 		}
@@ -31749,9 +31765,8 @@ namespace SteamNative
 	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	internal struct InputDigitalActionData_t
 	{
-		internal InputSourceMode EMode; // eMode EInputSourceMode
-		internal float X; // x float
-		internal float Y; // y float
+		[MarshalAs(UnmanagedType.I1)]
+		internal bool BState; // bState bool
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool BActive; // bActive bool
 		
@@ -31776,9 +31791,8 @@ namespace SteamNative
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		internal struct PackSmall
 		{
-			internal InputSourceMode EMode; // eMode EInputSourceMode
-			internal float X; // x float
-			internal float Y; // y float
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool BState; // bState bool
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool BActive; // bActive bool
 			
@@ -31789,9 +31803,7 @@ namespace SteamNative
 			{
 				return new InputDigitalActionData_t()
 				{
-					EMode = d.EMode,
-					X = d.X,
-					Y = d.Y,
+					BState = d.BState,
 					BActive = d.BActive,
 				};
 			}
