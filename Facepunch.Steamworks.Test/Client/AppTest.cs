@@ -27,6 +27,26 @@ namespace Steamworks
 		}
 
 		[TestMethod]
+		public void AppInstallDir()
+		{
+			var str = Apps.AppInstallDir( 4000 );
+			Assert.IsNotNull( str );
+			Assert.IsTrue( str.Length > 3 );
+
+			Console.WriteLine( $"{str}" );
+		}
+
+		[TestMethod]
+		public void AppOwner()
+		{
+			var steamid = Apps.AppOwner;
+			Assert.IsTrue( steamid.Value > 70561197960279927 );
+			Assert.IsTrue( steamid.Value < 80561197960279927 );
+
+			Console.WriteLine( $"{steamid.Value}" );
+		}
+
+		[TestMethod]
 		public void InstalledDepots()
 		{
 			var depots = Apps.InstalledDepots( 4000 ).ToArray();
@@ -38,8 +58,6 @@ namespace Steamworks
 			{
 				Console.WriteLine( $"{depot.Value}" );
 			}
-
-			
 		}
 	}
 

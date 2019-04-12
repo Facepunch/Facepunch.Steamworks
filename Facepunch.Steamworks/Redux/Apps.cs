@@ -152,5 +152,57 @@ namespace Steamworks
 			}
 		}
 
+		/// <summary>
+		/// Gets the install folder for a specific AppID.
+		/// This works even if the application is not installed, based on where the game would be installed with the default Steam library location.
+		/// </summary>
+		public static string AppInstallDir( AppId appid )
+		{
+			var sb = SteamNative.Helpers.TakeStringBuilder();
+
+			if ( steamapps.GetAppInstallDir( appid.Value, sb, (uint) sb.Capacity ) == 0 )
+				return null;
+
+			return sb.ToString();
+		}
+
+		/// <summary>
+		/// The app may not actually be owned by the current user, they may have it left over from a free weekend, etc.
+		/// </summary>
+		public static bool IsAppInstalled( AppId appid ) => steamapps.BIsAppInstalled( appid.Value );
+
+		/// <summary>
+		/// Gets the Steam ID of the original owner of the current app. If it's different from the current user then it is borrowed..
+		/// </summary>
+		public static SteamId AppOwner => steamapps.GetAppOwner().Value;
+
+		/// <summary>
+		/// Gets the associated launch parameter if the game is run via steam://run/<appid>/?param1=value1;param2=value2;param3=value3 etc.
+		/// Parameter names starting with the character '@' are reserved for internal use and will always return an empty string.
+		/// Parameter names starting with an underscore '_' are reserved for steam features -- they can be queried by the game, 
+		/// but it is advised that you not param names beginning with an underscore for your own features.
+		/// </summary>
+		public static string GetLaunchParam( string param ) => steamapps.GetLaunchQueryParam( param );
+
+		/// <summary>
+		/// Gets the download progress for optional DLC.
+		/// </summary>
+		public static DownloadProgress DlcDownloadProgress( AppId appid )
+		{
+			ulong punBytesDownloaded = 0;
+			ulong punBytesTotal = 0;
+
+			if ( !steamapps.GetDlcDownloadProgress( appid.Value, ref punBytesDownloaded, ref punBytesTotal ) )
+				return default( DownloadProgress );
+
+			return new DownloadProgress { BytesDownloaded = punBytesDownloaded, BytesTotal = punBytesTotal, Active = true };
+		}
+
+		/// <summary>
+		/// Gets the buildid of this app, may change at any time based on backend updates to the game.
+		/// Defaults to 0 if you're not running a build downloaded from steam.
+		/// </summary>
+		public static int BuildId => steamapps.GetAppBuildId();
+
 	}
 }
