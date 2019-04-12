@@ -9,6 +9,7 @@ namespace Generator
 		public class Class
 		{
 			public string Name;
+			public string InterfaceString;
 
 			public class Function
 			{
@@ -19,7 +20,7 @@ namespace Generator
 				public string CallResult;
 			}
 
-			public List<Function> Functions = new List<Function>();
+			public List<Function> Functions = new List<Function>();			
 
 			internal Function AddFunction( string funcName, string returnType, string args )
 			{

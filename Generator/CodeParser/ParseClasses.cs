@@ -40,6 +40,12 @@ namespace Generator
 			var c = new Class();
 			c.Name = classname;
 
+			var interfaceMatch = Regex.Match( Content, $"#define {classname.ToUpper().Substring( 1 )}_INTERFACE_VERSION \"(.+?)\"" );
+			if ( interfaceMatch.Success )
+			{
+				c.InterfaceString = interfaceMatch.Groups[1].Value;
+			}
+
 			foreach ( var line in lines )
 			{
 				if ( line.Trim().Length < 4 ) continue;

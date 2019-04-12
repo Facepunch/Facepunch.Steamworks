@@ -8,6 +8,8 @@ namespace Steamworks.Internal
 {
 	public class ISteamApps : BaseSteamInterface
 	{
+		public override string InterfaceName => "STEAMAPPS_INTERFACE_VERSION008";
+		
 		public override void InitInternals()
 		{
 			BIsSubscribedDelegatePointer = Marshal.GetDelegateForFunctionPointer<BIsSubscribedDelegate>( Marshal.ReadIntPtr( VTable, 0) );

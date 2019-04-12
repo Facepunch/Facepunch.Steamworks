@@ -14,7 +14,7 @@ namespace Steamworks.Internal
 		public IntPtr Self;
 		public IntPtr VTable;
 
-		public virtual string InterfaceName => "STEAMAPPS_INTERFACE_VERSION008";
+		public virtual string InterfaceName => null;
 
 		public BaseSteamInterface()
 		{
