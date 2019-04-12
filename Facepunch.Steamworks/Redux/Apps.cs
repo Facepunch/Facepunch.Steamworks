@@ -54,5 +54,62 @@ namespace Steamworks
 		/// Gets a list of the languages the current app supports.
 		/// </summary>
 		public static string[] AvailablLanguages => steamapps.GetAvailableGameLanguages().Split( new[] { ',' }, StringSplitOptions.RemoveEmptyEntries );
+
+		/// <summary>
+		/// Checks if the active user is subscribed to a specified AppId.
+		/// Only use this if you need to check ownership of another game related to yours, a demo for example.
+		/// </summary>
+		public static bool IsSubscribedToApp( AppId appid ) => steamapps.BIsSubscribedApp( appid.Value );
+
+		/// <summary>
+		/// Checks if the user owns a specific DLC and if the DLC is installed
+		/// </summary>
+		public static bool IsDlcInstalled( AppId appid ) => steamapps.BIsDlcInstalled( appid.Value );
+
+		/// <summary>
+		/// Returns the time of the purchase of the app
+		/// </summary>
+		public static DateTime PurchaseTime( AppId appid ) => Facepunch.Steamworks.Utility.Epoch.ToDateTime( steamapps.GetEarliestPurchaseUnixTime( appid.Value ) );
+
+		/// <summary>
+		/// Checks if the user is subscribed to the current app through a free weekend
+		/// This function will return false for users who have a retail or other type of license
+		/// Before using, please ask your Valve technical contact how to package and secure your free weekened
+		/// </summary>
+		public static bool IsSubscribedFromFreeWeekend => steamapps.BIsSubscribedFromFreeWeekend();
+
+		/// <summary>
+		/// Returns metadata for all available DLC
+		/// </summary>
+		public static IEnumerable<DlcInformation> DlcInformation()
+		{
+			var appid = default( SteamNative.AppId_t );
+			var sb = new StringBuilder( 512 );
+			var available = false;
+
+			for ( int i = 0; i < steamapps.GetDLCCount(); i++ )
+			{
+				if ( !steamapps.BGetDLCDataByIndex( i, ref appid, ref available, sb, sb.Capacity ) )
+					continue;
+
+				yield return new DlcInformation
+				{
+					AppId = appid.Value,
+					Name = sb.ToString(),
+					Available = available
+				};
+			}
+		}
+
+		/// <summary>
+		/// Install/Uninstall control for optional DLC
+		/// </summary>
+		public static void InstallDlc( AppId appid ) => steamapps.InstallDLC( appid.Value );
+
+		/// <summary>
+		/// Install/Uninstall control for optional DLC
+		/// </summary>
+		public static void UninstallDlc( AppId appid ) => steamapps.UninstallDLC( appid.Value );
+
 	}
 }
