@@ -177,7 +177,7 @@ namespace Steamworks
 		public static SteamId AppOwner => steamapps.GetAppOwner().Value;
 
 		/// <summary>
-		/// Gets the associated launch parameter if the game is run via steam://run/<appid>/?param1=value1;param2=value2;param3=value3 etc.
+		/// Gets the associated launch parameter if the game is run via steam://run/appid/?param1=value1;param2=value2;param3=value3 etc.
 		/// Parameter names starting with the character '@' are reserved for internal use and will always return an empty string.
 		/// Parameter names starting with an underscore '_' are reserved for steam features -- they can be queried by the game, 
 		/// but it is advised that you not param names beginning with an underscore for your own features.
@@ -213,13 +213,19 @@ namespace Steamworks
 		{
 			var call = steamapps.GetFileDetails( filename );
 
-			while ( !Utils.IsCallComplete( call, out bool failed ) )
+			while ( !call.IsComplete() )
 			{
 				await Task.Delay( 1 );
 			}
 
+			var r = call.GetResult();
+			if ( !r.HasValue )
+					throw new System.Exception( "Something went wrong" );
 
-			return new FileDetails();
+			return new FileDetails
+			{
+				SizeInBytes = r.Value.FileSize
+			};
 		}
 
 	}
