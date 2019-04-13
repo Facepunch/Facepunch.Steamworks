@@ -65,6 +65,8 @@ namespace Steamworks
 		public async Task GetFileDetails()
 		{
 			var fileinfo = await Apps.GetFileDetails( "hl2.exe" );
+
+			Console.WriteLine( $"fileinfo.SizeInBytes: {fileinfo.SizeInBytes}" );
 		}
 	}
 

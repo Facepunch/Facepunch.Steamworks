@@ -337,9 +337,9 @@ namespace Steamworks.Internal
 		private GetFileDetailsDelegate GetFileDetailsDelegatePointer;
 		
 		#endregion
-		public SteamAPICall_t GetFileDetails( string pszFileName )
+		public SteamApiCallback<FileDetailsResult_t> GetFileDetails( string pszFileName )
 		{
-			return GetFileDetailsDelegatePointer( Self, pszFileName );
+			return new SteamApiCallback<FileDetailsResult_t>( GetFileDetailsDelegatePointer( Self, pszFileName ) );
 		}
 		
 		#region FunctionMeta

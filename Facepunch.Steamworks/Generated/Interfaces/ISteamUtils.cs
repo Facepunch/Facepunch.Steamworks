@@ -266,9 +266,9 @@ namespace Steamworks.Internal
 		private CheckFileSignatureDelegate CheckFileSignatureDelegatePointer;
 		
 		#endregion
-		public SteamAPICall_t CheckFileSignature( string szFileName )
+		public SteamApiCallback<CheckFileSignature_t> CheckFileSignature( string szFileName )
 		{
-			return CheckFileSignatureDelegatePointer( Self, szFileName );
+			return new SteamApiCallback<CheckFileSignature_t>( CheckFileSignatureDelegatePointer( Self, szFileName ) );
 		}
 		
 		#region FunctionMeta
