@@ -66,7 +66,10 @@ namespace Steamworks
 		{
 			var fileinfo = await Apps.GetFileDetails( "hl2.exe" );
 
+			Console.WriteLine( $"fileinfo.Found: {fileinfo.Found}" );
 			Console.WriteLine( $"fileinfo.SizeInBytes: {fileinfo.SizeInBytes}" );
+			Console.WriteLine( $"fileinfo.Sha1: {fileinfo.Sha1}" );
+			Console.WriteLine( $"fileinfo.Flags: {fileinfo.Flags}" );
 		}
 	}
 

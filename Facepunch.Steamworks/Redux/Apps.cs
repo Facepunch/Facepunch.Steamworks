@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -211,20 +212,19 @@ namespace Steamworks
 		/// </summary>
 		public static async Task<FileDetails> GetFileDetails( string filename )
 		{
-			var call = steamapps.GetFileDetails( filename );
+			var r = await steamapps.GetFileDetails( filename );
 
-			while ( !call.IsComplete() )
-			{
-				await Task.Delay( 1 );
-			}
-
-			var r = call.GetResult();
 			if ( !r.HasValue )
-					throw new System.Exception( "Something went wrong" );
+			{
+				throw new System.Exception( "Something went wrong" );
+			}
 
 			return new FileDetails
 			{
-				SizeInBytes = r.Value.FileSize
+				Found = r.Value.Result == SteamNative.Result.OK,
+				SizeInBytes = r.Value.FileSize,
+				Flags = r.Value.Flags,
+				Sha1 = string.Join( "", r.Value.FileSHA.Select( x => x.ToString( "x" ) ) )
 			};
 		}
 

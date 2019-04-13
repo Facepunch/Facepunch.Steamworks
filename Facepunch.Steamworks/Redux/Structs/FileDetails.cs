@@ -8,8 +8,9 @@ namespace Steamworks
 {
 	public struct FileDetails
 	{
+		public bool Found;
 		public ulong SizeInBytes;
 		public string Sha1;
-		public ulong BytesTotal;
+		public uint Flags;
 	}
 }
