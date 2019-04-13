@@ -30,6 +30,11 @@ namespace Steamworks
 		public static bool IsSubscribed => steamapps.BIsSubscribed();
 
 		/// <summary>
+		/// Check if user borrowed this game via Family Sharing, If true, call GetAppOwner() to get the lender SteamID
+		/// </summary>
+		public static bool IsSubscribedFromFamilySharing => steamapps.BIsSubscribedFromFamilySharing();
+
+		/// <summary>
 		/// Checks if the license owned by the user provides low violence depots.
 		/// Low violence depots are useful for copies sold in countries that have content restrictions
 		/// </summary>
@@ -226,6 +231,24 @@ namespace Steamworks
 				Flags = r.Value.Flags,
 				Sha1 = string.Join( "", r.Value.FileSHA.Select( x => x.ToString( "x" ) ) )
 			};
+		}
+
+		/// <summary>
+		/// Get command line if game was launched via Steam URL, e.g. steam://run/<appid>//<command line>/.
+		/// This method of passing a connect string (used when joining via rich presence, accepting an
+		/// invite, etc) is preferable to passing the connect string on the operating system command
+		/// line, which is a security risk.  In order for rich presence joins to go through this
+		/// path and not be placed on the OS command line, you must set a value in your app's
+		/// configuration on Steam.  Ask Valve for help with this.
+		/// </summary>
+		public static string CommandLine
+		{
+			get
+			{
+				var sb = SteamNative.Helpers.TakeStringBuilder();
+				var len = steamapps.GetLaunchCommandLine( sb, sb.Capacity );
+				return sb.ToString();
+			}
 		}
 
 	}

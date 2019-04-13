@@ -71,6 +71,14 @@ namespace Steamworks
 			Console.WriteLine( $"fileinfo.Sha1: {fileinfo.Sha1}" );
 			Console.WriteLine( $"fileinfo.Flags: {fileinfo.Flags}" );
 		}
+
+		[TestMethod]
+		public async Task CommandLine()
+		{
+			var cl = Apps.CommandLine;
+
+			Console.WriteLine( $"CommandLine: {cl}" );
+		}
 	}
 
 }
