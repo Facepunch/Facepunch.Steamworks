@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading.Tasks;
 using SteamNative;
 
 
@@ -337,9 +338,9 @@ namespace Steamworks.Internal
 		private GetFileDetailsDelegate GetFileDetailsDelegatePointer;
 		
 		#endregion
-		public SteamApiCallback<FileDetailsResult_t> GetFileDetails( string pszFileName )
+		public async Task<FileDetailsResult_t?> GetFileDetails( string pszFileName )
 		{
-			return new SteamApiCallback<FileDetailsResult_t>( GetFileDetailsDelegatePointer( Self, pszFileName ) );
+			return await (new SteamApiCallback<FileDetailsResult_t>( GetFileDetailsDelegatePointer( Self, pszFileName ) )).GetResult();
 		}
 		
 		#region FunctionMeta

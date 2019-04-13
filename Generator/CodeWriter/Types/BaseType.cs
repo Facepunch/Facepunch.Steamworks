@@ -73,8 +73,8 @@ internal class SteamApiCallType : BaseType
 {
 	public string CallResult;
 	public override string TypeName => "SteamAPICall_t";
-	public override string Return( string varname ) => $"return new SteamApiCallback<{CallResult}>( {varname} );";
-	public override string ReturnType => $"SteamApiCallback<{CallResult}>";
+	public override string Return( string varname ) => $"return await (new SteamApiCallback<{CallResult}>( {varname} )).GetResult();";
+	public override string ReturnType => $"async Task<{CallResult}?>";
 }
 
 internal class CSteamIdType : BaseType

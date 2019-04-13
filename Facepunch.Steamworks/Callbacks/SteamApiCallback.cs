@@ -16,13 +16,23 @@ namespace Steamworks
 			CallHandle = callbackHandle;
 		}
 
-		public bool IsComplete()
+		public bool IsComplete( out bool failed )
 		{
-			return Utils.IsCallComplete( CallHandle, out bool failed );
+			return Utils.IsCallComplete( CallHandle, out failed );
 		}
 
-		public T? GetResult()
+		public async Task<T?> GetResult()
 		{
+			bool failed = false;
+
+			while ( !IsComplete( out failed ) )
+			{
+				await Task.Delay( 1 );
+			}
+
+			if ( failed )
+				return null;
+
 			return Utils.GetResult<T>( CallHandle );
 		}
 	}

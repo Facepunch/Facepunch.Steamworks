@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading.Tasks;
 using SteamNative;
 
 
@@ -266,9 +267,9 @@ namespace Steamworks.Internal
 		private CheckFileSignatureDelegate CheckFileSignatureDelegatePointer;
 		
 		#endregion
-		public SteamApiCallback<CheckFileSignature_t> CheckFileSignature( string szFileName )
+		public async Task<CheckFileSignature_t?> CheckFileSignature( string szFileName )
 		{
-			return new SteamApiCallback<CheckFileSignature_t>( CheckFileSignatureDelegatePointer( Self, szFileName ) );
+			return await (new SteamApiCallback<CheckFileSignature_t>( CheckFileSignatureDelegatePointer( Self, szFileName ) )).GetResult();
 		}
 		
 		#region FunctionMeta
