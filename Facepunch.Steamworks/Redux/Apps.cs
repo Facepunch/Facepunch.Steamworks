@@ -235,7 +235,7 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Get command line if game was launched via Steam URL, e.g. steam://run/<appid>//<command line>/.
+		/// Get command line if game was launched via Steam URL, e.g. steam://run/appid//command line/.
 		/// This method of passing a connect string (used when joining via rich presence, accepting an
 		/// invite, etc) is preferable to passing the connect string on the operating system command
 		/// line, which is a security risk.  In order for rich presence joins to go through this

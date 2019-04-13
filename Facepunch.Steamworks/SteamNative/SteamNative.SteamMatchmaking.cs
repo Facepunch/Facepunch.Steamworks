@@ -90,7 +90,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle CreateLobby( LobbyType eLobbyType /*ELobbyType*/, int cMaxMembers /*int*/, Action<LobbyCreated_t, bool> CallbackFunction = null /*Action<LobbyCreated_t, bool>*/ )
+		public CallResult<LobbyCreated_t> CreateLobby( LobbyType eLobbyType /*ELobbyType*/, int cMaxMembers /*int*/, Action<LobbyCreated_t, bool> CallbackFunction = null /*Action<LobbyCreated_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamMatchmaking_CreateLobby( eLobbyType, cMaxMembers );
@@ -98,7 +98,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return LobbyCreated_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<LobbyCreated_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
@@ -212,7 +212,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle JoinLobby( CSteamID steamIDLobby /*class CSteamID*/, Action<LobbyEnter_t, bool> CallbackFunction = null /*Action<LobbyEnter_t, bool>*/ )
+		public CallResult<LobbyEnter_t> JoinLobby( CSteamID steamIDLobby /*class CSteamID*/, Action<LobbyEnter_t, bool> CallbackFunction = null /*Action<LobbyEnter_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamMatchmaking_JoinLobby( steamIDLobby.Value );
@@ -220,7 +220,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return LobbyEnter_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<LobbyEnter_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// void
@@ -242,7 +242,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle RequestLobbyList( Action<LobbyMatchList_t, bool> CallbackFunction = null /*Action<LobbyMatchList_t, bool>*/ )
+		public CallResult<LobbyMatchList_t> RequestLobbyList( Action<LobbyMatchList_t, bool> CallbackFunction = null /*Action<LobbyMatchList_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamMatchmaking_RequestLobbyList();
@@ -250,7 +250,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return LobbyMatchList_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<LobbyMatchList_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool

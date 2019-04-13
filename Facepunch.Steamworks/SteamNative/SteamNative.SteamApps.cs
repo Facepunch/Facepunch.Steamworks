@@ -182,7 +182,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle GetFileDetails( string pszFileName /*const char **/, Action<FileDetailsResult_t, bool> CallbackFunction = null /*Action<FileDetailsResult_t, bool>*/ )
+		public CallResult<FileDetailsResult_t> GetFileDetails( string pszFileName /*const char **/, Action<FileDetailsResult_t, bool> CallbackFunction = null /*Action<FileDetailsResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamApps_GetFileDetails( pszFileName );
@@ -190,7 +190,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return FileDetailsResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<FileDetailsResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// uint

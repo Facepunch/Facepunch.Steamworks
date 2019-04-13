@@ -42,7 +42,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle AttachLeaderboardUGC( SteamLeaderboard_t hSteamLeaderboard /*SteamLeaderboard_t*/, UGCHandle_t hUGC /*UGCHandle_t*/, Action<LeaderboardUGCSet_t, bool> CallbackFunction = null /*Action<LeaderboardUGCSet_t, bool>*/ )
+		public CallResult<LeaderboardUGCSet_t> AttachLeaderboardUGC( SteamLeaderboard_t hSteamLeaderboard /*SteamLeaderboard_t*/, UGCHandle_t hUGC /*UGCHandle_t*/, Action<LeaderboardUGCSet_t, bool> CallbackFunction = null /*Action<LeaderboardUGCSet_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUserStats_AttachLeaderboardUGC( hSteamLeaderboard.Value, hUGC.Value );
@@ -50,7 +50,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return LeaderboardUGCSet_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<LeaderboardUGCSet_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
@@ -60,7 +60,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle DownloadLeaderboardEntries( SteamLeaderboard_t hSteamLeaderboard /*SteamLeaderboard_t*/, LeaderboardDataRequest eLeaderboardDataRequest /*ELeaderboardDataRequest*/, int nRangeStart /*int*/, int nRangeEnd /*int*/, Action<LeaderboardScoresDownloaded_t, bool> CallbackFunction = null /*Action<LeaderboardScoresDownloaded_t, bool>*/ )
+		public CallResult<LeaderboardScoresDownloaded_t> DownloadLeaderboardEntries( SteamLeaderboard_t hSteamLeaderboard /*SteamLeaderboard_t*/, LeaderboardDataRequest eLeaderboardDataRequest /*ELeaderboardDataRequest*/, int nRangeStart /*int*/, int nRangeEnd /*int*/, Action<LeaderboardScoresDownloaded_t, bool> CallbackFunction = null /*Action<LeaderboardScoresDownloaded_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUserStats_DownloadLeaderboardEntries( hSteamLeaderboard.Value, eLeaderboardDataRequest, nRangeStart, nRangeEnd );
@@ -68,11 +68,11 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return LeaderboardScoresDownloaded_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<LeaderboardScoresDownloaded_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle DownloadLeaderboardEntriesForUsers( SteamLeaderboard_t hSteamLeaderboard /*SteamLeaderboard_t*/, IntPtr prgUsers /*class CSteamID **/, int cUsers /*int*/, Action<LeaderboardScoresDownloaded_t, bool> CallbackFunction = null /*Action<LeaderboardScoresDownloaded_t, bool>*/ )
+		public CallResult<LeaderboardScoresDownloaded_t> DownloadLeaderboardEntriesForUsers( SteamLeaderboard_t hSteamLeaderboard /*SteamLeaderboard_t*/, IntPtr prgUsers /*class CSteamID **/, int cUsers /*int*/, Action<LeaderboardScoresDownloaded_t, bool> CallbackFunction = null /*Action<LeaderboardScoresDownloaded_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUserStats_DownloadLeaderboardEntriesForUsers( hSteamLeaderboard.Value, (IntPtr) prgUsers, cUsers );
@@ -80,11 +80,11 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return LeaderboardScoresDownloaded_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<LeaderboardScoresDownloaded_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle FindLeaderboard( string pchLeaderboardName /*const char **/, Action<LeaderboardFindResult_t, bool> CallbackFunction = null /*Action<LeaderboardFindResult_t, bool>*/ )
+		public CallResult<LeaderboardFindResult_t> FindLeaderboard( string pchLeaderboardName /*const char **/, Action<LeaderboardFindResult_t, bool> CallbackFunction = null /*Action<LeaderboardFindResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUserStats_FindLeaderboard( pchLeaderboardName );
@@ -92,11 +92,11 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return LeaderboardFindResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<LeaderboardFindResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle FindOrCreateLeaderboard( string pchLeaderboardName /*const char **/, LeaderboardSortMethod eLeaderboardSortMethod /*ELeaderboardSortMethod*/, LeaderboardDisplayType eLeaderboardDisplayType /*ELeaderboardDisplayType*/, Action<LeaderboardFindResult_t, bool> CallbackFunction = null /*Action<LeaderboardFindResult_t, bool>*/ )
+		public CallResult<LeaderboardFindResult_t> FindOrCreateLeaderboard( string pchLeaderboardName /*const char **/, LeaderboardSortMethod eLeaderboardSortMethod /*ELeaderboardSortMethod*/, LeaderboardDisplayType eLeaderboardDisplayType /*ELeaderboardDisplayType*/, Action<LeaderboardFindResult_t, bool> CallbackFunction = null /*Action<LeaderboardFindResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUserStats_FindOrCreateLeaderboard( pchLeaderboardName, eLeaderboardSortMethod, eLeaderboardDisplayType );
@@ -104,7 +104,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return LeaderboardFindResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<LeaderboardFindResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
@@ -241,7 +241,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle GetNumberOfCurrentPlayers( Action<NumberOfCurrentPlayers_t, bool> CallbackFunction = null /*Action<NumberOfCurrentPlayers_t, bool>*/ )
+		public CallResult<NumberOfCurrentPlayers_t> GetNumberOfCurrentPlayers( Action<NumberOfCurrentPlayers_t, bool> CallbackFunction = null /*Action<NumberOfCurrentPlayers_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUserStats_GetNumberOfCurrentPlayers();
@@ -249,7 +249,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return NumberOfCurrentPlayers_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<NumberOfCurrentPlayers_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
@@ -301,7 +301,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle RequestGlobalAchievementPercentages( Action<GlobalAchievementPercentagesReady_t, bool> CallbackFunction = null /*Action<GlobalAchievementPercentagesReady_t, bool>*/ )
+		public CallResult<GlobalAchievementPercentagesReady_t> RequestGlobalAchievementPercentages( Action<GlobalAchievementPercentagesReady_t, bool> CallbackFunction = null /*Action<GlobalAchievementPercentagesReady_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUserStats_RequestGlobalAchievementPercentages();
@@ -309,11 +309,11 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return GlobalAchievementPercentagesReady_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<GlobalAchievementPercentagesReady_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle RequestGlobalStats( int nHistoryDays /*int*/, Action<GlobalStatsReceived_t, bool> CallbackFunction = null /*Action<GlobalStatsReceived_t, bool>*/ )
+		public CallResult<GlobalStatsReceived_t> RequestGlobalStats( int nHistoryDays /*int*/, Action<GlobalStatsReceived_t, bool> CallbackFunction = null /*Action<GlobalStatsReceived_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUserStats_RequestGlobalStats( nHistoryDays );
@@ -321,11 +321,11 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return GlobalStatsReceived_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<GlobalStatsReceived_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle RequestUserStats( CSteamID steamIDUser /*class CSteamID*/, Action<UserStatsReceived_t, bool> CallbackFunction = null /*Action<UserStatsReceived_t, bool>*/ )
+		public CallResult<UserStatsReceived_t> RequestUserStats( CSteamID steamIDUser /*class CSteamID*/, Action<UserStatsReceived_t, bool> CallbackFunction = null /*Action<UserStatsReceived_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUserStats_RequestUserStats( steamIDUser.Value );
@@ -333,7 +333,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return UserStatsReceived_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<UserStatsReceived_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
@@ -373,7 +373,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle UploadLeaderboardScore( SteamLeaderboard_t hSteamLeaderboard /*SteamLeaderboard_t*/, LeaderboardUploadScoreMethod eLeaderboardUploadScoreMethod /*ELeaderboardUploadScoreMethod*/, int nScore /*int32*/, int[] pScoreDetails /*const int32 **/, int cScoreDetailsCount /*int*/, Action<LeaderboardScoreUploaded_t, bool> CallbackFunction = null /*Action<LeaderboardScoreUploaded_t, bool>*/ )
+		public CallResult<LeaderboardScoreUploaded_t> UploadLeaderboardScore( SteamLeaderboard_t hSteamLeaderboard /*SteamLeaderboard_t*/, LeaderboardUploadScoreMethod eLeaderboardUploadScoreMethod /*ELeaderboardUploadScoreMethod*/, int nScore /*int32*/, int[] pScoreDetails /*const int32 **/, int cScoreDetailsCount /*int*/, Action<LeaderboardScoreUploaded_t, bool> CallbackFunction = null /*Action<LeaderboardScoreUploaded_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUserStats_UploadLeaderboardScore( hSteamLeaderboard.Value, eLeaderboardUploadScoreMethod, nScore, pScoreDetails, cScoreDetailsCount );
@@ -381,7 +381,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return LeaderboardScoreUploaded_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<LeaderboardScoreUploaded_t>( steamworks, callback, CallbackFunction );
 		}
 		
 	}

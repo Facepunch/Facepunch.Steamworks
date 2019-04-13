@@ -6,6 +6,6 @@ namespace Steamworks
 	{
 		int GetCallbackId();
 		int GetStructSize();
-		ISteamCallback Fill( IntPtr ptr, int size );
+		ISteamCallback Fill( IntPtr ptr );
 	}
 }

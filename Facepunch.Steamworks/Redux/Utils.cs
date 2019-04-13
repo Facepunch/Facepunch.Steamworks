@@ -47,7 +47,7 @@ namespace Steamworks
 				if ( failed )
 					return null;
 
-				t = (T)t.Fill( ptr, size );
+				t = (T)t.Fill( ptr );
 
 				return t;
 			}

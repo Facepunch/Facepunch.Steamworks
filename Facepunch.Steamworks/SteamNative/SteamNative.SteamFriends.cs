@@ -90,7 +90,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle EnumerateFollowingList( uint unStartIndex /*uint32*/, Action<FriendsEnumerateFollowingList_t, bool> CallbackFunction = null /*Action<FriendsEnumerateFollowingList_t, bool>*/ )
+		public CallResult<FriendsEnumerateFollowingList_t> EnumerateFollowingList( uint unStartIndex /*uint32*/, Action<FriendsEnumerateFollowingList_t, bool> CallbackFunction = null /*Action<FriendsEnumerateFollowingList_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamFriends_EnumerateFollowingList( unStartIndex );
@@ -98,7 +98,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return FriendsEnumerateFollowingList_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<FriendsEnumerateFollowingList_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// ulong
@@ -186,7 +186,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle GetFollowerCount( CSteamID steamID /*class CSteamID*/, Action<FriendsGetFollowerCount_t, bool> CallbackFunction = null /*Action<FriendsGetFollowerCount_t, bool>*/ )
+		public CallResult<FriendsGetFollowerCount_t> GetFollowerCount( CSteamID steamID /*class CSteamID*/, Action<FriendsGetFollowerCount_t, bool> CallbackFunction = null /*Action<FriendsGetFollowerCount_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamFriends_GetFollowerCount( steamID.Value );
@@ -194,7 +194,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return FriendsGetFollowerCount_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<FriendsGetFollowerCount_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// ulong
@@ -429,7 +429,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle IsFollowing( CSteamID steamID /*class CSteamID*/, Action<FriendsIsFollowing_t, bool> CallbackFunction = null /*Action<FriendsIsFollowing_t, bool>*/ )
+		public CallResult<FriendsIsFollowing_t> IsFollowing( CSteamID steamID /*class CSteamID*/, Action<FriendsIsFollowing_t, bool> CallbackFunction = null /*Action<FriendsIsFollowing_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamFriends_IsFollowing( steamID.Value );
@@ -437,7 +437,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return FriendsIsFollowing_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<FriendsIsFollowing_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
@@ -447,7 +447,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle JoinClanChatRoom( CSteamID steamIDClan /*class CSteamID*/, Action<JoinClanChatRoomCompletionResult_t, bool> CallbackFunction = null /*Action<JoinClanChatRoomCompletionResult_t, bool>*/ )
+		public CallResult<JoinClanChatRoomCompletionResult_t> JoinClanChatRoom( CSteamID steamIDClan /*class CSteamID*/, Action<JoinClanChatRoomCompletionResult_t, bool> CallbackFunction = null /*Action<JoinClanChatRoomCompletionResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamFriends_JoinClanChatRoom( steamIDClan.Value );
@@ -455,7 +455,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return JoinClanChatRoomCompletionResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<JoinClanChatRoomCompletionResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
@@ -477,7 +477,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle RequestClanOfficerList( CSteamID steamIDClan /*class CSteamID*/, Action<ClanOfficerListResponse_t, bool> CallbackFunction = null /*Action<ClanOfficerListResponse_t, bool>*/ )
+		public CallResult<ClanOfficerListResponse_t> RequestClanOfficerList( CSteamID steamIDClan /*class CSteamID*/, Action<ClanOfficerListResponse_t, bool> CallbackFunction = null /*Action<ClanOfficerListResponse_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamFriends_RequestClanOfficerList( steamIDClan.Value );
@@ -485,7 +485,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return ClanOfficerListResponse_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<ClanOfficerListResponse_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// void
@@ -519,7 +519,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle SetPersonaName( string pchPersonaName /*const char **/, Action<SetPersonaNameResponse_t, bool> CallbackFunction = null /*Action<SetPersonaNameResponse_t, bool>*/ )
+		public CallResult<SetPersonaNameResponse_t> SetPersonaName( string pchPersonaName /*const char **/, Action<SetPersonaNameResponse_t, bool> CallbackFunction = null /*Action<SetPersonaNameResponse_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamFriends_SetPersonaName( pchPersonaName );
@@ -527,7 +527,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return SetPersonaNameResponse_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<SetPersonaNameResponse_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// void

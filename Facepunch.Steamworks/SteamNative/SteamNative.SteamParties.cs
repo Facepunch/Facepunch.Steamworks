@@ -48,7 +48,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle ChangeNumOpenSlots( PartyBeaconID_t ulBeacon /*PartyBeaconID_t*/, uint unOpenSlots /*uint32*/, Action<ChangeNumOpenSlotsCallback_t, bool> CallbackFunction = null /*Action<ChangeNumOpenSlotsCallback_t, bool>*/ )
+		public CallResult<ChangeNumOpenSlotsCallback_t> ChangeNumOpenSlots( PartyBeaconID_t ulBeacon /*PartyBeaconID_t*/, uint unOpenSlots /*uint32*/, Action<ChangeNumOpenSlotsCallback_t, bool> CallbackFunction = null /*Action<ChangeNumOpenSlotsCallback_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamParties_ChangeNumOpenSlots( ulBeacon.Value, unOpenSlots );
@@ -56,11 +56,11 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return ChangeNumOpenSlotsCallback_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<ChangeNumOpenSlotsCallback_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle CreateBeacon( uint unOpenSlots /*uint32*/, ref SteamPartyBeaconLocation_t pBeaconLocation /*struct SteamPartyBeaconLocation_t **/, string pchConnectString /*const char **/, string pchMetadata /*const char **/, Action<CreateBeaconCallback_t, bool> CallbackFunction = null /*Action<CreateBeaconCallback_t, bool>*/ )
+		public CallResult<CreateBeaconCallback_t> CreateBeacon( uint unOpenSlots /*uint32*/, ref SteamPartyBeaconLocation_t pBeaconLocation /*struct SteamPartyBeaconLocation_t **/, string pchConnectString /*const char **/, string pchMetadata /*const char **/, Action<CreateBeaconCallback_t, bool> CallbackFunction = null /*Action<CreateBeaconCallback_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamParties_CreateBeacon( unOpenSlots, ref pBeaconLocation, pchConnectString, pchMetadata );
@@ -68,7 +68,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return CreateBeaconCallback_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<CreateBeaconCallback_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
@@ -130,7 +130,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle JoinParty( PartyBeaconID_t ulBeaconID /*PartyBeaconID_t*/, Action<JoinPartyCallback_t, bool> CallbackFunction = null /*Action<JoinPartyCallback_t, bool>*/ )
+		public CallResult<JoinPartyCallback_t> JoinParty( PartyBeaconID_t ulBeaconID /*PartyBeaconID_t*/, Action<JoinPartyCallback_t, bool> CallbackFunction = null /*Action<JoinPartyCallback_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamParties_JoinParty( ulBeaconID.Value );
@@ -138,7 +138,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return JoinPartyCallback_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<JoinPartyCallback_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// void

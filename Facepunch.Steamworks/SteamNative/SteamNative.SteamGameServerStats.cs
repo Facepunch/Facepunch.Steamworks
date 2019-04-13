@@ -66,7 +66,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle RequestUserStats( CSteamID steamIDUser /*class CSteamID*/, Action<GSStatsReceived_t, bool> CallbackFunction = null /*Action<GSStatsReceived_t, bool>*/ )
+		public CallResult<GSStatsReceived_t> RequestUserStats( CSteamID steamIDUser /*class CSteamID*/, Action<GSStatsReceived_t, bool> CallbackFunction = null /*Action<GSStatsReceived_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamGameServerStats_RequestUserStats( steamIDUser.Value );
@@ -74,7 +74,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return GSStatsReceived_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<GSStatsReceived_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
@@ -96,7 +96,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle StoreUserStats( CSteamID steamIDUser /*class CSteamID*/, Action<GSStatsStored_t, bool> CallbackFunction = null /*Action<GSStatsStored_t, bool>*/ )
+		public CallResult<GSStatsStored_t> StoreUserStats( CSteamID steamIDUser /*class CSteamID*/, Action<GSStatsStored_t, bool> CallbackFunction = null /*Action<GSStatsStored_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamGameServerStats_StoreUserStats( steamIDUser.Value );
@@ -104,7 +104,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return GSStatsStored_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<GSStatsStored_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool

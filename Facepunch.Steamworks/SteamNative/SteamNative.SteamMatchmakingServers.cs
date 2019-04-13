@@ -66,7 +66,7 @@ namespace SteamNative
 			IntPtr struct_pointer;
 			struct_pointer = platform.ISteamMatchmakingServers_GetServerDetails( hRequest.Value, iServer );
 			if ( struct_pointer == IntPtr.Zero ) return default(gameserveritem_t);
-			return gameserveritem_t.FromPointer( struct_pointer );
+			return new gameserveritem_t().Fill( struct_pointer );
 		}
 		
 		// bool

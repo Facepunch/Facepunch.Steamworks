@@ -42,7 +42,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle AddAppDependency( PublishedFileId_t nPublishedFileID /*PublishedFileId_t*/, AppId_t nAppID /*AppId_t*/, Action<AddAppDependencyResult_t, bool> CallbackFunction = null /*Action<AddAppDependencyResult_t, bool>*/ )
+		public CallResult<AddAppDependencyResult_t> AddAppDependency( PublishedFileId_t nPublishedFileID /*PublishedFileId_t*/, AppId_t nAppID /*AppId_t*/, Action<AddAppDependencyResult_t, bool> CallbackFunction = null /*Action<AddAppDependencyResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUGC_AddAppDependency( nPublishedFileID.Value, nAppID.Value );
@@ -50,11 +50,11 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return AddAppDependencyResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<AddAppDependencyResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle AddDependency( PublishedFileId_t nParentPublishedFileID /*PublishedFileId_t*/, PublishedFileId_t nChildPublishedFileID /*PublishedFileId_t*/, Action<AddUGCDependencyResult_t, bool> CallbackFunction = null /*Action<AddUGCDependencyResult_t, bool>*/ )
+		public CallResult<AddUGCDependencyResult_t> AddDependency( PublishedFileId_t nParentPublishedFileID /*PublishedFileId_t*/, PublishedFileId_t nChildPublishedFileID /*PublishedFileId_t*/, Action<AddUGCDependencyResult_t, bool> CallbackFunction = null /*Action<AddUGCDependencyResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUGC_AddDependency( nParentPublishedFileID.Value, nChildPublishedFileID.Value );
@@ -62,7 +62,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return AddUGCDependencyResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<AddUGCDependencyResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
@@ -90,7 +90,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle AddItemToFavorites( AppId_t nAppId /*AppId_t*/, PublishedFileId_t nPublishedFileID /*PublishedFileId_t*/, Action<UserFavoriteItemsListChanged_t, bool> CallbackFunction = null /*Action<UserFavoriteItemsListChanged_t, bool>*/ )
+		public CallResult<UserFavoriteItemsListChanged_t> AddItemToFavorites( AppId_t nAppId /*AppId_t*/, PublishedFileId_t nPublishedFileID /*PublishedFileId_t*/, Action<UserFavoriteItemsListChanged_t, bool> CallbackFunction = null /*Action<UserFavoriteItemsListChanged_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUGC_AddItemToFavorites( nAppId.Value, nPublishedFileID.Value );
@@ -98,7 +98,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return UserFavoriteItemsListChanged_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<UserFavoriteItemsListChanged_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
@@ -120,7 +120,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle CreateItem( AppId_t nConsumerAppId /*AppId_t*/, WorkshopFileType eFileType /*EWorkshopFileType*/, Action<CreateItemResult_t, bool> CallbackFunction = null /*Action<CreateItemResult_t, bool>*/ )
+		public CallResult<CreateItemResult_t> CreateItem( AppId_t nConsumerAppId /*AppId_t*/, WorkshopFileType eFileType /*EWorkshopFileType*/, Action<CreateItemResult_t, bool> CallbackFunction = null /*Action<CreateItemResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUGC_CreateItem( nConsumerAppId.Value, eFileType );
@@ -128,7 +128,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return CreateItemResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<CreateItemResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// UGCQueryHandle_t
@@ -161,7 +161,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle DeleteItem( PublishedFileId_t nPublishedFileID /*PublishedFileId_t*/, Action<DeleteItemResult_t, bool> CallbackFunction = null /*Action<DeleteItemResult_t, bool>*/ )
+		public CallResult<DeleteItemResult_t> DeleteItem( PublishedFileId_t nPublishedFileID /*PublishedFileId_t*/, Action<DeleteItemResult_t, bool> CallbackFunction = null /*Action<DeleteItemResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUGC_DeleteItem( nPublishedFileID.Value );
@@ -169,7 +169,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return DeleteItemResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<DeleteItemResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
@@ -179,7 +179,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle GetAppDependencies( PublishedFileId_t nPublishedFileID /*PublishedFileId_t*/, Action<GetAppDependenciesResult_t, bool> CallbackFunction = null /*Action<GetAppDependenciesResult_t, bool>*/ )
+		public CallResult<GetAppDependenciesResult_t> GetAppDependencies( PublishedFileId_t nPublishedFileID /*PublishedFileId_t*/, Action<GetAppDependenciesResult_t, bool> CallbackFunction = null /*Action<GetAppDependenciesResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUGC_GetAppDependencies( nPublishedFileID.Value );
@@ -187,7 +187,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return GetAppDependenciesResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<GetAppDependenciesResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
@@ -333,7 +333,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle GetUserItemVote( PublishedFileId_t nPublishedFileID /*PublishedFileId_t*/, Action<GetUserItemVoteResult_t, bool> CallbackFunction = null /*Action<GetUserItemVoteResult_t, bool>*/ )
+		public CallResult<GetUserItemVoteResult_t> GetUserItemVote( PublishedFileId_t nPublishedFileID /*PublishedFileId_t*/, Action<GetUserItemVoteResult_t, bool> CallbackFunction = null /*Action<GetUserItemVoteResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUGC_GetUserItemVote( nPublishedFileID.Value );
@@ -341,7 +341,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return GetUserItemVoteResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<GetUserItemVoteResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
@@ -351,7 +351,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle RemoveAppDependency( PublishedFileId_t nPublishedFileID /*PublishedFileId_t*/, AppId_t nAppID /*AppId_t*/, Action<RemoveAppDependencyResult_t, bool> CallbackFunction = null /*Action<RemoveAppDependencyResult_t, bool>*/ )
+		public CallResult<RemoveAppDependencyResult_t> RemoveAppDependency( PublishedFileId_t nPublishedFileID /*PublishedFileId_t*/, AppId_t nAppID /*AppId_t*/, Action<RemoveAppDependencyResult_t, bool> CallbackFunction = null /*Action<RemoveAppDependencyResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUGC_RemoveAppDependency( nPublishedFileID.Value, nAppID.Value );
@@ -359,11 +359,11 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return RemoveAppDependencyResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<RemoveAppDependencyResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle RemoveDependency( PublishedFileId_t nParentPublishedFileID /*PublishedFileId_t*/, PublishedFileId_t nChildPublishedFileID /*PublishedFileId_t*/, Action<RemoveUGCDependencyResult_t, bool> CallbackFunction = null /*Action<RemoveUGCDependencyResult_t, bool>*/ )
+		public CallResult<RemoveUGCDependencyResult_t> RemoveDependency( PublishedFileId_t nParentPublishedFileID /*PublishedFileId_t*/, PublishedFileId_t nChildPublishedFileID /*PublishedFileId_t*/, Action<RemoveUGCDependencyResult_t, bool> CallbackFunction = null /*Action<RemoveUGCDependencyResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUGC_RemoveDependency( nParentPublishedFileID.Value, nChildPublishedFileID.Value );
@@ -371,11 +371,11 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return RemoveUGCDependencyResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<RemoveUGCDependencyResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle RemoveItemFromFavorites( AppId_t nAppId /*AppId_t*/, PublishedFileId_t nPublishedFileID /*PublishedFileId_t*/, Action<UserFavoriteItemsListChanged_t, bool> CallbackFunction = null /*Action<UserFavoriteItemsListChanged_t, bool>*/ )
+		public CallResult<UserFavoriteItemsListChanged_t> RemoveItemFromFavorites( AppId_t nAppId /*AppId_t*/, PublishedFileId_t nPublishedFileID /*PublishedFileId_t*/, Action<UserFavoriteItemsListChanged_t, bool> CallbackFunction = null /*Action<UserFavoriteItemsListChanged_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUGC_RemoveItemFromFavorites( nAppId.Value, nPublishedFileID.Value );
@@ -383,7 +383,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return UserFavoriteItemsListChanged_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<UserFavoriteItemsListChanged_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
@@ -405,7 +405,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle SendQueryUGCRequest( UGCQueryHandle_t handle /*UGCQueryHandle_t*/, Action<SteamUGCQueryCompleted_t, bool> CallbackFunction = null /*Action<SteamUGCQueryCompleted_t, bool>*/ )
+		public CallResult<SteamUGCQueryCompleted_t> SendQueryUGCRequest( UGCQueryHandle_t handle /*UGCQueryHandle_t*/, Action<SteamUGCQueryCompleted_t, bool> CallbackFunction = null /*Action<SteamUGCQueryCompleted_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUGC_SendQueryUGCRequest( handle.Value );
@@ -413,7 +413,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return SteamUGCQueryCompleted_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<SteamUGCQueryCompleted_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
@@ -581,7 +581,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle SetUserItemVote( PublishedFileId_t nPublishedFileID /*PublishedFileId_t*/, bool bVoteUp /*bool*/, Action<SetUserItemVoteResult_t, bool> CallbackFunction = null /*Action<SetUserItemVoteResult_t, bool>*/ )
+		public CallResult<SetUserItemVoteResult_t> SetUserItemVote( PublishedFileId_t nPublishedFileID /*PublishedFileId_t*/, bool bVoteUp /*bool*/, Action<SetUserItemVoteResult_t, bool> CallbackFunction = null /*Action<SetUserItemVoteResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUGC_SetUserItemVote( nPublishedFileID.Value, bVoteUp );
@@ -589,7 +589,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return SetUserItemVoteResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<SetUserItemVoteResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// UGCUpdateHandle_t
@@ -600,7 +600,7 @@ namespace SteamNative
 		
 		// with: Detect_VectorReturn
 		// SteamAPICall_t
-		public CallbackHandle StartPlaytimeTracking( PublishedFileId_t[] pvecPublishedFileID /*PublishedFileId_t **/, Action<StartPlaytimeTrackingResult_t, bool> CallbackFunction = null /*Action<StartPlaytimeTrackingResult_t, bool>*/ )
+		public CallResult<StartPlaytimeTrackingResult_t> StartPlaytimeTracking( PublishedFileId_t[] pvecPublishedFileID /*PublishedFileId_t **/, Action<StartPlaytimeTrackingResult_t, bool> CallbackFunction = null /*Action<StartPlaytimeTrackingResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			var unNumPublishedFileIDs = (uint) pvecPublishedFileID.Length;
@@ -612,12 +612,12 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return StartPlaytimeTrackingResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<StartPlaytimeTrackingResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// with: Detect_VectorReturn
 		// SteamAPICall_t
-		public CallbackHandle StopPlaytimeTracking( PublishedFileId_t[] pvecPublishedFileID /*PublishedFileId_t **/, Action<StopPlaytimeTrackingResult_t, bool> CallbackFunction = null /*Action<StopPlaytimeTrackingResult_t, bool>*/ )
+		public CallResult<StopPlaytimeTrackingResult_t> StopPlaytimeTracking( PublishedFileId_t[] pvecPublishedFileID /*PublishedFileId_t **/, Action<StopPlaytimeTrackingResult_t, bool> CallbackFunction = null /*Action<StopPlaytimeTrackingResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			var unNumPublishedFileIDs = (uint) pvecPublishedFileID.Length;
@@ -629,11 +629,11 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return StopPlaytimeTrackingResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<StopPlaytimeTrackingResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle StopPlaytimeTrackingForAllItems( Action<StopPlaytimeTrackingResult_t, bool> CallbackFunction = null /*Action<StopPlaytimeTrackingResult_t, bool>*/ )
+		public CallResult<StopPlaytimeTrackingResult_t> StopPlaytimeTrackingForAllItems( Action<StopPlaytimeTrackingResult_t, bool> CallbackFunction = null /*Action<StopPlaytimeTrackingResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUGC_StopPlaytimeTrackingForAllItems();
@@ -641,11 +641,11 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return StopPlaytimeTrackingResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<StopPlaytimeTrackingResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle SubmitItemUpdate( UGCUpdateHandle_t handle /*UGCUpdateHandle_t*/, string pchChangeNote /*const char **/, Action<SubmitItemUpdateResult_t, bool> CallbackFunction = null /*Action<SubmitItemUpdateResult_t, bool>*/ )
+		public CallResult<SubmitItemUpdateResult_t> SubmitItemUpdate( UGCUpdateHandle_t handle /*UGCUpdateHandle_t*/, string pchChangeNote /*const char **/, Action<SubmitItemUpdateResult_t, bool> CallbackFunction = null /*Action<SubmitItemUpdateResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUGC_SubmitItemUpdate( handle.Value, pchChangeNote );
@@ -653,11 +653,11 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return SubmitItemUpdateResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<SubmitItemUpdateResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle SubscribeItem( PublishedFileId_t nPublishedFileID /*PublishedFileId_t*/, Action<RemoteStorageSubscribePublishedFileResult_t, bool> CallbackFunction = null /*Action<RemoteStorageSubscribePublishedFileResult_t, bool>*/ )
+		public CallResult<RemoteStorageSubscribePublishedFileResult_t> SubscribeItem( PublishedFileId_t nPublishedFileID /*PublishedFileId_t*/, Action<RemoteStorageSubscribePublishedFileResult_t, bool> CallbackFunction = null /*Action<RemoteStorageSubscribePublishedFileResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUGC_SubscribeItem( nPublishedFileID.Value );
@@ -665,7 +665,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return RemoteStorageSubscribePublishedFileResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<RemoteStorageSubscribePublishedFileResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// void
@@ -675,7 +675,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle UnsubscribeItem( PublishedFileId_t nPublishedFileID /*PublishedFileId_t*/, Action<RemoteStorageUnsubscribePublishedFileResult_t, bool> CallbackFunction = null /*Action<RemoteStorageUnsubscribePublishedFileResult_t, bool>*/ )
+		public CallResult<RemoteStorageUnsubscribePublishedFileResult_t> UnsubscribeItem( PublishedFileId_t nPublishedFileID /*PublishedFileId_t*/, Action<RemoteStorageUnsubscribePublishedFileResult_t, bool> CallbackFunction = null /*Action<RemoteStorageUnsubscribePublishedFileResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUGC_UnsubscribeItem( nPublishedFileID.Value );
@@ -683,7 +683,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return RemoteStorageUnsubscribePublishedFileResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<RemoteStorageUnsubscribePublishedFileResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool

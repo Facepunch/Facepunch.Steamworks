@@ -175,14 +175,14 @@ namespace Generator
             BeforeLines.Insert( 0, "SteamAPICall_t callback = 0;" );
 
             ReturnVar = "callback";
-            ReturnType = $"CallbackHandle";
+            ReturnType = $"CallResult<{MethodDef.CallResult}>";
 
             AfterLines.Add( "" );
             AfterLines.Add( "if ( CallbackFunction == null ) return null;" );
             AfterLines.Add("if ( callback == 0 ) return null;");
             AfterLines.Add( "" );
 
-            AfterLines.Add( $"return {MethodDef.CallResult}.CallResult( steamworks, callback, CallbackFunction );" );
+            AfterLines.Add( $"return new CallResult<{MethodDef.CallResult}>( steamworks, callback, CallbackFunction );" );
         }
 
         private void Detect_StringArray( List<Argument> argList, List<Argument> callargs )
@@ -303,7 +303,7 @@ namespace Generator
             BeforeLines.Add( "IntPtr struct_pointer;" );
 
             AfterLines.Add( $"if ( struct_pointer == IntPtr.Zero ) return default({ReturnType});" );
-            AfterLines.Add( $"return {ReturnType}.FromPointer( struct_pointer );" );
+            AfterLines.Add( $"return new {ReturnType}().Fill( struct_pointer );" );
 
         }
 

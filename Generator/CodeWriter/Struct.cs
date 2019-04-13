@@ -60,110 +60,95 @@ namespace Generator
 				//
                 StartBlock( $"public struct {c.Name}{(isCallback?" : Steamworks.ISteamCallback":"")}" );
                 {
-                    if ( isCallback  )
-                    {
-                        WriteLine( "internal const int CallbackId = " + c.CallbackId  + ";" );
-						WriteLine( "public int GetCallbackId() => CallbackId;" );
-						WriteLine( "public int GetStructSize() => StructSize();" );
+					//
+					// The fields
+					//
+					StructFields( c.Fields );
+					WriteLine();
 
-						StartBlock( "public Steamworks.ISteamCallback Fill( IntPtr p, int size)" );
+					if ( isCallback )
+                    {
+						WriteLine( "#region ISteamCallback" );
 						{
-							WriteLine( "return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW" );
+							WriteLine( $"public int GetCallbackId() => {c.CallbackId};" );
+							WriteLine( $"public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );" );
+							WriteLine( $"public Steamworks.ISteamCallback Fill( IntPtr p ) => Platform.PackSmall ? (({c.Name})(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : (({c.Name})(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));" );
+						}
+						WriteLine( "#endregion" );
+					}
+					else
+					{
+						WriteLine( "#region Marshalling" );
+						{
+							WriteLine( $"public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );" );
+							WriteLine( $"public {c.Name} Fill( IntPtr p ) => Platform.PackSmall ? (({c.Name})(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : (({c.Name})(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));" );
+						}
+						WriteLine( "#endregion" );
+					}
+
+					WriteLine( "#region Packed Versions" );
+					{
+						//
+						// Small packed struct (for osx, linux)
+						//
+
+						WriteLine( $"[StructLayout( LayoutKind.Sequential, Pack = 4 )]" );
+						StartBlock( $"public struct Pack4" );
+						{
+							StructFields( c.Fields );
+
+							//
+							// Implicit convert from PackSmall to regular
+							//
+							WriteLine();
+							Write( $"public static implicit operator {c.Name} ( {c.Name}.Pack4 d ) => " );
+							{
+								Write( $"new {c.Name}{{ " );
+								{
+									foreach ( var f in c.Fields )
+									{
+										Write( $"{CleanMemberName( f.Name )} = d.{CleanMemberName( f.Name )}," );
+									}
+								}
+								WriteLine( " };" );
+							}
+
 						}
 						EndBlock();
-					}
-
-                    //
-                    // The fields
-                    //
-                    StructFields( c.Fields );
-
-                    WriteLine();
-                    WriteLine( "//" );
-                    WriteLine( "// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff." );
-                    WriteLine( "//" );
-					WriteLine( $"internal static {c.Name} FromPointer( IntPtr p ) => " );
-                    {
-                        WriteLine( $"	Platform.PackSmall ? (({c.Name})(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : (({c.Name})(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));" );
-                    }
-
-                    WriteLine();
-                    WriteLine( "//" );
-                    WriteLine( "// Get the size of the structure we're going to be using." );
-                    WriteLine( "//" );
-                    StartBlock( $"internal static int StructSize()" );
-                    {
-                        WriteLine( $"return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );" );
-                    }
-                    EndBlock();
-
-                 //   if ( defaultPack == 8 )
-                 //       defaultPack = 4;
-
-                    //
-                    // Small packed struct (for osx, linux)
-                    //
-                    WriteLine();
-                    WriteLine( $"[StructLayout( LayoutKind.Sequential, Pack = 4 )]" );
-                    StartBlock( $"public struct Pack4" );
-                    {
-                        StructFields( c.Fields );
-
-                        //
-                        // Implicit convert from PackSmall to regular
-                        //
-                        WriteLine();
-                        Write( $"public static implicit operator {c.Name} ( {c.Name}.Pack4 d ) => " );
-                        {
-                            Write( $"new {c.Name}{{ " );
-                            {
-                                foreach ( var f in c.Fields )
-                                {
-									Write( $"{CleanMemberName( f.Name )} = d.{CleanMemberName( f.Name )}," );
-                                }
-                            }
-                            WriteLine( " };" );
-                        }
-
-					}
-                    EndBlock();
-
-					//
-					// Small packed struct (for osx, linux)
-					//
-					WriteLine();
-					WriteLine( $"[StructLayout( LayoutKind.Sequential, Pack = {defaultPack} )]" );
-					StartBlock( $"public struct Pack8" );
-					{
-						StructFields( c.Fields );
 
 						//
-						// Implicit convert from PackSmall to regular
+						// Small packed struct (for osx, linux)
 						//
 						WriteLine();
-						Write( $"public static implicit operator {c.Name} ( {c.Name}.Pack8 d ) => " );
+						WriteLine( $"[StructLayout( LayoutKind.Sequential, Pack = {defaultPack} )]" );
+						StartBlock( $"public struct Pack8" );
 						{
-							Write( $"new {c.Name}{{ " );
+							StructFields( c.Fields );
+
+							//
+							// Implicit convert from PackSmall to regular
+							//
+							WriteLine();
+							Write( $"public static implicit operator {c.Name} ( {c.Name}.Pack8 d ) => " );
 							{
-								foreach ( var f in c.Fields )
+								Write( $"new {c.Name}{{ " );
 								{
-									Write( $"{CleanMemberName( f.Name )} = d.{CleanMemberName( f.Name )}," );
+									foreach ( var f in c.Fields )
+									{
+										Write( $"{CleanMemberName( f.Name )} = d.{CleanMemberName( f.Name )}," );
+									}
 								}
+								WriteLine( " };" );
 							}
-							WriteLine( " };" );
+
 						}
+						EndBlock();
 
 					}
-					EndBlock();
-
-					if ( c.IsCallResult )
-                    {
-                        CallResult( c );
-                    }
+					WriteLine( "#endregion" );
 
                     if ( !string.IsNullOrEmpty( c.CallbackId ) )
                     {
-                        Callback( c );
                         callbackList.Add( c );
                     }
 
@@ -177,7 +162,7 @@ namespace Generator
             {
                 foreach ( var c in callbackList )
                 {
-                    WriteLine( $"{c.Name}.Register( steamworks );" );
+                    WriteLine( $"new CallbackHandle<{c.Name}>( steamworks );" );
                 }
             }
             EndBlock();
@@ -256,155 +241,6 @@ namespace Generator
 
                 WriteLine( $"internal {t} {CleanMemberName( m.Name )}; // {m.Name} {m.Type}" );
             }
-        }
-
-        private void Callback( SteamApiDefinition.StructDef c )
-        {           
-            WriteLine();
-            StartBlock( $"internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )" );
-            {
-                WriteLine( $"var handle = new CallbackHandle( steamworks );" );
-                WriteLine( $"" );
-
-                CallbackCall( c );
-
-                WriteLine( "" );
-                WriteLine( "//" );
-                WriteLine( "// Register the callback with Steam" );
-                WriteLine( "//" );
-                WriteLine( $"steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );" );
-
-                WriteLine();
-                WriteLine( "steamworks.RegisterCallbackHandle( handle );" );
-            }
-            EndBlock();
-
-            WriteLine();
-            WriteLine( "[MonoPInvokeCallback]" );
-            WriteLine( "internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }" );
-            WriteLine( "[MonoPInvokeCallback]" );
-            WriteLine( "internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }" );
-            WriteLine( "[MonoPInvokeCallback]" );
-            WriteLine( "internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }" );
-            WriteLine( "[MonoPInvokeCallback]" );
-            WriteLine( "internal static int OnGetSize(){ return StructSize(); }" );
-
-            WriteLine();
-            WriteLine( "[MonoPInvokeCallback]" );
-            StartBlock( "internal static void OnResult( IntPtr param )" );
-            {
-                WriteLine( $"OnResultWithInfo( param, false, 0 );" );
-            }
-            EndBlock();
-
-            WriteLine();
-            WriteLine( "[MonoPInvokeCallback]" );
-            StartBlock( "internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )" );
-            {
-                WriteLine( $"if ( failure ) return;" );
-                WriteLine();
-                WriteLine( "var value = FromPointer( param );" );
-
-                WriteLine();
-                WriteLine( "if ( Facepunch.Steamworks.Client.Instance != null )" );
-                WriteLine( $"    Facepunch.Steamworks.Client.Instance.OnCallback<{c.Name}>( value );" );
-
-                WriteLine();
-                WriteLine( "if ( Facepunch.Steamworks.Server.Instance != null )" );
-                WriteLine( $"    Facepunch.Steamworks.Server.Instance.OnCallback<{c.Name}>( value );" );
-            }
-            EndBlock();
-        }
-
-
-        private void CallResult( SteamApiDefinition.StructDef c )
-        {
-            WriteLine();
-            StartBlock( $"internal static CallResult<{c.Name}> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<{c.Name}, bool> CallbackFunction )" );
-            {
-                WriteLine( $"return new CallResult<{c.Name}>( steamworks, call, CallbackFunction, FromPointer, StructSize(), CallbackId );" );
-            }
-            EndBlock();
-        }
-
-
-        private void CallbackCall( SteamApiDefinition.StructDef c )
-        {
-            WriteLine( "//" );
-            WriteLine( "// Create the functions we need for the vtable" );
-            WriteLine( "//" );
-
-            StartBlock( "if ( Facepunch.Steamworks.Config.UseThisCall )" );
-            {
-                CallFunctions( c, "ThisCall", "_" );
-            }
-            Else();
-            {
-                CallFunctions( c, "StdCall", "" );
-            }
-            EndBlock();
-
-            WriteLine( "" );
-            WriteLine( "//" );
-            WriteLine( "// Create the callback object" );
-            WriteLine( "//" );
-            WriteLine( $"var cb = new Callback();" );
-            WriteLine( $"cb.vTablePtr = handle.vTablePtr;" );
-            WriteLine( $"cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;" );
-            WriteLine( $"cb.CallbackId = CallbackId;" );
-
-            WriteLine( "" );
-            WriteLine( "//" );
-            WriteLine( "// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native" );
-            WriteLine( "//" );
-            WriteLine( $"handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );" );
-        }
-
-        private void CallFunctions( SteamApiDefinition.StructDef c, string ThisCall, string ThisArg )
-        {
-            var ThisArgC = ThisArg.Length > 0 ? $"{ThisArg}, " : "";
-            var This = ThisArg.Length > 0 ? "This" : "";
-
-            WriteLine( "//" );
-            WriteLine( "// Create the VTable by manually allocating the memory and copying across" );
-            WriteLine( "//" );
-            StartBlock( "if ( Platform.IsWindows )" );
-            {
-                WriteLine( $"handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin{This} ) ) );" );
-                StartBlock( $"var vTable = new Callback.VTableWin{This}" );
-                {
-                    WriteLine( $"ResultA = OnResult{This}," );
-                    WriteLine( $"ResultB = OnResultWithInfo{This}," );
-                    WriteLine( $"GetSize = OnGetSize{This}," );
-                }
-                EndBlock( ";" );
-
-                WriteLine( "handle.FuncA = GCHandle.Alloc( vTable.ResultA );" );
-                WriteLine( "handle.FuncB = GCHandle.Alloc( vTable.ResultB );" );
-                WriteLine( "handle.FuncC = GCHandle.Alloc( vTable.GetSize );" );
-
-                WriteLine( "Marshal.StructureToPtr( vTable, handle.vTablePtr, false );" );
-            }
-            Else();
-            {
-                WriteLine( $"handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable{This} ) ) );" );
-                StartBlock( $"var vTable = new Callback.VTable{This}" );
-                {
-                    WriteLine( $"ResultA = OnResult{This}," );
-                    WriteLine( $"ResultB = OnResultWithInfo{This}," );
-                    WriteLine( $"GetSize = OnGetSize{This}," );
-                }
-                EndBlock( ";" );
-
-                WriteLine( "handle.FuncA = GCHandle.Alloc( vTable.ResultA );" );
-                WriteLine( "handle.FuncB = GCHandle.Alloc( vTable.ResultB );" );
-                WriteLine( "handle.FuncC = GCHandle.Alloc( vTable.GetSize );" );
-
-                WriteLine( "Marshal.StructureToPtr( vTable, handle.vTablePtr, false );" );
-            }
-            EndBlock();
-
-            
         }
     }
 }

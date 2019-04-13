@@ -138,7 +138,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle GetMarketEligibility( Action<MarketEligibilityResponse_t, bool> CallbackFunction = null /*Action<MarketEligibilityResponse_t, bool>*/ )
+		public CallResult<MarketEligibilityResponse_t> GetMarketEligibility( Action<MarketEligibilityResponse_t, bool> CallbackFunction = null /*Action<MarketEligibilityResponse_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUser_GetMarketEligibility();
@@ -146,7 +146,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return MarketEligibilityResponse_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<MarketEligibilityResponse_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// int
@@ -192,7 +192,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle RequestEncryptedAppTicket( IntPtr pDataToInclude /*void **/, int cbDataToInclude /*int*/, Action<EncryptedAppTicketResponse_t, bool> CallbackFunction = null /*Action<EncryptedAppTicketResponse_t, bool>*/ )
+		public CallResult<EncryptedAppTicketResponse_t> RequestEncryptedAppTicket( IntPtr pDataToInclude /*void **/, int cbDataToInclude /*int*/, Action<EncryptedAppTicketResponse_t, bool> CallbackFunction = null /*Action<EncryptedAppTicketResponse_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUser_RequestEncryptedAppTicket( (IntPtr) pDataToInclude, cbDataToInclude );
@@ -200,11 +200,11 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return EncryptedAppTicketResponse_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<EncryptedAppTicketResponse_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle RequestStoreAuthURL( string pchRedirectURL /*const char **/, Action<StoreAuthURLResponse_t, bool> CallbackFunction = null /*Action<StoreAuthURLResponse_t, bool>*/ )
+		public CallResult<StoreAuthURLResponse_t> RequestStoreAuthURL( string pchRedirectURL /*const char **/, Action<StoreAuthURLResponse_t, bool> CallbackFunction = null /*Action<StoreAuthURLResponse_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUser_RequestStoreAuthURL( pchRedirectURL );
@@ -212,7 +212,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return StoreAuthURLResponse_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<StoreAuthURLResponse_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// void

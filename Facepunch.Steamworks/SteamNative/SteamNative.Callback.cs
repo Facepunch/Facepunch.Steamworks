@@ -119,7 +119,138 @@ namespace SteamNative
         public virtual bool IsValid { get { return true; } }
     }
 
-    internal abstract class CallResult : CallbackHandle
+	internal class CallbackHandle<T> : CallbackHandle where T: struct, Steamworks.ISteamCallback
+	{
+		T template;
+
+		internal CallbackHandle( Facepunch.Steamworks.BaseSteamworks steamworks ) : base( steamworks )
+		{
+			template = new T();
+
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				if ( Platform.IsWindows )
+				{
+					vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
+					var vTable = new Callback.VTableWinThis
+					{
+						ResultA = OnResultThis,
+						ResultB = OnResultWithInfoThis,
+						GetSize = OnGetSizeThis,
+					};
+					FuncA = GCHandle.Alloc( vTable.ResultA );
+					FuncB = GCHandle.Alloc( vTable.ResultB );
+					FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, vTablePtr, false );
+				}
+				else
+				{
+					vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
+					var vTable = new Callback.VTableThis
+					{
+						ResultA = OnResultThis,
+						ResultB = OnResultWithInfoThis,
+						GetSize = OnGetSizeThis,
+					};
+					FuncA = GCHandle.Alloc( vTable.ResultA );
+					FuncB = GCHandle.Alloc( vTable.ResultB );
+					FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, vTablePtr, false );
+				}
+			}
+			else
+			{
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				if ( Platform.IsWindows )
+				{
+					vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
+					var vTable = new Callback.VTableWin
+					{
+						ResultA = OnResult,
+						ResultB = OnResultWithInfo,
+						GetSize = OnGetSize,
+					};
+					FuncA = GCHandle.Alloc( vTable.ResultA );
+					FuncB = GCHandle.Alloc( vTable.ResultB );
+					FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, vTablePtr, false );
+				}
+				else
+				{
+					vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+					var vTable = new Callback.VTable
+					{
+						ResultA = OnResult,
+						ResultB = OnResultWithInfo,
+						GetSize = OnGetSize,
+					};
+					FuncA = GCHandle.Alloc( vTable.ResultA );
+					FuncB = GCHandle.Alloc( vTable.ResultB );
+					FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, vTablePtr, false );
+				}
+			}
+
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte)SteamNative.Callback.Flags.GameServer : (byte)0;
+			cb.CallbackId = template.GetCallbackId();
+
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( PinnedCallback.AddrOfPinnedObject(), cb.CallbackId );
+
+			steamworks.RegisterCallbackHandle( this );
+		}
+
+		[MonoPInvokeCallback]
+		internal void OnResultThis( IntPtr self, IntPtr param ) { OnResult( param ); }
+		[MonoPInvokeCallback]
+		internal void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ) { OnResultWithInfo( param, failure, call ); }
+		[MonoPInvokeCallback]
+		internal int OnGetSizeThis( IntPtr self ) { return OnGetSize(); }
+		[MonoPInvokeCallback]
+		internal int OnGetSize() { return template.GetStructSize(); }
+
+		[MonoPInvokeCallback]
+		internal void OnResult( IntPtr param )
+		{
+			OnResultWithInfo( param, false, 0 );
+		}
+
+		[MonoPInvokeCallback]
+		internal void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
+		{
+			if ( failure ) return;
+
+			var value = (T) template.Fill( param );
+
+			if ( Facepunch.Steamworks.Client.Instance != null )
+				Facepunch.Steamworks.Client.Instance.OnCallback<T>( value );
+
+			if ( Facepunch.Steamworks.Server.Instance != null )
+				Facepunch.Steamworks.Server.Instance.OnCallback<T>( value );
+		}
+	}
+
+	internal abstract class CallResult : CallbackHandle
     {
         internal SteamAPICall_t Call;
         public override bool IsValid { get { return Call > 0; } }
@@ -146,31 +277,27 @@ namespace SteamNative
     }
 
 
-    internal class CallResult<T> : CallResult
+    internal class CallResult<T> : CallResult where T : struct, Steamworks.ISteamCallback
     {
+		T template;
+
         private static byte[] resultBuffer = new byte[1024 * 16];
 
         internal delegate T ConvertFromPointer( IntPtr p );
 
         Action<T, bool> CallbackFunction;
-        ConvertFromPointer ConvertFromPointerFunction;
 
-        internal int ResultSize = -1;
-        internal int CallbackId = 0;
-
-        internal CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<T, bool> callbackFunction, ConvertFromPointer fromPointer, int resultSize, int callbackId ) : base( steamworks, call )
+        internal CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<T, bool> callbackFunction ) : base( steamworks, call )
         {
-            ResultSize = resultSize;
-            CallbackId = callbackId;
-            CallbackFunction = callbackFunction;
-            ConvertFromPointerFunction = fromPointer;
+			template = new T();
+			CallbackFunction = callbackFunction;
 
             Steamworks.RegisterCallResult( this );
         }
 
         public override string ToString()
         {
-            return $"CallResult( {typeof(T).Name}, {CallbackId}, {ResultSize}b )";
+            return $"CallResult( {typeof(T).Name}, {template.GetCallbackId()}, {template.GetStructSize()}b )";
         }
 
         unsafe internal override void RunCallback()
@@ -179,13 +306,13 @@ namespace SteamNative
 
             fixed ( byte* ptr = resultBuffer )
             {
-                if ( !Steamworks.native.utils.GetAPICallResult( Call, (IntPtr)ptr, resultBuffer.Length, CallbackId, ref failed ) || failed )
+                if ( !Steamworks.native.utils.GetAPICallResult( Call, (IntPtr)ptr, resultBuffer.Length, template.GetCallbackId(), ref failed ) || failed )
                 {
                     CallbackFunction( default(T), true );
                     return;
                 }
 
-                var val = ConvertFromPointerFunction( (IntPtr)ptr );
+                var val = (T) template.Fill( (IntPtr)ptr );
                 CallbackFunction( val, false );
             }
         }

@@ -235,7 +235,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle RequestEligiblePromoItemDefinitionsIDs( CSteamID steamID /*class CSteamID*/, Action<SteamInventoryEligiblePromoItemDefIDs_t, bool> CallbackFunction = null /*Action<SteamInventoryEligiblePromoItemDefIDs_t, bool>*/ )
+		public CallResult<SteamInventoryEligiblePromoItemDefIDs_t> RequestEligiblePromoItemDefinitionsIDs( CSteamID steamID /*class CSteamID*/, Action<SteamInventoryEligiblePromoItemDefIDs_t, bool> CallbackFunction = null /*Action<SteamInventoryEligiblePromoItemDefIDs_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamInventory_RequestEligiblePromoItemDefinitionsIDs( steamID.Value );
@@ -243,11 +243,11 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return SteamInventoryEligiblePromoItemDefIDs_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<SteamInventoryEligiblePromoItemDefIDs_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle RequestPrices( Action<SteamInventoryRequestPricesResult_t, bool> CallbackFunction = null /*Action<SteamInventoryRequestPricesResult_t, bool>*/ )
+		public CallResult<SteamInventoryRequestPricesResult_t> RequestPrices( Action<SteamInventoryRequestPricesResult_t, bool> CallbackFunction = null /*Action<SteamInventoryRequestPricesResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamInventory_RequestPrices();
@@ -255,7 +255,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return SteamInventoryRequestPricesResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<SteamInventoryRequestPricesResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// void
@@ -295,7 +295,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle StartPurchase( SteamItemDef_t[] pArrayItemDefs /*const SteamItemDef_t **/, uint[] punArrayQuantity /*const uint32 **/, uint unArrayLength /*uint32*/, Action<SteamInventoryStartPurchaseResult_t, bool> CallbackFunction = null /*Action<SteamInventoryStartPurchaseResult_t, bool>*/ )
+		public CallResult<SteamInventoryStartPurchaseResult_t> StartPurchase( SteamItemDef_t[] pArrayItemDefs /*const SteamItemDef_t **/, uint[] punArrayQuantity /*const uint32 **/, uint unArrayLength /*uint32*/, Action<SteamInventoryStartPurchaseResult_t, bool> CallbackFunction = null /*Action<SteamInventoryStartPurchaseResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamInventory_StartPurchase( pArrayItemDefs.Select( x => x.Value ).ToArray(), punArrayQuantity, unArrayLength );
@@ -303,7 +303,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return SteamInventoryStartPurchaseResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<SteamInventoryStartPurchaseResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamInventoryUpdateHandle_t

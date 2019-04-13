@@ -60,7 +60,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle CreateBrowser( string pchUserAgent /*const char **/, string pchUserCSS /*const char **/, Action<HTML_BrowserReady_t, bool> CallbackFunction = null /*Action<HTML_BrowserReady_t, bool>*/ )
+		public CallResult<HTML_BrowserReady_t> CreateBrowser( string pchUserAgent /*const char **/, string pchUserCSS /*const char **/, Action<HTML_BrowserReady_t, bool> CallbackFunction = null /*Action<HTML_BrowserReady_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamHTMLSurface_CreateBrowser( pchUserAgent, pchUserCSS );
@@ -68,7 +68,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return HTML_BrowserReady_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<HTML_BrowserReady_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// void

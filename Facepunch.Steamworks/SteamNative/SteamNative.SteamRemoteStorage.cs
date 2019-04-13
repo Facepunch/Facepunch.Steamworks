@@ -42,7 +42,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle CommitPublishedFileUpdate( PublishedFileUpdateHandle_t updateHandle /*PublishedFileUpdateHandle_t*/, Action<RemoteStorageUpdatePublishedFileResult_t, bool> CallbackFunction = null /*Action<RemoteStorageUpdatePublishedFileResult_t, bool>*/ )
+		public CallResult<RemoteStorageUpdatePublishedFileResult_t> CommitPublishedFileUpdate( PublishedFileUpdateHandle_t updateHandle /*PublishedFileUpdateHandle_t*/, Action<RemoteStorageUpdatePublishedFileResult_t, bool> CallbackFunction = null /*Action<RemoteStorageUpdatePublishedFileResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamRemoteStorage_CommitPublishedFileUpdate( updateHandle.Value );
@@ -50,7 +50,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return RemoteStorageUpdatePublishedFileResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<RemoteStorageUpdatePublishedFileResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// PublishedFileUpdateHandle_t
@@ -60,7 +60,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle DeletePublishedFile( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/, Action<RemoteStorageDeletePublishedFileResult_t, bool> CallbackFunction = null /*Action<RemoteStorageDeletePublishedFileResult_t, bool>*/ )
+		public CallResult<RemoteStorageDeletePublishedFileResult_t> DeletePublishedFile( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/, Action<RemoteStorageDeletePublishedFileResult_t, bool> CallbackFunction = null /*Action<RemoteStorageDeletePublishedFileResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamRemoteStorage_DeletePublishedFile( unPublishedFileId.Value );
@@ -68,11 +68,11 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return RemoteStorageDeletePublishedFileResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<RemoteStorageDeletePublishedFileResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle EnumeratePublishedFilesByUserAction( WorkshopFileAction eAction /*EWorkshopFileAction*/, uint unStartIndex /*uint32*/, Action<RemoteStorageEnumeratePublishedFilesByUserActionResult_t, bool> CallbackFunction = null /*Action<RemoteStorageEnumeratePublishedFilesByUserActionResult_t, bool>*/ )
+		public CallResult<RemoteStorageEnumeratePublishedFilesByUserActionResult_t> EnumeratePublishedFilesByUserAction( WorkshopFileAction eAction /*EWorkshopFileAction*/, uint unStartIndex /*uint32*/, Action<RemoteStorageEnumeratePublishedFilesByUserActionResult_t, bool> CallbackFunction = null /*Action<RemoteStorageEnumeratePublishedFilesByUserActionResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamRemoteStorage_EnumeratePublishedFilesByUserAction( eAction, unStartIndex );
@@ -80,12 +80,12 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return RemoteStorageEnumeratePublishedFilesByUserActionResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<RemoteStorageEnumeratePublishedFilesByUserActionResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
 		// using: Detect_StringArray
-		public CallbackHandle EnumeratePublishedWorkshopFiles( WorkshopEnumerationType eEnumerationType /*EWorkshopEnumerationType*/, uint unStartIndex /*uint32*/, uint unCount /*uint32*/, uint unDays /*uint32*/, string[] pTags /*struct SteamParamStringArray_t **/, ref SteamParamStringArray_t pUserTags /*struct SteamParamStringArray_t **/, Action<RemoteStorageEnumerateWorkshopFilesResult_t, bool> CallbackFunction = null /*Action<RemoteStorageEnumerateWorkshopFilesResult_t, bool>*/ )
+		public CallResult<RemoteStorageEnumerateWorkshopFilesResult_t> EnumeratePublishedWorkshopFiles( WorkshopEnumerationType eEnumerationType /*EWorkshopEnumerationType*/, uint unStartIndex /*uint32*/, uint unCount /*uint32*/, uint unDays /*uint32*/, string[] pTags /*struct SteamParamStringArray_t **/, ref SteamParamStringArray_t pUserTags /*struct SteamParamStringArray_t **/, Action<RemoteStorageEnumerateWorkshopFilesResult_t, bool> CallbackFunction = null /*Action<RemoteStorageEnumerateWorkshopFilesResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			// Create strings
@@ -118,11 +118,11 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return RemoteStorageEnumerateWorkshopFilesResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<RemoteStorageEnumerateWorkshopFilesResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle EnumerateUserPublishedFiles( uint unStartIndex /*uint32*/, Action<RemoteStorageEnumerateUserPublishedFilesResult_t, bool> CallbackFunction = null /*Action<RemoteStorageEnumerateUserPublishedFilesResult_t, bool>*/ )
+		public CallResult<RemoteStorageEnumerateUserPublishedFilesResult_t> EnumerateUserPublishedFiles( uint unStartIndex /*uint32*/, Action<RemoteStorageEnumerateUserPublishedFilesResult_t, bool> CallbackFunction = null /*Action<RemoteStorageEnumerateUserPublishedFilesResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamRemoteStorage_EnumerateUserPublishedFiles( unStartIndex );
@@ -130,12 +130,12 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return RemoteStorageEnumerateUserPublishedFilesResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<RemoteStorageEnumerateUserPublishedFilesResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
 		// using: Detect_StringArray
-		public CallbackHandle EnumerateUserSharedWorkshopFiles( CSteamID steamId /*class CSteamID*/, uint unStartIndex /*uint32*/, string[] pRequiredTags /*struct SteamParamStringArray_t **/, ref SteamParamStringArray_t pExcludedTags /*struct SteamParamStringArray_t **/, Action<RemoteStorageEnumerateUserPublishedFilesResult_t, bool> CallbackFunction = null /*Action<RemoteStorageEnumerateUserPublishedFilesResult_t, bool>*/ )
+		public CallResult<RemoteStorageEnumerateUserPublishedFilesResult_t> EnumerateUserSharedWorkshopFiles( CSteamID steamId /*class CSteamID*/, uint unStartIndex /*uint32*/, string[] pRequiredTags /*struct SteamParamStringArray_t **/, ref SteamParamStringArray_t pExcludedTags /*struct SteamParamStringArray_t **/, Action<RemoteStorageEnumerateUserPublishedFilesResult_t, bool> CallbackFunction = null /*Action<RemoteStorageEnumerateUserPublishedFilesResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			// Create strings
@@ -168,11 +168,11 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return RemoteStorageEnumerateUserPublishedFilesResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<RemoteStorageEnumerateUserPublishedFilesResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle EnumerateUserSubscribedFiles( uint unStartIndex /*uint32*/, Action<RemoteStorageEnumerateUserSubscribedFilesResult_t, bool> CallbackFunction = null /*Action<RemoteStorageEnumerateUserSubscribedFilesResult_t, bool>*/ )
+		public CallResult<RemoteStorageEnumerateUserSubscribedFilesResult_t> EnumerateUserSubscribedFiles( uint unStartIndex /*uint32*/, Action<RemoteStorageEnumerateUserSubscribedFilesResult_t, bool> CallbackFunction = null /*Action<RemoteStorageEnumerateUserSubscribedFilesResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamRemoteStorage_EnumerateUserSubscribedFiles( unStartIndex );
@@ -180,7 +180,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return RemoteStorageEnumerateUserSubscribedFilesResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<RemoteStorageEnumerateUserSubscribedFilesResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
@@ -214,7 +214,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle FileReadAsync( string pchFile /*const char **/, uint nOffset /*uint32*/, uint cubToRead /*uint32*/, Action<RemoteStorageFileReadAsyncComplete_t, bool> CallbackFunction = null /*Action<RemoteStorageFileReadAsyncComplete_t, bool>*/ )
+		public CallResult<RemoteStorageFileReadAsyncComplete_t> FileReadAsync( string pchFile /*const char **/, uint nOffset /*uint32*/, uint cubToRead /*uint32*/, Action<RemoteStorageFileReadAsyncComplete_t, bool> CallbackFunction = null /*Action<RemoteStorageFileReadAsyncComplete_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamRemoteStorage_FileReadAsync( pchFile, nOffset, cubToRead );
@@ -222,7 +222,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return RemoteStorageFileReadAsyncComplete_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<RemoteStorageFileReadAsyncComplete_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
@@ -232,7 +232,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle FileShare( string pchFile /*const char **/, Action<RemoteStorageFileShareResult_t, bool> CallbackFunction = null /*Action<RemoteStorageFileShareResult_t, bool>*/ )
+		public CallResult<RemoteStorageFileShareResult_t> FileShare( string pchFile /*const char **/, Action<RemoteStorageFileShareResult_t, bool> CallbackFunction = null /*Action<RemoteStorageFileShareResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamRemoteStorage_FileShare( pchFile );
@@ -240,7 +240,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return RemoteStorageFileShareResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<RemoteStorageFileShareResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
@@ -250,7 +250,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle FileWriteAsync( string pchFile /*const char **/, IntPtr pvData /*const void **/, uint cubData /*uint32*/, Action<RemoteStorageFileWriteAsyncComplete_t, bool> CallbackFunction = null /*Action<RemoteStorageFileWriteAsyncComplete_t, bool>*/ )
+		public CallResult<RemoteStorageFileWriteAsyncComplete_t> FileWriteAsync( string pchFile /*const char **/, IntPtr pvData /*const void **/, uint cubData /*uint32*/, Action<RemoteStorageFileWriteAsyncComplete_t, bool> CallbackFunction = null /*Action<RemoteStorageFileWriteAsyncComplete_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamRemoteStorage_FileWriteAsync( pchFile, (IntPtr) pvData, cubData );
@@ -258,7 +258,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return RemoteStorageFileWriteAsyncComplete_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<RemoteStorageFileWriteAsyncComplete_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
@@ -325,7 +325,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle GetPublishedFileDetails( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/, uint unMaxSecondsOld /*uint32*/, Action<RemoteStorageGetPublishedFileDetailsResult_t, bool> CallbackFunction = null /*Action<RemoteStorageGetPublishedFileDetailsResult_t, bool>*/ )
+		public CallResult<RemoteStorageGetPublishedFileDetailsResult_t> GetPublishedFileDetails( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/, uint unMaxSecondsOld /*uint32*/, Action<RemoteStorageGetPublishedFileDetailsResult_t, bool> CallbackFunction = null /*Action<RemoteStorageGetPublishedFileDetailsResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamRemoteStorage_GetPublishedFileDetails( unPublishedFileId.Value, unMaxSecondsOld );
@@ -333,11 +333,11 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return RemoteStorageGetPublishedFileDetailsResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<RemoteStorageGetPublishedFileDetailsResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle GetPublishedItemVoteDetails( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/, Action<RemoteStorageGetPublishedItemVoteDetailsResult_t, bool> CallbackFunction = null /*Action<RemoteStorageGetPublishedItemVoteDetailsResult_t, bool>*/ )
+		public CallResult<RemoteStorageGetPublishedItemVoteDetailsResult_t> GetPublishedItemVoteDetails( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/, Action<RemoteStorageGetPublishedItemVoteDetailsResult_t, bool> CallbackFunction = null /*Action<RemoteStorageGetPublishedItemVoteDetailsResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamRemoteStorage_GetPublishedItemVoteDetails( unPublishedFileId.Value );
@@ -345,7 +345,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return RemoteStorageGetPublishedItemVoteDetailsResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<RemoteStorageGetPublishedItemVoteDetailsResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
@@ -381,7 +381,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle GetUserPublishedItemVoteDetails( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/, Action<RemoteStorageGetPublishedItemVoteDetailsResult_t, bool> CallbackFunction = null /*Action<RemoteStorageGetPublishedItemVoteDetailsResult_t, bool>*/ )
+		public CallResult<RemoteStorageGetPublishedItemVoteDetailsResult_t> GetUserPublishedItemVoteDetails( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/, Action<RemoteStorageGetPublishedItemVoteDetailsResult_t, bool> CallbackFunction = null /*Action<RemoteStorageGetPublishedItemVoteDetailsResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamRemoteStorage_GetUserPublishedItemVoteDetails( unPublishedFileId.Value );
@@ -389,7 +389,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return RemoteStorageGetPublishedItemVoteDetailsResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<RemoteStorageGetPublishedItemVoteDetailsResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
@@ -406,7 +406,7 @@ namespace SteamNative
 		
 		// SteamAPICall_t
 		// using: Detect_StringArray
-		public CallbackHandle PublishVideo( WorkshopVideoProvider eVideoProvider /*EWorkshopVideoProvider*/, string pchVideoAccount /*const char **/, string pchVideoIdentifier /*const char **/, string pchPreviewFile /*const char **/, AppId_t nConsumerAppId /*AppId_t*/, string pchTitle /*const char **/, string pchDescription /*const char **/, RemoteStoragePublishedFileVisibility eVisibility /*ERemoteStoragePublishedFileVisibility*/, string[] pTags /*struct SteamParamStringArray_t **/, Action<RemoteStoragePublishFileProgress_t, bool> CallbackFunction = null /*Action<RemoteStoragePublishFileProgress_t, bool>*/ )
+		public CallResult<RemoteStoragePublishFileProgress_t> PublishVideo( WorkshopVideoProvider eVideoProvider /*EWorkshopVideoProvider*/, string pchVideoAccount /*const char **/, string pchVideoIdentifier /*const char **/, string pchPreviewFile /*const char **/, AppId_t nConsumerAppId /*AppId_t*/, string pchTitle /*const char **/, string pchDescription /*const char **/, RemoteStoragePublishedFileVisibility eVisibility /*ERemoteStoragePublishedFileVisibility*/, string[] pTags /*struct SteamParamStringArray_t **/, Action<RemoteStoragePublishFileProgress_t, bool> CallbackFunction = null /*Action<RemoteStoragePublishFileProgress_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			// Create strings
@@ -439,12 +439,12 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return RemoteStoragePublishFileProgress_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<RemoteStoragePublishFileProgress_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
 		// using: Detect_StringArray
-		public CallbackHandle PublishWorkshopFile( string pchFile /*const char **/, string pchPreviewFile /*const char **/, AppId_t nConsumerAppId /*AppId_t*/, string pchTitle /*const char **/, string pchDescription /*const char **/, RemoteStoragePublishedFileVisibility eVisibility /*ERemoteStoragePublishedFileVisibility*/, string[] pTags /*struct SteamParamStringArray_t **/, WorkshopFileType eWorkshopFileType /*EWorkshopFileType*/, Action<RemoteStoragePublishFileProgress_t, bool> CallbackFunction = null /*Action<RemoteStoragePublishFileProgress_t, bool>*/ )
+		public CallResult<RemoteStoragePublishFileProgress_t> PublishWorkshopFile( string pchFile /*const char **/, string pchPreviewFile /*const char **/, AppId_t nConsumerAppId /*AppId_t*/, string pchTitle /*const char **/, string pchDescription /*const char **/, RemoteStoragePublishedFileVisibility eVisibility /*ERemoteStoragePublishedFileVisibility*/, string[] pTags /*struct SteamParamStringArray_t **/, WorkshopFileType eWorkshopFileType /*EWorkshopFileType*/, Action<RemoteStoragePublishFileProgress_t, bool> CallbackFunction = null /*Action<RemoteStoragePublishFileProgress_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			// Create strings
@@ -477,7 +477,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return RemoteStoragePublishFileProgress_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<RemoteStoragePublishFileProgress_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// void
@@ -493,7 +493,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle SetUserPublishedFileAction( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/, WorkshopFileAction eAction /*EWorkshopFileAction*/, Action<RemoteStorageSetUserPublishedFileActionResult_t, bool> CallbackFunction = null /*Action<RemoteStorageSetUserPublishedFileActionResult_t, bool>*/ )
+		public CallResult<RemoteStorageSetUserPublishedFileActionResult_t> SetUserPublishedFileAction( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/, WorkshopFileAction eAction /*EWorkshopFileAction*/, Action<RemoteStorageSetUserPublishedFileActionResult_t, bool> CallbackFunction = null /*Action<RemoteStorageSetUserPublishedFileActionResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamRemoteStorage_SetUserPublishedFileAction( unPublishedFileId.Value, eAction );
@@ -501,11 +501,11 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return RemoteStorageSetUserPublishedFileActionResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<RemoteStorageSetUserPublishedFileActionResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle SubscribePublishedFile( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/, Action<RemoteStorageSubscribePublishedFileResult_t, bool> CallbackFunction = null /*Action<RemoteStorageSubscribePublishedFileResult_t, bool>*/ )
+		public CallResult<RemoteStorageSubscribePublishedFileResult_t> SubscribePublishedFile( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/, Action<RemoteStorageSubscribePublishedFileResult_t, bool> CallbackFunction = null /*Action<RemoteStorageSubscribePublishedFileResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamRemoteStorage_SubscribePublishedFile( unPublishedFileId.Value );
@@ -513,11 +513,11 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return RemoteStorageSubscribePublishedFileResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<RemoteStorageSubscribePublishedFileResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle UGCDownload( UGCHandle_t hContent /*UGCHandle_t*/, uint unPriority /*uint32*/, Action<RemoteStorageDownloadUGCResult_t, bool> CallbackFunction = null /*Action<RemoteStorageDownloadUGCResult_t, bool>*/ )
+		public CallResult<RemoteStorageDownloadUGCResult_t> UGCDownload( UGCHandle_t hContent /*UGCHandle_t*/, uint unPriority /*uint32*/, Action<RemoteStorageDownloadUGCResult_t, bool> CallbackFunction = null /*Action<RemoteStorageDownloadUGCResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamRemoteStorage_UGCDownload( hContent.Value, unPriority );
@@ -525,11 +525,11 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return RemoteStorageDownloadUGCResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<RemoteStorageDownloadUGCResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle UGCDownloadToLocation( UGCHandle_t hContent /*UGCHandle_t*/, string pchLocation /*const char **/, uint unPriority /*uint32*/, Action<RemoteStorageDownloadUGCResult_t, bool> CallbackFunction = null /*Action<RemoteStorageDownloadUGCResult_t, bool>*/ )
+		public CallResult<RemoteStorageDownloadUGCResult_t> UGCDownloadToLocation( UGCHandle_t hContent /*UGCHandle_t*/, string pchLocation /*const char **/, uint unPriority /*uint32*/, Action<RemoteStorageDownloadUGCResult_t, bool> CallbackFunction = null /*Action<RemoteStorageDownloadUGCResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamRemoteStorage_UGCDownloadToLocation( hContent.Value, pchLocation, unPriority );
@@ -537,7 +537,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return RemoteStorageDownloadUGCResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<RemoteStorageDownloadUGCResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// int
@@ -547,7 +547,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle UnsubscribePublishedFile( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/, Action<RemoteStorageUnsubscribePublishedFileResult_t, bool> CallbackFunction = null /*Action<RemoteStorageUnsubscribePublishedFileResult_t, bool>*/ )
+		public CallResult<RemoteStorageUnsubscribePublishedFileResult_t> UnsubscribePublishedFile( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/, Action<RemoteStorageUnsubscribePublishedFileResult_t, bool> CallbackFunction = null /*Action<RemoteStorageUnsubscribePublishedFileResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamRemoteStorage_UnsubscribePublishedFile( unPublishedFileId.Value );
@@ -555,7 +555,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return RemoteStorageUnsubscribePublishedFileResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<RemoteStorageUnsubscribePublishedFileResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// bool
@@ -627,7 +627,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle UpdateUserPublishedItemVote( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/, bool bVoteUp /*bool*/, Action<RemoteStorageUpdateUserPublishedItemVoteResult_t, bool> CallbackFunction = null /*Action<RemoteStorageUpdateUserPublishedItemVoteResult_t, bool>*/ )
+		public CallResult<RemoteStorageUpdateUserPublishedItemVoteResult_t> UpdateUserPublishedItemVote( PublishedFileId_t unPublishedFileId /*PublishedFileId_t*/, bool bVoteUp /*bool*/, Action<RemoteStorageUpdateUserPublishedItemVoteResult_t, bool> CallbackFunction = null /*Action<RemoteStorageUpdateUserPublishedItemVoteResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamRemoteStorage_UpdateUserPublishedItemVote( unPublishedFileId.Value, bVoteUp );
@@ -635,7 +635,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return RemoteStorageUpdateUserPublishedItemVoteResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<RemoteStorageUpdateUserPublishedItemVoteResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 	}

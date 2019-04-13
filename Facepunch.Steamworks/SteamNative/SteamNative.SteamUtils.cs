@@ -48,7 +48,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle CheckFileSignature( string szFileName /*const char **/, Action<CheckFileSignature_t, bool> CallbackFunction = null /*Action<CheckFileSignature_t, bool>*/ )
+		public CallResult<CheckFileSignature_t> CheckFileSignature( string szFileName /*const char **/, Action<CheckFileSignature_t, bool> CallbackFunction = null /*Action<CheckFileSignature_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamUtils_CheckFileSignature( szFileName );
@@ -56,7 +56,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return CheckFileSignature_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<CheckFileSignature_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// SteamAPICallFailure

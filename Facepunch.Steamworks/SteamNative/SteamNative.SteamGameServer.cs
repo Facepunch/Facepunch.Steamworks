@@ -42,7 +42,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle AssociateWithClan( CSteamID steamIDClan /*class CSteamID*/, Action<AssociateWithClanResult_t, bool> CallbackFunction = null /*Action<AssociateWithClanResult_t, bool>*/ )
+		public CallResult<AssociateWithClanResult_t> AssociateWithClan( CSteamID steamIDClan /*class CSteamID*/, Action<AssociateWithClanResult_t, bool> CallbackFunction = null /*Action<AssociateWithClanResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamGameServer_AssociateWithClan( steamIDClan.Value );
@@ -50,7 +50,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return AssociateWithClanResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<AssociateWithClanResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// BeginAuthSessionResult
@@ -90,7 +90,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle ComputeNewPlayerCompatibility( CSteamID steamIDNewPlayer /*class CSteamID*/, Action<ComputeNewPlayerCompatibilityResult_t, bool> CallbackFunction = null /*Action<ComputeNewPlayerCompatibilityResult_t, bool>*/ )
+		public CallResult<ComputeNewPlayerCompatibilityResult_t> ComputeNewPlayerCompatibility( CSteamID steamIDNewPlayer /*class CSteamID*/, Action<ComputeNewPlayerCompatibilityResult_t, bool> CallbackFunction = null /*Action<ComputeNewPlayerCompatibilityResult_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamGameServer_ComputeNewPlayerCompatibility( steamIDNewPlayer.Value );
@@ -98,7 +98,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return ComputeNewPlayerCompatibilityResult_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<ComputeNewPlayerCompatibilityResult_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// ulong
@@ -150,7 +150,7 @@ namespace SteamNative
 		}
 		
 		// SteamAPICall_t
-		public CallbackHandle GetServerReputation( Action<GSReputation_t, bool> CallbackFunction = null /*Action<GSReputation_t, bool>*/ )
+		public CallResult<GSReputation_t> GetServerReputation( Action<GSReputation_t, bool> CallbackFunction = null /*Action<GSReputation_t, bool>*/ )
 		{
 			SteamAPICall_t callback = 0;
 			callback = platform.ISteamGameServer_GetServerReputation();
@@ -158,7 +158,7 @@ namespace SteamNative
 			if ( CallbackFunction == null ) return null;
 			if ( callback == 0 ) return null;
 			
-			return GSReputation_t.CallResult( steamworks, callback, CallbackFunction );
+			return new CallResult<GSReputation_t>( steamworks, callback, CallbackFunction );
 		}
 		
 		// ulong
