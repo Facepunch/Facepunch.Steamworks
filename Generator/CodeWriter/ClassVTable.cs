@@ -73,9 +73,12 @@ namespace Generator
 			{
 				delegateargstr += $", ref {returnType.TypeName} retVal";
 				delegateargstr = delegateargstr.Replace( ", , ", ", " );
-				//returnType = new VoidType();
 			}
 
+			if ( returnType is SteamApiCallType sap )
+			{
+				sap.CallResult = func.CallResult;
+			}
 
 			WriteLine( $"#region FunctionMeta" );
 
@@ -89,7 +92,7 @@ namespace Generator
 			WriteLine();
 			WriteLine( $"#endregion" );
 
-			StartBlock( $"public {returnType.TypeName} {func.Name}( {argstr} )".Replace( "(  )", "()" ) );
+			StartBlock( $"public {returnType.ReturnType} {func.Name}( {argstr} )".Replace( "(  )", "()" ) );
 			{
 				var callargs = string.Join( ", ", args.Select( x => x.AsCallArgument() ) );
 

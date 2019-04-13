@@ -470,7 +470,7 @@ namespace SteamNative
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamFriends _ptr is null!" );
 				
-				var pFriendGameInfo_ps = new FriendGameInfo_t.PackSmall();
+				var pFriendGameInfo_ps = new FriendGameInfo_t.Pack4();
 				var ret = Native.SteamAPI_ISteamFriends_GetFriendGamePlayed(_ptr, steamIDFriend, ref pFriendGameInfo_ps);
 				pFriendGameInfo = pFriendGameInfo_ps;
 				return ret;
@@ -1468,7 +1468,7 @@ namespace SteamNative
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamParties _ptr is null!" );
 				
-				var pLocation_ps = new SteamPartyBeaconLocation_t.PackSmall();
+				var pLocation_ps = new SteamPartyBeaconLocation_t.Pack4();
 				var ret = Native.SteamAPI_ISteamParties_GetBeaconDetails(_ptr, ulBeaconID, out pSteamIDBeaconOwner, ref pLocation_ps, pchMetadata, cchMetadata);
 				pLocation = pLocation_ps;
 				return ret;
@@ -1489,7 +1489,7 @@ namespace SteamNative
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamParties _ptr is null!" );
 				
-				var pLocationList_ps = new SteamPartyBeaconLocation_t.PackSmall();
+				var pLocationList_ps = new SteamPartyBeaconLocation_t.Pack4();
 				var ret = Native.SteamAPI_ISteamParties_GetAvailableBeaconLocations(_ptr, ref pLocationList_ps, uMaxNumLocations);
 				pLocationList = pLocationList_ps;
 				return ret;
@@ -1498,7 +1498,7 @@ namespace SteamNative
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamParties _ptr is null!" );
 				
-				var pBeaconLocation_ps = new SteamPartyBeaconLocation_t.PackSmall();
+				var pBeaconLocation_ps = new SteamPartyBeaconLocation_t.Pack4();
 				var ret = Native.SteamAPI_ISteamParties_CreateBeacon(_ptr, unOpenSlots, ref pBeaconLocation_ps, pchConnectString, pchMetadata);
 				pBeaconLocation = pBeaconLocation_ps;
 				return ret;
@@ -1718,7 +1718,7 @@ namespace SteamNative
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				var pTags_ps = new SteamParamStringArray_t.PackSmall();
+				var pTags_ps = new SteamParamStringArray_t.Pack4();
 				var ret = Native.SteamAPI_ISteamRemoteStorage_PublishWorkshopFile(_ptr, pchFile, pchPreviewFile, nConsumerAppId, pchTitle, pchDescription, eVisibility, ref pTags_ps, eWorkshopFileType);
 				pTags = pTags_ps;
 				return ret;
@@ -1763,7 +1763,7 @@ namespace SteamNative
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				var pTags_ps = new SteamParamStringArray_t.PackSmall();
+				var pTags_ps = new SteamParamStringArray_t.Pack4();
 				var ret = Native.SteamAPI_ISteamRemoteStorage_UpdatePublishedFileTags(_ptr, updateHandle, ref pTags_ps);
 				pTags = pTags_ps;
 				return ret;
@@ -1838,8 +1838,8 @@ namespace SteamNative
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				var pRequiredTags_ps = new SteamParamStringArray_t.PackSmall();
-				var pExcludedTags_ps = new SteamParamStringArray_t.PackSmall();
+				var pRequiredTags_ps = new SteamParamStringArray_t.Pack4();
+				var pExcludedTags_ps = new SteamParamStringArray_t.Pack4();
 				var ret = Native.SteamAPI_ISteamRemoteStorage_EnumerateUserSharedWorkshopFiles(_ptr, steamId, unStartIndex, ref pRequiredTags_ps, ref pExcludedTags_ps);
 				pRequiredTags = pRequiredTags_ps;
 				pExcludedTags = pExcludedTags_ps;
@@ -1849,7 +1849,7 @@ namespace SteamNative
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				var pTags_ps = new SteamParamStringArray_t.PackSmall();
+				var pTags_ps = new SteamParamStringArray_t.Pack4();
 				var ret = Native.SteamAPI_ISteamRemoteStorage_PublishVideo(_ptr, eVideoProvider, pchVideoAccount, pchVideoIdentifier, pchPreviewFile, nConsumerAppId, pchTitle, pchDescription, eVisibility, ref pTags_ps);
 				pTags = pTags_ps;
 				return ret;
@@ -1870,8 +1870,8 @@ namespace SteamNative
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamRemoteStorage _ptr is null!" );
 				
-				var pTags_ps = new SteamParamStringArray_t.PackSmall();
-				var pUserTags_ps = new SteamParamStringArray_t.PackSmall();
+				var pTags_ps = new SteamParamStringArray_t.Pack4();
+				var pUserTags_ps = new SteamParamStringArray_t.Pack4();
 				var ret = Native.SteamAPI_ISteamRemoteStorage_EnumeratePublishedWorkshopFiles(_ptr, eEnumerationType, unStartIndex, unCount, unDays, ref pTags_ps, ref pUserTags_ps);
 				pTags = pTags_ps;
 				pUserTags = pUserTags_ps;
@@ -2068,7 +2068,7 @@ namespace SteamNative
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamUserStats _ptr is null!" );
 				
-				var pLeaderboardEntry_ps = new LeaderboardEntry_t.PackSmall();
+				var pLeaderboardEntry_ps = new LeaderboardEntry_t.Pack4();
 				var ret = Native.SteamAPI_ISteamUserStats_GetDownloadedLeaderboardEntry(_ptr, hSteamLeaderboardEntries, index, ref pLeaderboardEntry_ps, pDetails, cDetailsMax);
 				pLeaderboardEntry = pLeaderboardEntry_ps;
 				return ret;
@@ -2355,7 +2355,7 @@ namespace SteamNative
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamNetworking _ptr is null!" );
 				
-				var pConnectionState_ps = new P2PSessionState_t.PackSmall();
+				var pConnectionState_ps = new P2PSessionState_t.Pack4();
 				var ret = Native.SteamAPI_ISteamNetworking_GetP2PSessionState(_ptr, steamIDRemote, ref pConnectionState_ps);
 				pConnectionState = pConnectionState_ps;
 				return ret;
@@ -3337,7 +3337,7 @@ namespace SteamNative
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				var pDetails_ps = new SteamUGCDetails_t.PackSmall();
+				var pDetails_ps = new SteamUGCDetails_t.Pack4();
 				var ret = Native.SteamAPI_ISteamUGC_GetQueryUGCResult(_ptr, handle, index, ref pDetails_ps);
 				pDetails = pDetails_ps;
 				return ret;
@@ -3550,7 +3550,7 @@ namespace SteamNative
 			{
 				if ( _ptr == IntPtr.Zero ) throw new System.Exception( "ISteamUGC _ptr is null!" );
 				
-				var pTags_ps = new SteamParamStringArray_t.PackSmall();
+				var pTags_ps = new SteamParamStringArray_t.Pack4();
 				var ret = Native.SteamAPI_ISteamUGC_SetItemTags(_ptr, updateHandle, ref pTags_ps);
 				pTags = pTags_ps;
 				return ret;
@@ -4867,7 +4867,7 @@ namespace SteamNative
 				internal static extern IntPtr SteamAPI_ISteamFriends_GetFriendPersonaName( IntPtr ISteamFriends, ulong steamIDFriend );
 				[return: MarshalAs(UnmanagedType.U1)]
 				[DllImport( "libsteam_api.dylib" )]
-				internal static extern bool /*bool*/ SteamAPI_ISteamFriends_GetFriendGamePlayed( IntPtr ISteamFriends, ulong steamIDFriend, ref FriendGameInfo_t.PackSmall /*struct FriendGameInfo_t **/ pFriendGameInfo );
+				internal static extern bool /*bool*/ SteamAPI_ISteamFriends_GetFriendGamePlayed( IntPtr ISteamFriends, ulong steamIDFriend, ref FriendGameInfo_t.Pack4 /*struct FriendGameInfo_t **/ pFriendGameInfo );
 				[DllImport( "libsteam_api.dylib" )]
 				internal static extern IntPtr SteamAPI_ISteamFriends_GetFriendPersonaNameHistory( IntPtr ISteamFriends, ulong steamIDFriend, int /*int*/ iPersonaName );
 				[DllImport( "libsteam_api.dylib" )]
@@ -5261,7 +5261,7 @@ namespace SteamNative
 				internal static extern PartyBeaconID_t /*(PartyBeaconID_t)*/ SteamAPI_ISteamParties_GetBeaconByIndex( IntPtr ISteamParties, uint /*uint32*/ unIndex );
 				[return: MarshalAs(UnmanagedType.U1)]
 				[DllImport( "libsteam_api.dylib" )]
-				internal static extern bool /*bool*/ SteamAPI_ISteamParties_GetBeaconDetails( IntPtr ISteamParties, ulong ulBeaconID, out ulong pSteamIDBeaconOwner, ref SteamPartyBeaconLocation_t.PackSmall /*struct SteamPartyBeaconLocation_t **/ pLocation, System.Text.StringBuilder /*char **/ pchMetadata, int /*int*/ cchMetadata );
+				internal static extern bool /*bool*/ SteamAPI_ISteamParties_GetBeaconDetails( IntPtr ISteamParties, ulong ulBeaconID, out ulong pSteamIDBeaconOwner, ref SteamPartyBeaconLocation_t.Pack4 /*struct SteamPartyBeaconLocation_t **/ pLocation, System.Text.StringBuilder /*char **/ pchMetadata, int /*int*/ cchMetadata );
 				[DllImport( "libsteam_api.dylib" )]
 				internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamParties_JoinParty( IntPtr ISteamParties, ulong ulBeaconID );
 				[return: MarshalAs(UnmanagedType.U1)]
@@ -5269,9 +5269,9 @@ namespace SteamNative
 				internal static extern bool /*bool*/ SteamAPI_ISteamParties_GetNumAvailableBeaconLocations( IntPtr ISteamParties, IntPtr /*uint32 **/ puNumLocations );
 				[return: MarshalAs(UnmanagedType.U1)]
 				[DllImport( "libsteam_api.dylib" )]
-				internal static extern bool /*bool*/ SteamAPI_ISteamParties_GetAvailableBeaconLocations( IntPtr ISteamParties, ref SteamPartyBeaconLocation_t.PackSmall /*struct SteamPartyBeaconLocation_t **/ pLocationList, uint /*uint32*/ uMaxNumLocations );
+				internal static extern bool /*bool*/ SteamAPI_ISteamParties_GetAvailableBeaconLocations( IntPtr ISteamParties, ref SteamPartyBeaconLocation_t.Pack4 /*struct SteamPartyBeaconLocation_t **/ pLocationList, uint /*uint32*/ uMaxNumLocations );
 				[DllImport( "libsteam_api.dylib" )]
-				internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamParties_CreateBeacon( IntPtr ISteamParties, uint /*uint32*/ unOpenSlots, ref SteamPartyBeaconLocation_t.PackSmall /*struct SteamPartyBeaconLocation_t **/ pBeaconLocation, string /*const char **/ pchConnectString, string /*const char **/ pchMetadata );
+				internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamParties_CreateBeacon( IntPtr ISteamParties, uint /*uint32*/ unOpenSlots, ref SteamPartyBeaconLocation_t.Pack4 /*struct SteamPartyBeaconLocation_t **/ pBeaconLocation, string /*const char **/ pchConnectString, string /*const char **/ pchMetadata );
 				[DllImport( "libsteam_api.dylib" )]
 				internal static extern void /*void*/ SteamAPI_ISteamParties_OnReservationCompleted( IntPtr ISteamParties, ulong ulBeacon, ulong steamIDUser );
 				[DllImport( "libsteam_api.dylib" )]
@@ -5364,7 +5364,7 @@ namespace SteamNative
 				[DllImport( "libsteam_api.dylib" )]
 				internal static extern UGCHandle_t /*(UGCHandle_t)*/ SteamAPI_ISteamRemoteStorage_GetCachedUGCHandle( IntPtr ISteamRemoteStorage, int /*int32*/ iCachedContent );
 				[DllImport( "libsteam_api.dylib" )]
-				internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamRemoteStorage_PublishWorkshopFile( IntPtr ISteamRemoteStorage, string /*const char **/ pchFile, string /*const char **/ pchPreviewFile, uint nConsumerAppId, string /*const char **/ pchTitle, string /*const char **/ pchDescription, RemoteStoragePublishedFileVisibility /*ERemoteStoragePublishedFileVisibility*/ eVisibility, ref SteamParamStringArray_t.PackSmall /*struct SteamParamStringArray_t **/ pTags, WorkshopFileType /*EWorkshopFileType*/ eWorkshopFileType );
+				internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamRemoteStorage_PublishWorkshopFile( IntPtr ISteamRemoteStorage, string /*const char **/ pchFile, string /*const char **/ pchPreviewFile, uint nConsumerAppId, string /*const char **/ pchTitle, string /*const char **/ pchDescription, RemoteStoragePublishedFileVisibility /*ERemoteStoragePublishedFileVisibility*/ eVisibility, ref SteamParamStringArray_t.Pack4 /*struct SteamParamStringArray_t **/ pTags, WorkshopFileType /*EWorkshopFileType*/ eWorkshopFileType );
 				[DllImport( "libsteam_api.dylib" )]
 				internal static extern PublishedFileUpdateHandle_t /*(PublishedFileUpdateHandle_t)*/ SteamAPI_ISteamRemoteStorage_CreatePublishedFileUpdateRequest( IntPtr ISteamRemoteStorage, ulong unPublishedFileId );
 				[return: MarshalAs(UnmanagedType.U1)]
@@ -5384,7 +5384,7 @@ namespace SteamNative
 				internal static extern bool /*bool*/ SteamAPI_ISteamRemoteStorage_UpdatePublishedFileVisibility( IntPtr ISteamRemoteStorage, ulong updateHandle, RemoteStoragePublishedFileVisibility /*ERemoteStoragePublishedFileVisibility*/ eVisibility );
 				[return: MarshalAs(UnmanagedType.U1)]
 				[DllImport( "libsteam_api.dylib" )]
-				internal static extern bool /*bool*/ SteamAPI_ISteamRemoteStorage_UpdatePublishedFileTags( IntPtr ISteamRemoteStorage, ulong updateHandle, ref SteamParamStringArray_t.PackSmall /*struct SteamParamStringArray_t **/ pTags );
+				internal static extern bool /*bool*/ SteamAPI_ISteamRemoteStorage_UpdatePublishedFileTags( IntPtr ISteamRemoteStorage, ulong updateHandle, ref SteamParamStringArray_t.Pack4 /*struct SteamParamStringArray_t **/ pTags );
 				[DllImport( "libsteam_api.dylib" )]
 				internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamRemoteStorage_CommitPublishedFileUpdate( IntPtr ISteamRemoteStorage, ulong updateHandle );
 				[DllImport( "libsteam_api.dylib" )]
@@ -5409,15 +5409,15 @@ namespace SteamNative
 				[DllImport( "libsteam_api.dylib" )]
 				internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamRemoteStorage_GetUserPublishedItemVoteDetails( IntPtr ISteamRemoteStorage, ulong unPublishedFileId );
 				[DllImport( "libsteam_api.dylib" )]
-				internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamRemoteStorage_EnumerateUserSharedWorkshopFiles( IntPtr ISteamRemoteStorage, ulong steamId, uint /*uint32*/ unStartIndex, ref SteamParamStringArray_t.PackSmall /*struct SteamParamStringArray_t **/ pRequiredTags, ref SteamParamStringArray_t.PackSmall /*struct SteamParamStringArray_t **/ pExcludedTags );
+				internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamRemoteStorage_EnumerateUserSharedWorkshopFiles( IntPtr ISteamRemoteStorage, ulong steamId, uint /*uint32*/ unStartIndex, ref SteamParamStringArray_t.Pack4 /*struct SteamParamStringArray_t **/ pRequiredTags, ref SteamParamStringArray_t.Pack4 /*struct SteamParamStringArray_t **/ pExcludedTags );
 				[DllImport( "libsteam_api.dylib" )]
-				internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamRemoteStorage_PublishVideo( IntPtr ISteamRemoteStorage, WorkshopVideoProvider /*EWorkshopVideoProvider*/ eVideoProvider, string /*const char **/ pchVideoAccount, string /*const char **/ pchVideoIdentifier, string /*const char **/ pchPreviewFile, uint nConsumerAppId, string /*const char **/ pchTitle, string /*const char **/ pchDescription, RemoteStoragePublishedFileVisibility /*ERemoteStoragePublishedFileVisibility*/ eVisibility, ref SteamParamStringArray_t.PackSmall /*struct SteamParamStringArray_t **/ pTags );
+				internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamRemoteStorage_PublishVideo( IntPtr ISteamRemoteStorage, WorkshopVideoProvider /*EWorkshopVideoProvider*/ eVideoProvider, string /*const char **/ pchVideoAccount, string /*const char **/ pchVideoIdentifier, string /*const char **/ pchPreviewFile, uint nConsumerAppId, string /*const char **/ pchTitle, string /*const char **/ pchDescription, RemoteStoragePublishedFileVisibility /*ERemoteStoragePublishedFileVisibility*/ eVisibility, ref SteamParamStringArray_t.Pack4 /*struct SteamParamStringArray_t **/ pTags );
 				[DllImport( "libsteam_api.dylib" )]
 				internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamRemoteStorage_SetUserPublishedFileAction( IntPtr ISteamRemoteStorage, ulong unPublishedFileId, WorkshopFileAction /*EWorkshopFileAction*/ eAction );
 				[DllImport( "libsteam_api.dylib" )]
 				internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamRemoteStorage_EnumeratePublishedFilesByUserAction( IntPtr ISteamRemoteStorage, WorkshopFileAction /*EWorkshopFileAction*/ eAction, uint /*uint32*/ unStartIndex );
 				[DllImport( "libsteam_api.dylib" )]
-				internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamRemoteStorage_EnumeratePublishedWorkshopFiles( IntPtr ISteamRemoteStorage, WorkshopEnumerationType /*EWorkshopEnumerationType*/ eEnumerationType, uint /*uint32*/ unStartIndex, uint /*uint32*/ unCount, uint /*uint32*/ unDays, ref SteamParamStringArray_t.PackSmall /*struct SteamParamStringArray_t **/ pTags, ref SteamParamStringArray_t.PackSmall /*struct SteamParamStringArray_t **/ pUserTags );
+				internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamRemoteStorage_EnumeratePublishedWorkshopFiles( IntPtr ISteamRemoteStorage, WorkshopEnumerationType /*EWorkshopEnumerationType*/ eEnumerationType, uint /*uint32*/ unStartIndex, uint /*uint32*/ unCount, uint /*uint32*/ unDays, ref SteamParamStringArray_t.Pack4 /*struct SteamParamStringArray_t **/ pTags, ref SteamParamStringArray_t.Pack4 /*struct SteamParamStringArray_t **/ pUserTags );
 				[DllImport( "libsteam_api.dylib" )]
 				internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamRemoteStorage_UGCDownloadToLocation( IntPtr ISteamRemoteStorage, ulong hContent, string /*const char **/ pchLocation, uint /*uint32*/ unPriority );
 				
@@ -5503,7 +5503,7 @@ namespace SteamNative
 				internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamUserStats_DownloadLeaderboardEntriesForUsers( IntPtr ISteamUserStats, ulong hSteamLeaderboard, IntPtr /*class CSteamID **/ prgUsers, int /*int*/ cUsers );
 				[return: MarshalAs(UnmanagedType.U1)]
 				[DllImport( "libsteam_api.dylib" )]
-				internal static extern bool /*bool*/ SteamAPI_ISteamUserStats_GetDownloadedLeaderboardEntry( IntPtr ISteamUserStats, ulong hSteamLeaderboardEntries, int /*int*/ index, ref LeaderboardEntry_t.PackSmall /*struct LeaderboardEntry_t **/ pLeaderboardEntry, IntPtr /*int32 **/ pDetails, int /*int*/ cDetailsMax );
+				internal static extern bool /*bool*/ SteamAPI_ISteamUserStats_GetDownloadedLeaderboardEntry( IntPtr ISteamUserStats, ulong hSteamLeaderboardEntries, int /*int*/ index, ref LeaderboardEntry_t.Pack4 /*struct LeaderboardEntry_t **/ pLeaderboardEntry, IntPtr /*int32 **/ pDetails, int /*int*/ cDetailsMax );
 				[DllImport( "libsteam_api.dylib" )]
 				internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamUserStats_UploadLeaderboardScore( IntPtr ISteamUserStats, ulong hSteamLeaderboard, LeaderboardUploadScoreMethod /*ELeaderboardUploadScoreMethod*/ eLeaderboardUploadScoreMethod, int /*int32*/ nScore, int[] /*const int32 **/ pScoreDetails, int /*int*/ cScoreDetailsCount );
 				[DllImport( "libsteam_api.dylib" )]
@@ -5628,7 +5628,7 @@ namespace SteamNative
 				internal static extern bool /*bool*/ SteamAPI_ISteamNetworking_CloseP2PChannelWithUser( IntPtr ISteamNetworking, ulong steamIDRemote, int /*int*/ nChannel );
 				[return: MarshalAs(UnmanagedType.U1)]
 				[DllImport( "libsteam_api.dylib" )]
-				internal static extern bool /*bool*/ SteamAPI_ISteamNetworking_GetP2PSessionState( IntPtr ISteamNetworking, ulong steamIDRemote, ref P2PSessionState_t.PackSmall /*struct P2PSessionState_t **/ pConnectionState );
+				internal static extern bool /*bool*/ SteamAPI_ISteamNetworking_GetP2PSessionState( IntPtr ISteamNetworking, ulong steamIDRemote, ref P2PSessionState_t.Pack4 /*struct P2PSessionState_t **/ pConnectionState );
 				[return: MarshalAs(UnmanagedType.U1)]
 				[DllImport( "libsteam_api.dylib" )]
 				internal static extern bool /*bool*/ SteamAPI_ISteamNetworking_AllowP2PPacketRelay( IntPtr ISteamNetworking, [MarshalAs(UnmanagedType.U1)] bool /*bool*/ bAllow );
@@ -6058,7 +6058,7 @@ namespace SteamNative
 				internal static extern SteamAPICall_t /*(SteamAPICall_t)*/ SteamAPI_ISteamUGC_SendQueryUGCRequest( IntPtr ISteamUGC, ulong handle );
 				[return: MarshalAs(UnmanagedType.U1)]
 				[DllImport( "libsteam_api.dylib" )]
-				internal static extern bool /*bool*/ SteamAPI_ISteamUGC_GetQueryUGCResult( IntPtr ISteamUGC, ulong handle, uint /*uint32*/ index, ref SteamUGCDetails_t.PackSmall /*struct SteamUGCDetails_t **/ pDetails );
+				internal static extern bool /*bool*/ SteamAPI_ISteamUGC_GetQueryUGCResult( IntPtr ISteamUGC, ulong handle, uint /*uint32*/ index, ref SteamUGCDetails_t.Pack4 /*struct SteamUGCDetails_t **/ pDetails );
 				[return: MarshalAs(UnmanagedType.U1)]
 				[DllImport( "libsteam_api.dylib" )]
 				internal static extern bool /*bool*/ SteamAPI_ISteamUGC_GetQueryUGCPreviewURL( IntPtr ISteamUGC, ulong handle, uint /*uint32*/ index, System.Text.StringBuilder /*char **/ pchURL, uint /*uint32*/ cchURLSize );
@@ -6158,7 +6158,7 @@ namespace SteamNative
 				internal static extern bool /*bool*/ SteamAPI_ISteamUGC_SetItemVisibility( IntPtr ISteamUGC, ulong handle, RemoteStoragePublishedFileVisibility /*ERemoteStoragePublishedFileVisibility*/ eVisibility );
 				[return: MarshalAs(UnmanagedType.U1)]
 				[DllImport( "libsteam_api.dylib" )]
-				internal static extern bool /*bool*/ SteamAPI_ISteamUGC_SetItemTags( IntPtr ISteamUGC, ulong updateHandle, ref SteamParamStringArray_t.PackSmall /*const struct SteamParamStringArray_t **/ pTags );
+				internal static extern bool /*bool*/ SteamAPI_ISteamUGC_SetItemTags( IntPtr ISteamUGC, ulong updateHandle, ref SteamParamStringArray_t.Pack4 /*const struct SteamParamStringArray_t **/ pTags );
 				[return: MarshalAs(UnmanagedType.U1)]
 				[DllImport( "libsteam_api.dylib" )]
 				internal static extern bool /*bool*/ SteamAPI_ISteamUGC_SetItemContent( IntPtr ISteamUGC, ulong handle, string /*const char **/ pszContentFolder );

@@ -46,11 +46,20 @@ namespace Generator
 				c.InterfaceString = interfaceMatch.Groups[1].Value;
 			}
 
+			var lastCallResult = "";
+
 			foreach ( var line in lines )
 			{
 				if ( line.Trim().Length < 4 ) continue;
 				if ( line.Trim().StartsWith( "public:" ) ) continue;
 				if ( line.Trim().StartsWith( "//" ) ) continue;
+
+				var callresult = Regex.Match( line, @"STEAM_CALL_RESULT\( (.+?) \)" );
+				if ( callresult.Success )
+				{
+					lastCallResult = callresult.Groups[1].Value.Trim();
+					continue;
+				}
 
 				var f = func.Match( line );
 				if ( f.Success )
@@ -63,7 +72,10 @@ namespace Generator
 					if ( funcName.Contains( ' ' ) || funcName.Contains( '*' ) )
 						throw new System.Exception( "Parsing Error!" );
 
-					c.AddFunction( funcName, returnType, args );
+					var fnc = c.AddFunction( funcName, returnType, args );
+
+					fnc.CallResult = lastCallResult;
+					lastCallResult = null;
 				}
 				else
 				{
