@@ -51,7 +51,7 @@ namespace Generator
             if ( m.ClassName == "SteamApi" )
                 flatName = methodName;
 
-            var argstring = string.Join( ", ", arguments.Select( x => x.InteropParameter( true, true ) ) );
+            var argstring = string.Join( ", ", arguments.Select( x => x.InteropParameter( true, true, true ) ) );
             if ( argstring != "" ) argstring = $" {argstring} ";
 
             WriteLine( $"{ret.Return()} {m.ClassName}_{methodName}({argstring});" );

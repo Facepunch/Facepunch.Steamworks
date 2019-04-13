@@ -89,7 +89,7 @@ namespace Generator
             if ( classname == "SteamApi" )
                 flatName = methodName;
 
-            var argstring = string.Join( ", ", arguments.Select( x => x.InteropParameter( true, true ) ) );
+            var argstring = string.Join( ", ", arguments.Select( x => x.InteropParameter( true, true, true ) ) );
             if ( argstring != "" ) argstring = $" {argstring} ";
 
             StartBlock( $"public virtual {ret.Return()} {classname}_{methodName}({argstring})" );
@@ -113,16 +113,25 @@ namespace Generator
 
                 foreach ( var a in arguments )
                 {
-                    if ( a.InteropParameter( LargePack ).Contains( ".PackSmall" ) )
+                    if ( a.InteropParameter( false, LargePack, false ).Contains( ".Pack4" ) )
                     {
-                        WriteLine( $"var {a.Name}_ps = new {a.ManagedType.Trim( '*' )}.PackSmall();" );
+                        WriteLine( $"var {a.Name}_ps = new {a.ManagedType.Trim( '*' )}.Pack4();" );
                         AfterLines.Add( $"{a.Name} = {a.Name}_ps;" );
                         a.Name = "ref " + a.Name + "_ps";
 
                         if ( retcode != "" )
                             retcode = "var ret = ";
                     }
-                }
+					else if ( a.InteropParameter( false, LargePack, false ).Contains( ".Pack8" ) )
+					{
+						WriteLine( $"var {a.Name}_ps = new {a.ManagedType.Trim( '*' )}.Pack8();" );
+						AfterLines.Add( $"{a.Name} = {a.Name}_ps;" );
+						a.Name = "ref " + a.Name + "_ps";
+
+						if ( retcode != "" )
+							retcode = "var ret = ";
+					}
+				}
 
                 argstring = string.Join( ", ", arguments.Select( x => x.InteropVariable( false ) ) );
 
@@ -178,7 +187,7 @@ namespace Generator
             if ( classname == "SteamApi" )
                 flatName = methodName;
 
-            var argstring = string.Join( ", ", arguments.Select( x => x.InteropParameter( LargePack, true ) ) );
+            var argstring = string.Join( ", ", arguments.Select( x => x.InteropParameter( false, LargePack, true ) ) );
 
             if ( methodDef.NeedsSelfPointer )
             {

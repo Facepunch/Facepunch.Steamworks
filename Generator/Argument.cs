@@ -205,9 +205,9 @@ namespace Generator
             return $"{Name}{value}";
         }
 
-        internal string InteropParameter( bool LargePack, bool includeMarshalling = false )
+        internal string InteropParameter( bool NoPacking, bool LargePack, bool includeMarshalling )
         {
-            var ps = LargePack ? "" : ".PackSmall";
+            var ps = NoPacking ? "" : (LargePack ? ".Pack8" : ".Pack4");
             var marshalling = "";
             if ( !NativeType.Contains( "_t" ) )
                 ps = string.Empty;
