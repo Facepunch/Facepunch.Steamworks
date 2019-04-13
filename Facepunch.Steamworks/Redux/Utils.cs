@@ -29,5 +29,32 @@ namespace Steamworks
 			failed = false;
 			return steamutils.IsAPICallCompleted( call, ref failed );
 		}
+
+		internal static T? GetResult<T>( SteamAPICall_t call ) where T : struct, ISteamCallback
+		{
+			var t = new T();
+
+			var size = t.GetStructSize();
+			var ptr = Marshal.AllocHGlobal( size );
+
+			try
+			{
+				bool failed = false;
+
+				if ( !steamutils.GetAPICallResult( call, ptr, size, t.GetCallbackId(), ref failed ) )
+					return null;
+
+				if ( failed )
+					return null;
+
+				t = (T)t.Fill( ptr, size );
+
+				return t;
+			}
+			finally
+			{
+				Marshal.FreeHGlobal( ptr );
+			}
+		}
 	}
 }
