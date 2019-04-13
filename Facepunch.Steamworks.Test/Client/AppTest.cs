@@ -17,6 +17,11 @@ namespace Steamworks
 			Steamworks.Steam.Init( 4000 );
 		}
 
+		static void OnNewUrlLaunchParameters()
+		{
+			// Wow!
+		}
+
 		[TestMethod]
         public void GameLangauge()
         {

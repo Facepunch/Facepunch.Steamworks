@@ -269,7 +269,7 @@ namespace Steamworks.Internal
 		#endregion
 		public async Task<CheckFileSignature_t?> CheckFileSignature( string szFileName )
 		{
-			return await (new SteamApiCallback<CheckFileSignature_t>( CheckFileSignatureDelegatePointer( Self, szFileName ) )).GetResult();
+			return await (new Result<CheckFileSignature_t>( CheckFileSignatureDelegatePointer( Self, szFileName ) )).GetResult();
 		}
 		
 		#region FunctionMeta

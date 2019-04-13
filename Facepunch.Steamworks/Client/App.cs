@@ -17,7 +17,7 @@ namespace Facepunch.Steamworks
             client.RegisterCallback<SteamNative.DlcInstalled_t>( DlcInstalled );
         }
 
-        public delegate void DlcInstalledDelegate( uint appid );
+		public delegate void DlcInstalledDelegate( uint appid );
 
         /// <summary>
         /// Triggered after the current user gains ownership of DLC and that DLC is installed.

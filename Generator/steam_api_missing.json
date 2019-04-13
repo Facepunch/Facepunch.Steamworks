@@ -1,10 +1,14 @@
 {
-  "structs":
-  [
+  "structs": [
+    {
+      "struct": "NewUrlLaunchParameters_t",
+      "fields": [
+      ]
+    },
+
     {
       "struct": "ItemInstalled_t",
-      "fields":
-      [
+      "fields": [
         {
           "fieldname": "m_unAppID",
           "fieldtype": "AppId_t"
@@ -18,8 +22,7 @@
 
     {
       "struct": "InputAnalogActionData_t",
-      "fields":
-      [
+      "fields": [
         {
           "fieldname": "eMode",
           "fieldtype": "EInputSourceMode"
@@ -41,8 +44,7 @@
 
     {
       "struct": "InputMotionData_t",
-      "fields":
-      [
+      "fields": [
         {
           "fieldname": "rotQuatX",
           "fieldtype": "float"
@@ -98,8 +100,7 @@
 
     {
       "struct": "InputDigitalActionData_t",
-      "fields":
-      [
+      "fields": [
         {
           "fieldname": "bState",
           "fieldtype": "bool"
@@ -128,8 +129,7 @@
 
     {
       "struct": "GCMessageAvailable_t",
-      "fields":
-      [
+      "fields": [
         {
           "fieldname": "m_nMessageSize",
           "fieldtype": "uint32"
@@ -153,8 +153,7 @@
     },
     {
       "struct": "IPCFailure_t",
-      "fields":
-      [
+      "fields": [
         {
           "fieldname": "m_eFailureType",
           "fieldtype": "uint8"

@@ -7,11 +7,14 @@ using SteamNative;
 
 namespace Steamworks
 {
-	public struct SteamApiCallback<T> where T : struct, ISteamCallback
+	/// <summary>
+	/// Results are Steam Callbacks that are direct responses to function calls
+	/// </summary>
+	public struct Result<T> where T : struct, ISteamCallback
 	{
 		public ulong CallHandle;
 
-		public SteamApiCallback( ulong callbackHandle )
+		public Result( ulong callbackHandle )
 		{
 			CallHandle = callbackHandle;
 		}
@@ -35,12 +38,5 @@ namespace Steamworks
 
 			return Utils.GetResult<T>( CallHandle );
 		}
-	}
-
-	public interface ISteamCallback
-	{
-		int GetCallbackId();
-		int GetStructSize();
-		ISteamCallback Fill( IntPtr ptr, int size );
 	}
 }

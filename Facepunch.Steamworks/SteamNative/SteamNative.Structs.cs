@@ -31481,6 +31481,171 @@ namespace SteamNative
 		}
 	}
 	
+	public struct NewUrlLaunchParameters_t : Steamworks.ISteamCallback
+	{
+		internal const int CallbackId = CallbackIdentifiers.SteamApps + 14;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
+		
+		//
+		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
+		//
+		internal static NewUrlLaunchParameters_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((NewUrlLaunchParameters_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((NewUrlLaunchParameters_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		
+		//
+		// Get the size of the structure we're going to be using.
+		//
+		internal static int StructSize()
+		{
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack4
+		{
+			
+			public static implicit operator NewUrlLaunchParameters_t ( NewUrlLaunchParameters_t.Pack4 d ) => new NewUrlLaunchParameters_t{  };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			
+			public static implicit operator NewUrlLaunchParameters_t ( NewUrlLaunchParameters_t.Pack8 d ) => new NewUrlLaunchParameters_t{  };
+		}
+		
+		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
+		{
+			var handle = new CallbackHandle( steamworks );
+			
+			//
+			// Create the functions we need for the vtable
+			//
+			if ( Facepunch.Steamworks.Config.UseThisCall )
+			{
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				if ( Platform.IsWindows )
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWinThis ) ) );
+					var vTable = new Callback.VTableWinThis
+					{
+						ResultA = OnResultThis,
+						ResultB = OnResultWithInfoThis,
+						GetSize = OnGetSizeThis,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+				else
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableThis ) ) );
+					var vTable = new Callback.VTableThis
+					{
+						ResultA = OnResultThis,
+						ResultB = OnResultWithInfoThis,
+						GetSize = OnGetSizeThis,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+			}
+			else
+			{
+				//
+				// Create the VTable by manually allocating the memory and copying across
+				//
+				if ( Platform.IsWindows )
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTableWin ) ) );
+					var vTable = new Callback.VTableWin
+					{
+						ResultA = OnResult,
+						ResultB = OnResultWithInfo,
+						GetSize = OnGetSize,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+				else
+				{
+					handle.vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+					var vTable = new Callback.VTable
+					{
+						ResultA = OnResult,
+						ResultB = OnResultWithInfo,
+						GetSize = OnGetSize,
+					};
+					handle.FuncA = GCHandle.Alloc( vTable.ResultA );
+					handle.FuncB = GCHandle.Alloc( vTable.ResultB );
+					handle.FuncC = GCHandle.Alloc( vTable.GetSize );
+					Marshal.StructureToPtr( vTable, handle.vTablePtr, false );
+				}
+			}
+			
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = handle.vTablePtr;
+			cb.CallbackFlags = steamworks.IsGameServer ? (byte) SteamNative.Callback.Flags.GameServer : (byte) 0;
+			cb.CallbackId = CallbackId;
+			
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			handle.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			
+			//
+			// Register the callback with Steam
+			//
+			steamworks.native.api.SteamAPI_RegisterCallback( handle.PinnedCallback.AddrOfPinnedObject(), CallbackId );
+			
+			steamworks.RegisterCallbackHandle( handle );
+		}
+		
+		[MonoPInvokeCallback]
+		internal static void OnResultThis( IntPtr self, IntPtr param ){ OnResult( param ); }
+		[MonoPInvokeCallback]
+		internal static void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ){ OnResultWithInfo( param, failure, call ); }
+		[MonoPInvokeCallback]
+		internal static int OnGetSizeThis( IntPtr self ){ return OnGetSize(); }
+		[MonoPInvokeCallback]
+		internal static int OnGetSize(){ return StructSize(); }
+		
+		[MonoPInvokeCallback]
+		internal static void OnResult( IntPtr param )
+		{
+			OnResultWithInfo( param, false, 0 );
+		}
+		
+		[MonoPInvokeCallback]
+		internal static void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
+		{
+			if ( failure ) return;
+			
+			var value = FromPointer( param );
+			
+			if ( Facepunch.Steamworks.Client.Instance != null )
+			    Facepunch.Steamworks.Client.Instance.OnCallback<NewUrlLaunchParameters_t>( value );
+			
+			if ( Facepunch.Steamworks.Server.Instance != null )
+			    Facepunch.Steamworks.Server.Instance.OnCallback<NewUrlLaunchParameters_t>( value );
+		}
+	}
+	
 	public struct ItemInstalled_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 5;
@@ -33670,6 +33835,7 @@ namespace SteamNative
 			GSStatsReceived_t.Register( steamworks );
 			GSStatsStored_t.Register( steamworks );
 			GSStatsUnloaded_t.Register( steamworks );
+			NewUrlLaunchParameters_t.Register( steamworks );
 			ItemInstalled_t.Register( steamworks );
 			SteamInventoryDefinitionUpdate_t.Register( steamworks );
 			SteamParentalSettingsChanged_t.Register( steamworks );

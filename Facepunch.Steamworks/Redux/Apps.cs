@@ -24,6 +24,7 @@ namespace Steamworks
 			}
 		}
 
+
 		/// <summary>
 		/// Checks if the active user is subscribed to the current App ID
 		/// </summary>

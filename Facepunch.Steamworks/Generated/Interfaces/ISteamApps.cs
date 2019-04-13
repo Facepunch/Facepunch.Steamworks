@@ -340,7 +340,7 @@ namespace Steamworks.Internal
 		#endregion
 		public async Task<FileDetailsResult_t?> GetFileDetails( string pszFileName )
 		{
-			return await (new SteamApiCallback<FileDetailsResult_t>( GetFileDetailsDelegatePointer( Self, pszFileName ) )).GetResult();
+			return await (new Result<FileDetailsResult_t>( GetFileDetailsDelegatePointer( Self, pszFileName ) )).GetResult();
 		}
 		
 		#region FunctionMeta
