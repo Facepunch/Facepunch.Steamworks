@@ -12,6 +12,11 @@ namespace Steamworks
 
 		public static void Init( uint appid )
 		{
+			if ( IntPtr.Size != 8 )
+			{
+				throw new System.Exception( "Only 64bit processes are currently supported" );
+			}
+
 			System.Environment.SetEnvironmentVariable( "SteamAppId", appid.ToString() );
 			System.Environment.SetEnvironmentVariable( "SteamGameId", appid.ToString() );
 
