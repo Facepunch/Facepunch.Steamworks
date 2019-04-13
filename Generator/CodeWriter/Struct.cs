@@ -53,16 +53,25 @@ namespace Generator
                 if (  c.Fields.Any( x => x.Type.Contains( "class CSteamID" ) ) && !ForceLargePackStructs.Contains( c.Name ) )
                     defaultPack = 4;
 
-                //
-                // Main struct
-                //
-                WriteLine( $"[StructLayout( LayoutKind.Sequential, Pack = {defaultPack} )]" );
-                StartBlock( $"public struct {c.Name}" );
+				var isCallback = !string.IsNullOrEmpty( c.CallbackId );
+
+				//
+				// Main struct
+				//
+                StartBlock( $"public struct {c.Name}{(isCallback?" : Steamworks.ISteamCallback":"")}" );
                 {
-                    if ( !string.IsNullOrEmpty( c.CallbackId ) )
+                    if ( isCallback  )
                     {
                         WriteLine( "internal const int CallbackId = " + c.CallbackId  + ";" );
-                    }
+						WriteLine( "public int GetCallbackId() => CallbackId;" );
+						WriteLine( "public int GetStructSize() => StructSize();" );
+
+						StartBlock( "public Steamworks.ISteamCallback Fill( IntPtr p, int size)" );
+						{
+							WriteLine( "return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW" );
+						}
+						EndBlock();
+					}
 
                     //
                     // The fields
@@ -73,13 +82,10 @@ namespace Generator
                     WriteLine( "//" );
                     WriteLine( "// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff." );
                     WriteLine( "//" );
-                    StartBlock( $"internal static {c.Name} FromPointer( IntPtr p )" );
+					WriteLine( $"internal static {c.Name} FromPointer( IntPtr p ) => " );
                     {
-                        WriteLine( $"if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );" );
-
-                        WriteLine( $"return ({c.Name}) Marshal.PtrToStructure( p, typeof({c.Name}) );" );
+                        WriteLine( $"	Platform.PackSmall ? (({c.Name})(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : (({c.Name})(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));" );
                     }
-                    EndBlock();
 
                     WriteLine();
                     WriteLine( "//" );
@@ -87,21 +93,19 @@ namespace Generator
                     WriteLine( "//" );
                     StartBlock( $"internal static int StructSize()" );
                     {
-                        WriteLine( $"if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );" );
-
-                        WriteLine( $"return System.Runtime.InteropServices.Marshal.SizeOf( typeof({c.Name}) );" );
+                        WriteLine( $"return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );" );
                     }
                     EndBlock();
 
-                    if ( defaultPack == 8 )
-                        defaultPack = 4;
+                 //   if ( defaultPack == 8 )
+                 //       defaultPack = 4;
 
                     //
                     // Small packed struct (for osx, linux)
                     //
                     WriteLine();
-                    WriteLine( $"[StructLayout( LayoutKind.Sequential, Pack = {defaultPack} )]" );
-                    StartBlock( $"public struct PackSmall" );
+                    WriteLine( $"[StructLayout( LayoutKind.Sequential, Pack = 4 )]" );
+                    StartBlock( $"public struct Pack4" );
                     {
                         StructFields( c.Fields );
 
@@ -109,26 +113,50 @@ namespace Generator
                         // Implicit convert from PackSmall to regular
                         //
                         WriteLine();
-                        WriteLine( "//" );
-                        WriteLine( $"// Easily convert from PackSmall to {c.Name}" );
-                        WriteLine( "//" );
-                        StartBlock( $"public static implicit operator {c.Name} (  {c.Name}.PackSmall d )" );
+                        Write( $"public static implicit operator {c.Name} ( {c.Name}.Pack4 d ) => " );
                         {
-                            StartBlock( $"return new {c.Name}()" );
+                            Write( $"new {c.Name}{{ " );
                             {
                                 foreach ( var f in c.Fields )
                                 {
-                                    WriteLine( $"{CleanMemberName( f.Name )} = d.{CleanMemberName( f.Name )}," );
+									Write( $"{CleanMemberName( f.Name )} = d.{CleanMemberName( f.Name )}," );
                                 }
                             }
-                            EndBlock( ";" );
+                            WriteLine( " };" );
                         }
-                        EndBlock();
 
-                    }
+					}
                     EndBlock();
 
-                    if ( c.IsCallResult )
+					//
+					// Small packed struct (for osx, linux)
+					//
+					WriteLine();
+					WriteLine( $"[StructLayout( LayoutKind.Sequential, Pack = {defaultPack} )]" );
+					StartBlock( $"public struct Pack8" );
+					{
+						StructFields( c.Fields );
+
+						//
+						// Implicit convert from PackSmall to regular
+						//
+						WriteLine();
+						Write( $"public static implicit operator {c.Name} ( {c.Name}.Pack8 d ) => " );
+						{
+							Write( $"new {c.Name}{{ " );
+							{
+								foreach ( var f in c.Fields )
+								{
+									Write( $"{CleanMemberName( f.Name )} = d.{CleanMemberName( f.Name )}," );
+								}
+							}
+							WriteLine( " };" );
+						}
+
+					}
+					EndBlock();
+
+					if ( c.IsCallResult )
                     {
                         CallResult( c );
                     }
@@ -174,16 +202,16 @@ namespace Generator
 
                 if ( t.StartsWith( "char " ) && t.Contains( "[" ) )
                 {
-                    var num = t.Replace( "char", "" ).Trim( '[', ']', ' ' );
-                    t = "string";
-                    WriteLine( $"[MarshalAs(UnmanagedType.ByValTStr, SizeConst = {num})]" );
+					var num = t.Replace( "char", "" ).Trim( '[', ']', ' ' );
+					t = "string";
+					WriteLine( $"[MarshalAs(UnmanagedType.ByValTStr, SizeConst = {num})]" );
                 }
 
                 if ( t.StartsWith( "uint8 " ) && t.Contains( "[" ) )
                 {
                     var num = t.Replace( "uint8", "" ).Trim( '[', ']', ' ' );
-                    t = "char";
-                    WriteLine( $"[MarshalAs(UnmanagedType.ByValTStr, SizeConst = {num})]" );
+                    t = "byte[]";
+                    WriteLine( $"[MarshalAs(UnmanagedType.ByValArray, SizeConst = {num})] //  {m.Name}" );
                 }
 
                 if ( t.StartsWith( "CSteamID " ) && t.Contains( "[" ) )

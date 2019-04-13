@@ -4,7 +4,6 @@ using System.Linq;
 
 namespace SteamNative
 {
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct CallbackMsg_t
 	{
 		internal int SteamUser; // m_hSteamUser HSteamUser
@@ -15,49 +14,49 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static CallbackMsg_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (CallbackMsg_t) Marshal.PtrToStructure( p, typeof(CallbackMsg_t) );
-		}
+		internal static CallbackMsg_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((CallbackMsg_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((CallbackMsg_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(CallbackMsg_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal int SteamUser; // m_hSteamUser HSteamUser
 			internal int Callback; // m_iCallback int
 			internal IntPtr ParamPtr; // m_pubParam uint8 *
 			internal int ParamCount; // m_cubParam int
 			
-			//
-			// Easily convert from PackSmall to CallbackMsg_t
-			//
-			public static implicit operator CallbackMsg_t (  CallbackMsg_t.PackSmall d )
-			{
-				return new CallbackMsg_t()
-				{
-					SteamUser = d.SteamUser,
-					Callback = d.Callback,
-					ParamPtr = d.ParamPtr,
-					ParamCount = d.ParamCount,
-				};
-			}
+			public static implicit operator CallbackMsg_t ( CallbackMsg_t.Pack4 d ) => new CallbackMsg_t{ SteamUser = d.SteamUser,Callback = d.Callback,ParamPtr = d.ParamPtr,ParamCount = d.ParamCount, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal int SteamUser; // m_hSteamUser HSteamUser
+			internal int Callback; // m_iCallback int
+			internal IntPtr ParamPtr; // m_pubParam uint8 *
+			internal int ParamCount; // m_cubParam int
+			
+			public static implicit operator CallbackMsg_t ( CallbackMsg_t.Pack8 d ) => new CallbackMsg_t{ SteamUser = d.SteamUser,Callback = d.Callback,ParamPtr = d.ParamPtr,ParamCount = d.ParamCount, };
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct SteamServerConnectFailure_t
+	public struct SteamServerConnectFailure_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUser + 2;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool StillRetrying; // m_bStillRetrying _Bool
@@ -65,39 +64,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static SteamServerConnectFailure_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (SteamServerConnectFailure_t) Marshal.PtrToStructure( p, typeof(SteamServerConnectFailure_t) );
-		}
+		internal static SteamServerConnectFailure_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((SteamServerConnectFailure_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((SteamServerConnectFailure_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamServerConnectFailure_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool StillRetrying; // m_bStillRetrying _Bool
 			
-			//
-			// Easily convert from PackSmall to SteamServerConnectFailure_t
-			//
-			public static implicit operator SteamServerConnectFailure_t (  SteamServerConnectFailure_t.PackSmall d )
-			{
-				return new SteamServerConnectFailure_t()
-				{
-					Result = d.Result,
-					StillRetrying = d.StillRetrying,
-				};
-			}
+			public static implicit operator SteamServerConnectFailure_t ( SteamServerConnectFailure_t.Pack4 d ) => new SteamServerConnectFailure_t{ Result = d.Result,StillRetrying = d.StillRetrying, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool StillRetrying; // m_bStillRetrying _Bool
+			
+			public static implicit operator SteamServerConnectFailure_t ( SteamServerConnectFailure_t.Pack8 d ) => new SteamServerConnectFailure_t{ Result = d.Result,StillRetrying = d.StillRetrying, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -227,45 +222,45 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct SteamServersDisconnected_t
+	public struct SteamServersDisconnected_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUser + 3;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static SteamServersDisconnected_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (SteamServersDisconnected_t) Marshal.PtrToStructure( p, typeof(SteamServersDisconnected_t) );
-		}
+		internal static SteamServersDisconnected_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((SteamServersDisconnected_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((SteamServersDisconnected_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamServersDisconnected_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			
-			//
-			// Easily convert from PackSmall to SteamServersDisconnected_t
-			//
-			public static implicit operator SteamServersDisconnected_t (  SteamServersDisconnected_t.PackSmall d )
-			{
-				return new SteamServersDisconnected_t()
-				{
-					Result = d.Result,
-				};
-			}
+			public static implicit operator SteamServersDisconnected_t ( SteamServersDisconnected_t.Pack4 d ) => new SteamServersDisconnected_t{ Result = d.Result, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			
+			public static implicit operator SteamServersDisconnected_t ( SteamServersDisconnected_t.Pack8 d ) => new SteamServersDisconnected_t{ Result = d.Result, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -395,10 +390,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct ClientGameServerDeny_t
+	public struct ClientGameServerDeny_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUser + 13;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint AppID; // m_uAppID uint32
 		internal uint GameServerIP; // m_unGameServerIP uint32
 		internal ushort GameServerPort; // m_usGameServerPort uint16
@@ -408,23 +408,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static ClientGameServerDeny_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (ClientGameServerDeny_t) Marshal.PtrToStructure( p, typeof(ClientGameServerDeny_t) );
-		}
+		internal static ClientGameServerDeny_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((ClientGameServerDeny_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((ClientGameServerDeny_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(ClientGameServerDeny_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint AppID; // m_uAppID uint32
 			internal uint GameServerIP; // m_unGameServerIP uint32
@@ -432,20 +428,19 @@ namespace SteamNative
 			internal ushort Secure; // m_bSecure uint16
 			internal uint Reason; // m_uReason uint32
 			
-			//
-			// Easily convert from PackSmall to ClientGameServerDeny_t
-			//
-			public static implicit operator ClientGameServerDeny_t (  ClientGameServerDeny_t.PackSmall d )
-			{
-				return new ClientGameServerDeny_t()
-				{
-					AppID = d.AppID,
-					GameServerIP = d.GameServerIP,
-					GameServerPort = d.GameServerPort,
-					Secure = d.Secure,
-					Reason = d.Reason,
-				};
-			}
+			public static implicit operator ClientGameServerDeny_t ( ClientGameServerDeny_t.Pack4 d ) => new ClientGameServerDeny_t{ AppID = d.AppID,GameServerIP = d.GameServerIP,GameServerPort = d.GameServerPort,Secure = d.Secure,Reason = d.Reason, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint AppID; // m_uAppID uint32
+			internal uint GameServerIP; // m_unGameServerIP uint32
+			internal ushort GameServerPort; // m_usGameServerPort uint16
+			internal ushort Secure; // m_bSecure uint16
+			internal uint Reason; // m_uReason uint32
+			
+			public static implicit operator ClientGameServerDeny_t ( ClientGameServerDeny_t.Pack8 d ) => new ClientGameServerDeny_t{ AppID = d.AppID,GameServerIP = d.GameServerIP,GameServerPort = d.GameServerPort,Secure = d.Secure,Reason = d.Reason, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -575,10 +570,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct ValidateAuthTicketResponse_t
+	public struct ValidateAuthTicketResponse_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUser + 43;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamID; // m_SteamID class CSteamID
 		internal AuthSessionResponse AuthSessionResponse; // m_eAuthSessionResponse enum EAuthSessionResponse
 		internal ulong OwnerSteamID; // m_OwnerSteamID class CSteamID
@@ -586,40 +586,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static ValidateAuthTicketResponse_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (ValidateAuthTicketResponse_t) Marshal.PtrToStructure( p, typeof(ValidateAuthTicketResponse_t) );
-		}
+		internal static ValidateAuthTicketResponse_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((ValidateAuthTicketResponse_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((ValidateAuthTicketResponse_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(ValidateAuthTicketResponse_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamID; // m_SteamID class CSteamID
 			internal AuthSessionResponse AuthSessionResponse; // m_eAuthSessionResponse enum EAuthSessionResponse
 			internal ulong OwnerSteamID; // m_OwnerSteamID class CSteamID
 			
-			//
-			// Easily convert from PackSmall to ValidateAuthTicketResponse_t
-			//
-			public static implicit operator ValidateAuthTicketResponse_t (  ValidateAuthTicketResponse_t.PackSmall d )
-			{
-				return new ValidateAuthTicketResponse_t()
-				{
-					SteamID = d.SteamID,
-					AuthSessionResponse = d.AuthSessionResponse,
-					OwnerSteamID = d.OwnerSteamID,
-				};
-			}
+			public static implicit operator ValidateAuthTicketResponse_t ( ValidateAuthTicketResponse_t.Pack4 d ) => new ValidateAuthTicketResponse_t{ SteamID = d.SteamID,AuthSessionResponse = d.AuthSessionResponse,OwnerSteamID = d.OwnerSteamID, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal ulong SteamID; // m_SteamID class CSteamID
+			internal AuthSessionResponse AuthSessionResponse; // m_eAuthSessionResponse enum EAuthSessionResponse
+			internal ulong OwnerSteamID; // m_OwnerSteamID class CSteamID
+			
+			public static implicit operator ValidateAuthTicketResponse_t ( ValidateAuthTicketResponse_t.Pack8 d ) => new ValidateAuthTicketResponse_t{ SteamID = d.SteamID,AuthSessionResponse = d.AuthSessionResponse,OwnerSteamID = d.OwnerSteamID, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -749,10 +744,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct MicroTxnAuthorizationResponse_t
+	public struct MicroTxnAuthorizationResponse_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUser + 52;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint AppID; // m_unAppID uint32
 		internal ulong OrderID; // m_ulOrderID uint64
 		internal byte Authorized; // m_bAuthorized uint8
@@ -760,40 +760,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static MicroTxnAuthorizationResponse_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (MicroTxnAuthorizationResponse_t) Marshal.PtrToStructure( p, typeof(MicroTxnAuthorizationResponse_t) );
-		}
+		internal static MicroTxnAuthorizationResponse_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((MicroTxnAuthorizationResponse_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((MicroTxnAuthorizationResponse_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(MicroTxnAuthorizationResponse_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint AppID; // m_unAppID uint32
 			internal ulong OrderID; // m_ulOrderID uint64
 			internal byte Authorized; // m_bAuthorized uint8
 			
-			//
-			// Easily convert from PackSmall to MicroTxnAuthorizationResponse_t
-			//
-			public static implicit operator MicroTxnAuthorizationResponse_t (  MicroTxnAuthorizationResponse_t.PackSmall d )
-			{
-				return new MicroTxnAuthorizationResponse_t()
-				{
-					AppID = d.AppID,
-					OrderID = d.OrderID,
-					Authorized = d.Authorized,
-				};
-			}
+			public static implicit operator MicroTxnAuthorizationResponse_t ( MicroTxnAuthorizationResponse_t.Pack4 d ) => new MicroTxnAuthorizationResponse_t{ AppID = d.AppID,OrderID = d.OrderID,Authorized = d.Authorized, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint AppID; // m_unAppID uint32
+			internal ulong OrderID; // m_ulOrderID uint64
+			internal byte Authorized; // m_bAuthorized uint8
+			
+			public static implicit operator MicroTxnAuthorizationResponse_t ( MicroTxnAuthorizationResponse_t.Pack8 d ) => new MicroTxnAuthorizationResponse_t{ AppID = d.AppID,OrderID = d.OrderID,Authorized = d.Authorized, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -923,45 +918,45 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct EncryptedAppTicketResponse_t
+	public struct EncryptedAppTicketResponse_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUser + 54;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static EncryptedAppTicketResponse_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (EncryptedAppTicketResponse_t) Marshal.PtrToStructure( p, typeof(EncryptedAppTicketResponse_t) );
-		}
+		internal static EncryptedAppTicketResponse_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((EncryptedAppTicketResponse_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((EncryptedAppTicketResponse_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(EncryptedAppTicketResponse_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			
-			//
-			// Easily convert from PackSmall to EncryptedAppTicketResponse_t
-			//
-			public static implicit operator EncryptedAppTicketResponse_t (  EncryptedAppTicketResponse_t.PackSmall d )
-			{
-				return new EncryptedAppTicketResponse_t()
-				{
-					Result = d.Result,
-				};
-			}
+			public static implicit operator EncryptedAppTicketResponse_t ( EncryptedAppTicketResponse_t.Pack4 d ) => new EncryptedAppTicketResponse_t{ Result = d.Result, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			
+			public static implicit operator EncryptedAppTicketResponse_t ( EncryptedAppTicketResponse_t.Pack8 d ) => new EncryptedAppTicketResponse_t{ Result = d.Result, };
 		}
 		
 		internal static CallResult<EncryptedAppTicketResponse_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<EncryptedAppTicketResponse_t, bool> CallbackFunction )
@@ -1096,48 +1091,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct GetAuthSessionTicketResponse_t
+	public struct GetAuthSessionTicketResponse_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUser + 63;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint AuthTicket; // m_hAuthTicket HAuthTicket
 		internal Result Result; // m_eResult enum EResult
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GetAuthSessionTicketResponse_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GetAuthSessionTicketResponse_t) Marshal.PtrToStructure( p, typeof(GetAuthSessionTicketResponse_t) );
-		}
+		internal static GetAuthSessionTicketResponse_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GetAuthSessionTicketResponse_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GetAuthSessionTicketResponse_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GetAuthSessionTicketResponse_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint AuthTicket; // m_hAuthTicket HAuthTicket
 			internal Result Result; // m_eResult enum EResult
 			
-			//
-			// Easily convert from PackSmall to GetAuthSessionTicketResponse_t
-			//
-			public static implicit operator GetAuthSessionTicketResponse_t (  GetAuthSessionTicketResponse_t.PackSmall d )
-			{
-				return new GetAuthSessionTicketResponse_t()
-				{
-					AuthTicket = d.AuthTicket,
-					Result = d.Result,
-				};
-			}
+			public static implicit operator GetAuthSessionTicketResponse_t ( GetAuthSessionTicketResponse_t.Pack4 d ) => new GetAuthSessionTicketResponse_t{ AuthTicket = d.AuthTicket,Result = d.Result, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint AuthTicket; // m_hAuthTicket HAuthTicket
+			internal Result Result; // m_eResult enum EResult
+			
+			public static implicit operator GetAuthSessionTicketResponse_t ( GetAuthSessionTicketResponse_t.Pack8 d ) => new GetAuthSessionTicketResponse_t{ AuthTicket = d.AuthTicket,Result = d.Result, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -1267,47 +1262,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct GameWebCallback_t
+	public struct GameWebCallback_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUser + 64;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 		internal string URL; // m_szURL char [256]
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GameWebCallback_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GameWebCallback_t) Marshal.PtrToStructure( p, typeof(GameWebCallback_t) );
-		}
+		internal static GameWebCallback_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GameWebCallback_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GameWebCallback_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameWebCallback_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 			internal string URL; // m_szURL char [256]
 			
-			//
-			// Easily convert from PackSmall to GameWebCallback_t
-			//
-			public static implicit operator GameWebCallback_t (  GameWebCallback_t.PackSmall d )
-			{
-				return new GameWebCallback_t()
-				{
-					URL = d.URL,
-				};
-			}
+			public static implicit operator GameWebCallback_t ( GameWebCallback_t.Pack4 d ) => new GameWebCallback_t{ URL = d.URL, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+			internal string URL; // m_szURL char [256]
+			
+			public static implicit operator GameWebCallback_t ( GameWebCallback_t.Pack8 d ) => new GameWebCallback_t{ URL = d.URL, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -1437,47 +1433,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct StoreAuthURLResponse_t
+	public struct StoreAuthURLResponse_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUser + 65;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
 		internal string URL; // m_szURL char [512]
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static StoreAuthURLResponse_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (StoreAuthURLResponse_t) Marshal.PtrToStructure( p, typeof(StoreAuthURLResponse_t) );
-		}
+		internal static StoreAuthURLResponse_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((StoreAuthURLResponse_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((StoreAuthURLResponse_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(StoreAuthURLResponse_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
 			internal string URL; // m_szURL char [512]
 			
-			//
-			// Easily convert from PackSmall to StoreAuthURLResponse_t
-			//
-			public static implicit operator StoreAuthURLResponse_t (  StoreAuthURLResponse_t.PackSmall d )
-			{
-				return new StoreAuthURLResponse_t()
-				{
-					URL = d.URL,
-				};
-			}
+			public static implicit operator StoreAuthURLResponse_t ( StoreAuthURLResponse_t.Pack4 d ) => new StoreAuthURLResponse_t{ URL = d.URL, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
+			internal string URL; // m_szURL char [512]
+			
+			public static implicit operator StoreAuthURLResponse_t ( StoreAuthURLResponse_t.Pack8 d ) => new StoreAuthURLResponse_t{ URL = d.URL, };
 		}
 		
 		internal static CallResult<StoreAuthURLResponse_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<StoreAuthURLResponse_t, bool> CallbackFunction )
@@ -1612,10 +1609,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct MarketEligibilityResponse_t
+	public struct MarketEligibilityResponse_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUser + 66;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool Allowed; // m_bAllowed _Bool
 		internal MarketNotAllowedReasonFlags NotAllowedReason; // m_eNotAllowedReason enum EMarketNotAllowedReasonFlags
@@ -1626,23 +1628,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static MarketEligibilityResponse_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (MarketEligibilityResponse_t) Marshal.PtrToStructure( p, typeof(MarketEligibilityResponse_t) );
-		}
+		internal static MarketEligibilityResponse_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((MarketEligibilityResponse_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((MarketEligibilityResponse_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(MarketEligibilityResponse_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool Allowed; // m_bAllowed _Bool
@@ -1651,20 +1649,20 @@ namespace SteamNative
 			internal int CdaySteamGuardRequiredDays; // m_cdaySteamGuardRequiredDays int
 			internal int CdayNewDeviceCooldown; // m_cdayNewDeviceCooldown int
 			
-			//
-			// Easily convert from PackSmall to MarketEligibilityResponse_t
-			//
-			public static implicit operator MarketEligibilityResponse_t (  MarketEligibilityResponse_t.PackSmall d )
-			{
-				return new MarketEligibilityResponse_t()
-				{
-					Allowed = d.Allowed,
-					NotAllowedReason = d.NotAllowedReason,
-					TAllowedAtTime = d.TAllowedAtTime,
-					CdaySteamGuardRequiredDays = d.CdaySteamGuardRequiredDays,
-					CdayNewDeviceCooldown = d.CdayNewDeviceCooldown,
-				};
-			}
+			public static implicit operator MarketEligibilityResponse_t ( MarketEligibilityResponse_t.Pack4 d ) => new MarketEligibilityResponse_t{ Allowed = d.Allowed,NotAllowedReason = d.NotAllowedReason,TAllowedAtTime = d.TAllowedAtTime,CdaySteamGuardRequiredDays = d.CdaySteamGuardRequiredDays,CdayNewDeviceCooldown = d.CdayNewDeviceCooldown, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool Allowed; // m_bAllowed _Bool
+			internal MarketNotAllowedReasonFlags NotAllowedReason; // m_eNotAllowedReason enum EMarketNotAllowedReasonFlags
+			internal uint TAllowedAtTime; // m_rtAllowedAtTime RTime32
+			internal int CdaySteamGuardRequiredDays; // m_cdaySteamGuardRequiredDays int
+			internal int CdayNewDeviceCooldown; // m_cdayNewDeviceCooldown int
+			
+			public static implicit operator MarketEligibilityResponse_t ( MarketEligibilityResponse_t.Pack8 d ) => new MarketEligibilityResponse_t{ Allowed = d.Allowed,NotAllowedReason = d.NotAllowedReason,TAllowedAtTime = d.TAllowedAtTime,CdaySteamGuardRequiredDays = d.CdaySteamGuardRequiredDays,CdayNewDeviceCooldown = d.CdayNewDeviceCooldown, };
 		}
 		
 		internal static CallResult<MarketEligibilityResponse_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<MarketEligibilityResponse_t, bool> CallbackFunction )
@@ -1799,7 +1797,6 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct FriendGameInfo_t
 	{
 		internal ulong GameID; // m_gameID class CGameID
@@ -1811,23 +1808,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static FriendGameInfo_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (FriendGameInfo_t) Marshal.PtrToStructure( p, typeof(FriendGameInfo_t) );
-		}
+		internal static FriendGameInfo_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((FriendGameInfo_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((FriendGameInfo_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(FriendGameInfo_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong GameID; // m_gameID class CGameID
 			internal uint GameIP; // m_unGameIP uint32
@@ -1835,24 +1828,22 @@ namespace SteamNative
 			internal ushort QueryPort; // m_usQueryPort uint16
 			internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
 			
-			//
-			// Easily convert from PackSmall to FriendGameInfo_t
-			//
-			public static implicit operator FriendGameInfo_t (  FriendGameInfo_t.PackSmall d )
-			{
-				return new FriendGameInfo_t()
-				{
-					GameID = d.GameID,
-					GameIP = d.GameIP,
-					GamePort = d.GamePort,
-					QueryPort = d.QueryPort,
-					SteamIDLobby = d.SteamIDLobby,
-				};
-			}
+			public static implicit operator FriendGameInfo_t ( FriendGameInfo_t.Pack4 d ) => new FriendGameInfo_t{ GameID = d.GameID,GameIP = d.GameIP,GamePort = d.GamePort,QueryPort = d.QueryPort,SteamIDLobby = d.SteamIDLobby, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal ulong GameID; // m_gameID class CGameID
+			internal uint GameIP; // m_unGameIP uint32
+			internal ushort GamePort; // m_usGamePort uint16
+			internal ushort QueryPort; // m_usQueryPort uint16
+			internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
+			
+			public static implicit operator FriendGameInfo_t ( FriendGameInfo_t.Pack8 d ) => new FriendGameInfo_t{ GameID = d.GameID,GameIP = d.GameIP,GamePort = d.GamePort,QueryPort = d.QueryPort,SteamIDLobby = d.SteamIDLobby, };
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct FriendSessionStateInfo_t
 	{
 		internal uint IOnlineSessionInstances; // m_uiOnlineSessionInstances uint32
@@ -1861,83 +1852,78 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static FriendSessionStateInfo_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (FriendSessionStateInfo_t) Marshal.PtrToStructure( p, typeof(FriendSessionStateInfo_t) );
-		}
+		internal static FriendSessionStateInfo_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((FriendSessionStateInfo_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((FriendSessionStateInfo_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(FriendSessionStateInfo_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint IOnlineSessionInstances; // m_uiOnlineSessionInstances uint32
 			internal byte IPublishedToFriendsSessionInstance; // m_uiPublishedToFriendsSessionInstance uint8
 			
-			//
-			// Easily convert from PackSmall to FriendSessionStateInfo_t
-			//
-			public static implicit operator FriendSessionStateInfo_t (  FriendSessionStateInfo_t.PackSmall d )
-			{
-				return new FriendSessionStateInfo_t()
-				{
-					IOnlineSessionInstances = d.IOnlineSessionInstances,
-					IPublishedToFriendsSessionInstance = d.IPublishedToFriendsSessionInstance,
-				};
-			}
+			public static implicit operator FriendSessionStateInfo_t ( FriendSessionStateInfo_t.Pack4 d ) => new FriendSessionStateInfo_t{ IOnlineSessionInstances = d.IOnlineSessionInstances,IPublishedToFriendsSessionInstance = d.IPublishedToFriendsSessionInstance, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint IOnlineSessionInstances; // m_uiOnlineSessionInstances uint32
+			internal byte IPublishedToFriendsSessionInstance; // m_uiPublishedToFriendsSessionInstance uint8
+			
+			public static implicit operator FriendSessionStateInfo_t ( FriendSessionStateInfo_t.Pack8 d ) => new FriendSessionStateInfo_t{ IOnlineSessionInstances = d.IOnlineSessionInstances,IPublishedToFriendsSessionInstance = d.IPublishedToFriendsSessionInstance, };
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct PersonaStateChange_t
+	public struct PersonaStateChange_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 4;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamID; // m_ulSteamID uint64
 		internal int ChangeFlags; // m_nChangeFlags int
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static PersonaStateChange_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (PersonaStateChange_t) Marshal.PtrToStructure( p, typeof(PersonaStateChange_t) );
-		}
+		internal static PersonaStateChange_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((PersonaStateChange_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((PersonaStateChange_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PersonaStateChange_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamID; // m_ulSteamID uint64
 			internal int ChangeFlags; // m_nChangeFlags int
 			
-			//
-			// Easily convert from PackSmall to PersonaStateChange_t
-			//
-			public static implicit operator PersonaStateChange_t (  PersonaStateChange_t.PackSmall d )
-			{
-				return new PersonaStateChange_t()
-				{
-					SteamID = d.SteamID,
-					ChangeFlags = d.ChangeFlags,
-				};
-			}
+			public static implicit operator PersonaStateChange_t ( PersonaStateChange_t.Pack4 d ) => new PersonaStateChange_t{ SteamID = d.SteamID,ChangeFlags = d.ChangeFlags, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong SteamID; // m_ulSteamID uint64
+			internal int ChangeFlags; // m_nChangeFlags int
+			
+			public static implicit operator PersonaStateChange_t ( PersonaStateChange_t.Pack8 d ) => new PersonaStateChange_t{ SteamID = d.SteamID,ChangeFlags = d.ChangeFlags, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -2067,45 +2053,45 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct GameOverlayActivated_t
+	public struct GameOverlayActivated_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 31;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal byte Active; // m_bActive uint8
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GameOverlayActivated_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GameOverlayActivated_t) Marshal.PtrToStructure( p, typeof(GameOverlayActivated_t) );
-		}
+		internal static GameOverlayActivated_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GameOverlayActivated_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GameOverlayActivated_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameOverlayActivated_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal byte Active; // m_bActive uint8
 			
-			//
-			// Easily convert from PackSmall to GameOverlayActivated_t
-			//
-			public static implicit operator GameOverlayActivated_t (  GameOverlayActivated_t.PackSmall d )
-			{
-				return new GameOverlayActivated_t()
-				{
-					Active = d.Active,
-				};
-			}
+			public static implicit operator GameOverlayActivated_t ( GameOverlayActivated_t.Pack4 d ) => new GameOverlayActivated_t{ Active = d.Active, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal byte Active; // m_bActive uint8
+			
+			public static implicit operator GameOverlayActivated_t ( GameOverlayActivated_t.Pack8 d ) => new GameOverlayActivated_t{ Active = d.Active, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -2235,10 +2221,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct GameServerChangeRequested_t
+	public struct GameServerChangeRequested_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 32;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
 		internal string Server; // m_rgchServer char [64]
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
@@ -2247,40 +2238,37 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GameServerChangeRequested_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GameServerChangeRequested_t) Marshal.PtrToStructure( p, typeof(GameServerChangeRequested_t) );
-		}
+		internal static GameServerChangeRequested_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GameServerChangeRequested_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GameServerChangeRequested_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameServerChangeRequested_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
 			internal string Server; // m_rgchServer char [64]
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
 			internal string Password; // m_rgchPassword char [64]
 			
-			//
-			// Easily convert from PackSmall to GameServerChangeRequested_t
-			//
-			public static implicit operator GameServerChangeRequested_t (  GameServerChangeRequested_t.PackSmall d )
-			{
-				return new GameServerChangeRequested_t()
-				{
-					Server = d.Server,
-					Password = d.Password,
-				};
-			}
+			public static implicit operator GameServerChangeRequested_t ( GameServerChangeRequested_t.Pack4 d ) => new GameServerChangeRequested_t{ Server = d.Server,Password = d.Password, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+			internal string Server; // m_rgchServer char [64]
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+			internal string Password; // m_rgchPassword char [64]
+			
+			public static implicit operator GameServerChangeRequested_t ( GameServerChangeRequested_t.Pack8 d ) => new GameServerChangeRequested_t{ Server = d.Server,Password = d.Password, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -2410,48 +2398,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct GameLobbyJoinRequested_t
+	public struct GameLobbyJoinRequested_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 33;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
 		internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GameLobbyJoinRequested_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GameLobbyJoinRequested_t) Marshal.PtrToStructure( p, typeof(GameLobbyJoinRequested_t) );
-		}
+		internal static GameLobbyJoinRequested_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GameLobbyJoinRequested_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GameLobbyJoinRequested_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameLobbyJoinRequested_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
 			internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
 			
-			//
-			// Easily convert from PackSmall to GameLobbyJoinRequested_t
-			//
-			public static implicit operator GameLobbyJoinRequested_t (  GameLobbyJoinRequested_t.PackSmall d )
-			{
-				return new GameLobbyJoinRequested_t()
-				{
-					SteamIDLobby = d.SteamIDLobby,
-					SteamIDFriend = d.SteamIDFriend,
-				};
-			}
+			public static implicit operator GameLobbyJoinRequested_t ( GameLobbyJoinRequested_t.Pack4 d ) => new GameLobbyJoinRequested_t{ SteamIDLobby = d.SteamIDLobby,SteamIDFriend = d.SteamIDFriend, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
+			internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
+			
+			public static implicit operator GameLobbyJoinRequested_t ( GameLobbyJoinRequested_t.Pack8 d ) => new GameLobbyJoinRequested_t{ SteamIDLobby = d.SteamIDLobby,SteamIDFriend = d.SteamIDFriend, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -2581,10 +2569,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct AvatarImageLoaded_t
+	public struct AvatarImageLoaded_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 34;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamID; // m_steamID class CSteamID
 		internal int Image; // m_iImage int
 		internal int Wide; // m_iWide int
@@ -2593,42 +2586,37 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static AvatarImageLoaded_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (AvatarImageLoaded_t) Marshal.PtrToStructure( p, typeof(AvatarImageLoaded_t) );
-		}
+		internal static AvatarImageLoaded_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((AvatarImageLoaded_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((AvatarImageLoaded_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(AvatarImageLoaded_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamID; // m_steamID class CSteamID
 			internal int Image; // m_iImage int
 			internal int Wide; // m_iWide int
 			internal int Tall; // m_iTall int
 			
-			//
-			// Easily convert from PackSmall to AvatarImageLoaded_t
-			//
-			public static implicit operator AvatarImageLoaded_t (  AvatarImageLoaded_t.PackSmall d )
-			{
-				return new AvatarImageLoaded_t()
-				{
-					SteamID = d.SteamID,
-					Image = d.Image,
-					Wide = d.Wide,
-					Tall = d.Tall,
-				};
-			}
+			public static implicit operator AvatarImageLoaded_t ( AvatarImageLoaded_t.Pack4 d ) => new AvatarImageLoaded_t{ SteamID = d.SteamID,Image = d.Image,Wide = d.Wide,Tall = d.Tall, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal ulong SteamID; // m_steamID class CSteamID
+			internal int Image; // m_iImage int
+			internal int Wide; // m_iWide int
+			internal int Tall; // m_iTall int
+			
+			public static implicit operator AvatarImageLoaded_t ( AvatarImageLoaded_t.Pack8 d ) => new AvatarImageLoaded_t{ SteamID = d.SteamID,Image = d.Image,Wide = d.Wide,Tall = d.Tall, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -2758,10 +2746,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct ClanOfficerListResponse_t
+	public struct ClanOfficerListResponse_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 35;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamIDClan; // m_steamIDClan class CSteamID
 		internal int COfficers; // m_cOfficers int
 		internal byte Success; // m_bSuccess uint8
@@ -2769,40 +2762,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static ClanOfficerListResponse_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (ClanOfficerListResponse_t) Marshal.PtrToStructure( p, typeof(ClanOfficerListResponse_t) );
-		}
+		internal static ClanOfficerListResponse_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((ClanOfficerListResponse_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((ClanOfficerListResponse_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(ClanOfficerListResponse_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamIDClan; // m_steamIDClan class CSteamID
 			internal int COfficers; // m_cOfficers int
 			internal byte Success; // m_bSuccess uint8
 			
-			//
-			// Easily convert from PackSmall to ClanOfficerListResponse_t
-			//
-			public static implicit operator ClanOfficerListResponse_t (  ClanOfficerListResponse_t.PackSmall d )
-			{
-				return new ClanOfficerListResponse_t()
-				{
-					SteamIDClan = d.SteamIDClan,
-					COfficers = d.COfficers,
-					Success = d.Success,
-				};
-			}
+			public static implicit operator ClanOfficerListResponse_t ( ClanOfficerListResponse_t.Pack4 d ) => new ClanOfficerListResponse_t{ SteamIDClan = d.SteamIDClan,COfficers = d.COfficers,Success = d.Success, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal ulong SteamIDClan; // m_steamIDClan class CSteamID
+			internal int COfficers; // m_cOfficers int
+			internal byte Success; // m_bSuccess uint8
+			
+			public static implicit operator ClanOfficerListResponse_t ( ClanOfficerListResponse_t.Pack8 d ) => new ClanOfficerListResponse_t{ SteamIDClan = d.SteamIDClan,COfficers = d.COfficers,Success = d.Success, };
 		}
 		
 		internal static CallResult<ClanOfficerListResponse_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<ClanOfficerListResponse_t, bool> CallbackFunction )
@@ -2937,48 +2925,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct FriendRichPresenceUpdate_t
+	public struct FriendRichPresenceUpdate_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 36;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
 		internal uint AppID; // m_nAppID AppId_t
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static FriendRichPresenceUpdate_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (FriendRichPresenceUpdate_t) Marshal.PtrToStructure( p, typeof(FriendRichPresenceUpdate_t) );
-		}
+		internal static FriendRichPresenceUpdate_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((FriendRichPresenceUpdate_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((FriendRichPresenceUpdate_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(FriendRichPresenceUpdate_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
 			internal uint AppID; // m_nAppID AppId_t
 			
-			//
-			// Easily convert from PackSmall to FriendRichPresenceUpdate_t
-			//
-			public static implicit operator FriendRichPresenceUpdate_t (  FriendRichPresenceUpdate_t.PackSmall d )
-			{
-				return new FriendRichPresenceUpdate_t()
-				{
-					SteamIDFriend = d.SteamIDFriend,
-					AppID = d.AppID,
-				};
-			}
+			public static implicit operator FriendRichPresenceUpdate_t ( FriendRichPresenceUpdate_t.Pack4 d ) => new FriendRichPresenceUpdate_t{ SteamIDFriend = d.SteamIDFriend,AppID = d.AppID, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
+			internal uint AppID; // m_nAppID AppId_t
+			
+			public static implicit operator FriendRichPresenceUpdate_t ( FriendRichPresenceUpdate_t.Pack8 d ) => new FriendRichPresenceUpdate_t{ SteamIDFriend = d.SteamIDFriend,AppID = d.AppID, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -3108,10 +3096,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct GameRichPresenceJoinRequested_t
+	public struct GameRichPresenceJoinRequested_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 37;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 		internal string Connect; // m_rgchConnect char [256]
@@ -3119,39 +3112,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GameRichPresenceJoinRequested_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GameRichPresenceJoinRequested_t) Marshal.PtrToStructure( p, typeof(GameRichPresenceJoinRequested_t) );
-		}
+		internal static GameRichPresenceJoinRequested_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GameRichPresenceJoinRequested_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GameRichPresenceJoinRequested_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameRichPresenceJoinRequested_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 			internal string Connect; // m_rgchConnect char [256]
 			
-			//
-			// Easily convert from PackSmall to GameRichPresenceJoinRequested_t
-			//
-			public static implicit operator GameRichPresenceJoinRequested_t (  GameRichPresenceJoinRequested_t.PackSmall d )
-			{
-				return new GameRichPresenceJoinRequested_t()
-				{
-					SteamIDFriend = d.SteamIDFriend,
-					Connect = d.Connect,
-				};
-			}
+			public static implicit operator GameRichPresenceJoinRequested_t ( GameRichPresenceJoinRequested_t.Pack4 d ) => new GameRichPresenceJoinRequested_t{ SteamIDFriend = d.SteamIDFriend,Connect = d.Connect, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+			internal string Connect; // m_rgchConnect char [256]
+			
+			public static implicit operator GameRichPresenceJoinRequested_t ( GameRichPresenceJoinRequested_t.Pack8 d ) => new GameRichPresenceJoinRequested_t{ SteamIDFriend = d.SteamIDFriend,Connect = d.Connect, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -3281,10 +3270,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct GameConnectedClanChatMsg_t
+	public struct GameConnectedClanChatMsg_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 38;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
 		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 		internal int MessageID; // m_iMessageID int
@@ -3292,40 +3286,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GameConnectedClanChatMsg_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GameConnectedClanChatMsg_t) Marshal.PtrToStructure( p, typeof(GameConnectedClanChatMsg_t) );
-		}
+		internal static GameConnectedClanChatMsg_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GameConnectedClanChatMsg_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GameConnectedClanChatMsg_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameConnectedClanChatMsg_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
 			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			internal int MessageID; // m_iMessageID int
 			
-			//
-			// Easily convert from PackSmall to GameConnectedClanChatMsg_t
-			//
-			public static implicit operator GameConnectedClanChatMsg_t (  GameConnectedClanChatMsg_t.PackSmall d )
-			{
-				return new GameConnectedClanChatMsg_t()
-				{
-					SteamIDClanChat = d.SteamIDClanChat,
-					SteamIDUser = d.SteamIDUser,
-					MessageID = d.MessageID,
-				};
-			}
+			public static implicit operator GameConnectedClanChatMsg_t ( GameConnectedClanChatMsg_t.Pack4 d ) => new GameConnectedClanChatMsg_t{ SteamIDClanChat = d.SteamIDClanChat,SteamIDUser = d.SteamIDUser,MessageID = d.MessageID, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
+			internal int MessageID; // m_iMessageID int
+			
+			public static implicit operator GameConnectedClanChatMsg_t ( GameConnectedClanChatMsg_t.Pack8 d ) => new GameConnectedClanChatMsg_t{ SteamIDClanChat = d.SteamIDClanChat,SteamIDUser = d.SteamIDUser,MessageID = d.MessageID, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -3455,48 +3444,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct GameConnectedChatJoin_t
+	public struct GameConnectedChatJoin_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 39;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
 		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GameConnectedChatJoin_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GameConnectedChatJoin_t) Marshal.PtrToStructure( p, typeof(GameConnectedChatJoin_t) );
-		}
+		internal static GameConnectedChatJoin_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GameConnectedChatJoin_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GameConnectedChatJoin_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameConnectedChatJoin_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
 			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			
-			//
-			// Easily convert from PackSmall to GameConnectedChatJoin_t
-			//
-			public static implicit operator GameConnectedChatJoin_t (  GameConnectedChatJoin_t.PackSmall d )
-			{
-				return new GameConnectedChatJoin_t()
-				{
-					SteamIDClanChat = d.SteamIDClanChat,
-					SteamIDUser = d.SteamIDUser,
-				};
-			}
+			public static implicit operator GameConnectedChatJoin_t ( GameConnectedChatJoin_t.Pack4 d ) => new GameConnectedChatJoin_t{ SteamIDClanChat = d.SteamIDClanChat,SteamIDUser = d.SteamIDUser, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
+			
+			public static implicit operator GameConnectedChatJoin_t ( GameConnectedChatJoin_t.Pack8 d ) => new GameConnectedChatJoin_t{ SteamIDClanChat = d.SteamIDClanChat,SteamIDUser = d.SteamIDUser, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -3626,10 +3615,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct GameConnectedChatLeave_t
+	public struct GameConnectedChatLeave_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 40;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
 		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 		[MarshalAs(UnmanagedType.I1)]
@@ -3640,23 +3634,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GameConnectedChatLeave_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GameConnectedChatLeave_t) Marshal.PtrToStructure( p, typeof(GameConnectedChatLeave_t) );
-		}
+		internal static GameConnectedChatLeave_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GameConnectedChatLeave_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GameConnectedChatLeave_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameConnectedChatLeave_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
 			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
@@ -3665,19 +3655,20 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool Dropped; // m_bDropped _Bool
 			
-			//
-			// Easily convert from PackSmall to GameConnectedChatLeave_t
-			//
-			public static implicit operator GameConnectedChatLeave_t (  GameConnectedChatLeave_t.PackSmall d )
-			{
-				return new GameConnectedChatLeave_t()
-				{
-					SteamIDClanChat = d.SteamIDClanChat,
-					SteamIDUser = d.SteamIDUser,
-					Kicked = d.Kicked,
-					Dropped = d.Dropped,
-				};
-			}
+			public static implicit operator GameConnectedChatLeave_t ( GameConnectedChatLeave_t.Pack4 d ) => new GameConnectedChatLeave_t{ SteamIDClanChat = d.SteamIDClanChat,SteamIDUser = d.SteamIDUser,Kicked = d.Kicked,Dropped = d.Dropped, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool Kicked; // m_bKicked _Bool
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool Dropped; // m_bDropped _Bool
+			
+			public static implicit operator GameConnectedChatLeave_t ( GameConnectedChatLeave_t.Pack8 d ) => new GameConnectedChatLeave_t{ SteamIDClanChat = d.SteamIDClanChat,SteamIDUser = d.SteamIDUser,Kicked = d.Kicked,Dropped = d.Dropped, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -3807,47 +3798,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct DownloadClanActivityCountsResult_t
+	public struct DownloadClanActivityCountsResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 41;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool Success; // m_bSuccess _Bool
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static DownloadClanActivityCountsResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (DownloadClanActivityCountsResult_t) Marshal.PtrToStructure( p, typeof(DownloadClanActivityCountsResult_t) );
-		}
+		internal static DownloadClanActivityCountsResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((DownloadClanActivityCountsResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((DownloadClanActivityCountsResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(DownloadClanActivityCountsResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool Success; // m_bSuccess _Bool
 			
-			//
-			// Easily convert from PackSmall to DownloadClanActivityCountsResult_t
-			//
-			public static implicit operator DownloadClanActivityCountsResult_t (  DownloadClanActivityCountsResult_t.PackSmall d )
-			{
-				return new DownloadClanActivityCountsResult_t()
-				{
-					Success = d.Success,
-				};
-			}
+			public static implicit operator DownloadClanActivityCountsResult_t ( DownloadClanActivityCountsResult_t.Pack4 d ) => new DownloadClanActivityCountsResult_t{ Success = d.Success, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool Success; // m_bSuccess _Bool
+			
+			public static implicit operator DownloadClanActivityCountsResult_t ( DownloadClanActivityCountsResult_t.Pack8 d ) => new DownloadClanActivityCountsResult_t{ Success = d.Success, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -3977,48 +3969,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct JoinClanChatRoomCompletionResult_t
+	public struct JoinClanChatRoomCompletionResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 42;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
 		internal ChatRoomEnterResponse ChatRoomEnterResponse; // m_eChatRoomEnterResponse enum EChatRoomEnterResponse
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static JoinClanChatRoomCompletionResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (JoinClanChatRoomCompletionResult_t) Marshal.PtrToStructure( p, typeof(JoinClanChatRoomCompletionResult_t) );
-		}
+		internal static JoinClanChatRoomCompletionResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((JoinClanChatRoomCompletionResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((JoinClanChatRoomCompletionResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(JoinClanChatRoomCompletionResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
 			internal ChatRoomEnterResponse ChatRoomEnterResponse; // m_eChatRoomEnterResponse enum EChatRoomEnterResponse
 			
-			//
-			// Easily convert from PackSmall to JoinClanChatRoomCompletionResult_t
-			//
-			public static implicit operator JoinClanChatRoomCompletionResult_t (  JoinClanChatRoomCompletionResult_t.PackSmall d )
-			{
-				return new JoinClanChatRoomCompletionResult_t()
-				{
-					SteamIDClanChat = d.SteamIDClanChat,
-					ChatRoomEnterResponse = d.ChatRoomEnterResponse,
-				};
-			}
+			public static implicit operator JoinClanChatRoomCompletionResult_t ( JoinClanChatRoomCompletionResult_t.Pack4 d ) => new JoinClanChatRoomCompletionResult_t{ SteamIDClanChat = d.SteamIDClanChat,ChatRoomEnterResponse = d.ChatRoomEnterResponse, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
+			internal ChatRoomEnterResponse ChatRoomEnterResponse; // m_eChatRoomEnterResponse enum EChatRoomEnterResponse
+			
+			public static implicit operator JoinClanChatRoomCompletionResult_t ( JoinClanChatRoomCompletionResult_t.Pack8 d ) => new JoinClanChatRoomCompletionResult_t{ SteamIDClanChat = d.SteamIDClanChat,ChatRoomEnterResponse = d.ChatRoomEnterResponse, };
 		}
 		
 		internal static CallResult<JoinClanChatRoomCompletionResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<JoinClanChatRoomCompletionResult_t, bool> CallbackFunction )
@@ -4153,48 +4145,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct GameConnectedFriendChatMsg_t
+	public struct GameConnectedFriendChatMsg_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 43;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 		internal int MessageID; // m_iMessageID int
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GameConnectedFriendChatMsg_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GameConnectedFriendChatMsg_t) Marshal.PtrToStructure( p, typeof(GameConnectedFriendChatMsg_t) );
-		}
+		internal static GameConnectedFriendChatMsg_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GameConnectedFriendChatMsg_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GameConnectedFriendChatMsg_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameConnectedFriendChatMsg_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			internal int MessageID; // m_iMessageID int
 			
-			//
-			// Easily convert from PackSmall to GameConnectedFriendChatMsg_t
-			//
-			public static implicit operator GameConnectedFriendChatMsg_t (  GameConnectedFriendChatMsg_t.PackSmall d )
-			{
-				return new GameConnectedFriendChatMsg_t()
-				{
-					SteamIDUser = d.SteamIDUser,
-					MessageID = d.MessageID,
-				};
-			}
+			public static implicit operator GameConnectedFriendChatMsg_t ( GameConnectedFriendChatMsg_t.Pack4 d ) => new GameConnectedFriendChatMsg_t{ SteamIDUser = d.SteamIDUser,MessageID = d.MessageID, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
+			internal int MessageID; // m_iMessageID int
+			
+			public static implicit operator GameConnectedFriendChatMsg_t ( GameConnectedFriendChatMsg_t.Pack8 d ) => new GameConnectedFriendChatMsg_t{ SteamIDUser = d.SteamIDUser,MessageID = d.MessageID, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -4324,10 +4316,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct FriendsGetFollowerCount_t
+	public struct FriendsGetFollowerCount_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 44;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong SteamID; // m_steamID class CSteamID
 		internal int Count; // m_nCount int
@@ -4335,40 +4332,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static FriendsGetFollowerCount_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (FriendsGetFollowerCount_t) Marshal.PtrToStructure( p, typeof(FriendsGetFollowerCount_t) );
-		}
+		internal static FriendsGetFollowerCount_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((FriendsGetFollowerCount_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((FriendsGetFollowerCount_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(FriendsGetFollowerCount_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong SteamID; // m_steamID class CSteamID
 			internal int Count; // m_nCount int
 			
-			//
-			// Easily convert from PackSmall to FriendsGetFollowerCount_t
-			//
-			public static implicit operator FriendsGetFollowerCount_t (  FriendsGetFollowerCount_t.PackSmall d )
-			{
-				return new FriendsGetFollowerCount_t()
-				{
-					Result = d.Result,
-					SteamID = d.SteamID,
-					Count = d.Count,
-				};
-			}
+			public static implicit operator FriendsGetFollowerCount_t ( FriendsGetFollowerCount_t.Pack4 d ) => new FriendsGetFollowerCount_t{ Result = d.Result,SteamID = d.SteamID,Count = d.Count, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong SteamID; // m_steamID class CSteamID
+			internal int Count; // m_nCount int
+			
+			public static implicit operator FriendsGetFollowerCount_t ( FriendsGetFollowerCount_t.Pack8 d ) => new FriendsGetFollowerCount_t{ Result = d.Result,SteamID = d.SteamID,Count = d.Count, };
 		}
 		
 		internal static CallResult<FriendsGetFollowerCount_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<FriendsGetFollowerCount_t, bool> CallbackFunction )
@@ -4503,10 +4495,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct FriendsIsFollowing_t
+	public struct FriendsIsFollowing_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 45;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong SteamID; // m_steamID class CSteamID
 		[MarshalAs(UnmanagedType.I1)]
@@ -4515,41 +4512,37 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static FriendsIsFollowing_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (FriendsIsFollowing_t) Marshal.PtrToStructure( p, typeof(FriendsIsFollowing_t) );
-		}
+		internal static FriendsIsFollowing_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((FriendsIsFollowing_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((FriendsIsFollowing_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(FriendsIsFollowing_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong SteamID; // m_steamID class CSteamID
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool IsFollowing; // m_bIsFollowing _Bool
 			
-			//
-			// Easily convert from PackSmall to FriendsIsFollowing_t
-			//
-			public static implicit operator FriendsIsFollowing_t (  FriendsIsFollowing_t.PackSmall d )
-			{
-				return new FriendsIsFollowing_t()
-				{
-					Result = d.Result,
-					SteamID = d.SteamID,
-					IsFollowing = d.IsFollowing,
-				};
-			}
+			public static implicit operator FriendsIsFollowing_t ( FriendsIsFollowing_t.Pack4 d ) => new FriendsIsFollowing_t{ Result = d.Result,SteamID = d.SteamID,IsFollowing = d.IsFollowing, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong SteamID; // m_steamID class CSteamID
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool IsFollowing; // m_bIsFollowing _Bool
+			
+			public static implicit operator FriendsIsFollowing_t ( FriendsIsFollowing_t.Pack8 d ) => new FriendsIsFollowing_t{ Result = d.Result,SteamID = d.SteamID,IsFollowing = d.IsFollowing, };
 		}
 		
 		internal static CallResult<FriendsIsFollowing_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<FriendsIsFollowing_t, bool> CallbackFunction )
@@ -4684,10 +4677,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct FriendsEnumerateFollowingList_t
+	public struct FriendsEnumerateFollowingList_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 46;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
 		internal ulong[] GSteamID; // m_rgSteamID class CSteamID [50]
@@ -4697,23 +4695,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static FriendsEnumerateFollowingList_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (FriendsEnumerateFollowingList_t) Marshal.PtrToStructure( p, typeof(FriendsEnumerateFollowingList_t) );
-		}
+		internal static FriendsEnumerateFollowingList_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((FriendsEnumerateFollowingList_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((FriendsEnumerateFollowingList_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(FriendsEnumerateFollowingList_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
@@ -4721,19 +4715,19 @@ namespace SteamNative
 			internal int ResultsReturned; // m_nResultsReturned int32
 			internal int TotalResultCount; // m_nTotalResultCount int32
 			
-			//
-			// Easily convert from PackSmall to FriendsEnumerateFollowingList_t
-			//
-			public static implicit operator FriendsEnumerateFollowingList_t (  FriendsEnumerateFollowingList_t.PackSmall d )
-			{
-				return new FriendsEnumerateFollowingList_t()
-				{
-					Result = d.Result,
-					GSteamID = d.GSteamID,
-					ResultsReturned = d.ResultsReturned,
-					TotalResultCount = d.TotalResultCount,
-				};
-			}
+			public static implicit operator FriendsEnumerateFollowingList_t ( FriendsEnumerateFollowingList_t.Pack4 d ) => new FriendsEnumerateFollowingList_t{ Result = d.Result,GSteamID = d.GSteamID,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
+			internal ulong[] GSteamID; // m_rgSteamID class CSteamID [50]
+			internal int ResultsReturned; // m_nResultsReturned int32
+			internal int TotalResultCount; // m_nTotalResultCount int32
+			
+			public static implicit operator FriendsEnumerateFollowingList_t ( FriendsEnumerateFollowingList_t.Pack8 d ) => new FriendsEnumerateFollowingList_t{ Result = d.Result,GSteamID = d.GSteamID,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount, };
 		}
 		
 		internal static CallResult<FriendsEnumerateFollowingList_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<FriendsEnumerateFollowingList_t, bool> CallbackFunction )
@@ -4868,10 +4862,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct SetPersonaNameResponse_t
+	public struct SetPersonaNameResponse_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamFriends + 47;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool Success; // m_bSuccess _Bool
 		[MarshalAs(UnmanagedType.I1)]
@@ -4881,23 +4880,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static SetPersonaNameResponse_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (SetPersonaNameResponse_t) Marshal.PtrToStructure( p, typeof(SetPersonaNameResponse_t) );
-		}
+		internal static SetPersonaNameResponse_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((SetPersonaNameResponse_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((SetPersonaNameResponse_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SetPersonaNameResponse_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool Success; // m_bSuccess _Bool
@@ -4905,18 +4900,19 @@ namespace SteamNative
 			internal bool LocalSuccess; // m_bLocalSuccess _Bool
 			internal Result Result; // m_result enum EResult
 			
-			//
-			// Easily convert from PackSmall to SetPersonaNameResponse_t
-			//
-			public static implicit operator SetPersonaNameResponse_t (  SetPersonaNameResponse_t.PackSmall d )
-			{
-				return new SetPersonaNameResponse_t()
-				{
-					Success = d.Success,
-					LocalSuccess = d.LocalSuccess,
-					Result = d.Result,
-				};
-			}
+			public static implicit operator SetPersonaNameResponse_t ( SetPersonaNameResponse_t.Pack4 d ) => new SetPersonaNameResponse_t{ Success = d.Success,LocalSuccess = d.LocalSuccess,Result = d.Result, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool Success; // m_bSuccess _Bool
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool LocalSuccess; // m_bLocalSuccess _Bool
+			internal Result Result; // m_result enum EResult
+			
+			public static implicit operator SetPersonaNameResponse_t ( SetPersonaNameResponse_t.Pack8 d ) => new SetPersonaNameResponse_t{ Success = d.Success,LocalSuccess = d.LocalSuccess,Result = d.Result, };
 		}
 		
 		internal static CallResult<SetPersonaNameResponse_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<SetPersonaNameResponse_t, bool> CallbackFunction )
@@ -5051,45 +5047,45 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct LowBatteryPower_t
+	public struct LowBatteryPower_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUtils + 2;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal byte MinutesBatteryLeft; // m_nMinutesBatteryLeft uint8
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static LowBatteryPower_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (LowBatteryPower_t) Marshal.PtrToStructure( p, typeof(LowBatteryPower_t) );
-		}
+		internal static LowBatteryPower_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((LowBatteryPower_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((LowBatteryPower_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(LowBatteryPower_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal byte MinutesBatteryLeft; // m_nMinutesBatteryLeft uint8
 			
-			//
-			// Easily convert from PackSmall to LowBatteryPower_t
-			//
-			public static implicit operator LowBatteryPower_t (  LowBatteryPower_t.PackSmall d )
-			{
-				return new LowBatteryPower_t()
-				{
-					MinutesBatteryLeft = d.MinutesBatteryLeft,
-				};
-			}
+			public static implicit operator LowBatteryPower_t ( LowBatteryPower_t.Pack4 d ) => new LowBatteryPower_t{ MinutesBatteryLeft = d.MinutesBatteryLeft, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal byte MinutesBatteryLeft; // m_nMinutesBatteryLeft uint8
+			
+			public static implicit operator LowBatteryPower_t ( LowBatteryPower_t.Pack8 d ) => new LowBatteryPower_t{ MinutesBatteryLeft = d.MinutesBatteryLeft, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -5219,10 +5215,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct SteamAPICallCompleted_t
+	public struct SteamAPICallCompleted_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUtils + 3;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong AsyncCall; // m_hAsyncCall SteamAPICall_t
 		internal int Callback; // m_iCallback int
 		internal uint ParamCount; // m_cubParam uint32
@@ -5230,40 +5231,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static SteamAPICallCompleted_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (SteamAPICallCompleted_t) Marshal.PtrToStructure( p, typeof(SteamAPICallCompleted_t) );
-		}
+		internal static SteamAPICallCompleted_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((SteamAPICallCompleted_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((SteamAPICallCompleted_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamAPICallCompleted_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong AsyncCall; // m_hAsyncCall SteamAPICall_t
 			internal int Callback; // m_iCallback int
 			internal uint ParamCount; // m_cubParam uint32
 			
-			//
-			// Easily convert from PackSmall to SteamAPICallCompleted_t
-			//
-			public static implicit operator SteamAPICallCompleted_t (  SteamAPICallCompleted_t.PackSmall d )
-			{
-				return new SteamAPICallCompleted_t()
-				{
-					AsyncCall = d.AsyncCall,
-					Callback = d.Callback,
-					ParamCount = d.ParamCount,
-				};
-			}
+			public static implicit operator SteamAPICallCompleted_t ( SteamAPICallCompleted_t.Pack4 d ) => new SteamAPICallCompleted_t{ AsyncCall = d.AsyncCall,Callback = d.Callback,ParamCount = d.ParamCount, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong AsyncCall; // m_hAsyncCall SteamAPICall_t
+			internal int Callback; // m_iCallback int
+			internal uint ParamCount; // m_cubParam uint32
+			
+			public static implicit operator SteamAPICallCompleted_t ( SteamAPICallCompleted_t.Pack8 d ) => new SteamAPICallCompleted_t{ AsyncCall = d.AsyncCall,Callback = d.Callback,ParamCount = d.ParamCount, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -5393,45 +5389,45 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct CheckFileSignature_t
+	public struct CheckFileSignature_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUtils + 5;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal CheckFileSignature CheckFileSignature; // m_eCheckFileSignature enum ECheckFileSignature
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static CheckFileSignature_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (CheckFileSignature_t) Marshal.PtrToStructure( p, typeof(CheckFileSignature_t) );
-		}
+		internal static CheckFileSignature_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((CheckFileSignature_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((CheckFileSignature_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(CheckFileSignature_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal CheckFileSignature CheckFileSignature; // m_eCheckFileSignature enum ECheckFileSignature
 			
-			//
-			// Easily convert from PackSmall to CheckFileSignature_t
-			//
-			public static implicit operator CheckFileSignature_t (  CheckFileSignature_t.PackSmall d )
-			{
-				return new CheckFileSignature_t()
-				{
-					CheckFileSignature = d.CheckFileSignature,
-				};
-			}
+			public static implicit operator CheckFileSignature_t ( CheckFileSignature_t.Pack4 d ) => new CheckFileSignature_t{ CheckFileSignature = d.CheckFileSignature, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal CheckFileSignature CheckFileSignature; // m_eCheckFileSignature enum ECheckFileSignature
+			
+			public static implicit operator CheckFileSignature_t ( CheckFileSignature_t.Pack8 d ) => new CheckFileSignature_t{ CheckFileSignature = d.CheckFileSignature, };
 		}
 		
 		internal static CallResult<CheckFileSignature_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<CheckFileSignature_t, bool> CallbackFunction )
@@ -5566,10 +5562,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct GamepadTextInputDismissed_t
+	public struct GamepadTextInputDismissed_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUtils + 14;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool Submitted; // m_bSubmitted _Bool
 		internal uint SubmittedText; // m_unSubmittedText uint32
@@ -5577,39 +5578,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GamepadTextInputDismissed_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GamepadTextInputDismissed_t) Marshal.PtrToStructure( p, typeof(GamepadTextInputDismissed_t) );
-		}
+		internal static GamepadTextInputDismissed_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GamepadTextInputDismissed_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GamepadTextInputDismissed_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GamepadTextInputDismissed_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool Submitted; // m_bSubmitted _Bool
 			internal uint SubmittedText; // m_unSubmittedText uint32
 			
-			//
-			// Easily convert from PackSmall to GamepadTextInputDismissed_t
-			//
-			public static implicit operator GamepadTextInputDismissed_t (  GamepadTextInputDismissed_t.PackSmall d )
-			{
-				return new GamepadTextInputDismissed_t()
-				{
-					Submitted = d.Submitted,
-					SubmittedText = d.SubmittedText,
-				};
-			}
+			public static implicit operator GamepadTextInputDismissed_t ( GamepadTextInputDismissed_t.Pack4 d ) => new GamepadTextInputDismissed_t{ Submitted = d.Submitted,SubmittedText = d.SubmittedText, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool Submitted; // m_bSubmitted _Bool
+			internal uint SubmittedText; // m_unSubmittedText uint32
+			
+			public static implicit operator GamepadTextInputDismissed_t ( GamepadTextInputDismissed_t.Pack8 d ) => new GamepadTextInputDismissed_t{ Submitted = d.Submitted,SubmittedText = d.SubmittedText, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -5739,7 +5736,6 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct MatchMakingKeyValuePair_t
 	{
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
@@ -5750,44 +5746,40 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static MatchMakingKeyValuePair_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (MatchMakingKeyValuePair_t) Marshal.PtrToStructure( p, typeof(MatchMakingKeyValuePair_t) );
-		}
+		internal static MatchMakingKeyValuePair_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((MatchMakingKeyValuePair_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((MatchMakingKeyValuePair_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(MatchMakingKeyValuePair_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 			internal string Key; // m_szKey char [256]
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 			internal string Value; // m_szValue char [256]
 			
-			//
-			// Easily convert from PackSmall to MatchMakingKeyValuePair_t
-			//
-			public static implicit operator MatchMakingKeyValuePair_t (  MatchMakingKeyValuePair_t.PackSmall d )
-			{
-				return new MatchMakingKeyValuePair_t()
-				{
-					Key = d.Key,
-					Value = d.Value,
-				};
-			}
+			public static implicit operator MatchMakingKeyValuePair_t ( MatchMakingKeyValuePair_t.Pack4 d ) => new MatchMakingKeyValuePair_t{ Key = d.Key,Value = d.Value, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+			internal string Key; // m_szKey char [256]
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+			internal string Value; // m_szValue char [256]
+			
+			public static implicit operator MatchMakingKeyValuePair_t ( MatchMakingKeyValuePair_t.Pack8 d ) => new MatchMakingKeyValuePair_t{ Key = d.Key,Value = d.Value, };
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct servernetadr_t
 	{
 		internal ushort ConnectionPort; // m_usConnectionPort uint16
@@ -5797,44 +5789,38 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static servernetadr_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (servernetadr_t) Marshal.PtrToStructure( p, typeof(servernetadr_t) );
-		}
+		internal static servernetadr_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((servernetadr_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((servernetadr_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(servernetadr_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ushort ConnectionPort; // m_usConnectionPort uint16
 			internal ushort QueryPort; // m_usQueryPort uint16
 			internal uint IP; // m_unIP uint32
 			
-			//
-			// Easily convert from PackSmall to servernetadr_t
-			//
-			public static implicit operator servernetadr_t (  servernetadr_t.PackSmall d )
-			{
-				return new servernetadr_t()
-				{
-					ConnectionPort = d.ConnectionPort,
-					QueryPort = d.QueryPort,
-					IP = d.IP,
-				};
-			}
+			public static implicit operator servernetadr_t ( servernetadr_t.Pack4 d ) => new servernetadr_t{ ConnectionPort = d.ConnectionPort,QueryPort = d.QueryPort,IP = d.IP, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ushort ConnectionPort; // m_usConnectionPort uint16
+			internal ushort QueryPort; // m_usQueryPort uint16
+			internal uint IP; // m_unIP uint32
+			
+			public static implicit operator servernetadr_t ( servernetadr_t.Pack8 d ) => new servernetadr_t{ ConnectionPort = d.ConnectionPort,QueryPort = d.QueryPort,IP = d.IP, };
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public struct gameserveritem_t
 	{
 		internal servernetadr_t NetAdr; // m_NetAdr class servernetadr_t
@@ -5868,23 +5854,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static gameserveritem_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (gameserveritem_t) Marshal.PtrToStructure( p, typeof(gameserveritem_t) );
-		}
+		internal static gameserveritem_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((gameserveritem_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((gameserveritem_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(gameserveritem_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal servernetadr_t NetAdr; // m_NetAdr class servernetadr_t
 			internal int Ping; // m_nPing int
@@ -5914,37 +5896,44 @@ namespace SteamNative
 			internal string GameTags; // m_szGameTags char [128]
 			internal ulong SteamID; // m_steamID class CSteamID
 			
-			//
-			// Easily convert from PackSmall to gameserveritem_t
-			//
-			public static implicit operator gameserveritem_t (  gameserveritem_t.PackSmall d )
-			{
-				return new gameserveritem_t()
-				{
-					NetAdr = d.NetAdr,
-					Ping = d.Ping,
-					HadSuccessfulResponse = d.HadSuccessfulResponse,
-					DoNotRefresh = d.DoNotRefresh,
-					GameDir = d.GameDir,
-					Map = d.Map,
-					GameDescription = d.GameDescription,
-					AppID = d.AppID,
-					Players = d.Players,
-					MaxPlayers = d.MaxPlayers,
-					BotPlayers = d.BotPlayers,
-					Password = d.Password,
-					Secure = d.Secure,
-					TimeLastPlayed = d.TimeLastPlayed,
-					ServerVersion = d.ServerVersion,
-					ServerName = d.ServerName,
-					GameTags = d.GameTags,
-					SteamID = d.SteamID,
-				};
-			}
+			public static implicit operator gameserveritem_t ( gameserveritem_t.Pack4 d ) => new gameserveritem_t{ NetAdr = d.NetAdr,Ping = d.Ping,HadSuccessfulResponse = d.HadSuccessfulResponse,DoNotRefresh = d.DoNotRefresh,GameDir = d.GameDir,Map = d.Map,GameDescription = d.GameDescription,AppID = d.AppID,Players = d.Players,MaxPlayers = d.MaxPlayers,BotPlayers = d.BotPlayers,Password = d.Password,Secure = d.Secure,TimeLastPlayed = d.TimeLastPlayed,ServerVersion = d.ServerVersion,ServerName = d.ServerName,GameTags = d.GameTags,SteamID = d.SteamID, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal servernetadr_t NetAdr; // m_NetAdr class servernetadr_t
+			internal int Ping; // m_nPing int
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool HadSuccessfulResponse; // m_bHadSuccessfulResponse _Bool
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool DoNotRefresh; // m_bDoNotRefresh _Bool
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+			internal string GameDir; // m_szGameDir char [32]
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+			internal string Map; // m_szMap char [32]
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+			internal string GameDescription; // m_szGameDescription char [64]
+			internal uint AppID; // m_nAppID uint32
+			internal int Players; // m_nPlayers int
+			internal int MaxPlayers; // m_nMaxPlayers int
+			internal int BotPlayers; // m_nBotPlayers int
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool Password; // m_bPassword _Bool
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool Secure; // m_bSecure _Bool
+			internal uint TimeLastPlayed; // m_ulTimeLastPlayed uint32
+			internal int ServerVersion; // m_nServerVersion int
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+			internal string ServerName; // m_szServerName char [64]
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+			internal string GameTags; // m_szGameTags char [128]
+			internal ulong SteamID; // m_steamID class CSteamID
+			
+			public static implicit operator gameserveritem_t ( gameserveritem_t.Pack8 d ) => new gameserveritem_t{ NetAdr = d.NetAdr,Ping = d.Ping,HadSuccessfulResponse = d.HadSuccessfulResponse,DoNotRefresh = d.DoNotRefresh,GameDir = d.GameDir,Map = d.Map,GameDescription = d.GameDescription,AppID = d.AppID,Players = d.Players,MaxPlayers = d.MaxPlayers,BotPlayers = d.BotPlayers,Password = d.Password,Secure = d.Secure,TimeLastPlayed = d.TimeLastPlayed,ServerVersion = d.ServerVersion,ServerName = d.ServerName,GameTags = d.GameTags,SteamID = d.SteamID, };
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct SteamPartyBeaconLocation_t
 	{
 		internal SteamPartyBeaconLocationType Type; // m_eType enum ESteamPartyBeaconLocationType
@@ -5953,45 +5942,45 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static SteamPartyBeaconLocation_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (SteamPartyBeaconLocation_t) Marshal.PtrToStructure( p, typeof(SteamPartyBeaconLocation_t) );
-		}
+		internal static SteamPartyBeaconLocation_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((SteamPartyBeaconLocation_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((SteamPartyBeaconLocation_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamPartyBeaconLocation_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal SteamPartyBeaconLocationType Type; // m_eType enum ESteamPartyBeaconLocationType
 			internal ulong LocationID; // m_ulLocationID uint64
 			
-			//
-			// Easily convert from PackSmall to SteamPartyBeaconLocation_t
-			//
-			public static implicit operator SteamPartyBeaconLocation_t (  SteamPartyBeaconLocation_t.PackSmall d )
-			{
-				return new SteamPartyBeaconLocation_t()
-				{
-					Type = d.Type,
-					LocationID = d.LocationID,
-				};
-			}
+			public static implicit operator SteamPartyBeaconLocation_t ( SteamPartyBeaconLocation_t.Pack4 d ) => new SteamPartyBeaconLocation_t{ Type = d.Type,LocationID = d.LocationID, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal SteamPartyBeaconLocationType Type; // m_eType enum ESteamPartyBeaconLocationType
+			internal ulong LocationID; // m_ulLocationID uint64
+			
+			public static implicit operator SteamPartyBeaconLocation_t ( SteamPartyBeaconLocation_t.Pack8 d ) => new SteamPartyBeaconLocation_t{ Type = d.Type,LocationID = d.LocationID, };
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct FavoritesListChanged_t
+	public struct FavoritesListChanged_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMatchmaking + 2;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint IP; // m_nIP uint32
 		internal uint QueryPort; // m_nQueryPort uint32
 		internal uint ConnPort; // m_nConnPort uint32
@@ -6004,23 +5993,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static FavoritesListChanged_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (FavoritesListChanged_t) Marshal.PtrToStructure( p, typeof(FavoritesListChanged_t) );
-		}
+		internal static FavoritesListChanged_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((FavoritesListChanged_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((FavoritesListChanged_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(FavoritesListChanged_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint IP; // m_nIP uint32
 			internal uint QueryPort; // m_nQueryPort uint32
@@ -6031,22 +6016,22 @@ namespace SteamNative
 			internal bool Add; // m_bAdd _Bool
 			internal uint AccountId; // m_unAccountId AccountID_t
 			
-			//
-			// Easily convert from PackSmall to FavoritesListChanged_t
-			//
-			public static implicit operator FavoritesListChanged_t (  FavoritesListChanged_t.PackSmall d )
-			{
-				return new FavoritesListChanged_t()
-				{
-					IP = d.IP,
-					QueryPort = d.QueryPort,
-					ConnPort = d.ConnPort,
-					AppID = d.AppID,
-					Flags = d.Flags,
-					Add = d.Add,
-					AccountId = d.AccountId,
-				};
-			}
+			public static implicit operator FavoritesListChanged_t ( FavoritesListChanged_t.Pack4 d ) => new FavoritesListChanged_t{ IP = d.IP,QueryPort = d.QueryPort,ConnPort = d.ConnPort,AppID = d.AppID,Flags = d.Flags,Add = d.Add,AccountId = d.AccountId, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint IP; // m_nIP uint32
+			internal uint QueryPort; // m_nQueryPort uint32
+			internal uint ConnPort; // m_nConnPort uint32
+			internal uint AppID; // m_nAppID uint32
+			internal uint Flags; // m_nFlags uint32
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool Add; // m_bAdd _Bool
+			internal uint AccountId; // m_unAccountId AccountID_t
+			
+			public static implicit operator FavoritesListChanged_t ( FavoritesListChanged_t.Pack8 d ) => new FavoritesListChanged_t{ IP = d.IP,QueryPort = d.QueryPort,ConnPort = d.ConnPort,AppID = d.AppID,Flags = d.Flags,Add = d.Add,AccountId = d.AccountId, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -6176,10 +6161,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct LobbyInvite_t
+	public struct LobbyInvite_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMatchmaking + 3;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamIDUser; // m_ulSteamIDUser uint64
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 		internal ulong GameID; // m_ulGameID uint64
@@ -6187,40 +6177,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static LobbyInvite_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (LobbyInvite_t) Marshal.PtrToStructure( p, typeof(LobbyInvite_t) );
-		}
+		internal static LobbyInvite_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((LobbyInvite_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((LobbyInvite_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(LobbyInvite_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamIDUser; // m_ulSteamIDUser uint64
 			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 			internal ulong GameID; // m_ulGameID uint64
 			
-			//
-			// Easily convert from PackSmall to LobbyInvite_t
-			//
-			public static implicit operator LobbyInvite_t (  LobbyInvite_t.PackSmall d )
-			{
-				return new LobbyInvite_t()
-				{
-					SteamIDUser = d.SteamIDUser,
-					SteamIDLobby = d.SteamIDLobby,
-					GameID = d.GameID,
-				};
-			}
+			public static implicit operator LobbyInvite_t ( LobbyInvite_t.Pack4 d ) => new LobbyInvite_t{ SteamIDUser = d.SteamIDUser,SteamIDLobby = d.SteamIDLobby,GameID = d.GameID, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong SteamIDUser; // m_ulSteamIDUser uint64
+			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
+			internal ulong GameID; // m_ulGameID uint64
+			
+			public static implicit operator LobbyInvite_t ( LobbyInvite_t.Pack8 d ) => new LobbyInvite_t{ SteamIDUser = d.SteamIDUser,SteamIDLobby = d.SteamIDLobby,GameID = d.GameID, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -6350,10 +6335,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct LobbyEnter_t
+	public struct LobbyEnter_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMatchmaking + 4;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 		internal uint GfChatPermissions; // m_rgfChatPermissions uint32
 		[MarshalAs(UnmanagedType.I1)]
@@ -6363,23 +6353,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static LobbyEnter_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (LobbyEnter_t) Marshal.PtrToStructure( p, typeof(LobbyEnter_t) );
-		}
+		internal static LobbyEnter_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((LobbyEnter_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((LobbyEnter_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(LobbyEnter_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 			internal uint GfChatPermissions; // m_rgfChatPermissions uint32
@@ -6387,19 +6373,19 @@ namespace SteamNative
 			internal bool Locked; // m_bLocked _Bool
 			internal uint EChatRoomEnterResponse; // m_EChatRoomEnterResponse uint32
 			
-			//
-			// Easily convert from PackSmall to LobbyEnter_t
-			//
-			public static implicit operator LobbyEnter_t (  LobbyEnter_t.PackSmall d )
-			{
-				return new LobbyEnter_t()
-				{
-					SteamIDLobby = d.SteamIDLobby,
-					GfChatPermissions = d.GfChatPermissions,
-					Locked = d.Locked,
-					EChatRoomEnterResponse = d.EChatRoomEnterResponse,
-				};
-			}
+			public static implicit operator LobbyEnter_t ( LobbyEnter_t.Pack4 d ) => new LobbyEnter_t{ SteamIDLobby = d.SteamIDLobby,GfChatPermissions = d.GfChatPermissions,Locked = d.Locked,EChatRoomEnterResponse = d.EChatRoomEnterResponse, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
+			internal uint GfChatPermissions; // m_rgfChatPermissions uint32
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool Locked; // m_bLocked _Bool
+			internal uint EChatRoomEnterResponse; // m_EChatRoomEnterResponse uint32
+			
+			public static implicit operator LobbyEnter_t ( LobbyEnter_t.Pack8 d ) => new LobbyEnter_t{ SteamIDLobby = d.SteamIDLobby,GfChatPermissions = d.GfChatPermissions,Locked = d.Locked,EChatRoomEnterResponse = d.EChatRoomEnterResponse, };
 		}
 		
 		internal static CallResult<LobbyEnter_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<LobbyEnter_t, bool> CallbackFunction )
@@ -6534,10 +6520,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct LobbyDataUpdate_t
+	public struct LobbyDataUpdate_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMatchmaking + 5;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 		internal ulong SteamIDMember; // m_ulSteamIDMember uint64
 		internal byte Success; // m_bSuccess uint8
@@ -6545,40 +6536,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static LobbyDataUpdate_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (LobbyDataUpdate_t) Marshal.PtrToStructure( p, typeof(LobbyDataUpdate_t) );
-		}
+		internal static LobbyDataUpdate_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((LobbyDataUpdate_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((LobbyDataUpdate_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(LobbyDataUpdate_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 			internal ulong SteamIDMember; // m_ulSteamIDMember uint64
 			internal byte Success; // m_bSuccess uint8
 			
-			//
-			// Easily convert from PackSmall to LobbyDataUpdate_t
-			//
-			public static implicit operator LobbyDataUpdate_t (  LobbyDataUpdate_t.PackSmall d )
-			{
-				return new LobbyDataUpdate_t()
-				{
-					SteamIDLobby = d.SteamIDLobby,
-					SteamIDMember = d.SteamIDMember,
-					Success = d.Success,
-				};
-			}
+			public static implicit operator LobbyDataUpdate_t ( LobbyDataUpdate_t.Pack4 d ) => new LobbyDataUpdate_t{ SteamIDLobby = d.SteamIDLobby,SteamIDMember = d.SteamIDMember,Success = d.Success, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
+			internal ulong SteamIDMember; // m_ulSteamIDMember uint64
+			internal byte Success; // m_bSuccess uint8
+			
+			public static implicit operator LobbyDataUpdate_t ( LobbyDataUpdate_t.Pack8 d ) => new LobbyDataUpdate_t{ SteamIDLobby = d.SteamIDLobby,SteamIDMember = d.SteamIDMember,Success = d.Success, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -6708,10 +6694,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct LobbyChatUpdate_t
+	public struct LobbyChatUpdate_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMatchmaking + 6;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 		internal ulong SteamIDUserChanged; // m_ulSteamIDUserChanged uint64
 		internal ulong SteamIDMakingChange; // m_ulSteamIDMakingChange uint64
@@ -6720,42 +6711,37 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static LobbyChatUpdate_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (LobbyChatUpdate_t) Marshal.PtrToStructure( p, typeof(LobbyChatUpdate_t) );
-		}
+		internal static LobbyChatUpdate_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((LobbyChatUpdate_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((LobbyChatUpdate_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(LobbyChatUpdate_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 			internal ulong SteamIDUserChanged; // m_ulSteamIDUserChanged uint64
 			internal ulong SteamIDMakingChange; // m_ulSteamIDMakingChange uint64
 			internal uint GfChatMemberStateChange; // m_rgfChatMemberStateChange uint32
 			
-			//
-			// Easily convert from PackSmall to LobbyChatUpdate_t
-			//
-			public static implicit operator LobbyChatUpdate_t (  LobbyChatUpdate_t.PackSmall d )
-			{
-				return new LobbyChatUpdate_t()
-				{
-					SteamIDLobby = d.SteamIDLobby,
-					SteamIDUserChanged = d.SteamIDUserChanged,
-					SteamIDMakingChange = d.SteamIDMakingChange,
-					GfChatMemberStateChange = d.GfChatMemberStateChange,
-				};
-			}
+			public static implicit operator LobbyChatUpdate_t ( LobbyChatUpdate_t.Pack4 d ) => new LobbyChatUpdate_t{ SteamIDLobby = d.SteamIDLobby,SteamIDUserChanged = d.SteamIDUserChanged,SteamIDMakingChange = d.SteamIDMakingChange,GfChatMemberStateChange = d.GfChatMemberStateChange, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
+			internal ulong SteamIDUserChanged; // m_ulSteamIDUserChanged uint64
+			internal ulong SteamIDMakingChange; // m_ulSteamIDMakingChange uint64
+			internal uint GfChatMemberStateChange; // m_rgfChatMemberStateChange uint32
+			
+			public static implicit operator LobbyChatUpdate_t ( LobbyChatUpdate_t.Pack8 d ) => new LobbyChatUpdate_t{ SteamIDLobby = d.SteamIDLobby,SteamIDUserChanged = d.SteamIDUserChanged,SteamIDMakingChange = d.SteamIDMakingChange,GfChatMemberStateChange = d.GfChatMemberStateChange, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -6885,10 +6871,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct LobbyChatMsg_t
+	public struct LobbyChatMsg_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMatchmaking + 7;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 		internal ulong SteamIDUser; // m_ulSteamIDUser uint64
 		internal byte ChatEntryType; // m_eChatEntryType uint8
@@ -6897,42 +6888,37 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static LobbyChatMsg_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (LobbyChatMsg_t) Marshal.PtrToStructure( p, typeof(LobbyChatMsg_t) );
-		}
+		internal static LobbyChatMsg_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((LobbyChatMsg_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((LobbyChatMsg_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(LobbyChatMsg_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 			internal ulong SteamIDUser; // m_ulSteamIDUser uint64
 			internal byte ChatEntryType; // m_eChatEntryType uint8
 			internal uint ChatID; // m_iChatID uint32
 			
-			//
-			// Easily convert from PackSmall to LobbyChatMsg_t
-			//
-			public static implicit operator LobbyChatMsg_t (  LobbyChatMsg_t.PackSmall d )
-			{
-				return new LobbyChatMsg_t()
-				{
-					SteamIDLobby = d.SteamIDLobby,
-					SteamIDUser = d.SteamIDUser,
-					ChatEntryType = d.ChatEntryType,
-					ChatID = d.ChatID,
-				};
-			}
+			public static implicit operator LobbyChatMsg_t ( LobbyChatMsg_t.Pack4 d ) => new LobbyChatMsg_t{ SteamIDLobby = d.SteamIDLobby,SteamIDUser = d.SteamIDUser,ChatEntryType = d.ChatEntryType,ChatID = d.ChatID, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
+			internal ulong SteamIDUser; // m_ulSteamIDUser uint64
+			internal byte ChatEntryType; // m_eChatEntryType uint8
+			internal uint ChatID; // m_iChatID uint32
+			
+			public static implicit operator LobbyChatMsg_t ( LobbyChatMsg_t.Pack8 d ) => new LobbyChatMsg_t{ SteamIDLobby = d.SteamIDLobby,SteamIDUser = d.SteamIDUser,ChatEntryType = d.ChatEntryType,ChatID = d.ChatID, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -7062,10 +7048,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct LobbyGameCreated_t
+	public struct LobbyGameCreated_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMatchmaking + 9;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 		internal ulong SteamIDGameServer; // m_ulSteamIDGameServer uint64
 		internal uint IP; // m_unIP uint32
@@ -7074,42 +7065,37 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static LobbyGameCreated_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (LobbyGameCreated_t) Marshal.PtrToStructure( p, typeof(LobbyGameCreated_t) );
-		}
+		internal static LobbyGameCreated_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((LobbyGameCreated_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((LobbyGameCreated_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(LobbyGameCreated_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 			internal ulong SteamIDGameServer; // m_ulSteamIDGameServer uint64
 			internal uint IP; // m_unIP uint32
 			internal ushort Port; // m_usPort uint16
 			
-			//
-			// Easily convert from PackSmall to LobbyGameCreated_t
-			//
-			public static implicit operator LobbyGameCreated_t (  LobbyGameCreated_t.PackSmall d )
-			{
-				return new LobbyGameCreated_t()
-				{
-					SteamIDLobby = d.SteamIDLobby,
-					SteamIDGameServer = d.SteamIDGameServer,
-					IP = d.IP,
-					Port = d.Port,
-				};
-			}
+			public static implicit operator LobbyGameCreated_t ( LobbyGameCreated_t.Pack4 d ) => new LobbyGameCreated_t{ SteamIDLobby = d.SteamIDLobby,SteamIDGameServer = d.SteamIDGameServer,IP = d.IP,Port = d.Port, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
+			internal ulong SteamIDGameServer; // m_ulSteamIDGameServer uint64
+			internal uint IP; // m_unIP uint32
+			internal ushort Port; // m_usPort uint16
+			
+			public static implicit operator LobbyGameCreated_t ( LobbyGameCreated_t.Pack8 d ) => new LobbyGameCreated_t{ SteamIDLobby = d.SteamIDLobby,SteamIDGameServer = d.SteamIDGameServer,IP = d.IP,Port = d.Port, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -7239,45 +7225,45 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct LobbyMatchList_t
+	public struct LobbyMatchList_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMatchmaking + 10;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint LobbiesMatching; // m_nLobbiesMatching uint32
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static LobbyMatchList_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (LobbyMatchList_t) Marshal.PtrToStructure( p, typeof(LobbyMatchList_t) );
-		}
+		internal static LobbyMatchList_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((LobbyMatchList_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((LobbyMatchList_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(LobbyMatchList_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint LobbiesMatching; // m_nLobbiesMatching uint32
 			
-			//
-			// Easily convert from PackSmall to LobbyMatchList_t
-			//
-			public static implicit operator LobbyMatchList_t (  LobbyMatchList_t.PackSmall d )
-			{
-				return new LobbyMatchList_t()
-				{
-					LobbiesMatching = d.LobbiesMatching,
-				};
-			}
+			public static implicit operator LobbyMatchList_t ( LobbyMatchList_t.Pack4 d ) => new LobbyMatchList_t{ LobbiesMatching = d.LobbiesMatching, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint LobbiesMatching; // m_nLobbiesMatching uint32
+			
+			public static implicit operator LobbyMatchList_t ( LobbyMatchList_t.Pack8 d ) => new LobbyMatchList_t{ LobbiesMatching = d.LobbiesMatching, };
 		}
 		
 		internal static CallResult<LobbyMatchList_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<LobbyMatchList_t, bool> CallbackFunction )
@@ -7412,10 +7398,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct LobbyKicked_t
+	public struct LobbyKicked_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMatchmaking + 12;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 		internal ulong SteamIDAdmin; // m_ulSteamIDAdmin uint64
 		internal byte KickedDueToDisconnect; // m_bKickedDueToDisconnect uint8
@@ -7423,40 +7414,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static LobbyKicked_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (LobbyKicked_t) Marshal.PtrToStructure( p, typeof(LobbyKicked_t) );
-		}
+		internal static LobbyKicked_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((LobbyKicked_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((LobbyKicked_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(LobbyKicked_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 			internal ulong SteamIDAdmin; // m_ulSteamIDAdmin uint64
 			internal byte KickedDueToDisconnect; // m_bKickedDueToDisconnect uint8
 			
-			//
-			// Easily convert from PackSmall to LobbyKicked_t
-			//
-			public static implicit operator LobbyKicked_t (  LobbyKicked_t.PackSmall d )
-			{
-				return new LobbyKicked_t()
-				{
-					SteamIDLobby = d.SteamIDLobby,
-					SteamIDAdmin = d.SteamIDAdmin,
-					KickedDueToDisconnect = d.KickedDueToDisconnect,
-				};
-			}
+			public static implicit operator LobbyKicked_t ( LobbyKicked_t.Pack4 d ) => new LobbyKicked_t{ SteamIDLobby = d.SteamIDLobby,SteamIDAdmin = d.SteamIDAdmin,KickedDueToDisconnect = d.KickedDueToDisconnect, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
+			internal ulong SteamIDAdmin; // m_ulSteamIDAdmin uint64
+			internal byte KickedDueToDisconnect; // m_bKickedDueToDisconnect uint8
+			
+			public static implicit operator LobbyKicked_t ( LobbyKicked_t.Pack8 d ) => new LobbyKicked_t{ SteamIDLobby = d.SteamIDLobby,SteamIDAdmin = d.SteamIDAdmin,KickedDueToDisconnect = d.KickedDueToDisconnect, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -7586,48 +7572,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct LobbyCreated_t
+	public struct LobbyCreated_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMatchmaking + 13;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static LobbyCreated_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (LobbyCreated_t) Marshal.PtrToStructure( p, typeof(LobbyCreated_t) );
-		}
+		internal static LobbyCreated_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((LobbyCreated_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((LobbyCreated_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(LobbyCreated_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 			
-			//
-			// Easily convert from PackSmall to LobbyCreated_t
-			//
-			public static implicit operator LobbyCreated_t (  LobbyCreated_t.PackSmall d )
-			{
-				return new LobbyCreated_t()
-				{
-					Result = d.Result,
-					SteamIDLobby = d.SteamIDLobby,
-				};
-			}
+			public static implicit operator LobbyCreated_t ( LobbyCreated_t.Pack4 d ) => new LobbyCreated_t{ Result = d.Result,SteamIDLobby = d.SteamIDLobby, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
+			
+			public static implicit operator LobbyCreated_t ( LobbyCreated_t.Pack8 d ) => new LobbyCreated_t{ Result = d.Result,SteamIDLobby = d.SteamIDLobby, };
 		}
 		
 		internal static CallResult<LobbyCreated_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<LobbyCreated_t, bool> CallbackFunction )
@@ -7762,10 +7748,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct PSNGameBootInviteResult_t
+	public struct PSNGameBootInviteResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMatchmaking + 15;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool GameBootInviteExists; // m_bGameBootInviteExists _Bool
 		internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
@@ -7773,39 +7764,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static PSNGameBootInviteResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (PSNGameBootInviteResult_t) Marshal.PtrToStructure( p, typeof(PSNGameBootInviteResult_t) );
-		}
+		internal static PSNGameBootInviteResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((PSNGameBootInviteResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((PSNGameBootInviteResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PSNGameBootInviteResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool GameBootInviteExists; // m_bGameBootInviteExists _Bool
 			internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
 			
-			//
-			// Easily convert from PackSmall to PSNGameBootInviteResult_t
-			//
-			public static implicit operator PSNGameBootInviteResult_t (  PSNGameBootInviteResult_t.PackSmall d )
-			{
-				return new PSNGameBootInviteResult_t()
-				{
-					GameBootInviteExists = d.GameBootInviteExists,
-					SteamIDLobby = d.SteamIDLobby,
-				};
-			}
+			public static implicit operator PSNGameBootInviteResult_t ( PSNGameBootInviteResult_t.Pack4 d ) => new PSNGameBootInviteResult_t{ GameBootInviteExists = d.GameBootInviteExists,SteamIDLobby = d.SteamIDLobby, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool GameBootInviteExists; // m_bGameBootInviteExists _Bool
+			internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
+			
+			public static implicit operator PSNGameBootInviteResult_t ( PSNGameBootInviteResult_t.Pack8 d ) => new PSNGameBootInviteResult_t{ GameBootInviteExists = d.GameBootInviteExists,SteamIDLobby = d.SteamIDLobby, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -7935,45 +7922,45 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct FavoritesListAccountsUpdated_t
+	public struct FavoritesListAccountsUpdated_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMatchmaking + 16;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static FavoritesListAccountsUpdated_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (FavoritesListAccountsUpdated_t) Marshal.PtrToStructure( p, typeof(FavoritesListAccountsUpdated_t) );
-		}
+		internal static FavoritesListAccountsUpdated_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((FavoritesListAccountsUpdated_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((FavoritesListAccountsUpdated_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(FavoritesListAccountsUpdated_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			
-			//
-			// Easily convert from PackSmall to FavoritesListAccountsUpdated_t
-			//
-			public static implicit operator FavoritesListAccountsUpdated_t (  FavoritesListAccountsUpdated_t.PackSmall d )
-			{
-				return new FavoritesListAccountsUpdated_t()
-				{
-					Result = d.Result,
-				};
-			}
+			public static implicit operator FavoritesListAccountsUpdated_t ( FavoritesListAccountsUpdated_t.Pack4 d ) => new FavoritesListAccountsUpdated_t{ Result = d.Result, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			
+			public static implicit operator FavoritesListAccountsUpdated_t ( FavoritesListAccountsUpdated_t.Pack8 d ) => new FavoritesListAccountsUpdated_t{ Result = d.Result, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -8103,10 +8090,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct SearchForGameProgressCallback_t
+	public struct SearchForGameProgressCallback_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameSearch + 1;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong LSearchID; // m_ullSearchID uint64
 		internal Result Result; // m_eResult enum EResult
 		internal ulong LobbyID; // m_lobbyID class CSteamID
@@ -8117,23 +8109,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static SearchForGameProgressCallback_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (SearchForGameProgressCallback_t) Marshal.PtrToStructure( p, typeof(SearchForGameProgressCallback_t) );
-		}
+		internal static SearchForGameProgressCallback_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((SearchForGameProgressCallback_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((SearchForGameProgressCallback_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SearchForGameProgressCallback_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong LSearchID; // m_ullSearchID uint64
 			internal Result Result; // m_eResult enum EResult
@@ -8142,21 +8130,20 @@ namespace SteamNative
 			internal int SecondsRemainingEstimate; // m_nSecondsRemainingEstimate int32
 			internal int CPlayersSearching; // m_cPlayersSearching int32
 			
-			//
-			// Easily convert from PackSmall to SearchForGameProgressCallback_t
-			//
-			public static implicit operator SearchForGameProgressCallback_t (  SearchForGameProgressCallback_t.PackSmall d )
-			{
-				return new SearchForGameProgressCallback_t()
-				{
-					LSearchID = d.LSearchID,
-					Result = d.Result,
-					LobbyID = d.LobbyID,
-					SteamIDEndedSearch = d.SteamIDEndedSearch,
-					SecondsRemainingEstimate = d.SecondsRemainingEstimate,
-					CPlayersSearching = d.CPlayersSearching,
-				};
-			}
+			public static implicit operator SearchForGameProgressCallback_t ( SearchForGameProgressCallback_t.Pack4 d ) => new SearchForGameProgressCallback_t{ LSearchID = d.LSearchID,Result = d.Result,LobbyID = d.LobbyID,SteamIDEndedSearch = d.SteamIDEndedSearch,SecondsRemainingEstimate = d.SecondsRemainingEstimate,CPlayersSearching = d.CPlayersSearching, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal ulong LSearchID; // m_ullSearchID uint64
+			internal Result Result; // m_eResult enum EResult
+			internal ulong LobbyID; // m_lobbyID class CSteamID
+			internal ulong SteamIDEndedSearch; // m_steamIDEndedSearch class CSteamID
+			internal int SecondsRemainingEstimate; // m_nSecondsRemainingEstimate int32
+			internal int CPlayersSearching; // m_cPlayersSearching int32
+			
+			public static implicit operator SearchForGameProgressCallback_t ( SearchForGameProgressCallback_t.Pack8 d ) => new SearchForGameProgressCallback_t{ LSearchID = d.LSearchID,Result = d.Result,LobbyID = d.LobbyID,SteamIDEndedSearch = d.SteamIDEndedSearch,SecondsRemainingEstimate = d.SecondsRemainingEstimate,CPlayersSearching = d.CPlayersSearching, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -8286,10 +8273,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct SearchForGameResultCallback_t
+	public struct SearchForGameResultCallback_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameSearch + 2;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong LSearchID; // m_ullSearchID uint64
 		internal Result Result; // m_eResult enum EResult
 		internal int CountPlayersInGame; // m_nCountPlayersInGame int32
@@ -8301,23 +8293,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static SearchForGameResultCallback_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (SearchForGameResultCallback_t) Marshal.PtrToStructure( p, typeof(SearchForGameResultCallback_t) );
-		}
+		internal static SearchForGameResultCallback_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((SearchForGameResultCallback_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((SearchForGameResultCallback_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SearchForGameResultCallback_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong LSearchID; // m_ullSearchID uint64
 			internal Result Result; // m_eResult enum EResult
@@ -8327,21 +8315,21 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool FinalCallback; // m_bFinalCallback _Bool
 			
-			//
-			// Easily convert from PackSmall to SearchForGameResultCallback_t
-			//
-			public static implicit operator SearchForGameResultCallback_t (  SearchForGameResultCallback_t.PackSmall d )
-			{
-				return new SearchForGameResultCallback_t()
-				{
-					LSearchID = d.LSearchID,
-					Result = d.Result,
-					CountPlayersInGame = d.CountPlayersInGame,
-					CountAcceptedGame = d.CountAcceptedGame,
-					SteamIDHost = d.SteamIDHost,
-					FinalCallback = d.FinalCallback,
-				};
-			}
+			public static implicit operator SearchForGameResultCallback_t ( SearchForGameResultCallback_t.Pack4 d ) => new SearchForGameResultCallback_t{ LSearchID = d.LSearchID,Result = d.Result,CountPlayersInGame = d.CountPlayersInGame,CountAcceptedGame = d.CountAcceptedGame,SteamIDHost = d.SteamIDHost,FinalCallback = d.FinalCallback, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal ulong LSearchID; // m_ullSearchID uint64
+			internal Result Result; // m_eResult enum EResult
+			internal int CountPlayersInGame; // m_nCountPlayersInGame int32
+			internal int CountAcceptedGame; // m_nCountAcceptedGame int32
+			internal ulong SteamIDHost; // m_steamIDHost class CSteamID
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool FinalCallback; // m_bFinalCallback _Bool
+			
+			public static implicit operator SearchForGameResultCallback_t ( SearchForGameResultCallback_t.Pack8 d ) => new SearchForGameResultCallback_t{ LSearchID = d.LSearchID,Result = d.Result,CountPlayersInGame = d.CountPlayersInGame,CountAcceptedGame = d.CountAcceptedGame,SteamIDHost = d.SteamIDHost,FinalCallback = d.FinalCallback, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -8471,48 +8459,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RequestPlayersForGameProgressCallback_t
+	public struct RequestPlayersForGameProgressCallback_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameSearch + 11;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong LSearchID; // m_ullSearchID uint64
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RequestPlayersForGameProgressCallback_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RequestPlayersForGameProgressCallback_t) Marshal.PtrToStructure( p, typeof(RequestPlayersForGameProgressCallback_t) );
-		}
+		internal static RequestPlayersForGameProgressCallback_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RequestPlayersForGameProgressCallback_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RequestPlayersForGameProgressCallback_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RequestPlayersForGameProgressCallback_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong LSearchID; // m_ullSearchID uint64
 			
-			//
-			// Easily convert from PackSmall to RequestPlayersForGameProgressCallback_t
-			//
-			public static implicit operator RequestPlayersForGameProgressCallback_t (  RequestPlayersForGameProgressCallback_t.PackSmall d )
-			{
-				return new RequestPlayersForGameProgressCallback_t()
-				{
-					Result = d.Result,
-					LSearchID = d.LSearchID,
-				};
-			}
+			public static implicit operator RequestPlayersForGameProgressCallback_t ( RequestPlayersForGameProgressCallback_t.Pack4 d ) => new RequestPlayersForGameProgressCallback_t{ Result = d.Result,LSearchID = d.LSearchID, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong LSearchID; // m_ullSearchID uint64
+			
+			public static implicit operator RequestPlayersForGameProgressCallback_t ( RequestPlayersForGameProgressCallback_t.Pack8 d ) => new RequestPlayersForGameProgressCallback_t{ Result = d.Result,LSearchID = d.LSearchID, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -8642,10 +8630,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct RequestPlayersForGameResultCallback_t
+	public struct RequestPlayersForGameResultCallback_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameSearch + 12;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong LSearchID; // m_ullSearchID uint64
 		internal ulong SteamIDPlayerFound; // m_SteamIDPlayerFound class CSteamID
@@ -8660,23 +8653,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RequestPlayersForGameResultCallback_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RequestPlayersForGameResultCallback_t) Marshal.PtrToStructure( p, typeof(RequestPlayersForGameResultCallback_t) );
-		}
+		internal static RequestPlayersForGameResultCallback_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RequestPlayersForGameResultCallback_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RequestPlayersForGameResultCallback_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RequestPlayersForGameResultCallback_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong LSearchID; // m_ullSearchID uint64
@@ -8689,25 +8678,24 @@ namespace SteamNative
 			internal int SuggestedTeamIndex; // m_nSuggestedTeamIndex int32
 			internal ulong LUniqueGameID; // m_ullUniqueGameID uint64
 			
-			//
-			// Easily convert from PackSmall to RequestPlayersForGameResultCallback_t
-			//
-			public static implicit operator RequestPlayersForGameResultCallback_t (  RequestPlayersForGameResultCallback_t.PackSmall d )
-			{
-				return new RequestPlayersForGameResultCallback_t()
-				{
-					Result = d.Result,
-					LSearchID = d.LSearchID,
-					SteamIDPlayerFound = d.SteamIDPlayerFound,
-					SteamIDLobby = d.SteamIDLobby,
-					PlayerAcceptState = d.PlayerAcceptState,
-					PlayerIndex = d.PlayerIndex,
-					TotalPlayersFound = d.TotalPlayersFound,
-					TotalPlayersAcceptedGame = d.TotalPlayersAcceptedGame,
-					SuggestedTeamIndex = d.SuggestedTeamIndex,
-					LUniqueGameID = d.LUniqueGameID,
-				};
-			}
+			public static implicit operator RequestPlayersForGameResultCallback_t ( RequestPlayersForGameResultCallback_t.Pack4 d ) => new RequestPlayersForGameResultCallback_t{ Result = d.Result,LSearchID = d.LSearchID,SteamIDPlayerFound = d.SteamIDPlayerFound,SteamIDLobby = d.SteamIDLobby,PlayerAcceptState = d.PlayerAcceptState,PlayerIndex = d.PlayerIndex,TotalPlayersFound = d.TotalPlayersFound,TotalPlayersAcceptedGame = d.TotalPlayersAcceptedGame,SuggestedTeamIndex = d.SuggestedTeamIndex,LUniqueGameID = d.LUniqueGameID, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong LSearchID; // m_ullSearchID uint64
+			internal ulong SteamIDPlayerFound; // m_SteamIDPlayerFound class CSteamID
+			internal ulong SteamIDLobby; // m_SteamIDLobby class CSteamID
+			internal PlayerAcceptState_t PlayerAcceptState; // m_ePlayerAcceptState PlayerAcceptState_t
+			internal int PlayerIndex; // m_nPlayerIndex int32
+			internal int TotalPlayersFound; // m_nTotalPlayersFound int32
+			internal int TotalPlayersAcceptedGame; // m_nTotalPlayersAcceptedGame int32
+			internal int SuggestedTeamIndex; // m_nSuggestedTeamIndex int32
+			internal ulong LUniqueGameID; // m_ullUniqueGameID uint64
+			
+			public static implicit operator RequestPlayersForGameResultCallback_t ( RequestPlayersForGameResultCallback_t.Pack8 d ) => new RequestPlayersForGameResultCallback_t{ Result = d.Result,LSearchID = d.LSearchID,SteamIDPlayerFound = d.SteamIDPlayerFound,SteamIDLobby = d.SteamIDLobby,PlayerAcceptState = d.PlayerAcceptState,PlayerIndex = d.PlayerIndex,TotalPlayersFound = d.TotalPlayersFound,TotalPlayersAcceptedGame = d.TotalPlayersAcceptedGame,SuggestedTeamIndex = d.SuggestedTeamIndex,LUniqueGameID = d.LUniqueGameID, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -8837,10 +8825,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RequestPlayersForGameFinalResultCallback_t
+	public struct RequestPlayersForGameFinalResultCallback_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameSearch + 13;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong LSearchID; // m_ullSearchID uint64
 		internal ulong LUniqueGameID; // m_ullUniqueGameID uint64
@@ -8848,40 +8841,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RequestPlayersForGameFinalResultCallback_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RequestPlayersForGameFinalResultCallback_t) Marshal.PtrToStructure( p, typeof(RequestPlayersForGameFinalResultCallback_t) );
-		}
+		internal static RequestPlayersForGameFinalResultCallback_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RequestPlayersForGameFinalResultCallback_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RequestPlayersForGameFinalResultCallback_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RequestPlayersForGameFinalResultCallback_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong LSearchID; // m_ullSearchID uint64
 			internal ulong LUniqueGameID; // m_ullUniqueGameID uint64
 			
-			//
-			// Easily convert from PackSmall to RequestPlayersForGameFinalResultCallback_t
-			//
-			public static implicit operator RequestPlayersForGameFinalResultCallback_t (  RequestPlayersForGameFinalResultCallback_t.PackSmall d )
-			{
-				return new RequestPlayersForGameFinalResultCallback_t()
-				{
-					Result = d.Result,
-					LSearchID = d.LSearchID,
-					LUniqueGameID = d.LUniqueGameID,
-				};
-			}
+			public static implicit operator RequestPlayersForGameFinalResultCallback_t ( RequestPlayersForGameFinalResultCallback_t.Pack4 d ) => new RequestPlayersForGameFinalResultCallback_t{ Result = d.Result,LSearchID = d.LSearchID,LUniqueGameID = d.LUniqueGameID, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong LSearchID; // m_ullSearchID uint64
+			internal ulong LUniqueGameID; // m_ullUniqueGameID uint64
+			
+			public static implicit operator RequestPlayersForGameFinalResultCallback_t ( RequestPlayersForGameFinalResultCallback_t.Pack8 d ) => new RequestPlayersForGameFinalResultCallback_t{ Result = d.Result,LSearchID = d.LSearchID,LUniqueGameID = d.LUniqueGameID, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -9011,10 +8999,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct SubmitPlayerResultResultCallback_t
+	public struct SubmitPlayerResultResultCallback_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameSearch + 14;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong UllUniqueGameID; // ullUniqueGameID uint64
 		internal ulong SteamIDPlayer; // steamIDPlayer class CSteamID
@@ -9022,40 +9015,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static SubmitPlayerResultResultCallback_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (SubmitPlayerResultResultCallback_t) Marshal.PtrToStructure( p, typeof(SubmitPlayerResultResultCallback_t) );
-		}
+		internal static SubmitPlayerResultResultCallback_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((SubmitPlayerResultResultCallback_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((SubmitPlayerResultResultCallback_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SubmitPlayerResultResultCallback_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong UllUniqueGameID; // ullUniqueGameID uint64
 			internal ulong SteamIDPlayer; // steamIDPlayer class CSteamID
 			
-			//
-			// Easily convert from PackSmall to SubmitPlayerResultResultCallback_t
-			//
-			public static implicit operator SubmitPlayerResultResultCallback_t (  SubmitPlayerResultResultCallback_t.PackSmall d )
-			{
-				return new SubmitPlayerResultResultCallback_t()
-				{
-					Result = d.Result,
-					UllUniqueGameID = d.UllUniqueGameID,
-					SteamIDPlayer = d.SteamIDPlayer,
-				};
-			}
+			public static implicit operator SubmitPlayerResultResultCallback_t ( SubmitPlayerResultResultCallback_t.Pack4 d ) => new SubmitPlayerResultResultCallback_t{ Result = d.Result,UllUniqueGameID = d.UllUniqueGameID,SteamIDPlayer = d.SteamIDPlayer, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong UllUniqueGameID; // ullUniqueGameID uint64
+			internal ulong SteamIDPlayer; // steamIDPlayer class CSteamID
+			
+			public static implicit operator SubmitPlayerResultResultCallback_t ( SubmitPlayerResultResultCallback_t.Pack8 d ) => new SubmitPlayerResultResultCallback_t{ Result = d.Result,UllUniqueGameID = d.UllUniqueGameID,SteamIDPlayer = d.SteamIDPlayer, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -9185,48 +9173,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct EndGameResultCallback_t
+	public struct EndGameResultCallback_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameSearch + 15;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong UllUniqueGameID; // ullUniqueGameID uint64
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static EndGameResultCallback_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (EndGameResultCallback_t) Marshal.PtrToStructure( p, typeof(EndGameResultCallback_t) );
-		}
+		internal static EndGameResultCallback_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((EndGameResultCallback_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((EndGameResultCallback_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(EndGameResultCallback_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong UllUniqueGameID; // ullUniqueGameID uint64
 			
-			//
-			// Easily convert from PackSmall to EndGameResultCallback_t
-			//
-			public static implicit operator EndGameResultCallback_t (  EndGameResultCallback_t.PackSmall d )
-			{
-				return new EndGameResultCallback_t()
-				{
-					Result = d.Result,
-					UllUniqueGameID = d.UllUniqueGameID,
-				};
-			}
+			public static implicit operator EndGameResultCallback_t ( EndGameResultCallback_t.Pack4 d ) => new EndGameResultCallback_t{ Result = d.Result,UllUniqueGameID = d.UllUniqueGameID, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong UllUniqueGameID; // ullUniqueGameID uint64
+			
+			public static implicit operator EndGameResultCallback_t ( EndGameResultCallback_t.Pack8 d ) => new EndGameResultCallback_t{ Result = d.Result,UllUniqueGameID = d.UllUniqueGameID, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -9356,10 +9344,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct JoinPartyCallback_t
+	public struct JoinPartyCallback_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamParties + 1;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
 		internal ulong SteamIDBeaconOwner; // m_SteamIDBeaconOwner class CSteamID
@@ -9369,23 +9362,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static JoinPartyCallback_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (JoinPartyCallback_t) Marshal.PtrToStructure( p, typeof(JoinPartyCallback_t) );
-		}
+		internal static JoinPartyCallback_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((JoinPartyCallback_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((JoinPartyCallback_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(JoinPartyCallback_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
@@ -9393,19 +9382,19 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 			internal string ConnectString; // m_rgchConnectString char [256]
 			
-			//
-			// Easily convert from PackSmall to JoinPartyCallback_t
-			//
-			public static implicit operator JoinPartyCallback_t (  JoinPartyCallback_t.PackSmall d )
-			{
-				return new JoinPartyCallback_t()
-				{
-					Result = d.Result,
-					BeaconID = d.BeaconID,
-					SteamIDBeaconOwner = d.SteamIDBeaconOwner,
-					ConnectString = d.ConnectString,
-				};
-			}
+			public static implicit operator JoinPartyCallback_t ( JoinPartyCallback_t.Pack4 d ) => new JoinPartyCallback_t{ Result = d.Result,BeaconID = d.BeaconID,SteamIDBeaconOwner = d.SteamIDBeaconOwner,ConnectString = d.ConnectString, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
+			internal ulong SteamIDBeaconOwner; // m_SteamIDBeaconOwner class CSteamID
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+			internal string ConnectString; // m_rgchConnectString char [256]
+			
+			public static implicit operator JoinPartyCallback_t ( JoinPartyCallback_t.Pack8 d ) => new JoinPartyCallback_t{ Result = d.Result,BeaconID = d.BeaconID,SteamIDBeaconOwner = d.SteamIDBeaconOwner,ConnectString = d.ConnectString, };
 		}
 		
 		internal static CallResult<JoinPartyCallback_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<JoinPartyCallback_t, bool> CallbackFunction )
@@ -9540,48 +9529,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct CreateBeaconCallback_t
+	public struct CreateBeaconCallback_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamParties + 2;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static CreateBeaconCallback_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (CreateBeaconCallback_t) Marshal.PtrToStructure( p, typeof(CreateBeaconCallback_t) );
-		}
+		internal static CreateBeaconCallback_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((CreateBeaconCallback_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((CreateBeaconCallback_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(CreateBeaconCallback_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
 			
-			//
-			// Easily convert from PackSmall to CreateBeaconCallback_t
-			//
-			public static implicit operator CreateBeaconCallback_t (  CreateBeaconCallback_t.PackSmall d )
-			{
-				return new CreateBeaconCallback_t()
-				{
-					Result = d.Result,
-					BeaconID = d.BeaconID,
-				};
-			}
+			public static implicit operator CreateBeaconCallback_t ( CreateBeaconCallback_t.Pack4 d ) => new CreateBeaconCallback_t{ Result = d.Result,BeaconID = d.BeaconID, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
+			
+			public static implicit operator CreateBeaconCallback_t ( CreateBeaconCallback_t.Pack8 d ) => new CreateBeaconCallback_t{ Result = d.Result,BeaconID = d.BeaconID, };
 		}
 		
 		internal static CallResult<CreateBeaconCallback_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<CreateBeaconCallback_t, bool> CallbackFunction )
@@ -9716,48 +9705,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct ReservationNotificationCallback_t
+	public struct ReservationNotificationCallback_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamParties + 3;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
 		internal ulong SteamIDJoiner; // m_steamIDJoiner class CSteamID
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static ReservationNotificationCallback_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (ReservationNotificationCallback_t) Marshal.PtrToStructure( p, typeof(ReservationNotificationCallback_t) );
-		}
+		internal static ReservationNotificationCallback_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((ReservationNotificationCallback_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((ReservationNotificationCallback_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(ReservationNotificationCallback_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
 			internal ulong SteamIDJoiner; // m_steamIDJoiner class CSteamID
 			
-			//
-			// Easily convert from PackSmall to ReservationNotificationCallback_t
-			//
-			public static implicit operator ReservationNotificationCallback_t (  ReservationNotificationCallback_t.PackSmall d )
-			{
-				return new ReservationNotificationCallback_t()
-				{
-					BeaconID = d.BeaconID,
-					SteamIDJoiner = d.SteamIDJoiner,
-				};
-			}
+			public static implicit operator ReservationNotificationCallback_t ( ReservationNotificationCallback_t.Pack4 d ) => new ReservationNotificationCallback_t{ BeaconID = d.BeaconID,SteamIDJoiner = d.SteamIDJoiner, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
+			internal ulong SteamIDJoiner; // m_steamIDJoiner class CSteamID
+			
+			public static implicit operator ReservationNotificationCallback_t ( ReservationNotificationCallback_t.Pack8 d ) => new ReservationNotificationCallback_t{ BeaconID = d.BeaconID,SteamIDJoiner = d.SteamIDJoiner, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -9887,45 +9876,45 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct ChangeNumOpenSlotsCallback_t
+	public struct ChangeNumOpenSlotsCallback_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamParties + 4;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static ChangeNumOpenSlotsCallback_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (ChangeNumOpenSlotsCallback_t) Marshal.PtrToStructure( p, typeof(ChangeNumOpenSlotsCallback_t) );
-		}
+		internal static ChangeNumOpenSlotsCallback_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((ChangeNumOpenSlotsCallback_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((ChangeNumOpenSlotsCallback_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(ChangeNumOpenSlotsCallback_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			
-			//
-			// Easily convert from PackSmall to ChangeNumOpenSlotsCallback_t
-			//
-			public static implicit operator ChangeNumOpenSlotsCallback_t (  ChangeNumOpenSlotsCallback_t.PackSmall d )
-			{
-				return new ChangeNumOpenSlotsCallback_t()
-				{
-					Result = d.Result,
-				};
-			}
+			public static implicit operator ChangeNumOpenSlotsCallback_t ( ChangeNumOpenSlotsCallback_t.Pack4 d ) => new ChangeNumOpenSlotsCallback_t{ Result = d.Result, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			
+			public static implicit operator ChangeNumOpenSlotsCallback_t ( ChangeNumOpenSlotsCallback_t.Pack8 d ) => new ChangeNumOpenSlotsCallback_t{ Result = d.Result, };
 		}
 		
 		internal static CallResult<ChangeNumOpenSlotsCallback_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<ChangeNumOpenSlotsCallback_t, bool> CallbackFunction )
@@ -10060,7 +10049,6 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct SteamParamStringArray_t
 	{
 		internal IntPtr Strings; // m_ppStrings const char **
@@ -10069,45 +10057,45 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static SteamParamStringArray_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (SteamParamStringArray_t) Marshal.PtrToStructure( p, typeof(SteamParamStringArray_t) );
-		}
+		internal static SteamParamStringArray_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((SteamParamStringArray_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((SteamParamStringArray_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamParamStringArray_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal IntPtr Strings; // m_ppStrings const char **
 			internal int NumStrings; // m_nNumStrings int32
 			
-			//
-			// Easily convert from PackSmall to SteamParamStringArray_t
-			//
-			public static implicit operator SteamParamStringArray_t (  SteamParamStringArray_t.PackSmall d )
-			{
-				return new SteamParamStringArray_t()
-				{
-					Strings = d.Strings,
-					NumStrings = d.NumStrings,
-				};
-			}
+			public static implicit operator SteamParamStringArray_t ( SteamParamStringArray_t.Pack4 d ) => new SteamParamStringArray_t{ Strings = d.Strings,NumStrings = d.NumStrings, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal IntPtr Strings; // m_ppStrings const char **
+			internal int NumStrings; // m_nNumStrings int32
+			
+			public static implicit operator SteamParamStringArray_t ( SteamParamStringArray_t.Pack8 d ) => new SteamParamStringArray_t{ Strings = d.Strings,NumStrings = d.NumStrings, };
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStorageAppSyncedClient_t
+	public struct RemoteStorageAppSyncedClient_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 1;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint AppID; // m_nAppID AppId_t
 		internal Result Result; // m_eResult enum EResult
 		internal int NumDownloads; // m_unNumDownloads int
@@ -10115,40 +10103,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoteStorageAppSyncedClient_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoteStorageAppSyncedClient_t) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncedClient_t) );
-		}
+		internal static RemoteStorageAppSyncedClient_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoteStorageAppSyncedClient_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoteStorageAppSyncedClient_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageAppSyncedClient_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint AppID; // m_nAppID AppId_t
 			internal Result Result; // m_eResult enum EResult
 			internal int NumDownloads; // m_unNumDownloads int
 			
-			//
-			// Easily convert from PackSmall to RemoteStorageAppSyncedClient_t
-			//
-			public static implicit operator RemoteStorageAppSyncedClient_t (  RemoteStorageAppSyncedClient_t.PackSmall d )
-			{
-				return new RemoteStorageAppSyncedClient_t()
-				{
-					AppID = d.AppID,
-					Result = d.Result,
-					NumDownloads = d.NumDownloads,
-				};
-			}
+			public static implicit operator RemoteStorageAppSyncedClient_t ( RemoteStorageAppSyncedClient_t.Pack4 d ) => new RemoteStorageAppSyncedClient_t{ AppID = d.AppID,Result = d.Result,NumDownloads = d.NumDownloads, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint AppID; // m_nAppID AppId_t
+			internal Result Result; // m_eResult enum EResult
+			internal int NumDownloads; // m_unNumDownloads int
+			
+			public static implicit operator RemoteStorageAppSyncedClient_t ( RemoteStorageAppSyncedClient_t.Pack8 d ) => new RemoteStorageAppSyncedClient_t{ AppID = d.AppID,Result = d.Result,NumDownloads = d.NumDownloads, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -10278,10 +10261,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStorageAppSyncedServer_t
+	public struct RemoteStorageAppSyncedServer_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 2;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint AppID; // m_nAppID AppId_t
 		internal Result Result; // m_eResult enum EResult
 		internal int NumUploads; // m_unNumUploads int
@@ -10289,40 +10277,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoteStorageAppSyncedServer_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoteStorageAppSyncedServer_t) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncedServer_t) );
-		}
+		internal static RemoteStorageAppSyncedServer_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoteStorageAppSyncedServer_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoteStorageAppSyncedServer_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageAppSyncedServer_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint AppID; // m_nAppID AppId_t
 			internal Result Result; // m_eResult enum EResult
 			internal int NumUploads; // m_unNumUploads int
 			
-			//
-			// Easily convert from PackSmall to RemoteStorageAppSyncedServer_t
-			//
-			public static implicit operator RemoteStorageAppSyncedServer_t (  RemoteStorageAppSyncedServer_t.PackSmall d )
-			{
-				return new RemoteStorageAppSyncedServer_t()
-				{
-					AppID = d.AppID,
-					Result = d.Result,
-					NumUploads = d.NumUploads,
-				};
-			}
+			public static implicit operator RemoteStorageAppSyncedServer_t ( RemoteStorageAppSyncedServer_t.Pack4 d ) => new RemoteStorageAppSyncedServer_t{ AppID = d.AppID,Result = d.Result,NumUploads = d.NumUploads, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint AppID; // m_nAppID AppId_t
+			internal Result Result; // m_eResult enum EResult
+			internal int NumUploads; // m_unNumUploads int
+			
+			public static implicit operator RemoteStorageAppSyncedServer_t ( RemoteStorageAppSyncedServer_t.Pack8 d ) => new RemoteStorageAppSyncedServer_t{ AppID = d.AppID,Result = d.Result,NumUploads = d.NumUploads, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -10452,10 +10435,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStorageAppSyncProgress_t
+	public struct RemoteStorageAppSyncProgress_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 3;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
 		internal string CurrentFile; // m_rgchCurrentFile char [260]
 		internal uint AppID; // m_nAppID AppId_t
@@ -10467,23 +10455,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoteStorageAppSyncProgress_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoteStorageAppSyncProgress_t) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncProgress_t) );
-		}
+		internal static RemoteStorageAppSyncProgress_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoteStorageAppSyncProgress_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoteStorageAppSyncProgress_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageAppSyncProgress_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
 			internal string CurrentFile; // m_rgchCurrentFile char [260]
@@ -10493,20 +10477,21 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool Uploading; // m_bUploading _Bool
 			
-			//
-			// Easily convert from PackSmall to RemoteStorageAppSyncProgress_t
-			//
-			public static implicit operator RemoteStorageAppSyncProgress_t (  RemoteStorageAppSyncProgress_t.PackSmall d )
-			{
-				return new RemoteStorageAppSyncProgress_t()
-				{
-					CurrentFile = d.CurrentFile,
-					AppID = d.AppID,
-					BytesTransferredThisChunk = d.BytesTransferredThisChunk,
-					DAppPercentComplete = d.DAppPercentComplete,
-					Uploading = d.Uploading,
-				};
-			}
+			public static implicit operator RemoteStorageAppSyncProgress_t ( RemoteStorageAppSyncProgress_t.Pack4 d ) => new RemoteStorageAppSyncProgress_t{ CurrentFile = d.CurrentFile,AppID = d.AppID,BytesTransferredThisChunk = d.BytesTransferredThisChunk,DAppPercentComplete = d.DAppPercentComplete,Uploading = d.Uploading, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
+			internal string CurrentFile; // m_rgchCurrentFile char [260]
+			internal uint AppID; // m_nAppID AppId_t
+			internal uint BytesTransferredThisChunk; // m_uBytesTransferredThisChunk uint32
+			internal double DAppPercentComplete; // m_dAppPercentComplete double
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool Uploading; // m_bUploading _Bool
+			
+			public static implicit operator RemoteStorageAppSyncProgress_t ( RemoteStorageAppSyncProgress_t.Pack8 d ) => new RemoteStorageAppSyncProgress_t{ CurrentFile = d.CurrentFile,AppID = d.AppID,BytesTransferredThisChunk = d.BytesTransferredThisChunk,DAppPercentComplete = d.DAppPercentComplete,Uploading = d.Uploading, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -10636,48 +10621,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStorageAppSyncStatusCheck_t
+	public struct RemoteStorageAppSyncStatusCheck_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 5;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint AppID; // m_nAppID AppId_t
 		internal Result Result; // m_eResult enum EResult
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoteStorageAppSyncStatusCheck_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoteStorageAppSyncStatusCheck_t) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncStatusCheck_t) );
-		}
+		internal static RemoteStorageAppSyncStatusCheck_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoteStorageAppSyncStatusCheck_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoteStorageAppSyncStatusCheck_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageAppSyncStatusCheck_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint AppID; // m_nAppID AppId_t
 			internal Result Result; // m_eResult enum EResult
 			
-			//
-			// Easily convert from PackSmall to RemoteStorageAppSyncStatusCheck_t
-			//
-			public static implicit operator RemoteStorageAppSyncStatusCheck_t (  RemoteStorageAppSyncStatusCheck_t.PackSmall d )
-			{
-				return new RemoteStorageAppSyncStatusCheck_t()
-				{
-					AppID = d.AppID,
-					Result = d.Result,
-				};
-			}
+			public static implicit operator RemoteStorageAppSyncStatusCheck_t ( RemoteStorageAppSyncStatusCheck_t.Pack4 d ) => new RemoteStorageAppSyncStatusCheck_t{ AppID = d.AppID,Result = d.Result, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint AppID; // m_nAppID AppId_t
+			internal Result Result; // m_eResult enum EResult
+			
+			public static implicit operator RemoteStorageAppSyncStatusCheck_t ( RemoteStorageAppSyncStatusCheck_t.Pack8 d ) => new RemoteStorageAppSyncStatusCheck_t{ AppID = d.AppID,Result = d.Result, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -10807,10 +10792,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStorageFileShareResult_t
+	public struct RemoteStorageFileShareResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 7;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong File; // m_hFile UGCHandle_t
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
@@ -10819,41 +10809,37 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoteStorageFileShareResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoteStorageFileShareResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageFileShareResult_t) );
-		}
+		internal static RemoteStorageFileShareResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoteStorageFileShareResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoteStorageFileShareResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageFileShareResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong File; // m_hFile UGCHandle_t
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
 			internal string Filename; // m_rgchFilename char [260]
 			
-			//
-			// Easily convert from PackSmall to RemoteStorageFileShareResult_t
-			//
-			public static implicit operator RemoteStorageFileShareResult_t (  RemoteStorageFileShareResult_t.PackSmall d )
-			{
-				return new RemoteStorageFileShareResult_t()
-				{
-					Result = d.Result,
-					File = d.File,
-					Filename = d.Filename,
-				};
-			}
+			public static implicit operator RemoteStorageFileShareResult_t ( RemoteStorageFileShareResult_t.Pack4 d ) => new RemoteStorageFileShareResult_t{ Result = d.Result,File = d.File,Filename = d.Filename, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong File; // m_hFile UGCHandle_t
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
+			internal string Filename; // m_rgchFilename char [260]
+			
+			public static implicit operator RemoteStorageFileShareResult_t ( RemoteStorageFileShareResult_t.Pack8 d ) => new RemoteStorageFileShareResult_t{ Result = d.Result,File = d.File,Filename = d.Filename, };
 		}
 		
 		internal static CallResult<RemoteStorageFileShareResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageFileShareResult_t, bool> CallbackFunction )
@@ -10988,10 +10974,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStoragePublishFileResult_t
+	public struct RemoteStoragePublishFileResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 9;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		[MarshalAs(UnmanagedType.I1)]
@@ -11000,41 +10991,37 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoteStoragePublishFileResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoteStoragePublishFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishFileResult_t) );
-		}
+		internal static RemoteStoragePublishFileResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoteStoragePublishFileResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoteStoragePublishFileResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStoragePublishFileResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 			
-			//
-			// Easily convert from PackSmall to RemoteStoragePublishFileResult_t
-			//
-			public static implicit operator RemoteStoragePublishFileResult_t (  RemoteStoragePublishFileResult_t.PackSmall d )
-			{
-				return new RemoteStoragePublishFileResult_t()
-				{
-					Result = d.Result,
-					PublishedFileId = d.PublishedFileId,
-					UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement,
-				};
-			}
+			public static implicit operator RemoteStoragePublishFileResult_t ( RemoteStoragePublishFileResult_t.Pack4 d ) => new RemoteStoragePublishFileResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
+			
+			public static implicit operator RemoteStoragePublishFileResult_t ( RemoteStoragePublishFileResult_t.Pack8 d ) => new RemoteStoragePublishFileResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -11164,48 +11151,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStorageDeletePublishedFileResult_t
+	public struct RemoteStorageDeletePublishedFileResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 11;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoteStorageDeletePublishedFileResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoteStorageDeletePublishedFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageDeletePublishedFileResult_t) );
-		}
+		internal static RemoteStorageDeletePublishedFileResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoteStorageDeletePublishedFileResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoteStorageDeletePublishedFileResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageDeletePublishedFileResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
-			//
-			// Easily convert from PackSmall to RemoteStorageDeletePublishedFileResult_t
-			//
-			public static implicit operator RemoteStorageDeletePublishedFileResult_t (  RemoteStorageDeletePublishedFileResult_t.PackSmall d )
-			{
-				return new RemoteStorageDeletePublishedFileResult_t()
-				{
-					Result = d.Result,
-					PublishedFileId = d.PublishedFileId,
-				};
-			}
+			public static implicit operator RemoteStorageDeletePublishedFileResult_t ( RemoteStorageDeletePublishedFileResult_t.Pack4 d ) => new RemoteStorageDeletePublishedFileResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			
+			public static implicit operator RemoteStorageDeletePublishedFileResult_t ( RemoteStorageDeletePublishedFileResult_t.Pack8 d ) => new RemoteStorageDeletePublishedFileResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
 		}
 		
 		internal static CallResult<RemoteStorageDeletePublishedFileResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageDeletePublishedFileResult_t, bool> CallbackFunction )
@@ -11340,10 +11327,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStorageEnumerateUserPublishedFilesResult_t
+	public struct RemoteStorageEnumerateUserPublishedFilesResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 12;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal int ResultsReturned; // m_nResultsReturned int32
 		internal int TotalResultCount; // m_nTotalResultCount int32
@@ -11353,23 +11345,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoteStorageEnumerateUserPublishedFilesResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoteStorageEnumerateUserPublishedFilesResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserPublishedFilesResult_t) );
-		}
+		internal static RemoteStorageEnumerateUserPublishedFilesResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoteStorageEnumerateUserPublishedFilesResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoteStorageEnumerateUserPublishedFilesResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageEnumerateUserPublishedFilesResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal int ResultsReturned; // m_nResultsReturned int32
@@ -11377,19 +11365,19 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
 			internal ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 			
-			//
-			// Easily convert from PackSmall to RemoteStorageEnumerateUserPublishedFilesResult_t
-			//
-			public static implicit operator RemoteStorageEnumerateUserPublishedFilesResult_t (  RemoteStorageEnumerateUserPublishedFilesResult_t.PackSmall d )
-			{
-				return new RemoteStorageEnumerateUserPublishedFilesResult_t()
-				{
-					Result = d.Result,
-					ResultsReturned = d.ResultsReturned,
-					TotalResultCount = d.TotalResultCount,
-					GPublishedFileId = d.GPublishedFileId,
-				};
-			}
+			public static implicit operator RemoteStorageEnumerateUserPublishedFilesResult_t ( RemoteStorageEnumerateUserPublishedFilesResult_t.Pack4 d ) => new RemoteStorageEnumerateUserPublishedFilesResult_t{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal int ResultsReturned; // m_nResultsReturned int32
+			internal int TotalResultCount; // m_nTotalResultCount int32
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
+			internal ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+			
+			public static implicit operator RemoteStorageEnumerateUserPublishedFilesResult_t ( RemoteStorageEnumerateUserPublishedFilesResult_t.Pack8 d ) => new RemoteStorageEnumerateUserPublishedFilesResult_t{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId, };
 		}
 		
 		internal static CallResult<RemoteStorageEnumerateUserPublishedFilesResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageEnumerateUserPublishedFilesResult_t, bool> CallbackFunction )
@@ -11524,48 +11512,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStorageSubscribePublishedFileResult_t
+	public struct RemoteStorageSubscribePublishedFileResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 13;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoteStorageSubscribePublishedFileResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoteStorageSubscribePublishedFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageSubscribePublishedFileResult_t) );
-		}
+		internal static RemoteStorageSubscribePublishedFileResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoteStorageSubscribePublishedFileResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoteStorageSubscribePublishedFileResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageSubscribePublishedFileResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
-			//
-			// Easily convert from PackSmall to RemoteStorageSubscribePublishedFileResult_t
-			//
-			public static implicit operator RemoteStorageSubscribePublishedFileResult_t (  RemoteStorageSubscribePublishedFileResult_t.PackSmall d )
-			{
-				return new RemoteStorageSubscribePublishedFileResult_t()
-				{
-					Result = d.Result,
-					PublishedFileId = d.PublishedFileId,
-				};
-			}
+			public static implicit operator RemoteStorageSubscribePublishedFileResult_t ( RemoteStorageSubscribePublishedFileResult_t.Pack4 d ) => new RemoteStorageSubscribePublishedFileResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			
+			public static implicit operator RemoteStorageSubscribePublishedFileResult_t ( RemoteStorageSubscribePublishedFileResult_t.Pack8 d ) => new RemoteStorageSubscribePublishedFileResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
 		}
 		
 		internal static CallResult<RemoteStorageSubscribePublishedFileResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageSubscribePublishedFileResult_t, bool> CallbackFunction )
@@ -11700,10 +11688,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStorageEnumerateUserSubscribedFilesResult_t
+	public struct RemoteStorageEnumerateUserSubscribedFilesResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 14;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal int ResultsReturned; // m_nResultsReturned int32
 		internal int TotalResultCount; // m_nTotalResultCount int32
@@ -11715,23 +11708,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoteStorageEnumerateUserSubscribedFilesResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoteStorageEnumerateUserSubscribedFilesResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserSubscribedFilesResult_t) );
-		}
+		internal static RemoteStorageEnumerateUserSubscribedFilesResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoteStorageEnumerateUserSubscribedFilesResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoteStorageEnumerateUserSubscribedFilesResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageEnumerateUserSubscribedFilesResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal int ResultsReturned; // m_nResultsReturned int32
@@ -11741,20 +11730,21 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U4)]
 			internal uint[] GRTimeSubscribed; // m_rgRTimeSubscribed uint32 [50]
 			
-			//
-			// Easily convert from PackSmall to RemoteStorageEnumerateUserSubscribedFilesResult_t
-			//
-			public static implicit operator RemoteStorageEnumerateUserSubscribedFilesResult_t (  RemoteStorageEnumerateUserSubscribedFilesResult_t.PackSmall d )
-			{
-				return new RemoteStorageEnumerateUserSubscribedFilesResult_t()
-				{
-					Result = d.Result,
-					ResultsReturned = d.ResultsReturned,
-					TotalResultCount = d.TotalResultCount,
-					GPublishedFileId = d.GPublishedFileId,
-					GRTimeSubscribed = d.GRTimeSubscribed,
-				};
-			}
+			public static implicit operator RemoteStorageEnumerateUserSubscribedFilesResult_t ( RemoteStorageEnumerateUserSubscribedFilesResult_t.Pack4 d ) => new RemoteStorageEnumerateUserSubscribedFilesResult_t{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId,GRTimeSubscribed = d.GRTimeSubscribed, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal int ResultsReturned; // m_nResultsReturned int32
+			internal int TotalResultCount; // m_nTotalResultCount int32
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
+			internal ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U4)]
+			internal uint[] GRTimeSubscribed; // m_rgRTimeSubscribed uint32 [50]
+			
+			public static implicit operator RemoteStorageEnumerateUserSubscribedFilesResult_t ( RemoteStorageEnumerateUserSubscribedFilesResult_t.Pack8 d ) => new RemoteStorageEnumerateUserSubscribedFilesResult_t{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId,GRTimeSubscribed = d.GRTimeSubscribed, };
 		}
 		
 		internal static CallResult<RemoteStorageEnumerateUserSubscribedFilesResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageEnumerateUserSubscribedFilesResult_t, bool> CallbackFunction )
@@ -11889,48 +11879,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStorageUnsubscribePublishedFileResult_t
+	public struct RemoteStorageUnsubscribePublishedFileResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 15;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoteStorageUnsubscribePublishedFileResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoteStorageUnsubscribePublishedFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageUnsubscribePublishedFileResult_t) );
-		}
+		internal static RemoteStorageUnsubscribePublishedFileResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoteStorageUnsubscribePublishedFileResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoteStorageUnsubscribePublishedFileResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageUnsubscribePublishedFileResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
-			//
-			// Easily convert from PackSmall to RemoteStorageUnsubscribePublishedFileResult_t
-			//
-			public static implicit operator RemoteStorageUnsubscribePublishedFileResult_t (  RemoteStorageUnsubscribePublishedFileResult_t.PackSmall d )
-			{
-				return new RemoteStorageUnsubscribePublishedFileResult_t()
-				{
-					Result = d.Result,
-					PublishedFileId = d.PublishedFileId,
-				};
-			}
+			public static implicit operator RemoteStorageUnsubscribePublishedFileResult_t ( RemoteStorageUnsubscribePublishedFileResult_t.Pack4 d ) => new RemoteStorageUnsubscribePublishedFileResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			
+			public static implicit operator RemoteStorageUnsubscribePublishedFileResult_t ( RemoteStorageUnsubscribePublishedFileResult_t.Pack8 d ) => new RemoteStorageUnsubscribePublishedFileResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
 		}
 		
 		internal static CallResult<RemoteStorageUnsubscribePublishedFileResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageUnsubscribePublishedFileResult_t, bool> CallbackFunction )
@@ -12065,10 +12055,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStorageUpdatePublishedFileResult_t
+	public struct RemoteStorageUpdatePublishedFileResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 16;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		[MarshalAs(UnmanagedType.I1)]
@@ -12077,41 +12072,37 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoteStorageUpdatePublishedFileResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoteStorageUpdatePublishedFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageUpdatePublishedFileResult_t) );
-		}
+		internal static RemoteStorageUpdatePublishedFileResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoteStorageUpdatePublishedFileResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoteStorageUpdatePublishedFileResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageUpdatePublishedFileResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 			
-			//
-			// Easily convert from PackSmall to RemoteStorageUpdatePublishedFileResult_t
-			//
-			public static implicit operator RemoteStorageUpdatePublishedFileResult_t (  RemoteStorageUpdatePublishedFileResult_t.PackSmall d )
-			{
-				return new RemoteStorageUpdatePublishedFileResult_t()
-				{
-					Result = d.Result,
-					PublishedFileId = d.PublishedFileId,
-					UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement,
-				};
-			}
+			public static implicit operator RemoteStorageUpdatePublishedFileResult_t ( RemoteStorageUpdatePublishedFileResult_t.Pack4 d ) => new RemoteStorageUpdatePublishedFileResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
+			
+			public static implicit operator RemoteStorageUpdatePublishedFileResult_t ( RemoteStorageUpdatePublishedFileResult_t.Pack8 d ) => new RemoteStorageUpdatePublishedFileResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement, };
 		}
 		
 		internal static CallResult<RemoteStorageUpdatePublishedFileResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageUpdatePublishedFileResult_t, bool> CallbackFunction )
@@ -12246,10 +12237,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStorageDownloadUGCResult_t
+	public struct RemoteStorageDownloadUGCResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 17;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong File; // m_hFile UGCHandle_t
 		internal uint AppID; // m_nAppID AppId_t
@@ -12261,23 +12257,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoteStorageDownloadUGCResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoteStorageDownloadUGCResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageDownloadUGCResult_t) );
-		}
+		internal static RemoteStorageDownloadUGCResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoteStorageDownloadUGCResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoteStorageDownloadUGCResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageDownloadUGCResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong File; // m_hFile UGCHandle_t
@@ -12287,21 +12279,21 @@ namespace SteamNative
 			internal string PchFileName; // m_pchFileName char [260]
 			internal ulong SteamIDOwner; // m_ulSteamIDOwner uint64
 			
-			//
-			// Easily convert from PackSmall to RemoteStorageDownloadUGCResult_t
-			//
-			public static implicit operator RemoteStorageDownloadUGCResult_t (  RemoteStorageDownloadUGCResult_t.PackSmall d )
-			{
-				return new RemoteStorageDownloadUGCResult_t()
-				{
-					Result = d.Result,
-					File = d.File,
-					AppID = d.AppID,
-					SizeInBytes = d.SizeInBytes,
-					PchFileName = d.PchFileName,
-					SteamIDOwner = d.SteamIDOwner,
-				};
-			}
+			public static implicit operator RemoteStorageDownloadUGCResult_t ( RemoteStorageDownloadUGCResult_t.Pack4 d ) => new RemoteStorageDownloadUGCResult_t{ Result = d.Result,File = d.File,AppID = d.AppID,SizeInBytes = d.SizeInBytes,PchFileName = d.PchFileName,SteamIDOwner = d.SteamIDOwner, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong File; // m_hFile UGCHandle_t
+			internal uint AppID; // m_nAppID AppId_t
+			internal int SizeInBytes; // m_nSizeInBytes int32
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
+			internal string PchFileName; // m_pchFileName char [260]
+			internal ulong SteamIDOwner; // m_ulSteamIDOwner uint64
+			
+			public static implicit operator RemoteStorageDownloadUGCResult_t ( RemoteStorageDownloadUGCResult_t.Pack8 d ) => new RemoteStorageDownloadUGCResult_t{ Result = d.Result,File = d.File,AppID = d.AppID,SizeInBytes = d.SizeInBytes,PchFileName = d.PchFileName,SteamIDOwner = d.SteamIDOwner, };
 		}
 		
 		internal static CallResult<RemoteStorageDownloadUGCResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageDownloadUGCResult_t, bool> CallbackFunction )
@@ -12436,10 +12428,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStorageGetPublishedFileDetailsResult_t
+	public struct RemoteStorageGetPublishedFileDetailsResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 18;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal uint CreatorAppID; // m_nCreatorAppID AppId_t
@@ -12473,23 +12470,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoteStorageGetPublishedFileDetailsResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoteStorageGetPublishedFileDetailsResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageGetPublishedFileDetailsResult_t) );
-		}
+		internal static RemoteStorageGetPublishedFileDetailsResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoteStorageGetPublishedFileDetailsResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoteStorageGetPublishedFileDetailsResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageGetPublishedFileDetailsResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -12521,36 +12514,43 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool AcceptedForUse; // m_bAcceptedForUse _Bool
 			
-			//
-			// Easily convert from PackSmall to RemoteStorageGetPublishedFileDetailsResult_t
-			//
-			public static implicit operator RemoteStorageGetPublishedFileDetailsResult_t (  RemoteStorageGetPublishedFileDetailsResult_t.PackSmall d )
-			{
-				return new RemoteStorageGetPublishedFileDetailsResult_t()
-				{
-					Result = d.Result,
-					PublishedFileId = d.PublishedFileId,
-					CreatorAppID = d.CreatorAppID,
-					ConsumerAppID = d.ConsumerAppID,
-					Title = d.Title,
-					Description = d.Description,
-					File = d.File,
-					PreviewFile = d.PreviewFile,
-					SteamIDOwner = d.SteamIDOwner,
-					TimeCreated = d.TimeCreated,
-					TimeUpdated = d.TimeUpdated,
-					Visibility = d.Visibility,
-					Banned = d.Banned,
-					Tags = d.Tags,
-					TagsTruncated = d.TagsTruncated,
-					PchFileName = d.PchFileName,
-					FileSize = d.FileSize,
-					PreviewFileSize = d.PreviewFileSize,
-					URL = d.URL,
-					FileType = d.FileType,
-					AcceptedForUse = d.AcceptedForUse,
-				};
-			}
+			public static implicit operator RemoteStorageGetPublishedFileDetailsResult_t ( RemoteStorageGetPublishedFileDetailsResult_t.Pack4 d ) => new RemoteStorageGetPublishedFileDetailsResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,CreatorAppID = d.CreatorAppID,ConsumerAppID = d.ConsumerAppID,Title = d.Title,Description = d.Description,File = d.File,PreviewFile = d.PreviewFile,SteamIDOwner = d.SteamIDOwner,TimeCreated = d.TimeCreated,TimeUpdated = d.TimeUpdated,Visibility = d.Visibility,Banned = d.Banned,Tags = d.Tags,TagsTruncated = d.TagsTruncated,PchFileName = d.PchFileName,FileSize = d.FileSize,PreviewFileSize = d.PreviewFileSize,URL = d.URL,FileType = d.FileType,AcceptedForUse = d.AcceptedForUse, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal uint CreatorAppID; // m_nCreatorAppID AppId_t
+			internal uint ConsumerAppID; // m_nConsumerAppID AppId_t
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 129)]
+			internal string Title; // m_rgchTitle char [129]
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8000)]
+			internal string Description; // m_rgchDescription char [8000]
+			internal ulong File; // m_hFile UGCHandle_t
+			internal ulong PreviewFile; // m_hPreviewFile UGCHandle_t
+			internal ulong SteamIDOwner; // m_ulSteamIDOwner uint64
+			internal uint TimeCreated; // m_rtimeCreated uint32
+			internal uint TimeUpdated; // m_rtimeUpdated uint32
+			internal RemoteStoragePublishedFileVisibility Visibility; // m_eVisibility enum ERemoteStoragePublishedFileVisibility
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool Banned; // m_bBanned _Bool
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1025)]
+			internal string Tags; // m_rgchTags char [1025]
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool TagsTruncated; // m_bTagsTruncated _Bool
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
+			internal string PchFileName; // m_pchFileName char [260]
+			internal int FileSize; // m_nFileSize int32
+			internal int PreviewFileSize; // m_nPreviewFileSize int32
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+			internal string URL; // m_rgchURL char [256]
+			internal WorkshopFileType FileType; // m_eFileType enum EWorkshopFileType
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool AcceptedForUse; // m_bAcceptedForUse _Bool
+			
+			public static implicit operator RemoteStorageGetPublishedFileDetailsResult_t ( RemoteStorageGetPublishedFileDetailsResult_t.Pack8 d ) => new RemoteStorageGetPublishedFileDetailsResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,CreatorAppID = d.CreatorAppID,ConsumerAppID = d.ConsumerAppID,Title = d.Title,Description = d.Description,File = d.File,PreviewFile = d.PreviewFile,SteamIDOwner = d.SteamIDOwner,TimeCreated = d.TimeCreated,TimeUpdated = d.TimeUpdated,Visibility = d.Visibility,Banned = d.Banned,Tags = d.Tags,TagsTruncated = d.TagsTruncated,PchFileName = d.PchFileName,FileSize = d.FileSize,PreviewFileSize = d.PreviewFileSize,URL = d.URL,FileType = d.FileType,AcceptedForUse = d.AcceptedForUse, };
 		}
 		
 		internal static CallResult<RemoteStorageGetPublishedFileDetailsResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageGetPublishedFileDetailsResult_t, bool> CallbackFunction )
@@ -12685,10 +12685,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStorageEnumerateWorkshopFilesResult_t
+	public struct RemoteStorageEnumerateWorkshopFilesResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 19;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal int ResultsReturned; // m_nResultsReturned int32
 		internal int TotalResultCount; // m_nTotalResultCount int32
@@ -12702,23 +12707,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoteStorageEnumerateWorkshopFilesResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoteStorageEnumerateWorkshopFilesResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateWorkshopFilesResult_t) );
-		}
+		internal static RemoteStorageEnumerateWorkshopFilesResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoteStorageEnumerateWorkshopFilesResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoteStorageEnumerateWorkshopFilesResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageEnumerateWorkshopFilesResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal int ResultsReturned; // m_nResultsReturned int32
@@ -12730,22 +12731,23 @@ namespace SteamNative
 			internal uint AppId; // m_nAppId AppId_t
 			internal uint StartIndex; // m_unStartIndex uint32
 			
-			//
-			// Easily convert from PackSmall to RemoteStorageEnumerateWorkshopFilesResult_t
-			//
-			public static implicit operator RemoteStorageEnumerateWorkshopFilesResult_t (  RemoteStorageEnumerateWorkshopFilesResult_t.PackSmall d )
-			{
-				return new RemoteStorageEnumerateWorkshopFilesResult_t()
-				{
-					Result = d.Result,
-					ResultsReturned = d.ResultsReturned,
-					TotalResultCount = d.TotalResultCount,
-					GPublishedFileId = d.GPublishedFileId,
-					GScore = d.GScore,
-					AppId = d.AppId,
-					StartIndex = d.StartIndex,
-				};
-			}
+			public static implicit operator RemoteStorageEnumerateWorkshopFilesResult_t ( RemoteStorageEnumerateWorkshopFilesResult_t.Pack4 d ) => new RemoteStorageEnumerateWorkshopFilesResult_t{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId,GScore = d.GScore,AppId = d.AppId,StartIndex = d.StartIndex, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal int ResultsReturned; // m_nResultsReturned int32
+			internal int TotalResultCount; // m_nTotalResultCount int32
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
+			internal ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.R4)]
+			internal float[] GScore; // m_rgScore float [50]
+			internal uint AppId; // m_nAppId AppId_t
+			internal uint StartIndex; // m_unStartIndex uint32
+			
+			public static implicit operator RemoteStorageEnumerateWorkshopFilesResult_t ( RemoteStorageEnumerateWorkshopFilesResult_t.Pack8 d ) => new RemoteStorageEnumerateWorkshopFilesResult_t{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId,GScore = d.GScore,AppId = d.AppId,StartIndex = d.StartIndex, };
 		}
 		
 		internal static CallResult<RemoteStorageEnumerateWorkshopFilesResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageEnumerateWorkshopFilesResult_t, bool> CallbackFunction )
@@ -12880,10 +12882,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStorageGetPublishedItemVoteDetailsResult_t
+	public struct RemoteStorageGetPublishedItemVoteDetailsResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 20;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_unPublishedFileId PublishedFileId_t
 		internal int VotesFor; // m_nVotesFor int32
@@ -12894,23 +12901,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoteStorageGetPublishedItemVoteDetailsResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoteStorageGetPublishedItemVoteDetailsResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageGetPublishedItemVoteDetailsResult_t) );
-		}
+		internal static RemoteStorageGetPublishedItemVoteDetailsResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoteStorageGetPublishedItemVoteDetailsResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoteStorageGetPublishedItemVoteDetailsResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageGetPublishedItemVoteDetailsResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_unPublishedFileId PublishedFileId_t
@@ -12919,21 +12922,20 @@ namespace SteamNative
 			internal int Reports; // m_nReports int32
 			internal float FScore; // m_fScore float
 			
-			//
-			// Easily convert from PackSmall to RemoteStorageGetPublishedItemVoteDetailsResult_t
-			//
-			public static implicit operator RemoteStorageGetPublishedItemVoteDetailsResult_t (  RemoteStorageGetPublishedItemVoteDetailsResult_t.PackSmall d )
-			{
-				return new RemoteStorageGetPublishedItemVoteDetailsResult_t()
-				{
-					Result = d.Result,
-					PublishedFileId = d.PublishedFileId,
-					VotesFor = d.VotesFor,
-					VotesAgainst = d.VotesAgainst,
-					Reports = d.Reports,
-					FScore = d.FScore,
-				};
-			}
+			public static implicit operator RemoteStorageGetPublishedItemVoteDetailsResult_t ( RemoteStorageGetPublishedItemVoteDetailsResult_t.Pack4 d ) => new RemoteStorageGetPublishedItemVoteDetailsResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,VotesFor = d.VotesFor,VotesAgainst = d.VotesAgainst,Reports = d.Reports,FScore = d.FScore, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong PublishedFileId; // m_unPublishedFileId PublishedFileId_t
+			internal int VotesFor; // m_nVotesFor int32
+			internal int VotesAgainst; // m_nVotesAgainst int32
+			internal int Reports; // m_nReports int32
+			internal float FScore; // m_fScore float
+			
+			public static implicit operator RemoteStorageGetPublishedItemVoteDetailsResult_t ( RemoteStorageGetPublishedItemVoteDetailsResult_t.Pack8 d ) => new RemoteStorageGetPublishedItemVoteDetailsResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,VotesFor = d.VotesFor,VotesAgainst = d.VotesAgainst,Reports = d.Reports,FScore = d.FScore, };
 		}
 		
 		internal static CallResult<RemoteStorageGetPublishedItemVoteDetailsResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageGetPublishedItemVoteDetailsResult_t, bool> CallbackFunction )
@@ -13068,48 +13070,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStoragePublishedFileSubscribed_t
+	public struct RemoteStoragePublishedFileSubscribed_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 21;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal uint AppID; // m_nAppID AppId_t
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoteStoragePublishedFileSubscribed_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoteStoragePublishedFileSubscribed_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileSubscribed_t) );
-		}
+		internal static RemoteStoragePublishedFileSubscribed_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoteStoragePublishedFileSubscribed_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoteStoragePublishedFileSubscribed_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStoragePublishedFileSubscribed_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal uint AppID; // m_nAppID AppId_t
 			
-			//
-			// Easily convert from PackSmall to RemoteStoragePublishedFileSubscribed_t
-			//
-			public static implicit operator RemoteStoragePublishedFileSubscribed_t (  RemoteStoragePublishedFileSubscribed_t.PackSmall d )
-			{
-				return new RemoteStoragePublishedFileSubscribed_t()
-				{
-					PublishedFileId = d.PublishedFileId,
-					AppID = d.AppID,
-				};
-			}
+			public static implicit operator RemoteStoragePublishedFileSubscribed_t ( RemoteStoragePublishedFileSubscribed_t.Pack4 d ) => new RemoteStoragePublishedFileSubscribed_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal uint AppID; // m_nAppID AppId_t
+			
+			public static implicit operator RemoteStoragePublishedFileSubscribed_t ( RemoteStoragePublishedFileSubscribed_t.Pack8 d ) => new RemoteStoragePublishedFileSubscribed_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -13239,48 +13241,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStoragePublishedFileUnsubscribed_t
+	public struct RemoteStoragePublishedFileUnsubscribed_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 22;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal uint AppID; // m_nAppID AppId_t
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoteStoragePublishedFileUnsubscribed_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoteStoragePublishedFileUnsubscribed_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileUnsubscribed_t) );
-		}
+		internal static RemoteStoragePublishedFileUnsubscribed_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoteStoragePublishedFileUnsubscribed_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoteStoragePublishedFileUnsubscribed_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStoragePublishedFileUnsubscribed_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal uint AppID; // m_nAppID AppId_t
 			
-			//
-			// Easily convert from PackSmall to RemoteStoragePublishedFileUnsubscribed_t
-			//
-			public static implicit operator RemoteStoragePublishedFileUnsubscribed_t (  RemoteStoragePublishedFileUnsubscribed_t.PackSmall d )
-			{
-				return new RemoteStoragePublishedFileUnsubscribed_t()
-				{
-					PublishedFileId = d.PublishedFileId,
-					AppID = d.AppID,
-				};
-			}
+			public static implicit operator RemoteStoragePublishedFileUnsubscribed_t ( RemoteStoragePublishedFileUnsubscribed_t.Pack4 d ) => new RemoteStoragePublishedFileUnsubscribed_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal uint AppID; // m_nAppID AppId_t
+			
+			public static implicit operator RemoteStoragePublishedFileUnsubscribed_t ( RemoteStoragePublishedFileUnsubscribed_t.Pack8 d ) => new RemoteStoragePublishedFileUnsubscribed_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -13410,48 +13412,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStoragePublishedFileDeleted_t
+	public struct RemoteStoragePublishedFileDeleted_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 23;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal uint AppID; // m_nAppID AppId_t
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoteStoragePublishedFileDeleted_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoteStoragePublishedFileDeleted_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileDeleted_t) );
-		}
+		internal static RemoteStoragePublishedFileDeleted_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoteStoragePublishedFileDeleted_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoteStoragePublishedFileDeleted_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStoragePublishedFileDeleted_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal uint AppID; // m_nAppID AppId_t
 			
-			//
-			// Easily convert from PackSmall to RemoteStoragePublishedFileDeleted_t
-			//
-			public static implicit operator RemoteStoragePublishedFileDeleted_t (  RemoteStoragePublishedFileDeleted_t.PackSmall d )
-			{
-				return new RemoteStoragePublishedFileDeleted_t()
-				{
-					PublishedFileId = d.PublishedFileId,
-					AppID = d.AppID,
-				};
-			}
+			public static implicit operator RemoteStoragePublishedFileDeleted_t ( RemoteStoragePublishedFileDeleted_t.Pack4 d ) => new RemoteStoragePublishedFileDeleted_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal uint AppID; // m_nAppID AppId_t
+			
+			public static implicit operator RemoteStoragePublishedFileDeleted_t ( RemoteStoragePublishedFileDeleted_t.Pack8 d ) => new RemoteStoragePublishedFileDeleted_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -13581,48 +13583,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStorageUpdateUserPublishedItemVoteResult_t
+	public struct RemoteStorageUpdateUserPublishedItemVoteResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 24;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoteStorageUpdateUserPublishedItemVoteResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoteStorageUpdateUserPublishedItemVoteResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageUpdateUserPublishedItemVoteResult_t) );
-		}
+		internal static RemoteStorageUpdateUserPublishedItemVoteResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoteStorageUpdateUserPublishedItemVoteResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoteStorageUpdateUserPublishedItemVoteResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageUpdateUserPublishedItemVoteResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
-			//
-			// Easily convert from PackSmall to RemoteStorageUpdateUserPublishedItemVoteResult_t
-			//
-			public static implicit operator RemoteStorageUpdateUserPublishedItemVoteResult_t (  RemoteStorageUpdateUserPublishedItemVoteResult_t.PackSmall d )
-			{
-				return new RemoteStorageUpdateUserPublishedItemVoteResult_t()
-				{
-					Result = d.Result,
-					PublishedFileId = d.PublishedFileId,
-				};
-			}
+			public static implicit operator RemoteStorageUpdateUserPublishedItemVoteResult_t ( RemoteStorageUpdateUserPublishedItemVoteResult_t.Pack4 d ) => new RemoteStorageUpdateUserPublishedItemVoteResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			
+			public static implicit operator RemoteStorageUpdateUserPublishedItemVoteResult_t ( RemoteStorageUpdateUserPublishedItemVoteResult_t.Pack8 d ) => new RemoteStorageUpdateUserPublishedItemVoteResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
 		}
 		
 		internal static CallResult<RemoteStorageUpdateUserPublishedItemVoteResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageUpdateUserPublishedItemVoteResult_t, bool> CallbackFunction )
@@ -13757,10 +13759,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStorageUserVoteDetails_t
+	public struct RemoteStorageUserVoteDetails_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 25;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal WorkshopVote Vote; // m_eVote enum EWorkshopVote
@@ -13768,40 +13775,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoteStorageUserVoteDetails_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoteStorageUserVoteDetails_t) Marshal.PtrToStructure( p, typeof(RemoteStorageUserVoteDetails_t) );
-		}
+		internal static RemoteStorageUserVoteDetails_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoteStorageUserVoteDetails_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoteStorageUserVoteDetails_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageUserVoteDetails_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal WorkshopVote Vote; // m_eVote enum EWorkshopVote
 			
-			//
-			// Easily convert from PackSmall to RemoteStorageUserVoteDetails_t
-			//
-			public static implicit operator RemoteStorageUserVoteDetails_t (  RemoteStorageUserVoteDetails_t.PackSmall d )
-			{
-				return new RemoteStorageUserVoteDetails_t()
-				{
-					Result = d.Result,
-					PublishedFileId = d.PublishedFileId,
-					Vote = d.Vote,
-				};
-			}
+			public static implicit operator RemoteStorageUserVoteDetails_t ( RemoteStorageUserVoteDetails_t.Pack4 d ) => new RemoteStorageUserVoteDetails_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,Vote = d.Vote, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal WorkshopVote Vote; // m_eVote enum EWorkshopVote
+			
+			public static implicit operator RemoteStorageUserVoteDetails_t ( RemoteStorageUserVoteDetails_t.Pack8 d ) => new RemoteStorageUserVoteDetails_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,Vote = d.Vote, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -13931,10 +13933,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStorageEnumerateUserSharedWorkshopFilesResult_t
+	public struct RemoteStorageEnumerateUserSharedWorkshopFilesResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 26;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal int ResultsReturned; // m_nResultsReturned int32
 		internal int TotalResultCount; // m_nTotalResultCount int32
@@ -13944,23 +13951,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoteStorageEnumerateUserSharedWorkshopFilesResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoteStorageEnumerateUserSharedWorkshopFilesResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserSharedWorkshopFilesResult_t) );
-		}
+		internal static RemoteStorageEnumerateUserSharedWorkshopFilesResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoteStorageEnumerateUserSharedWorkshopFilesResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoteStorageEnumerateUserSharedWorkshopFilesResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageEnumerateUserSharedWorkshopFilesResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal int ResultsReturned; // m_nResultsReturned int32
@@ -13968,19 +13971,19 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
 			internal ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 			
-			//
-			// Easily convert from PackSmall to RemoteStorageEnumerateUserSharedWorkshopFilesResult_t
-			//
-			public static implicit operator RemoteStorageEnumerateUserSharedWorkshopFilesResult_t (  RemoteStorageEnumerateUserSharedWorkshopFilesResult_t.PackSmall d )
-			{
-				return new RemoteStorageEnumerateUserSharedWorkshopFilesResult_t()
-				{
-					Result = d.Result,
-					ResultsReturned = d.ResultsReturned,
-					TotalResultCount = d.TotalResultCount,
-					GPublishedFileId = d.GPublishedFileId,
-				};
-			}
+			public static implicit operator RemoteStorageEnumerateUserSharedWorkshopFilesResult_t ( RemoteStorageEnumerateUserSharedWorkshopFilesResult_t.Pack4 d ) => new RemoteStorageEnumerateUserSharedWorkshopFilesResult_t{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal int ResultsReturned; // m_nResultsReturned int32
+			internal int TotalResultCount; // m_nTotalResultCount int32
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
+			internal ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+			
+			public static implicit operator RemoteStorageEnumerateUserSharedWorkshopFilesResult_t ( RemoteStorageEnumerateUserSharedWorkshopFilesResult_t.Pack8 d ) => new RemoteStorageEnumerateUserSharedWorkshopFilesResult_t{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -14110,10 +14113,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStorageSetUserPublishedFileActionResult_t
+	public struct RemoteStorageSetUserPublishedFileActionResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 27;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal WorkshopFileAction Action; // m_eAction enum EWorkshopFileAction
@@ -14121,40 +14129,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoteStorageSetUserPublishedFileActionResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoteStorageSetUserPublishedFileActionResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageSetUserPublishedFileActionResult_t) );
-		}
+		internal static RemoteStorageSetUserPublishedFileActionResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoteStorageSetUserPublishedFileActionResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoteStorageSetUserPublishedFileActionResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageSetUserPublishedFileActionResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal WorkshopFileAction Action; // m_eAction enum EWorkshopFileAction
 			
-			//
-			// Easily convert from PackSmall to RemoteStorageSetUserPublishedFileActionResult_t
-			//
-			public static implicit operator RemoteStorageSetUserPublishedFileActionResult_t (  RemoteStorageSetUserPublishedFileActionResult_t.PackSmall d )
-			{
-				return new RemoteStorageSetUserPublishedFileActionResult_t()
-				{
-					Result = d.Result,
-					PublishedFileId = d.PublishedFileId,
-					Action = d.Action,
-				};
-			}
+			public static implicit operator RemoteStorageSetUserPublishedFileActionResult_t ( RemoteStorageSetUserPublishedFileActionResult_t.Pack4 d ) => new RemoteStorageSetUserPublishedFileActionResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,Action = d.Action, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal WorkshopFileAction Action; // m_eAction enum EWorkshopFileAction
+			
+			public static implicit operator RemoteStorageSetUserPublishedFileActionResult_t ( RemoteStorageSetUserPublishedFileActionResult_t.Pack8 d ) => new RemoteStorageSetUserPublishedFileActionResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,Action = d.Action, };
 		}
 		
 		internal static CallResult<RemoteStorageSetUserPublishedFileActionResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageSetUserPublishedFileActionResult_t, bool> CallbackFunction )
@@ -14289,10 +14292,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStorageEnumeratePublishedFilesByUserActionResult_t
+	public struct RemoteStorageEnumeratePublishedFilesByUserActionResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 28;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal WorkshopFileAction Action; // m_eAction enum EWorkshopFileAction
 		internal int ResultsReturned; // m_nResultsReturned int32
@@ -14305,23 +14313,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoteStorageEnumeratePublishedFilesByUserActionResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoteStorageEnumeratePublishedFilesByUserActionResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumeratePublishedFilesByUserActionResult_t) );
-		}
+		internal static RemoteStorageEnumeratePublishedFilesByUserActionResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoteStorageEnumeratePublishedFilesByUserActionResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoteStorageEnumeratePublishedFilesByUserActionResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageEnumeratePublishedFilesByUserActionResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal WorkshopFileAction Action; // m_eAction enum EWorkshopFileAction
@@ -14332,21 +14336,22 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U4)]
 			internal uint[] GRTimeUpdated; // m_rgRTimeUpdated uint32 [50]
 			
-			//
-			// Easily convert from PackSmall to RemoteStorageEnumeratePublishedFilesByUserActionResult_t
-			//
-			public static implicit operator RemoteStorageEnumeratePublishedFilesByUserActionResult_t (  RemoteStorageEnumeratePublishedFilesByUserActionResult_t.PackSmall d )
-			{
-				return new RemoteStorageEnumeratePublishedFilesByUserActionResult_t()
-				{
-					Result = d.Result,
-					Action = d.Action,
-					ResultsReturned = d.ResultsReturned,
-					TotalResultCount = d.TotalResultCount,
-					GPublishedFileId = d.GPublishedFileId,
-					GRTimeUpdated = d.GRTimeUpdated,
-				};
-			}
+			public static implicit operator RemoteStorageEnumeratePublishedFilesByUserActionResult_t ( RemoteStorageEnumeratePublishedFilesByUserActionResult_t.Pack4 d ) => new RemoteStorageEnumeratePublishedFilesByUserActionResult_t{ Result = d.Result,Action = d.Action,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId,GRTimeUpdated = d.GRTimeUpdated, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal WorkshopFileAction Action; // m_eAction enum EWorkshopFileAction
+			internal int ResultsReturned; // m_nResultsReturned int32
+			internal int TotalResultCount; // m_nTotalResultCount int32
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
+			internal ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U4)]
+			internal uint[] GRTimeUpdated; // m_rgRTimeUpdated uint32 [50]
+			
+			public static implicit operator RemoteStorageEnumeratePublishedFilesByUserActionResult_t ( RemoteStorageEnumeratePublishedFilesByUserActionResult_t.Pack8 d ) => new RemoteStorageEnumeratePublishedFilesByUserActionResult_t{ Result = d.Result,Action = d.Action,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId,GRTimeUpdated = d.GRTimeUpdated, };
 		}
 		
 		internal static CallResult<RemoteStorageEnumeratePublishedFilesByUserActionResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageEnumeratePublishedFilesByUserActionResult_t, bool> CallbackFunction )
@@ -14481,10 +14486,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStoragePublishFileProgress_t
+	public struct RemoteStoragePublishFileProgress_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 29;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal double DPercentFile; // m_dPercentFile double
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool Preview; // m_bPreview _Bool
@@ -14492,39 +14502,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoteStoragePublishFileProgress_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoteStoragePublishFileProgress_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishFileProgress_t) );
-		}
+		internal static RemoteStoragePublishFileProgress_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoteStoragePublishFileProgress_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoteStoragePublishFileProgress_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStoragePublishFileProgress_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal double DPercentFile; // m_dPercentFile double
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool Preview; // m_bPreview _Bool
 			
-			//
-			// Easily convert from PackSmall to RemoteStoragePublishFileProgress_t
-			//
-			public static implicit operator RemoteStoragePublishFileProgress_t (  RemoteStoragePublishFileProgress_t.PackSmall d )
-			{
-				return new RemoteStoragePublishFileProgress_t()
-				{
-					DPercentFile = d.DPercentFile,
-					Preview = d.Preview,
-				};
-			}
+			public static implicit operator RemoteStoragePublishFileProgress_t ( RemoteStoragePublishFileProgress_t.Pack4 d ) => new RemoteStoragePublishFileProgress_t{ DPercentFile = d.DPercentFile,Preview = d.Preview, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal double DPercentFile; // m_dPercentFile double
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool Preview; // m_bPreview _Bool
+			
+			public static implicit operator RemoteStoragePublishFileProgress_t ( RemoteStoragePublishFileProgress_t.Pack8 d ) => new RemoteStoragePublishFileProgress_t{ DPercentFile = d.DPercentFile,Preview = d.Preview, };
 		}
 		
 		internal static CallResult<RemoteStoragePublishFileProgress_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStoragePublishFileProgress_t, bool> CallbackFunction )
@@ -14659,10 +14665,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStoragePublishedFileUpdated_t
+	public struct RemoteStoragePublishedFileUpdated_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 30;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal uint AppID; // m_nAppID AppId_t
 		internal ulong Unused; // m_ulUnused uint64
@@ -14670,40 +14681,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoteStoragePublishedFileUpdated_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoteStoragePublishedFileUpdated_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileUpdated_t) );
-		}
+		internal static RemoteStoragePublishedFileUpdated_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoteStoragePublishedFileUpdated_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoteStoragePublishedFileUpdated_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStoragePublishedFileUpdated_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal uint AppID; // m_nAppID AppId_t
 			internal ulong Unused; // m_ulUnused uint64
 			
-			//
-			// Easily convert from PackSmall to RemoteStoragePublishedFileUpdated_t
-			//
-			public static implicit operator RemoteStoragePublishedFileUpdated_t (  RemoteStoragePublishedFileUpdated_t.PackSmall d )
-			{
-				return new RemoteStoragePublishedFileUpdated_t()
-				{
-					PublishedFileId = d.PublishedFileId,
-					AppID = d.AppID,
-					Unused = d.Unused,
-				};
-			}
+			public static implicit operator RemoteStoragePublishedFileUpdated_t ( RemoteStoragePublishedFileUpdated_t.Pack4 d ) => new RemoteStoragePublishedFileUpdated_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID,Unused = d.Unused, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal uint AppID; // m_nAppID AppId_t
+			internal ulong Unused; // m_ulUnused uint64
+			
+			public static implicit operator RemoteStoragePublishedFileUpdated_t ( RemoteStoragePublishedFileUpdated_t.Pack8 d ) => new RemoteStoragePublishedFileUpdated_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID,Unused = d.Unused, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -14833,45 +14839,45 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStorageFileWriteAsyncComplete_t
+	public struct RemoteStorageFileWriteAsyncComplete_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 31;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoteStorageFileWriteAsyncComplete_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoteStorageFileWriteAsyncComplete_t) Marshal.PtrToStructure( p, typeof(RemoteStorageFileWriteAsyncComplete_t) );
-		}
+		internal static RemoteStorageFileWriteAsyncComplete_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoteStorageFileWriteAsyncComplete_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoteStorageFileWriteAsyncComplete_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageFileWriteAsyncComplete_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			
-			//
-			// Easily convert from PackSmall to RemoteStorageFileWriteAsyncComplete_t
-			//
-			public static implicit operator RemoteStorageFileWriteAsyncComplete_t (  RemoteStorageFileWriteAsyncComplete_t.PackSmall d )
-			{
-				return new RemoteStorageFileWriteAsyncComplete_t()
-				{
-					Result = d.Result,
-				};
-			}
+			public static implicit operator RemoteStorageFileWriteAsyncComplete_t ( RemoteStorageFileWriteAsyncComplete_t.Pack4 d ) => new RemoteStorageFileWriteAsyncComplete_t{ Result = d.Result, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			
+			public static implicit operator RemoteStorageFileWriteAsyncComplete_t ( RemoteStorageFileWriteAsyncComplete_t.Pack8 d ) => new RemoteStorageFileWriteAsyncComplete_t{ Result = d.Result, };
 		}
 		
 		internal static CallResult<RemoteStorageFileWriteAsyncComplete_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageFileWriteAsyncComplete_t, bool> CallbackFunction )
@@ -15006,10 +15012,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoteStorageFileReadAsyncComplete_t
+	public struct RemoteStorageFileReadAsyncComplete_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientRemoteStorage + 32;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong FileReadAsync; // m_hFileReadAsync SteamAPICall_t
 		internal Result Result; // m_eResult enum EResult
 		internal uint Offset; // m_nOffset uint32
@@ -15018,42 +15029,37 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoteStorageFileReadAsyncComplete_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoteStorageFileReadAsyncComplete_t) Marshal.PtrToStructure( p, typeof(RemoteStorageFileReadAsyncComplete_t) );
-		}
+		internal static RemoteStorageFileReadAsyncComplete_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoteStorageFileReadAsyncComplete_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoteStorageFileReadAsyncComplete_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageFileReadAsyncComplete_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong FileReadAsync; // m_hFileReadAsync SteamAPICall_t
 			internal Result Result; // m_eResult enum EResult
 			internal uint Offset; // m_nOffset uint32
 			internal uint Read; // m_cubRead uint32
 			
-			//
-			// Easily convert from PackSmall to RemoteStorageFileReadAsyncComplete_t
-			//
-			public static implicit operator RemoteStorageFileReadAsyncComplete_t (  RemoteStorageFileReadAsyncComplete_t.PackSmall d )
-			{
-				return new RemoteStorageFileReadAsyncComplete_t()
-				{
-					FileReadAsync = d.FileReadAsync,
-					Result = d.Result,
-					Offset = d.Offset,
-					Read = d.Read,
-				};
-			}
+			public static implicit operator RemoteStorageFileReadAsyncComplete_t ( RemoteStorageFileReadAsyncComplete_t.Pack4 d ) => new RemoteStorageFileReadAsyncComplete_t{ FileReadAsync = d.FileReadAsync,Result = d.Result,Offset = d.Offset,Read = d.Read, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong FileReadAsync; // m_hFileReadAsync SteamAPICall_t
+			internal Result Result; // m_eResult enum EResult
+			internal uint Offset; // m_nOffset uint32
+			internal uint Read; // m_cubRead uint32
+			
+			public static implicit operator RemoteStorageFileReadAsyncComplete_t ( RemoteStorageFileReadAsyncComplete_t.Pack8 d ) => new RemoteStorageFileReadAsyncComplete_t{ FileReadAsync = d.FileReadAsync,Result = d.Result,Offset = d.Offset,Read = d.Read, };
 		}
 		
 		internal static CallResult<RemoteStorageFileReadAsyncComplete_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoteStorageFileReadAsyncComplete_t, bool> CallbackFunction )
@@ -15188,7 +15194,6 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct LeaderboardEntry_t
 	{
 		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
@@ -15200,23 +15205,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static LeaderboardEntry_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (LeaderboardEntry_t) Marshal.PtrToStructure( p, typeof(LeaderboardEntry_t) );
-		}
+		internal static LeaderboardEntry_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((LeaderboardEntry_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((LeaderboardEntry_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(LeaderboardEntry_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			internal int GlobalRank; // m_nGlobalRank int32
@@ -15224,27 +15225,31 @@ namespace SteamNative
 			internal int CDetails; // m_cDetails int32
 			internal ulong UGC; // m_hUGC UGCHandle_t
 			
-			//
-			// Easily convert from PackSmall to LeaderboardEntry_t
-			//
-			public static implicit operator LeaderboardEntry_t (  LeaderboardEntry_t.PackSmall d )
-			{
-				return new LeaderboardEntry_t()
-				{
-					SteamIDUser = d.SteamIDUser,
-					GlobalRank = d.GlobalRank,
-					Score = d.Score,
-					CDetails = d.CDetails,
-					UGC = d.UGC,
-				};
-			}
+			public static implicit operator LeaderboardEntry_t ( LeaderboardEntry_t.Pack4 d ) => new LeaderboardEntry_t{ SteamIDUser = d.SteamIDUser,GlobalRank = d.GlobalRank,Score = d.Score,CDetails = d.CDetails,UGC = d.UGC, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
+			internal int GlobalRank; // m_nGlobalRank int32
+			internal int Score; // m_nScore int32
+			internal int CDetails; // m_cDetails int32
+			internal ulong UGC; // m_hUGC UGCHandle_t
+			
+			public static implicit operator LeaderboardEntry_t ( LeaderboardEntry_t.Pack8 d ) => new LeaderboardEntry_t{ SteamIDUser = d.SteamIDUser,GlobalRank = d.GlobalRank,Score = d.Score,CDetails = d.CDetails,UGC = d.UGC, };
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct UserStatsReceived_t
+	public struct UserStatsReceived_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUserStats + 1;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong GameID; // m_nGameID uint64
 		internal Result Result; // m_eResult enum EResult
 		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
@@ -15252,40 +15257,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static UserStatsReceived_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (UserStatsReceived_t) Marshal.PtrToStructure( p, typeof(UserStatsReceived_t) );
-		}
+		internal static UserStatsReceived_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((UserStatsReceived_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((UserStatsReceived_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(UserStatsReceived_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong GameID; // m_nGameID uint64
 			internal Result Result; // m_eResult enum EResult
 			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			
-			//
-			// Easily convert from PackSmall to UserStatsReceived_t
-			//
-			public static implicit operator UserStatsReceived_t (  UserStatsReceived_t.PackSmall d )
-			{
-				return new UserStatsReceived_t()
-				{
-					GameID = d.GameID,
-					Result = d.Result,
-					SteamIDUser = d.SteamIDUser,
-				};
-			}
+			public static implicit operator UserStatsReceived_t ( UserStatsReceived_t.Pack4 d ) => new UserStatsReceived_t{ GameID = d.GameID,Result = d.Result,SteamIDUser = d.SteamIDUser, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal ulong GameID; // m_nGameID uint64
+			internal Result Result; // m_eResult enum EResult
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
+			
+			public static implicit operator UserStatsReceived_t ( UserStatsReceived_t.Pack8 d ) => new UserStatsReceived_t{ GameID = d.GameID,Result = d.Result,SteamIDUser = d.SteamIDUser, };
 		}
 		
 		internal static CallResult<UserStatsReceived_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<UserStatsReceived_t, bool> CallbackFunction )
@@ -15420,48 +15420,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct UserStatsStored_t
+	public struct UserStatsStored_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUserStats + 2;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong GameID; // m_nGameID uint64
 		internal Result Result; // m_eResult enum EResult
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static UserStatsStored_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (UserStatsStored_t) Marshal.PtrToStructure( p, typeof(UserStatsStored_t) );
-		}
+		internal static UserStatsStored_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((UserStatsStored_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((UserStatsStored_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(UserStatsStored_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong GameID; // m_nGameID uint64
 			internal Result Result; // m_eResult enum EResult
 			
-			//
-			// Easily convert from PackSmall to UserStatsStored_t
-			//
-			public static implicit operator UserStatsStored_t (  UserStatsStored_t.PackSmall d )
-			{
-				return new UserStatsStored_t()
-				{
-					GameID = d.GameID,
-					Result = d.Result,
-				};
-			}
+			public static implicit operator UserStatsStored_t ( UserStatsStored_t.Pack4 d ) => new UserStatsStored_t{ GameID = d.GameID,Result = d.Result, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong GameID; // m_nGameID uint64
+			internal Result Result; // m_eResult enum EResult
+			
+			public static implicit operator UserStatsStored_t ( UserStatsStored_t.Pack8 d ) => new UserStatsStored_t{ GameID = d.GameID,Result = d.Result, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -15591,10 +15591,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct UserAchievementStored_t
+	public struct UserAchievementStored_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUserStats + 3;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong GameID; // m_nGameID uint64
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool GroupAchievement; // m_bGroupAchievement _Bool
@@ -15606,23 +15611,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static UserAchievementStored_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (UserAchievementStored_t) Marshal.PtrToStructure( p, typeof(UserAchievementStored_t) );
-		}
+		internal static UserAchievementStored_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((UserAchievementStored_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((UserAchievementStored_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(UserAchievementStored_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong GameID; // m_nGameID uint64
 			[MarshalAs(UnmanagedType.I1)]
@@ -15632,20 +15633,21 @@ namespace SteamNative
 			internal uint CurProgress; // m_nCurProgress uint32
 			internal uint MaxProgress; // m_nMaxProgress uint32
 			
-			//
-			// Easily convert from PackSmall to UserAchievementStored_t
-			//
-			public static implicit operator UserAchievementStored_t (  UserAchievementStored_t.PackSmall d )
-			{
-				return new UserAchievementStored_t()
-				{
-					GameID = d.GameID,
-					GroupAchievement = d.GroupAchievement,
-					AchievementName = d.AchievementName,
-					CurProgress = d.CurProgress,
-					MaxProgress = d.MaxProgress,
-				};
-			}
+			public static implicit operator UserAchievementStored_t ( UserAchievementStored_t.Pack4 d ) => new UserAchievementStored_t{ GameID = d.GameID,GroupAchievement = d.GroupAchievement,AchievementName = d.AchievementName,CurProgress = d.CurProgress,MaxProgress = d.MaxProgress, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong GameID; // m_nGameID uint64
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool GroupAchievement; // m_bGroupAchievement _Bool
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+			internal string AchievementName; // m_rgchAchievementName char [128]
+			internal uint CurProgress; // m_nCurProgress uint32
+			internal uint MaxProgress; // m_nMaxProgress uint32
+			
+			public static implicit operator UserAchievementStored_t ( UserAchievementStored_t.Pack8 d ) => new UserAchievementStored_t{ GameID = d.GameID,GroupAchievement = d.GroupAchievement,AchievementName = d.AchievementName,CurProgress = d.CurProgress,MaxProgress = d.MaxProgress, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -15775,48 +15777,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct LeaderboardFindResult_t
+	public struct LeaderboardFindResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUserStats + 4;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
 		internal byte LeaderboardFound; // m_bLeaderboardFound uint8
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static LeaderboardFindResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (LeaderboardFindResult_t) Marshal.PtrToStructure( p, typeof(LeaderboardFindResult_t) );
-		}
+		internal static LeaderboardFindResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((LeaderboardFindResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((LeaderboardFindResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(LeaderboardFindResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
 			internal byte LeaderboardFound; // m_bLeaderboardFound uint8
 			
-			//
-			// Easily convert from PackSmall to LeaderboardFindResult_t
-			//
-			public static implicit operator LeaderboardFindResult_t (  LeaderboardFindResult_t.PackSmall d )
-			{
-				return new LeaderboardFindResult_t()
-				{
-					SteamLeaderboard = d.SteamLeaderboard,
-					LeaderboardFound = d.LeaderboardFound,
-				};
-			}
+			public static implicit operator LeaderboardFindResult_t ( LeaderboardFindResult_t.Pack4 d ) => new LeaderboardFindResult_t{ SteamLeaderboard = d.SteamLeaderboard,LeaderboardFound = d.LeaderboardFound, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
+			internal byte LeaderboardFound; // m_bLeaderboardFound uint8
+			
+			public static implicit operator LeaderboardFindResult_t ( LeaderboardFindResult_t.Pack8 d ) => new LeaderboardFindResult_t{ SteamLeaderboard = d.SteamLeaderboard,LeaderboardFound = d.LeaderboardFound, };
 		}
 		
 		internal static CallResult<LeaderboardFindResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<LeaderboardFindResult_t, bool> CallbackFunction )
@@ -15951,10 +15953,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct LeaderboardScoresDownloaded_t
+	public struct LeaderboardScoresDownloaded_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUserStats + 5;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
 		internal ulong SteamLeaderboardEntries; // m_hSteamLeaderboardEntries SteamLeaderboardEntries_t
 		internal int CEntryCount; // m_cEntryCount int
@@ -15962,40 +15969,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static LeaderboardScoresDownloaded_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (LeaderboardScoresDownloaded_t) Marshal.PtrToStructure( p, typeof(LeaderboardScoresDownloaded_t) );
-		}
+		internal static LeaderboardScoresDownloaded_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((LeaderboardScoresDownloaded_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((LeaderboardScoresDownloaded_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(LeaderboardScoresDownloaded_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
 			internal ulong SteamLeaderboardEntries; // m_hSteamLeaderboardEntries SteamLeaderboardEntries_t
 			internal int CEntryCount; // m_cEntryCount int
 			
-			//
-			// Easily convert from PackSmall to LeaderboardScoresDownloaded_t
-			//
-			public static implicit operator LeaderboardScoresDownloaded_t (  LeaderboardScoresDownloaded_t.PackSmall d )
-			{
-				return new LeaderboardScoresDownloaded_t()
-				{
-					SteamLeaderboard = d.SteamLeaderboard,
-					SteamLeaderboardEntries = d.SteamLeaderboardEntries,
-					CEntryCount = d.CEntryCount,
-				};
-			}
+			public static implicit operator LeaderboardScoresDownloaded_t ( LeaderboardScoresDownloaded_t.Pack4 d ) => new LeaderboardScoresDownloaded_t{ SteamLeaderboard = d.SteamLeaderboard,SteamLeaderboardEntries = d.SteamLeaderboardEntries,CEntryCount = d.CEntryCount, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
+			internal ulong SteamLeaderboardEntries; // m_hSteamLeaderboardEntries SteamLeaderboardEntries_t
+			internal int CEntryCount; // m_cEntryCount int
+			
+			public static implicit operator LeaderboardScoresDownloaded_t ( LeaderboardScoresDownloaded_t.Pack8 d ) => new LeaderboardScoresDownloaded_t{ SteamLeaderboard = d.SteamLeaderboard,SteamLeaderboardEntries = d.SteamLeaderboardEntries,CEntryCount = d.CEntryCount, };
 		}
 		
 		internal static CallResult<LeaderboardScoresDownloaded_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<LeaderboardScoresDownloaded_t, bool> CallbackFunction )
@@ -16130,10 +16132,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct LeaderboardScoreUploaded_t
+	public struct LeaderboardScoreUploaded_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUserStats + 6;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal byte Success; // m_bSuccess uint8
 		internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
 		internal int Score; // m_nScore int32
@@ -16144,23 +16151,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static LeaderboardScoreUploaded_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (LeaderboardScoreUploaded_t) Marshal.PtrToStructure( p, typeof(LeaderboardScoreUploaded_t) );
-		}
+		internal static LeaderboardScoreUploaded_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((LeaderboardScoreUploaded_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((LeaderboardScoreUploaded_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(LeaderboardScoreUploaded_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal byte Success; // m_bSuccess uint8
 			internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
@@ -16169,21 +16172,20 @@ namespace SteamNative
 			internal int GlobalRankNew; // m_nGlobalRankNew int
 			internal int GlobalRankPrevious; // m_nGlobalRankPrevious int
 			
-			//
-			// Easily convert from PackSmall to LeaderboardScoreUploaded_t
-			//
-			public static implicit operator LeaderboardScoreUploaded_t (  LeaderboardScoreUploaded_t.PackSmall d )
-			{
-				return new LeaderboardScoreUploaded_t()
-				{
-					Success = d.Success,
-					SteamLeaderboard = d.SteamLeaderboard,
-					Score = d.Score,
-					ScoreChanged = d.ScoreChanged,
-					GlobalRankNew = d.GlobalRankNew,
-					GlobalRankPrevious = d.GlobalRankPrevious,
-				};
-			}
+			public static implicit operator LeaderboardScoreUploaded_t ( LeaderboardScoreUploaded_t.Pack4 d ) => new LeaderboardScoreUploaded_t{ Success = d.Success,SteamLeaderboard = d.SteamLeaderboard,Score = d.Score,ScoreChanged = d.ScoreChanged,GlobalRankNew = d.GlobalRankNew,GlobalRankPrevious = d.GlobalRankPrevious, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal byte Success; // m_bSuccess uint8
+			internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
+			internal int Score; // m_nScore int32
+			internal byte ScoreChanged; // m_bScoreChanged uint8
+			internal int GlobalRankNew; // m_nGlobalRankNew int
+			internal int GlobalRankPrevious; // m_nGlobalRankPrevious int
+			
+			public static implicit operator LeaderboardScoreUploaded_t ( LeaderboardScoreUploaded_t.Pack8 d ) => new LeaderboardScoreUploaded_t{ Success = d.Success,SteamLeaderboard = d.SteamLeaderboard,Score = d.Score,ScoreChanged = d.ScoreChanged,GlobalRankNew = d.GlobalRankNew,GlobalRankPrevious = d.GlobalRankPrevious, };
 		}
 		
 		internal static CallResult<LeaderboardScoreUploaded_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<LeaderboardScoreUploaded_t, bool> CallbackFunction )
@@ -16318,48 +16320,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct NumberOfCurrentPlayers_t
+	public struct NumberOfCurrentPlayers_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUserStats + 7;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal byte Success; // m_bSuccess uint8
 		internal int CPlayers; // m_cPlayers int32
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static NumberOfCurrentPlayers_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (NumberOfCurrentPlayers_t) Marshal.PtrToStructure( p, typeof(NumberOfCurrentPlayers_t) );
-		}
+		internal static NumberOfCurrentPlayers_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((NumberOfCurrentPlayers_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((NumberOfCurrentPlayers_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(NumberOfCurrentPlayers_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal byte Success; // m_bSuccess uint8
 			internal int CPlayers; // m_cPlayers int32
 			
-			//
-			// Easily convert from PackSmall to NumberOfCurrentPlayers_t
-			//
-			public static implicit operator NumberOfCurrentPlayers_t (  NumberOfCurrentPlayers_t.PackSmall d )
-			{
-				return new NumberOfCurrentPlayers_t()
-				{
-					Success = d.Success,
-					CPlayers = d.CPlayers,
-				};
-			}
+			public static implicit operator NumberOfCurrentPlayers_t ( NumberOfCurrentPlayers_t.Pack4 d ) => new NumberOfCurrentPlayers_t{ Success = d.Success,CPlayers = d.CPlayers, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal byte Success; // m_bSuccess uint8
+			internal int CPlayers; // m_cPlayers int32
+			
+			public static implicit operator NumberOfCurrentPlayers_t ( NumberOfCurrentPlayers_t.Pack8 d ) => new NumberOfCurrentPlayers_t{ Success = d.Success,CPlayers = d.CPlayers, };
 		}
 		
 		internal static CallResult<NumberOfCurrentPlayers_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<NumberOfCurrentPlayers_t, bool> CallbackFunction )
@@ -16494,45 +16496,45 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct UserStatsUnloaded_t
+	public struct UserStatsUnloaded_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUserStats + 8;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static UserStatsUnloaded_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (UserStatsUnloaded_t) Marshal.PtrToStructure( p, typeof(UserStatsUnloaded_t) );
-		}
+		internal static UserStatsUnloaded_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((UserStatsUnloaded_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((UserStatsUnloaded_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(UserStatsUnloaded_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			
-			//
-			// Easily convert from PackSmall to UserStatsUnloaded_t
-			//
-			public static implicit operator UserStatsUnloaded_t (  UserStatsUnloaded_t.PackSmall d )
-			{
-				return new UserStatsUnloaded_t()
-				{
-					SteamIDUser = d.SteamIDUser,
-				};
-			}
+			public static implicit operator UserStatsUnloaded_t ( UserStatsUnloaded_t.Pack4 d ) => new UserStatsUnloaded_t{ SteamIDUser = d.SteamIDUser, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
+			
+			public static implicit operator UserStatsUnloaded_t ( UserStatsUnloaded_t.Pack8 d ) => new UserStatsUnloaded_t{ SteamIDUser = d.SteamIDUser, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -16662,10 +16664,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct UserAchievementIconFetched_t
+	public struct UserAchievementIconFetched_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUserStats + 9;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong GameID; // m_nGameID class CGameID
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
 		internal string AchievementName; // m_rgchAchievementName char [128]
@@ -16676,23 +16683,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static UserAchievementIconFetched_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (UserAchievementIconFetched_t) Marshal.PtrToStructure( p, typeof(UserAchievementIconFetched_t) );
-		}
+		internal static UserAchievementIconFetched_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((UserAchievementIconFetched_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((UserAchievementIconFetched_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(UserAchievementIconFetched_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong GameID; // m_nGameID class CGameID
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
@@ -16701,19 +16704,20 @@ namespace SteamNative
 			internal bool Achieved; // m_bAchieved _Bool
 			internal int IconHandle; // m_nIconHandle int
 			
-			//
-			// Easily convert from PackSmall to UserAchievementIconFetched_t
-			//
-			public static implicit operator UserAchievementIconFetched_t (  UserAchievementIconFetched_t.PackSmall d )
-			{
-				return new UserAchievementIconFetched_t()
-				{
-					GameID = d.GameID,
-					AchievementName = d.AchievementName,
-					Achieved = d.Achieved,
-					IconHandle = d.IconHandle,
-				};
-			}
+			public static implicit operator UserAchievementIconFetched_t ( UserAchievementIconFetched_t.Pack4 d ) => new UserAchievementIconFetched_t{ GameID = d.GameID,AchievementName = d.AchievementName,Achieved = d.Achieved,IconHandle = d.IconHandle, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong GameID; // m_nGameID class CGameID
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+			internal string AchievementName; // m_rgchAchievementName char [128]
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool Achieved; // m_bAchieved _Bool
+			internal int IconHandle; // m_nIconHandle int
+			
+			public static implicit operator UserAchievementIconFetched_t ( UserAchievementIconFetched_t.Pack8 d ) => new UserAchievementIconFetched_t{ GameID = d.GameID,AchievementName = d.AchievementName,Achieved = d.Achieved,IconHandle = d.IconHandle, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -16843,48 +16847,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct GlobalAchievementPercentagesReady_t
+	public struct GlobalAchievementPercentagesReady_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUserStats + 10;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong GameID; // m_nGameID uint64
 		internal Result Result; // m_eResult enum EResult
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GlobalAchievementPercentagesReady_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GlobalAchievementPercentagesReady_t) Marshal.PtrToStructure( p, typeof(GlobalAchievementPercentagesReady_t) );
-		}
+		internal static GlobalAchievementPercentagesReady_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GlobalAchievementPercentagesReady_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GlobalAchievementPercentagesReady_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GlobalAchievementPercentagesReady_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong GameID; // m_nGameID uint64
 			internal Result Result; // m_eResult enum EResult
 			
-			//
-			// Easily convert from PackSmall to GlobalAchievementPercentagesReady_t
-			//
-			public static implicit operator GlobalAchievementPercentagesReady_t (  GlobalAchievementPercentagesReady_t.PackSmall d )
-			{
-				return new GlobalAchievementPercentagesReady_t()
-				{
-					GameID = d.GameID,
-					Result = d.Result,
-				};
-			}
+			public static implicit operator GlobalAchievementPercentagesReady_t ( GlobalAchievementPercentagesReady_t.Pack4 d ) => new GlobalAchievementPercentagesReady_t{ GameID = d.GameID,Result = d.Result, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong GameID; // m_nGameID uint64
+			internal Result Result; // m_eResult enum EResult
+			
+			public static implicit operator GlobalAchievementPercentagesReady_t ( GlobalAchievementPercentagesReady_t.Pack8 d ) => new GlobalAchievementPercentagesReady_t{ GameID = d.GameID,Result = d.Result, };
 		}
 		
 		internal static CallResult<GlobalAchievementPercentagesReady_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<GlobalAchievementPercentagesReady_t, bool> CallbackFunction )
@@ -17019,48 +17023,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct LeaderboardUGCSet_t
+	public struct LeaderboardUGCSet_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUserStats + 11;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static LeaderboardUGCSet_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (LeaderboardUGCSet_t) Marshal.PtrToStructure( p, typeof(LeaderboardUGCSet_t) );
-		}
+		internal static LeaderboardUGCSet_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((LeaderboardUGCSet_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((LeaderboardUGCSet_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(LeaderboardUGCSet_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
 			
-			//
-			// Easily convert from PackSmall to LeaderboardUGCSet_t
-			//
-			public static implicit operator LeaderboardUGCSet_t (  LeaderboardUGCSet_t.PackSmall d )
-			{
-				return new LeaderboardUGCSet_t()
-				{
-					Result = d.Result,
-					SteamLeaderboard = d.SteamLeaderboard,
-				};
-			}
+			public static implicit operator LeaderboardUGCSet_t ( LeaderboardUGCSet_t.Pack4 d ) => new LeaderboardUGCSet_t{ Result = d.Result,SteamLeaderboard = d.SteamLeaderboard, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
+			
+			public static implicit operator LeaderboardUGCSet_t ( LeaderboardUGCSet_t.Pack8 d ) => new LeaderboardUGCSet_t{ Result = d.Result,SteamLeaderboard = d.SteamLeaderboard, };
 		}
 		
 		internal static CallResult<LeaderboardUGCSet_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<LeaderboardUGCSet_t, bool> CallbackFunction )
@@ -17195,10 +17199,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct PS3TrophiesInstalled_t
+	public struct PS3TrophiesInstalled_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUserStats + 12;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong GameID; // m_nGameID uint64
 		internal Result Result; // m_eResult enum EResult
 		internal ulong RequiredDiskSpace; // m_ulRequiredDiskSpace uint64
@@ -17206,40 +17215,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static PS3TrophiesInstalled_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (PS3TrophiesInstalled_t) Marshal.PtrToStructure( p, typeof(PS3TrophiesInstalled_t) );
-		}
+		internal static PS3TrophiesInstalled_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((PS3TrophiesInstalled_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((PS3TrophiesInstalled_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PS3TrophiesInstalled_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong GameID; // m_nGameID uint64
 			internal Result Result; // m_eResult enum EResult
 			internal ulong RequiredDiskSpace; // m_ulRequiredDiskSpace uint64
 			
-			//
-			// Easily convert from PackSmall to PS3TrophiesInstalled_t
-			//
-			public static implicit operator PS3TrophiesInstalled_t (  PS3TrophiesInstalled_t.PackSmall d )
-			{
-				return new PS3TrophiesInstalled_t()
-				{
-					GameID = d.GameID,
-					Result = d.Result,
-					RequiredDiskSpace = d.RequiredDiskSpace,
-				};
-			}
+			public static implicit operator PS3TrophiesInstalled_t ( PS3TrophiesInstalled_t.Pack4 d ) => new PS3TrophiesInstalled_t{ GameID = d.GameID,Result = d.Result,RequiredDiskSpace = d.RequiredDiskSpace, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong GameID; // m_nGameID uint64
+			internal Result Result; // m_eResult enum EResult
+			internal ulong RequiredDiskSpace; // m_ulRequiredDiskSpace uint64
+			
+			public static implicit operator PS3TrophiesInstalled_t ( PS3TrophiesInstalled_t.Pack8 d ) => new PS3TrophiesInstalled_t{ GameID = d.GameID,Result = d.Result,RequiredDiskSpace = d.RequiredDiskSpace, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -17369,48 +17373,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct GlobalStatsReceived_t
+	public struct GlobalStatsReceived_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUserStats + 12;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong GameID; // m_nGameID uint64
 		internal Result Result; // m_eResult enum EResult
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GlobalStatsReceived_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GlobalStatsReceived_t) Marshal.PtrToStructure( p, typeof(GlobalStatsReceived_t) );
-		}
+		internal static GlobalStatsReceived_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GlobalStatsReceived_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GlobalStatsReceived_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GlobalStatsReceived_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong GameID; // m_nGameID uint64
 			internal Result Result; // m_eResult enum EResult
 			
-			//
-			// Easily convert from PackSmall to GlobalStatsReceived_t
-			//
-			public static implicit operator GlobalStatsReceived_t (  GlobalStatsReceived_t.PackSmall d )
-			{
-				return new GlobalStatsReceived_t()
-				{
-					GameID = d.GameID,
-					Result = d.Result,
-				};
-			}
+			public static implicit operator GlobalStatsReceived_t ( GlobalStatsReceived_t.Pack4 d ) => new GlobalStatsReceived_t{ GameID = d.GameID,Result = d.Result, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong GameID; // m_nGameID uint64
+			internal Result Result; // m_eResult enum EResult
+			
+			public static implicit operator GlobalStatsReceived_t ( GlobalStatsReceived_t.Pack8 d ) => new GlobalStatsReceived_t{ GameID = d.GameID,Result = d.Result, };
 		}
 		
 		internal static CallResult<GlobalStatsReceived_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<GlobalStatsReceived_t, bool> CallbackFunction )
@@ -17545,45 +17549,45 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct DlcInstalled_t
+	public struct DlcInstalled_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamApps + 5;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint AppID; // m_nAppID AppId_t
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static DlcInstalled_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (DlcInstalled_t) Marshal.PtrToStructure( p, typeof(DlcInstalled_t) );
-		}
+		internal static DlcInstalled_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((DlcInstalled_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((DlcInstalled_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(DlcInstalled_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint AppID; // m_nAppID AppId_t
 			
-			//
-			// Easily convert from PackSmall to DlcInstalled_t
-			//
-			public static implicit operator DlcInstalled_t (  DlcInstalled_t.PackSmall d )
-			{
-				return new DlcInstalled_t()
-				{
-					AppID = d.AppID,
-				};
-			}
+			public static implicit operator DlcInstalled_t ( DlcInstalled_t.Pack4 d ) => new DlcInstalled_t{ AppID = d.AppID, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint AppID; // m_nAppID AppId_t
+			
+			public static implicit operator DlcInstalled_t ( DlcInstalled_t.Pack8 d ) => new DlcInstalled_t{ AppID = d.AppID, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -17713,48 +17717,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RegisterActivationCodeResponse_t
+	public struct RegisterActivationCodeResponse_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamApps + 8;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal RegisterActivationCodeResult Result; // m_eResult enum ERegisterActivationCodeResult
 		internal uint PackageRegistered; // m_unPackageRegistered uint32
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RegisterActivationCodeResponse_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RegisterActivationCodeResponse_t) Marshal.PtrToStructure( p, typeof(RegisterActivationCodeResponse_t) );
-		}
+		internal static RegisterActivationCodeResponse_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RegisterActivationCodeResponse_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RegisterActivationCodeResponse_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RegisterActivationCodeResponse_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal RegisterActivationCodeResult Result; // m_eResult enum ERegisterActivationCodeResult
 			internal uint PackageRegistered; // m_unPackageRegistered uint32
 			
-			//
-			// Easily convert from PackSmall to RegisterActivationCodeResponse_t
-			//
-			public static implicit operator RegisterActivationCodeResponse_t (  RegisterActivationCodeResponse_t.PackSmall d )
-			{
-				return new RegisterActivationCodeResponse_t()
-				{
-					Result = d.Result,
-					PackageRegistered = d.PackageRegistered,
-				};
-			}
+			public static implicit operator RegisterActivationCodeResponse_t ( RegisterActivationCodeResponse_t.Pack4 d ) => new RegisterActivationCodeResponse_t{ Result = d.Result,PackageRegistered = d.PackageRegistered, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal RegisterActivationCodeResult Result; // m_eResult enum ERegisterActivationCodeResult
+			internal uint PackageRegistered; // m_unPackageRegistered uint32
+			
+			public static implicit operator RegisterActivationCodeResponse_t ( RegisterActivationCodeResponse_t.Pack8 d ) => new RegisterActivationCodeResponse_t{ Result = d.Result,PackageRegistered = d.PackageRegistered, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -17884,10 +17888,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct AppProofOfPurchaseKeyResponse_t
+	public struct AppProofOfPurchaseKeyResponse_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamApps + 21;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal uint AppID; // m_nAppID uint32
 		internal uint CchKeyLength; // m_cchKeyLength uint32
@@ -17897,23 +17906,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static AppProofOfPurchaseKeyResponse_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (AppProofOfPurchaseKeyResponse_t) Marshal.PtrToStructure( p, typeof(AppProofOfPurchaseKeyResponse_t) );
-		}
+		internal static AppProofOfPurchaseKeyResponse_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((AppProofOfPurchaseKeyResponse_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((AppProofOfPurchaseKeyResponse_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(AppProofOfPurchaseKeyResponse_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal uint AppID; // m_nAppID uint32
@@ -17921,19 +17926,19 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 240)]
 			internal string Key; // m_rgchKey char [240]
 			
-			//
-			// Easily convert from PackSmall to AppProofOfPurchaseKeyResponse_t
-			//
-			public static implicit operator AppProofOfPurchaseKeyResponse_t (  AppProofOfPurchaseKeyResponse_t.PackSmall d )
-			{
-				return new AppProofOfPurchaseKeyResponse_t()
-				{
-					Result = d.Result,
-					AppID = d.AppID,
-					CchKeyLength = d.CchKeyLength,
-					Key = d.Key,
-				};
-			}
+			public static implicit operator AppProofOfPurchaseKeyResponse_t ( AppProofOfPurchaseKeyResponse_t.Pack4 d ) => new AppProofOfPurchaseKeyResponse_t{ Result = d.Result,AppID = d.AppID,CchKeyLength = d.CchKeyLength,Key = d.Key, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal uint AppID; // m_nAppID uint32
+			internal uint CchKeyLength; // m_cchKeyLength uint32
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 240)]
+			internal string Key; // m_rgchKey char [240]
+			
+			public static implicit operator AppProofOfPurchaseKeyResponse_t ( AppProofOfPurchaseKeyResponse_t.Pack8 d ) => new AppProofOfPurchaseKeyResponse_t{ Result = d.Result,AppID = d.AppID,CchKeyLength = d.CchKeyLength,Key = d.Key, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -18063,56 +18068,57 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct FileDetailsResult_t
+	public struct FileDetailsResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamApps + 23;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong FileSize; // m_ulFileSize uint64
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 20)]
-		internal char FileSHA; // m_FileSHA uint8 [20]
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 20)] //  m_FileSHA
+		internal byte[] FileSHA; // m_FileSHA uint8 [20]
 		internal uint Flags; // m_unFlags uint32
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static FileDetailsResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (FileDetailsResult_t) Marshal.PtrToStructure( p, typeof(FileDetailsResult_t) );
-		}
+		internal static FileDetailsResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((FileDetailsResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((FileDetailsResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(FileDetailsResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong FileSize; // m_ulFileSize uint64
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 20)]
-			internal char FileSHA; // m_FileSHA uint8 [20]
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 20)] //  m_FileSHA
+			internal byte[] FileSHA; // m_FileSHA uint8 [20]
 			internal uint Flags; // m_unFlags uint32
 			
-			//
-			// Easily convert from PackSmall to FileDetailsResult_t
-			//
-			public static implicit operator FileDetailsResult_t (  FileDetailsResult_t.PackSmall d )
-			{
-				return new FileDetailsResult_t()
-				{
-					Result = d.Result,
-					FileSize = d.FileSize,
-					FileSHA = d.FileSHA,
-					Flags = d.Flags,
-				};
-			}
+			public static implicit operator FileDetailsResult_t ( FileDetailsResult_t.Pack4 d ) => new FileDetailsResult_t{ Result = d.Result,FileSize = d.FileSize,FileSHA = d.FileSHA,Flags = d.Flags, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong FileSize; // m_ulFileSize uint64
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 20)] //  m_FileSHA
+			internal byte[] FileSHA; // m_FileSHA uint8 [20]
+			internal uint Flags; // m_unFlags uint32
+			
+			public static implicit operator FileDetailsResult_t ( FileDetailsResult_t.Pack8 d ) => new FileDetailsResult_t{ Result = d.Result,FileSize = d.FileSize,FileSHA = d.FileSHA,Flags = d.Flags, };
 		}
 		
 		internal static CallResult<FileDetailsResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<FileDetailsResult_t, bool> CallbackFunction )
@@ -18247,7 +18253,6 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct P2PSessionState_t
 	{
 		internal byte ConnectionActive; // m_bConnectionActive uint8
@@ -18262,23 +18267,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static P2PSessionState_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (P2PSessionState_t) Marshal.PtrToStructure( p, typeof(P2PSessionState_t) );
-		}
+		internal static P2PSessionState_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((P2PSessionState_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((P2PSessionState_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(P2PSessionState_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal byte ConnectionActive; // m_bConnectionActive uint8
 			internal byte Connecting; // m_bConnecting uint8
@@ -18289,65 +18290,64 @@ namespace SteamNative
 			internal uint RemoteIP; // m_nRemoteIP uint32
 			internal ushort RemotePort; // m_nRemotePort uint16
 			
-			//
-			// Easily convert from PackSmall to P2PSessionState_t
-			//
-			public static implicit operator P2PSessionState_t (  P2PSessionState_t.PackSmall d )
-			{
-				return new P2PSessionState_t()
-				{
-					ConnectionActive = d.ConnectionActive,
-					Connecting = d.Connecting,
-					P2PSessionError = d.P2PSessionError,
-					UsingRelay = d.UsingRelay,
-					BytesQueuedForSend = d.BytesQueuedForSend,
-					PacketsQueuedForSend = d.PacketsQueuedForSend,
-					RemoteIP = d.RemoteIP,
-					RemotePort = d.RemotePort,
-				};
-			}
+			public static implicit operator P2PSessionState_t ( P2PSessionState_t.Pack4 d ) => new P2PSessionState_t{ ConnectionActive = d.ConnectionActive,Connecting = d.Connecting,P2PSessionError = d.P2PSessionError,UsingRelay = d.UsingRelay,BytesQueuedForSend = d.BytesQueuedForSend,PacketsQueuedForSend = d.PacketsQueuedForSend,RemoteIP = d.RemoteIP,RemotePort = d.RemotePort, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal byte ConnectionActive; // m_bConnectionActive uint8
+			internal byte Connecting; // m_bConnecting uint8
+			internal byte P2PSessionError; // m_eP2PSessionError uint8
+			internal byte UsingRelay; // m_bUsingRelay uint8
+			internal int BytesQueuedForSend; // m_nBytesQueuedForSend int32
+			internal int PacketsQueuedForSend; // m_nPacketsQueuedForSend int32
+			internal uint RemoteIP; // m_nRemoteIP uint32
+			internal ushort RemotePort; // m_nRemotePort uint16
+			
+			public static implicit operator P2PSessionState_t ( P2PSessionState_t.Pack8 d ) => new P2PSessionState_t{ ConnectionActive = d.ConnectionActive,Connecting = d.Connecting,P2PSessionError = d.P2PSessionError,UsingRelay = d.UsingRelay,BytesQueuedForSend = d.BytesQueuedForSend,PacketsQueuedForSend = d.PacketsQueuedForSend,RemoteIP = d.RemoteIP,RemotePort = d.RemotePort, };
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct P2PSessionRequest_t
+	public struct P2PSessionRequest_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamNetworking + 2;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamIDRemote; // m_steamIDRemote class CSteamID
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static P2PSessionRequest_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (P2PSessionRequest_t) Marshal.PtrToStructure( p, typeof(P2PSessionRequest_t) );
-		}
+		internal static P2PSessionRequest_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((P2PSessionRequest_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((P2PSessionRequest_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(P2PSessionRequest_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamIDRemote; // m_steamIDRemote class CSteamID
 			
-			//
-			// Easily convert from PackSmall to P2PSessionRequest_t
-			//
-			public static implicit operator P2PSessionRequest_t (  P2PSessionRequest_t.PackSmall d )
-			{
-				return new P2PSessionRequest_t()
-				{
-					SteamIDRemote = d.SteamIDRemote,
-				};
-			}
+			public static implicit operator P2PSessionRequest_t ( P2PSessionRequest_t.Pack4 d ) => new P2PSessionRequest_t{ SteamIDRemote = d.SteamIDRemote, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal ulong SteamIDRemote; // m_steamIDRemote class CSteamID
+			
+			public static implicit operator P2PSessionRequest_t ( P2PSessionRequest_t.Pack8 d ) => new P2PSessionRequest_t{ SteamIDRemote = d.SteamIDRemote, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -18477,48 +18477,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct P2PSessionConnectFail_t
+	public struct P2PSessionConnectFail_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamNetworking + 3;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamIDRemote; // m_steamIDRemote class CSteamID
 		internal byte P2PSessionError; // m_eP2PSessionError uint8
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static P2PSessionConnectFail_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (P2PSessionConnectFail_t) Marshal.PtrToStructure( p, typeof(P2PSessionConnectFail_t) );
-		}
+		internal static P2PSessionConnectFail_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((P2PSessionConnectFail_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((P2PSessionConnectFail_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(P2PSessionConnectFail_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamIDRemote; // m_steamIDRemote class CSteamID
 			internal byte P2PSessionError; // m_eP2PSessionError uint8
 			
-			//
-			// Easily convert from PackSmall to P2PSessionConnectFail_t
-			//
-			public static implicit operator P2PSessionConnectFail_t (  P2PSessionConnectFail_t.PackSmall d )
-			{
-				return new P2PSessionConnectFail_t()
-				{
-					SteamIDRemote = d.SteamIDRemote,
-					P2PSessionError = d.P2PSessionError,
-				};
-			}
+			public static implicit operator P2PSessionConnectFail_t ( P2PSessionConnectFail_t.Pack4 d ) => new P2PSessionConnectFail_t{ SteamIDRemote = d.SteamIDRemote,P2PSessionError = d.P2PSessionError, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal ulong SteamIDRemote; // m_steamIDRemote class CSteamID
+			internal byte P2PSessionError; // m_eP2PSessionError uint8
+			
+			public static implicit operator P2PSessionConnectFail_t ( P2PSessionConnectFail_t.Pack8 d ) => new P2PSessionConnectFail_t{ SteamIDRemote = d.SteamIDRemote,P2PSessionError = d.P2PSessionError, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -18648,10 +18648,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct SocketStatusCallback_t
+	public struct SocketStatusCallback_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamNetworking + 1;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint Socket; // m_hSocket SNetSocket_t
 		internal uint ListenSocket; // m_hListenSocket SNetListenSocket_t
 		internal ulong SteamIDRemote; // m_steamIDRemote class CSteamID
@@ -18660,42 +18665,37 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static SocketStatusCallback_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (SocketStatusCallback_t) Marshal.PtrToStructure( p, typeof(SocketStatusCallback_t) );
-		}
+		internal static SocketStatusCallback_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((SocketStatusCallback_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((SocketStatusCallback_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SocketStatusCallback_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint Socket; // m_hSocket SNetSocket_t
 			internal uint ListenSocket; // m_hListenSocket SNetListenSocket_t
 			internal ulong SteamIDRemote; // m_steamIDRemote class CSteamID
 			internal int SNetSocketState; // m_eSNetSocketState int
 			
-			//
-			// Easily convert from PackSmall to SocketStatusCallback_t
-			//
-			public static implicit operator SocketStatusCallback_t (  SocketStatusCallback_t.PackSmall d )
-			{
-				return new SocketStatusCallback_t()
-				{
-					Socket = d.Socket,
-					ListenSocket = d.ListenSocket,
-					SteamIDRemote = d.SteamIDRemote,
-					SNetSocketState = d.SNetSocketState,
-				};
-			}
+			public static implicit operator SocketStatusCallback_t ( SocketStatusCallback_t.Pack4 d ) => new SocketStatusCallback_t{ Socket = d.Socket,ListenSocket = d.ListenSocket,SteamIDRemote = d.SteamIDRemote,SNetSocketState = d.SNetSocketState, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal uint Socket; // m_hSocket SNetSocket_t
+			internal uint ListenSocket; // m_hListenSocket SNetListenSocket_t
+			internal ulong SteamIDRemote; // m_steamIDRemote class CSteamID
+			internal int SNetSocketState; // m_eSNetSocketState int
+			
+			public static implicit operator SocketStatusCallback_t ( SocketStatusCallback_t.Pack8 d ) => new SocketStatusCallback_t{ Socket = d.Socket,ListenSocket = d.ListenSocket,SteamIDRemote = d.SteamIDRemote,SNetSocketState = d.SNetSocketState, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -18825,48 +18825,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct ScreenshotReady_t
+	public struct ScreenshotReady_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamScreenshots + 1;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint Local; // m_hLocal ScreenshotHandle
 		internal Result Result; // m_eResult enum EResult
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static ScreenshotReady_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (ScreenshotReady_t) Marshal.PtrToStructure( p, typeof(ScreenshotReady_t) );
-		}
+		internal static ScreenshotReady_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((ScreenshotReady_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((ScreenshotReady_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(ScreenshotReady_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint Local; // m_hLocal ScreenshotHandle
 			internal Result Result; // m_eResult enum EResult
 			
-			//
-			// Easily convert from PackSmall to ScreenshotReady_t
-			//
-			public static implicit operator ScreenshotReady_t (  ScreenshotReady_t.PackSmall d )
-			{
-				return new ScreenshotReady_t()
-				{
-					Local = d.Local,
-					Result = d.Result,
-				};
-			}
+			public static implicit operator ScreenshotReady_t ( ScreenshotReady_t.Pack4 d ) => new ScreenshotReady_t{ Local = d.Local,Result = d.Result, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint Local; // m_hLocal ScreenshotHandle
+			internal Result Result; // m_eResult enum EResult
+			
+			public static implicit operator ScreenshotReady_t ( ScreenshotReady_t.Pack8 d ) => new ScreenshotReady_t{ Local = d.Local,Result = d.Result, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -18996,45 +18996,45 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct VolumeHasChanged_t
+	public struct VolumeHasChanged_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMusic + 2;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal float NewVolume; // m_flNewVolume float
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static VolumeHasChanged_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (VolumeHasChanged_t) Marshal.PtrToStructure( p, typeof(VolumeHasChanged_t) );
-		}
+		internal static VolumeHasChanged_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((VolumeHasChanged_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((VolumeHasChanged_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(VolumeHasChanged_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal float NewVolume; // m_flNewVolume float
 			
-			//
-			// Easily convert from PackSmall to VolumeHasChanged_t
-			//
-			public static implicit operator VolumeHasChanged_t (  VolumeHasChanged_t.PackSmall d )
-			{
-				return new VolumeHasChanged_t()
-				{
-					NewVolume = d.NewVolume,
-				};
-			}
+			public static implicit operator VolumeHasChanged_t ( VolumeHasChanged_t.Pack4 d ) => new VolumeHasChanged_t{ NewVolume = d.NewVolume, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal float NewVolume; // m_flNewVolume float
+			
+			public static implicit operator VolumeHasChanged_t ( VolumeHasChanged_t.Pack8 d ) => new VolumeHasChanged_t{ NewVolume = d.NewVolume, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -19164,47 +19164,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct MusicPlayerWantsShuffled_t
+	public struct MusicPlayerWantsShuffled_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMusicRemote + 9;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool Shuffled; // m_bShuffled _Bool
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static MusicPlayerWantsShuffled_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (MusicPlayerWantsShuffled_t) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsShuffled_t) );
-		}
+		internal static MusicPlayerWantsShuffled_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((MusicPlayerWantsShuffled_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((MusicPlayerWantsShuffled_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(MusicPlayerWantsShuffled_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool Shuffled; // m_bShuffled _Bool
 			
-			//
-			// Easily convert from PackSmall to MusicPlayerWantsShuffled_t
-			//
-			public static implicit operator MusicPlayerWantsShuffled_t (  MusicPlayerWantsShuffled_t.PackSmall d )
-			{
-				return new MusicPlayerWantsShuffled_t()
-				{
-					Shuffled = d.Shuffled,
-				};
-			}
+			public static implicit operator MusicPlayerWantsShuffled_t ( MusicPlayerWantsShuffled_t.Pack4 d ) => new MusicPlayerWantsShuffled_t{ Shuffled = d.Shuffled, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool Shuffled; // m_bShuffled _Bool
+			
+			public static implicit operator MusicPlayerWantsShuffled_t ( MusicPlayerWantsShuffled_t.Pack8 d ) => new MusicPlayerWantsShuffled_t{ Shuffled = d.Shuffled, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -19334,47 +19335,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct MusicPlayerWantsLooped_t
+	public struct MusicPlayerWantsLooped_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMusicRemote + 10;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool Looped; // m_bLooped _Bool
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static MusicPlayerWantsLooped_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (MusicPlayerWantsLooped_t) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsLooped_t) );
-		}
+		internal static MusicPlayerWantsLooped_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((MusicPlayerWantsLooped_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((MusicPlayerWantsLooped_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(MusicPlayerWantsLooped_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool Looped; // m_bLooped _Bool
 			
-			//
-			// Easily convert from PackSmall to MusicPlayerWantsLooped_t
-			//
-			public static implicit operator MusicPlayerWantsLooped_t (  MusicPlayerWantsLooped_t.PackSmall d )
-			{
-				return new MusicPlayerWantsLooped_t()
-				{
-					Looped = d.Looped,
-				};
-			}
+			public static implicit operator MusicPlayerWantsLooped_t ( MusicPlayerWantsLooped_t.Pack4 d ) => new MusicPlayerWantsLooped_t{ Looped = d.Looped, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool Looped; // m_bLooped _Bool
+			
+			public static implicit operator MusicPlayerWantsLooped_t ( MusicPlayerWantsLooped_t.Pack8 d ) => new MusicPlayerWantsLooped_t{ Looped = d.Looped, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -19504,45 +19506,45 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct MusicPlayerWantsVolume_t
+	public struct MusicPlayerWantsVolume_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMusic + 11;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal float NewVolume; // m_flNewVolume float
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static MusicPlayerWantsVolume_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (MusicPlayerWantsVolume_t) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsVolume_t) );
-		}
+		internal static MusicPlayerWantsVolume_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((MusicPlayerWantsVolume_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((MusicPlayerWantsVolume_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(MusicPlayerWantsVolume_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal float NewVolume; // m_flNewVolume float
 			
-			//
-			// Easily convert from PackSmall to MusicPlayerWantsVolume_t
-			//
-			public static implicit operator MusicPlayerWantsVolume_t (  MusicPlayerWantsVolume_t.PackSmall d )
-			{
-				return new MusicPlayerWantsVolume_t()
-				{
-					NewVolume = d.NewVolume,
-				};
-			}
+			public static implicit operator MusicPlayerWantsVolume_t ( MusicPlayerWantsVolume_t.Pack4 d ) => new MusicPlayerWantsVolume_t{ NewVolume = d.NewVolume, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal float NewVolume; // m_flNewVolume float
+			
+			public static implicit operator MusicPlayerWantsVolume_t ( MusicPlayerWantsVolume_t.Pack8 d ) => new MusicPlayerWantsVolume_t{ NewVolume = d.NewVolume, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -19672,45 +19674,45 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct MusicPlayerSelectsQueueEntry_t
+	public struct MusicPlayerSelectsQueueEntry_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMusic + 12;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal int NID; // nID int
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static MusicPlayerSelectsQueueEntry_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (MusicPlayerSelectsQueueEntry_t) Marshal.PtrToStructure( p, typeof(MusicPlayerSelectsQueueEntry_t) );
-		}
+		internal static MusicPlayerSelectsQueueEntry_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((MusicPlayerSelectsQueueEntry_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((MusicPlayerSelectsQueueEntry_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(MusicPlayerSelectsQueueEntry_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal int NID; // nID int
 			
-			//
-			// Easily convert from PackSmall to MusicPlayerSelectsQueueEntry_t
-			//
-			public static implicit operator MusicPlayerSelectsQueueEntry_t (  MusicPlayerSelectsQueueEntry_t.PackSmall d )
-			{
-				return new MusicPlayerSelectsQueueEntry_t()
-				{
-					NID = d.NID,
-				};
-			}
+			public static implicit operator MusicPlayerSelectsQueueEntry_t ( MusicPlayerSelectsQueueEntry_t.Pack4 d ) => new MusicPlayerSelectsQueueEntry_t{ NID = d.NID, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal int NID; // nID int
+			
+			public static implicit operator MusicPlayerSelectsQueueEntry_t ( MusicPlayerSelectsQueueEntry_t.Pack8 d ) => new MusicPlayerSelectsQueueEntry_t{ NID = d.NID, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -19840,45 +19842,45 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct MusicPlayerSelectsPlaylistEntry_t
+	public struct MusicPlayerSelectsPlaylistEntry_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMusic + 13;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal int NID; // nID int
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static MusicPlayerSelectsPlaylistEntry_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (MusicPlayerSelectsPlaylistEntry_t) Marshal.PtrToStructure( p, typeof(MusicPlayerSelectsPlaylistEntry_t) );
-		}
+		internal static MusicPlayerSelectsPlaylistEntry_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((MusicPlayerSelectsPlaylistEntry_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((MusicPlayerSelectsPlaylistEntry_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(MusicPlayerSelectsPlaylistEntry_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal int NID; // nID int
 			
-			//
-			// Easily convert from PackSmall to MusicPlayerSelectsPlaylistEntry_t
-			//
-			public static implicit operator MusicPlayerSelectsPlaylistEntry_t (  MusicPlayerSelectsPlaylistEntry_t.PackSmall d )
-			{
-				return new MusicPlayerSelectsPlaylistEntry_t()
-				{
-					NID = d.NID,
-				};
-			}
+			public static implicit operator MusicPlayerSelectsPlaylistEntry_t ( MusicPlayerSelectsPlaylistEntry_t.Pack4 d ) => new MusicPlayerSelectsPlaylistEntry_t{ NID = d.NID, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal int NID; // nID int
+			
+			public static implicit operator MusicPlayerSelectsPlaylistEntry_t ( MusicPlayerSelectsPlaylistEntry_t.Pack8 d ) => new MusicPlayerSelectsPlaylistEntry_t{ NID = d.NID, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -20008,45 +20010,45 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct MusicPlayerWantsPlayingRepeatStatus_t
+	public struct MusicPlayerWantsPlayingRepeatStatus_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamMusicRemote + 14;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal int PlayingRepeatStatus; // m_nPlayingRepeatStatus int
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static MusicPlayerWantsPlayingRepeatStatus_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (MusicPlayerWantsPlayingRepeatStatus_t) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsPlayingRepeatStatus_t) );
-		}
+		internal static MusicPlayerWantsPlayingRepeatStatus_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((MusicPlayerWantsPlayingRepeatStatus_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((MusicPlayerWantsPlayingRepeatStatus_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(MusicPlayerWantsPlayingRepeatStatus_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal int PlayingRepeatStatus; // m_nPlayingRepeatStatus int
 			
-			//
-			// Easily convert from PackSmall to MusicPlayerWantsPlayingRepeatStatus_t
-			//
-			public static implicit operator MusicPlayerWantsPlayingRepeatStatus_t (  MusicPlayerWantsPlayingRepeatStatus_t.PackSmall d )
-			{
-				return new MusicPlayerWantsPlayingRepeatStatus_t()
-				{
-					PlayingRepeatStatus = d.PlayingRepeatStatus,
-				};
-			}
+			public static implicit operator MusicPlayerWantsPlayingRepeatStatus_t ( MusicPlayerWantsPlayingRepeatStatus_t.Pack4 d ) => new MusicPlayerWantsPlayingRepeatStatus_t{ PlayingRepeatStatus = d.PlayingRepeatStatus, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal int PlayingRepeatStatus; // m_nPlayingRepeatStatus int
+			
+			public static implicit operator MusicPlayerWantsPlayingRepeatStatus_t ( MusicPlayerWantsPlayingRepeatStatus_t.Pack8 d ) => new MusicPlayerWantsPlayingRepeatStatus_t{ PlayingRepeatStatus = d.PlayingRepeatStatus, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -20176,10 +20178,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct HTTPRequestCompleted_t
+	public struct HTTPRequestCompleted_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientHTTP + 1;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint Request; // m_hRequest HTTPRequestHandle
 		internal ulong ContextValue; // m_ulContextValue uint64
 		[MarshalAs(UnmanagedType.I1)]
@@ -20190,23 +20197,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static HTTPRequestCompleted_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (HTTPRequestCompleted_t) Marshal.PtrToStructure( p, typeof(HTTPRequestCompleted_t) );
-		}
+		internal static HTTPRequestCompleted_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((HTTPRequestCompleted_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((HTTPRequestCompleted_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTTPRequestCompleted_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint Request; // m_hRequest HTTPRequestHandle
 			internal ulong ContextValue; // m_ulContextValue uint64
@@ -20215,20 +20218,20 @@ namespace SteamNative
 			internal HTTPStatusCode StatusCode; // m_eStatusCode enum EHTTPStatusCode
 			internal uint BodySize; // m_unBodySize uint32
 			
-			//
-			// Easily convert from PackSmall to HTTPRequestCompleted_t
-			//
-			public static implicit operator HTTPRequestCompleted_t (  HTTPRequestCompleted_t.PackSmall d )
-			{
-				return new HTTPRequestCompleted_t()
-				{
-					Request = d.Request,
-					ContextValue = d.ContextValue,
-					RequestSuccessful = d.RequestSuccessful,
-					StatusCode = d.StatusCode,
-					BodySize = d.BodySize,
-				};
-			}
+			public static implicit operator HTTPRequestCompleted_t ( HTTPRequestCompleted_t.Pack4 d ) => new HTTPRequestCompleted_t{ Request = d.Request,ContextValue = d.ContextValue,RequestSuccessful = d.RequestSuccessful,StatusCode = d.StatusCode,BodySize = d.BodySize, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint Request; // m_hRequest HTTPRequestHandle
+			internal ulong ContextValue; // m_ulContextValue uint64
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool RequestSuccessful; // m_bRequestSuccessful _Bool
+			internal HTTPStatusCode StatusCode; // m_eStatusCode enum EHTTPStatusCode
+			internal uint BodySize; // m_unBodySize uint32
+			
+			public static implicit operator HTTPRequestCompleted_t ( HTTPRequestCompleted_t.Pack8 d ) => new HTTPRequestCompleted_t{ Request = d.Request,ContextValue = d.ContextValue,RequestSuccessful = d.RequestSuccessful,StatusCode = d.StatusCode,BodySize = d.BodySize, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -20358,48 +20361,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct HTTPRequestHeadersReceived_t
+	public struct HTTPRequestHeadersReceived_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientHTTP + 2;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint Request; // m_hRequest HTTPRequestHandle
 		internal ulong ContextValue; // m_ulContextValue uint64
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static HTTPRequestHeadersReceived_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (HTTPRequestHeadersReceived_t) Marshal.PtrToStructure( p, typeof(HTTPRequestHeadersReceived_t) );
-		}
+		internal static HTTPRequestHeadersReceived_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((HTTPRequestHeadersReceived_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((HTTPRequestHeadersReceived_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTTPRequestHeadersReceived_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint Request; // m_hRequest HTTPRequestHandle
 			internal ulong ContextValue; // m_ulContextValue uint64
 			
-			//
-			// Easily convert from PackSmall to HTTPRequestHeadersReceived_t
-			//
-			public static implicit operator HTTPRequestHeadersReceived_t (  HTTPRequestHeadersReceived_t.PackSmall d )
-			{
-				return new HTTPRequestHeadersReceived_t()
-				{
-					Request = d.Request,
-					ContextValue = d.ContextValue,
-				};
-			}
+			public static implicit operator HTTPRequestHeadersReceived_t ( HTTPRequestHeadersReceived_t.Pack4 d ) => new HTTPRequestHeadersReceived_t{ Request = d.Request,ContextValue = d.ContextValue, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint Request; // m_hRequest HTTPRequestHandle
+			internal ulong ContextValue; // m_ulContextValue uint64
+			
+			public static implicit operator HTTPRequestHeadersReceived_t ( HTTPRequestHeadersReceived_t.Pack8 d ) => new HTTPRequestHeadersReceived_t{ Request = d.Request,ContextValue = d.ContextValue, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -20529,10 +20532,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct HTTPRequestDataReceived_t
+	public struct HTTPRequestDataReceived_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientHTTP + 3;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint Request; // m_hRequest HTTPRequestHandle
 		internal ulong ContextValue; // m_ulContextValue uint64
 		internal uint COffset; // m_cOffset uint32
@@ -20541,42 +20549,37 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static HTTPRequestDataReceived_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (HTTPRequestDataReceived_t) Marshal.PtrToStructure( p, typeof(HTTPRequestDataReceived_t) );
-		}
+		internal static HTTPRequestDataReceived_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((HTTPRequestDataReceived_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((HTTPRequestDataReceived_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTTPRequestDataReceived_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint Request; // m_hRequest HTTPRequestHandle
 			internal ulong ContextValue; // m_ulContextValue uint64
 			internal uint COffset; // m_cOffset uint32
 			internal uint CBytesReceived; // m_cBytesReceived uint32
 			
-			//
-			// Easily convert from PackSmall to HTTPRequestDataReceived_t
-			//
-			public static implicit operator HTTPRequestDataReceived_t (  HTTPRequestDataReceived_t.PackSmall d )
-			{
-				return new HTTPRequestDataReceived_t()
-				{
-					Request = d.Request,
-					ContextValue = d.ContextValue,
-					COffset = d.COffset,
-					CBytesReceived = d.CBytesReceived,
-				};
-			}
+			public static implicit operator HTTPRequestDataReceived_t ( HTTPRequestDataReceived_t.Pack4 d ) => new HTTPRequestDataReceived_t{ Request = d.Request,ContextValue = d.ContextValue,COffset = d.COffset,CBytesReceived = d.CBytesReceived, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint Request; // m_hRequest HTTPRequestHandle
+			internal ulong ContextValue; // m_ulContextValue uint64
+			internal uint COffset; // m_cOffset uint32
+			internal uint CBytesReceived; // m_cBytesReceived uint32
+			
+			public static implicit operator HTTPRequestDataReceived_t ( HTTPRequestDataReceived_t.Pack8 d ) => new HTTPRequestDataReceived_t{ Request = d.Request,ContextValue = d.ContextValue,COffset = d.COffset,CBytesReceived = d.CBytesReceived, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -20706,7 +20709,6 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct SteamUGCDetails_t
 	{
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -20747,23 +20749,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static SteamUGCDetails_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (SteamUGCDetails_t) Marshal.PtrToStructure( p, typeof(SteamUGCDetails_t) );
-		}
+		internal static SteamUGCDetails_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((SteamUGCDetails_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((SteamUGCDetails_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamUGCDetails_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal Result Result; // m_eResult enum EResult
@@ -20800,48 +20798,60 @@ namespace SteamNative
 			internal float Score; // m_flScore float
 			internal uint NumChildren; // m_unNumChildren uint32
 			
-			//
-			// Easily convert from PackSmall to SteamUGCDetails_t
-			//
-			public static implicit operator SteamUGCDetails_t (  SteamUGCDetails_t.PackSmall d )
-			{
-				return new SteamUGCDetails_t()
-				{
-					PublishedFileId = d.PublishedFileId,
-					Result = d.Result,
-					FileType = d.FileType,
-					CreatorAppID = d.CreatorAppID,
-					ConsumerAppID = d.ConsumerAppID,
-					Title = d.Title,
-					Description = d.Description,
-					SteamIDOwner = d.SteamIDOwner,
-					TimeCreated = d.TimeCreated,
-					TimeUpdated = d.TimeUpdated,
-					TimeAddedToUserList = d.TimeAddedToUserList,
-					Visibility = d.Visibility,
-					Banned = d.Banned,
-					AcceptedForUse = d.AcceptedForUse,
-					TagsTruncated = d.TagsTruncated,
-					Tags = d.Tags,
-					File = d.File,
-					PreviewFile = d.PreviewFile,
-					PchFileName = d.PchFileName,
-					FileSize = d.FileSize,
-					PreviewFileSize = d.PreviewFileSize,
-					URL = d.URL,
-					VotesUp = d.VotesUp,
-					VotesDown = d.VotesDown,
-					Score = d.Score,
-					NumChildren = d.NumChildren,
-				};
-			}
+			public static implicit operator SteamUGCDetails_t ( SteamUGCDetails_t.Pack4 d ) => new SteamUGCDetails_t{ PublishedFileId = d.PublishedFileId,Result = d.Result,FileType = d.FileType,CreatorAppID = d.CreatorAppID,ConsumerAppID = d.ConsumerAppID,Title = d.Title,Description = d.Description,SteamIDOwner = d.SteamIDOwner,TimeCreated = d.TimeCreated,TimeUpdated = d.TimeUpdated,TimeAddedToUserList = d.TimeAddedToUserList,Visibility = d.Visibility,Banned = d.Banned,AcceptedForUse = d.AcceptedForUse,TagsTruncated = d.TagsTruncated,Tags = d.Tags,File = d.File,PreviewFile = d.PreviewFile,PchFileName = d.PchFileName,FileSize = d.FileSize,PreviewFileSize = d.PreviewFileSize,URL = d.URL,VotesUp = d.VotesUp,VotesDown = d.VotesDown,Score = d.Score,NumChildren = d.NumChildren, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal Result Result; // m_eResult enum EResult
+			internal WorkshopFileType FileType; // m_eFileType enum EWorkshopFileType
+			internal uint CreatorAppID; // m_nCreatorAppID AppId_t
+			internal uint ConsumerAppID; // m_nConsumerAppID AppId_t
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 129)]
+			internal string Title; // m_rgchTitle char [129]
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8000)]
+			internal string Description; // m_rgchDescription char [8000]
+			internal ulong SteamIDOwner; // m_ulSteamIDOwner uint64
+			internal uint TimeCreated; // m_rtimeCreated uint32
+			internal uint TimeUpdated; // m_rtimeUpdated uint32
+			internal uint TimeAddedToUserList; // m_rtimeAddedToUserList uint32
+			internal RemoteStoragePublishedFileVisibility Visibility; // m_eVisibility enum ERemoteStoragePublishedFileVisibility
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool Banned; // m_bBanned _Bool
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool AcceptedForUse; // m_bAcceptedForUse _Bool
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool TagsTruncated; // m_bTagsTruncated _Bool
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1025)]
+			internal string Tags; // m_rgchTags char [1025]
+			internal ulong File; // m_hFile UGCHandle_t
+			internal ulong PreviewFile; // m_hPreviewFile UGCHandle_t
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
+			internal string PchFileName; // m_pchFileName char [260]
+			internal int FileSize; // m_nFileSize int32
+			internal int PreviewFileSize; // m_nPreviewFileSize int32
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+			internal string URL; // m_rgchURL char [256]
+			internal uint VotesUp; // m_unVotesUp uint32
+			internal uint VotesDown; // m_unVotesDown uint32
+			internal float Score; // m_flScore float
+			internal uint NumChildren; // m_unNumChildren uint32
+			
+			public static implicit operator SteamUGCDetails_t ( SteamUGCDetails_t.Pack8 d ) => new SteamUGCDetails_t{ PublishedFileId = d.PublishedFileId,Result = d.Result,FileType = d.FileType,CreatorAppID = d.CreatorAppID,ConsumerAppID = d.ConsumerAppID,Title = d.Title,Description = d.Description,SteamIDOwner = d.SteamIDOwner,TimeCreated = d.TimeCreated,TimeUpdated = d.TimeUpdated,TimeAddedToUserList = d.TimeAddedToUserList,Visibility = d.Visibility,Banned = d.Banned,AcceptedForUse = d.AcceptedForUse,TagsTruncated = d.TagsTruncated,Tags = d.Tags,File = d.File,PreviewFile = d.PreviewFile,PchFileName = d.PchFileName,FileSize = d.FileSize,PreviewFileSize = d.PreviewFileSize,URL = d.URL,VotesUp = d.VotesUp,VotesDown = d.VotesDown,Score = d.Score,NumChildren = d.NumChildren, };
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct SteamUGCQueryCompleted_t
+	public struct SteamUGCQueryCompleted_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 1;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong Handle; // m_handle UGCQueryHandle_t
 		internal Result Result; // m_eResult enum EResult
 		internal uint NumResultsReturned; // m_unNumResultsReturned uint32
@@ -20854,23 +20864,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static SteamUGCQueryCompleted_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (SteamUGCQueryCompleted_t) Marshal.PtrToStructure( p, typeof(SteamUGCQueryCompleted_t) );
-		}
+		internal static SteamUGCQueryCompleted_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((SteamUGCQueryCompleted_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((SteamUGCQueryCompleted_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamUGCQueryCompleted_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong Handle; // m_handle UGCQueryHandle_t
 			internal Result Result; // m_eResult enum EResult
@@ -20881,21 +20887,22 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 			internal string NextCursor; // m_rgchNextCursor char [256]
 			
-			//
-			// Easily convert from PackSmall to SteamUGCQueryCompleted_t
-			//
-			public static implicit operator SteamUGCQueryCompleted_t (  SteamUGCQueryCompleted_t.PackSmall d )
-			{
-				return new SteamUGCQueryCompleted_t()
-				{
-					Handle = d.Handle,
-					Result = d.Result,
-					NumResultsReturned = d.NumResultsReturned,
-					TotalMatchingResults = d.TotalMatchingResults,
-					CachedData = d.CachedData,
-					NextCursor = d.NextCursor,
-				};
-			}
+			public static implicit operator SteamUGCQueryCompleted_t ( SteamUGCQueryCompleted_t.Pack4 d ) => new SteamUGCQueryCompleted_t{ Handle = d.Handle,Result = d.Result,NumResultsReturned = d.NumResultsReturned,TotalMatchingResults = d.TotalMatchingResults,CachedData = d.CachedData,NextCursor = d.NextCursor, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong Handle; // m_handle UGCQueryHandle_t
+			internal Result Result; // m_eResult enum EResult
+			internal uint NumResultsReturned; // m_unNumResultsReturned uint32
+			internal uint TotalMatchingResults; // m_unTotalMatchingResults uint32
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool CachedData; // m_bCachedData _Bool
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+			internal string NextCursor; // m_rgchNextCursor char [256]
+			
+			public static implicit operator SteamUGCQueryCompleted_t ( SteamUGCQueryCompleted_t.Pack8 d ) => new SteamUGCQueryCompleted_t{ Handle = d.Handle,Result = d.Result,NumResultsReturned = d.NumResultsReturned,TotalMatchingResults = d.TotalMatchingResults,CachedData = d.CachedData,NextCursor = d.NextCursor, };
 		}
 		
 		internal static CallResult<SteamUGCQueryCompleted_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<SteamUGCQueryCompleted_t, bool> CallbackFunction )
@@ -21030,10 +21037,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct SteamUGCRequestUGCDetailsResult_t
+	public struct SteamUGCRequestUGCDetailsResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 2;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal SteamUGCDetails_t Details; // m_details struct SteamUGCDetails_t
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool CachedData; // m_bCachedData _Bool
@@ -21041,39 +21053,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static SteamUGCRequestUGCDetailsResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (SteamUGCRequestUGCDetailsResult_t) Marshal.PtrToStructure( p, typeof(SteamUGCRequestUGCDetailsResult_t) );
-		}
+		internal static SteamUGCRequestUGCDetailsResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((SteamUGCRequestUGCDetailsResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((SteamUGCRequestUGCDetailsResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamUGCRequestUGCDetailsResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal SteamUGCDetails_t Details; // m_details struct SteamUGCDetails_t
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool CachedData; // m_bCachedData _Bool
 			
-			//
-			// Easily convert from PackSmall to SteamUGCRequestUGCDetailsResult_t
-			//
-			public static implicit operator SteamUGCRequestUGCDetailsResult_t (  SteamUGCRequestUGCDetailsResult_t.PackSmall d )
-			{
-				return new SteamUGCRequestUGCDetailsResult_t()
-				{
-					Details = d.Details,
-					CachedData = d.CachedData,
-				};
-			}
+			public static implicit operator SteamUGCRequestUGCDetailsResult_t ( SteamUGCRequestUGCDetailsResult_t.Pack4 d ) => new SteamUGCRequestUGCDetailsResult_t{ Details = d.Details,CachedData = d.CachedData, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal SteamUGCDetails_t Details; // m_details struct SteamUGCDetails_t
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool CachedData; // m_bCachedData _Bool
+			
+			public static implicit operator SteamUGCRequestUGCDetailsResult_t ( SteamUGCRequestUGCDetailsResult_t.Pack8 d ) => new SteamUGCRequestUGCDetailsResult_t{ Details = d.Details,CachedData = d.CachedData, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -21203,10 +21211,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct CreateItemResult_t
+	public struct CreateItemResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 3;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		[MarshalAs(UnmanagedType.I1)]
@@ -21215,41 +21228,37 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static CreateItemResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (CreateItemResult_t) Marshal.PtrToStructure( p, typeof(CreateItemResult_t) );
-		}
+		internal static CreateItemResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((CreateItemResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((CreateItemResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(CreateItemResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 			
-			//
-			// Easily convert from PackSmall to CreateItemResult_t
-			//
-			public static implicit operator CreateItemResult_t (  CreateItemResult_t.PackSmall d )
-			{
-				return new CreateItemResult_t()
-				{
-					Result = d.Result,
-					PublishedFileId = d.PublishedFileId,
-					UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement,
-				};
-			}
+			public static implicit operator CreateItemResult_t ( CreateItemResult_t.Pack4 d ) => new CreateItemResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
+			
+			public static implicit operator CreateItemResult_t ( CreateItemResult_t.Pack8 d ) => new CreateItemResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement, };
 		}
 		
 		internal static CallResult<CreateItemResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<CreateItemResult_t, bool> CallbackFunction )
@@ -21384,10 +21393,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct SubmitItemUpdateResult_t
+	public struct SubmitItemUpdateResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 4;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
@@ -21396,41 +21410,37 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static SubmitItemUpdateResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (SubmitItemUpdateResult_t) Marshal.PtrToStructure( p, typeof(SubmitItemUpdateResult_t) );
-		}
+		internal static SubmitItemUpdateResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((SubmitItemUpdateResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((SubmitItemUpdateResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SubmitItemUpdateResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
-			//
-			// Easily convert from PackSmall to SubmitItemUpdateResult_t
-			//
-			public static implicit operator SubmitItemUpdateResult_t (  SubmitItemUpdateResult_t.PackSmall d )
-			{
-				return new SubmitItemUpdateResult_t()
-				{
-					Result = d.Result,
-					UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement,
-					PublishedFileId = d.PublishedFileId,
-				};
-			}
+			public static implicit operator SubmitItemUpdateResult_t ( SubmitItemUpdateResult_t.Pack4 d ) => new SubmitItemUpdateResult_t{ Result = d.Result,UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement,PublishedFileId = d.PublishedFileId, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
+			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			
+			public static implicit operator SubmitItemUpdateResult_t ( SubmitItemUpdateResult_t.Pack8 d ) => new SubmitItemUpdateResult_t{ Result = d.Result,UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement,PublishedFileId = d.PublishedFileId, };
 		}
 		
 		internal static CallResult<SubmitItemUpdateResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<SubmitItemUpdateResult_t, bool> CallbackFunction )
@@ -21565,10 +21575,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct DownloadItemResult_t
+	public struct DownloadItemResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 6;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint AppID; // m_unAppID AppId_t
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal Result Result; // m_eResult enum EResult
@@ -21576,40 +21591,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static DownloadItemResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (DownloadItemResult_t) Marshal.PtrToStructure( p, typeof(DownloadItemResult_t) );
-		}
+		internal static DownloadItemResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((DownloadItemResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((DownloadItemResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(DownloadItemResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint AppID; // m_unAppID AppId_t
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal Result Result; // m_eResult enum EResult
 			
-			//
-			// Easily convert from PackSmall to DownloadItemResult_t
-			//
-			public static implicit operator DownloadItemResult_t (  DownloadItemResult_t.PackSmall d )
-			{
-				return new DownloadItemResult_t()
-				{
-					AppID = d.AppID,
-					PublishedFileId = d.PublishedFileId,
-					Result = d.Result,
-				};
-			}
+			public static implicit operator DownloadItemResult_t ( DownloadItemResult_t.Pack4 d ) => new DownloadItemResult_t{ AppID = d.AppID,PublishedFileId = d.PublishedFileId,Result = d.Result, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint AppID; // m_unAppID AppId_t
+			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal Result Result; // m_eResult enum EResult
+			
+			public static implicit operator DownloadItemResult_t ( DownloadItemResult_t.Pack8 d ) => new DownloadItemResult_t{ AppID = d.AppID,PublishedFileId = d.PublishedFileId,Result = d.Result, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -21739,10 +21749,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct UserFavoriteItemsListChanged_t
+	public struct UserFavoriteItemsListChanged_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 7;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal Result Result; // m_eResult enum EResult
 		[MarshalAs(UnmanagedType.I1)]
@@ -21751,41 +21766,37 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static UserFavoriteItemsListChanged_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (UserFavoriteItemsListChanged_t) Marshal.PtrToStructure( p, typeof(UserFavoriteItemsListChanged_t) );
-		}
+		internal static UserFavoriteItemsListChanged_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((UserFavoriteItemsListChanged_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((UserFavoriteItemsListChanged_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(UserFavoriteItemsListChanged_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal Result Result; // m_eResult enum EResult
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool WasAddRequest; // m_bWasAddRequest _Bool
 			
-			//
-			// Easily convert from PackSmall to UserFavoriteItemsListChanged_t
-			//
-			public static implicit operator UserFavoriteItemsListChanged_t (  UserFavoriteItemsListChanged_t.PackSmall d )
-			{
-				return new UserFavoriteItemsListChanged_t()
-				{
-					PublishedFileId = d.PublishedFileId,
-					Result = d.Result,
-					WasAddRequest = d.WasAddRequest,
-				};
-			}
+			public static implicit operator UserFavoriteItemsListChanged_t ( UserFavoriteItemsListChanged_t.Pack4 d ) => new UserFavoriteItemsListChanged_t{ PublishedFileId = d.PublishedFileId,Result = d.Result,WasAddRequest = d.WasAddRequest, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal Result Result; // m_eResult enum EResult
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool WasAddRequest; // m_bWasAddRequest _Bool
+			
+			public static implicit operator UserFavoriteItemsListChanged_t ( UserFavoriteItemsListChanged_t.Pack8 d ) => new UserFavoriteItemsListChanged_t{ PublishedFileId = d.PublishedFileId,Result = d.Result,WasAddRequest = d.WasAddRequest, };
 		}
 		
 		internal static CallResult<UserFavoriteItemsListChanged_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<UserFavoriteItemsListChanged_t, bool> CallbackFunction )
@@ -21920,10 +21931,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct SetUserItemVoteResult_t
+	public struct SetUserItemVoteResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 8;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal Result Result; // m_eResult enum EResult
 		[MarshalAs(UnmanagedType.I1)]
@@ -21932,41 +21948,37 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static SetUserItemVoteResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (SetUserItemVoteResult_t) Marshal.PtrToStructure( p, typeof(SetUserItemVoteResult_t) );
-		}
+		internal static SetUserItemVoteResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((SetUserItemVoteResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((SetUserItemVoteResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SetUserItemVoteResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal Result Result; // m_eResult enum EResult
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool VoteUp; // m_bVoteUp _Bool
 			
-			//
-			// Easily convert from PackSmall to SetUserItemVoteResult_t
-			//
-			public static implicit operator SetUserItemVoteResult_t (  SetUserItemVoteResult_t.PackSmall d )
-			{
-				return new SetUserItemVoteResult_t()
-				{
-					PublishedFileId = d.PublishedFileId,
-					Result = d.Result,
-					VoteUp = d.VoteUp,
-				};
-			}
+			public static implicit operator SetUserItemVoteResult_t ( SetUserItemVoteResult_t.Pack4 d ) => new SetUserItemVoteResult_t{ PublishedFileId = d.PublishedFileId,Result = d.Result,VoteUp = d.VoteUp, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal Result Result; // m_eResult enum EResult
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool VoteUp; // m_bVoteUp _Bool
+			
+			public static implicit operator SetUserItemVoteResult_t ( SetUserItemVoteResult_t.Pack8 d ) => new SetUserItemVoteResult_t{ PublishedFileId = d.PublishedFileId,Result = d.Result,VoteUp = d.VoteUp, };
 		}
 		
 		internal static CallResult<SetUserItemVoteResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<SetUserItemVoteResult_t, bool> CallbackFunction )
@@ -22101,10 +22113,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct GetUserItemVoteResult_t
+	public struct GetUserItemVoteResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 9;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal Result Result; // m_eResult enum EResult
 		[MarshalAs(UnmanagedType.I1)]
@@ -22117,23 +22134,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GetUserItemVoteResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GetUserItemVoteResult_t) Marshal.PtrToStructure( p, typeof(GetUserItemVoteResult_t) );
-		}
+		internal static GetUserItemVoteResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GetUserItemVoteResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GetUserItemVoteResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GetUserItemVoteResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal Result Result; // m_eResult enum EResult
@@ -22144,20 +22157,22 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool VoteSkipped; // m_bVoteSkipped _Bool
 			
-			//
-			// Easily convert from PackSmall to GetUserItemVoteResult_t
-			//
-			public static implicit operator GetUserItemVoteResult_t (  GetUserItemVoteResult_t.PackSmall d )
-			{
-				return new GetUserItemVoteResult_t()
-				{
-					PublishedFileId = d.PublishedFileId,
-					Result = d.Result,
-					VotedUp = d.VotedUp,
-					VotedDown = d.VotedDown,
-					VoteSkipped = d.VoteSkipped,
-				};
-			}
+			public static implicit operator GetUserItemVoteResult_t ( GetUserItemVoteResult_t.Pack4 d ) => new GetUserItemVoteResult_t{ PublishedFileId = d.PublishedFileId,Result = d.Result,VotedUp = d.VotedUp,VotedDown = d.VotedDown,VoteSkipped = d.VoteSkipped, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal Result Result; // m_eResult enum EResult
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool VotedUp; // m_bVotedUp _Bool
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool VotedDown; // m_bVotedDown _Bool
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool VoteSkipped; // m_bVoteSkipped _Bool
+			
+			public static implicit operator GetUserItemVoteResult_t ( GetUserItemVoteResult_t.Pack8 d ) => new GetUserItemVoteResult_t{ PublishedFileId = d.PublishedFileId,Result = d.Result,VotedUp = d.VotedUp,VotedDown = d.VotedDown,VoteSkipped = d.VoteSkipped, };
 		}
 		
 		internal static CallResult<GetUserItemVoteResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<GetUserItemVoteResult_t, bool> CallbackFunction )
@@ -22292,45 +22307,45 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct StartPlaytimeTrackingResult_t
+	public struct StartPlaytimeTrackingResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 10;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static StartPlaytimeTrackingResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (StartPlaytimeTrackingResult_t) Marshal.PtrToStructure( p, typeof(StartPlaytimeTrackingResult_t) );
-		}
+		internal static StartPlaytimeTrackingResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((StartPlaytimeTrackingResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((StartPlaytimeTrackingResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(StartPlaytimeTrackingResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			
-			//
-			// Easily convert from PackSmall to StartPlaytimeTrackingResult_t
-			//
-			public static implicit operator StartPlaytimeTrackingResult_t (  StartPlaytimeTrackingResult_t.PackSmall d )
-			{
-				return new StartPlaytimeTrackingResult_t()
-				{
-					Result = d.Result,
-				};
-			}
+			public static implicit operator StartPlaytimeTrackingResult_t ( StartPlaytimeTrackingResult_t.Pack4 d ) => new StartPlaytimeTrackingResult_t{ Result = d.Result, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			
+			public static implicit operator StartPlaytimeTrackingResult_t ( StartPlaytimeTrackingResult_t.Pack8 d ) => new StartPlaytimeTrackingResult_t{ Result = d.Result, };
 		}
 		
 		internal static CallResult<StartPlaytimeTrackingResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<StartPlaytimeTrackingResult_t, bool> CallbackFunction )
@@ -22465,45 +22480,45 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct StopPlaytimeTrackingResult_t
+	public struct StopPlaytimeTrackingResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 11;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static StopPlaytimeTrackingResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (StopPlaytimeTrackingResult_t) Marshal.PtrToStructure( p, typeof(StopPlaytimeTrackingResult_t) );
-		}
+		internal static StopPlaytimeTrackingResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((StopPlaytimeTrackingResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((StopPlaytimeTrackingResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(StopPlaytimeTrackingResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			
-			//
-			// Easily convert from PackSmall to StopPlaytimeTrackingResult_t
-			//
-			public static implicit operator StopPlaytimeTrackingResult_t (  StopPlaytimeTrackingResult_t.PackSmall d )
-			{
-				return new StopPlaytimeTrackingResult_t()
-				{
-					Result = d.Result,
-				};
-			}
+			public static implicit operator StopPlaytimeTrackingResult_t ( StopPlaytimeTrackingResult_t.Pack4 d ) => new StopPlaytimeTrackingResult_t{ Result = d.Result, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			
+			public static implicit operator StopPlaytimeTrackingResult_t ( StopPlaytimeTrackingResult_t.Pack8 d ) => new StopPlaytimeTrackingResult_t{ Result = d.Result, };
 		}
 		
 		internal static CallResult<StopPlaytimeTrackingResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<StopPlaytimeTrackingResult_t, bool> CallbackFunction )
@@ -22638,10 +22653,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct AddUGCDependencyResult_t
+	public struct AddUGCDependencyResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 12;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal ulong ChildPublishedFileId; // m_nChildPublishedFileId PublishedFileId_t
@@ -22649,40 +22669,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static AddUGCDependencyResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (AddUGCDependencyResult_t) Marshal.PtrToStructure( p, typeof(AddUGCDependencyResult_t) );
-		}
+		internal static AddUGCDependencyResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((AddUGCDependencyResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((AddUGCDependencyResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(AddUGCDependencyResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal ulong ChildPublishedFileId; // m_nChildPublishedFileId PublishedFileId_t
 			
-			//
-			// Easily convert from PackSmall to AddUGCDependencyResult_t
-			//
-			public static implicit operator AddUGCDependencyResult_t (  AddUGCDependencyResult_t.PackSmall d )
-			{
-				return new AddUGCDependencyResult_t()
-				{
-					Result = d.Result,
-					PublishedFileId = d.PublishedFileId,
-					ChildPublishedFileId = d.ChildPublishedFileId,
-				};
-			}
+			public static implicit operator AddUGCDependencyResult_t ( AddUGCDependencyResult_t.Pack4 d ) => new AddUGCDependencyResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,ChildPublishedFileId = d.ChildPublishedFileId, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal ulong ChildPublishedFileId; // m_nChildPublishedFileId PublishedFileId_t
+			
+			public static implicit operator AddUGCDependencyResult_t ( AddUGCDependencyResult_t.Pack8 d ) => new AddUGCDependencyResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,ChildPublishedFileId = d.ChildPublishedFileId, };
 		}
 		
 		internal static CallResult<AddUGCDependencyResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<AddUGCDependencyResult_t, bool> CallbackFunction )
@@ -22817,10 +22832,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoveUGCDependencyResult_t
+	public struct RemoveUGCDependencyResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 13;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal ulong ChildPublishedFileId; // m_nChildPublishedFileId PublishedFileId_t
@@ -22828,40 +22848,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoveUGCDependencyResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoveUGCDependencyResult_t) Marshal.PtrToStructure( p, typeof(RemoveUGCDependencyResult_t) );
-		}
+		internal static RemoveUGCDependencyResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoveUGCDependencyResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoveUGCDependencyResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoveUGCDependencyResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal ulong ChildPublishedFileId; // m_nChildPublishedFileId PublishedFileId_t
 			
-			//
-			// Easily convert from PackSmall to RemoveUGCDependencyResult_t
-			//
-			public static implicit operator RemoveUGCDependencyResult_t (  RemoveUGCDependencyResult_t.PackSmall d )
-			{
-				return new RemoveUGCDependencyResult_t()
-				{
-					Result = d.Result,
-					PublishedFileId = d.PublishedFileId,
-					ChildPublishedFileId = d.ChildPublishedFileId,
-				};
-			}
+			public static implicit operator RemoveUGCDependencyResult_t ( RemoveUGCDependencyResult_t.Pack4 d ) => new RemoveUGCDependencyResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,ChildPublishedFileId = d.ChildPublishedFileId, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal ulong ChildPublishedFileId; // m_nChildPublishedFileId PublishedFileId_t
+			
+			public static implicit operator RemoveUGCDependencyResult_t ( RemoveUGCDependencyResult_t.Pack8 d ) => new RemoveUGCDependencyResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,ChildPublishedFileId = d.ChildPublishedFileId, };
 		}
 		
 		internal static CallResult<RemoveUGCDependencyResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoveUGCDependencyResult_t, bool> CallbackFunction )
@@ -22996,10 +23011,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct AddAppDependencyResult_t
+	public struct AddAppDependencyResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 14;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal uint AppID; // m_nAppID AppId_t
@@ -23007,40 +23027,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static AddAppDependencyResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (AddAppDependencyResult_t) Marshal.PtrToStructure( p, typeof(AddAppDependencyResult_t) );
-		}
+		internal static AddAppDependencyResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((AddAppDependencyResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((AddAppDependencyResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(AddAppDependencyResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal uint AppID; // m_nAppID AppId_t
 			
-			//
-			// Easily convert from PackSmall to AddAppDependencyResult_t
-			//
-			public static implicit operator AddAppDependencyResult_t (  AddAppDependencyResult_t.PackSmall d )
-			{
-				return new AddAppDependencyResult_t()
-				{
-					Result = d.Result,
-					PublishedFileId = d.PublishedFileId,
-					AppID = d.AppID,
-				};
-			}
+			public static implicit operator AddAppDependencyResult_t ( AddAppDependencyResult_t.Pack4 d ) => new AddAppDependencyResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal uint AppID; // m_nAppID AppId_t
+			
+			public static implicit operator AddAppDependencyResult_t ( AddAppDependencyResult_t.Pack8 d ) => new AddAppDependencyResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
 		}
 		
 		internal static CallResult<AddAppDependencyResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<AddAppDependencyResult_t, bool> CallbackFunction )
@@ -23175,10 +23190,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct RemoveAppDependencyResult_t
+	public struct RemoveAppDependencyResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 15;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal uint AppID; // m_nAppID AppId_t
@@ -23186,40 +23206,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static RemoveAppDependencyResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (RemoveAppDependencyResult_t) Marshal.PtrToStructure( p, typeof(RemoveAppDependencyResult_t) );
-		}
+		internal static RemoveAppDependencyResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((RemoveAppDependencyResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((RemoveAppDependencyResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoveAppDependencyResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal uint AppID; // m_nAppID AppId_t
 			
-			//
-			// Easily convert from PackSmall to RemoveAppDependencyResult_t
-			//
-			public static implicit operator RemoveAppDependencyResult_t (  RemoveAppDependencyResult_t.PackSmall d )
-			{
-				return new RemoveAppDependencyResult_t()
-				{
-					Result = d.Result,
-					PublishedFileId = d.PublishedFileId,
-					AppID = d.AppID,
-				};
-			}
+			public static implicit operator RemoveAppDependencyResult_t ( RemoveAppDependencyResult_t.Pack4 d ) => new RemoveAppDependencyResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal uint AppID; // m_nAppID AppId_t
+			
+			public static implicit operator RemoveAppDependencyResult_t ( RemoveAppDependencyResult_t.Pack8 d ) => new RemoveAppDependencyResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
 		}
 		
 		internal static CallResult<RemoveAppDependencyResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<RemoveAppDependencyResult_t, bool> CallbackFunction )
@@ -23354,10 +23369,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct GetAppDependenciesResult_t
+	public struct GetAppDependenciesResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 16;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 32, ArraySubType = UnmanagedType.U4)]
@@ -23368,23 +23388,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GetAppDependenciesResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GetAppDependenciesResult_t) Marshal.PtrToStructure( p, typeof(GetAppDependenciesResult_t) );
-		}
+		internal static GetAppDependenciesResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GetAppDependenciesResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GetAppDependenciesResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GetAppDependenciesResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -23393,20 +23409,20 @@ namespace SteamNative
 			internal uint NumAppDependencies; // m_nNumAppDependencies uint32
 			internal uint TotalNumAppDependencies; // m_nTotalNumAppDependencies uint32
 			
-			//
-			// Easily convert from PackSmall to GetAppDependenciesResult_t
-			//
-			public static implicit operator GetAppDependenciesResult_t (  GetAppDependenciesResult_t.PackSmall d )
-			{
-				return new GetAppDependenciesResult_t()
-				{
-					Result = d.Result,
-					PublishedFileId = d.PublishedFileId,
-					GAppIDs = d.GAppIDs,
-					NumAppDependencies = d.NumAppDependencies,
-					TotalNumAppDependencies = d.TotalNumAppDependencies,
-				};
-			}
+			public static implicit operator GetAppDependenciesResult_t ( GetAppDependenciesResult_t.Pack4 d ) => new GetAppDependenciesResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,GAppIDs = d.GAppIDs,NumAppDependencies = d.NumAppDependencies,TotalNumAppDependencies = d.TotalNumAppDependencies, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 32, ArraySubType = UnmanagedType.U4)]
+			internal AppId_t[] GAppIDs; // m_rgAppIDs AppId_t [32]
+			internal uint NumAppDependencies; // m_nNumAppDependencies uint32
+			internal uint TotalNumAppDependencies; // m_nTotalNumAppDependencies uint32
+			
+			public static implicit operator GetAppDependenciesResult_t ( GetAppDependenciesResult_t.Pack8 d ) => new GetAppDependenciesResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,GAppIDs = d.GAppIDs,NumAppDependencies = d.NumAppDependencies,TotalNumAppDependencies = d.TotalNumAppDependencies, };
 		}
 		
 		internal static CallResult<GetAppDependenciesResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<GetAppDependenciesResult_t, bool> CallbackFunction )
@@ -23541,48 +23557,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct DeleteItemResult_t
+	public struct DeleteItemResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 17;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static DeleteItemResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (DeleteItemResult_t) Marshal.PtrToStructure( p, typeof(DeleteItemResult_t) );
-		}
+		internal static DeleteItemResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((DeleteItemResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((DeleteItemResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(DeleteItemResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
-			//
-			// Easily convert from PackSmall to DeleteItemResult_t
-			//
-			public static implicit operator DeleteItemResult_t (  DeleteItemResult_t.PackSmall d )
-			{
-				return new DeleteItemResult_t()
-				{
-					Result = d.Result,
-					PublishedFileId = d.PublishedFileId,
-				};
-			}
+			public static implicit operator DeleteItemResult_t ( DeleteItemResult_t.Pack4 d ) => new DeleteItemResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			
+			public static implicit operator DeleteItemResult_t ( DeleteItemResult_t.Pack8 d ) => new DeleteItemResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
 		}
 		
 		internal static CallResult<DeleteItemResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<DeleteItemResult_t, bool> CallbackFunction )
@@ -23717,45 +23733,45 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct SteamAppInstalled_t
+	public struct SteamAppInstalled_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamAppList + 1;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint AppID; // m_nAppID AppId_t
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static SteamAppInstalled_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (SteamAppInstalled_t) Marshal.PtrToStructure( p, typeof(SteamAppInstalled_t) );
-		}
+		internal static SteamAppInstalled_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((SteamAppInstalled_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((SteamAppInstalled_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamAppInstalled_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint AppID; // m_nAppID AppId_t
 			
-			//
-			// Easily convert from PackSmall to SteamAppInstalled_t
-			//
-			public static implicit operator SteamAppInstalled_t (  SteamAppInstalled_t.PackSmall d )
-			{
-				return new SteamAppInstalled_t()
-				{
-					AppID = d.AppID,
-				};
-			}
+			public static implicit operator SteamAppInstalled_t ( SteamAppInstalled_t.Pack4 d ) => new SteamAppInstalled_t{ AppID = d.AppID, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint AppID; // m_nAppID AppId_t
+			
+			public static implicit operator SteamAppInstalled_t ( SteamAppInstalled_t.Pack8 d ) => new SteamAppInstalled_t{ AppID = d.AppID, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -23885,45 +23901,45 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct SteamAppUninstalled_t
+	public struct SteamAppUninstalled_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamAppList + 2;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint AppID; // m_nAppID AppId_t
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static SteamAppUninstalled_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (SteamAppUninstalled_t) Marshal.PtrToStructure( p, typeof(SteamAppUninstalled_t) );
-		}
+		internal static SteamAppUninstalled_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((SteamAppUninstalled_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((SteamAppUninstalled_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamAppUninstalled_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint AppID; // m_nAppID AppId_t
 			
-			//
-			// Easily convert from PackSmall to SteamAppUninstalled_t
-			//
-			public static implicit operator SteamAppUninstalled_t (  SteamAppUninstalled_t.PackSmall d )
-			{
-				return new SteamAppUninstalled_t()
-				{
-					AppID = d.AppID,
-				};
-			}
+			public static implicit operator SteamAppUninstalled_t ( SteamAppUninstalled_t.Pack4 d ) => new SteamAppUninstalled_t{ AppID = d.AppID, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint AppID; // m_nAppID AppId_t
+			
+			public static implicit operator SteamAppUninstalled_t ( SteamAppUninstalled_t.Pack8 d ) => new SteamAppUninstalled_t{ AppID = d.AppID, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -24053,45 +24069,45 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct HTML_BrowserReady_t
+	public struct HTML_BrowserReady_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 1;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static HTML_BrowserReady_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (HTML_BrowserReady_t) Marshal.PtrToStructure( p, typeof(HTML_BrowserReady_t) );
-		}
+		internal static HTML_BrowserReady_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((HTML_BrowserReady_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((HTML_BrowserReady_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_BrowserReady_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			
-			//
-			// Easily convert from PackSmall to HTML_BrowserReady_t
-			//
-			public static implicit operator HTML_BrowserReady_t (  HTML_BrowserReady_t.PackSmall d )
-			{
-				return new HTML_BrowserReady_t()
-				{
-					UnBrowserHandle = d.UnBrowserHandle,
-				};
-			}
+			public static implicit operator HTML_BrowserReady_t ( HTML_BrowserReady_t.Pack4 d ) => new HTML_BrowserReady_t{ UnBrowserHandle = d.UnBrowserHandle, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
+			
+			public static implicit operator HTML_BrowserReady_t ( HTML_BrowserReady_t.Pack8 d ) => new HTML_BrowserReady_t{ UnBrowserHandle = d.UnBrowserHandle, };
 		}
 		
 		internal static CallResult<HTML_BrowserReady_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<HTML_BrowserReady_t, bool> CallbackFunction )
@@ -24226,7 +24242,6 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct HTML_NeedsPaint_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -24245,23 +24260,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static HTML_NeedsPaint_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (HTML_NeedsPaint_t) Marshal.PtrToStructure( p, typeof(HTML_NeedsPaint_t) );
-		}
+		internal static HTML_NeedsPaint_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((HTML_NeedsPaint_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((HTML_NeedsPaint_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_NeedsPaint_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal string PBGRA; // pBGRA const char *
@@ -24276,31 +24287,29 @@ namespace SteamNative
 			internal float FlPageScale; // flPageScale float
 			internal uint UnPageSerial; // unPageSerial uint32
 			
-			//
-			// Easily convert from PackSmall to HTML_NeedsPaint_t
-			//
-			public static implicit operator HTML_NeedsPaint_t (  HTML_NeedsPaint_t.PackSmall d )
-			{
-				return new HTML_NeedsPaint_t()
-				{
-					UnBrowserHandle = d.UnBrowserHandle,
-					PBGRA = d.PBGRA,
-					UnWide = d.UnWide,
-					UnTall = d.UnTall,
-					UnUpdateX = d.UnUpdateX,
-					UnUpdateY = d.UnUpdateY,
-					UnUpdateWide = d.UnUpdateWide,
-					UnUpdateTall = d.UnUpdateTall,
-					UnScrollX = d.UnScrollX,
-					UnScrollY = d.UnScrollY,
-					FlPageScale = d.FlPageScale,
-					UnPageSerial = d.UnPageSerial,
-				};
-			}
+			public static implicit operator HTML_NeedsPaint_t ( HTML_NeedsPaint_t.Pack4 d ) => new HTML_NeedsPaint_t{ UnBrowserHandle = d.UnBrowserHandle,PBGRA = d.PBGRA,UnWide = d.UnWide,UnTall = d.UnTall,UnUpdateX = d.UnUpdateX,UnUpdateY = d.UnUpdateY,UnUpdateWide = d.UnUpdateWide,UnUpdateTall = d.UnUpdateTall,UnScrollX = d.UnScrollX,UnScrollY = d.UnScrollY,FlPageScale = d.FlPageScale,UnPageSerial = d.UnPageSerial, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
+			internal string PBGRA; // pBGRA const char *
+			internal uint UnWide; // unWide uint32
+			internal uint UnTall; // unTall uint32
+			internal uint UnUpdateX; // unUpdateX uint32
+			internal uint UnUpdateY; // unUpdateY uint32
+			internal uint UnUpdateWide; // unUpdateWide uint32
+			internal uint UnUpdateTall; // unUpdateTall uint32
+			internal uint UnScrollX; // unScrollX uint32
+			internal uint UnScrollY; // unScrollY uint32
+			internal float FlPageScale; // flPageScale float
+			internal uint UnPageSerial; // unPageSerial uint32
+			
+			public static implicit operator HTML_NeedsPaint_t ( HTML_NeedsPaint_t.Pack8 d ) => new HTML_NeedsPaint_t{ UnBrowserHandle = d.UnBrowserHandle,PBGRA = d.PBGRA,UnWide = d.UnWide,UnTall = d.UnTall,UnUpdateX = d.UnUpdateX,UnUpdateY = d.UnUpdateY,UnUpdateWide = d.UnUpdateWide,UnUpdateTall = d.UnUpdateTall,UnScrollX = d.UnScrollX,UnScrollY = d.UnScrollY,FlPageScale = d.FlPageScale,UnPageSerial = d.UnPageSerial, };
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct HTML_StartRequest_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -24313,23 +24322,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static HTML_StartRequest_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (HTML_StartRequest_t) Marshal.PtrToStructure( p, typeof(HTML_StartRequest_t) );
-		}
+		internal static HTML_StartRequest_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((HTML_StartRequest_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((HTML_StartRequest_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_StartRequest_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal string PchURL; // pchURL const char *
@@ -24338,24 +24343,23 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool BIsRedirect; // bIsRedirect _Bool
 			
-			//
-			// Easily convert from PackSmall to HTML_StartRequest_t
-			//
-			public static implicit operator HTML_StartRequest_t (  HTML_StartRequest_t.PackSmall d )
-			{
-				return new HTML_StartRequest_t()
-				{
-					UnBrowserHandle = d.UnBrowserHandle,
-					PchURL = d.PchURL,
-					PchTarget = d.PchTarget,
-					PchPostData = d.PchPostData,
-					BIsRedirect = d.BIsRedirect,
-				};
-			}
+			public static implicit operator HTML_StartRequest_t ( HTML_StartRequest_t.Pack4 d ) => new HTML_StartRequest_t{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL,PchTarget = d.PchTarget,PchPostData = d.PchPostData,BIsRedirect = d.BIsRedirect, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
+			internal string PchURL; // pchURL const char *
+			internal string PchTarget; // pchTarget const char *
+			internal string PchPostData; // pchPostData const char *
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool BIsRedirect; // bIsRedirect _Bool
+			
+			public static implicit operator HTML_StartRequest_t ( HTML_StartRequest_t.Pack8 d ) => new HTML_StartRequest_t{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL,PchTarget = d.PchTarget,PchPostData = d.PchPostData,BIsRedirect = d.BIsRedirect, };
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct HTML_CloseBrowser_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -24363,43 +24367,43 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static HTML_CloseBrowser_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (HTML_CloseBrowser_t) Marshal.PtrToStructure( p, typeof(HTML_CloseBrowser_t) );
-		}
+		internal static HTML_CloseBrowser_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((HTML_CloseBrowser_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((HTML_CloseBrowser_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_CloseBrowser_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			
-			//
-			// Easily convert from PackSmall to HTML_CloseBrowser_t
-			//
-			public static implicit operator HTML_CloseBrowser_t (  HTML_CloseBrowser_t.PackSmall d )
-			{
-				return new HTML_CloseBrowser_t()
-				{
-					UnBrowserHandle = d.UnBrowserHandle,
-				};
-			}
+			public static implicit operator HTML_CloseBrowser_t ( HTML_CloseBrowser_t.Pack4 d ) => new HTML_CloseBrowser_t{ UnBrowserHandle = d.UnBrowserHandle, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
+			
+			public static implicit operator HTML_CloseBrowser_t ( HTML_CloseBrowser_t.Pack8 d ) => new HTML_CloseBrowser_t{ UnBrowserHandle = d.UnBrowserHandle, };
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct HTML_URLChanged_t
+	public struct HTML_URLChanged_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 5;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchURL; // pchURL const char *
 		internal string PchPostData; // pchPostData const char *
@@ -24412,23 +24416,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static HTML_URLChanged_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (HTML_URLChanged_t) Marshal.PtrToStructure( p, typeof(HTML_URLChanged_t) );
-		}
+		internal static HTML_URLChanged_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((HTML_URLChanged_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((HTML_URLChanged_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_URLChanged_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal string PchURL; // pchURL const char *
@@ -24439,21 +24439,22 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool BNewNavigation; // bNewNavigation _Bool
 			
-			//
-			// Easily convert from PackSmall to HTML_URLChanged_t
-			//
-			public static implicit operator HTML_URLChanged_t (  HTML_URLChanged_t.PackSmall d )
-			{
-				return new HTML_URLChanged_t()
-				{
-					UnBrowserHandle = d.UnBrowserHandle,
-					PchURL = d.PchURL,
-					PchPostData = d.PchPostData,
-					BIsRedirect = d.BIsRedirect,
-					PchPageTitle = d.PchPageTitle,
-					BNewNavigation = d.BNewNavigation,
-				};
-			}
+			public static implicit operator HTML_URLChanged_t ( HTML_URLChanged_t.Pack4 d ) => new HTML_URLChanged_t{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL,PchPostData = d.PchPostData,BIsRedirect = d.BIsRedirect,PchPageTitle = d.PchPageTitle,BNewNavigation = d.BNewNavigation, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
+			internal string PchURL; // pchURL const char *
+			internal string PchPostData; // pchPostData const char *
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool BIsRedirect; // bIsRedirect _Bool
+			internal string PchPageTitle; // pchPageTitle const char *
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool BNewNavigation; // bNewNavigation _Bool
+			
+			public static implicit operator HTML_URLChanged_t ( HTML_URLChanged_t.Pack8 d ) => new HTML_URLChanged_t{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL,PchPostData = d.PchPostData,BIsRedirect = d.BIsRedirect,PchPageTitle = d.PchPageTitle,BNewNavigation = d.BNewNavigation, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -24583,10 +24584,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct HTML_FinishedRequest_t
+	public struct HTML_FinishedRequest_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 6;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchURL; // pchURL const char *
 		internal string PchPageTitle; // pchPageTitle const char *
@@ -24594,40 +24600,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static HTML_FinishedRequest_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (HTML_FinishedRequest_t) Marshal.PtrToStructure( p, typeof(HTML_FinishedRequest_t) );
-		}
+		internal static HTML_FinishedRequest_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((HTML_FinishedRequest_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((HTML_FinishedRequest_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_FinishedRequest_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal string PchURL; // pchURL const char *
 			internal string PchPageTitle; // pchPageTitle const char *
 			
-			//
-			// Easily convert from PackSmall to HTML_FinishedRequest_t
-			//
-			public static implicit operator HTML_FinishedRequest_t (  HTML_FinishedRequest_t.PackSmall d )
-			{
-				return new HTML_FinishedRequest_t()
-				{
-					UnBrowserHandle = d.UnBrowserHandle,
-					PchURL = d.PchURL,
-					PchPageTitle = d.PchPageTitle,
-				};
-			}
+			public static implicit operator HTML_FinishedRequest_t ( HTML_FinishedRequest_t.Pack4 d ) => new HTML_FinishedRequest_t{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL,PchPageTitle = d.PchPageTitle, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
+			internal string PchURL; // pchURL const char *
+			internal string PchPageTitle; // pchPageTitle const char *
+			
+			public static implicit operator HTML_FinishedRequest_t ( HTML_FinishedRequest_t.Pack8 d ) => new HTML_FinishedRequest_t{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL,PchPageTitle = d.PchPageTitle, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -24757,48 +24758,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct HTML_OpenLinkInNewTab_t
+	public struct HTML_OpenLinkInNewTab_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 7;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchURL; // pchURL const char *
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static HTML_OpenLinkInNewTab_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (HTML_OpenLinkInNewTab_t) Marshal.PtrToStructure( p, typeof(HTML_OpenLinkInNewTab_t) );
-		}
+		internal static HTML_OpenLinkInNewTab_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((HTML_OpenLinkInNewTab_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((HTML_OpenLinkInNewTab_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_OpenLinkInNewTab_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal string PchURL; // pchURL const char *
 			
-			//
-			// Easily convert from PackSmall to HTML_OpenLinkInNewTab_t
-			//
-			public static implicit operator HTML_OpenLinkInNewTab_t (  HTML_OpenLinkInNewTab_t.PackSmall d )
-			{
-				return new HTML_OpenLinkInNewTab_t()
-				{
-					UnBrowserHandle = d.UnBrowserHandle,
-					PchURL = d.PchURL,
-				};
-			}
+			public static implicit operator HTML_OpenLinkInNewTab_t ( HTML_OpenLinkInNewTab_t.Pack4 d ) => new HTML_OpenLinkInNewTab_t{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
+			internal string PchURL; // pchURL const char *
+			
+			public static implicit operator HTML_OpenLinkInNewTab_t ( HTML_OpenLinkInNewTab_t.Pack8 d ) => new HTML_OpenLinkInNewTab_t{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -24928,48 +24929,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct HTML_ChangedTitle_t
+	public struct HTML_ChangedTitle_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 8;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchTitle; // pchTitle const char *
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static HTML_ChangedTitle_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (HTML_ChangedTitle_t) Marshal.PtrToStructure( p, typeof(HTML_ChangedTitle_t) );
-		}
+		internal static HTML_ChangedTitle_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((HTML_ChangedTitle_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((HTML_ChangedTitle_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_ChangedTitle_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal string PchTitle; // pchTitle const char *
 			
-			//
-			// Easily convert from PackSmall to HTML_ChangedTitle_t
-			//
-			public static implicit operator HTML_ChangedTitle_t (  HTML_ChangedTitle_t.PackSmall d )
-			{
-				return new HTML_ChangedTitle_t()
-				{
-					UnBrowserHandle = d.UnBrowserHandle,
-					PchTitle = d.PchTitle,
-				};
-			}
+			public static implicit operator HTML_ChangedTitle_t ( HTML_ChangedTitle_t.Pack4 d ) => new HTML_ChangedTitle_t{ UnBrowserHandle = d.UnBrowserHandle,PchTitle = d.PchTitle, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
+			internal string PchTitle; // pchTitle const char *
+			
+			public static implicit operator HTML_ChangedTitle_t ( HTML_ChangedTitle_t.Pack8 d ) => new HTML_ChangedTitle_t{ UnBrowserHandle = d.UnBrowserHandle,PchTitle = d.PchTitle, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -25099,10 +25100,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct HTML_SearchResults_t
+	public struct HTML_SearchResults_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 9;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal uint UnResults; // unResults uint32
 		internal uint UnCurrentMatch; // unCurrentMatch uint32
@@ -25110,40 +25116,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static HTML_SearchResults_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (HTML_SearchResults_t) Marshal.PtrToStructure( p, typeof(HTML_SearchResults_t) );
-		}
+		internal static HTML_SearchResults_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((HTML_SearchResults_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((HTML_SearchResults_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_SearchResults_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal uint UnResults; // unResults uint32
 			internal uint UnCurrentMatch; // unCurrentMatch uint32
 			
-			//
-			// Easily convert from PackSmall to HTML_SearchResults_t
-			//
-			public static implicit operator HTML_SearchResults_t (  HTML_SearchResults_t.PackSmall d )
-			{
-				return new HTML_SearchResults_t()
-				{
-					UnBrowserHandle = d.UnBrowserHandle,
-					UnResults = d.UnResults,
-					UnCurrentMatch = d.UnCurrentMatch,
-				};
-			}
+			public static implicit operator HTML_SearchResults_t ( HTML_SearchResults_t.Pack4 d ) => new HTML_SearchResults_t{ UnBrowserHandle = d.UnBrowserHandle,UnResults = d.UnResults,UnCurrentMatch = d.UnCurrentMatch, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
+			internal uint UnResults; // unResults uint32
+			internal uint UnCurrentMatch; // unCurrentMatch uint32
+			
+			public static implicit operator HTML_SearchResults_t ( HTML_SearchResults_t.Pack8 d ) => new HTML_SearchResults_t{ UnBrowserHandle = d.UnBrowserHandle,UnResults = d.UnResults,UnCurrentMatch = d.UnCurrentMatch, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -25273,10 +25274,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct HTML_CanGoBackAndForward_t
+	public struct HTML_CanGoBackAndForward_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 10;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool BCanGoBack; // bCanGoBack _Bool
@@ -25286,23 +25292,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static HTML_CanGoBackAndForward_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (HTML_CanGoBackAndForward_t) Marshal.PtrToStructure( p, typeof(HTML_CanGoBackAndForward_t) );
-		}
+		internal static HTML_CanGoBackAndForward_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((HTML_CanGoBackAndForward_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((HTML_CanGoBackAndForward_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_CanGoBackAndForward_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			[MarshalAs(UnmanagedType.I1)]
@@ -25310,18 +25312,19 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool BCanGoForward; // bCanGoForward _Bool
 			
-			//
-			// Easily convert from PackSmall to HTML_CanGoBackAndForward_t
-			//
-			public static implicit operator HTML_CanGoBackAndForward_t (  HTML_CanGoBackAndForward_t.PackSmall d )
-			{
-				return new HTML_CanGoBackAndForward_t()
-				{
-					UnBrowserHandle = d.UnBrowserHandle,
-					BCanGoBack = d.BCanGoBack,
-					BCanGoForward = d.BCanGoForward,
-				};
-			}
+			public static implicit operator HTML_CanGoBackAndForward_t ( HTML_CanGoBackAndForward_t.Pack4 d ) => new HTML_CanGoBackAndForward_t{ UnBrowserHandle = d.UnBrowserHandle,BCanGoBack = d.BCanGoBack,BCanGoForward = d.BCanGoForward, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool BCanGoBack; // bCanGoBack _Bool
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool BCanGoForward; // bCanGoForward _Bool
+			
+			public static implicit operator HTML_CanGoBackAndForward_t ( HTML_CanGoBackAndForward_t.Pack8 d ) => new HTML_CanGoBackAndForward_t{ UnBrowserHandle = d.UnBrowserHandle,BCanGoBack = d.BCanGoBack,BCanGoForward = d.BCanGoForward, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -25451,10 +25454,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct HTML_HorizontalScroll_t
+	public struct HTML_HorizontalScroll_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 11;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal uint UnScrollMax; // unScrollMax uint32
 		internal uint UnScrollCurrent; // unScrollCurrent uint32
@@ -25466,23 +25474,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static HTML_HorizontalScroll_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (HTML_HorizontalScroll_t) Marshal.PtrToStructure( p, typeof(HTML_HorizontalScroll_t) );
-		}
+		internal static HTML_HorizontalScroll_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((HTML_HorizontalScroll_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((HTML_HorizontalScroll_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_HorizontalScroll_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal uint UnScrollMax; // unScrollMax uint32
@@ -25492,21 +25496,21 @@ namespace SteamNative
 			internal bool BVisible; // bVisible _Bool
 			internal uint UnPageSize; // unPageSize uint32
 			
-			//
-			// Easily convert from PackSmall to HTML_HorizontalScroll_t
-			//
-			public static implicit operator HTML_HorizontalScroll_t (  HTML_HorizontalScroll_t.PackSmall d )
-			{
-				return new HTML_HorizontalScroll_t()
-				{
-					UnBrowserHandle = d.UnBrowserHandle,
-					UnScrollMax = d.UnScrollMax,
-					UnScrollCurrent = d.UnScrollCurrent,
-					FlPageScale = d.FlPageScale,
-					BVisible = d.BVisible,
-					UnPageSize = d.UnPageSize,
-				};
-			}
+			public static implicit operator HTML_HorizontalScroll_t ( HTML_HorizontalScroll_t.Pack4 d ) => new HTML_HorizontalScroll_t{ UnBrowserHandle = d.UnBrowserHandle,UnScrollMax = d.UnScrollMax,UnScrollCurrent = d.UnScrollCurrent,FlPageScale = d.FlPageScale,BVisible = d.BVisible,UnPageSize = d.UnPageSize, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
+			internal uint UnScrollMax; // unScrollMax uint32
+			internal uint UnScrollCurrent; // unScrollCurrent uint32
+			internal float FlPageScale; // flPageScale float
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool BVisible; // bVisible _Bool
+			internal uint UnPageSize; // unPageSize uint32
+			
+			public static implicit operator HTML_HorizontalScroll_t ( HTML_HorizontalScroll_t.Pack8 d ) => new HTML_HorizontalScroll_t{ UnBrowserHandle = d.UnBrowserHandle,UnScrollMax = d.UnScrollMax,UnScrollCurrent = d.UnScrollCurrent,FlPageScale = d.FlPageScale,BVisible = d.BVisible,UnPageSize = d.UnPageSize, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -25636,10 +25640,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct HTML_VerticalScroll_t
+	public struct HTML_VerticalScroll_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 12;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal uint UnScrollMax; // unScrollMax uint32
 		internal uint UnScrollCurrent; // unScrollCurrent uint32
@@ -25651,23 +25660,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static HTML_VerticalScroll_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (HTML_VerticalScroll_t) Marshal.PtrToStructure( p, typeof(HTML_VerticalScroll_t) );
-		}
+		internal static HTML_VerticalScroll_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((HTML_VerticalScroll_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((HTML_VerticalScroll_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_VerticalScroll_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal uint UnScrollMax; // unScrollMax uint32
@@ -25677,21 +25682,21 @@ namespace SteamNative
 			internal bool BVisible; // bVisible _Bool
 			internal uint UnPageSize; // unPageSize uint32
 			
-			//
-			// Easily convert from PackSmall to HTML_VerticalScroll_t
-			//
-			public static implicit operator HTML_VerticalScroll_t (  HTML_VerticalScroll_t.PackSmall d )
-			{
-				return new HTML_VerticalScroll_t()
-				{
-					UnBrowserHandle = d.UnBrowserHandle,
-					UnScrollMax = d.UnScrollMax,
-					UnScrollCurrent = d.UnScrollCurrent,
-					FlPageScale = d.FlPageScale,
-					BVisible = d.BVisible,
-					UnPageSize = d.UnPageSize,
-				};
-			}
+			public static implicit operator HTML_VerticalScroll_t ( HTML_VerticalScroll_t.Pack4 d ) => new HTML_VerticalScroll_t{ UnBrowserHandle = d.UnBrowserHandle,UnScrollMax = d.UnScrollMax,UnScrollCurrent = d.UnScrollCurrent,FlPageScale = d.FlPageScale,BVisible = d.BVisible,UnPageSize = d.UnPageSize, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
+			internal uint UnScrollMax; // unScrollMax uint32
+			internal uint UnScrollCurrent; // unScrollCurrent uint32
+			internal float FlPageScale; // flPageScale float
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool BVisible; // bVisible _Bool
+			internal uint UnPageSize; // unPageSize uint32
+			
+			public static implicit operator HTML_VerticalScroll_t ( HTML_VerticalScroll_t.Pack8 d ) => new HTML_VerticalScroll_t{ UnBrowserHandle = d.UnBrowserHandle,UnScrollMax = d.UnScrollMax,UnScrollCurrent = d.UnScrollCurrent,FlPageScale = d.FlPageScale,BVisible = d.BVisible,UnPageSize = d.UnPageSize, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -25821,10 +25826,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct HTML_LinkAtPosition_t
+	public struct HTML_LinkAtPosition_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 13;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal uint X; // x uint32
 		internal uint Y; // y uint32
@@ -25837,23 +25847,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static HTML_LinkAtPosition_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (HTML_LinkAtPosition_t) Marshal.PtrToStructure( p, typeof(HTML_LinkAtPosition_t) );
-		}
+		internal static HTML_LinkAtPosition_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((HTML_LinkAtPosition_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((HTML_LinkAtPosition_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_LinkAtPosition_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal uint X; // x uint32
@@ -25864,21 +25870,22 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool BLiveLink; // bLiveLink _Bool
 			
-			//
-			// Easily convert from PackSmall to HTML_LinkAtPosition_t
-			//
-			public static implicit operator HTML_LinkAtPosition_t (  HTML_LinkAtPosition_t.PackSmall d )
-			{
-				return new HTML_LinkAtPosition_t()
-				{
-					UnBrowserHandle = d.UnBrowserHandle,
-					X = d.X,
-					Y = d.Y,
-					PchURL = d.PchURL,
-					BInput = d.BInput,
-					BLiveLink = d.BLiveLink,
-				};
-			}
+			public static implicit operator HTML_LinkAtPosition_t ( HTML_LinkAtPosition_t.Pack4 d ) => new HTML_LinkAtPosition_t{ UnBrowserHandle = d.UnBrowserHandle,X = d.X,Y = d.Y,PchURL = d.PchURL,BInput = d.BInput,BLiveLink = d.BLiveLink, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
+			internal uint X; // x uint32
+			internal uint Y; // y uint32
+			internal string PchURL; // pchURL const char *
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool BInput; // bInput _Bool
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool BLiveLink; // bLiveLink _Bool
+			
+			public static implicit operator HTML_LinkAtPosition_t ( HTML_LinkAtPosition_t.Pack8 d ) => new HTML_LinkAtPosition_t{ UnBrowserHandle = d.UnBrowserHandle,X = d.X,Y = d.Y,PchURL = d.PchURL,BInput = d.BInput,BLiveLink = d.BLiveLink, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -26008,48 +26015,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct HTML_JSAlert_t
+	public struct HTML_JSAlert_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 14;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchMessage; // pchMessage const char *
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static HTML_JSAlert_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (HTML_JSAlert_t) Marshal.PtrToStructure( p, typeof(HTML_JSAlert_t) );
-		}
+		internal static HTML_JSAlert_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((HTML_JSAlert_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((HTML_JSAlert_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_JSAlert_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal string PchMessage; // pchMessage const char *
 			
-			//
-			// Easily convert from PackSmall to HTML_JSAlert_t
-			//
-			public static implicit operator HTML_JSAlert_t (  HTML_JSAlert_t.PackSmall d )
-			{
-				return new HTML_JSAlert_t()
-				{
-					UnBrowserHandle = d.UnBrowserHandle,
-					PchMessage = d.PchMessage,
-				};
-			}
+			public static implicit operator HTML_JSAlert_t ( HTML_JSAlert_t.Pack4 d ) => new HTML_JSAlert_t{ UnBrowserHandle = d.UnBrowserHandle,PchMessage = d.PchMessage, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
+			internal string PchMessage; // pchMessage const char *
+			
+			public static implicit operator HTML_JSAlert_t ( HTML_JSAlert_t.Pack8 d ) => new HTML_JSAlert_t{ UnBrowserHandle = d.UnBrowserHandle,PchMessage = d.PchMessage, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -26179,48 +26186,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct HTML_JSConfirm_t
+	public struct HTML_JSConfirm_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 15;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchMessage; // pchMessage const char *
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static HTML_JSConfirm_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (HTML_JSConfirm_t) Marshal.PtrToStructure( p, typeof(HTML_JSConfirm_t) );
-		}
+		internal static HTML_JSConfirm_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((HTML_JSConfirm_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((HTML_JSConfirm_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_JSConfirm_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal string PchMessage; // pchMessage const char *
 			
-			//
-			// Easily convert from PackSmall to HTML_JSConfirm_t
-			//
-			public static implicit operator HTML_JSConfirm_t (  HTML_JSConfirm_t.PackSmall d )
-			{
-				return new HTML_JSConfirm_t()
-				{
-					UnBrowserHandle = d.UnBrowserHandle,
-					PchMessage = d.PchMessage,
-				};
-			}
+			public static implicit operator HTML_JSConfirm_t ( HTML_JSConfirm_t.Pack4 d ) => new HTML_JSConfirm_t{ UnBrowserHandle = d.UnBrowserHandle,PchMessage = d.PchMessage, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
+			internal string PchMessage; // pchMessage const char *
+			
+			public static implicit operator HTML_JSConfirm_t ( HTML_JSConfirm_t.Pack8 d ) => new HTML_JSConfirm_t{ UnBrowserHandle = d.UnBrowserHandle,PchMessage = d.PchMessage, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -26350,10 +26357,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct HTML_FileOpenDialog_t
+	public struct HTML_FileOpenDialog_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 16;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchTitle; // pchTitle const char *
 		internal string PchInitialFile; // pchInitialFile const char *
@@ -26361,40 +26373,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static HTML_FileOpenDialog_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (HTML_FileOpenDialog_t) Marshal.PtrToStructure( p, typeof(HTML_FileOpenDialog_t) );
-		}
+		internal static HTML_FileOpenDialog_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((HTML_FileOpenDialog_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((HTML_FileOpenDialog_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_FileOpenDialog_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal string PchTitle; // pchTitle const char *
 			internal string PchInitialFile; // pchInitialFile const char *
 			
-			//
-			// Easily convert from PackSmall to HTML_FileOpenDialog_t
-			//
-			public static implicit operator HTML_FileOpenDialog_t (  HTML_FileOpenDialog_t.PackSmall d )
-			{
-				return new HTML_FileOpenDialog_t()
-				{
-					UnBrowserHandle = d.UnBrowserHandle,
-					PchTitle = d.PchTitle,
-					PchInitialFile = d.PchInitialFile,
-				};
-			}
+			public static implicit operator HTML_FileOpenDialog_t ( HTML_FileOpenDialog_t.Pack4 d ) => new HTML_FileOpenDialog_t{ UnBrowserHandle = d.UnBrowserHandle,PchTitle = d.PchTitle,PchInitialFile = d.PchInitialFile, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
+			internal string PchTitle; // pchTitle const char *
+			internal string PchInitialFile; // pchInitialFile const char *
+			
+			public static implicit operator HTML_FileOpenDialog_t ( HTML_FileOpenDialog_t.Pack8 d ) => new HTML_FileOpenDialog_t{ UnBrowserHandle = d.UnBrowserHandle,PchTitle = d.PchTitle,PchInitialFile = d.PchInitialFile, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -26524,10 +26531,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct HTML_NewWindow_t
+	public struct HTML_NewWindow_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 21;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchURL; // pchURL const char *
 		internal uint UnX; // unX uint32
@@ -26539,23 +26551,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static HTML_NewWindow_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (HTML_NewWindow_t) Marshal.PtrToStructure( p, typeof(HTML_NewWindow_t) );
-		}
+		internal static HTML_NewWindow_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((HTML_NewWindow_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((HTML_NewWindow_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_NewWindow_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal string PchURL; // pchURL const char *
@@ -26565,22 +26573,21 @@ namespace SteamNative
 			internal uint UnTall; // unTall uint32
 			internal uint UnNewWindow_BrowserHandle_IGNORE; // unNewWindow_BrowserHandle_IGNORE HHTMLBrowser
 			
-			//
-			// Easily convert from PackSmall to HTML_NewWindow_t
-			//
-			public static implicit operator HTML_NewWindow_t (  HTML_NewWindow_t.PackSmall d )
-			{
-				return new HTML_NewWindow_t()
-				{
-					UnBrowserHandle = d.UnBrowserHandle,
-					PchURL = d.PchURL,
-					UnX = d.UnX,
-					UnY = d.UnY,
-					UnWide = d.UnWide,
-					UnTall = d.UnTall,
-					UnNewWindow_BrowserHandle_IGNORE = d.UnNewWindow_BrowserHandle_IGNORE,
-				};
-			}
+			public static implicit operator HTML_NewWindow_t ( HTML_NewWindow_t.Pack4 d ) => new HTML_NewWindow_t{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL,UnX = d.UnX,UnY = d.UnY,UnWide = d.UnWide,UnTall = d.UnTall,UnNewWindow_BrowserHandle_IGNORE = d.UnNewWindow_BrowserHandle_IGNORE, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
+			internal string PchURL; // pchURL const char *
+			internal uint UnX; // unX uint32
+			internal uint UnY; // unY uint32
+			internal uint UnWide; // unWide uint32
+			internal uint UnTall; // unTall uint32
+			internal uint UnNewWindow_BrowserHandle_IGNORE; // unNewWindow_BrowserHandle_IGNORE HHTMLBrowser
+			
+			public static implicit operator HTML_NewWindow_t ( HTML_NewWindow_t.Pack8 d ) => new HTML_NewWindow_t{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL,UnX = d.UnX,UnY = d.UnY,UnWide = d.UnWide,UnTall = d.UnTall,UnNewWindow_BrowserHandle_IGNORE = d.UnNewWindow_BrowserHandle_IGNORE, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -26710,48 +26717,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct HTML_SetCursor_t
+	public struct HTML_SetCursor_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 22;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal uint EMouseCursor; // eMouseCursor uint32
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static HTML_SetCursor_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (HTML_SetCursor_t) Marshal.PtrToStructure( p, typeof(HTML_SetCursor_t) );
-		}
+		internal static HTML_SetCursor_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((HTML_SetCursor_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((HTML_SetCursor_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_SetCursor_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal uint EMouseCursor; // eMouseCursor uint32
 			
-			//
-			// Easily convert from PackSmall to HTML_SetCursor_t
-			//
-			public static implicit operator HTML_SetCursor_t (  HTML_SetCursor_t.PackSmall d )
-			{
-				return new HTML_SetCursor_t()
-				{
-					UnBrowserHandle = d.UnBrowserHandle,
-					EMouseCursor = d.EMouseCursor,
-				};
-			}
+			public static implicit operator HTML_SetCursor_t ( HTML_SetCursor_t.Pack4 d ) => new HTML_SetCursor_t{ UnBrowserHandle = d.UnBrowserHandle,EMouseCursor = d.EMouseCursor, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
+			internal uint EMouseCursor; // eMouseCursor uint32
+			
+			public static implicit operator HTML_SetCursor_t ( HTML_SetCursor_t.Pack8 d ) => new HTML_SetCursor_t{ UnBrowserHandle = d.UnBrowserHandle,EMouseCursor = d.EMouseCursor, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -26881,48 +26888,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct HTML_StatusText_t
+	public struct HTML_StatusText_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 23;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchMsg; // pchMsg const char *
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static HTML_StatusText_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (HTML_StatusText_t) Marshal.PtrToStructure( p, typeof(HTML_StatusText_t) );
-		}
+		internal static HTML_StatusText_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((HTML_StatusText_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((HTML_StatusText_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_StatusText_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal string PchMsg; // pchMsg const char *
 			
-			//
-			// Easily convert from PackSmall to HTML_StatusText_t
-			//
-			public static implicit operator HTML_StatusText_t (  HTML_StatusText_t.PackSmall d )
-			{
-				return new HTML_StatusText_t()
-				{
-					UnBrowserHandle = d.UnBrowserHandle,
-					PchMsg = d.PchMsg,
-				};
-			}
+			public static implicit operator HTML_StatusText_t ( HTML_StatusText_t.Pack4 d ) => new HTML_StatusText_t{ UnBrowserHandle = d.UnBrowserHandle,PchMsg = d.PchMsg, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
+			internal string PchMsg; // pchMsg const char *
+			
+			public static implicit operator HTML_StatusText_t ( HTML_StatusText_t.Pack8 d ) => new HTML_StatusText_t{ UnBrowserHandle = d.UnBrowserHandle,PchMsg = d.PchMsg, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -27052,48 +27059,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct HTML_ShowToolTip_t
+	public struct HTML_ShowToolTip_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 24;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchMsg; // pchMsg const char *
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static HTML_ShowToolTip_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (HTML_ShowToolTip_t) Marshal.PtrToStructure( p, typeof(HTML_ShowToolTip_t) );
-		}
+		internal static HTML_ShowToolTip_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((HTML_ShowToolTip_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((HTML_ShowToolTip_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_ShowToolTip_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal string PchMsg; // pchMsg const char *
 			
-			//
-			// Easily convert from PackSmall to HTML_ShowToolTip_t
-			//
-			public static implicit operator HTML_ShowToolTip_t (  HTML_ShowToolTip_t.PackSmall d )
-			{
-				return new HTML_ShowToolTip_t()
-				{
-					UnBrowserHandle = d.UnBrowserHandle,
-					PchMsg = d.PchMsg,
-				};
-			}
+			public static implicit operator HTML_ShowToolTip_t ( HTML_ShowToolTip_t.Pack4 d ) => new HTML_ShowToolTip_t{ UnBrowserHandle = d.UnBrowserHandle,PchMsg = d.PchMsg, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
+			internal string PchMsg; // pchMsg const char *
+			
+			public static implicit operator HTML_ShowToolTip_t ( HTML_ShowToolTip_t.Pack8 d ) => new HTML_ShowToolTip_t{ UnBrowserHandle = d.UnBrowserHandle,PchMsg = d.PchMsg, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -27223,48 +27230,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct HTML_UpdateToolTip_t
+	public struct HTML_UpdateToolTip_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 25;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchMsg; // pchMsg const char *
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static HTML_UpdateToolTip_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (HTML_UpdateToolTip_t) Marshal.PtrToStructure( p, typeof(HTML_UpdateToolTip_t) );
-		}
+		internal static HTML_UpdateToolTip_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((HTML_UpdateToolTip_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((HTML_UpdateToolTip_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_UpdateToolTip_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal string PchMsg; // pchMsg const char *
 			
-			//
-			// Easily convert from PackSmall to HTML_UpdateToolTip_t
-			//
-			public static implicit operator HTML_UpdateToolTip_t (  HTML_UpdateToolTip_t.PackSmall d )
-			{
-				return new HTML_UpdateToolTip_t()
-				{
-					UnBrowserHandle = d.UnBrowserHandle,
-					PchMsg = d.PchMsg,
-				};
-			}
+			public static implicit operator HTML_UpdateToolTip_t ( HTML_UpdateToolTip_t.Pack4 d ) => new HTML_UpdateToolTip_t{ UnBrowserHandle = d.UnBrowserHandle,PchMsg = d.PchMsg, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
+			internal string PchMsg; // pchMsg const char *
+			
+			public static implicit operator HTML_UpdateToolTip_t ( HTML_UpdateToolTip_t.Pack8 d ) => new HTML_UpdateToolTip_t{ UnBrowserHandle = d.UnBrowserHandle,PchMsg = d.PchMsg, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -27394,45 +27401,45 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct HTML_HideToolTip_t
+	public struct HTML_HideToolTip_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 26;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static HTML_HideToolTip_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (HTML_HideToolTip_t) Marshal.PtrToStructure( p, typeof(HTML_HideToolTip_t) );
-		}
+		internal static HTML_HideToolTip_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((HTML_HideToolTip_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((HTML_HideToolTip_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_HideToolTip_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			
-			//
-			// Easily convert from PackSmall to HTML_HideToolTip_t
-			//
-			public static implicit operator HTML_HideToolTip_t (  HTML_HideToolTip_t.PackSmall d )
-			{
-				return new HTML_HideToolTip_t()
-				{
-					UnBrowserHandle = d.UnBrowserHandle,
-				};
-			}
+			public static implicit operator HTML_HideToolTip_t ( HTML_HideToolTip_t.Pack4 d ) => new HTML_HideToolTip_t{ UnBrowserHandle = d.UnBrowserHandle, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
+			
+			public static implicit operator HTML_HideToolTip_t ( HTML_HideToolTip_t.Pack8 d ) => new HTML_HideToolTip_t{ UnBrowserHandle = d.UnBrowserHandle, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -27562,48 +27569,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct HTML_BrowserRestarted_t
+	public struct HTML_BrowserRestarted_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamHTMLSurface + 27;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal uint UnOldBrowserHandle; // unOldBrowserHandle HHTMLBrowser
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static HTML_BrowserRestarted_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (HTML_BrowserRestarted_t) Marshal.PtrToStructure( p, typeof(HTML_BrowserRestarted_t) );
-		}
+		internal static HTML_BrowserRestarted_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((HTML_BrowserRestarted_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((HTML_BrowserRestarted_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_BrowserRestarted_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			internal uint UnOldBrowserHandle; // unOldBrowserHandle HHTMLBrowser
 			
-			//
-			// Easily convert from PackSmall to HTML_BrowserRestarted_t
-			//
-			public static implicit operator HTML_BrowserRestarted_t (  HTML_BrowserRestarted_t.PackSmall d )
-			{
-				return new HTML_BrowserRestarted_t()
-				{
-					UnBrowserHandle = d.UnBrowserHandle,
-					UnOldBrowserHandle = d.UnOldBrowserHandle,
-				};
-			}
+			public static implicit operator HTML_BrowserRestarted_t ( HTML_BrowserRestarted_t.Pack4 d ) => new HTML_BrowserRestarted_t{ UnBrowserHandle = d.UnBrowserHandle,UnOldBrowserHandle = d.UnOldBrowserHandle, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
+			internal uint UnOldBrowserHandle; // unOldBrowserHandle HHTMLBrowser
+			
+			public static implicit operator HTML_BrowserRestarted_t ( HTML_BrowserRestarted_t.Pack8 d ) => new HTML_BrowserRestarted_t{ UnBrowserHandle = d.UnBrowserHandle,UnOldBrowserHandle = d.UnOldBrowserHandle, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -27733,7 +27740,6 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct SteamItemDetails_t
 	{
 		internal ulong ItemId; // m_itemId SteamItemInstanceID_t
@@ -27744,87 +27750,82 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static SteamItemDetails_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (SteamItemDetails_t) Marshal.PtrToStructure( p, typeof(SteamItemDetails_t) );
-		}
+		internal static SteamItemDetails_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((SteamItemDetails_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((SteamItemDetails_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamItemDetails_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong ItemId; // m_itemId SteamItemInstanceID_t
 			internal int Definition; // m_iDefinition SteamItemDef_t
 			internal ushort Quantity; // m_unQuantity uint16
 			internal ushort Flags; // m_unFlags uint16
 			
-			//
-			// Easily convert from PackSmall to SteamItemDetails_t
-			//
-			public static implicit operator SteamItemDetails_t (  SteamItemDetails_t.PackSmall d )
-			{
-				return new SteamItemDetails_t()
-				{
-					ItemId = d.ItemId,
-					Definition = d.Definition,
-					Quantity = d.Quantity,
-					Flags = d.Flags,
-				};
-			}
+			public static implicit operator SteamItemDetails_t ( SteamItemDetails_t.Pack4 d ) => new SteamItemDetails_t{ ItemId = d.ItemId,Definition = d.Definition,Quantity = d.Quantity,Flags = d.Flags, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong ItemId; // m_itemId SteamItemInstanceID_t
+			internal int Definition; // m_iDefinition SteamItemDef_t
+			internal ushort Quantity; // m_unQuantity uint16
+			internal ushort Flags; // m_unFlags uint16
+			
+			public static implicit operator SteamItemDetails_t ( SteamItemDetails_t.Pack8 d ) => new SteamItemDetails_t{ ItemId = d.ItemId,Definition = d.Definition,Quantity = d.Quantity,Flags = d.Flags, };
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct SteamInventoryResultReady_t
+	public struct SteamInventoryResultReady_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientInventory + 0;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal int Handle; // m_handle SteamInventoryResult_t
 		internal Result Result; // m_result enum EResult
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static SteamInventoryResultReady_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (SteamInventoryResultReady_t) Marshal.PtrToStructure( p, typeof(SteamInventoryResultReady_t) );
-		}
+		internal static SteamInventoryResultReady_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((SteamInventoryResultReady_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((SteamInventoryResultReady_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamInventoryResultReady_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal int Handle; // m_handle SteamInventoryResult_t
 			internal Result Result; // m_result enum EResult
 			
-			//
-			// Easily convert from PackSmall to SteamInventoryResultReady_t
-			//
-			public static implicit operator SteamInventoryResultReady_t (  SteamInventoryResultReady_t.PackSmall d )
-			{
-				return new SteamInventoryResultReady_t()
-				{
-					Handle = d.Handle,
-					Result = d.Result,
-				};
-			}
+			public static implicit operator SteamInventoryResultReady_t ( SteamInventoryResultReady_t.Pack4 d ) => new SteamInventoryResultReady_t{ Handle = d.Handle,Result = d.Result, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal int Handle; // m_handle SteamInventoryResult_t
+			internal Result Result; // m_result enum EResult
+			
+			public static implicit operator SteamInventoryResultReady_t ( SteamInventoryResultReady_t.Pack8 d ) => new SteamInventoryResultReady_t{ Handle = d.Handle,Result = d.Result, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -27954,45 +27955,45 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct SteamInventoryFullUpdate_t
+	public struct SteamInventoryFullUpdate_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientInventory + 1;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal int Handle; // m_handle SteamInventoryResult_t
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static SteamInventoryFullUpdate_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (SteamInventoryFullUpdate_t) Marshal.PtrToStructure( p, typeof(SteamInventoryFullUpdate_t) );
-		}
+		internal static SteamInventoryFullUpdate_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((SteamInventoryFullUpdate_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((SteamInventoryFullUpdate_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamInventoryFullUpdate_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal int Handle; // m_handle SteamInventoryResult_t
 			
-			//
-			// Easily convert from PackSmall to SteamInventoryFullUpdate_t
-			//
-			public static implicit operator SteamInventoryFullUpdate_t (  SteamInventoryFullUpdate_t.PackSmall d )
-			{
-				return new SteamInventoryFullUpdate_t()
-				{
-					Handle = d.Handle,
-				};
-			}
+			public static implicit operator SteamInventoryFullUpdate_t ( SteamInventoryFullUpdate_t.Pack4 d ) => new SteamInventoryFullUpdate_t{ Handle = d.Handle, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal int Handle; // m_handle SteamInventoryResult_t
+			
+			public static implicit operator SteamInventoryFullUpdate_t ( SteamInventoryFullUpdate_t.Pack8 d ) => new SteamInventoryFullUpdate_t{ Handle = d.Handle, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -28122,10 +28123,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct SteamInventoryEligiblePromoItemDefIDs_t
+	public struct SteamInventoryEligiblePromoItemDefIDs_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientInventory + 3;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_result enum EResult
 		internal ulong SteamID; // m_steamID class CSteamID
 		internal int UmEligiblePromoItemDefs; // m_numEligiblePromoItemDefs int
@@ -28135,23 +28141,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static SteamInventoryEligiblePromoItemDefIDs_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (SteamInventoryEligiblePromoItemDefIDs_t) Marshal.PtrToStructure( p, typeof(SteamInventoryEligiblePromoItemDefIDs_t) );
-		}
+		internal static SteamInventoryEligiblePromoItemDefIDs_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((SteamInventoryEligiblePromoItemDefIDs_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((SteamInventoryEligiblePromoItemDefIDs_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamInventoryEligiblePromoItemDefIDs_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_result enum EResult
 			internal ulong SteamID; // m_steamID class CSteamID
@@ -28159,19 +28161,19 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool CachedData; // m_bCachedData _Bool
 			
-			//
-			// Easily convert from PackSmall to SteamInventoryEligiblePromoItemDefIDs_t
-			//
-			public static implicit operator SteamInventoryEligiblePromoItemDefIDs_t (  SteamInventoryEligiblePromoItemDefIDs_t.PackSmall d )
-			{
-				return new SteamInventoryEligiblePromoItemDefIDs_t()
-				{
-					Result = d.Result,
-					SteamID = d.SteamID,
-					UmEligiblePromoItemDefs = d.UmEligiblePromoItemDefs,
-					CachedData = d.CachedData,
-				};
-			}
+			public static implicit operator SteamInventoryEligiblePromoItemDefIDs_t ( SteamInventoryEligiblePromoItemDefIDs_t.Pack4 d ) => new SteamInventoryEligiblePromoItemDefIDs_t{ Result = d.Result,SteamID = d.SteamID,UmEligiblePromoItemDefs = d.UmEligiblePromoItemDefs,CachedData = d.CachedData, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_result enum EResult
+			internal ulong SteamID; // m_steamID class CSteamID
+			internal int UmEligiblePromoItemDefs; // m_numEligiblePromoItemDefs int
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool CachedData; // m_bCachedData _Bool
+			
+			public static implicit operator SteamInventoryEligiblePromoItemDefIDs_t ( SteamInventoryEligiblePromoItemDefIDs_t.Pack8 d ) => new SteamInventoryEligiblePromoItemDefIDs_t{ Result = d.Result,SteamID = d.SteamID,UmEligiblePromoItemDefs = d.UmEligiblePromoItemDefs,CachedData = d.CachedData, };
 		}
 		
 		internal static CallResult<SteamInventoryEligiblePromoItemDefIDs_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<SteamInventoryEligiblePromoItemDefIDs_t, bool> CallbackFunction )
@@ -28306,10 +28308,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct SteamInventoryStartPurchaseResult_t
+	public struct SteamInventoryStartPurchaseResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientInventory + 4;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_result enum EResult
 		internal ulong OrderID; // m_ulOrderID uint64
 		internal ulong TransID; // m_ulTransID uint64
@@ -28317,40 +28324,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static SteamInventoryStartPurchaseResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (SteamInventoryStartPurchaseResult_t) Marshal.PtrToStructure( p, typeof(SteamInventoryStartPurchaseResult_t) );
-		}
+		internal static SteamInventoryStartPurchaseResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((SteamInventoryStartPurchaseResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((SteamInventoryStartPurchaseResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamInventoryStartPurchaseResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_result enum EResult
 			internal ulong OrderID; // m_ulOrderID uint64
 			internal ulong TransID; // m_ulTransID uint64
 			
-			//
-			// Easily convert from PackSmall to SteamInventoryStartPurchaseResult_t
-			//
-			public static implicit operator SteamInventoryStartPurchaseResult_t (  SteamInventoryStartPurchaseResult_t.PackSmall d )
-			{
-				return new SteamInventoryStartPurchaseResult_t()
-				{
-					Result = d.Result,
-					OrderID = d.OrderID,
-					TransID = d.TransID,
-				};
-			}
+			public static implicit operator SteamInventoryStartPurchaseResult_t ( SteamInventoryStartPurchaseResult_t.Pack4 d ) => new SteamInventoryStartPurchaseResult_t{ Result = d.Result,OrderID = d.OrderID,TransID = d.TransID, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_result enum EResult
+			internal ulong OrderID; // m_ulOrderID uint64
+			internal ulong TransID; // m_ulTransID uint64
+			
+			public static implicit operator SteamInventoryStartPurchaseResult_t ( SteamInventoryStartPurchaseResult_t.Pack8 d ) => new SteamInventoryStartPurchaseResult_t{ Result = d.Result,OrderID = d.OrderID,TransID = d.TransID, };
 		}
 		
 		internal static CallResult<SteamInventoryStartPurchaseResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<SteamInventoryStartPurchaseResult_t, bool> CallbackFunction )
@@ -28485,10 +28487,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct SteamInventoryRequestPricesResult_t
+	public struct SteamInventoryRequestPricesResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientInventory + 5;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_result enum EResult
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
 		internal string Currency; // m_rgchCurrency char [4]
@@ -28496,39 +28503,35 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static SteamInventoryRequestPricesResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (SteamInventoryRequestPricesResult_t) Marshal.PtrToStructure( p, typeof(SteamInventoryRequestPricesResult_t) );
-		}
+		internal static SteamInventoryRequestPricesResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((SteamInventoryRequestPricesResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((SteamInventoryRequestPricesResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamInventoryRequestPricesResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_result enum EResult
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
 			internal string Currency; // m_rgchCurrency char [4]
 			
-			//
-			// Easily convert from PackSmall to SteamInventoryRequestPricesResult_t
-			//
-			public static implicit operator SteamInventoryRequestPricesResult_t (  SteamInventoryRequestPricesResult_t.PackSmall d )
-			{
-				return new SteamInventoryRequestPricesResult_t()
-				{
-					Result = d.Result,
-					Currency = d.Currency,
-				};
-			}
+			public static implicit operator SteamInventoryRequestPricesResult_t ( SteamInventoryRequestPricesResult_t.Pack4 d ) => new SteamInventoryRequestPricesResult_t{ Result = d.Result,Currency = d.Currency, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_result enum EResult
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
+			internal string Currency; // m_rgchCurrency char [4]
+			
+			public static implicit operator SteamInventoryRequestPricesResult_t ( SteamInventoryRequestPricesResult_t.Pack8 d ) => new SteamInventoryRequestPricesResult_t{ Result = d.Result,Currency = d.Currency, };
 		}
 		
 		internal static CallResult<SteamInventoryRequestPricesResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<SteamInventoryRequestPricesResult_t, bool> CallbackFunction )
@@ -28663,45 +28666,45 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct BroadcastUploadStop_t
+	public struct BroadcastUploadStop_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientVideo + 5;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal BroadcastUploadResult Result; // m_eResult enum EBroadcastUploadResult
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static BroadcastUploadStop_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (BroadcastUploadStop_t) Marshal.PtrToStructure( p, typeof(BroadcastUploadStop_t) );
-		}
+		internal static BroadcastUploadStop_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((BroadcastUploadStop_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((BroadcastUploadStop_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(BroadcastUploadStop_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal BroadcastUploadResult Result; // m_eResult enum EBroadcastUploadResult
 			
-			//
-			// Easily convert from PackSmall to BroadcastUploadStop_t
-			//
-			public static implicit operator BroadcastUploadStop_t (  BroadcastUploadStop_t.PackSmall d )
-			{
-				return new BroadcastUploadStop_t()
-				{
-					Result = d.Result,
-				};
-			}
+			public static implicit operator BroadcastUploadStop_t ( BroadcastUploadStop_t.Pack4 d ) => new BroadcastUploadStop_t{ Result = d.Result, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal BroadcastUploadResult Result; // m_eResult enum EBroadcastUploadResult
+			
+			public static implicit operator BroadcastUploadStop_t ( BroadcastUploadStop_t.Pack8 d ) => new BroadcastUploadStop_t{ Result = d.Result, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -28831,10 +28834,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct GetVideoURLResult_t
+	public struct GetVideoURLResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientVideo + 11;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal uint VideoAppID; // m_unVideoAppID AppId_t
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
@@ -28843,41 +28851,37 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GetVideoURLResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GetVideoURLResult_t) Marshal.PtrToStructure( p, typeof(GetVideoURLResult_t) );
-		}
+		internal static GetVideoURLResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GetVideoURLResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GetVideoURLResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GetVideoURLResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal uint VideoAppID; // m_unVideoAppID AppId_t
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 			internal string URL; // m_rgchURL char [256]
 			
-			//
-			// Easily convert from PackSmall to GetVideoURLResult_t
-			//
-			public static implicit operator GetVideoURLResult_t (  GetVideoURLResult_t.PackSmall d )
-			{
-				return new GetVideoURLResult_t()
-				{
-					Result = d.Result,
-					VideoAppID = d.VideoAppID,
-					URL = d.URL,
-				};
-			}
+			public static implicit operator GetVideoURLResult_t ( GetVideoURLResult_t.Pack4 d ) => new GetVideoURLResult_t{ Result = d.Result,VideoAppID = d.VideoAppID,URL = d.URL, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal uint VideoAppID; // m_unVideoAppID AppId_t
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+			internal string URL; // m_rgchURL char [256]
+			
+			public static implicit operator GetVideoURLResult_t ( GetVideoURLResult_t.Pack8 d ) => new GetVideoURLResult_t{ Result = d.Result,VideoAppID = d.VideoAppID,URL = d.URL, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -29007,48 +29011,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct GetOPFSettingsResult_t
+	public struct GetOPFSettingsResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientVideo + 24;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal uint VideoAppID; // m_unVideoAppID AppId_t
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GetOPFSettingsResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GetOPFSettingsResult_t) Marshal.PtrToStructure( p, typeof(GetOPFSettingsResult_t) );
-		}
+		internal static GetOPFSettingsResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GetOPFSettingsResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GetOPFSettingsResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GetOPFSettingsResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal uint VideoAppID; // m_unVideoAppID AppId_t
 			
-			//
-			// Easily convert from PackSmall to GetOPFSettingsResult_t
-			//
-			public static implicit operator GetOPFSettingsResult_t (  GetOPFSettingsResult_t.PackSmall d )
-			{
-				return new GetOPFSettingsResult_t()
-				{
-					Result = d.Result,
-					VideoAppID = d.VideoAppID,
-				};
-			}
+			public static implicit operator GetOPFSettingsResult_t ( GetOPFSettingsResult_t.Pack4 d ) => new GetOPFSettingsResult_t{ Result = d.Result,VideoAppID = d.VideoAppID, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal uint VideoAppID; // m_unVideoAppID AppId_t
+			
+			public static implicit operator GetOPFSettingsResult_t ( GetOPFSettingsResult_t.Pack8 d ) => new GetOPFSettingsResult_t{ Result = d.Result,VideoAppID = d.VideoAppID, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -29178,48 +29182,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct GSClientApprove_t
+	public struct GSClientApprove_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameServer + 1;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamID; // m_SteamID class CSteamID
 		internal ulong OwnerSteamID; // m_OwnerSteamID class CSteamID
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GSClientApprove_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GSClientApprove_t) Marshal.PtrToStructure( p, typeof(GSClientApprove_t) );
-		}
+		internal static GSClientApprove_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GSClientApprove_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GSClientApprove_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSClientApprove_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamID; // m_SteamID class CSteamID
 			internal ulong OwnerSteamID; // m_OwnerSteamID class CSteamID
 			
-			//
-			// Easily convert from PackSmall to GSClientApprove_t
-			//
-			public static implicit operator GSClientApprove_t (  GSClientApprove_t.PackSmall d )
-			{
-				return new GSClientApprove_t()
-				{
-					SteamID = d.SteamID,
-					OwnerSteamID = d.OwnerSteamID,
-				};
-			}
+			public static implicit operator GSClientApprove_t ( GSClientApprove_t.Pack4 d ) => new GSClientApprove_t{ SteamID = d.SteamID,OwnerSteamID = d.OwnerSteamID, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal ulong SteamID; // m_SteamID class CSteamID
+			internal ulong OwnerSteamID; // m_OwnerSteamID class CSteamID
+			
+			public static implicit operator GSClientApprove_t ( GSClientApprove_t.Pack8 d ) => new GSClientApprove_t{ SteamID = d.SteamID,OwnerSteamID = d.OwnerSteamID, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -29349,10 +29353,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct GSClientDeny_t
+	public struct GSClientDeny_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameServer + 2;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamID; // m_SteamID class CSteamID
 		internal DenyReason DenyReason; // m_eDenyReason enum EDenyReason
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
@@ -29361,41 +29370,37 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GSClientDeny_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GSClientDeny_t) Marshal.PtrToStructure( p, typeof(GSClientDeny_t) );
-		}
+		internal static GSClientDeny_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GSClientDeny_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GSClientDeny_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSClientDeny_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamID; // m_SteamID class CSteamID
 			internal DenyReason DenyReason; // m_eDenyReason enum EDenyReason
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
 			internal string OptionalText; // m_rgchOptionalText char [128]
 			
-			//
-			// Easily convert from PackSmall to GSClientDeny_t
-			//
-			public static implicit operator GSClientDeny_t (  GSClientDeny_t.PackSmall d )
-			{
-				return new GSClientDeny_t()
-				{
-					SteamID = d.SteamID,
-					DenyReason = d.DenyReason,
-					OptionalText = d.OptionalText,
-				};
-			}
+			public static implicit operator GSClientDeny_t ( GSClientDeny_t.Pack4 d ) => new GSClientDeny_t{ SteamID = d.SteamID,DenyReason = d.DenyReason,OptionalText = d.OptionalText, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal ulong SteamID; // m_SteamID class CSteamID
+			internal DenyReason DenyReason; // m_eDenyReason enum EDenyReason
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+			internal string OptionalText; // m_rgchOptionalText char [128]
+			
+			public static implicit operator GSClientDeny_t ( GSClientDeny_t.Pack8 d ) => new GSClientDeny_t{ SteamID = d.SteamID,DenyReason = d.DenyReason,OptionalText = d.OptionalText, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -29525,48 +29530,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct GSClientKick_t
+	public struct GSClientKick_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameServer + 3;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamID; // m_SteamID class CSteamID
 		internal DenyReason DenyReason; // m_eDenyReason enum EDenyReason
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GSClientKick_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GSClientKick_t) Marshal.PtrToStructure( p, typeof(GSClientKick_t) );
-		}
+		internal static GSClientKick_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GSClientKick_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GSClientKick_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSClientKick_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamID; // m_SteamID class CSteamID
 			internal DenyReason DenyReason; // m_eDenyReason enum EDenyReason
 			
-			//
-			// Easily convert from PackSmall to GSClientKick_t
-			//
-			public static implicit operator GSClientKick_t (  GSClientKick_t.PackSmall d )
-			{
-				return new GSClientKick_t()
-				{
-					SteamID = d.SteamID,
-					DenyReason = d.DenyReason,
-				};
-			}
+			public static implicit operator GSClientKick_t ( GSClientKick_t.Pack4 d ) => new GSClientKick_t{ SteamID = d.SteamID,DenyReason = d.DenyReason, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal ulong SteamID; // m_SteamID class CSteamID
+			internal DenyReason DenyReason; // m_eDenyReason enum EDenyReason
+			
+			public static implicit operator GSClientKick_t ( GSClientKick_t.Pack8 d ) => new GSClientKick_t{ SteamID = d.SteamID,DenyReason = d.DenyReason, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -29696,10 +29701,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct GSClientAchievementStatus_t
+	public struct GSClientAchievementStatus_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameServer + 6;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamID; // m_SteamID uint64
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
 		internal string PchAchievement; // m_pchAchievement char [128]
@@ -29709,23 +29719,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GSClientAchievementStatus_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GSClientAchievementStatus_t) Marshal.PtrToStructure( p, typeof(GSClientAchievementStatus_t) );
-		}
+		internal static GSClientAchievementStatus_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GSClientAchievementStatus_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GSClientAchievementStatus_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSClientAchievementStatus_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamID; // m_SteamID uint64
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
@@ -29733,18 +29739,19 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool Unlocked; // m_bUnlocked _Bool
 			
-			//
-			// Easily convert from PackSmall to GSClientAchievementStatus_t
-			//
-			public static implicit operator GSClientAchievementStatus_t (  GSClientAchievementStatus_t.PackSmall d )
-			{
-				return new GSClientAchievementStatus_t()
-				{
-					SteamID = d.SteamID,
-					PchAchievement = d.PchAchievement,
-					Unlocked = d.Unlocked,
-				};
-			}
+			public static implicit operator GSClientAchievementStatus_t ( GSClientAchievementStatus_t.Pack4 d ) => new GSClientAchievementStatus_t{ SteamID = d.SteamID,PchAchievement = d.PchAchievement,Unlocked = d.Unlocked, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal ulong SteamID; // m_SteamID uint64
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+			internal string PchAchievement; // m_pchAchievement char [128]
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool Unlocked; // m_bUnlocked _Bool
+			
+			public static implicit operator GSClientAchievementStatus_t ( GSClientAchievementStatus_t.Pack8 d ) => new GSClientAchievementStatus_t{ SteamID = d.SteamID,PchAchievement = d.PchAchievement,Unlocked = d.Unlocked, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -29874,45 +29881,45 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct GSPolicyResponse_t
+	public struct GSPolicyResponse_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUser + 15;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal byte Secure; // m_bSecure uint8
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GSPolicyResponse_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GSPolicyResponse_t) Marshal.PtrToStructure( p, typeof(GSPolicyResponse_t) );
-		}
+		internal static GSPolicyResponse_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GSPolicyResponse_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GSPolicyResponse_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSPolicyResponse_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal byte Secure; // m_bSecure uint8
 			
-			//
-			// Easily convert from PackSmall to GSPolicyResponse_t
-			//
-			public static implicit operator GSPolicyResponse_t (  GSPolicyResponse_t.PackSmall d )
-			{
-				return new GSPolicyResponse_t()
-				{
-					Secure = d.Secure,
-				};
-			}
+			public static implicit operator GSPolicyResponse_t ( GSPolicyResponse_t.Pack4 d ) => new GSPolicyResponse_t{ Secure = d.Secure, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal byte Secure; // m_bSecure uint8
+			
+			public static implicit operator GSPolicyResponse_t ( GSPolicyResponse_t.Pack8 d ) => new GSPolicyResponse_t{ Secure = d.Secure, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -30042,10 +30049,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct GSGameplayStats_t
+	public struct GSGameplayStats_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameServer + 7;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal int Rank; // m_nRank int32
 		internal uint TotalConnects; // m_unTotalConnects uint32
@@ -30054,42 +30066,37 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GSGameplayStats_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GSGameplayStats_t) Marshal.PtrToStructure( p, typeof(GSGameplayStats_t) );
-		}
+		internal static GSGameplayStats_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GSGameplayStats_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GSGameplayStats_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSGameplayStats_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal int Rank; // m_nRank int32
 			internal uint TotalConnects; // m_unTotalConnects uint32
 			internal uint TotalMinutesPlayed; // m_unTotalMinutesPlayed uint32
 			
-			//
-			// Easily convert from PackSmall to GSGameplayStats_t
-			//
-			public static implicit operator GSGameplayStats_t (  GSGameplayStats_t.PackSmall d )
-			{
-				return new GSGameplayStats_t()
-				{
-					Result = d.Result,
-					Rank = d.Rank,
-					TotalConnects = d.TotalConnects,
-					TotalMinutesPlayed = d.TotalMinutesPlayed,
-				};
-			}
+			public static implicit operator GSGameplayStats_t ( GSGameplayStats_t.Pack4 d ) => new GSGameplayStats_t{ Result = d.Result,Rank = d.Rank,TotalConnects = d.TotalConnects,TotalMinutesPlayed = d.TotalMinutesPlayed, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal int Rank; // m_nRank int32
+			internal uint TotalConnects; // m_unTotalConnects uint32
+			internal uint TotalMinutesPlayed; // m_unTotalMinutesPlayed uint32
+			
+			public static implicit operator GSGameplayStats_t ( GSGameplayStats_t.Pack8 d ) => new GSGameplayStats_t{ Result = d.Result,Rank = d.Rank,TotalConnects = d.TotalConnects,TotalMinutesPlayed = d.TotalMinutesPlayed, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -30219,10 +30226,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct GSClientGroupStatus_t
+	public struct GSClientGroupStatus_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameServer + 8;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamIDUser; // m_SteamIDUser class CSteamID
 		internal ulong SteamIDGroup; // m_SteamIDGroup class CSteamID
 		[MarshalAs(UnmanagedType.I1)]
@@ -30233,23 +30245,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GSClientGroupStatus_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GSClientGroupStatus_t) Marshal.PtrToStructure( p, typeof(GSClientGroupStatus_t) );
-		}
+		internal static GSClientGroupStatus_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GSClientGroupStatus_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GSClientGroupStatus_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSClientGroupStatus_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamIDUser; // m_SteamIDUser class CSteamID
 			internal ulong SteamIDGroup; // m_SteamIDGroup class CSteamID
@@ -30258,19 +30266,20 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool Officer; // m_bOfficer _Bool
 			
-			//
-			// Easily convert from PackSmall to GSClientGroupStatus_t
-			//
-			public static implicit operator GSClientGroupStatus_t (  GSClientGroupStatus_t.PackSmall d )
-			{
-				return new GSClientGroupStatus_t()
-				{
-					SteamIDUser = d.SteamIDUser,
-					SteamIDGroup = d.SteamIDGroup,
-					Member = d.Member,
-					Officer = d.Officer,
-				};
-			}
+			public static implicit operator GSClientGroupStatus_t ( GSClientGroupStatus_t.Pack4 d ) => new GSClientGroupStatus_t{ SteamIDUser = d.SteamIDUser,SteamIDGroup = d.SteamIDGroup,Member = d.Member,Officer = d.Officer, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal ulong SteamIDUser; // m_SteamIDUser class CSteamID
+			internal ulong SteamIDGroup; // m_SteamIDGroup class CSteamID
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool Member; // m_bMember _Bool
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool Officer; // m_bOfficer _Bool
+			
+			public static implicit operator GSClientGroupStatus_t ( GSClientGroupStatus_t.Pack8 d ) => new GSClientGroupStatus_t{ SteamIDUser = d.SteamIDUser,SteamIDGroup = d.SteamIDGroup,Member = d.Member,Officer = d.Officer, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -30400,10 +30409,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct GSReputation_t
+	public struct GSReputation_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameServer + 9;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal uint ReputationScore; // m_unReputationScore uint32
 		[MarshalAs(UnmanagedType.I1)]
@@ -30416,23 +30430,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GSReputation_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GSReputation_t) Marshal.PtrToStructure( p, typeof(GSReputation_t) );
-		}
+		internal static GSReputation_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GSReputation_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GSReputation_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSReputation_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal uint ReputationScore; // m_unReputationScore uint32
@@ -30443,22 +30453,22 @@ namespace SteamNative
 			internal ulong BannedGameID; // m_ulBannedGameID uint64
 			internal uint BanExpires; // m_unBanExpires uint32
 			
-			//
-			// Easily convert from PackSmall to GSReputation_t
-			//
-			public static implicit operator GSReputation_t (  GSReputation_t.PackSmall d )
-			{
-				return new GSReputation_t()
-				{
-					Result = d.Result,
-					ReputationScore = d.ReputationScore,
-					Banned = d.Banned,
-					BannedIP = d.BannedIP,
-					BannedPort = d.BannedPort,
-					BannedGameID = d.BannedGameID,
-					BanExpires = d.BanExpires,
-				};
-			}
+			public static implicit operator GSReputation_t ( GSReputation_t.Pack4 d ) => new GSReputation_t{ Result = d.Result,ReputationScore = d.ReputationScore,Banned = d.Banned,BannedIP = d.BannedIP,BannedPort = d.BannedPort,BannedGameID = d.BannedGameID,BanExpires = d.BanExpires, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal uint ReputationScore; // m_unReputationScore uint32
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool Banned; // m_bBanned _Bool
+			internal uint BannedIP; // m_unBannedIP uint32
+			internal ushort BannedPort; // m_usBannedPort uint16
+			internal ulong BannedGameID; // m_ulBannedGameID uint64
+			internal uint BanExpires; // m_unBanExpires uint32
+			
+			public static implicit operator GSReputation_t ( GSReputation_t.Pack8 d ) => new GSReputation_t{ Result = d.Result,ReputationScore = d.ReputationScore,Banned = d.Banned,BannedIP = d.BannedIP,BannedPort = d.BannedPort,BannedGameID = d.BannedGameID,BanExpires = d.BanExpires, };
 		}
 		
 		internal static CallResult<GSReputation_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<GSReputation_t, bool> CallbackFunction )
@@ -30593,45 +30603,45 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct AssociateWithClanResult_t
+	public struct AssociateWithClanResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameServer + 10;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static AssociateWithClanResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (AssociateWithClanResult_t) Marshal.PtrToStructure( p, typeof(AssociateWithClanResult_t) );
-		}
+		internal static AssociateWithClanResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((AssociateWithClanResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((AssociateWithClanResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(AssociateWithClanResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			
-			//
-			// Easily convert from PackSmall to AssociateWithClanResult_t
-			//
-			public static implicit operator AssociateWithClanResult_t (  AssociateWithClanResult_t.PackSmall d )
-			{
-				return new AssociateWithClanResult_t()
-				{
-					Result = d.Result,
-				};
-			}
+			public static implicit operator AssociateWithClanResult_t ( AssociateWithClanResult_t.Pack4 d ) => new AssociateWithClanResult_t{ Result = d.Result, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			
+			public static implicit operator AssociateWithClanResult_t ( AssociateWithClanResult_t.Pack8 d ) => new AssociateWithClanResult_t{ Result = d.Result, };
 		}
 		
 		internal static CallResult<AssociateWithClanResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<AssociateWithClanResult_t, bool> CallbackFunction )
@@ -30766,10 +30776,15 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct ComputeNewPlayerCompatibilityResult_t
+	public struct ComputeNewPlayerCompatibilityResult_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameServer + 11;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal int CPlayersThatDontLikeCandidate; // m_cPlayersThatDontLikeCandidate int
 		internal int CPlayersThatCandidateDoesntLike; // m_cPlayersThatCandidateDoesntLike int
@@ -30779,23 +30794,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static ComputeNewPlayerCompatibilityResult_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (ComputeNewPlayerCompatibilityResult_t) Marshal.PtrToStructure( p, typeof(ComputeNewPlayerCompatibilityResult_t) );
-		}
+		internal static ComputeNewPlayerCompatibilityResult_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((ComputeNewPlayerCompatibilityResult_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((ComputeNewPlayerCompatibilityResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(ComputeNewPlayerCompatibilityResult_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal int CPlayersThatDontLikeCandidate; // m_cPlayersThatDontLikeCandidate int
@@ -30803,20 +30814,19 @@ namespace SteamNative
 			internal int CClanPlayersThatDontLikeCandidate; // m_cClanPlayersThatDontLikeCandidate int
 			internal ulong SteamIDCandidate; // m_SteamIDCandidate class CSteamID
 			
-			//
-			// Easily convert from PackSmall to ComputeNewPlayerCompatibilityResult_t
-			//
-			public static implicit operator ComputeNewPlayerCompatibilityResult_t (  ComputeNewPlayerCompatibilityResult_t.PackSmall d )
-			{
-				return new ComputeNewPlayerCompatibilityResult_t()
-				{
-					Result = d.Result,
-					CPlayersThatDontLikeCandidate = d.CPlayersThatDontLikeCandidate,
-					CPlayersThatCandidateDoesntLike = d.CPlayersThatCandidateDoesntLike,
-					CClanPlayersThatDontLikeCandidate = d.CClanPlayersThatDontLikeCandidate,
-					SteamIDCandidate = d.SteamIDCandidate,
-				};
-			}
+			public static implicit operator ComputeNewPlayerCompatibilityResult_t ( ComputeNewPlayerCompatibilityResult_t.Pack4 d ) => new ComputeNewPlayerCompatibilityResult_t{ Result = d.Result,CPlayersThatDontLikeCandidate = d.CPlayersThatDontLikeCandidate,CPlayersThatCandidateDoesntLike = d.CPlayersThatCandidateDoesntLike,CClanPlayersThatDontLikeCandidate = d.CClanPlayersThatDontLikeCandidate,SteamIDCandidate = d.SteamIDCandidate, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal int CPlayersThatDontLikeCandidate; // m_cPlayersThatDontLikeCandidate int
+			internal int CPlayersThatCandidateDoesntLike; // m_cPlayersThatCandidateDoesntLike int
+			internal int CClanPlayersThatDontLikeCandidate; // m_cClanPlayersThatDontLikeCandidate int
+			internal ulong SteamIDCandidate; // m_SteamIDCandidate class CSteamID
+			
+			public static implicit operator ComputeNewPlayerCompatibilityResult_t ( ComputeNewPlayerCompatibilityResult_t.Pack8 d ) => new ComputeNewPlayerCompatibilityResult_t{ Result = d.Result,CPlayersThatDontLikeCandidate = d.CPlayersThatDontLikeCandidate,CPlayersThatCandidateDoesntLike = d.CPlayersThatCandidateDoesntLike,CClanPlayersThatDontLikeCandidate = d.CClanPlayersThatDontLikeCandidate,SteamIDCandidate = d.SteamIDCandidate, };
 		}
 		
 		internal static CallResult<ComputeNewPlayerCompatibilityResult_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<ComputeNewPlayerCompatibilityResult_t, bool> CallbackFunction )
@@ -30951,48 +30961,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct GSStatsReceived_t
+	public struct GSStatsReceived_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameServerStats + 0;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GSStatsReceived_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GSStatsReceived_t) Marshal.PtrToStructure( p, typeof(GSStatsReceived_t) );
-		}
+		internal static GSStatsReceived_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GSStatsReceived_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GSStatsReceived_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSStatsReceived_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			
-			//
-			// Easily convert from PackSmall to GSStatsReceived_t
-			//
-			public static implicit operator GSStatsReceived_t (  GSStatsReceived_t.PackSmall d )
-			{
-				return new GSStatsReceived_t()
-				{
-					Result = d.Result,
-					SteamIDUser = d.SteamIDUser,
-				};
-			}
+			public static implicit operator GSStatsReceived_t ( GSStatsReceived_t.Pack4 d ) => new GSStatsReceived_t{ Result = d.Result,SteamIDUser = d.SteamIDUser, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
+			
+			public static implicit operator GSStatsReceived_t ( GSStatsReceived_t.Pack8 d ) => new GSStatsReceived_t{ Result = d.Result,SteamIDUser = d.SteamIDUser, };
 		}
 		
 		internal static CallResult<GSStatsReceived_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<GSStatsReceived_t, bool> CallbackFunction )
@@ -31127,48 +31137,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct GSStatsStored_t
+	public struct GSStatsStored_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameServerStats + 1;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal Result Result; // m_eResult enum EResult
 		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GSStatsStored_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GSStatsStored_t) Marshal.PtrToStructure( p, typeof(GSStatsStored_t) );
-		}
+		internal static GSStatsStored_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GSStatsStored_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GSStatsStored_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSStatsStored_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			
-			//
-			// Easily convert from PackSmall to GSStatsStored_t
-			//
-			public static implicit operator GSStatsStored_t (  GSStatsStored_t.PackSmall d )
-			{
-				return new GSStatsStored_t()
-				{
-					Result = d.Result,
-					SteamIDUser = d.SteamIDUser,
-				};
-			}
+			public static implicit operator GSStatsStored_t ( GSStatsStored_t.Pack4 d ) => new GSStatsStored_t{ Result = d.Result,SteamIDUser = d.SteamIDUser, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal Result Result; // m_eResult enum EResult
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
+			
+			public static implicit operator GSStatsStored_t ( GSStatsStored_t.Pack8 d ) => new GSStatsStored_t{ Result = d.Result,SteamIDUser = d.SteamIDUser, };
 		}
 		
 		internal static CallResult<GSStatsStored_t> CallResult( Facepunch.Steamworks.BaseSteamworks steamworks, SteamAPICall_t call, Action<GSStatsStored_t, bool> CallbackFunction )
@@ -31303,45 +31313,45 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-	public struct GSStatsUnloaded_t
+	public struct GSStatsUnloaded_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUserStats + 8;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GSStatsUnloaded_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GSStatsUnloaded_t) Marshal.PtrToStructure( p, typeof(GSStatsUnloaded_t) );
-		}
+		internal static GSStatsUnloaded_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GSStatsUnloaded_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GSStatsUnloaded_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSStatsUnloaded_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			
-			//
-			// Easily convert from PackSmall to GSStatsUnloaded_t
-			//
-			public static implicit operator GSStatsUnloaded_t (  GSStatsUnloaded_t.PackSmall d )
-			{
-				return new GSStatsUnloaded_t()
-				{
-					SteamIDUser = d.SteamIDUser,
-				};
-			}
+			public static implicit operator GSStatsUnloaded_t ( GSStatsUnloaded_t.Pack4 d ) => new GSStatsUnloaded_t{ SteamIDUser = d.SteamIDUser, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack8
+		{
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
+			
+			public static implicit operator GSStatsUnloaded_t ( GSStatsUnloaded_t.Pack8 d ) => new GSStatsUnloaded_t{ SteamIDUser = d.SteamIDUser, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -31471,48 +31481,48 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct ItemInstalled_t
+	public struct ItemInstalled_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientUGC + 5;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint AppID; // m_unAppID AppId_t
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static ItemInstalled_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (ItemInstalled_t) Marshal.PtrToStructure( p, typeof(ItemInstalled_t) );
-		}
+		internal static ItemInstalled_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((ItemInstalled_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((ItemInstalled_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(ItemInstalled_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint AppID; // m_unAppID AppId_t
 			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
-			//
-			// Easily convert from PackSmall to ItemInstalled_t
-			//
-			public static implicit operator ItemInstalled_t (  ItemInstalled_t.PackSmall d )
-			{
-				return new ItemInstalled_t()
-				{
-					AppID = d.AppID,
-					PublishedFileId = d.PublishedFileId,
-				};
-			}
+			public static implicit operator ItemInstalled_t ( ItemInstalled_t.Pack4 d ) => new ItemInstalled_t{ AppID = d.AppID,PublishedFileId = d.PublishedFileId, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint AppID; // m_unAppID AppId_t
+			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			
+			public static implicit operator ItemInstalled_t ( ItemInstalled_t.Pack8 d ) => new ItemInstalled_t{ AppID = d.AppID,PublishedFileId = d.PublishedFileId, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -31642,7 +31652,6 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct InputAnalogActionData_t
 	{
 		internal InputSourceMode EMode; // eMode EInputSourceMode
@@ -31654,23 +31663,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static InputAnalogActionData_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (InputAnalogActionData_t) Marshal.PtrToStructure( p, typeof(InputAnalogActionData_t) );
-		}
+		internal static InputAnalogActionData_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((InputAnalogActionData_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((InputAnalogActionData_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(InputAnalogActionData_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal InputSourceMode EMode; // eMode EInputSourceMode
 			internal float X; // x float
@@ -31678,23 +31683,22 @@ namespace SteamNative
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool BActive; // bActive bool
 			
-			//
-			// Easily convert from PackSmall to InputAnalogActionData_t
-			//
-			public static implicit operator InputAnalogActionData_t (  InputAnalogActionData_t.PackSmall d )
-			{
-				return new InputAnalogActionData_t()
-				{
-					EMode = d.EMode,
-					X = d.X,
-					Y = d.Y,
-					BActive = d.BActive,
-				};
-			}
+			public static implicit operator InputAnalogActionData_t ( InputAnalogActionData_t.Pack4 d ) => new InputAnalogActionData_t{ EMode = d.EMode,X = d.X,Y = d.Y,BActive = d.BActive, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal InputSourceMode EMode; // eMode EInputSourceMode
+			internal float X; // x float
+			internal float Y; // y float
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool BActive; // bActive bool
+			
+			public static implicit operator InputAnalogActionData_t ( InputAnalogActionData_t.Pack8 d ) => new InputAnalogActionData_t{ EMode = d.EMode,X = d.X,Y = d.Y,BActive = d.BActive, };
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct InputMotionData_t
 	{
 		internal float RotQuatX; // rotQuatX float
@@ -31711,23 +31715,19 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static InputMotionData_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (InputMotionData_t) Marshal.PtrToStructure( p, typeof(InputMotionData_t) );
-		}
+		internal static InputMotionData_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((InputMotionData_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((InputMotionData_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(InputMotionData_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal float RotQuatX; // rotQuatX float
 			internal float RotQuatY; // rotQuatY float
@@ -31740,29 +31740,27 @@ namespace SteamNative
 			internal float RotVelY; // rotVelY float
 			internal float RotVelZ; // rotVelZ float
 			
-			//
-			// Easily convert from PackSmall to InputMotionData_t
-			//
-			public static implicit operator InputMotionData_t (  InputMotionData_t.PackSmall d )
-			{
-				return new InputMotionData_t()
-				{
-					RotQuatX = d.RotQuatX,
-					RotQuatY = d.RotQuatY,
-					RotQuatZ = d.RotQuatZ,
-					RotQuatW = d.RotQuatW,
-					PosAccelX = d.PosAccelX,
-					PosAccelY = d.PosAccelY,
-					PosAccelZ = d.PosAccelZ,
-					RotVelX = d.RotVelX,
-					RotVelY = d.RotVelY,
-					RotVelZ = d.RotVelZ,
-				};
-			}
+			public static implicit operator InputMotionData_t ( InputMotionData_t.Pack4 d ) => new InputMotionData_t{ RotQuatX = d.RotQuatX,RotQuatY = d.RotQuatY,RotQuatZ = d.RotQuatZ,RotQuatW = d.RotQuatW,PosAccelX = d.PosAccelX,PosAccelY = d.PosAccelY,PosAccelZ = d.PosAccelZ,RotVelX = d.RotVelX,RotVelY = d.RotVelY,RotVelZ = d.RotVelZ, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal float RotQuatX; // rotQuatX float
+			internal float RotQuatY; // rotQuatY float
+			internal float RotQuatZ; // rotQuatZ float
+			internal float RotQuatW; // rotQuatW float
+			internal float PosAccelX; // posAccelX float
+			internal float PosAccelY; // posAccelY float
+			internal float PosAccelZ; // posAccelZ float
+			internal float RotVelX; // rotVelX float
+			internal float RotVelY; // rotVelY float
+			internal float RotVelZ; // rotVelZ float
+			
+			public static implicit operator InputMotionData_t ( InputMotionData_t.Pack8 d ) => new InputMotionData_t{ RotQuatX = d.RotQuatX,RotQuatY = d.RotQuatY,RotQuatZ = d.RotQuatZ,RotQuatW = d.RotQuatW,PosAccelX = d.PosAccelX,PosAccelY = d.PosAccelY,PosAccelZ = d.PosAccelZ,RotVelX = d.RotVelX,RotVelY = d.RotVelY,RotVelZ = d.RotVelZ, };
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct InputDigitalActionData_t
 	{
 		[MarshalAs(UnmanagedType.I1)]
@@ -31773,79 +31771,76 @@ namespace SteamNative
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static InputDigitalActionData_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (InputDigitalActionData_t) Marshal.PtrToStructure( p, typeof(InputDigitalActionData_t) );
-		}
+		internal static InputDigitalActionData_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((InputDigitalActionData_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((InputDigitalActionData_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(InputDigitalActionData_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool BState; // bState bool
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool BActive; // bActive bool
 			
-			//
-			// Easily convert from PackSmall to InputDigitalActionData_t
-			//
-			public static implicit operator InputDigitalActionData_t (  InputDigitalActionData_t.PackSmall d )
-			{
-				return new InputDigitalActionData_t()
-				{
-					BState = d.BState,
-					BActive = d.BActive,
-				};
-			}
+			public static implicit operator InputDigitalActionData_t ( InputDigitalActionData_t.Pack4 d ) => new InputDigitalActionData_t{ BState = d.BState,BActive = d.BActive, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool BState; // bState bool
+			[MarshalAs(UnmanagedType.I1)]
+			internal bool BActive; // bActive bool
+			
+			public static implicit operator InputDigitalActionData_t ( InputDigitalActionData_t.Pack8 d ) => new InputDigitalActionData_t{ BState = d.BState,BActive = d.BActive, };
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct SteamInventoryDefinitionUpdate_t
+	public struct SteamInventoryDefinitionUpdate_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.ClientInventory + 2;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static SteamInventoryDefinitionUpdate_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (SteamInventoryDefinitionUpdate_t) Marshal.PtrToStructure( p, typeof(SteamInventoryDefinitionUpdate_t) );
-		}
+		internal static SteamInventoryDefinitionUpdate_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((SteamInventoryDefinitionUpdate_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((SteamInventoryDefinitionUpdate_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamInventoryDefinitionUpdate_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			
-			//
-			// Easily convert from PackSmall to SteamInventoryDefinitionUpdate_t
-			//
-			public static implicit operator SteamInventoryDefinitionUpdate_t (  SteamInventoryDefinitionUpdate_t.PackSmall d )
-			{
-				return new SteamInventoryDefinitionUpdate_t()
-				{
-				};
-			}
+			public static implicit operator SteamInventoryDefinitionUpdate_t ( SteamInventoryDefinitionUpdate_t.Pack4 d ) => new SteamInventoryDefinitionUpdate_t{  };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			
+			public static implicit operator SteamInventoryDefinitionUpdate_t ( SteamInventoryDefinitionUpdate_t.Pack8 d ) => new SteamInventoryDefinitionUpdate_t{  };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -31975,42 +31970,42 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct SteamParentalSettingsChanged_t
+	public struct SteamParentalSettingsChanged_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamParentalSettings + 1;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static SteamParentalSettingsChanged_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (SteamParentalSettingsChanged_t) Marshal.PtrToStructure( p, typeof(SteamParentalSettingsChanged_t) );
-		}
+		internal static SteamParentalSettingsChanged_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((SteamParentalSettingsChanged_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((SteamParentalSettingsChanged_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamParentalSettingsChanged_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			
-			//
-			// Easily convert from PackSmall to SteamParentalSettingsChanged_t
-			//
-			public static implicit operator SteamParentalSettingsChanged_t (  SteamParentalSettingsChanged_t.PackSmall d )
-			{
-				return new SteamParentalSettingsChanged_t()
-				{
-				};
-			}
+			public static implicit operator SteamParentalSettingsChanged_t ( SteamParentalSettingsChanged_t.Pack4 d ) => new SteamParentalSettingsChanged_t{  };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			
+			public static implicit operator SteamParentalSettingsChanged_t ( SteamParentalSettingsChanged_t.Pack8 d ) => new SteamParentalSettingsChanged_t{  };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -32140,42 +32135,42 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct SteamServersConnected_t
+	public struct SteamServersConnected_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUser + 1;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static SteamServersConnected_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (SteamServersConnected_t) Marshal.PtrToStructure( p, typeof(SteamServersConnected_t) );
-		}
+		internal static SteamServersConnected_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((SteamServersConnected_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((SteamServersConnected_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamServersConnected_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			
-			//
-			// Easily convert from PackSmall to SteamServersConnected_t
-			//
-			public static implicit operator SteamServersConnected_t (  SteamServersConnected_t.PackSmall d )
-			{
-				return new SteamServersConnected_t()
-				{
-				};
-			}
+			public static implicit operator SteamServersConnected_t ( SteamServersConnected_t.Pack4 d ) => new SteamServersConnected_t{  };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			
+			public static implicit operator SteamServersConnected_t ( SteamServersConnected_t.Pack8 d ) => new SteamServersConnected_t{  };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -32305,83 +32300,77 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 	public struct NewLaunchQueryParameters_t
 	{
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static NewLaunchQueryParameters_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (NewLaunchQueryParameters_t) Marshal.PtrToStructure( p, typeof(NewLaunchQueryParameters_t) );
-		}
+		internal static NewLaunchQueryParameters_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((NewLaunchQueryParameters_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((NewLaunchQueryParameters_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(NewLaunchQueryParameters_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			
-			//
-			// Easily convert from PackSmall to NewLaunchQueryParameters_t
-			//
-			public static implicit operator NewLaunchQueryParameters_t (  NewLaunchQueryParameters_t.PackSmall d )
-			{
-				return new NewLaunchQueryParameters_t()
-				{
-				};
-			}
+			public static implicit operator NewLaunchQueryParameters_t ( NewLaunchQueryParameters_t.Pack4 d ) => new NewLaunchQueryParameters_t{  };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			
+			public static implicit operator NewLaunchQueryParameters_t ( NewLaunchQueryParameters_t.Pack8 d ) => new NewLaunchQueryParameters_t{  };
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct GCMessageAvailable_t
+	public struct GCMessageAvailable_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameCoordinator + 1;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal uint MessageSize; // m_nMessageSize uint32
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GCMessageAvailable_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GCMessageAvailable_t) Marshal.PtrToStructure( p, typeof(GCMessageAvailable_t) );
-		}
+		internal static GCMessageAvailable_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GCMessageAvailable_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GCMessageAvailable_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GCMessageAvailable_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal uint MessageSize; // m_nMessageSize uint32
 			
-			//
-			// Easily convert from PackSmall to GCMessageAvailable_t
-			//
-			public static implicit operator GCMessageAvailable_t (  GCMessageAvailable_t.PackSmall d )
-			{
-				return new GCMessageAvailable_t()
-				{
-					MessageSize = d.MessageSize,
-				};
-			}
+			public static implicit operator GCMessageAvailable_t ( GCMessageAvailable_t.Pack4 d ) => new GCMessageAvailable_t{ MessageSize = d.MessageSize, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal uint MessageSize; // m_nMessageSize uint32
+			
+			public static implicit operator GCMessageAvailable_t ( GCMessageAvailable_t.Pack8 d ) => new GCMessageAvailable_t{ MessageSize = d.MessageSize, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -32511,42 +32500,42 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct GCMessageFailed_t
+	public struct GCMessageFailed_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamGameCoordinator + 2;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static GCMessageFailed_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (GCMessageFailed_t) Marshal.PtrToStructure( p, typeof(GCMessageFailed_t) );
-		}
+		internal static GCMessageFailed_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((GCMessageFailed_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((GCMessageFailed_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(GCMessageFailed_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			
-			//
-			// Easily convert from PackSmall to GCMessageFailed_t
-			//
-			public static implicit operator GCMessageFailed_t (  GCMessageFailed_t.PackSmall d )
-			{
-				return new GCMessageFailed_t()
-				{
-				};
-			}
+			public static implicit operator GCMessageFailed_t ( GCMessageFailed_t.Pack4 d ) => new GCMessageFailed_t{  };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			
+			public static implicit operator GCMessageFailed_t ( GCMessageFailed_t.Pack8 d ) => new GCMessageFailed_t{  };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -32676,42 +32665,42 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct ScreenshotRequested_t
+	public struct ScreenshotRequested_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamScreenshots + 2;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static ScreenshotRequested_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (ScreenshotRequested_t) Marshal.PtrToStructure( p, typeof(ScreenshotRequested_t) );
-		}
+		internal static ScreenshotRequested_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((ScreenshotRequested_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((ScreenshotRequested_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(ScreenshotRequested_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			
-			//
-			// Easily convert from PackSmall to ScreenshotRequested_t
-			//
-			public static implicit operator ScreenshotRequested_t (  ScreenshotRequested_t.PackSmall d )
-			{
-				return new ScreenshotRequested_t()
-				{
-				};
-			}
+			public static implicit operator ScreenshotRequested_t ( ScreenshotRequested_t.Pack4 d ) => new ScreenshotRequested_t{  };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			
+			public static implicit operator ScreenshotRequested_t ( ScreenshotRequested_t.Pack8 d ) => new ScreenshotRequested_t{  };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -32841,42 +32830,42 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct LicensesUpdated_t
+	public struct LicensesUpdated_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUser + 25;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static LicensesUpdated_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (LicensesUpdated_t) Marshal.PtrToStructure( p, typeof(LicensesUpdated_t) );
-		}
+		internal static LicensesUpdated_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((LicensesUpdated_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((LicensesUpdated_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(LicensesUpdated_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			
-			//
-			// Easily convert from PackSmall to LicensesUpdated_t
-			//
-			public static implicit operator LicensesUpdated_t (  LicensesUpdated_t.PackSmall d )
-			{
-				return new LicensesUpdated_t()
-				{
-				};
-			}
+			public static implicit operator LicensesUpdated_t ( LicensesUpdated_t.Pack4 d ) => new LicensesUpdated_t{  };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			
+			public static implicit operator LicensesUpdated_t ( LicensesUpdated_t.Pack8 d ) => new LicensesUpdated_t{  };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -33006,42 +32995,42 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct SteamShutdown_t
+	public struct SteamShutdown_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUtils + 4;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static SteamShutdown_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (SteamShutdown_t) Marshal.PtrToStructure( p, typeof(SteamShutdown_t) );
-		}
+		internal static SteamShutdown_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((SteamShutdown_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((SteamShutdown_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamShutdown_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			
-			//
-			// Easily convert from PackSmall to SteamShutdown_t
-			//
-			public static implicit operator SteamShutdown_t (  SteamShutdown_t.PackSmall d )
-			{
-				return new SteamShutdown_t()
-				{
-				};
-			}
+			public static implicit operator SteamShutdown_t ( SteamShutdown_t.Pack4 d ) => new SteamShutdown_t{  };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			
+			public static implicit operator SteamShutdown_t ( SteamShutdown_t.Pack8 d ) => new SteamShutdown_t{  };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -33171,42 +33160,42 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct IPCountry_t
+	public struct IPCountry_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUtils + 1;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static IPCountry_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (IPCountry_t) Marshal.PtrToStructure( p, typeof(IPCountry_t) );
-		}
+		internal static IPCountry_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((IPCountry_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((IPCountry_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(IPCountry_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			
-			//
-			// Easily convert from PackSmall to IPCountry_t
-			//
-			public static implicit operator IPCountry_t (  IPCountry_t.PackSmall d )
-			{
-				return new IPCountry_t()
-				{
-				};
-			}
+			public static implicit operator IPCountry_t ( IPCountry_t.Pack4 d ) => new IPCountry_t{  };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			
+			public static implicit operator IPCountry_t ( IPCountry_t.Pack8 d ) => new IPCountry_t{  };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
@@ -33336,45 +33325,45 @@ namespace SteamNative
 		}
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-	public struct IPCFailure_t
+	public struct IPCFailure_t : Steamworks.ISteamCallback
 	{
 		internal const int CallbackId = CallbackIdentifiers.SteamUser + 17;
+		public int GetCallbackId() => CallbackId;
+		public int GetStructSize() => StructSize();
+		public Steamworks.ISteamCallback Fill( IntPtr p, int size)
+		{
+			return FromPointer( p ); // TODO - USE SIZE HERE SOMEHOW
+		}
 		internal byte FailureType; // m_eFailureType uint8
 		
 		//
 		// Read this struct from a pointer, usually from Native. It will automatically do the awesome stuff.
 		//
-		internal static IPCFailure_t FromPointer( IntPtr p )
-		{
-			if ( Platform.PackSmall ) return (PackSmall) Marshal.PtrToStructure( p, typeof(PackSmall) );
-			return (IPCFailure_t) Marshal.PtrToStructure( p, typeof(IPCFailure_t) );
-		}
+		internal static IPCFailure_t FromPointer( IntPtr p ) => 
+			Platform.PackSmall ? ((IPCFailure_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((IPCFailure_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		
 		//
 		// Get the size of the structure we're going to be using.
 		//
 		internal static int StructSize()
 		{
-			if ( Platform.PackSmall ) return System.Runtime.InteropServices.Marshal.SizeOf( typeof(PackSmall) );
-			return System.Runtime.InteropServices.Marshal.SizeOf( typeof(IPCFailure_t) );
+			return System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct PackSmall
+		public struct Pack4
 		{
 			internal byte FailureType; // m_eFailureType uint8
 			
-			//
-			// Easily convert from PackSmall to IPCFailure_t
-			//
-			public static implicit operator IPCFailure_t (  IPCFailure_t.PackSmall d )
-			{
-				return new IPCFailure_t()
-				{
-					FailureType = d.FailureType,
-				};
-			}
+			public static implicit operator IPCFailure_t ( IPCFailure_t.Pack4 d ) => new IPCFailure_t{ FailureType = d.FailureType, };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal byte FailureType; // m_eFailureType uint8
+			
+			public static implicit operator IPCFailure_t ( IPCFailure_t.Pack8 d ) => new IPCFailure_t{ FailureType = d.FailureType, };
 		}
 		
 		internal static void Register( Facepunch.Steamworks.BaseSteamworks steamworks )
