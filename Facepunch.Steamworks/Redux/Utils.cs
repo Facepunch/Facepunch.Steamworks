@@ -24,6 +24,37 @@ namespace Steamworks
 			}
 		}
 
+
+		public static uint SecondsSinceAppActive => _steamutils.GetSecondsSinceAppActive();
+
+		public static uint SecondsSinceComputerActive => _steamutils.GetSecondsSinceComputerActive();
+
+		// the universe this client is connecting to
+		public static Universe ConnectedUniverse => _steamutils.GetConnectedUniverse();
+
+		/// <summary>
+		/// Steam server time.  Number of seconds since January 1, 1970, GMT (i.e unix time)
+		/// </summary>
+		public static DateTime SteamServerTime => Facepunch.Steamworks.Utility.Epoch.ToDateTime( _steamutils.GetServerRealTime() );
+
+		/// <summary>
+		/// returns the 2 digit ISO 3166-1-alpha-2 format country code this client is running in (as looked up via an IP-to-location database)
+		/// e.g "US" or "UK".
+		/// </summary>
+		public static string IpCountry => _steamutils.GetIPCountry();
+
+		/// <summary>
+		/// returns true if the image exists, and the buffer was successfully filled out
+		/// results are returned in RGBA format
+		/// the destination buffer size should be 4 * height * width * sizeof(char)
+		/// </summary>
+		public static bool GetImageSize( int image, out uint width, out uint height )
+		{
+			width = 0;
+			height = 0;
+			return _steamutils.GetImageSize( image, ref width, ref height );
+		}
+
 		internal static bool IsCallComplete( SteamAPICall_t call, out bool failed )
 		{
 			failed = false;
