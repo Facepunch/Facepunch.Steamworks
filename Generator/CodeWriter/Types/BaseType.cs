@@ -15,6 +15,8 @@ internal class BaseType
 	{
 		if ( type == "SteamAPIWarningMessageHook_t" ) return new PointerType { NativeType = type, VarName = varname };
 
+		if ( type == "SteamAPICall_t" ) return new SteamApiCallType { NativeType = type, VarName = varname };
+
 		if ( type == "void" ) return new VoidType { NativeType = type, VarName = varname };
 		if ( type.Replace( " ", "" ) == "constchar*" ) return new ConstCharType { NativeType = type, VarName = varname };
 		if ( type == "char *" ) return new StringBuilderType { NativeType = type, VarName = varname };
@@ -42,6 +44,8 @@ internal class BaseType
 	public virtual string Return( string varname ) => $"return {varname};";
 	public virtual string ReturnAttribute => null;
 
+	public virtual string ReturnType => TypeName;
+
 	public virtual string Ref => !IsVector && NativeType.EndsWith( "*" ) ? "ref " : "";
 	public virtual bool IsVector => NativeType.EndsWith( "*" ) && (VarName.StartsWith( "pvec" ) || VarName.StartsWith( "pub" ));
 
@@ -63,6 +67,14 @@ internal class StructType : BaseType
 	public string StructName;
 
 	public override string TypeName => StructName;
+}
+
+internal class SteamApiCallType : BaseType
+{
+	public string CallResult;
+	public override string TypeName => "SteamAPICall_t";
+	public override string Return( string varname ) => $"return new SteamApiCallback<{CallResult}>( {varname} );";
+	public override string ReturnType => $"SteamApiCallback<{CallResult}>";
 }
 
 internal class CSteamIdType : BaseType
