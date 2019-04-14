@@ -55,6 +55,23 @@ namespace Steamworks
 			return _steamutils.GetImageSize( image, ref width, ref height );
 		}
 
+		/// <summary>
+		/// returns the image in RGBA format
+		/// </summary>
+		public static byte[] GetImageRGBA( int image )
+		{
+			if ( !GetImageSize( image, out var w, out var h ) )
+				return null;
+
+			var size = w * h * 4 * sizeof( char );
+			var data = new byte[size];
+
+			if ( !_steamutils.GetImageRGBA( image, data, data.Length ) )
+				return null;
+
+			return data;
+		}
+
 		internal static bool IsCallComplete( SteamAPICall_t call, out bool failed )
 		{
 			failed = false;
