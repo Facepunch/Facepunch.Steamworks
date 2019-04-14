@@ -13,15 +13,15 @@ namespace Steamworks
 	/// </summary>
 	public static class Apps
 	{
-		static Internal.ISteamApps _steamapps;
+		static Internal.ISteamApps _internal;
 		internal static Internal.ISteamApps steamapps
 		{
 			get
 			{
-				if ( _steamapps == null )
-					_steamapps = new Internal.ISteamApps();
+				if ( _internal == null )
+					_internal = new Internal.ISteamApps();
 
-				return _steamapps;
+				return _internal;
 			}
 		}
 

@@ -12,15 +12,15 @@ namespace Steamworks
 	/// </summary>
 	public static class Utils
 	{
-		static Internal.ISteamUtils _steamutils;
+		static Internal.ISteamUtils _internal;
 		internal static Internal.ISteamUtils steamutils
 		{
 			get
 			{
-				if ( _steamutils == null )
-					_steamutils = new Internal.ISteamUtils();
+				if ( _internal == null )
+					_internal = new Internal.ISteamUtils();
 
-				return _steamutils;
+				return _internal;
 			}
 		}
 

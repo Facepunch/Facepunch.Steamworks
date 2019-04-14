@@ -33,6 +33,7 @@ namespace Steamworks
 
 			Apps.InstallEvents();
 			Utils.InstallEvents();
+			Parental.InstallEvents();
 		}
 
 		internal static void RegisterCallback( IntPtr intPtr, int callbackId )
