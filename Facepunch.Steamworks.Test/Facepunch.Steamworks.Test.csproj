@@ -89,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client\AchievementsTest.cs" />
+    <Compile Include="Client\UtilsTest.cs" />
     <Compile Include="Client\ClientTest.cs" />
     <Compile Include="Client\LobbyTest.cs" />
     <Compile Include="Client\RichPresenceTest.cs" />

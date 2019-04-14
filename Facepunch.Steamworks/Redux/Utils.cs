@@ -53,9 +53,14 @@ namespace Steamworks
 		/// </summary>
 		public static event Action<bool> OnGamepadTextInputDismissed;
 
-
+		/// <summary>
+		/// Returns the number of seconds since the application was active
+		/// </summary>
 		public static uint SecondsSinceAppActive => steamutils.GetSecondsSinceAppActive();
 
+		/// <summary>
+		/// Returns the number of seconds since the user last moved the mouse etc
+		/// </summary>
 		public static uint SecondsSinceComputerActive => steamutils.GetSecondsSinceComputerActive();
 
 		// the universe this client is connecting to
@@ -104,7 +109,7 @@ namespace Steamworks
 		/// <summary>
 		/// Returns true if we're using a battery (ie, a laptop not plugged in)
 		/// </summary>
-		public static bool UsingBatteryPower => steamutils.GetCurrentBatteryPower() == 255;
+		public static bool UsingBatteryPower => steamutils.GetCurrentBatteryPower() != 255;
 
 		/// <summary>
 		/// Returns battery power [0-1]
@@ -134,8 +139,8 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Returns true if the overlay is running & the user can access it. The overlay process could take a few seconds to
-		/// start & hook the game process, so this function will initially return false while the overlay is loading.
+		/// Returns true if the overlay is running and the user can access it. The overlay process could take a few seconds to
+		/// start and hook the game process, so this function will initially return false while the overlay is loading.
 		/// </summary>
 		public static bool IsOverlayEnabled => steamutils.IsOverlayEnabled();
 
