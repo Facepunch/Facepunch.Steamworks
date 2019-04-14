@@ -31,5 +31,15 @@ namespace Steamworks
 				throw new System.Exception( "GetHSteamUser returned 0" );
 			}
 		}
+
+		internal static void RegisterCallback( IntPtr intPtr, int callbackId )
+		{
+			SteamApi.RegisterCallback( intPtr, callbackId );
+		}
+
+		internal static void UnregisterCallback( IntPtr intPtr )
+		{
+			SteamApi.UnregisterCallback( intPtr );
+		}
 	}
 }
