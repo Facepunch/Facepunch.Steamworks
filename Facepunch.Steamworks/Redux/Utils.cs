@@ -26,10 +26,10 @@ namespace Steamworks
 
 		internal static void InstallEvents()
 		{
-			new Event<IPCountry_t>( x => OnIpCountryChanged() );
-			new Event<LowBatteryPower_t>( x => OnLowBatteryPower( x.MinutesBatteryLeft ) );
-			new Event<SteamShutdown_t>( x => OnSteamShutdown() );
-			new Event<GamepadTextInputDismissed_t>( x => OnGamepadTextInputDismissed( x.Submitted ) );
+			new Event<IPCountry_t>( x => OnIpCountryChanged?.Invoke() );
+			new Event<LowBatteryPower_t>( x => OnLowBatteryPower?.Invoke( x.MinutesBatteryLeft ) );
+			new Event<SteamShutdown_t>( x => OnSteamShutdown?.Invoke() );
+			new Event<GamepadTextInputDismissed_t>( x => OnGamepadTextInputDismissed?.Invoke( x.Submitted ) );
 		}
 
 		/// <summary>

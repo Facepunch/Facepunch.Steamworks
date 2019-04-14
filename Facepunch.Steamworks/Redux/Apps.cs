@@ -27,8 +27,8 @@ namespace Steamworks
 
 		internal static void InstallEvents()
 		{
-			new Event<DlcInstalled_t>( x => OnDlcInstalled( x.AppID ) );
-			new Event<NewUrlLaunchParameters_t>( x => OnNewLaunchParameters() );
+			new Event<DlcInstalled_t>( x => OnDlcInstalled?.Invoke( x.AppID ) );
+			new Event<NewUrlLaunchParameters_t>( x => OnNewLaunchParameters?.Invoke() );
 		}
 
 		/// <summary>
