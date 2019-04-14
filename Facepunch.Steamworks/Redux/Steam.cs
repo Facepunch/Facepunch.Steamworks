@@ -30,6 +30,9 @@ namespace Steamworks
 			{
 				throw new System.Exception( "GetHSteamUser returned 0" );
 			}
+
+			Apps.InstallEvents();
+			Utils.InstallEvents();
 		}
 
 		internal static void RegisterCallback( IntPtr intPtr, int callbackId )
