@@ -13,7 +13,7 @@ namespace Steamworks
 	public static class Parental
 	{
 		static Internal.ISteamParentalSettings _internal;
-		internal static Internal.ISteamParentalSettings parentalsettings
+		internal static Internal.ISteamParentalSettings Internal
 		{
 			get
 			{
@@ -38,31 +38,31 @@ namespace Steamworks
 		/// <summary>
 		/// 
 		/// </summary>
-		public static bool IsParentalLockEnabled => parentalsettings.BIsParentalLockEnabled();
+		public static bool IsParentalLockEnabled => Internal.BIsParentalLockEnabled();
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public static bool IsParentalLockLocked => parentalsettings.BIsParentalLockLocked();
+		public static bool IsParentalLockLocked => Internal.BIsParentalLockLocked();
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public static bool IsAppBlocked( AppId app ) => parentalsettings.BIsAppBlocked( app.Value );
+		public static bool IsAppBlocked( AppId app ) => Internal.BIsAppBlocked( app.Value );
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public static bool BIsAppInBlockList( AppId app ) => parentalsettings.BIsAppInBlockList( app.Value );
+		public static bool BIsAppInBlockList( AppId app ) => Internal.BIsAppInBlockList( app.Value );
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public static bool IsFeatureBlocked( ParentalFeature feature ) => parentalsettings.BIsFeatureBlocked( feature );
+		public static bool IsFeatureBlocked( ParentalFeature feature ) => Internal.BIsFeatureBlocked( feature );
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public static bool BIsFeatureInBlockList( ParentalFeature feature ) => parentalsettings.BIsFeatureInBlockList( feature );
+		public static bool BIsFeatureInBlockList( ParentalFeature feature ) => Internal.BIsFeatureInBlockList( feature );
 	}
 }

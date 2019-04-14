@@ -13,7 +13,7 @@ namespace Steamworks
 	public static class Music
 	{
 		static Internal.ISteamMusic _internal;
-		internal static Internal.ISteamMusic music
+		internal static Internal.ISteamMusic Internal
 		{
 			get
 			{
@@ -43,40 +43,40 @@ namespace Steamworks
 		/// <summary>
 		/// Checks if Steam Music is enabled
 		/// </summary>
-		public static bool IsEnabled => music.BIsEnabled();
+		public static bool IsEnabled => Internal.BIsEnabled();
 
 		/// <summary>
 		/// true if a song is currently playing, paused, or queued up to play; otherwise false.
 		/// </summary>
-		public static bool IsPlaying => music.BIsPlaying();
+		public static bool IsPlaying => Internal.BIsPlaying();
 
 		/// <summary>
 		/// Gets the current status of the Steam Music player
 		/// </summary>
-		public static AudioPlayback_Status Status => music.GetPlaybackStatus();
+		public static AudioPlayback_Status Status => Internal.GetPlaybackStatus();
 
 
-		public static void Play() => music.Play();
+		public static void Play() => Internal.Play();
 
-		public static void Pause() => music.Pause();
+		public static void Pause() => Internal.Pause();
 
 		/// <summary>
 		/// Have the Steam Music player play the previous song.
 		/// </summary>
-		public static void PlayPrevious() => music.PlayPrevious();
+		public static void PlayPrevious() => Internal.PlayPrevious();
 
 		/// <summary>
 		/// Have the Steam Music player skip to the next song
 		/// </summary>
-		public static void PlayNext() => music.PlayNext();
+		public static void PlayNext() => Internal.PlayNext();
 
 		/// <summary>
 		/// Gets/Sets the current volume of the Steam Music player
 		/// </summary>
 		public static float Volume
 		{
-			get => music.GetVolume();
-			set => music.SetVolume( value );
+			get => Internal.GetVolume();
+			set => Internal.SetVolume( value );
 		}
 	}
 }

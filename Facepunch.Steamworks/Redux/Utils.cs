@@ -13,7 +13,7 @@ namespace Steamworks
 	public static class Utils
 	{
 		static Internal.ISteamUtils _internal;
-		internal static Internal.ISteamUtils steamutils
+		internal static Internal.ISteamUtils Internal
 		{
 			get
 			{
@@ -56,26 +56,26 @@ namespace Steamworks
 		/// <summary>
 		/// Returns the number of seconds since the application was active
 		/// </summary>
-		public static uint SecondsSinceAppActive => steamutils.GetSecondsSinceAppActive();
+		public static uint SecondsSinceAppActive => Internal.GetSecondsSinceAppActive();
 
 		/// <summary>
 		/// Returns the number of seconds since the user last moved the mouse etc
 		/// </summary>
-		public static uint SecondsSinceComputerActive => steamutils.GetSecondsSinceComputerActive();
+		public static uint SecondsSinceComputerActive => Internal.GetSecondsSinceComputerActive();
 
 		// the universe this client is connecting to
-		public static Universe ConnectedUniverse => steamutils.GetConnectedUniverse();
+		public static Universe ConnectedUniverse => Internal.GetConnectedUniverse();
 
 		/// <summary>
 		/// Steam server time.  Number of seconds since January 1, 1970, GMT (i.e unix time)
 		/// </summary>
-		public static DateTime SteamServerTime => Facepunch.Steamworks.Utility.Epoch.ToDateTime( steamutils.GetServerRealTime() );
+		public static DateTime SteamServerTime => Facepunch.Steamworks.Utility.Epoch.ToDateTime( Internal.GetServerRealTime() );
 
 		/// <summary>
 		/// returns the 2 digit ISO 3166-1-alpha-2 format country code this client is running in (as looked up via an IP-to-location database)
 		/// e.g "US" or "UK".
 		/// </summary>
-		public static string IpCountry => steamutils.GetIPCountry();
+		public static string IpCountry => Internal.GetIPCountry();
 
 		/// <summary>
 		/// returns true if the image exists, and the buffer was successfully filled out
@@ -86,7 +86,7 @@ namespace Steamworks
 		{
 			width = 0;
 			height = 0;
-			return steamutils.GetImageSize( image, ref width, ref height );
+			return Internal.GetImageSize( image, ref width, ref height );
 		}
 
 		/// <summary>
@@ -100,7 +100,7 @@ namespace Steamworks
 			var size = w * h * 4 * sizeof( char );
 			var data = new byte[size];
 
-			if ( !steamutils.GetImageRGBA( image, data, data.Length ) )
+			if ( !Internal.GetImageRGBA( image, data, data.Length ) )
 				return null;
 
 			return data;
@@ -109,17 +109,17 @@ namespace Steamworks
 		/// <summary>
 		/// Returns true if we're using a battery (ie, a laptop not plugged in)
 		/// </summary>
-		public static bool UsingBatteryPower => steamutils.GetCurrentBatteryPower() != 255;
+		public static bool UsingBatteryPower => Internal.GetCurrentBatteryPower() != 255;
 
 		/// <summary>
 		/// Returns battery power [0-1]
 		/// </summary>
-		public static float CurrentBatteryPower => Math.Min( steamutils.GetCurrentBatteryPower() / 100, 1.0f );
+		public static float CurrentBatteryPower => Math.Min( Internal.GetCurrentBatteryPower() / 100, 1.0f );
 
 		/// <summary>
 		/// returns the appID of the current process
 		/// </summary>
-		public static AppId AppId => steamutils.GetAppID();
+		public static AppId AppId => Internal.GetAppID();
 
 		static NotificationPosition overlayNotificationPosition = NotificationPosition.BottomRight;
 
@@ -134,7 +134,7 @@ namespace Steamworks
 			set
 			{
 				overlayNotificationPosition = value;
-				steamutils.SetOverlayNotificationPosition( value );
+				Internal.SetOverlayNotificationPosition( value );
 			}
 		}
 
@@ -142,7 +142,7 @@ namespace Steamworks
 		/// Returns true if the overlay is running and the user can access it. The overlay process could take a few seconds to
 		/// start and hook the game process, so this function will initially return false while the overlay is loading.
 		/// </summary>
-		public static bool IsOverlayEnabled => steamutils.IsOverlayEnabled();
+		public static bool IsOverlayEnabled => Internal.IsOverlayEnabled();
 
 		/// <summary>
 		/// Normally this call is unneeded if your game has a constantly running frame loop that calls the 
@@ -155,7 +155,7 @@ namespace Steamworks
 		/// in that case, and then you can check for this periodically (roughly 33hz is desirable) and make sure you
 		/// refresh the screen with Present or SwapBuffers to allow the overlay to do it's work.
 		/// </summary>
-		public static bool DoesOverlayNeedPresent => steamutils.BOverlayNeedsPresent();
+		public static bool DoesOverlayNeedPresent => Internal.BOverlayNeedsPresent();
 
 		/// <summary>
 		/// Asynchronous call to check if an executable file has been signed using the public key set on the signing tab
@@ -163,7 +163,7 @@ namespace Steamworks
 		/// </summary>
 		public static async Task<CheckFileSignature> CheckFileSignature( string filename )
 		{
-			var r = await steamutils.CheckFileSignature( filename );
+			var r = await Internal.CheckFileSignature( filename );
 
 			if ( !r.HasValue )
 			{
@@ -178,7 +178,7 @@ namespace Steamworks
 		/// </summary>
 		public static bool ShowGamepadTextInput( GamepadTextInputMode inputMode, GamepadTextInputLineMode lineInputMode, string description, int maxChars, string existingText = "" )
 		{
-			return steamutils.ShowGamepadTextInput( inputMode, lineInputMode, description, (uint)maxChars, existingText );
+			return Internal.ShowGamepadTextInput( inputMode, lineInputMode, description, (uint)maxChars, existingText );
 		}
 
 		/// <summary>
@@ -186,11 +186,11 @@ namespace Steamworks
 		/// </summary>
 		public static string GetEnteredGamepadText()
 		{
-			var len = steamutils.GetEnteredGamepadTextLength();
+			var len = Internal.GetEnteredGamepadTextLength();
 			if ( len == 0 ) return string.Empty;
 
 			var sb = Helpers.TakeStringBuilder();
-			if ( !steamutils.GetEnteredGamepadTextInput( sb, len ) )
+			if ( !Internal.GetEnteredGamepadTextInput( sb, len ) )
 				return string.Empty;
 
 			return sb.ToString();
@@ -200,19 +200,19 @@ namespace Steamworks
 		/// returns the language the steam client is running in, you probably want 
 		/// Apps.CurrentGameLanguage instead, this is for very special usage cases
 		/// </summary>
-		public static string SteamUILanguage => steamutils.GetSteamUILanguage();
+		public static string SteamUILanguage => Internal.GetSteamUILanguage();
 
 		/// <summary>
 		/// returns true if Steam itself is running in VR mode
 		/// </summary>
-		public static bool IsSteamRunningInVR => steamutils.IsSteamRunningInVR();
+		public static bool IsSteamRunningInVR => Internal.IsSteamRunningInVR();
 
 		/// <summary>
 		/// Sets the inset of the overlay notification from the corner specified by SetOverlayNotificationPosition
 		/// </summary>
 		public static void SetOverlayNotificationInset( int x, int y )
 		{
-			steamutils.SetOverlayNotificationInset( x, y );
+			Internal.SetOverlayNotificationInset( x, y );
 		}
 
 		/// <summary>
@@ -220,13 +220,13 @@ namespace Steamworks
 		/// Games much be launched through the Steam client to enable the Big Picture overlay. During development,
 		/// a game can be added as a non-steam game to the developers library to test this feature
 		/// </summary>
-		public static bool IsSteamInBigPictureMode => steamutils.IsSteamInBigPictureMode();
+		public static bool IsSteamInBigPictureMode => Internal.IsSteamInBigPictureMode();
 
 
 		/// <summary>
 		/// ask SteamUI to create and render its OpenVR dashboard
 		/// </summary>
-		public static void StartVRDashboard() => steamutils.StartVRDashboard();
+		public static void StartVRDashboard() => Internal.StartVRDashboard();
 
 		/// <summary>
 		/// Set whether the HMD content will be streamed via Steam In-Home Streaming
@@ -237,11 +237,11 @@ namespace Steamworks
 		/// </summary>
 		public static bool VrHeadsetStreaming
 		{
-			get => steamutils.IsVRHeadsetStreamingEnabled();
+			get => Internal.IsVRHeadsetStreamingEnabled();
 			
 			set
 			{
-				steamutils.SetVRHeadsetStreamingEnabled( value );
+				Internal.SetVRHeadsetStreamingEnabled( value );
 			}
 		}
 
@@ -249,7 +249,7 @@ namespace Steamworks
 		internal static bool IsCallComplete( SteamAPICall_t call, out bool failed )
 		{
 			failed = false;
-			return steamutils.IsAPICallCompleted( call, ref failed );
+			return Internal.IsAPICallCompleted( call, ref failed );
 		}
 
 		internal static T? GetResult<T>( SteamAPICall_t call ) where T : struct, ISteamCallback
@@ -263,7 +263,7 @@ namespace Steamworks
 			{
 				bool failed = false;
 
-				if ( !steamutils.GetAPICallResult( call, ptr, size, t.GetCallbackId(), ref failed ) )
+				if ( !Internal.GetAPICallResult( call, ptr, size, t.GetCallbackId(), ref failed ) )
 					return null;
 
 				if ( failed )
