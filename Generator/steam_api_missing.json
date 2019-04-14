@@ -7,6 +7,11 @@
 		  "struct": "PlaybackStatusHasChanged_t",
 		  "fields": [ ]
 		},
+
+		{
+			"struct": "BroadcastUploadStart_t",
+			"fields": [ ]
+		  },
   
 	  {
 		"struct": "NewUrlLaunchParameters_t",
