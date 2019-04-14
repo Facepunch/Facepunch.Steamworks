@@ -6816,6 +6816,31 @@ namespace SteamNative
 		#endregion
 	}
 	
+	public struct PlaybackStatusHasChanged_t : Steamworks.ISteamCallback
+	{
+		
+		#region ISteamCallback
+		public int GetCallbackId() => CallbackIdentifiers.SteamMusic + 1;
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => Platform.PackSmall ? ((PlaybackStatusHasChanged_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((PlaybackStatusHasChanged_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		#endregion
+		#region Packed Versions
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+		public struct Pack4
+		{
+			
+			public static implicit operator PlaybackStatusHasChanged_t ( PlaybackStatusHasChanged_t.Pack4 d ) => new PlaybackStatusHasChanged_t{  };
+		}
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			
+			public static implicit operator PlaybackStatusHasChanged_t ( PlaybackStatusHasChanged_t.Pack8 d ) => new PlaybackStatusHasChanged_t{  };
+		}
+		#endregion
+	}
+	
 	public struct NewUrlLaunchParameters_t : Steamworks.ISteamCallback
 	{
 		
@@ -7458,6 +7483,7 @@ namespace SteamNative
 			new CallbackHandle<GSStatsReceived_t>( steamworks );
 			new CallbackHandle<GSStatsStored_t>( steamworks );
 			new CallbackHandle<GSStatsUnloaded_t>( steamworks );
+			new CallbackHandle<PlaybackStatusHasChanged_t>( steamworks );
 			new CallbackHandle<NewUrlLaunchParameters_t>( steamworks );
 			new CallbackHandle<ItemInstalled_t>( steamworks );
 			new CallbackHandle<SteamInventoryDefinitionUpdate_t>( steamworks );
