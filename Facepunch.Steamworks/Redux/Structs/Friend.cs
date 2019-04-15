@@ -54,6 +54,11 @@ namespace Steamworks
 			}
 		}
 
+		public bool IsIn( CSteamID group_or_room )
+		{
+			return Friends.Internal.IsUserInSource( Id, group_or_room );
+		}
+
 		public struct FriendGameInfo
 		{
 			internal ulong GameID; // m_gameID class CGameID
@@ -74,6 +79,7 @@ namespace Steamworks
 				};
 			}
 		}
+
 
 	}
 }
