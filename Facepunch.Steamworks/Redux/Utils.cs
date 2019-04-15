@@ -216,7 +216,7 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// returns true if Steam & the Steam Overlay are running in Big Picture mode
+		/// returns true if Steam and the Steam Overlay are running in Big Picture mode
 		/// Games much be launched through the Steam client to enable the Big Picture overlay. During development,
 		/// a game can be added as a non-steam game to the developers library to test this feature
 		/// </summary>

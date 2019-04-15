@@ -32,13 +32,13 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// posted after the user gains ownership of DLC & that DLC is installed
+		/// posted after the user gains ownership of DLC and that DLC is installed
 		/// </summary>
 		public static event Action< AppId > OnDlcInstalled;
 
 		/// <summary>
 		/// posted after the user gains executes a Steam URL with command line or query parameters
-		/// such as steam://run/appid//-commandline/?param1=value1&param2=value2&param3=value3 etc
+		/// such as steam://run/appid//-commandline/?param1=value1(and)param2=value2(and)param3=value3 etc
 		/// while the game is already running.  The new params can be queried
 		/// with GetLaunchQueryParam and GetLaunchCommandLine
 		/// </summary>

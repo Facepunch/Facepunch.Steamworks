@@ -58,7 +58,6 @@ namespace Facepunch.Steamworks
         /// </summary>
         public string[] AvailableLanguages { get; }
 
-        public Voice Voice { get; private set; }
         public ServerList ServerList { get; private set; }
         public LobbyList LobbyList { get; private set; }
         public Achievements Achievements { get; private set; }
@@ -103,7 +102,6 @@ namespace Facepunch.Steamworks
             //
             // Client only interfaces
             //
-            Voice = new Voice( this );
             ServerList = new ServerList( this );
             LobbyList = new LobbyList(this);
             Stats = new Stats( this );
@@ -155,7 +153,6 @@ namespace Facepunch.Steamworks
                 return;
 
             RunCallbacks();
-            Voice.Update();
             Friends.Cycle();
 
             base.Update();            
@@ -175,11 +172,6 @@ namespace Facepunch.Steamworks
         public override void Dispose()
         {
             if ( disposed ) return;
-
-            if ( Voice != null )
-            {
-                Voice = null;
-            }
 
             if ( ServerList  != null )
             {
