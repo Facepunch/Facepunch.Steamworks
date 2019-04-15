@@ -77,7 +77,7 @@ namespace Steamworks
 				await Task.Delay( 16 );
 				try
 				{
-					SteamApi.SteamAPI_RunCallbacks();
+					SteamApi.SteamGameServer_RunCallbacks();
 				}
 				catch ( System.Exception )
 				{

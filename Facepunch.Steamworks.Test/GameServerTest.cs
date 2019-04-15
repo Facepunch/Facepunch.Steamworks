@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SteamNative;
 
 namespace Steamworks
 {
@@ -38,96 +39,70 @@ namespace Steamworks
         }
 
         [TestMethod]
-        public void AuthCallback()
+        public async Task BeginAuthSession()
         {
-			/*
-            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
-            {
-                Assert.IsTrue( client.IsValid );
-                var ticket = client.Auth.GetAuthSessionTicket();
-                var ticketBinary = ticket.Data;
+			bool finished = false;
+			AuthSessionResponse response = AuthSessionResponse.AuthTicketInvalidAlreadyUsed;
 
-                using ( var server = new Facepunch.Steamworks.Server( 252490, new ServerInit( "rust", "Rust" ) ) )
-                {
-                    server.LogOnAnonymous();
+			//
+			// Clientside calls this function, gets ticket
+			//
+			var clientTicket = User.GetAuthSessionTicket();
 
-                    Assert.IsTrue( server.IsValid );
+			//
+			// The client sends this data to the server along with their steamid
+			//
+			var ticketData = clientTicket.Data;
+			var clientSteamId = User.SteamID;
 
-                    var auth = server.Auth;
+			//
+			// Server listens to auth responses from Gabe
+			//
+			GameServer.OnValidateAuthTicketResponse += ( steamid, ownerid, rsponse ) =>
+			{
+				finished = true;
+				response = rsponse;
 
-                    var Authed = false;
+				Assert.AreEqual( steamid, clientSteamId );
+				Assert.AreEqual( steamid, ownerid );
 
-                    server.Auth.OnAuthChange = ( steamid, ownerid, status ) =>
-                    {
-                        Authed = status == ServerAuth.Status.OK;
+				Console.WriteLine( "steamid: {0}", steamid );
+				Console.WriteLine( "ownerid: {0}", ownerid );
+				Console.WriteLine( "status: {0}", response );
+			};
 
-                        Assert.AreEqual( steamid, client.SteamId );
-                        Assert.AreEqual( steamid, ownerid );
+			//
+			// Server gets the ticket, starts authing
+			//
+			if ( !GameServer.BeginAuthSession( ticketData, clientSteamId ) )
+			{
+				Assert.Fail( "BeginAuthSession returned false, called bullshit without even having to check with Gabe" );
+			}
 
-                        Console.WriteLine( "steamid: {0}", steamid );
-                        Console.WriteLine( "ownerid: {0}", ownerid );
-                        Console.WriteLine( "status: {0}", status );
-                    };
+			//
+			// Wait for that to go through steam
+			//
+			while ( !finished )
+				await Task.Delay( 10 );
 
-                    for ( int i = 0; i < 16; i++ )
-                    {
-                        System.Threading.Thread.Sleep( 10 );
-                        GC.Collect();
-                        server.Update();
-                        GC.Collect();
-                        client.Update();
-                        GC.Collect();
-                    }
+			Assert.AreEqual( response, AuthSessionResponse.OK );
 
-                    GC.Collect();
-                    if ( !server.Auth.StartSession( ticketBinary, client.SteamId ) )
-                    {
-                        Assert.Fail( "Start Session returned false" );
-                    }
-                    GC.Collect();
+			finished = false;
 
-                    //
-                    // Server should receive a ServerAuth.Status.OK 
-                    // message via the OnAuthChange callback
-                    //
+			//
+			// The client is leaving, and now wants to cancel the ticket
+			//
 
-                    for ( int i = 0; i< 100; i++ )
-                    {
-                        GC.Collect();
-                        System.Threading.Thread.Sleep( 100 );
-                        GC.Collect();
-                        server.Update();
-                        client.Update();
+			clientTicket.Cancel();
 
-                        if ( Authed )
-                            break;
-                    }
+			//
+			// We should get another callback 
+			//
+			while ( !finished )
+				await Task.Delay( 10 );
 
-                    Assert.IsTrue( Authed );
+			Assert.AreEqual( response, AuthSessionResponse.AuthTicketCanceled );
 
-                    //
-                    // Client cancels ticket
-                    //
-                    ticket.Cancel();
-
-                    //
-                    // Server should receive a ticket cancelled message
-                    //
-
-                    for ( int i = 0; i < 100; i++ )
-                    {
-                        System.Threading.Thread.Sleep( 100 );
-                        server.Update();
-                        client.Update();
-
-                        if ( !Authed )
-                            break;
-                    }
-
-                    Assert.IsTrue( !Authed );
-
-                }
-            }*/
-        }
+		}
     }
 }
