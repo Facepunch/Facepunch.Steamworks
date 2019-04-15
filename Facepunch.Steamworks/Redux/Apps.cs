@@ -235,7 +235,7 @@ namespace Steamworks
 		/// Asynchronously retrieves metadata details about a specific file in the depot manifest.
 		/// Currently provides:
 		/// </summary>
-		public static async Task<FileDetails> GetFileDetails( string filename )
+		public static async Task<FileDetails> GetFileDetailsAsync( string filename )
 		{
 			var r = await Internal.GetFileDetails( filename );
 

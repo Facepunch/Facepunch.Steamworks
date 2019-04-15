@@ -121,20 +121,24 @@ namespace Steamworks
 		public static CSteamID SteamID => Internal.GetSteamID();
 
 
+		static bool _recordingVoice;
+
 		/// <summary>
-		/// Starts voice recording.
+		/// Starts/Stops voice recording.
 		/// Once started, use GetAvailableVoice and GetVoice to get the data, and then call StopVoiceRecording 
 		/// when the user has released their push-to-talk hotkey or the game session has completed.
 		/// </summary>
-		public static void StartVoiceRecording() => Internal.StartVoiceRecording();
 
-		/// <summary>
-		/// Stops voice recording.
-		/// Because people often release push-to-talk keys early, the system will keep recording for a little bit 
-		/// after this function is called.As such, GetVoice should continue to be called until it returns k_EVoiceResultNotRecording, 
-		/// only then will voice recording be stopped.
-		/// </summary>
-		public static void StopVoiceRecording() => Internal.StopVoiceRecording();
+		public static bool VoiceRecord
+		{
+			get => _recordingVoice;
+			set
+			{
+				_recordingVoice = value;
+				if ( value ) Internal.StartVoiceRecording();
+				else Internal.StopVoiceRecording();
+			}
+		}
 
 
 		/// <summary>

@@ -89,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client\AchievementsTest.cs" />
+    <Compile Include="Client\UserTest.cs" />
     <Compile Include="Client\UtilsTest.cs" />
     <Compile Include="Client\ClientTest.cs" />
     <Compile Include="Client\LobbyTest.cs" />
@@ -96,7 +97,6 @@
     <Compile Include="Client\LeaderboardTest.cs" />
     <Compile Include="Client\AppTest.cs" />
     <Compile Include="Client\RemoteStorageTest.cs" />
-    <Compile Include="Client\VoiceTest.cs" />
     <Compile Include="Client\InventoryTest.cs" />
     <Compile Include="Client\WorkshopTest.cs" />
     <Compile Include="Client\NetworkingTest.cs" />

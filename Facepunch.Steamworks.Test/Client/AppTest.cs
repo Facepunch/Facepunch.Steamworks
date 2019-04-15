@@ -69,7 +69,7 @@ namespace Steamworks
 		[TestMethod]
 		public async Task GetFileDetails()
 		{
-			var fileinfo = await Apps.GetFileDetails( "hl2.exe" );
+			var fileinfo = await Apps.GetFileDetailsAsync( "hl2.exe" );
 
 			Console.WriteLine( $"fileinfo.Found: {fileinfo.Found}" );
 			Console.WriteLine( $"fileinfo.SizeInBytes: {fileinfo.SizeInBytes}" );
@@ -78,7 +78,7 @@ namespace Steamworks
 		}
 
 		[TestMethod]
-		public async Task CommandLine()
+		public void CommandLine()
 		{
 			var cl = Apps.CommandLine;
 
