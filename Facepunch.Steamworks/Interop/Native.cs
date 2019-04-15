@@ -31,9 +31,6 @@ namespace Facepunch.Steamworks.Interop
 
         internal bool InitClient( BaseSteamworks steamworks )
         {
-            if ( Steamworks.Server.Instance != null )
-                throw new System.Exception("Steam client should be initialized before steam server - or there's big trouble.");
-
             isServer = false;
 
             api = new SteamNative.SteamApi();

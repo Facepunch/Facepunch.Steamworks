@@ -31,12 +31,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Compile Update="Server.cs">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Compile>
-  </ItemGroup>
-  
-  <ItemGroup>
     <None Update="steam_api64.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

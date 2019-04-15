@@ -9,6 +9,10 @@ namespace Steamworks.Internal
 {
 	public class ISteamMusic : BaseSteamInterface
 	{
+		public ISteamMusic( bool server = false ) : base( server )
+		{
+		}
+		
 		public override string InterfaceName => "STEAMMUSIC_INTERFACE_VERSION001";
 		
 		public override void InitInternals()

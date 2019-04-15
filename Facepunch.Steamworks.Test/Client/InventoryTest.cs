@@ -196,7 +196,7 @@ namespace Facepunch.Steamworks.Test
 
                 Assert.IsNotNull( client.Inventory.SerializedItems );
                 Assert.IsTrue( client.Inventory.SerializedItems.Length > 4 );
-
+				/*
                 using ( var server = new Facepunch.Steamworks.Server( 252490, new ServerInit( "rust", "Rust" ) ) )
                 {
                     server.LogOnAnonymous();
@@ -223,6 +223,7 @@ namespace Facepunch.Steamworks.Test
                         Console.WriteLine( "Item: {0} ({1})", item.Id, item.DefinitionId );
                     }
                 }
+				*/
             }
         }
 

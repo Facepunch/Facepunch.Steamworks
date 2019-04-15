@@ -9,6 +9,10 @@ namespace Steamworks.Internal
 {
 	public class ISteamParentalSettings : BaseSteamInterface
 	{
+		public ISteamParentalSettings( bool server = false ) : base( server )
+		{
+		}
+		
 		public override string InterfaceName => "STEAMPARENTALSETTINGS_INTERFACE_VERSION001";
 		
 		public override void InitInternals()

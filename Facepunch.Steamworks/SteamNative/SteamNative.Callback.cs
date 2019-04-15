@@ -326,9 +326,6 @@ namespace SteamNative
 
 			if ( Facepunch.Steamworks.Client.Instance != null )
 				Facepunch.Steamworks.Client.Instance.OnCallback<T>( value );
-
-			if ( Facepunch.Steamworks.Server.Instance != null )
-				Facepunch.Steamworks.Server.Instance.OnCallback<T>( value );
 		}
 	}
 

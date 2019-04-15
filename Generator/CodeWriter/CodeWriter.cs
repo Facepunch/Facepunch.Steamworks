@@ -100,6 +100,7 @@ namespace Generator
 				GenerateVTableClass( "ISteamUser", $"{folder}../Generated/Interfaces/ISteamUser.cs" );
 				GenerateVTableClass( "ISteamMatchmakingServers", $"{folder}../Generated/Interfaces/ISteamMatchmakingServers.cs" );
 				GenerateVTableClass( "ISteamFriends", $"{folder}../Generated/Interfaces/ISteamFriends.cs" );
+				GenerateVTableClass( "ISteamGameServer", $"{folder}../Generated/Interfaces/ISteamGameServer.cs" );
 			}
 		}
 

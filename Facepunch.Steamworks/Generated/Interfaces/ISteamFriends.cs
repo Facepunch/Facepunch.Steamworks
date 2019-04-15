@@ -9,6 +9,10 @@ namespace Steamworks.Internal
 {
 	public class ISteamFriends : BaseSteamInterface
 	{
+		public ISteamFriends( bool server = false ) : base( server )
+		{
+		}
+		
 		public override string InterfaceName => "SteamFriends017";
 		
 		public override void InitInternals()

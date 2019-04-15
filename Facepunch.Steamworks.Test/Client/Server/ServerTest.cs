@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+/*
 namespace Facepunch.Steamworks.Test
 {
     [DeploymentItem( "steam_api64.dll" )]
@@ -148,3 +148,4 @@ namespace Facepunch.Steamworks.Test
         }
     }
 }
+*/

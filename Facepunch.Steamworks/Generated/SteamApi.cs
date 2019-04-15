@@ -13,6 +13,9 @@ public static class SteamApi
 	[DllImport( "Steam_api64", EntryPoint = "SteamAPI_GetHSteamUser", CallingConvention = CallingConvention.Cdecl )]
 	public static extern int GetHSteamUser();
 
+	[DllImport( "Steam_api64", EntryPoint = "SteamGameServer_GetHSteamUser", CallingConvention = CallingConvention.Cdecl )]
+	public static extern int SteamGameServer_GetHSteamUser();
+
 	[DllImport( "Steam_api64", EntryPoint = "SteamAPI_RunCallbacks", CallingConvention = CallingConvention.Cdecl )]
 	public static extern int RunCallbacks();
 

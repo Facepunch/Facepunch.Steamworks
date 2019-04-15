@@ -8,4 +8,8 @@ public static class SteamInternal
 {
 	[DllImport( "Steam_api64", EntryPoint = "SteamInternal_FindOrCreateUserInterface", CallingConvention = CallingConvention.Cdecl )]
 	public static extern IntPtr FindOrCreateUserInterface( int hSteamUser, [MarshalAs( UnmanagedType.LPStr )] string pszVersion );
+
+
+	[DllImport( "Steam_api64", EntryPoint = "SteamInternal_FindOrCreateGameServerInterface", CallingConvention = CallingConvention.Cdecl )]
+	public static extern IntPtr FindOrCreateGameServerInterface( int hSteamUser, [MarshalAs( UnmanagedType.LPStr )] string pszVersion );
 }

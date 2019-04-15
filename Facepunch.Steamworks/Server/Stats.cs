@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
+#if false
 namespace Facepunch.Steamworks
 {
     /// <summary>
@@ -144,3 +145,4 @@ namespace Facepunch.Steamworks
         }
     }
 }
+#endif

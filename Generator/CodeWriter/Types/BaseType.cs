@@ -40,7 +40,7 @@ internal class BaseType
 		return new BaseType { NativeType = type, VarName = varname };
 	}
 
-	public virtual string AsArgument() => IsVector? $"[In,Out] {Ref}{TypeName.Trim( '*', ' ' )}[]  {VarName}" : $"{Ref}{TypeName.Trim( '*', ' ' )} {VarName}";
+	public virtual string AsArgument() => IsVector ? $"[In,Out] {Ref}{TypeName.Trim( '*', ' ' )}[]  {VarName}" : $"{Ref}{TypeName.Trim( '*', ' ' )} {VarName}";
 	public virtual string AsCallArgument() => $"{Ref}{VarName}";
 
 	public virtual string Return( string varname ) => $"return {varname};";
@@ -49,9 +49,26 @@ internal class BaseType
 	public virtual string ReturnType => TypeName;
 
 	public virtual string Ref => !IsVector && NativeType.EndsWith( "*" ) || NativeType.EndsWith( "**" ) ? "ref " : "";
-	public virtual bool IsVector => (NativeType.EndsWith( "*" ) && (VarName.StartsWith( "pvec" ) || VarName.StartsWith( "pub" ) || VarName.StartsWith( "pOut" ))) 
-									|| NativeType.EndsWith( "**" ) 
-									|| VarName == "psteamIDClans";
+	public virtual bool IsVector
+	{
+		get
+		{
+			if ( VarName == "pOut" ) return false;
+
+			if ( VarName == "psteamIDClans" ) return true;
+			if ( NativeType.EndsWith( "**" ) ) return true;
+
+			if ( NativeType.EndsWith( "*" ) )
+			{
+				if ( VarName.StartsWith( "pvec" ) ) return true;
+				if ( VarName.StartsWith( "pub" ) ) return true;
+				if ( VarName.StartsWith( "pOut" ) ) return true;
+			}
+
+			return false;
+		}
+	}
+
 
 	public virtual bool IsVoid => false;
 	public virtual bool IsReturnedWeird => false;

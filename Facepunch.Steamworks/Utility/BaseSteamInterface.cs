@@ -16,14 +16,25 @@ namespace Steamworks.Internal
 
 		public virtual string InterfaceName => null;
 
-		public BaseSteamInterface()
+		public BaseSteamInterface( bool server = false )
 		{
-			if ( Steamworks.Steam.HUser == 0 )
+			var hUser = server ? SteamApi.SteamGameServer_GetHSteamUser() : SteamApi.GetHSteamUser();
+
+			if ( hUser == 0 )
 				throw new System.Exception( "Steamworks is uninitialized" );
 
-			Self = SteamInternal.FindOrCreateUserInterface( Steamworks.Steam.HUser, InterfaceName );
+			if ( server )
+			{
+				Self = SteamInternal.FindOrCreateUserInterface( hUser, InterfaceName );
+			}
+			else
+			{
+				Self = SteamInternal.FindOrCreateUserInterface( hUser, InterfaceName );
+			}
+
 			if ( Self == IntPtr.Zero )
-				throw new System.Exception( $"Couldn't find interface {InterfaceName}" );
+				throw new System.Exception( $"Couldn't find interface {InterfaceName} (server:{server})" );
+
 
 			VTable = Marshal.ReadIntPtr( Self, 0 );
 			if ( Self == IntPtr.Zero )

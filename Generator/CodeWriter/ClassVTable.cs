@@ -27,6 +27,12 @@ namespace Generator
 			{
 				StartBlock( $"public class {clss.Name} : BaseSteamInterface" );
 				{
+					StartBlock( $"public {clss.Name}( bool server = false ) : base( server )" );
+					{
+
+					}
+					EndBlock();
+					WriteLine();
 
 					WriteLine( $"public override string InterfaceName => \"{clss.InterfaceString}\";" );
 					WriteLine();

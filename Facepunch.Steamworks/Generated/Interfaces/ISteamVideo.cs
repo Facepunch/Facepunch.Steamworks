@@ -9,6 +9,10 @@ namespace Steamworks.Internal
 {
 	public class ISteamVideo : BaseSteamInterface
 	{
+		public ISteamVideo( bool server = false ) : base( server )
+		{
+		}
+		
 		public override string InterfaceName => "STEAMVIDEO_INTERFACE_V002";
 		
 		public override void InitInternals()

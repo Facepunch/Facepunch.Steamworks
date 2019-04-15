@@ -5,48 +5,56 @@ using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Facepunch.Steamworks
+namespace Steamworks
 {
     /// <summary>
     /// Used to set up the server. 
     /// The variables in here are all required to be set, and can't be changed once the server is created.
     /// </summary>
-    public class ServerInit
+    public struct ServerInit
     {
         public IPAddress IpAddress;
         public ushort SteamPort;
-        public ushort GamePort = 27015;
-        public ushort QueryPort = 27016;
-        public bool Secure = true;
+        public ushort GamePort;
+        public ushort QueryPort;
+        public bool Secure;
 
         /// <summary>
         /// The version string is usually in the form x.x.x.x, and is used by the master server to detect when the server is out of date.
         /// If you go into the dedicated server tab on steamworks you'll be able to server the latest version. If this version number is
         /// less than that latest version then your server won't show.
         /// </summary>
-        public string VersionString = "2.0.0.0";
+        public string VersionString;
 
-        /// <summary>
-        /// This should be the same directory game where gets installed into. Just the folder name, not the whole path. I.e. "Rust", "Garrysmod".
-        /// </summary>
-        public string ModDir = "unset";
+		/// <summary>
+		/// This should be the same directory game where gets installed into. Just the folder name, not the whole path. I.e. "Rust", "Garrysmod".
+		/// </summary>
+		public string ModDir;
 
         /// <summary>
         /// The game description. Setting this to the full name of your game is recommended.
         /// </summary>
-        public string GameDescription = "unset";
+        public string GameDescription;
 
 
         public ServerInit( string modDir, string gameDesc )
         {
             ModDir = modDir;
             GameDescription = gameDesc;
-        }
+			GamePort = 27015;
+			QueryPort = 27016;
+			Secure = true;
+			VersionString = "1.0.0.0";
+			ModDir = "unset";
+			GameDescription = "unset";
+			IpAddress = null;
+			SteamPort = 0;
+		}
 
         /// <summary>
         /// Set the Steam quert port 
         /// </summary>
-        public ServerInit RandomSteamPort()
+        public ServerInit WithRandomSteamPort()
         {
             SteamPort = (ushort)new Random().Next( 10000, 60000 );
             return this;
@@ -59,7 +67,7 @@ namespace Facepunch.Steamworks
         /// 
         /// More info about this here: https://partner.steamgames.com/doc/api/ISteamGameServer#HandleIncomingPacket
         /// </summary>
-        public ServerInit QueryShareGamePort()
+        public ServerInit WithQueryShareGamePort()
         {
             QueryPort = 0xFFFF;
             return this;
