@@ -40,7 +40,7 @@ internal class BaseType
 		return new BaseType { NativeType = type, VarName = varname };
 	}
 
-	public virtual string AsArgument() => IsVector? $"[In,Out] {TypeName}[]  {VarName}" : $"{Ref}{TypeName} {VarName}";
+	public virtual string AsArgument() => IsVector? $"[In,Out] {TypeName.Trim( '*', ' ' )}[]  {VarName}" : $"{Ref}{TypeName.Trim( '*', ' ' )} {VarName}";
 	public virtual string AsCallArgument() => $"{Ref}{VarName}";
 
 	public virtual string Return( string varname ) => $"return {varname};";
@@ -49,7 +49,9 @@ internal class BaseType
 	public virtual string ReturnType => TypeName;
 
 	public virtual string Ref => !IsVector && NativeType.EndsWith( "*" ) ? "ref " : "";
-	public virtual bool IsVector => (NativeType.EndsWith( "*" ) && (VarName.StartsWith( "pvec" ) || VarName.StartsWith( "pub" ))) || NativeType.EndsWith( "**" );
+	public virtual bool IsVector => (NativeType.EndsWith( "*" ) && (VarName.StartsWith( "pvec" ) || VarName.StartsWith( "pub" ) || VarName.StartsWith( "pOut" ))) 
+									|| NativeType.EndsWith( "**" ) 
+									|| VarName == "psteamIDClans";
 
 	public virtual bool IsVoid => false;
 	public virtual bool IsReturnedWeird => false;

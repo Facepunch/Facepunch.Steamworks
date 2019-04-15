@@ -64,10 +64,16 @@ namespace Generator
 				var f = func.Match( line );
 				if ( f.Success )
 				{
+
+					
+
 					var returnType = f.Groups[1].Value.Trim();
 					var funcName = f.Groups[2].Value.Trim();
 					var args = f.Groups[3].Value.Trim();
 					//	Console.WriteLine( $"Function: {funcName} returns {returnType} with args {args}" );
+
+
+					if ( funcName == "DownloadClanActivityCounts" ) lastCallResult = "DownloadClanActivityCountsResult_t";
 
 					if ( funcName.Contains( ' ' ) || funcName.Contains( '*' ) )
 						throw new System.Exception( "Parsing Error!" );
@@ -92,6 +98,9 @@ namespace Generator
 			str = Regex.Replace( str, @"STEAM_OUT_ARRAY_CALL\((.+?)\)", "" );
 			str = Regex.Replace( str, @"STEAM_PRIVATE_API\((.+)\)", "$1" );
 			str = Regex.Replace( str, @"STEAM_ARRAY_COUNT\((.+?)\) ", "" );
+			str = Regex.Replace( str, @"STEAM_OUT_STRUCT\((.+?)\) ", "" );
+
+			
 
 			return str;
 		}
