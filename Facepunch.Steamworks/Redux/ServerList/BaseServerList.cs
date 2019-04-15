@@ -66,8 +66,10 @@ namespace Steamworks
 		/// Query the server list. Task result will be true when finished
 		/// </summary>
 		/// <returns></returns>
-		public async Task<bool> RunQueryAsync()
+		public async Task<bool> RunQueryAsync( float timeoutSeconds = 10 )
 		{
+			var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+
 			Reset();
 			LaunchQuery();
 
@@ -92,6 +94,9 @@ namespace Steamworks
 				{
 					OnChanges?.Invoke();
 				}
+
+				if ( stopwatch.Elapsed.TotalSeconds > timeoutSeconds )
+					break;
 			}
 
 			MovePendingToUnresponsive();
