@@ -60,23 +60,6 @@ namespace Facepunch.Steamworks.Test
         }
 
         [TestMethod]
-        public void AuthSessionTicket()
-        {
-            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
-            {
-                var ticket = client.Auth.GetAuthSessionTicket();
-
-                Assert.IsTrue( ticket != null );
-                Assert.IsTrue( ticket.Handle != 0 );
-                Assert.IsTrue( ticket.Data.Length > 0 );
-
-                ticket.Cancel();
-
-                Assert.IsTrue( ticket.Handle == 0 );
-            }
-        }
-
-        [TestMethod]
         public void Update()
         {
             var sw = new Stopwatch();
