@@ -20,7 +20,7 @@ namespace Steamworks
 			System.Environment.SetEnvironmentVariable( "SteamAppId", appid.ToString() );
 			System.Environment.SetEnvironmentVariable( "SteamGameId", appid.ToString() );
 
-			if ( !SteamApi.Init() )
+			if ( !SteamApi.SteamAPI_Init() )
 			{
 				throw new System.Exception( "SteamApi_Init returned false. Steam isn't running, couldn't find Steam, AppId is ureleased, Don't own AppId." );
 			}
@@ -49,7 +49,7 @@ namespace Steamworks
 				await Task.Delay( 16 );
 				try
 				{
-					SteamApi.RunCallbacks();
+					SteamApi.SteamAPI_RunCallbacks();
 				}
 				catch ( System.Exception )
 				{
@@ -65,7 +65,7 @@ namespace Steamworks
 
 		public static void Update()
 		{
-			SteamApi.RunCallbacks();
+			SteamApi.SteamAPI_RunCallbacks();
 		}
 
 		internal static void UnregisterCallback( IntPtr intPtr )

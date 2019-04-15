@@ -1,63 +1,46 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-/*
-namespace Facepunch.Steamworks.Test
+
+namespace Steamworks
 {
     [DeploymentItem( "steam_api64.dll" )]
     [DeploymentItem( "tier0_s64.dll" )]
     [DeploymentItem( "vstdlib_s64.dll" )]
     [DeploymentItem( "steamclient64.dll" )]
     [TestClass]
-    public partial class Server
+    public partial class GameServerTest
     {
         [TestMethod]
         public void Init()
         {
-            var serverInit = new ServerInit( "rust", "Rust" );
-            serverInit.GamePort = 28015;
-            serverInit.Secure = true;
-            serverInit.QueryPort = 28016;
-
-            using ( var server = new Facepunch.Steamworks.Server( 252490, serverInit ) )
-            {
-                server.ServerName = "My Test Server";
-                server.LogOnAnonymous();
-
-                Assert.IsTrue( server.IsValid );
-            }
-        }
+			GameServer.DedicatedServer = true;
+			GameServer.DedicatedServer = false;
+		}
 
         [TestMethod]
-        public void PublicIp()
+        public async Task PublicIp()
         {
-            using ( var server = new Facepunch.Steamworks.Server( 252490, new ServerInit( "rust", "Rust" ) ) )
+            while ( true )
             {
-                server.LogOnAnonymous();
+                var ip = GameServer.PublicIp;
 
-                Assert.IsTrue( server.IsValid );
-
-                while ( true )
+                if ( ip == null )
                 {
-                    var ip = server.PublicIp;
-
-                    if ( ip == null )
-                    {
-                        System.Threading.Thread.Sleep( 100 );
-                        server.Update();
-                        continue;
-                    }
-
-                    Assert.IsNotNull( ip );
-                    Console.WriteLine( ip.ToString() );
-                    break;
+					await Task.Delay( 10 );
+                    continue;
                 }
 
+                Assert.IsNotNull( ip );
+                Console.WriteLine( ip.ToString() );
+                break;
             }
         }
 
         [TestMethod]
         public void AuthCallback()
         {
+			/*
             using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
             {
                 Assert.IsTrue( client.IsValid );
@@ -144,8 +127,7 @@ namespace Facepunch.Steamworks.Test
                     Assert.IsTrue( !Authed );
 
                 }
-            }
+            }*/
         }
     }
 }
-*/

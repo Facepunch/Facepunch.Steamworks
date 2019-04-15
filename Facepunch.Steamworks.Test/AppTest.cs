@@ -14,7 +14,25 @@ namespace Steamworks
 		[AssemblyInitialize]
 		public static void AssemblyInit( TestContext context )
 		{
+			//
+			// Init Client
+			//
 			Steamworks.Steam.Init( 4000 );
+
+			//
+			// Init Server
+			//
+			var serverInit = new ServerInit( "gmod", "Garry Mode" )
+			{
+				GamePort = 28015,
+				Secure = true,
+				QueryPort = 28016
+			};
+
+			Steamworks.GameServer.Init( 4000, serverInit );
+
+			GameServer.LogOnAnonymous();
+
 		}
 
 		static void OnNewUrlLaunchParameters()

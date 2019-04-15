@@ -35,7 +35,7 @@ namespace Steamworks
 		/// </summary>
 		public static event Action<CSteamID, CSteamID, AuthSessionResponse> OnValidateAuthTicketResponse;
 
-		public static bool Init( AppId appid, ServerInit init )
+		public static void Init( AppId appid, ServerInit init )
 		{
 			uint ipaddress = 0; // Any Port
 
@@ -48,9 +48,9 @@ namespace Steamworks
 			//
 			// Get other interfaces
 			//
-			if ( !Internal.InitGameServer( ipaddress, init.GamePort, init.QueryPort, (uint)( init.Secure ? 3 : 2 ), appid.Value, init.VersionString ) )
+			if ( !global::SteamApi.SteamInternal_GameServer_Init( ipaddress, init.SteamPort, init.GamePort, init.QueryPort, (int)( init.Secure ? 3 : 2 ), init.VersionString ) )
 			{
-				return false;
+				throw new System.Exception( "InitGameServer returned false" );
 			}
 
 			//
@@ -65,10 +65,25 @@ namespace Steamworks
 			Passworded = false;
 			DedicatedServer = true;
 
-
 			InstallEvents();
+			RunCallbacks();
+		}
 
-			return true;
+
+		internal static async void RunCallbacks()
+		{
+			while ( true )
+			{
+				await Task.Delay( 16 );
+				try
+				{
+					SteamApi.SteamAPI_RunCallbacks();
+				}
+				catch ( System.Exception )
+				{
+					// TODO - error outputs
+				}
+			}
 		}
 
 		/// <summary>

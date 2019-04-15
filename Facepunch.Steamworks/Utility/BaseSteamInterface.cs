@@ -25,7 +25,7 @@ namespace Steamworks.Internal
 
 			if ( server )
 			{
-				Self = SteamInternal.FindOrCreateUserInterface( hUser, InterfaceName );
+				Self = SteamInternal.FindOrCreateGameServerInterface( hUser, InterfaceName );
 			}
 			else
 			{
