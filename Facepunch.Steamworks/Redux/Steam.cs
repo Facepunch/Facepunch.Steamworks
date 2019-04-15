@@ -37,11 +37,34 @@ namespace Steamworks
 			Music.InstallEvents();
 			Video.InstallEvents();
 			User.InstallEvents();
+
+			RunCallbacks();
+		}
+
+		internal static async void RunCallbacks()
+		{
+			while ( true )
+			{
+				await Task.Delay( 16 );
+				try
+				{
+					SteamApi.RunCallbacks();
+				}
+				catch ( System.Exception )
+				{
+					// TODO - error outputs
+				}
+			}
 		}
 
 		internal static void RegisterCallback( IntPtr intPtr, int callbackId )
 		{
 			SteamApi.RegisterCallback( intPtr, callbackId );
+		}
+
+		public static void Update()
+		{
+			SteamApi.RunCallbacks();
 		}
 
 		internal static void UnregisterCallback( IntPtr intPtr )

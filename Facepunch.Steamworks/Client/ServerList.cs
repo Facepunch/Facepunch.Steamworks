@@ -41,11 +41,11 @@ namespace Facepunch.Steamworks
                 encoded = encoded << 32;
                 encoded = encoded | (uint)conPort;
 
-                if ( ( flags & Server.k_unFavoriteFlagFavorite ) == Server.k_unFavoriteFlagFavorite )
-                    FavouriteHash.Add( encoded );
+          //      if ( ( flags & Server.k_unFavoriteFlagFavorite ) == Server.k_unFavoriteFlagFavorite )
+           //         FavouriteHash.Add( encoded );
 
-                if ( ( flags & Server.k_unFavoriteFlagFavorite ) == Server.k_unFavoriteFlagFavorite )
-                    HistoryHash.Add( encoded );
+            //    if ( ( flags & Server.k_unFavoriteFlagFavorite ) == Server.k_unFavoriteFlagFavorite )
+             //       HistoryHash.Add( encoded );
             }
         }
 
@@ -113,8 +113,6 @@ namespace Facepunch.Steamworks
             }
         }
 
- 
-
         [StructLayout( LayoutKind.Sequential )]
         private struct MatchPair
         {
@@ -122,146 +120,6 @@ namespace Facepunch.Steamworks
             public string key;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
             public string value;
-        }
-
-
-
-        public Request Internet( Filter filter = null )
-        {
-            if ( filter == null )
-            {
-                filter = new Filter();
-                filter.Add( "appid", client.AppId.ToString() );
-            }
-
-            filter.Start();
-
-            var request = new Request( client );
-            request.Filter = filter;
-            request.AddRequest( client.native.servers.RequestInternetServerList( client.AppId, filter.NativeArray, (uint) filter.Count, IntPtr.Zero ) );
-
-            filter.Free();
-
-            return request;
-        }
-
-        /// <summary>
-        /// Query a list of addresses. No filters applied.
-        /// </summary>
-        public Request Custom( IEnumerable<string> serverList )
-        {
-            var request = new Request( client );
-            request.ServerList = serverList;
-            request.StartCustomQuery();
-            return request;
-        }
-
-        /// <summary>
-        /// Request a list of servers we've been on. History isn't applied automatically
-        /// You need to call server.AddtoHistoryList() when you join a server etc.
-        /// </summary>
-        public Request History( Filter filter = null )
-        {
-            if ( filter == null )
-            {
-                filter = new Filter();
-                filter.Add( "appid", client.AppId.ToString() );
-            }
-
-            filter.Start();
-
-            var request = new Request( client );
-            request.Filter = filter;
-            request.AddRequest( client.native.servers.RequestHistoryServerList( client.AppId, filter.NativeArray, (uint)filter.Count, IntPtr.Zero ) );
-
-            filter.Free();
-
-            return request;
-        }
-
-        /// <summary>
-        /// Request a list of servers we've favourited
-        /// </summary>
-        public Request Favourites( Filter filter = null )
-        {
-            if ( filter == null )
-            {
-                filter = new Filter();
-                filter.Add( "appid", client.AppId.ToString() );
-            }
-
-            filter.Start();
-
-            var request = new Request( client );
-            request.Filter = filter;
-            request.AddRequest( client.native.servers.RequestFavoritesServerList( client.AppId, filter.NativeArray, (uint)filter.Count, IntPtr.Zero ) );
-
-            filter.Free();
-
-            return request;
-        }
-
-        /// <summary>
-        /// Request a list of servers that our friends are on
-        /// </summary>
-        public Request Friends( Filter filter = null )
-        {
-            if ( filter == null )
-            {
-                filter = new Filter();
-                filter.Add( "appid", client.AppId.ToString() );
-            }
-
-            filter.Start();
-
-            var request = new Request( client );
-            request.Filter = filter;
-            request.AddRequest( client.native.servers.RequestFriendsServerList( client.AppId, filter.NativeArray, (uint)filter.Count, IntPtr.Zero ) );
-
-            filter.Free();
-
-            return request;
-        }
-
-        /// <summary>
-        /// Request a list of servers that are running on our LAN
-        /// </summary>
-        public Request Local( Filter filter = null )
-        {
-            if ( filter == null )
-            {
-                filter = new Filter();
-                filter.Add( "appid", client.AppId.ToString() );
-            }
-
-            filter.Start();
-
-            var request = new Request( client );
-            request.Filter = filter;
-            request.AddRequest( client.native.servers.RequestLANServerList( client.AppId, IntPtr.Zero ) );
-
-            filter.Free();
-
-            return request;
-        }
-
-
-        internal bool IsFavourite( Server server )
-        {
-            ulong encoded = Utility.IpToInt32( server.Address );
-            encoded = encoded << 32;
-            encoded = encoded | (uint)server.ConnectionPort;
-
-            return FavouriteHash.Contains( encoded );
-        }
-
-        internal bool IsHistory( Server server )
-        {
-            ulong encoded = Utility.IpToInt32( server.Address );
-            encoded = encoded << 32;
-            encoded = encoded | (uint)server.ConnectionPort;
-
-            return HistoryHash.Contains( encoded );
         }
     }
 }

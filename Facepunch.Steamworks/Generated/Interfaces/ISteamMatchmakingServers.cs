@@ -111,13 +111,13 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate gameserveritem_t GetServerDetailsDelegate( IntPtr self, HServerListRequest hRequest, int iServer );
+		public delegate IntPtr GetServerDetailsDelegate( IntPtr self, HServerListRequest hRequest, int iServer );
 		private GetServerDetailsDelegate GetServerDetailsDelegatePointer;
 		
 		#endregion
 		public gameserveritem_t GetServerDetails( HServerListRequest hRequest, int iServer )
 		{
-			return GetServerDetailsDelegatePointer( Self, hRequest, iServer );
+			return new gameserveritem_t().Fill( GetServerDetailsDelegatePointer( Self, hRequest, iServer ) );
 		}
 		
 		#region FunctionMeta

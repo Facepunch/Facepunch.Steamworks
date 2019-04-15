@@ -69,6 +69,18 @@ internal class StructType : BaseType
 	public string StructName;
 
 	public override string TypeName => StructName;
+
+	public override string TypeNameFrom => NativeType.EndsWith( "*" ) ? "IntPtr" : base.ReturnType;
+
+	public override string Return( string varname )
+	{
+		if ( NativeType.EndsWith( "*" ) )
+		{
+			return $"return new {TypeName}().Fill( {varname} );";
+		}
+
+		return base.Return( varname );
+	}
 }
 
 internal class SteamApiCallType : BaseType

@@ -22,4 +22,6 @@ public static class SteamApi
 	[DllImport( "Steam_api64", EntryPoint = "SteamAPI_UnregisterCallback", CallingConvention = CallingConvention.Cdecl )]
 	public static extern int UnregisterCallback( IntPtr pCallback );
 
+
+
 }
