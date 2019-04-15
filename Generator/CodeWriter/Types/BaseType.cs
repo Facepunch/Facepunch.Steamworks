@@ -24,6 +24,7 @@ internal class BaseType
 		var basicType = type.Trim( ' ', '*' );
 
 		if ( basicType == "void" ) return new PointerType { NativeType = type, VarName = varname };
+		if ( basicType == "const void" ) return new PointerType { NativeType = type, VarName = varname };
 		if ( basicType == "int32" || basicType == "int" ) return new IntType { NativeType = type, VarName = varname };
 		if ( basicType == "uint32" ) return new UIntType { NativeType = type, VarName = varname };
 		if ( basicType == "uint8" ) return new UInt8Type { NativeType = type, VarName = varname };

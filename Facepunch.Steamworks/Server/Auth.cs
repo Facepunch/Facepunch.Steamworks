@@ -68,5 +68,6 @@ namespace Facepunch.Steamworks
             server.native.gameServer.EndAuthSession( steamid );
         }
 
-    }
+
+	}
 }

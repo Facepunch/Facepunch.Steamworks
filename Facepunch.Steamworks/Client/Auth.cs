@@ -53,7 +53,6 @@ namespace Facepunch.Steamworks
         }
 
         /// <summary>
-        /// Creates an auth ticket. 
         /// Which you can send to a server to authenticate that you are who you say you are.
         /// </summary>
         public unsafe Ticket GetAuthSessionTicket()
