@@ -93,7 +93,6 @@
     <Compile Include="Client\UtilsTest.cs" />
     <Compile Include="Client\ClientTest.cs" />
     <Compile Include="Client\LobbyTest.cs" />
-    <Compile Include="Client\RichPresenceTest.cs" />
     <Compile Include="Client\LeaderboardTest.cs" />
     <Compile Include="Client\AppTest.cs" />
     <Compile Include="Client\RemoteStorageTest.cs" />

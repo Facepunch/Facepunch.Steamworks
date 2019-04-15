@@ -19,11 +19,17 @@ namespace Steamworks
 			get
 			{
 				if ( _internal == null )
+				{
 					_internal = new Internal.ISteamFriends();
+
+					richPresence = new Dictionary<string, string>();
+				}
 
 				return _internal;
 			}
 		}
+
+		static Dictionary<string, string> richPresence;
 
 		internal static void InstallEvents()
 		{
@@ -159,6 +165,35 @@ namespace Steamworks
 			}
 
 			return Utils.GetImage( imageid );
+		}
+
+		/// <summary>
+		/// Find a rich presence value by key for current user. Will be null if not found.
+		/// </summary>
+		public static string GetRichPresence( string key )
+		{
+			if ( richPresence.TryGetValue( key, out var val ) )
+				return val;
+
+			return null;
+		}
+
+		/// <summary>
+		/// Sets a rich presence value by key for current user.
+		/// </summary>
+		public static bool SetRichPresence( string key, string value )
+		{
+			richPresence[key] = value;
+			return Internal.SetRichPresence( key, value );
+		}
+
+		/// <summary>
+		/// Clears all of the current user's rich presence data.
+		/// </summary>
+		public static void ClearRichPresence()
+		{
+			richPresence.Clear();
+			Internal.ClearRichPresence();
 		}
 
 	}

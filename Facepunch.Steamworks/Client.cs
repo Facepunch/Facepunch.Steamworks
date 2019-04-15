@@ -63,7 +63,6 @@ namespace Facepunch.Steamworks
         public Achievements Achievements { get; private set; }
         public Stats Stats { get; private set; }
         public MicroTransactions MicroTransactions { get; private set; }
-        public User User { get; private set; }
         public RemoteStorage RemoteStorage { get; private set; }
 
         public Client( uint appId ) : base( appId )
@@ -106,7 +105,6 @@ namespace Facepunch.Steamworks
             Stats = new Stats( this );
             Achievements = new Achievements( this );
             MicroTransactions = new MicroTransactions( this );
-            User = new User( this );
             RemoteStorage = new RemoteStorage( this );
 
             Workshop.friends = Friends;
@@ -199,12 +197,6 @@ namespace Facepunch.Steamworks
             {
                 MicroTransactions.Dispose();
                 MicroTransactions = null;
-            }
-
-            if ( User != null )
-            {
-                User.Dispose();
-                User = null;
             }
 
             if ( RemoteStorage  != null )
