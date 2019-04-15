@@ -68,12 +68,12 @@ namespace Generator
 
 			var args = func.Arguments.Select( x => BaseType.Parse( x.Value, x.Key ) ).ToArray();
 			var argstr = string.Join( ", ", args.Select( x => x.AsArgument() ) );
-			var delegateargstr = "IntPtr self, " + string.Join( ", ", args.Select( x => x.AsArgument() ) );
+			var delegateargstr = string.Join( ", ", args.Select( x => x.AsArgument() ) );
 
 			if ( returnType.IsReturnedWeird  )
 			{
-				delegateargstr += $", ref {returnType.TypeName} retVal";
-				delegateargstr = delegateargstr.Replace( ", , ", ", " );
+				delegateargstr = $"ref {returnType.TypeName} retVal, {delegateargstr}";
+				delegateargstr = delegateargstr.Trim( ',', ' ' );
 			}
 
 			if ( returnType is SteamApiCallType sap )
@@ -88,7 +88,7 @@ namespace Generator
 			if ( returnType.ReturnAttribute != null)
 				WriteLine( returnType.ReturnAttribute );
 
-			WriteLine( $"public delegate {(returnType.IsReturnedWeird?"void":returnType.TypeNameFrom)} {func.Name}Delegate( {delegateargstr} );".Replace( "( IntPtr self,  )", "( IntPtr self )" ) );
+			WriteLine( $"public delegate {(returnType.IsReturnedWeird?"void":returnType.TypeNameFrom)} {func.Name}Delegate( IntPtr self, {delegateargstr} );".Replace( "( IntPtr self,  )", "( IntPtr self )" ) );
 			WriteLine( $"private {func.Name}Delegate {func.Name}DelegatePointer;" );
 			WriteLine();
 			WriteLine( $"#endregion" );
@@ -100,7 +100,7 @@ namespace Generator
 				if ( returnType.IsReturnedWeird )
 				{
 					WriteLine( $"var retVal = default( {returnType.TypeName} );" );
-					WriteLine( $"{func.Name}DelegatePointer( Self, {callargs}, ref retVal );".Replace( ", , ", ", " ) );
+					WriteLine( $"{func.Name}DelegatePointer( Self, ref retVal, {callargs} );".Replace( ",  );", " );" ) );
 					WriteLine( $"{returnType.Return( "retVal" )}" );
 				}
 				else if ( returnType.IsVoid )

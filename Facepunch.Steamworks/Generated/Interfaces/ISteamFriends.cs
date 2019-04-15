@@ -132,14 +132,14 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void GetFriendByIndexDelegate( IntPtr self, int iFriend, int iFriendFlags, ref CSteamID retVal );
+		public delegate void GetFriendByIndexDelegate( IntPtr self, ref CSteamID retVal, int iFriend, int iFriendFlags );
 		private GetFriendByIndexDelegate GetFriendByIndexDelegatePointer;
 		
 		#endregion
 		public CSteamID GetFriendByIndex( int iFriend, int iFriendFlags )
 		{
 			var retVal = default( CSteamID );
-			GetFriendByIndexDelegatePointer( Self, iFriend, iFriendFlags, ref retVal );
+			GetFriendByIndexDelegatePointer( Self, ref retVal, iFriend, iFriendFlags );
 			return retVal;
 		}
 		
@@ -289,14 +289,14 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void GetClanByIndexDelegate( IntPtr self, int iClan, ref CSteamID retVal );
+		public delegate void GetClanByIndexDelegate( IntPtr self, ref CSteamID retVal, int iClan );
 		private GetClanByIndexDelegate GetClanByIndexDelegatePointer;
 		
 		#endregion
 		public CSteamID GetClanByIndex( int iClan )
 		{
 			var retVal = default( CSteamID );
-			GetClanByIndexDelegatePointer( Self, iClan, ref retVal );
+			GetClanByIndexDelegatePointer( Self, ref retVal, iClan );
 			return retVal;
 		}
 		
@@ -358,14 +358,14 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void GetFriendFromSourceByIndexDelegate( IntPtr self, CSteamID steamIDSource, int iFriend, ref CSteamID retVal );
+		public delegate void GetFriendFromSourceByIndexDelegate( IntPtr self, ref CSteamID retVal, CSteamID steamIDSource, int iFriend );
 		private GetFriendFromSourceByIndexDelegate GetFriendFromSourceByIndexDelegatePointer;
 		
 		#endregion
 		public CSteamID GetFriendFromSourceByIndex( CSteamID steamIDSource, int iFriend )
 		{
 			var retVal = default( CSteamID );
-			GetFriendFromSourceByIndexDelegatePointer( Self, steamIDSource, iFriend, ref retVal );
+			GetFriendFromSourceByIndexDelegatePointer( Self, ref retVal, steamIDSource, iFriend );
 			return retVal;
 		}
 		
@@ -516,14 +516,14 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void GetClanOwnerDelegate( IntPtr self, CSteamID steamIDClan, ref CSteamID retVal );
+		public delegate void GetClanOwnerDelegate( IntPtr self, ref CSteamID retVal, CSteamID steamIDClan );
 		private GetClanOwnerDelegate GetClanOwnerDelegatePointer;
 		
 		#endregion
 		public CSteamID GetClanOwner( CSteamID steamIDClan )
 		{
 			var retVal = default( CSteamID );
-			GetClanOwnerDelegatePointer( Self, steamIDClan, ref retVal );
+			GetClanOwnerDelegatePointer( Self, ref retVal, steamIDClan );
 			return retVal;
 		}
 		
@@ -540,14 +540,14 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void GetClanOfficerByIndexDelegate( IntPtr self, CSteamID steamIDClan, int iOfficer, ref CSteamID retVal );
+		public delegate void GetClanOfficerByIndexDelegate( IntPtr self, ref CSteamID retVal, CSteamID steamIDClan, int iOfficer );
 		private GetClanOfficerByIndexDelegate GetClanOfficerByIndexDelegatePointer;
 		
 		#endregion
 		public CSteamID GetClanOfficerByIndex( CSteamID steamIDClan, int iOfficer )
 		{
 			var retVal = default( CSteamID );
-			GetClanOfficerByIndexDelegatePointer( Self, steamIDClan, iOfficer, ref retVal );
+			GetClanOfficerByIndexDelegatePointer( Self, ref retVal, steamIDClan, iOfficer );
 			return retVal;
 		}
 		
@@ -654,14 +654,14 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void GetCoplayFriendDelegate( IntPtr self, int iCoplayFriend, ref CSteamID retVal );
+		public delegate void GetCoplayFriendDelegate( IntPtr self, ref CSteamID retVal, int iCoplayFriend );
 		private GetCoplayFriendDelegate GetCoplayFriendDelegatePointer;
 		
 		#endregion
 		public CSteamID GetCoplayFriend( int iCoplayFriend )
 		{
 			var retVal = default( CSteamID );
-			GetCoplayFriendDelegatePointer( Self, iCoplayFriend, ref retVal );
+			GetCoplayFriendDelegatePointer( Self, ref retVal, iCoplayFriend );
 			return retVal;
 		}
 		
@@ -723,14 +723,14 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void GetChatMemberByIndexDelegate( IntPtr self, CSteamID steamIDClan, int iUser, ref CSteamID retVal );
+		public delegate void GetChatMemberByIndexDelegate( IntPtr self, ref CSteamID retVal, CSteamID steamIDClan, int iUser );
 		private GetChatMemberByIndexDelegate GetChatMemberByIndexDelegatePointer;
 		
 		#endregion
 		public CSteamID GetChatMemberByIndex( CSteamID steamIDClan, int iUser )
 		{
 			var retVal = default( CSteamID );
-			GetChatMemberByIndexDelegatePointer( Self, steamIDClan, iUser, ref retVal );
+			GetChatMemberByIndexDelegatePointer( Self, ref retVal, steamIDClan, iUser );
 			return retVal;
 		}
 		
