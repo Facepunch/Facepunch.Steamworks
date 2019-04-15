@@ -38,6 +38,9 @@ namespace Steamworks.Internal
 
 		internal string GetString( IntPtr p )
 		{
+			if ( p == IntPtr.Zero )
+				return null;
+
 			// return Marshal.PtrToStringUTF8( p );
 			lock ( stringbuffer )
 			{

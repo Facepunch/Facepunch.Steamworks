@@ -2,32 +2,49 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 
-namespace Facepunch.Steamworks.Test
+namespace Steamworks
 {
     [DeploymentItem( "steam_api64.dll" )]
     [TestClass]
-    public class Friends
+    public class FriendsTest
     {
         [TestMethod]
-        public void FriendList()
+        public void GetFriends()
         {
-            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
-            {
-                Assert.IsTrue( client.IsValid );
+			foreach ( var friend in Friends.GetFriends() )
+			{
+				Console.WriteLine( $"{friend.Id.Value}: {friend.Name} (Friend:{friend.IsFriend}) (Blocked:{friend.IsBlocked})" );
+				Console.WriteLine( $"		{string.Join( ", ", friend.NameHistory)}" );
 
-                client.Friends.Refresh();
-
-                Assert.IsNotNull( client.Friends.All );
-
-                foreach ( var friend in client.Friends.All )
-                {
-                    Console.WriteLine( "{0}: {1} (Friend:{2}) (Blocked:{3})", friend.Id, friend.Name, friend.IsFriend, friend.IsBlocked );
-
-                    Assert.IsNotNull(friend.GetAvatar( Steamworks.Friends.AvatarSize.Medium ));
-                }
-            }
+				//	Assert.IsNotNull( friend.GetAvatar( Steamworks.Friends.AvatarSize.Medium ) );
+			}
         }
 
+		[TestMethod]
+		public void GetBlocked()
+		{
+			foreach ( var friend in Friends.GetBlocked() )
+			{
+				Console.WriteLine( $"{friend.Id.Value}: {friend.Name} (Friend:{friend.IsFriend}) (Blocked:{friend.IsBlocked})" );
+				Console.WriteLine( $"		{string.Join( ", ", friend.NameHistory )}" );
+
+				//	Assert.IsNotNull( friend.GetAvatar( Steamworks.Friends.AvatarSize.Medium ) );
+			}
+		}
+
+		[TestMethod]
+		public void GetPlayedWith()
+		{
+			foreach ( var friend in Friends.GetPlayedWith() )
+			{
+				Console.WriteLine( $"{friend.Id.Value}: {friend.Name} (Friend:{friend.IsFriend}) (Blocked:{friend.IsBlocked})" );
+				Console.WriteLine( $"		{string.Join( ", ", friend.NameHistory )}" );
+
+				//	Assert.IsNotNull( friend.GetAvatar( Steamworks.Friends.AvatarSize.Medium ) );
+			}
+		}
+
+		/*
         [TestMethod]
         public void FriendListWithoutRefresh()
         {
@@ -119,5 +136,6 @@ namespace Facepunch.Steamworks.Test
                 Console.WriteLine( str );
             }
         }
-    }
+		*/
+	}
 }
