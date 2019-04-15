@@ -107,8 +107,6 @@ namespace Facepunch.Steamworks
             MicroTransactions = new MicroTransactions( this );
             RemoteStorage = new RemoteStorage( this );
 
-            Workshop.friends = Friends;
-
             Stats.UpdateStats();
 
             //
@@ -149,8 +147,6 @@ namespace Facepunch.Steamworks
                 return;
 
             RunCallbacks();
-            Friends.Cycle();
-
             base.Update();            
         }
 

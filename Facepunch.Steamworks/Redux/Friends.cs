@@ -33,11 +33,78 @@ namespace Steamworks
 
 		internal static void InstallEvents()
 		{
-			//new Event<BroadcastUploadStart_t>( x => OnBroadcastStarted?.Invoke() );
-			//new Event<BroadcastUploadStop_t>( x => OnBroadcastStopped?.Invoke( x.Result ) );
+			new Event<PersonaStateChange_t>( x => OnPersonaStateChange?.Invoke( new Friend( x.SteamID ) ) );
+			new Event<GameRichPresenceJoinRequested_t>( x => OnGameRichPresenceJoinRequested?.Invoke( new Friend( x.SteamIDFriend), x.Connect ) );
+			new Event<GameConnectedFriendChatMsg_t>( OnFriendChatMessage );
+			new Event<GameOverlayActivated_t>( x => OnGameOverlayActivated?.Invoke() );
+			new Event<GameServerChangeRequested_t>( x => OnGameServerChangeRequested?.Invoke( x.Server, x.Password ) );
+			new Event<GameLobbyJoinRequested_t>( x => OnGameLobbyJoinRequested?.Invoke( x.SteamIDLobby, x.SteamIDFriend ) );
+			new Event<FriendRichPresenceUpdate_t>( x => OnFriendRichPresenceUpdate?.Invoke( new Friend( x.SteamIDFriend ) ) );
 		}
 
-		//	public static event Action OnBroadcastStarted;
+		/// <summary>
+		/// Called when chat message has been received from a friend. You'll need to turn on
+		/// ListenForFriendsMessages to recieve this. (friend, msgtype, message)
+		/// </summary>
+		public static event Action<Friend, string, string> OnChatMessage;
+
+		/// <summary>
+		/// called when a friends' status changes
+		/// </summary>
+		public static event Action<Friend> OnPersonaStateChange;
+
+
+		/// <summary>
+		/// Called when the user tries to join a game from their friends list
+		///	rich presence will have been set with the "connect" key which is set here
+		/// </summary>
+		public static event Action<Friend, string> OnGameRichPresenceJoinRequested;
+
+		/// <summary>
+		/// Posted when game overlay activates or deactivates
+		///	the game can use this to be pause or resume single player games
+		/// </summary>
+		public static event Action OnGameOverlayActivated;
+
+		/// <summary>
+		/// Called when the user tries to join a different game server from their friends list
+		///	game client should attempt to connect to specified server when this is received
+		/// </summary>
+		public static event Action<string, string> OnGameServerChangeRequested;
+
+		/// <summary>
+		/// Called when the user tries to join a lobby from their friends list
+		///	game client should attempt to connect to specified lobby when this is received
+		/// </summary>
+		public static event Action<CSteamID, CSteamID> OnGameLobbyJoinRequested;
+
+		/// <summary>
+		/// Callback indicating updated data about friends rich presence information
+		/// </summary>
+		public static event Action<Friend> OnFriendRichPresenceUpdate;
+
+		static unsafe void OnFriendChatMessage( GameConnectedFriendChatMsg_t data )
+		{
+			if ( OnChatMessage == null ) return;
+
+			var friend = new Friend( data.SteamIDUser );
+
+			var buffer = Helpers.TakeBuffer( 1024 * 32 );
+			var type = ChatEntryType.ChatMsg;
+
+			fixed ( byte* ptr = buffer )
+			{
+				var len = Internal.GetFriendMessage( data.SteamIDUser, data.MessageID, (IntPtr)ptr, buffer.Length, ref type );
+
+				if ( len == 0 && type == ChatEntryType.Invalid )
+					return;
+
+				var typeName = type.ToString();
+				var message = Encoding.UTF8.GetString( buffer, 0, len );
+
+				OnChatMessage( friend, typeName, message );
+			}
+		}
 
 		/// <summary>
 		/// returns the local players name - guaranteed to not be NULL.
@@ -194,6 +261,24 @@ namespace Steamworks
 		{
 			richPresence.Clear();
 			Internal.ClearRichPresence();
+		}
+
+		static bool _listenForFriendsMessages;
+
+		/// <summary>
+		/// Listens for Steam friends chat messages.
+		/// You can then show these chats inline in the game. For example with a Blizzard style chat message system or the chat system in Dota 2.
+		/// After enabling this you will receive callbacks when ever the user receives a chat message.
+		/// </summary>
+		public static bool ListenForFriendsMessages
+		{
+			get => _listenForFriendsMessages;
+				
+			set
+			{
+				_listenForFriendsMessages = value;
+				Internal.SetListenForFriendsMessages( value );
+			}
 		}
 
 	}

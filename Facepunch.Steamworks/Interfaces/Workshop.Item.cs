@@ -203,11 +203,12 @@ namespace Facepunch.Steamworks
             public int ReportScore { get; internal set; }
             public string PreviewImageUrl { get; internal set; }
 
+			/*
             string _ownerName = null;
 
 
 
-            public string OwnerName
+            public Friend OwnerName
             {
                 get
                 {
@@ -226,7 +227,7 @@ namespace Facepunch.Steamworks
 
                     return _ownerName;
                 }
-            }
+            }*/
         }
     }
 }

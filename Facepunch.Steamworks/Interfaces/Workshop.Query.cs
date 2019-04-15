@@ -56,7 +56,6 @@ namespace Facepunch.Steamworks
             public int PerPage { get; set; } = SteamResponseSize;
 
             internal Workshop workshop;
-            internal Friends friends;
 
             private int _resultPage = 0;
             private int _resultsRemain = 0;

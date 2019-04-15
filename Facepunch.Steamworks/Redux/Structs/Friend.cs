@@ -18,6 +18,28 @@ namespace Steamworks
 
 		public bool IsFriend => Relationship == FriendRelationship.Friend;
 		public bool IsBlocked => Relationship == FriendRelationship.Blocked;
+		public bool IsPlayingThisGame => GameInfo?.GameID == Utils.AppId;
+
+		/// <summary>
+		/// Returns true if this friend is online
+		/// </summary>
+		public bool IsOnline => State != PersonaState.Offline;
+
+		/// <summary>
+		/// Returns true if this friend is marked as away
+		/// </summary>
+		public bool IsAway => State == PersonaState.Away;
+
+		/// <summary>
+		/// Returns true if this friend is marked as busy
+		/// </summary>
+		public bool IsBusy => State == PersonaState.Busy;
+
+		/// <summary>
+		/// Returns true if this friend is marked as snoozing
+		/// </summary>
+		public bool IsSnoozing => State == PersonaState.Snooze;
+
 
 
 		public FriendRelationship Relationship => Friends.Internal.GetFriendRelationship( Id );
@@ -93,6 +115,29 @@ namespace Steamworks
 		public async Task<Image?> GetLargeAvatarAsync()
 		{
 			return await Friends.GetLargeAvatarAsync( Id );
+		}
+
+		public string GetRichPresence( string key )
+		{
+			var val = Friends.Internal.GetFriendRichPresence( Id, key );
+			if ( string.IsNullOrEmpty( val ) ) return null;
+			return val;
+		}
+
+		/// <summary>
+		/// Invite this friend to the game that we are playing
+		/// </summary>
+		public bool InviteToGame( string Text )
+		{
+			return Friends.Internal.InviteUserToGame( Id, Text );
+		}
+
+		/// <summary>
+		/// Sends a message to a Steam friend. Returns true if success
+		/// </summary>
+		public bool SendMessage( string message )
+		{
+			return Friends.Internal.ReplyToFriendMessage( Id, message );
 		}
 
 	}

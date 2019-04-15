@@ -283,7 +283,7 @@ namespace Facepunch.Steamworks
                             Score = entry.Score,
                             SteamId = entry.SteamIDUser,
                             SubScores = entry.CDetails == 0 ? null : subEntriesBuffer.Take( entry.CDetails ).ToArray(),
-                            Name = client.Friends.GetName( entry.SteamIDUser ),
+                        //    Name = client.Friends.GetName( entry.SteamIDUser ),
                             AttachedFile = (entry.UGC >> 32) == 0xffffffff ? null : new RemoteFile( client.RemoteStorage, entry.UGC )
                         } );
                 }

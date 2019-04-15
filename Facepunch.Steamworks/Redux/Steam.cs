@@ -37,6 +37,7 @@ namespace Steamworks
 			Music.InstallEvents();
 			Video.InstallEvents();
 			User.InstallEvents();
+			Friends.InstallEvents();
 
 			RunCallbacks();
 		}
