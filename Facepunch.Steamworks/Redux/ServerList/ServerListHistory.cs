@@ -15,7 +15,7 @@ namespace Steamworks
 		internal override void LaunchQuery()
 		{
 			var filters = GetFilters();
-			request = Internal.RequestHistoryServerList( AppId.Value, filters, (uint)filters.Length, IntPtr.Zero );
+			request = Internal.RequestHistoryServerList( AppId.Value, ref filters, (uint)filters.Length, IntPtr.Zero );
 		}
 	}
 }

@@ -34,13 +34,13 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate HServerListRequest RequestInternetServerListDelegate( IntPtr self, AppId_t iApp, [In,Out] MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
+		public delegate HServerListRequest RequestInternetServerListDelegate( IntPtr self, AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
 		private RequestInternetServerListDelegate RequestInternetServerListDelegatePointer;
 		
 		#endregion
-		public HServerListRequest RequestInternetServerList( AppId_t iApp, [In,Out] MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
+		public HServerListRequest RequestInternetServerList( AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
 		{
-			return RequestInternetServerListDelegatePointer( Self, iApp, ppchFilters, nFilters, pRequestServersResponse );
+			return RequestInternetServerListDelegatePointer( Self, iApp, ref ppchFilters, nFilters, pRequestServersResponse );
 		}
 		
 		#region FunctionMeta
@@ -56,46 +56,46 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate HServerListRequest RequestFriendsServerListDelegate( IntPtr self, AppId_t iApp, [In,Out] MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
+		public delegate HServerListRequest RequestFriendsServerListDelegate( IntPtr self, AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
 		private RequestFriendsServerListDelegate RequestFriendsServerListDelegatePointer;
 		
 		#endregion
-		public HServerListRequest RequestFriendsServerList( AppId_t iApp, [In,Out] MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
+		public HServerListRequest RequestFriendsServerList( AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
 		{
-			return RequestFriendsServerListDelegatePointer( Self, iApp, ppchFilters, nFilters, pRequestServersResponse );
+			return RequestFriendsServerListDelegatePointer( Self, iApp, ref ppchFilters, nFilters, pRequestServersResponse );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate HServerListRequest RequestFavoritesServerListDelegate( IntPtr self, AppId_t iApp, [In,Out] MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
+		public delegate HServerListRequest RequestFavoritesServerListDelegate( IntPtr self, AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
 		private RequestFavoritesServerListDelegate RequestFavoritesServerListDelegatePointer;
 		
 		#endregion
-		public HServerListRequest RequestFavoritesServerList( AppId_t iApp, [In,Out] MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
+		public HServerListRequest RequestFavoritesServerList( AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
 		{
-			return RequestFavoritesServerListDelegatePointer( Self, iApp, ppchFilters, nFilters, pRequestServersResponse );
+			return RequestFavoritesServerListDelegatePointer( Self, iApp, ref ppchFilters, nFilters, pRequestServersResponse );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate HServerListRequest RequestHistoryServerListDelegate( IntPtr self, AppId_t iApp, [In,Out] MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
+		public delegate HServerListRequest RequestHistoryServerListDelegate( IntPtr self, AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
 		private RequestHistoryServerListDelegate RequestHistoryServerListDelegatePointer;
 		
 		#endregion
-		public HServerListRequest RequestHistoryServerList( AppId_t iApp, [In,Out] MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
+		public HServerListRequest RequestHistoryServerList( AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
 		{
-			return RequestHistoryServerListDelegatePointer( Self, iApp, ppchFilters, nFilters, pRequestServersResponse );
+			return RequestHistoryServerListDelegatePointer( Self, iApp, ref ppchFilters, nFilters, pRequestServersResponse );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate HServerListRequest RequestSpectatorServerListDelegate( IntPtr self, AppId_t iApp, [In,Out] MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
+		public delegate HServerListRequest RequestSpectatorServerListDelegate( IntPtr self, AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
 		private RequestSpectatorServerListDelegate RequestSpectatorServerListDelegatePointer;
 		
 		#endregion
-		public HServerListRequest RequestSpectatorServerList( AppId_t iApp, [In,Out] MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
+		public HServerListRequest RequestSpectatorServerList( AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
 		{
-			return RequestSpectatorServerListDelegatePointer( Self, iApp, ppchFilters, nFilters, pRequestServersResponse );
+			return RequestSpectatorServerListDelegatePointer( Self, iApp, ref ppchFilters, nFilters, pRequestServersResponse );
 		}
 		
 		#region FunctionMeta
