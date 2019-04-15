@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
-
+using System.Threading.Tasks;
 
 namespace Steamworks
 {
@@ -80,6 +80,20 @@ namespace Steamworks
 			}
 		}
 
+		public async Task<Image?> GetSmallAvatarAsync()
+		{
+			return await Friends.GetSmallAvatarAsync( Id );
+		}
+
+		public async Task<Image?> GetMediumAvatarAsync()
+		{
+			return await Friends.GetMediumAvatarAsync( Id );
+		}
+
+		public async Task<Image?> GetLargeAvatarAsync()
+		{
+			return await Friends.GetLargeAvatarAsync( Id );
+		}
 
 	}
 }

@@ -92,18 +92,23 @@ namespace Steamworks
 		/// <summary>
 		/// returns the image in RGBA format
 		/// </summary>
-		public static byte[] GetImageRGBA( int image )
+		public static Image? GetImage( int image )
 		{
-			if ( !GetImageSize( image, out var w, out var h ) )
+			var i = new Image();
+
+			if ( !GetImageSize( image, out i.Width, out i.Height ) )
 				return null;
 
-			var size = w * h * 4 * sizeof( char );
-			var data = new byte[size];
+			var size = i.Width * i.Height * 4;
 
-			if ( !Internal.GetImageRGBA( image, data, data.Length ) )
+			var buf = Helpers.TakeBuffer( (int) size );
+
+			if ( !Internal.GetImageRGBA( image, buf, (int)size ) )
 				return null;
 
-			return data;
+			i.Data = new byte[size];
+			Array.Copy( buf, 0, i.Data, 0, size );
+			return i;
 		}
 
 		/// <summary>

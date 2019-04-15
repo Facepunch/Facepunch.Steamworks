@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Steamworks
 {
@@ -44,6 +45,70 @@ namespace Steamworks
 			}
 		}
 
+		[TestMethod]
+		public async Task LargeAvatar()
+		{
+			ulong id = (ulong)(76561197960279927 + (new Random().Next() % 10000));
+
+			var image = await Friends.GetLargeAvatarAsync( id );
+			if ( !image.HasValue )
+				return;
+
+			Console.WriteLine( $"image.Width {image.Value.Width}" );
+			Console.WriteLine( $"image.Height {image.Value.Height}" );
+
+			DrawImage( image.Value );			
+		}
+
+		[TestMethod]
+		public async Task MediumAvatar()
+		{
+			ulong id = (ulong)(76561197960279927 + (new Random().Next() % 10000));
+
+			Console.WriteLine( $"Steam: http://steamcommunity.com/profiles/{id}" );
+
+			var image = await Friends.GetMediumAvatarAsync( id );
+			if ( !image.HasValue )
+				return;
+
+			Console.WriteLine( $"image.Width {image.Value.Width}" );
+			Console.WriteLine( $"image.Height {image.Value.Height}" );
+
+			DrawImage( image.Value );
+		}
+
+		[TestMethod]
+		public async Task SmallAvatar()
+		{
+			ulong id = (ulong)(76561197960279927 + (new Random().Next() % 10000));
+
+			var image = await Friends.GetSmallAvatarAsync( id );
+			if ( !image.HasValue )
+				return;
+
+			Console.WriteLine( $"image.Width {image.Value.Width}" );
+			Console.WriteLine( $"image.Height {image.Value.Height}" );
+
+			DrawImage( image.Value );
+		}
+
+		[TestMethod]
+		public async Task GetFriendsAvatars()
+		{
+			foreach ( var friend in Friends.GetFriends() )
+			{
+				Console.WriteLine( $"{friend.Id.Value}: {friend.Name}" );
+
+				var image = await friend.GetSmallAvatarAsync();
+				if ( image.HasValue )
+				{
+					DrawImage( image.Value );
+				}
+
+				//	Assert.IsNotNull( friend.GetAvatar( Steamworks.Friends.AvatarSize.Medium ) );
+			}
+		}
+
 		/*
         [TestMethod]
         public void FriendListWithoutRefresh()
@@ -59,40 +124,7 @@ namespace Steamworks
             }
         }
 
-        [TestMethod]
-        public void Avatar()
-        {
-            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
-            {
-                Assert.IsTrue( client.IsValid );
 
-                ulong id = (ulong)( 76561197960279927 + (new Random().Next() % 10000));
-                bool passed = false;
-
-                client.Friends.GetAvatar( Steamworks.Friends.AvatarSize.Medium, id, ( avatar) =>
-                {
-                    if ( avatar == null )
-                    {
-                        Console.WriteLine( "No Avatar" );
-                    }
-                    else
-                    {
-                        Assert.AreEqual( avatar.Width, 64 );
-                        Assert.AreEqual( avatar.Height, 64 );
-                        Assert.AreEqual( avatar.Data.Length, avatar.Width * avatar.Height * 4 );
-
-                        DrawImage( avatar );
-                    }
-                    passed = true;
-                });
-
-                while (passed == false )
-                {
-                    client.Update();
-                    System.Threading.Thread.Sleep( 10 );
-                }
-            }
-        }
 
         [TestMethod]
         public void CachedAvatar()
@@ -113,8 +145,8 @@ namespace Steamworks
                 }
             }
         }
-
-        public static void DrawImage( Image img )
+				*/
+		public static void DrawImage( Image img )
         {
             var grad = " -:+#";
 
@@ -136,6 +168,6 @@ namespace Steamworks
                 Console.WriteLine( str );
             }
         }
-		*/
+
 	}
 }

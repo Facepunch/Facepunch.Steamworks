@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Facepunch.Steamworks;
 using SteamNative;
 
 namespace Steamworks
@@ -112,6 +113,53 @@ namespace Steamworks
 		/// NOTE: The current user must be in game with the other player for the association to work.
 		/// </summary>
 		public static void SetPlayedWith( CSteamID steamid ) => Internal.SetPlayedWith( steamid );
+
+		static async Task CacheUserInformationAsync( CSteamID steamid, bool nameonly )
+		{
+			// Got it straight away, skip any waiting.
+			if ( !Internal.RequestUserInformation( steamid, nameonly ) )
+				return;
+
+			await Task.Delay( 100 );
+
+			while ( Internal.RequestUserInformation( steamid, nameonly ) )
+			{
+				await Task.Delay( 50 );
+			}
+
+			//
+			// And extra wait here seems to solve avatars loading as [?]
+			//
+			await Task.Delay( 500 );
+		}
+
+		public static async Task<Image?> GetSmallAvatarAsync( CSteamID steamid )
+		{
+			await CacheUserInformationAsync( steamid, false );
+			return Utils.GetImage( Internal.GetSmallFriendAvatar( steamid ) );
+		}
+
+		public static async Task<Image?> GetMediumAvatarAsync( CSteamID steamid )
+		{
+			await CacheUserInformationAsync( steamid, false );
+			return Utils.GetImage( Internal.GetMediumFriendAvatar( steamid ) );
+		}
+
+		public static async Task<Image?> GetLargeAvatarAsync( CSteamID steamid )
+		{
+			await CacheUserInformationAsync( steamid, false );
+
+			var imageid = Internal.GetLargeFriendAvatar( steamid );
+
+			// Wait for the image to download
+			while ( imageid == -1 )
+			{
+				await Task.Delay( 50 );
+				imageid = Internal.GetLargeFriendAvatar( steamid );
+			}
+
+			return Utils.GetImage( imageid );
+		}
 
 	}
 }
