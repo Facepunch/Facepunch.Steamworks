@@ -98,6 +98,7 @@ namespace Generator
 				GenerateVTableClass( "ISteamMusic", $"{folder}../Generated/Interfaces/ISteamMusic.cs" );
 				GenerateVTableClass( "ISteamVideo", $"{folder}../Generated/Interfaces/ISteamVideo.cs" );
 				GenerateVTableClass( "ISteamUser", $"{folder}../Generated/Interfaces/ISteamUser.cs" );
+				GenerateVTableClass( "ISteamMatchmakingServers", $"{folder}../Generated/Interfaces/ISteamMatchmakingServers.cs" );
 			}
 		}
 

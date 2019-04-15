@@ -24,6 +24,7 @@ internal class BaseType
 		var basicType = type.Trim( ' ', '*' );
 
 		if ( basicType == "void" ) return new PointerType { NativeType = type, VarName = varname };
+		if ( basicType.StartsWith( "ISteam" ) ) return new PointerType { NativeType = type, VarName = varname };
 		if ( basicType == "const void" ) return new PointerType { NativeType = type, VarName = varname };
 		if ( basicType == "int32" || basicType == "int" ) return new IntType { NativeType = type, VarName = varname };
 		if ( basicType == "uint32" ) return new UIntType { NativeType = type, VarName = varname };
@@ -48,7 +49,7 @@ internal class BaseType
 	public virtual string ReturnType => TypeName;
 
 	public virtual string Ref => !IsVector && NativeType.EndsWith( "*" ) ? "ref " : "";
-	public virtual bool IsVector => NativeType.EndsWith( "*" ) && (VarName.StartsWith( "pvec" ) || VarName.StartsWith( "pub" ));
+	public virtual bool IsVector => (NativeType.EndsWith( "*" ) && (VarName.StartsWith( "pvec" ) || VarName.StartsWith( "pub" ))) || NativeType.EndsWith( "**" );
 
 	public virtual bool IsVoid => false;
 	public virtual bool IsReturnedWeird => false;

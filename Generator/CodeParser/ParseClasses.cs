@@ -91,6 +91,7 @@ namespace Generator
 		{
 			str = Regex.Replace( str, @"STEAM_OUT_ARRAY_CALL\((.+?)\)", "" );
 			str = Regex.Replace( str, @"STEAM_PRIVATE_API\((.+)\)", "$1" );
+			str = Regex.Replace( str, @"STEAM_ARRAY_COUNT\((.+?)\) ", "" );
 
 			return str;
 		}
