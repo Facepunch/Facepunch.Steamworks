@@ -9,7 +9,8 @@ using SteamNative;
 namespace Steamworks
 {
 	/// <summary>
-	/// Undocumented Parental Settings
+	/// Functions for accessing and manipulating Steam user information.
+	/// This is also where the APIs for Steam Voice are exposed.
 	/// </summary>
 	public static class User
 	{
@@ -35,11 +36,69 @@ namespace Steamworks
 
 		internal static void InstallEvents()
 		{
-		//	new Event<BroadcastUploadStart_t>( x => OnBroadcastStarted?.Invoke() );
-		//	new Event<BroadcastUploadStop_t>( x => OnBroadcastStopped?.Invoke( x.Result ) );
+			new Event<SteamServersConnected_t>( x => OnSteamServersConnected?.Invoke() );
+			new Event<SteamServerConnectFailure_t>( x => OnSteamServerConnectFailure?.Invoke() );
+			new Event<SteamServersDisconnected_t>( x => OnSteamServersDisconnected?.Invoke() );
+			new Event<ClientGameServerDeny_t>( x => OnClientGameServerDeny?.Invoke() );
+			new Event<LicensesUpdated_t>( x => OnLicensesUpdated?.Invoke() );
+			new Event<ValidateAuthTicketResponse_t>( x => OnValidateAuthTicketResponse?.Invoke( x.SteamID, x.OwnerSteamID, x.AuthSessionResponse ) );
+			new Event<MicroTxnAuthorizationResponse_t>( x => OnMicroTxnAuthorizationResponse?.Invoke( x.AppID, x.OrderID, x.Authorized != 0 ) );
+			new Event<GameWebCallback_t>( x => OnGameWebCallback?.Invoke( x.URL ) );
 		}
 
-		//	public static event Action OnBroadcastStarted;
+		/// <summary>
+		/// Called when a connections to the Steam back-end has been established.
+		/// This means the Steam client now has a working connection to the Steam servers. 
+		/// Usually this will have occurred before the game has launched, and should only be seen if the 
+		/// user has dropped connection due to a networking issue or a Steam server update.
+		/// </summary>
+		public static event Action OnSteamServersConnected;
+
+		/// <summary>
+		/// Called when a connection attempt has failed.
+		///	This will occur periodically if the Steam client is not connected, 
+		///	and has failed when retrying to establish a connection.
+		/// </summary>
+		public static event Action OnSteamServerConnectFailure;
+
+		/// <summary>
+		/// Called if the client has lost connection to the Steam servers.
+		/// Real-time services will be disabled until a matching OnSteamServersConnected has been posted.
+		/// </summary>
+		public static event Action OnSteamServersDisconnected;
+
+		/// <summary>
+		/// Sent by the Steam server to the client telling it to disconnect from the specified game server, 
+		/// which it may be in the process of or already connected to.
+		/// The game client should immediately disconnect upon receiving this message.
+		/// This can usually occur if the user doesn't have rights to play on the game server.
+		/// </summary>
+		public static event Action OnClientGameServerDeny;
+
+		/// <summary>
+		/// Called whenever the users licenses (owned packages) changes.
+		/// </summary>
+		public static event Action OnLicensesUpdated;
+
+		/// <summary>
+		/// Called when an auth ticket has been validated. 
+		/// The first parameter is the steamid of this user
+		/// The second is the Steam ID that owns the game, this will be different from the first if the game is being borrowed via Steam Family Sharing
+		/// </summary>
+		public static event Action<CSteamID, CSteamID, AuthSessionResponse> OnValidateAuthTicketResponse;
+
+		/// <summary>
+		/// Called when a user has responded to a microtransaction authorization request.
+		/// ( appid, orderid, user authorized )
+		/// </summary>
+		public static event Action<AppId, ulong, bool> OnMicroTxnAuthorizationResponse;
+
+		/// <summary>
+		/// Sent to your game in response to a steam://gamewebcallback/ command from a user clicking a link in the Steam overlay browser.
+		/// You can use this to add support for external site signups where you want to pop back into the browser after some web page 
+		/// signup sequence, and optionally get back some detail about that.
+		/// </summary>
+		public static event Action<string> OnGameWebCallback;
 
 		/// <summary>
 		/// Checks if the current user's Steam client is connected to the Steam servers.

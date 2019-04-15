@@ -36,6 +36,7 @@ namespace Steamworks
 			Parental.InstallEvents();
 			Music.InstallEvents();
 			Video.InstallEvents();
+			User.InstallEvents();
 		}
 
 		internal static void RegisterCallback( IntPtr intPtr, int callbackId )
