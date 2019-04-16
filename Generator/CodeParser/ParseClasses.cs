@@ -48,25 +48,52 @@ namespace Generator
 
 			var lastCallResult = "";
 
-			foreach ( var line in lines )
+			var partialLine = "";
+
+			var needsEndIf = false;
+
+			foreach ( var linestr in lines )
 			{
+				var line = linestr;
+
 				if ( line.Trim().Length < 4 ) continue;
 				if ( line.Trim().StartsWith( "public:" ) ) continue;
 				if ( line.Trim().StartsWith( "//" ) ) continue;
 
+				if ( line.Trim().StartsWith( "#ifdef _PS3" ) )
+				{
+					needsEndIf = true;
+					continue;
+				}
+
+				if ( needsEndIf )
+				{
+					needsEndIf = !line.Trim().StartsWith( "#endif" );
+					continue;
+				}
+
 				var callresult = Regex.Match( line, @"STEAM_CALL_RESULT\((.+?)\)" );
 				if ( callresult.Success )
 				{
+					partialLine = "";
 					lastCallResult = callresult.Groups[1].Value.Trim();
 					continue;
+				}
+
+				if ( !string.IsNullOrEmpty( partialLine ) )
+				{
+					partialLine += " " + line.Trim();
+
+					if ( !partialLine.Trim().EndsWith( ";" ) )
+						continue;
+
+					line = partialLine;
+					partialLine = "";
 				}
 
 				var f = func.Match( line );
 				if ( f.Success )
 				{
-
-					
-
 					var returnType = f.Groups[1].Value.Trim();
 					var funcName = f.Groups[2].Value.Trim();
 					var args = f.Groups[3].Value.Trim();
@@ -82,9 +109,15 @@ namespace Generator
 
 					fnc.CallResult = lastCallResult;
 					lastCallResult = null;
+					partialLine = "";
 				}
 				else
 				{
+					if ( line.Trim().StartsWith( "virtual " ) )
+					{
+						partialLine = line;
+					}
+
 					Console.WriteLine( $"Unknown Line: {line}" );
 				}
 			}
@@ -101,6 +134,8 @@ namespace Generator
 			str = Regex.Replace( str, @"STEAM_ARRAY_COUNT\((.+?)\) ", "" );
 			str = Regex.Replace( str, @"STEAM_OUT_STRUCT\(\) ", "" );
 			str = Regex.Replace( str, @"STEAM_OUT_STRUCT\((.+?)\) ", "" );
+			str = Regex.Replace( str, @"STEAM_OUT_ARRAY_COUNT\((.+?)\)", "" );
+			str = Regex.Replace( str, @"STEAM_ARRAY_COUNT_D\((.+?)\)", "" );
 
 			
 

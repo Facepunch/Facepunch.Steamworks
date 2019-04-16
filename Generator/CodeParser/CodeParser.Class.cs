@@ -30,6 +30,8 @@ namespace Generator
 					ReturnType = returnType
 				};
 
+				args = Regex.Replace( args, "", "" );
+
 				foreach ( var arg in args.Split( new[] { ',' }, StringSplitOptions.RemoveEmptyEntries ) )
 				{
 					var m = Regex.Match( arg.Trim(), @"(.+?[ |\*])?([a-zA-Z0-9_]+?)( = (.+?))?$" );

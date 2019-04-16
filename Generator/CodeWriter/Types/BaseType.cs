@@ -61,6 +61,7 @@ internal class BaseType
 
 			if ( VarName == "psteamIDClans" ) return true;
 			if ( VarName == "pScoreDetails" ) return true;
+			if ( VarName == "prgUsers" ) return true;
 			if ( NativeType.EndsWith( "**" ) ) return true;
 
 			if ( NativeType.EndsWith( "*" ) )

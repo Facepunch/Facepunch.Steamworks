@@ -46,22 +46,20 @@ namespace Steamworks
 			GetLeaderboardSortMethodDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetLeaderboardSortMethodDelegate>( Marshal.ReadIntPtr( VTable, 208) );
 			GetLeaderboardDisplayTypeDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetLeaderboardDisplayTypeDelegate>( Marshal.ReadIntPtr( VTable, 216) );
 			DownloadLeaderboardEntriesDelegatePointer = Marshal.GetDelegateForFunctionPointer<DownloadLeaderboardEntriesDelegate>( Marshal.ReadIntPtr( VTable, 224) );
-			GetDownloadedLeaderboardEntryDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetDownloadedLeaderboardEntryDelegate>( Marshal.ReadIntPtr( VTable, 232) );
-			UploadLeaderboardScoreDelegatePointer = Marshal.GetDelegateForFunctionPointer<UploadLeaderboardScoreDelegate>( Marshal.ReadIntPtr( VTable, 240) );
-			AttachLeaderboardUGCDelegatePointer = Marshal.GetDelegateForFunctionPointer<AttachLeaderboardUGCDelegate>( Marshal.ReadIntPtr( VTable, 248) );
-			GetNumberOfCurrentPlayersDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetNumberOfCurrentPlayersDelegate>( Marshal.ReadIntPtr( VTable, 256) );
-			RequestGlobalAchievementPercentagesDelegatePointer = Marshal.GetDelegateForFunctionPointer<RequestGlobalAchievementPercentagesDelegate>( Marshal.ReadIntPtr( VTable, 264) );
-			GetMostAchievedAchievementInfoDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetMostAchievedAchievementInfoDelegate>( Marshal.ReadIntPtr( VTable, 272) );
-			GetNextMostAchievedAchievementInfoDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetNextMostAchievedAchievementInfoDelegate>( Marshal.ReadIntPtr( VTable, 280) );
-			GetAchievementAchievedPercentDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetAchievementAchievedPercentDelegate>( Marshal.ReadIntPtr( VTable, 288) );
-			RequestGlobalStatsDelegatePointer = Marshal.GetDelegateForFunctionPointer<RequestGlobalStatsDelegate>( Marshal.ReadIntPtr( VTable, 296) );
-			GetGlobalStatDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetGlobalStatDelegate>( Marshal.ReadIntPtr( VTable, 304) );
-			GetGlobalStat2DelegatePointer = Marshal.GetDelegateForFunctionPointer<GetGlobalStat2Delegate>( Marshal.ReadIntPtr( VTable, 312) );
-			GetGlobalStatHistoryDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetGlobalStatHistoryDelegate>( Marshal.ReadIntPtr( VTable, 320) );
-			GetGlobalStatHistory2DelegatePointer = Marshal.GetDelegateForFunctionPointer<GetGlobalStatHistory2Delegate>( Marshal.ReadIntPtr( VTable, 328) );
-			GetTrophySpaceRequiredBeforeInstallDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetTrophySpaceRequiredBeforeInstallDelegate>( Marshal.ReadIntPtr( VTable, 336) );
-			SetUserStatsDataDelegatePointer = Marshal.GetDelegateForFunctionPointer<SetUserStatsDataDelegate>( Marshal.ReadIntPtr( VTable, 344) );
-			GetUserStatsDataDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetUserStatsDataDelegate>( Marshal.ReadIntPtr( VTable, 352) );
+			DownloadLeaderboardEntriesForUsersDelegatePointer = Marshal.GetDelegateForFunctionPointer<DownloadLeaderboardEntriesForUsersDelegate>( Marshal.ReadIntPtr( VTable, 232) );
+			GetDownloadedLeaderboardEntryDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetDownloadedLeaderboardEntryDelegate>( Marshal.ReadIntPtr( VTable, 240) );
+			UploadLeaderboardScoreDelegatePointer = Marshal.GetDelegateForFunctionPointer<UploadLeaderboardScoreDelegate>( Marshal.ReadIntPtr( VTable, 248) );
+			AttachLeaderboardUGCDelegatePointer = Marshal.GetDelegateForFunctionPointer<AttachLeaderboardUGCDelegate>( Marshal.ReadIntPtr( VTable, 256) );
+			GetNumberOfCurrentPlayersDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetNumberOfCurrentPlayersDelegate>( Marshal.ReadIntPtr( VTable, 264) );
+			RequestGlobalAchievementPercentagesDelegatePointer = Marshal.GetDelegateForFunctionPointer<RequestGlobalAchievementPercentagesDelegate>( Marshal.ReadIntPtr( VTable, 272) );
+			GetMostAchievedAchievementInfoDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetMostAchievedAchievementInfoDelegate>( Marshal.ReadIntPtr( VTable, 280) );
+			GetNextMostAchievedAchievementInfoDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetNextMostAchievedAchievementInfoDelegate>( Marshal.ReadIntPtr( VTable, 288) );
+			GetAchievementAchievedPercentDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetAchievementAchievedPercentDelegate>( Marshal.ReadIntPtr( VTable, 296) );
+			RequestGlobalStatsDelegatePointer = Marshal.GetDelegateForFunctionPointer<RequestGlobalStatsDelegate>( Marshal.ReadIntPtr( VTable, 304) );
+			GetGlobalStatDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetGlobalStatDelegate>( Marshal.ReadIntPtr( VTable, 312) );
+			GetGlobalStat2DelegatePointer = Marshal.GetDelegateForFunctionPointer<GetGlobalStat2Delegate>( Marshal.ReadIntPtr( VTable, 320) );
+			GetGlobalStatHistoryDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetGlobalStatHistoryDelegate>( Marshal.ReadIntPtr( VTable, 328) );
+			GetGlobalStatHistory2DelegatePointer = Marshal.GetDelegateForFunctionPointer<GetGlobalStatHistory2Delegate>( Marshal.ReadIntPtr( VTable, 336) );
 		}
 		
 		#region FunctionMeta
@@ -402,6 +400,17 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
+		private delegate SteamAPICall_t DownloadLeaderboardEntriesForUsersDelegate( IntPtr self, SteamLeaderboard_t hSteamLeaderboard, [In,Out] SteamId[]  prgUsers, int cUsers );
+		private DownloadLeaderboardEntriesForUsersDelegate DownloadLeaderboardEntriesForUsersDelegatePointer;
+		
+		#endregion
+		internal async Task<LeaderboardScoresDownloaded_t?> DownloadLeaderboardEntriesForUsers( SteamLeaderboard_t hSteamLeaderboard, [In,Out] SteamId[]  prgUsers, int cUsers )
+		{
+			return await (new Result<LeaderboardScoresDownloaded_t>( DownloadLeaderboardEntriesForUsersDelegatePointer( Self, hSteamLeaderboard, prgUsers, cUsers ) )).GetResult();
+		}
+		
+		#region FunctionMeta
+		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private delegate bool GetDownloadedLeaderboardEntryDelegate( IntPtr self, SteamLeaderboardEntries_t hSteamLeaderboardEntries, int index, ref LeaderboardEntry_t pLeaderboardEntry, ref int pDetails, int cDetailsMax );
 		private GetDownloadedLeaderboardEntryDelegate GetDownloadedLeaderboardEntryDelegatePointer;
@@ -545,41 +554,6 @@ namespace Steamworks
 		internal int GetGlobalStatHistory2( string pchStatName, ref double pData, uint cubData )
 		{
 			return GetGlobalStatHistory2DelegatePointer( Self, pchStatName, ref pData, cubData );
-		}
-		
-		#region FunctionMeta
-		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate ulong GetTrophySpaceRequiredBeforeInstallDelegate( IntPtr self );
-		private GetTrophySpaceRequiredBeforeInstallDelegate GetTrophySpaceRequiredBeforeInstallDelegatePointer;
-		
-		#endregion
-		internal ulong GetTrophySpaceRequiredBeforeInstall()
-		{
-			return GetTrophySpaceRequiredBeforeInstallDelegatePointer( Self );
-		}
-		
-		#region FunctionMeta
-		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool SetUserStatsDataDelegate( IntPtr self, IntPtr pvData, uint cubData );
-		private SetUserStatsDataDelegate SetUserStatsDataDelegatePointer;
-		
-		#endregion
-		internal bool SetUserStatsData( IntPtr pvData, uint cubData )
-		{
-			return SetUserStatsDataDelegatePointer( Self, pvData, cubData );
-		}
-		
-		#region FunctionMeta
-		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool GetUserStatsDataDelegate( IntPtr self, IntPtr pvData, uint cubData, ref uint pcubWritten );
-		private GetUserStatsDataDelegate GetUserStatsDataDelegatePointer;
-		
-		#endregion
-		internal bool GetUserStatsData( IntPtr pvData, uint cubData, ref uint pcubWritten )
-		{
-			return GetUserStatsDataDelegatePointer( Self, pvData, cubData, ref pcubWritten );
 		}
 		
 	}
