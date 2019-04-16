@@ -16,9 +16,11 @@ namespace Steamworks
         {
 			foreach ( var a in SteamUserStats.Achievements )
 			{
-				Console.WriteLine( $"{a.Value}" );
+				Console.WriteLine( $"{a.Identifier}" );
 				Console.WriteLine( $"	a.State: {a.State}" );
 				Console.WriteLine( $"	a.UnlockTime: {a.UnlockTime}" );
+				Console.WriteLine( $"	a.Name: {a.Name}" );
+				Console.WriteLine( $"	a.Description: {a.Description}" );
 				Console.WriteLine( $"	a.GlobalUnlockedPercentage:	{a.GlobalUnlockedPercentage}" );
 
 				var icon = a.GetIcon();

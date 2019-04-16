@@ -8,7 +8,7 @@ namespace Steamworks.Data
 {
 	public struct Achievement
 	{
-		public string Value;
+		internal string Value;
 
 		public Achievement( string name )
 		{
@@ -29,6 +29,12 @@ namespace Steamworks.Data
 				return state;
 			}
 		}
+
+		public string Identifier => Value;
+
+		public string Name => SteamUserStats.Internal.GetAchievementDisplayAttribute( Value, "name" );
+
+		public string Description => SteamUserStats.Internal.GetAchievementDisplayAttribute( Value, "desc" );
 
 
 		/// <summary>
