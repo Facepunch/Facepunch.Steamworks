@@ -18,19 +18,22 @@ namespace Steamworks
 
 		public BaseSteamInterface( bool server = false )
 		{
-			var hUser = server ? SteamApi.SteamGameServer_GetHSteamUser() : SteamApi.GetHSteamUser();
+			//
+			// If teh client isn't initialized but the server is, 
+			// try to open this interface in server mode
+			//
+			if ( !SteamClient.IsValid && SteamServer.IsValid ) server = true;
+
+			var hUser = server ? 
+						SteamApi.SteamGameServer_GetHSteamUser() : 
+						SteamApi.GetHSteamUser();
 
 			if ( hUser == 0 )
 				throw new System.Exception( "Steamworks is uninitialized" );
 
-			if ( server )
-			{
-				Self = SteamInternal.FindOrCreateGameServerInterface( hUser, InterfaceName );
-			}
-			else
-			{
-				Self = SteamInternal.FindOrCreateUserInterface( hUser, InterfaceName );
-			}
+			Self = server ?
+					SteamInternal.FindOrCreateGameServerInterface( hUser, InterfaceName ) :
+					SteamInternal.FindOrCreateUserInterface( hUser, InterfaceName );
 
 			if ( Self == IntPtr.Zero )
 				throw new System.Exception( $"Couldn't find interface {InterfaceName} (server:{server})" );
@@ -45,6 +48,10 @@ namespace Steamworks
 
 		public abstract void InitInternals();
 
+
+		//
+		// Dedicated string conversion buffer
+		//
 		static byte[] stringbuffer = new byte[1024 * 128];
 
 		internal string GetString( IntPtr p )
