@@ -33,7 +33,7 @@ namespace Generator
 
             {
                 sb = new StringBuilder();
-                Header();
+                Header( "Steamworks.Data" );
                 Types();
                 Footer();
                 System.IO.File.WriteAllText( $"{folder}SteamTypes.cs", sb.ToString() );
@@ -49,7 +49,7 @@ namespace Generator
 
             {
                 sb = new StringBuilder();
-                Header();
+                Header( "Steamworks.Data" );
                 Constants();
                 Footer();
                 System.IO.File.WriteAllText( $"{folder}SteamConstants.cs", sb.ToString() );

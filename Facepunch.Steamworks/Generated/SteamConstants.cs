@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using System.Linq;
 using Steamworks.Data;
 
-namespace Steamworks
+namespace Steamworks.Data
 {
 	internal static class CallbackIdentifiers
 	{
