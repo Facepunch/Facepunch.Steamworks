@@ -29,6 +29,14 @@ namespace Steamworks
 			}			
 		}
 
+		[TestMethod]
+		public async Task PlayerCountAsync()
+		{
+			var players = await SteamUserStats.PlayerCountAsync();
+			Assert.AreNotEqual( players, -1 );
+			Console.WriteLine( $"players:	{players}" );
+		}
+
 	}
 
 }

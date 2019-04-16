@@ -34,5 +34,18 @@ namespace Steamworks
 				}
 			}
 		}
+
+		/// <summary>
+		/// Tries to get the number of players currently playing this game.
+		/// Or -1 if failed.
+		/// </summary>
+		public static async Task<int> PlayerCountAsync()
+		{
+			var result = await Internal.GetNumberOfCurrentPlayers();
+			if ( !result.HasValue || result.Value.Success == 0 )
+				return -1;
+
+			return result.Value.CPlayers;
+		}
 	}
 }
