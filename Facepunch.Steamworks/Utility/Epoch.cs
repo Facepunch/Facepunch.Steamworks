@@ -9,28 +9,16 @@ namespace Steamworks
 		/// <summary>
 		/// Returns the current Unix Epoch
 		/// </summary>
-		public static int Current
-		{
-			get
-			{
-				return (int)(DateTime.UtcNow.Subtract( epoch ).TotalSeconds);
-			}
-		}
+		public static int Current => (int)(DateTime.UtcNow.Subtract( epoch ).TotalSeconds);
 
 		/// <summary>
 		/// Convert an epoch to a datetime
 		/// </summary>
-		public static DateTime ToDateTime( decimal unixTime )
-		{
-			return epoch.AddSeconds( (long)unixTime );
-		}
+		public static DateTime ToDateTime( decimal unixTime ) => epoch.AddSeconds( (long)unixTime );
 
 		/// <summary>
 		/// Convert a DateTime to a unix time
 		/// </summary>
-		public static uint FromDateTime( DateTime dt )
-		{
-			return (uint)(dt.Subtract( epoch ).TotalSeconds);
-		}
+		public static uint FromDateTime( DateTime dt ) => (uint)(dt.Subtract( epoch ).TotalSeconds);
 	}
 }

@@ -83,44 +83,5 @@ namespace Steamworks
                 default: return $"{decimaled} {currency}";
             }
         }
-
-        public static string ReadNullTerminatedUTF8String( this BinaryReader br, byte[] buffer = null )
-        {
-            if ( buffer == null )
-                buffer = new byte[1024];
-
-            byte chr;
-            int i = 0;
-            while ( (chr = br.ReadByte()) != 0 && i < buffer.Length )
-            {
-                buffer[i] = chr;
-                i++;
-            }
-
-            return Encoding.UTF8.GetString( buffer, 0, i );
-        }
-
-        public static IEnumerable<T> UnionSelect<T>(
-            this IEnumerable<T> first,
-            IEnumerable<T> second,
-            Func<T, T, T> selector) where T : IEquatable<T>
-        {
-            var items = new Dictionary<T, T>();
-
-            foreach (var i in first)
-            {
-                items[i] = i;
-            }
-
-            foreach (var i in second)
-            {
-                T firstValue;
-                if (items.TryGetValue(i, out firstValue))
-                {
-                    items.Remove(i);
-                    yield return selector(firstValue, i);
-                }
-            }
-        }
     }
 }
