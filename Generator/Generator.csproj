@@ -47,7 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Argument.cs" />
     <Compile Include="CodeParser\CodeParser.Class.cs" />
     <Compile Include="CodeParser\CodeParser.cs" />
     <Compile Include="CodeParser\ParseClasses.cs" />

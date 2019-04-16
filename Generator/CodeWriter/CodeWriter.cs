@@ -92,20 +92,6 @@ namespace Generator
             }
         }
 
-        private List<Argument> BuildArguments( SteamApiDefinition.MethodDef.ParamType[] ps )
-        {
-            var args = new List<Argument>();
-            if ( ps == null ) return args;
-
-            foreach ( var p in ps )
-            {
-                var a = new Argument( p.Name, p.Type, TypeDefs );
-                args.Add( a );
-            }
-
-            return args;
-        }
-
         private void Header( string NamespaceName = "Steamworks" )
         {
             WriteLine( "using System;" );

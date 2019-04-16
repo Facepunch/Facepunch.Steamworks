@@ -8,28 +8,6 @@ namespace Generator
 {
     public partial class CodeWriter
     {
-        static string[] IgnoredClasses = new string[]
-        {
-             "ISteamMatchmakingPingResponse",
-             "ISteamMatchmakingServerListResponse",
-             "ISteamMatchmakingPlayersResponse",
-             "ISteamMatchmakingRulesResponse",
-             "ISteamMatchmakingPingResponse",
-        };
-
-        public static bool ShouldIgnoreClass( string name )
-        {
-            return IgnoredClasses.Contains( name );
-        }
-
-        public string InterfaceNameToClass( string name )
-        {
-            if ( name[0] == 'I' )
-                name = name.Substring( 1 );
-
-            return name;
-        }
-
         string CleanMemberName( string m )
         {
             if ( m == "m_pubParam" ) return "ParamPtr";
