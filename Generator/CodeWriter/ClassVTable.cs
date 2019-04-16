@@ -25,7 +25,7 @@ namespace Generator
 
 			StartBlock( $"namespace Steamworks" );
 			{
-				StartBlock( $"internal class {clss.Name} : BaseSteamInterface" );
+				StartBlock( $"internal class {clss.Name} : SteamInterface" );
 				{
 					StartBlock( $"public {clss.Name}( bool server = false ) : base( server )" );
 					{

@@ -7,7 +7,7 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	internal class ISteamMusic : BaseSteamInterface
+	internal class ISteamMusic : SteamInterface
 	{
 		public ISteamMusic( bool server = false ) : base( server )
 		{

@@ -7,7 +7,7 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	internal class ISteamApps : BaseSteamInterface
+	internal class ISteamApps : SteamInterface
 	{
 		public ISteamApps( bool server = false ) : base( server )
 		{

@@ -7,7 +7,7 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	internal class ISteamMatchmakingServers : BaseSteamInterface
+	internal class ISteamMatchmakingServers : SteamInterface
 	{
 		public ISteamMatchmakingServers( bool server = false ) : base( server )
 		{

@@ -7,7 +7,7 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	internal class ISteamVideo : BaseSteamInterface
+	internal class ISteamVideo : SteamInterface
 	{
 		public ISteamVideo( bool server = false ) : base( server )
 		{

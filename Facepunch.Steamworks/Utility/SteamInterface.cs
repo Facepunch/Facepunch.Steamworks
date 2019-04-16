@@ -9,14 +9,14 @@ using System.Text;
 
 namespace Steamworks
 {
-	internal abstract class BaseSteamInterface
+	internal abstract class SteamInterface
 	{
 		public IntPtr Self;
 		public IntPtr VTable;
 
 		public virtual string InterfaceName => null;
 
-		public BaseSteamInterface( bool server = false )
+		public SteamInterface( bool server = false )
 		{
 			//
 			// If teh client isn't initialized but the server is, 
