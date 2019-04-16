@@ -235,18 +235,15 @@ namespace Steamworks
 		/// Asynchronously retrieves metadata details about a specific file in the depot manifest.
 		/// Currently provides:
 		/// </summary>
-		public static async Task<FileDetails> GetFileDetailsAsync( string filename )
+		public static async Task<FileDetails?> GetFileDetailsAsync( string filename )
 		{
 			var r = await Internal.GetFileDetails( filename );
 
-			if ( !r.HasValue )
-			{
-				throw new System.Exception( "Something went wrong" );
-			}
+			if ( !r.HasValue || r.Value.Result != Result.OK )
+				return null;
 
 			return new FileDetails
 			{
-				Found = r.Value.Result == Result.OK,
 				SizeInBytes = r.Value.FileSize,
 				Flags = r.Value.Flags,
 				Sha1 = string.Join( "", r.Value.FileSHA.Select( x => x.ToString( "x" ) ) )

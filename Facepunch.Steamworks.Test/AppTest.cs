@@ -89,10 +89,9 @@ namespace Steamworks
 		{
 			var fileinfo = await SteamApps.GetFileDetailsAsync( "hl2.exe" );
 
-			Console.WriteLine( $"fileinfo.Found: {fileinfo.Found}" );
-			Console.WriteLine( $"fileinfo.SizeInBytes: {fileinfo.SizeInBytes}" );
-			Console.WriteLine( $"fileinfo.Sha1: {fileinfo.Sha1}" );
-			Console.WriteLine( $"fileinfo.Flags: {fileinfo.Flags}" );
+			Console.WriteLine( $"fileinfo.SizeInBytes: {fileinfo?.SizeInBytes}" );
+			Console.WriteLine( $"fileinfo.Sha1: {fileinfo?.Sha1}" );
+			Console.WriteLine( $"fileinfo.Flags: {fileinfo?.Flags}" );
 		}
 
 		[TestMethod]
