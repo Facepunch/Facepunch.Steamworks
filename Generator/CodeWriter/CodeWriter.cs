@@ -41,7 +41,7 @@ namespace Generator
 
             {
                 sb = new StringBuilder();
-                Header();
+                Header( "Steamworks.Data" );
                 Structs();
                 Footer();
                 System.IO.File.WriteAllText( $"{folder}SteamStructs.cs", sb.ToString() );
