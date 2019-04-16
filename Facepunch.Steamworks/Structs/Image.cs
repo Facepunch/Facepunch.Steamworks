@@ -23,6 +23,11 @@ namespace Steamworks.Data
 
 			return c;
 		}
+
+		public override string ToString()
+		{
+			return $"{Width}x{Height} ({Data.Length}bytes)";
+		}
 	}
 
 	public struct Color

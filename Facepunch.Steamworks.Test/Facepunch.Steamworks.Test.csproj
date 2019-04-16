@@ -89,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="UserTest.cs" />
+    <Compile Include="UserStatsTest.cs" />
     <Compile Include="UtilsTest.cs" />
     <Compile Include="AppTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
