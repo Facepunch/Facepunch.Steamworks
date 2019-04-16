@@ -11,7 +11,7 @@ namespace Steamworks
     /// Used to set up the server. 
     /// The variables in here are all required to be set, and can't be changed once the server is created.
     /// </summary>
-    public struct ServerInit
+    public struct SteamServerInit
     {
         public IPAddress IpAddress;
         public ushort SteamPort;
@@ -37,7 +37,7 @@ namespace Steamworks
         public string GameDescription;
 
 
-        public ServerInit( string modDir, string gameDesc )
+        public SteamServerInit( string modDir, string gameDesc )
         {
             ModDir = modDir;
             GameDescription = gameDesc;
@@ -54,7 +54,7 @@ namespace Steamworks
         /// <summary>
         /// Set the Steam quert port 
         /// </summary>
-        public ServerInit WithRandomSteamPort()
+        public SteamServerInit WithRandomSteamPort()
         {
             SteamPort = (ushort)new Random().Next( 10000, 60000 );
             return this;
@@ -67,7 +67,7 @@ namespace Steamworks
         /// 
         /// More info about this here: https://partner.steamgames.com/doc/api/ISteamGameServer#HandleIncomingPacket
         /// </summary>
-        public ServerInit WithQueryShareGamePort()
+        public SteamServerInit WithQueryShareGamePort()
         {
             QueryPort = 0xFFFF;
             return this;

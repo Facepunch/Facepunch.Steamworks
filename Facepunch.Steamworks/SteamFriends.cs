@@ -11,14 +11,14 @@ namespace Steamworks
 	/// </summary>
 	public static class SteamFriends
 	{
-		static Internal.ISteamFriends _internal;
-		internal static Internal.ISteamFriends Internal
+		static ISteamFriends _internal;
+		internal static ISteamFriends Internal
 		{
 			get
 			{
 				if ( _internal == null )
 				{
-					_internal = new Internal.ISteamFriends();
+					_internal = new ISteamFriends();
 
 					richPresence = new Dictionary<string, string>();
 				}
@@ -193,19 +193,19 @@ namespace Steamworks
 			await Task.Delay( 500 );
 		}
 
-		public static async Task<Image?> GetSmallAvatarAsync( SteamId steamid )
+		public static async Task<Data.Image?> GetSmallAvatarAsync( SteamId steamid )
 		{
 			await CacheUserInformationAsync( steamid, false );
 			return SteamUtils.GetImage( Internal.GetSmallFriendAvatar( steamid ) );
 		}
 
-		public static async Task<Image?> GetMediumAvatarAsync( SteamId steamid )
+		public static async Task<Data.Image?> GetMediumAvatarAsync( SteamId steamid )
 		{
 			await CacheUserInformationAsync( steamid, false );
 			return SteamUtils.GetImage( Internal.GetMediumFriendAvatar( steamid ) );
 		}
 
-		public static async Task<Image?> GetLargeAvatarAsync( SteamId steamid )
+		public static async Task<Data.Image?> GetLargeAvatarAsync( SteamId steamid )
 		{
 			await CacheUserInformationAsync( steamid, false );
 

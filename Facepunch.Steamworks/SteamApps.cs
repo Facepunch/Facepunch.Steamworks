@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Steamworks.Data;
 
 namespace Steamworks
 {
@@ -12,13 +13,13 @@ namespace Steamworks
 	/// </summary>
 	public static class SteamApps
 	{
-		static Internal.ISteamApps _internal;
-		internal static Internal.ISteamApps Internal
+		static ISteamApps _internal;
+		internal static ISteamApps Internal
 		{
 			get
 			{
 				if ( _internal == null )
-					_internal = new Internal.ISteamApps();
+					_internal = new ISteamApps();
 
 				return _internal;
 			}

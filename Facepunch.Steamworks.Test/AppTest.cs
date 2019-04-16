@@ -22,7 +22,7 @@ namespace Steamworks
 			//
 			// Init Server
 			//
-			var serverInit = new ServerInit( "gmod", "Garry Mode" )
+			var serverInit = new SteamServerInit( "gmod", "Garry Mode" )
 			{
 				GamePort = 28015,
 				Secure = true,

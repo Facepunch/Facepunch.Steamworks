@@ -2,11 +2,12 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Steamworks.Data;
 
 
-namespace Steamworks.Internal
+namespace Steamworks
 {
-	public class ISteamVideo : BaseSteamInterface
+	internal class ISteamVideo : BaseSteamInterface
 	{
 		public ISteamVideo( bool server = false ) : base( server )
 		{

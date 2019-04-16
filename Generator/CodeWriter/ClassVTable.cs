@@ -18,13 +18,14 @@ namespace Generator
 			WriteLine( $"using System.Runtime.InteropServices;" );
 			WriteLine( $"using System.Text;" );
 			WriteLine( $"using System.Threading.Tasks;" );
+			WriteLine( $"using Steamworks.Data;" );
 			WriteLine();
 
 			WriteLine();
 
-			StartBlock( $"namespace Steamworks.Internal" );
+			StartBlock( $"namespace Steamworks" );
 			{
-				StartBlock( $"public class {clss.Name} : BaseSteamInterface" );
+				StartBlock( $"internal class {clss.Name} : BaseSteamInterface" );
 				{
 					StartBlock( $"public {clss.Name}( bool server = false ) : base( server )" );
 					{

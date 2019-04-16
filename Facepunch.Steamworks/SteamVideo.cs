@@ -11,13 +11,13 @@ namespace Steamworks
 	/// </summary>
 	public static class SteamVideo
 	{
-		static Internal.ISteamVideo _internal;
-		internal static Internal.ISteamVideo Internal
+		static ISteamVideo _internal;
+		internal static ISteamVideo Internal
 		{
 			get
 			{
 				if ( _internal == null )
-					_internal = new Internal.ISteamVideo();
+					_internal = new ISteamVideo();
 
 				return _internal;
 			}

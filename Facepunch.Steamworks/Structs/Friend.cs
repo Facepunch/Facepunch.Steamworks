@@ -101,17 +101,17 @@ namespace Steamworks
 			}
 		}
 
-		public async Task<Image?> GetSmallAvatarAsync()
+		public async Task<Data.Image?> GetSmallAvatarAsync()
 		{
 			return await SteamFriends.GetSmallAvatarAsync( Id );
 		}
 
-		public async Task<Image?> GetMediumAvatarAsync()
+		public async Task<Data.Image?> GetMediumAvatarAsync()
 		{
 			return await SteamFriends.GetMediumAvatarAsync( Id );
 		}
 
-		public async Task<Image?> GetLargeAvatarAsync()
+		public async Task<Data.Image?> GetLargeAvatarAsync()
 		{
 			return await SteamFriends.GetLargeAvatarAsync( Id );
 		}

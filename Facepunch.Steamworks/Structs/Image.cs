@@ -1,5 +1,5 @@
 ﻿
-namespace Steamworks
+namespace Steamworks.Data
 {
 	public struct Image
 	{

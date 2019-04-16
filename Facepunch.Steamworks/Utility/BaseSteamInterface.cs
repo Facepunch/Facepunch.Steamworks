@@ -7,9 +7,9 @@ using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Steamworks.Internal
+namespace Steamworks
 {
-	public abstract class BaseSteamInterface
+	internal abstract class BaseSteamInterface
 	{
 		public IntPtr Self;
 		public IntPtr VTable;

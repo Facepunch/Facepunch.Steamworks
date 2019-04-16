@@ -11,13 +11,13 @@ namespace Steamworks
 	/// </summary>
 	public static class SteamUtils
 	{
-		static Internal.ISteamUtils _internal;
-		internal static Internal.ISteamUtils Internal
+		static ISteamUtils _internal;
+		internal static ISteamUtils Internal
 		{
 			get
 			{
 				if ( _internal == null )
-					_internal = new Internal.ISteamUtils();
+					_internal = new ISteamUtils();
 
 				return _internal;
 			}
@@ -91,9 +91,9 @@ namespace Steamworks
 		/// <summary>
 		/// returns the image in RGBA format
 		/// </summary>
-		public static Image? GetImage( int image )
+		public static Data.Image? GetImage( int image )
 		{
-			var i = new Image();
+			var i = new Data.Image();
 
 			if ( !GetImageSize( image, out i.Width, out i.Height ) )
 				return null;

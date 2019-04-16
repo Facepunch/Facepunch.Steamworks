@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Steamworks.Data;
 
 namespace Steamworks
 {
@@ -13,13 +14,13 @@ namespace Steamworks
 	{
 		static bool initialized;
 
-		static Internal.ISteamGameServer _internal;
-		internal static Internal.ISteamGameServer Internal
+		static ISteamGameServer _internal;
+		internal static ISteamGameServer Internal
 		{
 			get
 			{
 				if ( _internal == null )
-					_internal = new Internal.ISteamGameServer( true );
+					_internal = new ISteamGameServer( true );
 
 				return _internal;
 			}
@@ -37,7 +38,7 @@ namespace Steamworks
 		/// </summary>
 		public static event Action<SteamId, SteamId, AuthResponse> OnValidateAuthTicketResponse;
 
-		public static void Init( AppId appid, ServerInit init )
+		public static void Init( AppId appid, SteamServerInit init )
 		{
 			uint ipaddress = 0; // Any Port
 

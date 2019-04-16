@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 
 
-namespace Steamworks
+namespace Steamworks.Data
 {
 	public struct ServerInfo
 	{

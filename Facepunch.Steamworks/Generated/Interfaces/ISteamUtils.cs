@@ -2,11 +2,12 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Steamworks.Data;
 
 
-namespace Steamworks.Internal
+namespace Steamworks
 {
-	public class ISteamUtils : BaseSteamInterface
+	internal class ISteamUtils : BaseSteamInterface
 	{
 		public ISteamUtils( bool server = false ) : base( server )
 		{

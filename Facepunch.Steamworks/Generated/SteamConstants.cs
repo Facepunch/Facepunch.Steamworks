@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Linq;
+using Steamworks.Data;
 
 namespace Steamworks
 {

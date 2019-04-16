@@ -11,13 +11,13 @@ namespace Steamworks
 	/// </summary>
 	public static class SteamParental
 	{
-		static Internal.ISteamParentalSettings _internal;
-		internal static Internal.ISteamParentalSettings Internal
+		static ISteamParentalSettings _internal;
+		internal static ISteamParentalSettings Internal
 		{
 			get
 			{
 				if ( _internal == null )
-					_internal = new Internal.ISteamParentalSettings();
+					_internal = new ISteamParentalSettings();
 
 				return _internal;
 			}

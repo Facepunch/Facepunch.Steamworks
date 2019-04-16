@@ -11,13 +11,13 @@ namespace Steamworks
 	/// </summary>
 	public static class SteamMusic
 	{
-		static Internal.ISteamMusic _internal;
-		internal static Internal.ISteamMusic Internal
+		static ISteamMusic _internal;
+		internal static ISteamMusic Internal
 		{
 			get
 			{
 				if ( _internal == null )
-					_internal = new Internal.ISteamMusic();
+					_internal = new ISteamMusic();
 
 				return _internal;
 			}

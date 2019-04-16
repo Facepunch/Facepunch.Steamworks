@@ -13,14 +13,14 @@ namespace Steamworks
 	/// </summary>
 	public static class SteamUser
 	{
-		static Internal.ISteamUser _internal;
-		internal static Internal.ISteamUser Internal
+		static ISteamUser _internal;
+		internal static ISteamUser Internal
 		{
 			get
 			{
 				if ( _internal == null )
 				{
-					_internal = new Internal.ISteamUser();
+					_internal = new ISteamUser();
 
 					richPresence = new Dictionary<string, string>();
 

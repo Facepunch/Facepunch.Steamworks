@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Steamworks.Data;
 
 namespace Steamworks
 {
@@ -14,13 +15,13 @@ namespace Steamworks
 
 		#region ISteamMatchmakingServers
 
-		static Internal.ISteamMatchmakingServers _internal;
-		internal static Internal.ISteamMatchmakingServers Internal
+		static ISteamMatchmakingServers _internal;
+		internal static ISteamMatchmakingServers Internal
 		{
 			get
 			{
 				if ( _internal == null )
-					_internal = new Internal.ISteamMatchmakingServers();
+					_internal = new ISteamMatchmakingServers();
 
 				return _internal;
 			}
