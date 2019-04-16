@@ -88,6 +88,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FriendsTest.cs" />
     <Compile Include="UserTest.cs" />
     <Compile Include="UserStatsTest.cs" />
     <Compile Include="UtilsTest.cs" />
