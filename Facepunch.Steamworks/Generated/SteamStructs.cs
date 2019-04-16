@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Steamworks
 {
-	public struct CallbackMsg_t
+	internal struct CallbackMsg_t
 	{
 		internal int SteamUser; // m_hSteamUser HSteamUser
 		internal int Callback; // m_iCallback int
@@ -40,7 +40,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct SteamServerConnectFailure_t : Steamworks.ISteamCallback
+	internal struct SteamServerConnectFailure_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		[MarshalAs(UnmanagedType.I1)]
@@ -74,7 +74,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct SteamServersDisconnected_t : Steamworks.ISteamCallback
+	internal struct SteamServersDisconnected_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		
@@ -102,7 +102,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct ClientGameServerDeny_t : Steamworks.ISteamCallback
+	internal struct ClientGameServerDeny_t : Steamworks.ISteamCallback
 	{
 		internal uint AppID; // m_uAppID uint32
 		internal uint GameServerIP; // m_unGameServerIP uint32
@@ -142,10 +142,10 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct ValidateAuthTicketResponse_t : Steamworks.ISteamCallback
+	internal struct ValidateAuthTicketResponse_t : Steamworks.ISteamCallback
 	{
 		internal SteamId SteamID; // m_SteamID class CSteamID
-		internal AuthSessionResponse AuthSessionResponse; // m_eAuthSessionResponse enum EAuthSessionResponse
+		internal AuthResponse AuthSessionResponse; // m_eAuthSessionResponse enum EAuthSessionResponse
 		internal SteamId OwnerSteamID; // m_OwnerSteamID class CSteamID
 		
 		#region ISteamCallback
@@ -158,7 +158,7 @@ namespace Steamworks
 		public struct Pack4
 		{
 			internal SteamId SteamID; // m_SteamID class CSteamID
-			internal AuthSessionResponse AuthSessionResponse; // m_eAuthSessionResponse enum EAuthSessionResponse
+			internal AuthResponse AuthSessionResponse; // m_eAuthSessionResponse enum EAuthSessionResponse
 			internal SteamId OwnerSteamID; // m_OwnerSteamID class CSteamID
 			
 			public static implicit operator ValidateAuthTicketResponse_t ( ValidateAuthTicketResponse_t.Pack4 d ) => new ValidateAuthTicketResponse_t{ SteamID = d.SteamID,AuthSessionResponse = d.AuthSessionResponse,OwnerSteamID = d.OwnerSteamID, };
@@ -168,7 +168,7 @@ namespace Steamworks
 		public struct Pack8
 		{
 			internal SteamId SteamID; // m_SteamID class CSteamID
-			internal AuthSessionResponse AuthSessionResponse; // m_eAuthSessionResponse enum EAuthSessionResponse
+			internal AuthResponse AuthSessionResponse; // m_eAuthSessionResponse enum EAuthSessionResponse
 			internal SteamId OwnerSteamID; // m_OwnerSteamID class CSteamID
 			
 			public static implicit operator ValidateAuthTicketResponse_t ( ValidateAuthTicketResponse_t.Pack8 d ) => new ValidateAuthTicketResponse_t{ SteamID = d.SteamID,AuthSessionResponse = d.AuthSessionResponse,OwnerSteamID = d.OwnerSteamID, };
@@ -176,7 +176,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct MicroTxnAuthorizationResponse_t : Steamworks.ISteamCallback
+	internal struct MicroTxnAuthorizationResponse_t : Steamworks.ISteamCallback
 	{
 		internal uint AppID; // m_unAppID uint32
 		internal ulong OrderID; // m_ulOrderID uint64
@@ -210,7 +210,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct EncryptedAppTicketResponse_t : Steamworks.ISteamCallback
+	internal struct EncryptedAppTicketResponse_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		
@@ -238,7 +238,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GetAuthSessionTicketResponse_t : Steamworks.ISteamCallback
+	internal struct GetAuthSessionTicketResponse_t : Steamworks.ISteamCallback
 	{
 		internal uint AuthTicket; // m_hAuthTicket HAuthTicket
 		internal Result Result; // m_eResult enum EResult
@@ -269,7 +269,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GameWebCallback_t : Steamworks.ISteamCallback
+	internal struct GameWebCallback_t : Steamworks.ISteamCallback
 	{
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 		internal string URL; // m_szURL char [256]
@@ -300,7 +300,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct StoreAuthURLResponse_t : Steamworks.ISteamCallback
+	internal struct StoreAuthURLResponse_t : Steamworks.ISteamCallback
 	{
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
 		internal string URL; // m_szURL char [512]
@@ -331,7 +331,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct MarketEligibilityResponse_t : Steamworks.ISteamCallback
+	internal struct MarketEligibilityResponse_t : Steamworks.ISteamCallback
 	{
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool Allowed; // m_bAllowed _Bool
@@ -374,7 +374,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct FriendGameInfo_t
+	internal struct FriendGameInfo_t
 	{
 		internal GameId GameID; // m_gameID class CGameID
 		internal uint GameIP; // m_unGameIP uint32
@@ -413,7 +413,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct FriendSessionStateInfo_t
+	internal struct FriendSessionStateInfo_t
 	{
 		internal uint IOnlineSessionInstances; // m_uiOnlineSessionInstances uint32
 		internal byte IPublishedToFriendsSessionInstance; // m_uiPublishedToFriendsSessionInstance uint8
@@ -443,7 +443,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct PersonaStateChange_t : Steamworks.ISteamCallback
+	internal struct FriendStateChange_t : Steamworks.ISteamCallback
 	{
 		internal ulong SteamID; // m_ulSteamID uint64
 		internal int ChangeFlags; // m_nChangeFlags int
@@ -451,7 +451,7 @@ namespace Steamworks
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamFriends + 4;
 		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(Pack4) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((PersonaStateChange_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((PersonaStateChange_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((FriendStateChange_t)(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : ((FriendStateChange_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
 		#endregion
 		#region Packed Versions
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
@@ -460,7 +460,7 @@ namespace Steamworks
 			internal ulong SteamID; // m_ulSteamID uint64
 			internal int ChangeFlags; // m_nChangeFlags int
 			
-			public static implicit operator PersonaStateChange_t ( PersonaStateChange_t.Pack4 d ) => new PersonaStateChange_t{ SteamID = d.SteamID,ChangeFlags = d.ChangeFlags, };
+			public static implicit operator FriendStateChange_t ( FriendStateChange_t.Pack4 d ) => new FriendStateChange_t{ SteamID = d.SteamID,ChangeFlags = d.ChangeFlags, };
 		}
 		
 		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
@@ -469,12 +469,12 @@ namespace Steamworks
 			internal ulong SteamID; // m_ulSteamID uint64
 			internal int ChangeFlags; // m_nChangeFlags int
 			
-			public static implicit operator PersonaStateChange_t ( PersonaStateChange_t.Pack8 d ) => new PersonaStateChange_t{ SteamID = d.SteamID,ChangeFlags = d.ChangeFlags, };
+			public static implicit operator FriendStateChange_t ( FriendStateChange_t.Pack8 d ) => new FriendStateChange_t{ SteamID = d.SteamID,ChangeFlags = d.ChangeFlags, };
 		}
 		#endregion
 	}
 	
-	public struct GameOverlayActivated_t : Steamworks.ISteamCallback
+	internal struct GameOverlayActivated_t : Steamworks.ISteamCallback
 	{
 		internal byte Active; // m_bActive uint8
 		
@@ -502,7 +502,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GameServerChangeRequested_t : Steamworks.ISteamCallback
+	internal struct GameServerChangeRequested_t : Steamworks.ISteamCallback
 	{
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
 		internal string Server; // m_rgchServer char [64]
@@ -539,7 +539,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GameLobbyJoinRequested_t : Steamworks.ISteamCallback
+	internal struct GameLobbyJoinRequested_t : Steamworks.ISteamCallback
 	{
 		internal SteamId SteamIDLobby; // m_steamIDLobby class CSteamID
 		internal SteamId SteamIDFriend; // m_steamIDFriend class CSteamID
@@ -570,7 +570,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct AvatarImageLoaded_t : Steamworks.ISteamCallback
+	internal struct AvatarImageLoaded_t : Steamworks.ISteamCallback
 	{
 		internal SteamId SteamID; // m_steamID class CSteamID
 		internal int Image; // m_iImage int
@@ -607,7 +607,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct ClanOfficerListResponse_t : Steamworks.ISteamCallback
+	internal struct ClanOfficerListResponse_t : Steamworks.ISteamCallback
 	{
 		internal SteamId SteamIDClan; // m_steamIDClan class CSteamID
 		internal int COfficers; // m_cOfficers int
@@ -641,7 +641,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct FriendRichPresenceUpdate_t : Steamworks.ISteamCallback
+	internal struct FriendRichPresenceUpdate_t : Steamworks.ISteamCallback
 	{
 		internal SteamId SteamIDFriend; // m_steamIDFriend class CSteamID
 		internal uint AppID; // m_nAppID AppId_t
@@ -672,7 +672,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GameRichPresenceJoinRequested_t : Steamworks.ISteamCallback
+	internal struct GameRichPresenceJoinRequested_t : Steamworks.ISteamCallback
 	{
 		internal SteamId SteamIDFriend; // m_steamIDFriend class CSteamID
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
@@ -706,7 +706,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GameConnectedClanChatMsg_t : Steamworks.ISteamCallback
+	internal struct GameConnectedClanChatMsg_t : Steamworks.ISteamCallback
 	{
 		internal SteamId SteamIDClanChat; // m_steamIDClanChat class CSteamID
 		internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
@@ -740,7 +740,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GameConnectedChatJoin_t : Steamworks.ISteamCallback
+	internal struct GameConnectedChatJoin_t : Steamworks.ISteamCallback
 	{
 		internal SteamId SteamIDClanChat; // m_steamIDClanChat class CSteamID
 		internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
@@ -771,7 +771,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GameConnectedChatLeave_t : Steamworks.ISteamCallback
+	internal struct GameConnectedChatLeave_t : Steamworks.ISteamCallback
 	{
 		internal SteamId SteamIDClanChat; // m_steamIDClanChat class CSteamID
 		internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
@@ -814,7 +814,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct DownloadClanActivityCountsResult_t : Steamworks.ISteamCallback
+	internal struct DownloadClanActivityCountsResult_t : Steamworks.ISteamCallback
 	{
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool Success; // m_bSuccess _Bool
@@ -845,7 +845,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct JoinClanChatRoomCompletionResult_t : Steamworks.ISteamCallback
+	internal struct JoinClanChatRoomCompletionResult_t : Steamworks.ISteamCallback
 	{
 		internal SteamId SteamIDClanChat; // m_steamIDClanChat class CSteamID
 		internal ChatRoomEnterResponse ChatRoomEnterResponse; // m_eChatRoomEnterResponse enum EChatRoomEnterResponse
@@ -876,7 +876,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GameConnectedFriendChatMsg_t : Steamworks.ISteamCallback
+	internal struct GameConnectedFriendChatMsg_t : Steamworks.ISteamCallback
 	{
 		internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
 		internal int MessageID; // m_iMessageID int
@@ -907,7 +907,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct FriendsGetFollowerCount_t : Steamworks.ISteamCallback
+	internal struct FriendsGetFollowerCount_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal SteamId SteamID; // m_steamID class CSteamID
@@ -941,7 +941,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct FriendsIsFollowing_t : Steamworks.ISteamCallback
+	internal struct FriendsIsFollowing_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal SteamId SteamID; // m_steamID class CSteamID
@@ -978,7 +978,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct FriendsEnumerateFollowingList_t : Steamworks.ISteamCallback
+	internal struct FriendsEnumerateFollowingList_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
@@ -1018,7 +1018,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct SetPersonaNameResponse_t : Steamworks.ISteamCallback
+	internal struct SetPersonaNameResponse_t : Steamworks.ISteamCallback
 	{
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool Success; // m_bSuccess _Bool
@@ -1058,7 +1058,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct LowBatteryPower_t : Steamworks.ISteamCallback
+	internal struct LowBatteryPower_t : Steamworks.ISteamCallback
 	{
 		internal byte MinutesBatteryLeft; // m_nMinutesBatteryLeft uint8
 		
@@ -1086,7 +1086,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct SteamAPICallCompleted_t : Steamworks.ISteamCallback
+	internal struct SteamAPICallCompleted_t : Steamworks.ISteamCallback
 	{
 		internal ulong AsyncCall; // m_hAsyncCall SteamAPICall_t
 		internal int Callback; // m_iCallback int
@@ -1120,7 +1120,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct CheckFileSignature_t : Steamworks.ISteamCallback
+	internal struct CheckFileSignature_t : Steamworks.ISteamCallback
 	{
 		internal CheckFileSignature CheckFileSignature; // m_eCheckFileSignature enum ECheckFileSignature
 		
@@ -1148,7 +1148,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GamepadTextInputDismissed_t : Steamworks.ISteamCallback
+	internal struct GamepadTextInputDismissed_t : Steamworks.ISteamCallback
 	{
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool Submitted; // m_bSubmitted _Bool
@@ -1182,7 +1182,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct MatchMakingKeyValuePair_t
+	internal struct MatchMakingKeyValuePair_t
 	{
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 		internal string Key; // m_szKey char [256]
@@ -1218,7 +1218,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct servernetadr_t
+	internal struct servernetadr_t
 	{
 		internal ushort ConnectionPort; // m_usConnectionPort uint16
 		internal ushort QueryPort; // m_usQueryPort uint16
@@ -1251,7 +1251,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct gameserveritem_t
+	internal struct gameserveritem_t
 	{
 		internal servernetadr_t NetAdr; // m_NetAdr class servernetadr_t
 		internal int Ping; // m_nPing int
@@ -1356,7 +1356,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct SteamPartyBeaconLocation_t
+	internal struct SteamPartyBeaconLocation_t
 	{
 		internal SteamPartyBeaconLocationType Type; // m_eType enum ESteamPartyBeaconLocationType
 		internal ulong LocationID; // m_ulLocationID uint64
@@ -1386,7 +1386,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct FavoritesListChanged_t : Steamworks.ISteamCallback
+	internal struct FavoritesListChanged_t : Steamworks.ISteamCallback
 	{
 		internal uint IP; // m_nIP uint32
 		internal uint QueryPort; // m_nQueryPort uint32
@@ -1435,7 +1435,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct LobbyInvite_t : Steamworks.ISteamCallback
+	internal struct LobbyInvite_t : Steamworks.ISteamCallback
 	{
 		internal ulong SteamIDUser; // m_ulSteamIDUser uint64
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
@@ -1469,7 +1469,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct LobbyEnter_t : Steamworks.ISteamCallback
+	internal struct LobbyEnter_t : Steamworks.ISteamCallback
 	{
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 		internal uint GfChatPermissions; // m_rgfChatPermissions uint32
@@ -1509,7 +1509,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct LobbyDataUpdate_t : Steamworks.ISteamCallback
+	internal struct LobbyDataUpdate_t : Steamworks.ISteamCallback
 	{
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 		internal ulong SteamIDMember; // m_ulSteamIDMember uint64
@@ -1543,7 +1543,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct LobbyChatUpdate_t : Steamworks.ISteamCallback
+	internal struct LobbyChatUpdate_t : Steamworks.ISteamCallback
 	{
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 		internal ulong SteamIDUserChanged; // m_ulSteamIDUserChanged uint64
@@ -1580,7 +1580,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct LobbyChatMsg_t : Steamworks.ISteamCallback
+	internal struct LobbyChatMsg_t : Steamworks.ISteamCallback
 	{
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 		internal ulong SteamIDUser; // m_ulSteamIDUser uint64
@@ -1617,7 +1617,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct LobbyGameCreated_t : Steamworks.ISteamCallback
+	internal struct LobbyGameCreated_t : Steamworks.ISteamCallback
 	{
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 		internal ulong SteamIDGameServer; // m_ulSteamIDGameServer uint64
@@ -1654,7 +1654,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct LobbyMatchList_t : Steamworks.ISteamCallback
+	internal struct LobbyMatchList_t : Steamworks.ISteamCallback
 	{
 		internal uint LobbiesMatching; // m_nLobbiesMatching uint32
 		
@@ -1682,7 +1682,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct LobbyKicked_t : Steamworks.ISteamCallback
+	internal struct LobbyKicked_t : Steamworks.ISteamCallback
 	{
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 		internal ulong SteamIDAdmin; // m_ulSteamIDAdmin uint64
@@ -1716,7 +1716,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct LobbyCreated_t : Steamworks.ISteamCallback
+	internal struct LobbyCreated_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
@@ -1747,7 +1747,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct PSNGameBootInviteResult_t : Steamworks.ISteamCallback
+	internal struct PSNGameBootInviteResult_t : Steamworks.ISteamCallback
 	{
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool GameBootInviteExists; // m_bGameBootInviteExists _Bool
@@ -1781,7 +1781,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct FavoritesListAccountsUpdated_t : Steamworks.ISteamCallback
+	internal struct FavoritesListAccountsUpdated_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		
@@ -1809,7 +1809,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct SearchForGameProgressCallback_t : Steamworks.ISteamCallback
+	internal struct SearchForGameProgressCallback_t : Steamworks.ISteamCallback
 	{
 		internal ulong LSearchID; // m_ullSearchID uint64
 		internal Result Result; // m_eResult enum EResult
@@ -1852,7 +1852,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct SearchForGameResultCallback_t : Steamworks.ISteamCallback
+	internal struct SearchForGameResultCallback_t : Steamworks.ISteamCallback
 	{
 		internal ulong LSearchID; // m_ullSearchID uint64
 		internal Result Result; // m_eResult enum EResult
@@ -1898,7 +1898,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RequestPlayersForGameProgressCallback_t : Steamworks.ISteamCallback
+	internal struct RequestPlayersForGameProgressCallback_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong LSearchID; // m_ullSearchID uint64
@@ -1929,7 +1929,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RequestPlayersForGameResultCallback_t : Steamworks.ISteamCallback
+	internal struct RequestPlayersForGameResultCallback_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong LSearchID; // m_ullSearchID uint64
@@ -1984,7 +1984,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RequestPlayersForGameFinalResultCallback_t : Steamworks.ISteamCallback
+	internal struct RequestPlayersForGameFinalResultCallback_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong LSearchID; // m_ullSearchID uint64
@@ -2018,7 +2018,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct SubmitPlayerResultResultCallback_t : Steamworks.ISteamCallback
+	internal struct SubmitPlayerResultResultCallback_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong UllUniqueGameID; // ullUniqueGameID uint64
@@ -2052,7 +2052,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct EndGameResultCallback_t : Steamworks.ISteamCallback
+	internal struct EndGameResultCallback_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong UllUniqueGameID; // ullUniqueGameID uint64
@@ -2083,7 +2083,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct JoinPartyCallback_t : Steamworks.ISteamCallback
+	internal struct JoinPartyCallback_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
@@ -2123,7 +2123,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct CreateBeaconCallback_t : Steamworks.ISteamCallback
+	internal struct CreateBeaconCallback_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
@@ -2154,7 +2154,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct ReservationNotificationCallback_t : Steamworks.ISteamCallback
+	internal struct ReservationNotificationCallback_t : Steamworks.ISteamCallback
 	{
 		internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
 		internal SteamId SteamIDJoiner; // m_steamIDJoiner class CSteamID
@@ -2185,7 +2185,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct ChangeNumOpenSlotsCallback_t : Steamworks.ISteamCallback
+	internal struct ChangeNumOpenSlotsCallback_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		
@@ -2213,7 +2213,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct SteamParamStringArray_t
+	internal struct SteamParamStringArray_t
 	{
 		internal IntPtr Strings; // m_ppStrings const char **
 		internal int NumStrings; // m_nNumStrings int32
@@ -2243,7 +2243,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoteStorageAppSyncedClient_t : Steamworks.ISteamCallback
+	internal struct RemoteStorageAppSyncedClient_t : Steamworks.ISteamCallback
 	{
 		internal uint AppID; // m_nAppID AppId_t
 		internal Result Result; // m_eResult enum EResult
@@ -2277,7 +2277,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoteStorageAppSyncedServer_t : Steamworks.ISteamCallback
+	internal struct RemoteStorageAppSyncedServer_t : Steamworks.ISteamCallback
 	{
 		internal uint AppID; // m_nAppID AppId_t
 		internal Result Result; // m_eResult enum EResult
@@ -2311,7 +2311,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoteStorageAppSyncProgress_t : Steamworks.ISteamCallback
+	internal struct RemoteStorageAppSyncProgress_t : Steamworks.ISteamCallback
 	{
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
 		internal string CurrentFile; // m_rgchCurrentFile char [260]
@@ -2357,7 +2357,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoteStorageAppSyncStatusCheck_t : Steamworks.ISteamCallback
+	internal struct RemoteStorageAppSyncStatusCheck_t : Steamworks.ISteamCallback
 	{
 		internal uint AppID; // m_nAppID AppId_t
 		internal Result Result; // m_eResult enum EResult
@@ -2388,7 +2388,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoteStorageFileShareResult_t : Steamworks.ISteamCallback
+	internal struct RemoteStorageFileShareResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong File; // m_hFile UGCHandle_t
@@ -2425,7 +2425,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoteStoragePublishFileResult_t : Steamworks.ISteamCallback
+	internal struct RemoteStoragePublishFileResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -2462,7 +2462,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoteStorageDeletePublishedFileResult_t : Steamworks.ISteamCallback
+	internal struct RemoteStorageDeletePublishedFileResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -2493,7 +2493,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoteStorageEnumerateUserPublishedFilesResult_t : Steamworks.ISteamCallback
+	internal struct RemoteStorageEnumerateUserPublishedFilesResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal int ResultsReturned; // m_nResultsReturned int32
@@ -2533,7 +2533,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoteStorageSubscribePublishedFileResult_t : Steamworks.ISteamCallback
+	internal struct RemoteStorageSubscribePublishedFileResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -2564,7 +2564,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoteStorageEnumerateUserSubscribedFilesResult_t : Steamworks.ISteamCallback
+	internal struct RemoteStorageEnumerateUserSubscribedFilesResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal int ResultsReturned; // m_nResultsReturned int32
@@ -2610,7 +2610,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoteStorageUnsubscribePublishedFileResult_t : Steamworks.ISteamCallback
+	internal struct RemoteStorageUnsubscribePublishedFileResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -2641,7 +2641,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoteStorageUpdatePublishedFileResult_t : Steamworks.ISteamCallback
+	internal struct RemoteStorageUpdatePublishedFileResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -2678,7 +2678,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoteStorageDownloadUGCResult_t : Steamworks.ISteamCallback
+	internal struct RemoteStorageDownloadUGCResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong File; // m_hFile UGCHandle_t
@@ -2724,7 +2724,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoteStorageGetPublishedFileDetailsResult_t : Steamworks.ISteamCallback
+	internal struct RemoteStorageGetPublishedFileDetailsResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -2836,7 +2836,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoteStorageEnumerateWorkshopFilesResult_t : Steamworks.ISteamCallback
+	internal struct RemoteStorageEnumerateWorkshopFilesResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal int ResultsReturned; // m_nResultsReturned int32
@@ -2888,7 +2888,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoteStorageGetPublishedItemVoteDetailsResult_t : Steamworks.ISteamCallback
+	internal struct RemoteStorageGetPublishedItemVoteDetailsResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_unPublishedFileId PublishedFileId_t
@@ -2931,7 +2931,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoteStoragePublishedFileSubscribed_t : Steamworks.ISteamCallback
+	internal struct RemoteStoragePublishedFileSubscribed_t : Steamworks.ISteamCallback
 	{
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal uint AppID; // m_nAppID AppId_t
@@ -2962,7 +2962,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoteStoragePublishedFileUnsubscribed_t : Steamworks.ISteamCallback
+	internal struct RemoteStoragePublishedFileUnsubscribed_t : Steamworks.ISteamCallback
 	{
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal uint AppID; // m_nAppID AppId_t
@@ -2993,7 +2993,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoteStoragePublishedFileDeleted_t : Steamworks.ISteamCallback
+	internal struct RemoteStoragePublishedFileDeleted_t : Steamworks.ISteamCallback
 	{
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal uint AppID; // m_nAppID AppId_t
@@ -3024,7 +3024,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoteStorageUpdateUserPublishedItemVoteResult_t : Steamworks.ISteamCallback
+	internal struct RemoteStorageUpdateUserPublishedItemVoteResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -3055,7 +3055,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoteStorageUserVoteDetails_t : Steamworks.ISteamCallback
+	internal struct RemoteStorageUserVoteDetails_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -3089,7 +3089,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoteStorageEnumerateUserSharedWorkshopFilesResult_t : Steamworks.ISteamCallback
+	internal struct RemoteStorageEnumerateUserSharedWorkshopFilesResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal int ResultsReturned; // m_nResultsReturned int32
@@ -3129,7 +3129,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoteStorageSetUserPublishedFileActionResult_t : Steamworks.ISteamCallback
+	internal struct RemoteStorageSetUserPublishedFileActionResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -3163,7 +3163,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoteStorageEnumeratePublishedFilesByUserActionResult_t : Steamworks.ISteamCallback
+	internal struct RemoteStorageEnumeratePublishedFilesByUserActionResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal WorkshopFileAction Action; // m_eAction enum EWorkshopFileAction
@@ -3212,7 +3212,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoteStoragePublishFileProgress_t : Steamworks.ISteamCallback
+	internal struct RemoteStoragePublishFileProgress_t : Steamworks.ISteamCallback
 	{
 		internal double DPercentFile; // m_dPercentFile double
 		[MarshalAs(UnmanagedType.I1)]
@@ -3246,7 +3246,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoteStoragePublishedFileUpdated_t : Steamworks.ISteamCallback
+	internal struct RemoteStoragePublishedFileUpdated_t : Steamworks.ISteamCallback
 	{
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal uint AppID; // m_nAppID AppId_t
@@ -3280,7 +3280,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoteStorageFileWriteAsyncComplete_t : Steamworks.ISteamCallback
+	internal struct RemoteStorageFileWriteAsyncComplete_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		
@@ -3308,7 +3308,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoteStorageFileReadAsyncComplete_t : Steamworks.ISteamCallback
+	internal struct RemoteStorageFileReadAsyncComplete_t : Steamworks.ISteamCallback
 	{
 		internal ulong FileReadAsync; // m_hFileReadAsync SteamAPICall_t
 		internal Result Result; // m_eResult enum EResult
@@ -3345,7 +3345,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct LeaderboardEntry_t
+	internal struct LeaderboardEntry_t
 	{
 		internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
 		internal int GlobalRank; // m_nGlobalRank int32
@@ -3384,7 +3384,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct UserStatsReceived_t : Steamworks.ISteamCallback
+	internal struct UserStatsReceived_t : Steamworks.ISteamCallback
 	{
 		internal ulong GameID; // m_nGameID uint64
 		internal Result Result; // m_eResult enum EResult
@@ -3418,7 +3418,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct UserStatsStored_t : Steamworks.ISteamCallback
+	internal struct UserStatsStored_t : Steamworks.ISteamCallback
 	{
 		internal ulong GameID; // m_nGameID uint64
 		internal Result Result; // m_eResult enum EResult
@@ -3449,7 +3449,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct UserAchievementStored_t : Steamworks.ISteamCallback
+	internal struct UserAchievementStored_t : Steamworks.ISteamCallback
 	{
 		internal ulong GameID; // m_nGameID uint64
 		[MarshalAs(UnmanagedType.I1)]
@@ -3495,7 +3495,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct LeaderboardFindResult_t : Steamworks.ISteamCallback
+	internal struct LeaderboardFindResult_t : Steamworks.ISteamCallback
 	{
 		internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
 		internal byte LeaderboardFound; // m_bLeaderboardFound uint8
@@ -3526,7 +3526,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct LeaderboardScoresDownloaded_t : Steamworks.ISteamCallback
+	internal struct LeaderboardScoresDownloaded_t : Steamworks.ISteamCallback
 	{
 		internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
 		internal ulong SteamLeaderboardEntries; // m_hSteamLeaderboardEntries SteamLeaderboardEntries_t
@@ -3560,7 +3560,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct LeaderboardScoreUploaded_t : Steamworks.ISteamCallback
+	internal struct LeaderboardScoreUploaded_t : Steamworks.ISteamCallback
 	{
 		internal byte Success; // m_bSuccess uint8
 		internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
@@ -3603,7 +3603,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct NumberOfCurrentPlayers_t : Steamworks.ISteamCallback
+	internal struct NumberOfCurrentPlayers_t : Steamworks.ISteamCallback
 	{
 		internal byte Success; // m_bSuccess uint8
 		internal int CPlayers; // m_cPlayers int32
@@ -3634,7 +3634,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct UserStatsUnloaded_t : Steamworks.ISteamCallback
+	internal struct UserStatsUnloaded_t : Steamworks.ISteamCallback
 	{
 		internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
 		
@@ -3662,7 +3662,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct UserAchievementIconFetched_t : Steamworks.ISteamCallback
+	internal struct UserAchievementIconFetched_t : Steamworks.ISteamCallback
 	{
 		internal GameId GameID; // m_nGameID class CGameID
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
@@ -3705,7 +3705,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GlobalAchievementPercentagesReady_t : Steamworks.ISteamCallback
+	internal struct GlobalAchievementPercentagesReady_t : Steamworks.ISteamCallback
 	{
 		internal ulong GameID; // m_nGameID uint64
 		internal Result Result; // m_eResult enum EResult
@@ -3736,7 +3736,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct LeaderboardUGCSet_t : Steamworks.ISteamCallback
+	internal struct LeaderboardUGCSet_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
@@ -3767,7 +3767,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct PS3TrophiesInstalled_t : Steamworks.ISteamCallback
+	internal struct PS3TrophiesInstalled_t : Steamworks.ISteamCallback
 	{
 		internal ulong GameID; // m_nGameID uint64
 		internal Result Result; // m_eResult enum EResult
@@ -3801,7 +3801,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GlobalStatsReceived_t : Steamworks.ISteamCallback
+	internal struct GlobalStatsReceived_t : Steamworks.ISteamCallback
 	{
 		internal ulong GameID; // m_nGameID uint64
 		internal Result Result; // m_eResult enum EResult
@@ -3832,7 +3832,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct DlcInstalled_t : Steamworks.ISteamCallback
+	internal struct DlcInstalled_t : Steamworks.ISteamCallback
 	{
 		internal uint AppID; // m_nAppID AppId_t
 		
@@ -3860,7 +3860,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RegisterActivationCodeResponse_t : Steamworks.ISteamCallback
+	internal struct RegisterActivationCodeResponse_t : Steamworks.ISteamCallback
 	{
 		internal RegisterActivationCodeResult Result; // m_eResult enum ERegisterActivationCodeResult
 		internal uint PackageRegistered; // m_unPackageRegistered uint32
@@ -3891,7 +3891,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct AppProofOfPurchaseKeyResponse_t : Steamworks.ISteamCallback
+	internal struct AppProofOfPurchaseKeyResponse_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal uint AppID; // m_nAppID uint32
@@ -3931,7 +3931,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct FileDetailsResult_t : Steamworks.ISteamCallback
+	internal struct FileDetailsResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong FileSize; // m_ulFileSize uint64
@@ -3971,7 +3971,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct P2PSessionState_t
+	internal struct P2PSessionState_t
 	{
 		internal byte ConnectionActive; // m_bConnectionActive uint8
 		internal byte Connecting; // m_bConnecting uint8
@@ -4019,7 +4019,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct P2PSessionRequest_t : Steamworks.ISteamCallback
+	internal struct P2PSessionRequest_t : Steamworks.ISteamCallback
 	{
 		internal SteamId SteamIDRemote; // m_steamIDRemote class CSteamID
 		
@@ -4047,7 +4047,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct P2PSessionConnectFail_t : Steamworks.ISteamCallback
+	internal struct P2PSessionConnectFail_t : Steamworks.ISteamCallback
 	{
 		internal SteamId SteamIDRemote; // m_steamIDRemote class CSteamID
 		internal byte P2PSessionError; // m_eP2PSessionError uint8
@@ -4078,7 +4078,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct SocketStatusCallback_t : Steamworks.ISteamCallback
+	internal struct SocketStatusCallback_t : Steamworks.ISteamCallback
 	{
 		internal uint Socket; // m_hSocket SNetSocket_t
 		internal uint ListenSocket; // m_hListenSocket SNetListenSocket_t
@@ -4115,7 +4115,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct ScreenshotReady_t : Steamworks.ISteamCallback
+	internal struct ScreenshotReady_t : Steamworks.ISteamCallback
 	{
 		internal uint Local; // m_hLocal ScreenshotHandle
 		internal Result Result; // m_eResult enum EResult
@@ -4146,7 +4146,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct VolumeHasChanged_t : Steamworks.ISteamCallback
+	internal struct VolumeHasChanged_t : Steamworks.ISteamCallback
 	{
 		internal float NewVolume; // m_flNewVolume float
 		
@@ -4174,7 +4174,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct MusicPlayerWantsShuffled_t : Steamworks.ISteamCallback
+	internal struct MusicPlayerWantsShuffled_t : Steamworks.ISteamCallback
 	{
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool Shuffled; // m_bShuffled _Bool
@@ -4205,7 +4205,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct MusicPlayerWantsLooped_t : Steamworks.ISteamCallback
+	internal struct MusicPlayerWantsLooped_t : Steamworks.ISteamCallback
 	{
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool Looped; // m_bLooped _Bool
@@ -4236,7 +4236,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct MusicPlayerWantsVolume_t : Steamworks.ISteamCallback
+	internal struct MusicPlayerWantsVolume_t : Steamworks.ISteamCallback
 	{
 		internal float NewVolume; // m_flNewVolume float
 		
@@ -4264,7 +4264,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct MusicPlayerSelectsQueueEntry_t : Steamworks.ISteamCallback
+	internal struct MusicPlayerSelectsQueueEntry_t : Steamworks.ISteamCallback
 	{
 		internal int NID; // nID int
 		
@@ -4292,7 +4292,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct MusicPlayerSelectsPlaylistEntry_t : Steamworks.ISteamCallback
+	internal struct MusicPlayerSelectsPlaylistEntry_t : Steamworks.ISteamCallback
 	{
 		internal int NID; // nID int
 		
@@ -4320,7 +4320,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct MusicPlayerWantsPlayingRepeatStatus_t : Steamworks.ISteamCallback
+	internal struct MusicPlayerWantsPlayingRepeatStatus_t : Steamworks.ISteamCallback
 	{
 		internal int PlayingRepeatStatus; // m_nPlayingRepeatStatus int
 		
@@ -4348,7 +4348,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct HTTPRequestCompleted_t : Steamworks.ISteamCallback
+	internal struct HTTPRequestCompleted_t : Steamworks.ISteamCallback
 	{
 		internal uint Request; // m_hRequest HTTPRequestHandle
 		internal ulong ContextValue; // m_ulContextValue uint64
@@ -4391,7 +4391,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct HTTPRequestHeadersReceived_t : Steamworks.ISteamCallback
+	internal struct HTTPRequestHeadersReceived_t : Steamworks.ISteamCallback
 	{
 		internal uint Request; // m_hRequest HTTPRequestHandle
 		internal ulong ContextValue; // m_ulContextValue uint64
@@ -4422,7 +4422,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct HTTPRequestDataReceived_t : Steamworks.ISteamCallback
+	internal struct HTTPRequestDataReceived_t : Steamworks.ISteamCallback
 	{
 		internal uint Request; // m_hRequest HTTPRequestHandle
 		internal ulong ContextValue; // m_ulContextValue uint64
@@ -4459,7 +4459,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct SteamUGCDetails_t
+	internal struct SteamUGCDetails_t
 	{
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal Result Result; // m_eResult enum EResult
@@ -4585,7 +4585,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct SteamUGCQueryCompleted_t : Steamworks.ISteamCallback
+	internal struct SteamUGCQueryCompleted_t : Steamworks.ISteamCallback
 	{
 		internal ulong Handle; // m_handle UGCQueryHandle_t
 		internal Result Result; // m_eResult enum EResult
@@ -4634,7 +4634,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct SteamUGCRequestUGCDetailsResult_t : Steamworks.ISteamCallback
+	internal struct SteamUGCRequestUGCDetailsResult_t : Steamworks.ISteamCallback
 	{
 		internal SteamUGCDetails_t Details; // m_details struct SteamUGCDetails_t
 		[MarshalAs(UnmanagedType.I1)]
@@ -4668,7 +4668,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct CreateItemResult_t : Steamworks.ISteamCallback
+	internal struct CreateItemResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -4705,7 +4705,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct SubmitItemUpdateResult_t : Steamworks.ISteamCallback
+	internal struct SubmitItemUpdateResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		[MarshalAs(UnmanagedType.I1)]
@@ -4742,7 +4742,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct DownloadItemResult_t : Steamworks.ISteamCallback
+	internal struct DownloadItemResult_t : Steamworks.ISteamCallback
 	{
 		internal uint AppID; // m_unAppID AppId_t
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -4776,7 +4776,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct UserFavoriteItemsListChanged_t : Steamworks.ISteamCallback
+	internal struct UserFavoriteItemsListChanged_t : Steamworks.ISteamCallback
 	{
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal Result Result; // m_eResult enum EResult
@@ -4813,7 +4813,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct SetUserItemVoteResult_t : Steamworks.ISteamCallback
+	internal struct SetUserItemVoteResult_t : Steamworks.ISteamCallback
 	{
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal Result Result; // m_eResult enum EResult
@@ -4850,7 +4850,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GetUserItemVoteResult_t : Steamworks.ISteamCallback
+	internal struct GetUserItemVoteResult_t : Steamworks.ISteamCallback
 	{
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal Result Result; // m_eResult enum EResult
@@ -4899,7 +4899,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct StartPlaytimeTrackingResult_t : Steamworks.ISteamCallback
+	internal struct StartPlaytimeTrackingResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		
@@ -4927,7 +4927,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct StopPlaytimeTrackingResult_t : Steamworks.ISteamCallback
+	internal struct StopPlaytimeTrackingResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		
@@ -4955,7 +4955,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct AddUGCDependencyResult_t : Steamworks.ISteamCallback
+	internal struct AddUGCDependencyResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -4989,7 +4989,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoveUGCDependencyResult_t : Steamworks.ISteamCallback
+	internal struct RemoveUGCDependencyResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -5023,7 +5023,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct AddAppDependencyResult_t : Steamworks.ISteamCallback
+	internal struct AddAppDependencyResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -5057,7 +5057,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct RemoveAppDependencyResult_t : Steamworks.ISteamCallback
+	internal struct RemoveAppDependencyResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -5091,7 +5091,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GetAppDependenciesResult_t : Steamworks.ISteamCallback
+	internal struct GetAppDependenciesResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -5134,7 +5134,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct DeleteItemResult_t : Steamworks.ISteamCallback
+	internal struct DeleteItemResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -5165,7 +5165,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct SteamAppInstalled_t : Steamworks.ISteamCallback
+	internal struct SteamAppInstalled_t : Steamworks.ISteamCallback
 	{
 		internal uint AppID; // m_nAppID AppId_t
 		
@@ -5193,7 +5193,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct SteamAppUninstalled_t : Steamworks.ISteamCallback
+	internal struct SteamAppUninstalled_t : Steamworks.ISteamCallback
 	{
 		internal uint AppID; // m_nAppID AppId_t
 		
@@ -5221,7 +5221,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct HTML_BrowserReady_t : Steamworks.ISteamCallback
+	internal struct HTML_BrowserReady_t : Steamworks.ISteamCallback
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		
@@ -5249,7 +5249,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct HTML_NeedsPaint_t
+	internal struct HTML_NeedsPaint_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PBGRA; // pBGRA const char *
@@ -5309,7 +5309,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct HTML_StartRequest_t
+	internal struct HTML_StartRequest_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchURL; // pchURL const char *
@@ -5351,7 +5351,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct HTML_CloseBrowser_t
+	internal struct HTML_CloseBrowser_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		
@@ -5378,7 +5378,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct HTML_URLChanged_t : Steamworks.ISteamCallback
+	internal struct HTML_URLChanged_t : Steamworks.ISteamCallback
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchURL; // pchURL const char *
@@ -5427,7 +5427,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct HTML_FinishedRequest_t : Steamworks.ISteamCallback
+	internal struct HTML_FinishedRequest_t : Steamworks.ISteamCallback
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchURL; // pchURL const char *
@@ -5461,7 +5461,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct HTML_OpenLinkInNewTab_t : Steamworks.ISteamCallback
+	internal struct HTML_OpenLinkInNewTab_t : Steamworks.ISteamCallback
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchURL; // pchURL const char *
@@ -5492,7 +5492,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct HTML_ChangedTitle_t : Steamworks.ISteamCallback
+	internal struct HTML_ChangedTitle_t : Steamworks.ISteamCallback
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchTitle; // pchTitle const char *
@@ -5523,7 +5523,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct HTML_SearchResults_t : Steamworks.ISteamCallback
+	internal struct HTML_SearchResults_t : Steamworks.ISteamCallback
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal uint UnResults; // unResults uint32
@@ -5557,7 +5557,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct HTML_CanGoBackAndForward_t : Steamworks.ISteamCallback
+	internal struct HTML_CanGoBackAndForward_t : Steamworks.ISteamCallback
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		[MarshalAs(UnmanagedType.I1)]
@@ -5597,7 +5597,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct HTML_HorizontalScroll_t : Steamworks.ISteamCallback
+	internal struct HTML_HorizontalScroll_t : Steamworks.ISteamCallback
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal uint UnScrollMax; // unScrollMax uint32
@@ -5643,7 +5643,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct HTML_VerticalScroll_t : Steamworks.ISteamCallback
+	internal struct HTML_VerticalScroll_t : Steamworks.ISteamCallback
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal uint UnScrollMax; // unScrollMax uint32
@@ -5689,7 +5689,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct HTML_LinkAtPosition_t : Steamworks.ISteamCallback
+	internal struct HTML_LinkAtPosition_t : Steamworks.ISteamCallback
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal uint X; // x uint32
@@ -5738,7 +5738,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct HTML_JSAlert_t : Steamworks.ISteamCallback
+	internal struct HTML_JSAlert_t : Steamworks.ISteamCallback
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchMessage; // pchMessage const char *
@@ -5769,7 +5769,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct HTML_JSConfirm_t : Steamworks.ISteamCallback
+	internal struct HTML_JSConfirm_t : Steamworks.ISteamCallback
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchMessage; // pchMessage const char *
@@ -5800,7 +5800,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct HTML_FileOpenDialog_t : Steamworks.ISteamCallback
+	internal struct HTML_FileOpenDialog_t : Steamworks.ISteamCallback
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchTitle; // pchTitle const char *
@@ -5834,7 +5834,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct HTML_NewWindow_t : Steamworks.ISteamCallback
+	internal struct HTML_NewWindow_t : Steamworks.ISteamCallback
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchURL; // pchURL const char *
@@ -5880,7 +5880,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct HTML_SetCursor_t : Steamworks.ISteamCallback
+	internal struct HTML_SetCursor_t : Steamworks.ISteamCallback
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal uint EMouseCursor; // eMouseCursor uint32
@@ -5911,7 +5911,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct HTML_StatusText_t : Steamworks.ISteamCallback
+	internal struct HTML_StatusText_t : Steamworks.ISteamCallback
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchMsg; // pchMsg const char *
@@ -5942,7 +5942,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct HTML_ShowToolTip_t : Steamworks.ISteamCallback
+	internal struct HTML_ShowToolTip_t : Steamworks.ISteamCallback
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchMsg; // pchMsg const char *
@@ -5973,7 +5973,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct HTML_UpdateToolTip_t : Steamworks.ISteamCallback
+	internal struct HTML_UpdateToolTip_t : Steamworks.ISteamCallback
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchMsg; // pchMsg const char *
@@ -6004,7 +6004,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct HTML_HideToolTip_t : Steamworks.ISteamCallback
+	internal struct HTML_HideToolTip_t : Steamworks.ISteamCallback
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		
@@ -6032,7 +6032,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct HTML_BrowserRestarted_t : Steamworks.ISteamCallback
+	internal struct HTML_BrowserRestarted_t : Steamworks.ISteamCallback
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal uint UnOldBrowserHandle; // unOldBrowserHandle HHTMLBrowser
@@ -6063,7 +6063,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct SteamItemDetails_t
+	internal struct SteamItemDetails_t
 	{
 		internal ulong ItemId; // m_itemId SteamItemInstanceID_t
 		internal int Definition; // m_iDefinition SteamItemDef_t
@@ -6099,7 +6099,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct SteamInventoryResultReady_t : Steamworks.ISteamCallback
+	internal struct SteamInventoryResultReady_t : Steamworks.ISteamCallback
 	{
 		internal int Handle; // m_handle SteamInventoryResult_t
 		internal Result Result; // m_result enum EResult
@@ -6130,7 +6130,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct SteamInventoryFullUpdate_t : Steamworks.ISteamCallback
+	internal struct SteamInventoryFullUpdate_t : Steamworks.ISteamCallback
 	{
 		internal int Handle; // m_handle SteamInventoryResult_t
 		
@@ -6158,7 +6158,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct SteamInventoryEligiblePromoItemDefIDs_t : Steamworks.ISteamCallback
+	internal struct SteamInventoryEligiblePromoItemDefIDs_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_result enum EResult
 		internal SteamId SteamID; // m_steamID class CSteamID
@@ -6198,7 +6198,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct SteamInventoryStartPurchaseResult_t : Steamworks.ISteamCallback
+	internal struct SteamInventoryStartPurchaseResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_result enum EResult
 		internal ulong OrderID; // m_ulOrderID uint64
@@ -6232,7 +6232,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct SteamInventoryRequestPricesResult_t : Steamworks.ISteamCallback
+	internal struct SteamInventoryRequestPricesResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_result enum EResult
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
@@ -6266,7 +6266,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct BroadcastUploadStop_t : Steamworks.ISteamCallback
+	internal struct BroadcastUploadStop_t : Steamworks.ISteamCallback
 	{
 		internal BroadcastUploadResult Result; // m_eResult enum EBroadcastUploadResult
 		
@@ -6294,7 +6294,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GetVideoURLResult_t : Steamworks.ISteamCallback
+	internal struct GetVideoURLResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal uint VideoAppID; // m_unVideoAppID AppId_t
@@ -6331,7 +6331,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GetOPFSettingsResult_t : Steamworks.ISteamCallback
+	internal struct GetOPFSettingsResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal uint VideoAppID; // m_unVideoAppID AppId_t
@@ -6362,7 +6362,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GSClientApprove_t : Steamworks.ISteamCallback
+	internal struct GSClientApprove_t : Steamworks.ISteamCallback
 	{
 		internal SteamId SteamID; // m_SteamID class CSteamID
 		internal SteamId OwnerSteamID; // m_OwnerSteamID class CSteamID
@@ -6393,7 +6393,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GSClientDeny_t : Steamworks.ISteamCallback
+	internal struct GSClientDeny_t : Steamworks.ISteamCallback
 	{
 		internal SteamId SteamID; // m_SteamID class CSteamID
 		internal DenyReason DenyReason; // m_eDenyReason enum EDenyReason
@@ -6430,7 +6430,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GSClientKick_t : Steamworks.ISteamCallback
+	internal struct GSClientKick_t : Steamworks.ISteamCallback
 	{
 		internal SteamId SteamID; // m_SteamID class CSteamID
 		internal DenyReason DenyReason; // m_eDenyReason enum EDenyReason
@@ -6461,7 +6461,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GSClientAchievementStatus_t : Steamworks.ISteamCallback
+	internal struct GSClientAchievementStatus_t : Steamworks.ISteamCallback
 	{
 		internal ulong SteamID; // m_SteamID uint64
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
@@ -6501,7 +6501,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GSPolicyResponse_t : Steamworks.ISteamCallback
+	internal struct GSPolicyResponse_t : Steamworks.ISteamCallback
 	{
 		internal byte Secure; // m_bSecure uint8
 		
@@ -6529,7 +6529,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GSGameplayStats_t : Steamworks.ISteamCallback
+	internal struct GSGameplayStats_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal int Rank; // m_nRank int32
@@ -6566,7 +6566,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GSClientGroupStatus_t : Steamworks.ISteamCallback
+	internal struct GSClientGroupStatus_t : Steamworks.ISteamCallback
 	{
 		internal SteamId SteamIDUser; // m_SteamIDUser class CSteamID
 		internal SteamId SteamIDGroup; // m_SteamIDGroup class CSteamID
@@ -6609,7 +6609,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GSReputation_t : Steamworks.ISteamCallback
+	internal struct GSReputation_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal uint ReputationScore; // m_unReputationScore uint32
@@ -6658,7 +6658,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct AssociateWithClanResult_t : Steamworks.ISteamCallback
+	internal struct AssociateWithClanResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		
@@ -6686,7 +6686,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct ComputeNewPlayerCompatibilityResult_t : Steamworks.ISteamCallback
+	internal struct ComputeNewPlayerCompatibilityResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal int CPlayersThatDontLikeCandidate; // m_cPlayersThatDontLikeCandidate int
@@ -6726,7 +6726,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GSStatsReceived_t : Steamworks.ISteamCallback
+	internal struct GSStatsReceived_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
@@ -6757,7 +6757,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GSStatsStored_t : Steamworks.ISteamCallback
+	internal struct GSStatsStored_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
@@ -6788,7 +6788,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GSStatsUnloaded_t : Steamworks.ISteamCallback
+	internal struct GSStatsUnloaded_t : Steamworks.ISteamCallback
 	{
 		internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
 		
@@ -6816,7 +6816,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct PlaybackStatusHasChanged_t : Steamworks.ISteamCallback
+	internal struct PlaybackStatusHasChanged_t : Steamworks.ISteamCallback
 	{
 		
 		#region ISteamCallback
@@ -6841,7 +6841,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct BroadcastUploadStart_t : Steamworks.ISteamCallback
+	internal struct BroadcastUploadStart_t : Steamworks.ISteamCallback
 	{
 		
 		#region ISteamCallback
@@ -6866,7 +6866,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct NewUrlLaunchParameters_t : Steamworks.ISteamCallback
+	internal struct NewUrlLaunchParameters_t : Steamworks.ISteamCallback
 	{
 		
 		#region ISteamCallback
@@ -6891,7 +6891,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct ItemInstalled_t : Steamworks.ISteamCallback
+	internal struct ItemInstalled_t : Steamworks.ISteamCallback
 	{
 		internal uint AppID; // m_unAppID AppId_t
 		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -6922,7 +6922,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct InputAnalogActionData_t
+	internal struct InputAnalogActionData_t
 	{
 		internal InputSourceMode EMode; // eMode EInputSourceMode
 		internal float X; // x float
@@ -6961,7 +6961,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct InputMotionData_t
+	internal struct InputMotionData_t
 	{
 		internal float RotQuatX; // rotQuatX float
 		internal float RotQuatY; // rotQuatY float
@@ -7015,7 +7015,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct InputDigitalActionData_t
+	internal struct InputDigitalActionData_t
 	{
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool BState; // bState bool
@@ -7051,7 +7051,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct SteamInventoryDefinitionUpdate_t : Steamworks.ISteamCallback
+	internal struct SteamInventoryDefinitionUpdate_t : Steamworks.ISteamCallback
 	{
 		
 		#region ISteamCallback
@@ -7076,7 +7076,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct SteamParentalSettingsChanged_t : Steamworks.ISteamCallback
+	internal struct SteamParentalSettingsChanged_t : Steamworks.ISteamCallback
 	{
 		
 		#region ISteamCallback
@@ -7101,7 +7101,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct SteamServersConnected_t : Steamworks.ISteamCallback
+	internal struct SteamServersConnected_t : Steamworks.ISteamCallback
 	{
 		
 		#region ISteamCallback
@@ -7126,7 +7126,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct NewLaunchQueryParameters_t
+	internal struct NewLaunchQueryParameters_t
 	{
 		
 		#region Marshalling
@@ -7150,7 +7150,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GCMessageAvailable_t : Steamworks.ISteamCallback
+	internal struct GCMessageAvailable_t : Steamworks.ISteamCallback
 	{
 		internal uint MessageSize; // m_nMessageSize uint32
 		
@@ -7178,7 +7178,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct GCMessageFailed_t : Steamworks.ISteamCallback
+	internal struct GCMessageFailed_t : Steamworks.ISteamCallback
 	{
 		
 		#region ISteamCallback
@@ -7203,7 +7203,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct ScreenshotRequested_t : Steamworks.ISteamCallback
+	internal struct ScreenshotRequested_t : Steamworks.ISteamCallback
 	{
 		
 		#region ISteamCallback
@@ -7228,7 +7228,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct LicensesUpdated_t : Steamworks.ISteamCallback
+	internal struct LicensesUpdated_t : Steamworks.ISteamCallback
 	{
 		
 		#region ISteamCallback
@@ -7253,7 +7253,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct SteamShutdown_t : Steamworks.ISteamCallback
+	internal struct SteamShutdown_t : Steamworks.ISteamCallback
 	{
 		
 		#region ISteamCallback
@@ -7278,7 +7278,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct IPCountry_t : Steamworks.ISteamCallback
+	internal struct IPCountry_t : Steamworks.ISteamCallback
 	{
 		
 		#region ISteamCallback
@@ -7303,7 +7303,7 @@ namespace Steamworks
 		#endregion
 	}
 	
-	public struct IPCFailure_t : Steamworks.ISteamCallback
+	internal struct IPCFailure_t : Steamworks.ISteamCallback
 	{
 		internal byte FailureType; // m_eFailureType uint8
 		

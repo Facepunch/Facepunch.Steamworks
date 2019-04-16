@@ -64,7 +64,7 @@ namespace Generator
 				//
 				// Main struct
 				//
-                StartBlock( $"public struct {name}{(isCallback?" : Steamworks.ISteamCallback":"")}" );
+                StartBlock( $"{Cleanup.Expose( name )} struct {name}{(isCallback?" : Steamworks.ISteamCallback":"")}" );
                 {
 					//
 					// The fields

@@ -50,55 +50,55 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate uint GetSecondsSinceAppActiveDelegate( IntPtr self );
+		private delegate uint GetSecondsSinceAppActiveDelegate( IntPtr self );
 		private GetSecondsSinceAppActiveDelegate GetSecondsSinceAppActiveDelegatePointer;
 		
 		#endregion
-		public uint GetSecondsSinceAppActive()
+		internal uint GetSecondsSinceAppActive()
 		{
 			return GetSecondsSinceAppActiveDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate uint GetSecondsSinceComputerActiveDelegate( IntPtr self );
+		private delegate uint GetSecondsSinceComputerActiveDelegate( IntPtr self );
 		private GetSecondsSinceComputerActiveDelegate GetSecondsSinceComputerActiveDelegatePointer;
 		
 		#endregion
-		public uint GetSecondsSinceComputerActive()
+		internal uint GetSecondsSinceComputerActive()
 		{
 			return GetSecondsSinceComputerActiveDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate Universe GetConnectedUniverseDelegate( IntPtr self );
+		private delegate Universe GetConnectedUniverseDelegate( IntPtr self );
 		private GetConnectedUniverseDelegate GetConnectedUniverseDelegatePointer;
 		
 		#endregion
-		public Universe GetConnectedUniverse()
+		internal Universe GetConnectedUniverse()
 		{
 			return GetConnectedUniverseDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate uint GetServerRealTimeDelegate( IntPtr self );
+		private delegate uint GetServerRealTimeDelegate( IntPtr self );
 		private GetServerRealTimeDelegate GetServerRealTimeDelegatePointer;
 		
 		#endregion
-		public uint GetServerRealTime()
+		internal uint GetServerRealTime()
 		{
 			return GetServerRealTimeDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate IntPtr GetIPCountryDelegate( IntPtr self );
+		private delegate IntPtr GetIPCountryDelegate( IntPtr self );
 		private GetIPCountryDelegate GetIPCountryDelegatePointer;
 		
 		#endregion
-		public string GetIPCountry()
+		internal string GetIPCountry()
 		{
 			return GetString( GetIPCountryDelegatePointer( Self ) );
 		}
@@ -106,11 +106,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool GetImageSizeDelegate( IntPtr self, int iImage, ref uint pnWidth, ref uint pnHeight );
+		private delegate bool GetImageSizeDelegate( IntPtr self, int iImage, ref uint pnWidth, ref uint pnHeight );
 		private GetImageSizeDelegate GetImageSizeDelegatePointer;
 		
 		#endregion
-		public bool GetImageSize( int iImage, ref uint pnWidth, ref uint pnHeight )
+		internal bool GetImageSize( int iImage, ref uint pnWidth, ref uint pnHeight )
 		{
 			return GetImageSizeDelegatePointer( Self, iImage, ref pnWidth, ref pnHeight );
 		}
@@ -118,11 +118,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool GetImageRGBADelegate( IntPtr self, int iImage, [In,Out] byte[]  pubDest, int nDestBufferSize );
+		private delegate bool GetImageRGBADelegate( IntPtr self, int iImage, [In,Out] byte[]  pubDest, int nDestBufferSize );
 		private GetImageRGBADelegate GetImageRGBADelegatePointer;
 		
 		#endregion
-		public bool GetImageRGBA( int iImage, [In,Out] byte[]  pubDest, int nDestBufferSize )
+		internal bool GetImageRGBA( int iImage, [In,Out] byte[]  pubDest, int nDestBufferSize )
 		{
 			return GetImageRGBADelegatePointer( Self, iImage, pubDest, nDestBufferSize );
 		}
@@ -130,44 +130,44 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool GetCSERIPPortDelegate( IntPtr self, ref uint unIP, ref ushort usPort );
+		private delegate bool GetCSERIPPortDelegate( IntPtr self, ref uint unIP, ref ushort usPort );
 		private GetCSERIPPortDelegate GetCSERIPPortDelegatePointer;
 		
 		#endregion
-		public bool GetCSERIPPort( ref uint unIP, ref ushort usPort )
+		internal bool GetCSERIPPort( ref uint unIP, ref ushort usPort )
 		{
 			return GetCSERIPPortDelegatePointer( Self, ref unIP, ref usPort );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate byte GetCurrentBatteryPowerDelegate( IntPtr self );
+		private delegate byte GetCurrentBatteryPowerDelegate( IntPtr self );
 		private GetCurrentBatteryPowerDelegate GetCurrentBatteryPowerDelegatePointer;
 		
 		#endregion
-		public byte GetCurrentBatteryPower()
+		internal byte GetCurrentBatteryPower()
 		{
 			return GetCurrentBatteryPowerDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate uint GetAppIDDelegate( IntPtr self );
+		private delegate uint GetAppIDDelegate( IntPtr self );
 		private GetAppIDDelegate GetAppIDDelegatePointer;
 		
 		#endregion
-		public uint GetAppID()
+		internal uint GetAppID()
 		{
 			return GetAppIDDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void SetOverlayNotificationPositionDelegate( IntPtr self, NotificationPosition eNotificationPosition );
+		private delegate void SetOverlayNotificationPositionDelegate( IntPtr self, NotificationPosition eNotificationPosition );
 		private SetOverlayNotificationPositionDelegate SetOverlayNotificationPositionDelegatePointer;
 		
 		#endregion
-		public void SetOverlayNotificationPosition( NotificationPosition eNotificationPosition )
+		internal void SetOverlayNotificationPosition( NotificationPosition eNotificationPosition )
 		{
 			SetOverlayNotificationPositionDelegatePointer( Self, eNotificationPosition );
 		}
@@ -175,22 +175,22 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool IsAPICallCompletedDelegate( IntPtr self, SteamAPICall_t hSteamAPICall, [MarshalAs( UnmanagedType.U1 )] ref bool pbFailed );
+		private delegate bool IsAPICallCompletedDelegate( IntPtr self, SteamAPICall_t hSteamAPICall, [MarshalAs( UnmanagedType.U1 )] ref bool pbFailed );
 		private IsAPICallCompletedDelegate IsAPICallCompletedDelegatePointer;
 		
 		#endregion
-		public bool IsAPICallCompleted( SteamAPICall_t hSteamAPICall, [MarshalAs( UnmanagedType.U1 )] ref bool pbFailed )
+		internal bool IsAPICallCompleted( SteamAPICall_t hSteamAPICall, [MarshalAs( UnmanagedType.U1 )] ref bool pbFailed )
 		{
 			return IsAPICallCompletedDelegatePointer( Self, hSteamAPICall, ref pbFailed );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate SteamAPICallFailure GetAPICallFailureReasonDelegate( IntPtr self, SteamAPICall_t hSteamAPICall );
+		private delegate SteamAPICallFailure GetAPICallFailureReasonDelegate( IntPtr self, SteamAPICall_t hSteamAPICall );
 		private GetAPICallFailureReasonDelegate GetAPICallFailureReasonDelegatePointer;
 		
 		#endregion
-		public SteamAPICallFailure GetAPICallFailureReason( SteamAPICall_t hSteamAPICall )
+		internal SteamAPICallFailure GetAPICallFailureReason( SteamAPICall_t hSteamAPICall )
 		{
 			return GetAPICallFailureReasonDelegatePointer( Self, hSteamAPICall );
 		}
@@ -198,44 +198,44 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool GetAPICallResultDelegate( IntPtr self, SteamAPICall_t hSteamAPICall, IntPtr pCallback, int cubCallback, int iCallbackExpected, [MarshalAs( UnmanagedType.U1 )] ref bool pbFailed );
+		private delegate bool GetAPICallResultDelegate( IntPtr self, SteamAPICall_t hSteamAPICall, IntPtr pCallback, int cubCallback, int iCallbackExpected, [MarshalAs( UnmanagedType.U1 )] ref bool pbFailed );
 		private GetAPICallResultDelegate GetAPICallResultDelegatePointer;
 		
 		#endregion
-		public bool GetAPICallResult( SteamAPICall_t hSteamAPICall, IntPtr pCallback, int cubCallback, int iCallbackExpected, [MarshalAs( UnmanagedType.U1 )] ref bool pbFailed )
+		internal bool GetAPICallResult( SteamAPICall_t hSteamAPICall, IntPtr pCallback, int cubCallback, int iCallbackExpected, [MarshalAs( UnmanagedType.U1 )] ref bool pbFailed )
 		{
 			return GetAPICallResultDelegatePointer( Self, hSteamAPICall, pCallback, cubCallback, iCallbackExpected, ref pbFailed );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void RunFrameDelegate( IntPtr self );
+		private delegate void RunFrameDelegate( IntPtr self );
 		private RunFrameDelegate RunFrameDelegatePointer;
 		
 		#endregion
-		public void RunFrame()
+		internal void RunFrame()
 		{
 			RunFrameDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate uint GetIPCCallCountDelegate( IntPtr self );
+		private delegate uint GetIPCCallCountDelegate( IntPtr self );
 		private GetIPCCallCountDelegate GetIPCCallCountDelegatePointer;
 		
 		#endregion
-		public uint GetIPCCallCount()
+		internal uint GetIPCCallCount()
 		{
 			return GetIPCCallCountDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void SetWarningMessageHookDelegate( IntPtr self, IntPtr pFunction );
+		private delegate void SetWarningMessageHookDelegate( IntPtr self, IntPtr pFunction );
 		private SetWarningMessageHookDelegate SetWarningMessageHookDelegatePointer;
 		
 		#endregion
-		public void SetWarningMessageHook( IntPtr pFunction )
+		internal void SetWarningMessageHook( IntPtr pFunction )
 		{
 			SetWarningMessageHookDelegatePointer( Self, pFunction );
 		}
@@ -243,11 +243,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool IsOverlayEnabledDelegate( IntPtr self );
+		private delegate bool IsOverlayEnabledDelegate( IntPtr self );
 		private IsOverlayEnabledDelegate IsOverlayEnabledDelegatePointer;
 		
 		#endregion
-		public bool IsOverlayEnabled()
+		internal bool IsOverlayEnabled()
 		{
 			return IsOverlayEnabledDelegatePointer( Self );
 		}
@@ -255,22 +255,22 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool BOverlayNeedsPresentDelegate( IntPtr self );
+		private delegate bool BOverlayNeedsPresentDelegate( IntPtr self );
 		private BOverlayNeedsPresentDelegate BOverlayNeedsPresentDelegatePointer;
 		
 		#endregion
-		public bool BOverlayNeedsPresent()
+		internal bool BOverlayNeedsPresent()
 		{
 			return BOverlayNeedsPresentDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate SteamAPICall_t CheckFileSignatureDelegate( IntPtr self, string szFileName );
+		private delegate SteamAPICall_t CheckFileSignatureDelegate( IntPtr self, string szFileName );
 		private CheckFileSignatureDelegate CheckFileSignatureDelegatePointer;
 		
 		#endregion
-		public async Task<CheckFileSignature_t?> CheckFileSignature( string szFileName )
+		internal async Task<CheckFileSignature_t?> CheckFileSignature( string szFileName )
 		{
 			return await (new Result<CheckFileSignature_t>( CheckFileSignatureDelegatePointer( Self, szFileName ) )).GetResult();
 		}
@@ -278,22 +278,22 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool ShowGamepadTextInputDelegate( IntPtr self, GamepadTextInputMode eInputMode, GamepadTextInputLineMode eLineInputMode, string pchDescription, uint unCharMax, string pchExistingText );
+		private delegate bool ShowGamepadTextInputDelegate( IntPtr self, GamepadTextInputMode eInputMode, GamepadTextInputLineMode eLineInputMode, string pchDescription, uint unCharMax, string pchExistingText );
 		private ShowGamepadTextInputDelegate ShowGamepadTextInputDelegatePointer;
 		
 		#endregion
-		public bool ShowGamepadTextInput( GamepadTextInputMode eInputMode, GamepadTextInputLineMode eLineInputMode, string pchDescription, uint unCharMax, string pchExistingText )
+		internal bool ShowGamepadTextInput( GamepadTextInputMode eInputMode, GamepadTextInputLineMode eLineInputMode, string pchDescription, uint unCharMax, string pchExistingText )
 		{
 			return ShowGamepadTextInputDelegatePointer( Self, eInputMode, eLineInputMode, pchDescription, unCharMax, pchExistingText );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate uint GetEnteredGamepadTextLengthDelegate( IntPtr self );
+		private delegate uint GetEnteredGamepadTextLengthDelegate( IntPtr self );
 		private GetEnteredGamepadTextLengthDelegate GetEnteredGamepadTextLengthDelegatePointer;
 		
 		#endregion
-		public uint GetEnteredGamepadTextLength()
+		internal uint GetEnteredGamepadTextLength()
 		{
 			return GetEnteredGamepadTextLengthDelegatePointer( Self );
 		}
@@ -301,22 +301,22 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool GetEnteredGamepadTextInputDelegate( IntPtr self, StringBuilder pchText, uint cchText );
+		private delegate bool GetEnteredGamepadTextInputDelegate( IntPtr self, StringBuilder pchText, uint cchText );
 		private GetEnteredGamepadTextInputDelegate GetEnteredGamepadTextInputDelegatePointer;
 		
 		#endregion
-		public bool GetEnteredGamepadTextInput( StringBuilder pchText, uint cchText )
+		internal bool GetEnteredGamepadTextInput( StringBuilder pchText, uint cchText )
 		{
 			return GetEnteredGamepadTextInputDelegatePointer( Self, pchText, cchText );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate IntPtr GetSteamUILanguageDelegate( IntPtr self );
+		private delegate IntPtr GetSteamUILanguageDelegate( IntPtr self );
 		private GetSteamUILanguageDelegate GetSteamUILanguageDelegatePointer;
 		
 		#endregion
-		public string GetSteamUILanguage()
+		internal string GetSteamUILanguage()
 		{
 			return GetString( GetSteamUILanguageDelegatePointer( Self ) );
 		}
@@ -324,22 +324,22 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool IsSteamRunningInVRDelegate( IntPtr self );
+		private delegate bool IsSteamRunningInVRDelegate( IntPtr self );
 		private IsSteamRunningInVRDelegate IsSteamRunningInVRDelegatePointer;
 		
 		#endregion
-		public bool IsSteamRunningInVR()
+		internal bool IsSteamRunningInVR()
 		{
 			return IsSteamRunningInVRDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void SetOverlayNotificationInsetDelegate( IntPtr self, int nHorizontalInset, int nVerticalInset );
+		private delegate void SetOverlayNotificationInsetDelegate( IntPtr self, int nHorizontalInset, int nVerticalInset );
 		private SetOverlayNotificationInsetDelegate SetOverlayNotificationInsetDelegatePointer;
 		
 		#endregion
-		public void SetOverlayNotificationInset( int nHorizontalInset, int nVerticalInset )
+		internal void SetOverlayNotificationInset( int nHorizontalInset, int nVerticalInset )
 		{
 			SetOverlayNotificationInsetDelegatePointer( Self, nHorizontalInset, nVerticalInset );
 		}
@@ -347,22 +347,22 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool IsSteamInBigPictureModeDelegate( IntPtr self );
+		private delegate bool IsSteamInBigPictureModeDelegate( IntPtr self );
 		private IsSteamInBigPictureModeDelegate IsSteamInBigPictureModeDelegatePointer;
 		
 		#endregion
-		public bool IsSteamInBigPictureMode()
+		internal bool IsSteamInBigPictureMode()
 		{
 			return IsSteamInBigPictureModeDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void StartVRDashboardDelegate( IntPtr self );
+		private delegate void StartVRDashboardDelegate( IntPtr self );
 		private StartVRDashboardDelegate StartVRDashboardDelegatePointer;
 		
 		#endregion
-		public void StartVRDashboard()
+		internal void StartVRDashboard()
 		{
 			StartVRDashboardDelegatePointer( Self );
 		}
@@ -370,22 +370,22 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool IsVRHeadsetStreamingEnabledDelegate( IntPtr self );
+		private delegate bool IsVRHeadsetStreamingEnabledDelegate( IntPtr self );
 		private IsVRHeadsetStreamingEnabledDelegate IsVRHeadsetStreamingEnabledDelegatePointer;
 		
 		#endregion
-		public bool IsVRHeadsetStreamingEnabled()
+		internal bool IsVRHeadsetStreamingEnabled()
 		{
 			return IsVRHeadsetStreamingEnabledDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void SetVRHeadsetStreamingEnabledDelegate( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bEnabled );
+		private delegate void SetVRHeadsetStreamingEnabledDelegate( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bEnabled );
 		private SetVRHeadsetStreamingEnabledDelegate SetVRHeadsetStreamingEnabledDelegatePointer;
 		
 		#endregion
-		public void SetVRHeadsetStreamingEnabled( [MarshalAs( UnmanagedType.U1 )] bool bEnabled )
+		internal void SetVRHeadsetStreamingEnabled( [MarshalAs( UnmanagedType.U1 )] bool bEnabled )
 		{
 			SetVRHeadsetStreamingEnabledDelegatePointer( Self, bEnabled );
 		}

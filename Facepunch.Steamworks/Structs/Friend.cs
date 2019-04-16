@@ -15,34 +15,34 @@ namespace Steamworks
 			Id = steamid;
 		}
 
-		public bool IsFriend => Relationship == FriendRelationship.Friend;
-		public bool IsBlocked => Relationship == FriendRelationship.Blocked;
+		public bool IsFriend => Relationship == Relationship.Friend;
+		public bool IsBlocked => Relationship == Relationship.Blocked;
 		public bool IsPlayingThisGame => GameInfo?.GameID == Utils.AppId;
 
 		/// <summary>
 		/// Returns true if this friend is online
 		/// </summary>
-		public bool IsOnline => State != PersonaState.Offline;
+		public bool IsOnline => State != FriendState.Offline;
 
 		/// <summary>
 		/// Returns true if this friend is marked as away
 		/// </summary>
-		public bool IsAway => State == PersonaState.Away;
+		public bool IsAway => State == FriendState.Away;
 
 		/// <summary>
 		/// Returns true if this friend is marked as busy
 		/// </summary>
-		public bool IsBusy => State == PersonaState.Busy;
+		public bool IsBusy => State == FriendState.Busy;
 
 		/// <summary>
 		/// Returns true if this friend is marked as snoozing
 		/// </summary>
-		public bool IsSnoozing => State == PersonaState.Snooze;
+		public bool IsSnoozing => State == FriendState.Snooze;
 
 
 
-		public FriendRelationship Relationship => Friends.Internal.GetFriendRelationship( Id );
-		public PersonaState State => Friends.Internal.GetFriendPersonaState( Id );
+		public Relationship Relationship => Friends.Internal.GetFriendRelationship( Id );
+		public FriendState State => Friends.Internal.GetFriendPersonaState( Id );
 		public string Name => Friends.Internal.GetFriendPersonaName( Id );
 		public IEnumerable<string> NameHistory
 		{
@@ -88,7 +88,7 @@ namespace Steamworks
 			internal ushort QueryPort; // m_usQueryPort uint16
 			internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
 
-			public static FriendGameInfo From( FriendGameInfo_t i )
+			internal static FriendGameInfo From( FriendGameInfo_t i )
 			{
 				return new FriendGameInfo
 				{

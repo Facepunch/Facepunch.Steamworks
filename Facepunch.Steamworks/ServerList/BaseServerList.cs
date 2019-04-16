@@ -109,7 +109,7 @@ namespace Steamworks
 		// Overrides
 		internal abstract void LaunchQuery();
 
-		protected HServerListRequest request;
+		internal HServerListRequest request;
 
 		#region Filters
 

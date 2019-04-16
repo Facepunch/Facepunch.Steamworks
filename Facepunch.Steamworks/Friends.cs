@@ -31,7 +31,7 @@ namespace Steamworks
 
 		internal static void InstallEvents()
 		{
-			new Event<PersonaStateChange_t>( x => OnPersonaStateChange?.Invoke( new Friend( x.SteamID ) ) );
+			new Event<FriendStateChange_t>( x => OnPersonaStateChange?.Invoke( new Friend( x.SteamID ) ) );
 			new Event<GameRichPresenceJoinRequested_t>( x => OnGameRichPresenceJoinRequested?.Invoke( new Friend( x.SteamIDFriend), x.Connect ) );
 			new Event<GameConnectedFriendChatMsg_t>( OnFriendChatMessage );
 			new Event<GameOverlayActivated_t>( x => OnGameOverlayActivated?.Invoke() );
@@ -108,12 +108,12 @@ namespace Steamworks
 		/// returns the local players name - guaranteed to not be NULL.
 		/// this is the same name as on the users community profile page
 		/// </summary>
-		public static string PersonaName => Internal.GetPersonaName();
+		public static string Name => Internal.GetPersonaName();
 
 		/// <summary>
 		/// gets the status of the current user
 		/// </summary>
-		public static PersonaState PersonaState => Internal.GetPersonaState();
+		public static FriendState State => Internal.GetPersonaState();
 
 		public static IEnumerable<Friend> GetFriends()
 		{

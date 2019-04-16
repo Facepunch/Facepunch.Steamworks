@@ -30,11 +30,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool BIsEnabledDelegate( IntPtr self );
+		private delegate bool BIsEnabledDelegate( IntPtr self );
 		private BIsEnabledDelegate BIsEnabledDelegatePointer;
 		
 		#endregion
-		public bool BIsEnabled()
+		internal bool BIsEnabled()
 		{
 			return BIsEnabledDelegatePointer( Self );
 		}
@@ -42,88 +42,88 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool BIsPlayingDelegate( IntPtr self );
+		private delegate bool BIsPlayingDelegate( IntPtr self );
 		private BIsPlayingDelegate BIsPlayingDelegatePointer;
 		
 		#endregion
-		public bool BIsPlaying()
+		internal bool BIsPlaying()
 		{
 			return BIsPlayingDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate AudioPlayback_Status GetPlaybackStatusDelegate( IntPtr self );
+		private delegate MusicStatus GetPlaybackStatusDelegate( IntPtr self );
 		private GetPlaybackStatusDelegate GetPlaybackStatusDelegatePointer;
 		
 		#endregion
-		public AudioPlayback_Status GetPlaybackStatus()
+		internal MusicStatus GetPlaybackStatus()
 		{
 			return GetPlaybackStatusDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void PlayDelegate( IntPtr self );
+		private delegate void PlayDelegate( IntPtr self );
 		private PlayDelegate PlayDelegatePointer;
 		
 		#endregion
-		public void Play()
+		internal void Play()
 		{
 			PlayDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void PauseDelegate( IntPtr self );
+		private delegate void PauseDelegate( IntPtr self );
 		private PauseDelegate PauseDelegatePointer;
 		
 		#endregion
-		public void Pause()
+		internal void Pause()
 		{
 			PauseDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void PlayPreviousDelegate( IntPtr self );
+		private delegate void PlayPreviousDelegate( IntPtr self );
 		private PlayPreviousDelegate PlayPreviousDelegatePointer;
 		
 		#endregion
-		public void PlayPrevious()
+		internal void PlayPrevious()
 		{
 			PlayPreviousDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void PlayNextDelegate( IntPtr self );
+		private delegate void PlayNextDelegate( IntPtr self );
 		private PlayNextDelegate PlayNextDelegatePointer;
 		
 		#endregion
-		public void PlayNext()
+		internal void PlayNext()
 		{
 			PlayNextDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void SetVolumeDelegate( IntPtr self, float flVolume );
+		private delegate void SetVolumeDelegate( IntPtr self, float flVolume );
 		private SetVolumeDelegate SetVolumeDelegatePointer;
 		
 		#endregion
-		public void SetVolume( float flVolume )
+		internal void SetVolume( float flVolume )
 		{
 			SetVolumeDelegatePointer( Self, flVolume );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate float GetVolumeDelegate( IntPtr self );
+		private delegate float GetVolumeDelegate( IntPtr self );
 		private GetVolumeDelegate GetVolumeDelegatePointer;
 		
 		#endregion
-		public float GetVolume()
+		internal float GetVolume()
 		{
 			return GetVolumeDelegatePointer( Self );
 		}

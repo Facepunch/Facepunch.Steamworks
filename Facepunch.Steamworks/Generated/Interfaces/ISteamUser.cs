@@ -50,11 +50,11 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate HSteamUser GetHSteamUserDelegate( IntPtr self );
+		private delegate HSteamUser GetHSteamUserDelegate( IntPtr self );
 		private GetHSteamUserDelegate GetHSteamUserDelegatePointer;
 		
 		#endregion
-		public HSteamUser GetHSteamUser()
+		internal HSteamUser GetHSteamUser()
 		{
 			return GetHSteamUserDelegatePointer( Self );
 		}
@@ -62,22 +62,22 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool BLoggedOnDelegate( IntPtr self );
+		private delegate bool BLoggedOnDelegate( IntPtr self );
 		private BLoggedOnDelegate BLoggedOnDelegatePointer;
 		
 		#endregion
-		public bool BLoggedOn()
+		internal bool BLoggedOn()
 		{
 			return BLoggedOnDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void GetSteamIDDelegate( IntPtr self, ref SteamId retVal );
+		private delegate void GetSteamIDDelegate( IntPtr self, ref SteamId retVal );
 		private GetSteamIDDelegate GetSteamIDDelegatePointer;
 		
 		#endregion
-		public SteamId GetSteamID()
+		internal SteamId GetSteamID()
 		{
 			var retVal = default( SteamId );
 			GetSteamIDDelegatePointer( Self, ref retVal );
@@ -86,33 +86,33 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate int InitiateGameConnectionDelegate( IntPtr self, IntPtr pAuthBlob, int cbMaxAuthBlob, SteamId steamIDGameServer, uint unIPServer, ushort usPortServer, [MarshalAs( UnmanagedType.U1 )] bool bSecure );
+		private delegate int InitiateGameConnectionDelegate( IntPtr self, IntPtr pAuthBlob, int cbMaxAuthBlob, SteamId steamIDGameServer, uint unIPServer, ushort usPortServer, [MarshalAs( UnmanagedType.U1 )] bool bSecure );
 		private InitiateGameConnectionDelegate InitiateGameConnectionDelegatePointer;
 		
 		#endregion
-		public int InitiateGameConnection( IntPtr pAuthBlob, int cbMaxAuthBlob, SteamId steamIDGameServer, uint unIPServer, ushort usPortServer, [MarshalAs( UnmanagedType.U1 )] bool bSecure )
+		internal int InitiateGameConnection( IntPtr pAuthBlob, int cbMaxAuthBlob, SteamId steamIDGameServer, uint unIPServer, ushort usPortServer, [MarshalAs( UnmanagedType.U1 )] bool bSecure )
 		{
 			return InitiateGameConnectionDelegatePointer( Self, pAuthBlob, cbMaxAuthBlob, steamIDGameServer, unIPServer, usPortServer, bSecure );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void TerminateGameConnectionDelegate( IntPtr self, uint unIPServer, ushort usPortServer );
+		private delegate void TerminateGameConnectionDelegate( IntPtr self, uint unIPServer, ushort usPortServer );
 		private TerminateGameConnectionDelegate TerminateGameConnectionDelegatePointer;
 		
 		#endregion
-		public void TerminateGameConnection( uint unIPServer, ushort usPortServer )
+		internal void TerminateGameConnection( uint unIPServer, ushort usPortServer )
 		{
 			TerminateGameConnectionDelegatePointer( Self, unIPServer, usPortServer );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void TrackAppUsageEventDelegate( IntPtr self, GameId gameID, int eAppUsageEvent, string pchExtraInfo );
+		private delegate void TrackAppUsageEventDelegate( IntPtr self, GameId gameID, int eAppUsageEvent, string pchExtraInfo );
 		private TrackAppUsageEventDelegate TrackAppUsageEventDelegatePointer;
 		
 		#endregion
-		public void TrackAppUsageEvent( GameId gameID, int eAppUsageEvent, string pchExtraInfo )
+		internal void TrackAppUsageEvent( GameId gameID, int eAppUsageEvent, string pchExtraInfo )
 		{
 			TrackAppUsageEventDelegatePointer( Self, gameID, eAppUsageEvent, pchExtraInfo );
 		}
@@ -120,132 +120,132 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool GetUserDataFolderDelegate( IntPtr self, StringBuilder pchBuffer, int cubBuffer );
+		private delegate bool GetUserDataFolderDelegate( IntPtr self, StringBuilder pchBuffer, int cubBuffer );
 		private GetUserDataFolderDelegate GetUserDataFolderDelegatePointer;
 		
 		#endregion
-		public bool GetUserDataFolder( StringBuilder pchBuffer, int cubBuffer )
+		internal bool GetUserDataFolder( StringBuilder pchBuffer, int cubBuffer )
 		{
 			return GetUserDataFolderDelegatePointer( Self, pchBuffer, cubBuffer );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void StartVoiceRecordingDelegate( IntPtr self );
+		private delegate void StartVoiceRecordingDelegate( IntPtr self );
 		private StartVoiceRecordingDelegate StartVoiceRecordingDelegatePointer;
 		
 		#endregion
-		public void StartVoiceRecording()
+		internal void StartVoiceRecording()
 		{
 			StartVoiceRecordingDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void StopVoiceRecordingDelegate( IntPtr self );
+		private delegate void StopVoiceRecordingDelegate( IntPtr self );
 		private StopVoiceRecordingDelegate StopVoiceRecordingDelegatePointer;
 		
 		#endregion
-		public void StopVoiceRecording()
+		internal void StopVoiceRecording()
 		{
 			StopVoiceRecordingDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate VoiceResult GetAvailableVoiceDelegate( IntPtr self, ref uint pcbCompressed, ref uint pcbUncompressed_Deprecated, uint nUncompressedVoiceDesiredSampleRate_Deprecated );
+		private delegate VoiceResult GetAvailableVoiceDelegate( IntPtr self, ref uint pcbCompressed, ref uint pcbUncompressed_Deprecated, uint nUncompressedVoiceDesiredSampleRate_Deprecated );
 		private GetAvailableVoiceDelegate GetAvailableVoiceDelegatePointer;
 		
 		#endregion
-		public VoiceResult GetAvailableVoice( ref uint pcbCompressed, ref uint pcbUncompressed_Deprecated, uint nUncompressedVoiceDesiredSampleRate_Deprecated )
+		internal VoiceResult GetAvailableVoice( ref uint pcbCompressed, ref uint pcbUncompressed_Deprecated, uint nUncompressedVoiceDesiredSampleRate_Deprecated )
 		{
 			return GetAvailableVoiceDelegatePointer( Self, ref pcbCompressed, ref pcbUncompressed_Deprecated, nUncompressedVoiceDesiredSampleRate_Deprecated );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate VoiceResult GetVoiceDelegate( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bWantCompressed, IntPtr pDestBuffer, uint cbDestBufferSize, ref uint nBytesWritten, [MarshalAs( UnmanagedType.U1 )] bool bWantUncompressed_Deprecated, IntPtr pUncompressedDestBuffer_Deprecated, uint cbUncompressedDestBufferSize_Deprecated, ref uint nUncompressBytesWritten_Deprecated, uint nUncompressedVoiceDesiredSampleRate_Deprecated );
+		private delegate VoiceResult GetVoiceDelegate( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bWantCompressed, IntPtr pDestBuffer, uint cbDestBufferSize, ref uint nBytesWritten, [MarshalAs( UnmanagedType.U1 )] bool bWantUncompressed_Deprecated, IntPtr pUncompressedDestBuffer_Deprecated, uint cbUncompressedDestBufferSize_Deprecated, ref uint nUncompressBytesWritten_Deprecated, uint nUncompressedVoiceDesiredSampleRate_Deprecated );
 		private GetVoiceDelegate GetVoiceDelegatePointer;
 		
 		#endregion
-		public VoiceResult GetVoice( [MarshalAs( UnmanagedType.U1 )] bool bWantCompressed, IntPtr pDestBuffer, uint cbDestBufferSize, ref uint nBytesWritten, [MarshalAs( UnmanagedType.U1 )] bool bWantUncompressed_Deprecated, IntPtr pUncompressedDestBuffer_Deprecated, uint cbUncompressedDestBufferSize_Deprecated, ref uint nUncompressBytesWritten_Deprecated, uint nUncompressedVoiceDesiredSampleRate_Deprecated )
+		internal VoiceResult GetVoice( [MarshalAs( UnmanagedType.U1 )] bool bWantCompressed, IntPtr pDestBuffer, uint cbDestBufferSize, ref uint nBytesWritten, [MarshalAs( UnmanagedType.U1 )] bool bWantUncompressed_Deprecated, IntPtr pUncompressedDestBuffer_Deprecated, uint cbUncompressedDestBufferSize_Deprecated, ref uint nUncompressBytesWritten_Deprecated, uint nUncompressedVoiceDesiredSampleRate_Deprecated )
 		{
 			return GetVoiceDelegatePointer( Self, bWantCompressed, pDestBuffer, cbDestBufferSize, ref nBytesWritten, bWantUncompressed_Deprecated, pUncompressedDestBuffer_Deprecated, cbUncompressedDestBufferSize_Deprecated, ref nUncompressBytesWritten_Deprecated, nUncompressedVoiceDesiredSampleRate_Deprecated );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate VoiceResult DecompressVoiceDelegate( IntPtr self, IntPtr pCompressed, uint cbCompressed, IntPtr pDestBuffer, uint cbDestBufferSize, ref uint nBytesWritten, uint nDesiredSampleRate );
+		private delegate VoiceResult DecompressVoiceDelegate( IntPtr self, IntPtr pCompressed, uint cbCompressed, IntPtr pDestBuffer, uint cbDestBufferSize, ref uint nBytesWritten, uint nDesiredSampleRate );
 		private DecompressVoiceDelegate DecompressVoiceDelegatePointer;
 		
 		#endregion
-		public VoiceResult DecompressVoice( IntPtr pCompressed, uint cbCompressed, IntPtr pDestBuffer, uint cbDestBufferSize, ref uint nBytesWritten, uint nDesiredSampleRate )
+		internal VoiceResult DecompressVoice( IntPtr pCompressed, uint cbCompressed, IntPtr pDestBuffer, uint cbDestBufferSize, ref uint nBytesWritten, uint nDesiredSampleRate )
 		{
 			return DecompressVoiceDelegatePointer( Self, pCompressed, cbCompressed, pDestBuffer, cbDestBufferSize, ref nBytesWritten, nDesiredSampleRate );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate uint GetVoiceOptimalSampleRateDelegate( IntPtr self );
+		private delegate uint GetVoiceOptimalSampleRateDelegate( IntPtr self );
 		private GetVoiceOptimalSampleRateDelegate GetVoiceOptimalSampleRateDelegatePointer;
 		
 		#endregion
-		public uint GetVoiceOptimalSampleRate()
+		internal uint GetVoiceOptimalSampleRate()
 		{
 			return GetVoiceOptimalSampleRateDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate HAuthTicket GetAuthSessionTicketDelegate( IntPtr self, IntPtr pTicket, int cbMaxTicket, ref uint pcbTicket );
+		private delegate HAuthTicket GetAuthSessionTicketDelegate( IntPtr self, IntPtr pTicket, int cbMaxTicket, ref uint pcbTicket );
 		private GetAuthSessionTicketDelegate GetAuthSessionTicketDelegatePointer;
 		
 		#endregion
-		public HAuthTicket GetAuthSessionTicket( IntPtr pTicket, int cbMaxTicket, ref uint pcbTicket )
+		internal HAuthTicket GetAuthSessionTicket( IntPtr pTicket, int cbMaxTicket, ref uint pcbTicket )
 		{
 			return GetAuthSessionTicketDelegatePointer( Self, pTicket, cbMaxTicket, ref pcbTicket );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate BeginAuthSessionResult BeginAuthSessionDelegate( IntPtr self, IntPtr pAuthTicket, int cbAuthTicket, SteamId steamID );
+		private delegate BeginAuthResult BeginAuthSessionDelegate( IntPtr self, IntPtr pAuthTicket, int cbAuthTicket, SteamId steamID );
 		private BeginAuthSessionDelegate BeginAuthSessionDelegatePointer;
 		
 		#endregion
-		public BeginAuthSessionResult BeginAuthSession( IntPtr pAuthTicket, int cbAuthTicket, SteamId steamID )
+		internal BeginAuthResult BeginAuthSession( IntPtr pAuthTicket, int cbAuthTicket, SteamId steamID )
 		{
 			return BeginAuthSessionDelegatePointer( Self, pAuthTicket, cbAuthTicket, steamID );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void EndAuthSessionDelegate( IntPtr self, SteamId steamID );
+		private delegate void EndAuthSessionDelegate( IntPtr self, SteamId steamID );
 		private EndAuthSessionDelegate EndAuthSessionDelegatePointer;
 		
 		#endregion
-		public void EndAuthSession( SteamId steamID )
+		internal void EndAuthSession( SteamId steamID )
 		{
 			EndAuthSessionDelegatePointer( Self, steamID );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void CancelAuthTicketDelegate( IntPtr self, HAuthTicket hAuthTicket );
+		private delegate void CancelAuthTicketDelegate( IntPtr self, HAuthTicket hAuthTicket );
 		private CancelAuthTicketDelegate CancelAuthTicketDelegatePointer;
 		
 		#endregion
-		public void CancelAuthTicket( HAuthTicket hAuthTicket )
+		internal void CancelAuthTicket( HAuthTicket hAuthTicket )
 		{
 			CancelAuthTicketDelegatePointer( Self, hAuthTicket );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate UserHasLicenseForAppResult UserHasLicenseForAppDelegate( IntPtr self, SteamId steamID, AppId_t appID );
+		private delegate UserHasLicenseForAppResult UserHasLicenseForAppDelegate( IntPtr self, SteamId steamID, AppId_t appID );
 		private UserHasLicenseForAppDelegate UserHasLicenseForAppDelegatePointer;
 		
 		#endregion
-		public UserHasLicenseForAppResult UserHasLicenseForApp( SteamId steamID, AppId_t appID )
+		internal UserHasLicenseForAppResult UserHasLicenseForApp( SteamId steamID, AppId_t appID )
 		{
 			return UserHasLicenseForAppDelegatePointer( Self, steamID, appID );
 		}
@@ -253,33 +253,33 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool BIsBehindNATDelegate( IntPtr self );
+		private delegate bool BIsBehindNATDelegate( IntPtr self );
 		private BIsBehindNATDelegate BIsBehindNATDelegatePointer;
 		
 		#endregion
-		public bool BIsBehindNAT()
+		internal bool BIsBehindNAT()
 		{
 			return BIsBehindNATDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void AdvertiseGameDelegate( IntPtr self, SteamId steamIDGameServer, uint unIPServer, ushort usPortServer );
+		private delegate void AdvertiseGameDelegate( IntPtr self, SteamId steamIDGameServer, uint unIPServer, ushort usPortServer );
 		private AdvertiseGameDelegate AdvertiseGameDelegatePointer;
 		
 		#endregion
-		public void AdvertiseGame( SteamId steamIDGameServer, uint unIPServer, ushort usPortServer )
+		internal void AdvertiseGame( SteamId steamIDGameServer, uint unIPServer, ushort usPortServer )
 		{
 			AdvertiseGameDelegatePointer( Self, steamIDGameServer, unIPServer, usPortServer );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate SteamAPICall_t RequestEncryptedAppTicketDelegate( IntPtr self, IntPtr pDataToInclude, int cbDataToInclude );
+		private delegate SteamAPICall_t RequestEncryptedAppTicketDelegate( IntPtr self, IntPtr pDataToInclude, int cbDataToInclude );
 		private RequestEncryptedAppTicketDelegate RequestEncryptedAppTicketDelegatePointer;
 		
 		#endregion
-		public async Task<EncryptedAppTicketResponse_t?> RequestEncryptedAppTicket( IntPtr pDataToInclude, int cbDataToInclude )
+		internal async Task<EncryptedAppTicketResponse_t?> RequestEncryptedAppTicket( IntPtr pDataToInclude, int cbDataToInclude )
 		{
 			return await (new Result<EncryptedAppTicketResponse_t>( RequestEncryptedAppTicketDelegatePointer( Self, pDataToInclude, cbDataToInclude ) )).GetResult();
 		}
@@ -287,44 +287,44 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool GetEncryptedAppTicketDelegate( IntPtr self, IntPtr pTicket, int cbMaxTicket, ref uint pcbTicket );
+		private delegate bool GetEncryptedAppTicketDelegate( IntPtr self, IntPtr pTicket, int cbMaxTicket, ref uint pcbTicket );
 		private GetEncryptedAppTicketDelegate GetEncryptedAppTicketDelegatePointer;
 		
 		#endregion
-		public bool GetEncryptedAppTicket( IntPtr pTicket, int cbMaxTicket, ref uint pcbTicket )
+		internal bool GetEncryptedAppTicket( IntPtr pTicket, int cbMaxTicket, ref uint pcbTicket )
 		{
 			return GetEncryptedAppTicketDelegatePointer( Self, pTicket, cbMaxTicket, ref pcbTicket );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate int GetGameBadgeLevelDelegate( IntPtr self, int nSeries, [MarshalAs( UnmanagedType.U1 )] bool bFoil );
+		private delegate int GetGameBadgeLevelDelegate( IntPtr self, int nSeries, [MarshalAs( UnmanagedType.U1 )] bool bFoil );
 		private GetGameBadgeLevelDelegate GetGameBadgeLevelDelegatePointer;
 		
 		#endregion
-		public int GetGameBadgeLevel( int nSeries, [MarshalAs( UnmanagedType.U1 )] bool bFoil )
+		internal int GetGameBadgeLevel( int nSeries, [MarshalAs( UnmanagedType.U1 )] bool bFoil )
 		{
 			return GetGameBadgeLevelDelegatePointer( Self, nSeries, bFoil );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate int GetPlayerSteamLevelDelegate( IntPtr self );
+		private delegate int GetPlayerSteamLevelDelegate( IntPtr self );
 		private GetPlayerSteamLevelDelegate GetPlayerSteamLevelDelegatePointer;
 		
 		#endregion
-		public int GetPlayerSteamLevel()
+		internal int GetPlayerSteamLevel()
 		{
 			return GetPlayerSteamLevelDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate SteamAPICall_t RequestStoreAuthURLDelegate( IntPtr self, string pchRedirectURL );
+		private delegate SteamAPICall_t RequestStoreAuthURLDelegate( IntPtr self, string pchRedirectURL );
 		private RequestStoreAuthURLDelegate RequestStoreAuthURLDelegatePointer;
 		
 		#endregion
-		public async Task<StoreAuthURLResponse_t?> RequestStoreAuthURL( string pchRedirectURL )
+		internal async Task<StoreAuthURLResponse_t?> RequestStoreAuthURL( string pchRedirectURL )
 		{
 			return await (new Result<StoreAuthURLResponse_t>( RequestStoreAuthURLDelegatePointer( Self, pchRedirectURL ) )).GetResult();
 		}
@@ -332,11 +332,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool BIsPhoneVerifiedDelegate( IntPtr self );
+		private delegate bool BIsPhoneVerifiedDelegate( IntPtr self );
 		private BIsPhoneVerifiedDelegate BIsPhoneVerifiedDelegatePointer;
 		
 		#endregion
-		public bool BIsPhoneVerified()
+		internal bool BIsPhoneVerified()
 		{
 			return BIsPhoneVerifiedDelegatePointer( Self );
 		}
@@ -344,11 +344,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool BIsTwoFactorEnabledDelegate( IntPtr self );
+		private delegate bool BIsTwoFactorEnabledDelegate( IntPtr self );
 		private BIsTwoFactorEnabledDelegate BIsTwoFactorEnabledDelegatePointer;
 		
 		#endregion
-		public bool BIsTwoFactorEnabled()
+		internal bool BIsTwoFactorEnabled()
 		{
 			return BIsTwoFactorEnabledDelegatePointer( Self );
 		}
@@ -356,11 +356,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool BIsPhoneIdentifyingDelegate( IntPtr self );
+		private delegate bool BIsPhoneIdentifyingDelegate( IntPtr self );
 		private BIsPhoneIdentifyingDelegate BIsPhoneIdentifyingDelegatePointer;
 		
 		#endregion
-		public bool BIsPhoneIdentifying()
+		internal bool BIsPhoneIdentifying()
 		{
 			return BIsPhoneIdentifyingDelegatePointer( Self );
 		}
@@ -368,22 +368,22 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool BIsPhoneRequiringVerificationDelegate( IntPtr self );
+		private delegate bool BIsPhoneRequiringVerificationDelegate( IntPtr self );
 		private BIsPhoneRequiringVerificationDelegate BIsPhoneRequiringVerificationDelegatePointer;
 		
 		#endregion
-		public bool BIsPhoneRequiringVerification()
+		internal bool BIsPhoneRequiringVerification()
 		{
 			return BIsPhoneRequiringVerificationDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate SteamAPICall_t GetMarketEligibilityDelegate( IntPtr self );
+		private delegate SteamAPICall_t GetMarketEligibilityDelegate( IntPtr self );
 		private GetMarketEligibilityDelegate GetMarketEligibilityDelegatePointer;
 		
 		#endregion
-		public async Task<MarketEligibilityResponse_t?> GetMarketEligibility()
+		internal async Task<MarketEligibilityResponse_t?> GetMarketEligibility()
 		{
 			return await (new Result<MarketEligibilityResponse_t>( GetMarketEligibilityDelegatePointer( Self ) )).GetResult();
 		}

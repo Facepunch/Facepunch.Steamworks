@@ -72,9 +72,7 @@ namespace Generator
             type = type.Replace( "union ", "" );
             type = type.Replace( "enum ", "" );
 
-			var cleantype = Cleanup.ConvertType( type );
-			if ( cleantype != type )
-				return cleantype;
+			type = Cleanup.ConvertType( type );
 
 			switch ( type )
             {

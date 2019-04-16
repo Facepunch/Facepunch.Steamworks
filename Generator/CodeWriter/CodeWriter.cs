@@ -83,7 +83,7 @@ namespace Generator
 
                 type = ToManagedType( type );
 
-                TypeDefs.Add( c.Name, new TypeDef()
+				TypeDefs.Add( c.Name, new TypeDef()
                 {
                     Name = c.Name,
                     NativeType = c.Type,

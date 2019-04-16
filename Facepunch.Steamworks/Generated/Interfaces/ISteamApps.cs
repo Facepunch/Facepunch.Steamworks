@@ -49,11 +49,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool BIsSubscribedDelegate( IntPtr self );
+		private delegate bool BIsSubscribedDelegate( IntPtr self );
 		private BIsSubscribedDelegate BIsSubscribedDelegatePointer;
 		
 		#endregion
-		public bool BIsSubscribed()
+		internal bool BIsSubscribed()
 		{
 			return BIsSubscribedDelegatePointer( Self );
 		}
@@ -61,11 +61,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool BIsLowViolenceDelegate( IntPtr self );
+		private delegate bool BIsLowViolenceDelegate( IntPtr self );
 		private BIsLowViolenceDelegate BIsLowViolenceDelegatePointer;
 		
 		#endregion
-		public bool BIsLowViolence()
+		internal bool BIsLowViolence()
 		{
 			return BIsLowViolenceDelegatePointer( Self );
 		}
@@ -73,11 +73,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool BIsCybercafeDelegate( IntPtr self );
+		private delegate bool BIsCybercafeDelegate( IntPtr self );
 		private BIsCybercafeDelegate BIsCybercafeDelegatePointer;
 		
 		#endregion
-		public bool BIsCybercafe()
+		internal bool BIsCybercafe()
 		{
 			return BIsCybercafeDelegatePointer( Self );
 		}
@@ -85,33 +85,33 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool BIsVACBannedDelegate( IntPtr self );
+		private delegate bool BIsVACBannedDelegate( IntPtr self );
 		private BIsVACBannedDelegate BIsVACBannedDelegatePointer;
 		
 		#endregion
-		public bool BIsVACBanned()
+		internal bool BIsVACBanned()
 		{
 			return BIsVACBannedDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate IntPtr GetCurrentGameLanguageDelegate( IntPtr self );
+		private delegate IntPtr GetCurrentGameLanguageDelegate( IntPtr self );
 		private GetCurrentGameLanguageDelegate GetCurrentGameLanguageDelegatePointer;
 		
 		#endregion
-		public string GetCurrentGameLanguage()
+		internal string GetCurrentGameLanguage()
 		{
 			return GetString( GetCurrentGameLanguageDelegatePointer( Self ) );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate IntPtr GetAvailableGameLanguagesDelegate( IntPtr self );
+		private delegate IntPtr GetAvailableGameLanguagesDelegate( IntPtr self );
 		private GetAvailableGameLanguagesDelegate GetAvailableGameLanguagesDelegatePointer;
 		
 		#endregion
-		public string GetAvailableGameLanguages()
+		internal string GetAvailableGameLanguages()
 		{
 			return GetString( GetAvailableGameLanguagesDelegatePointer( Self ) );
 		}
@@ -119,11 +119,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool BIsSubscribedAppDelegate( IntPtr self, AppId_t appID );
+		private delegate bool BIsSubscribedAppDelegate( IntPtr self, AppId_t appID );
 		private BIsSubscribedAppDelegate BIsSubscribedAppDelegatePointer;
 		
 		#endregion
-		public bool BIsSubscribedApp( AppId_t appID )
+		internal bool BIsSubscribedApp( AppId_t appID )
 		{
 			return BIsSubscribedAppDelegatePointer( Self, appID );
 		}
@@ -131,22 +131,22 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool BIsDlcInstalledDelegate( IntPtr self, AppId_t appID );
+		private delegate bool BIsDlcInstalledDelegate( IntPtr self, AppId_t appID );
 		private BIsDlcInstalledDelegate BIsDlcInstalledDelegatePointer;
 		
 		#endregion
-		public bool BIsDlcInstalled( AppId_t appID )
+		internal bool BIsDlcInstalled( AppId_t appID )
 		{
 			return BIsDlcInstalledDelegatePointer( Self, appID );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate uint GetEarliestPurchaseUnixTimeDelegate( IntPtr self, AppId_t nAppID );
+		private delegate uint GetEarliestPurchaseUnixTimeDelegate( IntPtr self, AppId_t nAppID );
 		private GetEarliestPurchaseUnixTimeDelegate GetEarliestPurchaseUnixTimeDelegatePointer;
 		
 		#endregion
-		public uint GetEarliestPurchaseUnixTime( AppId_t nAppID )
+		internal uint GetEarliestPurchaseUnixTime( AppId_t nAppID )
 		{
 			return GetEarliestPurchaseUnixTimeDelegatePointer( Self, nAppID );
 		}
@@ -154,22 +154,22 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool BIsSubscribedFromFreeWeekendDelegate( IntPtr self );
+		private delegate bool BIsSubscribedFromFreeWeekendDelegate( IntPtr self );
 		private BIsSubscribedFromFreeWeekendDelegate BIsSubscribedFromFreeWeekendDelegatePointer;
 		
 		#endregion
-		public bool BIsSubscribedFromFreeWeekend()
+		internal bool BIsSubscribedFromFreeWeekend()
 		{
 			return BIsSubscribedFromFreeWeekendDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate int GetDLCCountDelegate( IntPtr self );
+		private delegate int GetDLCCountDelegate( IntPtr self );
 		private GetDLCCountDelegate GetDLCCountDelegatePointer;
 		
 		#endregion
-		public int GetDLCCount()
+		internal int GetDLCCount()
 		{
 			return GetDLCCountDelegatePointer( Self );
 		}
@@ -177,44 +177,44 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool BGetDLCDataByIndexDelegate( IntPtr self, int iDLC, ref AppId_t pAppID, [MarshalAs( UnmanagedType.U1 )] ref bool pbAvailable, StringBuilder pchName, int cchNameBufferSize );
+		private delegate bool BGetDLCDataByIndexDelegate( IntPtr self, int iDLC, ref AppId_t pAppID, [MarshalAs( UnmanagedType.U1 )] ref bool pbAvailable, StringBuilder pchName, int cchNameBufferSize );
 		private BGetDLCDataByIndexDelegate BGetDLCDataByIndexDelegatePointer;
 		
 		#endregion
-		public bool BGetDLCDataByIndex( int iDLC, ref AppId_t pAppID, [MarshalAs( UnmanagedType.U1 )] ref bool pbAvailable, StringBuilder pchName, int cchNameBufferSize )
+		internal bool BGetDLCDataByIndex( int iDLC, ref AppId_t pAppID, [MarshalAs( UnmanagedType.U1 )] ref bool pbAvailable, StringBuilder pchName, int cchNameBufferSize )
 		{
 			return BGetDLCDataByIndexDelegatePointer( Self, iDLC, ref pAppID, ref pbAvailable, pchName, cchNameBufferSize );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void InstallDLCDelegate( IntPtr self, AppId_t nAppID );
+		private delegate void InstallDLCDelegate( IntPtr self, AppId_t nAppID );
 		private InstallDLCDelegate InstallDLCDelegatePointer;
 		
 		#endregion
-		public void InstallDLC( AppId_t nAppID )
+		internal void InstallDLC( AppId_t nAppID )
 		{
 			InstallDLCDelegatePointer( Self, nAppID );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void UninstallDLCDelegate( IntPtr self, AppId_t nAppID );
+		private delegate void UninstallDLCDelegate( IntPtr self, AppId_t nAppID );
 		private UninstallDLCDelegate UninstallDLCDelegatePointer;
 		
 		#endregion
-		public void UninstallDLC( AppId_t nAppID )
+		internal void UninstallDLC( AppId_t nAppID )
 		{
 			UninstallDLCDelegatePointer( Self, nAppID );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void RequestAppProofOfPurchaseKeyDelegate( IntPtr self, AppId_t nAppID );
+		private delegate void RequestAppProofOfPurchaseKeyDelegate( IntPtr self, AppId_t nAppID );
 		private RequestAppProofOfPurchaseKeyDelegate RequestAppProofOfPurchaseKeyDelegatePointer;
 		
 		#endregion
-		public void RequestAppProofOfPurchaseKey( AppId_t nAppID )
+		internal void RequestAppProofOfPurchaseKey( AppId_t nAppID )
 		{
 			RequestAppProofOfPurchaseKeyDelegatePointer( Self, nAppID );
 		}
@@ -222,11 +222,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool GetCurrentBetaNameDelegate( IntPtr self, StringBuilder pchName, int cchNameBufferSize );
+		private delegate bool GetCurrentBetaNameDelegate( IntPtr self, StringBuilder pchName, int cchNameBufferSize );
 		private GetCurrentBetaNameDelegate GetCurrentBetaNameDelegatePointer;
 		
 		#endregion
-		public bool GetCurrentBetaName( StringBuilder pchName, int cchNameBufferSize )
+		internal bool GetCurrentBetaName( StringBuilder pchName, int cchNameBufferSize )
 		{
 			return GetCurrentBetaNameDelegatePointer( Self, pchName, cchNameBufferSize );
 		}
@@ -234,33 +234,33 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool MarkContentCorruptDelegate( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bMissingFilesOnly );
+		private delegate bool MarkContentCorruptDelegate( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bMissingFilesOnly );
 		private MarkContentCorruptDelegate MarkContentCorruptDelegatePointer;
 		
 		#endregion
-		public bool MarkContentCorrupt( [MarshalAs( UnmanagedType.U1 )] bool bMissingFilesOnly )
+		internal bool MarkContentCorrupt( [MarshalAs( UnmanagedType.U1 )] bool bMissingFilesOnly )
 		{
 			return MarkContentCorruptDelegatePointer( Self, bMissingFilesOnly );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate uint GetInstalledDepotsDelegate( IntPtr self, AppId_t appID, [In,Out] DepotId_t[]  pvecDepots, uint cMaxDepots );
+		private delegate uint GetInstalledDepotsDelegate( IntPtr self, AppId_t appID, [In,Out] DepotId_t[]  pvecDepots, uint cMaxDepots );
 		private GetInstalledDepotsDelegate GetInstalledDepotsDelegatePointer;
 		
 		#endregion
-		public uint GetInstalledDepots( AppId_t appID, [In,Out] DepotId_t[]  pvecDepots, uint cMaxDepots )
+		internal uint GetInstalledDepots( AppId_t appID, [In,Out] DepotId_t[]  pvecDepots, uint cMaxDepots )
 		{
 			return GetInstalledDepotsDelegatePointer( Self, appID, pvecDepots, cMaxDepots );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate uint GetAppInstallDirDelegate( IntPtr self, AppId_t appID, StringBuilder pchFolder, uint cchFolderBufferSize );
+		private delegate uint GetAppInstallDirDelegate( IntPtr self, AppId_t appID, StringBuilder pchFolder, uint cchFolderBufferSize );
 		private GetAppInstallDirDelegate GetAppInstallDirDelegatePointer;
 		
 		#endregion
-		public uint GetAppInstallDir( AppId_t appID, StringBuilder pchFolder, uint cchFolderBufferSize )
+		internal uint GetAppInstallDir( AppId_t appID, StringBuilder pchFolder, uint cchFolderBufferSize )
 		{
 			return GetAppInstallDirDelegatePointer( Self, appID, pchFolder, cchFolderBufferSize );
 		}
@@ -268,22 +268,22 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool BIsAppInstalledDelegate( IntPtr self, AppId_t appID );
+		private delegate bool BIsAppInstalledDelegate( IntPtr self, AppId_t appID );
 		private BIsAppInstalledDelegate BIsAppInstalledDelegatePointer;
 		
 		#endregion
-		public bool BIsAppInstalled( AppId_t appID )
+		internal bool BIsAppInstalled( AppId_t appID )
 		{
 			return BIsAppInstalledDelegatePointer( Self, appID );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void GetAppOwnerDelegate( IntPtr self, ref SteamId retVal );
+		private delegate void GetAppOwnerDelegate( IntPtr self, ref SteamId retVal );
 		private GetAppOwnerDelegate GetAppOwnerDelegatePointer;
 		
 		#endregion
-		public SteamId GetAppOwner()
+		internal SteamId GetAppOwner()
 		{
 			var retVal = default( SteamId );
 			GetAppOwnerDelegatePointer( Self, ref retVal );
@@ -292,11 +292,11 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate IntPtr GetLaunchQueryParamDelegate( IntPtr self, string pchKey );
+		private delegate IntPtr GetLaunchQueryParamDelegate( IntPtr self, string pchKey );
 		private GetLaunchQueryParamDelegate GetLaunchQueryParamDelegatePointer;
 		
 		#endregion
-		public string GetLaunchQueryParam( string pchKey )
+		internal string GetLaunchQueryParam( string pchKey )
 		{
 			return GetString( GetLaunchQueryParamDelegatePointer( Self, pchKey ) );
 		}
@@ -304,55 +304,55 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool GetDlcDownloadProgressDelegate( IntPtr self, AppId_t nAppID, ref ulong punBytesDownloaded, ref ulong punBytesTotal );
+		private delegate bool GetDlcDownloadProgressDelegate( IntPtr self, AppId_t nAppID, ref ulong punBytesDownloaded, ref ulong punBytesTotal );
 		private GetDlcDownloadProgressDelegate GetDlcDownloadProgressDelegatePointer;
 		
 		#endregion
-		public bool GetDlcDownloadProgress( AppId_t nAppID, ref ulong punBytesDownloaded, ref ulong punBytesTotal )
+		internal bool GetDlcDownloadProgress( AppId_t nAppID, ref ulong punBytesDownloaded, ref ulong punBytesTotal )
 		{
 			return GetDlcDownloadProgressDelegatePointer( Self, nAppID, ref punBytesDownloaded, ref punBytesTotal );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate int GetAppBuildIdDelegate( IntPtr self );
+		private delegate int GetAppBuildIdDelegate( IntPtr self );
 		private GetAppBuildIdDelegate GetAppBuildIdDelegatePointer;
 		
 		#endregion
-		public int GetAppBuildId()
+		internal int GetAppBuildId()
 		{
 			return GetAppBuildIdDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void RequestAllProofOfPurchaseKeysDelegate( IntPtr self );
+		private delegate void RequestAllProofOfPurchaseKeysDelegate( IntPtr self );
 		private RequestAllProofOfPurchaseKeysDelegate RequestAllProofOfPurchaseKeysDelegatePointer;
 		
 		#endregion
-		public void RequestAllProofOfPurchaseKeys()
+		internal void RequestAllProofOfPurchaseKeys()
 		{
 			RequestAllProofOfPurchaseKeysDelegatePointer( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate SteamAPICall_t GetFileDetailsDelegate( IntPtr self, string pszFileName );
+		private delegate SteamAPICall_t GetFileDetailsDelegate( IntPtr self, string pszFileName );
 		private GetFileDetailsDelegate GetFileDetailsDelegatePointer;
 		
 		#endregion
-		public async Task<FileDetailsResult_t?> GetFileDetails( string pszFileName )
+		internal async Task<FileDetailsResult_t?> GetFileDetails( string pszFileName )
 		{
 			return await (new Result<FileDetailsResult_t>( GetFileDetailsDelegatePointer( Self, pszFileName ) )).GetResult();
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate int GetLaunchCommandLineDelegate( IntPtr self, StringBuilder pszCommandLine, int cubCommandLine );
+		private delegate int GetLaunchCommandLineDelegate( IntPtr self, StringBuilder pszCommandLine, int cubCommandLine );
 		private GetLaunchCommandLineDelegate GetLaunchCommandLineDelegatePointer;
 		
 		#endregion
-		public int GetLaunchCommandLine( StringBuilder pszCommandLine, int cubCommandLine )
+		internal int GetLaunchCommandLine( StringBuilder pszCommandLine, int cubCommandLine )
 		{
 			return GetLaunchCommandLineDelegatePointer( Self, pszCommandLine, cubCommandLine );
 		}
@@ -360,11 +360,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool BIsSubscribedFromFamilySharingDelegate( IntPtr self );
+		private delegate bool BIsSubscribedFromFamilySharingDelegate( IntPtr self );
 		private BIsSubscribedFromFamilySharingDelegate BIsSubscribedFromFamilySharingDelegatePointer;
 		
 		#endregion
-		public bool BIsSubscribedFromFamilySharing()
+		internal bool BIsSubscribedFromFamilySharing()
 		{
 			return BIsSubscribedFromFamilySharingDelegatePointer( Self );
 		}

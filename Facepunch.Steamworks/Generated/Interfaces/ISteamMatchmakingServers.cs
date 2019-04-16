@@ -37,110 +37,110 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate HServerListRequest RequestInternetServerListDelegate( IntPtr self, AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
+		private delegate HServerListRequest RequestInternetServerListDelegate( IntPtr self, AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
 		private RequestInternetServerListDelegate RequestInternetServerListDelegatePointer;
 		
 		#endregion
-		public HServerListRequest RequestInternetServerList( AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
+		internal HServerListRequest RequestInternetServerList( AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
 		{
 			return RequestInternetServerListDelegatePointer( Self, iApp, ref ppchFilters, nFilters, pRequestServersResponse );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate HServerListRequest RequestLANServerListDelegate( IntPtr self, AppId_t iApp, IntPtr pRequestServersResponse );
+		private delegate HServerListRequest RequestLANServerListDelegate( IntPtr self, AppId_t iApp, IntPtr pRequestServersResponse );
 		private RequestLANServerListDelegate RequestLANServerListDelegatePointer;
 		
 		#endregion
-		public HServerListRequest RequestLANServerList( AppId_t iApp, IntPtr pRequestServersResponse )
+		internal HServerListRequest RequestLANServerList( AppId_t iApp, IntPtr pRequestServersResponse )
 		{
 			return RequestLANServerListDelegatePointer( Self, iApp, pRequestServersResponse );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate HServerListRequest RequestFriendsServerListDelegate( IntPtr self, AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
+		private delegate HServerListRequest RequestFriendsServerListDelegate( IntPtr self, AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
 		private RequestFriendsServerListDelegate RequestFriendsServerListDelegatePointer;
 		
 		#endregion
-		public HServerListRequest RequestFriendsServerList( AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
+		internal HServerListRequest RequestFriendsServerList( AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
 		{
 			return RequestFriendsServerListDelegatePointer( Self, iApp, ref ppchFilters, nFilters, pRequestServersResponse );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate HServerListRequest RequestFavoritesServerListDelegate( IntPtr self, AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
+		private delegate HServerListRequest RequestFavoritesServerListDelegate( IntPtr self, AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
 		private RequestFavoritesServerListDelegate RequestFavoritesServerListDelegatePointer;
 		
 		#endregion
-		public HServerListRequest RequestFavoritesServerList( AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
+		internal HServerListRequest RequestFavoritesServerList( AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
 		{
 			return RequestFavoritesServerListDelegatePointer( Self, iApp, ref ppchFilters, nFilters, pRequestServersResponse );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate HServerListRequest RequestHistoryServerListDelegate( IntPtr self, AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
+		private delegate HServerListRequest RequestHistoryServerListDelegate( IntPtr self, AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
 		private RequestHistoryServerListDelegate RequestHistoryServerListDelegatePointer;
 		
 		#endregion
-		public HServerListRequest RequestHistoryServerList( AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
+		internal HServerListRequest RequestHistoryServerList( AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
 		{
 			return RequestHistoryServerListDelegatePointer( Self, iApp, ref ppchFilters, nFilters, pRequestServersResponse );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate HServerListRequest RequestSpectatorServerListDelegate( IntPtr self, AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
+		private delegate HServerListRequest RequestSpectatorServerListDelegate( IntPtr self, AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
 		private RequestSpectatorServerListDelegate RequestSpectatorServerListDelegatePointer;
 		
 		#endregion
-		public HServerListRequest RequestSpectatorServerList( AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
+		internal HServerListRequest RequestSpectatorServerList( AppId_t iApp, [In,Out] ref MatchMakingKeyValuePair_t[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
 		{
 			return RequestSpectatorServerListDelegatePointer( Self, iApp, ref ppchFilters, nFilters, pRequestServersResponse );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void ReleaseRequestDelegate( IntPtr self, HServerListRequest hServerListRequest );
+		private delegate void ReleaseRequestDelegate( IntPtr self, HServerListRequest hServerListRequest );
 		private ReleaseRequestDelegate ReleaseRequestDelegatePointer;
 		
 		#endregion
-		public void ReleaseRequest( HServerListRequest hServerListRequest )
+		internal void ReleaseRequest( HServerListRequest hServerListRequest )
 		{
 			ReleaseRequestDelegatePointer( Self, hServerListRequest );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate IntPtr GetServerDetailsDelegate( IntPtr self, HServerListRequest hRequest, int iServer );
+		private delegate IntPtr GetServerDetailsDelegate( IntPtr self, HServerListRequest hRequest, int iServer );
 		private GetServerDetailsDelegate GetServerDetailsDelegatePointer;
 		
 		#endregion
-		public gameserveritem_t GetServerDetails( HServerListRequest hRequest, int iServer )
+		internal gameserveritem_t GetServerDetails( HServerListRequest hRequest, int iServer )
 		{
 			return new gameserveritem_t().Fill( GetServerDetailsDelegatePointer( Self, hRequest, iServer ) );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void CancelQueryDelegate( IntPtr self, HServerListRequest hRequest );
+		private delegate void CancelQueryDelegate( IntPtr self, HServerListRequest hRequest );
 		private CancelQueryDelegate CancelQueryDelegatePointer;
 		
 		#endregion
-		public void CancelQuery( HServerListRequest hRequest )
+		internal void CancelQuery( HServerListRequest hRequest )
 		{
 			CancelQueryDelegatePointer( Self, hRequest );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void RefreshQueryDelegate( IntPtr self, HServerListRequest hRequest );
+		private delegate void RefreshQueryDelegate( IntPtr self, HServerListRequest hRequest );
 		private RefreshQueryDelegate RefreshQueryDelegatePointer;
 		
 		#endregion
-		public void RefreshQuery( HServerListRequest hRequest )
+		internal void RefreshQuery( HServerListRequest hRequest )
 		{
 			RefreshQueryDelegatePointer( Self, hRequest );
 		}
@@ -148,77 +148,77 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool IsRefreshingDelegate( IntPtr self, HServerListRequest hRequest );
+		private delegate bool IsRefreshingDelegate( IntPtr self, HServerListRequest hRequest );
 		private IsRefreshingDelegate IsRefreshingDelegatePointer;
 		
 		#endregion
-		public bool IsRefreshing( HServerListRequest hRequest )
+		internal bool IsRefreshing( HServerListRequest hRequest )
 		{
 			return IsRefreshingDelegatePointer( Self, hRequest );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate int GetServerCountDelegate( IntPtr self, HServerListRequest hRequest );
+		private delegate int GetServerCountDelegate( IntPtr self, HServerListRequest hRequest );
 		private GetServerCountDelegate GetServerCountDelegatePointer;
 		
 		#endregion
-		public int GetServerCount( HServerListRequest hRequest )
+		internal int GetServerCount( HServerListRequest hRequest )
 		{
 			return GetServerCountDelegatePointer( Self, hRequest );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void RefreshServerDelegate( IntPtr self, HServerListRequest hRequest, int iServer );
+		private delegate void RefreshServerDelegate( IntPtr self, HServerListRequest hRequest, int iServer );
 		private RefreshServerDelegate RefreshServerDelegatePointer;
 		
 		#endregion
-		public void RefreshServer( HServerListRequest hRequest, int iServer )
+		internal void RefreshServer( HServerListRequest hRequest, int iServer )
 		{
 			RefreshServerDelegatePointer( Self, hRequest, iServer );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate HServerQuery PingServerDelegate( IntPtr self, uint unIP, ushort usPort, IntPtr pRequestServersResponse );
+		private delegate HServerQuery PingServerDelegate( IntPtr self, uint unIP, ushort usPort, IntPtr pRequestServersResponse );
 		private PingServerDelegate PingServerDelegatePointer;
 		
 		#endregion
-		public HServerQuery PingServer( uint unIP, ushort usPort, IntPtr pRequestServersResponse )
+		internal HServerQuery PingServer( uint unIP, ushort usPort, IntPtr pRequestServersResponse )
 		{
 			return PingServerDelegatePointer( Self, unIP, usPort, pRequestServersResponse );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate HServerQuery PlayerDetailsDelegate( IntPtr self, uint unIP, ushort usPort, IntPtr pRequestServersResponse );
+		private delegate HServerQuery PlayerDetailsDelegate( IntPtr self, uint unIP, ushort usPort, IntPtr pRequestServersResponse );
 		private PlayerDetailsDelegate PlayerDetailsDelegatePointer;
 		
 		#endregion
-		public HServerQuery PlayerDetails( uint unIP, ushort usPort, IntPtr pRequestServersResponse )
+		internal HServerQuery PlayerDetails( uint unIP, ushort usPort, IntPtr pRequestServersResponse )
 		{
 			return PlayerDetailsDelegatePointer( Self, unIP, usPort, pRequestServersResponse );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate HServerQuery ServerRulesDelegate( IntPtr self, uint unIP, ushort usPort, IntPtr pRequestServersResponse );
+		private delegate HServerQuery ServerRulesDelegate( IntPtr self, uint unIP, ushort usPort, IntPtr pRequestServersResponse );
 		private ServerRulesDelegate ServerRulesDelegatePointer;
 		
 		#endregion
-		public HServerQuery ServerRules( uint unIP, ushort usPort, IntPtr pRequestServersResponse )
+		internal HServerQuery ServerRules( uint unIP, ushort usPort, IntPtr pRequestServersResponse )
 		{
 			return ServerRulesDelegatePointer( Self, unIP, usPort, pRequestServersResponse );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void CancelServerQueryDelegate( IntPtr self, HServerQuery hServerQuery );
+		private delegate void CancelServerQueryDelegate( IntPtr self, HServerQuery hServerQuery );
 		private CancelServerQueryDelegate CancelServerQueryDelegatePointer;
 		
 		#endregion
-		public void CancelServerQuery( HServerQuery hServerQuery )
+		internal void CancelServerQuery( HServerQuery hServerQuery )
 		{
 			CancelServerQueryDelegatePointer( Self, hServerQuery );
 		}

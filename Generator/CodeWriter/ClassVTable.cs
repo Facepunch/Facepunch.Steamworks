@@ -93,12 +93,12 @@ namespace Generator
 			if ( returnType.ReturnAttribute != null)
 				WriteLine( returnType.ReturnAttribute );
 
-			WriteLine( $"public delegate {(returnType.IsReturnedWeird?"void":returnType.TypeNameFrom)} {func.Name}Delegate( IntPtr self, {delegateargstr} );".Replace( "( IntPtr self,  )", "( IntPtr self )" ) );
+			WriteLine( $"private delegate {(returnType.IsReturnedWeird?"void":returnType.TypeNameFrom)} {func.Name}Delegate( IntPtr self, {delegateargstr} );".Replace( "( IntPtr self,  )", "( IntPtr self )" ) );
 			WriteLine( $"private {func.Name}Delegate {func.Name}DelegatePointer;" );
 			WriteLine();
 			WriteLine( $"#endregion" );
 
-			StartBlock( $"public {returnType.ReturnType} {func.Name}( {argstr} )".Replace( "(  )", "()" ) );
+			StartBlock( $"internal {returnType.ReturnType} {func.Name}( {argstr} )".Replace( "(  )", "()" ) );
 			{
 				var callargs = string.Join( ", ", args.Select( x => x.AsCallArgument() ) );
 

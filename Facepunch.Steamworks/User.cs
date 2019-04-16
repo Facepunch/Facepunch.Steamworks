@@ -84,7 +84,7 @@ namespace Steamworks
 		/// The first parameter is the steamid of this user
 		/// The second is the Steam ID that owns the game, this will be different from the first if the game is being borrowed via Steam Family Sharing
 		/// </summary>
-		public static event Action<SteamId, SteamId, AuthSessionResponse> OnValidateAuthTicketResponse;
+		public static event Action<SteamId, SteamId, AuthResponse> OnValidateAuthTicketResponse;
 
 		/// <summary>
 		/// Called when a user has responded to a microtransaction authorization request.
@@ -264,7 +264,7 @@ namespace Steamworks
 			}
 		}
 
-		public static unsafe BeginAuthSessionResult BeginAuthSession( byte[] ticketData, SteamId steamid )
+		public static unsafe BeginAuthResult BeginAuthSession( byte[] ticketData, SteamId steamid )
 		{
 			fixed ( byte* ptr = ticketData )
 			{

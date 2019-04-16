@@ -4,754 +4,454 @@ using System.Linq;
 
 namespace Steamworks
 {
-	public struct GID_t
+	internal struct GID_t
 	{
 		public ulong Value;
 		
-		public static implicit operator GID_t( ulong value )
-		{
-			return new GID_t(){ Value = value };
-		}
-		
-		public static implicit operator ulong( GID_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator GID_t( ulong value ) => new GID_t(){ Value = value };
+		public static implicit operator ulong( GID_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct JobID_t
+	internal struct JobID_t
 	{
 		public ulong Value;
 		
-		public static implicit operator JobID_t( ulong value )
-		{
-			return new JobID_t(){ Value = value };
-		}
-		
-		public static implicit operator ulong( JobID_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator JobID_t( ulong value ) => new JobID_t(){ Value = value };
+		public static implicit operator ulong( JobID_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct TxnID_t
+	internal struct TxnID_t
 	{
 		public GID_t Value;
 		
-		public static implicit operator TxnID_t( GID_t value )
-		{
-			return new TxnID_t(){ Value = value };
-		}
-		
-		public static implicit operator GID_t( TxnID_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator TxnID_t( GID_t value ) => new TxnID_t(){ Value = value };
+		public static implicit operator GID_t( TxnID_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct PackageId_t
+	internal struct PackageId_t
 	{
 		public uint Value;
 		
-		public static implicit operator PackageId_t( uint value )
-		{
-			return new PackageId_t(){ Value = value };
-		}
-		
-		public static implicit operator uint( PackageId_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator PackageId_t( uint value ) => new PackageId_t(){ Value = value };
+		public static implicit operator uint( PackageId_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct BundleId_t
+	internal struct BundleId_t
 	{
 		public uint Value;
 		
-		public static implicit operator BundleId_t( uint value )
-		{
-			return new BundleId_t(){ Value = value };
-		}
-		
-		public static implicit operator uint( BundleId_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator BundleId_t( uint value ) => new BundleId_t(){ Value = value };
+		public static implicit operator uint( BundleId_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct AppId_t
+	internal struct AppId_t
 	{
 		public uint Value;
 		
-		public static implicit operator AppId_t( uint value )
-		{
-			return new AppId_t(){ Value = value };
-		}
-		
-		public static implicit operator uint( AppId_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator AppId_t( uint value ) => new AppId_t(){ Value = value };
+		public static implicit operator uint( AppId_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct AssetClassId_t
+	internal struct AssetClassId_t
 	{
 		public ulong Value;
 		
-		public static implicit operator AssetClassId_t( ulong value )
-		{
-			return new AssetClassId_t(){ Value = value };
-		}
-		
-		public static implicit operator ulong( AssetClassId_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator AssetClassId_t( ulong value ) => new AssetClassId_t(){ Value = value };
+		public static implicit operator ulong( AssetClassId_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct PhysicalItemId_t
+	internal struct PhysicalItemId_t
 	{
 		public uint Value;
 		
-		public static implicit operator PhysicalItemId_t( uint value )
-		{
-			return new PhysicalItemId_t(){ Value = value };
-		}
-		
-		public static implicit operator uint( PhysicalItemId_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator PhysicalItemId_t( uint value ) => new PhysicalItemId_t(){ Value = value };
+		public static implicit operator uint( PhysicalItemId_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct DepotId_t
+	internal struct DepotId_t
 	{
 		public uint Value;
 		
-		public static implicit operator DepotId_t( uint value )
-		{
-			return new DepotId_t(){ Value = value };
-		}
-		
-		public static implicit operator uint( DepotId_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator DepotId_t( uint value ) => new DepotId_t(){ Value = value };
+		public static implicit operator uint( DepotId_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct RTime32
+	internal struct RTime32
 	{
 		public uint Value;
 		
-		public static implicit operator RTime32( uint value )
-		{
-			return new RTime32(){ Value = value };
-		}
-		
-		public static implicit operator uint( RTime32 value )
-		{
-			return value.Value;
-		}
+		public static implicit operator RTime32( uint value ) => new RTime32(){ Value = value };
+		public static implicit operator uint( RTime32 value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct CellID_t
+	internal struct CellID_t
 	{
 		public uint Value;
 		
-		public static implicit operator CellID_t( uint value )
-		{
-			return new CellID_t(){ Value = value };
-		}
-		
-		public static implicit operator uint( CellID_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator CellID_t( uint value ) => new CellID_t(){ Value = value };
+		public static implicit operator uint( CellID_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct SteamAPICall_t
+	internal struct SteamAPICall_t
 	{
 		public ulong Value;
 		
-		public static implicit operator SteamAPICall_t( ulong value )
-		{
-			return new SteamAPICall_t(){ Value = value };
-		}
-		
-		public static implicit operator ulong( SteamAPICall_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator SteamAPICall_t( ulong value ) => new SteamAPICall_t(){ Value = value };
+		public static implicit operator ulong( SteamAPICall_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct AccountID_t
+	internal struct AccountID_t
 	{
 		public uint Value;
 		
-		public static implicit operator AccountID_t( uint value )
-		{
-			return new AccountID_t(){ Value = value };
-		}
-		
-		public static implicit operator uint( AccountID_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator AccountID_t( uint value ) => new AccountID_t(){ Value = value };
+		public static implicit operator uint( AccountID_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct PartnerId_t
+	internal struct PartnerId_t
 	{
 		public uint Value;
 		
-		public static implicit operator PartnerId_t( uint value )
-		{
-			return new PartnerId_t(){ Value = value };
-		}
-		
-		public static implicit operator uint( PartnerId_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator PartnerId_t( uint value ) => new PartnerId_t(){ Value = value };
+		public static implicit operator uint( PartnerId_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct ManifestId_t
+	internal struct ManifestId_t
 	{
 		public ulong Value;
 		
-		public static implicit operator ManifestId_t( ulong value )
-		{
-			return new ManifestId_t(){ Value = value };
-		}
-		
-		public static implicit operator ulong( ManifestId_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator ManifestId_t( ulong value ) => new ManifestId_t(){ Value = value };
+		public static implicit operator ulong( ManifestId_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct SiteId_t
+	internal struct SiteId_t
 	{
 		public ulong Value;
 		
-		public static implicit operator SiteId_t( ulong value )
-		{
-			return new SiteId_t(){ Value = value };
-		}
-		
-		public static implicit operator ulong( SiteId_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator SiteId_t( ulong value ) => new SiteId_t(){ Value = value };
+		public static implicit operator ulong( SiteId_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct PartyBeaconID_t
+	internal struct PartyBeaconID_t
 	{
 		public ulong Value;
 		
-		public static implicit operator PartyBeaconID_t( ulong value )
-		{
-			return new PartyBeaconID_t(){ Value = value };
-		}
-		
-		public static implicit operator ulong( PartyBeaconID_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator PartyBeaconID_t( ulong value ) => new PartyBeaconID_t(){ Value = value };
+		public static implicit operator ulong( PartyBeaconID_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct HAuthTicket
+	internal struct HAuthTicket
 	{
 		public uint Value;
 		
-		public static implicit operator HAuthTicket( uint value )
-		{
-			return new HAuthTicket(){ Value = value };
-		}
-		
-		public static implicit operator uint( HAuthTicket value )
-		{
-			return value.Value;
-		}
+		public static implicit operator HAuthTicket( uint value ) => new HAuthTicket(){ Value = value };
+		public static implicit operator uint( HAuthTicket value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct BREAKPAD_HANDLE
+	internal struct BREAKPAD_HANDLE
 	{
 		public IntPtr Value;
 		
-		public static implicit operator BREAKPAD_HANDLE( IntPtr value )
-		{
-			return new BREAKPAD_HANDLE(){ Value = value };
-		}
-		
-		public static implicit operator IntPtr( BREAKPAD_HANDLE value )
-		{
-			return value.Value;
-		}
+		public static implicit operator BREAKPAD_HANDLE( IntPtr value ) => new BREAKPAD_HANDLE(){ Value = value };
+		public static implicit operator IntPtr( BREAKPAD_HANDLE value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct HSteamPipe
+	internal struct HSteamPipe
 	{
 		public int Value;
 		
-		public static implicit operator HSteamPipe( int value )
-		{
-			return new HSteamPipe(){ Value = value };
-		}
-		
-		public static implicit operator int( HSteamPipe value )
-		{
-			return value.Value;
-		}
+		public static implicit operator HSteamPipe( int value ) => new HSteamPipe(){ Value = value };
+		public static implicit operator int( HSteamPipe value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct HSteamUser
+	internal struct HSteamUser
 	{
 		public int Value;
 		
-		public static implicit operator HSteamUser( int value )
-		{
-			return new HSteamUser(){ Value = value };
-		}
-		
-		public static implicit operator int( HSteamUser value )
-		{
-			return value.Value;
-		}
+		public static implicit operator HSteamUser( int value ) => new HSteamUser(){ Value = value };
+		public static implicit operator int( HSteamUser value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct FriendsGroupID_t
+	internal struct FriendsGroupID_t
 	{
 		public short Value;
 		
-		public static implicit operator FriendsGroupID_t( short value )
-		{
-			return new FriendsGroupID_t(){ Value = value };
-		}
-		
-		public static implicit operator short( FriendsGroupID_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator FriendsGroupID_t( short value ) => new FriendsGroupID_t(){ Value = value };
+		public static implicit operator short( FriendsGroupID_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct HServerListRequest
+	internal struct HServerListRequest
 	{
 		public IntPtr Value;
 		
-		public static implicit operator HServerListRequest( IntPtr value )
-		{
-			return new HServerListRequest(){ Value = value };
-		}
-		
-		public static implicit operator IntPtr( HServerListRequest value )
-		{
-			return value.Value;
-		}
+		public static implicit operator HServerListRequest( IntPtr value ) => new HServerListRequest(){ Value = value };
+		public static implicit operator IntPtr( HServerListRequest value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct HServerQuery
+	internal struct HServerQuery
 	{
 		public int Value;
 		
-		public static implicit operator HServerQuery( int value )
-		{
-			return new HServerQuery(){ Value = value };
-		}
-		
-		public static implicit operator int( HServerQuery value )
-		{
-			return value.Value;
-		}
+		public static implicit operator HServerQuery( int value ) => new HServerQuery(){ Value = value };
+		public static implicit operator int( HServerQuery value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct UGCHandle_t
+	internal struct UGCHandle_t
 	{
 		public ulong Value;
 		
-		public static implicit operator UGCHandle_t( ulong value )
-		{
-			return new UGCHandle_t(){ Value = value };
-		}
-		
-		public static implicit operator ulong( UGCHandle_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator UGCHandle_t( ulong value ) => new UGCHandle_t(){ Value = value };
+		public static implicit operator ulong( UGCHandle_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct PublishedFileUpdateHandle_t
+	internal struct PublishedFileUpdateHandle_t
 	{
 		public ulong Value;
 		
-		public static implicit operator PublishedFileUpdateHandle_t( ulong value )
-		{
-			return new PublishedFileUpdateHandle_t(){ Value = value };
-		}
-		
-		public static implicit operator ulong( PublishedFileUpdateHandle_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator PublishedFileUpdateHandle_t( ulong value ) => new PublishedFileUpdateHandle_t(){ Value = value };
+		public static implicit operator ulong( PublishedFileUpdateHandle_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct PublishedFileId_t
+	internal struct PublishedFileId_t
 	{
 		public ulong Value;
 		
-		public static implicit operator PublishedFileId_t( ulong value )
-		{
-			return new PublishedFileId_t(){ Value = value };
-		}
-		
-		public static implicit operator ulong( PublishedFileId_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator PublishedFileId_t( ulong value ) => new PublishedFileId_t(){ Value = value };
+		public static implicit operator ulong( PublishedFileId_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct UGCFileWriteStreamHandle_t
+	internal struct UGCFileWriteStreamHandle_t
 	{
 		public ulong Value;
 		
-		public static implicit operator UGCFileWriteStreamHandle_t( ulong value )
-		{
-			return new UGCFileWriteStreamHandle_t(){ Value = value };
-		}
-		
-		public static implicit operator ulong( UGCFileWriteStreamHandle_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator UGCFileWriteStreamHandle_t( ulong value ) => new UGCFileWriteStreamHandle_t(){ Value = value };
+		public static implicit operator ulong( UGCFileWriteStreamHandle_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct SteamLeaderboard_t
+	internal struct SteamLeaderboard_t
 	{
 		public ulong Value;
 		
-		public static implicit operator SteamLeaderboard_t( ulong value )
-		{
-			return new SteamLeaderboard_t(){ Value = value };
-		}
-		
-		public static implicit operator ulong( SteamLeaderboard_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator SteamLeaderboard_t( ulong value ) => new SteamLeaderboard_t(){ Value = value };
+		public static implicit operator ulong( SteamLeaderboard_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct SteamLeaderboardEntries_t
+	internal struct SteamLeaderboardEntries_t
 	{
 		public ulong Value;
 		
-		public static implicit operator SteamLeaderboardEntries_t( ulong value )
-		{
-			return new SteamLeaderboardEntries_t(){ Value = value };
-		}
-		
-		public static implicit operator ulong( SteamLeaderboardEntries_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator SteamLeaderboardEntries_t( ulong value ) => new SteamLeaderboardEntries_t(){ Value = value };
+		public static implicit operator ulong( SteamLeaderboardEntries_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct SNetSocket_t
+	internal struct SNetSocket_t
 	{
 		public uint Value;
 		
-		public static implicit operator SNetSocket_t( uint value )
-		{
-			return new SNetSocket_t(){ Value = value };
-		}
-		
-		public static implicit operator uint( SNetSocket_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator SNetSocket_t( uint value ) => new SNetSocket_t(){ Value = value };
+		public static implicit operator uint( SNetSocket_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct SNetListenSocket_t
+	internal struct SNetListenSocket_t
 	{
 		public uint Value;
 		
-		public static implicit operator SNetListenSocket_t( uint value )
-		{
-			return new SNetListenSocket_t(){ Value = value };
-		}
-		
-		public static implicit operator uint( SNetListenSocket_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator SNetListenSocket_t( uint value ) => new SNetListenSocket_t(){ Value = value };
+		public static implicit operator uint( SNetListenSocket_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct ScreenshotHandle
+	internal struct ScreenshotHandle
 	{
 		public uint Value;
 		
-		public static implicit operator ScreenshotHandle( uint value )
-		{
-			return new ScreenshotHandle(){ Value = value };
-		}
-		
-		public static implicit operator uint( ScreenshotHandle value )
-		{
-			return value.Value;
-		}
+		public static implicit operator ScreenshotHandle( uint value ) => new ScreenshotHandle(){ Value = value };
+		public static implicit operator uint( ScreenshotHandle value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct HTTPRequestHandle
+	internal struct HTTPRequestHandle
 	{
 		public uint Value;
 		
-		public static implicit operator HTTPRequestHandle( uint value )
-		{
-			return new HTTPRequestHandle(){ Value = value };
-		}
-		
-		public static implicit operator uint( HTTPRequestHandle value )
-		{
-			return value.Value;
-		}
+		public static implicit operator HTTPRequestHandle( uint value ) => new HTTPRequestHandle(){ Value = value };
+		public static implicit operator uint( HTTPRequestHandle value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct HTTPCookieContainerHandle
+	internal struct HTTPCookieContainerHandle
 	{
 		public uint Value;
 		
-		public static implicit operator HTTPCookieContainerHandle( uint value )
-		{
-			return new HTTPCookieContainerHandle(){ Value = value };
-		}
-		
-		public static implicit operator uint( HTTPCookieContainerHandle value )
-		{
-			return value.Value;
-		}
+		public static implicit operator HTTPCookieContainerHandle( uint value ) => new HTTPCookieContainerHandle(){ Value = value };
+		public static implicit operator uint( HTTPCookieContainerHandle value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct InputHandle_t
+	internal struct InputHandle_t
 	{
 		public ulong Value;
 		
-		public static implicit operator InputHandle_t( ulong value )
-		{
-			return new InputHandle_t(){ Value = value };
-		}
-		
-		public static implicit operator ulong( InputHandle_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator InputHandle_t( ulong value ) => new InputHandle_t(){ Value = value };
+		public static implicit operator ulong( InputHandle_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct InputActionSetHandle_t
+	internal struct InputActionSetHandle_t
 	{
 		public ulong Value;
 		
-		public static implicit operator InputActionSetHandle_t( ulong value )
-		{
-			return new InputActionSetHandle_t(){ Value = value };
-		}
-		
-		public static implicit operator ulong( InputActionSetHandle_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator InputActionSetHandle_t( ulong value ) => new InputActionSetHandle_t(){ Value = value };
+		public static implicit operator ulong( InputActionSetHandle_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct InputDigitalActionHandle_t
+	internal struct InputDigitalActionHandle_t
 	{
 		public ulong Value;
 		
-		public static implicit operator InputDigitalActionHandle_t( ulong value )
-		{
-			return new InputDigitalActionHandle_t(){ Value = value };
-		}
-		
-		public static implicit operator ulong( InputDigitalActionHandle_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator InputDigitalActionHandle_t( ulong value ) => new InputDigitalActionHandle_t(){ Value = value };
+		public static implicit operator ulong( InputDigitalActionHandle_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct InputAnalogActionHandle_t
+	internal struct InputAnalogActionHandle_t
 	{
 		public ulong Value;
 		
-		public static implicit operator InputAnalogActionHandle_t( ulong value )
-		{
-			return new InputAnalogActionHandle_t(){ Value = value };
-		}
-		
-		public static implicit operator ulong( InputAnalogActionHandle_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator InputAnalogActionHandle_t( ulong value ) => new InputAnalogActionHandle_t(){ Value = value };
+		public static implicit operator ulong( InputAnalogActionHandle_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct ControllerHandle_t
+	internal struct ControllerHandle_t
 	{
 		public ulong Value;
 		
-		public static implicit operator ControllerHandle_t( ulong value )
-		{
-			return new ControllerHandle_t(){ Value = value };
-		}
-		
-		public static implicit operator ulong( ControllerHandle_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator ControllerHandle_t( ulong value ) => new ControllerHandle_t(){ Value = value };
+		public static implicit operator ulong( ControllerHandle_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct ControllerActionSetHandle_t
+	internal struct ControllerActionSetHandle_t
 	{
 		public ulong Value;
 		
-		public static implicit operator ControllerActionSetHandle_t( ulong value )
-		{
-			return new ControllerActionSetHandle_t(){ Value = value };
-		}
-		
-		public static implicit operator ulong( ControllerActionSetHandle_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator ControllerActionSetHandle_t( ulong value ) => new ControllerActionSetHandle_t(){ Value = value };
+		public static implicit operator ulong( ControllerActionSetHandle_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct ControllerDigitalActionHandle_t
+	internal struct ControllerDigitalActionHandle_t
 	{
 		public ulong Value;
 		
-		public static implicit operator ControllerDigitalActionHandle_t( ulong value )
-		{
-			return new ControllerDigitalActionHandle_t(){ Value = value };
-		}
-		
-		public static implicit operator ulong( ControllerDigitalActionHandle_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator ControllerDigitalActionHandle_t( ulong value ) => new ControllerDigitalActionHandle_t(){ Value = value };
+		public static implicit operator ulong( ControllerDigitalActionHandle_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct ControllerAnalogActionHandle_t
+	internal struct ControllerAnalogActionHandle_t
 	{
 		public ulong Value;
 		
-		public static implicit operator ControllerAnalogActionHandle_t( ulong value )
-		{
-			return new ControllerAnalogActionHandle_t(){ Value = value };
-		}
-		
-		public static implicit operator ulong( ControllerAnalogActionHandle_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator ControllerAnalogActionHandle_t( ulong value ) => new ControllerAnalogActionHandle_t(){ Value = value };
+		public static implicit operator ulong( ControllerAnalogActionHandle_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct UGCQueryHandle_t
+	internal struct UGCQueryHandle_t
 	{
 		public ulong Value;
 		
-		public static implicit operator UGCQueryHandle_t( ulong value )
-		{
-			return new UGCQueryHandle_t(){ Value = value };
-		}
-		
-		public static implicit operator ulong( UGCQueryHandle_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator UGCQueryHandle_t( ulong value ) => new UGCQueryHandle_t(){ Value = value };
+		public static implicit operator ulong( UGCQueryHandle_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct UGCUpdateHandle_t
+	internal struct UGCUpdateHandle_t
 	{
 		public ulong Value;
 		
-		public static implicit operator UGCUpdateHandle_t( ulong value )
-		{
-			return new UGCUpdateHandle_t(){ Value = value };
-		}
-		
-		public static implicit operator ulong( UGCUpdateHandle_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator UGCUpdateHandle_t( ulong value ) => new UGCUpdateHandle_t(){ Value = value };
+		public static implicit operator ulong( UGCUpdateHandle_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct HHTMLBrowser
+	internal struct HHTMLBrowser
 	{
 		public uint Value;
 		
-		public static implicit operator HHTMLBrowser( uint value )
-		{
-			return new HHTMLBrowser(){ Value = value };
-		}
-		
-		public static implicit operator uint( HHTMLBrowser value )
-		{
-			return value.Value;
-		}
+		public static implicit operator HHTMLBrowser( uint value ) => new HHTMLBrowser(){ Value = value };
+		public static implicit operator uint( HHTMLBrowser value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct SteamItemInstanceID_t
+	internal struct SteamItemInstanceID_t
 	{
 		public ulong Value;
 		
-		public static implicit operator SteamItemInstanceID_t( ulong value )
-		{
-			return new SteamItemInstanceID_t(){ Value = value };
-		}
-		
-		public static implicit operator ulong( SteamItemInstanceID_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator SteamItemInstanceID_t( ulong value ) => new SteamItemInstanceID_t(){ Value = value };
+		public static implicit operator ulong( SteamItemInstanceID_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct SteamItemDef_t
+	internal struct SteamItemDef_t
 	{
 		public int Value;
 		
-		public static implicit operator SteamItemDef_t( int value )
-		{
-			return new SteamItemDef_t(){ Value = value };
-		}
-		
-		public static implicit operator int( SteamItemDef_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator SteamItemDef_t( int value ) => new SteamItemDef_t(){ Value = value };
+		public static implicit operator int( SteamItemDef_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct SteamInventoryResult_t
+	internal struct SteamInventoryResult_t
 	{
 		public int Value;
 		
-		public static implicit operator SteamInventoryResult_t( int value )
-		{
-			return new SteamInventoryResult_t(){ Value = value };
-		}
-		
-		public static implicit operator int( SteamInventoryResult_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator SteamInventoryResult_t( int value ) => new SteamInventoryResult_t(){ Value = value };
+		public static implicit operator int( SteamInventoryResult_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
-	public struct SteamInventoryUpdateHandle_t
+	internal struct SteamInventoryUpdateHandle_t
 	{
 		public ulong Value;
 		
-		public static implicit operator SteamInventoryUpdateHandle_t( ulong value )
-		{
-			return new SteamInventoryUpdateHandle_t(){ Value = value };
-		}
-		
-		public static implicit operator ulong( SteamInventoryUpdateHandle_t value )
-		{
-			return value.Value;
-		}
+		public static implicit operator SteamInventoryUpdateHandle_t( ulong value ) => new SteamInventoryUpdateHandle_t(){ Value = value };
+		public static implicit operator ulong( SteamInventoryUpdateHandle_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
 	}
 	
 }

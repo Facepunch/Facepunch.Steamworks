@@ -42,7 +42,7 @@ namespace Steamworks
         {
 			var stopwatch = System.Diagnostics.Stopwatch.StartNew();
 			bool finished = false;
-			AuthSessionResponse response = AuthSessionResponse.AuthTicketInvalidAlreadyUsed;
+			AuthResponse response = AuthResponse.AuthTicketInvalidAlreadyUsed;
 
 			//
 			// Clientside calls this function, gets ticket
@@ -90,7 +90,7 @@ namespace Steamworks
 				await Task.Delay( 10 );
 			}
 
-			Assert.AreEqual( response, AuthSessionResponse.OK );
+			Assert.AreEqual( response, AuthResponse.OK );
 
 			finished = false;
 			stopwatch = System.Diagnostics.Stopwatch.StartNew();
@@ -113,7 +113,7 @@ namespace Steamworks
 				await Task.Delay( 10 );
 			}
 
-			Assert.AreEqual( response, AuthSessionResponse.AuthTicketCanceled );
+			Assert.AreEqual( response, AuthResponse.AuthTicketCanceled );
 
 		}
     }

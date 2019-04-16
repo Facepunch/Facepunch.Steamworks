@@ -36,7 +36,7 @@ namespace Steamworks
 		/// <summary>
 		/// User has been authed or rejected
 		/// </summary>
-		public static event Action<SteamId, SteamId, AuthSessionResponse> OnValidateAuthTicketResponse;
+		public static event Action<SteamId, SteamId, AuthResponse> OnValidateAuthTicketResponse;
 
 		public static void Init( AppId appid, ServerInit init )
 		{
@@ -307,7 +307,7 @@ namespace Steamworks
 			{
 				var result = Internal.BeginAuthSession( (IntPtr)p, data.Length, steamid );
 
-				if ( result == BeginAuthSessionResult.OK )
+				if ( result == BeginAuthResult.OK )
 					return true;
 
 				return false;

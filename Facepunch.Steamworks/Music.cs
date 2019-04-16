@@ -52,7 +52,7 @@ namespace Steamworks
 		/// <summary>
 		/// Gets the current status of the Steam Music player
 		/// </summary>
-		public static AudioPlayback_Status Status => Internal.GetPlaybackStatus();
+		public static MusicStatus Status => Internal.GetPlaybackStatus();
 
 
 		public static void Play() => Internal.Play();

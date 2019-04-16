@@ -27,11 +27,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool BIsParentalLockEnabledDelegate( IntPtr self );
+		private delegate bool BIsParentalLockEnabledDelegate( IntPtr self );
 		private BIsParentalLockEnabledDelegate BIsParentalLockEnabledDelegatePointer;
 		
 		#endregion
-		public bool BIsParentalLockEnabled()
+		internal bool BIsParentalLockEnabled()
 		{
 			return BIsParentalLockEnabledDelegatePointer( Self );
 		}
@@ -39,11 +39,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool BIsParentalLockLockedDelegate( IntPtr self );
+		private delegate bool BIsParentalLockLockedDelegate( IntPtr self );
 		private BIsParentalLockLockedDelegate BIsParentalLockLockedDelegatePointer;
 		
 		#endregion
-		public bool BIsParentalLockLocked()
+		internal bool BIsParentalLockLocked()
 		{
 			return BIsParentalLockLockedDelegatePointer( Self );
 		}
@@ -51,11 +51,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool BIsAppBlockedDelegate( IntPtr self, AppId_t nAppID );
+		private delegate bool BIsAppBlockedDelegate( IntPtr self, AppId_t nAppID );
 		private BIsAppBlockedDelegate BIsAppBlockedDelegatePointer;
 		
 		#endregion
-		public bool BIsAppBlocked( AppId_t nAppID )
+		internal bool BIsAppBlocked( AppId_t nAppID )
 		{
 			return BIsAppBlockedDelegatePointer( Self, nAppID );
 		}
@@ -63,11 +63,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool BIsAppInBlockListDelegate( IntPtr self, AppId_t nAppID );
+		private delegate bool BIsAppInBlockListDelegate( IntPtr self, AppId_t nAppID );
 		private BIsAppInBlockListDelegate BIsAppInBlockListDelegatePointer;
 		
 		#endregion
-		public bool BIsAppInBlockList( AppId_t nAppID )
+		internal bool BIsAppInBlockList( AppId_t nAppID )
 		{
 			return BIsAppInBlockListDelegatePointer( Self, nAppID );
 		}
@@ -75,11 +75,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool BIsFeatureBlockedDelegate( IntPtr self, ParentalFeature eFeature );
+		private delegate bool BIsFeatureBlockedDelegate( IntPtr self, ParentalFeature eFeature );
 		private BIsFeatureBlockedDelegate BIsFeatureBlockedDelegatePointer;
 		
 		#endregion
-		public bool BIsFeatureBlocked( ParentalFeature eFeature )
+		internal bool BIsFeatureBlocked( ParentalFeature eFeature )
 		{
 			return BIsFeatureBlockedDelegatePointer( Self, eFeature );
 		}
@@ -87,11 +87,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool BIsFeatureInBlockListDelegate( IntPtr self, ParentalFeature eFeature );
+		private delegate bool BIsFeatureInBlockListDelegate( IntPtr self, ParentalFeature eFeature );
 		private BIsFeatureInBlockListDelegate BIsFeatureInBlockListDelegatePointer;
 		
 		#endregion
-		public bool BIsFeatureInBlockList( ParentalFeature eFeature )
+		internal bool BIsFeatureInBlockList( ParentalFeature eFeature )
 		{
 			return BIsFeatureInBlockListDelegatePointer( Self, eFeature );
 		}

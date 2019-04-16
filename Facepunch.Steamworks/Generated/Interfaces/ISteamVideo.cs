@@ -24,11 +24,11 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void GetVideoURLDelegate( IntPtr self, AppId_t unVideoAppID );
+		private delegate void GetVideoURLDelegate( IntPtr self, AppId_t unVideoAppID );
 		private GetVideoURLDelegate GetVideoURLDelegatePointer;
 		
 		#endregion
-		public void GetVideoURL( AppId_t unVideoAppID )
+		internal void GetVideoURL( AppId_t unVideoAppID )
 		{
 			GetVideoURLDelegatePointer( Self, unVideoAppID );
 		}
@@ -36,22 +36,22 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool IsBroadcastingDelegate( IntPtr self, ref int pnNumViewers );
+		private delegate bool IsBroadcastingDelegate( IntPtr self, ref int pnNumViewers );
 		private IsBroadcastingDelegate IsBroadcastingDelegatePointer;
 		
 		#endregion
-		public bool IsBroadcasting( ref int pnNumViewers )
+		internal bool IsBroadcasting( ref int pnNumViewers )
 		{
 			return IsBroadcastingDelegatePointer( Self, ref pnNumViewers );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void GetOPFSettingsDelegate( IntPtr self, AppId_t unVideoAppID );
+		private delegate void GetOPFSettingsDelegate( IntPtr self, AppId_t unVideoAppID );
 		private GetOPFSettingsDelegate GetOPFSettingsDelegatePointer;
 		
 		#endregion
-		public void GetOPFSettings( AppId_t unVideoAppID )
+		internal void GetOPFSettings( AppId_t unVideoAppID )
 		{
 			GetOPFSettingsDelegatePointer( Self, unVideoAppID );
 		}
@@ -59,11 +59,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool GetOPFStringForAppDelegate( IntPtr self, AppId_t unVideoAppID, StringBuilder pchBuffer, ref int pnBufferSize );
+		private delegate bool GetOPFStringForAppDelegate( IntPtr self, AppId_t unVideoAppID, StringBuilder pchBuffer, ref int pnBufferSize );
 		private GetOPFStringForAppDelegate GetOPFStringForAppDelegatePointer;
 		
 		#endregion
-		public bool GetOPFStringForApp( AppId_t unVideoAppID, StringBuilder pchBuffer, ref int pnBufferSize )
+		internal bool GetOPFStringForApp( AppId_t unVideoAppID, StringBuilder pchBuffer, ref int pnBufferSize )
 		{
 			return GetOPFStringForAppDelegatePointer( Self, unVideoAppID, pchBuffer, ref pnBufferSize );
 		}
