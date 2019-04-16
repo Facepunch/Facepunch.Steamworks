@@ -95,7 +95,7 @@ namespace Steamworks
 		/// <summary>
 		/// Returns the time of the purchase of the app
 		/// </summary>
-		public static DateTime PurchaseTime( AppId appid ) => Utility.Epoch.ToDateTime( Internal.GetEarliestPurchaseUnixTime( appid.Value ) );
+		public static DateTime PurchaseTime( AppId appid ) => Epoch.ToDateTime( Internal.GetEarliestPurchaseUnixTime( appid.Value ) );
 
 		/// <summary>
 		/// Checks if the user is subscribed to the current app through a free weekend

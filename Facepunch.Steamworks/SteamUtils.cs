@@ -68,7 +68,7 @@ namespace Steamworks
 		/// <summary>
 		/// Steam server time.  Number of seconds since January 1, 1970, GMT (i.e unix time)
 		/// </summary>
-		public static DateTime SteamServerTime => Utility.Epoch.ToDateTime( Internal.GetServerRealTime() );
+		public static DateTime SteamServerTime => Epoch.ToDateTime( Internal.GetServerRealTime() );
 
 		/// <summary>
 		/// returns the 2 digit ISO 3166-1-alpha-2 format country code this client is running in (as looked up via an IP-to-location database)
