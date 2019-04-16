@@ -99,25 +99,7 @@ namespace Steamworks
 		/// </summary>
 		public static event Action<string> OnGameWebCallback;
 
-		/// <summary>
-		/// Checks if the current user's Steam client is connected to the Steam servers.
-		/// If it's not then no real-time services provided by the Steamworks API will be enabled. The Steam 
-		/// client will automatically be trying to recreate the connection as often as possible. When the 
-		/// connection is restored a SteamServersConnected_t callback will be posted.
-		/// You usually don't need to check for this yourself. All of the API calls that rely on this will 
-		/// check internally. Forcefully disabling stuff when the player loses access is usually not a 
-		/// very good experience for the player and you could be preventing them from accessing APIs that do not 
-		/// need a live connection to Steam.
-		/// </summary>
-		public static bool IsLoggedOn => Internal.BLoggedOn();
 
-		/// <summary>
-		/// Gets the Steam ID of the account currently logged into the Steam client. This is 
-		/// commonly called the 'current user', or 'local user'.
-		/// A Steam ID is a unique identifier for a Steam accounts, Steam groups, Lobbies and Chat 
-		/// rooms, and used to differentiate users in all parts of the Steamworks API.
-		/// </summary>
-		public static SteamId SteamId => Internal.GetSteamID();
 
 
 		static bool _recordingVoice;

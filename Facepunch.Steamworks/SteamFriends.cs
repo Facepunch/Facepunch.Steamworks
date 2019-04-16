@@ -104,17 +104,6 @@ namespace Steamworks
 			}
 		}
 
-		/// <summary>
-		/// returns the local players name - guaranteed to not be NULL.
-		/// this is the same name as on the users community profile page
-		/// </summary>
-		public static string Name => Internal.GetPersonaName();
-
-		/// <summary>
-		/// gets the status of the current user
-		/// </summary>
-		public static FriendState State => Internal.GetPersonaState();
-
 		public static IEnumerable<Friend> GetFriends()
 		{
 			for ( int i=0; i<Internal.GetFriendCount( (int) FriendFlags.Immediate ); i++ )

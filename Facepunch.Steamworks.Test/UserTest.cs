@@ -46,15 +46,15 @@ namespace Steamworks
 		[TestMethod]
 		public void IsLoggedOn()
 		{
-			Assert.AreNotEqual( false, SteamUser.IsLoggedOn );
-			Console.WriteLine( $"User.IsLoggedOn: {SteamUser.IsLoggedOn}" );
+			Assert.AreNotEqual( false, SteamClient.IsLoggedOn );
+			Console.WriteLine( $"User.IsLoggedOn: {SteamClient.IsLoggedOn}" );
 		}
 
 		[TestMethod]
 		public void SteamID()
 		{
-			Assert.AreNotEqual( 0, SteamUser.SteamId.Value );
-			Console.WriteLine( $"User.SteamID: {SteamUser.SteamId.Value}" );
+			Assert.AreNotEqual( 0, SteamClient.SteamId.Value );
+			Console.WriteLine( $"User.SteamID: {SteamClient.SteamId.Value}" );
 		}
 
 		[TestMethod]
@@ -67,11 +67,11 @@ namespace Steamworks
 			Console.WriteLine( $"ticket.Handle: {ticket.Handle}" );
 			Console.WriteLine( $"ticket.Data: { string.Join( "", ticket.Data.Select( x => x.ToString( "x" ) ) ) }" );
 
-			var result = SteamUser.BeginAuthSession( ticket.Data, SteamUser.SteamId );
+			var result = SteamUser.BeginAuthSession( ticket.Data, SteamClient.SteamId );
 			Console.WriteLine( $"result: { result }" );
 			Assert.AreEqual( result, BeginAuthResult.OK );
 
-			SteamUser.EndAuthSession( SteamUser.SteamId );
+			SteamUser.EndAuthSession( SteamClient.SteamId );
 		}
 
 
