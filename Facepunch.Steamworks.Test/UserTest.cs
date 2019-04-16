@@ -69,7 +69,7 @@ namespace Steamworks
 
 			var result = User.BeginAuthSession( ticket.Data, User.SteamId );
 			Console.WriteLine( $"result: { result }" );
-			Assert.AreEqual( result, SteamNative.BeginAuthSessionResult.OK );
+			Assert.AreEqual( result, BeginAuthSessionResult.OK );
 
 			User.EndAuthSession( User.SteamId );
 		}

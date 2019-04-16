@@ -37,6 +37,8 @@ namespace Generator
 					var t = m.Groups[1].Value.Trim();
 					var n = m.Groups[2].Value.Trim();
 
+					t = Cleanup.ConvertType( t );
+
 					f.Arguments.Add( n, t );
 				}
 

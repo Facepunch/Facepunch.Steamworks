@@ -28,7 +28,7 @@ namespace Generator
                 Header();
                 Enums();
                 Footer();
-                System.IO.File.WriteAllText( $"{folder}SteamNative.Enums.cs", sb.ToString() );
+                System.IO.File.WriteAllText( $"{folder}SteamEnums.cs", sb.ToString() );
             }
 
             {
@@ -36,7 +36,7 @@ namespace Generator
                 Header();
                 Types();
                 Footer();
-                System.IO.File.WriteAllText( $"{folder}SteamNative.Types.cs", sb.ToString() );
+                System.IO.File.WriteAllText( $"{folder}SteamTypes.cs", sb.ToString() );
             }
 
             {
@@ -44,7 +44,7 @@ namespace Generator
                 Header();
                 Structs();
                 Footer();
-                System.IO.File.WriteAllText( $"{folder}SteamNative.Structs.cs", sb.ToString() );
+                System.IO.File.WriteAllText( $"{folder}SteamStructs.cs", sb.ToString() );
             }
 
             {
@@ -52,43 +52,7 @@ namespace Generator
                 Header();
                 Constants();
                 Footer();
-                System.IO.File.WriteAllText( $"{folder}SteamNative.Constants.cs", sb.ToString() );
-            }
-
-            {
-                sb = new StringBuilder();
-                Header();
-                PlatformInterface();
-                Footer();
-                System.IO.File.WriteAllText( $"{folder}SteamNative.Platform.Interface.cs", sb.ToString() );
-            }
-
-            {
-                sb = new StringBuilder();
-                Header();
-                PlatformClass( "Windows", "steam_api64.dll", true );
-                Footer();
-                System.IO.File.WriteAllText( $"{folder}SteamNative.Platform.Win64.cs", sb.ToString() );
-            }
-
-            {
-                sb = new StringBuilder();
-                Header();
-                PlatformClass( "Linux", "libsteam_api.so", false );
-                Footer();
-                System.IO.File.WriteAllText( $"{folder}SteamNative.Platform.Linux64.cs", sb.ToString() );
-            }
-
-            {
-                sb = new StringBuilder();
-                Header();
-                PlatformClass( "Mac", "libsteam_api.dylib", false );
-                Footer();
-                System.IO.File.WriteAllText( $"{folder}SteamNative.Platform.Mac.cs", sb.ToString() );
-            }
-
-            {
-                GenerateClasses( $"{folder}SteamNative." );
+                System.IO.File.WriteAllText( $"{folder}SteamConstants.cs", sb.ToString() );
             }
 
 			{
@@ -106,9 +70,6 @@ namespace Generator
 
         void WorkoutTypes()
         {
-            def.typedefs.Add( new SteamApiDefinition.TypeDef() { Name = "CGameID", Type = "ulong" } );
-            def.typedefs.Add( new SteamApiDefinition.TypeDef() { Name = "CSteamID", Type = "ulong" } );
-
             foreach ( var c in def.typedefs )
             {
                 if ( c.Name.StartsWith( "uint" ) || c.Name.StartsWith( "int" ) || c.Name.StartsWith( "lint" ) || c.Name.StartsWith( "luint" ) || c.Name.StartsWith( "ulint" ) )
@@ -145,7 +106,7 @@ namespace Generator
             return args;
         }
 
-        private void Header( string NamespaceName = "SteamNative" )
+        private void Header( string NamespaceName = "Steamworks" )
         {
             WriteLine( "using System;" );
             WriteLine( "using System.Runtime.InteropServices;" );

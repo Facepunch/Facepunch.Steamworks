@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SteamNative;
 
 namespace Steamworks
 {
@@ -41,6 +40,7 @@ namespace Steamworks
         [TestMethod]
         public async Task BeginAuthSession()
         {
+			var stopwatch = System.Diagnostics.Stopwatch.StartNew();
 			bool finished = false;
 			AuthSessionResponse response = AuthSessionResponse.AuthTicketInvalidAlreadyUsed;
 
@@ -83,23 +83,35 @@ namespace Steamworks
 			// Wait for that to go through steam
 			//
 			while ( !finished )
+			{
+				if ( stopwatch.Elapsed.TotalSeconds > 5 )
+					throw new System.Exception( "Took too long waiting for AuthSessionResponse.OK" );
+
 				await Task.Delay( 10 );
+			}
 
 			Assert.AreEqual( response, AuthSessionResponse.OK );
 
 			finished = false;
+			stopwatch = System.Diagnostics.Stopwatch.StartNew();
 
 			//
 			// The client is leaving, and now wants to cancel the ticket
 			//
 
+			Assert.AreNotEqual( 0, clientTicket.Handle );
 			clientTicket.Cancel();
 
 			//
 			// We should get another callback 
 			//
 			while ( !finished )
+			{
+				if ( stopwatch.Elapsed.TotalSeconds > 5 )
+					throw new System.Exception( "Took too long waiting for AuthSessionResponse.AuthTicketCanceled" );
+
 				await Task.Delay( 10 );
+			}
 
 			Assert.AreEqual( response, AuthSessionResponse.AuthTicketCanceled );
 

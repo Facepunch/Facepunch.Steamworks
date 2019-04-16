@@ -88,25 +88,15 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AchievementsTest.cs" />
     <Compile Include="UserTest.cs" />
     <Compile Include="UtilsTest.cs" />
-    <Compile Include="ClientTest.cs" />
-    <Compile Include="LobbyTest.cs" />
-    <Compile Include="LeaderboardTest.cs" />
     <Compile Include="AppTest.cs" />
-    <Compile Include="RemoteStorageTest.cs" />
-    <Compile Include="InventoryTest.cs" />
-    <Compile Include="WorkshopTest.cs" />
-    <Compile Include="NetworkingTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="FriendsTest.cs" />
     <Compile Include="GameServerTest.cs" />
     <Compile Include="Client\Server\StatsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ServerlistTest.cs" />
-    <Compile Include="StatsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

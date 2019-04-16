@@ -2,7 +2,6 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using SteamNative;
 
 
 namespace Steamworks.Internal
@@ -178,13 +177,13 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void GetSteamIDDelegate( IntPtr self, ref CSteamID retVal );
+		public delegate void GetSteamIDDelegate( IntPtr self, ref SteamId retVal );
 		private GetSteamIDDelegate GetSteamIDDelegatePointer;
 		
 		#endregion
-		public CSteamID GetSteamID()
+		public SteamId GetSteamID()
 		{
-			var retVal = default( CSteamID );
+			var retVal = default( SteamId );
 			GetSteamIDDelegatePointer( Self, ref retVal );
 			return retVal;
 		}
@@ -336,35 +335,35 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool SendUserConnectAndAuthenticateDelegate( IntPtr self, uint unIPClient, IntPtr pvAuthBlob, uint cubAuthBlobSize, ref CSteamID pSteamIDUser );
+		public delegate bool SendUserConnectAndAuthenticateDelegate( IntPtr self, uint unIPClient, IntPtr pvAuthBlob, uint cubAuthBlobSize, ref SteamId pSteamIDUser );
 		private SendUserConnectAndAuthenticateDelegate SendUserConnectAndAuthenticateDelegatePointer;
 		
 		#endregion
-		public bool SendUserConnectAndAuthenticate( uint unIPClient, IntPtr pvAuthBlob, uint cubAuthBlobSize, ref CSteamID pSteamIDUser )
+		public bool SendUserConnectAndAuthenticate( uint unIPClient, IntPtr pvAuthBlob, uint cubAuthBlobSize, ref SteamId pSteamIDUser )
 		{
 			return SendUserConnectAndAuthenticateDelegatePointer( Self, unIPClient, pvAuthBlob, cubAuthBlobSize, ref pSteamIDUser );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void CreateUnauthenticatedUserConnectionDelegate( IntPtr self, ref CSteamID retVal );
+		public delegate void CreateUnauthenticatedUserConnectionDelegate( IntPtr self, ref SteamId retVal );
 		private CreateUnauthenticatedUserConnectionDelegate CreateUnauthenticatedUserConnectionDelegatePointer;
 		
 		#endregion
-		public CSteamID CreateUnauthenticatedUserConnection()
+		public SteamId CreateUnauthenticatedUserConnection()
 		{
-			var retVal = default( CSteamID );
+			var retVal = default( SteamId );
 			CreateUnauthenticatedUserConnectionDelegatePointer( Self, ref retVal );
 			return retVal;
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void SendUserDisconnectDelegate( IntPtr self, CSteamID steamIDUser );
+		public delegate void SendUserDisconnectDelegate( IntPtr self, SteamId steamIDUser );
 		private SendUserDisconnectDelegate SendUserDisconnectDelegatePointer;
 		
 		#endregion
-		public void SendUserDisconnect( CSteamID steamIDUser )
+		public void SendUserDisconnect( SteamId steamIDUser )
 		{
 			SendUserDisconnectDelegatePointer( Self, steamIDUser );
 		}
@@ -372,11 +371,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool BUpdateUserDataDelegate( IntPtr self, CSteamID steamIDUser, string pchPlayerName, uint uScore );
+		public delegate bool BUpdateUserDataDelegate( IntPtr self, SteamId steamIDUser, string pchPlayerName, uint uScore );
 		private BUpdateUserDataDelegate BUpdateUserDataDelegatePointer;
 		
 		#endregion
-		public bool BUpdateUserData( CSteamID steamIDUser, string pchPlayerName, uint uScore )
+		public bool BUpdateUserData( SteamId steamIDUser, string pchPlayerName, uint uScore )
 		{
 			return BUpdateUserDataDelegatePointer( Self, steamIDUser, pchPlayerName, uScore );
 		}
@@ -394,22 +393,22 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate BeginAuthSessionResult BeginAuthSessionDelegate( IntPtr self, IntPtr pAuthTicket, int cbAuthTicket, CSteamID steamID );
+		public delegate BeginAuthSessionResult BeginAuthSessionDelegate( IntPtr self, IntPtr pAuthTicket, int cbAuthTicket, SteamId steamID );
 		private BeginAuthSessionDelegate BeginAuthSessionDelegatePointer;
 		
 		#endregion
-		public BeginAuthSessionResult BeginAuthSession( IntPtr pAuthTicket, int cbAuthTicket, CSteamID steamID )
+		public BeginAuthSessionResult BeginAuthSession( IntPtr pAuthTicket, int cbAuthTicket, SteamId steamID )
 		{
 			return BeginAuthSessionDelegatePointer( Self, pAuthTicket, cbAuthTicket, steamID );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void EndAuthSessionDelegate( IntPtr self, CSteamID steamID );
+		public delegate void EndAuthSessionDelegate( IntPtr self, SteamId steamID );
 		private EndAuthSessionDelegate EndAuthSessionDelegatePointer;
 		
 		#endregion
-		public void EndAuthSession( CSteamID steamID )
+		public void EndAuthSession( SteamId steamID )
 		{
 			EndAuthSessionDelegatePointer( Self, steamID );
 		}
@@ -427,11 +426,11 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate UserHasLicenseForAppResult UserHasLicenseForAppDelegate( IntPtr self, CSteamID steamID, AppId_t appID );
+		public delegate UserHasLicenseForAppResult UserHasLicenseForAppDelegate( IntPtr self, SteamId steamID, AppId_t appID );
 		private UserHasLicenseForAppDelegate UserHasLicenseForAppDelegatePointer;
 		
 		#endregion
-		public UserHasLicenseForAppResult UserHasLicenseForApp( CSteamID steamID, AppId_t appID )
+		public UserHasLicenseForAppResult UserHasLicenseForApp( SteamId steamID, AppId_t appID )
 		{
 			return UserHasLicenseForAppDelegatePointer( Self, steamID, appID );
 		}
@@ -439,11 +438,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool RequestUserGroupStatusDelegate( IntPtr self, CSteamID steamIDUser, CSteamID steamIDGroup );
+		public delegate bool RequestUserGroupStatusDelegate( IntPtr self, SteamId steamIDUser, SteamId steamIDGroup );
 		private RequestUserGroupStatusDelegate RequestUserGroupStatusDelegatePointer;
 		
 		#endregion
-		public bool RequestUserGroupStatus( CSteamID steamIDUser, CSteamID steamIDGroup )
+		public bool RequestUserGroupStatus( SteamId steamIDUser, SteamId steamIDGroup )
 		{
 			return RequestUserGroupStatusDelegatePointer( Self, steamIDUser, steamIDGroup );
 		}
@@ -539,22 +538,22 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate SteamAPICall_t AssociateWithClanDelegate( IntPtr self, CSteamID steamIDClan );
+		public delegate SteamAPICall_t AssociateWithClanDelegate( IntPtr self, SteamId steamIDClan );
 		private AssociateWithClanDelegate AssociateWithClanDelegatePointer;
 		
 		#endregion
-		public async Task<AssociateWithClanResult_t?> AssociateWithClan( CSteamID steamIDClan )
+		public async Task<AssociateWithClanResult_t?> AssociateWithClan( SteamId steamIDClan )
 		{
 			return await (new Result<AssociateWithClanResult_t>( AssociateWithClanDelegatePointer( Self, steamIDClan ) )).GetResult();
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate SteamAPICall_t ComputeNewPlayerCompatibilityDelegate( IntPtr self, CSteamID steamIDNewPlayer );
+		public delegate SteamAPICall_t ComputeNewPlayerCompatibilityDelegate( IntPtr self, SteamId steamIDNewPlayer );
 		private ComputeNewPlayerCompatibilityDelegate ComputeNewPlayerCompatibilityDelegatePointer;
 		
 		#endregion
-		public async Task<ComputeNewPlayerCompatibilityResult_t?> ComputeNewPlayerCompatibility( CSteamID steamIDNewPlayer )
+		public async Task<ComputeNewPlayerCompatibilityResult_t?> ComputeNewPlayerCompatibility( SteamId steamIDNewPlayer )
 		{
 			return await (new Result<ComputeNewPlayerCompatibilityResult_t>( ComputeNewPlayerCompatibilityDelegatePointer( Self, steamIDNewPlayer ) )).GetResult();
 		}

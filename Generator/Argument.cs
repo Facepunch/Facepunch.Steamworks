@@ -15,7 +15,13 @@ namespace Generator
 
         public Argument( string Name, string ManagedType, Dictionary<string, CodeWriter.TypeDef> typeDefs )
         {
-            this.Name = Name;
+			var cleantype = Cleanup.ConvertType( ManagedType );
+			if ( cleantype != ManagedType )
+			{
+				ManagedType = cleantype;
+			}
+
+			this.Name = Name;
             this.NativeType = ManagedType;
 
             Build( typeDefs );
@@ -126,6 +132,12 @@ namespace Generator
 
         private static string ToManagedType( string type )
         {
+			var cleantype = Cleanup.ConvertType( type );
+			if ( cleantype != type )
+			{
+				return cleantype;
+			}
+
             type = type.Replace( "ISteamHTMLSurface::", "" );
             type = type.Replace( "class ", "" );
             type = type.Replace( "struct ", "" );
@@ -207,7 +219,10 @@ namespace Generator
 
         internal string InteropParameter( bool NoPacking, bool LargePack, bool includeMarshalling )
         {
-            var ps = NoPacking ? "" : (LargePack ? ".Pack8" : ".Pack4");
+			var cleantype = Cleanup.ConvertType( NativeType );
+			if ( cleantype != NativeType ) return cleantype;
+
+			var ps = NoPacking ? "" : (LargePack ? ".Pack8" : ".Pack4");
             var marshalling = "";
             if ( !NativeType.Contains( "_t" ) )
                 ps = string.Empty;
@@ -250,9 +265,10 @@ namespace Generator
             if ( ShouldBePassedAsOut )
                 return $"{marshalling} out {ManagedType.Trim( '*', ' ' )} /*{NativeType}*/ {Name}".Trim();
 
+			cleantype = Cleanup.ConvertType( ManagedType );
+			if ( cleantype != ManagedType ) return cleantype;
 
-
-            if ( TypeDef != null )
+			if ( TypeDef != null )
             {
                 if ( NativeType.EndsWith( "*" ) )
                 {
@@ -270,7 +286,7 @@ namespace Generator
                 return $"IntPtr /*{NativeType}*/ {Name} ".Trim();
             }
 
-            return $"{marshalling} {ManagedType} /*{NativeType}*/ {Name} ".Trim();
+			return $"{marshalling} {ManagedType} /*{NativeType}*/ {Name} ".Trim();
         }
 
         internal string Return()

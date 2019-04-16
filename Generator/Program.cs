@@ -23,7 +23,7 @@ namespace Generator
 
             var generator = new CodeWriter( parser, def );
 
-            generator.ToFolder( "../Facepunch.Steamworks/SteamNative/" );
+            generator.ToFolder( "../Facepunch.Steamworks/Generated/" );
         }
 
         private static void AddMissing( SteamApiDefinition output )

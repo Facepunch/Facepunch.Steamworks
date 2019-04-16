@@ -2,7 +2,6 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using SteamNative;
 
 
 namespace Steamworks.Internal
@@ -138,46 +137,46 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void GetFriendByIndexDelegate( IntPtr self, ref CSteamID retVal, int iFriend, int iFriendFlags );
+		public delegate void GetFriendByIndexDelegate( IntPtr self, ref SteamId retVal, int iFriend, int iFriendFlags );
 		private GetFriendByIndexDelegate GetFriendByIndexDelegatePointer;
 		
 		#endregion
-		public CSteamID GetFriendByIndex( int iFriend, int iFriendFlags )
+		public SteamId GetFriendByIndex( int iFriend, int iFriendFlags )
 		{
-			var retVal = default( CSteamID );
+			var retVal = default( SteamId );
 			GetFriendByIndexDelegatePointer( Self, ref retVal, iFriend, iFriendFlags );
 			return retVal;
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate FriendRelationship GetFriendRelationshipDelegate( IntPtr self, CSteamID steamIDFriend );
+		public delegate FriendRelationship GetFriendRelationshipDelegate( IntPtr self, SteamId steamIDFriend );
 		private GetFriendRelationshipDelegate GetFriendRelationshipDelegatePointer;
 		
 		#endregion
-		public FriendRelationship GetFriendRelationship( CSteamID steamIDFriend )
+		public FriendRelationship GetFriendRelationship( SteamId steamIDFriend )
 		{
 			return GetFriendRelationshipDelegatePointer( Self, steamIDFriend );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate PersonaState GetFriendPersonaStateDelegate( IntPtr self, CSteamID steamIDFriend );
+		public delegate PersonaState GetFriendPersonaStateDelegate( IntPtr self, SteamId steamIDFriend );
 		private GetFriendPersonaStateDelegate GetFriendPersonaStateDelegatePointer;
 		
 		#endregion
-		public PersonaState GetFriendPersonaState( CSteamID steamIDFriend )
+		public PersonaState GetFriendPersonaState( SteamId steamIDFriend )
 		{
 			return GetFriendPersonaStateDelegatePointer( Self, steamIDFriend );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate IntPtr GetFriendPersonaNameDelegate( IntPtr self, CSteamID steamIDFriend );
+		public delegate IntPtr GetFriendPersonaNameDelegate( IntPtr self, SteamId steamIDFriend );
 		private GetFriendPersonaNameDelegate GetFriendPersonaNameDelegatePointer;
 		
 		#endregion
-		public string GetFriendPersonaName( CSteamID steamIDFriend )
+		public string GetFriendPersonaName( SteamId steamIDFriend )
 		{
 			return GetString( GetFriendPersonaNameDelegatePointer( Self, steamIDFriend ) );
 		}
@@ -185,44 +184,44 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool GetFriendGamePlayedDelegate( IntPtr self, CSteamID steamIDFriend, ref FriendGameInfo_t pFriendGameInfo );
+		public delegate bool GetFriendGamePlayedDelegate( IntPtr self, SteamId steamIDFriend, ref FriendGameInfo_t pFriendGameInfo );
 		private GetFriendGamePlayedDelegate GetFriendGamePlayedDelegatePointer;
 		
 		#endregion
-		public bool GetFriendGamePlayed( CSteamID steamIDFriend, ref FriendGameInfo_t pFriendGameInfo )
+		public bool GetFriendGamePlayed( SteamId steamIDFriend, ref FriendGameInfo_t pFriendGameInfo )
 		{
 			return GetFriendGamePlayedDelegatePointer( Self, steamIDFriend, ref pFriendGameInfo );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate IntPtr GetFriendPersonaNameHistoryDelegate( IntPtr self, CSteamID steamIDFriend, int iPersonaName );
+		public delegate IntPtr GetFriendPersonaNameHistoryDelegate( IntPtr self, SteamId steamIDFriend, int iPersonaName );
 		private GetFriendPersonaNameHistoryDelegate GetFriendPersonaNameHistoryDelegatePointer;
 		
 		#endregion
-		public string GetFriendPersonaNameHistory( CSteamID steamIDFriend, int iPersonaName )
+		public string GetFriendPersonaNameHistory( SteamId steamIDFriend, int iPersonaName )
 		{
 			return GetString( GetFriendPersonaNameHistoryDelegatePointer( Self, steamIDFriend, iPersonaName ) );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate int GetFriendSteamLevelDelegate( IntPtr self, CSteamID steamIDFriend );
+		public delegate int GetFriendSteamLevelDelegate( IntPtr self, SteamId steamIDFriend );
 		private GetFriendSteamLevelDelegate GetFriendSteamLevelDelegatePointer;
 		
 		#endregion
-		public int GetFriendSteamLevel( CSteamID steamIDFriend )
+		public int GetFriendSteamLevel( SteamId steamIDFriend )
 		{
 			return GetFriendSteamLevelDelegatePointer( Self, steamIDFriend );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate IntPtr GetPlayerNicknameDelegate( IntPtr self, CSteamID steamIDPlayer );
+		public delegate IntPtr GetPlayerNicknameDelegate( IntPtr self, SteamId steamIDPlayer );
 		private GetPlayerNicknameDelegate GetPlayerNicknameDelegatePointer;
 		
 		#endregion
-		public string GetPlayerNickname( CSteamID steamIDPlayer )
+		public string GetPlayerNickname( SteamId steamIDPlayer )
 		{
 			return GetString( GetPlayerNicknameDelegatePointer( Self, steamIDPlayer ) );
 		}
@@ -273,11 +272,11 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void GetFriendsGroupMembersListDelegate( IntPtr self, FriendsGroupID_t friendsGroupID, [In,Out] CSteamID[]  pOutSteamIDMembers, int nMembersCount );
+		public delegate void GetFriendsGroupMembersListDelegate( IntPtr self, FriendsGroupID_t friendsGroupID, [In,Out] SteamId[]  pOutSteamIDMembers, int nMembersCount );
 		private GetFriendsGroupMembersListDelegate GetFriendsGroupMembersListDelegatePointer;
 		
 		#endregion
-		public void GetFriendsGroupMembersList( FriendsGroupID_t friendsGroupID, [In,Out] CSteamID[]  pOutSteamIDMembers, int nMembersCount )
+		public void GetFriendsGroupMembersList( FriendsGroupID_t friendsGroupID, [In,Out] SteamId[]  pOutSteamIDMembers, int nMembersCount )
 		{
 			GetFriendsGroupMembersListDelegatePointer( Self, friendsGroupID, pOutSteamIDMembers, nMembersCount );
 		}
@@ -285,11 +284,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool HasFriendDelegate( IntPtr self, CSteamID steamIDFriend, int iFriendFlags );
+		public delegate bool HasFriendDelegate( IntPtr self, SteamId steamIDFriend, int iFriendFlags );
 		private HasFriendDelegate HasFriendDelegatePointer;
 		
 		#endregion
-		public bool HasFriend( CSteamID steamIDFriend, int iFriendFlags )
+		public bool HasFriend( SteamId steamIDFriend, int iFriendFlags )
 		{
 			return HasFriendDelegatePointer( Self, steamIDFriend, iFriendFlags );
 		}
@@ -307,35 +306,35 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void GetClanByIndexDelegate( IntPtr self, ref CSteamID retVal, int iClan );
+		public delegate void GetClanByIndexDelegate( IntPtr self, ref SteamId retVal, int iClan );
 		private GetClanByIndexDelegate GetClanByIndexDelegatePointer;
 		
 		#endregion
-		public CSteamID GetClanByIndex( int iClan )
+		public SteamId GetClanByIndex( int iClan )
 		{
-			var retVal = default( CSteamID );
+			var retVal = default( SteamId );
 			GetClanByIndexDelegatePointer( Self, ref retVal, iClan );
 			return retVal;
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate IntPtr GetClanNameDelegate( IntPtr self, CSteamID steamIDClan );
+		public delegate IntPtr GetClanNameDelegate( IntPtr self, SteamId steamIDClan );
 		private GetClanNameDelegate GetClanNameDelegatePointer;
 		
 		#endregion
-		public string GetClanName( CSteamID steamIDClan )
+		public string GetClanName( SteamId steamIDClan )
 		{
 			return GetString( GetClanNameDelegatePointer( Self, steamIDClan ) );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate IntPtr GetClanTagDelegate( IntPtr self, CSteamID steamIDClan );
+		public delegate IntPtr GetClanTagDelegate( IntPtr self, SteamId steamIDClan );
 		private GetClanTagDelegate GetClanTagDelegatePointer;
 		
 		#endregion
-		public string GetClanTag( CSteamID steamIDClan )
+		public string GetClanTag( SteamId steamIDClan )
 		{
 			return GetString( GetClanTagDelegatePointer( Self, steamIDClan ) );
 		}
@@ -343,46 +342,46 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool GetClanActivityCountsDelegate( IntPtr self, CSteamID steamIDClan, ref int pnOnline, ref int pnInGame, ref int pnChatting );
+		public delegate bool GetClanActivityCountsDelegate( IntPtr self, SteamId steamIDClan, ref int pnOnline, ref int pnInGame, ref int pnChatting );
 		private GetClanActivityCountsDelegate GetClanActivityCountsDelegatePointer;
 		
 		#endregion
-		public bool GetClanActivityCounts( CSteamID steamIDClan, ref int pnOnline, ref int pnInGame, ref int pnChatting )
+		public bool GetClanActivityCounts( SteamId steamIDClan, ref int pnOnline, ref int pnInGame, ref int pnChatting )
 		{
 			return GetClanActivityCountsDelegatePointer( Self, steamIDClan, ref pnOnline, ref pnInGame, ref pnChatting );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate SteamAPICall_t DownloadClanActivityCountsDelegate( IntPtr self, [In,Out] CSteamID[]  psteamIDClans, int cClansToRequest );
+		public delegate SteamAPICall_t DownloadClanActivityCountsDelegate( IntPtr self, [In,Out] SteamId[]  psteamIDClans, int cClansToRequest );
 		private DownloadClanActivityCountsDelegate DownloadClanActivityCountsDelegatePointer;
 		
 		#endregion
-		public async Task<DownloadClanActivityCountsResult_t?> DownloadClanActivityCounts( [In,Out] CSteamID[]  psteamIDClans, int cClansToRequest )
+		public async Task<DownloadClanActivityCountsResult_t?> DownloadClanActivityCounts( [In,Out] SteamId[]  psteamIDClans, int cClansToRequest )
 		{
 			return await (new Result<DownloadClanActivityCountsResult_t>( DownloadClanActivityCountsDelegatePointer( Self, psteamIDClans, cClansToRequest ) )).GetResult();
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate int GetFriendCountFromSourceDelegate( IntPtr self, CSteamID steamIDSource );
+		public delegate int GetFriendCountFromSourceDelegate( IntPtr self, SteamId steamIDSource );
 		private GetFriendCountFromSourceDelegate GetFriendCountFromSourceDelegatePointer;
 		
 		#endregion
-		public int GetFriendCountFromSource( CSteamID steamIDSource )
+		public int GetFriendCountFromSource( SteamId steamIDSource )
 		{
 			return GetFriendCountFromSourceDelegatePointer( Self, steamIDSource );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void GetFriendFromSourceByIndexDelegate( IntPtr self, ref CSteamID retVal, CSteamID steamIDSource, int iFriend );
+		public delegate void GetFriendFromSourceByIndexDelegate( IntPtr self, ref SteamId retVal, SteamId steamIDSource, int iFriend );
 		private GetFriendFromSourceByIndexDelegate GetFriendFromSourceByIndexDelegatePointer;
 		
 		#endregion
-		public CSteamID GetFriendFromSourceByIndex( CSteamID steamIDSource, int iFriend )
+		public SteamId GetFriendFromSourceByIndex( SteamId steamIDSource, int iFriend )
 		{
-			var retVal = default( CSteamID );
+			var retVal = default( SteamId );
 			GetFriendFromSourceByIndexDelegatePointer( Self, ref retVal, steamIDSource, iFriend );
 			return retVal;
 		}
@@ -390,22 +389,22 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool IsUserInSourceDelegate( IntPtr self, CSteamID steamIDUser, CSteamID steamIDSource );
+		public delegate bool IsUserInSourceDelegate( IntPtr self, SteamId steamIDUser, SteamId steamIDSource );
 		private IsUserInSourceDelegate IsUserInSourceDelegatePointer;
 		
 		#endregion
-		public bool IsUserInSource( CSteamID steamIDUser, CSteamID steamIDSource )
+		public bool IsUserInSource( SteamId steamIDUser, SteamId steamIDSource )
 		{
 			return IsUserInSourceDelegatePointer( Self, steamIDUser, steamIDSource );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void SetInGameVoiceSpeakingDelegate( IntPtr self, CSteamID steamIDUser, [MarshalAs( UnmanagedType.U1 )] bool bSpeaking );
+		public delegate void SetInGameVoiceSpeakingDelegate( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.U1 )] bool bSpeaking );
 		private SetInGameVoiceSpeakingDelegate SetInGameVoiceSpeakingDelegatePointer;
 		
 		#endregion
-		public void SetInGameVoiceSpeaking( CSteamID steamIDUser, [MarshalAs( UnmanagedType.U1 )] bool bSpeaking )
+		public void SetInGameVoiceSpeaking( SteamId steamIDUser, [MarshalAs( UnmanagedType.U1 )] bool bSpeaking )
 		{
 			SetInGameVoiceSpeakingDelegatePointer( Self, steamIDUser, bSpeaking );
 		}
@@ -423,11 +422,11 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void ActivateGameOverlayToUserDelegate( IntPtr self, string pchDialog, CSteamID steamID );
+		public delegate void ActivateGameOverlayToUserDelegate( IntPtr self, string pchDialog, SteamId steamID );
 		private ActivateGameOverlayToUserDelegate ActivateGameOverlayToUserDelegatePointer;
 		
 		#endregion
-		public void ActivateGameOverlayToUser( string pchDialog, CSteamID steamID )
+		public void ActivateGameOverlayToUser( string pchDialog, SteamId steamID )
 		{
 			ActivateGameOverlayToUserDelegatePointer( Self, pchDialog, steamID );
 		}
@@ -456,55 +455,55 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void SetPlayedWithDelegate( IntPtr self, CSteamID steamIDUserPlayedWith );
+		public delegate void SetPlayedWithDelegate( IntPtr self, SteamId steamIDUserPlayedWith );
 		private SetPlayedWithDelegate SetPlayedWithDelegatePointer;
 		
 		#endregion
-		public void SetPlayedWith( CSteamID steamIDUserPlayedWith )
+		public void SetPlayedWith( SteamId steamIDUserPlayedWith )
 		{
 			SetPlayedWithDelegatePointer( Self, steamIDUserPlayedWith );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void ActivateGameOverlayInviteDialogDelegate( IntPtr self, CSteamID steamIDLobby );
+		public delegate void ActivateGameOverlayInviteDialogDelegate( IntPtr self, SteamId steamIDLobby );
 		private ActivateGameOverlayInviteDialogDelegate ActivateGameOverlayInviteDialogDelegatePointer;
 		
 		#endregion
-		public void ActivateGameOverlayInviteDialog( CSteamID steamIDLobby )
+		public void ActivateGameOverlayInviteDialog( SteamId steamIDLobby )
 		{
 			ActivateGameOverlayInviteDialogDelegatePointer( Self, steamIDLobby );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate int GetSmallFriendAvatarDelegate( IntPtr self, CSteamID steamIDFriend );
+		public delegate int GetSmallFriendAvatarDelegate( IntPtr self, SteamId steamIDFriend );
 		private GetSmallFriendAvatarDelegate GetSmallFriendAvatarDelegatePointer;
 		
 		#endregion
-		public int GetSmallFriendAvatar( CSteamID steamIDFriend )
+		public int GetSmallFriendAvatar( SteamId steamIDFriend )
 		{
 			return GetSmallFriendAvatarDelegatePointer( Self, steamIDFriend );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate int GetMediumFriendAvatarDelegate( IntPtr self, CSteamID steamIDFriend );
+		public delegate int GetMediumFriendAvatarDelegate( IntPtr self, SteamId steamIDFriend );
 		private GetMediumFriendAvatarDelegate GetMediumFriendAvatarDelegatePointer;
 		
 		#endregion
-		public int GetMediumFriendAvatar( CSteamID steamIDFriend )
+		public int GetMediumFriendAvatar( SteamId steamIDFriend )
 		{
 			return GetMediumFriendAvatarDelegatePointer( Self, steamIDFriend );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate int GetLargeFriendAvatarDelegate( IntPtr self, CSteamID steamIDFriend );
+		public delegate int GetLargeFriendAvatarDelegate( IntPtr self, SteamId steamIDFriend );
 		private GetLargeFriendAvatarDelegate GetLargeFriendAvatarDelegatePointer;
 		
 		#endregion
-		public int GetLargeFriendAvatar( CSteamID steamIDFriend )
+		public int GetLargeFriendAvatar( SteamId steamIDFriend )
 		{
 			return GetLargeFriendAvatarDelegatePointer( Self, steamIDFriend );
 		}
@@ -512,59 +511,59 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool RequestUserInformationDelegate( IntPtr self, CSteamID steamIDUser, [MarshalAs( UnmanagedType.U1 )] bool bRequireNameOnly );
+		public delegate bool RequestUserInformationDelegate( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.U1 )] bool bRequireNameOnly );
 		private RequestUserInformationDelegate RequestUserInformationDelegatePointer;
 		
 		#endregion
-		public bool RequestUserInformation( CSteamID steamIDUser, [MarshalAs( UnmanagedType.U1 )] bool bRequireNameOnly )
+		public bool RequestUserInformation( SteamId steamIDUser, [MarshalAs( UnmanagedType.U1 )] bool bRequireNameOnly )
 		{
 			return RequestUserInformationDelegatePointer( Self, steamIDUser, bRequireNameOnly );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate SteamAPICall_t RequestClanOfficerListDelegate( IntPtr self, CSteamID steamIDClan );
+		public delegate SteamAPICall_t RequestClanOfficerListDelegate( IntPtr self, SteamId steamIDClan );
 		private RequestClanOfficerListDelegate RequestClanOfficerListDelegatePointer;
 		
 		#endregion
-		public async Task<ClanOfficerListResponse_t?> RequestClanOfficerList( CSteamID steamIDClan )
+		public async Task<ClanOfficerListResponse_t?> RequestClanOfficerList( SteamId steamIDClan )
 		{
 			return await (new Result<ClanOfficerListResponse_t>( RequestClanOfficerListDelegatePointer( Self, steamIDClan ) )).GetResult();
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void GetClanOwnerDelegate( IntPtr self, ref CSteamID retVal, CSteamID steamIDClan );
+		public delegate void GetClanOwnerDelegate( IntPtr self, ref SteamId retVal, SteamId steamIDClan );
 		private GetClanOwnerDelegate GetClanOwnerDelegatePointer;
 		
 		#endregion
-		public CSteamID GetClanOwner( CSteamID steamIDClan )
+		public SteamId GetClanOwner( SteamId steamIDClan )
 		{
-			var retVal = default( CSteamID );
+			var retVal = default( SteamId );
 			GetClanOwnerDelegatePointer( Self, ref retVal, steamIDClan );
 			return retVal;
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate int GetClanOfficerCountDelegate( IntPtr self, CSteamID steamIDClan );
+		public delegate int GetClanOfficerCountDelegate( IntPtr self, SteamId steamIDClan );
 		private GetClanOfficerCountDelegate GetClanOfficerCountDelegatePointer;
 		
 		#endregion
-		public int GetClanOfficerCount( CSteamID steamIDClan )
+		public int GetClanOfficerCount( SteamId steamIDClan )
 		{
 			return GetClanOfficerCountDelegatePointer( Self, steamIDClan );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void GetClanOfficerByIndexDelegate( IntPtr self, ref CSteamID retVal, CSteamID steamIDClan, int iOfficer );
+		public delegate void GetClanOfficerByIndexDelegate( IntPtr self, ref SteamId retVal, SteamId steamIDClan, int iOfficer );
 		private GetClanOfficerByIndexDelegate GetClanOfficerByIndexDelegatePointer;
 		
 		#endregion
-		public CSteamID GetClanOfficerByIndex( CSteamID steamIDClan, int iOfficer )
+		public SteamId GetClanOfficerByIndex( SteamId steamIDClan, int iOfficer )
 		{
-			var retVal = default( CSteamID );
+			var retVal = default( SteamId );
 			GetClanOfficerByIndexDelegatePointer( Self, ref retVal, steamIDClan, iOfficer );
 			return retVal;
 		}
@@ -605,44 +604,44 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate IntPtr GetFriendRichPresenceDelegate( IntPtr self, CSteamID steamIDFriend, string pchKey );
+		public delegate IntPtr GetFriendRichPresenceDelegate( IntPtr self, SteamId steamIDFriend, string pchKey );
 		private GetFriendRichPresenceDelegate GetFriendRichPresenceDelegatePointer;
 		
 		#endregion
-		public string GetFriendRichPresence( CSteamID steamIDFriend, string pchKey )
+		public string GetFriendRichPresence( SteamId steamIDFriend, string pchKey )
 		{
 			return GetString( GetFriendRichPresenceDelegatePointer( Self, steamIDFriend, pchKey ) );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate int GetFriendRichPresenceKeyCountDelegate( IntPtr self, CSteamID steamIDFriend );
+		public delegate int GetFriendRichPresenceKeyCountDelegate( IntPtr self, SteamId steamIDFriend );
 		private GetFriendRichPresenceKeyCountDelegate GetFriendRichPresenceKeyCountDelegatePointer;
 		
 		#endregion
-		public int GetFriendRichPresenceKeyCount( CSteamID steamIDFriend )
+		public int GetFriendRichPresenceKeyCount( SteamId steamIDFriend )
 		{
 			return GetFriendRichPresenceKeyCountDelegatePointer( Self, steamIDFriend );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate IntPtr GetFriendRichPresenceKeyByIndexDelegate( IntPtr self, CSteamID steamIDFriend, int iKey );
+		public delegate IntPtr GetFriendRichPresenceKeyByIndexDelegate( IntPtr self, SteamId steamIDFriend, int iKey );
 		private GetFriendRichPresenceKeyByIndexDelegate GetFriendRichPresenceKeyByIndexDelegatePointer;
 		
 		#endregion
-		public string GetFriendRichPresenceKeyByIndex( CSteamID steamIDFriend, int iKey )
+		public string GetFriendRichPresenceKeyByIndex( SteamId steamIDFriend, int iKey )
 		{
 			return GetString( GetFriendRichPresenceKeyByIndexDelegatePointer( Self, steamIDFriend, iKey ) );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void RequestFriendRichPresenceDelegate( IntPtr self, CSteamID steamIDFriend );
+		public delegate void RequestFriendRichPresenceDelegate( IntPtr self, SteamId steamIDFriend );
 		private RequestFriendRichPresenceDelegate RequestFriendRichPresenceDelegatePointer;
 		
 		#endregion
-		public void RequestFriendRichPresence( CSteamID steamIDFriend )
+		public void RequestFriendRichPresence( SteamId steamIDFriend )
 		{
 			RequestFriendRichPresenceDelegatePointer( Self, steamIDFriend );
 		}
@@ -650,11 +649,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool InviteUserToGameDelegate( IntPtr self, CSteamID steamIDFriend, string pchConnectString );
+		public delegate bool InviteUserToGameDelegate( IntPtr self, SteamId steamIDFriend, string pchConnectString );
 		private InviteUserToGameDelegate InviteUserToGameDelegatePointer;
 		
 		#endregion
-		public bool InviteUserToGame( CSteamID steamIDFriend, string pchConnectString )
+		public bool InviteUserToGame( SteamId steamIDFriend, string pchConnectString )
 		{
 			return InviteUserToGameDelegatePointer( Self, steamIDFriend, pchConnectString );
 		}
@@ -672,46 +671,46 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void GetCoplayFriendDelegate( IntPtr self, ref CSteamID retVal, int iCoplayFriend );
+		public delegate void GetCoplayFriendDelegate( IntPtr self, ref SteamId retVal, int iCoplayFriend );
 		private GetCoplayFriendDelegate GetCoplayFriendDelegatePointer;
 		
 		#endregion
-		public CSteamID GetCoplayFriend( int iCoplayFriend )
+		public SteamId GetCoplayFriend( int iCoplayFriend )
 		{
-			var retVal = default( CSteamID );
+			var retVal = default( SteamId );
 			GetCoplayFriendDelegatePointer( Self, ref retVal, iCoplayFriend );
 			return retVal;
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate int GetFriendCoplayTimeDelegate( IntPtr self, CSteamID steamIDFriend );
+		public delegate int GetFriendCoplayTimeDelegate( IntPtr self, SteamId steamIDFriend );
 		private GetFriendCoplayTimeDelegate GetFriendCoplayTimeDelegatePointer;
 		
 		#endregion
-		public int GetFriendCoplayTime( CSteamID steamIDFriend )
+		public int GetFriendCoplayTime( SteamId steamIDFriend )
 		{
 			return GetFriendCoplayTimeDelegatePointer( Self, steamIDFriend );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate AppId_t GetFriendCoplayGameDelegate( IntPtr self, CSteamID steamIDFriend );
+		public delegate AppId_t GetFriendCoplayGameDelegate( IntPtr self, SteamId steamIDFriend );
 		private GetFriendCoplayGameDelegate GetFriendCoplayGameDelegatePointer;
 		
 		#endregion
-		public AppId_t GetFriendCoplayGame( CSteamID steamIDFriend )
+		public AppId_t GetFriendCoplayGame( SteamId steamIDFriend )
 		{
 			return GetFriendCoplayGameDelegatePointer( Self, steamIDFriend );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate SteamAPICall_t JoinClanChatRoomDelegate( IntPtr self, CSteamID steamIDClan );
+		public delegate SteamAPICall_t JoinClanChatRoomDelegate( IntPtr self, SteamId steamIDClan );
 		private JoinClanChatRoomDelegate JoinClanChatRoomDelegatePointer;
 		
 		#endregion
-		public async Task<JoinClanChatRoomCompletionResult_t?> JoinClanChatRoom( CSteamID steamIDClan )
+		public async Task<JoinClanChatRoomCompletionResult_t?> JoinClanChatRoom( SteamId steamIDClan )
 		{
 			return await (new Result<JoinClanChatRoomCompletionResult_t>( JoinClanChatRoomDelegatePointer( Self, steamIDClan ) )).GetResult();
 		}
@@ -719,35 +718,35 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool LeaveClanChatRoomDelegate( IntPtr self, CSteamID steamIDClan );
+		public delegate bool LeaveClanChatRoomDelegate( IntPtr self, SteamId steamIDClan );
 		private LeaveClanChatRoomDelegate LeaveClanChatRoomDelegatePointer;
 		
 		#endregion
-		public bool LeaveClanChatRoom( CSteamID steamIDClan )
+		public bool LeaveClanChatRoom( SteamId steamIDClan )
 		{
 			return LeaveClanChatRoomDelegatePointer( Self, steamIDClan );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate int GetClanChatMemberCountDelegate( IntPtr self, CSteamID steamIDClan );
+		public delegate int GetClanChatMemberCountDelegate( IntPtr self, SteamId steamIDClan );
 		private GetClanChatMemberCountDelegate GetClanChatMemberCountDelegatePointer;
 		
 		#endregion
-		public int GetClanChatMemberCount( CSteamID steamIDClan )
+		public int GetClanChatMemberCount( SteamId steamIDClan )
 		{
 			return GetClanChatMemberCountDelegatePointer( Self, steamIDClan );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void GetChatMemberByIndexDelegate( IntPtr self, ref CSteamID retVal, CSteamID steamIDClan, int iUser );
+		public delegate void GetChatMemberByIndexDelegate( IntPtr self, ref SteamId retVal, SteamId steamIDClan, int iUser );
 		private GetChatMemberByIndexDelegate GetChatMemberByIndexDelegatePointer;
 		
 		#endregion
-		public CSteamID GetChatMemberByIndex( CSteamID steamIDClan, int iUser )
+		public SteamId GetChatMemberByIndex( SteamId steamIDClan, int iUser )
 		{
-			var retVal = default( CSteamID );
+			var retVal = default( SteamId );
 			GetChatMemberByIndexDelegatePointer( Self, ref retVal, steamIDClan, iUser );
 			return retVal;
 		}
@@ -755,22 +754,22 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool SendClanChatMessageDelegate( IntPtr self, CSteamID steamIDClanChat, string pchText );
+		public delegate bool SendClanChatMessageDelegate( IntPtr self, SteamId steamIDClanChat, string pchText );
 		private SendClanChatMessageDelegate SendClanChatMessageDelegatePointer;
 		
 		#endregion
-		public bool SendClanChatMessage( CSteamID steamIDClanChat, string pchText )
+		public bool SendClanChatMessage( SteamId steamIDClanChat, string pchText )
 		{
 			return SendClanChatMessageDelegatePointer( Self, steamIDClanChat, pchText );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate int GetClanChatMessageDelegate( IntPtr self, CSteamID steamIDClanChat, int iMessage, IntPtr prgchText, int cchTextMax, ref ChatEntryType peChatEntryType, ref CSteamID psteamidChatter );
+		public delegate int GetClanChatMessageDelegate( IntPtr self, SteamId steamIDClanChat, int iMessage, IntPtr prgchText, int cchTextMax, ref ChatEntryType peChatEntryType, ref SteamId psteamidChatter );
 		private GetClanChatMessageDelegate GetClanChatMessageDelegatePointer;
 		
 		#endregion
-		public int GetClanChatMessage( CSteamID steamIDClanChat, int iMessage, IntPtr prgchText, int cchTextMax, ref ChatEntryType peChatEntryType, ref CSteamID psteamidChatter )
+		public int GetClanChatMessage( SteamId steamIDClanChat, int iMessage, IntPtr prgchText, int cchTextMax, ref ChatEntryType peChatEntryType, ref SteamId psteamidChatter )
 		{
 			return GetClanChatMessageDelegatePointer( Self, steamIDClanChat, iMessage, prgchText, cchTextMax, ref peChatEntryType, ref psteamidChatter );
 		}
@@ -778,11 +777,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool IsClanChatAdminDelegate( IntPtr self, CSteamID steamIDClanChat, CSteamID steamIDUser );
+		public delegate bool IsClanChatAdminDelegate( IntPtr self, SteamId steamIDClanChat, SteamId steamIDUser );
 		private IsClanChatAdminDelegate IsClanChatAdminDelegatePointer;
 		
 		#endregion
-		public bool IsClanChatAdmin( CSteamID steamIDClanChat, CSteamID steamIDUser )
+		public bool IsClanChatAdmin( SteamId steamIDClanChat, SteamId steamIDUser )
 		{
 			return IsClanChatAdminDelegatePointer( Self, steamIDClanChat, steamIDUser );
 		}
@@ -790,11 +789,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool IsClanChatWindowOpenInSteamDelegate( IntPtr self, CSteamID steamIDClanChat );
+		public delegate bool IsClanChatWindowOpenInSteamDelegate( IntPtr self, SteamId steamIDClanChat );
 		private IsClanChatWindowOpenInSteamDelegate IsClanChatWindowOpenInSteamDelegatePointer;
 		
 		#endregion
-		public bool IsClanChatWindowOpenInSteam( CSteamID steamIDClanChat )
+		public bool IsClanChatWindowOpenInSteam( SteamId steamIDClanChat )
 		{
 			return IsClanChatWindowOpenInSteamDelegatePointer( Self, steamIDClanChat );
 		}
@@ -802,11 +801,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool OpenClanChatWindowInSteamDelegate( IntPtr self, CSteamID steamIDClanChat );
+		public delegate bool OpenClanChatWindowInSteamDelegate( IntPtr self, SteamId steamIDClanChat );
 		private OpenClanChatWindowInSteamDelegate OpenClanChatWindowInSteamDelegatePointer;
 		
 		#endregion
-		public bool OpenClanChatWindowInSteam( CSteamID steamIDClanChat )
+		public bool OpenClanChatWindowInSteam( SteamId steamIDClanChat )
 		{
 			return OpenClanChatWindowInSteamDelegatePointer( Self, steamIDClanChat );
 		}
@@ -814,11 +813,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool CloseClanChatWindowInSteamDelegate( IntPtr self, CSteamID steamIDClanChat );
+		public delegate bool CloseClanChatWindowInSteamDelegate( IntPtr self, SteamId steamIDClanChat );
 		private CloseClanChatWindowInSteamDelegate CloseClanChatWindowInSteamDelegatePointer;
 		
 		#endregion
-		public bool CloseClanChatWindowInSteam( CSteamID steamIDClanChat )
+		public bool CloseClanChatWindowInSteam( SteamId steamIDClanChat )
 		{
 			return CloseClanChatWindowInSteamDelegatePointer( Self, steamIDClanChat );
 		}
@@ -838,44 +837,44 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool ReplyToFriendMessageDelegate( IntPtr self, CSteamID steamIDFriend, string pchMsgToSend );
+		public delegate bool ReplyToFriendMessageDelegate( IntPtr self, SteamId steamIDFriend, string pchMsgToSend );
 		private ReplyToFriendMessageDelegate ReplyToFriendMessageDelegatePointer;
 		
 		#endregion
-		public bool ReplyToFriendMessage( CSteamID steamIDFriend, string pchMsgToSend )
+		public bool ReplyToFriendMessage( SteamId steamIDFriend, string pchMsgToSend )
 		{
 			return ReplyToFriendMessageDelegatePointer( Self, steamIDFriend, pchMsgToSend );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate int GetFriendMessageDelegate( IntPtr self, CSteamID steamIDFriend, int iMessageID, IntPtr pvData, int cubData, ref ChatEntryType peChatEntryType );
+		public delegate int GetFriendMessageDelegate( IntPtr self, SteamId steamIDFriend, int iMessageID, IntPtr pvData, int cubData, ref ChatEntryType peChatEntryType );
 		private GetFriendMessageDelegate GetFriendMessageDelegatePointer;
 		
 		#endregion
-		public int GetFriendMessage( CSteamID steamIDFriend, int iMessageID, IntPtr pvData, int cubData, ref ChatEntryType peChatEntryType )
+		public int GetFriendMessage( SteamId steamIDFriend, int iMessageID, IntPtr pvData, int cubData, ref ChatEntryType peChatEntryType )
 		{
 			return GetFriendMessageDelegatePointer( Self, steamIDFriend, iMessageID, pvData, cubData, ref peChatEntryType );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate SteamAPICall_t GetFollowerCountDelegate( IntPtr self, CSteamID steamID );
+		public delegate SteamAPICall_t GetFollowerCountDelegate( IntPtr self, SteamId steamID );
 		private GetFollowerCountDelegate GetFollowerCountDelegatePointer;
 		
 		#endregion
-		public async Task<FriendsGetFollowerCount_t?> GetFollowerCount( CSteamID steamID )
+		public async Task<FriendsGetFollowerCount_t?> GetFollowerCount( SteamId steamID )
 		{
 			return await (new Result<FriendsGetFollowerCount_t>( GetFollowerCountDelegatePointer( Self, steamID ) )).GetResult();
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate SteamAPICall_t IsFollowingDelegate( IntPtr self, CSteamID steamID );
+		public delegate SteamAPICall_t IsFollowingDelegate( IntPtr self, SteamId steamID );
 		private IsFollowingDelegate IsFollowingDelegatePointer;
 		
 		#endregion
-		public async Task<FriendsIsFollowing_t?> IsFollowing( CSteamID steamID )
+		public async Task<FriendsIsFollowing_t?> IsFollowing( SteamId steamID )
 		{
 			return await (new Result<FriendsIsFollowing_t>( IsFollowingDelegatePointer( Self, steamID ) )).GetResult();
 		}
@@ -894,11 +893,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool IsClanPublicDelegate( IntPtr self, CSteamID steamIDClan );
+		public delegate bool IsClanPublicDelegate( IntPtr self, SteamId steamIDClan );
 		private IsClanPublicDelegate IsClanPublicDelegatePointer;
 		
 		#endregion
-		public bool IsClanPublic( CSteamID steamIDClan )
+		public bool IsClanPublic( SteamId steamIDClan )
 		{
 			return IsClanPublicDelegatePointer( Self, steamIDClan );
 		}
@@ -906,11 +905,11 @@ namespace Steamworks.Internal
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		public delegate bool IsClanOfficialGameGroupDelegate( IntPtr self, CSteamID steamIDClan );
+		public delegate bool IsClanOfficialGameGroupDelegate( IntPtr self, SteamId steamIDClan );
 		private IsClanOfficialGameGroupDelegate IsClanOfficialGameGroupDelegatePointer;
 		
 		#endregion
-		public bool IsClanOfficialGameGroup( CSteamID steamIDClan )
+		public bool IsClanOfficialGameGroup( SteamId steamIDClan )
 		{
 			return IsClanOfficialGameGroupDelegatePointer( Self, steamIDClan );
 		}

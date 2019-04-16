@@ -19,9 +19,9 @@ namespace Steamworks
             var ipstr = "185.38.150.40";
             var ip = IPAddress.Parse( ipstr );
 
-            var ip_int = Facepunch.Steamworks.Utility.IpToInt32( ip );
+            var ip_int = Utility.IpToInt32( ip );
 
-            var ip_back = Facepunch.Steamworks.Utility.Int32ToIp( ip_int );
+            var ip_back = Utility.Int32ToIp( ip_int );
 
             Console.WriteLine( "ipstr: " + ipstr );
             Console.WriteLine( "ip: " + ip );

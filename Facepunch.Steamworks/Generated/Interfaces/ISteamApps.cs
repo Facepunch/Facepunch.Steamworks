@@ -2,7 +2,6 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using SteamNative;
 
 
 namespace Steamworks.Internal
@@ -280,13 +279,13 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void GetAppOwnerDelegate( IntPtr self, ref CSteamID retVal );
+		public delegate void GetAppOwnerDelegate( IntPtr self, ref SteamId retVal );
 		private GetAppOwnerDelegate GetAppOwnerDelegatePointer;
 		
 		#endregion
-		public CSteamID GetAppOwner()
+		public SteamId GetAppOwner()
 		{
-			var retVal = default( CSteamID );
+			var retVal = default( SteamId );
 			GetAppOwnerDelegatePointer( Self, ref retVal );
 			return retVal;
 		}

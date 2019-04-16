@@ -1,14 +1,17 @@
 ﻿using System;
 
-namespace Facepunch.Steamworks
+namespace Steamworks
 {
     public static class Config
     {
-        /// <summary>
-        /// Should be called before creating any interfaces, to configure Steam for Unity.
-        /// </summary>
-        /// <param name="platform">Please pass in Application.platform.ToString()</param>
-        public static void ForUnity( string platform )
+		public static OsType Os { get; set; }
+		public static bool PackSmall => Os != OsType.Windows;
+
+		/// <summary>
+		/// Should be called before creating any interfaces, to configure Steam for Unity.
+		/// </summary>
+		/// <param name="platform">Please pass in Application.platform.ToString()</param>
+		public static void ForUnity( string platform )
         {
             //
             // Windows Config
@@ -20,21 +23,21 @@ namespace Facepunch.Steamworks
                 //
                 if (IntPtr.Size == 4) UseThisCall = false;
 
-                ForcePlatform( OperatingSystem.Windows );                
+				Os = OsType.Windows;
             }
 
             if ( platform == "OSXEditor" || platform == "OSXPlayer" || platform == "OSXDashboardPlayer" )
             {
-                ForcePlatform( OperatingSystem.macOS );
+				Os = OsType.macOS;
             }
 
             if ( platform == "LinuxPlayer" || platform == "LinuxEditor" )
             {
-                ForcePlatform( OperatingSystem.Linux );
+				Os = OsType.Linux;
             }
 
-            Console.WriteLine( "Facepunch.Steamworks Unity: " + platform );
-            Console.WriteLine( "Facepunch.Steamworks Os: " + SteamNative.Platform.Os );
+            Console.WriteLine( "Steamworks Unity: " + platform );
+            Console.WriteLine( "Steamworks Os: " + Os );
         }
 
         /// <summary>
@@ -47,17 +50,12 @@ namespace Facepunch.Steamworks
         /// 
         /// </summary>
         public static bool UseThisCall { get; set; } = true;
-
-
-        /// <summary>
-        /// You can force the platform to a particular one here.
-        /// This is useful if you're on OSX because some versions of mono don't have a way
-        /// to tell which platform we're running
-        /// </summary>
-        public static void ForcePlatform( Facepunch.Steamworks.OperatingSystem os )
-        {
-            SteamNative.Platform.Os = os;
-        }
-
     }
+
+	public enum OsType
+	{
+		Windows,
+		Linux,
+		macOS,
+	}
 }

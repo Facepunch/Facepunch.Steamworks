@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using SteamNative;
 
 namespace Steamworks
 {
@@ -61,15 +60,14 @@ namespace Steamworks
 			//
 			// Create the functions we need for the vtable
 			//
-			if ( Facepunch.Steamworks.Config.UseThisCall )
+			if ( Config.UseThisCall )
 			{
 				//
 				// Create the VTable by manually allocating the memory and copying across
 				//
-				if ( Platform.IsWindows )
+				if ( Config.Os == OsType.Windows )
 				{
 					vTablePtr = Callback.VTableWinThis.GetVTable( OnResultThis, OnResultWithInfoThis, OnGetSizeThis, Allocations );
-
 				}
 				else
 				{
@@ -81,7 +79,7 @@ namespace Steamworks
 				//
 				// Create the VTable by manually allocating the memory and copying across
 				//
-				if ( Platform.IsWindows )
+				if ( Config.Os == OsType.Windows )
 				{
 					vTablePtr = Callback.VTableWin.GetVTable( OnResult, OnResultWithInfo, OnGetSize, Allocations );
 				}
@@ -111,13 +109,13 @@ namespace Steamworks
 		}
 
 		[MonoPInvokeCallback] internal void OnResultThis( IntPtr self, IntPtr param ) => OnResult( param );
-		[MonoPInvokeCallback] internal void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamNative.SteamAPICall_t call ) => OnResultWithInfo( param, failure, call );
+		[MonoPInvokeCallback] internal void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamAPICall_t call ) => OnResultWithInfo( param, failure, call );
 		[MonoPInvokeCallback] internal int OnGetSizeThis( IntPtr self ) => OnGetSize();
 		[MonoPInvokeCallback] internal int OnGetSize() => template.GetStructSize();
 		[MonoPInvokeCallback] internal void OnResult( IntPtr param ) => OnResultWithInfo( param, false, 0 );
 
 		[MonoPInvokeCallback]
-		internal void OnResultWithInfo( IntPtr param, bool failure, SteamNative.SteamAPICall_t call )
+		internal void OnResultWithInfo( IntPtr param, bool failure, SteamAPICall_t call )
 		{
 			if ( failure ) return;
 

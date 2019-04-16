@@ -13,6 +13,8 @@ internal class BaseType
 
 	public static BaseType Parse( string type, string varname = null )
 	{
+		type = Cleanup.ConvertType( type );
+
 		if ( type == "SteamAPIWarningMessageHook_t" ) return new PointerType { NativeType = type, VarName = varname };
 
 		if ( type == "SteamAPICall_t" ) return new SteamApiCallType { NativeType = type, VarName = varname };
@@ -30,11 +32,11 @@ internal class BaseType
 		if ( basicType == "uint32" ) return new UIntType { NativeType = type, VarName = varname };
 		if ( basicType == "uint8" ) return new UInt8Type { NativeType = type, VarName = varname };
 		if ( basicType == "uint16" ) return new UInt16Type { NativeType = type, VarName = varname };
-		if ( basicType == "CSteamID" ) return new CSteamIdType { NativeType = type, VarName = varname };
+		if ( basicType == "SteamId" ) return new CSteamIdType { NativeType = type, VarName = varname };
 		if ( basicType == "uint64" ) return new ULongType { NativeType = type, VarName = varname };
 		if ( basicType == "bool" ) return new BoolType { NativeType = type, VarName = varname };
 
-		if ( basicType.EndsWith( "_t" ) || basicType == "CSteamID" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
+		if ( basicType.EndsWith( "_t" ) ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
 		if ( basicType.StartsWith( "E" ) && char.IsUpper( basicType[1] ) ) return new EnumType { NativeType = type.Substring( 1 ), VarName = varname };
 
 		return new BaseType { NativeType = type, VarName = varname };

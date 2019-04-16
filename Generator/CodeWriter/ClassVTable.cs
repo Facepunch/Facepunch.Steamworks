@@ -18,7 +18,6 @@ namespace Generator
 			WriteLine( $"using System.Runtime.InteropServices;" );
 			WriteLine( $"using System.Text;" );
 			WriteLine( $"using System.Threading.Tasks;" );
-			WriteLine( $"using SteamNative;" );
 			WriteLine();
 
 			WriteLine();

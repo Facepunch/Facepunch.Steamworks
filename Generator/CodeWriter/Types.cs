@@ -37,7 +37,7 @@ namespace Generator
         {
             foreach ( var o in def.typedefs.Where( x => !x.Name.Contains( "::" ) ) )
             {
-                if ( SkipTypes.Contains( o.Name ) )
+				if ( SkipTypes.Contains( o.Name ) )
                     continue;
 
                 if ( SkipTypesStartingWith.Any( x => o.Name.StartsWith( x ) ) )

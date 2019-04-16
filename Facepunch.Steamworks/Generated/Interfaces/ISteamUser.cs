@@ -2,7 +2,6 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using SteamNative;
 
 
 namespace Steamworks.Internal
@@ -74,24 +73,24 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void GetSteamIDDelegate( IntPtr self, ref CSteamID retVal );
+		public delegate void GetSteamIDDelegate( IntPtr self, ref SteamId retVal );
 		private GetSteamIDDelegate GetSteamIDDelegatePointer;
 		
 		#endregion
-		public CSteamID GetSteamID()
+		public SteamId GetSteamID()
 		{
-			var retVal = default( CSteamID );
+			var retVal = default( SteamId );
 			GetSteamIDDelegatePointer( Self, ref retVal );
 			return retVal;
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate int InitiateGameConnectionDelegate( IntPtr self, IntPtr pAuthBlob, int cbMaxAuthBlob, CSteamID steamIDGameServer, uint unIPServer, ushort usPortServer, [MarshalAs( UnmanagedType.U1 )] bool bSecure );
+		public delegate int InitiateGameConnectionDelegate( IntPtr self, IntPtr pAuthBlob, int cbMaxAuthBlob, SteamId steamIDGameServer, uint unIPServer, ushort usPortServer, [MarshalAs( UnmanagedType.U1 )] bool bSecure );
 		private InitiateGameConnectionDelegate InitiateGameConnectionDelegatePointer;
 		
 		#endregion
-		public int InitiateGameConnection( IntPtr pAuthBlob, int cbMaxAuthBlob, CSteamID steamIDGameServer, uint unIPServer, ushort usPortServer, [MarshalAs( UnmanagedType.U1 )] bool bSecure )
+		public int InitiateGameConnection( IntPtr pAuthBlob, int cbMaxAuthBlob, SteamId steamIDGameServer, uint unIPServer, ushort usPortServer, [MarshalAs( UnmanagedType.U1 )] bool bSecure )
 		{
 			return InitiateGameConnectionDelegatePointer( Self, pAuthBlob, cbMaxAuthBlob, steamIDGameServer, unIPServer, usPortServer, bSecure );
 		}
@@ -109,11 +108,11 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void TrackAppUsageEventDelegate( IntPtr self, CGameID gameID, int eAppUsageEvent, string pchExtraInfo );
+		public delegate void TrackAppUsageEventDelegate( IntPtr self, GameId gameID, int eAppUsageEvent, string pchExtraInfo );
 		private TrackAppUsageEventDelegate TrackAppUsageEventDelegatePointer;
 		
 		#endregion
-		public void TrackAppUsageEvent( CGameID gameID, int eAppUsageEvent, string pchExtraInfo )
+		public void TrackAppUsageEvent( GameId gameID, int eAppUsageEvent, string pchExtraInfo )
 		{
 			TrackAppUsageEventDelegatePointer( Self, gameID, eAppUsageEvent, pchExtraInfo );
 		}
@@ -209,22 +208,22 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate BeginAuthSessionResult BeginAuthSessionDelegate( IntPtr self, IntPtr pAuthTicket, int cbAuthTicket, CSteamID steamID );
+		public delegate BeginAuthSessionResult BeginAuthSessionDelegate( IntPtr self, IntPtr pAuthTicket, int cbAuthTicket, SteamId steamID );
 		private BeginAuthSessionDelegate BeginAuthSessionDelegatePointer;
 		
 		#endregion
-		public BeginAuthSessionResult BeginAuthSession( IntPtr pAuthTicket, int cbAuthTicket, CSteamID steamID )
+		public BeginAuthSessionResult BeginAuthSession( IntPtr pAuthTicket, int cbAuthTicket, SteamId steamID )
 		{
 			return BeginAuthSessionDelegatePointer( Self, pAuthTicket, cbAuthTicket, steamID );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void EndAuthSessionDelegate( IntPtr self, CSteamID steamID );
+		public delegate void EndAuthSessionDelegate( IntPtr self, SteamId steamID );
 		private EndAuthSessionDelegate EndAuthSessionDelegatePointer;
 		
 		#endregion
-		public void EndAuthSession( CSteamID steamID )
+		public void EndAuthSession( SteamId steamID )
 		{
 			EndAuthSessionDelegatePointer( Self, steamID );
 		}
@@ -242,11 +241,11 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate UserHasLicenseForAppResult UserHasLicenseForAppDelegate( IntPtr self, CSteamID steamID, AppId_t appID );
+		public delegate UserHasLicenseForAppResult UserHasLicenseForAppDelegate( IntPtr self, SteamId steamID, AppId_t appID );
 		private UserHasLicenseForAppDelegate UserHasLicenseForAppDelegatePointer;
 		
 		#endregion
-		public UserHasLicenseForAppResult UserHasLicenseForApp( CSteamID steamID, AppId_t appID )
+		public UserHasLicenseForAppResult UserHasLicenseForApp( SteamId steamID, AppId_t appID )
 		{
 			return UserHasLicenseForAppDelegatePointer( Self, steamID, appID );
 		}
@@ -265,11 +264,11 @@ namespace Steamworks.Internal
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		public delegate void AdvertiseGameDelegate( IntPtr self, CSteamID steamIDGameServer, uint unIPServer, ushort usPortServer );
+		public delegate void AdvertiseGameDelegate( IntPtr self, SteamId steamIDGameServer, uint unIPServer, ushort usPortServer );
 		private AdvertiseGameDelegate AdvertiseGameDelegatePointer;
 		
 		#endregion
-		public void AdvertiseGame( CSteamID steamIDGameServer, uint unIPServer, ushort usPortServer )
+		public void AdvertiseGame( SteamId steamIDGameServer, uint unIPServer, ushort usPortServer )
 		{
 			AdvertiseGameDelegatePointer( Self, steamIDGameServer, unIPServer, usPortServer );
 		}

@@ -72,7 +72,11 @@ namespace Generator
             type = type.Replace( "union ", "" );
             type = type.Replace( "enum ", "" );
 
-            switch ( type )
+			var cleantype = Cleanup.ConvertType( type );
+			if ( cleantype != type )
+				return cleantype;
+
+			switch ( type )
             {
                 case "uint64": return "ulong";
                 case "uint32": return "uint";

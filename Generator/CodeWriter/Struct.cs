@@ -42,15 +42,21 @@ namespace Generator
 
             foreach ( var c in def.structs )
             {
-                if ( SkipStructs.Contains( c.Name ) )
+				var name = Cleanup.ConvertType( c.Name );
+
+				if ( SkipStructs.Contains( c.Name ) )
                     continue;
 
-                if ( c.Name.Contains( "::" ) )
+				if ( !Cleanup.ShouldCreate( name ) )
+					continue;
+
+                if ( name.Contains( "::" ) )
                     continue;
 
-                int defaultPack = 8;
 
-                if (  c.Fields.Any( x => x.Type.Contains( "class CSteamID" ) ) && !ForceLargePackStructs.Contains( c.Name ) )
+				int defaultPack = 8;
+
+                if ( c.Fields.Any( x => x.Type.Contains( "SteamId" ) ) && !ForceLargePackStructs.Contains( c.Name ) )
                     defaultPack = 4;
 
 				var isCallback = !string.IsNullOrEmpty( c.CallbackId );
@@ -58,7 +64,7 @@ namespace Generator
 				//
 				// Main struct
 				//
-                StartBlock( $"public struct {c.Name}{(isCallback?" : Steamworks.ISteamCallback":"")}" );
+                StartBlock( $"public struct {name}{(isCallback?" : Steamworks.ISteamCallback":"")}" );
                 {
 					//
 					// The fields
@@ -71,8 +77,8 @@ namespace Generator
 						WriteLine( "#region ISteamCallback" );
 						{
 							WriteLine( $"public int GetCallbackId() => {c.CallbackId};" );
-							WriteLine( $"public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );" );
-							WriteLine( $"public Steamworks.ISteamCallback Fill( IntPtr p ) => Platform.PackSmall ? (({c.Name})(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : (({c.Name})(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));" );
+							WriteLine( $"public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(Pack4) : typeof(Pack8) );" );
+							WriteLine( $"public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? (({name})(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : (({name})(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));" );
 						}
 						WriteLine( "#endregion" );
 					}
@@ -80,8 +86,8 @@ namespace Generator
 					{
 						WriteLine( "#region Marshalling" );
 						{
-							WriteLine( $"public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Platform.PackSmall ? typeof(Pack4) : typeof(Pack8) );" );
-							WriteLine( $"public {c.Name} Fill( IntPtr p ) => Platform.PackSmall ? (({c.Name})(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : (({c.Name})(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));" );
+							WriteLine( $"public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(Pack4) : typeof(Pack8) );" );
+							WriteLine( $"public {name} Fill( IntPtr p ) => Config.PackSmall ? (({name})(Pack4) Marshal.PtrToStructure( p, typeof(Pack4) )) : (({name})(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));" );
 						}
 						WriteLine( "#endregion" );
 					}
@@ -101,9 +107,9 @@ namespace Generator
 							// Implicit convert from PackSmall to regular
 							//
 							WriteLine();
-							Write( $"public static implicit operator {c.Name} ( {c.Name}.Pack4 d ) => " );
+							Write( $"public static implicit operator {name} ( {name}.Pack4 d ) => " );
 							{
-								Write( $"new {c.Name}{{ " );
+								Write( $"new {name}{{ " );
 								{
 									foreach ( var f in c.Fields )
 									{
@@ -129,9 +135,9 @@ namespace Generator
 							// Implicit convert from PackSmall to regular
 							//
 							WriteLine();
-							Write( $"public static implicit operator {c.Name} ( {c.Name}.Pack8 d ) => " );
+							Write( $"public static implicit operator {name} ( {name}.Pack8 d ) => " );
 							{
-								Write( $"new {c.Name}{{ " );
+								Write( $"new {name}{{ " );
 								{
 									foreach ( var f in c.Fields )
 									{
@@ -156,17 +162,6 @@ namespace Generator
                 EndBlock();
                 WriteLine();
             }
-
-            StartBlock( $"internal static class Callbacks" );
-            StartBlock( $"internal static void RegisterCallbacks( Facepunch.Steamworks.BaseSteamworks steamworks )" );
-            {
-                foreach ( var c in callbackList )
-                {
-                    WriteLine( $"new CallbackHandle<{c.Name}>( steamworks );" );
-                }
-            }
-            EndBlock();
-            EndBlock();
         }
 
         private void StructFields( SteamApiDefinition.StructDef.StructFields[] fields )
@@ -175,7 +170,9 @@ namespace Generator
             {
                 var t = ToManagedType( m.Type );
 
-                if ( TypeDefs.ContainsKey( t ) )
+				t = Cleanup.ConvertType( t );
+
+				if ( TypeDefs.ContainsKey( t ) )
                 {
                     t = TypeDefs[t].ManagedType;
                 }
@@ -199,9 +196,9 @@ namespace Generator
                     WriteLine( $"[MarshalAs(UnmanagedType.ByValArray, SizeConst = {num})] //  {m.Name}" );
                 }
 
-                if ( t.StartsWith( "CSteamID " ) && t.Contains( "[" ) )
+                if ( t.StartsWith( "SteamId" ) && t.Contains( "[" ) )
                 {
-                    var num = t.Replace( "CSteamID", "" ).Trim( '[', ']', ' ' );
+                    var num = t.Replace( "SteamId", "" ).Trim( '[', ']', ' ' );
                     t = $"ulong[]";
                     WriteLine( $"[MarshalAs(UnmanagedType.ByValArray, SizeConst = {num}, ArraySubType = UnmanagedType.U8)]" );
                 }
