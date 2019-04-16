@@ -53,7 +53,7 @@ namespace Steamworks
 			// The client sends this data to the server along with their steamid
 			//
 			var ticketData = clientTicket.Data;
-			var clientSteamId = User.SteamID;
+			var clientSteamId = User.SteamId;
 
 			//
 			// Server listens to auth responses from Gabe

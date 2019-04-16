@@ -13,6 +13,8 @@ namespace Steamworks
 	/// </summary>
 	public static partial class GameServer
 	{
+		static bool initialized;
+
 		static Internal.ISteamGameServer _internal;
 		internal static Internal.ISteamGameServer Internal
 		{
@@ -24,6 +26,8 @@ namespace Steamworks
 				return _internal;
 			}
 		}
+
+		public static bool IsValid => initialized;
 
 		internal static void InstallEvents()
 		{
@@ -53,6 +57,8 @@ namespace Steamworks
 				throw new System.Exception( "InitGameServer returned false" );
 			}
 
+			initialized = true;
+
 			//
 			// Initial settings
 			//
@@ -69,20 +75,30 @@ namespace Steamworks
 			RunCallbacks();
 		}
 
+		public static void Shutdown()
+		{
+			initialized = false;
+		}
+
 
 		internal static async void RunCallbacks()
 		{
 			while ( true )
 			{
 				await Task.Delay( 16 );
-				try
-				{
-					SteamApi.SteamGameServer_RunCallbacks();
-				}
-				catch ( System.Exception )
-				{
-					// TODO - error outputs
-				}
+				Update();
+			}
+		}
+
+		public static void Update()
+		{
+			try
+			{
+				SteamApi.SteamGameServer_RunCallbacks();
+			}
+			catch ( System.Exception )
+			{
+				// TODO - error outputs
 			}
 		}
 

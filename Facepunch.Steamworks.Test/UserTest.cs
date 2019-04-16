@@ -53,8 +53,8 @@ namespace Steamworks
 		[TestMethod]
 		public void SteamID()
 		{
-			Assert.AreNotEqual( 0, User.SteamID.Value );
-			Console.WriteLine( $"User.SteamID: {User.SteamID.Value}" );
+			Assert.AreNotEqual( 0, User.SteamId.Value );
+			Console.WriteLine( $"User.SteamID: {User.SteamId.Value}" );
 		}
 
 		[TestMethod]
@@ -67,11 +67,11 @@ namespace Steamworks
 			Console.WriteLine( $"ticket.Handle: {ticket.Handle}" );
 			Console.WriteLine( $"ticket.Data: { string.Join( "", ticket.Data.Select( x => x.ToString( "x" ) ) ) }" );
 
-			var result = User.BeginAuthSession( ticket.Data, User.SteamID );
+			var result = User.BeginAuthSession( ticket.Data, User.SteamId );
 			Console.WriteLine( $"result: { result }" );
 			Assert.AreEqual( result, SteamNative.BeginAuthSessionResult.OK );
 
-			User.EndAuthSession( User.SteamID );
+			User.EndAuthSession( User.SteamId );
 		}
 
 

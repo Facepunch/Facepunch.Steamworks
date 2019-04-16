@@ -118,7 +118,7 @@ namespace Steamworks
 		/// A Steam ID is a unique identifier for a Steam accounts, Steam groups, Lobbies and Chat 
 		/// rooms, and used to differentiate users in all parts of the Steamworks API.
 		/// </summary>
-		public static CSteamID SteamID => Internal.GetSteamID();
+		public static CSteamID SteamId => Internal.GetSteamID();
 
 
 		static bool _recordingVoice;

@@ -8,7 +8,7 @@ namespace Steamworks
 {
 	public static class Steam
 	{
-		internal static int HUser;
+		static bool initialized;
 
 		public static void Init( uint appid )
 		{
@@ -25,11 +25,7 @@ namespace Steamworks
 				throw new System.Exception( "SteamApi_Init returned false. Steam isn't running, couldn't find Steam, AppId is ureleased, Don't own AppId." );
 			}
 
-			HUser = SteamApi.GetHSteamUser();
-			if ( HUser == 0 )
-			{
-				throw new System.Exception( "GetHSteamUser returned 0" );
-			}
+			initialized = true;
 
 			Apps.InstallEvents();
 			Utils.InstallEvents();
@@ -41,6 +37,8 @@ namespace Steamworks
 
 			RunCallbacks();
 		}
+
+		public static bool IsValid => initialized;
 
 		internal static async void RunCallbacks()
 		{
