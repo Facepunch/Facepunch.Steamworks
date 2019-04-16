@@ -56,6 +56,7 @@ internal class BaseType
 		get
 		{
 			if ( VarName == "pOut" ) return false;
+			if ( VarName == "pubRGB" ) return false;
 
 			if ( VarName == "psteamIDClans" ) return true;
 			if ( NativeType.EndsWith( "**" ) ) return true;

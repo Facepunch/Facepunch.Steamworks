@@ -239,12 +239,12 @@ namespace Steamworks.Data
 		public override string ToString() => Value.ToString();
 	}
 	
-	internal struct PublishedFileId_t
+	public struct PublishedFileId
 	{
 		public ulong Value;
 		
-		public static implicit operator PublishedFileId_t( ulong value ) => new PublishedFileId_t(){ Value = value };
-		public static implicit operator ulong( PublishedFileId_t value ) => value.Value;
+		public static implicit operator PublishedFileId( ulong value ) => new PublishedFileId(){ Value = value };
+		public static implicit operator ulong( PublishedFileId value ) => value.Value;
 		public override string ToString() => Value.ToString();
 	}
 	

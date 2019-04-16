@@ -17,6 +17,7 @@ public static class Cleanup
 		type = type.Replace( "AuthSessionResponse", "AuthResponse" );
 		type = type.Replace( "FriendRelationship", "Relationship" );
 		type = type.Replace( "BeginAuthSessionResult", "BeginAuthResult" );
+		type = type.Replace( "PublishedFileId_t", "PublishedFileId" );
 		
 
 		
@@ -46,6 +47,8 @@ public static class Cleanup
 		if ( name == "GamepadTextInputLineMode" ) return "public";
 		if ( name == "CheckFileSignature" ) return "public";
 		if ( name == "BroadcastUploadResult" ) return "public";
+		if ( name == "PublishedFileId" ) return "public";
+		if ( name == "Result" ) return "public";
 
 		return "internal";
 	}

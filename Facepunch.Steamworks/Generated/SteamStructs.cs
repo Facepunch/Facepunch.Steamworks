@@ -2429,7 +2429,7 @@ namespace Steamworks.Data
 	internal struct RemoteStoragePublishFileResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
-		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 		
@@ -2443,7 +2443,7 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 			
@@ -2454,7 +2454,7 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 			
@@ -2466,7 +2466,7 @@ namespace Steamworks.Data
 	internal struct RemoteStorageDeletePublishedFileResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
-		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.ClientRemoteStorage + 11;
@@ -2478,7 +2478,7 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
 			public static implicit operator RemoteStorageDeletePublishedFileResult_t ( RemoteStorageDeletePublishedFileResult_t.Pack4 d ) => new RemoteStorageDeletePublishedFileResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
 		}
@@ -2487,7 +2487,7 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
 			public static implicit operator RemoteStorageDeletePublishedFileResult_t ( RemoteStorageDeletePublishedFileResult_t.Pack8 d ) => new RemoteStorageDeletePublishedFileResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
 		}
@@ -2500,7 +2500,7 @@ namespace Steamworks.Data
 		internal int ResultsReturned; // m_nResultsReturned int32
 		internal int TotalResultCount; // m_nTotalResultCount int32
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-		internal ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+		internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.ClientRemoteStorage + 12;
@@ -2515,7 +2515,7 @@ namespace Steamworks.Data
 			internal int ResultsReturned; // m_nResultsReturned int32
 			internal int TotalResultCount; // m_nTotalResultCount int32
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-			internal ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+			internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 			
 			public static implicit operator RemoteStorageEnumerateUserPublishedFilesResult_t ( RemoteStorageEnumerateUserPublishedFilesResult_t.Pack4 d ) => new RemoteStorageEnumerateUserPublishedFilesResult_t{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId, };
 		}
@@ -2527,7 +2527,7 @@ namespace Steamworks.Data
 			internal int ResultsReturned; // m_nResultsReturned int32
 			internal int TotalResultCount; // m_nTotalResultCount int32
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-			internal ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+			internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 			
 			public static implicit operator RemoteStorageEnumerateUserPublishedFilesResult_t ( RemoteStorageEnumerateUserPublishedFilesResult_t.Pack8 d ) => new RemoteStorageEnumerateUserPublishedFilesResult_t{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId, };
 		}
@@ -2537,7 +2537,7 @@ namespace Steamworks.Data
 	internal struct RemoteStorageSubscribePublishedFileResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
-		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.ClientRemoteStorage + 13;
@@ -2549,7 +2549,7 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
 			public static implicit operator RemoteStorageSubscribePublishedFileResult_t ( RemoteStorageSubscribePublishedFileResult_t.Pack4 d ) => new RemoteStorageSubscribePublishedFileResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
 		}
@@ -2558,7 +2558,7 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
 			public static implicit operator RemoteStorageSubscribePublishedFileResult_t ( RemoteStorageSubscribePublishedFileResult_t.Pack8 d ) => new RemoteStorageSubscribePublishedFileResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
 		}
@@ -2571,7 +2571,7 @@ namespace Steamworks.Data
 		internal int ResultsReturned; // m_nResultsReturned int32
 		internal int TotalResultCount; // m_nTotalResultCount int32
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-		internal ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+		internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U4)]
 		internal uint[] GRTimeSubscribed; // m_rgRTimeSubscribed uint32 [50]
 		
@@ -2588,7 +2588,7 @@ namespace Steamworks.Data
 			internal int ResultsReturned; // m_nResultsReturned int32
 			internal int TotalResultCount; // m_nTotalResultCount int32
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-			internal ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+			internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U4)]
 			internal uint[] GRTimeSubscribed; // m_rgRTimeSubscribed uint32 [50]
 			
@@ -2602,7 +2602,7 @@ namespace Steamworks.Data
 			internal int ResultsReturned; // m_nResultsReturned int32
 			internal int TotalResultCount; // m_nTotalResultCount int32
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-			internal ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+			internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U4)]
 			internal uint[] GRTimeSubscribed; // m_rgRTimeSubscribed uint32 [50]
 			
@@ -2614,7 +2614,7 @@ namespace Steamworks.Data
 	internal struct RemoteStorageUnsubscribePublishedFileResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
-		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.ClientRemoteStorage + 15;
@@ -2626,7 +2626,7 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
 			public static implicit operator RemoteStorageUnsubscribePublishedFileResult_t ( RemoteStorageUnsubscribePublishedFileResult_t.Pack4 d ) => new RemoteStorageUnsubscribePublishedFileResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
 		}
@@ -2635,7 +2635,7 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
 			public static implicit operator RemoteStorageUnsubscribePublishedFileResult_t ( RemoteStorageUnsubscribePublishedFileResult_t.Pack8 d ) => new RemoteStorageUnsubscribePublishedFileResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
 		}
@@ -2645,7 +2645,7 @@ namespace Steamworks.Data
 	internal struct RemoteStorageUpdatePublishedFileResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
-		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 		
@@ -2659,7 +2659,7 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 			
@@ -2670,7 +2670,7 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 			
@@ -2728,7 +2728,7 @@ namespace Steamworks.Data
 	internal struct RemoteStorageGetPublishedFileDetailsResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
-		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal uint CreatorAppID; // m_nCreatorAppID AppId_t
 		internal uint ConsumerAppID; // m_nConsumerAppID AppId_t
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 129)]
@@ -2767,7 +2767,7 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal uint CreatorAppID; // m_nCreatorAppID AppId_t
 			internal uint ConsumerAppID; // m_nConsumerAppID AppId_t
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 129)]
@@ -2803,7 +2803,7 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal uint CreatorAppID; // m_nCreatorAppID AppId_t
 			internal uint ConsumerAppID; // m_nConsumerAppID AppId_t
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 129)]
@@ -2843,7 +2843,7 @@ namespace Steamworks.Data
 		internal int ResultsReturned; // m_nResultsReturned int32
 		internal int TotalResultCount; // m_nTotalResultCount int32
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-		internal ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+		internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.R4)]
 		internal float[] GScore; // m_rgScore float [50]
 		internal uint AppId; // m_nAppId AppId_t
@@ -2862,7 +2862,7 @@ namespace Steamworks.Data
 			internal int ResultsReturned; // m_nResultsReturned int32
 			internal int TotalResultCount; // m_nTotalResultCount int32
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-			internal ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+			internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.R4)]
 			internal float[] GScore; // m_rgScore float [50]
 			internal uint AppId; // m_nAppId AppId_t
@@ -2878,7 +2878,7 @@ namespace Steamworks.Data
 			internal int ResultsReturned; // m_nResultsReturned int32
 			internal int TotalResultCount; // m_nTotalResultCount int32
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-			internal ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+			internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.R4)]
 			internal float[] GScore; // m_rgScore float [50]
 			internal uint AppId; // m_nAppId AppId_t
@@ -2892,7 +2892,7 @@ namespace Steamworks.Data
 	internal struct RemoteStorageGetPublishedItemVoteDetailsResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
-		internal ulong PublishedFileId; // m_unPublishedFileId PublishedFileId_t
+		internal PublishedFileId PublishedFileId; // m_unPublishedFileId PublishedFileId_t
 		internal int VotesFor; // m_nVotesFor int32
 		internal int VotesAgainst; // m_nVotesAgainst int32
 		internal int Reports; // m_nReports int32
@@ -2908,7 +2908,7 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_unPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_unPublishedFileId PublishedFileId_t
 			internal int VotesFor; // m_nVotesFor int32
 			internal int VotesAgainst; // m_nVotesAgainst int32
 			internal int Reports; // m_nReports int32
@@ -2921,7 +2921,7 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_unPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_unPublishedFileId PublishedFileId_t
 			internal int VotesFor; // m_nVotesFor int32
 			internal int VotesAgainst; // m_nVotesAgainst int32
 			internal int Reports; // m_nReports int32
@@ -2934,7 +2934,7 @@ namespace Steamworks.Data
 	
 	internal struct RemoteStoragePublishedFileSubscribed_t : Steamworks.ISteamCallback
 	{
-		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal uint AppID; // m_nAppID AppId_t
 		
 		#region ISteamCallback
@@ -2946,7 +2946,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal uint AppID; // m_nAppID AppId_t
 			
 			public static implicit operator RemoteStoragePublishedFileSubscribed_t ( RemoteStoragePublishedFileSubscribed_t.Pack4 d ) => new RemoteStoragePublishedFileSubscribed_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
@@ -2955,7 +2955,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 		public struct Pack8
 		{
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal uint AppID; // m_nAppID AppId_t
 			
 			public static implicit operator RemoteStoragePublishedFileSubscribed_t ( RemoteStoragePublishedFileSubscribed_t.Pack8 d ) => new RemoteStoragePublishedFileSubscribed_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
@@ -2965,7 +2965,7 @@ namespace Steamworks.Data
 	
 	internal struct RemoteStoragePublishedFileUnsubscribed_t : Steamworks.ISteamCallback
 	{
-		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal uint AppID; // m_nAppID AppId_t
 		
 		#region ISteamCallback
@@ -2977,7 +2977,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal uint AppID; // m_nAppID AppId_t
 			
 			public static implicit operator RemoteStoragePublishedFileUnsubscribed_t ( RemoteStoragePublishedFileUnsubscribed_t.Pack4 d ) => new RemoteStoragePublishedFileUnsubscribed_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
@@ -2986,7 +2986,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 		public struct Pack8
 		{
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal uint AppID; // m_nAppID AppId_t
 			
 			public static implicit operator RemoteStoragePublishedFileUnsubscribed_t ( RemoteStoragePublishedFileUnsubscribed_t.Pack8 d ) => new RemoteStoragePublishedFileUnsubscribed_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
@@ -2996,7 +2996,7 @@ namespace Steamworks.Data
 	
 	internal struct RemoteStoragePublishedFileDeleted_t : Steamworks.ISteamCallback
 	{
-		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal uint AppID; // m_nAppID AppId_t
 		
 		#region ISteamCallback
@@ -3008,7 +3008,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal uint AppID; // m_nAppID AppId_t
 			
 			public static implicit operator RemoteStoragePublishedFileDeleted_t ( RemoteStoragePublishedFileDeleted_t.Pack4 d ) => new RemoteStoragePublishedFileDeleted_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
@@ -3017,7 +3017,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 		public struct Pack8
 		{
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal uint AppID; // m_nAppID AppId_t
 			
 			public static implicit operator RemoteStoragePublishedFileDeleted_t ( RemoteStoragePublishedFileDeleted_t.Pack8 d ) => new RemoteStoragePublishedFileDeleted_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
@@ -3028,7 +3028,7 @@ namespace Steamworks.Data
 	internal struct RemoteStorageUpdateUserPublishedItemVoteResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
-		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.ClientRemoteStorage + 24;
@@ -3040,7 +3040,7 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
 			public static implicit operator RemoteStorageUpdateUserPublishedItemVoteResult_t ( RemoteStorageUpdateUserPublishedItemVoteResult_t.Pack4 d ) => new RemoteStorageUpdateUserPublishedItemVoteResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
 		}
@@ -3049,7 +3049,7 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
 			public static implicit operator RemoteStorageUpdateUserPublishedItemVoteResult_t ( RemoteStorageUpdateUserPublishedItemVoteResult_t.Pack8 d ) => new RemoteStorageUpdateUserPublishedItemVoteResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
 		}
@@ -3059,7 +3059,7 @@ namespace Steamworks.Data
 	internal struct RemoteStorageUserVoteDetails_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
-		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal WorkshopVote Vote; // m_eVote enum EWorkshopVote
 		
 		#region ISteamCallback
@@ -3072,7 +3072,7 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal WorkshopVote Vote; // m_eVote enum EWorkshopVote
 			
 			public static implicit operator RemoteStorageUserVoteDetails_t ( RemoteStorageUserVoteDetails_t.Pack4 d ) => new RemoteStorageUserVoteDetails_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,Vote = d.Vote, };
@@ -3082,7 +3082,7 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal WorkshopVote Vote; // m_eVote enum EWorkshopVote
 			
 			public static implicit operator RemoteStorageUserVoteDetails_t ( RemoteStorageUserVoteDetails_t.Pack8 d ) => new RemoteStorageUserVoteDetails_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,Vote = d.Vote, };
@@ -3096,7 +3096,7 @@ namespace Steamworks.Data
 		internal int ResultsReturned; // m_nResultsReturned int32
 		internal int TotalResultCount; // m_nTotalResultCount int32
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-		internal ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+		internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.ClientRemoteStorage + 26;
@@ -3111,7 +3111,7 @@ namespace Steamworks.Data
 			internal int ResultsReturned; // m_nResultsReturned int32
 			internal int TotalResultCount; // m_nTotalResultCount int32
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-			internal ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+			internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 			
 			public static implicit operator RemoteStorageEnumerateUserSharedWorkshopFilesResult_t ( RemoteStorageEnumerateUserSharedWorkshopFilesResult_t.Pack4 d ) => new RemoteStorageEnumerateUserSharedWorkshopFilesResult_t{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId, };
 		}
@@ -3123,7 +3123,7 @@ namespace Steamworks.Data
 			internal int ResultsReturned; // m_nResultsReturned int32
 			internal int TotalResultCount; // m_nTotalResultCount int32
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-			internal ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+			internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 			
 			public static implicit operator RemoteStorageEnumerateUserSharedWorkshopFilesResult_t ( RemoteStorageEnumerateUserSharedWorkshopFilesResult_t.Pack8 d ) => new RemoteStorageEnumerateUserSharedWorkshopFilesResult_t{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId, };
 		}
@@ -3133,7 +3133,7 @@ namespace Steamworks.Data
 	internal struct RemoteStorageSetUserPublishedFileActionResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
-		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal WorkshopFileAction Action; // m_eAction enum EWorkshopFileAction
 		
 		#region ISteamCallback
@@ -3146,7 +3146,7 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal WorkshopFileAction Action; // m_eAction enum EWorkshopFileAction
 			
 			public static implicit operator RemoteStorageSetUserPublishedFileActionResult_t ( RemoteStorageSetUserPublishedFileActionResult_t.Pack4 d ) => new RemoteStorageSetUserPublishedFileActionResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,Action = d.Action, };
@@ -3156,7 +3156,7 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal WorkshopFileAction Action; // m_eAction enum EWorkshopFileAction
 			
 			public static implicit operator RemoteStorageSetUserPublishedFileActionResult_t ( RemoteStorageSetUserPublishedFileActionResult_t.Pack8 d ) => new RemoteStorageSetUserPublishedFileActionResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,Action = d.Action, };
@@ -3171,7 +3171,7 @@ namespace Steamworks.Data
 		internal int ResultsReturned; // m_nResultsReturned int32
 		internal int TotalResultCount; // m_nTotalResultCount int32
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-		internal ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+		internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U4)]
 		internal uint[] GRTimeUpdated; // m_rgRTimeUpdated uint32 [50]
 		
@@ -3189,7 +3189,7 @@ namespace Steamworks.Data
 			internal int ResultsReturned; // m_nResultsReturned int32
 			internal int TotalResultCount; // m_nTotalResultCount int32
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-			internal ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+			internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U4)]
 			internal uint[] GRTimeUpdated; // m_rgRTimeUpdated uint32 [50]
 			
@@ -3204,7 +3204,7 @@ namespace Steamworks.Data
 			internal int ResultsReturned; // m_nResultsReturned int32
 			internal int TotalResultCount; // m_nTotalResultCount int32
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-			internal ulong[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
+			internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U4)]
 			internal uint[] GRTimeUpdated; // m_rgRTimeUpdated uint32 [50]
 			
@@ -3249,7 +3249,7 @@ namespace Steamworks.Data
 	
 	internal struct RemoteStoragePublishedFileUpdated_t : Steamworks.ISteamCallback
 	{
-		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal uint AppID; // m_nAppID AppId_t
 		internal ulong Unused; // m_ulUnused uint64
 		
@@ -3262,7 +3262,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal uint AppID; // m_nAppID AppId_t
 			internal ulong Unused; // m_ulUnused uint64
 			
@@ -3272,7 +3272,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 		public struct Pack8
 		{
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal uint AppID; // m_nAppID AppId_t
 			internal ulong Unused; // m_ulUnused uint64
 			
@@ -4462,7 +4462,7 @@ namespace Steamworks.Data
 	
 	internal struct SteamUGCDetails_t
 	{
-		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal Result Result; // m_eResult enum EResult
 		internal WorkshopFileType FileType; // m_eFileType enum EWorkshopFileType
 		internal uint CreatorAppID; // m_nCreatorAppID AppId_t
@@ -4505,7 +4505,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal Result Result; // m_eResult enum EResult
 			internal WorkshopFileType FileType; // m_eFileType enum EWorkshopFileType
 			internal uint CreatorAppID; // m_nCreatorAppID AppId_t
@@ -4546,7 +4546,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 		public struct Pack8
 		{
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal Result Result; // m_eResult enum EResult
 			internal WorkshopFileType FileType; // m_eFileType enum EWorkshopFileType
 			internal uint CreatorAppID; // m_nCreatorAppID AppId_t
@@ -4672,7 +4672,7 @@ namespace Steamworks.Data
 	internal struct CreateItemResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
-		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 		
@@ -4686,7 +4686,7 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 			
@@ -4697,7 +4697,7 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 			
@@ -4711,7 +4711,7 @@ namespace Steamworks.Data
 		internal Result Result; // m_eResult enum EResult
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
-		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.ClientUGC + 4;
@@ -4725,7 +4725,7 @@ namespace Steamworks.Data
 			internal Result Result; // m_eResult enum EResult
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
 			public static implicit operator SubmitItemUpdateResult_t ( SubmitItemUpdateResult_t.Pack4 d ) => new SubmitItemUpdateResult_t{ Result = d.Result,UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement,PublishedFileId = d.PublishedFileId, };
 		}
@@ -4736,7 +4736,7 @@ namespace Steamworks.Data
 			internal Result Result; // m_eResult enum EResult
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
 			public static implicit operator SubmitItemUpdateResult_t ( SubmitItemUpdateResult_t.Pack8 d ) => new SubmitItemUpdateResult_t{ Result = d.Result,UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement,PublishedFileId = d.PublishedFileId, };
 		}
@@ -4746,7 +4746,7 @@ namespace Steamworks.Data
 	internal struct DownloadItemResult_t : Steamworks.ISteamCallback
 	{
 		internal uint AppID; // m_unAppID AppId_t
-		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal Result Result; // m_eResult enum EResult
 		
 		#region ISteamCallback
@@ -4759,7 +4759,7 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal uint AppID; // m_unAppID AppId_t
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal Result Result; // m_eResult enum EResult
 			
 			public static implicit operator DownloadItemResult_t ( DownloadItemResult_t.Pack4 d ) => new DownloadItemResult_t{ AppID = d.AppID,PublishedFileId = d.PublishedFileId,Result = d.Result, };
@@ -4769,7 +4769,7 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal uint AppID; // m_unAppID AppId_t
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal Result Result; // m_eResult enum EResult
 			
 			public static implicit operator DownloadItemResult_t ( DownloadItemResult_t.Pack8 d ) => new DownloadItemResult_t{ AppID = d.AppID,PublishedFileId = d.PublishedFileId,Result = d.Result, };
@@ -4779,7 +4779,7 @@ namespace Steamworks.Data
 	
 	internal struct UserFavoriteItemsListChanged_t : Steamworks.ISteamCallback
 	{
-		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal Result Result; // m_eResult enum EResult
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool WasAddRequest; // m_bWasAddRequest _Bool
@@ -4793,7 +4793,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal Result Result; // m_eResult enum EResult
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool WasAddRequest; // m_bWasAddRequest _Bool
@@ -4804,7 +4804,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 		public struct Pack8
 		{
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal Result Result; // m_eResult enum EResult
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool WasAddRequest; // m_bWasAddRequest _Bool
@@ -4816,7 +4816,7 @@ namespace Steamworks.Data
 	
 	internal struct SetUserItemVoteResult_t : Steamworks.ISteamCallback
 	{
-		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal Result Result; // m_eResult enum EResult
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool VoteUp; // m_bVoteUp _Bool
@@ -4830,7 +4830,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal Result Result; // m_eResult enum EResult
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool VoteUp; // m_bVoteUp _Bool
@@ -4841,7 +4841,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 		public struct Pack8
 		{
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal Result Result; // m_eResult enum EResult
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool VoteUp; // m_bVoteUp _Bool
@@ -4853,7 +4853,7 @@ namespace Steamworks.Data
 	
 	internal struct GetUserItemVoteResult_t : Steamworks.ISteamCallback
 	{
-		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal Result Result; // m_eResult enum EResult
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool VotedUp; // m_bVotedUp _Bool
@@ -4871,7 +4871,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal Result Result; // m_eResult enum EResult
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool VotedUp; // m_bVotedUp _Bool
@@ -4886,7 +4886,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 		public struct Pack8
 		{
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal Result Result; // m_eResult enum EResult
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool VotedUp; // m_bVotedUp _Bool
@@ -4959,8 +4959,8 @@ namespace Steamworks.Data
 	internal struct AddUGCDependencyResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
-		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-		internal ulong ChildPublishedFileId; // m_nChildPublishedFileId PublishedFileId_t
+		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal PublishedFileId ChildPublishedFileId; // m_nChildPublishedFileId PublishedFileId_t
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.ClientUGC + 12;
@@ -4972,8 +4972,8 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal ulong ChildPublishedFileId; // m_nChildPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId ChildPublishedFileId; // m_nChildPublishedFileId PublishedFileId_t
 			
 			public static implicit operator AddUGCDependencyResult_t ( AddUGCDependencyResult_t.Pack4 d ) => new AddUGCDependencyResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,ChildPublishedFileId = d.ChildPublishedFileId, };
 		}
@@ -4982,8 +4982,8 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal ulong ChildPublishedFileId; // m_nChildPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId ChildPublishedFileId; // m_nChildPublishedFileId PublishedFileId_t
 			
 			public static implicit operator AddUGCDependencyResult_t ( AddUGCDependencyResult_t.Pack8 d ) => new AddUGCDependencyResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,ChildPublishedFileId = d.ChildPublishedFileId, };
 		}
@@ -4993,8 +4993,8 @@ namespace Steamworks.Data
 	internal struct RemoveUGCDependencyResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
-		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-		internal ulong ChildPublishedFileId; // m_nChildPublishedFileId PublishedFileId_t
+		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal PublishedFileId ChildPublishedFileId; // m_nChildPublishedFileId PublishedFileId_t
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.ClientUGC + 13;
@@ -5006,8 +5006,8 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal ulong ChildPublishedFileId; // m_nChildPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId ChildPublishedFileId; // m_nChildPublishedFileId PublishedFileId_t
 			
 			public static implicit operator RemoveUGCDependencyResult_t ( RemoveUGCDependencyResult_t.Pack4 d ) => new RemoveUGCDependencyResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,ChildPublishedFileId = d.ChildPublishedFileId, };
 		}
@@ -5016,8 +5016,8 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal ulong ChildPublishedFileId; // m_nChildPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId ChildPublishedFileId; // m_nChildPublishedFileId PublishedFileId_t
 			
 			public static implicit operator RemoveUGCDependencyResult_t ( RemoveUGCDependencyResult_t.Pack8 d ) => new RemoveUGCDependencyResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,ChildPublishedFileId = d.ChildPublishedFileId, };
 		}
@@ -5027,7 +5027,7 @@ namespace Steamworks.Data
 	internal struct AddAppDependencyResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
-		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal uint AppID; // m_nAppID AppId_t
 		
 		#region ISteamCallback
@@ -5040,7 +5040,7 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal uint AppID; // m_nAppID AppId_t
 			
 			public static implicit operator AddAppDependencyResult_t ( AddAppDependencyResult_t.Pack4 d ) => new AddAppDependencyResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
@@ -5050,7 +5050,7 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal uint AppID; // m_nAppID AppId_t
 			
 			public static implicit operator AddAppDependencyResult_t ( AddAppDependencyResult_t.Pack8 d ) => new AddAppDependencyResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
@@ -5061,7 +5061,7 @@ namespace Steamworks.Data
 	internal struct RemoveAppDependencyResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
-		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal uint AppID; // m_nAppID AppId_t
 		
 		#region ISteamCallback
@@ -5074,7 +5074,7 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal uint AppID; // m_nAppID AppId_t
 			
 			public static implicit operator RemoveAppDependencyResult_t ( RemoveAppDependencyResult_t.Pack4 d ) => new RemoveAppDependencyResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
@@ -5084,7 +5084,7 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal uint AppID; // m_nAppID AppId_t
 			
 			public static implicit operator RemoveAppDependencyResult_t ( RemoveAppDependencyResult_t.Pack8 d ) => new RemoveAppDependencyResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
@@ -5095,7 +5095,7 @@ namespace Steamworks.Data
 	internal struct GetAppDependenciesResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
-		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 32, ArraySubType = UnmanagedType.U4)]
 		internal AppId_t[] GAppIDs; // m_rgAppIDs AppId_t [32]
 		internal uint NumAppDependencies; // m_nNumAppDependencies uint32
@@ -5111,7 +5111,7 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 32, ArraySubType = UnmanagedType.U4)]
 			internal AppId_t[] GAppIDs; // m_rgAppIDs AppId_t [32]
 			internal uint NumAppDependencies; // m_nNumAppDependencies uint32
@@ -5124,7 +5124,7 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 32, ArraySubType = UnmanagedType.U4)]
 			internal AppId_t[] GAppIDs; // m_rgAppIDs AppId_t [32]
 			internal uint NumAppDependencies; // m_nNumAppDependencies uint32
@@ -5138,7 +5138,7 @@ namespace Steamworks.Data
 	internal struct DeleteItemResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
-		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.ClientUGC + 17;
@@ -5150,7 +5150,7 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
 			public static implicit operator DeleteItemResult_t ( DeleteItemResult_t.Pack4 d ) => new DeleteItemResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
 		}
@@ -5159,7 +5159,7 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
 			public static implicit operator DeleteItemResult_t ( DeleteItemResult_t.Pack8 d ) => new DeleteItemResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
 		}
@@ -6895,7 +6895,7 @@ namespace Steamworks.Data
 	internal struct ItemInstalled_t : Steamworks.ISteamCallback
 	{
 		internal uint AppID; // m_unAppID AppId_t
-		internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.ClientUGC + 5;
@@ -6907,7 +6907,7 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal uint AppID; // m_unAppID AppId_t
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
 			public static implicit operator ItemInstalled_t ( ItemInstalled_t.Pack4 d ) => new ItemInstalled_t{ AppID = d.AppID,PublishedFileId = d.PublishedFileId, };
 		}
@@ -6916,7 +6916,7 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal uint AppID; // m_unAppID AppId_t
-			internal ulong PublishedFileId; // m_nPublishedFileId PublishedFileId_t
+			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
 			public static implicit operator ItemInstalled_t ( ItemInstalled_t.Pack8 d ) => new ItemInstalled_t{ AppID = d.AppID,PublishedFileId = d.PublishedFileId, };
 		}

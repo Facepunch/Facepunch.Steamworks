@@ -203,10 +203,10 @@ namespace Generator
                     WriteLine( $"[MarshalAs(UnmanagedType.ByValArray, SizeConst = {num}, ArraySubType = UnmanagedType.U8)]" );
                 }
 
-                if ( t.StartsWith( "PublishedFileId_t " ) && t.Contains( "[" ) )
+                if ( t.StartsWith( "PublishedFileId " ) && t.Contains( "[" ) )
                 {
-                    var num = t.Replace( "PublishedFileId_t", "" ).Trim( '[', ']', ' ' );
-                    t = $"ulong[]";
+                    var num = t.Replace( "PublishedFileId", "" ).Trim( '[', ']', ' ' );
+                    t = $"PublishedFileId[]";
                     WriteLine( $"[MarshalAs(UnmanagedType.ByValArray, SizeConst = {num}, ArraySubType = UnmanagedType.U8)]" );
                 }
 

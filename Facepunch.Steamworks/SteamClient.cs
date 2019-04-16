@@ -34,6 +34,7 @@ namespace Steamworks
 			SteamVideo.InstallEvents();
 			SteamUser.InstallEvents();
 			SteamFriends.InstallEvents();
+			SteamScreenshots.InstallEvents();
 
 			RunCallbacks();
 		}

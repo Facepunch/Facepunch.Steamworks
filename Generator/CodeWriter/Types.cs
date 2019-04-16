@@ -37,18 +37,20 @@ namespace Generator
         {
             foreach ( var o in def.typedefs.Where( x => !x.Name.Contains( "::" ) ) )
             {
+				var typeName = Cleanup.ConvertType( o.Name );
+
 				if ( SkipTypes.Contains( o.Name ) )
                     continue;
 
                 if ( SkipTypesStartingWith.Any( x => o.Name.StartsWith( x ) ) )
                     continue;
 
-				StartBlock( $"{Cleanup.Expose( o.Name )} struct {o.Name}" );
+				StartBlock( $"{Cleanup.Expose( typeName )} struct {typeName}" );
                 {
 					WriteLine( $"public {ToManagedType( o.Type )} Value;" );
 					WriteLine();
-					WriteLine( $"public static implicit operator {o.Name}( {ToManagedType( o.Type )} value ) => new {o.Name}(){{ Value = value }};" );
-					WriteLine( $"public static implicit operator {ToManagedType( o.Type )}( {o.Name} value ) => value.Value;" );
+					WriteLine( $"public static implicit operator {typeName}( {ToManagedType( o.Type )} value ) => new {typeName}(){{ Value = value }};" );
+					WriteLine( $"public static implicit operator {ToManagedType( o.Type )}( {typeName} value ) => value.Value;" );
 					WriteLine( $"public override string ToString() => Value.ToString();" );
 				}
                 EndBlock();
