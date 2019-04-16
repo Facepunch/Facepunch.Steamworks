@@ -19,5 +19,7 @@ namespace Steamworks
 		{
 			return value.Value;
 		}
+
+		public override string ToString() => Value.ToString();
 	}
 }

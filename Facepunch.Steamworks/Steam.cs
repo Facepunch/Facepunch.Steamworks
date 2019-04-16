@@ -56,6 +56,11 @@ namespace Steamworks
 			}
 		}
 
+		public static void Shutdown()
+		{
+			// TODO.
+		}
+
 		internal static void RegisterCallback( IntPtr intPtr, int callbackId )
 		{
 			SteamApi.RegisterCallback( intPtr, callbackId );
