@@ -1,5 +1,4 @@
-﻿using Facepunch.Steamworks;
-
+﻿
 namespace Steamworks
 {
 	public struct Image

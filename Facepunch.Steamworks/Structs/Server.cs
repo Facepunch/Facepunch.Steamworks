@@ -1,5 +1,4 @@
-﻿using Facepunch.Steamworks;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Runtime.InteropServices;
