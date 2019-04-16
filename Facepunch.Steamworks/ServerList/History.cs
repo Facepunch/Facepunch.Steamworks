@@ -4,16 +4,14 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Steamworks
+namespace Steamworks.ServerList
 {
-	/*
-	public class ServerListSpectator : BaseServerList
+	public class History : Base
 	{
 		internal override void LaunchQuery()
 		{
 			var filters = GetFilters();
-			request = Internal.RequestSpectatorServerList( AppId.Value, filters, (uint)filters.Length, IntPtr.Zero );
+			request = Internal.RequestHistoryServerList( AppId.Value, ref filters, (uint)filters.Length, IntPtr.Zero );
 		}
 	}
-	*/
 }

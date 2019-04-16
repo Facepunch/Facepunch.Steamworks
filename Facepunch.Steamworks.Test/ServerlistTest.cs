@@ -33,7 +33,7 @@ namespace Steamworks
         [TestMethod]
         public async Task ServerListInternetInterupted()
         {
-			using ( var list = new ServerListInternet() )
+			using ( var list = new ServerList.Internet() )
 			{
 				var task = list.RunQueryAsync();
 
@@ -58,7 +58,7 @@ namespace Steamworks
 		[TestMethod]
 		public async Task ServerListInternet()
 		{
-			using ( var list = new ServerListInternet() )
+			using ( var list = new ServerList.Internet() )
 			{
 				var success = await list.RunQueryAsync();
 
@@ -71,7 +71,7 @@ namespace Steamworks
 		[TestMethod]
 		public async Task ServerListLan()
 		{
-			using ( var list = new ServerListLan() )
+			using ( var list = new ServerList.LocalNetwork() )
 			{
 				var success = await list.RunQueryAsync();
 
@@ -84,7 +84,7 @@ namespace Steamworks
 		[TestMethod]
 		public async Task ServerListFavourites()
 		{
-			using ( var list = new ServerListFavourites() )
+			using ( var list = new ServerList.Favourites() )
 			{
 				var success = await list.RunQueryAsync();
 
@@ -97,7 +97,7 @@ namespace Steamworks
 		[TestMethod]
 		public async Task ServerListFriends()
 		{
-			using ( var list = new ServerListFriends() )
+			using ( var list = new ServerList.Friends() )
 			{
 				var success = await list.RunQueryAsync();
 
@@ -110,7 +110,7 @@ namespace Steamworks
 		[TestMethod]
 		public async Task ServerListHistory()
 		{
-			using ( var list = new ServerListHistory() )
+			using ( var list = new ServerList.History() )
 			{
 				var success = await list.RunQueryAsync();
 
@@ -123,7 +123,7 @@ namespace Steamworks
 		[TestMethod]
 		public async Task FilterByMap()
 		{
-			using ( var list = new ServerListInternet() )
+			using ( var list = new ServerList.Internet() )
 			{
 				list.AddFilter( "map", "de_dust" );
 

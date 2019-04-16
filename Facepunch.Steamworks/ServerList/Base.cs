@@ -5,12 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Steamworks.Data;
 
-namespace Steamworks
+namespace Steamworks.ServerList
 {
-	/// <summary>
-	/// Not for reuse by newbs
-	/// </summary>
-	public abstract class BaseServerList : IDisposable
+	public abstract class Base : IDisposable
 	{
 
 		#region ISteamMatchmakingServers
@@ -57,7 +54,7 @@ namespace Steamworks
 		public List<ServerInfo> Unresponsive = new List<ServerInfo>();
 
 
-		public BaseServerList()
+		public Base()
 		{
 			AppId = SteamUtils.AppId; // Default AppId is this 
 		}

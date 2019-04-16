@@ -4,12 +4,9 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Steamworks
+namespace Steamworks.ServerList
 {
-	/// <summary>
-	/// Not for reuse by newbs
-	/// </summary>
-	public class ServerListLan : BaseServerList
+	public class LocalNetwork : Base
 	{
 		internal override void LaunchQuery()
 		{
