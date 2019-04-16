@@ -145,9 +145,9 @@ namespace Steamworks.Data
 	
 	internal struct ValidateAuthTicketResponse_t : Steamworks.ISteamCallback
 	{
-		internal SteamId SteamID; // m_SteamID class CSteamID
+		internal ulong SteamID; // m_SteamID class CSteamID
 		internal AuthResponse AuthSessionResponse; // m_eAuthSessionResponse enum EAuthSessionResponse
-		internal SteamId OwnerSteamID; // m_OwnerSteamID class CSteamID
+		internal ulong OwnerSteamID; // m_OwnerSteamID class CSteamID
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamUser + 43;
@@ -158,19 +158,19 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal SteamId SteamID; // m_SteamID class CSteamID
+			internal ulong SteamID; // m_SteamID class CSteamID
 			internal AuthResponse AuthSessionResponse; // m_eAuthSessionResponse enum EAuthSessionResponse
-			internal SteamId OwnerSteamID; // m_OwnerSteamID class CSteamID
+			internal ulong OwnerSteamID; // m_OwnerSteamID class CSteamID
 			
 			public static implicit operator ValidateAuthTicketResponse_t ( ValidateAuthTicketResponse_t.Pack4 d ) => new ValidateAuthTicketResponse_t{ SteamID = d.SteamID,AuthSessionResponse = d.AuthSessionResponse,OwnerSteamID = d.OwnerSteamID, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
-			internal SteamId SteamID; // m_SteamID class CSteamID
+			internal ulong SteamID; // m_SteamID class CSteamID
 			internal AuthResponse AuthSessionResponse; // m_eAuthSessionResponse enum EAuthSessionResponse
-			internal SteamId OwnerSteamID; // m_OwnerSteamID class CSteamID
+			internal ulong OwnerSteamID; // m_OwnerSteamID class CSteamID
 			
 			public static implicit operator ValidateAuthTicketResponse_t ( ValidateAuthTicketResponse_t.Pack8 d ) => new ValidateAuthTicketResponse_t{ SteamID = d.SteamID,AuthSessionResponse = d.AuthSessionResponse,OwnerSteamID = d.OwnerSteamID, };
 		}
@@ -381,7 +381,7 @@ namespace Steamworks.Data
 		internal uint GameIP; // m_unGameIP uint32
 		internal ushort GamePort; // m_usGamePort uint16
 		internal ushort QueryPort; // m_usQueryPort uint16
-		internal SteamId SteamIDLobby; // m_steamIDLobby class CSteamID
+		internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
 		
 		#region Marshalling
 		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(Pack4) : typeof(Pack8) );
@@ -395,19 +395,19 @@ namespace Steamworks.Data
 			internal uint GameIP; // m_unGameIP uint32
 			internal ushort GamePort; // m_usGamePort uint16
 			internal ushort QueryPort; // m_usQueryPort uint16
-			internal SteamId SteamIDLobby; // m_steamIDLobby class CSteamID
+			internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
 			
 			public static implicit operator FriendGameInfo_t ( FriendGameInfo_t.Pack4 d ) => new FriendGameInfo_t{ GameID = d.GameID,GameIP = d.GameIP,GamePort = d.GamePort,QueryPort = d.QueryPort,SteamIDLobby = d.SteamIDLobby, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
 			internal GameId GameID; // m_gameID class CGameID
 			internal uint GameIP; // m_unGameIP uint32
 			internal ushort GamePort; // m_usGamePort uint16
 			internal ushort QueryPort; // m_usQueryPort uint16
-			internal SteamId SteamIDLobby; // m_steamIDLobby class CSteamID
+			internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
 			
 			public static implicit operator FriendGameInfo_t ( FriendGameInfo_t.Pack8 d ) => new FriendGameInfo_t{ GameID = d.GameID,GameIP = d.GameIP,GamePort = d.GamePort,QueryPort = d.QueryPort,SteamIDLobby = d.SteamIDLobby, };
 		}
@@ -542,8 +542,8 @@ namespace Steamworks.Data
 	
 	internal struct GameLobbyJoinRequested_t : Steamworks.ISteamCallback
 	{
-		internal SteamId SteamIDLobby; // m_steamIDLobby class CSteamID
-		internal SteamId SteamIDFriend; // m_steamIDFriend class CSteamID
+		internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
+		internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamFriends + 33;
@@ -554,17 +554,17 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal SteamId SteamIDLobby; // m_steamIDLobby class CSteamID
-			internal SteamId SteamIDFriend; // m_steamIDFriend class CSteamID
+			internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
+			internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
 			
 			public static implicit operator GameLobbyJoinRequested_t ( GameLobbyJoinRequested_t.Pack4 d ) => new GameLobbyJoinRequested_t{ SteamIDLobby = d.SteamIDLobby,SteamIDFriend = d.SteamIDFriend, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
-			internal SteamId SteamIDLobby; // m_steamIDLobby class CSteamID
-			internal SteamId SteamIDFriend; // m_steamIDFriend class CSteamID
+			internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
+			internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
 			
 			public static implicit operator GameLobbyJoinRequested_t ( GameLobbyJoinRequested_t.Pack8 d ) => new GameLobbyJoinRequested_t{ SteamIDLobby = d.SteamIDLobby,SteamIDFriend = d.SteamIDFriend, };
 		}
@@ -573,7 +573,7 @@ namespace Steamworks.Data
 	
 	internal struct AvatarImageLoaded_t : Steamworks.ISteamCallback
 	{
-		internal SteamId SteamID; // m_steamID class CSteamID
+		internal ulong SteamID; // m_steamID class CSteamID
 		internal int Image; // m_iImage int
 		internal int Wide; // m_iWide int
 		internal int Tall; // m_iTall int
@@ -587,7 +587,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal SteamId SteamID; // m_steamID class CSteamID
+			internal ulong SteamID; // m_steamID class CSteamID
 			internal int Image; // m_iImage int
 			internal int Wide; // m_iWide int
 			internal int Tall; // m_iTall int
@@ -595,10 +595,10 @@ namespace Steamworks.Data
 			public static implicit operator AvatarImageLoaded_t ( AvatarImageLoaded_t.Pack4 d ) => new AvatarImageLoaded_t{ SteamID = d.SteamID,Image = d.Image,Wide = d.Wide,Tall = d.Tall, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
-			internal SteamId SteamID; // m_steamID class CSteamID
+			internal ulong SteamID; // m_steamID class CSteamID
 			internal int Image; // m_iImage int
 			internal int Wide; // m_iWide int
 			internal int Tall; // m_iTall int
@@ -610,7 +610,7 @@ namespace Steamworks.Data
 	
 	internal struct ClanOfficerListResponse_t : Steamworks.ISteamCallback
 	{
-		internal SteamId SteamIDClan; // m_steamIDClan class CSteamID
+		internal ulong SteamIDClan; // m_steamIDClan class CSteamID
 		internal int COfficers; // m_cOfficers int
 		internal byte Success; // m_bSuccess uint8
 		
@@ -623,17 +623,17 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal SteamId SteamIDClan; // m_steamIDClan class CSteamID
+			internal ulong SteamIDClan; // m_steamIDClan class CSteamID
 			internal int COfficers; // m_cOfficers int
 			internal byte Success; // m_bSuccess uint8
 			
 			public static implicit operator ClanOfficerListResponse_t ( ClanOfficerListResponse_t.Pack4 d ) => new ClanOfficerListResponse_t{ SteamIDClan = d.SteamIDClan,COfficers = d.COfficers,Success = d.Success, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
-			internal SteamId SteamIDClan; // m_steamIDClan class CSteamID
+			internal ulong SteamIDClan; // m_steamIDClan class CSteamID
 			internal int COfficers; // m_cOfficers int
 			internal byte Success; // m_bSuccess uint8
 			
@@ -644,7 +644,7 @@ namespace Steamworks.Data
 	
 	internal struct FriendRichPresenceUpdate_t : Steamworks.ISteamCallback
 	{
-		internal SteamId SteamIDFriend; // m_steamIDFriend class CSteamID
+		internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
 		internal uint AppID; // m_nAppID AppId_t
 		
 		#region ISteamCallback
@@ -656,16 +656,16 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal SteamId SteamIDFriend; // m_steamIDFriend class CSteamID
+			internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
 			internal uint AppID; // m_nAppID AppId_t
 			
 			public static implicit operator FriendRichPresenceUpdate_t ( FriendRichPresenceUpdate_t.Pack4 d ) => new FriendRichPresenceUpdate_t{ SteamIDFriend = d.SteamIDFriend,AppID = d.AppID, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
-			internal SteamId SteamIDFriend; // m_steamIDFriend class CSteamID
+			internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
 			internal uint AppID; // m_nAppID AppId_t
 			
 			public static implicit operator FriendRichPresenceUpdate_t ( FriendRichPresenceUpdate_t.Pack8 d ) => new FriendRichPresenceUpdate_t{ SteamIDFriend = d.SteamIDFriend,AppID = d.AppID, };
@@ -675,7 +675,7 @@ namespace Steamworks.Data
 	
 	internal struct GameRichPresenceJoinRequested_t : Steamworks.ISteamCallback
 	{
-		internal SteamId SteamIDFriend; // m_steamIDFriend class CSteamID
+		internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 		internal string Connect; // m_rgchConnect char [256]
 		
@@ -688,17 +688,17 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal SteamId SteamIDFriend; // m_steamIDFriend class CSteamID
+			internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 			internal string Connect; // m_rgchConnect char [256]
 			
 			public static implicit operator GameRichPresenceJoinRequested_t ( GameRichPresenceJoinRequested_t.Pack4 d ) => new GameRichPresenceJoinRequested_t{ SteamIDFriend = d.SteamIDFriend,Connect = d.Connect, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
-			internal SteamId SteamIDFriend; // m_steamIDFriend class CSteamID
+			internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 			internal string Connect; // m_rgchConnect char [256]
 			
@@ -709,8 +709,8 @@ namespace Steamworks.Data
 	
 	internal struct GameConnectedClanChatMsg_t : Steamworks.ISteamCallback
 	{
-		internal SteamId SteamIDClanChat; // m_steamIDClanChat class CSteamID
-		internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+		internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
+		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 		internal int MessageID; // m_iMessageID int
 		
 		#region ISteamCallback
@@ -722,18 +722,18 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal SteamId SteamIDClanChat; // m_steamIDClanChat class CSteamID
-			internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+			internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			internal int MessageID; // m_iMessageID int
 			
 			public static implicit operator GameConnectedClanChatMsg_t ( GameConnectedClanChatMsg_t.Pack4 d ) => new GameConnectedClanChatMsg_t{ SteamIDClanChat = d.SteamIDClanChat,SteamIDUser = d.SteamIDUser,MessageID = d.MessageID, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
-			internal SteamId SteamIDClanChat; // m_steamIDClanChat class CSteamID
-			internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+			internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			internal int MessageID; // m_iMessageID int
 			
 			public static implicit operator GameConnectedClanChatMsg_t ( GameConnectedClanChatMsg_t.Pack8 d ) => new GameConnectedClanChatMsg_t{ SteamIDClanChat = d.SteamIDClanChat,SteamIDUser = d.SteamIDUser,MessageID = d.MessageID, };
@@ -743,8 +743,8 @@ namespace Steamworks.Data
 	
 	internal struct GameConnectedChatJoin_t : Steamworks.ISteamCallback
 	{
-		internal SteamId SteamIDClanChat; // m_steamIDClanChat class CSteamID
-		internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+		internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
+		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamFriends + 39;
@@ -755,17 +755,17 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal SteamId SteamIDClanChat; // m_steamIDClanChat class CSteamID
-			internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+			internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			
 			public static implicit operator GameConnectedChatJoin_t ( GameConnectedChatJoin_t.Pack4 d ) => new GameConnectedChatJoin_t{ SteamIDClanChat = d.SteamIDClanChat,SteamIDUser = d.SteamIDUser, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
-			internal SteamId SteamIDClanChat; // m_steamIDClanChat class CSteamID
-			internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+			internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			
 			public static implicit operator GameConnectedChatJoin_t ( GameConnectedChatJoin_t.Pack8 d ) => new GameConnectedChatJoin_t{ SteamIDClanChat = d.SteamIDClanChat,SteamIDUser = d.SteamIDUser, };
 		}
@@ -774,8 +774,8 @@ namespace Steamworks.Data
 	
 	internal struct GameConnectedChatLeave_t : Steamworks.ISteamCallback
 	{
-		internal SteamId SteamIDClanChat; // m_steamIDClanChat class CSteamID
-		internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+		internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
+		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool Kicked; // m_bKicked _Bool
 		[MarshalAs(UnmanagedType.I1)]
@@ -790,8 +790,8 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal SteamId SteamIDClanChat; // m_steamIDClanChat class CSteamID
-			internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+			internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool Kicked; // m_bKicked _Bool
 			[MarshalAs(UnmanagedType.I1)]
@@ -800,11 +800,11 @@ namespace Steamworks.Data
 			public static implicit operator GameConnectedChatLeave_t ( GameConnectedChatLeave_t.Pack4 d ) => new GameConnectedChatLeave_t{ SteamIDClanChat = d.SteamIDClanChat,SteamIDUser = d.SteamIDUser,Kicked = d.Kicked,Dropped = d.Dropped, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
-			internal SteamId SteamIDClanChat; // m_steamIDClanChat class CSteamID
-			internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+			internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool Kicked; // m_bKicked _Bool
 			[MarshalAs(UnmanagedType.I1)]
@@ -848,7 +848,7 @@ namespace Steamworks.Data
 	
 	internal struct JoinClanChatRoomCompletionResult_t : Steamworks.ISteamCallback
 	{
-		internal SteamId SteamIDClanChat; // m_steamIDClanChat class CSteamID
+		internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
 		internal ChatRoomEnterResponse ChatRoomEnterResponse; // m_eChatRoomEnterResponse enum EChatRoomEnterResponse
 		
 		#region ISteamCallback
@@ -860,16 +860,16 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal SteamId SteamIDClanChat; // m_steamIDClanChat class CSteamID
+			internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
 			internal ChatRoomEnterResponse ChatRoomEnterResponse; // m_eChatRoomEnterResponse enum EChatRoomEnterResponse
 			
 			public static implicit operator JoinClanChatRoomCompletionResult_t ( JoinClanChatRoomCompletionResult_t.Pack4 d ) => new JoinClanChatRoomCompletionResult_t{ SteamIDClanChat = d.SteamIDClanChat,ChatRoomEnterResponse = d.ChatRoomEnterResponse, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
-			internal SteamId SteamIDClanChat; // m_steamIDClanChat class CSteamID
+			internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
 			internal ChatRoomEnterResponse ChatRoomEnterResponse; // m_eChatRoomEnterResponse enum EChatRoomEnterResponse
 			
 			public static implicit operator JoinClanChatRoomCompletionResult_t ( JoinClanChatRoomCompletionResult_t.Pack8 d ) => new JoinClanChatRoomCompletionResult_t{ SteamIDClanChat = d.SteamIDClanChat,ChatRoomEnterResponse = d.ChatRoomEnterResponse, };
@@ -879,7 +879,7 @@ namespace Steamworks.Data
 	
 	internal struct GameConnectedFriendChatMsg_t : Steamworks.ISteamCallback
 	{
-		internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 		internal int MessageID; // m_iMessageID int
 		
 		#region ISteamCallback
@@ -891,16 +891,16 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			internal int MessageID; // m_iMessageID int
 			
 			public static implicit operator GameConnectedFriendChatMsg_t ( GameConnectedFriendChatMsg_t.Pack4 d ) => new GameConnectedFriendChatMsg_t{ SteamIDUser = d.SteamIDUser,MessageID = d.MessageID, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
-			internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			internal int MessageID; // m_iMessageID int
 			
 			public static implicit operator GameConnectedFriendChatMsg_t ( GameConnectedFriendChatMsg_t.Pack8 d ) => new GameConnectedFriendChatMsg_t{ SteamIDUser = d.SteamIDUser,MessageID = d.MessageID, };
@@ -911,7 +911,7 @@ namespace Steamworks.Data
 	internal struct FriendsGetFollowerCount_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
-		internal SteamId SteamID; // m_steamID class CSteamID
+		internal ulong SteamID; // m_steamID class CSteamID
 		internal int Count; // m_nCount int
 		
 		#region ISteamCallback
@@ -924,17 +924,17 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal SteamId SteamID; // m_steamID class CSteamID
+			internal ulong SteamID; // m_steamID class CSteamID
 			internal int Count; // m_nCount int
 			
 			public static implicit operator FriendsGetFollowerCount_t ( FriendsGetFollowerCount_t.Pack4 d ) => new FriendsGetFollowerCount_t{ Result = d.Result,SteamID = d.SteamID,Count = d.Count, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal SteamId SteamID; // m_steamID class CSteamID
+			internal ulong SteamID; // m_steamID class CSteamID
 			internal int Count; // m_nCount int
 			
 			public static implicit operator FriendsGetFollowerCount_t ( FriendsGetFollowerCount_t.Pack8 d ) => new FriendsGetFollowerCount_t{ Result = d.Result,SteamID = d.SteamID,Count = d.Count, };
@@ -945,7 +945,7 @@ namespace Steamworks.Data
 	internal struct FriendsIsFollowing_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
-		internal SteamId SteamID; // m_steamID class CSteamID
+		internal ulong SteamID; // m_steamID class CSteamID
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool IsFollowing; // m_bIsFollowing _Bool
 		
@@ -959,18 +959,18 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal SteamId SteamID; // m_steamID class CSteamID
+			internal ulong SteamID; // m_steamID class CSteamID
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool IsFollowing; // m_bIsFollowing _Bool
 			
 			public static implicit operator FriendsIsFollowing_t ( FriendsIsFollowing_t.Pack4 d ) => new FriendsIsFollowing_t{ Result = d.Result,SteamID = d.SteamID,IsFollowing = d.IsFollowing, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal SteamId SteamID; // m_steamID class CSteamID
+			internal ulong SteamID; // m_steamID class CSteamID
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool IsFollowing; // m_bIsFollowing _Bool
 			
@@ -1005,7 +1005,7 @@ namespace Steamworks.Data
 			public static implicit operator FriendsEnumerateFollowingList_t ( FriendsEnumerateFollowingList_t.Pack4 d ) => new FriendsEnumerateFollowingList_t{ Result = d.Result,GSteamID = d.GSteamID,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
 			internal Result Result; // m_eResult enum EResult
@@ -1280,7 +1280,7 @@ namespace Steamworks.Data
 		internal string ServerName; // m_szServerName char [64]
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
 		internal string GameTags; // m_szGameTags char [128]
-		internal SteamId SteamID; // m_steamID class CSteamID
+		internal ulong SteamID; // m_steamID class CSteamID
 		
 		#region Marshalling
 		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(Pack4) : typeof(Pack8) );
@@ -1316,12 +1316,12 @@ namespace Steamworks.Data
 			internal string ServerName; // m_szServerName char [64]
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
 			internal string GameTags; // m_szGameTags char [128]
-			internal SteamId SteamID; // m_steamID class CSteamID
+			internal ulong SteamID; // m_steamID class CSteamID
 			
 			public static implicit operator gameserveritem_t ( gameserveritem_t.Pack4 d ) => new gameserveritem_t{ NetAdr = d.NetAdr,Ping = d.Ping,HadSuccessfulResponse = d.HadSuccessfulResponse,DoNotRefresh = d.DoNotRefresh,GameDir = d.GameDir,Map = d.Map,GameDescription = d.GameDescription,AppID = d.AppID,Players = d.Players,MaxPlayers = d.MaxPlayers,BotPlayers = d.BotPlayers,Password = d.Password,Secure = d.Secure,TimeLastPlayed = d.TimeLastPlayed,ServerVersion = d.ServerVersion,ServerName = d.ServerName,GameTags = d.GameTags,SteamID = d.SteamID, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
 			internal servernetadr_t NetAdr; // m_NetAdr class servernetadr_t
@@ -1350,7 +1350,7 @@ namespace Steamworks.Data
 			internal string ServerName; // m_szServerName char [64]
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
 			internal string GameTags; // m_szGameTags char [128]
-			internal SteamId SteamID; // m_steamID class CSteamID
+			internal ulong SteamID; // m_steamID class CSteamID
 			
 			public static implicit operator gameserveritem_t ( gameserveritem_t.Pack8 d ) => new gameserveritem_t{ NetAdr = d.NetAdr,Ping = d.Ping,HadSuccessfulResponse = d.HadSuccessfulResponse,DoNotRefresh = d.DoNotRefresh,GameDir = d.GameDir,Map = d.Map,GameDescription = d.GameDescription,AppID = d.AppID,Players = d.Players,MaxPlayers = d.MaxPlayers,BotPlayers = d.BotPlayers,Password = d.Password,Secure = d.Secure,TimeLastPlayed = d.TimeLastPlayed,ServerVersion = d.ServerVersion,ServerName = d.ServerName,GameTags = d.GameTags,SteamID = d.SteamID, };
 		}
@@ -1752,7 +1752,7 @@ namespace Steamworks.Data
 	{
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool GameBootInviteExists; // m_bGameBootInviteExists _Bool
-		internal SteamId SteamIDLobby; // m_steamIDLobby class CSteamID
+		internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamMatchmaking + 15;
@@ -1765,17 +1765,17 @@ namespace Steamworks.Data
 		{
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool GameBootInviteExists; // m_bGameBootInviteExists _Bool
-			internal SteamId SteamIDLobby; // m_steamIDLobby class CSteamID
+			internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
 			
 			public static implicit operator PSNGameBootInviteResult_t ( PSNGameBootInviteResult_t.Pack4 d ) => new PSNGameBootInviteResult_t{ GameBootInviteExists = d.GameBootInviteExists,SteamIDLobby = d.SteamIDLobby, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool GameBootInviteExists; // m_bGameBootInviteExists _Bool
-			internal SteamId SteamIDLobby; // m_steamIDLobby class CSteamID
+			internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
 			
 			public static implicit operator PSNGameBootInviteResult_t ( PSNGameBootInviteResult_t.Pack8 d ) => new PSNGameBootInviteResult_t{ GameBootInviteExists = d.GameBootInviteExists,SteamIDLobby = d.SteamIDLobby, };
 		}
@@ -1814,8 +1814,8 @@ namespace Steamworks.Data
 	{
 		internal ulong LSearchID; // m_ullSearchID uint64
 		internal Result Result; // m_eResult enum EResult
-		internal SteamId LobbyID; // m_lobbyID class CSteamID
-		internal SteamId SteamIDEndedSearch; // m_steamIDEndedSearch class CSteamID
+		internal ulong LobbyID; // m_lobbyID class CSteamID
+		internal ulong SteamIDEndedSearch; // m_steamIDEndedSearch class CSteamID
 		internal int SecondsRemainingEstimate; // m_nSecondsRemainingEstimate int32
 		internal int CPlayersSearching; // m_cPlayersSearching int32
 		
@@ -1830,21 +1830,21 @@ namespace Steamworks.Data
 		{
 			internal ulong LSearchID; // m_ullSearchID uint64
 			internal Result Result; // m_eResult enum EResult
-			internal SteamId LobbyID; // m_lobbyID class CSteamID
-			internal SteamId SteamIDEndedSearch; // m_steamIDEndedSearch class CSteamID
+			internal ulong LobbyID; // m_lobbyID class CSteamID
+			internal ulong SteamIDEndedSearch; // m_steamIDEndedSearch class CSteamID
 			internal int SecondsRemainingEstimate; // m_nSecondsRemainingEstimate int32
 			internal int CPlayersSearching; // m_cPlayersSearching int32
 			
 			public static implicit operator SearchForGameProgressCallback_t ( SearchForGameProgressCallback_t.Pack4 d ) => new SearchForGameProgressCallback_t{ LSearchID = d.LSearchID,Result = d.Result,LobbyID = d.LobbyID,SteamIDEndedSearch = d.SteamIDEndedSearch,SecondsRemainingEstimate = d.SecondsRemainingEstimate,CPlayersSearching = d.CPlayersSearching, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
 			internal ulong LSearchID; // m_ullSearchID uint64
 			internal Result Result; // m_eResult enum EResult
-			internal SteamId LobbyID; // m_lobbyID class CSteamID
-			internal SteamId SteamIDEndedSearch; // m_steamIDEndedSearch class CSteamID
+			internal ulong LobbyID; // m_lobbyID class CSteamID
+			internal ulong SteamIDEndedSearch; // m_steamIDEndedSearch class CSteamID
 			internal int SecondsRemainingEstimate; // m_nSecondsRemainingEstimate int32
 			internal int CPlayersSearching; // m_cPlayersSearching int32
 			
@@ -1859,7 +1859,7 @@ namespace Steamworks.Data
 		internal Result Result; // m_eResult enum EResult
 		internal int CountPlayersInGame; // m_nCountPlayersInGame int32
 		internal int CountAcceptedGame; // m_nCountAcceptedGame int32
-		internal SteamId SteamIDHost; // m_steamIDHost class CSteamID
+		internal ulong SteamIDHost; // m_steamIDHost class CSteamID
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool FinalCallback; // m_bFinalCallback _Bool
 		
@@ -1876,21 +1876,21 @@ namespace Steamworks.Data
 			internal Result Result; // m_eResult enum EResult
 			internal int CountPlayersInGame; // m_nCountPlayersInGame int32
 			internal int CountAcceptedGame; // m_nCountAcceptedGame int32
-			internal SteamId SteamIDHost; // m_steamIDHost class CSteamID
+			internal ulong SteamIDHost; // m_steamIDHost class CSteamID
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool FinalCallback; // m_bFinalCallback _Bool
 			
 			public static implicit operator SearchForGameResultCallback_t ( SearchForGameResultCallback_t.Pack4 d ) => new SearchForGameResultCallback_t{ LSearchID = d.LSearchID,Result = d.Result,CountPlayersInGame = d.CountPlayersInGame,CountAcceptedGame = d.CountAcceptedGame,SteamIDHost = d.SteamIDHost,FinalCallback = d.FinalCallback, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
 			internal ulong LSearchID; // m_ullSearchID uint64
 			internal Result Result; // m_eResult enum EResult
 			internal int CountPlayersInGame; // m_nCountPlayersInGame int32
 			internal int CountAcceptedGame; // m_nCountAcceptedGame int32
-			internal SteamId SteamIDHost; // m_steamIDHost class CSteamID
+			internal ulong SteamIDHost; // m_steamIDHost class CSteamID
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool FinalCallback; // m_bFinalCallback _Bool
 			
@@ -1934,8 +1934,8 @@ namespace Steamworks.Data
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong LSearchID; // m_ullSearchID uint64
-		internal SteamId SteamIDPlayerFound; // m_SteamIDPlayerFound class CSteamID
-		internal SteamId SteamIDLobby; // m_SteamIDLobby class CSteamID
+		internal ulong SteamIDPlayerFound; // m_SteamIDPlayerFound class CSteamID
+		internal ulong SteamIDLobby; // m_SteamIDLobby class CSteamID
 		internal PlayerAcceptState_t PlayerAcceptState; // m_ePlayerAcceptState PlayerAcceptState_t
 		internal int PlayerIndex; // m_nPlayerIndex int32
 		internal int TotalPlayersFound; // m_nTotalPlayersFound int32
@@ -1954,8 +1954,8 @@ namespace Steamworks.Data
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong LSearchID; // m_ullSearchID uint64
-			internal SteamId SteamIDPlayerFound; // m_SteamIDPlayerFound class CSteamID
-			internal SteamId SteamIDLobby; // m_SteamIDLobby class CSteamID
+			internal ulong SteamIDPlayerFound; // m_SteamIDPlayerFound class CSteamID
+			internal ulong SteamIDLobby; // m_SteamIDLobby class CSteamID
 			internal PlayerAcceptState_t PlayerAcceptState; // m_ePlayerAcceptState PlayerAcceptState_t
 			internal int PlayerIndex; // m_nPlayerIndex int32
 			internal int TotalPlayersFound; // m_nTotalPlayersFound int32
@@ -1966,13 +1966,13 @@ namespace Steamworks.Data
 			public static implicit operator RequestPlayersForGameResultCallback_t ( RequestPlayersForGameResultCallback_t.Pack4 d ) => new RequestPlayersForGameResultCallback_t{ Result = d.Result,LSearchID = d.LSearchID,SteamIDPlayerFound = d.SteamIDPlayerFound,SteamIDLobby = d.SteamIDLobby,PlayerAcceptState = d.PlayerAcceptState,PlayerIndex = d.PlayerIndex,TotalPlayersFound = d.TotalPlayersFound,TotalPlayersAcceptedGame = d.TotalPlayersAcceptedGame,SuggestedTeamIndex = d.SuggestedTeamIndex,LUniqueGameID = d.LUniqueGameID, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong LSearchID; // m_ullSearchID uint64
-			internal SteamId SteamIDPlayerFound; // m_SteamIDPlayerFound class CSteamID
-			internal SteamId SteamIDLobby; // m_SteamIDLobby class CSteamID
+			internal ulong SteamIDPlayerFound; // m_SteamIDPlayerFound class CSteamID
+			internal ulong SteamIDLobby; // m_SteamIDLobby class CSteamID
 			internal PlayerAcceptState_t PlayerAcceptState; // m_ePlayerAcceptState PlayerAcceptState_t
 			internal int PlayerIndex; // m_nPlayerIndex int32
 			internal int TotalPlayersFound; // m_nTotalPlayersFound int32
@@ -2023,7 +2023,7 @@ namespace Steamworks.Data
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong UllUniqueGameID; // ullUniqueGameID uint64
-		internal SteamId SteamIDPlayer; // steamIDPlayer class CSteamID
+		internal ulong SteamIDPlayer; // steamIDPlayer class CSteamID
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamGameSearch + 14;
@@ -2036,17 +2036,17 @@ namespace Steamworks.Data
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong UllUniqueGameID; // ullUniqueGameID uint64
-			internal SteamId SteamIDPlayer; // steamIDPlayer class CSteamID
+			internal ulong SteamIDPlayer; // steamIDPlayer class CSteamID
 			
 			public static implicit operator SubmitPlayerResultResultCallback_t ( SubmitPlayerResultResultCallback_t.Pack4 d ) => new SubmitPlayerResultResultCallback_t{ Result = d.Result,UllUniqueGameID = d.UllUniqueGameID,SteamIDPlayer = d.SteamIDPlayer, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong UllUniqueGameID; // ullUniqueGameID uint64
-			internal SteamId SteamIDPlayer; // steamIDPlayer class CSteamID
+			internal ulong SteamIDPlayer; // steamIDPlayer class CSteamID
 			
 			public static implicit operator SubmitPlayerResultResultCallback_t ( SubmitPlayerResultResultCallback_t.Pack8 d ) => new SubmitPlayerResultResultCallback_t{ Result = d.Result,UllUniqueGameID = d.UllUniqueGameID,SteamIDPlayer = d.SteamIDPlayer, };
 		}
@@ -2088,7 +2088,7 @@ namespace Steamworks.Data
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
-		internal SteamId SteamIDBeaconOwner; // m_SteamIDBeaconOwner class CSteamID
+		internal ulong SteamIDBeaconOwner; // m_SteamIDBeaconOwner class CSteamID
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 		internal string ConnectString; // m_rgchConnectString char [256]
 		
@@ -2103,19 +2103,19 @@ namespace Steamworks.Data
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
-			internal SteamId SteamIDBeaconOwner; // m_SteamIDBeaconOwner class CSteamID
+			internal ulong SteamIDBeaconOwner; // m_SteamIDBeaconOwner class CSteamID
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 			internal string ConnectString; // m_rgchConnectString char [256]
 			
 			public static implicit operator JoinPartyCallback_t ( JoinPartyCallback_t.Pack4 d ) => new JoinPartyCallback_t{ Result = d.Result,BeaconID = d.BeaconID,SteamIDBeaconOwner = d.SteamIDBeaconOwner,ConnectString = d.ConnectString, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
-			internal SteamId SteamIDBeaconOwner; // m_SteamIDBeaconOwner class CSteamID
+			internal ulong SteamIDBeaconOwner; // m_SteamIDBeaconOwner class CSteamID
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 			internal string ConnectString; // m_rgchConnectString char [256]
 			
@@ -2158,7 +2158,7 @@ namespace Steamworks.Data
 	internal struct ReservationNotificationCallback_t : Steamworks.ISteamCallback
 	{
 		internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
-		internal SteamId SteamIDJoiner; // m_steamIDJoiner class CSteamID
+		internal ulong SteamIDJoiner; // m_steamIDJoiner class CSteamID
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamParties + 3;
@@ -2170,16 +2170,16 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
-			internal SteamId SteamIDJoiner; // m_steamIDJoiner class CSteamID
+			internal ulong SteamIDJoiner; // m_steamIDJoiner class CSteamID
 			
 			public static implicit operator ReservationNotificationCallback_t ( ReservationNotificationCallback_t.Pack4 d ) => new ReservationNotificationCallback_t{ BeaconID = d.BeaconID,SteamIDJoiner = d.SteamIDJoiner, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
 			internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
-			internal SteamId SteamIDJoiner; // m_steamIDJoiner class CSteamID
+			internal ulong SteamIDJoiner; // m_steamIDJoiner class CSteamID
 			
 			public static implicit operator ReservationNotificationCallback_t ( ReservationNotificationCallback_t.Pack8 d ) => new ReservationNotificationCallback_t{ BeaconID = d.BeaconID,SteamIDJoiner = d.SteamIDJoiner, };
 		}
@@ -3348,7 +3348,7 @@ namespace Steamworks.Data
 	
 	internal struct LeaderboardEntry_t
 	{
-		internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 		internal int GlobalRank; // m_nGlobalRank int32
 		internal int Score; // m_nScore int32
 		internal int CDetails; // m_cDetails int32
@@ -3362,7 +3362,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			internal int GlobalRank; // m_nGlobalRank int32
 			internal int Score; // m_nScore int32
 			internal int CDetails; // m_cDetails int32
@@ -3374,7 +3374,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 		public struct Pack8
 		{
-			internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			internal int GlobalRank; // m_nGlobalRank int32
 			internal int Score; // m_nScore int32
 			internal int CDetails; // m_cDetails int32
@@ -3389,7 +3389,7 @@ namespace Steamworks.Data
 	{
 		internal ulong GameID; // m_nGameID uint64
 		internal Result Result; // m_eResult enum EResult
-		internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamUserStats + 1;
@@ -3402,17 +3402,17 @@ namespace Steamworks.Data
 		{
 			internal ulong GameID; // m_nGameID uint64
 			internal Result Result; // m_eResult enum EResult
-			internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			
 			public static implicit operator UserStatsReceived_t ( UserStatsReceived_t.Pack4 d ) => new UserStatsReceived_t{ GameID = d.GameID,Result = d.Result,SteamIDUser = d.SteamIDUser, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
 			internal ulong GameID; // m_nGameID uint64
 			internal Result Result; // m_eResult enum EResult
-			internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			
 			public static implicit operator UserStatsReceived_t ( UserStatsReceived_t.Pack8 d ) => new UserStatsReceived_t{ GameID = d.GameID,Result = d.Result,SteamIDUser = d.SteamIDUser, };
 		}
@@ -3637,7 +3637,7 @@ namespace Steamworks.Data
 	
 	internal struct UserStatsUnloaded_t : Steamworks.ISteamCallback
 	{
-		internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamUserStats + 8;
@@ -3648,15 +3648,15 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			
 			public static implicit operator UserStatsUnloaded_t ( UserStatsUnloaded_t.Pack4 d ) => new UserStatsUnloaded_t{ SteamIDUser = d.SteamIDUser, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
-			internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			
 			public static implicit operator UserStatsUnloaded_t ( UserStatsUnloaded_t.Pack8 d ) => new UserStatsUnloaded_t{ SteamIDUser = d.SteamIDUser, };
 		}
@@ -4022,7 +4022,7 @@ namespace Steamworks.Data
 	
 	internal struct P2PSessionRequest_t : Steamworks.ISteamCallback
 	{
-		internal SteamId SteamIDRemote; // m_steamIDRemote class CSteamID
+		internal ulong SteamIDRemote; // m_steamIDRemote class CSteamID
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamNetworking + 2;
@@ -4033,15 +4033,15 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal SteamId SteamIDRemote; // m_steamIDRemote class CSteamID
+			internal ulong SteamIDRemote; // m_steamIDRemote class CSteamID
 			
 			public static implicit operator P2PSessionRequest_t ( P2PSessionRequest_t.Pack4 d ) => new P2PSessionRequest_t{ SteamIDRemote = d.SteamIDRemote, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
-			internal SteamId SteamIDRemote; // m_steamIDRemote class CSteamID
+			internal ulong SteamIDRemote; // m_steamIDRemote class CSteamID
 			
 			public static implicit operator P2PSessionRequest_t ( P2PSessionRequest_t.Pack8 d ) => new P2PSessionRequest_t{ SteamIDRemote = d.SteamIDRemote, };
 		}
@@ -4050,7 +4050,7 @@ namespace Steamworks.Data
 	
 	internal struct P2PSessionConnectFail_t : Steamworks.ISteamCallback
 	{
-		internal SteamId SteamIDRemote; // m_steamIDRemote class CSteamID
+		internal ulong SteamIDRemote; // m_steamIDRemote class CSteamID
 		internal byte P2PSessionError; // m_eP2PSessionError uint8
 		
 		#region ISteamCallback
@@ -4062,16 +4062,16 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal SteamId SteamIDRemote; // m_steamIDRemote class CSteamID
+			internal ulong SteamIDRemote; // m_steamIDRemote class CSteamID
 			internal byte P2PSessionError; // m_eP2PSessionError uint8
 			
 			public static implicit operator P2PSessionConnectFail_t ( P2PSessionConnectFail_t.Pack4 d ) => new P2PSessionConnectFail_t{ SteamIDRemote = d.SteamIDRemote,P2PSessionError = d.P2PSessionError, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
-			internal SteamId SteamIDRemote; // m_steamIDRemote class CSteamID
+			internal ulong SteamIDRemote; // m_steamIDRemote class CSteamID
 			internal byte P2PSessionError; // m_eP2PSessionError uint8
 			
 			public static implicit operator P2PSessionConnectFail_t ( P2PSessionConnectFail_t.Pack8 d ) => new P2PSessionConnectFail_t{ SteamIDRemote = d.SteamIDRemote,P2PSessionError = d.P2PSessionError, };
@@ -4083,7 +4083,7 @@ namespace Steamworks.Data
 	{
 		internal uint Socket; // m_hSocket SNetSocket_t
 		internal uint ListenSocket; // m_hListenSocket SNetListenSocket_t
-		internal SteamId SteamIDRemote; // m_steamIDRemote class CSteamID
+		internal ulong SteamIDRemote; // m_steamIDRemote class CSteamID
 		internal int SNetSocketState; // m_eSNetSocketState int
 		
 		#region ISteamCallback
@@ -4097,18 +4097,18 @@ namespace Steamworks.Data
 		{
 			internal uint Socket; // m_hSocket SNetSocket_t
 			internal uint ListenSocket; // m_hListenSocket SNetListenSocket_t
-			internal SteamId SteamIDRemote; // m_steamIDRemote class CSteamID
+			internal ulong SteamIDRemote; // m_steamIDRemote class CSteamID
 			internal int SNetSocketState; // m_eSNetSocketState int
 			
 			public static implicit operator SocketStatusCallback_t ( SocketStatusCallback_t.Pack4 d ) => new SocketStatusCallback_t{ Socket = d.Socket,ListenSocket = d.ListenSocket,SteamIDRemote = d.SteamIDRemote,SNetSocketState = d.SNetSocketState, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
 			internal uint Socket; // m_hSocket SNetSocket_t
 			internal uint ListenSocket; // m_hListenSocket SNetListenSocket_t
-			internal SteamId SteamIDRemote; // m_steamIDRemote class CSteamID
+			internal ulong SteamIDRemote; // m_steamIDRemote class CSteamID
 			internal int SNetSocketState; // m_eSNetSocketState int
 			
 			public static implicit operator SocketStatusCallback_t ( SocketStatusCallback_t.Pack8 d ) => new SocketStatusCallback_t{ Socket = d.Socket,ListenSocket = d.ListenSocket,SteamIDRemote = d.SteamIDRemote,SNetSocketState = d.SNetSocketState, };
@@ -6162,7 +6162,7 @@ namespace Steamworks.Data
 	internal struct SteamInventoryEligiblePromoItemDefIDs_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_result enum EResult
-		internal SteamId SteamID; // m_steamID class CSteamID
+		internal ulong SteamID; // m_steamID class CSteamID
 		internal int UmEligiblePromoItemDefs; // m_numEligiblePromoItemDefs int
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool CachedData; // m_bCachedData _Bool
@@ -6177,7 +6177,7 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal Result Result; // m_result enum EResult
-			internal SteamId SteamID; // m_steamID class CSteamID
+			internal ulong SteamID; // m_steamID class CSteamID
 			internal int UmEligiblePromoItemDefs; // m_numEligiblePromoItemDefs int
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool CachedData; // m_bCachedData _Bool
@@ -6185,11 +6185,11 @@ namespace Steamworks.Data
 			public static implicit operator SteamInventoryEligiblePromoItemDefIDs_t ( SteamInventoryEligiblePromoItemDefIDs_t.Pack4 d ) => new SteamInventoryEligiblePromoItemDefIDs_t{ Result = d.Result,SteamID = d.SteamID,UmEligiblePromoItemDefs = d.UmEligiblePromoItemDefs,CachedData = d.CachedData, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
 			internal Result Result; // m_result enum EResult
-			internal SteamId SteamID; // m_steamID class CSteamID
+			internal ulong SteamID; // m_steamID class CSteamID
 			internal int UmEligiblePromoItemDefs; // m_numEligiblePromoItemDefs int
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool CachedData; // m_bCachedData _Bool
@@ -6365,8 +6365,8 @@ namespace Steamworks.Data
 	
 	internal struct GSClientApprove_t : Steamworks.ISteamCallback
 	{
-		internal SteamId SteamID; // m_SteamID class CSteamID
-		internal SteamId OwnerSteamID; // m_OwnerSteamID class CSteamID
+		internal ulong SteamID; // m_SteamID class CSteamID
+		internal ulong OwnerSteamID; // m_OwnerSteamID class CSteamID
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamGameServer + 1;
@@ -6377,17 +6377,17 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal SteamId SteamID; // m_SteamID class CSteamID
-			internal SteamId OwnerSteamID; // m_OwnerSteamID class CSteamID
+			internal ulong SteamID; // m_SteamID class CSteamID
+			internal ulong OwnerSteamID; // m_OwnerSteamID class CSteamID
 			
 			public static implicit operator GSClientApprove_t ( GSClientApprove_t.Pack4 d ) => new GSClientApprove_t{ SteamID = d.SteamID,OwnerSteamID = d.OwnerSteamID, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
-			internal SteamId SteamID; // m_SteamID class CSteamID
-			internal SteamId OwnerSteamID; // m_OwnerSteamID class CSteamID
+			internal ulong SteamID; // m_SteamID class CSteamID
+			internal ulong OwnerSteamID; // m_OwnerSteamID class CSteamID
 			
 			public static implicit operator GSClientApprove_t ( GSClientApprove_t.Pack8 d ) => new GSClientApprove_t{ SteamID = d.SteamID,OwnerSteamID = d.OwnerSteamID, };
 		}
@@ -6396,7 +6396,7 @@ namespace Steamworks.Data
 	
 	internal struct GSClientDeny_t : Steamworks.ISteamCallback
 	{
-		internal SteamId SteamID; // m_SteamID class CSteamID
+		internal ulong SteamID; // m_SteamID class CSteamID
 		internal DenyReason DenyReason; // m_eDenyReason enum EDenyReason
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
 		internal string OptionalText; // m_rgchOptionalText char [128]
@@ -6410,7 +6410,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal SteamId SteamID; // m_SteamID class CSteamID
+			internal ulong SteamID; // m_SteamID class CSteamID
 			internal DenyReason DenyReason; // m_eDenyReason enum EDenyReason
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
 			internal string OptionalText; // m_rgchOptionalText char [128]
@@ -6418,10 +6418,10 @@ namespace Steamworks.Data
 			public static implicit operator GSClientDeny_t ( GSClientDeny_t.Pack4 d ) => new GSClientDeny_t{ SteamID = d.SteamID,DenyReason = d.DenyReason,OptionalText = d.OptionalText, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
-			internal SteamId SteamID; // m_SteamID class CSteamID
+			internal ulong SteamID; // m_SteamID class CSteamID
 			internal DenyReason DenyReason; // m_eDenyReason enum EDenyReason
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
 			internal string OptionalText; // m_rgchOptionalText char [128]
@@ -6433,7 +6433,7 @@ namespace Steamworks.Data
 	
 	internal struct GSClientKick_t : Steamworks.ISteamCallback
 	{
-		internal SteamId SteamID; // m_SteamID class CSteamID
+		internal ulong SteamID; // m_SteamID class CSteamID
 		internal DenyReason DenyReason; // m_eDenyReason enum EDenyReason
 		
 		#region ISteamCallback
@@ -6445,16 +6445,16 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal SteamId SteamID; // m_SteamID class CSteamID
+			internal ulong SteamID; // m_SteamID class CSteamID
 			internal DenyReason DenyReason; // m_eDenyReason enum EDenyReason
 			
 			public static implicit operator GSClientKick_t ( GSClientKick_t.Pack4 d ) => new GSClientKick_t{ SteamID = d.SteamID,DenyReason = d.DenyReason, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
-			internal SteamId SteamID; // m_SteamID class CSteamID
+			internal ulong SteamID; // m_SteamID class CSteamID
 			internal DenyReason DenyReason; // m_eDenyReason enum EDenyReason
 			
 			public static implicit operator GSClientKick_t ( GSClientKick_t.Pack8 d ) => new GSClientKick_t{ SteamID = d.SteamID,DenyReason = d.DenyReason, };
@@ -6569,8 +6569,8 @@ namespace Steamworks.Data
 	
 	internal struct GSClientGroupStatus_t : Steamworks.ISteamCallback
 	{
-		internal SteamId SteamIDUser; // m_SteamIDUser class CSteamID
-		internal SteamId SteamIDGroup; // m_SteamIDGroup class CSteamID
+		internal ulong SteamIDUser; // m_SteamIDUser class CSteamID
+		internal ulong SteamIDGroup; // m_SteamIDGroup class CSteamID
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool Member; // m_bMember _Bool
 		[MarshalAs(UnmanagedType.I1)]
@@ -6585,8 +6585,8 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal SteamId SteamIDUser; // m_SteamIDUser class CSteamID
-			internal SteamId SteamIDGroup; // m_SteamIDGroup class CSteamID
+			internal ulong SteamIDUser; // m_SteamIDUser class CSteamID
+			internal ulong SteamIDGroup; // m_SteamIDGroup class CSteamID
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool Member; // m_bMember _Bool
 			[MarshalAs(UnmanagedType.I1)]
@@ -6595,11 +6595,11 @@ namespace Steamworks.Data
 			public static implicit operator GSClientGroupStatus_t ( GSClientGroupStatus_t.Pack4 d ) => new GSClientGroupStatus_t{ SteamIDUser = d.SteamIDUser,SteamIDGroup = d.SteamIDGroup,Member = d.Member,Officer = d.Officer, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
-			internal SteamId SteamIDUser; // m_SteamIDUser class CSteamID
-			internal SteamId SteamIDGroup; // m_SteamIDGroup class CSteamID
+			internal ulong SteamIDUser; // m_SteamIDUser class CSteamID
+			internal ulong SteamIDGroup; // m_SteamIDGroup class CSteamID
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool Member; // m_bMember _Bool
 			[MarshalAs(UnmanagedType.I1)]
@@ -6693,7 +6693,7 @@ namespace Steamworks.Data
 		internal int CPlayersThatDontLikeCandidate; // m_cPlayersThatDontLikeCandidate int
 		internal int CPlayersThatCandidateDoesntLike; // m_cPlayersThatCandidateDoesntLike int
 		internal int CClanPlayersThatDontLikeCandidate; // m_cClanPlayersThatDontLikeCandidate int
-		internal SteamId SteamIDCandidate; // m_SteamIDCandidate class CSteamID
+		internal ulong SteamIDCandidate; // m_SteamIDCandidate class CSteamID
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamGameServer + 11;
@@ -6708,19 +6708,19 @@ namespace Steamworks.Data
 			internal int CPlayersThatDontLikeCandidate; // m_cPlayersThatDontLikeCandidate int
 			internal int CPlayersThatCandidateDoesntLike; // m_cPlayersThatCandidateDoesntLike int
 			internal int CClanPlayersThatDontLikeCandidate; // m_cClanPlayersThatDontLikeCandidate int
-			internal SteamId SteamIDCandidate; // m_SteamIDCandidate class CSteamID
+			internal ulong SteamIDCandidate; // m_SteamIDCandidate class CSteamID
 			
 			public static implicit operator ComputeNewPlayerCompatibilityResult_t ( ComputeNewPlayerCompatibilityResult_t.Pack4 d ) => new ComputeNewPlayerCompatibilityResult_t{ Result = d.Result,CPlayersThatDontLikeCandidate = d.CPlayersThatDontLikeCandidate,CPlayersThatCandidateDoesntLike = d.CPlayersThatCandidateDoesntLike,CClanPlayersThatDontLikeCandidate = d.CClanPlayersThatDontLikeCandidate,SteamIDCandidate = d.SteamIDCandidate, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal int CPlayersThatDontLikeCandidate; // m_cPlayersThatDontLikeCandidate int
 			internal int CPlayersThatCandidateDoesntLike; // m_cPlayersThatCandidateDoesntLike int
 			internal int CClanPlayersThatDontLikeCandidate; // m_cClanPlayersThatDontLikeCandidate int
-			internal SteamId SteamIDCandidate; // m_SteamIDCandidate class CSteamID
+			internal ulong SteamIDCandidate; // m_SteamIDCandidate class CSteamID
 			
 			public static implicit operator ComputeNewPlayerCompatibilityResult_t ( ComputeNewPlayerCompatibilityResult_t.Pack8 d ) => new ComputeNewPlayerCompatibilityResult_t{ Result = d.Result,CPlayersThatDontLikeCandidate = d.CPlayersThatDontLikeCandidate,CPlayersThatCandidateDoesntLike = d.CPlayersThatCandidateDoesntLike,CClanPlayersThatDontLikeCandidate = d.CClanPlayersThatDontLikeCandidate,SteamIDCandidate = d.SteamIDCandidate, };
 		}
@@ -6730,7 +6730,7 @@ namespace Steamworks.Data
 	internal struct GSStatsReceived_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
-		internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamGameServerStats + 0;
@@ -6742,16 +6742,16 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			
 			public static implicit operator GSStatsReceived_t ( GSStatsReceived_t.Pack4 d ) => new GSStatsReceived_t{ Result = d.Result,SteamIDUser = d.SteamIDUser, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			
 			public static implicit operator GSStatsReceived_t ( GSStatsReceived_t.Pack8 d ) => new GSStatsReceived_t{ Result = d.Result,SteamIDUser = d.SteamIDUser, };
 		}
@@ -6761,7 +6761,7 @@ namespace Steamworks.Data
 	internal struct GSStatsStored_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
-		internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamGameServerStats + 1;
@@ -6773,16 +6773,16 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			
 			public static implicit operator GSStatsStored_t ( GSStatsStored_t.Pack4 d ) => new GSStatsStored_t{ Result = d.Result,SteamIDUser = d.SteamIDUser, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			
 			public static implicit operator GSStatsStored_t ( GSStatsStored_t.Pack8 d ) => new GSStatsStored_t{ Result = d.Result,SteamIDUser = d.SteamIDUser, };
 		}
@@ -6791,7 +6791,7 @@ namespace Steamworks.Data
 	
 	internal struct GSStatsUnloaded_t : Steamworks.ISteamCallback
 	{
-		internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamUserStats + 8;
@@ -6802,15 +6802,15 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			
 			public static implicit operator GSStatsUnloaded_t ( GSStatsUnloaded_t.Pack4 d ) => new GSStatsUnloaded_t{ SteamIDUser = d.SteamIDUser, };
 		}
 		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack8
 		{
-			internal SteamId SteamIDUser; // m_steamIDUser class CSteamID
+			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
 			
 			public static implicit operator GSStatsUnloaded_t ( GSStatsUnloaded_t.Pack8 d ) => new GSStatsUnloaded_t{ SteamIDUser = d.SteamIDUser, };
 		}

@@ -68,7 +68,7 @@ namespace Generator
                 case "uint16": return "ushort";
                 case "const char *": return "string";
                 case "_Bool": return "bool";
-                case "CSteamID": return "ulong";
+                case "SteamId": return "ulong";
 
                 case "SteamAPIWarningMessageHook_t": return "IntPtr";
             }
