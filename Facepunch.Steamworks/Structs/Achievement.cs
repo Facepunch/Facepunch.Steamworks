@@ -63,9 +63,9 @@ namespace Steamworks.Data
 		}
 
 		/// <summary>
-		/// Returns the percentage of users who have unlocked the specified achievement, or -1 if no data available.
+		/// Returns the fraction (0-1) of users who have unlocked the specified achievement, or -1 if no data available.
 		/// </summary>
-		public float GlobalUnlockedPercentage
+		public float GlobalUnlocked
 		{
 			get
 			{
@@ -74,7 +74,7 @@ namespace Steamworks.Data
 				if ( !SteamUserStats.Internal.GetAchievementAchievedPercent( Value, ref pct ) )
 					return -1.0f;
 
-				return pct;
+				return pct / 100.0f;
 			}
 		}
 

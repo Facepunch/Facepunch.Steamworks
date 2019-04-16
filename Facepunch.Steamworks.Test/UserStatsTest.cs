@@ -21,7 +21,7 @@ namespace Steamworks
 				Console.WriteLine( $"	a.UnlockTime: {a.UnlockTime}" );
 				Console.WriteLine( $"	a.Name: {a.Name}" );
 				Console.WriteLine( $"	a.Description: {a.Description}" );
-				Console.WriteLine( $"	a.GlobalUnlockedPercentage:	{a.GlobalUnlockedPercentage}" );
+				Console.WriteLine( $"	a.GlobalUnlocked:	{a.GlobalUnlocked}" );
 
 				var icon = a.GetIcon();
 
