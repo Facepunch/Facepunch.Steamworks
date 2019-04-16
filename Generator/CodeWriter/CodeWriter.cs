@@ -67,6 +67,7 @@ namespace Generator
 				GenerateVTableClass( "ISteamGameServer", $"{folder}../Generated/Interfaces/ISteamGameServer.cs" );
 				GenerateVTableClass( "ISteamGameServer", $"{folder}../Generated/Interfaces/ISteamGameServer.cs" );
 				GenerateVTableClass( "ISteamScreenshots", $"{folder}../Generated/Interfaces/ISteamScreenshots.cs" );
+				GenerateVTableClass( "ISteamUserStats", $"{folder}../Generated/Interfaces/ISteamUserStats.cs" );
 			}
 		}
 

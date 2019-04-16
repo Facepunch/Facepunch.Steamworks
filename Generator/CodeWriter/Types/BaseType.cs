@@ -23,7 +23,7 @@ internal class BaseType
 		if ( type.Replace( " ", "" ) == "constchar*" ) return new ConstCharType { NativeType = type, VarName = varname };
 		if ( type == "char *" ) return new StringBuilderType { NativeType = type, VarName = varname };
 
-		var basicType = type.Trim( ' ', '*' );
+		var basicType = type.Replace( "const ", "" ).Trim( ' ', '*' );
 
 		if ( basicType == "void" ) return new PointerType { NativeType = type, VarName = varname };
 		if ( basicType.StartsWith( "ISteam" ) ) return new PointerType { NativeType = type, VarName = varname };
@@ -34,6 +34,7 @@ internal class BaseType
 		if ( basicType == "uint16" ) return new UInt16Type { NativeType = type, VarName = varname };
 		if ( basicType == "SteamId" ) return new CSteamIdType { NativeType = type, VarName = varname };
 		if ( basicType == "uint64" ) return new ULongType { NativeType = type, VarName = varname };
+		if ( basicType == "int64" ) return new LongType { NativeType = type, VarName = varname };
 		if ( basicType == "bool" ) return new BoolType { NativeType = type, VarName = varname };
 
 		if ( basicType.EndsWith( "_t" ) ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
@@ -59,6 +60,7 @@ internal class BaseType
 			if ( VarName == "pubRGB" ) return false;
 
 			if ( VarName == "psteamIDClans" ) return true;
+			if ( VarName == "pScoreDetails" ) return true;
 			if ( NativeType.EndsWith( "**" ) ) return true;
 
 			if ( NativeType.EndsWith( "*" ) )
@@ -143,11 +145,14 @@ internal class PointerType : BaseType
 	public override string Ref => "";
 }
 
-
-
 internal class ULongType : BaseType
 {
 	public override string TypeName => $"ulong";
+}
+
+internal class LongType : BaseType
+{
+	public override string TypeName => $"long";
 }
 
 internal class ConstCharType : BaseType
