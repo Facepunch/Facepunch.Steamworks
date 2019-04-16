@@ -58,7 +58,7 @@ namespace Steamworks
 
 		public BaseServerList()
 		{
-			AppId = Utils.AppId; // Default AppId is this 
+			AppId = SteamUtils.AppId; // Default AppId is this 
 		}
 
 		/// <summary>

@@ -14,8 +14,8 @@ namespace Steamworks
         [TestMethod]
         public void Init()
         {
-			GameServer.DedicatedServer = true;
-			GameServer.DedicatedServer = false;
+			SteamServer.DedicatedServer = true;
+			SteamServer.DedicatedServer = false;
 		}
 
         [TestMethod]
@@ -23,7 +23,7 @@ namespace Steamworks
         {
             while ( true )
             {
-                var ip = GameServer.PublicIp;
+                var ip = SteamServer.PublicIp;
 
                 if ( ip == null )
                 {
@@ -47,18 +47,18 @@ namespace Steamworks
 			//
 			// Clientside calls this function, gets ticket
 			//
-			var clientTicket = User.GetAuthSessionTicket();
+			var clientTicket = SteamUser.GetAuthSessionTicket();
 
 			//
 			// The client sends this data to the server along with their steamid
 			//
 			var ticketData = clientTicket.Data;
-			var clientSteamId = User.SteamId;
+			var clientSteamId = SteamUser.SteamId;
 
 			//
 			// Server listens to auth responses from Gabe
 			//
-			GameServer.OnValidateAuthTicketResponse += ( steamid, ownerid, rsponse ) =>
+			SteamServer.OnValidateAuthTicketResponse += ( steamid, ownerid, rsponse ) =>
 			{
 				finished = true;
 				response = rsponse;
@@ -74,7 +74,7 @@ namespace Steamworks
 			//
 			// Server gets the ticket, starts authing
 			//
-			if ( !GameServer.BeginAuthSession( ticketData, clientSteamId ) )
+			if ( !SteamServer.BeginAuthSession( ticketData, clientSteamId ) )
 			{
 				Assert.Fail( "BeginAuthSession returned false, called bullshit without even having to check with Gabe" );
 			}

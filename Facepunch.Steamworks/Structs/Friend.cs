@@ -17,7 +17,7 @@ namespace Steamworks
 
 		public bool IsFriend => Relationship == Relationship.Friend;
 		public bool IsBlocked => Relationship == Relationship.Blocked;
-		public bool IsPlayingThisGame => GameInfo?.GameID == Utils.AppId;
+		public bool IsPlayingThisGame => GameInfo?.GameID == SteamUtils.AppId;
 
 		/// <summary>
 		/// Returns true if this friend is online
@@ -41,16 +41,16 @@ namespace Steamworks
 
 
 
-		public Relationship Relationship => Friends.Internal.GetFriendRelationship( Id );
-		public FriendState State => Friends.Internal.GetFriendPersonaState( Id );
-		public string Name => Friends.Internal.GetFriendPersonaName( Id );
+		public Relationship Relationship => SteamFriends.Internal.GetFriendRelationship( Id );
+		public FriendState State => SteamFriends.Internal.GetFriendPersonaState( Id );
+		public string Name => SteamFriends.Internal.GetFriendPersonaName( Id );
 		public IEnumerable<string> NameHistory
 		{
 			get
 			{
 				for( int i=0; i<32; i++ )
 				{
-					var n = Friends.Internal.GetFriendPersonaNameHistory( Id, i );
+					var n = SteamFriends.Internal.GetFriendPersonaNameHistory( Id, i );
 					if ( string.IsNullOrEmpty( n ) )
 						break;
 
@@ -59,7 +59,7 @@ namespace Steamworks
 			}
 		}
 
-		public int SteamLevel => Friends.Internal.GetFriendSteamLevel( Id );
+		public int SteamLevel => SteamFriends.Internal.GetFriendSteamLevel( Id );
 
 
 
@@ -68,7 +68,7 @@ namespace Steamworks
 			get
 			{
 				FriendGameInfo_t gameInfo = default( FriendGameInfo_t );
-				if ( !Friends.Internal.GetFriendGamePlayed( Id, ref gameInfo ) )
+				if ( !SteamFriends.Internal.GetFriendGamePlayed( Id, ref gameInfo ) )
 					return null;
 
 				return FriendGameInfo.From( gameInfo );
@@ -77,7 +77,7 @@ namespace Steamworks
 
 		public bool IsIn( SteamId group_or_room )
 		{
-			return Friends.Internal.IsUserInSource( Id, group_or_room );
+			return SteamFriends.Internal.IsUserInSource( Id, group_or_room );
 		}
 
 		public struct FriendGameInfo
@@ -103,22 +103,22 @@ namespace Steamworks
 
 		public async Task<Image?> GetSmallAvatarAsync()
 		{
-			return await Friends.GetSmallAvatarAsync( Id );
+			return await SteamFriends.GetSmallAvatarAsync( Id );
 		}
 
 		public async Task<Image?> GetMediumAvatarAsync()
 		{
-			return await Friends.GetMediumAvatarAsync( Id );
+			return await SteamFriends.GetMediumAvatarAsync( Id );
 		}
 
 		public async Task<Image?> GetLargeAvatarAsync()
 		{
-			return await Friends.GetLargeAvatarAsync( Id );
+			return await SteamFriends.GetLargeAvatarAsync( Id );
 		}
 
 		public string GetRichPresence( string key )
 		{
-			var val = Friends.Internal.GetFriendRichPresence( Id, key );
+			var val = SteamFriends.Internal.GetFriendRichPresence( Id, key );
 			if ( string.IsNullOrEmpty( val ) ) return null;
 			return val;
 		}
@@ -128,7 +128,7 @@ namespace Steamworks
 		/// </summary>
 		public bool InviteToGame( string Text )
 		{
-			return Friends.Internal.InviteUserToGame( Id, Text );
+			return SteamFriends.Internal.InviteUserToGame( Id, Text );
 		}
 
 		/// <summary>
@@ -136,7 +136,7 @@ namespace Steamworks
 		/// </summary>
 		public bool SendMessage( string message )
 		{
-			return Friends.Internal.ReplyToFriendMessage( Id, message );
+			return SteamFriends.Internal.ReplyToFriendMessage( Id, message );
 		}
 
 	}

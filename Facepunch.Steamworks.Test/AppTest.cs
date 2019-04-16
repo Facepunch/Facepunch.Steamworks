@@ -17,7 +17,7 @@ namespace Steamworks
 			//
 			// Init Client
 			//
-			Steamworks.Steam.Init( 4000 );
+			Steamworks.SteamClient.Init( 4000 );
 
 			//
 			// Init Server
@@ -29,9 +29,9 @@ namespace Steamworks
 				QueryPort = 28016
 			};
 
-			Steamworks.GameServer.Init( 4000, serverInit );
+			Steamworks.SteamServer.Init( 4000, serverInit );
 
-			GameServer.LogOnAnonymous();
+			SteamServer.LogOnAnonymous();
 
 		}
 
@@ -43,7 +43,7 @@ namespace Steamworks
 		[TestMethod]
         public void GameLangauge()
         {
-			var gl = Apps.GameLanguage;
+			var gl = SteamApps.GameLanguage;
 			Assert.IsNotNull( gl );
 			Assert.IsTrue( gl.Length > 3 );
 
@@ -53,7 +53,7 @@ namespace Steamworks
 		[TestMethod]
 		public void AppInstallDir()
 		{
-			var str = Apps.AppInstallDir( 4000 );
+			var str = SteamApps.AppInstallDir( 4000 );
 			Assert.IsNotNull( str );
 			Assert.IsTrue( str.Length > 3 );
 
@@ -63,7 +63,7 @@ namespace Steamworks
 		[TestMethod]
 		public void AppOwner()
 		{
-			var steamid = Apps.AppOwner;
+			var steamid = SteamApps.AppOwner;
 			Assert.IsTrue( steamid.Value > 70561197960279927 );
 			Assert.IsTrue( steamid.Value < 80561197960279927 );
 
@@ -73,7 +73,7 @@ namespace Steamworks
 		[TestMethod]
 		public void InstalledDepots()
 		{
-			var depots = Apps.InstalledDepots( 4000 ).ToArray();
+			var depots = SteamApps.InstalledDepots( 4000 ).ToArray();
 
 			Assert.IsNotNull( depots );
 			Assert.IsTrue( depots.Length > 0 );
@@ -87,7 +87,7 @@ namespace Steamworks
 		[TestMethod]
 		public async Task GetFileDetails()
 		{
-			var fileinfo = await Apps.GetFileDetailsAsync( "hl2.exe" );
+			var fileinfo = await SteamApps.GetFileDetailsAsync( "hl2.exe" );
 
 			Console.WriteLine( $"fileinfo.Found: {fileinfo.Found}" );
 			Console.WriteLine( $"fileinfo.SizeInBytes: {fileinfo.SizeInBytes}" );
@@ -98,7 +98,7 @@ namespace Steamworks
 		[TestMethod]
 		public void CommandLine()
 		{
-			var cl = Apps.CommandLine;
+			var cl = SteamApps.CommandLine;
 
 			Console.WriteLine( $"CommandLine: {cl}" );
 		}

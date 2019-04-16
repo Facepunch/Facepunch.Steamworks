@@ -10,7 +10,7 @@ namespace Steamworks
 	/// <summary>
 	/// Exposes a wide range of information and actions for applications and Downloadable Content (DLC).
 	/// </summary>
-	public static class Apps
+	public static class SteamApps
 	{
 		static Internal.ISteamApps _internal;
 		internal static Internal.ISteamApps Internal

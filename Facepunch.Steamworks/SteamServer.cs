@@ -9,7 +9,7 @@ namespace Steamworks
 	/// <summary>
 	/// Provides the core of the Steam Game Servers API
 	/// </summary>
-	public static partial class GameServer
+	public static partial class SteamServer
 	{
 		static bool initialized;
 

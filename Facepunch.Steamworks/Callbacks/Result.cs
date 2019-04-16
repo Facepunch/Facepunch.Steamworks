@@ -20,7 +20,7 @@ namespace Steamworks
 
 		public bool IsComplete( out bool failed )
 		{
-			return Utils.IsCallComplete( CallHandle, out failed );
+			return SteamUtils.IsCallComplete( CallHandle, out failed );
 		}
 
 		public async Task<T?> GetResult()
@@ -35,7 +35,7 @@ namespace Steamworks
 			if ( failed )
 				return null;
 
-			return Utils.GetResult<T>( CallHandle );
+			return SteamUtils.GetResult<T>( CallHandle );
 		}
 	}
 }

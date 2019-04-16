@@ -44,7 +44,7 @@ namespace Steamworks
 			if ( !PinnedCallback.IsAllocated )
 				return;
 
-			Steam.UnregisterCallback( PinnedCallback.AddrOfPinnedObject() );
+			SteamClient.UnregisterCallback( PinnedCallback.AddrOfPinnedObject() );
 		}
 
 		public virtual bool IsValid { get { return true; } }
@@ -105,7 +105,7 @@ namespace Steamworks
 			//
 			// Register the callback with Steam
 			//
-			Steam.RegisterCallback( PinnedCallback.AddrOfPinnedObject(), cb.CallbackId );
+			SteamClient.RegisterCallback( PinnedCallback.AddrOfPinnedObject(), cb.CallbackId );
 		}
 
 		[MonoPInvokeCallback] internal void OnResultThis( IntPtr self, IntPtr param ) => OnResult( param );

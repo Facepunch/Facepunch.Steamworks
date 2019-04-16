@@ -9,7 +9,7 @@ namespace Steamworks
 	/// <summary>
 	/// Undocumented Parental Settings
 	/// </summary>
-	public static class Parental
+	public static class SteamParental
 	{
 		static Internal.ISteamParentalSettings _internal;
 		internal static Internal.ISteamParentalSettings Internal

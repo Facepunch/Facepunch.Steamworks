@@ -9,7 +9,7 @@ namespace Steamworks
 	/// <summary>
 	/// Undocumented Parental Settings
 	/// </summary>
-	public static class Music
+	public static class SteamMusic
 	{
 		static Internal.ISteamMusic _internal;
 		internal static Internal.ISteamMusic Internal

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Steamworks
 {
-	public static class Steam
+	public static class SteamClient
 	{
 		static bool initialized;
 
@@ -27,13 +27,13 @@ namespace Steamworks
 
 			initialized = true;
 
-			Apps.InstallEvents();
-			Utils.InstallEvents();
-			Parental.InstallEvents();
-			Music.InstallEvents();
-			Video.InstallEvents();
-			User.InstallEvents();
-			Friends.InstallEvents();
+			SteamApps.InstallEvents();
+			SteamUtils.InstallEvents();
+			SteamParental.InstallEvents();
+			SteamMusic.InstallEvents();
+			SteamVideo.InstallEvents();
+			SteamUser.InstallEvents();
+			SteamFriends.InstallEvents();
 
 			RunCallbacks();
 		}

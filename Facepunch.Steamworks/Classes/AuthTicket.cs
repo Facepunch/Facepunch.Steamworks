@@ -15,7 +15,7 @@ namespace Steamworks
 		{
 			if ( Handle != 0 )
 			{
-				User.Internal.CancelAuthTicket( Handle );
+				SteamUser.Internal.CancelAuthTicket( Handle );
 			}
 
 			Handle = 0;

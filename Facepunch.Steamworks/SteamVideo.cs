@@ -9,7 +9,7 @@ namespace Steamworks
 	/// <summary>
 	/// Undocumented Parental Settings
 	/// </summary>
-	public static class Video
+	public static class SteamVideo
 	{
 		static Internal.ISteamVideo _internal;
 		internal static Internal.ISteamVideo Internal

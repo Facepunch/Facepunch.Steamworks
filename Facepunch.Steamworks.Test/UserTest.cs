@@ -20,14 +20,14 @@ namespace Steamworks
 			{
 				int compressed = 0;
 
-				User.VoiceRecord = true;
+				SteamUser.VoiceRecord = true;
 
 				var sw = Stopwatch.StartNew();
 
 				while ( sw.Elapsed.TotalSeconds < 3 )
 				{
 					System.Threading.Thread.Sleep( 10 );
-					compressed += User.ReadVoiceData( stream );
+					compressed += SteamUser.ReadVoiceData( stream );
 				}
 
 				Assert.AreEqual( compressed, stream.Length );
@@ -38,54 +38,54 @@ namespace Steamworks
 		[TestMethod]
 		public void OptimalSampleRate()
 		{
-			var rate = User.OptimalSampleRate;
+			var rate = SteamUser.OptimalSampleRate;
 			Assert.AreNotEqual( rate, 0 );
-			Console.WriteLine( $"User.OptimalSampleRate: {User.OptimalSampleRate}" );
+			Console.WriteLine( $"User.OptimalSampleRate: {SteamUser.OptimalSampleRate}" );
 		}
 
 		[TestMethod]
 		public void IsLoggedOn()
 		{
-			Assert.AreNotEqual( false, User.IsLoggedOn );
-			Console.WriteLine( $"User.IsLoggedOn: {User.IsLoggedOn}" );
+			Assert.AreNotEqual( false, SteamUser.IsLoggedOn );
+			Console.WriteLine( $"User.IsLoggedOn: {SteamUser.IsLoggedOn}" );
 		}
 
 		[TestMethod]
 		public void SteamID()
 		{
-			Assert.AreNotEqual( 0, User.SteamId.Value );
-			Console.WriteLine( $"User.SteamID: {User.SteamId.Value}" );
+			Assert.AreNotEqual( 0, SteamUser.SteamId.Value );
+			Console.WriteLine( $"User.SteamID: {SteamUser.SteamId.Value}" );
 		}
 
 		[TestMethod]
 		public void AuthSession()
 		{
-			var ticket = User.GetAuthSessionTicket();
+			var ticket = SteamUser.GetAuthSessionTicket();
 
 			Assert.AreNotEqual( 0, ticket.Handle );
 			Assert.AreNotEqual( 0, ticket.Data.Length );
 			Console.WriteLine( $"ticket.Handle: {ticket.Handle}" );
 			Console.WriteLine( $"ticket.Data: { string.Join( "", ticket.Data.Select( x => x.ToString( "x" ) ) ) }" );
 
-			var result = User.BeginAuthSession( ticket.Data, User.SteamId );
+			var result = SteamUser.BeginAuthSession( ticket.Data, SteamUser.SteamId );
 			Console.WriteLine( $"result: { result }" );
 			Assert.AreEqual( result, BeginAuthResult.OK );
 
-			User.EndAuthSession( User.SteamId );
+			SteamUser.EndAuthSession( SteamUser.SteamId );
 		}
 
 
 		[TestMethod]
 		public void SteamLevel()
 		{
-			Assert.AreNotEqual( 0, User.SteamLevel );
-			Console.WriteLine( $"User.SteamLevel: {User.SteamLevel}" );
+			Assert.AreNotEqual( 0, SteamUser.SteamLevel );
+			Console.WriteLine( $"User.SteamLevel: {SteamUser.SteamLevel}" );
 		}
 
 		[TestMethod]
 		public async Task GetStoreAuthUrlAsync()
 		{
-			var rustskins = await User.GetStoreAuthUrlAsync( "https://store.steampowered.com/itemstore/252490/" );
+			var rustskins = await SteamUser.GetStoreAuthUrlAsync( "https://store.steampowered.com/itemstore/252490/" );
 
 			Assert.IsNotNull( rustskins );
 			Console.WriteLine( $"rustskins: {rustskins}" );
@@ -94,25 +94,25 @@ namespace Steamworks
 		[TestMethod]
 		public void IsPhoneVerified()
 		{
-			Console.WriteLine( $"User.IsPhoneVerified: {User.IsPhoneVerified}" );
+			Console.WriteLine( $"User.IsPhoneVerified: {SteamUser.IsPhoneVerified}" );
 		}
 
 		[TestMethod]
 		public void IsTwoFactorEnabled()
 		{
-			Console.WriteLine( $"User.IsTwoFactorEnabled: {User.IsTwoFactorEnabled}" );
+			Console.WriteLine( $"User.IsTwoFactorEnabled: {SteamUser.IsTwoFactorEnabled}" );
 		}
 
 		[TestMethod]
 		public void IsPhoneIdentifying()
 		{
-			Console.WriteLine( $"User.IsPhoneIdentifying: {User.IsPhoneIdentifying}" );
+			Console.WriteLine( $"User.IsPhoneIdentifying: {SteamUser.IsPhoneIdentifying}" );
 		}
 
 		[TestMethod]
 		public void IsPhoneRequiringVerification()
 		{
-			Console.WriteLine( $"User.IsPhoneRequiringVerification: {User.IsPhoneRequiringVerification}" );
+			Console.WriteLine( $"User.IsPhoneRequiringVerification: {SteamUser.IsPhoneRequiringVerification}" );
 		}
 	}
 

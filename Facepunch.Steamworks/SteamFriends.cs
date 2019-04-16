@@ -9,7 +9,7 @@ namespace Steamworks
 	/// <summary>
 	/// Undocumented Parental Settings
 	/// </summary>
-	public static class Friends
+	public static class SteamFriends
 	{
 		static Internal.ISteamFriends _internal;
 		internal static Internal.ISteamFriends Internal
@@ -207,13 +207,13 @@ namespace Steamworks
 		public static async Task<Image?> GetSmallAvatarAsync( SteamId steamid )
 		{
 			await CacheUserInformationAsync( steamid, false );
-			return Utils.GetImage( Internal.GetSmallFriendAvatar( steamid ) );
+			return SteamUtils.GetImage( Internal.GetSmallFriendAvatar( steamid ) );
 		}
 
 		public static async Task<Image?> GetMediumAvatarAsync( SteamId steamid )
 		{
 			await CacheUserInformationAsync( steamid, false );
-			return Utils.GetImage( Internal.GetMediumFriendAvatar( steamid ) );
+			return SteamUtils.GetImage( Internal.GetMediumFriendAvatar( steamid ) );
 		}
 
 		public static async Task<Image?> GetLargeAvatarAsync( SteamId steamid )
@@ -229,7 +229,7 @@ namespace Steamworks
 				imageid = Internal.GetLargeFriendAvatar( steamid );
 			}
 
-			return Utils.GetImage( imageid );
+			return SteamUtils.GetImage( imageid );
 		}
 
 		/// <summary>
