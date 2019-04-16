@@ -54,7 +54,7 @@ namespace Generator
 				if ( line.Trim().StartsWith( "public:" ) ) continue;
 				if ( line.Trim().StartsWith( "//" ) ) continue;
 
-				var callresult = Regex.Match( line, @"STEAM_CALL_RESULT\( (.+?) \)" );
+				var callresult = Regex.Match( line, @"STEAM_CALL_RESULT\((.+?)\)" );
 				if ( callresult.Success )
 				{
 					lastCallResult = callresult.Groups[1].Value.Trim();
@@ -89,6 +89,7 @@ namespace Generator
 				}
 			}
 
+			c.PostProcess();
 
 			Classes.Add( c );
 		}

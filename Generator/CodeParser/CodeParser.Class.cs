@@ -46,6 +46,29 @@ namespace Generator
 
 				return f;
 			}
+
+			public void PostProcess()
+			{
+				var LastName = "";
+				var DuplicateCount = 0;
+
+				for (int i=0; i< Functions.Count; i++ )
+				{
+					var ThisName = Functions[i].Name;
+
+					if ( Functions[i].Name == LastName)
+					{
+						DuplicateCount++;
+						Functions[i].Name += $"{DuplicateCount + 1}";
+					}
+					else
+					{
+						DuplicateCount = 0;
+					}
+
+					LastName = ThisName;
+				}
+			}
 		}
 
 	}
