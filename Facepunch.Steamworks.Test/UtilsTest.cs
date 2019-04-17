@@ -63,7 +63,7 @@ namespace Steamworks
 		[TestMethod]
 		public void AppId()
 		{
-			var cnt = SteamUtils.AppId;
+			var cnt = SteamClient.AppId;
 
 			Assert.IsTrue( cnt.Value > 0 );
 

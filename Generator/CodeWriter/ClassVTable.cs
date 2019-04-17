@@ -80,6 +80,12 @@ namespace Generator
 				Swap( clss, "GetGlobalStatHistory1", "GetGlobalStatHistory2", locations );
 			}
 
+			if ( clss.Name == "ISteamUGC" )
+			{
+				Swap( clss, "CreateQueryAllUGCRequest1", "CreateQueryAllUGCRequest2", locations );
+			}
+
+
 			StartBlock( $"public override void InitInternals()" );
 			{
 				for (int i=0; i< clss.Functions.Count; i++ )

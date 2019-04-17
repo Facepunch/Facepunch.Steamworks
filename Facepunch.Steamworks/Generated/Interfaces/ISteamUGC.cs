@@ -18,8 +18,8 @@ namespace Steamworks
 		public override void InitInternals()
 		{
 			_CreateQueryUserUGCRequest = Marshal.GetDelegateForFunctionPointer<FCreateQueryUserUGCRequest>( Marshal.ReadIntPtr( VTable, 0) );
-			_CreateQueryAllUGCRequest1 = Marshal.GetDelegateForFunctionPointer<FCreateQueryAllUGCRequest1>( Marshal.ReadIntPtr( VTable, 8) );
-			_CreateQueryAllUGCRequest2 = Marshal.GetDelegateForFunctionPointer<FCreateQueryAllUGCRequest2>( Marshal.ReadIntPtr( VTable, 16) );
+			_CreateQueryAllUGCRequest1 = Marshal.GetDelegateForFunctionPointer<FCreateQueryAllUGCRequest1>( Marshal.ReadIntPtr( VTable, 16) );
+			_CreateQueryAllUGCRequest2 = Marshal.GetDelegateForFunctionPointer<FCreateQueryAllUGCRequest2>( Marshal.ReadIntPtr( VTable, 8) );
 			_CreateQueryUGCDetailsRequest = Marshal.GetDelegateForFunctionPointer<FCreateQueryUGCDetailsRequest>( Marshal.ReadIntPtr( VTable, 24) );
 			_SendQueryUGCRequest = Marshal.GetDelegateForFunctionPointer<FSendQueryUGCRequest>( Marshal.ReadIntPtr( VTable, 32) );
 			_GetQueryUGCResult = Marshal.GetDelegateForFunctionPointer<FGetQueryUGCResult>( Marshal.ReadIntPtr( VTable, 40) );
@@ -153,13 +153,13 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetQueryUGCResult( IntPtr self, UGCQueryHandle_t handle, uint index, [In,Out] SteamUGCDetails_t[]  pDetails );
+		private delegate bool FGetQueryUGCResult( IntPtr self, UGCQueryHandle_t handle, uint index, ref SteamUGCDetails_t pDetails );
 		private FGetQueryUGCResult _GetQueryUGCResult;
 		
 		#endregion
-		internal bool GetQueryUGCResult( UGCQueryHandle_t handle, uint index, [In,Out] SteamUGCDetails_t[]  pDetails )
+		internal bool GetQueryUGCResult( UGCQueryHandle_t handle, uint index, ref SteamUGCDetails_t pDetails )
 		{
-			return _GetQueryUGCResult( Self, handle, index, pDetails );
+			return _GetQueryUGCResult( Self, handle, index, ref pDetails );
 		}
 		
 		#region FunctionMeta

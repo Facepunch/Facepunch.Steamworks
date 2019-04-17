@@ -40,7 +40,7 @@ namespace Steamworks
 		/// <summary>
 		/// Return true if this user is playing the game we're running
 		/// </summary>
-		public bool IsPlayingThisGame => GameInfo?.GameID == SteamUtils.AppId;
+		public bool IsPlayingThisGame => GameInfo?.GameID == SteamClient.AppId;
 
 		/// <summary>
 		/// Returns true if this friend is online
