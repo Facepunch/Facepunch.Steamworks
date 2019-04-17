@@ -71,8 +71,14 @@ namespace Generator
 		private void WriteFunction( CodeParser.Class clss, CodeParser.Class.Function func )
 		{
 			var returnType = BaseType.Parse( func.ReturnType );
+			returnType.Func = func.Name;
 
-			var args = func.Arguments.Select( x => BaseType.Parse( x.Value, x.Key ) ).ToArray();
+			var args = func.Arguments.Select( x =>
+			{
+				var bt = BaseType.Parse( x.Value, x.Key );
+				bt.Func = func.Name;
+				return bt;
+			} ).ToArray();
 			var argstr = string.Join( ", ", args.Select( x => x.AsArgument() ) );
 			var delegateargstr = string.Join( ", ", args.Select( x => x.AsArgument() ) );
 

@@ -536,24 +536,24 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate int GetGlobalStatHistoryDelegate( IntPtr self, string pchStatName, ref long pData, uint cubData );
+		private delegate int GetGlobalStatHistoryDelegate( IntPtr self, string pchStatName, [In,Out] long[]  pData, uint cubData );
 		private GetGlobalStatHistoryDelegate GetGlobalStatHistoryDelegatePointer;
 		
 		#endregion
-		internal int GetGlobalStatHistory( string pchStatName, ref long pData, uint cubData )
+		internal int GetGlobalStatHistory( string pchStatName, [In,Out] long[]  pData, uint cubData )
 		{
-			return GetGlobalStatHistoryDelegatePointer( Self, pchStatName, ref pData, cubData );
+			return GetGlobalStatHistoryDelegatePointer( Self, pchStatName, pData, cubData );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate int GetGlobalStatHistory2Delegate( IntPtr self, string pchStatName, ref double pData, uint cubData );
+		private delegate int GetGlobalStatHistory2Delegate( IntPtr self, string pchStatName, [In,Out] double[]  pData, uint cubData );
 		private GetGlobalStatHistory2Delegate GetGlobalStatHistory2DelegatePointer;
 		
 		#endregion
-		internal int GetGlobalStatHistory2( string pchStatName, ref double pData, uint cubData )
+		internal int GetGlobalStatHistory2( string pchStatName, [In,Out] double[]  pData, uint cubData )
 		{
-			return GetGlobalStatHistory2DelegatePointer( Self, pchStatName, ref pData, cubData );
+			return GetGlobalStatHistory2DelegatePointer( Self, pchStatName, pData, cubData );
 		}
 		
 	}

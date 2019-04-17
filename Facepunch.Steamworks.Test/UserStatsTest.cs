@@ -4,11 +4,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Steamworks.Data;
 
 namespace Steamworks
 {
     [TestClass]
     [DeploymentItem( "steam_api64.dll" )]
+    [DeploymentItem( "steam_appid.txt" )]
     public class UserStatsTest
 	{
 		[TestMethod]
@@ -148,6 +150,42 @@ namespace Steamworks
 			foreach ( var e in globalsScores )
 			{
 				Console.WriteLine( $"{e.GlobalRank}: {e.Score} {e.User}" );
+			}
+		}
+
+		[TestMethod]
+		public void GetStatInt()
+		{
+			var startups = new Stat( "GMA_X_STARTUPS_STAT" );
+			Console.WriteLine( $"{startups.Name} {startups.GetInt()} times" );
+			Console.WriteLine( $"{startups.Name} {startups.GetFloat()} times" );
+
+			Assert.AreNotEqual( 0, startups.GetInt() );
+		}
+
+		[TestMethod]
+		public async Task GetStatGlobalInt()
+		{
+			var startups = new Stat( "GMA_X_STARTUPS_STAT" );
+			await startups.GetGlobalIntDays( 5 );
+
+			await Task.Delay( 3000 );
+
+			var totalStartups = startups.GetGlobalInt();
+			Assert.AreNotEqual( 0, totalStartups );
+			Console.WriteLine( $"Garry's Mod has been started {totalStartups} times" );
+		}
+
+		[TestMethod]
+		public async Task GetStatGlobalHistoryInt()
+		{
+			var startups = new Stat( "GMA_X_STARTUPS_STAT" );
+
+			var history = await startups.GetGlobalIntDays( 60 );
+
+			for( int i=0; i< history.Length; i++ )
+			{
+				Console.WriteLine( $"{i} : {history[i]}" );
 			}
 		}
 

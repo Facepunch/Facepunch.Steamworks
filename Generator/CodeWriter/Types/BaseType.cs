@@ -11,6 +11,8 @@ internal class BaseType
 	public virtual string TypeName => $"{NativeType}";
 	public virtual string TypeNameFrom => TypeName;
 
+	public string Func;
+
 	public static BaseType Parse( string type, string varname = null )
 	{
 		type = Cleanup.ConvertType( type );
@@ -63,6 +65,7 @@ internal class BaseType
 			if ( VarName == "pScoreDetails" ) return true;
 			if ( VarName == "prgUsers" ) return true;
 			if ( VarName == "pDetails" ) return true;
+			if ( VarName == "pData" && NativeType.EndsWith( "*" ) && Func.StartsWith( "GetGlobalStatHistory" ) ) return true;
 			if ( NativeType.EndsWith( "**" ) ) return true;
 
 			if ( NativeType.EndsWith( "*" ) )
