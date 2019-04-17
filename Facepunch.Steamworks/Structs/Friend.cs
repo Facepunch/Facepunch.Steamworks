@@ -16,6 +16,11 @@ namespace Steamworks
 			Id = steamid;
 		}
 
+		public override string ToString()
+		{
+			return $"{Name} ({Id.ToString()})";
+		}
+
 		public bool IsFriend => Relationship == Relationship.Friend;
 		public bool IsBlocked => Relationship == Relationship.Blocked;
 		public bool IsPlayingThisGame => GameInfo?.GameID == SteamUtils.AppId;

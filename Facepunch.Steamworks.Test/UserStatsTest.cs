@@ -50,6 +50,31 @@ namespace Steamworks
 
 		}
 
+		[TestMethod]
+		public async Task CreateLeaderboard()
+		{
+			var leaderboard = await SteamUserStats.FindOrCreateLeaderboard( "Testleaderboard", Data.LeaderboardSort.Descending, Data.LeaderboardDisplay.Numeric );
+			
+			Assert.IsTrue( leaderboard.HasValue );
+		}
+
+		[TestMethod]
+		public async Task FindLeaderboard()
+		{
+			var leaderboard = await SteamUserStats.FindLeaderboard( "Testleaderboard" );
+			Assert.IsTrue( leaderboard.HasValue );
+
+			// Get top 20 global scores
+			var globalsScores = await leaderboard.Value.GetGlobalEntriesAsync( 20 );
+			Assert.IsNotNull( globalsScores );
+
+			foreach ( var e in globalsScores )
+			{
+				Console.WriteLine( $"{e.GlobalRank}: {e.Score} {e.User}" );
+			}
+
+		}
+
 	}
 
 }

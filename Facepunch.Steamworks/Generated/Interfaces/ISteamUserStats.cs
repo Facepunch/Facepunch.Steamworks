@@ -412,13 +412,13 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool GetDownloadedLeaderboardEntryDelegate( IntPtr self, SteamLeaderboardEntries_t hSteamLeaderboardEntries, int index, ref LeaderboardEntry_t pLeaderboardEntry, ref int pDetails, int cDetailsMax );
+		private delegate bool GetDownloadedLeaderboardEntryDelegate( IntPtr self, SteamLeaderboardEntries_t hSteamLeaderboardEntries, int index, ref LeaderboardEntry_t pLeaderboardEntry, [In,Out] int[]  pDetails, int cDetailsMax );
 		private GetDownloadedLeaderboardEntryDelegate GetDownloadedLeaderboardEntryDelegatePointer;
 		
 		#endregion
-		internal bool GetDownloadedLeaderboardEntry( SteamLeaderboardEntries_t hSteamLeaderboardEntries, int index, ref LeaderboardEntry_t pLeaderboardEntry, ref int pDetails, int cDetailsMax )
+		internal bool GetDownloadedLeaderboardEntry( SteamLeaderboardEntries_t hSteamLeaderboardEntries, int index, ref LeaderboardEntry_t pLeaderboardEntry, [In,Out] int[]  pDetails, int cDetailsMax )
 		{
-			return GetDownloadedLeaderboardEntryDelegatePointer( Self, hSteamLeaderboardEntries, index, ref pLeaderboardEntry, ref pDetails, cDetailsMax );
+			return GetDownloadedLeaderboardEntryDelegatePointer( Self, hSteamLeaderboardEntries, index, ref pLeaderboardEntry, pDetails, cDetailsMax );
 		}
 		
 		#region FunctionMeta
