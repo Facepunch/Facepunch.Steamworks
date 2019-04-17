@@ -57,15 +57,48 @@ namespace Generator
 
 		void WriteFunctionPointerReader( CodeParser.Class clss )
 		{
+			// TODO - we'll probably have to do this PER platform
+
+			int[] locations = new int[clss.Functions.Count];
+
+			for ( int i = 0; i < clss.Functions.Count; i++ )
+			{
+				locations[i] = i * 8;
+			}
+
+			//
+			// MSVC switches the order in the vtable of overloaded functions
+			// I'm not going to try to try to work out how to order shit
+			// so lets just manually fix shit here
+			//
+			if ( clss.Name == "ISteamUserStats" )
+			{
+				Swap( clss, "GetStat1", "GetStat2", locations );
+				Swap( clss, "SetStat1", "SetStat2", locations );
+				Swap( clss, "GetUserStat1", "GetUserStat2", locations );
+				Swap( clss, "GetGlobalStat1", "GetGlobalStat2", locations );
+				Swap( clss, "GetGlobalStatHistory1", "GetGlobalStatHistory2", locations );
+			}
+
 			StartBlock( $"public override void InitInternals()" );
 			{
 				for (int i=0; i< clss.Functions.Count; i++ )
 				{
 					var func = clss.Functions[i];
-					WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, {i*8}) );" ); 
+					WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, {locations[i]}) );" ); 
 				}
 			}
 			EndBlock();
+		}
+
+		private void Swap( CodeParser.Class clss, string v1, string v2, int[] locations )
+		{
+			var a = clss.Functions.IndexOf( clss.Functions.Single( x => x.Name == v1 ) );
+			var b = clss.Functions.IndexOf( clss.Functions.Single( x => x.Name == v2 ) );
+
+			var s = locations[a];
+			locations[a] = locations[b];
+			locations[b] = s;
 		}
 
 		private void WriteFunction( CodeParser.Class clss, CodeParser.Class.Function func )
