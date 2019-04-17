@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Generator
@@ -14,6 +15,7 @@ namespace Generator
 			public class Function
 			{
 				public string Name;
+				public string DuplicateName;
 				public Dictionary<string, string> Arguments = new Dictionary<string, string>();
 
 				public string ReturnType;
@@ -51,24 +53,18 @@ namespace Generator
 
 			public void PostProcess()
 			{
-				var LastName = "";
-				var DuplicateCount = 0;
+				var duplicateFunctions = Functions
+											.GroupBy( x => x.Name )
+											.Where( x => x.Count() > 1 );
 
-				for (int i=0; i< Functions.Count; i++ )
+				foreach ( var group in duplicateFunctions )
 				{
-					var ThisName = Functions[i].Name;
-
-					if ( Functions[i].Name == LastName)
+					var g = group.ToArray();
+					for ( int i=0; i< g.Count(); i++ )
 					{
-						DuplicateCount++;
-						Functions[i].Name += $"{DuplicateCount + 1}";
+						g[i].DuplicateName = g[i].Name;
+						g[i].Name = $"{g[i].Name}{i+1}";
 					}
-					else
-					{
-						DuplicateCount = 0;
-					}
-
-					LastName = ThisName;
 				}
 			}
 		}

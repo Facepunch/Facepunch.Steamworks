@@ -18,9 +18,9 @@ namespace Steamworks
 		public override void InitInternals()
 		{
 			RequestCurrentStatsDelegatePointer = Marshal.GetDelegateForFunctionPointer<RequestCurrentStatsDelegate>( Marshal.ReadIntPtr( VTable, 0) );
-			GetStatDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetStatDelegate>( Marshal.ReadIntPtr( VTable, 8) );
+			GetStat1DelegatePointer = Marshal.GetDelegateForFunctionPointer<GetStat1Delegate>( Marshal.ReadIntPtr( VTable, 8) );
 			GetStat2DelegatePointer = Marshal.GetDelegateForFunctionPointer<GetStat2Delegate>( Marshal.ReadIntPtr( VTable, 16) );
-			SetStatDelegatePointer = Marshal.GetDelegateForFunctionPointer<SetStatDelegate>( Marshal.ReadIntPtr( VTable, 24) );
+			SetStat1DelegatePointer = Marshal.GetDelegateForFunctionPointer<SetStat1Delegate>( Marshal.ReadIntPtr( VTable, 24) );
 			SetStat2DelegatePointer = Marshal.GetDelegateForFunctionPointer<SetStat2Delegate>( Marshal.ReadIntPtr( VTable, 32) );
 			UpdateAvgRateStatDelegatePointer = Marshal.GetDelegateForFunctionPointer<UpdateAvgRateStatDelegate>( Marshal.ReadIntPtr( VTable, 40) );
 			GetAchievementDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetAchievementDelegate>( Marshal.ReadIntPtr( VTable, 48) );
@@ -34,7 +34,7 @@ namespace Steamworks
 			GetNumAchievementsDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetNumAchievementsDelegate>( Marshal.ReadIntPtr( VTable, 112) );
 			GetAchievementNameDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetAchievementNameDelegate>( Marshal.ReadIntPtr( VTable, 120) );
 			RequestUserStatsDelegatePointer = Marshal.GetDelegateForFunctionPointer<RequestUserStatsDelegate>( Marshal.ReadIntPtr( VTable, 128) );
-			GetUserStatDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetUserStatDelegate>( Marshal.ReadIntPtr( VTable, 136) );
+			GetUserStat1DelegatePointer = Marshal.GetDelegateForFunctionPointer<GetUserStat1Delegate>( Marshal.ReadIntPtr( VTable, 136) );
 			GetUserStat2DelegatePointer = Marshal.GetDelegateForFunctionPointer<GetUserStat2Delegate>( Marshal.ReadIntPtr( VTable, 144) );
 			GetUserAchievementDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetUserAchievementDelegate>( Marshal.ReadIntPtr( VTable, 152) );
 			GetUserAchievementAndUnlockTimeDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetUserAchievementAndUnlockTimeDelegate>( Marshal.ReadIntPtr( VTable, 160) );
@@ -56,9 +56,9 @@ namespace Steamworks
 			GetNextMostAchievedAchievementInfoDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetNextMostAchievedAchievementInfoDelegate>( Marshal.ReadIntPtr( VTable, 288) );
 			GetAchievementAchievedPercentDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetAchievementAchievedPercentDelegate>( Marshal.ReadIntPtr( VTable, 296) );
 			RequestGlobalStatsDelegatePointer = Marshal.GetDelegateForFunctionPointer<RequestGlobalStatsDelegate>( Marshal.ReadIntPtr( VTable, 304) );
-			GetGlobalStatDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetGlobalStatDelegate>( Marshal.ReadIntPtr( VTable, 312) );
+			GetGlobalStat1DelegatePointer = Marshal.GetDelegateForFunctionPointer<GetGlobalStat1Delegate>( Marshal.ReadIntPtr( VTable, 312) );
 			GetGlobalStat2DelegatePointer = Marshal.GetDelegateForFunctionPointer<GetGlobalStat2Delegate>( Marshal.ReadIntPtr( VTable, 320) );
-			GetGlobalStatHistoryDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetGlobalStatHistoryDelegate>( Marshal.ReadIntPtr( VTable, 328) );
+			GetGlobalStatHistory1DelegatePointer = Marshal.GetDelegateForFunctionPointer<GetGlobalStatHistory1Delegate>( Marshal.ReadIntPtr( VTable, 328) );
 			GetGlobalStatHistory2DelegatePointer = Marshal.GetDelegateForFunctionPointer<GetGlobalStatHistory2Delegate>( Marshal.ReadIntPtr( VTable, 336) );
 		}
 		
@@ -77,13 +77,13 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool GetStatDelegate( IntPtr self, string pchName, ref int pData );
-		private GetStatDelegate GetStatDelegatePointer;
+		private delegate bool GetStat1Delegate( IntPtr self, string pchName, ref int pData );
+		private GetStat1Delegate GetStat1DelegatePointer;
 		
 		#endregion
-		internal bool GetStat( string pchName, ref int pData )
+		internal bool GetStat1( string pchName, ref int pData )
 		{
-			return GetStatDelegatePointer( Self, pchName, ref pData );
+			return GetStat1DelegatePointer( Self, pchName, ref pData );
 		}
 		
 		#region FunctionMeta
@@ -101,13 +101,13 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool SetStatDelegate( IntPtr self, string pchName, int nData );
-		private SetStatDelegate SetStatDelegatePointer;
+		private delegate bool SetStat1Delegate( IntPtr self, string pchName, int nData );
+		private SetStat1Delegate SetStat1DelegatePointer;
 		
 		#endregion
-		internal bool SetStat( string pchName, int nData )
+		internal bool SetStat1( string pchName, int nData )
 		{
-			return SetStatDelegatePointer( Self, pchName, nData );
+			return SetStat1DelegatePointer( Self, pchName, nData );
 		}
 		
 		#region FunctionMeta
@@ -264,13 +264,13 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool GetUserStatDelegate( IntPtr self, SteamId steamIDUser, string pchName, ref int pData );
-		private GetUserStatDelegate GetUserStatDelegatePointer;
+		private delegate bool GetUserStat1Delegate( IntPtr self, SteamId steamIDUser, string pchName, ref int pData );
+		private GetUserStat1Delegate GetUserStat1DelegatePointer;
 		
 		#endregion
-		internal bool GetUserStat( SteamId steamIDUser, string pchName, ref int pData )
+		internal bool GetUserStat1( SteamId steamIDUser, string pchName, ref int pData )
 		{
-			return GetUserStatDelegatePointer( Self, steamIDUser, pchName, ref pData );
+			return GetUserStat1DelegatePointer( Self, steamIDUser, pchName, ref pData );
 		}
 		
 		#region FunctionMeta
@@ -513,13 +513,13 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool GetGlobalStatDelegate( IntPtr self, string pchStatName, ref long pData );
-		private GetGlobalStatDelegate GetGlobalStatDelegatePointer;
+		private delegate bool GetGlobalStat1Delegate( IntPtr self, string pchStatName, ref long pData );
+		private GetGlobalStat1Delegate GetGlobalStat1DelegatePointer;
 		
 		#endregion
-		internal bool GetGlobalStat( string pchStatName, ref long pData )
+		internal bool GetGlobalStat1( string pchStatName, ref long pData )
 		{
-			return GetGlobalStatDelegatePointer( Self, pchStatName, ref pData );
+			return GetGlobalStat1DelegatePointer( Self, pchStatName, ref pData );
 		}
 		
 		#region FunctionMeta
@@ -536,13 +536,13 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate int GetGlobalStatHistoryDelegate( IntPtr self, string pchStatName, [In,Out] long[]  pData, uint cubData );
-		private GetGlobalStatHistoryDelegate GetGlobalStatHistoryDelegatePointer;
+		private delegate int GetGlobalStatHistory1Delegate( IntPtr self, string pchStatName, [In,Out] long[]  pData, uint cubData );
+		private GetGlobalStatHistory1Delegate GetGlobalStatHistory1DelegatePointer;
 		
 		#endregion
-		internal int GetGlobalStatHistory( string pchStatName, [In,Out] long[]  pData, uint cubData )
+		internal int GetGlobalStatHistory1( string pchStatName, [In,Out] long[]  pData, uint cubData )
 		{
-			return GetGlobalStatHistoryDelegatePointer( Self, pchStatName, pData, cubData );
+			return GetGlobalStatHistory1DelegatePointer( Self, pchStatName, pData, cubData );
 		}
 		
 		#region FunctionMeta

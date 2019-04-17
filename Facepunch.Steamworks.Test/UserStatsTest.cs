@@ -182,8 +182,9 @@ namespace Steamworks
 			var startups = new Stat( "GMA_X_STARTUPS_STAT" );
 
 			var history = await startups.GetGlobalIntDays( 60 );
+			Assert.AreNotEqual( 0, history.Length );
 
-			for( int i=0; i< history.Length; i++ )
+			for ( int i=0; i< history.Length; i++ )
 			{
 				Console.WriteLine( $"{i} : {history[i]}" );
 			}
