@@ -47,6 +47,16 @@ namespace Steamworks.Data
 			return LeaderboardUpdate.From( r.Value );
 		}
 
+		/// <summary>
+		/// Attaches a piece of user generated content the user's entry on a leaderboard
+		/// </summary>
+		public async Task<Result> AttachUgc( Ugc file )
+		{
+			var r = await SteamUserStats.Internal.AttachLeaderboardUGC( Id, file.Handle );
+			if ( !r.HasValue ) return Result.Fail;
+
+			return r.Value.Result;
+		}
 
 		/// <summary>
 		/// Used to query for a sequential range of leaderboard entries by leaderboard Sort.
