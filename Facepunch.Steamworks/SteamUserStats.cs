@@ -101,5 +101,33 @@ namespace Steamworks
 		{
 			return Internal.RequestCurrentStats();
 		}
+
+		/// <summary>
+		/// Gets a leaderboard by name, it will create it if it's not yet created.
+		/// Leaderboards created with this function will not automatically show up in the Steam Community.
+		/// You must manually set the Community Name field in the App Admin panel of the Steamworks website. 
+		/// As such it's generally recommended to prefer creating the leaderboards in the App Admin panel on 
+		/// the Steamworks website and using FindLeaderboard unless you're expected to have a large amount of
+		/// dynamically created leaderboards.
+		/// </summary>
+		public static async Task<Leaderboard?> FindOrCreateLeaderboard( string name, LeaderboardSort sort, LeaderboardDisplay display )
+		{
+			var result = await Internal.FindOrCreateLeaderboard( name, sort, display );
+			if ( !result.HasValue || result.Value.LeaderboardFound == 0 )
+				return null;
+
+			return new Leaderboard { Id = result.Value.SteamLeaderboard };
+		}
+
+
+		public static async Task<Leaderboard?> FindLeaderboard( string name )
+		{
+			var result = await Internal.FindLeaderboard( name );
+			if ( !result.HasValue || result.Value.LeaderboardFound == 0 )
+				return null;
+
+			return new Leaderboard { Id = result.Value.SteamLeaderboard };
+		}
+
 	}
 }

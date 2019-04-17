@@ -323,11 +323,11 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamAPICall_t FindOrCreateLeaderboardDelegate( IntPtr self, string pchLeaderboardName, LeaderboardSortMethod eLeaderboardSortMethod, LeaderboardDisplayType eLeaderboardDisplayType );
+		private delegate SteamAPICall_t FindOrCreateLeaderboardDelegate( IntPtr self, string pchLeaderboardName, LeaderboardSort eLeaderboardSortMethod, LeaderboardDisplay eLeaderboardDisplayType );
 		private FindOrCreateLeaderboardDelegate FindOrCreateLeaderboardDelegatePointer;
 		
 		#endregion
-		internal async Task<LeaderboardFindResult_t?> FindOrCreateLeaderboard( string pchLeaderboardName, LeaderboardSortMethod eLeaderboardSortMethod, LeaderboardDisplayType eLeaderboardDisplayType )
+		internal async Task<LeaderboardFindResult_t?> FindOrCreateLeaderboard( string pchLeaderboardName, LeaderboardSort eLeaderboardSortMethod, LeaderboardDisplay eLeaderboardDisplayType )
 		{
 			return await (new Result<LeaderboardFindResult_t>( FindOrCreateLeaderboardDelegatePointer( Self, pchLeaderboardName, eLeaderboardSortMethod, eLeaderboardDisplayType ) )).GetResult();
 		}
@@ -367,22 +367,22 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate LeaderboardSortMethod GetLeaderboardSortMethodDelegate( IntPtr self, SteamLeaderboard_t hSteamLeaderboard );
+		private delegate LeaderboardSort GetLeaderboardSortMethodDelegate( IntPtr self, SteamLeaderboard_t hSteamLeaderboard );
 		private GetLeaderboardSortMethodDelegate GetLeaderboardSortMethodDelegatePointer;
 		
 		#endregion
-		internal LeaderboardSortMethod GetLeaderboardSortMethod( SteamLeaderboard_t hSteamLeaderboard )
+		internal LeaderboardSort GetLeaderboardSortMethod( SteamLeaderboard_t hSteamLeaderboard )
 		{
 			return GetLeaderboardSortMethodDelegatePointer( Self, hSteamLeaderboard );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate LeaderboardDisplayType GetLeaderboardDisplayTypeDelegate( IntPtr self, SteamLeaderboard_t hSteamLeaderboard );
+		private delegate LeaderboardDisplay GetLeaderboardDisplayTypeDelegate( IntPtr self, SteamLeaderboard_t hSteamLeaderboard );
 		private GetLeaderboardDisplayTypeDelegate GetLeaderboardDisplayTypeDelegatePointer;
 		
 		#endregion
-		internal LeaderboardDisplayType GetLeaderboardDisplayType( SteamLeaderboard_t hSteamLeaderboard )
+		internal LeaderboardDisplay GetLeaderboardDisplayType( SteamLeaderboard_t hSteamLeaderboard )
 		{
 			return GetLeaderboardDisplayTypeDelegatePointer( Self, hSteamLeaderboard );
 		}

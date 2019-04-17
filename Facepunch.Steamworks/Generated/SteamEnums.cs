@@ -904,24 +904,9 @@ namespace Steamworks
 	//
 	// ELeaderboardSortMethod
 	//
-	internal enum LeaderboardSortMethod : int
-	{
-		None = 0,
-		Ascending = 1,
-		Descending = 2,
-	}
-	
 	//
 	// ELeaderboardDisplayType
 	//
-	internal enum LeaderboardDisplayType : int
-	{
-		None = 0,
-		Numeric = 1,
-		TimeSeconds = 2,
-		TimeMilliSeconds = 3,
-	}
-	
 	//
 	// ELeaderboardUploadScoreMethod
 	//

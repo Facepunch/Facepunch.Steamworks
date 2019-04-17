@@ -18,9 +18,9 @@ public static class Cleanup
 		type = type.Replace( "FriendRelationship", "Relationship" );
 		type = type.Replace( "BeginAuthSessionResult", "BeginAuthResult" );
 		type = type.Replace( "PublishedFileId_t", "PublishedFileId" );
-		
-
-		
+		type = type.Replace( "PublishedFileId_t", "PublishedFileId" );
+		type = type.Replace( "LeaderboardSortMethod", "LeaderboardSort" );
+		type = type.Replace( "LeaderboardDisplayType", "LeaderboardDisplay" );
 
 		return type;
 	}
@@ -28,6 +28,8 @@ public static class Cleanup
 	public static bool ShouldCreate( string type )
 	{
 		if ( type == "SteamId" ) return false;
+		if ( type == "LeaderboardSort" ) return false;
+		if ( type == "LeaderboardDisplay" ) return false;
 
 
 		return true;

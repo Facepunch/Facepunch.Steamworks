@@ -27,6 +27,9 @@ namespace Generator
 
 				name = Cleanup.ConvertType( name );
 
+				if ( !Cleanup.ShouldCreate( name ) )
+					continue;
+
                 StartBlock( $"{Cleanup.Expose( name )} enum {name} : int" );
                 {
                     //
