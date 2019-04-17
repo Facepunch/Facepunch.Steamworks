@@ -21,8 +21,25 @@ namespace Steamworks
 			return $"{Name} ({Id.ToString()})";
 		}
 
+
+		/// <summary>
+		/// Returns true if this is the local user
+		/// </summary>
+		public bool IsMe => Id == SteamClient.SteamId;
+
+		/// <summary>
+		/// Return true if this is a friend
+		/// </summary>
 		public bool IsFriend => Relationship == Relationship.Friend;
+
+		/// <summary>
+		/// Returns true if you have this user blocked
+		/// </summary>
 		public bool IsBlocked => Relationship == Relationship.Blocked;
+
+		/// <summary>
+		/// Return true if this user is playing the game we're running
+		/// </summary>
 		public bool IsPlayingThisGame => GameInfo?.GameID == SteamUtils.AppId;
 
 		/// <summary>

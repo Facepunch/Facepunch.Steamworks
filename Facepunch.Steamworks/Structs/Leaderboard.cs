@@ -19,15 +19,70 @@ namespace Steamworks.Data
 		public LeaderboardDisplay Display => SteamUserStats.Internal.GetLeaderboardDisplayType( Id );
 
 		static int[] detailsBuffer = new int[64];
+		static int[] noDetails = new int[0];
+
+		/// <summary>
+		/// Submit your score and replace your old score even if it was better
+		/// </summary>
+		public async Task<LeaderboardUpdate?> ReplaceScore( int score, int[] details = null )
+		{
+			if ( details == null ) details = noDetails;
+
+			var r = await SteamUserStats.Internal.UploadLeaderboardScore( Id, LeaderboardUploadScoreMethod.ForceUpdate, score, details, details.Length );
+			if ( !r.HasValue ) return null;
+
+			return LeaderboardUpdate.From( r.Value );
+		}
+
+		/// <summary>
+		/// Submit your new score, but won't replace your high score if it's lower
+		/// </summary>
+		public async Task<LeaderboardUpdate?> SubmitScore( int score, int[] details = null )
+		{
+			if ( details == null ) details = noDetails;
+
+			var r = await SteamUserStats.Internal.UploadLeaderboardScore( Id, LeaderboardUploadScoreMethod.KeepBest, score, details, details.Length );
+			if ( !r.HasValue ) return null;
+
+			return LeaderboardUpdate.From( r.Value );
+		}
+
 
 		/// <summary>
 		/// Used to query for a sequential range of leaderboard entries by leaderboard Sort.
 		/// </summary>
-		public async Task<LeaderboardEntry[]> GetGlobalEntriesAsync( int count, int offset = 1 )
+		public async Task<LeaderboardEntry[]> GetScoresAsync( int count, int offset = 1 )
 		{
 			if ( offset <= 0 ) throw new System.ArgumentException( "Should be 1+", nameof( offset ) );
 
 			var r = await SteamUserStats.Internal.DownloadLeaderboardEntries( Id, LeaderboardDataRequest.Global, offset, offset + count );
+			if ( !r.HasValue )
+				return null;
+
+			return await LeaderboardResultToEntries( r.Value );
+		}
+
+		/// <summary>
+		/// Used to retrieve leaderboard entries relative a user's entry. If there are not enough entries in the leaderboard 
+		/// before or after the user's entry, Steam will adjust the range to try to return the number of entries requested.
+		/// For example, if the user is #1 on the leaderboard and start is set to -2, end is set to 2, Steam will return the first 
+		/// 5 entries in the leaderboard. If The current user has no entry, this will return null.
+		/// </summary>
+		public async Task<LeaderboardEntry[]> GetScoresAroundUserAsync( int start = -10, int end = 10 )
+		{
+			var r = await SteamUserStats.Internal.DownloadLeaderboardEntries( Id, LeaderboardDataRequest.GlobalAroundUser, start, end );
+			if ( !r.HasValue )
+				return null;
+
+			return await LeaderboardResultToEntries( r.Value );
+		}
+
+		/// <summary>
+		/// Used to retrieve all leaderboard entries for friends of the current user
+		/// </summary>
+		public async Task<LeaderboardEntry[]> GetScoresFromFriends()
+		{
+			var r = await SteamUserStats.Internal.DownloadLeaderboardEntries( Id, LeaderboardDataRequest.Friends, 0, 0 );
 			if ( !r.HasValue )
 				return null;
 
