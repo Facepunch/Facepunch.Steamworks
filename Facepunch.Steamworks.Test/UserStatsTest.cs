@@ -29,6 +29,27 @@ namespace Steamworks
 			}			
 		}
 
+		[TestMethod]
+		public async Task StoreStats()
+		{
+			var result = Result.NotSettled;
+
+			SteamUserStats.OnUserStatsStored += ( r ) =>
+			{
+				result = r;
+			};
+
+			SteamUserStats.StoreStats();
+
+			while ( result  == Result.NotSettled )
+			{
+				await Task.Delay( 10 );
+			}
+
+			Assert.AreEqual( result, Result.OK );
+
+		}
+
 	}
 
 }

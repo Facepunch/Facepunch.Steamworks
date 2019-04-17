@@ -21,6 +21,47 @@ namespace Steamworks
 			}
 		}
 
+		public static bool StatsRecieved { get; internal set; }
+
+		internal static void InstallEvents()
+		{
+			new Event<UserStatsReceived_t>( x =>
+			{
+				if ( x.SteamIDUser == SteamClient.SteamId )
+					StatsRecieved = true;
+
+				OnUserStatsReceived?.Invoke( x.SteamIDUser, x.Result );
+			} );
+
+			new Event<UserStatsStored_t>( x => OnUserStatsStored?.Invoke( x.Result ) );
+			new Event<UserAchievementStored_t>( x => OnAchievementProgress?.Invoke( x.AchievementName, (int) x.CurProgress, (int)x.MaxProgress ) );
+			new Event<UserStatsUnloaded_t>( x => OnUserStatsUnloaded?.Invoke( x.SteamIDUser ) );
+		}
+
+		/// <summary>
+		/// called when the latests stats and achievements have been received
+		///	from the server
+		/// </summary>
+		public static event Action<SteamId, Result> OnUserStatsReceived;
+
+		/// <summary>
+		/// result of a request to store the user stats for a game
+		/// </summary>
+		public static event Action<Result> OnUserStatsStored;
+
+		/// <summary>
+		/// result of a request to store the achievements for a game, or an 
+		///	"indicate progress" call. If both m_nCurProgress and m_nMaxProgress
+		///	are zero, that means the achievement has been fully unlocked
+		/// </summary>
+		public static event Action<string, int, int> OnAchievementProgress;
+
+
+		/// <summary>
+		/// Callback indicating that a user's stats have been unloaded
+		/// </summary>
+		public static event Action<SteamId> OnUserStatsUnloaded;
+
 		/// <summary>
 		/// Get the available achievements
 		/// </summary>
@@ -33,6 +74,32 @@ namespace Steamworks
 					yield return new Achievement( Internal.GetAchievementName( (uint) i ) );
 				}
 			}
+		}
+
+		/// <summary>
+		/// Send the changed stats and achievements data to the server for permanent storage.
+		/// If this fails then nothing is sent to the server. It's advisable to keep trying until the call is successful.
+		/// This call can be rate limited. Call frequency should be on the order of minutes, rather than seconds.You should only be calling this during major state changes such as the end of a round, the map changing, or the user leaving a server. This call is required to display the achievement unlock notification dialog though, so if you have called SetAchievement then it's advisable to call this soon after that.
+		/// If you have stats or achievements that you have saved locally but haven't uploaded with this function when your application process ends then this function will automatically be called.
+		/// You can find additional debug information written to the %steam_install%\logs\stats_log.txt file.
+		/// This function returns true upon success if :
+		/// RequestCurrentStats has completed and successfully returned its callback AND
+		/// the current game has stats associated with it in the Steamworks Partner backend, and those stats are published.
+		/// </summary>
+		public static bool StoreStats()
+		{
+			return Internal.StoreStats();
+		}
+
+		/// <summary>
+		/// Asynchronously request the user's current stats and achievements from the server.
+		/// You must always call this first to get the initial status of stats and achievements.
+		/// Only after the resulting callback comes back can you start calling the rest of the stats 
+		/// and achievement functions for the current user.
+		/// </summary>
+		public static bool RequestCurrentStats()
+		{
+			return Internal.RequestCurrentStats();
 		}
 	}
 }

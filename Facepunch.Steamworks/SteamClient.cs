@@ -35,15 +35,16 @@ namespace Steamworks
 			SteamUser.InstallEvents();
 			SteamFriends.InstallEvents();
 			SteamScreenshots.InstallEvents();
+			SteamUserStats.InstallEvents();
 
-			RunCallbacks();
+			RunCallbacksAsync();
 		}
 
 		public static bool IsValid => initialized;
 
-		internal static async void RunCallbacks()
+		internal static async void RunCallbacksAsync()
 		{
-			while ( true )
+			while ( IsValid )
 			{
 				await Task.Delay( 16 );
 				try
