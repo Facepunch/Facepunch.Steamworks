@@ -17,543 +17,543 @@ namespace Steamworks
 		
 		public override void InitInternals()
 		{
-			RequestCurrentStatsDelegatePointer = Marshal.GetDelegateForFunctionPointer<RequestCurrentStatsDelegate>( Marshal.ReadIntPtr( VTable, 0) );
-			GetStat1DelegatePointer = Marshal.GetDelegateForFunctionPointer<GetStat1Delegate>( Marshal.ReadIntPtr( VTable, 8) );
-			GetStat2DelegatePointer = Marshal.GetDelegateForFunctionPointer<GetStat2Delegate>( Marshal.ReadIntPtr( VTable, 16) );
-			SetStat1DelegatePointer = Marshal.GetDelegateForFunctionPointer<SetStat1Delegate>( Marshal.ReadIntPtr( VTable, 24) );
-			SetStat2DelegatePointer = Marshal.GetDelegateForFunctionPointer<SetStat2Delegate>( Marshal.ReadIntPtr( VTable, 32) );
-			UpdateAvgRateStatDelegatePointer = Marshal.GetDelegateForFunctionPointer<UpdateAvgRateStatDelegate>( Marshal.ReadIntPtr( VTable, 40) );
-			GetAchievementDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetAchievementDelegate>( Marshal.ReadIntPtr( VTable, 48) );
-			SetAchievementDelegatePointer = Marshal.GetDelegateForFunctionPointer<SetAchievementDelegate>( Marshal.ReadIntPtr( VTable, 56) );
-			ClearAchievementDelegatePointer = Marshal.GetDelegateForFunctionPointer<ClearAchievementDelegate>( Marshal.ReadIntPtr( VTable, 64) );
-			GetAchievementAndUnlockTimeDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetAchievementAndUnlockTimeDelegate>( Marshal.ReadIntPtr( VTable, 72) );
-			StoreStatsDelegatePointer = Marshal.GetDelegateForFunctionPointer<StoreStatsDelegate>( Marshal.ReadIntPtr( VTable, 80) );
-			GetAchievementIconDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetAchievementIconDelegate>( Marshal.ReadIntPtr( VTable, 88) );
-			GetAchievementDisplayAttributeDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetAchievementDisplayAttributeDelegate>( Marshal.ReadIntPtr( VTable, 96) );
-			IndicateAchievementProgressDelegatePointer = Marshal.GetDelegateForFunctionPointer<IndicateAchievementProgressDelegate>( Marshal.ReadIntPtr( VTable, 104) );
-			GetNumAchievementsDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetNumAchievementsDelegate>( Marshal.ReadIntPtr( VTable, 112) );
-			GetAchievementNameDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetAchievementNameDelegate>( Marshal.ReadIntPtr( VTable, 120) );
-			RequestUserStatsDelegatePointer = Marshal.GetDelegateForFunctionPointer<RequestUserStatsDelegate>( Marshal.ReadIntPtr( VTable, 128) );
-			GetUserStat1DelegatePointer = Marshal.GetDelegateForFunctionPointer<GetUserStat1Delegate>( Marshal.ReadIntPtr( VTable, 136) );
-			GetUserStat2DelegatePointer = Marshal.GetDelegateForFunctionPointer<GetUserStat2Delegate>( Marshal.ReadIntPtr( VTable, 144) );
-			GetUserAchievementDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetUserAchievementDelegate>( Marshal.ReadIntPtr( VTable, 152) );
-			GetUserAchievementAndUnlockTimeDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetUserAchievementAndUnlockTimeDelegate>( Marshal.ReadIntPtr( VTable, 160) );
-			ResetAllStatsDelegatePointer = Marshal.GetDelegateForFunctionPointer<ResetAllStatsDelegate>( Marshal.ReadIntPtr( VTable, 168) );
-			FindOrCreateLeaderboardDelegatePointer = Marshal.GetDelegateForFunctionPointer<FindOrCreateLeaderboardDelegate>( Marshal.ReadIntPtr( VTable, 176) );
-			FindLeaderboardDelegatePointer = Marshal.GetDelegateForFunctionPointer<FindLeaderboardDelegate>( Marshal.ReadIntPtr( VTable, 184) );
-			GetLeaderboardNameDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetLeaderboardNameDelegate>( Marshal.ReadIntPtr( VTable, 192) );
-			GetLeaderboardEntryCountDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetLeaderboardEntryCountDelegate>( Marshal.ReadIntPtr( VTable, 200) );
-			GetLeaderboardSortMethodDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetLeaderboardSortMethodDelegate>( Marshal.ReadIntPtr( VTable, 208) );
-			GetLeaderboardDisplayTypeDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetLeaderboardDisplayTypeDelegate>( Marshal.ReadIntPtr( VTable, 216) );
-			DownloadLeaderboardEntriesDelegatePointer = Marshal.GetDelegateForFunctionPointer<DownloadLeaderboardEntriesDelegate>( Marshal.ReadIntPtr( VTable, 224) );
-			DownloadLeaderboardEntriesForUsersDelegatePointer = Marshal.GetDelegateForFunctionPointer<DownloadLeaderboardEntriesForUsersDelegate>( Marshal.ReadIntPtr( VTable, 232) );
-			GetDownloadedLeaderboardEntryDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetDownloadedLeaderboardEntryDelegate>( Marshal.ReadIntPtr( VTable, 240) );
-			UploadLeaderboardScoreDelegatePointer = Marshal.GetDelegateForFunctionPointer<UploadLeaderboardScoreDelegate>( Marshal.ReadIntPtr( VTable, 248) );
-			AttachLeaderboardUGCDelegatePointer = Marshal.GetDelegateForFunctionPointer<AttachLeaderboardUGCDelegate>( Marshal.ReadIntPtr( VTable, 256) );
-			GetNumberOfCurrentPlayersDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetNumberOfCurrentPlayersDelegate>( Marshal.ReadIntPtr( VTable, 264) );
-			RequestGlobalAchievementPercentagesDelegatePointer = Marshal.GetDelegateForFunctionPointer<RequestGlobalAchievementPercentagesDelegate>( Marshal.ReadIntPtr( VTable, 272) );
-			GetMostAchievedAchievementInfoDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetMostAchievedAchievementInfoDelegate>( Marshal.ReadIntPtr( VTable, 280) );
-			GetNextMostAchievedAchievementInfoDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetNextMostAchievedAchievementInfoDelegate>( Marshal.ReadIntPtr( VTable, 288) );
-			GetAchievementAchievedPercentDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetAchievementAchievedPercentDelegate>( Marshal.ReadIntPtr( VTable, 296) );
-			RequestGlobalStatsDelegatePointer = Marshal.GetDelegateForFunctionPointer<RequestGlobalStatsDelegate>( Marshal.ReadIntPtr( VTable, 304) );
-			GetGlobalStat1DelegatePointer = Marshal.GetDelegateForFunctionPointer<GetGlobalStat1Delegate>( Marshal.ReadIntPtr( VTable, 312) );
-			GetGlobalStat2DelegatePointer = Marshal.GetDelegateForFunctionPointer<GetGlobalStat2Delegate>( Marshal.ReadIntPtr( VTable, 320) );
-			GetGlobalStatHistory1DelegatePointer = Marshal.GetDelegateForFunctionPointer<GetGlobalStatHistory1Delegate>( Marshal.ReadIntPtr( VTable, 328) );
-			GetGlobalStatHistory2DelegatePointer = Marshal.GetDelegateForFunctionPointer<GetGlobalStatHistory2Delegate>( Marshal.ReadIntPtr( VTable, 336) );
+			_RequestCurrentStats = Marshal.GetDelegateForFunctionPointer<FRequestCurrentStats>( Marshal.ReadIntPtr( VTable, 0) );
+			_GetStat1 = Marshal.GetDelegateForFunctionPointer<FGetStat1>( Marshal.ReadIntPtr( VTable, 8) );
+			_GetStat2 = Marshal.GetDelegateForFunctionPointer<FGetStat2>( Marshal.ReadIntPtr( VTable, 16) );
+			_SetStat1 = Marshal.GetDelegateForFunctionPointer<FSetStat1>( Marshal.ReadIntPtr( VTable, 24) );
+			_SetStat2 = Marshal.GetDelegateForFunctionPointer<FSetStat2>( Marshal.ReadIntPtr( VTable, 32) );
+			_UpdateAvgRateStat = Marshal.GetDelegateForFunctionPointer<FUpdateAvgRateStat>( Marshal.ReadIntPtr( VTable, 40) );
+			_GetAchievement = Marshal.GetDelegateForFunctionPointer<FGetAchievement>( Marshal.ReadIntPtr( VTable, 48) );
+			_SetAchievement = Marshal.GetDelegateForFunctionPointer<FSetAchievement>( Marshal.ReadIntPtr( VTable, 56) );
+			_ClearAchievement = Marshal.GetDelegateForFunctionPointer<FClearAchievement>( Marshal.ReadIntPtr( VTable, 64) );
+			_GetAchievementAndUnlockTime = Marshal.GetDelegateForFunctionPointer<FGetAchievementAndUnlockTime>( Marshal.ReadIntPtr( VTable, 72) );
+			_StoreStats = Marshal.GetDelegateForFunctionPointer<FStoreStats>( Marshal.ReadIntPtr( VTable, 80) );
+			_GetAchievementIcon = Marshal.GetDelegateForFunctionPointer<FGetAchievementIcon>( Marshal.ReadIntPtr( VTable, 88) );
+			_GetAchievementDisplayAttribute = Marshal.GetDelegateForFunctionPointer<FGetAchievementDisplayAttribute>( Marshal.ReadIntPtr( VTable, 96) );
+			_IndicateAchievementProgress = Marshal.GetDelegateForFunctionPointer<FIndicateAchievementProgress>( Marshal.ReadIntPtr( VTable, 104) );
+			_GetNumAchievements = Marshal.GetDelegateForFunctionPointer<FGetNumAchievements>( Marshal.ReadIntPtr( VTable, 112) );
+			_GetAchievementName = Marshal.GetDelegateForFunctionPointer<FGetAchievementName>( Marshal.ReadIntPtr( VTable, 120) );
+			_RequestUserStats = Marshal.GetDelegateForFunctionPointer<FRequestUserStats>( Marshal.ReadIntPtr( VTable, 128) );
+			_GetUserStat1 = Marshal.GetDelegateForFunctionPointer<FGetUserStat1>( Marshal.ReadIntPtr( VTable, 136) );
+			_GetUserStat2 = Marshal.GetDelegateForFunctionPointer<FGetUserStat2>( Marshal.ReadIntPtr( VTable, 144) );
+			_GetUserAchievement = Marshal.GetDelegateForFunctionPointer<FGetUserAchievement>( Marshal.ReadIntPtr( VTable, 152) );
+			_GetUserAchievementAndUnlockTime = Marshal.GetDelegateForFunctionPointer<FGetUserAchievementAndUnlockTime>( Marshal.ReadIntPtr( VTable, 160) );
+			_ResetAllStats = Marshal.GetDelegateForFunctionPointer<FResetAllStats>( Marshal.ReadIntPtr( VTable, 168) );
+			_FindOrCreateLeaderboard = Marshal.GetDelegateForFunctionPointer<FFindOrCreateLeaderboard>( Marshal.ReadIntPtr( VTable, 176) );
+			_FindLeaderboard = Marshal.GetDelegateForFunctionPointer<FFindLeaderboard>( Marshal.ReadIntPtr( VTable, 184) );
+			_GetLeaderboardName = Marshal.GetDelegateForFunctionPointer<FGetLeaderboardName>( Marshal.ReadIntPtr( VTable, 192) );
+			_GetLeaderboardEntryCount = Marshal.GetDelegateForFunctionPointer<FGetLeaderboardEntryCount>( Marshal.ReadIntPtr( VTable, 200) );
+			_GetLeaderboardSortMethod = Marshal.GetDelegateForFunctionPointer<FGetLeaderboardSortMethod>( Marshal.ReadIntPtr( VTable, 208) );
+			_GetLeaderboardDisplayType = Marshal.GetDelegateForFunctionPointer<FGetLeaderboardDisplayType>( Marshal.ReadIntPtr( VTable, 216) );
+			_DownloadLeaderboardEntries = Marshal.GetDelegateForFunctionPointer<FDownloadLeaderboardEntries>( Marshal.ReadIntPtr( VTable, 224) );
+			_DownloadLeaderboardEntriesForUsers = Marshal.GetDelegateForFunctionPointer<FDownloadLeaderboardEntriesForUsers>( Marshal.ReadIntPtr( VTable, 232) );
+			_GetDownloadedLeaderboardEntry = Marshal.GetDelegateForFunctionPointer<FGetDownloadedLeaderboardEntry>( Marshal.ReadIntPtr( VTable, 240) );
+			_UploadLeaderboardScore = Marshal.GetDelegateForFunctionPointer<FUploadLeaderboardScore>( Marshal.ReadIntPtr( VTable, 248) );
+			_AttachLeaderboardUGC = Marshal.GetDelegateForFunctionPointer<FAttachLeaderboardUGC>( Marshal.ReadIntPtr( VTable, 256) );
+			_GetNumberOfCurrentPlayers = Marshal.GetDelegateForFunctionPointer<FGetNumberOfCurrentPlayers>( Marshal.ReadIntPtr( VTable, 264) );
+			_RequestGlobalAchievementPercentages = Marshal.GetDelegateForFunctionPointer<FRequestGlobalAchievementPercentages>( Marshal.ReadIntPtr( VTable, 272) );
+			_GetMostAchievedAchievementInfo = Marshal.GetDelegateForFunctionPointer<FGetMostAchievedAchievementInfo>( Marshal.ReadIntPtr( VTable, 280) );
+			_GetNextMostAchievedAchievementInfo = Marshal.GetDelegateForFunctionPointer<FGetNextMostAchievedAchievementInfo>( Marshal.ReadIntPtr( VTable, 288) );
+			_GetAchievementAchievedPercent = Marshal.GetDelegateForFunctionPointer<FGetAchievementAchievedPercent>( Marshal.ReadIntPtr( VTable, 296) );
+			_RequestGlobalStats = Marshal.GetDelegateForFunctionPointer<FRequestGlobalStats>( Marshal.ReadIntPtr( VTable, 304) );
+			_GetGlobalStat1 = Marshal.GetDelegateForFunctionPointer<FGetGlobalStat1>( Marshal.ReadIntPtr( VTable, 312) );
+			_GetGlobalStat2 = Marshal.GetDelegateForFunctionPointer<FGetGlobalStat2>( Marshal.ReadIntPtr( VTable, 320) );
+			_GetGlobalStatHistory1 = Marshal.GetDelegateForFunctionPointer<FGetGlobalStatHistory1>( Marshal.ReadIntPtr( VTable, 328) );
+			_GetGlobalStatHistory2 = Marshal.GetDelegateForFunctionPointer<FGetGlobalStatHistory2>( Marshal.ReadIntPtr( VTable, 336) );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool RequestCurrentStatsDelegate( IntPtr self );
-		private RequestCurrentStatsDelegate RequestCurrentStatsDelegatePointer;
+		private delegate bool FRequestCurrentStats( IntPtr self );
+		private FRequestCurrentStats _RequestCurrentStats;
 		
 		#endregion
 		internal bool RequestCurrentStats()
 		{
-			return RequestCurrentStatsDelegatePointer( Self );
+			return _RequestCurrentStats( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool GetStat1Delegate( IntPtr self, string pchName, ref int pData );
-		private GetStat1Delegate GetStat1DelegatePointer;
+		private delegate bool FGetStat1( IntPtr self, string pchName, ref int pData );
+		private FGetStat1 _GetStat1;
 		
 		#endregion
 		internal bool GetStat1( string pchName, ref int pData )
 		{
-			return GetStat1DelegatePointer( Self, pchName, ref pData );
+			return _GetStat1( Self, pchName, ref pData );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool GetStat2Delegate( IntPtr self, string pchName, ref float pData );
-		private GetStat2Delegate GetStat2DelegatePointer;
+		private delegate bool FGetStat2( IntPtr self, string pchName, ref float pData );
+		private FGetStat2 _GetStat2;
 		
 		#endregion
 		internal bool GetStat2( string pchName, ref float pData )
 		{
-			return GetStat2DelegatePointer( Self, pchName, ref pData );
+			return _GetStat2( Self, pchName, ref pData );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool SetStat1Delegate( IntPtr self, string pchName, int nData );
-		private SetStat1Delegate SetStat1DelegatePointer;
+		private delegate bool FSetStat1( IntPtr self, string pchName, int nData );
+		private FSetStat1 _SetStat1;
 		
 		#endregion
 		internal bool SetStat1( string pchName, int nData )
 		{
-			return SetStat1DelegatePointer( Self, pchName, nData );
+			return _SetStat1( Self, pchName, nData );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool SetStat2Delegate( IntPtr self, string pchName, float fData );
-		private SetStat2Delegate SetStat2DelegatePointer;
+		private delegate bool FSetStat2( IntPtr self, string pchName, float fData );
+		private FSetStat2 _SetStat2;
 		
 		#endregion
 		internal bool SetStat2( string pchName, float fData )
 		{
-			return SetStat2DelegatePointer( Self, pchName, fData );
+			return _SetStat2( Self, pchName, fData );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool UpdateAvgRateStatDelegate( IntPtr self, string pchName, float flCountThisSession, double dSessionLength );
-		private UpdateAvgRateStatDelegate UpdateAvgRateStatDelegatePointer;
+		private delegate bool FUpdateAvgRateStat( IntPtr self, string pchName, float flCountThisSession, double dSessionLength );
+		private FUpdateAvgRateStat _UpdateAvgRateStat;
 		
 		#endregion
 		internal bool UpdateAvgRateStat( string pchName, float flCountThisSession, double dSessionLength )
 		{
-			return UpdateAvgRateStatDelegatePointer( Self, pchName, flCountThisSession, dSessionLength );
+			return _UpdateAvgRateStat( Self, pchName, flCountThisSession, dSessionLength );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool GetAchievementDelegate( IntPtr self, string pchName, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved );
-		private GetAchievementDelegate GetAchievementDelegatePointer;
+		private delegate bool FGetAchievement( IntPtr self, string pchName, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved );
+		private FGetAchievement _GetAchievement;
 		
 		#endregion
 		internal bool GetAchievement( string pchName, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved )
 		{
-			return GetAchievementDelegatePointer( Self, pchName, ref pbAchieved );
+			return _GetAchievement( Self, pchName, ref pbAchieved );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool SetAchievementDelegate( IntPtr self, string pchName );
-		private SetAchievementDelegate SetAchievementDelegatePointer;
+		private delegate bool FSetAchievement( IntPtr self, string pchName );
+		private FSetAchievement _SetAchievement;
 		
 		#endregion
 		internal bool SetAchievement( string pchName )
 		{
-			return SetAchievementDelegatePointer( Self, pchName );
+			return _SetAchievement( Self, pchName );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool ClearAchievementDelegate( IntPtr self, string pchName );
-		private ClearAchievementDelegate ClearAchievementDelegatePointer;
+		private delegate bool FClearAchievement( IntPtr self, string pchName );
+		private FClearAchievement _ClearAchievement;
 		
 		#endregion
 		internal bool ClearAchievement( string pchName )
 		{
-			return ClearAchievementDelegatePointer( Self, pchName );
+			return _ClearAchievement( Self, pchName );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool GetAchievementAndUnlockTimeDelegate( IntPtr self, string pchName, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved, ref uint punUnlockTime );
-		private GetAchievementAndUnlockTimeDelegate GetAchievementAndUnlockTimeDelegatePointer;
+		private delegate bool FGetAchievementAndUnlockTime( IntPtr self, string pchName, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved, ref uint punUnlockTime );
+		private FGetAchievementAndUnlockTime _GetAchievementAndUnlockTime;
 		
 		#endregion
 		internal bool GetAchievementAndUnlockTime( string pchName, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved, ref uint punUnlockTime )
 		{
-			return GetAchievementAndUnlockTimeDelegatePointer( Self, pchName, ref pbAchieved, ref punUnlockTime );
+			return _GetAchievementAndUnlockTime( Self, pchName, ref pbAchieved, ref punUnlockTime );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool StoreStatsDelegate( IntPtr self );
-		private StoreStatsDelegate StoreStatsDelegatePointer;
+		private delegate bool FStoreStats( IntPtr self );
+		private FStoreStats _StoreStats;
 		
 		#endregion
 		internal bool StoreStats()
 		{
-			return StoreStatsDelegatePointer( Self );
+			return _StoreStats( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate int GetAchievementIconDelegate( IntPtr self, string pchName );
-		private GetAchievementIconDelegate GetAchievementIconDelegatePointer;
+		private delegate int FGetAchievementIcon( IntPtr self, string pchName );
+		private FGetAchievementIcon _GetAchievementIcon;
 		
 		#endregion
 		internal int GetAchievementIcon( string pchName )
 		{
-			return GetAchievementIconDelegatePointer( Self, pchName );
+			return _GetAchievementIcon( Self, pchName );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate IntPtr GetAchievementDisplayAttributeDelegate( IntPtr self, string pchName, string pchKey );
-		private GetAchievementDisplayAttributeDelegate GetAchievementDisplayAttributeDelegatePointer;
+		private delegate IntPtr FGetAchievementDisplayAttribute( IntPtr self, string pchName, string pchKey );
+		private FGetAchievementDisplayAttribute _GetAchievementDisplayAttribute;
 		
 		#endregion
 		internal string GetAchievementDisplayAttribute( string pchName, string pchKey )
 		{
-			return GetString( GetAchievementDisplayAttributeDelegatePointer( Self, pchName, pchKey ) );
+			return GetString( _GetAchievementDisplayAttribute( Self, pchName, pchKey ) );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool IndicateAchievementProgressDelegate( IntPtr self, string pchName, uint nCurProgress, uint nMaxProgress );
-		private IndicateAchievementProgressDelegate IndicateAchievementProgressDelegatePointer;
+		private delegate bool FIndicateAchievementProgress( IntPtr self, string pchName, uint nCurProgress, uint nMaxProgress );
+		private FIndicateAchievementProgress _IndicateAchievementProgress;
 		
 		#endregion
 		internal bool IndicateAchievementProgress( string pchName, uint nCurProgress, uint nMaxProgress )
 		{
-			return IndicateAchievementProgressDelegatePointer( Self, pchName, nCurProgress, nMaxProgress );
+			return _IndicateAchievementProgress( Self, pchName, nCurProgress, nMaxProgress );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate uint GetNumAchievementsDelegate( IntPtr self );
-		private GetNumAchievementsDelegate GetNumAchievementsDelegatePointer;
+		private delegate uint FGetNumAchievements( IntPtr self );
+		private FGetNumAchievements _GetNumAchievements;
 		
 		#endregion
 		internal uint GetNumAchievements()
 		{
-			return GetNumAchievementsDelegatePointer( Self );
+			return _GetNumAchievements( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate IntPtr GetAchievementNameDelegate( IntPtr self, uint iAchievement );
-		private GetAchievementNameDelegate GetAchievementNameDelegatePointer;
+		private delegate IntPtr FGetAchievementName( IntPtr self, uint iAchievement );
+		private FGetAchievementName _GetAchievementName;
 		
 		#endregion
 		internal string GetAchievementName( uint iAchievement )
 		{
-			return GetString( GetAchievementNameDelegatePointer( Self, iAchievement ) );
+			return GetString( _GetAchievementName( Self, iAchievement ) );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamAPICall_t RequestUserStatsDelegate( IntPtr self, SteamId steamIDUser );
-		private RequestUserStatsDelegate RequestUserStatsDelegatePointer;
+		private delegate SteamAPICall_t FRequestUserStats( IntPtr self, SteamId steamIDUser );
+		private FRequestUserStats _RequestUserStats;
 		
 		#endregion
 		internal async Task<UserStatsReceived_t?> RequestUserStats( SteamId steamIDUser )
 		{
-			return await (new Result<UserStatsReceived_t>( RequestUserStatsDelegatePointer( Self, steamIDUser ) )).GetResult();
+			return await (new Result<UserStatsReceived_t>( _RequestUserStats( Self, steamIDUser ) )).GetResult();
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool GetUserStat1Delegate( IntPtr self, SteamId steamIDUser, string pchName, ref int pData );
-		private GetUserStat1Delegate GetUserStat1DelegatePointer;
+		private delegate bool FGetUserStat1( IntPtr self, SteamId steamIDUser, string pchName, ref int pData );
+		private FGetUserStat1 _GetUserStat1;
 		
 		#endregion
 		internal bool GetUserStat1( SteamId steamIDUser, string pchName, ref int pData )
 		{
-			return GetUserStat1DelegatePointer( Self, steamIDUser, pchName, ref pData );
+			return _GetUserStat1( Self, steamIDUser, pchName, ref pData );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool GetUserStat2Delegate( IntPtr self, SteamId steamIDUser, string pchName, ref float pData );
-		private GetUserStat2Delegate GetUserStat2DelegatePointer;
+		private delegate bool FGetUserStat2( IntPtr self, SteamId steamIDUser, string pchName, ref float pData );
+		private FGetUserStat2 _GetUserStat2;
 		
 		#endregion
 		internal bool GetUserStat2( SteamId steamIDUser, string pchName, ref float pData )
 		{
-			return GetUserStat2DelegatePointer( Self, steamIDUser, pchName, ref pData );
+			return _GetUserStat2( Self, steamIDUser, pchName, ref pData );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool GetUserAchievementDelegate( IntPtr self, SteamId steamIDUser, string pchName, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved );
-		private GetUserAchievementDelegate GetUserAchievementDelegatePointer;
+		private delegate bool FGetUserAchievement( IntPtr self, SteamId steamIDUser, string pchName, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved );
+		private FGetUserAchievement _GetUserAchievement;
 		
 		#endregion
 		internal bool GetUserAchievement( SteamId steamIDUser, string pchName, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved )
 		{
-			return GetUserAchievementDelegatePointer( Self, steamIDUser, pchName, ref pbAchieved );
+			return _GetUserAchievement( Self, steamIDUser, pchName, ref pbAchieved );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool GetUserAchievementAndUnlockTimeDelegate( IntPtr self, SteamId steamIDUser, string pchName, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved, ref uint punUnlockTime );
-		private GetUserAchievementAndUnlockTimeDelegate GetUserAchievementAndUnlockTimeDelegatePointer;
+		private delegate bool FGetUserAchievementAndUnlockTime( IntPtr self, SteamId steamIDUser, string pchName, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved, ref uint punUnlockTime );
+		private FGetUserAchievementAndUnlockTime _GetUserAchievementAndUnlockTime;
 		
 		#endregion
 		internal bool GetUserAchievementAndUnlockTime( SteamId steamIDUser, string pchName, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved, ref uint punUnlockTime )
 		{
-			return GetUserAchievementAndUnlockTimeDelegatePointer( Self, steamIDUser, pchName, ref pbAchieved, ref punUnlockTime );
+			return _GetUserAchievementAndUnlockTime( Self, steamIDUser, pchName, ref pbAchieved, ref punUnlockTime );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool ResetAllStatsDelegate( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bAchievementsToo );
-		private ResetAllStatsDelegate ResetAllStatsDelegatePointer;
+		private delegate bool FResetAllStats( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bAchievementsToo );
+		private FResetAllStats _ResetAllStats;
 		
 		#endregion
 		internal bool ResetAllStats( [MarshalAs( UnmanagedType.U1 )] bool bAchievementsToo )
 		{
-			return ResetAllStatsDelegatePointer( Self, bAchievementsToo );
+			return _ResetAllStats( Self, bAchievementsToo );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamAPICall_t FindOrCreateLeaderboardDelegate( IntPtr self, string pchLeaderboardName, LeaderboardSort eLeaderboardSortMethod, LeaderboardDisplay eLeaderboardDisplayType );
-		private FindOrCreateLeaderboardDelegate FindOrCreateLeaderboardDelegatePointer;
+		private delegate SteamAPICall_t FFindOrCreateLeaderboard( IntPtr self, string pchLeaderboardName, LeaderboardSort eLeaderboardSortMethod, LeaderboardDisplay eLeaderboardDisplayType );
+		private FFindOrCreateLeaderboard _FindOrCreateLeaderboard;
 		
 		#endregion
 		internal async Task<LeaderboardFindResult_t?> FindOrCreateLeaderboard( string pchLeaderboardName, LeaderboardSort eLeaderboardSortMethod, LeaderboardDisplay eLeaderboardDisplayType )
 		{
-			return await (new Result<LeaderboardFindResult_t>( FindOrCreateLeaderboardDelegatePointer( Self, pchLeaderboardName, eLeaderboardSortMethod, eLeaderboardDisplayType ) )).GetResult();
+			return await (new Result<LeaderboardFindResult_t>( _FindOrCreateLeaderboard( Self, pchLeaderboardName, eLeaderboardSortMethod, eLeaderboardDisplayType ) )).GetResult();
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamAPICall_t FindLeaderboardDelegate( IntPtr self, string pchLeaderboardName );
-		private FindLeaderboardDelegate FindLeaderboardDelegatePointer;
+		private delegate SteamAPICall_t FFindLeaderboard( IntPtr self, string pchLeaderboardName );
+		private FFindLeaderboard _FindLeaderboard;
 		
 		#endregion
 		internal async Task<LeaderboardFindResult_t?> FindLeaderboard( string pchLeaderboardName )
 		{
-			return await (new Result<LeaderboardFindResult_t>( FindLeaderboardDelegatePointer( Self, pchLeaderboardName ) )).GetResult();
+			return await (new Result<LeaderboardFindResult_t>( _FindLeaderboard( Self, pchLeaderboardName ) )).GetResult();
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate IntPtr GetLeaderboardNameDelegate( IntPtr self, SteamLeaderboard_t hSteamLeaderboard );
-		private GetLeaderboardNameDelegate GetLeaderboardNameDelegatePointer;
+		private delegate IntPtr FGetLeaderboardName( IntPtr self, SteamLeaderboard_t hSteamLeaderboard );
+		private FGetLeaderboardName _GetLeaderboardName;
 		
 		#endregion
 		internal string GetLeaderboardName( SteamLeaderboard_t hSteamLeaderboard )
 		{
-			return GetString( GetLeaderboardNameDelegatePointer( Self, hSteamLeaderboard ) );
+			return GetString( _GetLeaderboardName( Self, hSteamLeaderboard ) );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate int GetLeaderboardEntryCountDelegate( IntPtr self, SteamLeaderboard_t hSteamLeaderboard );
-		private GetLeaderboardEntryCountDelegate GetLeaderboardEntryCountDelegatePointer;
+		private delegate int FGetLeaderboardEntryCount( IntPtr self, SteamLeaderboard_t hSteamLeaderboard );
+		private FGetLeaderboardEntryCount _GetLeaderboardEntryCount;
 		
 		#endregion
 		internal int GetLeaderboardEntryCount( SteamLeaderboard_t hSteamLeaderboard )
 		{
-			return GetLeaderboardEntryCountDelegatePointer( Self, hSteamLeaderboard );
+			return _GetLeaderboardEntryCount( Self, hSteamLeaderboard );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate LeaderboardSort GetLeaderboardSortMethodDelegate( IntPtr self, SteamLeaderboard_t hSteamLeaderboard );
-		private GetLeaderboardSortMethodDelegate GetLeaderboardSortMethodDelegatePointer;
+		private delegate LeaderboardSort FGetLeaderboardSortMethod( IntPtr self, SteamLeaderboard_t hSteamLeaderboard );
+		private FGetLeaderboardSortMethod _GetLeaderboardSortMethod;
 		
 		#endregion
 		internal LeaderboardSort GetLeaderboardSortMethod( SteamLeaderboard_t hSteamLeaderboard )
 		{
-			return GetLeaderboardSortMethodDelegatePointer( Self, hSteamLeaderboard );
+			return _GetLeaderboardSortMethod( Self, hSteamLeaderboard );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate LeaderboardDisplay GetLeaderboardDisplayTypeDelegate( IntPtr self, SteamLeaderboard_t hSteamLeaderboard );
-		private GetLeaderboardDisplayTypeDelegate GetLeaderboardDisplayTypeDelegatePointer;
+		private delegate LeaderboardDisplay FGetLeaderboardDisplayType( IntPtr self, SteamLeaderboard_t hSteamLeaderboard );
+		private FGetLeaderboardDisplayType _GetLeaderboardDisplayType;
 		
 		#endregion
 		internal LeaderboardDisplay GetLeaderboardDisplayType( SteamLeaderboard_t hSteamLeaderboard )
 		{
-			return GetLeaderboardDisplayTypeDelegatePointer( Self, hSteamLeaderboard );
+			return _GetLeaderboardDisplayType( Self, hSteamLeaderboard );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamAPICall_t DownloadLeaderboardEntriesDelegate( IntPtr self, SteamLeaderboard_t hSteamLeaderboard, LeaderboardDataRequest eLeaderboardDataRequest, int nRangeStart, int nRangeEnd );
-		private DownloadLeaderboardEntriesDelegate DownloadLeaderboardEntriesDelegatePointer;
+		private delegate SteamAPICall_t FDownloadLeaderboardEntries( IntPtr self, SteamLeaderboard_t hSteamLeaderboard, LeaderboardDataRequest eLeaderboardDataRequest, int nRangeStart, int nRangeEnd );
+		private FDownloadLeaderboardEntries _DownloadLeaderboardEntries;
 		
 		#endregion
 		internal async Task<LeaderboardScoresDownloaded_t?> DownloadLeaderboardEntries( SteamLeaderboard_t hSteamLeaderboard, LeaderboardDataRequest eLeaderboardDataRequest, int nRangeStart, int nRangeEnd )
 		{
-			return await (new Result<LeaderboardScoresDownloaded_t>( DownloadLeaderboardEntriesDelegatePointer( Self, hSteamLeaderboard, eLeaderboardDataRequest, nRangeStart, nRangeEnd ) )).GetResult();
+			return await (new Result<LeaderboardScoresDownloaded_t>( _DownloadLeaderboardEntries( Self, hSteamLeaderboard, eLeaderboardDataRequest, nRangeStart, nRangeEnd ) )).GetResult();
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamAPICall_t DownloadLeaderboardEntriesForUsersDelegate( IntPtr self, SteamLeaderboard_t hSteamLeaderboard, [In,Out] SteamId[]  prgUsers, int cUsers );
-		private DownloadLeaderboardEntriesForUsersDelegate DownloadLeaderboardEntriesForUsersDelegatePointer;
+		private delegate SteamAPICall_t FDownloadLeaderboardEntriesForUsers( IntPtr self, SteamLeaderboard_t hSteamLeaderboard, [In,Out] SteamId[]  prgUsers, int cUsers );
+		private FDownloadLeaderboardEntriesForUsers _DownloadLeaderboardEntriesForUsers;
 		
 		#endregion
 		internal async Task<LeaderboardScoresDownloaded_t?> DownloadLeaderboardEntriesForUsers( SteamLeaderboard_t hSteamLeaderboard, [In,Out] SteamId[]  prgUsers, int cUsers )
 		{
-			return await (new Result<LeaderboardScoresDownloaded_t>( DownloadLeaderboardEntriesForUsersDelegatePointer( Self, hSteamLeaderboard, prgUsers, cUsers ) )).GetResult();
+			return await (new Result<LeaderboardScoresDownloaded_t>( _DownloadLeaderboardEntriesForUsers( Self, hSteamLeaderboard, prgUsers, cUsers ) )).GetResult();
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool GetDownloadedLeaderboardEntryDelegate( IntPtr self, SteamLeaderboardEntries_t hSteamLeaderboardEntries, int index, ref LeaderboardEntry_t pLeaderboardEntry, [In,Out] int[]  pDetails, int cDetailsMax );
-		private GetDownloadedLeaderboardEntryDelegate GetDownloadedLeaderboardEntryDelegatePointer;
+		private delegate bool FGetDownloadedLeaderboardEntry( IntPtr self, SteamLeaderboardEntries_t hSteamLeaderboardEntries, int index, ref LeaderboardEntry_t pLeaderboardEntry, [In,Out] int[]  pDetails, int cDetailsMax );
+		private FGetDownloadedLeaderboardEntry _GetDownloadedLeaderboardEntry;
 		
 		#endregion
 		internal bool GetDownloadedLeaderboardEntry( SteamLeaderboardEntries_t hSteamLeaderboardEntries, int index, ref LeaderboardEntry_t pLeaderboardEntry, [In,Out] int[]  pDetails, int cDetailsMax )
 		{
-			return GetDownloadedLeaderboardEntryDelegatePointer( Self, hSteamLeaderboardEntries, index, ref pLeaderboardEntry, pDetails, cDetailsMax );
+			return _GetDownloadedLeaderboardEntry( Self, hSteamLeaderboardEntries, index, ref pLeaderboardEntry, pDetails, cDetailsMax );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamAPICall_t UploadLeaderboardScoreDelegate( IntPtr self, SteamLeaderboard_t hSteamLeaderboard, LeaderboardUploadScoreMethod eLeaderboardUploadScoreMethod, int nScore, [In,Out] int[]  pScoreDetails, int cScoreDetailsCount );
-		private UploadLeaderboardScoreDelegate UploadLeaderboardScoreDelegatePointer;
+		private delegate SteamAPICall_t FUploadLeaderboardScore( IntPtr self, SteamLeaderboard_t hSteamLeaderboard, LeaderboardUploadScoreMethod eLeaderboardUploadScoreMethod, int nScore, [In,Out] int[]  pScoreDetails, int cScoreDetailsCount );
+		private FUploadLeaderboardScore _UploadLeaderboardScore;
 		
 		#endregion
 		internal async Task<LeaderboardScoreUploaded_t?> UploadLeaderboardScore( SteamLeaderboard_t hSteamLeaderboard, LeaderboardUploadScoreMethod eLeaderboardUploadScoreMethod, int nScore, [In,Out] int[]  pScoreDetails, int cScoreDetailsCount )
 		{
-			return await (new Result<LeaderboardScoreUploaded_t>( UploadLeaderboardScoreDelegatePointer( Self, hSteamLeaderboard, eLeaderboardUploadScoreMethod, nScore, pScoreDetails, cScoreDetailsCount ) )).GetResult();
+			return await (new Result<LeaderboardScoreUploaded_t>( _UploadLeaderboardScore( Self, hSteamLeaderboard, eLeaderboardUploadScoreMethod, nScore, pScoreDetails, cScoreDetailsCount ) )).GetResult();
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamAPICall_t AttachLeaderboardUGCDelegate( IntPtr self, SteamLeaderboard_t hSteamLeaderboard, UGCHandle_t hUGC );
-		private AttachLeaderboardUGCDelegate AttachLeaderboardUGCDelegatePointer;
+		private delegate SteamAPICall_t FAttachLeaderboardUGC( IntPtr self, SteamLeaderboard_t hSteamLeaderboard, UGCHandle_t hUGC );
+		private FAttachLeaderboardUGC _AttachLeaderboardUGC;
 		
 		#endregion
 		internal async Task<LeaderboardUGCSet_t?> AttachLeaderboardUGC( SteamLeaderboard_t hSteamLeaderboard, UGCHandle_t hUGC )
 		{
-			return await (new Result<LeaderboardUGCSet_t>( AttachLeaderboardUGCDelegatePointer( Self, hSteamLeaderboard, hUGC ) )).GetResult();
+			return await (new Result<LeaderboardUGCSet_t>( _AttachLeaderboardUGC( Self, hSteamLeaderboard, hUGC ) )).GetResult();
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamAPICall_t GetNumberOfCurrentPlayersDelegate( IntPtr self );
-		private GetNumberOfCurrentPlayersDelegate GetNumberOfCurrentPlayersDelegatePointer;
+		private delegate SteamAPICall_t FGetNumberOfCurrentPlayers( IntPtr self );
+		private FGetNumberOfCurrentPlayers _GetNumberOfCurrentPlayers;
 		
 		#endregion
 		internal async Task<NumberOfCurrentPlayers_t?> GetNumberOfCurrentPlayers()
 		{
-			return await (new Result<NumberOfCurrentPlayers_t>( GetNumberOfCurrentPlayersDelegatePointer( Self ) )).GetResult();
+			return await (new Result<NumberOfCurrentPlayers_t>( _GetNumberOfCurrentPlayers( Self ) )).GetResult();
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamAPICall_t RequestGlobalAchievementPercentagesDelegate( IntPtr self );
-		private RequestGlobalAchievementPercentagesDelegate RequestGlobalAchievementPercentagesDelegatePointer;
+		private delegate SteamAPICall_t FRequestGlobalAchievementPercentages( IntPtr self );
+		private FRequestGlobalAchievementPercentages _RequestGlobalAchievementPercentages;
 		
 		#endregion
 		internal async Task<GlobalAchievementPercentagesReady_t?> RequestGlobalAchievementPercentages()
 		{
-			return await (new Result<GlobalAchievementPercentagesReady_t>( RequestGlobalAchievementPercentagesDelegatePointer( Self ) )).GetResult();
+			return await (new Result<GlobalAchievementPercentagesReady_t>( _RequestGlobalAchievementPercentages( Self ) )).GetResult();
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate int GetMostAchievedAchievementInfoDelegate( IntPtr self, StringBuilder pchName, uint unNameBufLen, ref float pflPercent, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved );
-		private GetMostAchievedAchievementInfoDelegate GetMostAchievedAchievementInfoDelegatePointer;
+		private delegate int FGetMostAchievedAchievementInfo( IntPtr self, StringBuilder pchName, uint unNameBufLen, ref float pflPercent, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved );
+		private FGetMostAchievedAchievementInfo _GetMostAchievedAchievementInfo;
 		
 		#endregion
 		internal int GetMostAchievedAchievementInfo( StringBuilder pchName, uint unNameBufLen, ref float pflPercent, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved )
 		{
-			return GetMostAchievedAchievementInfoDelegatePointer( Self, pchName, unNameBufLen, ref pflPercent, ref pbAchieved );
+			return _GetMostAchievedAchievementInfo( Self, pchName, unNameBufLen, ref pflPercent, ref pbAchieved );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate int GetNextMostAchievedAchievementInfoDelegate( IntPtr self, int iIteratorPrevious, StringBuilder pchName, uint unNameBufLen, ref float pflPercent, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved );
-		private GetNextMostAchievedAchievementInfoDelegate GetNextMostAchievedAchievementInfoDelegatePointer;
+		private delegate int FGetNextMostAchievedAchievementInfo( IntPtr self, int iIteratorPrevious, StringBuilder pchName, uint unNameBufLen, ref float pflPercent, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved );
+		private FGetNextMostAchievedAchievementInfo _GetNextMostAchievedAchievementInfo;
 		
 		#endregion
 		internal int GetNextMostAchievedAchievementInfo( int iIteratorPrevious, StringBuilder pchName, uint unNameBufLen, ref float pflPercent, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved )
 		{
-			return GetNextMostAchievedAchievementInfoDelegatePointer( Self, iIteratorPrevious, pchName, unNameBufLen, ref pflPercent, ref pbAchieved );
+			return _GetNextMostAchievedAchievementInfo( Self, iIteratorPrevious, pchName, unNameBufLen, ref pflPercent, ref pbAchieved );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool GetAchievementAchievedPercentDelegate( IntPtr self, string pchName, ref float pflPercent );
-		private GetAchievementAchievedPercentDelegate GetAchievementAchievedPercentDelegatePointer;
+		private delegate bool FGetAchievementAchievedPercent( IntPtr self, string pchName, ref float pflPercent );
+		private FGetAchievementAchievedPercent _GetAchievementAchievedPercent;
 		
 		#endregion
 		internal bool GetAchievementAchievedPercent( string pchName, ref float pflPercent )
 		{
-			return GetAchievementAchievedPercentDelegatePointer( Self, pchName, ref pflPercent );
+			return _GetAchievementAchievedPercent( Self, pchName, ref pflPercent );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamAPICall_t RequestGlobalStatsDelegate( IntPtr self, int nHistoryDays );
-		private RequestGlobalStatsDelegate RequestGlobalStatsDelegatePointer;
+		private delegate SteamAPICall_t FRequestGlobalStats( IntPtr self, int nHistoryDays );
+		private FRequestGlobalStats _RequestGlobalStats;
 		
 		#endregion
 		internal async Task<GlobalStatsReceived_t?> RequestGlobalStats( int nHistoryDays )
 		{
-			return await (new Result<GlobalStatsReceived_t>( RequestGlobalStatsDelegatePointer( Self, nHistoryDays ) )).GetResult();
+			return await (new Result<GlobalStatsReceived_t>( _RequestGlobalStats( Self, nHistoryDays ) )).GetResult();
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool GetGlobalStat1Delegate( IntPtr self, string pchStatName, ref long pData );
-		private GetGlobalStat1Delegate GetGlobalStat1DelegatePointer;
+		private delegate bool FGetGlobalStat1( IntPtr self, string pchStatName, ref long pData );
+		private FGetGlobalStat1 _GetGlobalStat1;
 		
 		#endregion
 		internal bool GetGlobalStat1( string pchStatName, ref long pData )
 		{
-			return GetGlobalStat1DelegatePointer( Self, pchStatName, ref pData );
+			return _GetGlobalStat1( Self, pchStatName, ref pData );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool GetGlobalStat2Delegate( IntPtr self, string pchStatName, ref double pData );
-		private GetGlobalStat2Delegate GetGlobalStat2DelegatePointer;
+		private delegate bool FGetGlobalStat2( IntPtr self, string pchStatName, ref double pData );
+		private FGetGlobalStat2 _GetGlobalStat2;
 		
 		#endregion
 		internal bool GetGlobalStat2( string pchStatName, ref double pData )
 		{
-			return GetGlobalStat2DelegatePointer( Self, pchStatName, ref pData );
+			return _GetGlobalStat2( Self, pchStatName, ref pData );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate int GetGlobalStatHistory1Delegate( IntPtr self, string pchStatName, [In,Out] long[]  pData, uint cubData );
-		private GetGlobalStatHistory1Delegate GetGlobalStatHistory1DelegatePointer;
+		private delegate int FGetGlobalStatHistory1( IntPtr self, string pchStatName, [In,Out] long[]  pData, uint cubData );
+		private FGetGlobalStatHistory1 _GetGlobalStatHistory1;
 		
 		#endregion
 		internal int GetGlobalStatHistory1( string pchStatName, [In,Out] long[]  pData, uint cubData )
 		{
-			return GetGlobalStatHistory1DelegatePointer( Self, pchStatName, pData, cubData );
+			return _GetGlobalStatHistory1( Self, pchStatName, pData, cubData );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate int GetGlobalStatHistory2Delegate( IntPtr self, string pchStatName, [In,Out] double[]  pData, uint cubData );
-		private GetGlobalStatHistory2Delegate GetGlobalStatHistory2DelegatePointer;
+		private delegate int FGetGlobalStatHistory2( IntPtr self, string pchStatName, [In,Out] double[]  pData, uint cubData );
+		private FGetGlobalStatHistory2 _GetGlobalStatHistory2;
 		
 		#endregion
 		internal int GetGlobalStatHistory2( string pchStatName, [In,Out] double[]  pData, uint cubData )
 		{
-			return GetGlobalStatHistory2DelegatePointer( Self, pchStatName, pData, cubData );
+			return _GetGlobalStatHistory2( Self, pchStatName, pData, cubData );
 		}
 		
 	}

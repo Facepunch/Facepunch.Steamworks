@@ -17,118 +17,118 @@ namespace Steamworks
 		
 		public override void InitInternals()
 		{
-			WriteScreenshotDelegatePointer = Marshal.GetDelegateForFunctionPointer<WriteScreenshotDelegate>( Marshal.ReadIntPtr( VTable, 0) );
-			AddScreenshotToLibraryDelegatePointer = Marshal.GetDelegateForFunctionPointer<AddScreenshotToLibraryDelegate>( Marshal.ReadIntPtr( VTable, 8) );
-			TriggerScreenshotDelegatePointer = Marshal.GetDelegateForFunctionPointer<TriggerScreenshotDelegate>( Marshal.ReadIntPtr( VTable, 16) );
-			HookScreenshotsDelegatePointer = Marshal.GetDelegateForFunctionPointer<HookScreenshotsDelegate>( Marshal.ReadIntPtr( VTable, 24) );
-			SetLocationDelegatePointer = Marshal.GetDelegateForFunctionPointer<SetLocationDelegate>( Marshal.ReadIntPtr( VTable, 32) );
-			TagUserDelegatePointer = Marshal.GetDelegateForFunctionPointer<TagUserDelegate>( Marshal.ReadIntPtr( VTable, 40) );
-			TagPublishedFileDelegatePointer = Marshal.GetDelegateForFunctionPointer<TagPublishedFileDelegate>( Marshal.ReadIntPtr( VTable, 48) );
-			IsScreenshotsHookedDelegatePointer = Marshal.GetDelegateForFunctionPointer<IsScreenshotsHookedDelegate>( Marshal.ReadIntPtr( VTable, 56) );
-			AddVRScreenshotToLibraryDelegatePointer = Marshal.GetDelegateForFunctionPointer<AddVRScreenshotToLibraryDelegate>( Marshal.ReadIntPtr( VTable, 64) );
+			_WriteScreenshot = Marshal.GetDelegateForFunctionPointer<FWriteScreenshot>( Marshal.ReadIntPtr( VTable, 0) );
+			_AddScreenshotToLibrary = Marshal.GetDelegateForFunctionPointer<FAddScreenshotToLibrary>( Marshal.ReadIntPtr( VTable, 8) );
+			_TriggerScreenshot = Marshal.GetDelegateForFunctionPointer<FTriggerScreenshot>( Marshal.ReadIntPtr( VTable, 16) );
+			_HookScreenshots = Marshal.GetDelegateForFunctionPointer<FHookScreenshots>( Marshal.ReadIntPtr( VTable, 24) );
+			_SetLocation = Marshal.GetDelegateForFunctionPointer<FSetLocation>( Marshal.ReadIntPtr( VTable, 32) );
+			_TagUser = Marshal.GetDelegateForFunctionPointer<FTagUser>( Marshal.ReadIntPtr( VTable, 40) );
+			_TagPublishedFile = Marshal.GetDelegateForFunctionPointer<FTagPublishedFile>( Marshal.ReadIntPtr( VTable, 48) );
+			_IsScreenshotsHooked = Marshal.GetDelegateForFunctionPointer<FIsScreenshotsHooked>( Marshal.ReadIntPtr( VTable, 56) );
+			_AddVRScreenshotToLibrary = Marshal.GetDelegateForFunctionPointer<FAddVRScreenshotToLibrary>( Marshal.ReadIntPtr( VTable, 64) );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate ScreenshotHandle WriteScreenshotDelegate( IntPtr self, IntPtr pubRGB, uint cubRGB, int nWidth, int nHeight );
-		private WriteScreenshotDelegate WriteScreenshotDelegatePointer;
+		private delegate ScreenshotHandle FWriteScreenshot( IntPtr self, IntPtr pubRGB, uint cubRGB, int nWidth, int nHeight );
+		private FWriteScreenshot _WriteScreenshot;
 		
 		#endregion
 		internal ScreenshotHandle WriteScreenshot( IntPtr pubRGB, uint cubRGB, int nWidth, int nHeight )
 		{
-			return WriteScreenshotDelegatePointer( Self, pubRGB, cubRGB, nWidth, nHeight );
+			return _WriteScreenshot( Self, pubRGB, cubRGB, nWidth, nHeight );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate ScreenshotHandle AddScreenshotToLibraryDelegate( IntPtr self, string pchFilename, string pchThumbnailFilename, int nWidth, int nHeight );
-		private AddScreenshotToLibraryDelegate AddScreenshotToLibraryDelegatePointer;
+		private delegate ScreenshotHandle FAddScreenshotToLibrary( IntPtr self, string pchFilename, string pchThumbnailFilename, int nWidth, int nHeight );
+		private FAddScreenshotToLibrary _AddScreenshotToLibrary;
 		
 		#endregion
 		internal ScreenshotHandle AddScreenshotToLibrary( string pchFilename, string pchThumbnailFilename, int nWidth, int nHeight )
 		{
-			return AddScreenshotToLibraryDelegatePointer( Self, pchFilename, pchThumbnailFilename, nWidth, nHeight );
+			return _AddScreenshotToLibrary( Self, pchFilename, pchThumbnailFilename, nWidth, nHeight );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void TriggerScreenshotDelegate( IntPtr self );
-		private TriggerScreenshotDelegate TriggerScreenshotDelegatePointer;
+		private delegate void FTriggerScreenshot( IntPtr self );
+		private FTriggerScreenshot _TriggerScreenshot;
 		
 		#endregion
 		internal void TriggerScreenshot()
 		{
-			TriggerScreenshotDelegatePointer( Self );
+			_TriggerScreenshot( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void HookScreenshotsDelegate( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bHook );
-		private HookScreenshotsDelegate HookScreenshotsDelegatePointer;
+		private delegate void FHookScreenshots( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bHook );
+		private FHookScreenshots _HookScreenshots;
 		
 		#endregion
 		internal void HookScreenshots( [MarshalAs( UnmanagedType.U1 )] bool bHook )
 		{
-			HookScreenshotsDelegatePointer( Self, bHook );
+			_HookScreenshots( Self, bHook );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool SetLocationDelegate( IntPtr self, ScreenshotHandle hScreenshot, string pchLocation );
-		private SetLocationDelegate SetLocationDelegatePointer;
+		private delegate bool FSetLocation( IntPtr self, ScreenshotHandle hScreenshot, string pchLocation );
+		private FSetLocation _SetLocation;
 		
 		#endregion
 		internal bool SetLocation( ScreenshotHandle hScreenshot, string pchLocation )
 		{
-			return SetLocationDelegatePointer( Self, hScreenshot, pchLocation );
+			return _SetLocation( Self, hScreenshot, pchLocation );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool TagUserDelegate( IntPtr self, ScreenshotHandle hScreenshot, SteamId steamID );
-		private TagUserDelegate TagUserDelegatePointer;
+		private delegate bool FTagUser( IntPtr self, ScreenshotHandle hScreenshot, SteamId steamID );
+		private FTagUser _TagUser;
 		
 		#endregion
 		internal bool TagUser( ScreenshotHandle hScreenshot, SteamId steamID )
 		{
-			return TagUserDelegatePointer( Self, hScreenshot, steamID );
+			return _TagUser( Self, hScreenshot, steamID );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool TagPublishedFileDelegate( IntPtr self, ScreenshotHandle hScreenshot, PublishedFileId unPublishedFileID );
-		private TagPublishedFileDelegate TagPublishedFileDelegatePointer;
+		private delegate bool FTagPublishedFile( IntPtr self, ScreenshotHandle hScreenshot, PublishedFileId unPublishedFileID );
+		private FTagPublishedFile _TagPublishedFile;
 		
 		#endregion
 		internal bool TagPublishedFile( ScreenshotHandle hScreenshot, PublishedFileId unPublishedFileID )
 		{
-			return TagPublishedFileDelegatePointer( Self, hScreenshot, unPublishedFileID );
+			return _TagPublishedFile( Self, hScreenshot, unPublishedFileID );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool IsScreenshotsHookedDelegate( IntPtr self );
-		private IsScreenshotsHookedDelegate IsScreenshotsHookedDelegatePointer;
+		private delegate bool FIsScreenshotsHooked( IntPtr self );
+		private FIsScreenshotsHooked _IsScreenshotsHooked;
 		
 		#endregion
 		internal bool IsScreenshotsHooked()
 		{
-			return IsScreenshotsHookedDelegatePointer( Self );
+			return _IsScreenshotsHooked( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate ScreenshotHandle AddVRScreenshotToLibraryDelegate( IntPtr self, VRScreenshotType eType, string pchFilename, string pchVRFilename );
-		private AddVRScreenshotToLibraryDelegate AddVRScreenshotToLibraryDelegatePointer;
+		private delegate ScreenshotHandle FAddVRScreenshotToLibrary( IntPtr self, VRScreenshotType eType, string pchFilename, string pchVRFilename );
+		private FAddVRScreenshotToLibrary _AddVRScreenshotToLibrary;
 		
 		#endregion
 		internal ScreenshotHandle AddVRScreenshotToLibrary( VRScreenshotType eType, string pchFilename, string pchVRFilename )
 		{
-			return AddVRScreenshotToLibraryDelegatePointer( Self, eType, pchFilename, pchVRFilename );
+			return _AddVRScreenshotToLibrary( Self, eType, pchFilename, pchVRFilename );
 		}
 		
 	}

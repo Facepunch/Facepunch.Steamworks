@@ -62,7 +62,7 @@ namespace Generator
 				for (int i=0; i< clss.Functions.Count; i++ )
 				{
 					var func = clss.Functions[i];
-					WriteLine( $"{func.Name}DelegatePointer = Marshal.GetDelegateForFunctionPointer<{func.Name}Delegate>( Marshal.ReadIntPtr( VTable, {i*8}) );" ); 
+					WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, {i*8}) );" ); 
 				}
 			}
 			EndBlock();
@@ -100,8 +100,8 @@ namespace Generator
 			if ( returnType.ReturnAttribute != null)
 				WriteLine( returnType.ReturnAttribute );
 
-			WriteLine( $"private delegate {(returnType.IsReturnedWeird?"void":returnType.TypeNameFrom)} {func.Name}Delegate( IntPtr self, {delegateargstr} );".Replace( "( IntPtr self,  )", "( IntPtr self )" ) );
-			WriteLine( $"private {func.Name}Delegate {func.Name}DelegatePointer;" );
+			WriteLine( $"private delegate {(returnType.IsReturnedWeird?"void":returnType.TypeNameFrom)} F{func.Name}( IntPtr self, {delegateargstr} );".Replace( "( IntPtr self,  )", "( IntPtr self )" ) );
+			WriteLine( $"private F{func.Name} _{func.Name};" );
 			WriteLine();
 			WriteLine( $"#endregion" );
 
@@ -112,16 +112,16 @@ namespace Generator
 				if ( returnType.IsReturnedWeird )
 				{
 					WriteLine( $"var retVal = default( {returnType.TypeName} );" );
-					WriteLine( $"{func.Name}DelegatePointer( Self, ref retVal, {callargs} );".Replace( ",  );", " );" ) );
+					WriteLine( $"_{func.Name}( Self, ref retVal, {callargs} );".Replace( ",  );", " );" ) );
 					WriteLine( $"{returnType.Return( "retVal" )}" );
 				}
 				else if ( returnType.IsVoid )
 				{
-					WriteLine( $"{func.Name}DelegatePointer( Self, {callargs} );".Replace( "( Self,  )", "( Self )" ) );
+					WriteLine( $"_{func.Name}( Self, {callargs} );".Replace( "( Self,  )", "( Self )" ) );
 				}
 				else
 				{
-					var v = $"{func.Name}DelegatePointer( Self, {callargs} )".Replace( "( Self,  )", "( Self )" );
+					var v = $"_{func.Name}( Self, {callargs} )".Replace( "( Self,  )", "( Self )" );
 
 					WriteLine( returnType.Return( v ) );
 				}
