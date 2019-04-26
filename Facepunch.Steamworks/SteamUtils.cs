@@ -121,11 +121,6 @@ namespace Steamworks
 		/// </summary>
 		public static float CurrentBatteryPower => Math.Min( Internal.GetCurrentBatteryPower() / 100, 1.0f );
 
-		/// <summary>
-		/// returns the appID of the current process
-		/// </summary>
-		public static AppId AppId => Internal.GetAppID();
-
 		static NotificationPosition overlayNotificationPosition = NotificationPosition.BottomRight;
 
 		/// <summary>

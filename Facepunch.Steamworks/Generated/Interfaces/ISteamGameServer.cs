@@ -17,546 +17,546 @@ namespace Steamworks
 		
 		public override void InitInternals()
 		{
-			InitGameServerDelegatePointer = Marshal.GetDelegateForFunctionPointer<InitGameServerDelegate>( Marshal.ReadIntPtr( VTable, 0) );
-			SetProductDelegatePointer = Marshal.GetDelegateForFunctionPointer<SetProductDelegate>( Marshal.ReadIntPtr( VTable, 8) );
-			SetGameDescriptionDelegatePointer = Marshal.GetDelegateForFunctionPointer<SetGameDescriptionDelegate>( Marshal.ReadIntPtr( VTable, 16) );
-			SetModDirDelegatePointer = Marshal.GetDelegateForFunctionPointer<SetModDirDelegate>( Marshal.ReadIntPtr( VTable, 24) );
-			SetDedicatedServerDelegatePointer = Marshal.GetDelegateForFunctionPointer<SetDedicatedServerDelegate>( Marshal.ReadIntPtr( VTable, 32) );
-			LogOnDelegatePointer = Marshal.GetDelegateForFunctionPointer<LogOnDelegate>( Marshal.ReadIntPtr( VTable, 40) );
-			LogOnAnonymousDelegatePointer = Marshal.GetDelegateForFunctionPointer<LogOnAnonymousDelegate>( Marshal.ReadIntPtr( VTable, 48) );
-			LogOffDelegatePointer = Marshal.GetDelegateForFunctionPointer<LogOffDelegate>( Marshal.ReadIntPtr( VTable, 56) );
-			BLoggedOnDelegatePointer = Marshal.GetDelegateForFunctionPointer<BLoggedOnDelegate>( Marshal.ReadIntPtr( VTable, 64) );
-			BSecureDelegatePointer = Marshal.GetDelegateForFunctionPointer<BSecureDelegate>( Marshal.ReadIntPtr( VTable, 72) );
-			GetSteamIDDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetSteamIDDelegate>( Marshal.ReadIntPtr( VTable, 80) );
-			WasRestartRequestedDelegatePointer = Marshal.GetDelegateForFunctionPointer<WasRestartRequestedDelegate>( Marshal.ReadIntPtr( VTable, 88) );
-			SetMaxPlayerCountDelegatePointer = Marshal.GetDelegateForFunctionPointer<SetMaxPlayerCountDelegate>( Marshal.ReadIntPtr( VTable, 96) );
-			SetBotPlayerCountDelegatePointer = Marshal.GetDelegateForFunctionPointer<SetBotPlayerCountDelegate>( Marshal.ReadIntPtr( VTable, 104) );
-			SetServerNameDelegatePointer = Marshal.GetDelegateForFunctionPointer<SetServerNameDelegate>( Marshal.ReadIntPtr( VTable, 112) );
-			SetMapNameDelegatePointer = Marshal.GetDelegateForFunctionPointer<SetMapNameDelegate>( Marshal.ReadIntPtr( VTable, 120) );
-			SetPasswordProtectedDelegatePointer = Marshal.GetDelegateForFunctionPointer<SetPasswordProtectedDelegate>( Marshal.ReadIntPtr( VTable, 128) );
-			SetSpectatorPortDelegatePointer = Marshal.GetDelegateForFunctionPointer<SetSpectatorPortDelegate>( Marshal.ReadIntPtr( VTable, 136) );
-			SetSpectatorServerNameDelegatePointer = Marshal.GetDelegateForFunctionPointer<SetSpectatorServerNameDelegate>( Marshal.ReadIntPtr( VTable, 144) );
-			ClearAllKeyValuesDelegatePointer = Marshal.GetDelegateForFunctionPointer<ClearAllKeyValuesDelegate>( Marshal.ReadIntPtr( VTable, 152) );
-			SetKeyValueDelegatePointer = Marshal.GetDelegateForFunctionPointer<SetKeyValueDelegate>( Marshal.ReadIntPtr( VTable, 160) );
-			SetGameTagsDelegatePointer = Marshal.GetDelegateForFunctionPointer<SetGameTagsDelegate>( Marshal.ReadIntPtr( VTable, 168) );
-			SetGameDataDelegatePointer = Marshal.GetDelegateForFunctionPointer<SetGameDataDelegate>( Marshal.ReadIntPtr( VTable, 176) );
-			SetRegionDelegatePointer = Marshal.GetDelegateForFunctionPointer<SetRegionDelegate>( Marshal.ReadIntPtr( VTable, 184) );
-			SendUserConnectAndAuthenticateDelegatePointer = Marshal.GetDelegateForFunctionPointer<SendUserConnectAndAuthenticateDelegate>( Marshal.ReadIntPtr( VTable, 192) );
-			CreateUnauthenticatedUserConnectionDelegatePointer = Marshal.GetDelegateForFunctionPointer<CreateUnauthenticatedUserConnectionDelegate>( Marshal.ReadIntPtr( VTable, 200) );
-			SendUserDisconnectDelegatePointer = Marshal.GetDelegateForFunctionPointer<SendUserDisconnectDelegate>( Marshal.ReadIntPtr( VTable, 208) );
-			BUpdateUserDataDelegatePointer = Marshal.GetDelegateForFunctionPointer<BUpdateUserDataDelegate>( Marshal.ReadIntPtr( VTable, 216) );
-			GetAuthSessionTicketDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetAuthSessionTicketDelegate>( Marshal.ReadIntPtr( VTable, 224) );
-			BeginAuthSessionDelegatePointer = Marshal.GetDelegateForFunctionPointer<BeginAuthSessionDelegate>( Marshal.ReadIntPtr( VTable, 232) );
-			EndAuthSessionDelegatePointer = Marshal.GetDelegateForFunctionPointer<EndAuthSessionDelegate>( Marshal.ReadIntPtr( VTable, 240) );
-			CancelAuthTicketDelegatePointer = Marshal.GetDelegateForFunctionPointer<CancelAuthTicketDelegate>( Marshal.ReadIntPtr( VTable, 248) );
-			UserHasLicenseForAppDelegatePointer = Marshal.GetDelegateForFunctionPointer<UserHasLicenseForAppDelegate>( Marshal.ReadIntPtr( VTable, 256) );
-			RequestUserGroupStatusDelegatePointer = Marshal.GetDelegateForFunctionPointer<RequestUserGroupStatusDelegate>( Marshal.ReadIntPtr( VTable, 264) );
-			GetGameplayStatsDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetGameplayStatsDelegate>( Marshal.ReadIntPtr( VTable, 272) );
-			GetServerReputationDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetServerReputationDelegate>( Marshal.ReadIntPtr( VTable, 280) );
-			GetPublicIPDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetPublicIPDelegate>( Marshal.ReadIntPtr( VTable, 288) );
-			HandleIncomingPacketDelegatePointer = Marshal.GetDelegateForFunctionPointer<HandleIncomingPacketDelegate>( Marshal.ReadIntPtr( VTable, 296) );
-			GetNextOutgoingPacketDelegatePointer = Marshal.GetDelegateForFunctionPointer<GetNextOutgoingPacketDelegate>( Marshal.ReadIntPtr( VTable, 304) );
-			EnableHeartbeatsDelegatePointer = Marshal.GetDelegateForFunctionPointer<EnableHeartbeatsDelegate>( Marshal.ReadIntPtr( VTable, 312) );
-			SetHeartbeatIntervalDelegatePointer = Marshal.GetDelegateForFunctionPointer<SetHeartbeatIntervalDelegate>( Marshal.ReadIntPtr( VTable, 320) );
-			ForceHeartbeatDelegatePointer = Marshal.GetDelegateForFunctionPointer<ForceHeartbeatDelegate>( Marshal.ReadIntPtr( VTable, 328) );
-			AssociateWithClanDelegatePointer = Marshal.GetDelegateForFunctionPointer<AssociateWithClanDelegate>( Marshal.ReadIntPtr( VTable, 336) );
-			ComputeNewPlayerCompatibilityDelegatePointer = Marshal.GetDelegateForFunctionPointer<ComputeNewPlayerCompatibilityDelegate>( Marshal.ReadIntPtr( VTable, 344) );
+			_InitGameServer = Marshal.GetDelegateForFunctionPointer<FInitGameServer>( Marshal.ReadIntPtr( VTable, 0) );
+			_SetProduct = Marshal.GetDelegateForFunctionPointer<FSetProduct>( Marshal.ReadIntPtr( VTable, 8) );
+			_SetGameDescription = Marshal.GetDelegateForFunctionPointer<FSetGameDescription>( Marshal.ReadIntPtr( VTable, 16) );
+			_SetModDir = Marshal.GetDelegateForFunctionPointer<FSetModDir>( Marshal.ReadIntPtr( VTable, 24) );
+			_SetDedicatedServer = Marshal.GetDelegateForFunctionPointer<FSetDedicatedServer>( Marshal.ReadIntPtr( VTable, 32) );
+			_LogOn = Marshal.GetDelegateForFunctionPointer<FLogOn>( Marshal.ReadIntPtr( VTable, 40) );
+			_LogOnAnonymous = Marshal.GetDelegateForFunctionPointer<FLogOnAnonymous>( Marshal.ReadIntPtr( VTable, 48) );
+			_LogOff = Marshal.GetDelegateForFunctionPointer<FLogOff>( Marshal.ReadIntPtr( VTable, 56) );
+			_BLoggedOn = Marshal.GetDelegateForFunctionPointer<FBLoggedOn>( Marshal.ReadIntPtr( VTable, 64) );
+			_BSecure = Marshal.GetDelegateForFunctionPointer<FBSecure>( Marshal.ReadIntPtr( VTable, 72) );
+			_GetSteamID = Marshal.GetDelegateForFunctionPointer<FGetSteamID>( Marshal.ReadIntPtr( VTable, 80) );
+			_WasRestartRequested = Marshal.GetDelegateForFunctionPointer<FWasRestartRequested>( Marshal.ReadIntPtr( VTable, 88) );
+			_SetMaxPlayerCount = Marshal.GetDelegateForFunctionPointer<FSetMaxPlayerCount>( Marshal.ReadIntPtr( VTable, 96) );
+			_SetBotPlayerCount = Marshal.GetDelegateForFunctionPointer<FSetBotPlayerCount>( Marshal.ReadIntPtr( VTable, 104) );
+			_SetServerName = Marshal.GetDelegateForFunctionPointer<FSetServerName>( Marshal.ReadIntPtr( VTable, 112) );
+			_SetMapName = Marshal.GetDelegateForFunctionPointer<FSetMapName>( Marshal.ReadIntPtr( VTable, 120) );
+			_SetPasswordProtected = Marshal.GetDelegateForFunctionPointer<FSetPasswordProtected>( Marshal.ReadIntPtr( VTable, 128) );
+			_SetSpectatorPort = Marshal.GetDelegateForFunctionPointer<FSetSpectatorPort>( Marshal.ReadIntPtr( VTable, 136) );
+			_SetSpectatorServerName = Marshal.GetDelegateForFunctionPointer<FSetSpectatorServerName>( Marshal.ReadIntPtr( VTable, 144) );
+			_ClearAllKeyValues = Marshal.GetDelegateForFunctionPointer<FClearAllKeyValues>( Marshal.ReadIntPtr( VTable, 152) );
+			_SetKeyValue = Marshal.GetDelegateForFunctionPointer<FSetKeyValue>( Marshal.ReadIntPtr( VTable, 160) );
+			_SetGameTags = Marshal.GetDelegateForFunctionPointer<FSetGameTags>( Marshal.ReadIntPtr( VTable, 168) );
+			_SetGameData = Marshal.GetDelegateForFunctionPointer<FSetGameData>( Marshal.ReadIntPtr( VTable, 176) );
+			_SetRegion = Marshal.GetDelegateForFunctionPointer<FSetRegion>( Marshal.ReadIntPtr( VTable, 184) );
+			_SendUserConnectAndAuthenticate = Marshal.GetDelegateForFunctionPointer<FSendUserConnectAndAuthenticate>( Marshal.ReadIntPtr( VTable, 192) );
+			_CreateUnauthenticatedUserConnection = Marshal.GetDelegateForFunctionPointer<FCreateUnauthenticatedUserConnection>( Marshal.ReadIntPtr( VTable, 200) );
+			_SendUserDisconnect = Marshal.GetDelegateForFunctionPointer<FSendUserDisconnect>( Marshal.ReadIntPtr( VTable, 208) );
+			_BUpdateUserData = Marshal.GetDelegateForFunctionPointer<FBUpdateUserData>( Marshal.ReadIntPtr( VTable, 216) );
+			_GetAuthSessionTicket = Marshal.GetDelegateForFunctionPointer<FGetAuthSessionTicket>( Marshal.ReadIntPtr( VTable, 224) );
+			_BeginAuthSession = Marshal.GetDelegateForFunctionPointer<FBeginAuthSession>( Marshal.ReadIntPtr( VTable, 232) );
+			_EndAuthSession = Marshal.GetDelegateForFunctionPointer<FEndAuthSession>( Marshal.ReadIntPtr( VTable, 240) );
+			_CancelAuthTicket = Marshal.GetDelegateForFunctionPointer<FCancelAuthTicket>( Marshal.ReadIntPtr( VTable, 248) );
+			_UserHasLicenseForApp = Marshal.GetDelegateForFunctionPointer<FUserHasLicenseForApp>( Marshal.ReadIntPtr( VTable, 256) );
+			_RequestUserGroupStatus = Marshal.GetDelegateForFunctionPointer<FRequestUserGroupStatus>( Marshal.ReadIntPtr( VTable, 264) );
+			_GetGameplayStats = Marshal.GetDelegateForFunctionPointer<FGetGameplayStats>( Marshal.ReadIntPtr( VTable, 272) );
+			_GetServerReputation = Marshal.GetDelegateForFunctionPointer<FGetServerReputation>( Marshal.ReadIntPtr( VTable, 280) );
+			_GetPublicIP = Marshal.GetDelegateForFunctionPointer<FGetPublicIP>( Marshal.ReadIntPtr( VTable, 288) );
+			_HandleIncomingPacket = Marshal.GetDelegateForFunctionPointer<FHandleIncomingPacket>( Marshal.ReadIntPtr( VTable, 296) );
+			_GetNextOutgoingPacket = Marshal.GetDelegateForFunctionPointer<FGetNextOutgoingPacket>( Marshal.ReadIntPtr( VTable, 304) );
+			_EnableHeartbeats = Marshal.GetDelegateForFunctionPointer<FEnableHeartbeats>( Marshal.ReadIntPtr( VTable, 312) );
+			_SetHeartbeatInterval = Marshal.GetDelegateForFunctionPointer<FSetHeartbeatInterval>( Marshal.ReadIntPtr( VTable, 320) );
+			_ForceHeartbeat = Marshal.GetDelegateForFunctionPointer<FForceHeartbeat>( Marshal.ReadIntPtr( VTable, 328) );
+			_AssociateWithClan = Marshal.GetDelegateForFunctionPointer<FAssociateWithClan>( Marshal.ReadIntPtr( VTable, 336) );
+			_ComputeNewPlayerCompatibility = Marshal.GetDelegateForFunctionPointer<FComputeNewPlayerCompatibility>( Marshal.ReadIntPtr( VTable, 344) );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool InitGameServerDelegate( IntPtr self, uint unIP, ushort usGamePort, ushort usQueryPort, uint unFlags, AppId_t nGameAppId, string pchVersionString );
-		private InitGameServerDelegate InitGameServerDelegatePointer;
+		private delegate bool FInitGameServer( IntPtr self, uint unIP, ushort usGamePort, ushort usQueryPort, uint unFlags, AppId nGameAppId, string pchVersionString );
+		private FInitGameServer _InitGameServer;
 		
 		#endregion
-		internal bool InitGameServer( uint unIP, ushort usGamePort, ushort usQueryPort, uint unFlags, AppId_t nGameAppId, string pchVersionString )
+		internal bool InitGameServer( uint unIP, ushort usGamePort, ushort usQueryPort, uint unFlags, AppId nGameAppId, string pchVersionString )
 		{
-			return InitGameServerDelegatePointer( Self, unIP, usGamePort, usQueryPort, unFlags, nGameAppId, pchVersionString );
+			return _InitGameServer( Self, unIP, usGamePort, usQueryPort, unFlags, nGameAppId, pchVersionString );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void SetProductDelegate( IntPtr self, string pszProduct );
-		private SetProductDelegate SetProductDelegatePointer;
+		private delegate void FSetProduct( IntPtr self, string pszProduct );
+		private FSetProduct _SetProduct;
 		
 		#endregion
 		internal void SetProduct( string pszProduct )
 		{
-			SetProductDelegatePointer( Self, pszProduct );
+			_SetProduct( Self, pszProduct );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void SetGameDescriptionDelegate( IntPtr self, string pszGameDescription );
-		private SetGameDescriptionDelegate SetGameDescriptionDelegatePointer;
+		private delegate void FSetGameDescription( IntPtr self, string pszGameDescription );
+		private FSetGameDescription _SetGameDescription;
 		
 		#endregion
 		internal void SetGameDescription( string pszGameDescription )
 		{
-			SetGameDescriptionDelegatePointer( Self, pszGameDescription );
+			_SetGameDescription( Self, pszGameDescription );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void SetModDirDelegate( IntPtr self, string pszModDir );
-		private SetModDirDelegate SetModDirDelegatePointer;
+		private delegate void FSetModDir( IntPtr self, string pszModDir );
+		private FSetModDir _SetModDir;
 		
 		#endregion
 		internal void SetModDir( string pszModDir )
 		{
-			SetModDirDelegatePointer( Self, pszModDir );
+			_SetModDir( Self, pszModDir );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void SetDedicatedServerDelegate( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bDedicated );
-		private SetDedicatedServerDelegate SetDedicatedServerDelegatePointer;
+		private delegate void FSetDedicatedServer( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bDedicated );
+		private FSetDedicatedServer _SetDedicatedServer;
 		
 		#endregion
 		internal void SetDedicatedServer( [MarshalAs( UnmanagedType.U1 )] bool bDedicated )
 		{
-			SetDedicatedServerDelegatePointer( Self, bDedicated );
+			_SetDedicatedServer( Self, bDedicated );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void LogOnDelegate( IntPtr self, string pszToken );
-		private LogOnDelegate LogOnDelegatePointer;
+		private delegate void FLogOn( IntPtr self, string pszToken );
+		private FLogOn _LogOn;
 		
 		#endregion
 		internal void LogOn( string pszToken )
 		{
-			LogOnDelegatePointer( Self, pszToken );
+			_LogOn( Self, pszToken );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void LogOnAnonymousDelegate( IntPtr self );
-		private LogOnAnonymousDelegate LogOnAnonymousDelegatePointer;
+		private delegate void FLogOnAnonymous( IntPtr self );
+		private FLogOnAnonymous _LogOnAnonymous;
 		
 		#endregion
 		internal void LogOnAnonymous()
 		{
-			LogOnAnonymousDelegatePointer( Self );
+			_LogOnAnonymous( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void LogOffDelegate( IntPtr self );
-		private LogOffDelegate LogOffDelegatePointer;
+		private delegate void FLogOff( IntPtr self );
+		private FLogOff _LogOff;
 		
 		#endregion
 		internal void LogOff()
 		{
-			LogOffDelegatePointer( Self );
+			_LogOff( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool BLoggedOnDelegate( IntPtr self );
-		private BLoggedOnDelegate BLoggedOnDelegatePointer;
+		private delegate bool FBLoggedOn( IntPtr self );
+		private FBLoggedOn _BLoggedOn;
 		
 		#endregion
 		internal bool BLoggedOn()
 		{
-			return BLoggedOnDelegatePointer( Self );
+			return _BLoggedOn( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool BSecureDelegate( IntPtr self );
-		private BSecureDelegate BSecureDelegatePointer;
+		private delegate bool FBSecure( IntPtr self );
+		private FBSecure _BSecure;
 		
 		#endregion
 		internal bool BSecure()
 		{
-			return BSecureDelegatePointer( Self );
+			return _BSecure( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void GetSteamIDDelegate( IntPtr self, ref SteamId retVal );
-		private GetSteamIDDelegate GetSteamIDDelegatePointer;
+		private delegate void FGetSteamID( IntPtr self, ref SteamId retVal );
+		private FGetSteamID _GetSteamID;
 		
 		#endregion
 		internal SteamId GetSteamID()
 		{
 			var retVal = default( SteamId );
-			GetSteamIDDelegatePointer( Self, ref retVal );
+			_GetSteamID( Self, ref retVal );
 			return retVal;
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool WasRestartRequestedDelegate( IntPtr self );
-		private WasRestartRequestedDelegate WasRestartRequestedDelegatePointer;
+		private delegate bool FWasRestartRequested( IntPtr self );
+		private FWasRestartRequested _WasRestartRequested;
 		
 		#endregion
 		internal bool WasRestartRequested()
 		{
-			return WasRestartRequestedDelegatePointer( Self );
+			return _WasRestartRequested( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void SetMaxPlayerCountDelegate( IntPtr self, int cPlayersMax );
-		private SetMaxPlayerCountDelegate SetMaxPlayerCountDelegatePointer;
+		private delegate void FSetMaxPlayerCount( IntPtr self, int cPlayersMax );
+		private FSetMaxPlayerCount _SetMaxPlayerCount;
 		
 		#endregion
 		internal void SetMaxPlayerCount( int cPlayersMax )
 		{
-			SetMaxPlayerCountDelegatePointer( Self, cPlayersMax );
+			_SetMaxPlayerCount( Self, cPlayersMax );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void SetBotPlayerCountDelegate( IntPtr self, int cBotplayers );
-		private SetBotPlayerCountDelegate SetBotPlayerCountDelegatePointer;
+		private delegate void FSetBotPlayerCount( IntPtr self, int cBotplayers );
+		private FSetBotPlayerCount _SetBotPlayerCount;
 		
 		#endregion
 		internal void SetBotPlayerCount( int cBotplayers )
 		{
-			SetBotPlayerCountDelegatePointer( Self, cBotplayers );
+			_SetBotPlayerCount( Self, cBotplayers );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void SetServerNameDelegate( IntPtr self, string pszServerName );
-		private SetServerNameDelegate SetServerNameDelegatePointer;
+		private delegate void FSetServerName( IntPtr self, string pszServerName );
+		private FSetServerName _SetServerName;
 		
 		#endregion
 		internal void SetServerName( string pszServerName )
 		{
-			SetServerNameDelegatePointer( Self, pszServerName );
+			_SetServerName( Self, pszServerName );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void SetMapNameDelegate( IntPtr self, string pszMapName );
-		private SetMapNameDelegate SetMapNameDelegatePointer;
+		private delegate void FSetMapName( IntPtr self, string pszMapName );
+		private FSetMapName _SetMapName;
 		
 		#endregion
 		internal void SetMapName( string pszMapName )
 		{
-			SetMapNameDelegatePointer( Self, pszMapName );
+			_SetMapName( Self, pszMapName );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void SetPasswordProtectedDelegate( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bPasswordProtected );
-		private SetPasswordProtectedDelegate SetPasswordProtectedDelegatePointer;
+		private delegate void FSetPasswordProtected( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bPasswordProtected );
+		private FSetPasswordProtected _SetPasswordProtected;
 		
 		#endregion
 		internal void SetPasswordProtected( [MarshalAs( UnmanagedType.U1 )] bool bPasswordProtected )
 		{
-			SetPasswordProtectedDelegatePointer( Self, bPasswordProtected );
+			_SetPasswordProtected( Self, bPasswordProtected );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void SetSpectatorPortDelegate( IntPtr self, ushort unSpectatorPort );
-		private SetSpectatorPortDelegate SetSpectatorPortDelegatePointer;
+		private delegate void FSetSpectatorPort( IntPtr self, ushort unSpectatorPort );
+		private FSetSpectatorPort _SetSpectatorPort;
 		
 		#endregion
 		internal void SetSpectatorPort( ushort unSpectatorPort )
 		{
-			SetSpectatorPortDelegatePointer( Self, unSpectatorPort );
+			_SetSpectatorPort( Self, unSpectatorPort );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void SetSpectatorServerNameDelegate( IntPtr self, string pszSpectatorServerName );
-		private SetSpectatorServerNameDelegate SetSpectatorServerNameDelegatePointer;
+		private delegate void FSetSpectatorServerName( IntPtr self, string pszSpectatorServerName );
+		private FSetSpectatorServerName _SetSpectatorServerName;
 		
 		#endregion
 		internal void SetSpectatorServerName( string pszSpectatorServerName )
 		{
-			SetSpectatorServerNameDelegatePointer( Self, pszSpectatorServerName );
+			_SetSpectatorServerName( Self, pszSpectatorServerName );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void ClearAllKeyValuesDelegate( IntPtr self );
-		private ClearAllKeyValuesDelegate ClearAllKeyValuesDelegatePointer;
+		private delegate void FClearAllKeyValues( IntPtr self );
+		private FClearAllKeyValues _ClearAllKeyValues;
 		
 		#endregion
 		internal void ClearAllKeyValues()
 		{
-			ClearAllKeyValuesDelegatePointer( Self );
+			_ClearAllKeyValues( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void SetKeyValueDelegate( IntPtr self, string pKey, string pValue );
-		private SetKeyValueDelegate SetKeyValueDelegatePointer;
+		private delegate void FSetKeyValue( IntPtr self, string pKey, string pValue );
+		private FSetKeyValue _SetKeyValue;
 		
 		#endregion
 		internal void SetKeyValue( string pKey, string pValue )
 		{
-			SetKeyValueDelegatePointer( Self, pKey, pValue );
+			_SetKeyValue( Self, pKey, pValue );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void SetGameTagsDelegate( IntPtr self, string pchGameTags );
-		private SetGameTagsDelegate SetGameTagsDelegatePointer;
+		private delegate void FSetGameTags( IntPtr self, string pchGameTags );
+		private FSetGameTags _SetGameTags;
 		
 		#endregion
 		internal void SetGameTags( string pchGameTags )
 		{
-			SetGameTagsDelegatePointer( Self, pchGameTags );
+			_SetGameTags( Self, pchGameTags );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void SetGameDataDelegate( IntPtr self, string pchGameData );
-		private SetGameDataDelegate SetGameDataDelegatePointer;
+		private delegate void FSetGameData( IntPtr self, string pchGameData );
+		private FSetGameData _SetGameData;
 		
 		#endregion
 		internal void SetGameData( string pchGameData )
 		{
-			SetGameDataDelegatePointer( Self, pchGameData );
+			_SetGameData( Self, pchGameData );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void SetRegionDelegate( IntPtr self, string pszRegion );
-		private SetRegionDelegate SetRegionDelegatePointer;
+		private delegate void FSetRegion( IntPtr self, string pszRegion );
+		private FSetRegion _SetRegion;
 		
 		#endregion
 		internal void SetRegion( string pszRegion )
 		{
-			SetRegionDelegatePointer( Self, pszRegion );
+			_SetRegion( Self, pszRegion );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool SendUserConnectAndAuthenticateDelegate( IntPtr self, uint unIPClient, IntPtr pvAuthBlob, uint cubAuthBlobSize, ref SteamId pSteamIDUser );
-		private SendUserConnectAndAuthenticateDelegate SendUserConnectAndAuthenticateDelegatePointer;
+		private delegate bool FSendUserConnectAndAuthenticate( IntPtr self, uint unIPClient, IntPtr pvAuthBlob, uint cubAuthBlobSize, ref SteamId pSteamIDUser );
+		private FSendUserConnectAndAuthenticate _SendUserConnectAndAuthenticate;
 		
 		#endregion
 		internal bool SendUserConnectAndAuthenticate( uint unIPClient, IntPtr pvAuthBlob, uint cubAuthBlobSize, ref SteamId pSteamIDUser )
 		{
-			return SendUserConnectAndAuthenticateDelegatePointer( Self, unIPClient, pvAuthBlob, cubAuthBlobSize, ref pSteamIDUser );
+			return _SendUserConnectAndAuthenticate( Self, unIPClient, pvAuthBlob, cubAuthBlobSize, ref pSteamIDUser );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void CreateUnauthenticatedUserConnectionDelegate( IntPtr self, ref SteamId retVal );
-		private CreateUnauthenticatedUserConnectionDelegate CreateUnauthenticatedUserConnectionDelegatePointer;
+		private delegate void FCreateUnauthenticatedUserConnection( IntPtr self, ref SteamId retVal );
+		private FCreateUnauthenticatedUserConnection _CreateUnauthenticatedUserConnection;
 		
 		#endregion
 		internal SteamId CreateUnauthenticatedUserConnection()
 		{
 			var retVal = default( SteamId );
-			CreateUnauthenticatedUserConnectionDelegatePointer( Self, ref retVal );
+			_CreateUnauthenticatedUserConnection( Self, ref retVal );
 			return retVal;
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void SendUserDisconnectDelegate( IntPtr self, SteamId steamIDUser );
-		private SendUserDisconnectDelegate SendUserDisconnectDelegatePointer;
+		private delegate void FSendUserDisconnect( IntPtr self, SteamId steamIDUser );
+		private FSendUserDisconnect _SendUserDisconnect;
 		
 		#endregion
 		internal void SendUserDisconnect( SteamId steamIDUser )
 		{
-			SendUserDisconnectDelegatePointer( Self, steamIDUser );
+			_SendUserDisconnect( Self, steamIDUser );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool BUpdateUserDataDelegate( IntPtr self, SteamId steamIDUser, string pchPlayerName, uint uScore );
-		private BUpdateUserDataDelegate BUpdateUserDataDelegatePointer;
+		private delegate bool FBUpdateUserData( IntPtr self, SteamId steamIDUser, string pchPlayerName, uint uScore );
+		private FBUpdateUserData _BUpdateUserData;
 		
 		#endregion
 		internal bool BUpdateUserData( SteamId steamIDUser, string pchPlayerName, uint uScore )
 		{
-			return BUpdateUserDataDelegatePointer( Self, steamIDUser, pchPlayerName, uScore );
+			return _BUpdateUserData( Self, steamIDUser, pchPlayerName, uScore );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate HAuthTicket GetAuthSessionTicketDelegate( IntPtr self, IntPtr pTicket, int cbMaxTicket, ref uint pcbTicket );
-		private GetAuthSessionTicketDelegate GetAuthSessionTicketDelegatePointer;
+		private delegate HAuthTicket FGetAuthSessionTicket( IntPtr self, IntPtr pTicket, int cbMaxTicket, ref uint pcbTicket );
+		private FGetAuthSessionTicket _GetAuthSessionTicket;
 		
 		#endregion
 		internal HAuthTicket GetAuthSessionTicket( IntPtr pTicket, int cbMaxTicket, ref uint pcbTicket )
 		{
-			return GetAuthSessionTicketDelegatePointer( Self, pTicket, cbMaxTicket, ref pcbTicket );
+			return _GetAuthSessionTicket( Self, pTicket, cbMaxTicket, ref pcbTicket );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate BeginAuthResult BeginAuthSessionDelegate( IntPtr self, IntPtr pAuthTicket, int cbAuthTicket, SteamId steamID );
-		private BeginAuthSessionDelegate BeginAuthSessionDelegatePointer;
+		private delegate BeginAuthResult FBeginAuthSession( IntPtr self, IntPtr pAuthTicket, int cbAuthTicket, SteamId steamID );
+		private FBeginAuthSession _BeginAuthSession;
 		
 		#endregion
 		internal BeginAuthResult BeginAuthSession( IntPtr pAuthTicket, int cbAuthTicket, SteamId steamID )
 		{
-			return BeginAuthSessionDelegatePointer( Self, pAuthTicket, cbAuthTicket, steamID );
+			return _BeginAuthSession( Self, pAuthTicket, cbAuthTicket, steamID );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void EndAuthSessionDelegate( IntPtr self, SteamId steamID );
-		private EndAuthSessionDelegate EndAuthSessionDelegatePointer;
+		private delegate void FEndAuthSession( IntPtr self, SteamId steamID );
+		private FEndAuthSession _EndAuthSession;
 		
 		#endregion
 		internal void EndAuthSession( SteamId steamID )
 		{
-			EndAuthSessionDelegatePointer( Self, steamID );
+			_EndAuthSession( Self, steamID );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void CancelAuthTicketDelegate( IntPtr self, HAuthTicket hAuthTicket );
-		private CancelAuthTicketDelegate CancelAuthTicketDelegatePointer;
+		private delegate void FCancelAuthTicket( IntPtr self, HAuthTicket hAuthTicket );
+		private FCancelAuthTicket _CancelAuthTicket;
 		
 		#endregion
 		internal void CancelAuthTicket( HAuthTicket hAuthTicket )
 		{
-			CancelAuthTicketDelegatePointer( Self, hAuthTicket );
+			_CancelAuthTicket( Self, hAuthTicket );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate UserHasLicenseForAppResult UserHasLicenseForAppDelegate( IntPtr self, SteamId steamID, AppId_t appID );
-		private UserHasLicenseForAppDelegate UserHasLicenseForAppDelegatePointer;
+		private delegate UserHasLicenseForAppResult FUserHasLicenseForApp( IntPtr self, SteamId steamID, AppId appID );
+		private FUserHasLicenseForApp _UserHasLicenseForApp;
 		
 		#endregion
-		internal UserHasLicenseForAppResult UserHasLicenseForApp( SteamId steamID, AppId_t appID )
+		internal UserHasLicenseForAppResult UserHasLicenseForApp( SteamId steamID, AppId appID )
 		{
-			return UserHasLicenseForAppDelegatePointer( Self, steamID, appID );
+			return _UserHasLicenseForApp( Self, steamID, appID );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool RequestUserGroupStatusDelegate( IntPtr self, SteamId steamIDUser, SteamId steamIDGroup );
-		private RequestUserGroupStatusDelegate RequestUserGroupStatusDelegatePointer;
+		private delegate bool FRequestUserGroupStatus( IntPtr self, SteamId steamIDUser, SteamId steamIDGroup );
+		private FRequestUserGroupStatus _RequestUserGroupStatus;
 		
 		#endregion
 		internal bool RequestUserGroupStatus( SteamId steamIDUser, SteamId steamIDGroup )
 		{
-			return RequestUserGroupStatusDelegatePointer( Self, steamIDUser, steamIDGroup );
+			return _RequestUserGroupStatus( Self, steamIDUser, steamIDGroup );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void GetGameplayStatsDelegate( IntPtr self );
-		private GetGameplayStatsDelegate GetGameplayStatsDelegatePointer;
+		private delegate void FGetGameplayStats( IntPtr self );
+		private FGetGameplayStats _GetGameplayStats;
 		
 		#endregion
 		internal void GetGameplayStats()
 		{
-			GetGameplayStatsDelegatePointer( Self );
+			_GetGameplayStats( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamAPICall_t GetServerReputationDelegate( IntPtr self );
-		private GetServerReputationDelegate GetServerReputationDelegatePointer;
+		private delegate SteamAPICall_t FGetServerReputation( IntPtr self );
+		private FGetServerReputation _GetServerReputation;
 		
 		#endregion
 		internal async Task<GSReputation_t?> GetServerReputation()
 		{
-			return await (new Result<GSReputation_t>( GetServerReputationDelegatePointer( Self ) )).GetResult();
+			return await (new Result<GSReputation_t>( _GetServerReputation( Self ) )).GetResult();
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate uint GetPublicIPDelegate( IntPtr self );
-		private GetPublicIPDelegate GetPublicIPDelegatePointer;
+		private delegate uint FGetPublicIP( IntPtr self );
+		private FGetPublicIP _GetPublicIP;
 		
 		#endregion
 		internal uint GetPublicIP()
 		{
-			return GetPublicIPDelegatePointer( Self );
+			return _GetPublicIP( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool HandleIncomingPacketDelegate( IntPtr self, IntPtr pData, int cbData, uint srcIP, ushort srcPort );
-		private HandleIncomingPacketDelegate HandleIncomingPacketDelegatePointer;
+		private delegate bool FHandleIncomingPacket( IntPtr self, IntPtr pData, int cbData, uint srcIP, ushort srcPort );
+		private FHandleIncomingPacket _HandleIncomingPacket;
 		
 		#endregion
 		internal bool HandleIncomingPacket( IntPtr pData, int cbData, uint srcIP, ushort srcPort )
 		{
-			return HandleIncomingPacketDelegatePointer( Self, pData, cbData, srcIP, srcPort );
+			return _HandleIncomingPacket( Self, pData, cbData, srcIP, srcPort );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate int GetNextOutgoingPacketDelegate( IntPtr self, IntPtr pOut, int cbMaxOut, ref uint pNetAdr, ref ushort pPort );
-		private GetNextOutgoingPacketDelegate GetNextOutgoingPacketDelegatePointer;
+		private delegate int FGetNextOutgoingPacket( IntPtr self, IntPtr pOut, int cbMaxOut, ref uint pNetAdr, ref ushort pPort );
+		private FGetNextOutgoingPacket _GetNextOutgoingPacket;
 		
 		#endregion
 		internal int GetNextOutgoingPacket( IntPtr pOut, int cbMaxOut, ref uint pNetAdr, ref ushort pPort )
 		{
-			return GetNextOutgoingPacketDelegatePointer( Self, pOut, cbMaxOut, ref pNetAdr, ref pPort );
+			return _GetNextOutgoingPacket( Self, pOut, cbMaxOut, ref pNetAdr, ref pPort );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void EnableHeartbeatsDelegate( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bActive );
-		private EnableHeartbeatsDelegate EnableHeartbeatsDelegatePointer;
+		private delegate void FEnableHeartbeats( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bActive );
+		private FEnableHeartbeats _EnableHeartbeats;
 		
 		#endregion
 		internal void EnableHeartbeats( [MarshalAs( UnmanagedType.U1 )] bool bActive )
 		{
-			EnableHeartbeatsDelegatePointer( Self, bActive );
+			_EnableHeartbeats( Self, bActive );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void SetHeartbeatIntervalDelegate( IntPtr self, int iHeartbeatInterval );
-		private SetHeartbeatIntervalDelegate SetHeartbeatIntervalDelegatePointer;
+		private delegate void FSetHeartbeatInterval( IntPtr self, int iHeartbeatInterval );
+		private FSetHeartbeatInterval _SetHeartbeatInterval;
 		
 		#endregion
 		internal void SetHeartbeatInterval( int iHeartbeatInterval )
 		{
-			SetHeartbeatIntervalDelegatePointer( Self, iHeartbeatInterval );
+			_SetHeartbeatInterval( Self, iHeartbeatInterval );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void ForceHeartbeatDelegate( IntPtr self );
-		private ForceHeartbeatDelegate ForceHeartbeatDelegatePointer;
+		private delegate void FForceHeartbeat( IntPtr self );
+		private FForceHeartbeat _ForceHeartbeat;
 		
 		#endregion
 		internal void ForceHeartbeat()
 		{
-			ForceHeartbeatDelegatePointer( Self );
+			_ForceHeartbeat( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamAPICall_t AssociateWithClanDelegate( IntPtr self, SteamId steamIDClan );
-		private AssociateWithClanDelegate AssociateWithClanDelegatePointer;
+		private delegate SteamAPICall_t FAssociateWithClan( IntPtr self, SteamId steamIDClan );
+		private FAssociateWithClan _AssociateWithClan;
 		
 		#endregion
 		internal async Task<AssociateWithClanResult_t?> AssociateWithClan( SteamId steamIDClan )
 		{
-			return await (new Result<AssociateWithClanResult_t>( AssociateWithClanDelegatePointer( Self, steamIDClan ) )).GetResult();
+			return await (new Result<AssociateWithClanResult_t>( _AssociateWithClan( Self, steamIDClan ) )).GetResult();
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamAPICall_t ComputeNewPlayerCompatibilityDelegate( IntPtr self, SteamId steamIDNewPlayer );
-		private ComputeNewPlayerCompatibilityDelegate ComputeNewPlayerCompatibilityDelegatePointer;
+		private delegate SteamAPICall_t FComputeNewPlayerCompatibility( IntPtr self, SteamId steamIDNewPlayer );
+		private FComputeNewPlayerCompatibility _ComputeNewPlayerCompatibility;
 		
 		#endregion
 		internal async Task<ComputeNewPlayerCompatibilityResult_t?> ComputeNewPlayerCompatibility( SteamId steamIDNewPlayer )
 		{
-			return await (new Result<ComputeNewPlayerCompatibilityResult_t>( ComputeNewPlayerCompatibilityDelegatePointer( Self, steamIDNewPlayer ) )).GetResult();
+			return await (new Result<ComputeNewPlayerCompatibilityResult_t>( _ComputeNewPlayerCompatibility( Self, steamIDNewPlayer ) )).GetResult();
 		}
 		
 	}

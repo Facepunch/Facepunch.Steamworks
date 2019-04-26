@@ -99,7 +99,7 @@ namespace Generator
 					var args = f.Groups[3].Value.Trim();
 					//	Console.WriteLine( $"Function: {funcName} returns {returnType} with args {args}" );
 
-
+					if ( funcName == "RequestUGCDetails" ) lastCallResult = "SteamUGCRequestUGCDetailsResult_t";
 					if ( funcName == "DownloadClanActivityCounts" ) lastCallResult = "DownloadClanActivityCountsResult_t";
 
 					if ( funcName.Contains( ' ' ) || funcName.Contains( '*' ) )
@@ -136,6 +136,7 @@ namespace Generator
 			str = Regex.Replace( str, @"STEAM_OUT_STRUCT\((.+?)\) ", "" );
 			str = Regex.Replace( str, @"STEAM_OUT_ARRAY_COUNT\((.+?)\)", "" );
 			str = Regex.Replace( str, @"STEAM_ARRAY_COUNT_D\((.+?)\)", "" );
+			str = Regex.Replace( str, @"STEAM_OUT_STRING_COUNT\((.+?)\)", "" );
 
 			
 

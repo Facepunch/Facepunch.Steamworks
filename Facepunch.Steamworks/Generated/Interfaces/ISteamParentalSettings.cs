@@ -17,84 +17,84 @@ namespace Steamworks
 		
 		public override void InitInternals()
 		{
-			BIsParentalLockEnabledDelegatePointer = Marshal.GetDelegateForFunctionPointer<BIsParentalLockEnabledDelegate>( Marshal.ReadIntPtr( VTable, 0) );
-			BIsParentalLockLockedDelegatePointer = Marshal.GetDelegateForFunctionPointer<BIsParentalLockLockedDelegate>( Marshal.ReadIntPtr( VTable, 8) );
-			BIsAppBlockedDelegatePointer = Marshal.GetDelegateForFunctionPointer<BIsAppBlockedDelegate>( Marshal.ReadIntPtr( VTable, 16) );
-			BIsAppInBlockListDelegatePointer = Marshal.GetDelegateForFunctionPointer<BIsAppInBlockListDelegate>( Marshal.ReadIntPtr( VTable, 24) );
-			BIsFeatureBlockedDelegatePointer = Marshal.GetDelegateForFunctionPointer<BIsFeatureBlockedDelegate>( Marshal.ReadIntPtr( VTable, 32) );
-			BIsFeatureInBlockListDelegatePointer = Marshal.GetDelegateForFunctionPointer<BIsFeatureInBlockListDelegate>( Marshal.ReadIntPtr( VTable, 40) );
+			_BIsParentalLockEnabled = Marshal.GetDelegateForFunctionPointer<FBIsParentalLockEnabled>( Marshal.ReadIntPtr( VTable, 0) );
+			_BIsParentalLockLocked = Marshal.GetDelegateForFunctionPointer<FBIsParentalLockLocked>( Marshal.ReadIntPtr( VTable, 8) );
+			_BIsAppBlocked = Marshal.GetDelegateForFunctionPointer<FBIsAppBlocked>( Marshal.ReadIntPtr( VTable, 16) );
+			_BIsAppInBlockList = Marshal.GetDelegateForFunctionPointer<FBIsAppInBlockList>( Marshal.ReadIntPtr( VTable, 24) );
+			_BIsFeatureBlocked = Marshal.GetDelegateForFunctionPointer<FBIsFeatureBlocked>( Marshal.ReadIntPtr( VTable, 32) );
+			_BIsFeatureInBlockList = Marshal.GetDelegateForFunctionPointer<FBIsFeatureInBlockList>( Marshal.ReadIntPtr( VTable, 40) );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool BIsParentalLockEnabledDelegate( IntPtr self );
-		private BIsParentalLockEnabledDelegate BIsParentalLockEnabledDelegatePointer;
+		private delegate bool FBIsParentalLockEnabled( IntPtr self );
+		private FBIsParentalLockEnabled _BIsParentalLockEnabled;
 		
 		#endregion
 		internal bool BIsParentalLockEnabled()
 		{
-			return BIsParentalLockEnabledDelegatePointer( Self );
+			return _BIsParentalLockEnabled( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool BIsParentalLockLockedDelegate( IntPtr self );
-		private BIsParentalLockLockedDelegate BIsParentalLockLockedDelegatePointer;
+		private delegate bool FBIsParentalLockLocked( IntPtr self );
+		private FBIsParentalLockLocked _BIsParentalLockLocked;
 		
 		#endregion
 		internal bool BIsParentalLockLocked()
 		{
-			return BIsParentalLockLockedDelegatePointer( Self );
+			return _BIsParentalLockLocked( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool BIsAppBlockedDelegate( IntPtr self, AppId_t nAppID );
-		private BIsAppBlockedDelegate BIsAppBlockedDelegatePointer;
+		private delegate bool FBIsAppBlocked( IntPtr self, AppId nAppID );
+		private FBIsAppBlocked _BIsAppBlocked;
 		
 		#endregion
-		internal bool BIsAppBlocked( AppId_t nAppID )
+		internal bool BIsAppBlocked( AppId nAppID )
 		{
-			return BIsAppBlockedDelegatePointer( Self, nAppID );
+			return _BIsAppBlocked( Self, nAppID );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool BIsAppInBlockListDelegate( IntPtr self, AppId_t nAppID );
-		private BIsAppInBlockListDelegate BIsAppInBlockListDelegatePointer;
+		private delegate bool FBIsAppInBlockList( IntPtr self, AppId nAppID );
+		private FBIsAppInBlockList _BIsAppInBlockList;
 		
 		#endregion
-		internal bool BIsAppInBlockList( AppId_t nAppID )
+		internal bool BIsAppInBlockList( AppId nAppID )
 		{
-			return BIsAppInBlockListDelegatePointer( Self, nAppID );
+			return _BIsAppInBlockList( Self, nAppID );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool BIsFeatureBlockedDelegate( IntPtr self, ParentalFeature eFeature );
-		private BIsFeatureBlockedDelegate BIsFeatureBlockedDelegatePointer;
+		private delegate bool FBIsFeatureBlocked( IntPtr self, ParentalFeature eFeature );
+		private FBIsFeatureBlocked _BIsFeatureBlocked;
 		
 		#endregion
 		internal bool BIsFeatureBlocked( ParentalFeature eFeature )
 		{
-			return BIsFeatureBlockedDelegatePointer( Self, eFeature );
+			return _BIsFeatureBlocked( Self, eFeature );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool BIsFeatureInBlockListDelegate( IntPtr self, ParentalFeature eFeature );
-		private BIsFeatureInBlockListDelegate BIsFeatureInBlockListDelegatePointer;
+		private delegate bool FBIsFeatureInBlockList( IntPtr self, ParentalFeature eFeature );
+		private FBIsFeatureInBlockList _BIsFeatureInBlockList;
 		
 		#endregion
 		internal bool BIsFeatureInBlockList( ParentalFeature eFeature )
 		{
-			return BIsFeatureInBlockListDelegatePointer( Self, eFeature );
+			return _BIsFeatureInBlockList( Self, eFeature );
 		}
 		
 	}

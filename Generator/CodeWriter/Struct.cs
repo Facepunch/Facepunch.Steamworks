@@ -229,10 +229,10 @@ namespace Generator
                     t = "IntPtr";
                 }
 
-                if (t.StartsWith("AppId_t ") && t.Contains("["))
+                if (t.StartsWith("AppId ") && t.Contains("["))
                 {
-                    var num = t.Replace("AppId_t", "").Trim('[', ']', ' ');
-                    t = $"AppId_t[]";
+                    var num = t.Replace("AppId", "").Trim('[', ']', ' ');
+                    t = $"AppId[]";
                     WriteLine($"[MarshalAs(UnmanagedType.ByValArray, SizeConst = {num}, ArraySubType = UnmanagedType.U4)]");
                 }
 

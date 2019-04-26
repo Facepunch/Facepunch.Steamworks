@@ -645,7 +645,7 @@ namespace Steamworks.Data
 	internal struct FriendRichPresenceUpdate_t : Steamworks.ISteamCallback
 	{
 		internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
-		internal uint AppID; // m_nAppID AppId_t
+		internal AppId AppID; // m_nAppID AppId_t
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamFriends + 36;
@@ -657,7 +657,7 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			
 			public static implicit operator FriendRichPresenceUpdate_t ( FriendRichPresenceUpdate_t.Pack4 d ) => new FriendRichPresenceUpdate_t{ SteamIDFriend = d.SteamIDFriend,AppID = d.AppID, };
 		}
@@ -666,7 +666,7 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			
 			public static implicit operator FriendRichPresenceUpdate_t ( FriendRichPresenceUpdate_t.Pack8 d ) => new FriendRichPresenceUpdate_t{ SteamIDFriend = d.SteamIDFriend,AppID = d.AppID, };
 		}
@@ -2246,7 +2246,7 @@ namespace Steamworks.Data
 	
 	internal struct RemoteStorageAppSyncedClient_t : Steamworks.ISteamCallback
 	{
-		internal uint AppID; // m_nAppID AppId_t
+		internal AppId AppID; // m_nAppID AppId_t
 		internal Result Result; // m_eResult enum EResult
 		internal int NumDownloads; // m_unNumDownloads int
 		
@@ -2259,7 +2259,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			internal Result Result; // m_eResult enum EResult
 			internal int NumDownloads; // m_unNumDownloads int
 			
@@ -2269,7 +2269,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 		public struct Pack8
 		{
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			internal Result Result; // m_eResult enum EResult
 			internal int NumDownloads; // m_unNumDownloads int
 			
@@ -2280,7 +2280,7 @@ namespace Steamworks.Data
 	
 	internal struct RemoteStorageAppSyncedServer_t : Steamworks.ISteamCallback
 	{
-		internal uint AppID; // m_nAppID AppId_t
+		internal AppId AppID; // m_nAppID AppId_t
 		internal Result Result; // m_eResult enum EResult
 		internal int NumUploads; // m_unNumUploads int
 		
@@ -2293,7 +2293,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			internal Result Result; // m_eResult enum EResult
 			internal int NumUploads; // m_unNumUploads int
 			
@@ -2303,7 +2303,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 		public struct Pack8
 		{
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			internal Result Result; // m_eResult enum EResult
 			internal int NumUploads; // m_unNumUploads int
 			
@@ -2316,7 +2316,7 @@ namespace Steamworks.Data
 	{
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
 		internal string CurrentFile; // m_rgchCurrentFile char [260]
-		internal uint AppID; // m_nAppID AppId_t
+		internal AppId AppID; // m_nAppID AppId_t
 		internal uint BytesTransferredThisChunk; // m_uBytesTransferredThisChunk uint32
 		internal double DAppPercentComplete; // m_dAppPercentComplete double
 		[MarshalAs(UnmanagedType.I1)]
@@ -2333,7 +2333,7 @@ namespace Steamworks.Data
 		{
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
 			internal string CurrentFile; // m_rgchCurrentFile char [260]
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			internal uint BytesTransferredThisChunk; // m_uBytesTransferredThisChunk uint32
 			internal double DAppPercentComplete; // m_dAppPercentComplete double
 			[MarshalAs(UnmanagedType.I1)]
@@ -2347,7 +2347,7 @@ namespace Steamworks.Data
 		{
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
 			internal string CurrentFile; // m_rgchCurrentFile char [260]
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			internal uint BytesTransferredThisChunk; // m_uBytesTransferredThisChunk uint32
 			internal double DAppPercentComplete; // m_dAppPercentComplete double
 			[MarshalAs(UnmanagedType.I1)]
@@ -2360,7 +2360,7 @@ namespace Steamworks.Data
 	
 	internal struct RemoteStorageAppSyncStatusCheck_t : Steamworks.ISteamCallback
 	{
-		internal uint AppID; // m_nAppID AppId_t
+		internal AppId AppID; // m_nAppID AppId_t
 		internal Result Result; // m_eResult enum EResult
 		
 		#region ISteamCallback
@@ -2372,7 +2372,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			internal Result Result; // m_eResult enum EResult
 			
 			public static implicit operator RemoteStorageAppSyncStatusCheck_t ( RemoteStorageAppSyncStatusCheck_t.Pack4 d ) => new RemoteStorageAppSyncStatusCheck_t{ AppID = d.AppID,Result = d.Result, };
@@ -2381,7 +2381,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 		public struct Pack8
 		{
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			internal Result Result; // m_eResult enum EResult
 			
 			public static implicit operator RemoteStorageAppSyncStatusCheck_t ( RemoteStorageAppSyncStatusCheck_t.Pack8 d ) => new RemoteStorageAppSyncStatusCheck_t{ AppID = d.AppID,Result = d.Result, };
@@ -2683,7 +2683,7 @@ namespace Steamworks.Data
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong File; // m_hFile UGCHandle_t
-		internal uint AppID; // m_nAppID AppId_t
+		internal AppId AppID; // m_nAppID AppId_t
 		internal int SizeInBytes; // m_nSizeInBytes int32
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
 		internal string PchFileName; // m_pchFileName char [260]
@@ -2700,7 +2700,7 @@ namespace Steamworks.Data
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong File; // m_hFile UGCHandle_t
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			internal int SizeInBytes; // m_nSizeInBytes int32
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
 			internal string PchFileName; // m_pchFileName char [260]
@@ -2714,7 +2714,7 @@ namespace Steamworks.Data
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong File; // m_hFile UGCHandle_t
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			internal int SizeInBytes; // m_nSizeInBytes int32
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
 			internal string PchFileName; // m_pchFileName char [260]
@@ -2729,8 +2729,8 @@ namespace Steamworks.Data
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-		internal uint CreatorAppID; // m_nCreatorAppID AppId_t
-		internal uint ConsumerAppID; // m_nConsumerAppID AppId_t
+		internal AppId CreatorAppID; // m_nCreatorAppID AppId_t
+		internal AppId ConsumerAppID; // m_nConsumerAppID AppId_t
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 129)]
 		internal string Title; // m_rgchTitle char [129]
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8000)]
@@ -2768,8 +2768,8 @@ namespace Steamworks.Data
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal uint CreatorAppID; // m_nCreatorAppID AppId_t
-			internal uint ConsumerAppID; // m_nConsumerAppID AppId_t
+			internal AppId CreatorAppID; // m_nCreatorAppID AppId_t
+			internal AppId ConsumerAppID; // m_nConsumerAppID AppId_t
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 129)]
 			internal string Title; // m_rgchTitle char [129]
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8000)]
@@ -2804,8 +2804,8 @@ namespace Steamworks.Data
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal uint CreatorAppID; // m_nCreatorAppID AppId_t
-			internal uint ConsumerAppID; // m_nConsumerAppID AppId_t
+			internal AppId CreatorAppID; // m_nCreatorAppID AppId_t
+			internal AppId ConsumerAppID; // m_nConsumerAppID AppId_t
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 129)]
 			internal string Title; // m_rgchTitle char [129]
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8000)]
@@ -2846,7 +2846,7 @@ namespace Steamworks.Data
 		internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.R4)]
 		internal float[] GScore; // m_rgScore float [50]
-		internal uint AppId; // m_nAppId AppId_t
+		internal AppId AppId; // m_nAppId AppId_t
 		internal uint StartIndex; // m_unStartIndex uint32
 		
 		#region ISteamCallback
@@ -2865,7 +2865,7 @@ namespace Steamworks.Data
 			internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.R4)]
 			internal float[] GScore; // m_rgScore float [50]
-			internal uint AppId; // m_nAppId AppId_t
+			internal AppId AppId; // m_nAppId AppId_t
 			internal uint StartIndex; // m_unStartIndex uint32
 			
 			public static implicit operator RemoteStorageEnumerateWorkshopFilesResult_t ( RemoteStorageEnumerateWorkshopFilesResult_t.Pack4 d ) => new RemoteStorageEnumerateWorkshopFilesResult_t{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId,GScore = d.GScore,AppId = d.AppId,StartIndex = d.StartIndex, };
@@ -2881,7 +2881,7 @@ namespace Steamworks.Data
 			internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.R4)]
 			internal float[] GScore; // m_rgScore float [50]
-			internal uint AppId; // m_nAppId AppId_t
+			internal AppId AppId; // m_nAppId AppId_t
 			internal uint StartIndex; // m_unStartIndex uint32
 			
 			public static implicit operator RemoteStorageEnumerateWorkshopFilesResult_t ( RemoteStorageEnumerateWorkshopFilesResult_t.Pack8 d ) => new RemoteStorageEnumerateWorkshopFilesResult_t{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId,GScore = d.GScore,AppId = d.AppId,StartIndex = d.StartIndex, };
@@ -2935,7 +2935,7 @@ namespace Steamworks.Data
 	internal struct RemoteStoragePublishedFileSubscribed_t : Steamworks.ISteamCallback
 	{
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-		internal uint AppID; // m_nAppID AppId_t
+		internal AppId AppID; // m_nAppID AppId_t
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.ClientRemoteStorage + 21;
@@ -2947,7 +2947,7 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			
 			public static implicit operator RemoteStoragePublishedFileSubscribed_t ( RemoteStoragePublishedFileSubscribed_t.Pack4 d ) => new RemoteStoragePublishedFileSubscribed_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
 		}
@@ -2956,7 +2956,7 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			
 			public static implicit operator RemoteStoragePublishedFileSubscribed_t ( RemoteStoragePublishedFileSubscribed_t.Pack8 d ) => new RemoteStoragePublishedFileSubscribed_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
 		}
@@ -2966,7 +2966,7 @@ namespace Steamworks.Data
 	internal struct RemoteStoragePublishedFileUnsubscribed_t : Steamworks.ISteamCallback
 	{
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-		internal uint AppID; // m_nAppID AppId_t
+		internal AppId AppID; // m_nAppID AppId_t
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.ClientRemoteStorage + 22;
@@ -2978,7 +2978,7 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			
 			public static implicit operator RemoteStoragePublishedFileUnsubscribed_t ( RemoteStoragePublishedFileUnsubscribed_t.Pack4 d ) => new RemoteStoragePublishedFileUnsubscribed_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
 		}
@@ -2987,7 +2987,7 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			
 			public static implicit operator RemoteStoragePublishedFileUnsubscribed_t ( RemoteStoragePublishedFileUnsubscribed_t.Pack8 d ) => new RemoteStoragePublishedFileUnsubscribed_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
 		}
@@ -2997,7 +2997,7 @@ namespace Steamworks.Data
 	internal struct RemoteStoragePublishedFileDeleted_t : Steamworks.ISteamCallback
 	{
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-		internal uint AppID; // m_nAppID AppId_t
+		internal AppId AppID; // m_nAppID AppId_t
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.ClientRemoteStorage + 23;
@@ -3009,7 +3009,7 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			
 			public static implicit operator RemoteStoragePublishedFileDeleted_t ( RemoteStoragePublishedFileDeleted_t.Pack4 d ) => new RemoteStoragePublishedFileDeleted_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
 		}
@@ -3018,7 +3018,7 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			
 			public static implicit operator RemoteStoragePublishedFileDeleted_t ( RemoteStoragePublishedFileDeleted_t.Pack8 d ) => new RemoteStoragePublishedFileDeleted_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
 		}
@@ -3250,7 +3250,7 @@ namespace Steamworks.Data
 	internal struct RemoteStoragePublishedFileUpdated_t : Steamworks.ISteamCallback
 	{
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-		internal uint AppID; // m_nAppID AppId_t
+		internal AppId AppID; // m_nAppID AppId_t
 		internal ulong Unused; // m_ulUnused uint64
 		
 		#region ISteamCallback
@@ -3263,7 +3263,7 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			internal ulong Unused; // m_ulUnused uint64
 			
 			public static implicit operator RemoteStoragePublishedFileUpdated_t ( RemoteStoragePublishedFileUpdated_t.Pack4 d ) => new RemoteStoragePublishedFileUpdated_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID,Unused = d.Unused, };
@@ -3273,7 +3273,7 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			internal ulong Unused; // m_ulUnused uint64
 			
 			public static implicit operator RemoteStoragePublishedFileUpdated_t ( RemoteStoragePublishedFileUpdated_t.Pack8 d ) => new RemoteStoragePublishedFileUpdated_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID,Unused = d.Unused, };
@@ -3835,7 +3835,7 @@ namespace Steamworks.Data
 	
 	internal struct DlcInstalled_t : Steamworks.ISteamCallback
 	{
-		internal uint AppID; // m_nAppID AppId_t
+		internal AppId AppID; // m_nAppID AppId_t
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamApps + 5;
@@ -3846,7 +3846,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			
 			public static implicit operator DlcInstalled_t ( DlcInstalled_t.Pack4 d ) => new DlcInstalled_t{ AppID = d.AppID, };
 		}
@@ -3854,7 +3854,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 		public struct Pack8
 		{
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			
 			public static implicit operator DlcInstalled_t ( DlcInstalled_t.Pack8 d ) => new DlcInstalled_t{ AppID = d.AppID, };
 		}
@@ -4465,8 +4465,8 @@ namespace Steamworks.Data
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal Result Result; // m_eResult enum EResult
 		internal WorkshopFileType FileType; // m_eFileType enum EWorkshopFileType
-		internal uint CreatorAppID; // m_nCreatorAppID AppId_t
-		internal uint ConsumerAppID; // m_nConsumerAppID AppId_t
+		internal AppId CreatorAppID; // m_nCreatorAppID AppId_t
+		internal AppId ConsumerAppID; // m_nConsumerAppID AppId_t
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 129)]
 		internal string Title; // m_rgchTitle char [129]
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8000)]
@@ -4508,8 +4508,8 @@ namespace Steamworks.Data
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal Result Result; // m_eResult enum EResult
 			internal WorkshopFileType FileType; // m_eFileType enum EWorkshopFileType
-			internal uint CreatorAppID; // m_nCreatorAppID AppId_t
-			internal uint ConsumerAppID; // m_nConsumerAppID AppId_t
+			internal AppId CreatorAppID; // m_nCreatorAppID AppId_t
+			internal AppId ConsumerAppID; // m_nConsumerAppID AppId_t
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 129)]
 			internal string Title; // m_rgchTitle char [129]
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8000)]
@@ -4549,8 +4549,8 @@ namespace Steamworks.Data
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal Result Result; // m_eResult enum EResult
 			internal WorkshopFileType FileType; // m_eFileType enum EWorkshopFileType
-			internal uint CreatorAppID; // m_nCreatorAppID AppId_t
-			internal uint ConsumerAppID; // m_nConsumerAppID AppId_t
+			internal AppId CreatorAppID; // m_nCreatorAppID AppId_t
+			internal AppId ConsumerAppID; // m_nConsumerAppID AppId_t
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 129)]
 			internal string Title; // m_rgchTitle char [129]
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8000)]
@@ -4745,7 +4745,7 @@ namespace Steamworks.Data
 	
 	internal struct DownloadItemResult_t : Steamworks.ISteamCallback
 	{
-		internal uint AppID; // m_unAppID AppId_t
+		internal AppId AppID; // m_unAppID AppId_t
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal Result Result; // m_eResult enum EResult
 		
@@ -4758,7 +4758,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal uint AppID; // m_unAppID AppId_t
+			internal AppId AppID; // m_unAppID AppId_t
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal Result Result; // m_eResult enum EResult
 			
@@ -4768,7 +4768,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 		public struct Pack8
 		{
-			internal uint AppID; // m_unAppID AppId_t
+			internal AppId AppID; // m_unAppID AppId_t
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal Result Result; // m_eResult enum EResult
 			
@@ -5028,7 +5028,7 @@ namespace Steamworks.Data
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-		internal uint AppID; // m_nAppID AppId_t
+		internal AppId AppID; // m_nAppID AppId_t
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.ClientUGC + 14;
@@ -5041,7 +5041,7 @@ namespace Steamworks.Data
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			
 			public static implicit operator AddAppDependencyResult_t ( AddAppDependencyResult_t.Pack4 d ) => new AddAppDependencyResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
 		}
@@ -5051,7 +5051,7 @@ namespace Steamworks.Data
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			
 			public static implicit operator AddAppDependencyResult_t ( AddAppDependencyResult_t.Pack8 d ) => new AddAppDependencyResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
 		}
@@ -5062,7 +5062,7 @@ namespace Steamworks.Data
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-		internal uint AppID; // m_nAppID AppId_t
+		internal AppId AppID; // m_nAppID AppId_t
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.ClientUGC + 15;
@@ -5075,7 +5075,7 @@ namespace Steamworks.Data
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			
 			public static implicit operator RemoveAppDependencyResult_t ( RemoveAppDependencyResult_t.Pack4 d ) => new RemoveAppDependencyResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
 		}
@@ -5085,7 +5085,7 @@ namespace Steamworks.Data
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			
 			public static implicit operator RemoveAppDependencyResult_t ( RemoveAppDependencyResult_t.Pack8 d ) => new RemoveAppDependencyResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
 		}
@@ -5097,7 +5097,7 @@ namespace Steamworks.Data
 		internal Result Result; // m_eResult enum EResult
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 32, ArraySubType = UnmanagedType.U4)]
-		internal AppId_t[] GAppIDs; // m_rgAppIDs AppId_t [32]
+		internal AppId[] GAppIDs; // m_rgAppIDs AppId_t [32]
 		internal uint NumAppDependencies; // m_nNumAppDependencies uint32
 		internal uint TotalNumAppDependencies; // m_nTotalNumAppDependencies uint32
 		
@@ -5113,7 +5113,7 @@ namespace Steamworks.Data
 			internal Result Result; // m_eResult enum EResult
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 32, ArraySubType = UnmanagedType.U4)]
-			internal AppId_t[] GAppIDs; // m_rgAppIDs AppId_t [32]
+			internal AppId[] GAppIDs; // m_rgAppIDs AppId_t [32]
 			internal uint NumAppDependencies; // m_nNumAppDependencies uint32
 			internal uint TotalNumAppDependencies; // m_nTotalNumAppDependencies uint32
 			
@@ -5126,7 +5126,7 @@ namespace Steamworks.Data
 			internal Result Result; // m_eResult enum EResult
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 32, ArraySubType = UnmanagedType.U4)]
-			internal AppId_t[] GAppIDs; // m_rgAppIDs AppId_t [32]
+			internal AppId[] GAppIDs; // m_rgAppIDs AppId_t [32]
 			internal uint NumAppDependencies; // m_nNumAppDependencies uint32
 			internal uint TotalNumAppDependencies; // m_nTotalNumAppDependencies uint32
 			
@@ -5168,7 +5168,7 @@ namespace Steamworks.Data
 	
 	internal struct SteamAppInstalled_t : Steamworks.ISteamCallback
 	{
-		internal uint AppID; // m_nAppID AppId_t
+		internal AppId AppID; // m_nAppID AppId_t
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamAppList + 1;
@@ -5179,7 +5179,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			
 			public static implicit operator SteamAppInstalled_t ( SteamAppInstalled_t.Pack4 d ) => new SteamAppInstalled_t{ AppID = d.AppID, };
 		}
@@ -5187,7 +5187,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 		public struct Pack8
 		{
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			
 			public static implicit operator SteamAppInstalled_t ( SteamAppInstalled_t.Pack8 d ) => new SteamAppInstalled_t{ AppID = d.AppID, };
 		}
@@ -5196,7 +5196,7 @@ namespace Steamworks.Data
 	
 	internal struct SteamAppUninstalled_t : Steamworks.ISteamCallback
 	{
-		internal uint AppID; // m_nAppID AppId_t
+		internal AppId AppID; // m_nAppID AppId_t
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamAppList + 2;
@@ -5207,7 +5207,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			
 			public static implicit operator SteamAppUninstalled_t ( SteamAppUninstalled_t.Pack4 d ) => new SteamAppUninstalled_t{ AppID = d.AppID, };
 		}
@@ -5215,7 +5215,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 		public struct Pack8
 		{
-			internal uint AppID; // m_nAppID AppId_t
+			internal AppId AppID; // m_nAppID AppId_t
 			
 			public static implicit operator SteamAppUninstalled_t ( SteamAppUninstalled_t.Pack8 d ) => new SteamAppUninstalled_t{ AppID = d.AppID, };
 		}
@@ -6298,7 +6298,7 @@ namespace Steamworks.Data
 	internal struct GetVideoURLResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
-		internal uint VideoAppID; // m_unVideoAppID AppId_t
+		internal AppId VideoAppID; // m_unVideoAppID AppId_t
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 		internal string URL; // m_rgchURL char [256]
 		
@@ -6312,7 +6312,7 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal uint VideoAppID; // m_unVideoAppID AppId_t
+			internal AppId VideoAppID; // m_unVideoAppID AppId_t
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 			internal string URL; // m_rgchURL char [256]
 			
@@ -6323,7 +6323,7 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal uint VideoAppID; // m_unVideoAppID AppId_t
+			internal AppId VideoAppID; // m_unVideoAppID AppId_t
 			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
 			internal string URL; // m_rgchURL char [256]
 			
@@ -6335,7 +6335,7 @@ namespace Steamworks.Data
 	internal struct GetOPFSettingsResult_t : Steamworks.ISteamCallback
 	{
 		internal Result Result; // m_eResult enum EResult
-		internal uint VideoAppID; // m_unVideoAppID AppId_t
+		internal AppId VideoAppID; // m_unVideoAppID AppId_t
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.ClientVideo + 24;
@@ -6347,7 +6347,7 @@ namespace Steamworks.Data
 		public struct Pack4
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal uint VideoAppID; // m_unVideoAppID AppId_t
+			internal AppId VideoAppID; // m_unVideoAppID AppId_t
 			
 			public static implicit operator GetOPFSettingsResult_t ( GetOPFSettingsResult_t.Pack4 d ) => new GetOPFSettingsResult_t{ Result = d.Result,VideoAppID = d.VideoAppID, };
 		}
@@ -6356,7 +6356,7 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal Result Result; // m_eResult enum EResult
-			internal uint VideoAppID; // m_unVideoAppID AppId_t
+			internal AppId VideoAppID; // m_unVideoAppID AppId_t
 			
 			public static implicit operator GetOPFSettingsResult_t ( GetOPFSettingsResult_t.Pack8 d ) => new GetOPFSettingsResult_t{ Result = d.Result,VideoAppID = d.VideoAppID, };
 		}
@@ -6894,7 +6894,7 @@ namespace Steamworks.Data
 	
 	internal struct ItemInstalled_t : Steamworks.ISteamCallback
 	{
-		internal uint AppID; // m_unAppID AppId_t
+		internal AppId AppID; // m_unAppID AppId_t
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		
 		#region ISteamCallback
@@ -6906,7 +6906,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal uint AppID; // m_unAppID AppId_t
+			internal AppId AppID; // m_unAppID AppId_t
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
 			public static implicit operator ItemInstalled_t ( ItemInstalled_t.Pack4 d ) => new ItemInstalled_t{ AppID = d.AppID,PublishedFileId = d.PublishedFileId, };
@@ -6915,7 +6915,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 		public struct Pack8
 		{
-			internal uint AppID; // m_unAppID AppId_t
+			internal AppId AppID; // m_unAppID AppId_t
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
 			public static implicit operator ItemInstalled_t ( ItemInstalled_t.Pack8 d ) => new ItemInstalled_t{ AppID = d.AppID,PublishedFileId = d.PublishedFileId, };

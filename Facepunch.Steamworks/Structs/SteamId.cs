@@ -21,5 +21,7 @@ namespace Steamworks
 		}
 
 		public override string ToString() => Value.ToString();
+
+		public uint AccountId => (uint) (Value & 0xFFFFFFFFul);
 	}
 }

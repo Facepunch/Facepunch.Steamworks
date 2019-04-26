@@ -57,22 +57,67 @@ namespace Generator
 
 		void WriteFunctionPointerReader( CodeParser.Class clss )
 		{
+			// TODO - we'll probably have to do this PER platform
+
+			int[] locations = new int[clss.Functions.Count];
+
+			for ( int i = 0; i < clss.Functions.Count; i++ )
+			{
+				locations[i] = i * 8;
+			}
+
+			//
+			// MSVC switches the order in the vtable of overloaded functions
+			// I'm not going to try to try to work out how to order shit
+			// so lets just manually fix shit here
+			//
+			if ( clss.Name == "ISteamUserStats" )
+			{
+				Swap( clss, "GetStat1", "GetStat2", locations );
+				Swap( clss, "SetStat1", "SetStat2", locations );
+				Swap( clss, "GetUserStat1", "GetUserStat2", locations );
+				Swap( clss, "GetGlobalStat1", "GetGlobalStat2", locations );
+				Swap( clss, "GetGlobalStatHistory1", "GetGlobalStatHistory2", locations );
+			}
+
+			if ( clss.Name == "ISteamUGC" )
+			{
+				Swap( clss, "CreateQueryAllUGCRequest1", "CreateQueryAllUGCRequest2", locations );
+			}
+
+
 			StartBlock( $"public override void InitInternals()" );
 			{
 				for (int i=0; i< clss.Functions.Count; i++ )
 				{
 					var func = clss.Functions[i];
-					WriteLine( $"{func.Name}DelegatePointer = Marshal.GetDelegateForFunctionPointer<{func.Name}Delegate>( Marshal.ReadIntPtr( VTable, {i*8}) );" ); 
+					WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, {locations[i]}) );" ); 
 				}
 			}
 			EndBlock();
 		}
 
+		private void Swap( CodeParser.Class clss, string v1, string v2, int[] locations )
+		{
+			var a = clss.Functions.IndexOf( clss.Functions.Single( x => x.Name == v1 ) );
+			var b = clss.Functions.IndexOf( clss.Functions.Single( x => x.Name == v2 ) );
+
+			var s = locations[a];
+			locations[a] = locations[b];
+			locations[b] = s;
+		}
+
 		private void WriteFunction( CodeParser.Class clss, CodeParser.Class.Function func )
 		{
 			var returnType = BaseType.Parse( func.ReturnType );
+			returnType.Func = func.Name;
 
-			var args = func.Arguments.Select( x => BaseType.Parse( x.Value, x.Key ) ).ToArray();
+			var args = func.Arguments.Select( x =>
+			{
+				var bt = BaseType.Parse( x.Value, x.Key );
+				bt.Func = func.Name;
+				return bt;
+			} ).ToArray();
 			var argstr = string.Join( ", ", args.Select( x => x.AsArgument() ) );
 			var delegateargstr = string.Join( ", ", args.Select( x => x.AsArgument() ) );
 
@@ -94,8 +139,8 @@ namespace Generator
 			if ( returnType.ReturnAttribute != null)
 				WriteLine( returnType.ReturnAttribute );
 
-			WriteLine( $"private delegate {(returnType.IsReturnedWeird?"void":returnType.TypeNameFrom)} {func.Name}Delegate( IntPtr self, {delegateargstr} );".Replace( "( IntPtr self,  )", "( IntPtr self )" ) );
-			WriteLine( $"private {func.Name}Delegate {func.Name}DelegatePointer;" );
+			WriteLine( $"private delegate {(returnType.IsReturnedWeird?"void":returnType.TypeNameFrom)} F{func.Name}( IntPtr self, {delegateargstr} );".Replace( "( IntPtr self,  )", "( IntPtr self )" ) );
+			WriteLine( $"private F{func.Name} _{func.Name};" );
 			WriteLine();
 			WriteLine( $"#endregion" );
 
@@ -106,16 +151,16 @@ namespace Generator
 				if ( returnType.IsReturnedWeird )
 				{
 					WriteLine( $"var retVal = default( {returnType.TypeName} );" );
-					WriteLine( $"{func.Name}DelegatePointer( Self, ref retVal, {callargs} );".Replace( ",  );", " );" ) );
+					WriteLine( $"_{func.Name}( Self, ref retVal, {callargs} );".Replace( ",  );", " );" ) );
 					WriteLine( $"{returnType.Return( "retVal" )}" );
 				}
 				else if ( returnType.IsVoid )
 				{
-					WriteLine( $"{func.Name}DelegatePointer( Self, {callargs} );".Replace( "( Self,  )", "( Self )" ) );
+					WriteLine( $"_{func.Name}( Self, {callargs} );".Replace( "( Self,  )", "( Self )" ) );
 				}
 				else
 				{
-					var v = $"{func.Name}DelegatePointer( Self, {callargs} )".Replace( "( Self,  )", "( Self )" );
+					var v = $"_{func.Name}( Self, {callargs} )".Replace( "( Self,  )", "( Self )" );
 
 					WriteLine( returnType.Return( v ) );
 				}

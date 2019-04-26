@@ -18,9 +18,11 @@ public static class Cleanup
 		type = type.Replace( "FriendRelationship", "Relationship" );
 		type = type.Replace( "BeginAuthSessionResult", "BeginAuthResult" );
 		type = type.Replace( "PublishedFileId_t", "PublishedFileId" );
-		
-
-		
+		type = type.Replace( "PublishedFileId_t", "PublishedFileId" );
+		type = type.Replace( "AppId_t", "AppId" );
+		type = type.Replace( "LeaderboardSortMethod", "LeaderboardSort" );
+		type = type.Replace( "LeaderboardDisplayType", "LeaderboardDisplay" );
+		type = type.Replace( "UGCMatchingUGCType", "UgcType" );
 
 		return type;
 	}
@@ -28,7 +30,9 @@ public static class Cleanup
 	public static bool ShouldCreate( string type )
 	{
 		if ( type == "SteamId" ) return false;
-
+		if ( type == "LeaderboardSort" ) return false;
+		if ( type == "LeaderboardDisplay" ) return false;
+		if ( type == "AppId" ) return false;
 
 		return true;
 	}
@@ -49,6 +53,7 @@ public static class Cleanup
 		if ( name == "BroadcastUploadResult" ) return "public";
 		if ( name == "PublishedFileId" ) return "public";
 		if ( name == "Result" ) return "public";
+		if ( name == "UgcType" ) return "public";
 
 		return "internal";
 	}

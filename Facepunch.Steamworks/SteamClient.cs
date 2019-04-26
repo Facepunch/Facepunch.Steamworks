@@ -25,6 +25,8 @@ namespace Steamworks
 				throw new System.Exception( "SteamApi_Init returned false. Steam isn't running, couldn't find Steam, AppId is ureleased, Don't own AppId." );
 			}
 
+			AppId = appid;
+
 			initialized = true;
 
 			SteamApps.InstallEvents();
@@ -35,15 +37,16 @@ namespace Steamworks
 			SteamUser.InstallEvents();
 			SteamFriends.InstallEvents();
 			SteamScreenshots.InstallEvents();
+			SteamUserStats.InstallEvents();
 
-			RunCallbacks();
+			RunCallbacksAsync();
 		}
 
 		public static bool IsValid => initialized;
 
-		internal static async void RunCallbacks()
+		internal static async void RunCallbacksAsync()
 		{
-			while ( true )
+			while ( IsValid )
 			{
 				await Task.Delay( 16 );
 				try
@@ -107,5 +110,10 @@ namespace Steamworks
 		/// gets the status of the current user
 		/// </summary>
 		public static FriendState State => SteamFriends.Internal.GetPersonaState();
+
+		/// <summary>
+		/// returns the appID of the current process
+		/// </summary>
+		public static AppId AppId { get; internal set; }
 	}
 }
