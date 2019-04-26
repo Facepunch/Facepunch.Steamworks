@@ -25,6 +25,28 @@ namespace Steamworks
 		}
 
 		[TestMethod]
+		public async Task QueryWithTags()
+		{
+			var q = UgcQuery.All()
+							.WithTag( "Fun" )
+							.WithTag( "Movie" )
+							.MatchAllTags();
+
+			var result = await q.GetPageAsync( 1 );
+			Assert.IsNotNull( result );
+
+			Console.WriteLine( $"ResultCount: {result?.ResultCount}" );
+			Console.WriteLine( $"TotalCount: {result?.TotalCount}" );
+
+			foreach ( var entry in result.Value.Entries )
+			{
+				Assert.IsTrue( entry.HasTag( "Fun" ) );
+				Assert.IsTrue( entry.HasTag( "Movie" ) );
+
+			}
+		}
+
+		[TestMethod]
 		public async Task QueryAllFromFriends()
 		{
 			var q = UgcQuery.All()

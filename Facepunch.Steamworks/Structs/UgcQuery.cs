@@ -71,18 +71,27 @@ namespace Steamworks.Data
 		public UgcQuery RankedByPlaytimeSessionsTrend() { queryType = UGCQuery.RankedByPlaytimeSessionsTrend; return this; }
 		public UgcQuery RankedByLifetimePlaytimeSessions() { queryType = UGCQuery.RankedByLifetimePlaytimeSessions; return this; }
 
-		public UgcQuery ReturnOnlyIDs( bool b) { WantsReturnOnlyIDs = b; return this; }
-		public UgcQuery ReturnKeyValueTag( bool b ) { WantsReturnKeyValueTags = b; return this; }
-		public UgcQuery ReturnLongDescription( bool b ) { WantsReturnLongDescription = b; return this; }
-		public UgcQuery ReturnMetadata( bool b ) { WantsReturnMetadata = b; return this; }
-		public UgcQuery ReturnChildren( bool b ) { WantsReturnChildren = b; return this; }
-		public UgcQuery ReturnAdditionalPreviews( bool b ) { WantsReturnAdditionalPreviews = b; return this; }
-		public UgcQuery ReturnTotalOnly( bool b ) { WantsReturnTotalOnly = b; return this; }
-		public UgcQuery ReturnPlaytimeStats( bool b ) { WantsReturnPlaytimeStats = b; return this; }
+		public UgcQuery WithOnlyIDs( bool b) { WantsReturnOnlyIDs = b; return this; }
+		public UgcQuery WithKeyValueTag( bool b ) { WantsReturnKeyValueTags = b; return this; }
+		public UgcQuery WithLongDescription( bool b ) { WantsReturnLongDescription = b; return this; }
+		public UgcQuery WithMetadata( bool b ) { WantsReturnMetadata = b; return this; }
+		public UgcQuery WithChildren( bool b ) { WantsReturnChildren = b; return this; }
+		public UgcQuery WithAdditionalPreviews( bool b ) { WantsReturnAdditionalPreviews = b; return this; }
+		public UgcQuery WithTotalOnly( bool b ) { WantsReturnTotalOnly = b; return this; }
+		public UgcQuery WithPlaytimeStats( bool b ) { WantsReturnPlaytimeStats = b; return this; }
 		public UgcQuery AllowCachedResponse( int maxSecondsAge ) { maxCacheAge = maxSecondsAge; return this; }
 
 		public UgcQuery InLanguage( string lang ) { language = lang; return this; }
-		public UgcQuery MatchAnyTag( bool b ) { matchAnyTag = b; return this; }
+
+		/// <summary>
+		/// Found items must have at least one of the defined tags
+		/// </summary>
+		public UgcQuery MatchAnyTag() { matchAnyTag = true; return this; }
+
+		/// <summary>
+		/// Found items must have all defined tags
+		/// </summary>
+		public UgcQuery MatchAllTags() { matchAnyTag = false; return this; }
 
 		public UgcQuery WithTag( string tag )
 		{
@@ -127,6 +136,11 @@ namespace Steamworks.Data
 				{
 					foreach ( var tag in requiredKv )
 						SteamUGC.Internal.AddRequiredKeyValueTag( handle, tag.Key, tag.Value );
+				}
+
+				if ( matchAnyTag .HasValue )
+				{
+					SteamUGC.Internal.SetMatchAnyTag( handle, matchAnyTag.Value );
 				}
 
 				//
@@ -193,6 +207,7 @@ namespace Steamworks.Data
 
 		public string Title;
 		public string Description;
+		public string[] Tags;
 
 
 		//
@@ -211,7 +226,6 @@ namespace Steamworks.Data
 		internal bool Banned; // m_bBanned _Bool
 		internal bool AcceptedForUse; // m_bAcceptedForUse _Bool
 		internal bool TagsTruncated; // m_bTagsTruncated _Bool
-		internal string Tags; // m_rgchTags char [1025]
 		internal ulong File; // m_hFile UGCHandle_t
 		internal ulong PreviewFile; // m_hPreviewFile UGCHandle_t
 		internal string PchFileName; // m_pchFileName char [260]
@@ -232,10 +246,21 @@ namespace Steamworks.Data
 
 				Title = details.Title,
 				Description = details.Description,
+				Tags = details.Tags.Split( new[] { ',' }, StringSplitOptions.RemoveEmptyEntries )
 
 			};
 
 			return d;
+		}
+
+		/// <summary>
+		/// A case insensitive check for tag
+		/// </summary>
+		public bool HasTag( string find )
+		{
+			if ( Tags.Length == 0 ) return false;
+
+			return Tags.Contains( find, StringComparer.OrdinalIgnoreCase );
 		}
 	}
 }
