@@ -28,5 +28,10 @@ namespace Steamworks
 			}
 		}
 
+		public static async Task<bool> DeleteFileAsync( PublishedFileId fileId )
+		{
+			var r = await Internal.DeleteItem( fileId );
+			return r?.Result == Result.OK;
+		}
 	}
 }
