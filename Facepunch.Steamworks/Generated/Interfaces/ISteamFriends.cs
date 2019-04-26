@@ -445,11 +445,11 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FActivateGameOverlayToStore( IntPtr self, AppId_t nAppID, OverlayToStoreFlag eFlag );
+		private delegate void FActivateGameOverlayToStore( IntPtr self, AppId nAppID, OverlayToStoreFlag eFlag );
 		private FActivateGameOverlayToStore _ActivateGameOverlayToStore;
 		
 		#endregion
-		internal void ActivateGameOverlayToStore( AppId_t nAppID, OverlayToStoreFlag eFlag )
+		internal void ActivateGameOverlayToStore( AppId nAppID, OverlayToStoreFlag eFlag )
 		{
 			_ActivateGameOverlayToStore( Self, nAppID, eFlag );
 		}
@@ -696,11 +696,11 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate AppId_t FGetFriendCoplayGame( IntPtr self, SteamId steamIDFriend );
+		private delegate AppId FGetFriendCoplayGame( IntPtr self, SteamId steamIDFriend );
 		private FGetFriendCoplayGame _GetFriendCoplayGame;
 		
 		#endregion
-		internal AppId_t GetFriendCoplayGame( SteamId steamIDFriend )
+		internal AppId GetFriendCoplayGame( SteamId steamIDFriend )
 		{
 			return _GetFriendCoplayGame( Self, steamIDFriend );
 		}

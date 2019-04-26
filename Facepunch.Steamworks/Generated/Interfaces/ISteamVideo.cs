@@ -25,11 +25,11 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FGetVideoURL( IntPtr self, AppId_t unVideoAppID );
+		private delegate void FGetVideoURL( IntPtr self, AppId unVideoAppID );
 		private FGetVideoURL _GetVideoURL;
 		
 		#endregion
-		internal void GetVideoURL( AppId_t unVideoAppID )
+		internal void GetVideoURL( AppId unVideoAppID )
 		{
 			_GetVideoURL( Self, unVideoAppID );
 		}
@@ -48,11 +48,11 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FGetOPFSettings( IntPtr self, AppId_t unVideoAppID );
+		private delegate void FGetOPFSettings( IntPtr self, AppId unVideoAppID );
 		private FGetOPFSettings _GetOPFSettings;
 		
 		#endregion
-		internal void GetOPFSettings( AppId_t unVideoAppID )
+		internal void GetOPFSettings( AppId unVideoAppID )
 		{
 			_GetOPFSettings( Self, unVideoAppID );
 		}
@@ -60,11 +60,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetOPFStringForApp( IntPtr self, AppId_t unVideoAppID, StringBuilder pchBuffer, ref int pnBufferSize );
+		private delegate bool FGetOPFStringForApp( IntPtr self, AppId unVideoAppID, StringBuilder pchBuffer, ref int pnBufferSize );
 		private FGetOPFStringForApp _GetOPFStringForApp;
 		
 		#endregion
-		internal bool GetOPFStringForApp( AppId_t unVideoAppID, StringBuilder pchBuffer, ref int pnBufferSize )
+		internal bool GetOPFStringForApp( AppId unVideoAppID, StringBuilder pchBuffer, ref int pnBufferSize )
 		{
 			return _GetOPFStringForApp( Self, unVideoAppID, pchBuffer, ref pnBufferSize );
 		}

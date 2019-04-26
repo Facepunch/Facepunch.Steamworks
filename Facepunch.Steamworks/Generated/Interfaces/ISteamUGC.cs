@@ -97,33 +97,33 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate UGCQueryHandle_t FCreateQueryUserUGCRequest( IntPtr self, AccountID_t unAccountID, UserUGCList eListType, UgcType eMatchingUGCType, UserUGCListSortOrder eSortOrder, AppId_t nCreatorAppID, AppId_t nConsumerAppID, uint unPage );
+		private delegate UGCQueryHandle_t FCreateQueryUserUGCRequest( IntPtr self, AccountID_t unAccountID, UserUGCList eListType, UgcType eMatchingUGCType, UserUGCListSortOrder eSortOrder, AppId nCreatorAppID, AppId nConsumerAppID, uint unPage );
 		private FCreateQueryUserUGCRequest _CreateQueryUserUGCRequest;
 		
 		#endregion
-		internal UGCQueryHandle_t CreateQueryUserUGCRequest( AccountID_t unAccountID, UserUGCList eListType, UgcType eMatchingUGCType, UserUGCListSortOrder eSortOrder, AppId_t nCreatorAppID, AppId_t nConsumerAppID, uint unPage )
+		internal UGCQueryHandle_t CreateQueryUserUGCRequest( AccountID_t unAccountID, UserUGCList eListType, UgcType eMatchingUGCType, UserUGCListSortOrder eSortOrder, AppId nCreatorAppID, AppId nConsumerAppID, uint unPage )
 		{
 			return _CreateQueryUserUGCRequest( Self, unAccountID, eListType, eMatchingUGCType, eSortOrder, nCreatorAppID, nConsumerAppID, unPage );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate UGCQueryHandle_t FCreateQueryAllUGCRequest1( IntPtr self, UGCQuery eQueryType, UgcType eMatchingeMatchingUGCTypeFileType, AppId_t nCreatorAppID, AppId_t nConsumerAppID, uint unPage );
+		private delegate UGCQueryHandle_t FCreateQueryAllUGCRequest1( IntPtr self, UGCQuery eQueryType, UgcType eMatchingeMatchingUGCTypeFileType, AppId nCreatorAppID, AppId nConsumerAppID, uint unPage );
 		private FCreateQueryAllUGCRequest1 _CreateQueryAllUGCRequest1;
 		
 		#endregion
-		internal UGCQueryHandle_t CreateQueryAllUGCRequest1( UGCQuery eQueryType, UgcType eMatchingeMatchingUGCTypeFileType, AppId_t nCreatorAppID, AppId_t nConsumerAppID, uint unPage )
+		internal UGCQueryHandle_t CreateQueryAllUGCRequest1( UGCQuery eQueryType, UgcType eMatchingeMatchingUGCTypeFileType, AppId nCreatorAppID, AppId nConsumerAppID, uint unPage )
 		{
 			return _CreateQueryAllUGCRequest1( Self, eQueryType, eMatchingeMatchingUGCTypeFileType, nCreatorAppID, nConsumerAppID, unPage );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate UGCQueryHandle_t FCreateQueryAllUGCRequest2( IntPtr self, UGCQuery eQueryType, UgcType eMatchingeMatchingUGCTypeFileType, AppId_t nCreatorAppID, AppId_t nConsumerAppID, string pchCursor );
+		private delegate UGCQueryHandle_t FCreateQueryAllUGCRequest2( IntPtr self, UGCQuery eQueryType, UgcType eMatchingeMatchingUGCTypeFileType, AppId nCreatorAppID, AppId nConsumerAppID, string pchCursor );
 		private FCreateQueryAllUGCRequest2 _CreateQueryAllUGCRequest2;
 		
 		#endregion
-		internal UGCQueryHandle_t CreateQueryAllUGCRequest2( UGCQuery eQueryType, UgcType eMatchingeMatchingUGCTypeFileType, AppId_t nCreatorAppID, AppId_t nConsumerAppID, string pchCursor )
+		internal UGCQueryHandle_t CreateQueryAllUGCRequest2( UGCQuery eQueryType, UgcType eMatchingeMatchingUGCTypeFileType, AppId nCreatorAppID, AppId nConsumerAppID, string pchCursor )
 		{
 			return _CreateQueryAllUGCRequest2( Self, eQueryType, eMatchingeMatchingUGCTypeFileType, nCreatorAppID, nConsumerAppID, pchCursor );
 		}
@@ -485,22 +485,22 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamAPICall_t FCreateItem( IntPtr self, AppId_t nConsumerAppId, WorkshopFileType eFileType );
+		private delegate SteamAPICall_t FCreateItem( IntPtr self, AppId nConsumerAppId, WorkshopFileType eFileType );
 		private FCreateItem _CreateItem;
 		
 		#endregion
-		internal async Task<CreateItemResult_t?> CreateItem( AppId_t nConsumerAppId, WorkshopFileType eFileType )
+		internal async Task<CreateItemResult_t?> CreateItem( AppId nConsumerAppId, WorkshopFileType eFileType )
 		{
 			return await (new Result<CreateItemResult_t>( _CreateItem( Self, nConsumerAppId, eFileType ) )).GetResult();
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate UGCUpdateHandle_t FStartItemUpdate( IntPtr self, AppId_t nConsumerAppId, PublishedFileId nPublishedFileID );
+		private delegate UGCUpdateHandle_t FStartItemUpdate( IntPtr self, AppId nConsumerAppId, PublishedFileId nPublishedFileID );
 		private FStartItemUpdate _StartItemUpdate;
 		
 		#endregion
-		internal UGCUpdateHandle_t StartItemUpdate( AppId_t nConsumerAppId, PublishedFileId nPublishedFileID )
+		internal UGCUpdateHandle_t StartItemUpdate( AppId nConsumerAppId, PublishedFileId nPublishedFileID )
 		{
 			return _StartItemUpdate( Self, nConsumerAppId, nPublishedFileID );
 		}
@@ -743,22 +743,22 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamAPICall_t FAddItemToFavorites( IntPtr self, AppId_t nAppId, PublishedFileId nPublishedFileID );
+		private delegate SteamAPICall_t FAddItemToFavorites( IntPtr self, AppId nAppId, PublishedFileId nPublishedFileID );
 		private FAddItemToFavorites _AddItemToFavorites;
 		
 		#endregion
-		internal async Task<UserFavoriteItemsListChanged_t?> AddItemToFavorites( AppId_t nAppId, PublishedFileId nPublishedFileID )
+		internal async Task<UserFavoriteItemsListChanged_t?> AddItemToFavorites( AppId nAppId, PublishedFileId nPublishedFileID )
 		{
 			return await (new Result<UserFavoriteItemsListChanged_t>( _AddItemToFavorites( Self, nAppId, nPublishedFileID ) )).GetResult();
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamAPICall_t FRemoveItemFromFavorites( IntPtr self, AppId_t nAppId, PublishedFileId nPublishedFileID );
+		private delegate SteamAPICall_t FRemoveItemFromFavorites( IntPtr self, AppId nAppId, PublishedFileId nPublishedFileID );
 		private FRemoveItemFromFavorites _RemoveItemFromFavorites;
 		
 		#endregion
-		internal async Task<UserFavoriteItemsListChanged_t?> RemoveItemFromFavorites( AppId_t nAppId, PublishedFileId nPublishedFileID )
+		internal async Task<UserFavoriteItemsListChanged_t?> RemoveItemFromFavorites( AppId nAppId, PublishedFileId nPublishedFileID )
 		{
 			return await (new Result<UserFavoriteItemsListChanged_t>( _RemoveItemFromFavorites( Self, nAppId, nPublishedFileID ) )).GetResult();
 		}
@@ -934,22 +934,22 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamAPICall_t FAddAppDependency( IntPtr self, PublishedFileId nPublishedFileID, AppId_t nAppID );
+		private delegate SteamAPICall_t FAddAppDependency( IntPtr self, PublishedFileId nPublishedFileID, AppId nAppID );
 		private FAddAppDependency _AddAppDependency;
 		
 		#endregion
-		internal async Task<AddAppDependencyResult_t?> AddAppDependency( PublishedFileId nPublishedFileID, AppId_t nAppID )
+		internal async Task<AddAppDependencyResult_t?> AddAppDependency( PublishedFileId nPublishedFileID, AppId nAppID )
 		{
 			return await (new Result<AddAppDependencyResult_t>( _AddAppDependency( Self, nPublishedFileID, nAppID ) )).GetResult();
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamAPICall_t FRemoveAppDependency( IntPtr self, PublishedFileId nPublishedFileID, AppId_t nAppID );
+		private delegate SteamAPICall_t FRemoveAppDependency( IntPtr self, PublishedFileId nPublishedFileID, AppId nAppID );
 		private FRemoveAppDependency _RemoveAppDependency;
 		
 		#endregion
-		internal async Task<RemoveAppDependencyResult_t?> RemoveAppDependency( PublishedFileId nPublishedFileID, AppId_t nAppID )
+		internal async Task<RemoveAppDependencyResult_t?> RemoveAppDependency( PublishedFileId nPublishedFileID, AppId nAppID )
 		{
 			return await (new Result<RemoveAppDependencyResult_t>( _RemoveAppDependency( Self, nPublishedFileID, nAppID ) )).GetResult();
 		}

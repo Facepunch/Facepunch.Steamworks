@@ -66,11 +66,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FInitGameServer( IntPtr self, uint unIP, ushort usGamePort, ushort usQueryPort, uint unFlags, AppId_t nGameAppId, string pchVersionString );
+		private delegate bool FInitGameServer( IntPtr self, uint unIP, ushort usGamePort, ushort usQueryPort, uint unFlags, AppId nGameAppId, string pchVersionString );
 		private FInitGameServer _InitGameServer;
 		
 		#endregion
-		internal bool InitGameServer( uint unIP, ushort usGamePort, ushort usQueryPort, uint unFlags, AppId_t nGameAppId, string pchVersionString )
+		internal bool InitGameServer( uint unIP, ushort usGamePort, ushort usQueryPort, uint unFlags, AppId nGameAppId, string pchVersionString )
 		{
 			return _InitGameServer( Self, unIP, usGamePort, usQueryPort, unFlags, nGameAppId, pchVersionString );
 		}
@@ -427,11 +427,11 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate UserHasLicenseForAppResult FUserHasLicenseForApp( IntPtr self, SteamId steamID, AppId_t appID );
+		private delegate UserHasLicenseForAppResult FUserHasLicenseForApp( IntPtr self, SteamId steamID, AppId appID );
 		private FUserHasLicenseForApp _UserHasLicenseForApp;
 		
 		#endregion
-		internal UserHasLicenseForAppResult UserHasLicenseForApp( SteamId steamID, AppId_t appID )
+		internal UserHasLicenseForAppResult UserHasLicenseForApp( SteamId steamID, AppId appID )
 		{
 			return _UserHasLicenseForApp( Self, steamID, appID );
 		}

@@ -52,11 +52,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FBIsAppBlocked( IntPtr self, AppId_t nAppID );
+		private delegate bool FBIsAppBlocked( IntPtr self, AppId nAppID );
 		private FBIsAppBlocked _BIsAppBlocked;
 		
 		#endregion
-		internal bool BIsAppBlocked( AppId_t nAppID )
+		internal bool BIsAppBlocked( AppId nAppID )
 		{
 			return _BIsAppBlocked( Self, nAppID );
 		}
@@ -64,11 +64,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FBIsAppInBlockList( IntPtr self, AppId_t nAppID );
+		private delegate bool FBIsAppInBlockList( IntPtr self, AppId nAppID );
 		private FBIsAppInBlockList _BIsAppInBlockList;
 		
 		#endregion
-		internal bool BIsAppInBlockList( AppId_t nAppID )
+		internal bool BIsAppInBlockList( AppId nAppID )
 		{
 			return _BIsAppInBlockList( Self, nAppID );
 		}

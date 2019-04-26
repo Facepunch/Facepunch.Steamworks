@@ -242,11 +242,11 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate UserHasLicenseForAppResult FUserHasLicenseForApp( IntPtr self, SteamId steamID, AppId_t appID );
+		private delegate UserHasLicenseForAppResult FUserHasLicenseForApp( IntPtr self, SteamId steamID, AppId appID );
 		private FUserHasLicenseForApp _UserHasLicenseForApp;
 		
 		#endregion
-		internal UserHasLicenseForAppResult UserHasLicenseForApp( SteamId steamID, AppId_t appID )
+		internal UserHasLicenseForAppResult UserHasLicenseForApp( SteamId steamID, AppId appID )
 		{
 			return _UserHasLicenseForApp( Self, steamID, appID );
 		}

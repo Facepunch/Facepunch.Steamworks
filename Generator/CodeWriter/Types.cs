@@ -39,6 +39,9 @@ namespace Generator
             {
 				var typeName = Cleanup.ConvertType( o.Name );
 
+				if ( !Cleanup.ShouldCreate( typeName ) )
+					continue;
+
 				if ( SkipTypes.Contains( o.Name ) )
                     continue;
 
