@@ -89,6 +89,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UgcTest.cs" />
     <Compile Include="UgcEditor.cs" />
     <Compile Include="UserTest.cs" />
     <Compile Include="UserStatsTest.cs" />

@@ -33,5 +33,10 @@ namespace Steamworks
 			var r = await Internal.DeleteItem( fileId );
 			return r?.Result == Result.OK;
 		}
+
+		public static bool Download( PublishedFileId fileId, bool highPriority = false )
+		{
+			return Internal.DownloadItem( fileId, highPriority );
+		}
 	}
 }

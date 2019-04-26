@@ -12,7 +12,7 @@ namespace Steamworks.Ugc
 
 		public bool CachedData;
 
-		public IEnumerable<Result> Entries
+		public IEnumerable<Item> Entries
 		{
 			get
 			{
@@ -21,7 +21,7 @@ namespace Steamworks.Ugc
 				{
 					if ( SteamUGC.Internal.GetQueryUGCResult( Handle, i, ref details ) )
 					{
-						yield return Result.From( details, Handle );
+						yield return Item.From( details );
 					}
 				}
 			}
