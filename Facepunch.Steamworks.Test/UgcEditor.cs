@@ -30,10 +30,23 @@ namespace Steamworks
 
 		}
 
+		class ProgressBar : IProgress<float>
+		{
+			float Value = 0;
+
+			public void Report( float value )
+			{
+				if ( Value >= value ) return;
+
+				Value = value;
+
+				Console.WriteLine( value );
+			}
+		}
+
 		[TestMethod]
         public async Task UploadBigFile()
         {
-
 			var created = Ugc.Editor.NewCommunityFile
 							.WithTitle( "Unit Test Upload Item" )
 							.WithDescription( "This item was created by Facepunch Steamworks unit tests.\n\n" +
@@ -60,9 +73,7 @@ namespace Steamworks
 
 			try
 			{
-				var done = await created.SubmitAsync();
-
-				// TODO - Upload Progress
+				var done = await created.SubmitAsync( new ProgressBar() );
 
 				Assert.IsTrue( done.Success );
 				Console.WriteLine( "item.Id: {0}", done.FileId );

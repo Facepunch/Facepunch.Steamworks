@@ -52,10 +52,12 @@ namespace Steamworks.Ugc
 		public Editor WithContent( string folderName ) { return WithContent( new System.IO.DirectoryInfo( folderName ) ); }
 
 
-		public async Task<PublishResult> SubmitAsync()
+		public async Task<PublishResult> SubmitAsync( IProgress<float> progress = null )
 		{
 			var result = default( PublishResult );
-			
+
+			progress?.Report( 0 );
+
 			//
 			// Item Create
 			//
@@ -77,9 +79,8 @@ namespace Steamworks.Ugc
 				fileId = created.Value.PublishedFileId;
 				result.NeedsWorkshopAgreement = created.Value.UserNeedsToAcceptWorkshopLegalAgreement;
 				result.FileId = fileId;
-
-				await Task.Delay( 500 );
 			}
+
 
 			result.FileId = fileId;
 
@@ -99,7 +100,56 @@ namespace Steamworks.Ugc
 
 				result.Result = Steamworks.Result.Fail;
 
-				var updated = await SteamUGC.Internal.SubmitItemUpdate( handle, "" );
+				var updating = SteamUGC.Internal.SubmitItemUpdate( handle, "" );
+
+				while ( !updating.IsCompleted )
+				{
+					if ( progress != null )
+					{
+						ulong total = 0;
+						ulong processed = 0;
+
+						var r = SteamUGC.Internal.GetItemUpdateProgress( handle, ref processed, ref total );
+
+						switch ( r )
+						{
+							case ItemUpdateStatus.PreparingConfig:
+								{
+									progress?.Report( 0.1f );
+									break;
+								}
+
+							case ItemUpdateStatus.PreparingContent:
+								{
+									progress?.Report( 0.2f );
+									break;
+								}
+							case ItemUpdateStatus.UploadingContent:
+								{
+									var uploaded = total > 0 ? ((float)processed / (float)total) : 0.0f;
+									progress?.Report( 0.2f + uploaded * 0.7f );
+									break;
+								}
+							case ItemUpdateStatus.UploadingPreviewFile:
+								{
+									progress?.Report( 8f );
+									break;
+								}
+							case ItemUpdateStatus.CommittingChanges:
+								{
+									progress?.Report( 1 );
+									break;
+								}
+						}
+					}
+
+					await Task.Delay( 1000 / 60 );
+				}
+
+				progress?.Report( 1 );
+
+				var updated = updating.Result;
+
 				if ( !updated.HasValue ) return result;
 
 				result.Result = updated.Value.Result;
