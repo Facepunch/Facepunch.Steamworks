@@ -41,6 +41,16 @@ namespace Steamworks.Ugc
 		string Description;
 		public Editor WithDescription( string t ) { this.Description = t; return this; }
 
+		string MetaData;
+		public Editor WithMetaData( string t ) { this.MetaData = t; return this; }
+
+		string Language;
+		public Editor InLanguage( string t ) { this.Language = t; return this; }
+
+		System.IO.DirectoryInfo ContentFolder;
+		public Editor WithContent( System.IO.DirectoryInfo t ) { this.ContentFolder = t; return this; }
+		public Editor WithContent( string folderName ) { return WithContent( new System.IO.DirectoryInfo( folderName ) ); }
+
 
 		public async Task<PublishResult> SubmitAsync()
 		{
@@ -83,6 +93,9 @@ namespace Steamworks.Ugc
 
 				if ( Title != null ) SteamUGC.Internal.SetItemTitle( handle, Title );
 				if ( Description != null ) SteamUGC.Internal.SetItemDescription( handle, Description );
+				if ( MetaData != null ) SteamUGC.Internal.SetItemMetadata( handle, MetaData );
+				if ( Language != null ) SteamUGC.Internal.SetItemUpdateLanguage( handle, Language );
+				if ( ContentFolder != null ) SteamUGC.Internal.SetItemContent( handle, ContentFolder.FullName );
 
 				result.Result = Steamworks.Result.Fail;
 
