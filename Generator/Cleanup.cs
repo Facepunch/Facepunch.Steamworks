@@ -21,6 +21,7 @@ public static class Cleanup
 		type = type.Replace( "PublishedFileId_t", "PublishedFileId" );
 		type = type.Replace( "LeaderboardSortMethod", "LeaderboardSort" );
 		type = type.Replace( "LeaderboardDisplayType", "LeaderboardDisplay" );
+		type = type.Replace( "UGCMatchingUGCType", "UgcType" );
 
 		return type;
 	}
@@ -51,6 +52,7 @@ public static class Cleanup
 		if ( name == "BroadcastUploadResult" ) return "public";
 		if ( name == "PublishedFileId" ) return "public";
 		if ( name == "Result" ) return "public";
+		if ( name == "UgcType" ) return "public";
 
 		return "internal";
 	}

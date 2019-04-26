@@ -1774,7 +1774,7 @@ namespace Steamworks
 	//
 	// EUGCMatchingUGCType
 	//
-	internal enum UGCMatchingUGCType : int
+	public enum UgcType : int
 	{
 		Items = 0,
 		Items_Mtx = 1,

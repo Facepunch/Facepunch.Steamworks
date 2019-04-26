@@ -3,58 +3,69 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Steamworks.Data;
-
-using QueryType = Steamworks.Ugc.Query;
+using QueryType = Steamworks.Ugc.UserQuery;
 
 namespace Steamworks.Ugc
 {
-	public struct Query
+	public struct UserQuery
 	{
+		public UserQuery( UgcType type, SteamId steamid = default ) : this()
+		{
+			if ( steamid == 0 )
+				steamid = SteamClient.SteamId;
+
+			this.steamid = steamid;
+			this.matchingType = type;
+		}
+
+		SteamId steamid;
+
+		UserUGCList userType;
+		UserUGCListSortOrder userSort;
 		UgcType matchingType;
-		UGCQuery queryType;
+
 		AppId consumerApp;
 		AppId creatorApp;
 
-		public Query( UgcType type ) : this()
+		public static UserQuery All => new UserQuery( UgcType.All, 0 );
+		public static UserQuery Items => new UserQuery( UgcType.Items, 0 );
+		/*
+		public static UserQuery ItemsMtx( SteamId steamid = default ) => new UserQuery( steamid ) { matchingType = UGCMatchingUGCType.Items_Mtx };
+		public static UserQuery ItemsReadyToUse( SteamId steamid = default ) => new UserQuery( steamid ) { matchingType = UGCMatchingUGCType.Items_ReadyToUse };
+		public static UserQuery Collections( SteamId steamid = default ) => new UserQuery( steamid ) { matchingType = UGCMatchingUGCType.Collections };
+		public static UserQuery Artwork( SteamId steamid = default ) => new UserQuery( steamid ) { matchingType = UGCMatchingUGCType.Artwork };
+		public static UserQuery Videos( SteamId steamid = default ) => new UserQuery( steamid ) { matchingType = UGCMatchingUGCType.Videos };
+		public static UserQuery Screenshots( SteamId steamid = default ) => new UserQuery( steamid ) { matchingType = UGCMatchingUGCType.Screenshots };
+		public static UserQuery AllGuides( SteamId steamid = default ) => new UserQuery( steamid ) { matchingType = UGCMatchingUGCType.AllGuides };
+		public static UserQuery WebGuides( SteamId steamid = default ) => new UserQuery( steamid ) { matchingType = UGCMatchingUGCType.WebGuides };
+		public static UserQuery IntegratedGuides( SteamId steamid = default ) => new UserQuery( steamid ) { matchingType = UGCMatchingUGCType.IntegratedGuides };
+		public static UserQuery UsableInGame( SteamId steamid = default ) => new UserQuery( steamid ) { matchingType = UGCMatchingUGCType.UsableInGame };
+		public static UserQuery ControllerBindings( SteamId steamid = default ) => new UserQuery( steamid ) { matchingType = UGCMatchingUGCType.ControllerBindings };
+		public static UserQuery GameManagedItems( SteamId steamid = default ) => new UserQuery( steamid ) { matchingType = UGCMatchingUGCType.GameManagedItems };
+		*/
+
+		public UserQuery SortByCreationDate() { userSort = UserUGCListSortOrder.CreationOrderDesc; return this; }
+		public UserQuery SortByCreationDateAsc() { userSort = UserUGCListSortOrder.CreationOrderAsc; return this; }
+		public UserQuery SortByTitleAsc() { userSort = UserUGCListSortOrder.TitleAsc; return this; }
+		public UserQuery SortByUpdateDate() { userSort = UserUGCListSortOrder.LastUpdatedDesc; return this; }
+		public UserQuery SortBySubscriptionDate() { userSort = UserUGCListSortOrder.SubscriptionDateDesc; return this; }
+		public UserQuery SortByVoteScore() { userSort = UserUGCListSortOrder.VoteScoreDesc; return this; }
+		public UserQuery SortByModeration() { userSort = UserUGCListSortOrder.ForModeration; return this; }
+
+
+		public UserQuery GetPublished() { userType = UserUGCList.Published; return this; }
+
+		public UserQuery FromUser( SteamId steamid )
 		{
-			matchingType = type;
+			this.steamid = steamid;
+			return this;
 		}
 
-		public static Query All => new Query( UgcType.All );
-		public static Query Items => new Query( UgcType.Items );
-		public static Query ItemsMtx => new Query( UgcType.Items_Mtx );
-		public static Query ItemsReadyToUse => new Query( UgcType.Items_ReadyToUse );
-		public static Query Collections => new Query( UgcType.Collections );
-		public static Query Artwork => new Query( UgcType.Artwork );
-		public static Query Videos => new Query( UgcType.Videos );
-		public static Query Screenshots => new Query( UgcType.Screenshots );
-		public static Query AllGuides => new Query( UgcType.AllGuides );
-		public static Query WebGuides => new Query( UgcType.WebGuides );
-		public static Query IntegratedGuides => new Query( UgcType.IntegratedGuides );
-		public static Query UsableInGame => new Query( UgcType.UsableInGame );
-		public static Query ControllerBindings => new Query( UgcType.ControllerBindings );
-		public static Query GameManagedItems => new Query( UgcType.GameManagedItems );
-
-
-		public Query RankedByVote() { queryType = UGCQuery.RankedByVote; return this; }
-		public Query RankedByPublicationDate() { queryType = UGCQuery.RankedByPublicationDate; return this; }
-		public Query RankedByAcceptanceDate() { queryType = UGCQuery.AcceptedForGameRankedByAcceptanceDate; return this; }
-		public Query RankedByTrend() { queryType = UGCQuery.RankedByTrend; return this; }
-		public Query FavoritedByFriends() { queryType = UGCQuery.FavoritedByFriendsRankedByPublicationDate; return this; }
-		public Query CreatedByFriends() { queryType = UGCQuery.CreatedByFriendsRankedByPublicationDate; return this; }
-		public Query RankedByNumTimesReported() { queryType = UGCQuery.RankedByNumTimesReported; return this; }
-		public Query CreatedByFollowedUsers() { queryType = UGCQuery.CreatedByFollowedUsersRankedByPublicationDate; return this; }
-		public Query NotYetRated() { queryType = UGCQuery.NotYetRated; return this; }
-		public Query RankedByTotalVotesAsc() { queryType = UGCQuery.RankedByTotalVotesAsc; return this; }
-		public Query RankedByVotesUp() { queryType = UGCQuery.RankedByVotesUp; return this; }
-		public Query RankedByTextSearch() { queryType = UGCQuery.RankedByTextSearch; return this; }
-		public Query RankedByTotalUniqueSubscriptions() { queryType = UGCQuery.RankedByTotalUniqueSubscriptions; return this; }
-		public Query RankedByPlaytimeTrend() { queryType = UGCQuery.RankedByPlaytimeTrend; return this; }
-		public Query RankedByTotalPlaytime() { queryType = UGCQuery.RankedByTotalPlaytime; return this; }
-		public Query RankedByAveragePlaytimeTrend() { queryType = UGCQuery.RankedByAveragePlaytimeTrend; return this; }
-		public Query RankedByLifetimeAveragePlaytime() { queryType = UGCQuery.RankedByLifetimeAveragePlaytime; return this; }
-		public Query RankedByPlaytimeSessionsTrend() { queryType = UGCQuery.RankedByPlaytimeSessionsTrend; return this; }
-		public Query RankedByLifetimePlaytimeSessions() { queryType = UGCQuery.RankedByLifetimePlaytimeSessions; return this; }
+		public UserQuery FromSelf()
+		{
+			this.steamid = SteamClient.SteamId;
+			return this;
+		}
 
 
 		public async Task<ResultPage?> GetPageAsync( int page )
@@ -65,7 +76,8 @@ namespace Steamworks.Ugc
 			if ( creatorApp == 0 ) creatorApp = consumerApp;
 
 			UGCQueryHandle_t handle;
-			handle = SteamUGC.Internal.CreateQueryAllUGCRequest1( queryType, matchingType, creatorApp.Value, consumerApp.Value, (uint)page );
+
+			handle = SteamUGC.Internal.CreateQueryUserUGCRequest( steamid.AccountId, userType, matchingType, userSort, creatorApp.Value, consumerApp.Value, (uint)page );
 
 			ApplyConstraints( handle );
 
@@ -85,9 +97,8 @@ namespace Steamworks.Ugc
 			};
 		}
 
-
 		#region SharedConstraints
-		public QueryType WithType( UgcType type ){ matchingType = type; return this; }
+		public QueryType WithType( UgcType type ) { matchingType = type; return this; }
 		bool? WantsReturnOnlyIDs;
 		public QueryType WithOnlyIDs( bool b ) { WantsReturnOnlyIDs = b; return this; }
 		bool? WantsReturnKeyValueTags;
