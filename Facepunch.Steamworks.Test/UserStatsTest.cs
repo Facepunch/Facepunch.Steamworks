@@ -10,7 +10,6 @@ namespace Steamworks
 {
     [TestClass]
     [DeploymentItem( "steam_api64.dll" )]
-    [DeploymentItem( "steam_appid.txt" )]
     public class UserStatsTest
 	{
 		[TestMethod]

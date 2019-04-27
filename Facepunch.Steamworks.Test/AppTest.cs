@@ -17,19 +17,19 @@ namespace Steamworks
 			//
 			// Init Client
 			//
-			Steamworks.SteamClient.Init( 4000 );
+			Steamworks.SteamClient.Init( 252490 );
 
 			//
 			// Init Server
 			//
-			var serverInit = new SteamServerInit( "gmod", "Garry Mode" )
+			var serverInit = new SteamServerInit( "rust", "Rusty Mode" )
 			{
 				GamePort = 28015,
 				Secure = true,
 				QueryPort = 28016
 			};
 
-			Steamworks.SteamServer.Init( 4000, serverInit );
+			Steamworks.SteamServer.Init( 252490, serverInit );
 
 			SteamServer.LogOnAnonymous();
 
@@ -53,7 +53,7 @@ namespace Steamworks
 		[TestMethod]
 		public void AppInstallDir()
 		{
-			var str = SteamApps.AppInstallDir( 4000 );
+			var str = SteamApps.AppInstallDir();
 			Assert.IsNotNull( str );
 			Assert.IsTrue( str.Length > 3 );
 
@@ -73,7 +73,7 @@ namespace Steamworks
 		[TestMethod]
 		public void InstalledDepots()
 		{
-			var depots = SteamApps.InstalledDepots( 4000 ).ToArray();
+			var depots = SteamApps.InstalledDepots().ToArray();
 
 			Assert.IsNotNull( depots );
 			Assert.IsTrue( depots.Length > 0 );
