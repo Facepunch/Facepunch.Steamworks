@@ -387,13 +387,13 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetItemsWithPrices( IntPtr self, [In,Out] SteamItemDef_t[]  pArrayItemDefs, ref ulong pCurrentPrices, ref ulong pBasePrices, uint unArrayLength );
+		private delegate bool FGetItemsWithPrices( IntPtr self, [In,Out] SteamItemDef_t[]  pArrayItemDefs, [In,Out] ulong[]  pCurrentPrices, [In,Out] ulong[]  pBasePrices, uint unArrayLength );
 		private FGetItemsWithPrices _GetItemsWithPrices;
 		
 		#endregion
-		internal bool GetItemsWithPrices( [In,Out] SteamItemDef_t[]  pArrayItemDefs, ref ulong pCurrentPrices, ref ulong pBasePrices, uint unArrayLength )
+		internal bool GetItemsWithPrices( [In,Out] SteamItemDef_t[]  pArrayItemDefs, [In,Out] ulong[]  pCurrentPrices, [In,Out] ulong[]  pBasePrices, uint unArrayLength )
 		{
-			return _GetItemsWithPrices( Self, pArrayItemDefs, ref pCurrentPrices, ref pBasePrices, unArrayLength );
+			return _GetItemsWithPrices( Self, pArrayItemDefs, pCurrentPrices, pBasePrices, unArrayLength );
 		}
 		
 		#region FunctionMeta

@@ -66,6 +66,8 @@ internal class BaseType
 			if ( VarName == "prgUsers" ) return true;
 			if ( VarName == "punArrayQuantity" ) return true;
 			if ( VarName == "pArrayItemDefs" ) return true;
+			if ( VarName == "pBasePrices" ) return true;
+			if ( VarName == "pCurrentPrices" ) return true;
 			if ( VarName == "pDetails" && Func == "GetDownloadedLeaderboardEntry" ) return true;
 			if ( VarName == "pData" && NativeType.EndsWith( "*" ) && Func.StartsWith( "GetGlobalStatHistory" ) ) return true;
 			if ( NativeType.EndsWith( "**" ) ) return true;

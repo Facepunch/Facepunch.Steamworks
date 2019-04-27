@@ -13,9 +13,30 @@ namespace Steamworks
     public class InventoryTest
 	{
 		[TestMethod]
-        public async Task GetDefinitions()
+        public async Task GetItemsWithPricesAsync()
         {
+			var items = await SteamInventory.GetItemsWithPricesAsync();
 
+			foreach ( var item in items )
+			{
+				Console.WriteLine( $"[{item.LocalPrice}] {item.Name}" );
+			}
+		}
+
+		[TestMethod]
+		public async Task IutemDefs()
+		{
+			var items = await SteamInventory.GetItemsWithPricesAsync();
+
+			foreach ( var item in items )
+			{
+				Console.WriteLine( $"{item.Id}" );
+				foreach ( var prop in item.Properties )
+				{
+					Console.WriteLine( $"	{prop.Key}: {prop.Value}" );
+				}
+				Console.WriteLine( $"" );
+			}
 		}
 	}
 
