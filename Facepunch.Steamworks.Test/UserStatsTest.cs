@@ -162,32 +162,30 @@ namespace Steamworks
 		[TestMethod]
 		public void GetStatInt()
 		{
-			var startups = new Stat( "GMA_X_STARTUPS_STAT" );
-			Console.WriteLine( $"{startups.Name} {startups.GetInt()} times" );
-			Console.WriteLine( $"{startups.Name} {startups.GetFloat()} times" );
+			var deaths = new Stat( "deaths" );
+			Console.WriteLine( $"{deaths.Name} {deaths.GetInt()} times" );
+			Console.WriteLine( $"{deaths.Name} {deaths.GetFloat()} times" );
 
-			Assert.AreNotEqual( 0, startups.GetInt() );
+			Assert.AreNotEqual( 0, deaths.GetInt() );
 		}
 
 		[TestMethod]
 		public async Task GetStatGlobalInt()
 		{
-			var startups = new Stat( "GMA_X_STARTUPS_STAT" );
-			await startups.GetGlobalIntDays( 5 );
+			var deaths = new Stat( "deaths" );
+			await deaths.GetGlobalIntDays( 5 );
 
-			await Task.Delay( 3000 );
-
-			var totalStartups = startups.GetGlobalInt();
+			var totalStartups = deaths.GetGlobalInt();
 			Assert.AreNotEqual( 0, totalStartups );
-			Console.WriteLine( $"Garry's Mod has been started {totalStartups} times" );
+			Console.WriteLine( $"Rust has had {totalStartups} deaths" );
 		}
 
 		[TestMethod]
 		public async Task GetStatGlobalHistoryInt()
 		{
-			var startups = new Stat( "GMA_X_STARTUPS_STAT" );
+			var deaths = new Stat( "deaths" );
 
-			var history = await startups.GetGlobalIntDays( 60 );
+			var history = await deaths.GetGlobalIntDays( 10 );
 			Assert.AreNotEqual( 0, history.Length );
 
 			for ( int i=0; i< history.Length; i++ )
