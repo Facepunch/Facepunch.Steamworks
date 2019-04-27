@@ -138,6 +138,9 @@ namespace Generator
 			str = Regex.Replace( str, @"STEAM_ARRAY_COUNT_D\((.+?)\)", "" );
 			str = Regex.Replace( str, @"STEAM_OUT_STRING_COUNT\((.+?)\)", "" );
 			str = Regex.Replace( str, @"STEAM_OUT_STRING\(\) ", "" );
+			str = Regex.Replace( str, @"STEAM_OUT_BUFFER_COUNT\((.+?)\) ", "" );
+			str = Regex.Replace( str, @"STEAM_BUFFER_COUNT\((.+?)\) ", "" );
+			str = Regex.Replace( str, @"STEAM_DESC\((.+?)\) ", "" );
 
 			
 
