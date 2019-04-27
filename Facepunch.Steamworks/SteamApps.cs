@@ -165,8 +165,11 @@ namespace Steamworks
 		/// <summary>
 		/// Gets a list of all installed depots for a given App ID in mount order
 		/// </summary>
-		public static IEnumerable<DepotId> InstalledDepots( AppId appid )
+		public static IEnumerable<DepotId> InstalledDepots( AppId appid = default )
 		{
+			if ( appid == 0 )
+				appid = SteamClient.AppId;
+
 			var depots = new DepotId_t[32];
 			uint count = 0;
 
@@ -182,8 +185,11 @@ namespace Steamworks
 		/// Gets the install folder for a specific AppID.
 		/// This works even if the application is not installed, based on where the game would be installed with the default Steam library location.
 		/// </summary>
-		public static string AppInstallDir( AppId appid )
+		public static string AppInstallDir( AppId appid = default )
 		{
+			if ( appid == 0 )
+				appid = SteamClient.AppId;
+
 			var sb = Helpers.TakeStringBuilder();
 
 			if ( Internal.GetAppInstallDir( appid.Value, sb, (uint) sb.Capacity ) == 0 )
