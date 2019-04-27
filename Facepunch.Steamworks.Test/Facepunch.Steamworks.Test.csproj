@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FriendsTest.cs" />
+    <Compile Include="RemoteStorageTest.cs" />
     <Compile Include="UgcTest.cs" />
     <Compile Include="UgcEditor.cs" />
     <Compile Include="UserTest.cs" />
