@@ -13,29 +13,36 @@ namespace Steamworks
     public class InventoryTest
 	{
 		[TestMethod]
-        public async Task GetItemsWithPricesAsync()
-        {
-			var items = await SteamInventory.GetItemsWithPricesAsync();
+		public async Task LoadItemDefinitionsAsync()
+		{
+			var result = await SteamInventory.WaitForDefinitions( 5 );
+			Assert.IsTrue( result );
 
-			foreach ( var item in items )
+			result = await SteamInventory.WaitForDefinitions( 5 );
+			Assert.IsTrue( result );
+		}
+
+		[TestMethod]
+        public async Task GetDefinitions()
+        {
+			await SteamInventory.WaitForDefinitions();
+
+			Assert.IsNotNull( SteamInventory.Definitions );
+
+			foreach ( var def in SteamInventory.Definitions )
 			{
-				Console.WriteLine( $"[{item.LocalPrice}] {item.Name}" );
+				Console.WriteLine( $"[{def.Id:0000000000}] {def.Name} [{def.Type}]" );
 			}
 		}
 
 		[TestMethod]
-		public async Task IutemDefs()
+		public async Task GetDefinitionsWithPrices()
 		{
-			var items = await SteamInventory.GetItemsWithPricesAsync();
+			var defs = await SteamInventory.GetDefinitionsWithPricesAsync();
 
-			foreach ( var item in items )
+			foreach ( var def in defs )
 			{
-				Console.WriteLine( $"{item.Id}" );
-				foreach ( var prop in item.Properties )
-				{
-					Console.WriteLine( $"	{prop.Key}: {prop.Value}" );
-				}
-				Console.WriteLine( $"" );
+				Console.WriteLine( $"[{def.Id:0000000000}] {def.Name} [{def.LocalPriceFormatted}]" );
 			}
 		}
 	}

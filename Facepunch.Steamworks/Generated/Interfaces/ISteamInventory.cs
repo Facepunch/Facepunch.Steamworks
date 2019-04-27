@@ -307,13 +307,13 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetItemDefinitionIDs( IntPtr self, ref SteamItemDef_t pItemDefIDs, ref uint punItemDefIDsArraySize );
+		private delegate bool FGetItemDefinitionIDs( IntPtr self, [In,Out] SteamItemDef_t[]  pItemDefIDs, ref uint punItemDefIDsArraySize );
 		private FGetItemDefinitionIDs _GetItemDefinitionIDs;
 		
 		#endregion
-		internal bool GetItemDefinitionIDs( ref SteamItemDef_t pItemDefIDs, ref uint punItemDefIDsArraySize )
+		internal bool GetItemDefinitionIDs( [In,Out] SteamItemDef_t[]  pItemDefIDs, ref uint punItemDefIDsArraySize )
 		{
-			return _GetItemDefinitionIDs( Self, ref pItemDefIDs, ref punItemDefIDsArraySize );
+			return _GetItemDefinitionIDs( Self, pItemDefIDs, ref punItemDefIDsArraySize );
 		}
 		
 		#region FunctionMeta
@@ -342,13 +342,13 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetEligiblePromoItemDefinitionIDs( IntPtr self, SteamId steamID, ref SteamItemDef_t pItemDefIDs, ref uint punItemDefIDsArraySize );
+		private delegate bool FGetEligiblePromoItemDefinitionIDs( IntPtr self, SteamId steamID, [In,Out] SteamItemDef_t[]  pItemDefIDs, ref uint punItemDefIDsArraySize );
 		private FGetEligiblePromoItemDefinitionIDs _GetEligiblePromoItemDefinitionIDs;
 		
 		#endregion
-		internal bool GetEligiblePromoItemDefinitionIDs( SteamId steamID, ref SteamItemDef_t pItemDefIDs, ref uint punItemDefIDsArraySize )
+		internal bool GetEligiblePromoItemDefinitionIDs( SteamId steamID, [In,Out] SteamItemDef_t[]  pItemDefIDs, ref uint punItemDefIDsArraySize )
 		{
-			return _GetEligiblePromoItemDefinitionIDs( Self, steamID, ref pItemDefIDs, ref punItemDefIDsArraySize );
+			return _GetEligiblePromoItemDefinitionIDs( Self, steamID, pItemDefIDs, ref punItemDefIDsArraySize );
 		}
 		
 		#region FunctionMeta
