@@ -38,6 +38,7 @@ namespace Steamworks
 			SteamFriends.InstallEvents();
 			SteamScreenshots.InstallEvents();
 			SteamUserStats.InstallEvents();
+			SteamInventory.InstallEvents();
 
 			RunCallbacksAsync();
 		}
