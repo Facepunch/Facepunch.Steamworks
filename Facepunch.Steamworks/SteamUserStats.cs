@@ -88,7 +88,8 @@ namespace Steamworks
 
 			return result.Value.CPlayers;
 		}
-		
+
+		/// <summary>
 		/// Send the changed stats and achievements data to the server for permanent storage.
 		/// If this fails then nothing is sent to the server. It's advisable to keep trying until the call is successful.
 		/// This call can be rate limited. Call frequency should be on the order of minutes, rather than seconds.You should only be calling this during major state changes such as the end of a round, the map changing, or the user leaving a server. This call is required to display the achievement unlock notification dialog though, so if you have called SetAchievement then it's advisable to call this soon after that.

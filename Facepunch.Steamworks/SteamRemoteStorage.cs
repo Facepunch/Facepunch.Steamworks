@@ -123,7 +123,7 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// returns true if IsCloudEnabledForAccount && IsCloudEnabledForApp
+		/// returns true if IsCloudEnabledForAccount AND IsCloudEnabledForApp
 		/// </summary>
 		public static bool IsCloudEnabled => IsCloudEnabledForAccount && IsCloudEnabledForApp;
 
