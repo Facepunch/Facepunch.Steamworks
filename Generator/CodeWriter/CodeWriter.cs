@@ -69,6 +69,7 @@ namespace Generator
 				GenerateVTableClass( "ISteamScreenshots", $"{folder}../Generated/Interfaces/ISteamScreenshots.cs" );
 				GenerateVTableClass( "ISteamUserStats", $"{folder}../Generated/Interfaces/ISteamUserStats.cs" );
 				GenerateVTableClass( "ISteamUGC", $"{folder}../Generated/Interfaces/ISteamUGC.cs" );
+				GenerateVTableClass( "ISteamRemoteStorage", $"{folder}../Generated/Interfaces/ISteamRemoteStorage.cs" );
 			}
 		}
 
