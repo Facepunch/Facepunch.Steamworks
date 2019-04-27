@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 
 public static class Cleanup
-{ 
+{
 	public static string ConvertType( string type )
 	{
 		type = type.Replace( "CSteamID", "SteamId" );
@@ -56,5 +56,18 @@ public static class Cleanup
 		if ( name == "UgcType" ) return "public";
 
 		return "internal";
+	}
+
+	internal static bool IsDeprecated( string name )
+	{
+		if ( name.StartsWith( "ISteamRemoteStorage." ) )
+		{
+			if ( name.Contains( "Publish" ) ) return true;
+			if ( name.Contains( "ResetFileRequestState" ) ) return true;
+			if ( name.Contains( "EnumerateUserSubscribedFiles" ) ) return true;
+			if ( name.Contains( "EnumerateUserSharedWorkshopFile" ) ) return true;
+		}
+
+		return false;
 	}
 }

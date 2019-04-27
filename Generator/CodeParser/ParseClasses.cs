@@ -35,7 +35,7 @@ namespace Generator
 
 			var lines = inner.Split( new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries );
 
-			var func = new Regex( @"virtual (.+[ |\*])([a-zA-Z]+?)\((.+?)?\) = 0 ?;" );
+			var func = new Regex( @"virtual (.+[\t |\*])([a-zA-Z]+?)\((.+?)?\) = 0 ?;" );
 
 			var c = new Class();
 			c.Name = classname;
@@ -60,7 +60,7 @@ namespace Generator
 				if ( line.Trim().StartsWith( "public:" ) ) continue;
 				if ( line.Trim().StartsWith( "//" ) ) continue;
 
-				if ( line.Trim().StartsWith( "#ifdef _PS3" ) )
+				if ( line.Trim().StartsWith( "#ifdef _PS3" ) || line.Trim().StartsWith( "#if defined(_PS3)" ) )
 				{
 					needsEndIf = true;
 					continue;
@@ -137,6 +137,7 @@ namespace Generator
 			str = Regex.Replace( str, @"STEAM_OUT_ARRAY_COUNT\((.+?)\)", "" );
 			str = Regex.Replace( str, @"STEAM_ARRAY_COUNT_D\((.+?)\)", "" );
 			str = Regex.Replace( str, @"STEAM_OUT_STRING_COUNT\((.+?)\)", "" );
+			str = Regex.Replace( str, @"STEAM_OUT_STRING\(\) ", "" );
 
 			
 

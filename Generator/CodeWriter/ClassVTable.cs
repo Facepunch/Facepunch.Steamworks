@@ -43,6 +43,10 @@ namespace Generator
 
 					foreach ( var func in clss.Functions )
 					{
+						if ( Cleanup.IsDeprecated( $"{clss.Name}.{func.Name}" ) )
+							continue;
+
+
 						WriteFunction( clss, func );
 						WriteLine();
 					}
@@ -91,7 +95,15 @@ namespace Generator
 				for (int i=0; i< clss.Functions.Count; i++ )
 				{
 					var func = clss.Functions[i];
-					WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, {locations[i]}) );" ); 
+
+					if ( Cleanup.IsDeprecated( $"{clss.Name}.{func.Name}" ) )
+					{
+						WriteLine( $" // {func.Name} is deprecated - {locations[i]}" );
+					}
+					else
+					{
+						WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, {locations[i]}) );" );
+					}
 				}
 			}
 			EndBlock();
@@ -109,6 +121,7 @@ namespace Generator
 
 		private void WriteFunction( CodeParser.Class clss, CodeParser.Class.Function func )
 		{
+
 			var returnType = BaseType.Parse( func.ReturnType );
 			returnType.Func = func.Name;
 
