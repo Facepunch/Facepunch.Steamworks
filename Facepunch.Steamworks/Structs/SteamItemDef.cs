@@ -8,6 +8,11 @@ namespace Steamworks
 	{
 		internal SteamItemDef_t _id;
 
+		public SteamItemDef( int defId )
+		{
+			_id = defId;
+		}
+
 		public int Id => _id.Value;
 
 		/// <summary>
@@ -146,6 +151,8 @@ namespace Steamworks
 			}
 		}
 
+		public string LocalPriceFormatted => Utility.FormatPrice( SteamInventory.Currency, LocalPrice / 100.0 );
+
 		/// <summary>
 		/// If the price has been discounted, LocalPrice will differ from LocalBasePrice
 		/// (assumed, this isn't documented)
@@ -164,7 +171,6 @@ namespace Steamworks
 			}
 		}
 
-		public int CurrentPrice;
-		public int BasePrice;
+		public string LocalBasePriceFormatted => Utility.FormatPrice( SteamInventory.Currency, LocalPrice / 100.0 );
 	}
 }

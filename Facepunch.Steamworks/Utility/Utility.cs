@@ -27,12 +27,7 @@ namespace Steamworks
             return new IPAddress( Swap( ipAddress ) );
         }
 
-        internal static string FormatPrice(string currency, ulong price)
-        {
-            return FormatPrice(currency, price / 100.0);
-        }
-
-        public static string FormatPrice(string currency, double price)
+		public static string FormatPrice(string currency, double price)
         {
             var decimaled = price.ToString("0.00");
 

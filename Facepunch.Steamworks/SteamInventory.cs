@@ -37,16 +37,16 @@ namespace Steamworks
 		public static event Action OnDefinitionsUpdated;
 
 		public static async Task<SteamItemDef[]> GetItemsWithPricesAsync()
+		public static string Currency { get; internal set; }
 		{
 			var priceRequest = await Internal.RequestPrices();
 			if ( !priceRequest.HasValue || priceRequest.Value.Result != Result.OK )
 				return null;
 
-			Console.WriteLine( $"Currency: {priceRequest?.Currency}" );
+			Currency = priceRequest?.Currency;
 
 			var num = Internal.GetNumItemsWithPrices();
 
-			Console.WriteLine( $"num: {num}" );
 			if ( num <= 0 )
 				return null;
 
