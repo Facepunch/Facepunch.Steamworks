@@ -4,7 +4,7 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	public struct InventoryDef
+	public class InventoryDef
 	{
 		internal InventoryDefId _id;
 

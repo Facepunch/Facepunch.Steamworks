@@ -40,6 +40,17 @@ namespace Steamworks
 		internal static void DefinitionsUpdated()
 		{
 			Definitions = GetDefinitions();
+
+			if ( Definitions != null )
+			{
+				_defMap = new Dictionary<int, InventoryDef>();
+
+				foreach ( var d in Definitions )
+				{
+					_defMap[d.Id] = d;
+				}
+			}
+
 			defUpdateCount++;
 
 			OnDefinitionsUpdated?.Invoke();
@@ -76,6 +87,14 @@ namespace Steamworks
 			return true;
 		}
 
+		internal static InventoryDef FindDefinition( InventoryDefId defId )
+		{
+			if ( _defMap.TryGetValue( defId, out var val  ) )
+				return val;
+
+			return null;
+		}
+
 		public static string Currency { get; internal set; }
 
 		public static async Task<InventoryDef[]> GetDefinitionsWithPricesAsync()
@@ -103,6 +122,7 @@ namespace Steamworks
 		}
 
 		public static InventoryDef[] Definitions { get; internal set; }
+		public static Dictionary<int, InventoryDef> _defMap;
 
 		internal static InventoryDef[] GetDefinitions()
 		{

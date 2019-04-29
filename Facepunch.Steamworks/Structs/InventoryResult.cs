@@ -21,7 +21,7 @@ namespace Steamworks
 			while ( _result == Result.Pending )
 			{
 				_result = SteamInventory.Internal.GetResultStatus( _id );
-				Task.Delay( 10 );
+				await Task.Delay( 10 );
 			}
 
 			return _result == Result.OK || _result == Result.Expired;

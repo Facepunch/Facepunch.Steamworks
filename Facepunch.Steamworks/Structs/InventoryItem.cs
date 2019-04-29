@@ -18,6 +18,8 @@ namespace Steamworks
 
 		public int Quantity => _quantity;
 
+		public InventoryDef Def => SteamInventory.FindDefinition( DefId );
+
 
 		/// <summary>
 		/// Only available if the result set was created with the getproperties
