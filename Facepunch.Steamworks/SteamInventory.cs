@@ -167,5 +167,26 @@ namespace Steamworks
 			return await InventoryResult.GetAsync( sresult );
 		}
 
+		/// <summary>
+		/// Crafting! Uses the passed items to buy the target item.
+		/// You need to have set up the appropriate exchange rules in your item
+		/// definitions. This assumes all the items passed in aren't stacked.
+		/// </summary>
+		static async Task<InventoryResult?> CraftItem( InventoryItem[] list, InventoryDef target )
+		{
+			var sresult = default( SteamInventoryResult_t );
+
+			var give = new InventoryDefId[] { target.Id };
+			var givec = new uint[] { 1 };
+
+			var sell = list.Select( x => x.Id ).ToArray();
+			var sellc = list.Select( x => (uint)1 ).ToArray();
+
+			if ( !Internal.ExchangeItems( ref sresult, give, givec, 1, sell, sellc, (uint)sell.Length ) )
+				return null;
+
+			return await InventoryResult.GetAsync( sresult );
+		}
+
 	}
 }

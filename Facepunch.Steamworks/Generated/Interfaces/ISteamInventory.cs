@@ -236,13 +236,13 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FExchangeItems( IntPtr self, ref SteamInventoryResult_t pResultHandle, ref InventoryDefId pArrayGenerate, ref uint punArrayGenerateQuantity, uint unArrayGenerateLength, ref InventoryItemId pArrayDestroy, ref uint punArrayDestroyQuantity, uint unArrayDestroyLength );
+		private delegate bool FExchangeItems( IntPtr self, ref SteamInventoryResult_t pResultHandle, [In,Out] InventoryDefId[]  pArrayGenerate, [In,Out] uint[]  punArrayGenerateQuantity, uint unArrayGenerateLength, [In,Out] InventoryItemId[]  pArrayDestroy, [In,Out] uint[]  punArrayDestroyQuantity, uint unArrayDestroyLength );
 		private FExchangeItems _ExchangeItems;
 		
 		#endregion
-		internal bool ExchangeItems( ref SteamInventoryResult_t pResultHandle, ref InventoryDefId pArrayGenerate, ref uint punArrayGenerateQuantity, uint unArrayGenerateLength, ref InventoryItemId pArrayDestroy, ref uint punArrayDestroyQuantity, uint unArrayDestroyLength )
+		internal bool ExchangeItems( ref SteamInventoryResult_t pResultHandle, [In,Out] InventoryDefId[]  pArrayGenerate, [In,Out] uint[]  punArrayGenerateQuantity, uint unArrayGenerateLength, [In,Out] InventoryItemId[]  pArrayDestroy, [In,Out] uint[]  punArrayDestroyQuantity, uint unArrayDestroyLength )
 		{
-			return _ExchangeItems( Self, ref pResultHandle, ref pArrayGenerate, ref punArrayGenerateQuantity, unArrayGenerateLength, ref pArrayDestroy, ref punArrayDestroyQuantity, unArrayDestroyLength );
+			return _ExchangeItems( Self, ref pResultHandle, pArrayGenerate, punArrayGenerateQuantity, unArrayGenerateLength, pArrayDestroy, punArrayDestroyQuantity, unArrayDestroyLength );
 		}
 		
 		#region FunctionMeta
@@ -283,13 +283,13 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FTradeItems( IntPtr self, ref SteamInventoryResult_t pResultHandle, SteamId steamIDTradePartner, ref InventoryItemId pArrayGive, ref uint pArrayGiveQuantity, uint nArrayGiveLength, ref InventoryItemId pArrayGet, ref uint pArrayGetQuantity, uint nArrayGetLength );
+		private delegate bool FTradeItems( IntPtr self, ref SteamInventoryResult_t pResultHandle, SteamId steamIDTradePartner, [In,Out] InventoryItemId[]  pArrayGive, [In,Out] uint[]  pArrayGiveQuantity, uint nArrayGiveLength, [In,Out] InventoryItemId[]  pArrayGet, [In,Out] uint[]  pArrayGetQuantity, uint nArrayGetLength );
 		private FTradeItems _TradeItems;
 		
 		#endregion
-		internal bool TradeItems( ref SteamInventoryResult_t pResultHandle, SteamId steamIDTradePartner, ref InventoryItemId pArrayGive, ref uint pArrayGiveQuantity, uint nArrayGiveLength, ref InventoryItemId pArrayGet, ref uint pArrayGetQuantity, uint nArrayGetLength )
+		internal bool TradeItems( ref SteamInventoryResult_t pResultHandle, SteamId steamIDTradePartner, [In,Out] InventoryItemId[]  pArrayGive, [In,Out] uint[]  pArrayGiveQuantity, uint nArrayGiveLength, [In,Out] InventoryItemId[]  pArrayGet, [In,Out] uint[]  pArrayGetQuantity, uint nArrayGetLength )
 		{
-			return _TradeItems( Self, ref pResultHandle, steamIDTradePartner, ref pArrayGive, ref pArrayGiveQuantity, nArrayGiveLength, ref pArrayGet, ref pArrayGetQuantity, nArrayGetLength );
+			return _TradeItems( Self, ref pResultHandle, steamIDTradePartner, pArrayGive, pArrayGiveQuantity, nArrayGiveLength, pArrayGet, pArrayGetQuantity, nArrayGetLength );
 		}
 		
 		#region FunctionMeta

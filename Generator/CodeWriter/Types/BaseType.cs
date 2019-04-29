@@ -67,14 +67,14 @@ internal class BaseType
 			if ( VarName == "psteamIDClans" ) return true;
 			if ( VarName == "pScoreDetails" ) return true;
 			if ( VarName == "prgUsers" ) return true;
-			if ( VarName == "punArrayQuantity" ) return true;
-			if ( VarName == "pArrayItemDefs" ) return true;
 			if ( VarName == "pBasePrices" ) return true;
 			if ( VarName == "pCurrentPrices" ) return true;
 			if ( VarName == "pItemDefIDs" ) return true;
 			if ( VarName == "pDetails" && Func == "GetDownloadedLeaderboardEntry" ) return true;
 			if ( VarName == "pData" && NativeType.EndsWith( "*" ) && Func.StartsWith( "GetGlobalStatHistory" ) ) return true;
 			if ( NativeType.EndsWith( "**" ) ) return true;
+			if ( VarName.StartsWith( "pArray" ) ) return true;
+			if ( VarName.StartsWith( "punArray" ) ) return true;
 
 			if ( NativeType.EndsWith( "*" ) )
 			{
