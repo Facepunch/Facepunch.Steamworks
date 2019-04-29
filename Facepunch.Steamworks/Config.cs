@@ -1,44 +1,43 @@
 ﻿using System;
+using System.IO;
 
 namespace Steamworks
 {
     public static class Config
     {
-		public static OsType Os { get; set; }
+		static OsType _os;
+		public static OsType Os
+		{
+			get
+			{
+				if ( _os == OsType.None )
+				{
+					string windir = Environment.GetEnvironmentVariable( "windir" );
+					if ( !string.IsNullOrEmpty( windir ) && windir.Contains( @"\" ) && Directory.Exists( windir ) )
+					{
+						_os = OsType.Windows;
+					}
+					else if ( File.Exists( @"/System/Library/CoreServices/SystemVersion.plist" ) )
+					{
+						_os = OsType.MacOs;
+					}
+					else if ( File.Exists( @"/proc/sys/kernel/ostype" ) )
+					{
+						_os = OsType.Linux;
+					}
+					else
+					{
+						throw new System.Exception( "Couldn't determine operating system" );
+					}
+				}
+
+				return _os;
+			}
+
+			set => _os = value;
+		}
+
 		public static bool PackSmall => Os != OsType.Windows;
-
-		/// <summary>
-		/// Should be called before creating any interfaces, to configure Steam for Unity.
-		/// </summary>
-		/// <param name="platform">Please pass in Application.platform.ToString()</param>
-		public static void ForUnity( string platform )
-        {
-            //
-            // Windows Config
-            //
-            if ( platform == "WindowsEditor" || platform == "WindowsPlayer" )
-            {
-                //
-                // 32bit windows unity uses a stdcall
-                //
-                if (IntPtr.Size == 4) UseThisCall = false;
-
-				Os = OsType.Windows;
-            }
-
-            if ( platform == "OSXEditor" || platform == "OSXPlayer" || platform == "OSXDashboardPlayer" )
-            {
-				Os = OsType.macOS;
-            }
-
-            if ( platform == "LinuxPlayer" || platform == "LinuxEditor" )
-            {
-				Os = OsType.Linux;
-            }
-
-            Console.WriteLine( "Steamworks Unity: " + platform );
-            Console.WriteLine( "Steamworks Os: " + Os );
-        }
 
         /// <summary>
         /// Some platforms allow/need CallingConvention.ThisCall. If you're crashing with argument null
@@ -54,8 +53,9 @@ namespace Steamworks
 
 	public enum OsType
 	{
+		None,
 		Windows,
 		Linux,
-		macOS,
+		MacOs,
 	}
 }
