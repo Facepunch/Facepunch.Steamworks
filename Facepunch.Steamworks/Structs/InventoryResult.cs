@@ -8,23 +8,13 @@ namespace Steamworks
 	public struct InventoryResult : IDisposable
 	{
 		internal SteamInventoryResult_t _id;
-		internal Result _result;
+		
+		public bool Expired { get; internal set; }
 
-		internal InventoryResult( SteamInventoryResult_t id )
+		internal InventoryResult( SteamInventoryResult_t id, bool expired )
 		{
 			_id = id;
-			_result = Result.Pending;
-		}
-
-		internal async Task<bool> WaitUntilReadyAsync()
-		{
-			while ( _result == Result.Pending )
-			{
-				_result = SteamInventory.Internal.GetResultStatus( _id );
-				await Task.Delay( 10 );
-			}
-
-			return _result == Result.OK || _result == Result.Expired;
+			Expired = expired;
 		}
 
 		public int ItemCount
@@ -69,6 +59,21 @@ namespace Steamworks
 		public void Dispose()
 		{
 			SteamInventory.Internal.DestroyResult( _id );
+		}
+
+		internal static async Task<InventoryResult?> GetAsync( SteamInventoryResult_t sresult )
+		{
+			var _result = Result.Pending;
+			while ( _result == Result.Pending )
+			{
+				_result = SteamInventory.Internal.GetResultStatus( sresult );
+				await Task.Delay( 10 );
+			}
+
+			if ( _result != Result.OK && _result != Result.Expired )
+				return null;
+
+			return new InventoryResult( sresult, _result == Result.Expired );
 		}
 
 		/// <summary>

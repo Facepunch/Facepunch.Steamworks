@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Steamworks.Data;
 
 namespace Steamworks
@@ -43,6 +44,46 @@ namespace Steamworks
 		/// This is an action confirmation flag which is only set one time, as part of a result set.
 		/// </summary>
 		public bool IsConsumed => (_flags & 1 << 9) != 0;
+
+		/// <summary>
+		/// Consumes items from a user's inventory. If the quantity of the given item goes to zero, it is permanently removed.
+		/// Once an item is removed it cannot be recovered.This is not for the faint of heart - if your game implements item removal at all, 
+		/// a high-friction UI confirmation process is highly recommended.ConsumeItem can be restricted to certain item definitions or fully
+		/// blocked via the Steamworks website to minimize support/abuse issues such as the classic "my brother borrowed my laptop and deleted all of my rare items".
+		/// </summary>
+		public async Task<InventoryResult?> Consume( int amount = 1 )
+		{
+			var sresult = default( SteamInventoryResult_t );
+			if ( !SteamInventory.Internal.ConsumeItem( ref sresult, Id, (uint)amount ) )
+				return null;
+
+			return await InventoryResult.GetAsync( sresult );
+		}
+
+		/// <summary>
+		/// Split stack into two items
+		/// </summary>
+		public async Task<InventoryResult?> SplitStack( int quantity = 1 )
+		{
+			var sresult = default( SteamInventoryResult_t );
+			if ( !SteamInventory.Internal.TransferItemQuantity( ref sresult, Id, (uint)quantity, ulong.MaxValue ) )
+				return null;
+
+			return await InventoryResult.GetAsync( sresult );
+		}
+
+		/// <summary>
+		/// Transfer x quantity from this item to the target item
+		/// </summary>
+		public async Task<InventoryResult?> TransferItemQuantity( InventoryItem toItem, int quantity )
+		{
+			var sresult = default( SteamInventoryResult_t );
+			if ( !SteamInventory.Internal.TransferItemQuantity( ref sresult, Id, (uint)quantity, toItem.Id ) )
+				return null;
+
+			return await InventoryResult.GetAsync( sresult );
+		}
+
 
 		internal static InventoryItem From( SteamItemDetails_t details )
 		{

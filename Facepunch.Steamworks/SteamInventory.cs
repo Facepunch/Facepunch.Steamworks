@@ -145,14 +145,7 @@ namespace Steamworks
 			if ( !Internal.GetAllItems( ref sresult ) )
 				return null;
 
-			var result = new InventoryResult( sresult );
-
-			if ( !await result.WaitUntilReadyAsync() )
-			{
-				return null;
-			}
-
-			return result;
+			return await InventoryResult.GetAsync( sresult );
 		}
 
 	}
