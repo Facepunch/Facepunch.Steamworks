@@ -152,11 +152,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSerializeResult( IntPtr self, SteamInventoryResult_t resultHandle, [In,Out] IntPtr[]  pOutBuffer, ref uint punOutBufferSize );
+		private delegate bool FSerializeResult( IntPtr self, SteamInventoryResult_t resultHandle, IntPtr pOutBuffer, ref uint punOutBufferSize );
 		private FSerializeResult _SerializeResult;
 		
 		#endregion
-		internal bool SerializeResult( SteamInventoryResult_t resultHandle, [In,Out] IntPtr[]  pOutBuffer, ref uint punOutBufferSize )
+		internal bool SerializeResult( SteamInventoryResult_t resultHandle, IntPtr pOutBuffer, ref uint punOutBufferSize )
 		{
 			return _SerializeResult( Self, resultHandle, pOutBuffer, ref punOutBufferSize );
 		}

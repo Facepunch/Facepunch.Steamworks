@@ -70,5 +70,33 @@ namespace Steamworks
 		{
 			SteamInventory.Internal.DestroyResult( _id );
 		}
+
+		/// <summary>
+		/// Serialized result sets contain a short signature which can't be forged or replayed across different game sessions.
+		/// A result set can be serialized on the local client, transmitted to other players via your game networking, and 
+		/// deserialized by the remote players.This is a secure way of preventing hackers from lying about posessing 
+		/// rare/high-value items. Serializes a result set with signature bytes to an output buffer.The size of a serialized 
+		/// result depends on the number items which are being serialized.When securely transmitting items to other players, 
+		/// it is recommended to use GetItemsByID first to create a minimal result set.
+		/// Results have a built-in timestamp which will be considered "expired" after an hour has elapsed.See DeserializeResult
+		/// for expiration handling.
+		/// </summary>
+		public unsafe byte[] Serialize()
+		{
+			uint size = 0;
+
+			if ( !SteamInventory.Internal.SerializeResult( _id, IntPtr.Zero, ref size ) )
+				return null;
+
+			var data = new byte[size];
+
+			fixed ( byte* ptr = data )
+			{
+				if ( !SteamInventory.Internal.SerializeResult( _id, (IntPtr)ptr, ref size ) )
+					return null;
+			}
+
+			return data;
+		}
 	}
 }
