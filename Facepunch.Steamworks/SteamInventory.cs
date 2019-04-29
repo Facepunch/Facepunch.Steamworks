@@ -188,5 +188,46 @@ namespace Steamworks
 			return await InventoryResult.GetAsync( sresult );
 		}
 
+		/// <summary>
+		/// Deserializes a result set and verifies the signature bytes.	
+		/// This call has a potential soft-failure mode where the Result is expired, it will 
+		/// still succeed in this mode.The "expired" 
+		/// result could indicate that the data may be out of date - not just due to timed 
+		/// expiration( one hour ), but also because one of the items in the result set may 
+		/// have been traded or consumed since the result set was generated.You could compare 
+		/// the timestamp from GetResultTimestamp to ISteamUtils::GetServerRealTime to determine
+		/// how old the data is. You could simply ignore the "expired" result code and 
+		/// continue as normal, or you could request the player with expired data to send 
+		/// an updated result set.
+		/// You should call CheckResultSteamID on the result handle when it completes to verify 
+		/// that a remote player is not pretending to have a different user's inventory.
+		/// </summary>
+		static async Task<InventoryResult?> DeserializeAsync( byte[] data, int dataLength = -1 )
+		{
+			if ( data == null )
+				throw new ArgumentException( "data should nto be null" );
+
+			if ( dataLength == -1 )
+				dataLength = data.Length;
+
+			var sresult = DeserializeResult( data, dataLength );
+			if ( !sresult.HasValue ) return null;
+
+			return await InventoryResult.GetAsync( sresult.Value );
+		}
+
+		internal static unsafe SteamInventoryResult_t? DeserializeResult( byte[] data, int dataLength = -1 )
+		{
+			var sresult = default( SteamInventoryResult_t );
+
+			fixed ( byte* ptr = data )
+			{
+				if ( !Internal.DeserializeResult( ref sresult, (IntPtr)ptr, (uint)dataLength, false ) )
+					return null;
+			}
+
+			return sresult;
+		}
+
 	}
 }

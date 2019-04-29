@@ -63,6 +63,7 @@ internal class BaseType
 			if ( VarName == "pOut" ) return false;
 			if ( VarName == "pOutBuffer" ) return false;
 			if ( VarName == "pubRGB" ) return false;
+			if ( VarName == "pOutResultHandle" ) return false;
 
 			if ( VarName == "psteamIDClans" ) return true;
 			if ( VarName == "pScoreDetails" ) return true;
