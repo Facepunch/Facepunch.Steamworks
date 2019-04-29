@@ -39,7 +39,7 @@ namespace Steamworks
 		/// <summary>
 		/// posted after the user gains ownership of DLC and that DLC is installed
 		/// </summary>
-		public static event Action< AppId > OnDlcInstalled;
+		public static event Action<AppId> OnDlcInstalled;
 
 		/// <summary>
 		/// posted after the user gains executes a Steam URL with command line or query parameters
@@ -100,7 +100,13 @@ namespace Steamworks
 		/// <summary>
 		/// Returns the time of the purchase of the app
 		/// </summary>
-		public static DateTime PurchaseTime( AppId appid ) => Epoch.ToDateTime( Internal.GetEarliestPurchaseUnixTime( appid.Value ) );
+		public static DateTime PurchaseTime( AppId appid = default )
+		{
+			if ( appid == 0 )
+				appid = SteamClient.AppId;
+
+			return Epoch.ToDateTime(Internal.GetEarliestPurchaseUnixTime(appid.Value ) );
+		}
 
 		/// <summary>
 		/// Checks if the user is subscribed to the current app through a free weekend
