@@ -23,6 +23,10 @@ namespace Steamworks
 				return _internal;
 			}
 		}
+		internal static void Shutdown()
+		{
+			_internal = null;
+		}
 
 		internal static void InstallEvents()
 		{

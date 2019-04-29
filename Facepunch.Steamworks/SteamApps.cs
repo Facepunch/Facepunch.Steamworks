@@ -25,6 +25,11 @@ namespace Steamworks
 			}
 		}
 
+		internal static void Shutdown()
+		{
+			_internal = null;
+		}
+
 		internal static void InstallEvents()
 		{
 			new Event<DlcInstalled_t>( x => OnDlcInstalled?.Invoke( x.AppID ) );

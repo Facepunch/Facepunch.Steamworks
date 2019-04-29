@@ -63,7 +63,18 @@ namespace Steamworks
 
 		public static void Shutdown()
 		{
-			// TODO.
+			initialized = false;
+
+			SteamApps.Shutdown();
+			SteamUtils.Shutdown();
+			SteamParental.Shutdown();
+			SteamMusic.Shutdown();
+			SteamVideo.Shutdown();
+			SteamUser.Shutdown();
+			SteamFriends.Shutdown();
+			SteamScreenshots.Shutdown();
+			SteamUserStats.Shutdown();
+			SteamInventory.Shutdown();
 		}
 
 		internal static void RegisterCallback( IntPtr intPtr, int callbackId )

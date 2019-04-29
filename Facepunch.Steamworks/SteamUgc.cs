@@ -28,6 +28,11 @@ namespace Steamworks
 			}
 		}
 
+		internal static void Shutdown()
+		{
+			_internal = null;
+		}
+
 		public static async Task<bool> DeleteFileAsync( PublishedFileId fileId )
 		{
 			var r = await Internal.DeleteItem( fileId );

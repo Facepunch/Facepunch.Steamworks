@@ -24,6 +24,11 @@ namespace Steamworks
 			}
 		}
 
+		internal static void Shutdown()
+		{
+			_internal = null;
+		}
+
 		internal static void InstallEvents()
 		{
 			new Event<BroadcastUploadStart_t>( x => OnBroadcastStarted?.Invoke() );

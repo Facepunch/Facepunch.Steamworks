@@ -24,6 +24,11 @@ namespace Steamworks
 			}
 		}
 
+		internal static void Shutdown()
+		{
+			_internal = null;
+		}
+
 		/// <summary>
 		/// Creates a new file, writes the bytes to the file, and then closes the file.
 		/// If the target file already exists, it is overwritten

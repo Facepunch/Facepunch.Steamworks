@@ -9,10 +9,7 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	/// <summary>
-	/// Undocumented Parental Settings
-	/// </summary>
-	public static class SteamInventory
+	public static class SteamServerInventory
 	{
 		static ISteamInventory _internal;
 		internal static ISteamInventory Internal
@@ -32,11 +29,9 @@ namespace Steamworks
 
 		internal static void InstallEvents()
 		{
-			new Event<SteamInventoryFullUpdate_t>( x => OnInventoryUpdated?.Invoke() );
-			new Event<SteamInventoryDefinitionUpdate_t>( x => DefinitionsUpdated() );
+			new Event<SteamInventoryDefinitionUpdate_t>( x => DefinitionsUpdated(), true );
 		}
 
-		public static event Action OnInventoryUpdated;
 		public static event Action OnDefinitionsUpdated;
 
 		internal static int defUpdateCount = 0;
@@ -140,56 +135,6 @@ namespace Steamworks
 				return null;
 
 			return defs.Select( x => new InventoryDef( x ) ).ToArray();
-		}
-
-		public static async Task<InventoryResult?> GetItems()
-		{
-			var sresult = default( SteamInventoryResult_t );
-
-			if ( !Internal.GetAllItems( ref sresult ) )
-				return null;
-
-			return await InventoryResult.GetAsync( sresult );
-		}
-
-		/// <summary>
-		/// This is used to grant a specific item to the user. This should 
-		/// only be used for development prototyping, from a trusted server, 
-		/// or if you don't care about hacked clients granting arbitrary items. 
-		/// This call can be disabled by a setting on Steamworks.
-		/// </summary>
-		static async Task<InventoryResult?> GenerateItem( InventoryDef target, int amount )
-		{
-			var sresult = default( SteamInventoryResult_t );
-
-			var defs = new InventoryDefId[] { target.Id };
-			var cnts = new uint[] { (uint)amount };
-
-			if ( !Internal.GenerateItems( ref sresult, defs, cnts, 1 ) )
-				return null;
-
-			return await InventoryResult.GetAsync( sresult );
-		}
-
-		/// <summary>
-		/// Crafting! Uses the passed items to buy the target item.
-		/// You need to have set up the appropriate exchange rules in your item
-		/// definitions. This assumes all the items passed in aren't stacked.
-		/// </summary>
-		static async Task<InventoryResult?> CraftItem( InventoryItem[] list, InventoryDef target )
-		{
-			var sresult = default( SteamInventoryResult_t );
-
-			var give = new InventoryDefId[] { target.Id };
-			var givec = new uint[] { 1 };
-
-			var sell = list.Select( x => x.Id ).ToArray();
-			var sellc = list.Select( x => (uint)1 ).ToArray();
-
-			if ( !Internal.ExchangeItems( ref sresult, give, givec, 1, sell, sellc, (uint)sell.Length ) )
-				return null;
-
-			return await InventoryResult.GetAsync( sresult );
 		}
 
 		/// <summary>

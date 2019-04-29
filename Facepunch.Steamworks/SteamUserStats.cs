@@ -20,6 +20,10 @@ namespace Steamworks
 				return _internal;
 			}
 		}
+		internal static void Shutdown()
+		{
+			_internal = null;
+		}
 
 		public static bool StatsRecieved { get; internal set; }
 
