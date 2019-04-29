@@ -36,6 +36,15 @@ namespace Generator
 					}
 					EndBlock();
 
+					StartBlock( $"internal static class MacOs" );
+					{
+						foreach ( var func in functions )
+						{
+							WriteMarshalledFunction( func, "libsteam_api" );
+						}
+					}
+					EndBlock();
+
 					foreach ( var func in functions )
 					{
 						WriteGlobalFunction( startingWith, func );
@@ -78,22 +87,50 @@ namespace Generator
 			{
 				var callargs = string.Join( ", ", args.Select( x => x.AsCallArgument() ) );
 
-				if ( returnType.IsReturnedWeird )
+				StartBlock( "if ( Config.Os == OsType.Windows )" );
 				{
-					WriteLine( $"var retVal = default( {returnType.TypeName} );" );
-					WriteLine( $"Win64.{func.Name}( ref retVal, {callargs} );" );
-					WriteLine( $"{returnType.Return( "retVal" )}" );
-				}
-				else if ( returnType.IsVoid )
-				{
-					WriteLine( $"Win64.{func.Name}( {callargs} );" );
-				}
-				else
-				{
-					var v = $"Win64.{func.Name}( {callargs} )";
 
-					WriteLine( returnType.Return( v ) );
+					if ( returnType.IsReturnedWeird )
+					{
+						WriteLine( $"var retVal = default( {returnType.TypeName} );" );
+						WriteLine( $"Win64.{func.Name}( ref retVal, {callargs} );" );
+						WriteLine( $"{returnType.Return( "retVal" )}" );
+					}
+					else if ( returnType.IsVoid )
+					{
+						WriteLine( $"Win64.{func.Name}( {callargs} );" );
+					}
+					else
+					{
+						var v = $"Win64.{func.Name}( {callargs} )";
+
+						WriteLine( returnType.Return( v ) );
+					}
 				}
+				Else( " if ( Config.Os == OsType.MacOs )" );
+				{
+					if ( returnType.IsReturnedWeird )
+					{
+						WriteLine( $"var retVal = default( {returnType.TypeName} );" );
+						WriteLine( $"MacOs.{func.Name}( ref retVal, {callargs} );" );
+						WriteLine( $"{returnType.Return( "retVal" )}" );
+					}
+					else if ( returnType.IsVoid )
+					{
+						WriteLine( $"MacOs.{func.Name}( {callargs} );" );
+					}
+					else
+					{
+						var v = $"MacOs.{func.Name}( {callargs} )";
+
+						WriteLine( returnType.Return( v ) );
+					}
+				}
+				Else();
+				{
+					WriteLine( "throw new System.Exception( \"this platform isn't supported\" );" );
+				}
+				EndBlock();
 			}
 			EndBlock();
 

@@ -25,24 +25,84 @@ namespace Steamworks
 			public static extern IntPtr SteamInternal_CreateInterface( string version );
 			
 		}
+		internal static class MacOs
+		{
+			[DllImport( "libsteam_api", EntryPoint = "SteamInternal_GameServer_Init", CallingConvention = CallingConvention.Cdecl )]
+			[return: MarshalAs( UnmanagedType.I1 )]
+			public static extern bool SteamInternal_GameServer_Init( uint unIP, ushort usPort, ushort usGamePort, ushort usQueryPort, int eServerMode, string pchVersionString );
+			
+			[DllImport( "libsteam_api", EntryPoint = "SteamInternal_FindOrCreateUserInterface", CallingConvention = CallingConvention.Cdecl )]
+			public static extern IntPtr SteamInternal_FindOrCreateUserInterface( int steamuser, string versionname );
+			
+			[DllImport( "libsteam_api", EntryPoint = "SteamInternal_FindOrCreateGameServerInterface", CallingConvention = CallingConvention.Cdecl )]
+			public static extern IntPtr SteamInternal_FindOrCreateGameServerInterface( int steamuser, string versionname );
+			
+			[DllImport( "libsteam_api", EntryPoint = "SteamInternal_CreateInterface", CallingConvention = CallingConvention.Cdecl )]
+			public static extern IntPtr SteamInternal_CreateInterface( string version );
+			
+		}
 		static internal bool GameServer_Init( uint unIP, ushort usPort, ushort usGamePort, ushort usQueryPort, int eServerMode, string pchVersionString )
 		{
-			return Win64.SteamInternal_GameServer_Init( unIP, usPort, usGamePort, usQueryPort, eServerMode, pchVersionString );
+			if ( Config.Os == OsType.Windows )
+			{
+				return Win64.SteamInternal_GameServer_Init( unIP, usPort, usGamePort, usQueryPort, eServerMode, pchVersionString );
+			}
+			else if ( Config.Os == OsType.MacOs )
+			{
+				return MacOs.SteamInternal_GameServer_Init( unIP, usPort, usGamePort, usQueryPort, eServerMode, pchVersionString );
+			}
+			else
+			{
+				throw new System.Exception( "this platform isn't supported" );
+			}
 		}
 		
 		static internal IntPtr FindOrCreateUserInterface( int steamuser, string versionname )
 		{
-			return Win64.SteamInternal_FindOrCreateUserInterface( steamuser, versionname );
+			if ( Config.Os == OsType.Windows )
+			{
+				return Win64.SteamInternal_FindOrCreateUserInterface( steamuser, versionname );
+			}
+			else if ( Config.Os == OsType.MacOs )
+			{
+				return MacOs.SteamInternal_FindOrCreateUserInterface( steamuser, versionname );
+			}
+			else
+			{
+				throw new System.Exception( "this platform isn't supported" );
+			}
 		}
 		
 		static internal IntPtr FindOrCreateGameServerInterface( int steamuser, string versionname )
 		{
-			return Win64.SteamInternal_FindOrCreateGameServerInterface( steamuser, versionname );
+			if ( Config.Os == OsType.Windows )
+			{
+				return Win64.SteamInternal_FindOrCreateGameServerInterface( steamuser, versionname );
+			}
+			else if ( Config.Os == OsType.MacOs )
+			{
+				return MacOs.SteamInternal_FindOrCreateGameServerInterface( steamuser, versionname );
+			}
+			else
+			{
+				throw new System.Exception( "this platform isn't supported" );
+			}
 		}
 		
 		static internal IntPtr CreateInterface( string version )
 		{
-			return Win64.SteamInternal_CreateInterface( version );
+			if ( Config.Os == OsType.Windows )
+			{
+				return Win64.SteamInternal_CreateInterface( version );
+			}
+			else if ( Config.Os == OsType.MacOs )
+			{
+				return MacOs.SteamInternal_CreateInterface( version );
+			}
+			else
+			{
+				throw new System.Exception( "this platform isn't supported" );
+			}
 		}
 		
 	}

@@ -24,24 +24,83 @@ namespace Steamworks
 			public static extern HSteamPipe SteamGameServer_GetHSteamPipe();
 			
 		}
+		internal static class MacOs
+		{
+			[DllImport( "libsteam_api", EntryPoint = "SteamGameServer_RunCallbacks", CallingConvention = CallingConvention.Cdecl )]
+			public static extern void SteamGameServer_RunCallbacks();
+			
+			[DllImport( "libsteam_api", EntryPoint = "SteamGameServer_Shutdown", CallingConvention = CallingConvention.Cdecl )]
+			public static extern void SteamGameServer_Shutdown();
+			
+			[DllImport( "libsteam_api", EntryPoint = "SteamGameServer_GetHSteamUser", CallingConvention = CallingConvention.Cdecl )]
+			public static extern HSteamUser SteamGameServer_GetHSteamUser();
+			
+			[DllImport( "libsteam_api", EntryPoint = "SteamGameServer_GetHSteamPipe", CallingConvention = CallingConvention.Cdecl )]
+			public static extern HSteamPipe SteamGameServer_GetHSteamPipe();
+			
+		}
 		static internal void RunCallbacks()
 		{
-			Win64.SteamGameServer_RunCallbacks();
+			if ( Config.Os == OsType.Windows )
+			{
+				Win64.SteamGameServer_RunCallbacks();
+			}
+			else if ( Config.Os == OsType.MacOs )
+			{
+				MacOs.SteamGameServer_RunCallbacks();
+			}
+			else
+			{
+				throw new System.Exception( "this platform isn't supported" );
+			}
 		}
 		
 		static internal void Shutdown()
 		{
-			Win64.SteamGameServer_Shutdown();
+			if ( Config.Os == OsType.Windows )
+			{
+				Win64.SteamGameServer_Shutdown();
+			}
+			else if ( Config.Os == OsType.MacOs )
+			{
+				MacOs.SteamGameServer_Shutdown();
+			}
+			else
+			{
+				throw new System.Exception( "this platform isn't supported" );
+			}
 		}
 		
 		static internal HSteamUser GetHSteamUser()
 		{
-			return Win64.SteamGameServer_GetHSteamUser();
+			if ( Config.Os == OsType.Windows )
+			{
+				return Win64.SteamGameServer_GetHSteamUser();
+			}
+			else if ( Config.Os == OsType.MacOs )
+			{
+				return MacOs.SteamGameServer_GetHSteamUser();
+			}
+			else
+			{
+				throw new System.Exception( "this platform isn't supported" );
+			}
 		}
 		
 		static internal HSteamPipe GetHSteamPipe()
 		{
-			return Win64.SteamGameServer_GetHSteamPipe();
+			if ( Config.Os == OsType.Windows )
+			{
+				return Win64.SteamGameServer_GetHSteamPipe();
+			}
+			else if ( Config.Os == OsType.MacOs )
+			{
+				return MacOs.SteamGameServer_GetHSteamPipe();
+			}
+			else
+			{
+				throw new System.Exception( "this platform isn't supported" );
+			}
 		}
 		
 	}
