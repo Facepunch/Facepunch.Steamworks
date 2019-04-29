@@ -28,6 +28,7 @@ namespace Steamworks
 			_BLoggedOn = Marshal.GetDelegateForFunctionPointer<FBLoggedOn>( Marshal.ReadIntPtr( VTable, 64) );
 			_BSecure = Marshal.GetDelegateForFunctionPointer<FBSecure>( Marshal.ReadIntPtr( VTable, 72) );
 			_GetSteamID = Marshal.GetDelegateForFunctionPointer<FGetSteamID>( Marshal.ReadIntPtr( VTable, 80) );
+			_GetSteamID_Windows = Marshal.GetDelegateForFunctionPointer<FGetSteamID_Windows>( Marshal.ReadIntPtr( VTable, 80) );
 			_WasRestartRequested = Marshal.GetDelegateForFunctionPointer<FWasRestartRequested>( Marshal.ReadIntPtr( VTable, 88) );
 			_SetMaxPlayerCount = Marshal.GetDelegateForFunctionPointer<FSetMaxPlayerCount>( Marshal.ReadIntPtr( VTable, 96) );
 			_SetBotPlayerCount = Marshal.GetDelegateForFunctionPointer<FSetBotPlayerCount>( Marshal.ReadIntPtr( VTable, 104) );
@@ -43,6 +44,7 @@ namespace Steamworks
 			_SetRegion = Marshal.GetDelegateForFunctionPointer<FSetRegion>( Marshal.ReadIntPtr( VTable, 184) );
 			_SendUserConnectAndAuthenticate = Marshal.GetDelegateForFunctionPointer<FSendUserConnectAndAuthenticate>( Marshal.ReadIntPtr( VTable, 192) );
 			_CreateUnauthenticatedUserConnection = Marshal.GetDelegateForFunctionPointer<FCreateUnauthenticatedUserConnection>( Marshal.ReadIntPtr( VTable, 200) );
+			_CreateUnauthenticatedUserConnection_Windows = Marshal.GetDelegateForFunctionPointer<FCreateUnauthenticatedUserConnection_Windows>( Marshal.ReadIntPtr( VTable, 200) );
 			_SendUserDisconnect = Marshal.GetDelegateForFunctionPointer<FSendUserDisconnect>( Marshal.ReadIntPtr( VTable, 208) );
 			_BUpdateUserData = Marshal.GetDelegateForFunctionPointer<FBUpdateUserData>( Marshal.ReadIntPtr( VTable, 216) );
 			_GetAuthSessionTicket = Marshal.GetDelegateForFunctionPointer<FGetAuthSessionTicket>( Marshal.ReadIntPtr( VTable, 224) );
@@ -178,15 +180,22 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FGetSteamID( IntPtr self, ref SteamId retVal );
+		private delegate SteamId FGetSteamID( IntPtr self );
 		private FGetSteamID _GetSteamID;
+		private delegate void FGetSteamID_Windows( IntPtr self, ref SteamId retVal );
+		private FGetSteamID_Windows _GetSteamID_Windows;
 		
 		#endregion
 		internal SteamId GetSteamID()
 		{
-			var retVal = default( SteamId );
-			_GetSteamID( Self, ref retVal );
-			return retVal;
+			if ( Config.Os == OsType.Windows )
+			{
+				var retVal = default( SteamId );
+				_GetSteamID_Windows( Self, ref retVal );
+				return retVal;
+			}
+			
+			return _GetSteamID( Self );
 		}
 		
 		#region FunctionMeta
@@ -347,15 +356,22 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FCreateUnauthenticatedUserConnection( IntPtr self, ref SteamId retVal );
+		private delegate SteamId FCreateUnauthenticatedUserConnection( IntPtr self );
 		private FCreateUnauthenticatedUserConnection _CreateUnauthenticatedUserConnection;
+		private delegate void FCreateUnauthenticatedUserConnection_Windows( IntPtr self, ref SteamId retVal );
+		private FCreateUnauthenticatedUserConnection_Windows _CreateUnauthenticatedUserConnection_Windows;
 		
 		#endregion
 		internal SteamId CreateUnauthenticatedUserConnection()
 		{
-			var retVal = default( SteamId );
-			_CreateUnauthenticatedUserConnection( Self, ref retVal );
-			return retVal;
+			if ( Config.Os == OsType.Windows )
+			{
+				var retVal = default( SteamId );
+				_CreateUnauthenticatedUserConnection_Windows( Self, ref retVal );
+				return retVal;
+			}
+			
+			return _CreateUnauthenticatedUserConnection( Self );
 		}
 		
 		#region FunctionMeta

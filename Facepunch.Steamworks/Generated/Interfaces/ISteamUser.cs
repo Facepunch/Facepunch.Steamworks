@@ -20,6 +20,7 @@ namespace Steamworks
 			_GetHSteamUser = Marshal.GetDelegateForFunctionPointer<FGetHSteamUser>( Marshal.ReadIntPtr( VTable, 0) );
 			_BLoggedOn = Marshal.GetDelegateForFunctionPointer<FBLoggedOn>( Marshal.ReadIntPtr( VTable, 8) );
 			_GetSteamID = Marshal.GetDelegateForFunctionPointer<FGetSteamID>( Marshal.ReadIntPtr( VTable, 16) );
+			_GetSteamID_Windows = Marshal.GetDelegateForFunctionPointer<FGetSteamID_Windows>( Marshal.ReadIntPtr( VTable, 16) );
 			_InitiateGameConnection = Marshal.GetDelegateForFunctionPointer<FInitiateGameConnection>( Marshal.ReadIntPtr( VTable, 24) );
 			_TerminateGameConnection = Marshal.GetDelegateForFunctionPointer<FTerminateGameConnection>( Marshal.ReadIntPtr( VTable, 32) );
 			_TrackAppUsageEvent = Marshal.GetDelegateForFunctionPointer<FTrackAppUsageEvent>( Marshal.ReadIntPtr( VTable, 40) );
@@ -74,15 +75,22 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FGetSteamID( IntPtr self, ref SteamId retVal );
+		private delegate SteamId FGetSteamID( IntPtr self );
 		private FGetSteamID _GetSteamID;
+		private delegate void FGetSteamID_Windows( IntPtr self, ref SteamId retVal );
+		private FGetSteamID_Windows _GetSteamID_Windows;
 		
 		#endregion
 		internal SteamId GetSteamID()
 		{
-			var retVal = default( SteamId );
-			_GetSteamID( Self, ref retVal );
-			return retVal;
+			if ( Config.Os == OsType.Windows )
+			{
+				var retVal = default( SteamId );
+				_GetSteamID_Windows( Self, ref retVal );
+				return retVal;
+			}
+			
+			return _GetSteamID( Self );
 		}
 		
 		#region FunctionMeta

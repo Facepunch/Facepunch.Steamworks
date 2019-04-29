@@ -95,6 +95,7 @@ namespace Generator
 				for (int i=0; i< clss.Functions.Count; i++ )
 				{
 					var func = clss.Functions[i];
+					var returnType = BaseType.Parse( func.ReturnType );
 
 					if ( Cleanup.IsDeprecated( $"{clss.Name}.{func.Name}" ) )
 					{
@@ -103,6 +104,11 @@ namespace Generator
 					else
 					{
 						WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, {locations[i]}) );" );
+
+						if ( returnType.IsReturnedWeird )
+						{
+							WriteLine( $"_{func.Name}_Windows = Marshal.GetDelegateForFunctionPointer<F{func.Name}_Windows>( Marshal.ReadIntPtr( VTable, {locations[i]}) );" );
+						}
 					}
 				}
 			}
@@ -134,12 +140,6 @@ namespace Generator
 			var argstr = string.Join( ", ", args.Select( x => x.AsArgument() ) );
 			var delegateargstr = string.Join( ", ", args.Select( x => x.AsArgument() ) );
 
-			if ( returnType.IsReturnedWeird  )
-			{
-				delegateargstr = $"ref {returnType.TypeName} retVal, {delegateargstr}";
-				delegateargstr = delegateargstr.Trim( ',', ' ' );
-			}
-
 			if ( returnType is SteamApiCallType sap )
 			{
 				sap.CallResult = func.CallResult;
@@ -152,8 +152,17 @@ namespace Generator
 			if ( returnType.ReturnAttribute != null)
 				WriteLine( returnType.ReturnAttribute );
 
-			WriteLine( $"private delegate {(returnType.IsReturnedWeird?"void":returnType.TypeNameFrom)} F{func.Name}( IntPtr self, {delegateargstr} );".Replace( "( IntPtr self,  )", "( IntPtr self )" ) );
+			WriteLine( $"private delegate {returnType.TypeNameFrom} F{func.Name}( IntPtr self, {delegateargstr} );".Replace( "( IntPtr self,  )", "( IntPtr self )" ) );
 			WriteLine( $"private F{func.Name} _{func.Name};" );
+
+			if ( returnType.IsReturnedWeird )
+			{
+				var windelargs = $"ref {returnType.TypeName} retVal, {delegateargstr}".Trim( ',', ' ' );
+
+				WriteLine( $"private delegate void F{func.Name}_Windows( IntPtr self, {windelargs} );".Replace( "( IntPtr self,  )", "( IntPtr self )" ) );
+				WriteLine( $"private F{func.Name}_Windows _{func.Name}_Windows;" );
+			}
+
 			WriteLine();
 			WriteLine( $"#endregion" );
 
@@ -163,11 +172,17 @@ namespace Generator
 
 				if ( returnType.IsReturnedWeird )
 				{
-					WriteLine( $"var retVal = default( {returnType.TypeName} );" );
-					WriteLine( $"_{func.Name}( Self, ref retVal, {callargs} );".Replace( ",  );", " );" ) );
-					WriteLine( $"{returnType.Return( "retVal" )}" );
+					StartBlock( "if ( Config.Os == OsType.Windows )" );
+					{
+						WriteLine( $"var retVal = default( {returnType.TypeName} );" );
+						WriteLine( $"_{func.Name}_Windows( Self, ref retVal, {callargs} );".Replace( ",  );", " );" ) );
+						WriteLine( $"{returnType.Return( "retVal" )}" );
+					}
+					EndBlock();
+					WriteLine();
 				}
-				else if ( returnType.IsVoid )
+
+				if ( returnType.IsVoid )
 				{
 					WriteLine( $"_{func.Name}( Self, {callargs} );".Replace( "( Self,  )", "( Self )" ) );
 				}

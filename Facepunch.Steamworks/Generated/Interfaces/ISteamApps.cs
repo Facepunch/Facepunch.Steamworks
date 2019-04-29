@@ -38,6 +38,7 @@ namespace Steamworks
 			_GetAppInstallDir = Marshal.GetDelegateForFunctionPointer<FGetAppInstallDir>( Marshal.ReadIntPtr( VTable, 144) );
 			_BIsAppInstalled = Marshal.GetDelegateForFunctionPointer<FBIsAppInstalled>( Marshal.ReadIntPtr( VTable, 152) );
 			_GetAppOwner = Marshal.GetDelegateForFunctionPointer<FGetAppOwner>( Marshal.ReadIntPtr( VTable, 160) );
+			_GetAppOwner_Windows = Marshal.GetDelegateForFunctionPointer<FGetAppOwner_Windows>( Marshal.ReadIntPtr( VTable, 160) );
 			_GetLaunchQueryParam = Marshal.GetDelegateForFunctionPointer<FGetLaunchQueryParam>( Marshal.ReadIntPtr( VTable, 168) );
 			_GetDlcDownloadProgress = Marshal.GetDelegateForFunctionPointer<FGetDlcDownloadProgress>( Marshal.ReadIntPtr( VTable, 176) );
 			_GetAppBuildId = Marshal.GetDelegateForFunctionPointer<FGetAppBuildId>( Marshal.ReadIntPtr( VTable, 184) );
@@ -280,15 +281,22 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FGetAppOwner( IntPtr self, ref SteamId retVal );
+		private delegate SteamId FGetAppOwner( IntPtr self );
 		private FGetAppOwner _GetAppOwner;
+		private delegate void FGetAppOwner_Windows( IntPtr self, ref SteamId retVal );
+		private FGetAppOwner_Windows _GetAppOwner_Windows;
 		
 		#endregion
 		internal SteamId GetAppOwner()
 		{
-			var retVal = default( SteamId );
-			_GetAppOwner( Self, ref retVal );
-			return retVal;
+			if ( Config.Os == OsType.Windows )
+			{
+				var retVal = default( SteamId );
+				_GetAppOwner_Windows( Self, ref retVal );
+				return retVal;
+			}
+			
+			return _GetAppOwner( Self );
 		}
 		
 		#region FunctionMeta

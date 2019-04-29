@@ -361,7 +361,7 @@ namespace Steamworks
 		/// <summary>
 		/// We have received a server query on our game port. Pass it to Steam to handle.
 		/// </summary>
-		public static  unsafe void HandleIncomingPacket( byte[] data, int size, uint address, ushort port )
+		public static unsafe void HandleIncomingPacket( byte[] data, int size, uint address, ushort port )
 		{
 			fixed ( byte* ptr = data )
 			{
