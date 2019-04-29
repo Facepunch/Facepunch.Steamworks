@@ -140,11 +140,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetItemsByID( IntPtr self, ref SteamInventoryResult_t pResultHandle, ref SteamItemInstanceID_t pInstanceIDs, uint unCountInstanceIDs );
+		private delegate bool FGetItemsByID( IntPtr self, ref SteamInventoryResult_t pResultHandle, ref InventoryItemId pInstanceIDs, uint unCountInstanceIDs );
 		private FGetItemsByID _GetItemsByID;
 		
 		#endregion
-		internal bool GetItemsByID( ref SteamInventoryResult_t pResultHandle, ref SteamItemInstanceID_t pInstanceIDs, uint unCountInstanceIDs )
+		internal bool GetItemsByID( ref SteamInventoryResult_t pResultHandle, ref InventoryItemId pInstanceIDs, uint unCountInstanceIDs )
 		{
 			return _GetItemsByID( Self, ref pResultHandle, ref pInstanceIDs, unCountInstanceIDs );
 		}
@@ -176,11 +176,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGenerateItems( IntPtr self, ref SteamInventoryResult_t pResultHandle, [In,Out] SteamItemDef_t[]  pArrayItemDefs, [In,Out] uint[]  punArrayQuantity, uint unArrayLength );
+		private delegate bool FGenerateItems( IntPtr self, ref SteamInventoryResult_t pResultHandle, [In,Out] InventoryDefId[]  pArrayItemDefs, [In,Out] uint[]  punArrayQuantity, uint unArrayLength );
 		private FGenerateItems _GenerateItems;
 		
 		#endregion
-		internal bool GenerateItems( ref SteamInventoryResult_t pResultHandle, [In,Out] SteamItemDef_t[]  pArrayItemDefs, [In,Out] uint[]  punArrayQuantity, uint unArrayLength )
+		internal bool GenerateItems( ref SteamInventoryResult_t pResultHandle, [In,Out] InventoryDefId[]  pArrayItemDefs, [In,Out] uint[]  punArrayQuantity, uint unArrayLength )
 		{
 			return _GenerateItems( Self, ref pResultHandle, pArrayItemDefs, punArrayQuantity, unArrayLength );
 		}
@@ -200,11 +200,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FAddPromoItem( IntPtr self, ref SteamInventoryResult_t pResultHandle, SteamItemDef_t itemDef );
+		private delegate bool FAddPromoItem( IntPtr self, ref SteamInventoryResult_t pResultHandle, InventoryDefId itemDef );
 		private FAddPromoItem _AddPromoItem;
 		
 		#endregion
-		internal bool AddPromoItem( ref SteamInventoryResult_t pResultHandle, SteamItemDef_t itemDef )
+		internal bool AddPromoItem( ref SteamInventoryResult_t pResultHandle, InventoryDefId itemDef )
 		{
 			return _AddPromoItem( Self, ref pResultHandle, itemDef );
 		}
@@ -212,11 +212,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FAddPromoItems( IntPtr self, ref SteamInventoryResult_t pResultHandle, [In,Out] SteamItemDef_t[]  pArrayItemDefs, uint unArrayLength );
+		private delegate bool FAddPromoItems( IntPtr self, ref SteamInventoryResult_t pResultHandle, [In,Out] InventoryDefId[]  pArrayItemDefs, uint unArrayLength );
 		private FAddPromoItems _AddPromoItems;
 		
 		#endregion
-		internal bool AddPromoItems( ref SteamInventoryResult_t pResultHandle, [In,Out] SteamItemDef_t[]  pArrayItemDefs, uint unArrayLength )
+		internal bool AddPromoItems( ref SteamInventoryResult_t pResultHandle, [In,Out] InventoryDefId[]  pArrayItemDefs, uint unArrayLength )
 		{
 			return _AddPromoItems( Self, ref pResultHandle, pArrayItemDefs, unArrayLength );
 		}
@@ -224,11 +224,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FConsumeItem( IntPtr self, ref SteamInventoryResult_t pResultHandle, SteamItemInstanceID_t itemConsume, uint unQuantity );
+		private delegate bool FConsumeItem( IntPtr self, ref SteamInventoryResult_t pResultHandle, InventoryItemId itemConsume, uint unQuantity );
 		private FConsumeItem _ConsumeItem;
 		
 		#endregion
-		internal bool ConsumeItem( ref SteamInventoryResult_t pResultHandle, SteamItemInstanceID_t itemConsume, uint unQuantity )
+		internal bool ConsumeItem( ref SteamInventoryResult_t pResultHandle, InventoryItemId itemConsume, uint unQuantity )
 		{
 			return _ConsumeItem( Self, ref pResultHandle, itemConsume, unQuantity );
 		}
@@ -236,11 +236,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FExchangeItems( IntPtr self, ref SteamInventoryResult_t pResultHandle, ref SteamItemDef_t pArrayGenerate, ref uint punArrayGenerateQuantity, uint unArrayGenerateLength, ref SteamItemInstanceID_t pArrayDestroy, ref uint punArrayDestroyQuantity, uint unArrayDestroyLength );
+		private delegate bool FExchangeItems( IntPtr self, ref SteamInventoryResult_t pResultHandle, ref InventoryDefId pArrayGenerate, ref uint punArrayGenerateQuantity, uint unArrayGenerateLength, ref InventoryItemId pArrayDestroy, ref uint punArrayDestroyQuantity, uint unArrayDestroyLength );
 		private FExchangeItems _ExchangeItems;
 		
 		#endregion
-		internal bool ExchangeItems( ref SteamInventoryResult_t pResultHandle, ref SteamItemDef_t pArrayGenerate, ref uint punArrayGenerateQuantity, uint unArrayGenerateLength, ref SteamItemInstanceID_t pArrayDestroy, ref uint punArrayDestroyQuantity, uint unArrayDestroyLength )
+		internal bool ExchangeItems( ref SteamInventoryResult_t pResultHandle, ref InventoryDefId pArrayGenerate, ref uint punArrayGenerateQuantity, uint unArrayGenerateLength, ref InventoryItemId pArrayDestroy, ref uint punArrayDestroyQuantity, uint unArrayDestroyLength )
 		{
 			return _ExchangeItems( Self, ref pResultHandle, ref pArrayGenerate, ref punArrayGenerateQuantity, unArrayGenerateLength, ref pArrayDestroy, ref punArrayDestroyQuantity, unArrayDestroyLength );
 		}
@@ -248,11 +248,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FTransferItemQuantity( IntPtr self, ref SteamInventoryResult_t pResultHandle, SteamItemInstanceID_t itemIdSource, uint unQuantity, SteamItemInstanceID_t itemIdDest );
+		private delegate bool FTransferItemQuantity( IntPtr self, ref SteamInventoryResult_t pResultHandle, InventoryItemId itemIdSource, uint unQuantity, InventoryItemId itemIdDest );
 		private FTransferItemQuantity _TransferItemQuantity;
 		
 		#endregion
-		internal bool TransferItemQuantity( ref SteamInventoryResult_t pResultHandle, SteamItemInstanceID_t itemIdSource, uint unQuantity, SteamItemInstanceID_t itemIdDest )
+		internal bool TransferItemQuantity( ref SteamInventoryResult_t pResultHandle, InventoryItemId itemIdSource, uint unQuantity, InventoryItemId itemIdDest )
 		{
 			return _TransferItemQuantity( Self, ref pResultHandle, itemIdSource, unQuantity, itemIdDest );
 		}
@@ -271,11 +271,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FTriggerItemDrop( IntPtr self, ref SteamInventoryResult_t pResultHandle, SteamItemDef_t dropListDefinition );
+		private delegate bool FTriggerItemDrop( IntPtr self, ref SteamInventoryResult_t pResultHandle, InventoryDefId dropListDefinition );
 		private FTriggerItemDrop _TriggerItemDrop;
 		
 		#endregion
-		internal bool TriggerItemDrop( ref SteamInventoryResult_t pResultHandle, SteamItemDef_t dropListDefinition )
+		internal bool TriggerItemDrop( ref SteamInventoryResult_t pResultHandle, InventoryDefId dropListDefinition )
 		{
 			return _TriggerItemDrop( Self, ref pResultHandle, dropListDefinition );
 		}
@@ -283,11 +283,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FTradeItems( IntPtr self, ref SteamInventoryResult_t pResultHandle, SteamId steamIDTradePartner, ref SteamItemInstanceID_t pArrayGive, ref uint pArrayGiveQuantity, uint nArrayGiveLength, ref SteamItemInstanceID_t pArrayGet, ref uint pArrayGetQuantity, uint nArrayGetLength );
+		private delegate bool FTradeItems( IntPtr self, ref SteamInventoryResult_t pResultHandle, SteamId steamIDTradePartner, ref InventoryItemId pArrayGive, ref uint pArrayGiveQuantity, uint nArrayGiveLength, ref InventoryItemId pArrayGet, ref uint pArrayGetQuantity, uint nArrayGetLength );
 		private FTradeItems _TradeItems;
 		
 		#endregion
-		internal bool TradeItems( ref SteamInventoryResult_t pResultHandle, SteamId steamIDTradePartner, ref SteamItemInstanceID_t pArrayGive, ref uint pArrayGiveQuantity, uint nArrayGiveLength, ref SteamItemInstanceID_t pArrayGet, ref uint pArrayGetQuantity, uint nArrayGetLength )
+		internal bool TradeItems( ref SteamInventoryResult_t pResultHandle, SteamId steamIDTradePartner, ref InventoryItemId pArrayGive, ref uint pArrayGiveQuantity, uint nArrayGiveLength, ref InventoryItemId pArrayGet, ref uint pArrayGetQuantity, uint nArrayGetLength )
 		{
 			return _TradeItems( Self, ref pResultHandle, steamIDTradePartner, ref pArrayGive, ref pArrayGiveQuantity, nArrayGiveLength, ref pArrayGet, ref pArrayGetQuantity, nArrayGetLength );
 		}
@@ -307,11 +307,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetItemDefinitionIDs( IntPtr self, [In,Out] SteamItemDef_t[]  pItemDefIDs, ref uint punItemDefIDsArraySize );
+		private delegate bool FGetItemDefinitionIDs( IntPtr self, [In,Out] InventoryDefId[]  pItemDefIDs, ref uint punItemDefIDsArraySize );
 		private FGetItemDefinitionIDs _GetItemDefinitionIDs;
 		
 		#endregion
-		internal bool GetItemDefinitionIDs( [In,Out] SteamItemDef_t[]  pItemDefIDs, ref uint punItemDefIDsArraySize )
+		internal bool GetItemDefinitionIDs( [In,Out] InventoryDefId[]  pItemDefIDs, ref uint punItemDefIDsArraySize )
 		{
 			return _GetItemDefinitionIDs( Self, pItemDefIDs, ref punItemDefIDsArraySize );
 		}
@@ -319,11 +319,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetItemDefinitionProperty( IntPtr self, SteamItemDef_t iDefinition, string pchPropertyName, StringBuilder pchValueBuffer, ref uint punValueBufferSizeOut );
+		private delegate bool FGetItemDefinitionProperty( IntPtr self, InventoryDefId iDefinition, string pchPropertyName, StringBuilder pchValueBuffer, ref uint punValueBufferSizeOut );
 		private FGetItemDefinitionProperty _GetItemDefinitionProperty;
 		
 		#endregion
-		internal bool GetItemDefinitionProperty( SteamItemDef_t iDefinition, string pchPropertyName, StringBuilder pchValueBuffer, ref uint punValueBufferSizeOut )
+		internal bool GetItemDefinitionProperty( InventoryDefId iDefinition, string pchPropertyName, StringBuilder pchValueBuffer, ref uint punValueBufferSizeOut )
 		{
 			return _GetItemDefinitionProperty( Self, iDefinition, pchPropertyName, pchValueBuffer, ref punValueBufferSizeOut );
 		}
@@ -342,22 +342,22 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetEligiblePromoItemDefinitionIDs( IntPtr self, SteamId steamID, [In,Out] SteamItemDef_t[]  pItemDefIDs, ref uint punItemDefIDsArraySize );
+		private delegate bool FGetEligiblePromoItemDefinitionIDs( IntPtr self, SteamId steamID, [In,Out] InventoryDefId[]  pItemDefIDs, ref uint punItemDefIDsArraySize );
 		private FGetEligiblePromoItemDefinitionIDs _GetEligiblePromoItemDefinitionIDs;
 		
 		#endregion
-		internal bool GetEligiblePromoItemDefinitionIDs( SteamId steamID, [In,Out] SteamItemDef_t[]  pItemDefIDs, ref uint punItemDefIDsArraySize )
+		internal bool GetEligiblePromoItemDefinitionIDs( SteamId steamID, [In,Out] InventoryDefId[]  pItemDefIDs, ref uint punItemDefIDsArraySize )
 		{
 			return _GetEligiblePromoItemDefinitionIDs( Self, steamID, pItemDefIDs, ref punItemDefIDsArraySize );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamAPICall_t FStartPurchase( IntPtr self, [In,Out] SteamItemDef_t[]  pArrayItemDefs, [In,Out] uint[]  punArrayQuantity, uint unArrayLength );
+		private delegate SteamAPICall_t FStartPurchase( IntPtr self, [In,Out] InventoryDefId[]  pArrayItemDefs, [In,Out] uint[]  punArrayQuantity, uint unArrayLength );
 		private FStartPurchase _StartPurchase;
 		
 		#endregion
-		internal async Task<SteamInventoryStartPurchaseResult_t?> StartPurchase( [In,Out] SteamItemDef_t[]  pArrayItemDefs, [In,Out] uint[]  punArrayQuantity, uint unArrayLength )
+		internal async Task<SteamInventoryStartPurchaseResult_t?> StartPurchase( [In,Out] InventoryDefId[]  pArrayItemDefs, [In,Out] uint[]  punArrayQuantity, uint unArrayLength )
 		{
 			return await (new Result<SteamInventoryStartPurchaseResult_t>( _StartPurchase( Self, pArrayItemDefs, punArrayQuantity, unArrayLength ) )).GetResult();
 		}
@@ -387,11 +387,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetItemsWithPrices( IntPtr self, [In,Out] SteamItemDef_t[]  pArrayItemDefs, [In,Out] ulong[]  pCurrentPrices, [In,Out] ulong[]  pBasePrices, uint unArrayLength );
+		private delegate bool FGetItemsWithPrices( IntPtr self, [In,Out] InventoryDefId[]  pArrayItemDefs, [In,Out] ulong[]  pCurrentPrices, [In,Out] ulong[]  pBasePrices, uint unArrayLength );
 		private FGetItemsWithPrices _GetItemsWithPrices;
 		
 		#endregion
-		internal bool GetItemsWithPrices( [In,Out] SteamItemDef_t[]  pArrayItemDefs, [In,Out] ulong[]  pCurrentPrices, [In,Out] ulong[]  pBasePrices, uint unArrayLength )
+		internal bool GetItemsWithPrices( [In,Out] InventoryDefId[]  pArrayItemDefs, [In,Out] ulong[]  pCurrentPrices, [In,Out] ulong[]  pBasePrices, uint unArrayLength )
 		{
 			return _GetItemsWithPrices( Self, pArrayItemDefs, pCurrentPrices, pBasePrices, unArrayLength );
 		}
@@ -399,11 +399,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetItemPrice( IntPtr self, SteamItemDef_t iDefinition, ref ulong pCurrentPrice, ref ulong pBasePrice );
+		private delegate bool FGetItemPrice( IntPtr self, InventoryDefId iDefinition, ref ulong pCurrentPrice, ref ulong pBasePrice );
 		private FGetItemPrice _GetItemPrice;
 		
 		#endregion
-		internal bool GetItemPrice( SteamItemDef_t iDefinition, ref ulong pCurrentPrice, ref ulong pBasePrice )
+		internal bool GetItemPrice( InventoryDefId iDefinition, ref ulong pCurrentPrice, ref ulong pBasePrice )
 		{
 			return _GetItemPrice( Self, iDefinition, ref pCurrentPrice, ref pBasePrice );
 		}
@@ -422,11 +422,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FRemoveProperty( IntPtr self, SteamInventoryUpdateHandle_t handle, SteamItemInstanceID_t nItemID, string pchPropertyName );
+		private delegate bool FRemoveProperty( IntPtr self, SteamInventoryUpdateHandle_t handle, InventoryItemId nItemID, string pchPropertyName );
 		private FRemoveProperty _RemoveProperty;
 		
 		#endregion
-		internal bool RemoveProperty( SteamInventoryUpdateHandle_t handle, SteamItemInstanceID_t nItemID, string pchPropertyName )
+		internal bool RemoveProperty( SteamInventoryUpdateHandle_t handle, InventoryItemId nItemID, string pchPropertyName )
 		{
 			return _RemoveProperty( Self, handle, nItemID, pchPropertyName );
 		}
@@ -434,11 +434,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetProperty1( IntPtr self, SteamInventoryUpdateHandle_t handle, SteamItemInstanceID_t nItemID, string pchPropertyName, string pchPropertyValue );
+		private delegate bool FSetProperty1( IntPtr self, SteamInventoryUpdateHandle_t handle, InventoryItemId nItemID, string pchPropertyName, string pchPropertyValue );
 		private FSetProperty1 _SetProperty1;
 		
 		#endregion
-		internal bool SetProperty1( SteamInventoryUpdateHandle_t handle, SteamItemInstanceID_t nItemID, string pchPropertyName, string pchPropertyValue )
+		internal bool SetProperty1( SteamInventoryUpdateHandle_t handle, InventoryItemId nItemID, string pchPropertyName, string pchPropertyValue )
 		{
 			return _SetProperty1( Self, handle, nItemID, pchPropertyName, pchPropertyValue );
 		}
@@ -446,11 +446,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetProperty2( IntPtr self, SteamInventoryUpdateHandle_t handle, SteamItemInstanceID_t nItemID, string pchPropertyName, [MarshalAs( UnmanagedType.U1 )] bool bValue );
+		private delegate bool FSetProperty2( IntPtr self, SteamInventoryUpdateHandle_t handle, InventoryItemId nItemID, string pchPropertyName, [MarshalAs( UnmanagedType.U1 )] bool bValue );
 		private FSetProperty2 _SetProperty2;
 		
 		#endregion
-		internal bool SetProperty2( SteamInventoryUpdateHandle_t handle, SteamItemInstanceID_t nItemID, string pchPropertyName, [MarshalAs( UnmanagedType.U1 )] bool bValue )
+		internal bool SetProperty2( SteamInventoryUpdateHandle_t handle, InventoryItemId nItemID, string pchPropertyName, [MarshalAs( UnmanagedType.U1 )] bool bValue )
 		{
 			return _SetProperty2( Self, handle, nItemID, pchPropertyName, bValue );
 		}
@@ -458,11 +458,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetProperty3( IntPtr self, SteamInventoryUpdateHandle_t handle, SteamItemInstanceID_t nItemID, string pchPropertyName, long nValue );
+		private delegate bool FSetProperty3( IntPtr self, SteamInventoryUpdateHandle_t handle, InventoryItemId nItemID, string pchPropertyName, long nValue );
 		private FSetProperty3 _SetProperty3;
 		
 		#endregion
-		internal bool SetProperty3( SteamInventoryUpdateHandle_t handle, SteamItemInstanceID_t nItemID, string pchPropertyName, long nValue )
+		internal bool SetProperty3( SteamInventoryUpdateHandle_t handle, InventoryItemId nItemID, string pchPropertyName, long nValue )
 		{
 			return _SetProperty3( Self, handle, nItemID, pchPropertyName, nValue );
 		}
@@ -470,11 +470,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetProperty4( IntPtr self, SteamInventoryUpdateHandle_t handle, SteamItemInstanceID_t nItemID, string pchPropertyName, float flValue );
+		private delegate bool FSetProperty4( IntPtr self, SteamInventoryUpdateHandle_t handle, InventoryItemId nItemID, string pchPropertyName, float flValue );
 		private FSetProperty4 _SetProperty4;
 		
 		#endregion
-		internal bool SetProperty4( SteamInventoryUpdateHandle_t handle, SteamItemInstanceID_t nItemID, string pchPropertyName, float flValue )
+		internal bool SetProperty4( SteamInventoryUpdateHandle_t handle, InventoryItemId nItemID, string pchPropertyName, float flValue )
 		{
 			return _SetProperty4( Self, handle, nItemID, pchPropertyName, flValue );
 		}

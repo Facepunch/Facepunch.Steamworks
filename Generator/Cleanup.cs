@@ -23,6 +23,8 @@ public static class Cleanup
 		type = type.Replace( "LeaderboardSortMethod", "LeaderboardSort" );
 		type = type.Replace( "LeaderboardDisplayType", "LeaderboardDisplay" );
 		type = type.Replace( "UGCMatchingUGCType", "UgcType" );
+		type = type.Replace( "SteamItemInstanceID_t", "InventoryItemId" );
+		type = type.Replace( "SteamItemDef_t", "InventoryDefId" );
 
 		return type;
 	}
@@ -54,6 +56,8 @@ public static class Cleanup
 		if ( name == "PublishedFileId" ) return "public";
 		if ( name == "Result" ) return "public";
 		if ( name == "UgcType" ) return "public";
+		if ( name == "InventoryItemId" ) return "public";
+		if ( name == "InventoryDefId" ) return "public";
 
 		return "internal";
 	}

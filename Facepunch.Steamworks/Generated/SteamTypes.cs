@@ -410,21 +410,21 @@ namespace Steamworks.Data
 		public override string ToString() => Value.ToString();
 	}
 	
-	internal struct SteamItemInstanceID_t
+	public struct InventoryItemId
 	{
 		public ulong Value;
 		
-		public static implicit operator SteamItemInstanceID_t( ulong value ) => new SteamItemInstanceID_t(){ Value = value };
-		public static implicit operator ulong( SteamItemInstanceID_t value ) => value.Value;
+		public static implicit operator InventoryItemId( ulong value ) => new InventoryItemId(){ Value = value };
+		public static implicit operator ulong( InventoryItemId value ) => value.Value;
 		public override string ToString() => Value.ToString();
 	}
 	
-	internal struct SteamItemDef_t
+	public struct InventoryDefId
 	{
 		public int Value;
 		
-		public static implicit operator SteamItemDef_t( int value ) => new SteamItemDef_t(){ Value = value };
-		public static implicit operator int( SteamItemDef_t value ) => value.Value;
+		public static implicit operator InventoryDefId( int value ) => new InventoryDefId(){ Value = value };
+		public static implicit operator int( InventoryDefId value ) => value.Value;
 		public override string ToString() => Value.ToString();
 	}
 	

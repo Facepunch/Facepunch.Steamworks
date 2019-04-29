@@ -6066,8 +6066,8 @@ namespace Steamworks.Data
 	
 	internal struct SteamItemDetails_t
 	{
-		internal ulong ItemId; // m_itemId SteamItemInstanceID_t
-		internal int Definition; // m_iDefinition SteamItemDef_t
+		internal InventoryItemId ItemId; // m_itemId SteamItemInstanceID_t
+		internal InventoryDefId Definition; // m_iDefinition SteamItemDef_t
 		internal ushort Quantity; // m_unQuantity uint16
 		internal ushort Flags; // m_unFlags uint16
 		
@@ -6079,8 +6079,8 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 		public struct Pack4
 		{
-			internal ulong ItemId; // m_itemId SteamItemInstanceID_t
-			internal int Definition; // m_iDefinition SteamItemDef_t
+			internal InventoryItemId ItemId; // m_itemId SteamItemInstanceID_t
+			internal InventoryDefId Definition; // m_iDefinition SteamItemDef_t
 			internal ushort Quantity; // m_unQuantity uint16
 			internal ushort Flags; // m_unFlags uint16
 			
@@ -6090,8 +6090,8 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 		public struct Pack8
 		{
-			internal ulong ItemId; // m_itemId SteamItemInstanceID_t
-			internal int Definition; // m_iDefinition SteamItemDef_t
+			internal InventoryItemId ItemId; // m_itemId SteamItemInstanceID_t
+			internal InventoryDefId Definition; // m_iDefinition SteamItemDef_t
 			internal ushort Quantity; // m_unQuantity uint16
 			internal ushort Flags; // m_unFlags uint16
 			
