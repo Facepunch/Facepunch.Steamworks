@@ -56,6 +56,12 @@ namespace Generator
             }
 
 			{
+				GenerateGlobalFunctions( "SteamAPI", $"{folder}../Generated/SteamAPI.cs" );
+				GenerateGlobalFunctions( "SteamGameServer", $"{folder}../Generated/SteamGameServer.cs" );
+				GenerateGlobalFunctions( "SteamInternal", $"{folder}../Generated/SteamInternal.cs" );
+			}
+
+			{
 				GenerateVTableClass( "ISteamApps", $"{folder}../Generated/Interfaces/ISteamApps.cs" );
 				GenerateVTableClass( "ISteamUtils", $"{folder}../Generated/Interfaces/ISteamUtils.cs" );
 				GenerateVTableClass( "ISteamParentalSettings", $"{folder}../Generated/Interfaces/ISteamParentalSettings.cs" );

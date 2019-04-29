@@ -53,7 +53,7 @@ namespace Steamworks
 			//
 			// Get other interfaces
 			//
-			if ( !global::SteamApi.SteamInternal_GameServer_Init( ipaddress, init.SteamPort, init.GamePort, init.QueryPort, (int)( init.Secure ? 3 : 2 ), init.VersionString ) )
+			if ( !SteamInternal.GameServer_Init( ipaddress, init.SteamPort, init.GamePort, init.QueryPort, (int)( init.Secure ? 3 : 2 ), init.VersionString ) )
 			{
 				throw new System.Exception( "InitGameServer returned false" );
 			}
@@ -83,6 +83,8 @@ namespace Steamworks
 			_internal = null;
 
 			SteamServerInventory.Shutdown();
+
+			SteamGameServer.Shutdown();
 		}
 
 
@@ -99,7 +101,7 @@ namespace Steamworks
 		{
 			try
 			{
-				SteamApi.SteamGameServer_RunCallbacks();
+				SteamGameServer.RunCallbacks();
 			}
 			catch ( System.Exception )
 			{

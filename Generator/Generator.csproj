@@ -50,6 +50,7 @@
     <Compile Include="CodeParser\CodeParser.Class.cs" />
     <Compile Include="CodeParser\CodeParser.cs" />
     <Compile Include="CodeParser\ParseClasses.cs" />
+    <Compile Include="CodeWriter\GlobalFunctions.cs" />
     <Compile Include="CodeWriter\ClassVTable.cs" />
     <Compile Include="CodeWriter\Constants.cs" />
     <Compile Include="CodeWriter\Types\BaseType.cs" />

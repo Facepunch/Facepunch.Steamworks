@@ -305,6 +305,42 @@
 		  }
 		]
 	  },
+
+	{
+		"NeedsSelfPointer": false,
+		"classname": "SteamApi",
+		"methodname": "SteamInternal_FindOrCreateUserInterface",
+		"returntype": "void *",
+		"params":
+		[
+		  {
+			"paramname": "steamuser",
+			"paramtype": "int32"
+		  },
+		  {
+			"paramname": "versionname",
+			"paramtype": "const char *"
+		  }
+		]
+	  },
+
+	  	{
+		"NeedsSelfPointer": false,
+		"classname": "SteamApi",
+		"methodname": "SteamInternal_FindOrCreateGameServerInterface",
+		"returntype": "void *",
+		"params":
+		[
+		  {
+			"paramname": "steamuser",
+			"paramtype": "int32"
+		  },
+		  {
+			"paramname": "versionname",
+			"paramtype": "const char *"
+		  }
+		]
+	  },
   
   
 	  {

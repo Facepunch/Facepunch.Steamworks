@@ -24,9 +24,9 @@ namespace Steamworks
 			//
 			if ( !SteamClient.IsValid && SteamServer.IsValid ) server = true;
 
-			var hUser = server ? 
-						SteamApi.SteamGameServer_GetHSteamUser() : 
-						SteamApi.GetHSteamUser();
+			var hUser = server ?
+						SteamGameServer.GetHSteamUser() : 
+						SteamAPI.GetHSteamUser();
 
 			if ( hUser == 0 )
 				throw new System.Exception( "Steamworks is uninitialized" );
