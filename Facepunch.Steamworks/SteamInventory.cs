@@ -148,5 +148,24 @@ namespace Steamworks
 			return await InventoryResult.GetAsync( sresult );
 		}
 
+		/// <summary>
+		/// This is used to grant a specific item to the user. This should 
+		/// only be used for development prototyping, from a trusted server, 
+		/// or if you don't care about hacked clients granting arbitrary items. 
+		/// This call can be disabled by a setting on Steamworks.
+		/// </summary>
+		static async Task<InventoryResult?> GenerateItem( InventoryDef target, int amount )
+		{
+			var sresult = default( SteamInventoryResult_t );
+
+			var defs = new InventoryDefId[] { target.Id };
+			var cnts = new uint[] { (uint)amount };
+
+			if ( !Internal.GenerateItems( ref sresult, defs, cnts, 1 ) )
+				return null;
+
+			return await InventoryResult.GetAsync( sresult );
+		}
+
 	}
 }
