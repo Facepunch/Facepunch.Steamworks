@@ -78,7 +78,7 @@ namespace Steamworks
 
 		public static string Currency { get; internal set; }
 
-		public static async Task<SteamItemDef[]> GetDefinitionsWithPricesAsync()
+		public static async Task<InventoryDef[]> GetDefinitionsWithPricesAsync()
 		{
 			var priceRequest = await Internal.RequestPrices();
 			if ( !priceRequest.HasValue || priceRequest.Value.Result != Result.OK )
@@ -91,7 +91,7 @@ namespace Steamworks
 			if ( num <= 0 )
 				return null;
 
-			var defs = new SteamItemDef_t[num];
+			var defs = new InventoryDefId[num];
 			var currentPrices = new ulong[num];
 			var baseprices = new ulong[num];
 
@@ -99,23 +99,40 @@ namespace Steamworks
 			if ( !gotPrices )
 				return null;
 
-			return defs.Select( x => new SteamItemDef( x ) ).ToArray();
+			return defs.Select( x => new InventoryDef( x ) ).ToArray();
 		}
 
-		public static SteamItemDef[] Definitions { get; internal set; }
+		public static InventoryDef[] Definitions { get; internal set; }
 
-		internal static SteamItemDef[] GetDefinitions()
+		internal static InventoryDef[] GetDefinitions()
 		{
 			uint num = 0;
 			if ( !Internal.GetItemDefinitionIDs( null, ref num ) )
 				return null;
 
-			var defs = new SteamItemDef_t[num];
+			var defs = new InventoryDefId[num];
 
 			if ( !Internal.GetItemDefinitionIDs( defs, ref num ) )
 				return null;
 
-			return defs.Select( x => new SteamItemDef( x ) ).ToArray();
+			return defs.Select( x => new InventoryDef( x ) ).ToArray();
+		}
+
+		public static async Task<InventoryResult?> GetItems()
+		{
+			var sresult = default( SteamInventoryResult_t );
+
+			if ( !Internal.GetAllItems( ref sresult ) )
+				return null;
+
+			var result = new InventoryResult( sresult );
+
+			if ( !await result.WaitUntilReadyAsync() )
+			{
+				return null;
+			}
+
+			return result;
 		}
 
 	}

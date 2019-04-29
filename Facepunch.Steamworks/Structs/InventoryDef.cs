@@ -4,11 +4,11 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	public struct SteamItemDef
+	public struct InventoryDef
 	{
-		internal SteamItemDef_t _id;
+		internal InventoryDefId _id;
 
-		public SteamItemDef( int defId )
+		public InventoryDef( InventoryDefId defId )
 		{
 			_id = defId;
 		}
