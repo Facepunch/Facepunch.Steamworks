@@ -80,7 +80,7 @@ namespace Steamworks
 		[TestMethod]
 		public async Task CheckFileSignature()
 		{
-			var sig = await SteamUtils.CheckFileSignature( "hl2.exe" );
+			var sig = await SteamUtils.CheckFileSignatureAsync( "hl2.exe" );
 			Console.WriteLine( $"{sig}" );
 		}
 
