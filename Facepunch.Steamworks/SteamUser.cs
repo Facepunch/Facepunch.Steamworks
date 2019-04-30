@@ -40,14 +40,14 @@ namespace Steamworks
 
 		internal static void InstallEvents()
 		{
-			Event.CreateEvent<SteamServersConnected_t>( x => OnSteamServersConnected?.Invoke() );
-			Event.CreateEvent<SteamServerConnectFailure_t>( x => OnSteamServerConnectFailure?.Invoke() );
-			Event.CreateEvent<SteamServersDisconnected_t>( x => OnSteamServersDisconnected?.Invoke() );
-			Event.CreateEvent<ClientGameServerDeny_t>( x => OnClientGameServerDeny?.Invoke() );
-			Event.CreateEvent<LicensesUpdated_t>( x => OnLicensesUpdated?.Invoke() );
-			Event.CreateEvent<ValidateAuthTicketResponse_t>( x => OnValidateAuthTicketResponse?.Invoke( x.SteamID, x.OwnerSteamID, x.AuthSessionResponse ) );
-			Event.CreateEvent<MicroTxnAuthorizationResponse_t>( x => OnMicroTxnAuthorizationResponse?.Invoke( x.AppID, x.OrderID, x.Authorized != 0 ) );
-			Event.CreateEvent<GameWebCallback_t>( x => OnGameWebCallback?.Invoke( x.URL ) );
+			SteamServersConnected_t.Install( x => OnSteamServersConnected?.Invoke() );
+			SteamServerConnectFailure_t.Install( x => OnSteamServerConnectFailure?.Invoke() );
+			SteamServersDisconnected_t.Install( x => OnSteamServersDisconnected?.Invoke() );
+			ClientGameServerDeny_t.Install( x => OnClientGameServerDeny?.Invoke() );
+			LicensesUpdated_t.Install( x => OnLicensesUpdated?.Invoke() );
+			ValidateAuthTicketResponse_t.Install( x => OnValidateAuthTicketResponse?.Invoke( x.SteamID, x.OwnerSteamID, x.AuthSessionResponse ) );
+			MicroTxnAuthorizationResponse_t.Install( x => OnMicroTxnAuthorizationResponse?.Invoke( x.AppID, x.OrderID, x.Authorized != 0 ) );
+			GameWebCallback_t.Install( x => OnGameWebCallback?.Invoke( x.URL ) );
 		}
 
 		/// <summary>

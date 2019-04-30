@@ -30,8 +30,8 @@ namespace Steamworks
 
 		internal static void InstallEvents()
 		{
-			Event.CreateEvent<ScreenshotRequested_t>( x => OnScreenshotRequested?.Invoke() );
-			Event.CreateEvent<ScreenshotReady_t>( x =>
+			ScreenshotRequested_t.Install( x => OnScreenshotRequested?.Invoke() );
+			ScreenshotReady_t.Install( x =>
 			{
 				if ( x.Result != Result.OK )
 					OnScreenshotFailed?.Invoke( x.Result );

@@ -64,7 +64,7 @@ namespace Steamworks
 
 		public static void Shutdown()
 		{
-			Events.DisposeAllClient();
+			Event.DisposeAllClient();
 
 			initialized = false;
 

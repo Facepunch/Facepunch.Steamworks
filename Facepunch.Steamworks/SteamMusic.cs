@@ -30,8 +30,8 @@ namespace Steamworks
 
 		internal static void InstallEvents()
 		{
-			Event.CreateEvent<PlaybackStatusHasChanged_t>( x => OnPlaybackChanged?.Invoke() );
-			Event.CreateEvent<VolumeHasChanged_t>( x => OnVolumeChanged?.Invoke( x.NewVolume ) );
+			PlaybackStatusHasChanged_t.Install( x => OnPlaybackChanged?.Invoke() );
+			VolumeHasChanged_t.Install( x => OnVolumeChanged?.Invoke( x.NewVolume ) );
 		}
 
 		/// <summary>

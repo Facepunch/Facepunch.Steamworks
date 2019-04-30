@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Steamworks.Data;
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using Steamworks.Data;
 
 namespace Steamworks
 {
-	internal static class Events
+	//
+	// Created on registration of a callback
+	//
+	internal class Event : IDisposable
 	{
 		internal static List<IDisposable> AllClient = new List<IDisposable>();
 		internal static List<IDisposable> AllServer = new List<IDisposable>();
@@ -31,20 +32,74 @@ namespace Steamworks
 
 			AllServer.Clear();
 		}
-	}
 
-	//
-	// Created on registration of a callback
-	//
-	internal class Event : IDisposable
-	{
-		Steamworks.ISteamCallback template;
-		public Action<Steamworks.ISteamCallback> Action;
+		internal static void Register( Callback.Run func, int size, int callbackId, bool gameserver )
+		{
+			var r = new Event();
+			r.vTablePtr = BuildVTable( func, r.Allocations );
+
+			//
+			// Create the callback object
+			//
+			var cb = new Callback();
+			cb.vTablePtr = r.vTablePtr;
+			cb.CallbackFlags = gameserver ? (byte)0x02 : (byte)0;
+			cb.CallbackId = callbackId;
+
+			//
+			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
+			//
+			r.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+
+			//
+			// Register the callback with Steam
+			//
+			SteamClient.RegisterCallback( r.PinnedCallback.AddrOfPinnedObject(), cb.CallbackId );
+
+			r.IsAllocated = true;
+
+			if ( gameserver )
+				Event.AllServer.Add( r );
+			else
+				Event.AllClient.Add( r );
+		}
+
+		static IntPtr BuildVTable( Callback.Run run, List<GCHandle> allocations )
+		{
+			var RunStub = (Callback.RunCall)Callback.RunStub;
+			var SizeStub = (Callback.GetCallbackSizeBytes)Callback.SizeStub;
+
+			allocations.Add( GCHandle.Alloc( run ) );
+			allocations.Add( GCHandle.Alloc( RunStub ) );
+			allocations.Add( GCHandle.Alloc( SizeStub ) );
+
+			var a = Marshal.GetFunctionPointerForDelegate<Callback.Run>( run );
+			var b = Marshal.GetFunctionPointerForDelegate<Callback.RunCall>( RunStub );
+			var c = Marshal.GetFunctionPointerForDelegate<Callback.GetCallbackSizeBytes>( SizeStub );
+
+			var vt = Marshal.AllocHGlobal( IntPtr.Size * 3 );
+
+			if ( Config.Os == OsType.Windows )
+			{
+				Marshal.WriteIntPtr( vt, IntPtr.Size * 0, b );
+				Marshal.WriteIntPtr( vt, IntPtr.Size * 1, a );
+				Marshal.WriteIntPtr( vt, IntPtr.Size * 2, c );
+			}
+			else
+			{
+				Marshal.WriteIntPtr( vt, IntPtr.Size * 0, a );
+				Marshal.WriteIntPtr( vt, IntPtr.Size * 1, b );
+				Marshal.WriteIntPtr( vt, IntPtr.Size * 2, c );
+			}
+
+			return vt;
+		}
 
 		bool IsAllocated;
 		List<GCHandle> Allocations = new List<GCHandle>();
 		internal IntPtr vTablePtr;
 		internal GCHandle PinnedCallback;
+
 
 		public void Dispose()
 		{
@@ -78,62 +133,5 @@ namespace Steamworks
 			Dispose();
 		}
 
-		public virtual bool IsValid { get { return true; } }
-
-		internal static Event CreateEvent<T>( Action<T> onresult, bool gameserver = false ) where T: struct, Steamworks.ISteamCallback
-		{
-			var r = new Event();
-
-			r.Action = ( x ) => onresult( (T) x );
-
-			r.template = new T();
-			r.vTablePtr = Callback.VTable.GetVTable( r.OnResult, RunStub, SizeStub, r.Allocations );
-
-			//
-			// Create the callback object
-			//
-			var cb = new Callback();
-			cb.vTablePtr = r.vTablePtr;
-			cb.CallbackFlags = gameserver ? (byte)0x02 : (byte)0;
-			cb.CallbackId = r.template.GetCallbackId();
-
-			//
-			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
-			//
-			r.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
-
-			//
-			// Register the callback with Steam
-			//
-			SteamClient.RegisterCallback( r.PinnedCallback.AddrOfPinnedObject(), cb.CallbackId );
-
-			r.IsAllocated = true;
-
-			if ( gameserver )
-				Events.AllServer.Add( r );
-			else
-				Events.AllClient.Add( r );
-
-			return r;
-		}
-
-		[MonoPInvokeCallback]
-		internal void OnResult( IntPtr self, IntPtr param )
-		{
-			var value = template.Fill( param );
-			Action( value );
-		}
-
-		[MonoPInvokeCallback]
-		static void RunStub( IntPtr self, IntPtr param, bool failure, SteamAPICall_t call )
-		{
-			throw new System.Exception( "Something changed in the Steam API and now CCallbackBack is calling the CallResult function [Run( void *pvParam, bool bIOFailure, SteamAPICall_t hSteamAPICall )]" );
-		}
-
-		[MonoPInvokeCallback]
-		static int SizeStub( IntPtr self )
-		{
-			throw new System.Exception( "Something changed in the Steam API and now CCallbackBack is calling the GetSize function [GetCallbackSizeBytes()]" );
-		}
 	}
 }

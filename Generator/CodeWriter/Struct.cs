@@ -53,8 +53,6 @@ namespace Generator
                 if ( name.Contains( "::" ) )
                     continue;
 
-				
-
 				int defaultPack = 8;
 
                 if ( c.Fields.Any( x => x.Type.Contains( "CSteamID" ) ) && !ForceLargePackStructs.Contains( c.Name ) )
@@ -90,6 +88,29 @@ namespace Generator
 								WriteLine( $"public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof({name}) : typeof(Pack8) );" );
 								WriteLine( $"public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? (({name})({name}) Marshal.PtrToStructure( p, typeof({name}) )) : (({name})(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));" );
 							}
+
+							WriteLine( $"static Action<{name}> actionClient;" );
+							WriteLine( $"[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( ({name})default({name}).Fill( pvParam ) );" );
+
+							WriteLine( $"static Action<{name}> actionServer;" );
+							WriteLine( $"[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( ({name})default({name}).Fill( pvParam ) );" );
+
+							StartBlock( $"public static void Install( Action<{name}> action, bool server = false )" );
+							{
+								StartBlock( "if ( server )" );
+								{
+									WriteLine( $"Event.Register( OnServer, default({name}).GetStructSize(), {c.CallbackId}, true );" );
+									WriteLine( $"actionServer = action;" );
+								}
+								Else();
+								{
+									WriteLine( $"Event.Register( OnClient, default({name}).GetStructSize(), {c.CallbackId}, false );" );
+									WriteLine( $"actionClient = action;" );
+								}
+								EndBlock();
+
+							}
+							EndBlock();
 						}
 						WriteLine( "#endregion" );
 					}
