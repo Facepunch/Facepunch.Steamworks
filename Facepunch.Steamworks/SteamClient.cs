@@ -29,6 +29,7 @@ namespace Steamworks
 
 			initialized = true;
 
+
 			SteamApps.InstallEvents();
 			SteamUtils.InstallEvents();
 			SteamParental.InstallEvents();
@@ -63,6 +64,8 @@ namespace Steamworks
 
 		public static void Shutdown()
 		{
+			Events.DisposeAllClient();
+
 			initialized = false;
 
 			SteamApps.Shutdown();

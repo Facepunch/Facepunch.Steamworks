@@ -7,6 +7,32 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
+	internal static class Events
+	{
+		internal static List<IDisposable> AllClient = new List<IDisposable>();
+		internal static List<IDisposable> AllServer = new List<IDisposable>();
+
+		internal static void DisposeAllClient()
+		{
+			foreach ( var a in AllClient.ToArray() )
+			{
+				a.Dispose();
+			}
+
+			AllClient.Clear();
+		}
+
+		internal static void DisposeAllServer()
+		{
+			foreach ( var a in AllServer.ToArray() )
+			{
+				a.Dispose();
+			}
+
+			AllServer.Clear();
+		}
+	}
+
 	//
 	// Created on registration of a callback
 	//
@@ -14,13 +40,20 @@ namespace Steamworks
 	{
 		public Action<T> Action;
 
+		bool IsAllocated;
 		List<GCHandle> Allocations = new List<GCHandle>();
 		internal IntPtr vTablePtr;
 		internal GCHandle PinnedCallback;
 
 		public void Dispose()
 		{
-			UnregisterCallback();
+			if ( !IsAllocated ) return;
+			IsAllocated = false;
+
+			if ( !PinnedCallback.IsAllocated )
+				throw new System.Exception( "Callback isn't allocated!?" );
+
+			SteamClient.UnregisterCallback( PinnedCallback.AddrOfPinnedObject() );
 
 			foreach ( var a in Allocations )
 			{
@@ -28,10 +61,9 @@ namespace Steamworks
 					a.Free();
 			}
 
-			Allocations.Clear();
+			Allocations = null;
 
-			if ( PinnedCallback.IsAllocated )
-				PinnedCallback.Free();
+			PinnedCallback.Free();
 
 			if ( vTablePtr != IntPtr.Zero )
 			{
@@ -40,12 +72,9 @@ namespace Steamworks
 			}
 		}
 
-		private void UnregisterCallback()
+		~Event()
 		{
-			if ( !PinnedCallback.IsAllocated )
-				return;
-
-			SteamClient.UnregisterCallback( PinnedCallback.AddrOfPinnedObject() );
+			Dispose();
 		}
 
 		public virtual bool IsValid { get { return true; } }
@@ -107,6 +136,13 @@ namespace Steamworks
 			// Register the callback with Steam
 			//
 			SteamClient.RegisterCallback( PinnedCallback.AddrOfPinnedObject(), cb.CallbackId );
+
+			IsAllocated = true;
+
+			if ( gameserver )
+				Events.AllServer.Add( this );
+			else
+				Events.AllClient.Add( this );
 		}
 
 		[MonoPInvokeCallback] internal void OnResultThis( IntPtr self, IntPtr param ) => OnResult( param );

@@ -78,6 +78,8 @@ namespace Steamworks
 
 		public static void Shutdown()
 		{
+			Events.DisposeAllServer();
+
 			initialized = false;
 
 			_internal = null;
