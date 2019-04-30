@@ -14,8 +14,8 @@ node ( 'vs2017' )
 
 	stage 'Archive'
 		archiveArtifacts artifacts: 'Facepunch.Steamworks/bin/**/*'
-		bat( "copy /Y 'Facepunch.Steamworks/bin/Debug/netstandard2.0/Facepunch.Steamworks.dll' 'UnityPlugin/'" )
-		bat( "copy /Y 'Facepunch.Steamworks/bin/Debug/netstandard2.0/Facepunch.Steamworks.pdb' 'UnityPlugin/'" )
-		bat( "copy /Y 'Facepunch.Steamworks/bin/Debug/netstandard2.0/Facepunch.Steamworks.xml' 'UnityPlugin/'" )
+		bat( "copy /Y 'Facepunch.Steamworks\\bin\\Debug\\netstandard2.0\\Facepunch.Steamworks.dll' 'UnityPlugin\\'" )
+		bat( "copy /Y 'Facepunch.Steamworks\\bin\\Debug\\netstandard2.0\\Facepunch.Steamworks.pdb' 'UnityPlugin\\'" )
+		bat( "copy /Y 'Facepunch.Steamworks\\bin\\Debug\\netstandard2.0\\Facepunch.Steamworks.xml' 'UnityPlugin\\'" )
 		archiveArtifacts unityplugin: 'UnityPlugin/**/*'
 }
