@@ -17,5 +17,5 @@ node ( 'vs2017' )
 		bat( "copy /Y Facepunch.Steamworks\\bin\\Debug\\netstandard2.0\\Facepunch.Steamworks.dll UnityPlugin\\" )
 		bat( "copy /Y Facepunch.Steamworks\\bin\\Debug\\netstandard2.0\\Facepunch.Steamworks.pdb UnityPlugin\\" )
 		bat( "copy /Y Facepunch.Steamworks\\bin\\Debug\\netstandard2.0\\Facepunch.Steamworks.xml UnityPlugin\\" )
-		archiveArtifacts unityplugin: 'UnityPlugin/**/*'
+		archiveArtifacts artifacts: 'UnityPlugin/**/*'
 }
