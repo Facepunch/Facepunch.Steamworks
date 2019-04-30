@@ -36,7 +36,7 @@ namespace Generator
 					}
 					EndBlock();
 
-					StartBlock( $"internal static class MacOs" );
+					StartBlock( $"internal static class Posix" );
 					{
 						foreach ( var func in functions )
 						{
@@ -107,21 +107,21 @@ namespace Generator
 						WriteLine( returnType.Return( v ) );
 					}
 				}
-				Else( " if ( Config.Os == OsType.MacOs )" );
+				Else( " if ( Config.Os == OsType.Posix )" );
 				{
 					if ( returnType.IsReturnedWeird )
 					{
 						WriteLine( $"var retVal = default( {returnType.TypeName} );" );
-						WriteLine( $"MacOs.{func.Name}( ref retVal, {callargs} );" );
+						WriteLine( $"Posix.{func.Name}( ref retVal, {callargs} );" );
 						WriteLine( $"{returnType.Return( "retVal" )}" );
 					}
 					else if ( returnType.IsVoid )
 					{
-						WriteLine( $"MacOs.{func.Name}( {callargs} );" );
+						WriteLine( $"Posix.{func.Name}( {callargs} );" );
 					}
 					else
 					{
-						var v = $"MacOs.{func.Name}( {callargs} )";
+						var v = $"Posix.{func.Name}( {callargs} )";
 
 						WriteLine( returnType.Return( v ) );
 					}

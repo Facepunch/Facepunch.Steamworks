@@ -25,7 +25,7 @@ namespace Steamworks
 			public static extern IntPtr SteamInternal_CreateInterface( string version );
 			
 		}
-		internal static class MacOs
+		internal static class Posix
 		{
 			[DllImport( "libsteam_api", EntryPoint = "SteamInternal_GameServer_Init", CallingConvention = CallingConvention.Cdecl )]
 			[return: MarshalAs( UnmanagedType.I1 )]
@@ -47,9 +47,9 @@ namespace Steamworks
 			{
 				return Win64.SteamInternal_GameServer_Init( unIP, usPort, usGamePort, usQueryPort, eServerMode, pchVersionString );
 			}
-			else if ( Config.Os == OsType.MacOs )
+			else if ( Config.Os == OsType.Posix )
 			{
-				return MacOs.SteamInternal_GameServer_Init( unIP, usPort, usGamePort, usQueryPort, eServerMode, pchVersionString );
+				return Posix.SteamInternal_GameServer_Init( unIP, usPort, usGamePort, usQueryPort, eServerMode, pchVersionString );
 			}
 			else
 			{
@@ -63,9 +63,9 @@ namespace Steamworks
 			{
 				return Win64.SteamInternal_FindOrCreateUserInterface( steamuser, versionname );
 			}
-			else if ( Config.Os == OsType.MacOs )
+			else if ( Config.Os == OsType.Posix )
 			{
-				return MacOs.SteamInternal_FindOrCreateUserInterface( steamuser, versionname );
+				return Posix.SteamInternal_FindOrCreateUserInterface( steamuser, versionname );
 			}
 			else
 			{
@@ -79,9 +79,9 @@ namespace Steamworks
 			{
 				return Win64.SteamInternal_FindOrCreateGameServerInterface( steamuser, versionname );
 			}
-			else if ( Config.Os == OsType.MacOs )
+			else if ( Config.Os == OsType.Posix )
 			{
-				return MacOs.SteamInternal_FindOrCreateGameServerInterface( steamuser, versionname );
+				return Posix.SteamInternal_FindOrCreateGameServerInterface( steamuser, versionname );
 			}
 			else
 			{
@@ -95,9 +95,9 @@ namespace Steamworks
 			{
 				return Win64.SteamInternal_CreateInterface( version );
 			}
-			else if ( Config.Os == OsType.MacOs )
+			else if ( Config.Os == OsType.Posix )
 			{
-				return MacOs.SteamInternal_CreateInterface( version );
+				return Posix.SteamInternal_CreateInterface( version );
 			}
 			else
 			{

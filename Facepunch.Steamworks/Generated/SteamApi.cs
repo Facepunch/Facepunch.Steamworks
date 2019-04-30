@@ -44,7 +44,7 @@ namespace Steamworks
 			public static extern bool SteamAPI_RestartAppIfNecessary( uint unOwnAppID );
 			
 		}
-		internal static class MacOs
+		internal static class Posix
 		{
 			[DllImport( "libsteam_api", EntryPoint = "SteamAPI_Init", CallingConvention = CallingConvention.Cdecl )]
 			[return: MarshalAs( UnmanagedType.I1 )]
@@ -85,9 +85,9 @@ namespace Steamworks
 			{
 				return Win64.SteamAPI_Init();
 			}
-			else if ( Config.Os == OsType.MacOs )
+			else if ( Config.Os == OsType.Posix )
 			{
-				return MacOs.SteamAPI_Init();
+				return Posix.SteamAPI_Init();
 			}
 			else
 			{
@@ -101,9 +101,9 @@ namespace Steamworks
 			{
 				Win64.SteamAPI_RunCallbacks();
 			}
-			else if ( Config.Os == OsType.MacOs )
+			else if ( Config.Os == OsType.Posix )
 			{
-				MacOs.SteamAPI_RunCallbacks();
+				Posix.SteamAPI_RunCallbacks();
 			}
 			else
 			{
@@ -117,9 +117,9 @@ namespace Steamworks
 			{
 				Win64.SteamAPI_RegisterCallback( pCallback, callback );
 			}
-			else if ( Config.Os == OsType.MacOs )
+			else if ( Config.Os == OsType.Posix )
 			{
-				MacOs.SteamAPI_RegisterCallback( pCallback, callback );
+				Posix.SteamAPI_RegisterCallback( pCallback, callback );
 			}
 			else
 			{
@@ -133,9 +133,9 @@ namespace Steamworks
 			{
 				Win64.SteamAPI_UnregisterCallback( pCallback );
 			}
-			else if ( Config.Os == OsType.MacOs )
+			else if ( Config.Os == OsType.Posix )
 			{
-				MacOs.SteamAPI_UnregisterCallback( pCallback );
+				Posix.SteamAPI_UnregisterCallback( pCallback );
 			}
 			else
 			{
@@ -149,9 +149,9 @@ namespace Steamworks
 			{
 				Win64.SteamAPI_RegisterCallResult( pCallback, callback );
 			}
-			else if ( Config.Os == OsType.MacOs )
+			else if ( Config.Os == OsType.Posix )
 			{
-				MacOs.SteamAPI_RegisterCallResult( pCallback, callback );
+				Posix.SteamAPI_RegisterCallResult( pCallback, callback );
 			}
 			else
 			{
@@ -165,9 +165,9 @@ namespace Steamworks
 			{
 				Win64.SteamAPI_UnregisterCallResult( pCallback, callback );
 			}
-			else if ( Config.Os == OsType.MacOs )
+			else if ( Config.Os == OsType.Posix )
 			{
-				MacOs.SteamAPI_UnregisterCallResult( pCallback, callback );
+				Posix.SteamAPI_UnregisterCallResult( pCallback, callback );
 			}
 			else
 			{
@@ -181,9 +181,9 @@ namespace Steamworks
 			{
 				Win64.SteamAPI_Shutdown();
 			}
-			else if ( Config.Os == OsType.MacOs )
+			else if ( Config.Os == OsType.Posix )
 			{
-				MacOs.SteamAPI_Shutdown();
+				Posix.SteamAPI_Shutdown();
 			}
 			else
 			{
@@ -197,9 +197,9 @@ namespace Steamworks
 			{
 				return Win64.SteamAPI_GetHSteamUser();
 			}
-			else if ( Config.Os == OsType.MacOs )
+			else if ( Config.Os == OsType.Posix )
 			{
-				return MacOs.SteamAPI_GetHSteamUser();
+				return Posix.SteamAPI_GetHSteamUser();
 			}
 			else
 			{
@@ -213,9 +213,9 @@ namespace Steamworks
 			{
 				return Win64.SteamAPI_GetHSteamPipe();
 			}
-			else if ( Config.Os == OsType.MacOs )
+			else if ( Config.Os == OsType.Posix )
 			{
-				return MacOs.SteamAPI_GetHSteamPipe();
+				return Posix.SteamAPI_GetHSteamPipe();
 			}
 			else
 			{
@@ -229,9 +229,9 @@ namespace Steamworks
 			{
 				return Win64.SteamAPI_RestartAppIfNecessary( unOwnAppID );
 			}
-			else if ( Config.Os == OsType.MacOs )
+			else if ( Config.Os == OsType.Posix )
 			{
-				return MacOs.SteamAPI_RestartAppIfNecessary( unOwnAppID );
+				return Posix.SteamAPI_RestartAppIfNecessary( unOwnAppID );
 			}
 			else
 			{

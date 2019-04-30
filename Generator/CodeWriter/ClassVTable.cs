@@ -112,7 +112,6 @@ namespace Generator
 						}
 						else
 						{
-
 							WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, {locations[i]}) );" );
 
 							if ( returnType.IsReturnedWeird )

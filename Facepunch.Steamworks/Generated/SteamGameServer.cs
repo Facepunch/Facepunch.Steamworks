@@ -24,7 +24,7 @@ namespace Steamworks
 			public static extern HSteamPipe SteamGameServer_GetHSteamPipe();
 			
 		}
-		internal static class MacOs
+		internal static class Posix
 		{
 			[DllImport( "libsteam_api", EntryPoint = "SteamGameServer_RunCallbacks", CallingConvention = CallingConvention.Cdecl )]
 			public static extern void SteamGameServer_RunCallbacks();
@@ -45,9 +45,9 @@ namespace Steamworks
 			{
 				Win64.SteamGameServer_RunCallbacks();
 			}
-			else if ( Config.Os == OsType.MacOs )
+			else if ( Config.Os == OsType.Posix )
 			{
-				MacOs.SteamGameServer_RunCallbacks();
+				Posix.SteamGameServer_RunCallbacks();
 			}
 			else
 			{
@@ -61,9 +61,9 @@ namespace Steamworks
 			{
 				Win64.SteamGameServer_Shutdown();
 			}
-			else if ( Config.Os == OsType.MacOs )
+			else if ( Config.Os == OsType.Posix )
 			{
-				MacOs.SteamGameServer_Shutdown();
+				Posix.SteamGameServer_Shutdown();
 			}
 			else
 			{
@@ -77,9 +77,9 @@ namespace Steamworks
 			{
 				return Win64.SteamGameServer_GetHSteamUser();
 			}
-			else if ( Config.Os == OsType.MacOs )
+			else if ( Config.Os == OsType.Posix )
 			{
-				return MacOs.SteamGameServer_GetHSteamUser();
+				return Posix.SteamGameServer_GetHSteamUser();
 			}
 			else
 			{
@@ -93,9 +93,9 @@ namespace Steamworks
 			{
 				return Win64.SteamGameServer_GetHSteamPipe();
 			}
-			else if ( Config.Os == OsType.MacOs )
+			else if ( Config.Os == OsType.Posix )
 			{
-				return MacOs.SteamGameServer_GetHSteamPipe();
+				return Posix.SteamGameServer_GetHSteamPipe();
 			}
 			else
 			{

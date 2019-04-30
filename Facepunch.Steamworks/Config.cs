@@ -19,11 +19,11 @@ namespace Steamworks
 					}
 					else if ( File.Exists( @"/System/Library/CoreServices/SystemVersion.plist" ) )
 					{
-						_os = OsType.MacOs;
+						_os = OsType.Posix;
 					}
 					else if ( File.Exists( @"/proc/sys/kernel/ostype" ) )
 					{
-						_os = OsType.Linux;
+						_os = OsType.Posix;
 					}
 					else
 					{
@@ -55,7 +55,6 @@ namespace Steamworks
 	{
 		None,
 		Windows,
-		Linux,
-		MacOs,
+		Posix,
 	}
 }
