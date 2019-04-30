@@ -60,6 +60,9 @@ internal class BaseType
 	{
 		get
 		{
+			if ( Func == "ReadP2PPacket" ) return false;
+			if ( Func == "SendP2PPacket" ) return false;
+
 			if ( VarName == "pOut" ) return false;
 			if ( VarName == "pOutBuffer" ) return false;
 			if ( VarName == "pubRGB" ) return false;

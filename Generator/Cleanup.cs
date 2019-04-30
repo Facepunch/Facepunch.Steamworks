@@ -58,6 +58,7 @@ public static class Cleanup
 		if ( name == "UgcType" ) return "public";
 		if ( name == "InventoryItemId" ) return "public";
 		if ( name == "InventoryDefId" ) return "public";
+		if ( name == "P2PSend" ) return "public";
 
 		return "internal";
 	}

@@ -44,11 +44,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSendP2PPacket( IntPtr self, SteamId steamIDRemote, [In,Out] IntPtr[]  pubData, uint cubData, P2PSend eP2PSendType, int nChannel );
+		private delegate bool FSendP2PPacket( IntPtr self, SteamId steamIDRemote, IntPtr pubData, uint cubData, P2PSend eP2PSendType, int nChannel );
 		private FSendP2PPacket _SendP2PPacket;
 		
 		#endregion
-		internal bool SendP2PPacket( SteamId steamIDRemote, [In,Out] IntPtr[]  pubData, uint cubData, P2PSend eP2PSendType, int nChannel )
+		internal bool SendP2PPacket( SteamId steamIDRemote, IntPtr pubData, uint cubData, P2PSend eP2PSendType, int nChannel )
 		{
 			return _SendP2PPacket( Self, steamIDRemote, pubData, cubData, eP2PSendType, nChannel );
 		}
@@ -68,11 +68,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FReadP2PPacket( IntPtr self, [In,Out] IntPtr[]  pubDest, uint cubDest, ref uint pcubMsgSize, ref SteamId psteamIDRemote, int nChannel );
+		private delegate bool FReadP2PPacket( IntPtr self, IntPtr pubDest, uint cubDest, ref uint pcubMsgSize, ref SteamId psteamIDRemote, int nChannel );
 		private FReadP2PPacket _ReadP2PPacket;
 		
 		#endregion
-		internal bool ReadP2PPacket( [In,Out] IntPtr[]  pubDest, uint cubDest, ref uint pcubMsgSize, ref SteamId psteamIDRemote, int nChannel )
+		internal bool ReadP2PPacket( IntPtr pubDest, uint cubDest, ref uint pcubMsgSize, ref SteamId psteamIDRemote, int nChannel )
 		{
 			return _ReadP2PPacket( Self, pubDest, cubDest, ref pcubMsgSize, ref psteamIDRemote, nChannel );
 		}

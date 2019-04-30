@@ -40,6 +40,7 @@ namespace Steamworks
 			SteamScreenshots.InstallEvents();
 			SteamUserStats.InstallEvents();
 			SteamInventory.InstallEvents();
+			SteamNetworking.InstallEvents();
 
 			RunCallbacksAsync();
 		}

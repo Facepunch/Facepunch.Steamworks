@@ -946,7 +946,7 @@ namespace Steamworks
 	//
 	// EP2PSend
 	//
-	internal enum P2PSend : int
+	public enum P2PSend : int
 	{
 		Unreliable = 0,
 		UnreliableNoDelay = 1,
