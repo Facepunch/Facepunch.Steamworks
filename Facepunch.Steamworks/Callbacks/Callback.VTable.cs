@@ -7,35 +7,43 @@ namespace Steamworks
 {
 	internal partial class Callback
     {
-		[StructLayout( LayoutKind.Sequential, Pack = 1 )]
-        public class VTable
+        internal static class VTable
         {
-            [UnmanagedFunctionPointer( CallingConvention.StdCall )] public delegate void ResultD( IntPtr pvParam );
-            [UnmanagedFunctionPointer( CallingConvention.StdCall )] public delegate void ResultWithInfoD( IntPtr pvParam, bool bIOFailure, SteamAPICall_t hSteamAPICall );
-            [UnmanagedFunctionPointer( CallingConvention.StdCall )] public delegate int GetSizeD();
+            [UnmanagedFunctionPointer( CallingConvention.ThisCall )]
+			public delegate void Run( IntPtr thisptr, IntPtr pvParam );
 
-            public ResultD ResultA;
-            public ResultWithInfoD ResultB;
-            public GetSizeD GetSize;
+            [UnmanagedFunctionPointer( CallingConvention.ThisCall )]
+			public delegate void RunCall( IntPtr thisptr, IntPtr pvParam, bool bIOFailure, SteamAPICall_t hSteamAPICall );
 
-			internal static IntPtr GetVTable( ResultD onResultThis, ResultWithInfoD onResultWithInfoThis, GetSizeD onGetSizeThis, List<GCHandle> allocations )
+            [UnmanagedFunctionPointer( CallingConvention.ThisCall )]
+			public delegate int GetCallbackSizeBytes( IntPtr thisptr );
+
+			internal static IntPtr GetVTable( Run run, RunCall runInfo, GetCallbackSizeBytes size, List<GCHandle> allocations )
 			{
-				var vTablePtr = Marshal.AllocHGlobal( Marshal.SizeOf( typeof( Callback.VTable ) ) );
+				allocations.Add( GCHandle.Alloc( run ) );
+				allocations.Add( GCHandle.Alloc( runInfo ) );
+				allocations.Add( GCHandle.Alloc( size ) );
 
-				var vTable = new Callback.VTable
+				var a = Marshal.GetFunctionPointerForDelegate<Run>( run );
+				var b = Marshal.GetFunctionPointerForDelegate<RunCall>( runInfo );
+				var c = Marshal.GetFunctionPointerForDelegate<GetCallbackSizeBytes>( size );
+
+				var vt = Marshal.AllocHGlobal( IntPtr.Size * 3 );
+
+				if ( Config.Os == OsType.Windows )
 				{
-					ResultA = onResultThis,
-					ResultB = onResultWithInfoThis,
-					GetSize = onGetSizeThis,
-				};
+					Marshal.WriteIntPtr( vt, IntPtr.Size * 0, b );
+					Marshal.WriteIntPtr( vt, IntPtr.Size * 1, a );
+					Marshal.WriteIntPtr( vt, IntPtr.Size * 2, c );
+				}
+				else
+				{
+					Marshal.WriteIntPtr( vt, IntPtr.Size * 0, a );
+					Marshal.WriteIntPtr( vt, IntPtr.Size * 1, b );
+					Marshal.WriteIntPtr( vt, IntPtr.Size * 2, c );
+				}
 
-				allocations.Add( GCHandle.Alloc( vTable.ResultA ) );
-				allocations.Add( GCHandle.Alloc( vTable.ResultB ) );
-				allocations.Add( GCHandle.Alloc( vTable.GetSize ) );
-
-				Marshal.StructureToPtr( vTable, vTablePtr, false );
-
-				return vTablePtr;
+				return vt;
 			}
 		}
     };

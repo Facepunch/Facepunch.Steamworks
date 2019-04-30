@@ -36,13 +36,13 @@ namespace Steamworks
 
 		internal static void InstallEvents()
 		{
-			new Event<FriendStateChange_t>( x => OnPersonaStateChange?.Invoke( new Friend( x.SteamID ) ) );
-			new Event<GameRichPresenceJoinRequested_t>( x => OnGameRichPresenceJoinRequested?.Invoke( new Friend( x.SteamIDFriend), x.Connect ) );
-			new Event<GameConnectedFriendChatMsg_t>( OnFriendChatMessage );
-			new Event<GameOverlayActivated_t>( x => OnGameOverlayActivated?.Invoke() );
-			new Event<GameServerChangeRequested_t>( x => OnGameServerChangeRequested?.Invoke( x.Server, x.Password ) );
-			new Event<GameLobbyJoinRequested_t>( x => OnGameLobbyJoinRequested?.Invoke( x.SteamIDLobby, x.SteamIDFriend ) );
-			new Event<FriendRichPresenceUpdate_t>( x => OnFriendRichPresenceUpdate?.Invoke( new Friend( x.SteamIDFriend ) ) );
+			Event.CreateEvent<FriendStateChange_t>( x => OnPersonaStateChange?.Invoke( new Friend( x.SteamID ) ) );
+			Event.CreateEvent<GameRichPresenceJoinRequested_t>( x => OnGameRichPresenceJoinRequested?.Invoke( new Friend( x.SteamIDFriend), x.Connect ) );
+			Event.CreateEvent<GameConnectedFriendChatMsg_t>( OnFriendChatMessage );
+			Event.CreateEvent<GameOverlayActivated_t>( x => OnGameOverlayActivated?.Invoke() );
+			Event.CreateEvent<GameServerChangeRequested_t>( x => OnGameServerChangeRequested?.Invoke( x.Server, x.Password ) );
+			Event.CreateEvent<GameLobbyJoinRequested_t>( x => OnGameLobbyJoinRequested?.Invoke( x.SteamIDLobby, x.SteamIDFriend ) );
+			Event.CreateEvent<FriendRichPresenceUpdate_t>( x => OnFriendRichPresenceUpdate?.Invoke( new Friend( x.SteamIDFriend ) ) );
 		}
 
 		/// <summary>

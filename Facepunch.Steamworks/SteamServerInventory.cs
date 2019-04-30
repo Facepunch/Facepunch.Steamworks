@@ -29,7 +29,7 @@ namespace Steamworks
 
 		internal static void InstallEvents()
 		{
-			new Event<SteamInventoryDefinitionUpdate_t>( x => DefinitionsUpdated(), true );
+			Event.CreateEvent<SteamInventoryDefinitionUpdate_t>( x => DefinitionsUpdated(), true );
 		}
 
 		public static event Action OnDefinitionsUpdated;

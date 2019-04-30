@@ -31,10 +31,10 @@ namespace Steamworks
 
 		internal static void InstallEvents()
 		{
-			new Event<IPCountry_t>( x => OnIpCountryChanged?.Invoke() );
-			new Event<LowBatteryPower_t>( x => OnLowBatteryPower?.Invoke( x.MinutesBatteryLeft ) );
-			new Event<SteamShutdown_t>( x => OnSteamShutdown?.Invoke() );
-			new Event<GamepadTextInputDismissed_t>( x => OnGamepadTextInputDismissed?.Invoke( x.Submitted ) );
+			Event.CreateEvent<IPCountry_t>( x => OnIpCountryChanged?.Invoke() );
+			Event.CreateEvent<LowBatteryPower_t>( x => OnLowBatteryPower?.Invoke( x.MinutesBatteryLeft ) );
+			Event.CreateEvent<SteamShutdown_t>( x => OnSteamShutdown?.Invoke() );
+			Event.CreateEvent<GamepadTextInputDismissed_t>( x => OnGamepadTextInputDismissed?.Invoke( x.Submitted ) );
 		}
 
 		/// <summary>
@@ -166,7 +166,7 @@ namespace Steamworks
 		/// Asynchronous call to check if an executable file has been signed using the public key set on the signing tab
 		/// of the partner site, for example to refuse to load modified executable files.  
 		/// </summary>
-		public static async Task<CheckFileSignature> CheckFileSignature( string filename )
+		public static async Task<CheckFileSignature> CheckFileSignatureAsync( string filename )
 		{
 			var r = await Internal.CheckFileSignature( filename );
 

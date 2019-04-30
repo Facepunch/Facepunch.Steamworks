@@ -30,7 +30,7 @@ namespace Steamworks
 
 		internal static void InstallEvents()
 		{
-			new Event<ValidateAuthTicketResponse_t>( x => OnValidateAuthTicketResponse?.Invoke( x.SteamID, x.OwnerSteamID, x.AuthSessionResponse ), true );
+			Event.CreateEvent<ValidateAuthTicketResponse_t>( x => OnValidateAuthTicketResponse?.Invoke( x.SteamID, x.OwnerSteamID, x.AuthSessionResponse ), true );
 
 			SteamServerInventory.InstallEvents();
 		}

@@ -32,7 +32,7 @@ namespace Steamworks
 
 		internal static void InstallEvents()
 		{
-			new Event<UserStatsReceived_t>( x =>
+			Event.CreateEvent<UserStatsReceived_t>( x =>
 			{
 				if ( x.SteamIDUser == SteamClient.SteamId )
 					StatsRecieved = true;
@@ -40,9 +40,9 @@ namespace Steamworks
 				OnUserStatsReceived?.Invoke( x.SteamIDUser, x.Result );
 			} );
 
-			new Event<UserStatsStored_t>( x => OnUserStatsStored?.Invoke( x.Result ) );
-			new Event<UserAchievementStored_t>( x => OnAchievementProgress?.Invoke( x.AchievementName, (int) x.CurProgress, (int)x.MaxProgress ) );
-			new Event<UserStatsUnloaded_t>( x => OnUserStatsUnloaded?.Invoke( x.SteamIDUser ) );
+			Event.CreateEvent<UserStatsStored_t>( x => OnUserStatsStored?.Invoke( x.Result ) );
+			Event.CreateEvent<UserAchievementStored_t>( x => OnAchievementProgress?.Invoke( x.AchievementName, (int) x.CurProgress, (int)x.MaxProgress ) );
+			Event.CreateEvent<UserStatsUnloaded_t>( x => OnUserStatsUnloaded?.Invoke( x.SteamIDUser ) );
 		}
 
 		/// <summary>

@@ -36,9 +36,10 @@ namespace Steamworks
 	//
 	// Created on registration of a callback
 	//
-	internal class Event<T> : IDisposable where T : struct, Steamworks.ISteamCallback
+	internal class Event : IDisposable
 	{
-		public Action<T> Action;
+		Steamworks.ISteamCallback template;
+		public Action<Steamworks.ISteamCallback> Action;
 
 		bool IsAllocated;
 		List<GCHandle> Allocations = new List<GCHandle>();
@@ -79,86 +80,60 @@ namespace Steamworks
 
 		public virtual bool IsValid { get { return true; } }
 
-		T template;
-
-		internal Event( Action<T> onresult, bool gameserver = false ) 
+		internal static Event CreateEvent<T>( Action<T> onresult, bool gameserver = false ) where T: struct, Steamworks.ISteamCallback
 		{
-			Action = onresult;
+			var r = new Event();
 
-			template = new T();
+			r.Action = ( x ) => onresult( (T) x );
 
-			//
-			// Create the functions we need for the vtable
-			//
-			if ( Config.UseThisCall )
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Config.Os == OsType.Windows )
-				{
-					vTablePtr = Callback.VTableWinThis.GetVTable( OnResultThis, OnResultWithInfoThis, OnGetSizeThis, Allocations );
-				}
-				else
-				{
-					vTablePtr = Callback.VTableThis.GetVTable( OnResultThis, OnResultWithInfoThis, OnGetSizeThis, Allocations );
-				}
-			}
-			else
-			{
-				//
-				// Create the VTable by manually allocating the memory and copying across
-				//
-				if ( Config.Os == OsType.Windows )
-				{
-					vTablePtr = Callback.VTableWin.GetVTable( OnResult, OnResultWithInfo, OnGetSize, Allocations );
-				}
-				else
-				{
-					vTablePtr = Callback.VTable.GetVTable( OnResult, OnResultWithInfo, OnGetSize, Allocations );
-				}
-			}
+			r.template = new T();
+			r.vTablePtr = Callback.VTable.GetVTable( r.OnResult, RunStub, SizeStub, r.Allocations );
 
 			//
 			// Create the callback object
 			//
 			var cb = new Callback();
-			cb.vTablePtr = vTablePtr;
+			cb.vTablePtr = r.vTablePtr;
 			cb.CallbackFlags = gameserver ? (byte)0x02 : (byte)0;
-			cb.CallbackId = template.GetCallbackId();
+			cb.CallbackId = r.template.GetCallbackId();
 
 			//
 			// Pin the callback, so it doesn't get garbage collected and we can pass the pointer to native
 			//
-			PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
+			r.PinnedCallback = GCHandle.Alloc( cb, GCHandleType.Pinned );
 
 			//
 			// Register the callback with Steam
 			//
-			SteamClient.RegisterCallback( PinnedCallback.AddrOfPinnedObject(), cb.CallbackId );
+			SteamClient.RegisterCallback( r.PinnedCallback.AddrOfPinnedObject(), cb.CallbackId );
 
-			IsAllocated = true;
+			r.IsAllocated = true;
 
 			if ( gameserver )
-				Events.AllServer.Add( this );
+				Events.AllServer.Add( r );
 			else
-				Events.AllClient.Add( this );
+				Events.AllClient.Add( r );
+
+			return r;
 		}
 
-		[MonoPInvokeCallback] internal void OnResultThis( IntPtr self, IntPtr param ) => OnResult( param );
-		[MonoPInvokeCallback] internal void OnResultWithInfoThis( IntPtr self, IntPtr param, bool failure, SteamAPICall_t call ) => OnResultWithInfo( param, failure, call );
-		[MonoPInvokeCallback] internal int OnGetSizeThis( IntPtr self ) => OnGetSize();
-		[MonoPInvokeCallback] internal int OnGetSize() => template.GetStructSize();
-		[MonoPInvokeCallback] internal void OnResult( IntPtr param ) => OnResultWithInfo( param, false, 0 );
+		[MonoPInvokeCallback]
+		internal void OnResult( IntPtr self, IntPtr param )
+		{
+			var value = template.Fill( param );
+			Action( value );
+		}
 
 		[MonoPInvokeCallback]
-		internal void OnResultWithInfo( IntPtr param, bool failure, SteamAPICall_t call )
+		static void RunStub( IntPtr self, IntPtr param, bool failure, SteamAPICall_t call )
 		{
-			if ( failure ) return;
+			throw new System.Exception( "Something changed in the Steam API and now CCallbackBack is calling the CallResult function [Run( void *pvParam, bool bIOFailure, SteamAPICall_t hSteamAPICall )]" );
+		}
 
-			var value = (T)template.Fill( param );
-
-			Action( value );
+		[MonoPInvokeCallback]
+		static int SizeStub( IntPtr self )
+		{
+			throw new System.Exception( "Something changed in the Steam API and now CCallbackBack is calling the GetSize function [GetCallbackSizeBytes()]" );
 		}
 	}
 }
