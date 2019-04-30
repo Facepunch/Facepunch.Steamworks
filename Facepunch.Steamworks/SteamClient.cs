@@ -84,7 +84,7 @@ namespace Steamworks
 			SteamAPI.RegisterCallback( intPtr, callbackId );
 		}
 
-		public static void Update()
+		public static void RunCallbacks()
 		{
 			SteamAPI.RunCallbacks();
 		}
