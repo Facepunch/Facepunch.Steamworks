@@ -37,28 +37,25 @@ namespace Generator
         {
             foreach ( var o in def.typedefs.Where( x => !x.Name.Contains( "::" ) ) )
             {
-                if ( SkipTypes.Contains( o.Name ) )
+				var typeName = Cleanup.ConvertType( o.Name );
+
+				if ( !Cleanup.ShouldCreate( typeName ) )
+					continue;
+
+				if ( SkipTypes.Contains( o.Name ) )
                     continue;
 
                 if ( SkipTypesStartingWith.Any( x => o.Name.StartsWith( x ) ) )
                     continue;
 
-                StartBlock( $"internal struct {o.Name}" );
+				StartBlock( $"{Cleanup.Expose( typeName )} struct {typeName}" );
                 {
-                    WriteLine( $"public {ToManagedType( o.Type )} Value;" );
-                    WriteLine();
-                    StartBlock( $"public static implicit operator {o.Name}( {ToManagedType( o.Type )} value )" );
-                    {
-                        WriteLine( $"return new {o.Name}(){{ Value = value }};" );
-                    }
-                    EndBlock();
-                    WriteLine();
-                    StartBlock( $"public static implicit operator {ToManagedType( o.Type )}( {o.Name} value )" );
-                    {
-                        WriteLine( $"return value.Value;" );
-                    }
-                    EndBlock();
-                }
+					WriteLine( $"public {ToManagedType( o.Type )} Value;" );
+					WriteLine();
+					WriteLine( $"public static implicit operator {typeName}( {ToManagedType( o.Type )} value ) => new {typeName}(){{ Value = value }};" );
+					WriteLine( $"public static implicit operator {ToManagedType( o.Type )}( {typeName} value ) => value.Value;" );
+					WriteLine( $"public override string ToString() => Value.ToString();" );
+				}
                 EndBlock();
                 WriteLine();
             }

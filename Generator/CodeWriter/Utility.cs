@@ -8,28 +8,6 @@ namespace Generator
 {
     public partial class CodeWriter
     {
-        static string[] IgnoredClasses = new string[]
-        {
-             "ISteamMatchmakingPingResponse",
-             "ISteamMatchmakingServerListResponse",
-             "ISteamMatchmakingPlayersResponse",
-             "ISteamMatchmakingRulesResponse",
-             "ISteamMatchmakingPingResponse",
-        };
-
-        public static bool ShouldIgnoreClass( string name )
-        {
-            return IgnoredClasses.Contains( name );
-        }
-
-        public string InterfaceNameToClass( string name )
-        {
-            if ( name[0] == 'I' )
-                name = name.Substring( 1 );
-
-            return name;
-        }
-
         string CleanMemberName( string m )
         {
             if ( m == "m_pubParam" ) return "ParamPtr";
@@ -72,7 +50,9 @@ namespace Generator
             type = type.Replace( "union ", "" );
             type = type.Replace( "enum ", "" );
 
-            switch ( type )
+			type = Cleanup.ConvertType( type );
+
+			switch ( type )
             {
                 case "uint64": return "ulong";
                 case "uint32": return "uint";
@@ -88,7 +68,7 @@ namespace Generator
                 case "uint16": return "ushort";
                 case "const char *": return "string";
                 case "_Bool": return "bool";
-                case "CSteamID": return "ulong";
+                case "SteamId": return "ulong";
 
                 case "SteamAPIWarningMessageHook_t": return "IntPtr";
             }

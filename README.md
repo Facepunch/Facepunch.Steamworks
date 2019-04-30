@@ -3,6 +3,22 @@ Another fucking c# Steamworks implementation
 
 [![Build Status](http://build.facepunch.com/buildStatus/icon?job=Facepunch/Facepunch.Steamworks/master)](http://build.facepunch.com/job/Facepunch/job/Facepunch.Steamworks/job/master/)
 
+## Features
+
+| Feature | Supported |
+|----------|------------ |
+| Windows | ✔ |
+| Linux | ✔ |
+| MacOS | ✔ |
+| Unity Support | ✔ |
+| Unity IL2CPP Support | ✔ |
+| Async Callbacks (steam callresults) | ✔ |
+| Events (steam callbacks) | ✔ |
+| Single C# dll (no native requirements apart from Steam) | ✔ |
+| Open Source | ✔ |
+| MIT license | ✔ |
+| Any 32bit OS | ❌ |
+
 ## Why
 
 The Steamworks C# implementations I found that were compatible with Unity have worked for a long time. But I hate them all. For a number of different reasons.
@@ -11,18 +27,29 @@ The Steamworks C# implementations I found that were compatible with Unity have w
 * They're not up to date.
 * They require a 3rd party native dll.
 * They can't be compiled into a standalone dll (in Unity).
-* They have a license.
+* They're not free
+* They have a restrictive license.
 
 C# is meant to make things easier. So lets try to wrap it up in a way that makes it all easier.
 
 ## What
 
-So say you want to print a list of your friends?
+### Get your own information
 
 ```csharp
-foreach ( var friend in client.Friends.All )
+SteamClient.SteamId // Your SteamId
+SteamClient.Name // Your Name
+```
+
+### View your friends list
+
+```csharp
+foreach ( var friend in SteamFriends.GetFriends() )
 {
-    Console.WriteLine( "{0}: {1}", friend.Id, friend.Name );
+    Console.WriteLine( "{friend.Id}: {friend.Name}" );
+    Console.WriteLine( "{friend.IsOnline} / {friend.SteamLevel}" );
+    
+    friend.SendMessage( "Hello Friend" );
 }
 ```
 
@@ -31,88 +58,173 @@ But what if you want to get a list of friends playing the same game that we're p
 ```csharp
 foreach ( var friend in client.Friends.All.Where( x => x.IsPlayingThisGame ) )
 {
-    Console.WriteLine( "{0}: {1}", friend.Id, friend.Name );
+    // 
 }
 ```
 
-You can view examples of everything in the Facepunch.Steamworks.Test project.
+### App Info
+
+```csharp
+Console.WriteLine( SteamApps.GameLanguage ); // Print the current game language
+var installDir = SteamApps.AppInstallDir( 4000 ); // Get the path to the Garry's Mod install folder
+
+var fileinfo = await SteamApps.GetFileDetailsAsync( "hl2.exe" ); // async get file details
+DoSomething( fileinfo.SizeInBytes, fileinfo.Sha1 );
+```
+
+### Get Avatars
+
+```csharp
+var image = await SteamFriends.GetLargeAvatarAsync( steamid );
+if ( !image.HasValue ) return DefaultImage;
+
+return MakeTextureFromRGBA( image.Data, image.Width, image.Height );
+```
+
+### Get a list of servers
+
+```csharp
+using ( var list = new ServerList.Internet() )
+{
+    list.AddFilter( "map", "de_dust" );
+    await list.RunQueryAsync();
+
+    foreach ( var server in list.Responsive )
+    {
+        Console.WriteLine( $"{server.Address} {server.Name}" );
+    }
+}
+```
+
+### Achievements
+
+List them
+
+```csharp
+foreach ( var a in SteamUserStats.Achievements )
+{
+    Console.WriteLine( $"{a.Name} ({a.State}})" );
+}	
+```
+
+Unlock them
+
+```csharp
+var ach = new Achievement( "GM_PLAYED_WITH_GARRY" );
+ach.Trigger();
+```
+
+### Voice
+
+```csharp
+
+SteamUser.VoiceRecord = KeyDown( "V" );
+
+if ( SteamUser.HasVoiceData )
+{
+    var bytesrwritten = SteamUser.ReadVoiceData( stream );
+    // Send Stream Data To Server or Something
+}
+
+```
+
+
+### Auth
+
+```csharp
+
+// Client sends ticket data to server somehow
+var ticket = SteamUser.GetAuthSessionTicket();
+
+
+// server listens to event
+SteamServer.OnValidateAuthTicketResponse += ( steamid, ownerid, rsponse ) =>
+{
+    if ( rsponse == AuthResponse.OK )
+        TellUserTheyCanBeOnServer( steamid );
+    else
+        KickUser( steamid );
+};
+
+// server gets ticket data from client, calls this function.. which either returns
+// false straight away, or will issue a TicketResponse.
+if ( !SteamServer.BeginAuthSession( ticketData, clientSteamId ) )
+{
+    KickUser( clientSteamId );
+}
+
+//
+// Client is leaving, cancels their ticket OnValidateAuth is called on the server again
+// this time with AuthResponse.AuthTicketCanceled
+//
+ticket.Cancel();
+
+```
+
+### Utils
+
+```csharp
+SteamUtils.SecondsSinceAppActive;
+SteamUtils.SecondsSinceComputerActive;
+SteamUtils.IpCountry;
+SteamUtils.UsingBatteryPower;
+SteamUtils.CurrentBatteryPower;
+SteamUtils.AppId;
+SteamUtils.IsOverlayEnabled;
+SteamUtils.IsSteamRunningInVR;
+SteamUtils.IsSteamInBigPictureMode;
+```
 
 # Usage
 
 ## Client
 
-Compile the Facepunch.Steamworks project and add the library to your Unity project. To create a client you can do this.
+To initialize a client you can do this.
 
 ```csharp
-var client = new Facepunch.Steamworks.Client( 252490 );
+using Steamworks;
+
+// ...
+
+try 
+{
+    SteamClient.Init( 4000 );
+}
+catch ( System.Exception e )
+{
+    // Couldn't init for some reason (steam is closed etc)
+}
 ```
 
-Replace 252490 with the appid of your game. This should be a singleton - you should only create one client, right at the start of your game.
+Replace 4000 with the appid of your game. You shouldn't call any Steam functions before you initialize.
 
-The client is disposable, so when you're closing your game should probably call..
+When you're done, when you're closing your game, just shutdown.
 
 ```csharp
-client.Dispose();
+SteamClient.Shutdown();
 ```
-
-Or use it in a using block if you can.
-
 
 ## Server
 
 To create a server do this.
 
 ```csharp
-ServerInit options = new ServerInit("GameDirectoryName", "GameDescription");
-```
-
-```csharp
-var server = new Facepunch.Steamworks.Server(252490, options);
-```
-
-This will register a secure server for game 252490, any ip, port 28015. Again, more usage in the Facepunch.Steamworks.Test project.
-
-## Lobby
-
-To create a Lobby do this.
-```csharp
-client.Lobby.Create(Steamworks.Lobby.Type.Public, 10);
-```
-
-Created lobbies are auto-joined, but if you want to find a friend's lobby, you'd call
-```csharp
-client.LobbyList.Refresh();
-//wait for the callback
-client.LobbyList.OnLobbiesUpdated = () =>
+var serverInit = new SteamServerInit( "gmod", "Garry Mode" )
 {
-    if (client.LobbyList.Finished)
-    {
-        foreach (LobbyList.Lobby lobby in client.LobbyList.Lobbies)
-        {
-            Console.WriteLine($"Found Lobby: {lobby.Name}");
-        }
-    }
+    GamePort = 28015,
+    Secure = true,
+    QueryPort = 28016
 };
-//join a lobby you found
-client.Lobby.Join(LobbyList.Lobbies[0]);
+
+try
+{
+    Steamworks.SteamServer.Init( 4000, serverInit );
+}
+catch ( System.Exception )
+{
+    // Couldn't init for some reason (dll errors, blocked ports)
+}
 ```
-
-Your can find more examples of Lobby functionality in the Lobby.cs file in the test project. Sending chat messages, assinging lobby data and member data, etc.
-
-
-# Unity
-
-Yeah this works under Unity. That's half the point of it.
-
-There's another repo with an example project with it working in Unity. You can find it [here](https://github.com/Facepunch/Facepunch.Steamworks.Unity/blob/master/Assets/Scripts/SteamTest.cs).
-
-The TLDR is before you create the Client or the Server, call this to let Facepunch.Steamworks know which platform we're on - because it can't tell the difference between osx and linux by itself.
-
-```csharp
-Facepunch.Steamworks.Config.ForUnity( Application.platform.ToString() );
-```
-
-You'll also want to put steam_api64.dll and steam_appid.txt (on windows 64) in your project root next to Assets, and use an editor script like [this](https://github.com/Facepunch/Facepunch.Steamworks.Unity/blob/master/Assets/Scripts/Editor/CopySteamLibraries.cs) to copy them into standalone builds.
 
 # Help
 

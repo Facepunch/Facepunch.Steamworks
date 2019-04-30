@@ -11,10 +11,13 @@ namespace Generator
     public partial class CodeWriter
     {
         private SteamApiDefinition def;
+		public CodeParser Parser;
 
-        public CodeWriter( SteamApiDefinition def )
+		public CodeWriter( CodeParser parser, SteamApiDefinition def )
         {
-            this.def = def;
+			Parser = parser;
+
+			this.def = def;
             WorkoutTypes();
         }
 
@@ -25,91 +28,60 @@ namespace Generator
                 Header();
                 Enums();
                 Footer();
-                System.IO.File.WriteAllText( $"{folder}SteamNative.Enums.cs", sb.ToString() );
+                System.IO.File.WriteAllText( $"{folder}SteamEnums.cs", sb.ToString() );
             }
 
             {
                 sb = new StringBuilder();
-                Header();
+                Header( "Steamworks.Data" );
                 Types();
                 Footer();
-                System.IO.File.WriteAllText( $"{folder}SteamNative.Types.cs", sb.ToString() );
+                System.IO.File.WriteAllText( $"{folder}SteamTypes.cs", sb.ToString() );
             }
 
             {
                 sb = new StringBuilder();
-                Header();
+                Header( "Steamworks.Data" );
                 Structs();
                 Footer();
-                System.IO.File.WriteAllText( $"{folder}SteamNative.Structs.cs", sb.ToString() );
+                System.IO.File.WriteAllText( $"{folder}SteamStructs.cs", sb.ToString() );
             }
 
             {
                 sb = new StringBuilder();
-                Header();
+                Header( "Steamworks.Data" );
                 Constants();
                 Footer();
-                System.IO.File.WriteAllText( $"{folder}SteamNative.Constants.cs", sb.ToString() );
+                System.IO.File.WriteAllText( $"{folder}SteamConstants.cs", sb.ToString() );
             }
 
-            {
-                sb = new StringBuilder();
-                Header();
-                PlatformInterface();
-                Footer();
-                System.IO.File.WriteAllText( $"{folder}SteamNative.Platform.Interface.cs", sb.ToString() );
-            }
+			{
+				GenerateGlobalFunctions( "SteamAPI", $"{folder}../Generated/SteamAPI.cs" );
+				GenerateGlobalFunctions( "SteamGameServer", $"{folder}../Generated/SteamGameServer.cs" );
+				GenerateGlobalFunctions( "SteamInternal", $"{folder}../Generated/SteamInternal.cs" );
+			}
 
-            {
-                sb = new StringBuilder();
-                Header();
-                PlatformClass( "Win32", "steam_api.dll", true );
-                Footer();
-                System.IO.File.WriteAllText( $"{folder}SteamNative.Platform.Win32.cs", sb.ToString() );
-            }
-
-            {
-                sb = new StringBuilder();
-                Header();
-                PlatformClass( "Win64", "steam_api64.dll", true );
-                Footer();
-                System.IO.File.WriteAllText( $"{folder}SteamNative.Platform.Win64.cs", sb.ToString() );
-            }
-
-            {
-                sb = new StringBuilder();
-                Header();
-                PlatformClass( "Linux32", "libsteam_api.so", false );
-                Footer();
-                System.IO.File.WriteAllText( $"{folder}SteamNative.Platform.Linux32.cs", sb.ToString() );
-            }
-
-            {
-                sb = new StringBuilder();
-                Header();
-                PlatformClass( "Linux64", "libsteam_api64.so", false );
-                Footer();
-                System.IO.File.WriteAllText( $"{folder}SteamNative.Platform.Linux64.cs", sb.ToString() );
-            }
-
-            {
-                sb = new StringBuilder();
-                Header();
-                PlatformClass( "Mac", "libsteam_api.dylib", false );
-                Footer();
-                System.IO.File.WriteAllText( $"{folder}SteamNative.Platform.Mac.cs", sb.ToString() );
-            }
-
-            {
-                GenerateClasses( $"{folder}SteamNative." );
-            }
-        }
+			{
+				GenerateVTableClass( "ISteamApps", $"{folder}../Generated/Interfaces/ISteamApps.cs" );
+				GenerateVTableClass( "ISteamUtils", $"{folder}../Generated/Interfaces/ISteamUtils.cs" );
+				GenerateVTableClass( "ISteamParentalSettings", $"{folder}../Generated/Interfaces/ISteamParentalSettings.cs" );
+				GenerateVTableClass( "ISteamMusic", $"{folder}../Generated/Interfaces/ISteamMusic.cs" );
+				GenerateVTableClass( "ISteamVideo", $"{folder}../Generated/Interfaces/ISteamVideo.cs" );
+				GenerateVTableClass( "ISteamUser", $"{folder}../Generated/Interfaces/ISteamUser.cs" );
+				GenerateVTableClass( "ISteamMatchmakingServers", $"{folder}../Generated/Interfaces/ISteamMatchmakingServers.cs" );
+				GenerateVTableClass( "ISteamFriends", $"{folder}../Generated/Interfaces/ISteamFriends.cs" );
+				GenerateVTableClass( "ISteamGameServer", $"{folder}../Generated/Interfaces/ISteamGameServer.cs" );
+				GenerateVTableClass( "ISteamGameServer", $"{folder}../Generated/Interfaces/ISteamGameServer.cs" );
+				GenerateVTableClass( "ISteamScreenshots", $"{folder}../Generated/Interfaces/ISteamScreenshots.cs" );
+				GenerateVTableClass( "ISteamUserStats", $"{folder}../Generated/Interfaces/ISteamUserStats.cs" );
+				GenerateVTableClass( "ISteamUGC", $"{folder}../Generated/Interfaces/ISteamUGC.cs" );
+				GenerateVTableClass( "ISteamRemoteStorage", $"{folder}../Generated/Interfaces/ISteamRemoteStorage.cs" );
+				GenerateVTableClass( "ISteamInventory", $"{folder}../Generated/Interfaces/ISteamInventory.cs" );
+			}
+		}
 
         void WorkoutTypes()
         {
-            def.typedefs.Add( new SteamApiDefinition.TypeDef() { Name = "CGameID", Type = "ulong" } );
-            def.typedefs.Add( new SteamApiDefinition.TypeDef() { Name = "CSteamID", Type = "ulong" } );
-
             foreach ( var c in def.typedefs )
             {
                 if ( c.Name.StartsWith( "uint" ) || c.Name.StartsWith( "int" ) || c.Name.StartsWith( "lint" ) || c.Name.StartsWith( "luint" ) || c.Name.StartsWith( "ulint" ) )
@@ -123,7 +95,7 @@ namespace Generator
 
                 type = ToManagedType( type );
 
-                TypeDefs.Add( c.Name, new TypeDef()
+				TypeDefs.Add( c.Name, new TypeDef()
                 {
                     Name = c.Name,
                     NativeType = c.Type,
@@ -132,25 +104,13 @@ namespace Generator
             }
         }
 
-        private List<Argument> BuildArguments( SteamApiDefinition.MethodDef.ParamType[] ps )
-        {
-            var args = new List<Argument>();
-            if ( ps == null ) return args;
-
-            foreach ( var p in ps )
-            {
-                var a = new Argument( p.Name, p.Type, TypeDefs );
-                args.Add( a );
-            }
-
-            return args;
-        }
-
-        private void Header( string NamespaceName = "SteamNative" )
+        private void Header( string NamespaceName = "Steamworks" )
         {
             WriteLine( "using System;" );
             WriteLine( "using System.Runtime.InteropServices;" );
             WriteLine( "using System.Linq;" );
+            WriteLine( "using Steamworks.Data;" );
+            WriteLine( "using System.Threading.Tasks;" );
             WriteLine();
             StartBlock( "namespace " + NamespaceName );
         }

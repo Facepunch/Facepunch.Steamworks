@@ -1,281 +1,422 @@
 {
-  "structs":
-  [
-    {
-      "struct": "ItemInstalled_t",
-      "fields":
-      [
-        {
-          "fieldname": "m_unAppID",
-          "fieldtype": "AppId_t"
-        },
-        {
-          "fieldname": "m_nPublishedFileId",
-          "fieldtype": "PublishedFileId_t"
-        }
-      ]
-    },
+	"structs": [
+  
+  
+	  
+	  {
+		  "struct": "PlaybackStatusHasChanged_t",
+		  "fields": [ ]
+		},
 
+		{
+			"struct": "BroadcastUploadStart_t",
+			"fields": [ ]
+		  },
+  
+	  {
+		"struct": "NewUrlLaunchParameters_t",
+		"fields": [ ]
+	  },
+  
+	  {
+		"struct": "ItemInstalled_t",
+		"fields": [
+		  {
+			"fieldname": "m_unAppID",
+			"fieldtype": "AppId_t"
+		  },
+		  {
+			"fieldname": "m_nPublishedFileId",
+			"fieldtype": "PublishedFileId_t"
+		  }
+		]
+	  },
+  
+	  {
+		"struct": "InputAnalogActionData_t",
+		"fields": [
+		  {
+			"fieldname": "eMode",
+			"fieldtype": "EInputSourceMode"
+		  },
+		  {
+			"fieldname": "x",
+			"fieldtype": "float"
+		  },
+		  {
+			"fieldname": "y",
+			"fieldtype": "float"
+		  },
+		  {
+			"fieldname": "bActive",
+			"fieldtype": "bool"
+		  }
+		]
+	  },
+  
+	  {
+		"struct": "InputMotionData_t",
+		"fields": [
+		  {
+			"fieldname": "rotQuatX",
+			"fieldtype": "float"
+		  },
+  
+		  {
+			"fieldname": "rotQuatY",
+			"fieldtype": "float"
+		  },
+  
+		  {
+			"fieldname": "rotQuatZ",
+			"fieldtype": "float"
+		  },
+  
+		  {
+			"fieldname": "rotQuatW",
+			"fieldtype": "float"
+		  },
+  
+		  {
+			"fieldname": "posAccelX",
+			"fieldtype": "float"
+		  },
+  
+		  {
+			"fieldname": "posAccelY",
+			"fieldtype": "float"
+		  },
+  
+		  {
+			"fieldname": "posAccelZ",
+			"fieldtype": "float"
+		  },
+  
+		  {
+			"fieldname": "rotVelX",
+			"fieldtype": "float"
+		  },
+  
+		  {
+			"fieldname": "rotVelY",
+			"fieldtype": "float"
+		  },
+  
+		  {
+			"fieldname": "rotVelZ",
+			"fieldtype": "float"
+		  }
+  
+		]
+	  },
+  
+	  {
+		"struct": "InputDigitalActionData_t",
+		"fields": [
+		  {
+			"fieldname": "bState",
+			"fieldtype": "bool"
+		  },
+		  {
+			"fieldname": "bActive",
+			"fieldtype": "bool"
+		  }
+		]
+	  },
+  
+	  {
+		"struct": "SteamInventoryDefinitionUpdate_t"
+	  },
+  
+	  {
+		"struct": "SteamParentalSettingsChanged_t"
+	  },
+  
+	  {
+		"struct": "SteamServersConnected_t"
+	  },
+	  {
+		"struct": "NewLaunchQueryParameters_t"
+	  },
+  
+	  {
+		"struct": "GCMessageAvailable_t",
+		"fields": [
+		  {
+			"fieldname": "m_nMessageSize",
+			"fieldtype": "uint32"
+		  }
+		]
+	  },
+	  {
+		"struct": "GCMessageFailed_t"
+	  },
+	  {
+		"struct": "ScreenshotRequested_t"
+	  },
+	  {
+		"struct": "LicensesUpdated_t"
+	  },
+	  {
+		"struct": "SteamShutdown_t"
+	  },
+	  {
+		"struct": "IPCountry_t"
+	  },
+	  {
+		"struct": "IPCFailure_t",
+		"fields": [
+		  {
+			"fieldname": "m_eFailureType",
+			"fieldtype": "uint8"
+		  }
+		]
+	  }
+	],
+  
+	"methods":
+	[
+	  {
+		"classname": "SteamApi",
+		"methodname": "SteamAPI_Init",
+		"returntype": "bool",
+		"NeedsSelfPointer": false
+	  },
+  
+	  {
+		"classname": "SteamApi",
+		"methodname": "SteamAPI_RunCallbacks",
+		"returntype": "void",
+		"NeedsSelfPointer": false
+	  },
+  
+  
+	  {
+		"classname": "SteamApi",
+		"methodname": "SteamGameServer_RunCallbacks",
+		"returntype": "void",
+		"NeedsSelfPointer": false
+	  },
+  
+  
+	  {
+		"classname": "SteamApi",
+		"methodname": "SteamAPI_RegisterCallback",
+		"returntype": "void",
+		"NeedsSelfPointer": false,
+		"params":
+		[
+		  {
+			"paramname": "pCallback",
+			"paramtype": "void *"
+		  },
+  
+		  {
+			"paramname": "callback",
+			"paramtype": "int"
+		  }
+		]
+	  },
+  
+  
+	  {
+		"classname": "SteamApi",
+		"methodname": "SteamAPI_UnregisterCallback",
+		"returntype": "void",
+		"NeedsSelfPointer": false,
+		"params":
+		[
+		  {
+			"paramname": "pCallback",
+			"paramtype": "void *"
+		  }
+		]
+	  },
+  
+  
+	  {
+		"NeedsSelfPointer": false,
+		"classname": "SteamApi",
+		"methodname": "SteamAPI_RegisterCallResult",
+		"returntype": "void",
+		"params":
+		[
+		  {
+			"paramname": "pCallback",
+			"paramtype": "void *"
+		  },
+		  {
+			"paramname": "callback",
+			"paramtype": "SteamAPICall_t"
+		  }
+		]
+	  },
+  
+  
+	  {
+		"NeedsSelfPointer": false,
+		"classname": "SteamApi",
+		"methodname": "SteamAPI_UnregisterCallResult",
+		"returntype": "void",
+		"params":
+		[
+		  {
+			"paramname": "pCallback",
+			"paramtype": "void *"
+		  },
+		  {
+			"paramname": "callback",
+			"paramtype": "SteamAPICall_t"
+		  }
+		]
+	  },
+  
+  
+	  {
+		"NeedsSelfPointer": false,
+		"classname": "SteamApi",
+		"methodname": "SteamInternal_GameServer_Init",
+		"returntype": "bool",
+		"params":
+		[
+		  {
+			"paramname": "unIP",
+			"paramtype": "uint32"
+		  },
+		  {
+			"paramname": "usPort",
+			"paramtype": "uint16"
+		  },
+		  {
+			"paramname": "usGamePort",
+			"paramtype": "uint16"
+		  },
+		  {
+			"paramname": "usQueryPort",
+			"paramtype": "uint16"
+		  },
+		  {
+			"paramname": "eServerMode",
+			"paramtype": "int"
+		  },
+		  {
+			"paramname": "pchVersionString",
+			"paramtype": "const char *"
+		  }
+		]
+	  },
 
-    {
-      "struct": "SteamInventoryDefinitionUpdate_t"
-    },
+	{
+		"NeedsSelfPointer": false,
+		"classname": "SteamApi",
+		"methodname": "SteamInternal_FindOrCreateUserInterface",
+		"returntype": "void *",
+		"params":
+		[
+		  {
+			"paramname": "steamuser",
+			"paramtype": "int32"
+		  },
+		  {
+			"paramname": "versionname",
+			"paramtype": "const char *"
+		  }
+		]
+	  },
 
-    {
-      "struct": "SteamParentalSettingsChanged_t"
-    },
-
-    {
-      "struct": "SteamServersConnected_t"
-    },
-    {
-      "struct": "NewLaunchQueryParameters_t"
-    },
-
-    {
-      "struct": "GCMessageAvailable_t",
-      "fields":
-      [
-        {
-          "fieldname": "m_nMessageSize",
-          "fieldtype": "uint32"
-        }
-      ]
-    },
-    {
-      "struct": "GCMessageFailed_t"
-    },
-    {
-      "struct": "ScreenshotRequested_t"
-    },
-    {
-      "struct": "LicensesUpdated_t"
-    },
-    {
-      "struct": "SteamShutdown_t"
-    },
-    {
-      "struct": "IPCountry_t"
-    },
-    {
-      "struct": "IPCFailure_t",
-      "fields":
-      [
-        {
-          "fieldname": "m_eFailureType",
-          "fieldtype": "uint8"
-        }
-      ]
-    }
-  ],
-
-  "methods":
-  [
-    {
-      "classname": "SteamApi",
-      "methodname": "SteamAPI_Init",
-      "returntype": "bool",
-      "NeedsSelfPointer": false
-    },
-
-    {
-      "classname": "SteamApi",
-      "methodname": "SteamAPI_RunCallbacks",
-      "returntype": "void",
-      "NeedsSelfPointer": false
-    },
-
-
-    {
-      "classname": "SteamApi",
-      "methodname": "SteamGameServer_RunCallbacks",
-      "returntype": "void",
-      "NeedsSelfPointer": false
-    },
-
-
-    {
-      "classname": "SteamApi",
-      "methodname": "SteamAPI_RegisterCallback",
-      "returntype": "void",
-      "NeedsSelfPointer": false,
-      "params":
-      [
-        {
-          "paramname": "pCallback",
-          "paramtype": "void *"
-        },
-
-        {
-          "paramname": "callback",
-          "paramtype": "int"
-        }
-      ]
-    },
-
-
-    {
-      "classname": "SteamApi",
-      "methodname": "SteamAPI_UnregisterCallback",
-      "returntype": "void",
-      "NeedsSelfPointer": false,
-      "params":
-      [
-        {
-          "paramname": "pCallback",
-          "paramtype": "void *"
-        }
-      ]
-    },
-
-
-    {
-      "NeedsSelfPointer": false,
-      "classname": "SteamApi",
-      "methodname": "SteamAPI_RegisterCallResult",
-      "returntype": "void",
-      "params":
-      [
-        {
-          "paramname": "pCallback",
-          "paramtype": "void *"
-        },
-        {
-          "paramname": "callback",
-          "paramtype": "SteamAPICall_t"
-        }
-      ]
-    },
-
-
-    {
-      "NeedsSelfPointer": false,
-      "classname": "SteamApi",
-      "methodname": "SteamAPI_UnregisterCallResult",
-      "returntype": "void",
-      "params":
-      [
-        {
-          "paramname": "pCallback",
-          "paramtype": "void *"
-        },
-        {
-          "paramname": "callback",
-          "paramtype": "SteamAPICall_t"
-        }
-      ]
-    },
-
-
-    {
-      "NeedsSelfPointer": false,
-      "classname": "SteamApi",
-      "methodname": "SteamInternal_GameServer_Init",
-      "returntype": "bool",
-      "params":
-      [
-        {
-          "paramname": "unIP",
-          "paramtype": "uint32"
-        },
-        {
-          "paramname": "usPort",
-          "paramtype": "uint16"
-        },
-        {
-          "paramname": "usGamePort",
-          "paramtype": "uint16"
-        },
-        {
-          "paramname": "usQueryPort",
-          "paramtype": "uint16"
-        },
-        {
-          "paramname": "eServerMode",
-          "paramtype": "int"
-        },
-        {
-          "paramname": "pchVersionString",
-          "paramtype": "const char *"
-        }
-      ]
-    },
-
-
-    {
-      "NeedsSelfPointer": false,
-      "classname": "SteamApi",
-      "methodname": "SteamAPI_Shutdown",
-      "returntype": "void"
-    },
-
-
-    {
-      "NeedsSelfPointer": false,
-      "classname": "SteamApi",
-      "methodname": "SteamGameServer_Shutdown",
-      "returntype": "void"
-    },
-
-
-    {
-      "NeedsSelfPointer": false,
-      "classname": "SteamApi",
-      "methodname": "SteamAPI_GetHSteamUser",
-      "returntype": "HSteamUser"
-    },
-
-
-    {
-      "NeedsSelfPointer": false,
-      "classname": "SteamApi",
-      "methodname": "SteamAPI_GetHSteamPipe",
-      "returntype": "HSteamPipe"
-    },
-
-
-    {
-      "NeedsSelfPointer": false,
-      "classname": "SteamApi",
-      "methodname": "SteamGameServer_GetHSteamUser",
-      "returntype": "HSteamUser"
-    },
-
-
-    {
-      "NeedsSelfPointer": false,
-      "classname": "SteamApi",
-      "methodname": "SteamGameServer_GetHSteamPipe",
-      "returntype": "HSteamPipe"
-    },
-
-
-    {
-      "NeedsSelfPointer": false,
-      "classname": "SteamApi",
-      "methodname": "SteamInternal_CreateInterface",
-      "returntype": "void *",
-      "params":
-      [
-        {
-          "paramname": "version",
-          "paramtype": "const char *"
-        }
-      ]
-    },
-
-    {
-      "NeedsSelfPointer": false,
-      "classname": "SteamApi",
-      "methodname": "SteamAPI_RestartAppIfNecessary",
-      "returntype": "bool",
-      "params":
-      [
-        {
-          "paramname": "unOwnAppID",
-          "paramtype": "uint32"
-        }
-      ]
-    }
-  ]
-}
+	  	{
+		"NeedsSelfPointer": false,
+		"classname": "SteamApi",
+		"methodname": "SteamInternal_FindOrCreateGameServerInterface",
+		"returntype": "void *",
+		"params":
+		[
+		  {
+			"paramname": "steamuser",
+			"paramtype": "int32"
+		  },
+		  {
+			"paramname": "versionname",
+			"paramtype": "const char *"
+		  }
+		]
+	  },
+  
+  
+	  {
+		"NeedsSelfPointer": false,
+		"classname": "SteamApi",
+		"methodname": "SteamAPI_Shutdown",
+		"returntype": "void"
+	  },
+  
+  
+	  {
+		"NeedsSelfPointer": false,
+		"classname": "SteamApi",
+		"methodname": "SteamGameServer_Shutdown",
+		"returntype": "void"
+	  },
+  
+  
+	  {
+		"NeedsSelfPointer": false,
+		"classname": "SteamApi",
+		"methodname": "SteamAPI_GetHSteamUser",
+		"returntype": "HSteamUser"
+	  },
+  
+  
+	  {
+		"NeedsSelfPointer": false,
+		"classname": "SteamApi",
+		"methodname": "SteamAPI_GetHSteamPipe",
+		"returntype": "HSteamPipe"
+	  },
+  
+  
+	  {
+		"NeedsSelfPointer": false,
+		"classname": "SteamApi",
+		"methodname": "SteamGameServer_GetHSteamUser",
+		"returntype": "HSteamUser"
+	  },
+  
+  
+	  {
+		"NeedsSelfPointer": false,
+		"classname": "SteamApi",
+		"methodname": "SteamGameServer_GetHSteamPipe",
+		"returntype": "HSteamPipe"
+	  },
+  
+  
+	  {
+		"NeedsSelfPointer": false,
+		"classname": "SteamApi",
+		"methodname": "SteamInternal_CreateInterface",
+		"returntype": "void *",
+		"params":
+		[
+		  {
+			"paramname": "version",
+			"paramtype": "const char *"
+		  }
+		]
+	  },
+  
+	  {
+		"NeedsSelfPointer": false,
+		"classname": "SteamApi",
+		"methodname": "SteamAPI_RestartAppIfNecessary",
+		"returntype": "bool",
+		"params":
+		[
+		  {
+			"paramname": "unOwnAppID",
+			"paramtype": "uint32"
+		  }
+		]
+	  }
+	]
+  }
