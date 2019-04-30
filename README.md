@@ -37,8 +37,8 @@ C# is meant to make things easier. So lets try to wrap it up in a way that makes
 ### Get your own information
 
 ```csharp
-SteamClient.SteamId // Your SteamId
-SteamClient.Name // Your Name
+    SteamClient.SteamId // Your SteamId
+    SteamClient.Name // Your Name
 ```
 
 ### View your friends list
@@ -53,32 +53,24 @@ foreach ( var friend in SteamFriends.GetFriends() )
 }
 ```
 
-But what if you want to get a list of friends playing the same game that we're playing?
-
-```csharp
-foreach ( var friend in client.Friends.All.Where( x => x.IsPlayingThisGame ) )
-{
-    // 
-}
-```
 
 ### App Info
 
 ```csharp
-Console.WriteLine( SteamApps.GameLanguage ); // Print the current game language
-var installDir = SteamApps.AppInstallDir( 4000 ); // Get the path to the Garry's Mod install folder
+    Console.WriteLine( SteamApps.GameLanguage ); // Print the current game language
+    var installDir = SteamApps.AppInstallDir( 4000 ); // Get the path to the Garry's Mod install folder
 
-var fileinfo = await SteamApps.GetFileDetailsAsync( "hl2.exe" ); // async get file details
-DoSomething( fileinfo.SizeInBytes, fileinfo.Sha1 );
+    var fileinfo = await SteamApps.GetFileDetailsAsync( "hl2.exe" ); // async get file details
+    DoSomething( fileinfo.SizeInBytes, fileinfo.Sha1 );
 ```
 
 ### Get Avatars
 
 ```csharp
-var image = await SteamFriends.GetLargeAvatarAsync( steamid );
-if ( !image.HasValue ) return DefaultImage;
+    var image = await SteamFriends.GetLargeAvatarAsync( steamid );
+    if ( !image.HasValue ) return DefaultImage;
 
-return MakeTextureFromRGBA( image.Data, image.Width, image.Height );
+    return MakeTextureFromRGBA( image.Data, image.Width, image.Height );
 ```
 
 ### Get a list of servers
@@ -101,81 +93,206 @@ using ( var list = new ServerList.Internet() )
 List them
 
 ```csharp
-foreach ( var a in SteamUserStats.Achievements )
-{
-    Console.WriteLine( $"{a.Name} ({a.State}})" );
-}	
+    foreach ( var a in SteamUserStats.Achievements )
+    {
+        Console.WriteLine( $"{a.Name} ({a.State}})" );
+    }	
 ```
 
 Unlock them
 
 ```csharp
-var ach = new Achievement( "GM_PLAYED_WITH_GARRY" );
-ach.Trigger();
+    var ach = new Achievement( "GM_PLAYED_WITH_GARRY" );
+    ach.Trigger();
 ```
 
 ### Voice
 
 ```csharp
+    SteamUser.VoiceRecord = KeyDown( "V" );
 
-SteamUser.VoiceRecord = KeyDown( "V" );
-
-if ( SteamUser.HasVoiceData )
-{
-    var bytesrwritten = SteamUser.ReadVoiceData( stream );
-    // Send Stream Data To Server or Something
-}
-
+    if ( SteamUser.HasVoiceData )
+    {
+        var bytesrwritten = SteamUser.ReadVoiceData( stream );
+        // Send Stream Data To Server or Something
+    }
 ```
 
 
 ### Auth
 
 ```csharp
+    // Client sends ticket data to server somehow
+    var ticket = SteamUser.GetAuthSessionTicket();
 
-// Client sends ticket data to server somehow
-var ticket = SteamUser.GetAuthSessionTicket();
+    // server listens to event
+    SteamServer.OnValidateAuthTicketResponse += ( steamid, ownerid, rsponse ) =>
+    {
+        if ( rsponse == AuthResponse.OK )
+            TellUserTheyCanBeOnServer( steamid );
+        else
+            KickUser( steamid );
+    };
 
+    // server gets ticket data from client, calls this function.. which either returns
+    // false straight away, or will issue a TicketResponse.
+    if ( !SteamServer.BeginAuthSession( ticketData, clientSteamId ) )
+    {
+        KickUser( clientSteamId );
+    }
 
-// server listens to event
-SteamServer.OnValidateAuthTicketResponse += ( steamid, ownerid, rsponse ) =>
-{
-    if ( rsponse == AuthResponse.OK )
-        TellUserTheyCanBeOnServer( steamid );
-    else
-        KickUser( steamid );
-};
-
-// server gets ticket data from client, calls this function.. which either returns
-// false straight away, or will issue a TicketResponse.
-if ( !SteamServer.BeginAuthSession( ticketData, clientSteamId ) )
-{
-    KickUser( clientSteamId );
-}
-
-//
-// Client is leaving, cancels their ticket OnValidateAuth is called on the server again
-// this time with AuthResponse.AuthTicketCanceled
-//
-ticket.Cancel();
-
+    //
+    // Client is leaving, cancels their ticket OnValidateAuth is called on the server again
+    // this time with AuthResponse.AuthTicketCanceled
+    //
+    ticket.Cancel();
 ```
 
 ### Utils
 
 ```csharp
-SteamUtils.SecondsSinceAppActive;
-SteamUtils.SecondsSinceComputerActive;
-SteamUtils.IpCountry;
-SteamUtils.UsingBatteryPower;
-SteamUtils.CurrentBatteryPower;
-SteamUtils.AppId;
-SteamUtils.IsOverlayEnabled;
-SteamUtils.IsSteamRunningInVR;
-SteamUtils.IsSteamInBigPictureMode;
+    SteamUtils.SecondsSinceAppActive;
+    SteamUtils.SecondsSinceComputerActive;
+    SteamUtils.IpCountry;
+    SteamUtils.UsingBatteryPower;
+    SteamUtils.CurrentBatteryPower;
+    SteamUtils.AppId;
+    SteamUtils.IsOverlayEnabled;
+    SteamUtils.IsSteamRunningInVR;
+    SteamUtils.IsSteamInBigPictureMode;
 ```
 
-# Usage
+### Workshop
+
+Download a workshop item by ID
+
+```csharp
+    SteamUGC.Download( 1717844711 );
+```
+
+Get a workshop item information
+
+```csharp
+    var itemInfo = await Ugc.Item.Get( 1720164672 );
+
+    Console.WriteLine( $"Title: {itemInfo?.Title}" );
+    Console.WriteLine( $"IsInstalled: {itemInfo?.IsInstalled}" );
+    Console.WriteLine( $"IsDownloading: {itemInfo?.IsDownloading}" );
+    Console.WriteLine( $"IsDownloadPending: {itemInfo?.IsDownloadPending}" );
+    Console.WriteLine( $"IsSubscribed: {itemInfo?.IsSubscribed}" );
+    Console.WriteLine( $"NeedsUpdate: {itemInfo?.NeedsUpdate}" );
+    Console.WriteLine( $"Description: {itemInfo?.Description}" );
+```
+
+Query a list of workshop items
+
+```csharp
+    var q = Ugc.Query.All
+                    .WithTag( "Fun" )
+                    .WithTag( "Movie" )
+                    .MatchAllTags();
+
+    var result = await q.GetPageAsync( 1 );
+
+    Console.WriteLine( $"ResultCount: {result?.ResultCount}" );
+    Console.WriteLine( $"TotalCount: {result?.TotalCount}" );
+
+    foreach ( Ugc.Item entry in result.Value.Entries )
+    {
+        Console.WriteLine( $" {entry.Title}" );
+    }
+```
+
+Query items created by friends
+
+```csharp
+    var q = Ugc.UserQuery.All
+                        .CreatedByFriends();
+```
+
+Query items created by yourself
+
+```csharp
+    var q = Ugc.UserQuery.All
+                        .FromSelf();
+```
+
+Publish your own file
+
+```csharp
+    var result = await Ugc.Editor.NewCommunityFile
+                      .WithTitle( "My New FIle" )
+                      .WithDescription( "This is a description" )
+                      .WithContent( "c:/folder/addon/location" )
+                      .WithTag( "awesome" )
+                      .WithTag( "small" )
+                      .SubmitAsync( iProgressBar );
+```
+
+### Steam Cloud
+
+Write a cloud file
+
+```csharp
+    SteamRemoteStorage.FileWrite( "file.txt", fileContents );
+```
+
+Read a cloud file
+
+```csharp
+    var fileContents = SteamRemoteStorage.ReadFile( "file.txt" );
+```
+
+List all files
+
+```csharp
+    foreach ( var file in SteamRemoteStorage.Files )
+    {
+        Console.WriteLine( $"{file} ({SteamRemoteStorage.FileSize(file)} {SteamRemoteStorage.FileTime( file )})" );
+    }
+```
+
+
+### Steam Inventory
+
+Get item definitions
+
+```csharp
+    foreach ( InventoryDef def in SteamInventory.Definitions )
+    {
+        Console.WriteLine( $"{def.Name}" );
+    }
+```
+
+Get items that are for sale in the item shop
+
+```csharp
+    var defs = await SteamInventory.GetDefinitionsWithPricesAsync();
+
+    foreach ( var def in defs )
+    {
+        Console.WriteLine( $"{def.Name} [{def.LocalPriceFormatted}]" );
+    }
+```
+
+Get a list of your items
+
+```csharp
+    var result = await SteamInventory.GetItems();
+
+    // result is disposable, good manners to dispose after use
+    using ( result )
+    {
+        var items = result?.GetItems( bWithProperties );
+
+        foreach ( InventoryItem item in items )
+        {
+            Console.WriteLine( $"{item.Id} / {item.Quantity} / {item.Def.Name} " );
+        }
+    }
+```
+
+# Getting Started
 
 ## Client
 
