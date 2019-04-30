@@ -119,20 +119,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamUser + 43;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(ValidateAuthTicketResponse_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((ValidateAuthTicketResponse_t)(ValidateAuthTicketResponse_t) Marshal.PtrToStructure( p, typeof(ValidateAuthTicketResponse_t) )) : ((ValidateAuthTicketResponse_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal ulong SteamID; // m_SteamID class CSteamID
-			internal AuthResponse AuthSessionResponse; // m_eAuthSessionResponse enum EAuthSessionResponse
-			internal ulong OwnerSteamID; // m_OwnerSteamID class CSteamID
-			
-			public static implicit operator ValidateAuthTicketResponse_t ( ValidateAuthTicketResponse_t.Pack8 d ) => new ValidateAuthTicketResponse_t{ SteamID = d.SteamID,AuthSessionResponse = d.AuthSessionResponse,OwnerSteamID = d.OwnerSteamID, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(ValidateAuthTicketResponse_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((ValidateAuthTicketResponse_t)(ValidateAuthTicketResponse_t) Marshal.PtrToStructure( p, typeof(ValidateAuthTicketResponse_t) ) );
 		#endregion
 	}
 	
@@ -298,22 +286,8 @@ namespace Steamworks.Data
 		internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
 		
 		#region Marshalling
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(FriendGameInfo_t) : typeof(Pack8) );
-		public FriendGameInfo_t Fill( IntPtr p ) => Config.PackSmall ? ((FriendGameInfo_t)(FriendGameInfo_t) Marshal.PtrToStructure( p, typeof(FriendGameInfo_t) )) : ((FriendGameInfo_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal GameId GameID; // m_gameID class CGameID
-			internal uint GameIP; // m_unGameIP uint32
-			internal ushort GamePort; // m_usGamePort uint16
-			internal ushort QueryPort; // m_usQueryPort uint16
-			internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
-			
-			public static implicit operator FriendGameInfo_t ( FriendGameInfo_t.Pack8 d ) => new FriendGameInfo_t{ GameID = d.GameID,GameIP = d.GameIP,GamePort = d.GamePort,QueryPort = d.QueryPort,SteamIDLobby = d.SteamIDLobby, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(FriendGameInfo_t) );
+		public FriendGameInfo_t Fill( IntPtr p ) => ((FriendGameInfo_t)(FriendGameInfo_t) Marshal.PtrToStructure( p, typeof(FriendGameInfo_t) ) );
 		#endregion
 	}
 	
@@ -422,19 +396,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamFriends + 33;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GameLobbyJoinRequested_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((GameLobbyJoinRequested_t)(GameLobbyJoinRequested_t) Marshal.PtrToStructure( p, typeof(GameLobbyJoinRequested_t) )) : ((GameLobbyJoinRequested_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
-			internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
-			
-			public static implicit operator GameLobbyJoinRequested_t ( GameLobbyJoinRequested_t.Pack8 d ) => new GameLobbyJoinRequested_t{ SteamIDLobby = d.SteamIDLobby,SteamIDFriend = d.SteamIDFriend, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameLobbyJoinRequested_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((GameLobbyJoinRequested_t)(GameLobbyJoinRequested_t) Marshal.PtrToStructure( p, typeof(GameLobbyJoinRequested_t) ) );
 		#endregion
 	}
 	
@@ -448,21 +411,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamFriends + 34;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(AvatarImageLoaded_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((AvatarImageLoaded_t)(AvatarImageLoaded_t) Marshal.PtrToStructure( p, typeof(AvatarImageLoaded_t) )) : ((AvatarImageLoaded_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal ulong SteamID; // m_steamID class CSteamID
-			internal int Image; // m_iImage int
-			internal int Wide; // m_iWide int
-			internal int Tall; // m_iTall int
-			
-			public static implicit operator AvatarImageLoaded_t ( AvatarImageLoaded_t.Pack8 d ) => new AvatarImageLoaded_t{ SteamID = d.SteamID,Image = d.Image,Wide = d.Wide,Tall = d.Tall, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(AvatarImageLoaded_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((AvatarImageLoaded_t)(AvatarImageLoaded_t) Marshal.PtrToStructure( p, typeof(AvatarImageLoaded_t) ) );
 		#endregion
 	}
 	
@@ -475,20 +425,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamFriends + 35;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(ClanOfficerListResponse_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((ClanOfficerListResponse_t)(ClanOfficerListResponse_t) Marshal.PtrToStructure( p, typeof(ClanOfficerListResponse_t) )) : ((ClanOfficerListResponse_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal ulong SteamIDClan; // m_steamIDClan class CSteamID
-			internal int COfficers; // m_cOfficers int
-			internal byte Success; // m_bSuccess uint8
-			
-			public static implicit operator ClanOfficerListResponse_t ( ClanOfficerListResponse_t.Pack8 d ) => new ClanOfficerListResponse_t{ SteamIDClan = d.SteamIDClan,COfficers = d.COfficers,Success = d.Success, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(ClanOfficerListResponse_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((ClanOfficerListResponse_t)(ClanOfficerListResponse_t) Marshal.PtrToStructure( p, typeof(ClanOfficerListResponse_t) ) );
 		#endregion
 	}
 	
@@ -500,19 +438,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamFriends + 36;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(FriendRichPresenceUpdate_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((FriendRichPresenceUpdate_t)(FriendRichPresenceUpdate_t) Marshal.PtrToStructure( p, typeof(FriendRichPresenceUpdate_t) )) : ((FriendRichPresenceUpdate_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
-			internal AppId AppID; // m_nAppID AppId_t
-			
-			public static implicit operator FriendRichPresenceUpdate_t ( FriendRichPresenceUpdate_t.Pack8 d ) => new FriendRichPresenceUpdate_t{ SteamIDFriend = d.SteamIDFriend,AppID = d.AppID, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(FriendRichPresenceUpdate_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((FriendRichPresenceUpdate_t)(FriendRichPresenceUpdate_t) Marshal.PtrToStructure( p, typeof(FriendRichPresenceUpdate_t) ) );
 		#endregion
 	}
 	
@@ -525,20 +452,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamFriends + 37;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GameRichPresenceJoinRequested_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((GameRichPresenceJoinRequested_t)(GameRichPresenceJoinRequested_t) Marshal.PtrToStructure( p, typeof(GameRichPresenceJoinRequested_t) )) : ((GameRichPresenceJoinRequested_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-			internal string Connect; // m_rgchConnect char [256]
-			
-			public static implicit operator GameRichPresenceJoinRequested_t ( GameRichPresenceJoinRequested_t.Pack8 d ) => new GameRichPresenceJoinRequested_t{ SteamIDFriend = d.SteamIDFriend,Connect = d.Connect, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameRichPresenceJoinRequested_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((GameRichPresenceJoinRequested_t)(GameRichPresenceJoinRequested_t) Marshal.PtrToStructure( p, typeof(GameRichPresenceJoinRequested_t) ) );
 		#endregion
 	}
 	
@@ -551,20 +466,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamFriends + 38;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GameConnectedClanChatMsg_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((GameConnectedClanChatMsg_t)(GameConnectedClanChatMsg_t) Marshal.PtrToStructure( p, typeof(GameConnectedClanChatMsg_t) )) : ((GameConnectedClanChatMsg_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
-			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
-			internal int MessageID; // m_iMessageID int
-			
-			public static implicit operator GameConnectedClanChatMsg_t ( GameConnectedClanChatMsg_t.Pack8 d ) => new GameConnectedClanChatMsg_t{ SteamIDClanChat = d.SteamIDClanChat,SteamIDUser = d.SteamIDUser,MessageID = d.MessageID, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameConnectedClanChatMsg_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((GameConnectedClanChatMsg_t)(GameConnectedClanChatMsg_t) Marshal.PtrToStructure( p, typeof(GameConnectedClanChatMsg_t) ) );
 		#endregion
 	}
 	
@@ -576,19 +479,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamFriends + 39;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GameConnectedChatJoin_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((GameConnectedChatJoin_t)(GameConnectedChatJoin_t) Marshal.PtrToStructure( p, typeof(GameConnectedChatJoin_t) )) : ((GameConnectedChatJoin_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
-			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
-			
-			public static implicit operator GameConnectedChatJoin_t ( GameConnectedChatJoin_t.Pack8 d ) => new GameConnectedChatJoin_t{ SteamIDClanChat = d.SteamIDClanChat,SteamIDUser = d.SteamIDUser, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameConnectedChatJoin_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((GameConnectedChatJoin_t)(GameConnectedChatJoin_t) Marshal.PtrToStructure( p, typeof(GameConnectedChatJoin_t) ) );
 		#endregion
 	}
 	
@@ -604,23 +496,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamFriends + 40;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GameConnectedChatLeave_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((GameConnectedChatLeave_t)(GameConnectedChatLeave_t) Marshal.PtrToStructure( p, typeof(GameConnectedChatLeave_t) )) : ((GameConnectedChatLeave_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
-			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool Kicked; // m_bKicked _Bool
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool Dropped; // m_bDropped _Bool
-			
-			public static implicit operator GameConnectedChatLeave_t ( GameConnectedChatLeave_t.Pack8 d ) => new GameConnectedChatLeave_t{ SteamIDClanChat = d.SteamIDClanChat,SteamIDUser = d.SteamIDUser,Kicked = d.Kicked,Dropped = d.Dropped, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameConnectedChatLeave_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((GameConnectedChatLeave_t)(GameConnectedChatLeave_t) Marshal.PtrToStructure( p, typeof(GameConnectedChatLeave_t) ) );
 		#endregion
 	}
 	
@@ -656,19 +533,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamFriends + 42;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(JoinClanChatRoomCompletionResult_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((JoinClanChatRoomCompletionResult_t)(JoinClanChatRoomCompletionResult_t) Marshal.PtrToStructure( p, typeof(JoinClanChatRoomCompletionResult_t) )) : ((JoinClanChatRoomCompletionResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
-			internal ChatRoomEnterResponse ChatRoomEnterResponse; // m_eChatRoomEnterResponse enum EChatRoomEnterResponse
-			
-			public static implicit operator JoinClanChatRoomCompletionResult_t ( JoinClanChatRoomCompletionResult_t.Pack8 d ) => new JoinClanChatRoomCompletionResult_t{ SteamIDClanChat = d.SteamIDClanChat,ChatRoomEnterResponse = d.ChatRoomEnterResponse, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(JoinClanChatRoomCompletionResult_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((JoinClanChatRoomCompletionResult_t)(JoinClanChatRoomCompletionResult_t) Marshal.PtrToStructure( p, typeof(JoinClanChatRoomCompletionResult_t) ) );
 		#endregion
 	}
 	
@@ -680,19 +546,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamFriends + 43;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GameConnectedFriendChatMsg_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((GameConnectedFriendChatMsg_t)(GameConnectedFriendChatMsg_t) Marshal.PtrToStructure( p, typeof(GameConnectedFriendChatMsg_t) )) : ((GameConnectedFriendChatMsg_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
-			internal int MessageID; // m_iMessageID int
-			
-			public static implicit operator GameConnectedFriendChatMsg_t ( GameConnectedFriendChatMsg_t.Pack8 d ) => new GameConnectedFriendChatMsg_t{ SteamIDUser = d.SteamIDUser,MessageID = d.MessageID, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameConnectedFriendChatMsg_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((GameConnectedFriendChatMsg_t)(GameConnectedFriendChatMsg_t) Marshal.PtrToStructure( p, typeof(GameConnectedFriendChatMsg_t) ) );
 		#endregion
 	}
 	
@@ -705,20 +560,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamFriends + 44;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(FriendsGetFollowerCount_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((FriendsGetFollowerCount_t)(FriendsGetFollowerCount_t) Marshal.PtrToStructure( p, typeof(FriendsGetFollowerCount_t) )) : ((FriendsGetFollowerCount_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal ulong SteamID; // m_steamID class CSteamID
-			internal int Count; // m_nCount int
-			
-			public static implicit operator FriendsGetFollowerCount_t ( FriendsGetFollowerCount_t.Pack8 d ) => new FriendsGetFollowerCount_t{ Result = d.Result,SteamID = d.SteamID,Count = d.Count, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(FriendsGetFollowerCount_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((FriendsGetFollowerCount_t)(FriendsGetFollowerCount_t) Marshal.PtrToStructure( p, typeof(FriendsGetFollowerCount_t) ) );
 		#endregion
 	}
 	
@@ -732,21 +575,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamFriends + 45;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(FriendsIsFollowing_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((FriendsIsFollowing_t)(FriendsIsFollowing_t) Marshal.PtrToStructure( p, typeof(FriendsIsFollowing_t) )) : ((FriendsIsFollowing_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal ulong SteamID; // m_steamID class CSteamID
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool IsFollowing; // m_bIsFollowing _Bool
-			
-			public static implicit operator FriendsIsFollowing_t ( FriendsIsFollowing_t.Pack8 d ) => new FriendsIsFollowing_t{ Result = d.Result,SteamID = d.SteamID,IsFollowing = d.IsFollowing, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(FriendsIsFollowing_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((FriendsIsFollowing_t)(FriendsIsFollowing_t) Marshal.PtrToStructure( p, typeof(FriendsIsFollowing_t) ) );
 		#endregion
 	}
 	
@@ -761,22 +591,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamFriends + 46;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(FriendsEnumerateFollowingList_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((FriendsEnumerateFollowingList_t)(FriendsEnumerateFollowingList_t) Marshal.PtrToStructure( p, typeof(FriendsEnumerateFollowingList_t) )) : ((FriendsEnumerateFollowingList_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-			internal ulong[] GSteamID; // m_rgSteamID class CSteamID [50]
-			internal int ResultsReturned; // m_nResultsReturned int32
-			internal int TotalResultCount; // m_nTotalResultCount int32
-			
-			public static implicit operator FriendsEnumerateFollowingList_t ( FriendsEnumerateFollowingList_t.Pack8 d ) => new FriendsEnumerateFollowingList_t{ Result = d.Result,GSteamID = d.GSteamID,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(FriendsEnumerateFollowingList_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((FriendsEnumerateFollowingList_t)(FriendsEnumerateFollowingList_t) Marshal.PtrToStructure( p, typeof(FriendsEnumerateFollowingList_t) ) );
 		#endregion
 	}
 	
@@ -990,44 +806,8 @@ namespace Steamworks.Data
 		internal ulong SteamID; // m_steamID class CSteamID
 		
 		#region Marshalling
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(gameserveritem_t) : typeof(Pack8) );
-		public gameserveritem_t Fill( IntPtr p ) => Config.PackSmall ? ((gameserveritem_t)(gameserveritem_t) Marshal.PtrToStructure( p, typeof(gameserveritem_t) )) : ((gameserveritem_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal servernetadr_t NetAdr; // m_NetAdr class servernetadr_t
-			internal int Ping; // m_nPing int
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool HadSuccessfulResponse; // m_bHadSuccessfulResponse _Bool
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool DoNotRefresh; // m_bDoNotRefresh _Bool
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-			internal string GameDir; // m_szGameDir char [32]
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-			internal string Map; // m_szMap char [32]
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-			internal string GameDescription; // m_szGameDescription char [64]
-			internal uint AppID; // m_nAppID uint32
-			internal int Players; // m_nPlayers int
-			internal int MaxPlayers; // m_nMaxPlayers int
-			internal int BotPlayers; // m_nBotPlayers int
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool Password; // m_bPassword _Bool
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool Secure; // m_bSecure _Bool
-			internal uint TimeLastPlayed; // m_ulTimeLastPlayed uint32
-			internal int ServerVersion; // m_nServerVersion int
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-			internal string ServerName; // m_szServerName char [64]
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-			internal string GameTags; // m_szGameTags char [128]
-			internal ulong SteamID; // m_steamID class CSteamID
-			
-			public static implicit operator gameserveritem_t ( gameserveritem_t.Pack8 d ) => new gameserveritem_t{ NetAdr = d.NetAdr,Ping = d.Ping,HadSuccessfulResponse = d.HadSuccessfulResponse,DoNotRefresh = d.DoNotRefresh,GameDir = d.GameDir,Map = d.Map,GameDescription = d.GameDescription,AppID = d.AppID,Players = d.Players,MaxPlayers = d.MaxPlayers,BotPlayers = d.BotPlayers,Password = d.Password,Secure = d.Secure,TimeLastPlayed = d.TimeLastPlayed,ServerVersion = d.ServerVersion,ServerName = d.ServerName,GameTags = d.GameTags,SteamID = d.SteamID, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(gameserveritem_t) );
+		public gameserveritem_t Fill( IntPtr p ) => ((gameserveritem_t)(gameserveritem_t) Marshal.PtrToStructure( p, typeof(gameserveritem_t) ) );
 		#endregion
 	}
 	
@@ -1337,20 +1117,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamMatchmaking + 15;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(PSNGameBootInviteResult_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((PSNGameBootInviteResult_t)(PSNGameBootInviteResult_t) Marshal.PtrToStructure( p, typeof(PSNGameBootInviteResult_t) )) : ((PSNGameBootInviteResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool GameBootInviteExists; // m_bGameBootInviteExists _Bool
-			internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
-			
-			public static implicit operator PSNGameBootInviteResult_t ( PSNGameBootInviteResult_t.Pack8 d ) => new PSNGameBootInviteResult_t{ GameBootInviteExists = d.GameBootInviteExists,SteamIDLobby = d.SteamIDLobby, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(PSNGameBootInviteResult_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((PSNGameBootInviteResult_t)(PSNGameBootInviteResult_t) Marshal.PtrToStructure( p, typeof(PSNGameBootInviteResult_t) ) );
 		#endregion
 	}
 	
@@ -1388,23 +1156,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamGameSearch + 1;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(SearchForGameProgressCallback_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((SearchForGameProgressCallback_t)(SearchForGameProgressCallback_t) Marshal.PtrToStructure( p, typeof(SearchForGameProgressCallback_t) )) : ((SearchForGameProgressCallback_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal ulong LSearchID; // m_ullSearchID uint64
-			internal Result Result; // m_eResult enum EResult
-			internal ulong LobbyID; // m_lobbyID class CSteamID
-			internal ulong SteamIDEndedSearch; // m_steamIDEndedSearch class CSteamID
-			internal int SecondsRemainingEstimate; // m_nSecondsRemainingEstimate int32
-			internal int CPlayersSearching; // m_cPlayersSearching int32
-			
-			public static implicit operator SearchForGameProgressCallback_t ( SearchForGameProgressCallback_t.Pack8 d ) => new SearchForGameProgressCallback_t{ LSearchID = d.LSearchID,Result = d.Result,LobbyID = d.LobbyID,SteamIDEndedSearch = d.SteamIDEndedSearch,SecondsRemainingEstimate = d.SecondsRemainingEstimate,CPlayersSearching = d.CPlayersSearching, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(SearchForGameProgressCallback_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((SearchForGameProgressCallback_t)(SearchForGameProgressCallback_t) Marshal.PtrToStructure( p, typeof(SearchForGameProgressCallback_t) ) );
 		#endregion
 	}
 	
@@ -1421,24 +1174,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamGameSearch + 2;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(SearchForGameResultCallback_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((SearchForGameResultCallback_t)(SearchForGameResultCallback_t) Marshal.PtrToStructure( p, typeof(SearchForGameResultCallback_t) )) : ((SearchForGameResultCallback_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal ulong LSearchID; // m_ullSearchID uint64
-			internal Result Result; // m_eResult enum EResult
-			internal int CountPlayersInGame; // m_nCountPlayersInGame int32
-			internal int CountAcceptedGame; // m_nCountAcceptedGame int32
-			internal ulong SteamIDHost; // m_steamIDHost class CSteamID
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool FinalCallback; // m_bFinalCallback _Bool
-			
-			public static implicit operator SearchForGameResultCallback_t ( SearchForGameResultCallback_t.Pack8 d ) => new SearchForGameResultCallback_t{ LSearchID = d.LSearchID,Result = d.Result,CountPlayersInGame = d.CountPlayersInGame,CountAcceptedGame = d.CountAcceptedGame,SteamIDHost = d.SteamIDHost,FinalCallback = d.FinalCallback, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(SearchForGameResultCallback_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((SearchForGameResultCallback_t)(SearchForGameResultCallback_t) Marshal.PtrToStructure( p, typeof(SearchForGameResultCallback_t) ) );
 		#endregion
 	}
 	
@@ -1482,27 +1219,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamGameSearch + 12;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RequestPlayersForGameResultCallback_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((RequestPlayersForGameResultCallback_t)(RequestPlayersForGameResultCallback_t) Marshal.PtrToStructure( p, typeof(RequestPlayersForGameResultCallback_t) )) : ((RequestPlayersForGameResultCallback_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal ulong LSearchID; // m_ullSearchID uint64
-			internal ulong SteamIDPlayerFound; // m_SteamIDPlayerFound class CSteamID
-			internal ulong SteamIDLobby; // m_SteamIDLobby class CSteamID
-			internal PlayerAcceptState_t PlayerAcceptState; // m_ePlayerAcceptState PlayerAcceptState_t
-			internal int PlayerIndex; // m_nPlayerIndex int32
-			internal int TotalPlayersFound; // m_nTotalPlayersFound int32
-			internal int TotalPlayersAcceptedGame; // m_nTotalPlayersAcceptedGame int32
-			internal int SuggestedTeamIndex; // m_nSuggestedTeamIndex int32
-			internal ulong LUniqueGameID; // m_ullUniqueGameID uint64
-			
-			public static implicit operator RequestPlayersForGameResultCallback_t ( RequestPlayersForGameResultCallback_t.Pack8 d ) => new RequestPlayersForGameResultCallback_t{ Result = d.Result,LSearchID = d.LSearchID,SteamIDPlayerFound = d.SteamIDPlayerFound,SteamIDLobby = d.SteamIDLobby,PlayerAcceptState = d.PlayerAcceptState,PlayerIndex = d.PlayerIndex,TotalPlayersFound = d.TotalPlayersFound,TotalPlayersAcceptedGame = d.TotalPlayersAcceptedGame,SuggestedTeamIndex = d.SuggestedTeamIndex,LUniqueGameID = d.LUniqueGameID, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(RequestPlayersForGameResultCallback_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((RequestPlayersForGameResultCallback_t)(RequestPlayersForGameResultCallback_t) Marshal.PtrToStructure( p, typeof(RequestPlayersForGameResultCallback_t) ) );
 		#endregion
 	}
 	
@@ -1541,20 +1259,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamGameSearch + 14;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(SubmitPlayerResultResultCallback_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((SubmitPlayerResultResultCallback_t)(SubmitPlayerResultResultCallback_t) Marshal.PtrToStructure( p, typeof(SubmitPlayerResultResultCallback_t) )) : ((SubmitPlayerResultResultCallback_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal ulong UllUniqueGameID; // ullUniqueGameID uint64
-			internal ulong SteamIDPlayer; // steamIDPlayer class CSteamID
-			
-			public static implicit operator SubmitPlayerResultResultCallback_t ( SubmitPlayerResultResultCallback_t.Pack8 d ) => new SubmitPlayerResultResultCallback_t{ Result = d.Result,UllUniqueGameID = d.UllUniqueGameID,SteamIDPlayer = d.SteamIDPlayer, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(SubmitPlayerResultResultCallback_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((SubmitPlayerResultResultCallback_t)(SubmitPlayerResultResultCallback_t) Marshal.PtrToStructure( p, typeof(SubmitPlayerResultResultCallback_t) ) );
 		#endregion
 	}
 	
@@ -1593,22 +1299,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamParties + 1;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(JoinPartyCallback_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((JoinPartyCallback_t)(JoinPartyCallback_t) Marshal.PtrToStructure( p, typeof(JoinPartyCallback_t) )) : ((JoinPartyCallback_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
-			internal ulong SteamIDBeaconOwner; // m_SteamIDBeaconOwner class CSteamID
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-			internal string ConnectString; // m_rgchConnectString char [256]
-			
-			public static implicit operator JoinPartyCallback_t ( JoinPartyCallback_t.Pack8 d ) => new JoinPartyCallback_t{ Result = d.Result,BeaconID = d.BeaconID,SteamIDBeaconOwner = d.SteamIDBeaconOwner,ConnectString = d.ConnectString, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(JoinPartyCallback_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((JoinPartyCallback_t)(JoinPartyCallback_t) Marshal.PtrToStructure( p, typeof(JoinPartyCallback_t) ) );
 		#endregion
 	}
 	
@@ -1644,19 +1336,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamParties + 3;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(ReservationNotificationCallback_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((ReservationNotificationCallback_t)(ReservationNotificationCallback_t) Marshal.PtrToStructure( p, typeof(ReservationNotificationCallback_t) )) : ((ReservationNotificationCallback_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
-			internal ulong SteamIDJoiner; // m_steamIDJoiner class CSteamID
-			
-			public static implicit operator ReservationNotificationCallback_t ( ReservationNotificationCallback_t.Pack8 d ) => new ReservationNotificationCallback_t{ BeaconID = d.BeaconID,SteamIDJoiner = d.SteamIDJoiner, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(ReservationNotificationCallback_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((ReservationNotificationCallback_t)(ReservationNotificationCallback_t) Marshal.PtrToStructure( p, typeof(ReservationNotificationCallback_t) ) );
 		#endregion
 	}
 	
@@ -2571,20 +2252,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamUserStats + 1;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(UserStatsReceived_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((UserStatsReceived_t)(UserStatsReceived_t) Marshal.PtrToStructure( p, typeof(UserStatsReceived_t) )) : ((UserStatsReceived_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal ulong GameID; // m_nGameID uint64
-			internal Result Result; // m_eResult enum EResult
-			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
-			
-			public static implicit operator UserStatsReceived_t ( UserStatsReceived_t.Pack8 d ) => new UserStatsReceived_t{ GameID = d.GameID,Result = d.Result,SteamIDUser = d.SteamIDUser, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(UserStatsReceived_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((UserStatsReceived_t)(UserStatsReceived_t) Marshal.PtrToStructure( p, typeof(UserStatsReceived_t) ) );
 		#endregion
 	}
 	
@@ -2759,18 +2428,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamUserStats + 8;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(UserStatsUnloaded_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((UserStatsUnloaded_t)(UserStatsUnloaded_t) Marshal.PtrToStructure( p, typeof(UserStatsUnloaded_t) )) : ((UserStatsUnloaded_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
-			
-			public static implicit operator UserStatsUnloaded_t ( UserStatsUnloaded_t.Pack8 d ) => new UserStatsUnloaded_t{ SteamIDUser = d.SteamIDUser, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(UserStatsUnloaded_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((UserStatsUnloaded_t)(UserStatsUnloaded_t) Marshal.PtrToStructure( p, typeof(UserStatsUnloaded_t) ) );
 		#endregion
 	}
 	
@@ -3052,18 +2711,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamNetworking + 2;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(P2PSessionRequest_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((P2PSessionRequest_t)(P2PSessionRequest_t) Marshal.PtrToStructure( p, typeof(P2PSessionRequest_t) )) : ((P2PSessionRequest_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal ulong SteamIDRemote; // m_steamIDRemote class CSteamID
-			
-			public static implicit operator P2PSessionRequest_t ( P2PSessionRequest_t.Pack8 d ) => new P2PSessionRequest_t{ SteamIDRemote = d.SteamIDRemote, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(P2PSessionRequest_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((P2PSessionRequest_t)(P2PSessionRequest_t) Marshal.PtrToStructure( p, typeof(P2PSessionRequest_t) ) );
 		#endregion
 	}
 	
@@ -3075,19 +2724,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamNetworking + 3;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(P2PSessionConnectFail_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((P2PSessionConnectFail_t)(P2PSessionConnectFail_t) Marshal.PtrToStructure( p, typeof(P2PSessionConnectFail_t) )) : ((P2PSessionConnectFail_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal ulong SteamIDRemote; // m_steamIDRemote class CSteamID
-			internal byte P2PSessionError; // m_eP2PSessionError uint8
-			
-			public static implicit operator P2PSessionConnectFail_t ( P2PSessionConnectFail_t.Pack8 d ) => new P2PSessionConnectFail_t{ SteamIDRemote = d.SteamIDRemote,P2PSessionError = d.P2PSessionError, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(P2PSessionConnectFail_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((P2PSessionConnectFail_t)(P2PSessionConnectFail_t) Marshal.PtrToStructure( p, typeof(P2PSessionConnectFail_t) ) );
 		#endregion
 	}
 	
@@ -3101,21 +2739,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamNetworking + 1;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(SocketStatusCallback_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((SocketStatusCallback_t)(SocketStatusCallback_t) Marshal.PtrToStructure( p, typeof(SocketStatusCallback_t) )) : ((SocketStatusCallback_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal uint Socket; // m_hSocket SNetSocket_t
-			internal uint ListenSocket; // m_hListenSocket SNetListenSocket_t
-			internal ulong SteamIDRemote; // m_steamIDRemote class CSteamID
-			internal int SNetSocketState; // m_eSNetSocketState int
-			
-			public static implicit operator SocketStatusCallback_t ( SocketStatusCallback_t.Pack8 d ) => new SocketStatusCallback_t{ Socket = d.Socket,ListenSocket = d.ListenSocket,SteamIDRemote = d.SteamIDRemote,SNetSocketState = d.SNetSocketState, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(SocketStatusCallback_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((SocketStatusCallback_t)(SocketStatusCallback_t) Marshal.PtrToStructure( p, typeof(SocketStatusCallback_t) ) );
 		#endregion
 	}
 	
@@ -4677,22 +4302,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.ClientInventory + 3;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(SteamInventoryEligiblePromoItemDefIDs_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((SteamInventoryEligiblePromoItemDefIDs_t)(SteamInventoryEligiblePromoItemDefIDs_t) Marshal.PtrToStructure( p, typeof(SteamInventoryEligiblePromoItemDefIDs_t) )) : ((SteamInventoryEligiblePromoItemDefIDs_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_result enum EResult
-			internal ulong SteamID; // m_steamID class CSteamID
-			internal int UmEligiblePromoItemDefs; // m_numEligiblePromoItemDefs int
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool CachedData; // m_bCachedData _Bool
-			
-			public static implicit operator SteamInventoryEligiblePromoItemDefIDs_t ( SteamInventoryEligiblePromoItemDefIDs_t.Pack8 d ) => new SteamInventoryEligiblePromoItemDefIDs_t{ Result = d.Result,SteamID = d.SteamID,UmEligiblePromoItemDefs = d.UmEligiblePromoItemDefs,CachedData = d.CachedData, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamInventoryEligiblePromoItemDefIDs_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((SteamInventoryEligiblePromoItemDefIDs_t)(SteamInventoryEligiblePromoItemDefIDs_t) Marshal.PtrToStructure( p, typeof(SteamInventoryEligiblePromoItemDefIDs_t) ) );
 		#endregion
 	}
 	
@@ -4830,19 +4441,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamGameServer + 1;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GSClientApprove_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((GSClientApprove_t)(GSClientApprove_t) Marshal.PtrToStructure( p, typeof(GSClientApprove_t) )) : ((GSClientApprove_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal ulong SteamID; // m_SteamID class CSteamID
-			internal ulong OwnerSteamID; // m_OwnerSteamID class CSteamID
-			
-			public static implicit operator GSClientApprove_t ( GSClientApprove_t.Pack8 d ) => new GSClientApprove_t{ SteamID = d.SteamID,OwnerSteamID = d.OwnerSteamID, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSClientApprove_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((GSClientApprove_t)(GSClientApprove_t) Marshal.PtrToStructure( p, typeof(GSClientApprove_t) ) );
 		#endregion
 	}
 	
@@ -4856,21 +4456,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamGameServer + 2;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GSClientDeny_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((GSClientDeny_t)(GSClientDeny_t) Marshal.PtrToStructure( p, typeof(GSClientDeny_t) )) : ((GSClientDeny_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal ulong SteamID; // m_SteamID class CSteamID
-			internal DenyReason DenyReason; // m_eDenyReason enum EDenyReason
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-			internal string OptionalText; // m_rgchOptionalText char [128]
-			
-			public static implicit operator GSClientDeny_t ( GSClientDeny_t.Pack8 d ) => new GSClientDeny_t{ SteamID = d.SteamID,DenyReason = d.DenyReason,OptionalText = d.OptionalText, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSClientDeny_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((GSClientDeny_t)(GSClientDeny_t) Marshal.PtrToStructure( p, typeof(GSClientDeny_t) ) );
 		#endregion
 	}
 	
@@ -4882,19 +4469,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamGameServer + 3;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GSClientKick_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((GSClientKick_t)(GSClientKick_t) Marshal.PtrToStructure( p, typeof(GSClientKick_t) )) : ((GSClientKick_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal ulong SteamID; // m_SteamID class CSteamID
-			internal DenyReason DenyReason; // m_eDenyReason enum EDenyReason
-			
-			public static implicit operator GSClientKick_t ( GSClientKick_t.Pack8 d ) => new GSClientKick_t{ SteamID = d.SteamID,DenyReason = d.DenyReason, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSClientKick_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((GSClientKick_t)(GSClientKick_t) Marshal.PtrToStructure( p, typeof(GSClientKick_t) ) );
 		#endregion
 	}
 	
@@ -4990,23 +4566,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamGameServer + 8;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GSClientGroupStatus_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((GSClientGroupStatus_t)(GSClientGroupStatus_t) Marshal.PtrToStructure( p, typeof(GSClientGroupStatus_t) )) : ((GSClientGroupStatus_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal ulong SteamIDUser; // m_SteamIDUser class CSteamID
-			internal ulong SteamIDGroup; // m_SteamIDGroup class CSteamID
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool Member; // m_bMember _Bool
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool Officer; // m_bOfficer _Bool
-			
-			public static implicit operator GSClientGroupStatus_t ( GSClientGroupStatus_t.Pack8 d ) => new GSClientGroupStatus_t{ SteamIDUser = d.SteamIDUser,SteamIDGroup = d.SteamIDGroup,Member = d.Member,Officer = d.Officer, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSClientGroupStatus_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((GSClientGroupStatus_t)(GSClientGroupStatus_t) Marshal.PtrToStructure( p, typeof(GSClientGroupStatus_t) ) );
 		#endregion
 	}
 	
@@ -5079,22 +4640,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamGameServer + 11;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(ComputeNewPlayerCompatibilityResult_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((ComputeNewPlayerCompatibilityResult_t)(ComputeNewPlayerCompatibilityResult_t) Marshal.PtrToStructure( p, typeof(ComputeNewPlayerCompatibilityResult_t) )) : ((ComputeNewPlayerCompatibilityResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal int CPlayersThatDontLikeCandidate; // m_cPlayersThatDontLikeCandidate int
-			internal int CPlayersThatCandidateDoesntLike; // m_cPlayersThatCandidateDoesntLike int
-			internal int CClanPlayersThatDontLikeCandidate; // m_cClanPlayersThatDontLikeCandidate int
-			internal ulong SteamIDCandidate; // m_SteamIDCandidate class CSteamID
-			
-			public static implicit operator ComputeNewPlayerCompatibilityResult_t ( ComputeNewPlayerCompatibilityResult_t.Pack8 d ) => new ComputeNewPlayerCompatibilityResult_t{ Result = d.Result,CPlayersThatDontLikeCandidate = d.CPlayersThatDontLikeCandidate,CPlayersThatCandidateDoesntLike = d.CPlayersThatCandidateDoesntLike,CClanPlayersThatDontLikeCandidate = d.CClanPlayersThatDontLikeCandidate,SteamIDCandidate = d.SteamIDCandidate, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(ComputeNewPlayerCompatibilityResult_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((ComputeNewPlayerCompatibilityResult_t)(ComputeNewPlayerCompatibilityResult_t) Marshal.PtrToStructure( p, typeof(ComputeNewPlayerCompatibilityResult_t) ) );
 		#endregion
 	}
 	
@@ -5106,19 +4653,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamGameServerStats + 0;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GSStatsReceived_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((GSStatsReceived_t)(GSStatsReceived_t) Marshal.PtrToStructure( p, typeof(GSStatsReceived_t) )) : ((GSStatsReceived_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
-			
-			public static implicit operator GSStatsReceived_t ( GSStatsReceived_t.Pack8 d ) => new GSStatsReceived_t{ Result = d.Result,SteamIDUser = d.SteamIDUser, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSStatsReceived_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((GSStatsReceived_t)(GSStatsReceived_t) Marshal.PtrToStructure( p, typeof(GSStatsReceived_t) ) );
 		#endregion
 	}
 	
@@ -5130,19 +4666,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamGameServerStats + 1;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GSStatsStored_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((GSStatsStored_t)(GSStatsStored_t) Marshal.PtrToStructure( p, typeof(GSStatsStored_t) )) : ((GSStatsStored_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
-			
-			public static implicit operator GSStatsStored_t ( GSStatsStored_t.Pack8 d ) => new GSStatsStored_t{ Result = d.Result,SteamIDUser = d.SteamIDUser, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSStatsStored_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((GSStatsStored_t)(GSStatsStored_t) Marshal.PtrToStructure( p, typeof(GSStatsStored_t) ) );
 		#endregion
 	}
 	
@@ -5153,18 +4678,8 @@ namespace Steamworks.Data
 		
 		#region ISteamCallback
 		public int GetCallbackId() => CallbackIdentifiers.SteamUserStats + 8;
-		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GSStatsUnloaded_t) : typeof(Pack8) );
-		public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? ((GSStatsUnloaded_t)(GSStatsUnloaded_t) Marshal.PtrToStructure( p, typeof(GSStatsUnloaded_t) )) : ((GSStatsUnloaded_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 4 )]
-		public struct Pack8
-		{
-			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
-			
-			public static implicit operator GSStatsUnloaded_t ( GSStatsUnloaded_t.Pack8 d ) => new GSStatsUnloaded_t{ SteamIDUser = d.SteamIDUser, };
-		}
+		public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSStatsUnloaded_t) );
+		public Steamworks.ISteamCallback Fill( IntPtr p ) => ((GSStatsUnloaded_t)(GSStatsUnloaded_t) Marshal.PtrToStructure( p, typeof(GSStatsUnloaded_t) ) );
 		#endregion
 	}
 	

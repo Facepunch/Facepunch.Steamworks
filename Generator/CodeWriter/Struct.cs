@@ -82,8 +82,8 @@ namespace Generator
 
 							if ( defaultPack == 4 )
 							{
-								WriteLine( $"public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof({name}) : typeof(Pack8) );" );
-								WriteLine( $"public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? (({name})({name}) Marshal.PtrToStructure( p, typeof({name}) )) : (({name})(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));" );
+								WriteLine( $"public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof({name}) );" );
+								WriteLine( $"public Steamworks.ISteamCallback Fill( IntPtr p ) => (({name})({name}) Marshal.PtrToStructure( p, typeof({name}) ) );" );
 							}
 							else
 							{
@@ -97,44 +97,55 @@ namespace Generator
 					{
 						WriteLine( "#region Marshalling" );
 						{
-							WriteLine( $"public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof({name}) : typeof(Pack8) );" );
-							WriteLine( $"public {name} Fill( IntPtr p ) => Config.PackSmall ? (({name})({name}) Marshal.PtrToStructure( p, typeof({name}) )) : (({name})(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));" );
+							if ( defaultPack == 4 )
+							{
+								WriteLine( $"public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof({name}) );" );
+								WriteLine( $"public {name} Fill( IntPtr p ) => (({name})({name}) Marshal.PtrToStructure( p, typeof({name}) ) );" );
+							}
+							else
+							{
+								WriteLine( $"public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof({name}) : typeof(Pack8) );" );
+								WriteLine( $"public {name} Fill( IntPtr p ) => Config.PackSmall ? (({name})({name}) Marshal.PtrToStructure( p, typeof({name}) )) : (({name})(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));" );
+							}
 						}
 						WriteLine( "#endregion" );
 					}
 
-					WriteLine( "#region Packed Versions" );
+					if ( defaultPack != 4 )
 					{
-						//
-						// Windows Packed version
-						//
-						WriteLine();
-						WriteLine( $"[StructLayout( LayoutKind.Sequential, Pack = {defaultPack} )]" );
-						StartBlock( $"public struct Pack8" );
+						WriteLine( "#region Packed Versions" );
 						{
-							StructFields( c.Fields );
-
 							//
-							// Implicit convert from PackSmall to regular
+							// Windows Packed version
 							//
 							WriteLine();
-							Write( $"public static implicit operator {name} ( {name}.Pack8 d ) => " );
+							WriteLine( $"[StructLayout( LayoutKind.Sequential, Pack = {defaultPack} )]" );
+							StartBlock( $"public struct Pack8" );
 							{
-								Write( $"new {name}{{ " );
+								StructFields( c.Fields );
+
+								//
+								// Implicit convert from PackSmall to regular
+								//
+								WriteLine();
+								Write( $"public static implicit operator {name} ( {name}.Pack8 d ) => " );
 								{
-									foreach ( var f in c.Fields )
+									Write( $"new {name}{{ " );
 									{
-										Write( $"{CleanMemberName( f.Name )} = d.{CleanMemberName( f.Name )}," );
+										foreach ( var f in c.Fields )
+										{
+											Write( $"{CleanMemberName( f.Name )} = d.{CleanMemberName( f.Name )}," );
+										}
 									}
+									WriteLine( " };" );
 								}
-								WriteLine( " };" );
+
 							}
+							EndBlock();
 
 						}
-						EndBlock();
-
+						WriteLine( "#endregion" );
 					}
-					WriteLine( "#endregion" );
 
                     if ( !string.IsNullOrEmpty( c.CallbackId ) )
                     {
