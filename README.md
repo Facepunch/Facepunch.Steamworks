@@ -3,6 +3,22 @@ Another fucking c# Steamworks implementation
 
 [![Build Status](http://build.facepunch.com/buildStatus/icon?job=Facepunch/Facepunch.Steamworks/master)](http://build.facepunch.com/job/Facepunch/job/Facepunch.Steamworks/job/master/)
 
+## Features
+
+| Feature | Supported |
+|----------|------------ |
+| Windows | ✔ |
+| Linux | ✔ |
+| MacOS | ✔ |
+| Unity Support | ✔ |
+| Unity IL2CPP Support | ✔ |
+| Async Callbacks (steam callresults) | ✔ |
+| Events (steam callbacks) | ✔ |
+| Single C# dll (no native requirements apart from Steam) | ✔ |
+| Open Source | ✔ |
+| MIT license | ✔ |
+| Any 32bit OS | ❌ |
+
 ## Why
 
 The Steamworks C# implementations I found that were compatible with Unity have worked for a long time. But I hate them all. For a number of different reasons.
@@ -11,7 +27,8 @@ The Steamworks C# implementations I found that were compatible with Unity have w
 * They're not up to date.
 * They require a 3rd party native dll.
 * They can't be compiled into a standalone dll (in Unity).
-* They have a license.
+* They're not free
+* They have a restrictive license.
 
 C# is meant to make things easier. So lets try to wrap it up in a way that makes it all easier.
 
