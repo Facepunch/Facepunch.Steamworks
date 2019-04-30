@@ -96,6 +96,7 @@ namespace Generator
 				{
 					var func = clss.Functions[i];
 					var returnType = BaseType.Parse( func.ReturnType );
+					var regularpos = i * 8;
 
 					if ( Cleanup.IsDeprecated( $"{clss.Name}.{func.Name}" ) )
 					{
@@ -103,11 +104,21 @@ namespace Generator
 					}
 					else
 					{
-						WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, {locations[i]}) );" );
-
-						if ( returnType.IsReturnedWeird )
+						if ( regularpos != locations[i] )
 						{
-							WriteLine( $"_{func.Name}_Windows = Marshal.GetDelegateForFunctionPointer<F{func.Name}_Windows>( Marshal.ReadIntPtr( VTable, {locations[i]}) );" );
+							WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, Config.Os == OsType.Windows ? {locations[i]} : {regularpos} ) );" );
+							if ( returnType.IsReturnedWeird )
+								throw new System.NotImplementedException();
+						}
+						else
+						{
+
+							WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, {locations[i]}) );" );
+
+							if ( returnType.IsReturnedWeird )
+							{
+								WriteLine( $"_{func.Name}_Windows = Marshal.GetDelegateForFunctionPointer<F{func.Name}_Windows>( Marshal.ReadIntPtr( VTable, {locations[i]}) );" );
+							}
 						}
 					}
 				}

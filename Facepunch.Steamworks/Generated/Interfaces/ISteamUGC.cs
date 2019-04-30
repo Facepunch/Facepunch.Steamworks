@@ -18,8 +18,8 @@ namespace Steamworks
 		public override void InitInternals()
 		{
 			_CreateQueryUserUGCRequest = Marshal.GetDelegateForFunctionPointer<FCreateQueryUserUGCRequest>( Marshal.ReadIntPtr( VTable, 0) );
-			_CreateQueryAllUGCRequest1 = Marshal.GetDelegateForFunctionPointer<FCreateQueryAllUGCRequest1>( Marshal.ReadIntPtr( VTable, 16) );
-			_CreateQueryAllUGCRequest2 = Marshal.GetDelegateForFunctionPointer<FCreateQueryAllUGCRequest2>( Marshal.ReadIntPtr( VTable, 8) );
+			_CreateQueryAllUGCRequest1 = Marshal.GetDelegateForFunctionPointer<FCreateQueryAllUGCRequest1>( Marshal.ReadIntPtr( VTable, Config.Os == OsType.Windows ? 16 : 8 ) );
+			_CreateQueryAllUGCRequest2 = Marshal.GetDelegateForFunctionPointer<FCreateQueryAllUGCRequest2>( Marshal.ReadIntPtr( VTable, Config.Os == OsType.Windows ? 8 : 16 ) );
 			_CreateQueryUGCDetailsRequest = Marshal.GetDelegateForFunctionPointer<FCreateQueryUGCDetailsRequest>( Marshal.ReadIntPtr( VTable, 24) );
 			_SendQueryUGCRequest = Marshal.GetDelegateForFunctionPointer<FSendQueryUGCRequest>( Marshal.ReadIntPtr( VTable, 32) );
 			_GetQueryUGCResult = Marshal.GetDelegateForFunctionPointer<FGetQueryUGCResult>( Marshal.ReadIntPtr( VTable, 40) );
