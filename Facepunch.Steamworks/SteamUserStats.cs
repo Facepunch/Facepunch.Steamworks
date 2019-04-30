@@ -15,7 +15,10 @@ namespace Steamworks
 			get
 			{
 				if ( _internal == null )
+				{
 					_internal = new ISteamUserStats();
+					RequestCurrentStats();
+				}
 
 				return _internal;
 			}
