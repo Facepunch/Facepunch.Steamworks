@@ -147,7 +147,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<SteamUGCQueryCompleted_t?> SendQueryUGCRequest( UGCQueryHandle_t handle )
 		{
-			return await (new Result<SteamUGCQueryCompleted_t>( _SendQueryUGCRequest( Self, handle ) )).GetResult();
+			return await SteamUGCQueryCompleted_t.GetResultAsync( _SendQueryUGCRequest( Self, handle ) );
 		}
 		
 		#region FunctionMeta
@@ -480,7 +480,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<SteamUGCRequestUGCDetailsResult_t?> RequestUGCDetails( PublishedFileId nPublishedFileID, uint unMaxAgeSeconds )
 		{
-			return await (new Result<SteamUGCRequestUGCDetailsResult_t>( _RequestUGCDetails( Self, nPublishedFileID, unMaxAgeSeconds ) )).GetResult();
+			return await SteamUGCRequestUGCDetailsResult_t.GetResultAsync( _RequestUGCDetails( Self, nPublishedFileID, unMaxAgeSeconds ) );
 		}
 		
 		#region FunctionMeta
@@ -491,7 +491,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<CreateItemResult_t?> CreateItem( AppId nConsumerAppId, WorkshopFileType eFileType )
 		{
-			return await (new Result<CreateItemResult_t>( _CreateItem( Self, nConsumerAppId, eFileType ) )).GetResult();
+			return await CreateItemResult_t.GetResultAsync( _CreateItem( Self, nConsumerAppId, eFileType ) );
 		}
 		
 		#region FunctionMeta
@@ -705,7 +705,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<SubmitItemUpdateResult_t?> SubmitItemUpdate( UGCUpdateHandle_t handle, string pchChangeNote )
 		{
-			return await (new Result<SubmitItemUpdateResult_t>( _SubmitItemUpdate( Self, handle, pchChangeNote ) )).GetResult();
+			return await SubmitItemUpdateResult_t.GetResultAsync( _SubmitItemUpdate( Self, handle, pchChangeNote ) );
 		}
 		
 		#region FunctionMeta
@@ -727,7 +727,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<SetUserItemVoteResult_t?> SetUserItemVote( PublishedFileId nPublishedFileID, [MarshalAs( UnmanagedType.U1 )] bool bVoteUp )
 		{
-			return await (new Result<SetUserItemVoteResult_t>( _SetUserItemVote( Self, nPublishedFileID, bVoteUp ) )).GetResult();
+			return await SetUserItemVoteResult_t.GetResultAsync( _SetUserItemVote( Self, nPublishedFileID, bVoteUp ) );
 		}
 		
 		#region FunctionMeta
@@ -738,7 +738,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<GetUserItemVoteResult_t?> GetUserItemVote( PublishedFileId nPublishedFileID )
 		{
-			return await (new Result<GetUserItemVoteResult_t>( _GetUserItemVote( Self, nPublishedFileID ) )).GetResult();
+			return await GetUserItemVoteResult_t.GetResultAsync( _GetUserItemVote( Self, nPublishedFileID ) );
 		}
 		
 		#region FunctionMeta
@@ -749,7 +749,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<UserFavoriteItemsListChanged_t?> AddItemToFavorites( AppId nAppId, PublishedFileId nPublishedFileID )
 		{
-			return await (new Result<UserFavoriteItemsListChanged_t>( _AddItemToFavorites( Self, nAppId, nPublishedFileID ) )).GetResult();
+			return await UserFavoriteItemsListChanged_t.GetResultAsync( _AddItemToFavorites( Self, nAppId, nPublishedFileID ) );
 		}
 		
 		#region FunctionMeta
@@ -760,7 +760,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<UserFavoriteItemsListChanged_t?> RemoveItemFromFavorites( AppId nAppId, PublishedFileId nPublishedFileID )
 		{
-			return await (new Result<UserFavoriteItemsListChanged_t>( _RemoveItemFromFavorites( Self, nAppId, nPublishedFileID ) )).GetResult();
+			return await UserFavoriteItemsListChanged_t.GetResultAsync( _RemoveItemFromFavorites( Self, nAppId, nPublishedFileID ) );
 		}
 		
 		#region FunctionMeta
@@ -771,7 +771,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<RemoteStorageSubscribePublishedFileResult_t?> SubscribeItem( PublishedFileId nPublishedFileID )
 		{
-			return await (new Result<RemoteStorageSubscribePublishedFileResult_t>( _SubscribeItem( Self, nPublishedFileID ) )).GetResult();
+			return await RemoteStorageSubscribePublishedFileResult_t.GetResultAsync( _SubscribeItem( Self, nPublishedFileID ) );
 		}
 		
 		#region FunctionMeta
@@ -782,7 +782,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<RemoteStorageUnsubscribePublishedFileResult_t?> UnsubscribeItem( PublishedFileId nPublishedFileID )
 		{
-			return await (new Result<RemoteStorageUnsubscribePublishedFileResult_t>( _UnsubscribeItem( Self, nPublishedFileID ) )).GetResult();
+			return await RemoteStorageUnsubscribePublishedFileResult_t.GetResultAsync( _UnsubscribeItem( Self, nPublishedFileID ) );
 		}
 		
 		#region FunctionMeta
@@ -885,7 +885,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<StartPlaytimeTrackingResult_t?> StartPlaytimeTracking( [In,Out] PublishedFileId[]  pvecPublishedFileID, uint unNumPublishedFileIDs )
 		{
-			return await (new Result<StartPlaytimeTrackingResult_t>( _StartPlaytimeTracking( Self, pvecPublishedFileID, unNumPublishedFileIDs ) )).GetResult();
+			return await StartPlaytimeTrackingResult_t.GetResultAsync( _StartPlaytimeTracking( Self, pvecPublishedFileID, unNumPublishedFileIDs ) );
 		}
 		
 		#region FunctionMeta
@@ -896,7 +896,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<StopPlaytimeTrackingResult_t?> StopPlaytimeTracking( [In,Out] PublishedFileId[]  pvecPublishedFileID, uint unNumPublishedFileIDs )
 		{
-			return await (new Result<StopPlaytimeTrackingResult_t>( _StopPlaytimeTracking( Self, pvecPublishedFileID, unNumPublishedFileIDs ) )).GetResult();
+			return await StopPlaytimeTrackingResult_t.GetResultAsync( _StopPlaytimeTracking( Self, pvecPublishedFileID, unNumPublishedFileIDs ) );
 		}
 		
 		#region FunctionMeta
@@ -907,7 +907,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<StopPlaytimeTrackingResult_t?> StopPlaytimeTrackingForAllItems()
 		{
-			return await (new Result<StopPlaytimeTrackingResult_t>( _StopPlaytimeTrackingForAllItems( Self ) )).GetResult();
+			return await StopPlaytimeTrackingResult_t.GetResultAsync( _StopPlaytimeTrackingForAllItems( Self ) );
 		}
 		
 		#region FunctionMeta
@@ -918,7 +918,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<AddUGCDependencyResult_t?> AddDependency( PublishedFileId nParentPublishedFileID, PublishedFileId nChildPublishedFileID )
 		{
-			return await (new Result<AddUGCDependencyResult_t>( _AddDependency( Self, nParentPublishedFileID, nChildPublishedFileID ) )).GetResult();
+			return await AddUGCDependencyResult_t.GetResultAsync( _AddDependency( Self, nParentPublishedFileID, nChildPublishedFileID ) );
 		}
 		
 		#region FunctionMeta
@@ -929,7 +929,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<RemoveUGCDependencyResult_t?> RemoveDependency( PublishedFileId nParentPublishedFileID, PublishedFileId nChildPublishedFileID )
 		{
-			return await (new Result<RemoveUGCDependencyResult_t>( _RemoveDependency( Self, nParentPublishedFileID, nChildPublishedFileID ) )).GetResult();
+			return await RemoveUGCDependencyResult_t.GetResultAsync( _RemoveDependency( Self, nParentPublishedFileID, nChildPublishedFileID ) );
 		}
 		
 		#region FunctionMeta
@@ -940,7 +940,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<AddAppDependencyResult_t?> AddAppDependency( PublishedFileId nPublishedFileID, AppId nAppID )
 		{
-			return await (new Result<AddAppDependencyResult_t>( _AddAppDependency( Self, nPublishedFileID, nAppID ) )).GetResult();
+			return await AddAppDependencyResult_t.GetResultAsync( _AddAppDependency( Self, nPublishedFileID, nAppID ) );
 		}
 		
 		#region FunctionMeta
@@ -951,7 +951,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<RemoveAppDependencyResult_t?> RemoveAppDependency( PublishedFileId nPublishedFileID, AppId nAppID )
 		{
-			return await (new Result<RemoveAppDependencyResult_t>( _RemoveAppDependency( Self, nPublishedFileID, nAppID ) )).GetResult();
+			return await RemoveAppDependencyResult_t.GetResultAsync( _RemoveAppDependency( Self, nPublishedFileID, nAppID ) );
 		}
 		
 		#region FunctionMeta
@@ -962,7 +962,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<GetAppDependenciesResult_t?> GetAppDependencies( PublishedFileId nPublishedFileID )
 		{
-			return await (new Result<GetAppDependenciesResult_t>( _GetAppDependencies( Self, nPublishedFileID ) )).GetResult();
+			return await GetAppDependenciesResult_t.GetResultAsync( _GetAppDependencies( Self, nPublishedFileID ) );
 		}
 		
 		#region FunctionMeta
@@ -973,7 +973,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<DeleteItemResult_t?> DeleteItem( PublishedFileId nPublishedFileID )
 		{
-			return await (new Result<DeleteItemResult_t>( _DeleteItem( Self, nPublishedFileID ) )).GetResult();
+			return await DeleteItemResult_t.GetResultAsync( _DeleteItem( Self, nPublishedFileID ) );
 		}
 		
 	}

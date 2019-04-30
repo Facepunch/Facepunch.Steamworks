@@ -290,7 +290,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<EncryptedAppTicketResponse_t?> RequestEncryptedAppTicket( IntPtr pDataToInclude, int cbDataToInclude )
 		{
-			return await (new Result<EncryptedAppTicketResponse_t>( _RequestEncryptedAppTicket( Self, pDataToInclude, cbDataToInclude ) )).GetResult();
+			return await EncryptedAppTicketResponse_t.GetResultAsync( _RequestEncryptedAppTicket( Self, pDataToInclude, cbDataToInclude ) );
 		}
 		
 		#region FunctionMeta
@@ -335,7 +335,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<StoreAuthURLResponse_t?> RequestStoreAuthURL( string pchRedirectURL )
 		{
-			return await (new Result<StoreAuthURLResponse_t>( _RequestStoreAuthURL( Self, pchRedirectURL ) )).GetResult();
+			return await StoreAuthURLResponse_t.GetResultAsync( _RequestStoreAuthURL( Self, pchRedirectURL ) );
 		}
 		
 		#region FunctionMeta
@@ -394,7 +394,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<MarketEligibilityResponse_t?> GetMarketEligibility()
 		{
-			return await (new Result<MarketEligibilityResponse_t>( _GetMarketEligibility( Self ) )).GetResult();
+			return await MarketEligibilityResponse_t.GetResultAsync( _GetMarketEligibility( Self ) );
 		}
 		
 	}

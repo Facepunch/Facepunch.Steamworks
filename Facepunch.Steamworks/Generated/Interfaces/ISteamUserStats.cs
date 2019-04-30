@@ -258,7 +258,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<UserStatsReceived_t?> RequestUserStats( SteamId steamIDUser )
 		{
-			return await (new Result<UserStatsReceived_t>( _RequestUserStats( Self, steamIDUser ) )).GetResult();
+			return await UserStatsReceived_t.GetResultAsync( _RequestUserStats( Self, steamIDUser ) );
 		}
 		
 		#region FunctionMeta
@@ -329,7 +329,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<LeaderboardFindResult_t?> FindOrCreateLeaderboard( string pchLeaderboardName, LeaderboardSort eLeaderboardSortMethod, LeaderboardDisplay eLeaderboardDisplayType )
 		{
-			return await (new Result<LeaderboardFindResult_t>( _FindOrCreateLeaderboard( Self, pchLeaderboardName, eLeaderboardSortMethod, eLeaderboardDisplayType ) )).GetResult();
+			return await LeaderboardFindResult_t.GetResultAsync( _FindOrCreateLeaderboard( Self, pchLeaderboardName, eLeaderboardSortMethod, eLeaderboardDisplayType ) );
 		}
 		
 		#region FunctionMeta
@@ -340,7 +340,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<LeaderboardFindResult_t?> FindLeaderboard( string pchLeaderboardName )
 		{
-			return await (new Result<LeaderboardFindResult_t>( _FindLeaderboard( Self, pchLeaderboardName ) )).GetResult();
+			return await LeaderboardFindResult_t.GetResultAsync( _FindLeaderboard( Self, pchLeaderboardName ) );
 		}
 		
 		#region FunctionMeta
@@ -395,7 +395,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<LeaderboardScoresDownloaded_t?> DownloadLeaderboardEntries( SteamLeaderboard_t hSteamLeaderboard, LeaderboardDataRequest eLeaderboardDataRequest, int nRangeStart, int nRangeEnd )
 		{
-			return await (new Result<LeaderboardScoresDownloaded_t>( _DownloadLeaderboardEntries( Self, hSteamLeaderboard, eLeaderboardDataRequest, nRangeStart, nRangeEnd ) )).GetResult();
+			return await LeaderboardScoresDownloaded_t.GetResultAsync( _DownloadLeaderboardEntries( Self, hSteamLeaderboard, eLeaderboardDataRequest, nRangeStart, nRangeEnd ) );
 		}
 		
 		#region FunctionMeta
@@ -406,7 +406,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<LeaderboardScoresDownloaded_t?> DownloadLeaderboardEntriesForUsers( SteamLeaderboard_t hSteamLeaderboard, [In,Out] SteamId[]  prgUsers, int cUsers )
 		{
-			return await (new Result<LeaderboardScoresDownloaded_t>( _DownloadLeaderboardEntriesForUsers( Self, hSteamLeaderboard, prgUsers, cUsers ) )).GetResult();
+			return await LeaderboardScoresDownloaded_t.GetResultAsync( _DownloadLeaderboardEntriesForUsers( Self, hSteamLeaderboard, prgUsers, cUsers ) );
 		}
 		
 		#region FunctionMeta
@@ -429,7 +429,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<LeaderboardScoreUploaded_t?> UploadLeaderboardScore( SteamLeaderboard_t hSteamLeaderboard, LeaderboardUploadScoreMethod eLeaderboardUploadScoreMethod, int nScore, [In,Out] int[]  pScoreDetails, int cScoreDetailsCount )
 		{
-			return await (new Result<LeaderboardScoreUploaded_t>( _UploadLeaderboardScore( Self, hSteamLeaderboard, eLeaderboardUploadScoreMethod, nScore, pScoreDetails, cScoreDetailsCount ) )).GetResult();
+			return await LeaderboardScoreUploaded_t.GetResultAsync( _UploadLeaderboardScore( Self, hSteamLeaderboard, eLeaderboardUploadScoreMethod, nScore, pScoreDetails, cScoreDetailsCount ) );
 		}
 		
 		#region FunctionMeta
@@ -440,7 +440,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<LeaderboardUGCSet_t?> AttachLeaderboardUGC( SteamLeaderboard_t hSteamLeaderboard, UGCHandle_t hUGC )
 		{
-			return await (new Result<LeaderboardUGCSet_t>( _AttachLeaderboardUGC( Self, hSteamLeaderboard, hUGC ) )).GetResult();
+			return await LeaderboardUGCSet_t.GetResultAsync( _AttachLeaderboardUGC( Self, hSteamLeaderboard, hUGC ) );
 		}
 		
 		#region FunctionMeta
@@ -451,7 +451,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<NumberOfCurrentPlayers_t?> GetNumberOfCurrentPlayers()
 		{
-			return await (new Result<NumberOfCurrentPlayers_t>( _GetNumberOfCurrentPlayers( Self ) )).GetResult();
+			return await NumberOfCurrentPlayers_t.GetResultAsync( _GetNumberOfCurrentPlayers( Self ) );
 		}
 		
 		#region FunctionMeta
@@ -462,7 +462,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<GlobalAchievementPercentagesReady_t?> RequestGlobalAchievementPercentages()
 		{
-			return await (new Result<GlobalAchievementPercentagesReady_t>( _RequestGlobalAchievementPercentages( Self ) )).GetResult();
+			return await GlobalAchievementPercentagesReady_t.GetResultAsync( _RequestGlobalAchievementPercentages( Self ) );
 		}
 		
 		#region FunctionMeta
@@ -507,7 +507,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<GlobalStatsReceived_t?> RequestGlobalStats( int nHistoryDays )
 		{
-			return await (new Result<GlobalStatsReceived_t>( _RequestGlobalStats( Self, nHistoryDays ) )).GetResult();
+			return await GlobalStatsReceived_t.GetResultAsync( _RequestGlobalStats( Self, nHistoryDays ) );
 		}
 		
 		#region FunctionMeta

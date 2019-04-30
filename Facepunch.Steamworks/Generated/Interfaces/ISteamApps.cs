@@ -352,7 +352,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<FileDetailsResult_t?> GetFileDetails( string pszFileName )
 		{
-			return await (new Result<FileDetailsResult_t>( _GetFileDetails( Self, pszFileName ) )).GetResult();
+			return await FileDetailsResult_t.GetResultAsync( _GetFileDetails( Self, pszFileName ) );
 		}
 		
 		#region FunctionMeta

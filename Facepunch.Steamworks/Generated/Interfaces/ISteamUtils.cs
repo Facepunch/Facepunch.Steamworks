@@ -273,7 +273,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<CheckFileSignature_t?> CheckFileSignature( string szFileName )
 		{
-			return await (new Result<CheckFileSignature_t>( _CheckFileSignature( Self, szFileName ) )).GetResult();
+			return await CheckFileSignature_t.GetResultAsync( _CheckFileSignature( Self, szFileName ) );
 		}
 		
 		#region FunctionMeta

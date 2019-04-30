@@ -118,7 +118,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<SetPersonaNameResponse_t?> SetPersonaName( string pchPersonaName )
 		{
-			return await (new Result<SetPersonaNameResponse_t>( _SetPersonaName( Self, pchPersonaName ) )).GetResult();
+			return await SetPersonaNameResponse_t.GetResultAsync( _SetPersonaName( Self, pchPersonaName ) );
 		}
 		
 		#region FunctionMeta
@@ -381,7 +381,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<DownloadClanActivityCountsResult_t?> DownloadClanActivityCounts( [In,Out] SteamId[]  psteamIDClans, int cClansToRequest )
 		{
-			return await (new Result<DownloadClanActivityCountsResult_t>( _DownloadClanActivityCounts( Self, psteamIDClans, cClansToRequest ) )).GetResult();
+			return await DownloadClanActivityCountsResult_t.GetResultAsync( _DownloadClanActivityCounts( Self, psteamIDClans, cClansToRequest ) );
 		}
 		
 		#region FunctionMeta
@@ -557,7 +557,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<ClanOfficerListResponse_t?> RequestClanOfficerList( SteamId steamIDClan )
 		{
-			return await (new Result<ClanOfficerListResponse_t>( _RequestClanOfficerList( Self, steamIDClan ) )).GetResult();
+			return await ClanOfficerListResponse_t.GetResultAsync( _RequestClanOfficerList( Self, steamIDClan ) );
 		}
 		
 		#region FunctionMeta
@@ -762,7 +762,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<JoinClanChatRoomCompletionResult_t?> JoinClanChatRoom( SteamId steamIDClan )
 		{
-			return await (new Result<JoinClanChatRoomCompletionResult_t>( _JoinClanChatRoom( Self, steamIDClan ) )).GetResult();
+			return await JoinClanChatRoomCompletionResult_t.GetResultAsync( _JoinClanChatRoom( Self, steamIDClan ) );
 		}
 		
 		#region FunctionMeta
@@ -922,7 +922,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<FriendsGetFollowerCount_t?> GetFollowerCount( SteamId steamID )
 		{
-			return await (new Result<FriendsGetFollowerCount_t>( _GetFollowerCount( Self, steamID ) )).GetResult();
+			return await FriendsGetFollowerCount_t.GetResultAsync( _GetFollowerCount( Self, steamID ) );
 		}
 		
 		#region FunctionMeta
@@ -933,7 +933,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<FriendsIsFollowing_t?> IsFollowing( SteamId steamID )
 		{
-			return await (new Result<FriendsIsFollowing_t>( _IsFollowing( Self, steamID ) )).GetResult();
+			return await FriendsIsFollowing_t.GetResultAsync( _IsFollowing( Self, steamID ) );
 		}
 		
 		#region FunctionMeta
@@ -944,7 +944,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<FriendsEnumerateFollowingList_t?> EnumerateFollowingList( uint unStartIndex )
 		{
-			return await (new Result<FriendsEnumerateFollowingList_t>( _EnumerateFollowingList( Self, unStartIndex ) )).GetResult();
+			return await FriendsEnumerateFollowingList_t.GetResultAsync( _EnumerateFollowingList( Self, unStartIndex ) );
 		}
 		
 		#region FunctionMeta

@@ -114,7 +114,7 @@ internal class StructType : BaseType
 	{
 		if ( NativeType.EndsWith( "*" ) )
 		{
-			return $"return new {TypeName}().Fill( {varname} );";
+			return $"return {TypeName}.Fill( {varname} );";
 		}
 
 		return base.Return( varname );
@@ -125,7 +125,7 @@ internal class SteamApiCallType : BaseType
 {
 	public string CallResult;
 	public override string TypeName => "SteamAPICall_t";
-	public override string Return( string varname ) => $"return await (new Result<{CallResult}>( {varname} )).GetResult();";
+	public override string Return( string varname ) => $"return await {CallResult}.GetResultAsync( {varname} );";
 	public override string ReturnType => $"async Task<{CallResult}?>";
 }
 

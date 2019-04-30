@@ -250,38 +250,10 @@ namespace Steamworks
 			}
 		}
 
-
 		internal static bool IsCallComplete( SteamAPICall_t call, out bool failed )
 		{
 			failed = false;
 			return Internal.IsAPICallCompleted( call, ref failed );
-		}
-
-		internal static T? GetResult<T>( SteamAPICall_t call ) where T : struct, ISteamCallback
-		{
-			var t = new T();
-
-			var size = t.GetStructSize();
-			var ptr = Marshal.AllocHGlobal( size );
-
-			try
-			{
-				bool failed = false;
-
-				if ( !Internal.GetAPICallResult( call, ptr, size, t.GetCallbackId(), ref failed ) )
-					return null;
-
-				if ( failed )
-					return null;
-
-				t = (T)t.Fill( ptr );
-
-				return t;
-			}
-			finally
-			{
-				Marshal.FreeHGlobal( ptr );
-			}
 		}
 	}
 }

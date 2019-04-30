@@ -104,7 +104,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<RemoteStorageFileWriteAsyncComplete_t?> FileWriteAsync( string pchFile, IntPtr pvData, uint cubData )
 		{
-			return await (new Result<RemoteStorageFileWriteAsyncComplete_t>( _FileWriteAsync( Self, pchFile, pvData, cubData ) )).GetResult();
+			return await RemoteStorageFileWriteAsyncComplete_t.GetResultAsync( _FileWriteAsync( Self, pchFile, pvData, cubData ) );
 		}
 		
 		#region FunctionMeta
@@ -115,7 +115,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<RemoteStorageFileReadAsyncComplete_t?> FileReadAsync( string pchFile, uint nOffset, uint cubToRead )
 		{
-			return await (new Result<RemoteStorageFileReadAsyncComplete_t>( _FileReadAsync( Self, pchFile, nOffset, cubToRead ) )).GetResult();
+			return await RemoteStorageFileReadAsyncComplete_t.GetResultAsync( _FileReadAsync( Self, pchFile, nOffset, cubToRead ) );
 		}
 		
 		#region FunctionMeta
@@ -162,7 +162,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<RemoteStorageFileShareResult_t?> FileShare( string pchFile )
 		{
-			return await (new Result<RemoteStorageFileShareResult_t>( _FileShare( Self, pchFile ) )).GetResult();
+			return await RemoteStorageFileShareResult_t.GetResultAsync( _FileShare( Self, pchFile ) );
 		}
 		
 		#region FunctionMeta
@@ -358,7 +358,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<RemoteStorageDownloadUGCResult_t?> UGCDownload( UGCHandle_t hContent, uint unPriority )
 		{
-			return await (new Result<RemoteStorageDownloadUGCResult_t>( _UGCDownload( Self, hContent, unPriority ) )).GetResult();
+			return await RemoteStorageDownloadUGCResult_t.GetResultAsync( _UGCDownload( Self, hContent, unPriority ) );
 		}
 		
 		#region FunctionMeta
@@ -415,7 +415,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<RemoteStorageDownloadUGCResult_t?> UGCDownloadToLocation( UGCHandle_t hContent, string pchLocation, uint unPriority )
 		{
-			return await (new Result<RemoteStorageDownloadUGCResult_t>( _UGCDownloadToLocation( Self, hContent, pchLocation, unPriority ) )).GetResult();
+			return await RemoteStorageDownloadUGCResult_t.GetResultAsync( _UGCDownloadToLocation( Self, hContent, pchLocation, unPriority ) );
 		}
 		
 	}

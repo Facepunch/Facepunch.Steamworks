@@ -64,7 +64,7 @@ namespace Generator
 				// Main struct
 				//
 				WriteLine( "[StructLayout( LayoutKind.Sequential, Pack = 4 )]" );
-                StartBlock( $"{Cleanup.Expose( name )} struct {name}{(isCallback?" : Steamworks.ISteamCallback":"")}" );
+                StartBlock( $"{Cleanup.Expose( name )} struct {name}" );
                 {
 					//
 					// The fields
@@ -74,41 +74,67 @@ namespace Generator
 
 					if ( isCallback )
                     {
-						WriteLine( "#region ISteamCallback" );
+						WriteLine( "#region SteamCallback" );
 						{
-							WriteLine( $"public int GetCallbackId() => {c.CallbackId};" );
-
 							if ( defaultPack == 4 )
 							{
-								WriteLine( $"public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof({name}) );" );
-								WriteLine( $"public Steamworks.ISteamCallback Fill( IntPtr p ) => (({name})({name}) Marshal.PtrToStructure( p, typeof({name}) ) );" );
+								WriteLine( $"internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof({name}) );" );
+								WriteLine( $"internal static {name} Fill( IntPtr p ) => (({name})({name}) Marshal.PtrToStructure( p, typeof({name}) ) );" );
 							}
 							else
 							{
-								WriteLine( $"public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof({name}) : typeof(Pack8) );" );
-								WriteLine( $"public Steamworks.ISteamCallback Fill( IntPtr p ) => Config.PackSmall ? (({name})({name}) Marshal.PtrToStructure( p, typeof({name}) )) : (({name})(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));" );
+								WriteLine( $"internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof({name}) : typeof(Pack8) );" );
+								WriteLine( $"internal static {name} Fill( IntPtr p ) => Config.PackSmall ? (({name})({name}) Marshal.PtrToStructure( p, typeof({name}) )) : (({name})(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));" );
 							}
-
+							WriteLine();
 							WriteLine( $"static Action<{name}> actionClient;" );
-							WriteLine( $"[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( ({name})default({name}).Fill( pvParam ) );" );
+							WriteLine( $"[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );" );
 
 							WriteLine( $"static Action<{name}> actionServer;" );
-							WriteLine( $"[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( ({name})default({name}).Fill( pvParam ) );" );
+							WriteLine( $"[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );" );
 
 							StartBlock( $"public static void Install( Action<{name}> action, bool server = false )" );
 							{
 								StartBlock( "if ( server )" );
 								{
-									WriteLine( $"Event.Register( OnServer, default({name}).GetStructSize(), {c.CallbackId}, true );" );
+									WriteLine( $"Event.Register( OnServer, StructSize, {c.CallbackId}, true );" );
 									WriteLine( $"actionServer = action;" );
 								}
 								Else();
 								{
-									WriteLine( $"Event.Register( OnClient, default({name}).GetStructSize(), {c.CallbackId}, false );" );
+									WriteLine( $"Event.Register( OnClient, StructSize, {c.CallbackId}, false );" );
 									WriteLine( $"actionClient = action;" );
 								}
 								EndBlock();
 
+							}
+							EndBlock();
+
+							StartBlock( $"public static async Task<{name}?> GetResultAsync( SteamAPICall_t handle )" );
+							{
+								WriteLine( $"bool failed = false;" );
+								WriteLine();
+								StartBlock( $"while ( !SteamUtils.IsCallComplete( handle, out failed ) )" );
+								{
+									WriteLine( $"await Task.Delay( 1 );" );
+								}
+								EndBlock();
+
+								WriteLine( $"if ( failed ) return null;" );
+								WriteLine( $"" );
+								WriteLine( $"var ptr = Marshal.AllocHGlobal( StructSize );" );
+								WriteLine( $"" );
+								WriteLine( $"try" );
+								WriteLine( $"{{" );
+								WriteLine( $"	if ( !SteamUtils.Internal.GetAPICallResult( handle, ptr, StructSize, {c.CallbackId}, ref failed ) || failed )" );
+								WriteLine( $"		return null;" );
+								WriteLine( $"" );
+								WriteLine( $"	return Fill( ptr );" );
+								WriteLine( $"}}" );
+								WriteLine( $"finally" );
+								WriteLine( $"{{" );
+								WriteLine( $"	Marshal.FreeHGlobal( ptr );" );
+								WriteLine( $"}}" );
 							}
 							EndBlock();
 						}
@@ -120,13 +146,13 @@ namespace Generator
 						{
 							if ( defaultPack == 4 )
 							{
-								WriteLine( $"public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof({name}) );" );
-								WriteLine( $"public {name} Fill( IntPtr p ) => (({name})({name}) Marshal.PtrToStructure( p, typeof({name}) ) );" );
+								//WriteLine( $"internal static int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( typeof({name}) );" );
+								WriteLine( $"internal static {name} Fill( IntPtr p ) => (({name})({name}) Marshal.PtrToStructure( p, typeof({name}) ) );" );
 							}
 							else
 							{
-								WriteLine( $"public int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof({name}) : typeof(Pack8) );" );
-								WriteLine( $"public {name} Fill( IntPtr p ) => Config.PackSmall ? (({name})({name}) Marshal.PtrToStructure( p, typeof({name}) )) : (({name})(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));" );
+								//WriteLine( $"internal static int GetStructSize() => System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof({name}) : typeof(Pack8) );" );
+								WriteLine( $"internal static {name} Fill( IntPtr p ) => Config.PackSmall ? (({name})({name}) Marshal.PtrToStructure( p, typeof({name}) )) : (({name})(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));" );
 							}
 						}
 						WriteLine( "#endregion" );

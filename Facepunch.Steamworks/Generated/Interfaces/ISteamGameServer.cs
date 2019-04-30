@@ -483,7 +483,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<GSReputation_t?> GetServerReputation()
 		{
-			return await (new Result<GSReputation_t>( _GetServerReputation( Self ) )).GetResult();
+			return await GSReputation_t.GetResultAsync( _GetServerReputation( Self ) );
 		}
 		
 		#region FunctionMeta
@@ -561,7 +561,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<AssociateWithClanResult_t?> AssociateWithClan( SteamId steamIDClan )
 		{
-			return await (new Result<AssociateWithClanResult_t>( _AssociateWithClan( Self, steamIDClan ) )).GetResult();
+			return await AssociateWithClanResult_t.GetResultAsync( _AssociateWithClan( Self, steamIDClan ) );
 		}
 		
 		#region FunctionMeta
@@ -572,7 +572,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<ComputeNewPlayerCompatibilityResult_t?> ComputeNewPlayerCompatibility( SteamId steamIDNewPlayer )
 		{
-			return await (new Result<ComputeNewPlayerCompatibilityResult_t>( _ComputeNewPlayerCompatibility( Self, steamIDNewPlayer ) )).GetResult();
+			return await ComputeNewPlayerCompatibilityResult_t.GetResultAsync( _ComputeNewPlayerCompatibility( Self, steamIDNewPlayer ) );
 		}
 		
 	}

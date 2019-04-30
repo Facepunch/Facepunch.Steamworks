@@ -336,7 +336,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<SteamInventoryEligiblePromoItemDefIDs_t?> RequestEligiblePromoItemDefinitionsIDs( SteamId steamID )
 		{
-			return await (new Result<SteamInventoryEligiblePromoItemDefIDs_t>( _RequestEligiblePromoItemDefinitionsIDs( Self, steamID ) )).GetResult();
+			return await SteamInventoryEligiblePromoItemDefIDs_t.GetResultAsync( _RequestEligiblePromoItemDefinitionsIDs( Self, steamID ) );
 		}
 		
 		#region FunctionMeta
@@ -359,7 +359,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<SteamInventoryStartPurchaseResult_t?> StartPurchase( [In,Out] InventoryDefId[]  pArrayItemDefs, [In,Out] uint[]  punArrayQuantity, uint unArrayLength )
 		{
-			return await (new Result<SteamInventoryStartPurchaseResult_t>( _StartPurchase( Self, pArrayItemDefs, punArrayQuantity, unArrayLength ) )).GetResult();
+			return await SteamInventoryStartPurchaseResult_t.GetResultAsync( _StartPurchase( Self, pArrayItemDefs, punArrayQuantity, unArrayLength ) );
 		}
 		
 		#region FunctionMeta
@@ -370,7 +370,7 @@ namespace Steamworks
 		#endregion
 		internal async Task<SteamInventoryRequestPricesResult_t?> RequestPrices()
 		{
-			return await (new Result<SteamInventoryRequestPricesResult_t>( _RequestPrices( Self ) )).GetResult();
+			return await SteamInventoryRequestPricesResult_t.GetResultAsync( _RequestPrices( Self ) );
 		}
 		
 		#region FunctionMeta

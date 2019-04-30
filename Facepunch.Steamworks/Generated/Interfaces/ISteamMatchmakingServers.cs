@@ -121,7 +121,7 @@ namespace Steamworks
 		#endregion
 		internal gameserveritem_t GetServerDetails( HServerListRequest hRequest, int iServer )
 		{
-			return new gameserveritem_t().Fill( _GetServerDetails( Self, hRequest, iServer ) );
+			return gameserveritem_t.Fill( _GetServerDetails( Self, hRequest, iServer ) );
 		}
 		
 		#region FunctionMeta

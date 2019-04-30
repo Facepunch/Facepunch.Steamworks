@@ -110,6 +110,7 @@ namespace Generator
             WriteLine( "using System.Runtime.InteropServices;" );
             WriteLine( "using System.Linq;" );
             WriteLine( "using Steamworks.Data;" );
+            WriteLine( "using System.Threading.Tasks;" );
             WriteLine();
             StartBlock( "namespace " + NamespaceName );
         }
