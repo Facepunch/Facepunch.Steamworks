@@ -35,7 +35,7 @@ namespace Generator
 
 			var lines = inner.Split( new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries );
 
-			var func = new Regex( @"virtual (.+[\t |\*])([a-zA-Z]+?)\((.+?)?\) = 0 ?;" );
+			var func = new Regex( @"virtual (.+[\t |\*])([a-z0-9A-Z]+?)\((.+?)?\) = 0 ?;$" );
 
 			var c = new Class();
 			c.Name = classname;
@@ -54,7 +54,11 @@ namespace Generator
 
 			foreach ( var linestr in lines )
 			{
-				var line = linestr;
+				var line = linestr.Trim();
+
+				var commentPos = line.IndexOf( "//" );
+				if ( commentPos > 0 )
+					line = line.Substring( 0, commentPos-1 ).Trim();
 
 				if ( line.Trim().Length < 4 ) continue;
 				if ( line.Trim().StartsWith( "public:" ) ) continue;
