@@ -102,13 +102,13 @@ namespace Steamworks.Data
 		#region util
 		internal async Task<LeaderboardEntry[]> LeaderboardResultToEntries( LeaderboardScoresDownloaded_t r )
 		{
-			if ( r.CEntryCount == 0 )
+			if ( r.CEntryCount <= 0 )
 				return null;
 
 			var output = new LeaderboardEntry[r.CEntryCount];
 			var e = default( LeaderboardEntry_t );
 
-			for ( int i = 0; i < r.CEntryCount; i++ )
+			for ( int i = 0; i < output.Length; i++ )
 			{
 				if ( SteamUserStats.Internal.GetDownloadedLeaderboardEntry( r.SteamLeaderboardEntries, i, ref e, detailsBuffer, detailsBuffer.Length ) )
 				{
