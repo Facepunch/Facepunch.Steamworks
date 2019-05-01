@@ -33,29 +33,25 @@ namespace Steamworks
 		internal static void InstallEvents()
 		{
 			SteamInventoryFullUpdate_t.Install( x => OnInventoryUpdated?.Invoke( x.Handle ) );
-			SteamInventoryDefinitionUpdate_t.Install( x => DefinitionsUpdated() );
+			SteamInventoryDefinitionUpdate_t.Install( x => LoadDefinitions() );
 		}
 
 		public static event Action<int> OnInventoryUpdated;
 		public static event Action OnDefinitionsUpdated;
 
-		internal static int defUpdateCount = 0;
-
-		internal static void DefinitionsUpdated()
+		static void LoadDefinitions()
 		{
 			Definitions = GetDefinitions();
 
-			if ( Definitions != null )
+			if ( Definitions == null )
+				return;
+
+			_defMap = new Dictionary<int, InventoryDef>();
+
+			foreach ( var d in Definitions )
 			{
-				_defMap = new Dictionary<int, InventoryDef>();
-
-				foreach ( var d in Definitions )
-				{
-					_defMap[d.Id] = d;
-				}
+				_defMap[d.Id] = d;
 			}
-
-			defUpdateCount++;
 
 			OnDefinitionsUpdated?.Invoke();
 		}
@@ -68,15 +64,32 @@ namespace Steamworks
 		/// </summary>
 		public static void LoadItemDefinitions()
 		{
+			// If they're null, try to load them immediately
+			// my hunch is that this loads a disk cached version
+			// but waiting for LoadItemDefinitions downloads a new copy
+			// from Steam's servers. So this will give us immediate data
+			// where as Steam's inventory servers could be slow/down
+			if ( Definitions == null )
+			{
+				LoadDefinitions();
+			}
+
 			Internal.LoadItemDefinitions();
 		}
 
 		/// <summary>
 		/// Will call LoadItemDefinitions and wait until Definitions is not null
 		/// </summary>
-		public static async Task<bool> WaitForDefinitions( float timeoutSeconds = 10 )
+		public static async Task<bool> WaitForDefinitions( float timeoutSeconds = 30 )
 		{
+			if ( Definitions != null )
+				return true;
+
+			LoadDefinitions();
 			LoadItemDefinitions();
+
+			if ( Definitions != null )
+				return true;
 
 			var sw = Stopwatch.StartNew();
 
