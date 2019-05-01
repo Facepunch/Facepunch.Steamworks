@@ -153,6 +153,8 @@ namespace Generator
 			if ( returnType is SteamApiCallType sap )
 			{
 				sap.CallResult = func.CallResult;
+
+				argstr = string.Join( ", ", args.Select( x => x.AsArgument().Replace( "ref ", " /* ref */ " )  ) );
 			}
 
 			WriteLine( $"#region FunctionMeta" );
