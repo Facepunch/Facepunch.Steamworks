@@ -42,6 +42,7 @@ namespace Steamworks
 			SteamInventory.InstallEvents();
 			SteamNetworking.InstallEvents();
 			SteamMatchmaking.InstallEvents();
+			SteamParties.InstallEvents();
 
 			RunCallbacksAsync();
 		}
@@ -82,6 +83,7 @@ namespace Steamworks
 			SteamInventory.Shutdown();
 			SteamNetworking.Shutdown();
 			SteamMatchmaking.Shutdown();
+			SteamParties.Shutdown();
 
 			SteamAPI.Shutdown();
 		}
