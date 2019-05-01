@@ -48,6 +48,15 @@ namespace Steamworks
 		public bool IsOnline => State != FriendState.Offline;
 
 		/// <summary>
+		/// Sometimes we don't know the user's name. This will wait until we have
+		/// downloaded the information on this user.
+		/// </summary>
+		public async Task RequestInfoAsync( int timeout = 5000 )
+		{
+			await SteamFriends.CacheUserInformationAsync( Id, true, timeout );
+		}
+
+		/// <summary>
 		/// Returns true if this friend is marked as away
 		/// </summary>
 		public bool IsAway => State == FriendState.Away;
