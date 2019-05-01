@@ -3,10 +3,20 @@
   
   
 	  
-	  {
-		  "struct": "PlaybackStatusHasChanged_t",
-		  "fields": [ ]
-		},
+		{
+			"struct": "AvailableBeaconLocationsUpdated_t",
+			"fields": [ ]
+		  },
+
+		  {
+			"struct": "ActiveBeaconsUpdated_t",
+			"fields": [ ]
+		  },
+
+		  {
+			"struct": "PlaybackStatusHasChanged_t",
+			"fields": [ ]
+		  },
 
 		{
 			"struct": "BroadcastUploadStart_t",

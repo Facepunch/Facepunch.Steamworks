@@ -11763,6 +11763,128 @@ namespace Steamworks.Data
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	internal struct AvailableBeaconLocationsUpdated_t
+	{
+		
+		#region SteamCallback
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(AvailableBeaconLocationsUpdated_t) : typeof(Pack8) );
+		internal static AvailableBeaconLocationsUpdated_t Fill( IntPtr p ) => Config.PackSmall ? ((AvailableBeaconLocationsUpdated_t)(AvailableBeaconLocationsUpdated_t) Marshal.PtrToStructure( p, typeof(AvailableBeaconLocationsUpdated_t) )) : ((AvailableBeaconLocationsUpdated_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		
+		static Action<AvailableBeaconLocationsUpdated_t> actionClient;
+		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
+		static Action<AvailableBeaconLocationsUpdated_t> actionServer;
+		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
+		public static void Install( Action<AvailableBeaconLocationsUpdated_t> action, bool server = false )
+		{
+			if ( server )
+			{
+				Event.Register( OnServer, StructSize, CallbackIdentifiers.SteamParties + 5, true );
+				actionServer = action;
+			}
+			else
+			{
+				Event.Register( OnClient, StructSize, CallbackIdentifiers.SteamParties + 5, false );
+				actionClient = action;
+			}
+		}
+		public static async Task<AvailableBeaconLocationsUpdated_t?> GetResultAsync( SteamAPICall_t handle )
+		{
+			bool failed = false;
+			
+			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
+			{
+				await Task.Delay( 1 );
+			}
+			if ( failed ) return null;
+			
+			var ptr = Marshal.AllocHGlobal( StructSize );
+			
+			try
+			{
+				if ( !SteamUtils.Internal.GetAPICallResult( handle, ptr, StructSize, CallbackIdentifiers.SteamParties + 5, ref failed ) || failed )
+					return null;
+			
+				return Fill( ptr );
+			}
+			finally
+			{
+				Marshal.FreeHGlobal( ptr );
+			}
+		}
+		#endregion
+		#region Packed Versions
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			
+			public static implicit operator AvailableBeaconLocationsUpdated_t ( AvailableBeaconLocationsUpdated_t.Pack8 d ) => new AvailableBeaconLocationsUpdated_t{  };
+		}
+		#endregion
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	internal struct ActiveBeaconsUpdated_t
+	{
+		
+		#region SteamCallback
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(ActiveBeaconsUpdated_t) : typeof(Pack8) );
+		internal static ActiveBeaconsUpdated_t Fill( IntPtr p ) => Config.PackSmall ? ((ActiveBeaconsUpdated_t)(ActiveBeaconsUpdated_t) Marshal.PtrToStructure( p, typeof(ActiveBeaconsUpdated_t) )) : ((ActiveBeaconsUpdated_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		
+		static Action<ActiveBeaconsUpdated_t> actionClient;
+		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
+		static Action<ActiveBeaconsUpdated_t> actionServer;
+		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
+		public static void Install( Action<ActiveBeaconsUpdated_t> action, bool server = false )
+		{
+			if ( server )
+			{
+				Event.Register( OnServer, StructSize, CallbackIdentifiers.SteamParties + 6, true );
+				actionServer = action;
+			}
+			else
+			{
+				Event.Register( OnClient, StructSize, CallbackIdentifiers.SteamParties + 6, false );
+				actionClient = action;
+			}
+		}
+		public static async Task<ActiveBeaconsUpdated_t?> GetResultAsync( SteamAPICall_t handle )
+		{
+			bool failed = false;
+			
+			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
+			{
+				await Task.Delay( 1 );
+			}
+			if ( failed ) return null;
+			
+			var ptr = Marshal.AllocHGlobal( StructSize );
+			
+			try
+			{
+				if ( !SteamUtils.Internal.GetAPICallResult( handle, ptr, StructSize, CallbackIdentifiers.SteamParties + 6, ref failed ) || failed )
+					return null;
+			
+				return Fill( ptr );
+			}
+			finally
+			{
+				Marshal.FreeHGlobal( ptr );
+			}
+		}
+		#endregion
+		#region Packed Versions
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			
+			public static implicit operator ActiveBeaconsUpdated_t ( ActiveBeaconsUpdated_t.Pack8 d ) => new ActiveBeaconsUpdated_t{  };
+		}
+		#endregion
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	internal struct PlaybackStatusHasChanged_t
 	{
 		
