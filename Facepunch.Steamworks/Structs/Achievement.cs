@@ -55,11 +55,55 @@ namespace Steamworks.Data
 		}
 
 		/// <summary>
-		/// Gets the icon of the achievement
+		/// Gets the icon of the achievement. This can return a null image even though the image exists if the image
+		/// hasn't been downloaded by Steam yet. You can use GetIconAsync if you want to wait for the image to be downloaded.
 		/// </summary>
 		public Image? GetIcon()
 		{
 			return SteamUtils.GetImage( SteamUserStats.Internal.GetAchievementIcon( Value ) );
+		}
+
+
+		/// <summary>
+		/// Gets the icon of the achievement, waits for it to load if we have to
+		/// </summary>
+		public async Task<Image?> GetIconAsync( int timeout = 5000 )
+		{
+			var i = SteamUserStats.Internal.GetAchievementIcon( Value );
+			if ( i != 0 ) return SteamUtils.GetImage( i );
+
+			var ident = Identifier;
+			bool gotCallback = false;
+
+			Action<string, int> f = ( x, icon ) =>
+			{
+				if ( x != ident ) return;
+				i = icon;
+				gotCallback = true;
+			};
+
+			try
+			{
+				SteamUserStats.OnAchievementIconFetched += f;
+
+				int waited = 0;
+				while ( !gotCallback )
+				{
+					await Task.Delay( 10 );
+					waited += 10;
+
+					// Time out after x milliseconds
+					if ( waited > timeout )
+						return null;
+				}
+
+				if ( i == 0 ) return null;
+				return SteamUtils.GetImage( i );
+			}
+			finally
+			{
+				SteamUserStats.OnAchievementIconFetched -= f;
+			}
 		}
 
 		/// <summary>

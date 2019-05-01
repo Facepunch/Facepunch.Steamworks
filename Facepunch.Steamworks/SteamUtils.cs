@@ -99,6 +99,8 @@ namespace Steamworks
 		/// </summary>
 		public static Data.Image? GetImage( int image )
 		{
+			if ( image == 0 ) return null;
+
 			var i = new Data.Image();
 
 			if ( !GetImageSize( image, out i.Width, out i.Height ) )
