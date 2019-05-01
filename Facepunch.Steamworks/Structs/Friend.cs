@@ -53,7 +53,7 @@ namespace Steamworks
 		/// </summary>
 		public async Task RequestInfoAsync( int timeout = 5000 )
 		{
-			await SteamFriends.CacheUserInformationAsync( Id, true, timeout );
+			await SteamFriends.CacheUserInformationAsync( Id, true );
 		}
 
 		/// <summary>

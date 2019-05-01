@@ -179,7 +179,7 @@ namespace Steamworks
 		/// </summary>
 		public static void SetPlayedWith( SteamId steamid ) => Internal.SetPlayedWith( steamid );
 
-		static async Task CacheUserInformationAsync( SteamId steamid, bool nameonly )
+		internal static async Task CacheUserInformationAsync( SteamId steamid, bool nameonly )
 		{
 			// Got it straight away, skip any waiting.
 			if ( !Internal.RequestUserInformation( steamid, nameonly ) )
