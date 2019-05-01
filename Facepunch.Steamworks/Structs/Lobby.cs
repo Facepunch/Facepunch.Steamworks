@@ -8,6 +8,12 @@ namespace Steamworks.Data
 	{
 		public SteamId Id { get; internal set; }
 
+
+		internal Lobby( SteamId id )
+		{
+			Id = id;
+		}
+
 		/// <summary>
 		/// Try to join this room. Will return RoomEnter.Success on success,
 		/// and anything else is a failure
@@ -135,8 +141,10 @@ namespace Steamworks.Data
 
 		/// <summary>
 		/// Sends bytes the the chat room
+		/// this isn't exposed because there's no way to read raw bytes atm, 
+		/// and I figure people can send json if they want something more advanced
 		/// </summary>
-		public unsafe bool SendChatBytes( byte[] data )
+		internal unsafe bool SendChatBytes( byte[] data )
 		{
 			fixed ( byte* ptr = data )
 			{

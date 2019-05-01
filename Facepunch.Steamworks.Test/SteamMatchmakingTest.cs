@@ -45,8 +45,7 @@ namespace Steamworks
 			var lobbyr = await SteamMatchmaking.CreateLobbyAsync( 32 );
 			if ( !lobbyr.HasValue )
 			{
-				Console.WriteLine( "No lobby created!" );
-				return;
+				Assert.Fail();
 			}
 
 			var lobby = lobbyr.Value;
