@@ -35,10 +35,12 @@ namespace Steamworks
 		}
 
 		[TestMethod]
-		public void GetPlayedWith()
+		public async Task GetPlayedWith()
 		{
 			foreach ( var friend in SteamFriends.GetPlayedWith() )
 			{
+				await friend.RequestInfoAsync();
+
 				Console.WriteLine( $"{friend.Id.Value}: {friend.Name} (Friend:{friend.IsFriend}) (Blocked:{friend.IsBlocked})" );
 				Console.WriteLine( $"		{string.Join( ", ", friend.NameHistory )}" );
 
