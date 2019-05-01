@@ -35,5 +35,18 @@ namespace Steamworks
 			//VolumeHasChanged_t.Install( x => OnVolumeChanged?.Invoke( x.NewVolume ) );
 		}
 
+		public static LobbyQuery LobbyList => new LobbyQuery();
+
+		/// <summary>
+		/// Creates a new invisible lobby. Call lobby.SetPublic to take it online.
+		/// </summary>
+		public static async Task<Lobby?> CreateLobbyAsync( int maxMembers = 100 )
+		{
+			var lobby = await Internal.CreateLobby( LobbyType.Invisible, maxMembers );
+			if ( !lobby.HasValue || lobby.Value.Result != Result.OK ) return null;
+
+			return new Lobby { Id = lobby.Value.SteamIDLobby };
+		}
+
 	}
 }

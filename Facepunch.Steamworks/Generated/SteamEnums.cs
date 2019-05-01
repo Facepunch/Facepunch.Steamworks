@@ -338,7 +338,7 @@ namespace Steamworks
 	//
 	// EChatRoomEnterResponse
 	//
-	internal enum ChatRoomEnterResponse : int
+	public enum RoomEnter : int
 	{
 		Success = 1,
 		DoesntExist = 2,

@@ -1429,7 +1429,7 @@ namespace Steamworks.Data
 	internal struct JoinClanChatRoomCompletionResult_t
 	{
 		internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
-		internal ChatRoomEnterResponse ChatRoomEnterResponse; // m_eChatRoomEnterResponse enum EChatRoomEnterResponse
+		internal RoomEnter ChatRoomEnterResponse; // m_eChatRoomEnterResponse enum EChatRoomEnterResponse
 		
 		#region SteamCallback
 		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(JoinClanChatRoomCompletionResult_t) );
