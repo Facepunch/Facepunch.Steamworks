@@ -8,7 +8,10 @@ using Steamworks.Data;
 namespace Steamworks
 {
 	/// <summary>
-	/// Undocumented Parental Settings
+	/// Functions to control music playback in the steam client.
+	/// This gives games the opportunity to do things like pause the music or lower the volume, 
+	/// when an important cut scene is shown, and start playing afterwards.
+	/// Nothing uses Steam Music though so this can probably get fucked
 	/// </summary>
 	public static class SteamMusic
 	{

@@ -41,6 +41,7 @@ namespace Steamworks
 			SteamUserStats.InstallEvents();
 			SteamInventory.InstallEvents();
 			SteamNetworking.InstallEvents();
+			SteamMatchmaking.InstallEvents();
 
 			RunCallbacksAsync();
 		}
@@ -79,6 +80,8 @@ namespace Steamworks
 			SteamScreenshots.Shutdown();
 			SteamUserStats.Shutdown();
 			SteamInventory.Shutdown();
+			SteamNetworking.Shutdown();
+			SteamMatchmaking.Shutdown();
 
 			SteamAPI.Shutdown();
 		}

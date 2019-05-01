@@ -22,6 +22,11 @@ namespace Steamworks
 			}
 		}
 
+		internal static void Shutdown()
+		{
+			_internal = null;
+		}
+
 		internal static void InstallEvents()
 		{
 			P2PSessionRequest_t.Install( x => OnP2PSessionRequest?.Invoke( x.SteamIDRemote ) );
