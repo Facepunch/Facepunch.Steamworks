@@ -49,7 +49,7 @@ namespace Steamworks
 					OnLobbyMemberJoined?.Invoke( new Lobby( x.SteamIDLobby ), new Friend( x.SteamIDUserChanged ) );
 
 				if ( (x.GfChatMemberStateChange & (int)ChatMemberStateChange.Left) != 0 )
-					OnLobbyMemberLeft?.Invoke( new Lobby( x.SteamIDLobby ), new Friend( x.SteamIDUserChanged ) );
+					OnLobbyMemberLeave?.Invoke( new Lobby( x.SteamIDLobby ), new Friend( x.SteamIDUserChanged ) );
 
 				if ( (x.GfChatMemberStateChange & (int)ChatMemberStateChange.Disconnected) != 0 )
 					OnLobbyMemberDisconnected?.Invoke( new Lobby( x.SteamIDLobby ), new Friend( x.SteamIDUserChanged ) );
@@ -104,7 +104,7 @@ namespace Steamworks
 		/// <summary>
 		/// The lobby member left the room
 		/// </summary>
-		public static event Action<Lobby, Friend> OnLobbyMemberLeft;
+		public static event Action<Lobby, Friend> OnLobbyMemberLeave;
 
 		/// <summary>
 		/// The lobby member left the room
