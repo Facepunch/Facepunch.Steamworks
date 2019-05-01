@@ -67,6 +67,39 @@ namespace Steamworks
 
 			lobby.SendChatString( "Hello I Love Lobbies" );
 		}
+
+		[TestMethod]
+		public async Task LobbyChat()
+		{
+			SteamMatchmaking.OnChatMessage += ( lbby, member, message ) =>
+			{
+				Console.WriteLine( $"[{lbby}] {member}: {message}" );
+			};
+
+			var lobbyr = await SteamMatchmaking.CreateLobbyAsync( 10 );
+			if ( !lobbyr.HasValue )
+				Assert.Fail();
+
+			var lobby = lobbyr.Value;
+			lobby.SetPublic();
+			lobby.SetData( "name", "Dave's Chat Room" );
+			Console.WriteLine( $"lobby: {lobby.Id}" );
+
+			lobby.SendChatString( "Hello Friends, It's me - your big fat daddy" );
+
+			await Task.Delay( 50 );
+
+			lobby.SendChatString( "What? No love for daddy?" );
+
+			await Task.Delay( 500 );
+
+			lobby.SendChatString( "Okay I will LEAVE" );
+			lobby.SendChatString( "BYE FOREVER" );
+
+			await Task.Delay( 1000 );
+
+			lobby.Leave();
+		}
 	}
 
 }
