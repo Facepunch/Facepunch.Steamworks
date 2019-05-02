@@ -46,44 +46,44 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate HSteamListenSocket FCreateListenSocketIP( IntPtr self, ref SteamNetworkingIPAddr localAddress );
+		private delegate Socket FCreateListenSocketIP( IntPtr self, ref NetworkAddress localAddress );
 		private FCreateListenSocketIP _CreateListenSocketIP;
 		
 		#endregion
-		internal HSteamListenSocket CreateListenSocketIP( ref SteamNetworkingIPAddr localAddress )
+		internal Socket CreateListenSocketIP( ref NetworkAddress localAddress )
 		{
 			return _CreateListenSocketIP( Self, ref localAddress );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate NetConnection FConnectByIPAddress( IntPtr self, ref SteamNetworkingIPAddr address );
+		private delegate NetConnection FConnectByIPAddress( IntPtr self, ref NetworkAddress address );
 		private FConnectByIPAddress _ConnectByIPAddress;
 		
 		#endregion
-		internal NetConnection ConnectByIPAddress( ref SteamNetworkingIPAddr address )
+		internal NetConnection ConnectByIPAddress( ref NetworkAddress address )
 		{
 			return _ConnectByIPAddress( Self, ref address );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate HSteamListenSocket FCreateListenSocketP2P( IntPtr self, int nVirtualPort );
+		private delegate Socket FCreateListenSocketP2P( IntPtr self, int nVirtualPort );
 		private FCreateListenSocketP2P _CreateListenSocketP2P;
 		
 		#endregion
-		internal HSteamListenSocket CreateListenSocketP2P( int nVirtualPort )
+		internal Socket CreateListenSocketP2P( int nVirtualPort )
 		{
 			return _CreateListenSocketP2P( Self, nVirtualPort );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate NetConnection FConnectP2P( IntPtr self, ref SteamNetworkingIdentity identityRemote, int nVirtualPort );
+		private delegate NetConnection FConnectP2P( IntPtr self, ref NetworkIdentity identityRemote, int nVirtualPort );
 		private FConnectP2P _ConnectP2P;
 		
 		#endregion
-		internal NetConnection ConnectP2P( ref SteamNetworkingIdentity identityRemote, int nVirtualPort )
+		internal NetConnection ConnectP2P( ref NetworkIdentity identityRemote, int nVirtualPort )
 		{
 			return _ConnectP2P( Self, ref identityRemote, nVirtualPort );
 		}
@@ -114,11 +114,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FCloseListenSocket( IntPtr self, HSteamListenSocket hSocket );
+		private delegate bool FCloseListenSocket( IntPtr self, Socket hSocket );
 		private FCloseListenSocket _CloseListenSocket;
 		
 		#endregion
-		internal bool CloseListenSocket( HSteamListenSocket hSocket )
+		internal bool CloseListenSocket( Socket hSocket )
 		{
 			return _CloseListenSocket( Self, hSocket );
 		}
@@ -204,11 +204,11 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate int FReceiveMessagesOnListenSocket( IntPtr self, HSteamListenSocket hSocket, [In,Out] ref SteamNetworkingMessage_t[]  ppOutMessages, int nMaxMessages );
+		private delegate int FReceiveMessagesOnListenSocket( IntPtr self, Socket hSocket, [In,Out] ref SteamNetworkingMessage_t[]  ppOutMessages, int nMaxMessages );
 		private FReceiveMessagesOnListenSocket _ReceiveMessagesOnListenSocket;
 		
 		#endregion
-		internal int ReceiveMessagesOnListenSocket( HSteamListenSocket hSocket, [In,Out] ref SteamNetworkingMessage_t[]  ppOutMessages, int nMaxMessages )
+		internal int ReceiveMessagesOnListenSocket( Socket hSocket, [In,Out] ref SteamNetworkingMessage_t[]  ppOutMessages, int nMaxMessages )
 		{
 			return _ReceiveMessagesOnListenSocket( Self, hSocket, ref ppOutMessages, nMaxMessages );
 		}
@@ -251,11 +251,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetListenSocketAddress( IntPtr self, HSteamListenSocket hSocket, ref SteamNetworkingIPAddr address );
+		private delegate bool FGetListenSocketAddress( IntPtr self, Socket hSocket, ref NetworkAddress address );
 		private FGetListenSocketAddress _GetListenSocketAddress;
 		
 		#endregion
-		internal bool GetListenSocketAddress( HSteamListenSocket hSocket, ref SteamNetworkingIPAddr address )
+		internal bool GetListenSocketAddress( Socket hSocket, ref NetworkAddress address )
 		{
 			return _GetListenSocketAddress( Self, hSocket, ref address );
 		}
@@ -263,11 +263,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FCreateSocketPair( IntPtr self, [In,Out] NetConnection[]  pOutConnection1, [In,Out] NetConnection[]  pOutConnection2, [MarshalAs( UnmanagedType.U1 )] bool bUseNetworkLoopback, ref SteamNetworkingIdentity pIdentity1, ref SteamNetworkingIdentity pIdentity2 );
+		private delegate bool FCreateSocketPair( IntPtr self, [In,Out] NetConnection[]  pOutConnection1, [In,Out] NetConnection[]  pOutConnection2, [MarshalAs( UnmanagedType.U1 )] bool bUseNetworkLoopback, ref NetworkIdentity pIdentity1, ref NetworkIdentity pIdentity2 );
 		private FCreateSocketPair _CreateSocketPair;
 		
 		#endregion
-		internal bool CreateSocketPair( [In,Out] NetConnection[]  pOutConnection1, [In,Out] NetConnection[]  pOutConnection2, [MarshalAs( UnmanagedType.U1 )] bool bUseNetworkLoopback, ref SteamNetworkingIdentity pIdentity1, ref SteamNetworkingIdentity pIdentity2 )
+		internal bool CreateSocketPair( [In,Out] NetConnection[]  pOutConnection1, [In,Out] NetConnection[]  pOutConnection2, [MarshalAs( UnmanagedType.U1 )] bool bUseNetworkLoopback, ref NetworkIdentity pIdentity1, ref NetworkIdentity pIdentity2 )
 		{
 			return _CreateSocketPair( Self, pOutConnection1, pOutConnection2, bUseNetworkLoopback, ref pIdentity1, ref pIdentity2 );
 		}
@@ -275,11 +275,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetIdentity( IntPtr self, ref SteamNetworkingIdentity pIdentity );
+		private delegate bool FGetIdentity( IntPtr self, ref NetworkIdentity pIdentity );
 		private FGetIdentity _GetIdentity;
 		
 		#endregion
-		internal bool GetIdentity( ref SteamNetworkingIdentity pIdentity )
+		internal bool GetIdentity( ref NetworkIdentity pIdentity )
 		{
 			return _GetIdentity( Self, ref pIdentity );
 		}
@@ -298,22 +298,22 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate int FFindRelayAuthTicketForServer( IntPtr self, ref SteamNetworkingIdentity identityGameServer, int nVirtualPort, [In,Out] SteamDatagramRelayAuthTicket[]  pOutParsedTicket );
+		private delegate int FFindRelayAuthTicketForServer( IntPtr self, ref NetworkIdentity identityGameServer, int nVirtualPort, [In,Out] SteamDatagramRelayAuthTicket[]  pOutParsedTicket );
 		private FFindRelayAuthTicketForServer _FindRelayAuthTicketForServer;
 		
 		#endregion
-		internal int FindRelayAuthTicketForServer( ref SteamNetworkingIdentity identityGameServer, int nVirtualPort, [In,Out] SteamDatagramRelayAuthTicket[]  pOutParsedTicket )
+		internal int FindRelayAuthTicketForServer( ref NetworkIdentity identityGameServer, int nVirtualPort, [In,Out] SteamDatagramRelayAuthTicket[]  pOutParsedTicket )
 		{
 			return _FindRelayAuthTicketForServer( Self, ref identityGameServer, nVirtualPort, pOutParsedTicket );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate NetConnection FConnectToHostedDedicatedServer( IntPtr self, ref SteamNetworkingIdentity identityTarget, int nVirtualPort );
+		private delegate NetConnection FConnectToHostedDedicatedServer( IntPtr self, ref NetworkIdentity identityTarget, int nVirtualPort );
 		private FConnectToHostedDedicatedServer _ConnectToHostedDedicatedServer;
 		
 		#endregion
-		internal NetConnection ConnectToHostedDedicatedServer( ref SteamNetworkingIdentity identityTarget, int nVirtualPort )
+		internal NetConnection ConnectToHostedDedicatedServer( ref NetworkIdentity identityTarget, int nVirtualPort )
 		{
 			return _ConnectToHostedDedicatedServer( Self, ref identityTarget, nVirtualPort );
 		}
@@ -354,11 +354,11 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate HSteamListenSocket FCreateHostedDedicatedServerListenSocket( IntPtr self, int nVirtualPort );
+		private delegate Socket FCreateHostedDedicatedServerListenSocket( IntPtr self, int nVirtualPort );
 		private FCreateHostedDedicatedServerListenSocket _CreateHostedDedicatedServerListenSocket;
 		
 		#endregion
-		internal HSteamListenSocket CreateHostedDedicatedServerListenSocket( int nVirtualPort )
+		internal Socket CreateHostedDedicatedServerListenSocket( int nVirtualPort )
 		{
 			return _CreateHostedDedicatedServerListenSocket( Self, nVirtualPort );
 		}

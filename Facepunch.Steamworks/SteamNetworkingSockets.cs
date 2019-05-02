@@ -18,7 +18,7 @@ namespace Steamworks
 				if ( _internal == null )
 				{
 					_internal = new ISteamNetworkingSockets();
-					_internal.InitUserless();
+					_internal.InitClient();
 				}
 
 				return _internal;
@@ -32,14 +32,23 @@ namespace Steamworks
 
 		internal static void InstallEvents()
 		{
+			SteamNetConnectionStatusChangedCallback_t.Install( x => OnConnectionStatusChanged( x ) );
+		}
 
+		private static void OnConnectionStatusChanged( SteamNetConnectionStatusChangedCallback_t data )
+		{
+			Console.WriteLine( $"data.Conn: {data.Conn.ToString()}" );
+			Console.WriteLine( $"data.Conn.UserData: {data.Conn.UserData}" );
+			Console.WriteLine( $"data.Conn.ConnectionName: {data.Conn.ConnectionName}" );
+
+			Console.WriteLine( $"States: {data.Nfo.state} {data.OldState}" );
 		}
 
 		/// <summary>
 		/// Creates a "server" socket that listens for clients to connect to by calling
 		/// Connect, over ordinary UDP (IPv4 or IPv6)
 		/// </summary>
-		public static HSteamListenSocket CreateExposedSocket( SteamNetworkingIPAddr address )
+		public static Socket CreateNormalSocket( NetworkAddress address )
 		{
 			return Internal.CreateListenSocketIP( ref address );
 		}
@@ -47,7 +56,7 @@ namespace Steamworks
 		/// <summary>
 		/// Connect to a socket created via <method>CreateListenSocketIP</method>
 		/// </summary>
-		public static NetConnection ConnectExposed( SteamNetworkingIPAddr address )
+		public static NetConnection ConnectNormal( NetworkAddress address )
 		{
 			return Internal.ConnectByIPAddress( ref address );
 		}
@@ -55,7 +64,7 @@ namespace Steamworks
 		/// <summary>
 		/// Creates a server that will be relayed via Valve's network (hiding the IP and improving ping)
 		/// </summary>
-		public static HSteamListenSocket CreateSocket( int virtualport = 0 )
+		public static Socket CreateRelaySocket( int virtualport = 0 )
 		{
 			return Internal.CreateListenSocketP2P( virtualport );
 		}
@@ -63,8 +72,9 @@ namespace Steamworks
 		/// <summary>
 		/// Connect to a relay server
 		/// </summary>
-		public static NetConnection Connect( SteamNetworkingIdentity identity, int virtualport = 0 )
+		public static NetConnection ConnectRelay( SteamId serverId, int virtualport = 0 )
 		{
+			NetworkIdentity identity = serverId;
 			return Internal.ConnectP2P( ref identity, virtualport );
 		}
 	}

@@ -43,6 +43,7 @@ namespace Steamworks
 			SteamNetworking.InstallEvents();
 			SteamMatchmaking.InstallEvents();
 			SteamParties.InstallEvents();
+			SteamNetworkingSockets.InstallEvents();
 
 			RunCallbacksAsync();
 		}

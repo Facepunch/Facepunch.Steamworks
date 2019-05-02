@@ -50,7 +50,8 @@ internal class BaseType
 		if ( basicType == "InventoryDefId" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
 		if ( basicType == "PingLocation" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
 		if ( basicType == "SteamNetworkingIPAddr" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
-		if ( basicType == "SteamNetworkingIdentity" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
+		if ( basicType == "NetworkIdentity" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
+		if ( basicType == "NetworkAddress" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
 		if ( basicType.StartsWith( "E" ) && char.IsUpper( basicType[1] ) ) return new EnumType { NativeType = type.Substring( 1 ), VarName = varname };
 
 		return new BaseType { NativeType = type, VarName = varname };
