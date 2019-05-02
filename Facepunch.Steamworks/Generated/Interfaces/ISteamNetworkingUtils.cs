@@ -181,45 +181,45 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetConfigValue( IntPtr self, SteamNetworkingConfigValue eValue, SteamNetworkingConfigScope eScopeType, IntPtr scopeObj, SteamNetworkingConfigDataType eDataType, IntPtr pArg );
+		private delegate bool FSetConfigValue( IntPtr self, NetConfig eValue, NetScope eScopeType, long scopeObj, NetConfigType eDataType, IntPtr pArg );
 		private FSetConfigValue _SetConfigValue;
 		
 		#endregion
-		internal bool SetConfigValue( SteamNetworkingConfigValue eValue, SteamNetworkingConfigScope eScopeType, IntPtr scopeObj, SteamNetworkingConfigDataType eDataType, IntPtr pArg )
+		internal bool SetConfigValue( NetConfig eValue, NetScope eScopeType, long scopeObj, NetConfigType eDataType, IntPtr pArg )
 		{
 			return _SetConfigValue( Self, eValue, eScopeType, scopeObj, eDataType, pArg );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamNetworkingGetConfigValueResult FGetConfigValue( IntPtr self, SteamNetworkingConfigValue eValue, SteamNetworkingConfigScope eScopeType, IntPtr scopeObj, [In,Out] SteamNetworkingConfigDataType[]  pOutDataType, IntPtr pResult, ref ulong cbResult );
+		private delegate SteamNetworkingGetConfigValueResult FGetConfigValue( IntPtr self, NetConfig eValue, NetScope eScopeType, long scopeObj, ref NetConfigType pOutDataType, IntPtr pResult, ref ulong cbResult );
 		private FGetConfigValue _GetConfigValue;
 		
 		#endregion
-		internal SteamNetworkingGetConfigValueResult GetConfigValue( SteamNetworkingConfigValue eValue, SteamNetworkingConfigScope eScopeType, IntPtr scopeObj, [In,Out] SteamNetworkingConfigDataType[]  pOutDataType, IntPtr pResult, ref ulong cbResult )
+		internal SteamNetworkingGetConfigValueResult GetConfigValue( NetConfig eValue, NetScope eScopeType, long scopeObj, ref NetConfigType pOutDataType, IntPtr pResult, ref ulong cbResult )
 		{
-			return _GetConfigValue( Self, eValue, eScopeType, scopeObj, pOutDataType, pResult, ref cbResult );
+			return _GetConfigValue( Self, eValue, eScopeType, scopeObj, ref pOutDataType, pResult, ref cbResult );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetConfigValueInfo( IntPtr self, SteamNetworkingConfigValue eValue, [In,Out] string[]  pOutName, [In,Out] SteamNetworkingConfigDataType[]  pOutDataType, [In,Out] SteamNetworkingConfigScope[]  pOutScope, [In,Out] SteamNetworkingConfigValue[]  pOutNextValue );
+		private delegate bool FGetConfigValueInfo( IntPtr self, NetConfig eValue, [In,Out] string[]  pOutName, ref NetConfigType pOutDataType, [In,Out] NetScope[]  pOutScope, [In,Out] NetConfig[]  pOutNextValue );
 		private FGetConfigValueInfo _GetConfigValueInfo;
 		
 		#endregion
-		internal bool GetConfigValueInfo( SteamNetworkingConfigValue eValue, [In,Out] string[]  pOutName, [In,Out] SteamNetworkingConfigDataType[]  pOutDataType, [In,Out] SteamNetworkingConfigScope[]  pOutScope, [In,Out] SteamNetworkingConfigValue[]  pOutNextValue )
+		internal bool GetConfigValueInfo( NetConfig eValue, [In,Out] string[]  pOutName, ref NetConfigType pOutDataType, [In,Out] NetScope[]  pOutScope, [In,Out] NetConfig[]  pOutNextValue )
 		{
-			return _GetConfigValueInfo( Self, eValue, pOutName, pOutDataType, pOutScope, pOutNextValue );
+			return _GetConfigValueInfo( Self, eValue, pOutName, ref pOutDataType, pOutScope, pOutNextValue );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamNetworkingConfigValue FGetFirstConfigValue( IntPtr self );
+		private delegate NetConfig FGetFirstConfigValue( IntPtr self );
 		private FGetFirstConfigValue _GetFirstConfigValue;
 		
 		#endregion
-		internal SteamNetworkingConfigValue GetFirstConfigValue()
+		internal NetConfig GetFirstConfigValue()
 		{
 			return _GetFirstConfigValue( Self );
 		}

@@ -11,7 +11,7 @@
 		Force32Bit = 0x7fffffff
 	};
 
-	enum SteamNetworkingConfigDataType
+	enum NetConfigType
 	{
 		Int32 = 1,
 		Int64 = 2,
@@ -37,7 +37,7 @@
 		Force32Bit = 0x7fffffff
 	};
 
-	internal enum SteamNetworkingConfigScope : int
+	internal enum NetScope : int
 	{
 		Global = 1,
 		SocketsInterface = 2,
@@ -47,7 +47,7 @@
 		Force32Bit = 0x7fffffff
 	}
 
-	internal enum SteamNetworkingConfigValue : int
+	internal enum NetConfig : int
 	{
 		Invalid = 0,
 		FakePacketLoss_Send = 2,

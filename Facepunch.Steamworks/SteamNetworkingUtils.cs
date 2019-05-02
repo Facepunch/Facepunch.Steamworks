@@ -78,5 +78,139 @@ namespace Steamworks
 				await Task.Delay( 10 );
 			}
 		}
+
+		public static SteamNetworkingMicroseconds LocalTimetamp => Internal.GetLocalTimestamp();
+
+
+		/// <summary>
+		/// [0 - 100] - Randomly discard N pct of packets
+		/// </summary>
+		public static float FakeSendPacketLoss
+		{
+			get => GetConfigFloat( NetConfig.FakePacketLoss_Send );
+			set => SetConfigFloat( NetConfig.FakePacketLoss_Send, value );
+		}
+
+		/// <summary>
+		/// [0 - 100] - Randomly discard N pct of packets 
+		/// </summary>
+		public static float FakeRecvPacketLoss
+		{
+			get => GetConfigFloat( NetConfig.FakePacketLoss_Recv );
+			set => SetConfigFloat( NetConfig.FakePacketLoss_Recv, value );
+		}
+
+		/// <summary>
+		/// Delay all packets by N ms 
+		/// </summary>
+		public static float FakeSendPacketLag
+		{
+			get => GetConfigFloat( NetConfig.FakePacketLag_Send );
+			set => SetConfigFloat( NetConfig.FakePacketLag_Send, value );
+		}
+
+		/// <summary>
+		/// Delay all packets by N ms 
+		/// </summary>
+		public static float FakeRecvPacketLag
+		{
+			get => GetConfigFloat( NetConfig.FakePacketLag_Recv );
+			set => SetConfigFloat( NetConfig.FakePacketLag_Recv, value );
+		}
+
+		#region Config Internals
+
+		internal unsafe static bool GetConfigInt( NetConfig type, int value )
+		{
+			int* ptr = &value;
+			return Internal.SetConfigValue( type, NetScope.Global, 0, NetConfigType.Int32, (IntPtr)ptr );
+		}
+
+		internal unsafe static int GetConfigInt( NetConfig type )
+		{
+			int value = 0;
+			NetConfigType dtype = NetConfigType.Int32;
+			int* ptr = &value;
+			ulong size = sizeof( int );
+			var result = Internal.GetConfigValue( type, NetScope.Global, 0, ref dtype, (IntPtr) ptr, ref size );
+			if ( result != SteamNetworkingGetConfigValueResult.OK )
+				return 0;
+
+			return value;
+		}
+
+		internal unsafe static bool SetConfigFloat( NetConfig type, float value )
+		{
+			float* ptr = &value;
+			return Internal.SetConfigValue( type, NetScope.Global, 0, NetConfigType.Float, (IntPtr)ptr );
+		}
+
+		internal unsafe static float GetConfigFloat( NetConfig type )
+		{
+			float value = 0;
+			NetConfigType dtype = NetConfigType.Float;
+			float* ptr = &value;
+			ulong size = sizeof( float );
+			var result = Internal.GetConfigValue( type, NetScope.Global, 0, ref dtype, (IntPtr)ptr, ref size );
+			if ( result != SteamNetworkingGetConfigValueResult.OK )
+				return 0;
+
+			return value;
+		}
+
+		internal unsafe static bool SetConfigString( NetConfig type, string value )
+		{
+			var bytes = Encoding.UTF8.GetBytes( value );
+
+			fixed ( byte* ptr = bytes )
+			{
+				return Internal.SetConfigValue( type, NetScope.Global, 0, NetConfigType.String, (IntPtr)ptr );
+			}
+		}
+
+		/*
+		internal unsafe static float GetConfigString( NetConfig type )
+		{
+
+			float value = 0;
+			NetConfigType dtype = NetConfigType.Float;
+			float* ptr = &value;
+			ulong size = sizeof( float );
+			var result = Internal.GetConfigValue( type, NetScope.Global, 0, ref dtype, (IntPtr)ptr, ref size );
+			if ( result != SteamNetworkingGetConfigValueResult.OK )
+				return 0;
+
+			return value;
+		}
+		*/
+
+
+		/*
+
+		TODO - Connection object
+
+		internal unsafe static bool SetConnectionConfig( uint con, NetConfig type, int value )
+		{
+			int* ptr = &value;
+			return Internal.SetConfigValue( type, NetScope.Connection, con, NetConfigType.Int32, (IntPtr)ptr );
+		}
+
+		internal unsafe static bool SetConnectionConfig( uint con, NetConfig type, float value )
+		{
+			float* ptr = &value;
+			return Internal.SetConfigValue( type, NetScope.Connection, con, NetConfigType.Float, (IntPtr)ptr );
+		}
+
+		internal unsafe static bool SetConnectionConfig( uint con, NetConfig type, string value )
+		{
+			var bytes = Encoding.UTF8.GetBytes( value );
+
+			fixed ( byte* ptr = bytes )
+			{
+				return Internal.SetConfigValue( type, NetScope.Connection, con, NetConfigType.String, (IntPtr)ptr );
+			}
+		}*/
+
+		#endregion
 	}
 }

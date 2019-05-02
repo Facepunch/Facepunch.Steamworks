@@ -18,7 +18,6 @@ internal class BaseType
 		type = Cleanup.ConvertType( type );
 
 		if ( type == "SteamAPIWarningMessageHook_t" ) return new PointerType { NativeType = type, VarName = varname };
-		if ( type == "intptr_t" ) return new PointerType { NativeType = type, VarName = varname };
 
 		if ( type == "SteamAPICall_t" ) return new SteamApiCallType { NativeType = type, VarName = varname };
 
@@ -39,6 +38,8 @@ internal class BaseType
 
 		// DANGER DANGER Danger
 		if ( basicType == "size_t" ) return new ULongType { NativeType = type, VarName = varname };
+		if ( basicType == "intptr_t" ) return new LongType { NativeType = type, VarName = varname };
+		if ( basicType == "ptrdiff_t" ) return new LongType { NativeType = type, VarName = varname };
 
 		if ( basicType == "uint64" ) return new ULongType { NativeType = type, VarName = varname };
 		if ( basicType == "int64" ) return new LongType { NativeType = type, VarName = varname };
@@ -73,6 +74,7 @@ internal class BaseType
 			if ( VarName == "pOutBuffer" ) return false;
 			if ( VarName == "pubRGB" ) return false;
 			if ( VarName == "pOutResultHandle" ) return false;
+			if ( VarName == "pOutDataType" ) return false;
 
 			if ( VarName == "psteamIDClans" ) return true;
 			if ( VarName == "pScoreDetails" ) return true;
