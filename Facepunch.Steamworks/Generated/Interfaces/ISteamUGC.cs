@@ -9,10 +9,6 @@ namespace Steamworks
 {
 	internal class ISteamUGC : SteamInterface
 	{
-		public ISteamUGC( bool server = false ) : base( server )
-		{
-		}
-		
 		public override string InterfaceName => "STEAMUGC_INTERFACE_VERSION012";
 		
 		public override void InitInternals()

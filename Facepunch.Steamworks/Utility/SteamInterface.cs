@@ -16,28 +16,42 @@ namespace Steamworks
 
 		public virtual string InterfaceName => null;
 
-		public SteamInterface( bool server = false )
+		public virtual void InitClient()
 		{
-			//
-			// If teh client isn't initialized but the server is, 
-			// try to open this interface in server mode
-			//
-			if ( !SteamClient.IsValid && SteamServer.IsValid ) server = true;
-
-			var hUser = server ?
-						SteamGameServer.GetHSteamUser() : 
-						SteamAPI.GetHSteamUser();
-
-			if ( hUser == 0 )
-				throw new System.Exception( "Steamworks is uninitialized" );
-
-			Self = server ?
-					SteamInternal.FindOrCreateGameServerInterface( hUser, InterfaceName ) :
-					SteamInternal.FindOrCreateUserInterface( hUser, InterfaceName );
+			var user = SteamAPI.GetHSteamUser();
+			Self = SteamInternal.FindOrCreateUserInterface( user, InterfaceName );
 
 			if ( Self == IntPtr.Zero )
-				throw new System.Exception( $"Couldn't find interface {InterfaceName} (server:{server})" );
+				throw new System.Exception( $"Couldn't find interface {InterfaceName}" );
 
+			VTable = Marshal.ReadIntPtr( Self, 0 );
+			if ( Self == IntPtr.Zero )
+				throw new System.Exception( $"Invalid VTable for {InterfaceName}" );
+
+			InitInternals();
+		}
+
+		public virtual void InitServer()
+		{
+			var user = SteamGameServer.GetHSteamUser();
+			Self = SteamInternal.FindOrCreateGameServerInterface( user, InterfaceName );
+
+			if ( Self == IntPtr.Zero )
+				throw new System.Exception( $"Couldn't find server interface {InterfaceName}" );
+
+			VTable = Marshal.ReadIntPtr( Self, 0 );
+			if ( Self == IntPtr.Zero )
+				throw new System.Exception( $"Invalid VTable for server {InterfaceName}" );
+
+			InitInternals();
+		}
+
+		public virtual void InitUserless()
+		{
+			Self = SteamInternal.FindOrCreateUserInterface( 0, InterfaceName );
+
+			if ( Self == IntPtr.Zero )
+				throw new System.Exception( $"Couldn't find interface {InterfaceName}" );
 
 			VTable = Marshal.ReadIntPtr( Self, 0 );
 			if ( Self == IntPtr.Zero )

@@ -9,10 +9,6 @@ namespace Steamworks
 {
 	internal class ISteamUtils : SteamInterface
 	{
-		public ISteamUtils( bool server = false ) : base( server )
-		{
-		}
-		
 		public override string InterfaceName => "SteamUtils009";
 		
 		public override void InitInternals()

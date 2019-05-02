@@ -18,7 +18,10 @@ namespace Steamworks
 			get
 			{
 				if ( _internal == null )
+				{
 					_internal = new ISteamVideo();
+					_internal.InitClient();
+				}
 
 				return _internal;
 			}

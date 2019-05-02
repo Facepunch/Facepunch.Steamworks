@@ -9,10 +9,6 @@ namespace Steamworks
 {
 	internal class ISteamApps : SteamInterface
 	{
-		public ISteamApps( bool server = false ) : base( server )
-		{
-		}
-		
 		public override string InterfaceName => "STEAMAPPS_INTERFACE_VERSION008";
 		
 		public override void InitInternals()

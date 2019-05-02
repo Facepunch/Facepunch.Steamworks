@@ -9,10 +9,6 @@ namespace Steamworks
 {
 	internal class ISteamScreenshots : SteamInterface
 	{
-		public ISteamScreenshots( bool server = false ) : base( server )
-		{
-		}
-		
 		public override string InterfaceName => "STEAMSCREENSHOTS_INTERFACE_VERSION003";
 		
 		public override void InitInternals()

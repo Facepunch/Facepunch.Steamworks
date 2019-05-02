@@ -22,6 +22,7 @@ namespace Steamworks
 				if ( _internal == null )
 				{
 					_internal = new ISteamUGC();
+					_internal.InitClient();
 				}
 
 				return _internal;

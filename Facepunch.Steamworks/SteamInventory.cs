@@ -20,7 +20,10 @@ namespace Steamworks
 			get
 			{
 				if ( _internal == null )
+				{ 
 					_internal = new ISteamInventory();
+					_internal.InitClient();
+				}
 
 				return _internal;
 			}

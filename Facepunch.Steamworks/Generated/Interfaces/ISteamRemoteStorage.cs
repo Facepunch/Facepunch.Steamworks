@@ -9,10 +9,6 @@ namespace Steamworks
 {
 	internal class ISteamRemoteStorage : SteamInterface
 	{
-		public ISteamRemoteStorage( bool server = false ) : base( server )
-		{
-		}
-		
 		public override string InterfaceName => "STEAMREMOTESTORAGE_INTERFACE_VERSION014";
 		
 		public override void InitInternals()

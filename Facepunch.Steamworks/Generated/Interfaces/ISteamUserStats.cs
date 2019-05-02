@@ -9,10 +9,6 @@ namespace Steamworks
 {
 	internal class ISteamUserStats : SteamInterface
 	{
-		public ISteamUserStats( bool server = false ) : base( server )
-		{
-		}
-		
 		public override string InterfaceName => "STEAMUSERSTATS_INTERFACE_VERSION011";
 		
 		public override void InitInternals()

@@ -20,7 +20,10 @@ namespace Steamworks
 			get
 			{
 				if ( _internal == null )
-					_internal = new ISteamGameServer( true );
+				{
+					_internal = new ISteamGameServer( );
+					_internal.InitServer();
+				}
 
 				return _internal;
 			}

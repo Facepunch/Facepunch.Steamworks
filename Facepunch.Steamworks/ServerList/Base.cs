@@ -18,7 +18,10 @@ namespace Steamworks.ServerList
 			get
 			{
 				if ( _internal == null )
+				{
 					_internal = new ISteamMatchmakingServers();
+					_internal.InitClient();
+				}
 
 				return _internal;
 			}

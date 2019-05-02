@@ -22,6 +22,7 @@ namespace Steamworks
 				if ( _internal == null )
 				{
 					_internal = new ISteamUser();
+					_internal.InitClient();
 
 					richPresence = new Dictionary<string, string>();
 

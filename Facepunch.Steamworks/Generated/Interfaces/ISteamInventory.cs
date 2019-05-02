@@ -9,10 +9,6 @@ namespace Steamworks
 {
 	internal class ISteamInventory : SteamInterface
 	{
-		public ISteamInventory( bool server = false ) : base( server )
-		{
-		}
-		
 		public override string InterfaceName => "STEAMINVENTORY_INTERFACE_V003";
 		
 		public override void InitInternals()

@@ -9,10 +9,6 @@ namespace Steamworks
 {
 	internal class ISteamParties : SteamInterface
 	{
-		public ISteamParties( bool server = false ) : base( server )
-		{
-		}
-		
 		public override string InterfaceName => "SteamParties002";
 		
 		public override void InitInternals()

@@ -9,10 +9,6 @@ namespace Steamworks
 {
 	internal class ISteamMatchmakingServers : SteamInterface
 	{
-		public ISteamMatchmakingServers( bool server = false ) : base( server )
-		{
-		}
-		
 		public override string InterfaceName => "SteamMatchMakingServers002";
 		
 		public override void InitInternals()
