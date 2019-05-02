@@ -36,7 +36,7 @@ namespace Generator
 
 				foreach ( var arg in args.Split( new[] { ',' }, StringSplitOptions.RemoveEmptyEntries ) )
 				{
-					var m = Regex.Match( arg.Trim(), @"(.+?[ |\*])?([a-zA-Z0-9_]+?)( = (.+?))?$" );
+					var m = Regex.Match( arg.Trim(), @"(.+?[ |\*|\&])?([a-zA-Z0-9_]+?)( = (.+?))?$" );
 
 					var t = m.Groups[1].Value.Trim();
 					var n = m.Groups[2].Value.Trim();

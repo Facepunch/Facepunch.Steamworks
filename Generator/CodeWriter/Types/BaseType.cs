@@ -17,12 +17,15 @@ internal class BaseType
 	{
 		type = Cleanup.ConvertType( type );
 
+		type = type.Trim( '&' );
+
 		if ( type == "SteamAPIWarningMessageHook_t" ) return new PointerType { NativeType = type, VarName = varname };
+		if ( type == "intptr_t" ) return new PointerType { NativeType = type, VarName = varname };
 
 		if ( type == "SteamAPICall_t" ) return new SteamApiCallType { NativeType = type, VarName = varname };
 
 		if ( type == "void" ) return new VoidType { NativeType = type, VarName = varname };
-		if ( type.Replace( " ", "" ) == "constchar*" ) return new ConstCharType { NativeType = type, VarName = varname };
+		if ( type.Replace( " ", "" ).StartsWith( "constchar*" ) ) return new ConstCharType { NativeType = type, VarName = varname };
 		if ( type == "char *" ) return new StringBuilderType { NativeType = type, VarName = varname };
 
 		var basicType = type.Replace( "const ", "" ).Trim( ' ', '*' );
@@ -35,6 +38,10 @@ internal class BaseType
 		if ( basicType == "uint8" ) return new UInt8Type { NativeType = type, VarName = varname };
 		if ( basicType == "uint16" ) return new UInt16Type { NativeType = type, VarName = varname };
 		if ( basicType == "SteamId" ) return new CSteamIdType { NativeType = type, VarName = varname };
+
+		// DANGER DANGER Danger
+		if ( basicType == "size_t" ) return new ULongType { NativeType = type, VarName = varname };
+
 		if ( basicType == "uint64" ) return new ULongType { NativeType = type, VarName = varname };
 		if ( basicType == "int64" ) return new LongType { NativeType = type, VarName = varname };
 		if ( basicType == "bool" ) return new BoolType { NativeType = type, VarName = varname };

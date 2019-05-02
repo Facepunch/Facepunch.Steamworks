@@ -80,6 +80,7 @@ namespace Generator
 				GenerateVTableClass( "ISteamNetworking", $"{folder}../Generated/Interfaces/ISteamNetworking.cs" );
 				GenerateVTableClass( "ISteamMatchmaking", $"{folder}../Generated/Interfaces/ISteamMatchmaking.cs" );
 				GenerateVTableClass( "ISteamParties", $"{folder}../Generated/Interfaces/ISteamParties.cs" );
+				GenerateVTableClass( "ISteamNetworkingUtils", $"{folder}../Generated/Interfaces/ISteamNetworkingUtils.cs" );
 			}
 		}
 
