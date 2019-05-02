@@ -58,23 +58,6 @@ namespace Steamworks.Data
 		public override string ToString() => Value.ToString();
 	}
 
-	public struct HSteamNetConnection
-	{
-		public uint Value;
-
-		public static implicit operator HSteamNetConnection( uint value )
-		{
-			return new HSteamNetConnection { Value = value };
-		}
-
-		public static implicit operator uint( HSteamNetConnection value )
-		{
-			return value.Value;
-		}
-
-		public override string ToString() => Value.ToString();
-	}
-
 	public enum IdentityType
 	{
 		Invalid = 0,
@@ -153,7 +136,7 @@ namespace Steamworks.Data
 	{
 		public IntPtr data;
 		public int length;
-		public HSteamNetConnection connection;
+		public NetConnection connection;
 		public SteamNetworkingIdentity identity;
 		public long userData;
 		public SteamNetworkingMicroseconds timeReceived;

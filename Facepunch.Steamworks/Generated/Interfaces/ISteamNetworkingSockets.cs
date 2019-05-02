@@ -57,11 +57,11 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate HSteamNetConnection FConnectByIPAddress( IntPtr self, ref SteamNetworkingIPAddr address );
+		private delegate NetConnection FConnectByIPAddress( IntPtr self, ref SteamNetworkingIPAddr address );
 		private FConnectByIPAddress _ConnectByIPAddress;
 		
 		#endregion
-		internal HSteamNetConnection ConnectByIPAddress( ref SteamNetworkingIPAddr address )
+		internal NetConnection ConnectByIPAddress( ref SteamNetworkingIPAddr address )
 		{
 			return _ConnectByIPAddress( Self, ref address );
 		}
@@ -79,22 +79,22 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate HSteamNetConnection FConnectP2P( IntPtr self, ref SteamNetworkingIdentity identityRemote, int nVirtualPort );
+		private delegate NetConnection FConnectP2P( IntPtr self, ref SteamNetworkingIdentity identityRemote, int nVirtualPort );
 		private FConnectP2P _ConnectP2P;
 		
 		#endregion
-		internal HSteamNetConnection ConnectP2P( ref SteamNetworkingIdentity identityRemote, int nVirtualPort )
+		internal NetConnection ConnectP2P( ref SteamNetworkingIdentity identityRemote, int nVirtualPort )
 		{
 			return _ConnectP2P( Self, ref identityRemote, nVirtualPort );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate Result FAcceptConnection( IntPtr self, HSteamNetConnection hConn );
+		private delegate Result FAcceptConnection( IntPtr self, NetConnection hConn );
 		private FAcceptConnection _AcceptConnection;
 		
 		#endregion
-		internal Result AcceptConnection( HSteamNetConnection hConn )
+		internal Result AcceptConnection( NetConnection hConn )
 		{
 			return _AcceptConnection( Self, hConn );
 		}
@@ -102,11 +102,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FCloseConnection( IntPtr self, HSteamNetConnection hPeer, int nReason, string pszDebug, [MarshalAs( UnmanagedType.U1 )] bool bEnableLinger );
+		private delegate bool FCloseConnection( IntPtr self, NetConnection hPeer, int nReason, string pszDebug, [MarshalAs( UnmanagedType.U1 )] bool bEnableLinger );
 		private FCloseConnection _CloseConnection;
 		
 		#endregion
-		internal bool CloseConnection( HSteamNetConnection hPeer, int nReason, string pszDebug, [MarshalAs( UnmanagedType.U1 )] bool bEnableLinger )
+		internal bool CloseConnection( NetConnection hPeer, int nReason, string pszDebug, [MarshalAs( UnmanagedType.U1 )] bool bEnableLinger )
 		{
 			return _CloseConnection( Self, hPeer, nReason, pszDebug, bEnableLinger );
 		}
@@ -126,33 +126,33 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetConnectionUserData( IntPtr self, HSteamNetConnection hPeer, long nUserData );
+		private delegate bool FSetConnectionUserData( IntPtr self, NetConnection hPeer, long nUserData );
 		private FSetConnectionUserData _SetConnectionUserData;
 		
 		#endregion
-		internal bool SetConnectionUserData( HSteamNetConnection hPeer, long nUserData )
+		internal bool SetConnectionUserData( NetConnection hPeer, long nUserData )
 		{
 			return _SetConnectionUserData( Self, hPeer, nUserData );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate long FGetConnectionUserData( IntPtr self, HSteamNetConnection hPeer );
+		private delegate long FGetConnectionUserData( IntPtr self, NetConnection hPeer );
 		private FGetConnectionUserData _GetConnectionUserData;
 		
 		#endregion
-		internal long GetConnectionUserData( HSteamNetConnection hPeer )
+		internal long GetConnectionUserData( NetConnection hPeer )
 		{
 			return _GetConnectionUserData( Self, hPeer );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FSetConnectionName( IntPtr self, HSteamNetConnection hPeer, string pszName );
+		private delegate void FSetConnectionName( IntPtr self, NetConnection hPeer, string pszName );
 		private FSetConnectionName _SetConnectionName;
 		
 		#endregion
-		internal void SetConnectionName( HSteamNetConnection hPeer, string pszName )
+		internal void SetConnectionName( NetConnection hPeer, string pszName )
 		{
 			_SetConnectionName( Self, hPeer, pszName );
 		}
@@ -160,44 +160,44 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetConnectionName( IntPtr self, HSteamNetConnection hPeer, StringBuilder pszName, int nMaxLen );
+		private delegate bool FGetConnectionName( IntPtr self, NetConnection hPeer, StringBuilder pszName, int nMaxLen );
 		private FGetConnectionName _GetConnectionName;
 		
 		#endregion
-		internal bool GetConnectionName( HSteamNetConnection hPeer, StringBuilder pszName, int nMaxLen )
+		internal bool GetConnectionName( NetConnection hPeer, StringBuilder pszName, int nMaxLen )
 		{
 			return _GetConnectionName( Self, hPeer, pszName, nMaxLen );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate Result FSendMessageToConnection( IntPtr self, HSteamNetConnection hConn, IntPtr pData, uint cbData, int nSendFlags );
+		private delegate Result FSendMessageToConnection( IntPtr self, NetConnection hConn, IntPtr pData, uint cbData, int nSendFlags );
 		private FSendMessageToConnection _SendMessageToConnection;
 		
 		#endregion
-		internal Result SendMessageToConnection( HSteamNetConnection hConn, IntPtr pData, uint cbData, int nSendFlags )
+		internal Result SendMessageToConnection( NetConnection hConn, IntPtr pData, uint cbData, int nSendFlags )
 		{
 			return _SendMessageToConnection( Self, hConn, pData, cbData, nSendFlags );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate Result FFlushMessagesOnConnection( IntPtr self, HSteamNetConnection hConn );
+		private delegate Result FFlushMessagesOnConnection( IntPtr self, NetConnection hConn );
 		private FFlushMessagesOnConnection _FlushMessagesOnConnection;
 		
 		#endregion
-		internal Result FlushMessagesOnConnection( HSteamNetConnection hConn )
+		internal Result FlushMessagesOnConnection( NetConnection hConn )
 		{
 			return _FlushMessagesOnConnection( Self, hConn );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate int FReceiveMessagesOnConnection( IntPtr self, HSteamNetConnection hConn, [In,Out] ref SteamNetworkingMessage_t[]  ppOutMessages, int nMaxMessages );
+		private delegate int FReceiveMessagesOnConnection( IntPtr self, NetConnection hConn, [In,Out] ref SteamNetworkingMessage_t[]  ppOutMessages, int nMaxMessages );
 		private FReceiveMessagesOnConnection _ReceiveMessagesOnConnection;
 		
 		#endregion
-		internal int ReceiveMessagesOnConnection( HSteamNetConnection hConn, [In,Out] ref SteamNetworkingMessage_t[]  ppOutMessages, int nMaxMessages )
+		internal int ReceiveMessagesOnConnection( NetConnection hConn, [In,Out] ref SteamNetworkingMessage_t[]  ppOutMessages, int nMaxMessages )
 		{
 			return _ReceiveMessagesOnConnection( Self, hConn, ref ppOutMessages, nMaxMessages );
 		}
@@ -216,11 +216,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetConnectionInfo( IntPtr self, HSteamNetConnection hConn, ref SteamNetConnectionInfo_t pInfo );
+		private delegate bool FGetConnectionInfo( IntPtr self, NetConnection hConn, ref SteamNetConnectionInfo_t pInfo );
 		private FGetConnectionInfo _GetConnectionInfo;
 		
 		#endregion
-		internal bool GetConnectionInfo( HSteamNetConnection hConn, ref SteamNetConnectionInfo_t pInfo )
+		internal bool GetConnectionInfo( NetConnection hConn, ref SteamNetConnectionInfo_t pInfo )
 		{
 			return _GetConnectionInfo( Self, hConn, ref pInfo );
 		}
@@ -228,22 +228,22 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetQuickConnectionStatus( IntPtr self, HSteamNetConnection hConn, ref SteamNetworkingQuickConnectionStatus pStats );
+		private delegate bool FGetQuickConnectionStatus( IntPtr self, NetConnection hConn, ref SteamNetworkingQuickConnectionStatus pStats );
 		private FGetQuickConnectionStatus _GetQuickConnectionStatus;
 		
 		#endregion
-		internal bool GetQuickConnectionStatus( HSteamNetConnection hConn, ref SteamNetworkingQuickConnectionStatus pStats )
+		internal bool GetQuickConnectionStatus( NetConnection hConn, ref SteamNetworkingQuickConnectionStatus pStats )
 		{
 			return _GetQuickConnectionStatus( Self, hConn, ref pStats );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate int FGetDetailedConnectionStatus( IntPtr self, HSteamNetConnection hConn, StringBuilder pszBuf, int cbBuf );
+		private delegate int FGetDetailedConnectionStatus( IntPtr self, NetConnection hConn, StringBuilder pszBuf, int cbBuf );
 		private FGetDetailedConnectionStatus _GetDetailedConnectionStatus;
 		
 		#endregion
-		internal int GetDetailedConnectionStatus( HSteamNetConnection hConn, StringBuilder pszBuf, int cbBuf )
+		internal int GetDetailedConnectionStatus( NetConnection hConn, StringBuilder pszBuf, int cbBuf )
 		{
 			return _GetDetailedConnectionStatus( Self, hConn, pszBuf, cbBuf );
 		}
@@ -263,11 +263,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FCreateSocketPair( IntPtr self, [In,Out] HSteamNetConnection[]  pOutConnection1, [In,Out] HSteamNetConnection[]  pOutConnection2, [MarshalAs( UnmanagedType.U1 )] bool bUseNetworkLoopback, ref SteamNetworkingIdentity pIdentity1, ref SteamNetworkingIdentity pIdentity2 );
+		private delegate bool FCreateSocketPair( IntPtr self, [In,Out] NetConnection[]  pOutConnection1, [In,Out] NetConnection[]  pOutConnection2, [MarshalAs( UnmanagedType.U1 )] bool bUseNetworkLoopback, ref SteamNetworkingIdentity pIdentity1, ref SteamNetworkingIdentity pIdentity2 );
 		private FCreateSocketPair _CreateSocketPair;
 		
 		#endregion
-		internal bool CreateSocketPair( [In,Out] HSteamNetConnection[]  pOutConnection1, [In,Out] HSteamNetConnection[]  pOutConnection2, [MarshalAs( UnmanagedType.U1 )] bool bUseNetworkLoopback, ref SteamNetworkingIdentity pIdentity1, ref SteamNetworkingIdentity pIdentity2 )
+		internal bool CreateSocketPair( [In,Out] NetConnection[]  pOutConnection1, [In,Out] NetConnection[]  pOutConnection2, [MarshalAs( UnmanagedType.U1 )] bool bUseNetworkLoopback, ref SteamNetworkingIdentity pIdentity1, ref SteamNetworkingIdentity pIdentity2 )
 		{
 			return _CreateSocketPair( Self, pOutConnection1, pOutConnection2, bUseNetworkLoopback, ref pIdentity1, ref pIdentity2 );
 		}
@@ -309,11 +309,11 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate HSteamNetConnection FConnectToHostedDedicatedServer( IntPtr self, ref SteamNetworkingIdentity identityTarget, int nVirtualPort );
+		private delegate NetConnection FConnectToHostedDedicatedServer( IntPtr self, ref SteamNetworkingIdentity identityTarget, int nVirtualPort );
 		private FConnectToHostedDedicatedServer _ConnectToHostedDedicatedServer;
 		
 		#endregion
-		internal HSteamNetConnection ConnectToHostedDedicatedServer( ref SteamNetworkingIdentity identityTarget, int nVirtualPort )
+		internal NetConnection ConnectToHostedDedicatedServer( ref SteamNetworkingIdentity identityTarget, int nVirtualPort )
 		{
 			return _ConnectToHostedDedicatedServer( Self, ref identityTarget, nVirtualPort );
 		}

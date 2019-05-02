@@ -8,17 +8,17 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	public static class SteamNetworking
+	public static class SteamNetworkingSockets
 	{
-		static ISteamNetworking _internal;
-		internal static ISteamNetworking Internal
+		static ISteamNetworkingSockets _internal;
+		internal static ISteamNetworkingSockets Internal
 		{
 			get
 			{
 				if ( _internal == null )
 				{
-					_internal = new ISteamNetworking();
-					_internal.InitClient();
+					_internal = new ISteamNetworkingSockets();
+					_internal.InitUserless();
 				}
 
 				return _internal;
@@ -32,90 +32,40 @@ namespace Steamworks
 
 		internal static void InstallEvents()
 		{
-			P2PSessionRequest_t.Install( x => OnP2PSessionRequest?.Invoke( x.SteamIDRemote ) );
-			P2PSessionConnectFail_t.Install( x => OnP2PConnectionFailed?.Invoke( x.SteamIDRemote ) );
+
 		}
 
 		/// <summary>
-		/// This SteamId wants to send you a message. You should respond by calling AcceptP2PSessionWithUser
-		/// if you want to recieve their messages
+		/// Creates a "server" socket that listens for clients to connect to by calling
+		/// Connect, over ordinary UDP (IPv4 or IPv6)
 		/// </summary>
-		public static Action<SteamId> OnP2PSessionRequest;
-
-		/// <summary>
-		/// Called when packets can't get through to the specified user.
-		/// All queued packets unsent at this point will be dropped, further attempts
-		/// to send will retry making the connection (but will be dropped if we fail again).
-		/// </summary>
-		public static Action<SteamId> OnP2PConnectionFailed;
-
-		/// <summary>
-		/// This should be called in response to a OnP2PSessionRequest
-		/// </summary>
-		public static bool AcceptP2PSessionWithUser( SteamId user ) => Internal.AcceptP2PSessionWithUser( user );
-
-		/// <summary>
-		/// This should be called when you're done communicating with a user, as this will
-		/// free up all of the resources allocated for the connection under-the-hood.
-		/// If the remote user tries to send data to you again, a new OnP2PSessionRequest 
-		/// callback will be posted
-		/// </summary>
-		public static bool CloseP2PSessionWithUser( SteamId user ) => Internal.CloseP2PSessionWithUser( user );
-
-		/// <summary>
-		/// Checks if a P2P packet is available to read, and gets the size of the message if there is one.
-		/// </summary>
-		public static bool IsP2PPacketAvailable( int channel = 0 )
+		public static HSteamListenSocket CreateExposedSocket( SteamNetworkingIPAddr address )
 		{
-			uint _ = 0;
-			return Internal.IsP2PPacketAvailable( ref _, channel );
+			return Internal.CreateListenSocketIP( ref address );
 		}
 
 		/// <summary>
-		/// Reads in a packet that has been sent from another user via SendP2PPacket..
+		/// Connect to a socket created via <method>CreateListenSocketIP</method>
 		/// </summary>
-		public unsafe static P2Packet? ReadP2PPacket( int channel = 0 )
+		public static NetConnection ConnectExposed( SteamNetworkingIPAddr address )
 		{
-			uint size = 0;
-
-			if ( !Internal.IsP2PPacketAvailable( ref size, channel ) )
-				return null;
-
-			var buffer = Helpers.TakeBuffer( (int) size );
-
-			fixed ( byte* p = buffer )
-            {
-                SteamId steamid = 1;
-                if ( !Internal.ReadP2PPacket( (IntPtr)p, (uint) buffer.Length, ref size, ref steamid, channel ) || size == 0 )
-                    return null;
-
-				var data = new byte[size];
-				Array.Copy( buffer, 0, data, 0, size );
-
-				return new P2Packet
-				{
-					SteamId = steamid,
-					Data = data
-				};
-            }
+			return Internal.ConnectByIPAddress( ref address );
 		}
 
 		/// <summary>
-		/// Sends a P2P packet to the specified user.
-		/// This is a session-less API which automatically establishes NAT-traversing or Steam relay server connections.
-		/// NOTE: The first packet send may be delayed as the NAT-traversal code runs.
+		/// Creates a server that will be relayed via Valve's network (hiding the IP and improving ping)
 		/// </summary>
-		public static unsafe bool SendP2PPacket( SteamId steamid, byte[] data, int length = -1, int nChannel = 0, P2PSend sendType = P2PSend.Reliable )
+		public static HSteamListenSocket CreateSocket( int virtualport = 0 )
 		{
-			if ( length <= 0 )
-				length = data.Length;
-
-			fixed ( byte* p = data )
-			{
-				return Internal.SendP2PPacket( steamid, (IntPtr)p, (uint)length, (P2PSend)sendType, nChannel );
-			}
+			return Internal.CreateListenSocketP2P( virtualport );
 		}
 
-
+		/// <summary>
+		/// Connect to a relay server
+		/// </summary>
+		public static NetConnection Connect( SteamNetworkingIdentity identity, int virtualport = 0 )
+		{
+			return Internal.ConnectP2P( ref identity, virtualport );
+		}
 	}
 }
