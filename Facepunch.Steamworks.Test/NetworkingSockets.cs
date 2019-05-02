@@ -54,8 +54,7 @@ namespace Steamworks
 			connection.UserData = 69;
 
 			// Give it a second for something to happen
-			await Task.Delay( 5000 );
-
+			await Task.Delay( 1000 );
 
 			connection.Close();
 

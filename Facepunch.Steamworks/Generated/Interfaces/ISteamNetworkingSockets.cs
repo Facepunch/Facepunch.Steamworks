@@ -216,11 +216,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetConnectionInfo( IntPtr self, NetConnection hConn, ref SteamNetConnectionInfo_t pInfo );
+		private delegate bool FGetConnectionInfo( IntPtr self, NetConnection hConn, ref ConnectionInfo pInfo );
 		private FGetConnectionInfo _GetConnectionInfo;
 		
 		#endregion
-		internal bool GetConnectionInfo( NetConnection hConn, ref SteamNetConnectionInfo_t pInfo )
+		internal bool GetConnectionInfo( NetConnection hConn, ref ConnectionInfo pInfo )
 		{
 			return _GetConnectionInfo( Self, hConn, ref pInfo );
 		}

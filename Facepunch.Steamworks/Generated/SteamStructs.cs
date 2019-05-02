@@ -12136,7 +12136,7 @@ namespace Steamworks.Data
 	internal struct SteamNetConnectionStatusChangedCallback_t
 	{
 		internal NetConnection Conn; // m_hConn HSteamNetConnection
-		internal SteamNetConnectionInfo_t Nfo; // m_info SteamNetConnectionInfo_t
+		internal ConnectionInfo Nfo; // m_info SteamNetConnectionInfo_t
 		internal SteamNetworkingConnectionState OldState; // m_eOldState ESteamNetworkingConnectionState
 		
 		#region SteamCallback
@@ -12191,7 +12191,7 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal NetConnection Conn; // m_hConn HSteamNetConnection
-			internal SteamNetConnectionInfo_t Nfo; // m_info SteamNetConnectionInfo_t
+			internal ConnectionInfo Nfo; // m_info SteamNetConnectionInfo_t
 			internal SteamNetworkingConnectionState OldState; // m_eOldState ESteamNetworkingConnectionState
 			
 			public static implicit operator SteamNetConnectionStatusChangedCallback_t ( SteamNetConnectionStatusChangedCallback_t.Pack8 d ) => new SteamNetConnectionStatusChangedCallback_t{ Conn = d.Conn,Nfo = d.Nfo,OldState = d.OldState, };

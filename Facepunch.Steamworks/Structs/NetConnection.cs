@@ -5,17 +5,7 @@ namespace Steamworks.Data
 {
 	public struct NetConnection
 	{
-		uint Id;
-
-		public static implicit operator NetConnection( uint value )
-		{
-			return new NetConnection { Id = value };
-		}
-
-		public static implicit operator uint( NetConnection value )
-		{
-			return value.Id;
-		}
+		internal uint Id;
 
 		public override string ToString() => Id.ToString();
 

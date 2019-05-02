@@ -73,24 +73,6 @@ namespace Steamworks.Data
 	}
 
 	[StructLayout( LayoutKind.Sequential )]
-	public struct SteamNetConnectionInfo_t
-	{
-		public NetworkIdentity identity;
-		public long userData;
-		public Socket listenSocket;
-		public NetworkAddress address;
-		private ushort pad;
-		private SteamNetworkingPOPID popRemote;
-		private SteamNetworkingPOPID popRelay;
-		public SteamNetworkingConnectionState state;
-		public int endReason;
-		[MarshalAs( UnmanagedType.ByValTStr, SizeConst = 128 )]
-		public string endDebug;
-		[MarshalAs( UnmanagedType.ByValTStr, SizeConst = 128 )]
-		public string connectionDescription;
-	}
-
-	[StructLayout( LayoutKind.Sequential )]
 	public struct SteamNetworkingQuickConnectionStatus
 	{
 		public SteamNetworkingConnectionState state;
