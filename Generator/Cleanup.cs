@@ -26,6 +26,7 @@ public static class Cleanup
 		type = type.Replace( "SteamItemInstanceID_t", "InventoryItemId" );
 		type = type.Replace( "SteamItemDef_t", "InventoryDefId" );
 		type = type.Replace( "ChatRoomEnterResponse", "RoomEnter" );
+		type = type.Replace( "SteamNetworkPingLocation_t", "PingLocation" );
 
 		return type;
 	}

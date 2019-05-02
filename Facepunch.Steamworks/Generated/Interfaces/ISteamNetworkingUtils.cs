@@ -34,58 +34,58 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate float FGetLocalPingLocation( IntPtr self, SteamNetworkPingLocation_t result );
+		private delegate float FGetLocalPingLocation( IntPtr self, ref PingLocation result );
 		private FGetLocalPingLocation _GetLocalPingLocation;
 		
 		#endregion
-		internal float GetLocalPingLocation( SteamNetworkPingLocation_t result )
+		internal float GetLocalPingLocation( ref PingLocation result )
 		{
-			return _GetLocalPingLocation( Self, result );
+			return _GetLocalPingLocation( Self, ref result );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate int FEstimatePingTimeBetweenTwoLocations( IntPtr self, SteamNetworkPingLocation_t location1, SteamNetworkPingLocation_t location2 );
+		private delegate int FEstimatePingTimeBetweenTwoLocations( IntPtr self, ref PingLocation location1, ref PingLocation location2 );
 		private FEstimatePingTimeBetweenTwoLocations _EstimatePingTimeBetweenTwoLocations;
 		
 		#endregion
-		internal int EstimatePingTimeBetweenTwoLocations( SteamNetworkPingLocation_t location1, SteamNetworkPingLocation_t location2 )
+		internal int EstimatePingTimeBetweenTwoLocations( ref PingLocation location1, ref PingLocation location2 )
 		{
-			return _EstimatePingTimeBetweenTwoLocations( Self, location1, location2 );
+			return _EstimatePingTimeBetweenTwoLocations( Self, ref location1, ref location2 );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate int FEstimatePingTimeFromLocalHost( IntPtr self, SteamNetworkPingLocation_t remoteLocation );
+		private delegate int FEstimatePingTimeFromLocalHost( IntPtr self, ref PingLocation remoteLocation );
 		private FEstimatePingTimeFromLocalHost _EstimatePingTimeFromLocalHost;
 		
 		#endregion
-		internal int EstimatePingTimeFromLocalHost( SteamNetworkPingLocation_t remoteLocation )
+		internal int EstimatePingTimeFromLocalHost( ref PingLocation remoteLocation )
 		{
-			return _EstimatePingTimeFromLocalHost( Self, remoteLocation );
+			return _EstimatePingTimeFromLocalHost( Self, ref remoteLocation );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FConvertPingLocationToString( IntPtr self, SteamNetworkPingLocation_t location, StringBuilder pszBuf, int cchBufSize );
+		private delegate void FConvertPingLocationToString( IntPtr self, ref PingLocation location, StringBuilder pszBuf, int cchBufSize );
 		private FConvertPingLocationToString _ConvertPingLocationToString;
 		
 		#endregion
-		internal void ConvertPingLocationToString( SteamNetworkPingLocation_t location, StringBuilder pszBuf, int cchBufSize )
+		internal void ConvertPingLocationToString( ref PingLocation location, StringBuilder pszBuf, int cchBufSize )
 		{
-			_ConvertPingLocationToString( Self, location, pszBuf, cchBufSize );
+			_ConvertPingLocationToString( Self, ref location, pszBuf, cchBufSize );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FParsePingLocationString( IntPtr self, string pszString, SteamNetworkPingLocation_t result );
+		private delegate bool FParsePingLocationString( IntPtr self, string pszString, ref PingLocation result );
 		private FParsePingLocationString _ParsePingLocationString;
 		
 		#endregion
-		internal bool ParsePingLocationString( string pszString, SteamNetworkPingLocation_t result )
+		internal bool ParsePingLocationString( string pszString, ref PingLocation result )
 		{
-			return _ParsePingLocationString( Self, pszString, result );
+			return _ParsePingLocationString( Self, pszString, ref result );
 		}
 		
 		#region FunctionMeta

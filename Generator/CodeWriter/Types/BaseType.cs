@@ -17,8 +17,6 @@ internal class BaseType
 	{
 		type = Cleanup.ConvertType( type );
 
-		type = type.Trim( '&' );
-
 		if ( type == "SteamAPIWarningMessageHook_t" ) return new PointerType { NativeType = type, VarName = varname };
 		if ( type == "intptr_t" ) return new PointerType { NativeType = type, VarName = varname };
 
@@ -28,7 +26,7 @@ internal class BaseType
 		if ( type.Replace( " ", "" ).StartsWith( "constchar*" ) ) return new ConstCharType { NativeType = type, VarName = varname };
 		if ( type == "char *" ) return new StringBuilderType { NativeType = type, VarName = varname };
 
-		var basicType = type.Replace( "const ", "" ).Trim( ' ', '*' );
+		var basicType = type.Replace( "const ", "" ).Trim( ' ', '*', '&' );
 
 		if ( basicType == "void" ) return new PointerType { NativeType = type, VarName = varname };
 		if ( basicType.StartsWith( "ISteam" ) ) return new PointerType { NativeType = type, VarName = varname };
@@ -49,6 +47,7 @@ internal class BaseType
 		if ( basicType.EndsWith( "_t" ) ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
 		if ( basicType == "InventoryItemId" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
 		if ( basicType == "InventoryDefId" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
+		if ( basicType == "PingLocation" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
 		if ( basicType.StartsWith( "E" ) && char.IsUpper( basicType[1] ) ) return new EnumType { NativeType = type.Substring( 1 ), VarName = varname };
 
 		return new BaseType { NativeType = type, VarName = varname };
@@ -62,7 +61,7 @@ internal class BaseType
 
 	public virtual string ReturnType => TypeName;
 
-	public virtual string Ref => !IsVector && NativeType.EndsWith( "*" ) || NativeType.EndsWith( "**" ) ? "ref " : "";
+	public virtual string Ref => !IsVector && NativeType.EndsWith( "*" ) || NativeType.EndsWith( "**" ) || NativeType.Contains( "&" ) ? "ref " : "";
 	public virtual bool IsVector
 	{
 		get

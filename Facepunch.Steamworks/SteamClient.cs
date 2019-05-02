@@ -84,6 +84,7 @@ namespace Steamworks
 			SteamNetworking.Shutdown();
 			SteamMatchmaking.Shutdown();
 			SteamParties.Shutdown();
+			SteamNetworkingUtils.Shutdown();
 
 			SteamAPI.Shutdown();
 		}

@@ -45,7 +45,7 @@ namespace Steamworks
 		}
 
 		[TestMethod]
-        public async Task UploadBigFile()
+        public async Task UploadBigishFile()
         {
 			var created = Ugc.Editor.NewCommunityFile
 							.WithTitle( "Unit Test Upload Item" )
@@ -65,7 +65,7 @@ namespace Steamworks
 
 			// Upload a file of random bytes
 			var rand = new Random();
-			var testFile = new byte[1024 * 1024 * 256];
+			var testFile = new byte[1024 * 1024 * 32];
 			rand.NextBytes( testFile );
 			System.IO.File.WriteAllBytes( testFolder.FullName + "/testfile1.bin", testFile );
 
