@@ -88,8 +88,9 @@ namespace Steamworks
 			_internal = null;
 
 			SteamServerInventory.Shutdown();
-
 			SteamGameServer.Shutdown();
+			SteamNetworkingUtils.Shutdown();
+			SteamNetworkingSockets.Shutdown();
 		}
 
 
