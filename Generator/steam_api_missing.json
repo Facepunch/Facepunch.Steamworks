@@ -41,6 +41,24 @@
 		  }
 		]
 	  },
+
+	  {
+		"struct": "SteamNetConnectionStatusChangedCallback_t",
+		"fields": [
+		  {
+			"fieldname": "m_hConn",
+			"fieldtype": "HSteamNetConnection"
+		  },
+		  {
+			"fieldname": "m_info",
+			"fieldtype": "SteamNetConnectionInfo_t"
+		  },
+		  {
+			"fieldname": "m_eOldState",
+			"fieldtype": "ESteamNetworkingConnectionState"
+		  }
+		]
+	  },
   
 	  {
 		"struct": "InputAnalogActionData_t",

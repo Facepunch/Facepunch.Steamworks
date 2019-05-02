@@ -12133,6 +12133,73 @@ namespace Steamworks.Data
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	internal struct SteamNetConnectionStatusChangedCallback_t
+	{
+		internal NetConnection Conn; // m_hConn HSteamNetConnection
+		internal SteamNetConnectionInfo_t Nfo; // m_info SteamNetConnectionInfo_t
+		internal SteamNetworkingConnectionState OldState; // m_eOldState ESteamNetworkingConnectionState
+		
+		#region SteamCallback
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(SteamNetConnectionStatusChangedCallback_t) : typeof(Pack8) );
+		internal static SteamNetConnectionStatusChangedCallback_t Fill( IntPtr p ) => Config.PackSmall ? ((SteamNetConnectionStatusChangedCallback_t)(SteamNetConnectionStatusChangedCallback_t) Marshal.PtrToStructure( p, typeof(SteamNetConnectionStatusChangedCallback_t) )) : ((SteamNetConnectionStatusChangedCallback_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		
+		static Action<SteamNetConnectionStatusChangedCallback_t> actionClient;
+		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
+		static Action<SteamNetConnectionStatusChangedCallback_t> actionServer;
+		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
+		public static void Install( Action<SteamNetConnectionStatusChangedCallback_t> action, bool server = false )
+		{
+			if ( server )
+			{
+				Event.Register( OnServer, StructSize, CallbackIdentifiers.SteamNetworkingSockets + 1, true );
+				actionServer = action;
+			}
+			else
+			{
+				Event.Register( OnClient, StructSize, CallbackIdentifiers.SteamNetworkingSockets + 1, false );
+				actionClient = action;
+			}
+		}
+		public static async Task<SteamNetConnectionStatusChangedCallback_t?> GetResultAsync( SteamAPICall_t handle )
+		{
+			bool failed = false;
+			
+			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
+			{
+				await Task.Delay( 1 );
+			}
+			if ( failed ) return null;
+			
+			var ptr = Marshal.AllocHGlobal( StructSize );
+			
+			try
+			{
+				if ( !SteamUtils.Internal.GetAPICallResult( handle, ptr, StructSize, CallbackIdentifiers.SteamNetworkingSockets + 1, ref failed ) || failed )
+					return null;
+			
+				return Fill( ptr );
+			}
+			finally
+			{
+				Marshal.FreeHGlobal( ptr );
+			}
+		}
+		#endregion
+		#region Packed Versions
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal NetConnection Conn; // m_hConn HSteamNetConnection
+			internal SteamNetConnectionInfo_t Nfo; // m_info SteamNetConnectionInfo_t
+			internal SteamNetworkingConnectionState OldState; // m_eOldState ESteamNetworkingConnectionState
+			
+			public static implicit operator SteamNetConnectionStatusChangedCallback_t ( SteamNetConnectionStatusChangedCallback_t.Pack8 d ) => new SteamNetConnectionStatusChangedCallback_t{ Conn = d.Conn,Nfo = d.Nfo,OldState = d.OldState, };
+		}
+		#endregion
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	internal struct InputAnalogActionData_t
 	{
 		internal InputSourceMode EMode; // eMode EInputSourceMode
