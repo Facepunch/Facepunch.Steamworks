@@ -41,6 +41,163 @@ namespace Steamworks.Data
 		public override string ToString() => Value.ToString();
 	}
 
+	public struct HSteamListenSocket
+	{
+		public uint Value;
+
+		public static implicit operator HSteamListenSocket( uint value )
+		{
+			return new HSteamListenSocket { Value = value };
+		}
+
+		public static implicit operator uint( HSteamListenSocket value )
+		{
+			return value.Value;
+		}
+
+		public override string ToString() => Value.ToString();
+	}
+
+	public struct HSteamNetConnection
+	{
+		public uint Value;
+
+		public static implicit operator HSteamNetConnection( uint value )
+		{
+			return new HSteamNetConnection { Value = value };
+		}
+
+		public static implicit operator uint( HSteamNetConnection value )
+		{
+			return value.Value;
+		}
+
+		public override string ToString() => Value.ToString();
+	}
+
+	public enum IdentityType
+	{
+		Invalid = 0,
+		IPAddress = 1,
+		GenericString = 2,
+		GenericBytes = 3,
+		SteamID = 16
+	}
+
+	[StructLayout( LayoutKind.Explicit, Size = 136 )]
+	public struct SteamNetworkingIdentity
+	{
+		[FieldOffset( 0 )]
+		public IdentityType type;
+		/*
+		public bool IsInvalid
+		{
+			get
+			{
+				return Native.SteamAPI_SteamNetworkingIdentity_IsInvalid( this );
+			}
+		}
+
+		public ulong GetSteamID()
+		{
+			return Native.SteamAPI_SteamNetworkingIdentity_GetSteamID64( this );
+		}
+
+		public void SetSteamID( ulong steamID )
+		{
+			Native.SteamAPI_SteamNetworkingIdentity_SetSteamID64( ref this, steamID );
+		}
+
+		public bool EqualsTo( NetworkingIdentity identity )
+		{
+			return Native.SteamAPI_SteamNetworkingIdentity_EqualTo( this, identity );
+		}*/
+	}
+
+	[StructLayout( LayoutKind.Sequential )]
+	public struct SteamNetworkingIPAddr
+	{
+		[MarshalAs( UnmanagedType.ByValArray, SizeConst = 16 )]
+		public byte[] ip;
+		public ushort port;
+		/*
+		public bool IsLocalHost
+		{
+			get
+			{
+				return Native.SteamAPI_SteamNetworkingIPAddr_IsLocalHost( ref this );
+			}
+		}
+
+		public string GetIP()
+		{
+			return ip.ParseIP();
+		}
+
+		public void SetLocalHost( ushort port )
+		{
+			Native.SteamAPI_SteamNetworkingIPAddr_SetIPv6LocalHost( ref this, port );
+		}
+
+		public void SetAddress( string ip, ushort port )
+		{
+			if ( !ip.Contains( ":" ) )
+				Native.SteamAPI_SteamNetworkingIPAddr_SetIPv4( ref this, ip.ParseIPv4(), port );
+			else
+				Native.SteamAPI_SteamNetworkingIPAddr_SetIPv6( ref this, ip.ParseIPv6(), port );
+		}*/
+	}
+
+	[StructLayout( LayoutKind.Sequential )]
+	public struct SteamNetworkingMessage_t
+	{
+		public IntPtr data;
+		public int length;
+		public HSteamNetConnection connection;
+		public SteamNetworkingIdentity identity;
+		public long userData;
+		public SteamNetworkingMicroseconds timeReceived;
+		public long messageNumber;
+		internal IntPtr release;
+		public int channel;
+		private int pad;
+		/*
+		public void CopyTo( byte[] destination )
+		{
+			if ( destination == null )
+				throw new ArgumentNullException( "destination" );
+
+			Marshal.Copy( data, destination, 0, length );
+		}
+
+		public void Destroy()
+		{
+			if ( release == IntPtr.Zero )
+				throw new InvalidOperationException( "Message not created" );
+
+			Native.SteamAPI_SteamNetworkingMessage_t_Release( release );
+		}*/
+	}
+
+	[StructLayout( LayoutKind.Sequential )]
+	public struct SteamNetConnectionInfo_t
+	{
+		public SteamNetworkingIdentity identity;
+		public long userData;
+		public HSteamListenSocket listenSocket;
+		public SteamNetworkingIPAddr address;
+		private ushort pad;
+		private SteamNetworkingPOPID popRemote;
+		private SteamNetworkingPOPID popRelay;
+		public SteamNetworkingConnectionState state;
+		public int endReason;
+		[MarshalAs( UnmanagedType.ByValTStr, SizeConst = 128 )]
+		public string endDebug;
+		[MarshalAs( UnmanagedType.ByValTStr, SizeConst = 128 )]
+		public string connectionDescription;
+	}
+
+
 	/// <summary>
 	///
 	/// Object that describes a "location" on the Internet with sufficient
@@ -107,5 +264,36 @@ namespace Steamworks.Data
 		{
 			return SteamNetworkingUtils.Internal.EstimatePingTimeBetweenTwoLocations( ref this, ref target );
 		}
+	}
+
+	[StructLayout( LayoutKind.Sequential )]
+	public struct SteamNetworkingQuickConnectionStatus
+	{
+		public SteamNetworkingConnectionState state;
+		public int ping;
+		public float connectionQualityLocal;
+		public float connectionQualityRemote;
+		public float outPacketsPerSecond;
+		public float outBytesPerSecond;
+		public float inPacketsPerSecond;
+		public float inBytesPerSecond;
+		public int sendRateBytesPerSecond;
+		public int pendingUnreliable;
+		public int pendingReliable;
+		public int sentUnackedReliable;
+		public SteamNetworkingMicroseconds queueTime;
+
+		[MarshalAs( UnmanagedType.ByValArray, SizeConst = 16 )]
+		uint[] reserved;
+	}
+
+	struct SteamDatagramRelayAuthTicket
+	{
+		// Not implemented
+	};
+
+	struct SteamDatagramHostedAddress
+	{
+		// Not implemented
 	}
 }
