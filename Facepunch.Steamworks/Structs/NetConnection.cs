@@ -52,6 +52,34 @@ namespace Steamworks.Data
 			set => SteamNetworkingSockets.Internal.SetConnectionName( this, value );
 		}
 
+
+		public Result SendMessage( IntPtr ptr, int size, SendType sendType = SendType.Reliable )
+		{
+			return SteamNetworkingSockets.Internal.SendMessageToConnection( this, ptr, (uint) size, (int)sendType );
+		}
+
+		public unsafe Result SendMessage( byte[] data, SendType sendType = SendType.Reliable )
+		{
+			fixed ( byte* ptr = data )
+			{
+				return SendMessage( (IntPtr)ptr, data.Length, sendType );
+			}
+		}
+
+		public unsafe Result SendMessage( byte[] data, int offset, int length, SendType sendType = SendType.Reliable )
+		{
+			fixed ( byte* ptr = data )
+			{
+				return SendMessage( (IntPtr)ptr + offset, length, sendType );
+			}
+		}
+
+		public unsafe Result SendMessage( string str, SendType sendType = SendType.Reliable )
+		{
+			var bytes = System.Text.Encoding.UTF8.GetBytes( str );
+			return SendMessage( bytes, sendType );
+		}
+
 		/// <summary>
 		/// Flush any messages waiting on the Nagle timer and send them at the next transmission opportunity (often that means right now).
 		/// </summary>
