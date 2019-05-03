@@ -15,7 +15,10 @@
 			return SteamNetworkingSockets.Internal.CloseListenSocket( this );
 		}
 
-		// GetListenSocketAddress
-
+		public SocketInterface Interface
+		{
+			get => SteamNetworkingSockets.GetSocketInterface( Id );
+			set => SteamNetworkingSockets.SetSocketInterface( Id, value );
+		}
 	}
 }
