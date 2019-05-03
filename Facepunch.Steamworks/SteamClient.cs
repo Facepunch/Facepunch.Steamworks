@@ -48,6 +48,8 @@ namespace Steamworks
 			RunCallbacksAsync();
 		}
 
+		public static Action<Exception> OnCallbackException;
+
 		public static bool IsValid => initialized;
 
 		internal static async void RunCallbacksAsync()
@@ -55,14 +57,7 @@ namespace Steamworks
 			while ( IsValid )
 			{
 				await Task.Delay( 16 );
-				try
-				{
-					SteamAPI.RunCallbacks();
-				}
-				catch ( System.Exception )
-				{
-					// TODO - error outputs
-				}
+				RunCallbacks();
 			}
 		}
 
@@ -98,7 +93,14 @@ namespace Steamworks
 
 		public static void RunCallbacks()
 		{
-			SteamAPI.RunCallbacks();
+			try
+			{
+				SteamAPI.RunCallbacks();
+			}
+			catch ( System.Exception e )
+			{
+				OnCallbackException?.Invoke( e );
+			}
 		}
 
 		internal static void UnregisterCallback( IntPtr intPtr )

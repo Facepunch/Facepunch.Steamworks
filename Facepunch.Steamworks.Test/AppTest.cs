@@ -14,6 +14,13 @@ namespace Steamworks
 		[AssemblyInitialize]
 		public static void AssemblyInit( TestContext context )
 		{
+			Steamworks.SteamClient.OnCallbackException = ( e ) =>
+			{
+				Console.Error.WriteLine( e.Message );
+				Console.Error.WriteLine( e.StackTrace );
+				Assert.Fail( e.Message );
+			};
+
 			//
 			// Init Client
 			//
