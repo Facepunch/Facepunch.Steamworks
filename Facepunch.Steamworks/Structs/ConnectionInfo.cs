@@ -2,7 +2,7 @@
 
 namespace Steamworks.Data
 {
-	[StructLayout( LayoutKind.Sequential, Pack = 0 )]
+	[StructLayout( LayoutKind.Sequential, Size = 696 )]
 	public struct ConnectionInfo
 	{
 		internal NetworkIdentity identity;

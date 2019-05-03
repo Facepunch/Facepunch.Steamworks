@@ -2,7 +2,7 @@
 
 namespace Steamworks.Data
 {
-	[StructLayout( LayoutKind.Explicit, Size = 18 )]
+	[StructLayout( LayoutKind.Explicit, Size = 18, Pack = 1 )]
 	public struct NetworkAddress
 	{
 		[FieldOffset( 0 )]
