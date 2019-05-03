@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using Steamworks.Data;
 
 namespace Steamworks
@@ -63,6 +65,39 @@ namespace Steamworks
 		public virtual void OnDisconnected( ConnectionInfo data )
 		{
 			Connected = false;
+		}
+
+		SteamNetworkingMessage_t[] messageBuffer;
+
+		public void Receive()
+		{
+			if ( messageBuffer == null )
+			{
+				messageBuffer = new SteamNetworkingMessage_t[128];
+			}
+
+			var processed = SteamNetworkingSockets.Internal.ReceiveMessagesOnConnection( Connection, ref messageBuffer, messageBuffer.Length );
+
+			for ( int i=0; i< processed; i++ )
+			{
+				Console.WriteLine( "FOUND SOME!" );
+				ReceiveMessage( messageBuffer[i] );
+			}
+
+			//
+			// Overwhelmed our buffer, keep going
+			//
+			if ( processed == messageBuffer.Length )
+				Receive();
+		}
+
+		internal unsafe void ReceiveMessage( SteamNetworkingMessage_t msg )
+		{
+			var stream = new UnmanagedMemoryStream( (byte*)msg.data, msg.length, msg.length, FileAccess.Read );
+
+			// read Message
+
+			msg.release.Invoke( ref msg );
 		}
 	}
 }

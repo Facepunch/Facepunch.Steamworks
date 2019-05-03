@@ -99,6 +99,7 @@ namespace Steamworks
 
 				while ( Connected )
 				{
+					Receive();
 					await Task.Delay( 10 );
 				}
 			}
