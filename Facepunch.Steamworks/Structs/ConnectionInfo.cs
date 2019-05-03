@@ -20,5 +20,6 @@ namespace Steamworks.Data
 		internal string connectionDescription;
 
 		public ConnectionState State => state;
+		public SteamId SteamId => identity.steamID;
 	}
 }
