@@ -103,7 +103,7 @@
 	}
 
 	/// High level connection status
-	public enum SteamNetworkingConnectionState
+	public enum ConnectionState
 	{
 
 		/// Dummy value used to indicate an error condition in the API.

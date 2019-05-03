@@ -75,7 +75,7 @@ namespace Steamworks.Data
 	[StructLayout( LayoutKind.Sequential )]
 	public struct SteamNetworkingQuickConnectionStatus
 	{
-		public SteamNetworkingConnectionState state;
+		public ConnectionState state;
 		public int ping;
 		public float connectionQualityLocal;
 		public float connectionQualityRemote;

@@ -12,11 +12,13 @@ namespace Steamworks.Data
 		internal ushort pad;
 		internal SteamNetworkingPOPID popRemote;
 		internal SteamNetworkingPOPID popRelay;
-		internal SteamNetworkingConnectionState state;
+		internal ConnectionState state;
 		internal int endReason;
 		[MarshalAs( UnmanagedType.ByValTStr, SizeConst = 128 )]
 		internal string endDebug;
 		[MarshalAs( UnmanagedType.ByValTStr, SizeConst = 128 )]
 		internal string connectionDescription;
+
+		public ConnectionState State => state;
 	}
 }

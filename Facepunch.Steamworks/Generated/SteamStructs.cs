@@ -12137,7 +12137,7 @@ namespace Steamworks.Data
 	{
 		internal NetConnection Conn; // m_hConn HSteamNetConnection
 		internal ConnectionInfo Nfo; // m_info SteamNetConnectionInfo_t
-		internal SteamNetworkingConnectionState OldState; // m_eOldState ESteamNetworkingConnectionState
+		internal ConnectionState OldState; // m_eOldState ESteamNetworkingConnectionState
 		
 		#region SteamCallback
 		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(SteamNetConnectionStatusChangedCallback_t) : typeof(Pack8) );
@@ -12192,7 +12192,7 @@ namespace Steamworks.Data
 		{
 			internal NetConnection Conn; // m_hConn HSteamNetConnection
 			internal ConnectionInfo Nfo; // m_info SteamNetConnectionInfo_t
-			internal SteamNetworkingConnectionState OldState; // m_eOldState ESteamNetworkingConnectionState
+			internal ConnectionState OldState; // m_eOldState ESteamNetworkingConnectionState
 			
 			public static implicit operator SteamNetConnectionStatusChangedCallback_t ( SteamNetConnectionStatusChangedCallback_t.Pack8 d ) => new SteamNetConnectionStatusChangedCallback_t{ Conn = d.Conn,Nfo = d.Nfo,OldState = d.OldState, };
 		}
