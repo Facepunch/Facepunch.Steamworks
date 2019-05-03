@@ -19,94 +19,135 @@ namespace Steamworks
 				{
 					_internal = new ISteamNetworkingSockets();
 					_internal.InitClient();
+
+					SocketInterfaces = new Dictionary<uint, SocketInterface>();
+					ConnectionInterfaces = new Dictionary<uint, ConnectionInterface>();
 				}
 
 				return _internal;
 			}
 		}
 
+		static Dictionary<uint, SocketInterface> SocketInterfaces;
+
+		internal static SocketInterface GetSocketInterface( uint id )
+		{
+			if ( SocketInterfaces == null ) return null;
+			if ( id == 0 ) throw new System.ArgumentException( "Invalid Socket" );
+
+			if ( SocketInterfaces.TryGetValue( id, out var isocket ) )
+				return isocket;
+
+			return null;
+		}
+
+		internal static void SetSocketInterface( uint id, SocketInterface iface )
+		{
+			if ( id == 0 ) throw new System.ArgumentException( "Invalid Socket" );
+
+			Console.WriteLine( $"Installing Socket For {id}" );
+			SocketInterfaces[id] = iface;
+		}
+
+		
+		static Dictionary<uint, ConnectionInterface> ConnectionInterfaces;
+
+
+		internal static ConnectionInterface GetConnectionInterface( uint id )
+		{
+			if ( ConnectionInterfaces == null ) return null;
+			if ( id == 0 ) return null;
+
+			if ( ConnectionInterfaces.TryGetValue( id, out var iconnection ) )
+				return iconnection;
+
+			return null;
+		}
+
+		internal static void SetConnectionInterface( uint id, ConnectionInterface iface )
+		{
+			if ( id == 0 ) throw new System.ArgumentException( "Invalid Connection" );
+			ConnectionInterfaces[id] = iface;
+		}
+
 		internal static void Shutdown()
 		{
 			_internal = null;
+			SocketInterfaces = null;
+			ConnectionInterfaces = null;
 		}
 
 		internal static void InstallEvents()
 		{
-			SteamNetConnectionStatusChangedCallback_t.Install( x => OnConnectionStatusChanged( x ) );
+			SteamNetConnectionStatusChangedCallback_t.Install( x => ConnectionStatusChanged( x ) );
 		}
 
-		private static void OnConnectionStatusChanged( SteamNetConnectionStatusChangedCallback_t data )
+		private static void ConnectionStatusChanged( SteamNetConnectionStatusChangedCallback_t data )
 		{
-			if ( data.Nfo.state != data.OldState )
+			//
+			// This is a message from/to a listen socket
+			//
+			if ( data.Nfo.listenSocket.Id > 0 )
 			{
-				OnConnectionStateChanged( data );
+				var iface = GetSocketInterface( data.Nfo.listenSocket.Id );
+				iface?.OnConnectionChanged( data.Conn, data.Nfo );
+			}
+			else
+			{
+				var iface = GetConnectionInterface( data.Conn.Id );
+				iface?.OnConnectionChanged( data.Nfo );
 			}
 
-			Console.WriteLine( $"data.Conn: {data.Conn.ToString()}" );
-			Console.WriteLine( $"data.Conn.UserData: {data.Conn.UserData}" );
-			Console.WriteLine( $"data.Conn.ConnectionName: {data.Conn.ConnectionName}" );
-
-			Console.WriteLine( $"identity: {data.Nfo.identity}" );
-			Console.WriteLine( $"identity.type: {data.Nfo.identity.type}" );
-			Console.WriteLine( $"identity.m_cbSize: {data.Nfo.identity.m_cbSize}" );
-			Console.WriteLine( $"identity.steamID: {data.Nfo.identity.steamID}" );
-			Console.WriteLine( $"userData: {data.Nfo.userData}" );
-			Console.WriteLine( $"listenSocket: {data.Nfo.listenSocket}" );
-			Console.WriteLine( $"address: {data.Nfo.address}" );
-			Console.WriteLine( $"popRemote: {data.Nfo.popRemote}" );
-			Console.WriteLine( $"popRelay: {data.Nfo.popRelay}" );
-			Console.WriteLine( $"state: {data.Nfo.state}" );
-			Console.WriteLine( $"endReason: {data.Nfo.endReason}" );
-			Console.WriteLine( $"endDebug: {data.Nfo.endDebug}" );
-			Console.WriteLine( $"connectionDescription: {data.Nfo.connectionDescription}" );
-			Console.WriteLine( $"---" );
+			OnConnectionStatusChanged?.Invoke( data.Conn, data.Nfo );
 		}
 
-		private static void OnConnectionStateChanged( SteamNetConnectionStatusChangedCallback_t data )
-		{
-			switch ( data.Nfo.state )
-			{
-				case SteamNetworkingConnectionState.Connecting:
-					OnConnecting?.Invoke( data.Conn, data.Nfo );
-					return;
-			}
-		}
-
-		public static event Action<NetConnection, ConnectionInfo> OnConnecting;
+		public static event Action<NetConnection, ConnectionInfo> OnConnectionStatusChanged;
 
 
 		/// <summary>
 		/// Creates a "server" socket that listens for clients to connect to by calling
 		/// Connect, over ordinary UDP (IPv4 or IPv6)
 		/// </summary>
-		public static Socket CreateNormalSocket( NetworkAddress address )
+		public static T CreateNormalSocket<T>( NetworkAddress address ) where T : SocketInterface, new()
 		{
-			return Internal.CreateListenSocketIP( ref address );
+			var t = new T();
+			t.Socket = Internal.CreateListenSocketIP( ref address );
+			SetSocketInterface( t.Socket.Id, t );
+			return t;
 		}
 
 		/// <summary>
 		/// Connect to a socket created via <method>CreateListenSocketIP</method>
 		/// </summary>
-		public static NetConnection ConnectNormal( NetworkAddress address )
+		public static T ConnectNormal<T>( NetworkAddress address ) where T : ConnectionInterface, new()
 		{
-			return Internal.ConnectByIPAddress( ref address );
+			var t = new T();
+			t.Connection = Internal.ConnectByIPAddress( ref address );
+			SetConnectionInterface( t.Connection.Id, t );
+			return t;
 		}
 
 		/// <summary>
 		/// Creates a server that will be relayed via Valve's network (hiding the IP and improving ping)
 		/// </summary>
-		public static Socket CreateRelaySocket( int virtualport = 0 )
+		public static T CreateRelaySocket<T>( int virtualport = 0 ) where T : SocketInterface, new()
 		{
-			return Internal.CreateListenSocketP2P( virtualport );
+			var t = new T();
+			t.Socket = Internal.CreateListenSocketP2P( virtualport );
+			SetSocketInterface( t.Socket.Id, t );
+			return t;
 		}
 
 		/// <summary>
 		/// Connect to a relay server
 		/// </summary>
-		public static NetConnection ConnectRelay( SteamId serverId, int virtualport = 0 )
+		public static T ConnectRelay<T>( SteamId serverId, int virtualport = 0 ) where T : ConnectionInterface, new()
 		{
+			var t = new T();
 			NetworkIdentity identity = serverId;
-			return Internal.ConnectP2P( ref identity, virtualport );
+			t.Connection = Internal.ConnectP2P( ref identity, virtualport );
+			SetConnectionInterface( t.Connection.Id, t );
+			return t;
 		}
 	}
 }
