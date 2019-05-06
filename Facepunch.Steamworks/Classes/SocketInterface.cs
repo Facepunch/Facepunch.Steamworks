@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Steamworks.Data;
 
 namespace Steamworks
@@ -25,6 +27,7 @@ namespace Steamworks
 					break;
 				case ConnectionState.ClosedByPeer:
 				case ConnectionState.ProblemDetectedLocally:
+				case ConnectionState.None:
 					OnDisconnected( connection, data );
 					break;
 			}
@@ -57,6 +60,55 @@ namespace Steamworks
 
 			Connecting.Remove( connection );
 			Connected.Remove( connection );
+		}
+
+		public void Receive( int bufferSize = 32 )
+		{
+			// #32bit
+			int processed = 0;
+			IntPtr messageBuffer = Marshal.AllocHGlobal( 8 * bufferSize );
+
+			try
+			{
+				processed = SteamNetworkingSockets.Internal.ReceiveMessagesOnListenSocket( Socket, messageBuffer, bufferSize );
+
+				for ( int i = 0; i < processed; i++ )
+				{
+					// #32bit
+					ReceiveMessage( Marshal.ReadIntPtr( messageBuffer, i * 8 ) );
+				}
+			}
+			finally
+			{
+				Marshal.FreeHGlobal( messageBuffer );
+			}
+
+			//
+			// Overwhelmed our buffer, keep going
+			//
+			if ( processed == bufferSize )
+				Receive( bufferSize );
+		}
+
+		internal unsafe void ReceiveMessage( IntPtr msgPtr )
+		{
+			var msg = Marshal.PtrToStructure<NetMsg>( msgPtr );
+			try
+			{
+				OnMessage( msg.Connection, msg.Identity, msg.DataPtr, msg.DataSize, msg.TimeRecv, msg.MessageNumber, msg.Channel );
+			}
+			finally
+			{
+				//
+				// Releases the message
+				//
+				msg.Release( msgPtr );
+			}
+		}
+
+		public virtual void OnMessage( NetConnection connection, NetworkIdentity identity, IntPtr data, int size, long messageNum, SteamNetworkingMicroseconds recvTime, int channel )
+		{
+
 		}
 	}
 }

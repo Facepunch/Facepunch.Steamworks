@@ -37,6 +37,7 @@ namespace Steamworks
 					break;
 				case ConnectionState.ClosedByPeer:
 				case ConnectionState.ProblemDetectedLocally:
+				case ConnectionState.None:
 					OnDisconnected( data );
 					break;
 			}
@@ -78,7 +79,8 @@ namespace Steamworks
 
 				for ( int i = 0; i < processed; i++ )
 				{
-					ReceiveMessage( Marshal.ReadIntPtr( messageBuffer, i ) );
+					// #32bit
+					ReceiveMessage( Marshal.ReadIntPtr( messageBuffer, i * 8) );
 				}
 			}
 			finally

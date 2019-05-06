@@ -96,10 +96,19 @@ namespace Steamworks
 
 				Console.WriteLine( "[Connection] Hey We're Connected!" );
 
+				var sw = System.Diagnostics.Stopwatch.StartNew();
+
+
 				while ( Connected )
 				{
 					Receive();
-					await Task.Delay( 10 );
+					await Task.Delay( 100 );
+
+					if ( sw.Elapsed.TotalSeconds > 5 )
+					{
+						Console.WriteLine( "CLIENT ERROR!!!!! TIMED OUT" );
+						break;
+					}
 				}
 			}
 
@@ -110,9 +119,26 @@ namespace Steamworks
 
 				Console.WriteLine( $"[Connection][{messageNum}][{recvTime}][{channel}] \"{str}\"" );
 
-				if ( str.StartsWith( "Hello" ) )
+				if ( str.Contains( "Hello" ) )
 				{
 					Connection.SendMessage( "Hello, How are you!?" );
+
+					Connection.SendMessage( "How do you like 20 messages in a row?" );
+
+					for ( int i=0; i<20; i++ )
+					{
+						Connection.SendMessage( $"BLAMMO!" );
+					}
+				}
+
+				if ( str.Contains( "how about yourself" ) )
+				{
+					Connection.SendMessage( "I'm great, but I have to go now, bye." );
+				}
+
+				if ( str.Contains( "hater" ) )
+				{
+					Close();
 				}
 
 			}
@@ -173,13 +199,42 @@ namespace Steamworks
 				await Task.Delay( 300 );
 				singleClient.SendMessage( "Hello Client!?" );
 
-				await Task.Delay( 1000 );
+				var sw = System.Diagnostics.Stopwatch.StartNew();
 
-				singleClient.Close();
+				while ( Connected.Contains( singleClient ) )
+				{
+					Receive();
+					await Task.Delay( 100 );
+
+					if ( sw.Elapsed.TotalSeconds > 5 )
+					{
+						Assert.Fail( "Took too long" );
+						break;
+					}
+				}
 
 				await Task.Delay( 1000 );
 
 				Close();
+			}
+
+			public override unsafe void OnMessage( NetConnection connection, NetworkIdentity identity, IntPtr data, int size, long messageNum, SteamNetworkingMicroseconds recvTime, int channel )
+			{
+				// We're only sending strings, so it's fine to read this like this
+				var str = UTF8Encoding.UTF8.GetString( (byte*)data, size );
+
+				Console.WriteLine( $"[SOCKET][{connection}[{identity}][{messageNum}][{recvTime}][{channel}] \"{str}\"" );
+
+				if ( str.Contains( "Hello, How are you" ) )
+				{
+					connection.SendMessage( "I'm great thanks, how about yourself?" );
+				}
+
+				if ( str.Contains( "bye" ) )
+				{
+					connection.SendMessage( "See you later, hater." );
+					connection.Close( true, 10, "Said Bye" );
+				}
 			}
 		}
 	}
