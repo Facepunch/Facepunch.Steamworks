@@ -175,6 +175,33 @@ namespace Steamworks
 			return (int) szWritten;
 		}
 
+		/// <summary>
+		/// Reads the voice data and returns the bytes. You should obviously ideally be using
+		/// ReadVoiceData because it won't be creating a new byte array every call. But this 
+		/// makes it easier to get it working, so let the babies have their bottle.
+		/// </summary>
+		public static unsafe byte[] ReadVoiceDataBytes()
+		{
+			if ( !HasVoiceData )
+				return null;
+
+			uint szWritten = 0;
+			uint deprecated = 0;
+
+			fixed ( byte* b = readBuffer )
+			{
+				if ( Internal.GetVoice( true, (IntPtr)b, (uint)readBuffer.Length, ref szWritten, false, IntPtr.Zero, 0, ref deprecated, 0 ) != VoiceResult.OK )
+					return null;
+			}
+
+			if ( szWritten == 0 )
+				return null;
+
+			var arry = new byte[szWritten];
+			Array.Copy( readBuffer, 0, arry, 0, szWritten );
+			return arry;
+		}
+
 		static uint sampleRate = 48000;
 
 		public static uint SampleRate
