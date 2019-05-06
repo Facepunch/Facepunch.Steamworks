@@ -180,15 +180,23 @@ namespace Steamworks
 		/// </summary>
 		public static void SetPlayedWith( SteamId steamid ) => Internal.SetPlayedWith( steamid );
 
+		/// <summary>
+		/// Requests the persona name and optionally the avatar of a specified user.
+		/// NOTE: It's a lot slower to download avatars and churns the local cache, so if you don't need avatars, don't request them.
+		/// returns true if we're fetching the data, false if we already have it
+		/// </summary>
+		public static bool RequestUserInformation( SteamId steamid, bool nameonly = true ) => Internal.RequestUserInformation( steamid, nameonly );
+
+
 		internal static async Task CacheUserInformationAsync( SteamId steamid, bool nameonly )
 		{
 			// Got it straight away, skip any waiting.
-			if ( !Internal.RequestUserInformation( steamid, nameonly ) )
+			if ( !RequestUserInformation( steamid, nameonly ) )
 				return;
 
 			await Task.Delay( 100 );
 
-			while ( Internal.RequestUserInformation( steamid, nameonly ) )
+			while ( RequestUserInformation( steamid, nameonly ) )
 			{
 				await Task.Delay( 50 );
 			}
