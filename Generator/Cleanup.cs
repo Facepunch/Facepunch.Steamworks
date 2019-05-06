@@ -36,6 +36,7 @@ public static class Cleanup
 		type = type.Replace( "SteamNetworkingIdentity", "NetworkIdentity" );
 		type = type.Replace( "SteamNetConnectionInfo_t", "ConnectionInfo" );
 		type = type.Replace( "SteamNetworkingConnectionState", "ConnectionState" );
+		type = type.Replace( "SteamNetworkingMicroseconds", "long" );
 
 		return type;
 	}

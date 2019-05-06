@@ -7,23 +7,6 @@ namespace Steamworks.Data
 {
 	delegate void FSteamNetworkingSocketsDebugOutput (SteamNetworkingSocketsDebugOutputType nType, string pszMsg );
 
-	public struct SteamNetworkingMicroseconds
-	{
-		public long Value;
-
-		public static implicit operator SteamNetworkingMicroseconds( long value )
-		{
-			return new SteamNetworkingMicroseconds { Value = value };
-		}
-
-		public static implicit operator long( SteamNetworkingMicroseconds value )
-		{
-			return value.Value;
-		}
-
-		public override string ToString() => Value.ToString();
-	}
-
 	public struct SteamNetworkingPOPID
 	{
 		public uint Value;
@@ -56,7 +39,7 @@ namespace Steamworks.Data
 		public int pendingUnreliable;
 		public int pendingReliable;
 		public int sentUnackedReliable;
-		public SteamNetworkingMicroseconds queueTime;
+		public long queueTime;
 
 		[MarshalAs( UnmanagedType.ByValArray, SizeConst = 16 )]
 		uint[] reserved;

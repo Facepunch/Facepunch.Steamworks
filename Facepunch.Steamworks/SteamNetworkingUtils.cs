@@ -79,7 +79,7 @@ namespace Steamworks
 			}
 		}
 
-		public static SteamNetworkingMicroseconds LocalTimetamp => Internal.GetLocalTimestamp();
+		public static long LocalTimetamp => Internal.GetLocalTimestamp();
 
 
 		/// <summary>

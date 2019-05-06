@@ -100,7 +100,7 @@ namespace Steamworks
 			var msg = Marshal.PtrToStructure<NetMsg>( msgPtr );
 			try
 			{
-				OnMessage( msg.DataPtr, msg.DataSize, msg.TimeRecv, msg.MessageNumber, msg.Channel );
+				OnMessage( msg.DataPtr, msg.DataSize, msg.RecvTime, msg.MessageNumber, msg.Channel );
 			}
 			finally
 			{
@@ -111,7 +111,7 @@ namespace Steamworks
 			}
 		}
 
-		public virtual void OnMessage( IntPtr data, int size, long messageNum, SteamNetworkingMicroseconds recvTime, int channel )
+		public virtual void OnMessage( IntPtr data, int size, long messageNum, long recvTime, int channel )
 		{
 
 		}

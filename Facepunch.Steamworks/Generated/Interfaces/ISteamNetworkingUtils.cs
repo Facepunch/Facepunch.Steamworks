@@ -158,11 +158,11 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamNetworkingMicroseconds FGetLocalTimestamp( IntPtr self );
+		private delegate long FGetLocalTimestamp( IntPtr self );
 		private FGetLocalTimestamp _GetLocalTimestamp;
 		
 		#endregion
-		internal SteamNetworkingMicroseconds GetLocalTimestamp()
+		internal long GetLocalTimestamp()
 		{
 			return _GetLocalTimestamp( Self );
 		}

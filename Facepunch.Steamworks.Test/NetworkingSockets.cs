@@ -98,7 +98,6 @@ namespace Steamworks
 
 				var sw = System.Diagnostics.Stopwatch.StartNew();
 
-
 				while ( Connected )
 				{
 					Receive();
@@ -106,15 +105,13 @@ namespace Steamworks
 
 					if ( sw.Elapsed.TotalSeconds > 5 )
 					{
-						Console.WriteLine( "CLIENT ERROR!!!!! TIMED OUT" );
+						Assert.Fail( "Client Took Too Long" );
 						break;
 					}
 				}
-
-				Console.WriteLine( Connection.DetailedStatus() );
 			}
 
-			public override unsafe void OnMessage( IntPtr data, int size, long messageNum, SteamNetworkingMicroseconds recvTime, int channel )
+			public override unsafe void OnMessage( IntPtr data, int size, long messageNum, long recvTime, int channel )
 			{
 				// We're only sending strings, so it's fine to read this like this
 				var str = UTF8Encoding.UTF8.GetString( (byte*) data, size );
@@ -131,6 +128,11 @@ namespace Steamworks
 					{
 						Connection.SendMessage( $"BLAMMO!" );
 					}
+				}
+
+				if ( str.Contains( "status" ))
+				{
+					Console.WriteLine( Connection.DetailedStatus() );
 				}
 
 				if ( str.Contains( "how about yourself" ) )
@@ -192,13 +194,15 @@ namespace Steamworks
 				var singleClient = Connected.First();
 
 				singleClient.SendMessage( "Hey?" );
-				await Task.Delay( 1000 );
+				await Task.Delay( 100 );
 				singleClient.SendMessage( "Anyone?" );
 				await Task.Delay( 100 );
 				singleClient.SendMessage( "What's this?" );
+				await Task.Delay( 100 );
+				singleClient.SendMessage( "What's your status?" );
 				await Task.Delay( 10 );
 				singleClient.SendMessage( "Greetings!!??" );
-				await Task.Delay( 300 );
+				await Task.Delay( 100 );
 				singleClient.SendMessage( "Hello Client!?" );
 
 				var sw = System.Diagnostics.Stopwatch.StartNew();
@@ -210,7 +214,7 @@ namespace Steamworks
 
 					if ( sw.Elapsed.TotalSeconds > 5 )
 					{
-						Assert.Fail( "Took too long" );
+						Assert.Fail( "Client Took Too Long" );
 						break;
 					}
 				}
@@ -220,7 +224,7 @@ namespace Steamworks
 				Close();
 			}
 
-			public override unsafe void OnMessage( NetConnection connection, NetworkIdentity identity, IntPtr data, int size, long messageNum, SteamNetworkingMicroseconds recvTime, int channel )
+			public override unsafe void OnMessage( NetConnection connection, NetworkIdentity identity, IntPtr data, int size, long messageNum, long recvTime, int channel )
 			{
 				// We're only sending strings, so it's fine to read this like this
 				var str = UTF8Encoding.UTF8.GetString( (byte*)data, size );

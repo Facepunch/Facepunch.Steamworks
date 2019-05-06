@@ -7,18 +7,16 @@ namespace Steamworks.Data
 	[StructLayout( LayoutKind.Sequential )]
 	internal struct NetMsg
 	{
-		// #32bit
 		internal IntPtr DataPtr;
 		internal int DataSize;
 		internal NetConnection Connection;
 		internal NetworkIdentity Identity;
 		internal long ConnectionUserData;
-		internal SteamNetworkingMicroseconds TimeRecv;
+		internal long RecvTime;
 		internal long MessageNumber;
 		internal IntPtr FreeDataPtr;
 		internal IntPtr ReleasePtr;
 		internal int Channel;
-
 
 		internal delegate void ReleaseDelegate( IntPtr msg );
 
