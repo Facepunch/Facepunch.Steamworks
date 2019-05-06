@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Steamworks.Data
 {
-	delegate void FSteamNetworkingSocketsDebugOutput (SteamNetworkingSocketsDebugOutputType nType, string pszMsg );
+	delegate void FSteamNetworkingSocketsDebugOutput (DebugOutputType nType, string pszMsg );
 
 	public struct SteamNetworkingPOPID
 	{

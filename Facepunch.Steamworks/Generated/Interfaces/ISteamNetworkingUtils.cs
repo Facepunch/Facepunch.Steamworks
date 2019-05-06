@@ -169,11 +169,11 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FSetDebugOutputFunction( IntPtr self, SteamNetworkingSocketsDebugOutputType eDetailLevel, FSteamNetworkingSocketsDebugOutput pfnFunc );
+		private delegate void FSetDebugOutputFunction( IntPtr self, DebugOutputType eDetailLevel, FSteamNetworkingSocketsDebugOutput pfnFunc );
 		private FSetDebugOutputFunction _SetDebugOutputFunction;
 		
 		#endregion
-		internal void SetDebugOutputFunction( SteamNetworkingSocketsDebugOutputType eDetailLevel, FSteamNetworkingSocketsDebugOutput pfnFunc )
+		internal void SetDebugOutputFunction( DebugOutputType eDetailLevel, FSteamNetworkingSocketsDebugOutput pfnFunc )
 		{
 			_SetDebugOutputFunction( Self, eDetailLevel, pfnFunc );
 		}
@@ -192,11 +192,11 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamNetworkingGetConfigValueResult FGetConfigValue( IntPtr self, NetConfig eValue, NetScope eScopeType, long scopeObj, ref NetConfigType pOutDataType, IntPtr pResult, ref ulong cbResult );
+		private delegate NetConfigResult FGetConfigValue( IntPtr self, NetConfig eValue, NetScope eScopeType, long scopeObj, ref NetConfigType pOutDataType, IntPtr pResult, ref ulong cbResult );
 		private FGetConfigValue _GetConfigValue;
 		
 		#endregion
-		internal SteamNetworkingGetConfigValueResult GetConfigValue( NetConfig eValue, NetScope eScopeType, long scopeObj, ref NetConfigType pOutDataType, IntPtr pResult, ref ulong cbResult )
+		internal NetConfigResult GetConfigValue( NetConfig eValue, NetScope eScopeType, long scopeObj, ref NetConfigType pOutDataType, IntPtr pResult, ref ulong cbResult )
 		{
 			return _GetConfigValue( Self, eValue, eScopeType, scopeObj, ref pOutDataType, pResult, ref cbResult );
 		}

@@ -133,7 +133,7 @@ namespace Steamworks
 			int* ptr = &value;
 			ulong size = sizeof( int );
 			var result = Internal.GetConfigValue( type, NetScope.Global, 0, ref dtype, (IntPtr) ptr, ref size );
-			if ( result != SteamNetworkingGetConfigValueResult.OK )
+			if ( result != NetConfigResult.OK )
 				return 0;
 
 			return value;
@@ -152,7 +152,7 @@ namespace Steamworks
 			float* ptr = &value;
 			ulong size = sizeof( float );
 			var result = Internal.GetConfigValue( type, NetScope.Global, 0, ref dtype, (IntPtr)ptr, ref size );
-			if ( result != SteamNetworkingGetConfigValueResult.OK )
+			if ( result != NetConfigResult.OK )
 				return 0;
 
 			return value;
