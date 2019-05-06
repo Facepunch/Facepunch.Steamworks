@@ -85,6 +85,16 @@ namespace Steamworks.Data
 		/// </summary>
 		public Result Flush() => SteamNetworkingSockets.Internal.FlushMessagesOnConnection( this );
 
+		public string DetailedStatus()
+		{
+			var sb = Helpers.TakeStringBuilder();
+
+			if ( SteamNetworkingSockets.Internal.GetDetailedConnectionStatus( this, sb, sb.Capacity ) != 0 )
+				return null;
+
+			return sb.ToString();
+		}
+
 		/*
 		[ThreadStatic]
 		private static SteamNetworkingMessage_t[] messageBuffer;

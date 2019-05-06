@@ -110,6 +110,8 @@ namespace Steamworks
 						break;
 					}
 				}
+
+				Console.WriteLine( Connection.DetailedStatus() );
 			}
 
 			public override unsafe void OnMessage( IntPtr data, int size, long messageNum, SteamNetworkingMicroseconds recvTime, int channel )
