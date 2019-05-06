@@ -193,24 +193,24 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate int FReceiveMessagesOnConnection( IntPtr self, NetConnection hConn, [In,Out] ref SteamNetworkingMessage_t[]  ppOutMessages, int nMaxMessages );
+		private delegate int FReceiveMessagesOnConnection( IntPtr self, NetConnection hConn, IntPtr ppOutMessages, int nMaxMessages );
 		private FReceiveMessagesOnConnection _ReceiveMessagesOnConnection;
 		
 		#endregion
-		internal int ReceiveMessagesOnConnection( NetConnection hConn, [In,Out] ref SteamNetworkingMessage_t[]  ppOutMessages, int nMaxMessages )
+		internal int ReceiveMessagesOnConnection( NetConnection hConn, IntPtr ppOutMessages, int nMaxMessages )
 		{
-			return _ReceiveMessagesOnConnection( Self, hConn, ref ppOutMessages, nMaxMessages );
+			return _ReceiveMessagesOnConnection( Self, hConn, ppOutMessages, nMaxMessages );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate int FReceiveMessagesOnListenSocket( IntPtr self, Socket hSocket, [In,Out] ref SteamNetworkingMessage_t[]  ppOutMessages, int nMaxMessages );
+		private delegate int FReceiveMessagesOnListenSocket( IntPtr self, Socket hSocket, IntPtr ppOutMessages, int nMaxMessages );
 		private FReceiveMessagesOnListenSocket _ReceiveMessagesOnListenSocket;
 		
 		#endregion
-		internal int ReceiveMessagesOnListenSocket( Socket hSocket, [In,Out] ref SteamNetworkingMessage_t[]  ppOutMessages, int nMaxMessages )
+		internal int ReceiveMessagesOnListenSocket( Socket hSocket, IntPtr ppOutMessages, int nMaxMessages )
 		{
-			return _ReceiveMessagesOnListenSocket( Self, hSocket, ref ppOutMessages, nMaxMessages );
+			return _ReceiveMessagesOnListenSocket( Self, hSocket, ppOutMessages, nMaxMessages );
 		}
 		
 		#region FunctionMeta
