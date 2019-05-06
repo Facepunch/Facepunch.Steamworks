@@ -42,37 +42,6 @@ namespace Steamworks.Data
 	}
 
 	[StructLayout( LayoutKind.Sequential )]
-	public struct SteamNetworkingMessage_t
-	{
-		public IntPtr data;
-		public int length;
-		public NetConnection connection;
-		public NetworkIdentity identity;
-		public long userData;
-		public SteamNetworkingMicroseconds timeReceived;
-		public long messageNumber;
-		internal IntPtr release;
-		public int channel;
-		private int pad;
-		/*
-		public void CopyTo( byte[] destination )
-		{
-			if ( destination == null )
-				throw new ArgumentNullException( "destination" );
-
-			Marshal.Copy( data, destination, 0, length );
-		}
-
-		public void Destroy()
-		{
-			if ( release == IntPtr.Zero )
-				throw new InvalidOperationException( "Message not created" );
-
-			Native.SteamAPI_SteamNetworkingMessage_t_Release( release );
-		}*/
-	}
-
-	[StructLayout( LayoutKind.Sequential )]
 	public struct SteamNetworkingQuickConnectionStatus
 	{
 		public ConnectionState state;
