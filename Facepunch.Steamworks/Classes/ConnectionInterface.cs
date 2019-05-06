@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using Steamworks.Data;
+﻿using Steamworks.Data;
+using System;
+using System.Runtime.InteropServices;
 
 namespace Steamworks
 {
@@ -67,37 +66,52 @@ namespace Steamworks
 			Connected = false;
 		}
 
-		SteamNetworkingMessage_t[] messageBuffer;
-
-		public void Receive()
+		public void Receive( int bufferSize = 32 )
 		{
-			if ( messageBuffer == null )
+			// #32bit
+			int processed = 0;
+			IntPtr messageBuffer = Marshal.AllocHGlobal( 8 * bufferSize );
+
+			try
 			{
-				messageBuffer = new SteamNetworkingMessage_t[128];
+				processed = SteamNetworkingSockets.Internal.ReceiveMessagesOnConnection( Connection, messageBuffer, bufferSize );
+
+				for ( int i = 0; i < processed; i++ )
+				{
+					ReceiveMessage( Marshal.ReadIntPtr( messageBuffer, i ) );
+				}
 			}
-
-			var processed = SteamNetworkingSockets.Internal.ReceiveMessagesOnConnection( Connection, ref messageBuffer, messageBuffer.Length );
-
-			for ( int i=0; i< processed; i++ )
+			finally
 			{
-				Console.WriteLine( "FOUND SOME!" );
-				ReceiveMessage( messageBuffer[i] );
+				Marshal.FreeHGlobal( messageBuffer );
 			}
 
 			//
 			// Overwhelmed our buffer, keep going
 			//
-			if ( processed == messageBuffer.Length )
-				Receive();
+			if ( processed == bufferSize )
+				Receive( bufferSize );
 		}
 
-		internal unsafe void ReceiveMessage( SteamNetworkingMessage_t msg )
+		internal unsafe void ReceiveMessage( IntPtr msgPtr )
 		{
-			var stream = new UnmanagedMemoryStream( (byte*)msg.data, msg.length, msg.length, FileAccess.Read );
+			var msg = Marshal.PtrToStructure<NetMsg>( msgPtr );
+			try
+			{
+				OnMessage( msg.DataPtr, msg.DataSize, msg.TimeRecv, msg.MessageNumber, msg.Channel );
+			}
+			finally
+			{
+				//
+				// Releases the message
+				//
+				msg.Release( msgPtr );
+			}
+		}
 
-			// read Message
+		public virtual void OnMessage( IntPtr data, int size, long messageNum, SteamNetworkingMicroseconds recvTime, int channel )
+		{
 
-			msg.release.Invoke( ref msg );
 		}
 	}
 }

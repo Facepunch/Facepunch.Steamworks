@@ -40,7 +40,6 @@ namespace Steamworks
 			si.Close();
 		}
 
-
 		[TestMethod]
 		public async Task RelayEndtoEnd()
 		{
@@ -103,6 +102,20 @@ namespace Steamworks
 					await Task.Delay( 10 );
 				}
 			}
+
+			public override unsafe void OnMessage( IntPtr data, int size, long messageNum, SteamNetworkingMicroseconds recvTime, int channel )
+			{
+				// We're only sending strings, so it's fine to read this like this
+				var str = UTF8Encoding.UTF8.GetString( (byte*) data, size );
+
+				Console.WriteLine( $"[Connection][{messageNum}][{recvTime}][{channel}] \"{str}\"" );
+
+				if ( str.StartsWith( "Hello" ) )
+				{
+					Connection.SendMessage( "Hello, How are you!?" );
+				}
+
+			}
 		}
 	
 
@@ -150,7 +163,15 @@ namespace Steamworks
 
 				var singleClient = Connected.First();
 
-				singleClient.SendMessage( "Hello Client" );
+				singleClient.SendMessage( "Hey?" );
+				await Task.Delay( 1000 );
+				singleClient.SendMessage( "Anyone?" );
+				await Task.Delay( 100 );
+				singleClient.SendMessage( "What's this?" );
+				await Task.Delay( 10 );
+				singleClient.SendMessage( "Greetings!!??" );
+				await Task.Delay( 300 );
+				singleClient.SendMessage( "Hello Client!?" );
 
 				await Task.Delay( 1000 );
 
