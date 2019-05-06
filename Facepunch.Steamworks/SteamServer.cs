@@ -35,7 +35,6 @@ namespace Steamworks
 		{
 			ValidateAuthTicketResponse_t.Install( x => OnValidateAuthTicketResponse?.Invoke( x.SteamID, x.OwnerSteamID, x.AuthSessionResponse ), true );
 
-			SteamServerInventory.InstallEvents();
 		}
 
 		/// <summary>
@@ -87,10 +86,10 @@ namespace Steamworks
 
 			_internal = null;
 
-			SteamServerInventory.Shutdown();
-			SteamGameServer.Shutdown();
 			SteamNetworkingUtils.Shutdown();
 			SteamNetworkingSockets.Shutdown();
+
+			SteamGameServer.Shutdown();
 		}
 
 
@@ -282,7 +281,7 @@ namespace Steamworks
 		/// any time a player's name or score changes. This keeps the information shown
 		/// to server queries up to date.
 		/// </summary>
-		public static void UpdatePlayer( ulong steamid, string name, int score )
+		public static void UpdatePlayer( SteamId steamid, string name, int score )
 		{
 			Internal.BUpdateUserData( steamid, name, (uint)score );
 		}
@@ -315,7 +314,7 @@ namespace Steamworks
 		/// <summary>
 		/// Start authorizing a ticket. This user isn't authorized yet. Wait for a call to OnAuthChange.
 		/// </summary>
-		public static unsafe bool BeginAuthSession( byte[] data, ulong steamid )
+		public static unsafe bool BeginAuthSession( byte[] data, SteamId steamid )
 		{
 			fixed ( byte* p = data )
 			{
@@ -331,7 +330,7 @@ namespace Steamworks
 		/// <summary>
 		/// Forget this guy. They're no longer in the game.
 		/// </summary>
-		public static void EndSession( ulong steamid )
+		public static void EndSession( SteamId steamid )
 		{
 			Internal.EndAuthSession( steamid );
 		}
@@ -374,5 +373,7 @@ namespace Steamworks
 				Internal.HandleIncomingPacket( (IntPtr)ptr, size, address, port );
 			}
 		}
+
+		public static IDisposable Push() => Realm.Server();
 	}
 }
