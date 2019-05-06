@@ -21,7 +21,7 @@ namespace Steamworks
 				if ( _internal == null )
 				{
 					_internal = new ISteamApps();
-					_internal.InitClient();
+					_internal.Init();
 				}
 
 				return _internal;

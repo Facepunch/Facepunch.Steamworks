@@ -142,7 +142,5 @@ namespace Steamworks
 		/// returns the appID of the current process
 		/// </summary>
 		public static AppId AppId { get; internal set; }
-
-		public static IDisposable Push() => Realm.Client();
 	}
 }

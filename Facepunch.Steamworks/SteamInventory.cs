@@ -22,7 +22,7 @@ namespace Steamworks
 				if ( _internal == null )
 				{ 
 					_internal = new ISteamInventory();
-					_internal.InitClient();
+					_internal.Init();
 				}
 
 				return _internal;

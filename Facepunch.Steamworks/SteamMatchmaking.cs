@@ -13,6 +13,7 @@ namespace Steamworks
 	public static class SteamMatchmaking
 	{
 		static ISteamMatchmaking _internal;
+
 		internal static ISteamMatchmaking Internal
 		{
 			get
@@ -20,7 +21,6 @@ namespace Steamworks
 				if ( _internal == null )
 				{
 					_internal = new ISteamMatchmaking();
-					_internal.InitClient();
 				}
 
 				return _internal;

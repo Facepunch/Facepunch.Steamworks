@@ -17,7 +17,7 @@ namespace Steamworks
 				if ( _internal == null )
 				{
 					_internal = new ISteamUserStats();
-					_internal.InitClient();
+					_internal.Init();
 
 					RequestCurrentStats();
 				}

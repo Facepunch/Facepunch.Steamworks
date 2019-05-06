@@ -18,7 +18,7 @@ namespace Steamworks
 				if ( _internal == null )
 				{
 					_internal = new ISteamNetworkingSockets();
-					_internal.InitClient();
+					_internal.Init();
 
 					SocketInterfaces = new Dictionary<uint, SocketInterface>();
 					ConnectionInterfaces = new Dictionary<uint, ConnectionInterface>();

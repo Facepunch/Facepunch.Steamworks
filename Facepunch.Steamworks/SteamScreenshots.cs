@@ -20,7 +20,7 @@ namespace Steamworks
 				if ( _internal == null )
 				{
 					_internal = new ISteamScreenshots();
-					_internal.InitClient();
+					_internal.Init();
 				}
 
 				return _internal;

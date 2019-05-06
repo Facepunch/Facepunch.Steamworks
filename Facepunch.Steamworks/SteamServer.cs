@@ -75,7 +75,8 @@ namespace Steamworks
 			DedicatedServer = true;
 
 			InstallEvents();
-			RunCallbacks();
+
+			RunCallbacksAsync();
 		}
 
 		public static void Shutdown()
@@ -92,16 +93,14 @@ namespace Steamworks
 			SteamGameServer.Shutdown();
 		}
 
-
-		internal static async void RunCallbacks()
+		internal static async void RunCallbacksAsync()
 		{
-			while ( true )
+			while ( IsValid )
 			{
 				await Task.Delay( 16 );
 				Update();
 			}
 		}
-
 		public static void Update()
 		{
 			try
@@ -373,7 +372,5 @@ namespace Steamworks
 				Internal.HandleIncomingPacket( (IntPtr)ptr, size, address, port );
 			}
 		}
-
-		public static IDisposable Push() => Realm.Server();
 	}
 }

@@ -16,7 +16,24 @@ namespace Steamworks
 
 		public virtual string InterfaceName => null;
 
-		public virtual void InitClient()
+		public void Init()
+		{
+			if ( SteamClient.IsValid )
+			{
+				InitClient();
+				return;
+			}
+
+			if ( SteamServer.IsValid )
+			{
+				InitServer();
+				return;
+			}
+
+			throw new System.Exception( "Trying to initialize Steam Interface but Steam not initialized" );
+		}
+
+		public void InitClient()
 		{
 			var user = SteamAPI.GetHSteamUser();
 			Self = SteamInternal.FindOrCreateUserInterface( user, InterfaceName );
@@ -31,7 +48,7 @@ namespace Steamworks
 			InitInternals();
 		}
 
-		public virtual void InitServer()
+		public void InitServer()
 		{
 			var user = SteamGameServer.GetHSteamUser();
 			Self = SteamInternal.FindOrCreateGameServerInterface( user, InterfaceName );
