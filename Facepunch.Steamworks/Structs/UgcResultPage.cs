@@ -16,15 +16,54 @@ namespace Steamworks.Ugc
 		{
 			get
 			{
+
 				var details = default( SteamUGCDetails_t );
 				for ( uint i=0; i< ResultCount; i++ )
 				{
 					if ( SteamUGC.Internal.GetQueryUGCResult( Handle, i, ref details ) )
 					{
-						yield return Item.From( details );
+						var item = Item.From( details );
+
+						item.NumSubscriptions = GetStat( i, ItemStatistic.NumSubscriptions );
+						item.NumFavorites = GetStat( i, ItemStatistic.NumFavorites );
+						item.NumFollowers = GetStat( i, ItemStatistic.NumFollowers );
+						item.NumUniqueSubscriptions = GetStat( i, ItemStatistic.NumUniqueSubscriptions );
+						item.NumUniqueFavorites = GetStat( i, ItemStatistic.NumUniqueFavorites );
+						item.NumUniqueFollowers = GetStat( i, ItemStatistic.NumUniqueFollowers );
+						item.NumUniqueWebsiteViews = GetStat( i, ItemStatistic.NumUniqueWebsiteViews );
+						item.ReportScore = GetStat( i, ItemStatistic.ReportScore );
+						item.NumSecondsPlayed = GetStat( i, ItemStatistic.NumSecondsPlayed );
+						item.NumPlaytimeSessions = GetStat( i, ItemStatistic.NumPlaytimeSessions );
+						item.NumComments = GetStat( i, ItemStatistic.NumComments );
+						item.NumSecondsPlayedDuringTimePeriod = GetStat( i, ItemStatistic.NumSecondsPlayedDuringTimePeriod );
+						item.NumPlaytimeSessionsDuringTimePeriod = GetStat( i, ItemStatistic.NumPlaytimeSessionsDuringTimePeriod );
+
+						var sb = Helpers.TakeStringBuilder();
+						if ( SteamUGC.Internal.GetQueryUGCPreviewURL( Handle, i, sb, (uint)sb.Capacity ) )
+						{
+							item.PreviewUrl = sb.ToString();
+						}
+
+						// TODO GetQueryUGCAdditionalPreview
+						// TODO GetQueryUGCChildren
+						// TODO GetQueryUGCKeyValueTag
+						// TODO GetQueryUGCMetadata
+
+
+						yield return item;
 					}
 				}
 			}
+		}
+
+		private ulong GetStat( uint index, ItemStatistic stat )
+		{
+			ulong val = 0;
+
+			if ( !SteamUGC.Internal.GetQueryUGCStatistic( Handle, index, stat, ref val ) )
+				return 0;
+
+			return val;
 		}
 
 		public void Dispose()
