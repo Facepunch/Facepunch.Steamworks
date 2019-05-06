@@ -21,6 +21,7 @@ namespace Steamworks
 				if ( _internal == null )
 				{
 					_internal = new ISteamMatchmaking();
+					_internal.Init();
 				}
 
 				return _internal;

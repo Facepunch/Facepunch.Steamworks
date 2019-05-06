@@ -18,7 +18,7 @@ namespace Steamworks
 				if ( _internal == null )
 				{
 					_internal = new ISteamNetworking();
-					_internal.InitUserless();
+					_internal.Init();
 				}
 
 				return _internal;
