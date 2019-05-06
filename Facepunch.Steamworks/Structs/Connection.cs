@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Steamworks.Data
 {
-	public struct NetConnection
+	public struct Connection
 	{
 		internal uint Id;
 

@@ -101,14 +101,14 @@ namespace Steamworks
 			OnConnectionStatusChanged?.Invoke( data.Conn, data.Nfo );
 		}
 
-		public static event Action<NetConnection, ConnectionInfo> OnConnectionStatusChanged;
+		public static event Action<Connection, ConnectionInfo> OnConnectionStatusChanged;
 
 
 		/// <summary>
 		/// Creates a "server" socket that listens for clients to connect to by calling
 		/// Connect, over ordinary UDP (IPv4 or IPv6)
 		/// </summary>
-		public static T CreateNormalSocket<T>( NetworkAddress address ) where T : SocketInterface, new()
+		public static T CreateNormalSocket<T>( NetAddress address ) where T : SocketInterface, new()
 		{
 			var t = new T();
 			t.Socket = Internal.CreateListenSocketIP( ref address );
@@ -119,7 +119,7 @@ namespace Steamworks
 		/// <summary>
 		/// Connect to a socket created via <method>CreateListenSocketIP</method>
 		/// </summary>
-		public static T ConnectNormal<T>( NetworkAddress address ) where T : ConnectionInterface, new()
+		public static T ConnectNormal<T>( NetAddress address ) where T : ConnectionInterface, new()
 		{
 			var t = new T();
 			t.Connection = Internal.ConnectByIPAddress( ref address );
@@ -144,7 +144,7 @@ namespace Steamworks
 		public static T ConnectRelay<T>( SteamId serverId, int virtualport = 0 ) where T : ConnectionInterface, new()
 		{
 			var t = new T();
-			NetworkIdentity identity = serverId;
+			NetIdentity identity = serverId;
 			t.Connection = Internal.ConnectP2P( ref identity, virtualport );
 			SetConnectionInterface( t.Connection.Id, t );
 			return t;

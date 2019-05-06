@@ -9,8 +9,8 @@ namespace Steamworks.Data
 	{
 		internal IntPtr DataPtr;
 		internal int DataSize;
-		internal NetConnection Connection;
-		internal NetworkIdentity Identity;
+		internal Connection Connection;
+		internal NetIdentity Identity;
 		internal long ConnectionUserData;
 		internal long RecvTime;
 		internal long MessageNumber;

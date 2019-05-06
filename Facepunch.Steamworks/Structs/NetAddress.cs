@@ -3,7 +3,7 @@
 namespace Steamworks.Data
 {
 	[StructLayout( LayoutKind.Explicit, Size = 18, Pack = 1 )]
-	public struct NetworkAddress
+	public struct NetAddress
 	{
 		[FieldOffset( 0 )]
 		internal IPV4 ip;
@@ -25,9 +25,9 @@ namespace Steamworks.Data
 		/// <summary>
 		/// Any IP, specific port
 		/// </summary>
-		public static NetworkAddress AnyIp( ushort port )
+		public static NetAddress AnyIp( ushort port )
 		{
-			return new NetworkAddress
+			return new NetAddress
 			{
 				ip = new IPV4
 				{

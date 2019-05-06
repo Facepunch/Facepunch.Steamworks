@@ -12135,7 +12135,7 @@ namespace Steamworks.Data
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	internal struct SteamNetConnectionStatusChangedCallback_t
 	{
-		internal NetConnection Conn; // m_hConn HSteamNetConnection
+		internal Connection Conn; // m_hConn HSteamNetConnection
 		internal ConnectionInfo Nfo; // m_info SteamNetConnectionInfo_t
 		internal ConnectionState OldState; // m_eOldState ESteamNetworkingConnectionState
 		
@@ -12190,7 +12190,7 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 		public struct Pack8
 		{
-			internal NetConnection Conn; // m_hConn HSteamNetConnection
+			internal Connection Conn; // m_hConn HSteamNetConnection
 			internal ConnectionInfo Nfo; // m_info SteamNetConnectionInfo_t
 			internal ConnectionState OldState; // m_eOldState ESteamNetworkingConnectionState
 			

@@ -30,10 +30,10 @@ public static class Cleanup
 		type = type.Replace( "SteamNetworkingConfigValue", "NetConfig" );
 		type = type.Replace( "SteamNetworkingConfigScope", "NetScope" );
 		type = type.Replace( "SteamNetworkingConfigDataType", "NetConfigType" );
-		type = type.Replace( "HSteamNetConnection", "NetConnection" );
+		type = type.Replace( "HSteamNetConnection", "Connection" );
 		type = type.Replace( "HSteamListenSocket", "Socket" );
-		type = type.Replace( "SteamNetworkingIPAddr", "NetworkAddress" );
-		type = type.Replace( "SteamNetworkingIdentity", "NetworkIdentity" );
+		type = type.Replace( "SteamNetworkingIPAddr", "NetAddress" );
+		type = type.Replace( "SteamNetworkingIdentity", "NetIdentity" );
 		type = type.Replace( "SteamNetConnectionInfo_t", "ConnectionInfo" );
 		type = type.Replace( "SteamNetworkingConnectionState", "ConnectionState" );
 		type = type.Replace( "SteamNetworkingMicroseconds", "long" );

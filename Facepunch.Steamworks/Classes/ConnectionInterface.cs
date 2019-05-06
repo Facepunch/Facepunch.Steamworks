@@ -6,7 +6,7 @@ namespace Steamworks
 {
 	public class ConnectionInterface
 	{
-		public NetConnection Connection;
+		public Connection Connection;
 		public bool Connected = false;
 
 		public string ConnectionName

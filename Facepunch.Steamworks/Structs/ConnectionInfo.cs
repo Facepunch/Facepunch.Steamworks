@@ -5,10 +5,10 @@ namespace Steamworks.Data
 	[StructLayout( LayoutKind.Sequential, Size = 696 )]
 	public struct ConnectionInfo
 	{
-		internal NetworkIdentity identity;
+		internal NetIdentity identity;
 		internal long userData;
 		internal Socket listenSocket;
-		internal NetworkAddress address;
+		internal NetAddress address;
 		internal ushort pad;
 		internal SteamNetworkingPOPID popRemote;
 		internal SteamNetworkingPOPID popRelay;

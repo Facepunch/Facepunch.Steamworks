@@ -30,7 +30,7 @@ namespace Steamworks
 		[TestMethod]
 		public async Task CreateNormalServer()
 		{
-			var si = SteamNetworkingSockets.CreateNormalSocket<TestSocketInterface>( Data.NetworkAddress.AnyIp( 21893 ) );
+			var si = SteamNetworkingSockets.CreateNormalSocket<TestSocketInterface>( Data.NetAddress.AnyIp( 21893 ) );
 
 			Console.WriteLine( $"Created Socket: {si}" );
 
@@ -153,14 +153,14 @@ namespace Steamworks
 		{
 			public bool HasFinished = false;
 
-			public override void OnConnectionChanged( NetConnection connection, ConnectionInfo data )
+			public override void OnConnectionChanged( Connection connection, ConnectionInfo data )
 			{
 				Console.WriteLine( $"[Socket{Socket}][{connection}] [{data.State}]" );
 
 				base.OnConnectionChanged( connection, data );
 			}
 
-			public override void OnConnecting( NetConnection connection, ConnectionInfo data )
+			public override void OnConnecting( Connection connection, ConnectionInfo data )
 			{
 				Console.WriteLine( $" - OnConnecting" );
 				base.OnConnecting( connection, data );
@@ -169,7 +169,7 @@ namespace Steamworks
 			/// <summary>
 			/// Client is connected. They move from connecting to Connections
 			/// </summary>
-			public override void OnConnected( NetConnection connection, ConnectionInfo data )
+			public override void OnConnected( Connection connection, ConnectionInfo data )
 			{
 				Console.WriteLine( $" - OnConnected" );
 				base.OnConnected( connection, data );
@@ -178,7 +178,7 @@ namespace Steamworks
 			/// <summary>
 			/// The connection has been closed remotely or disconnected locally. Check data.State for details.
 			/// </summary>
-			public override void OnDisconnected( NetConnection connection, ConnectionInfo data )
+			public override void OnDisconnected( Connection connection, ConnectionInfo data )
 			{
 				Console.WriteLine( $" - OnDisconnected" );
 				base.OnDisconnected( connection, data );
@@ -224,7 +224,7 @@ namespace Steamworks
 				Close();
 			}
 
-			public override unsafe void OnMessage( NetConnection connection, NetworkIdentity identity, IntPtr data, int size, long messageNum, long recvTime, int channel )
+			public override unsafe void OnMessage( Connection connection, NetIdentity identity, IntPtr data, int size, long messageNum, long recvTime, int channel )
 			{
 				// We're only sending strings, so it's fine to read this like this
 				var str = UTF8Encoding.UTF8.GetString( (byte*)data, size );

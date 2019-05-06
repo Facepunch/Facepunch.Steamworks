@@ -3,7 +3,7 @@
 namespace Steamworks.Data
 {
 	[StructLayout( LayoutKind.Explicit, Size = 136, Pack = 1 )]
-	public struct NetworkIdentity
+	public struct NetIdentity
 	{
 		[FieldOffset( 0 )]
 		internal IdentityType type;
@@ -14,12 +14,12 @@ namespace Steamworks.Data
 		[FieldOffset( 8 )]
 		internal SteamId steamID;
 
-		public static implicit operator NetworkIdentity( SteamId value )
+		public static implicit operator NetIdentity( SteamId value )
 		{
-			return new NetworkIdentity { steamID = value, type = IdentityType.SteamID, m_cbSize = 8 };
+			return new NetIdentity { steamID = value, type = IdentityType.SteamID, m_cbSize = 8 };
 		}
 
-		public static implicit operator SteamId( NetworkIdentity value )
+		public static implicit operator SteamId( NetIdentity value )
 		{
 			return value.steamID;
 		}

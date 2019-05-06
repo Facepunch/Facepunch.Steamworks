@@ -7,15 +7,15 @@ namespace Steamworks
 {
 	public class SocketInterface
 	{
-		public List<NetConnection> Connecting = new List<NetConnection>();
-		public List<NetConnection> Connected = new List<NetConnection>();
+		public List<Connection> Connecting = new List<Connection>();
+		public List<Connection> Connected = new List<Connection>();
 		public Socket Socket { get; internal set; }
 
 		public bool Close() => Socket.Close();
 
 		public override string ToString() => Socket.ToString();
 
-		public virtual void OnConnectionChanged( NetConnection connection, ConnectionInfo data )
+		public virtual void OnConnectionChanged( Connection connection, ConnectionInfo data )
 		{
 			switch ( data.State )
 			{
@@ -36,7 +36,7 @@ namespace Steamworks
 		/// <summary>
 		/// Default behaviour is to accept every connection
 		/// </summary>
-		public virtual void OnConnecting( NetConnection connection, ConnectionInfo data )
+		public virtual void OnConnecting( Connection connection, ConnectionInfo data )
 		{
 			connection.Accept();
 			Connecting.Add( connection );
@@ -45,7 +45,7 @@ namespace Steamworks
 		/// <summary>
 		/// Client is connected. They move from connecting to Connections
 		/// </summary>
-		public virtual void OnConnected( NetConnection connection, ConnectionInfo data )
+		public virtual void OnConnected( Connection connection, ConnectionInfo data )
 		{
 			Connecting.Remove( connection );
 			Connected.Add( connection );
@@ -54,7 +54,7 @@ namespace Steamworks
 		/// <summary>
 		/// The connection has been closed remotely or disconnected locally. Check data.State for details.
 		/// </summary>
-		public virtual void OnDisconnected( NetConnection connection, ConnectionInfo data )
+		public virtual void OnDisconnected( Connection connection, ConnectionInfo data )
 		{
 			connection.Close();
 
@@ -106,7 +106,7 @@ namespace Steamworks
 			}
 		}
 
-		public virtual void OnMessage( NetConnection connection, NetworkIdentity identity, IntPtr data, int size, long messageNum, long recvTime, int channel )
+		public virtual void OnMessage( Connection connection, NetIdentity identity, IntPtr data, int size, long messageNum, long recvTime, int channel )
 		{
 
 		}
