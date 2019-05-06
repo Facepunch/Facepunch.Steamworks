@@ -28,10 +28,24 @@ namespace Steamworks.Ugc
 		public string[] Tags { get; internal set; }
 
 		public bool IsInstalled => (State & ItemState.Installed) == ItemState.Installed;
-		public bool IsDownloading => (State & ItemState.Downloading) == ItemState.Downloading; 
-		public bool IsDownloadPending => (State & ItemState.DownloadPending) == ItemState.DownloadPending; 
+		public bool IsDownloading => (State & ItemState.Downloading) == ItemState.Downloading;
+		public bool IsDownloadPending => (State & ItemState.DownloadPending) == ItemState.DownloadPending;
 		public bool IsSubscribed => (State & ItemState.Subscribed) == ItemState.Subscribed;
 		public bool NeedsUpdate => (State & ItemState.NeedsUpdate) == ItemState.NeedsUpdate;
+
+		public string Directory 
+		{
+			get
+			{
+				ulong size = 0;
+				uint ts = 0;
+				var sb = Helpers.TakeStringBuilder();
+				if ( !SteamUGC.Internal.GetItemInstallInfo( Id, ref size, sb, (uint)sb.Capacity, ref ts ) )
+					return null;
+
+				return sb.ToString();
+			}
+		}
 
 		public bool Download( bool highPriority = false )
 		{
