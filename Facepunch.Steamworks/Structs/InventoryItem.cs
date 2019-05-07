@@ -122,5 +122,14 @@ namespace Steamworks
 
 			return props;
 		}
+
+		/// <summary>
+		/// Small utility class to describe an item with a quantity
+		/// </summary>
+		public struct Amount
+		{
+			public InventoryItem Item;
+			public int Quantity;
+		}
 	}
 }
