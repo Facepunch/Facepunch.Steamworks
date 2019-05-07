@@ -35,9 +35,17 @@ namespace Steamworks
 
 		internal static void InstallEvents()
 		{
-			SteamInventoryFullUpdate_t.Install( x => OnInventoryUpdated?.Invoke( x.Handle ) );
+			SteamInventoryFullUpdate_t.Install( x => InventoryUpdated( x ) );
 			SteamInventoryDefinitionUpdate_t.Install( x => LoadDefinitions() );
 			SteamInventoryDefinitionUpdate_t.Install( x => OnServerDefinitionsUpdated(), true );
+		}
+
+		private static void InventoryUpdated( SteamInventoryFullUpdate_t x )
+		{
+			var r = new InventoryResult( x.Handle, false );
+			Items = r.GetItems( false );
+
+			OnInventoryUpdated?.Invoke( x.Handle );
 		}
 
 		public static event Action<int> OnInventoryUpdated;
@@ -147,6 +155,11 @@ namespace Steamworks
 			return defs.Select( x => new InventoryDef( x ) ).ToArray();
 		}
 
+		/// <summary>
+		/// We will try to keep this list of your items automatically up to date.
+		/// </summary>
+		public static InventoryItem[] Items { get; internal set; }
+
 		public static InventoryDef[] Definitions { get; internal set; }
 		static Dictionary<int, InventoryDef> _defMap;
 
@@ -164,6 +177,18 @@ namespace Steamworks
 			return defs.Select( x => new InventoryDef( x ) ).ToArray();
 		}
 
+		/// <summary>
+		/// Update the list of Items[]
+		/// </summary>
+		public static bool GetAllItems()
+		{
+			var sresult = default( SteamInventoryResult_t );
+			return Internal.GetAllItems( ref sresult );
+		}
+
+		/// <summary>
+		/// Get all items and return the InventoryResult
+		/// </summary>
 		public static async Task<InventoryResult?> GetAllItemsAsync()
 		{
 			var sresult = default( SteamInventoryResult_t );

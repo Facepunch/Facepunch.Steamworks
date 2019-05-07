@@ -72,6 +72,25 @@ namespace Steamworks
 		}
 
 		[TestMethod]
+		public async Task Items()
+		{
+			SteamInventory.GetAllItems();
+			await SteamInventory.WaitForDefinitions();
+			
+			while ( SteamInventory.Items == null )
+			{
+				await Task.Delay( 10 );
+			}
+
+			Assert.IsNotNull( SteamInventory.Items );
+
+			foreach ( var item in SteamInventory.Items )
+			{
+				Console.WriteLine( $"{item.Id} / {item.DefId} / {item.Quantity} / {item.Def.Name}" );
+			}
+		}
+
+		[TestMethod]
 		public async Task GetExchanges()
 		{
 			var result = await SteamInventory.WaitForDefinitions( 5 );
