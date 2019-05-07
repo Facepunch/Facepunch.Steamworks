@@ -51,7 +51,7 @@ namespace Steamworks
 		{
 			await SteamInventory.WaitForDefinitions();
 
-			var result = await SteamInventory.GetItems();
+			var result = await SteamInventory.GetAllItemsAsync();
 
 			Assert.IsTrue( result.HasValue );
 

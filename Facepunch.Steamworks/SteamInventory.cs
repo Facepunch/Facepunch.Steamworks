@@ -164,7 +164,7 @@ namespace Steamworks
 			return defs.Select( x => new InventoryDef( x ) ).ToArray();
 		}
 
-		public static async Task<InventoryResult?> GetItems()
+		public static async Task<InventoryResult?> GetAllItemsAsync()
 		{
 			var sresult = default( SteamInventoryResult_t );
 
@@ -180,7 +180,7 @@ namespace Steamworks
 		/// or if you don't care about hacked clients granting arbitrary items. 
 		/// This call can be disabled by a setting on Steamworks.
 		/// </summary>
-		public static async Task<InventoryResult?> GenerateItem( InventoryDef target, int amount )
+		public static async Task<InventoryResult?> GenerateItemAsync( InventoryDef target, int amount )
 		{
 			var sresult = default( SteamInventoryResult_t );
 
@@ -198,7 +198,7 @@ namespace Steamworks
 		/// You need to have set up the appropriate exchange rules in your item
 		/// definitions. This assumes all the items passed in aren't stacked.
 		/// </summary>
-		public static async Task<InventoryResult?> CraftItem( InventoryItem[] list, InventoryDef target )
+		public static async Task<InventoryResult?> CraftItemAsync( InventoryItem[] list, InventoryDef target )
 		{
 			var sresult = default( SteamInventoryResult_t );
 
