@@ -197,7 +197,7 @@ namespace Steamworks.Ugc
 		/// <summary>
 		/// The URL to the preview image for this item
 		/// </summary>
-		public string PreviewUrl { get; internal set; }
+		public string PreviewImageUrl { get; internal set; }
 	}
 
 }

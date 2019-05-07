@@ -41,7 +41,7 @@ namespace Steamworks.Ugc
 						var sb = Helpers.TakeStringBuilder();
 						if ( SteamUGC.Internal.GetQueryUGCPreviewURL( Handle, i, sb, (uint)sb.Capacity ) )
 						{
-							item.PreviewUrl = sb.ToString();
+							item.PreviewImageUrl = sb.ToString();
 						}
 
 						// TODO GetQueryUGCAdditionalPreview
