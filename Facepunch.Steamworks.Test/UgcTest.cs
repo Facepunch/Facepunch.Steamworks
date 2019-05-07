@@ -21,7 +21,7 @@ namespace Steamworks
 		[TestMethod]
         public async Task GetInformation()
         {
-			var itemInfo = await Ugc.Item.Get( 1720164672 );
+			var itemInfo = await Ugc.Item.GetAsync( 1720164672 );
 
 			Assert.IsTrue( itemInfo.HasValue );
 

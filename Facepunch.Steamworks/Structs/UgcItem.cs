@@ -11,11 +11,18 @@ namespace Steamworks.Ugc
 	public struct Item
 	{
 		internal SteamUGCDetails_t details;
+		internal PublishedFileId _id;
+
+		public Item( PublishedFileId id ) : this()
+		{
+			_id = id;
+		}
+
 
 		/// <summary>
 		/// The actual ID of this file
 		/// </summary>
-		public PublishedFileId Id => details.PublishedFileId;
+		public PublishedFileId Id => _id;
 
 		/// <summary>
 		/// The given title of this item
@@ -117,7 +124,7 @@ namespace Steamworks.Ugc
 
 		private ItemState State => (ItemState) SteamUGC.Internal.GetItemState( Id );
 
-		public static async Task<Item?> Get( PublishedFileId id, int maxageseconds = 60 * 30 )
+		public static async Task<Item?> GetAsync( PublishedFileId id, int maxageseconds = 60 * 30 )
 		{
 			var result = await SteamUGC.Internal.RequestUGCDetails( id, (uint) maxageseconds );
 			if ( !result.HasValue ) return null;
@@ -129,6 +136,7 @@ namespace Steamworks.Ugc
 		{
 			var d = new Item
 			{
+				_id = details.PublishedFileId,
 				details = details,
 				Tags = details.Tags.ToLower().Split( new[] { ',' }, StringSplitOptions.RemoveEmptyEntries )
 			};
