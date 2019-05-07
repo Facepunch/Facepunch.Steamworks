@@ -47,6 +47,12 @@ namespace Steamworks
 		public string Type => GetProperty( "type" );
 
 		/// <summary>
+		/// Returns true if this is an item that generates an item, rather 
+		/// than something that is actual an item
+		/// </summary>
+		public bool IsGenerator => Type == "generator";
+
+		/// <summary>
 		/// Shortcut to call GetProperty( "exchange" )
 		/// </summary>
 		public string ExchangeSchema => GetProperty( "exchange" );
