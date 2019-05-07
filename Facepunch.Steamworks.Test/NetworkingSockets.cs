@@ -54,6 +54,20 @@ namespace Steamworks
 			await Task.WhenAll( server, client );
 		}
 
+		[TestMethod]
+		public async Task NormalEndtoEnd()
+		{
+			var socket = SteamNetworkingSockets.CreateNormalSocket<TestSocketInterface>( NetAddress.AnyIp( 12445 ) );
+			var server = socket.RunAsync();
+
+			await Task.Delay( 1000 );
+
+			var connection = SteamNetworkingSockets.ConnectNormal<TestConnectionInterface>( NetAddress.From( System.Net.IPAddress.Parse( "127.0.0.1" ), 12445 ) );
+			var client = connection.RunAsync();
+
+			await Task.WhenAll( server, client );
+		}
+
 		private class TestConnectionInterface : ConnectionInterface
 		{
 			public override void OnConnectionChanged( ConnectionInfo data )
@@ -91,13 +105,27 @@ namespace Steamworks
 			{
 				Console.WriteLine( "[Connection] RunAsync" );
 
-				while ( !Connected )
+				var sw = System.Diagnostics.Stopwatch.StartNew();
+
+				while ( Connecting )
+				{
 					await Task.Delay( 10 );
+
+					if ( sw.Elapsed.TotalSeconds > 30 )
+						break;
+				}
+
+				if ( !Connected )
+				{
+					Console.WriteLine( "[Connection] Couldn't connect!" );
+					Console.WriteLine( Connection.DetailedStatus() );
+					return;
+				}
 
 				Console.WriteLine( "[Connection] Hey We're Connected!" );
 
-				var sw = System.Diagnostics.Stopwatch.StartNew();
 
+				sw = System.Diagnostics.Stopwatch.StartNew();
 				while ( Connected )
 				{
 					Receive();
@@ -186,8 +214,18 @@ namespace Steamworks
 
 			internal async Task RunAsync()
 			{
+				var sw = System.Diagnostics.Stopwatch.StartNew();
+
 				while ( Connected.Count == 0 )
+				{
 					await Task.Delay( 10 );
+
+					if ( sw.Elapsed.TotalSeconds > 2 )
+					{
+						Assert.Fail( "Client Took Too Long To Connect"  );
+						break;
+					}
+				}
 
 				await Task.Delay( 1000 );
 
@@ -205,7 +243,7 @@ namespace Steamworks
 				await Task.Delay( 100 );
 				singleClient.SendMessage( "Hello Client!?" );
 
-				var sw = System.Diagnostics.Stopwatch.StartNew();
+				sw = System.Diagnostics.Stopwatch.StartNew();
 
 				while ( Connected.Contains( singleClient ) )
 				{
