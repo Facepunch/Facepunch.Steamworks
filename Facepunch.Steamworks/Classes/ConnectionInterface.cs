@@ -8,6 +8,7 @@ namespace Steamworks
 	{
 		public Connection Connection;
 		public bool Connected = false;
+		public bool Connecting = true;
 
 		public string ConnectionName
 		{
@@ -48,7 +49,7 @@ namespace Steamworks
 		/// </summary>
 		public virtual void OnConnecting( ConnectionInfo data )
 		{
-
+			Connecting = true;
 		}
 
 		/// <summary>
@@ -57,6 +58,7 @@ namespace Steamworks
 		public virtual void OnConnected( ConnectionInfo data )
 		{
 			Connected = true;
+			Connecting = false;
 		}
 
 		/// <summary>
@@ -65,6 +67,7 @@ namespace Steamworks
 		public virtual void OnDisconnected( ConnectionInfo data )
 		{
 			Connected = false;
+			Connecting = false;
 		}
 
 		public void Receive( int bufferSize = 32 )
