@@ -8,6 +8,7 @@ namespace Steamworks
 	public class InventoryDef
 	{
 		internal InventoryDefId _id;
+		internal Dictionary<string, string> _properties;
 
 		public InventoryDef( InventoryDefId defId )
 		{
@@ -94,13 +95,22 @@ namespace Steamworks
 		/// </summary>
 		public string GetProperty( string name )
 		{
+			if ( _properties!= null && _properties.TryGetValue( name, out string val ) )
+				return val;
+
 			var sb = Helpers.TakeStringBuilder();
 			uint _ = (uint)sb.Capacity;
 
 			if ( !SteamInventory.Internal.GetItemDefinitionProperty( Id, name, sb, ref _ ) )
 				return null;
 
-			return sb.ToString();
+			if ( _properties == null )
+				_properties = new Dictionary<string, string>();
+
+			var vl = sb.ToString();
+			_properties[name] = vl;
+
+			return vl;
 		}
 
 		/// <summary>
