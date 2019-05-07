@@ -47,6 +47,9 @@ namespace Steamworks.Ugc
 		string Language;
 		public Editor InLanguage( string t ) { this.Language = t; return this; }
 
+		string PreviewFile;
+		public Editor WithPreviewFile( string t ) { this.PreviewFile = t; return this; }
+
 		System.IO.DirectoryInfo ContentFolder;
 		public Editor WithContent( System.IO.DirectoryInfo t ) { this.ContentFolder = t; return this; }
 		public Editor WithContent( string folderName ) { return WithContent( new System.IO.DirectoryInfo( folderName ) ); }
@@ -97,6 +100,7 @@ namespace Steamworks.Ugc
 				if ( MetaData != null ) SteamUGC.Internal.SetItemMetadata( handle, MetaData );
 				if ( Language != null ) SteamUGC.Internal.SetItemUpdateLanguage( handle, Language );
 				if ( ContentFolder != null ) SteamUGC.Internal.SetItemContent( handle, ContentFolder.FullName );
+				if ( PreviewFile != null ) SteamUGC.Internal.SetItemPreview( handle, PreviewFile );
 
 				result.Result = Steamworks.Result.Fail;
 
