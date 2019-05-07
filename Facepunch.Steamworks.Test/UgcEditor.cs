@@ -20,6 +20,9 @@ namespace Steamworks
 							  .WithDescription( "This item was created by Facepunch Steamworks unit tests.\n\n" +
 												"It should have technically been deleted so you should never get to " +
 												"read this unless something terrible has happened." )
+							  .WithTag( "Arsehole" )
+							  .WithTag( "Spiteful" )
+							  .WithTag( "Fat-Head" )
 							  .SubmitAsync();
 
 			Assert.IsTrue( result.Success );

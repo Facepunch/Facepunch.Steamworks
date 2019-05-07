@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Steamworks.Data;
 
@@ -55,6 +56,16 @@ namespace Steamworks.Ugc
 		public Editor WithContent( string folderName ) { return WithContent( new System.IO.DirectoryInfo( folderName ) ); }
 
 
+		List<string> Tags;
+		public Editor WithTag( string tag )
+		{
+			if ( Tags == null ) Tags = new List<string>();
+
+			Tags.Add( tag );
+
+			return this;
+		}
+
 		public async Task<PublishResult> SubmitAsync( IProgress<float> progress = null )
 		{
 			var result = default( PublishResult );
@@ -101,6 +112,14 @@ namespace Steamworks.Ugc
 				if ( Language != null ) SteamUGC.Internal.SetItemUpdateLanguage( handle, Language );
 				if ( ContentFolder != null ) SteamUGC.Internal.SetItemContent( handle, ContentFolder.FullName );
 				if ( PreviewFile != null ) SteamUGC.Internal.SetItemPreview( handle, PreviewFile );
+				if ( Tags != null && Tags.Count > 0 )
+				{
+					using ( var a = SteamParamStringArray.From( Tags.ToArray() ) )
+					{
+						var val = a.Value;
+						SteamUGC.Internal.SetItemTags( handle, ref val );
+					}
+				}
 
 				result.Result = Steamworks.Result.Fail;
 
