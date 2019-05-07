@@ -114,6 +114,26 @@ namespace Steamworks
 		{
 			Console.WriteLine( $"User.IsPhoneRequiringVerification: {SteamUser.IsPhoneRequiringVerification}" );
 		}
+
+
+		[TestMethod]
+		public async Task RequestEncryptedAppTicketAsyncWithData()
+		{
+			var data = await SteamUser.RequestEncryptedAppTicketAsync( new byte[] { 0, 1, 2, 3, 4, 5, 6, 7 } );
+			Assert.IsNotNull( data );
+
+			Console.WriteLine( $"data: {string.Join( "", data.Select( x => x.ToString( "x" ) ))}" );
+		}
+
+		[TestMethod]
+		public async Task RequestEncryptedAppTicketAsync()
+		{
+			var data = await SteamUser.RequestEncryptedAppTicketAsync();
+			Assert.IsNotNull( data );
+
+			Console.WriteLine( $"data: {string.Join( "", data.Select( x => x.ToString( "x" ) ) )}" );
+		}
+
 	}
 
 }

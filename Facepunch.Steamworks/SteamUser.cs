@@ -338,5 +338,68 @@ namespace Steamworks
 		/// </summary>
 		public static bool IsPhoneRequiringVerification => Internal.BIsPhoneRequiringVerification();
 
+		/// <summary>
+		/// Requests an application ticket encrypted with the secret "encrypted app ticket key".
+		/// The encryption key can be obtained from the Encrypted App Ticket Key page on the App Admin for your app.
+		/// There can only be one call pending, and this call is subject to a 60 second rate limit.
+		/// This can fail if you don't have an encrypted ticket set for your app here https://partner.steamgames.com/apps/sdkauth/
+		/// </summary>
+		public static async Task<byte[]> RequestEncryptedAppTicketAsync( byte[] dataToInclude )
+		{
+			var dataPtr = Marshal.AllocHGlobal( dataToInclude.Length );
+			Marshal.Copy( dataToInclude, 0, dataPtr, dataToInclude.Length );
+
+			try
+			{
+				var result = await Internal.RequestEncryptedAppTicket( dataPtr, dataToInclude.Length );
+				if ( !result.HasValue || result.Value.Result != Result.OK ) return null;
+
+				var ticketData = Marshal.AllocHGlobal( 1024 );
+				uint outSize = 0;
+				byte[] data = null;
+
+				if ( Internal.GetEncryptedAppTicket( ticketData, 1024, ref outSize ) )
+				{
+					data = new byte[outSize];
+					Marshal.Copy( ticketData, data, 0, (int) outSize );
+				}
+
+				Marshal.FreeHGlobal( ticketData );
+
+				return data;
+			}
+			finally
+			{
+				Marshal.FreeHGlobal( dataPtr );
+			}
+		}
+
+		/// <summary>
+		/// Requests an application ticket encrypted with the secret "encrypted app ticket key".
+		/// The encryption key can be obtained from the Encrypted App Ticket Key page on the App Admin for your app.
+		/// There can only be one call pending, and this call is subject to a 60 second rate limit.
+		/// This can fail if you don't have an encrypted ticket set for your app here https://partner.steamgames.com/apps/sdkauth/
+		/// </summary>
+		public static async Task<byte[]> RequestEncryptedAppTicketAsync()
+		{
+			var result = await Internal.RequestEncryptedAppTicket( IntPtr.Zero, 0 );
+			if ( !result.HasValue || result.Value.Result != Result.OK ) return null;
+
+			var ticketData = Marshal.AllocHGlobal( 1024 );
+			uint outSize = 0;
+			byte[] data = null;
+
+			if ( Internal.GetEncryptedAppTicket( ticketData, 1024, ref outSize ) )
+			{
+				data = new byte[outSize];
+				Marshal.Copy( ticketData, data, 0, (int)outSize );
+			}
+
+			Marshal.FreeHGlobal( ticketData );
+
+			return data;
+
+		}
+
 	}
 }
