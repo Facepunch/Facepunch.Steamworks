@@ -70,6 +70,33 @@ namespace Steamworks
 				}
 			}
 		}
+
+		[TestMethod]
+		public async Task GetExchanges()
+		{
+			var result = await SteamInventory.WaitForDefinitions( 5 );
+			Assert.IsTrue( result );
+
+			foreach ( var def in SteamInventory.Definitions )
+			{
+				var exchangelist = def.GetRecipes();
+				if ( exchangelist == null ) continue;
+
+				foreach ( var exchange in exchangelist )
+				{
+					Assert.AreEqual( exchange.Result, def );
+
+					Console.WriteLine( $"{def.Name}:" );
+
+					foreach ( var item in exchange.Ingredients )
+					{
+						Console.WriteLine( $"	{item.Count} x {item.Definition.Name}" );
+					}
+
+					Console.WriteLine( $"" );
+				}
+			}
+		}
 	}
 
 }

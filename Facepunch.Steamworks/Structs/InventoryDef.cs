@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Steamworks.Data;
 
 namespace Steamworks
@@ -48,7 +49,19 @@ namespace Steamworks
 		/// <summary>
 		/// Shortcut to call GetProperty( "exchange" )
 		/// </summary>
-		public string Exchange => GetProperty( "exchange" );
+		public string ExchangeSchema => GetProperty( "exchange" );
+
+		/// <summary>
+		/// Get a list of exchanges that are available to make this item
+		/// </summary>
+		public InventoryRecipe[] GetRecipes()
+		{
+			if ( string.IsNullOrEmpty( ExchangeSchema ) ) return null;
+
+			var parts = ExchangeSchema.Split( new[] { ';' }, StringSplitOptions.RemoveEmptyEntries );
+
+			return parts.Select( x => InventoryRecipe.FromString( x, this ) ).ToArray();
+		}
 
 		/// <summary>
 		/// Shortcut to call GetBoolProperty( "marketable" )
