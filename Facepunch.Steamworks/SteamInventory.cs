@@ -109,7 +109,11 @@ namespace Steamworks
 			return true;
 		}
 
-		internal static InventoryDef FindDefinition( InventoryDefId defId )
+		/// <summary>
+		/// Try to find the definition that matches this definition ID.
+		/// Uses a dictionary so should be about as fast as possible.
+		/// </summary>
+		public static InventoryDef FindDefinition( InventoryDefId defId )
 		{
 			if ( _defMap.TryGetValue( defId, out var val  ) )
 				return val;
@@ -144,7 +148,7 @@ namespace Steamworks
 		}
 
 		public static InventoryDef[] Definitions { get; internal set; }
-		public static Dictionary<int, InventoryDef> _defMap;
+		static Dictionary<int, InventoryDef> _defMap;
 
 		internal static InventoryDef[] GetDefinitions()
 		{
