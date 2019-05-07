@@ -55,6 +55,11 @@ namespace Steamworks.Ugc
 		public Editor WithContent( System.IO.DirectoryInfo t ) { this.ContentFolder = t; return this; }
 		public Editor WithContent( string folderName ) { return WithContent( new System.IO.DirectoryInfo( folderName ) ); }
 
+		RemoteStoragePublishedFileVisibility? Visibility;
+
+		public Editor WithPublicVisibility() { Visibility = RemoteStoragePublishedFileVisibility.Public; return this; }
+		public Editor WithFriendsOnlyVisibility() { Visibility = RemoteStoragePublishedFileVisibility.FriendsOnly; return this; }
+		public Editor WithPrivateVisibility() { Visibility = RemoteStoragePublishedFileVisibility.Private; return this; }
 
 		List<string> Tags;
 		public Editor WithTag( string tag )
@@ -112,6 +117,7 @@ namespace Steamworks.Ugc
 				if ( Language != null ) SteamUGC.Internal.SetItemUpdateLanguage( handle, Language );
 				if ( ContentFolder != null ) SteamUGC.Internal.SetItemContent( handle, ContentFolder.FullName );
 				if ( PreviewFile != null ) SteamUGC.Internal.SetItemPreview( handle, PreviewFile );
+				if ( Visibility.HasValue ) SteamUGC.Internal.SetItemVisibility( handle, Visibility.Value );
 				if ( Tags != null && Tags.Count > 0 )
 				{
 					using ( var a = SteamParamStringArray.From( Tags.ToArray() ) )
