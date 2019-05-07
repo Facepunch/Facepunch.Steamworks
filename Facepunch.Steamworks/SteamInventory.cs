@@ -180,7 +180,7 @@ namespace Steamworks
 		/// or if you don't care about hacked clients granting arbitrary items. 
 		/// This call can be disabled by a setting on Steamworks.
 		/// </summary>
-		static async Task<InventoryResult?> GenerateItem( InventoryDef target, int amount )
+		public static async Task<InventoryResult?> GenerateItem( InventoryDef target, int amount )
 		{
 			var sresult = default( SteamInventoryResult_t );
 
@@ -198,7 +198,7 @@ namespace Steamworks
 		/// You need to have set up the appropriate exchange rules in your item
 		/// definitions. This assumes all the items passed in aren't stacked.
 		/// </summary>
-		static async Task<InventoryResult?> CraftItem( InventoryItem[] list, InventoryDef target )
+		public static async Task<InventoryResult?> CraftItem( InventoryItem[] list, InventoryDef target )
 		{
 			var sresult = default( SteamInventoryResult_t );
 
@@ -228,7 +228,7 @@ namespace Steamworks
 		/// You should call CheckResultSteamID on the result handle when it completes to verify 
 		/// that a remote player is not pretending to have a different user's inventory.
 		/// </summary>
-		static async Task<InventoryResult?> DeserializeAsync( byte[] data, int dataLength = -1 )
+		public static async Task<InventoryResult?> DeserializeAsync( byte[] data, int dataLength = -1 )
 		{
 			if ( data == null )
 				throw new ArgumentException( "data should nto be null" );

@@ -32,7 +32,7 @@ namespace Steamworks.Ugc
 		/// Workshop item that is meant to be voted on for the purpose of selling in-game
 		/// </summary>
 		public static Editor NewMicrotransactionFile => new Editor( WorkshopFileType.Microtransaction );
-
+		
 		public Editor ForAppId( AppId id ) { this.consumerAppId = id; return this; }
 
 
