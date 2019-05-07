@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
-
+using System.Threading.Tasks;
 
 namespace Steamworks.Data
 {
@@ -64,6 +64,14 @@ namespace Steamworks.Data
 		public void AddToHistory()
 		{
 			//Client.native.matchmaking.AddFavoriteGame( AppId, Utility.IpToInt32( Address ), (ushort)ConnectionPort, (ushort)QueryPort, k_unFavoriteFlagHistory, (uint)Utility.Epoch.Current );
+		}
+
+		/// <summary>
+		/// If this server responds to source engine style queries, we'll be able to get a list of rules here
+		/// </summary>
+		public async Task<Dictionary<string, string>> QueryRulesAsync()
+		{
+			return await SourceServerQuery.GetRules( this );
 		}
 
 		/// <summary>

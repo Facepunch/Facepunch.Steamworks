@@ -78,5 +78,21 @@ namespace Steamworks
                 default: return $"{decimaled} {currency}";
             }
         }
-    }
+
+		public static string ReadNullTerminatedUTF8String( this BinaryReader br, byte[] buffer = null )
+		{
+			if ( buffer == null )
+				buffer = new byte[1024];
+
+			byte chr;
+			int i = 0;
+			while ( (chr = br.ReadByte()) != 0 && i < buffer.Length )
+			{
+				buffer[i] = chr;
+				i++;
+			}
+
+			return Encoding.UTF8.GetString( buffer, 0, i );
+		}
+	}
 }

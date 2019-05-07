@@ -69,6 +69,30 @@ namespace Steamworks
 		}
 
 		[TestMethod]
+		public async Task SourceQuery()
+		{
+			using ( var list = new ServerList.Internet() )
+			{
+				var task = list.RunQueryAsync();
+				await Task.Delay( 1000 );
+				list.Cancel();
+
+				foreach ( var s in list.Responsive.Take( 10 ) )
+				{
+					Console.WriteLine( $"{s.Name} [{s.Address}]" );
+
+					var rules = await s.QueryRulesAsync();
+					Assert.IsNotNull( rules );
+
+					foreach ( var rule in rules )
+					{
+						Console.WriteLine( $"	{rule.Key}  = {rule.Value}" );
+					}
+				}
+			}
+		}
+
+		[TestMethod]
 		public async Task ServerListLan()
 		{
 			using ( var list = new ServerList.LocalNetwork() )
