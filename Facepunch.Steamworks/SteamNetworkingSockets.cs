@@ -28,6 +28,8 @@ namespace Steamworks
 			}
 		}
 
+		#region SocketInterface
+
 		static Dictionary<uint, SocketInterface> SocketInterfaces;
 
 		internal static SocketInterface GetSocketInterface( uint id )
@@ -48,8 +50,9 @@ namespace Steamworks
 			Console.WriteLine( $"Installing Socket For {id}" );
 			SocketInterfaces[id] = iface;
 		}
+		#endregion
 
-		
+		#region ConnectionInterface
 		static Dictionary<uint, ConnectionInterface> ConnectionInterfaces;
 
 
@@ -69,6 +72,7 @@ namespace Steamworks
 			if ( id == 0 ) throw new System.ArgumentException( "Invalid Connection" );
 			ConnectionInterfaces[id] = iface;
 		}
+		#endregion
 
 		internal static void Shutdown()
 		{
