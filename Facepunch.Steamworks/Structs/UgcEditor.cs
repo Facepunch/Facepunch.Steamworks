@@ -45,6 +45,9 @@ namespace Steamworks.Ugc
 		string MetaData;
 		public Editor WithMetaData( string t ) { this.MetaData = t; return this; }
 
+		string ChangeLog;
+		public Editor WithChangeLog( string t ) { this.ChangeLog = t; return this; }
+
 		string Language;
 		public Editor InLanguage( string t ) { this.Language = t; return this; }
 
@@ -129,7 +132,10 @@ namespace Steamworks.Ugc
 
 				result.Result = Steamworks.Result.Fail;
 
-				var updating = SteamUGC.Internal.SubmitItemUpdate( handle, "" );
+				if ( ChangeLog == null )
+					ChangeLog = "";
+
+			   var updating = SteamUGC.Internal.SubmitItemUpdate( handle, ChangeLog );
 
 				while ( !updating.IsCompleted )
 				{
