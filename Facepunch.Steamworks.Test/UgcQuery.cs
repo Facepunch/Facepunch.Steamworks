@@ -99,6 +99,30 @@ namespace Steamworks
 				Console.WriteLine( $" {entry.Title}" );
 			}
 		}
+
+		[TestMethod]
+		public async Task QuerySpecificFile()
+		{
+			var item = await SteamUGC.FetchItem( 1734427277 );
+
+			Assert.IsTrue( item.HasValue );
+			Assert.IsNotNull( item.Value.Title );
+
+			Console.WriteLine( $"Title: {item?.Title}" );
+			Console.WriteLine( $"Desc: {item?.Description}" );
+			Console.WriteLine( $"Tags: {string.Join( ",", item?.Tags )}" );
+			Console.WriteLine( $"Author: {item?.Owner.Name} [{item?.Owner.Id}]" );
+			Console.WriteLine( $"PreviewImageUrl: {item?.PreviewImageUrl}" );
+			Console.WriteLine( $"NumComments: {item?.NumComments}" );
+			Console.WriteLine( $"Url: {item?.Url}" );
+			Console.WriteLine( $"Directory: {item?.Directory}" );
+			Console.WriteLine( $"IsInstalled: {item?.IsInstalled}" );
+			Console.WriteLine( $"IsAcceptedForUse: {item?.IsAcceptedForUse}" );
+			Console.WriteLine( $"IsPublic: {item?.IsPublic}" );
+			Console.WriteLine( $"Created: {item?.Created}" );
+			Console.WriteLine( $"Updated: {item?.Updated}" );
+			Console.WriteLine( $"Score: {item?.Score}" );
+		}
 	}
 
 }
