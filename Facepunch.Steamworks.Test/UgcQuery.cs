@@ -105,7 +105,7 @@ namespace Steamworks
 		[TestMethod]
 		public async Task QuerySpecificFile()
 		{
-			var item = await SteamUGC.FetchItem( 1734427277 );
+			var item = await SteamUGC.QueryFileAsync( 1734427277 );
 
 			Assert.IsTrue( item.HasValue );
 			Assert.IsNotNull( item.Value.Title );

@@ -49,7 +49,7 @@ namespace Steamworks
 		/// Utility function to fetch a single item. Internally this uses Ugc.FileQuery -
 		/// which you can use to query multiple items if you need to.
 		/// </summary>
-		public static async Task<Ugc.Item?> FetchItem( PublishedFileId fileId )
+		public static async Task<Ugc.Item?> QueryFileAsync( PublishedFileId fileId )
 		{
 			var result = await new Ugc.FileQuery( fileId )
 									.GetPageAsync( 1 );
