@@ -222,5 +222,15 @@ namespace Steamworks
 			Internal.GetStat2( name, ref data );
 			return data;
 		}
+
+		/// <summary>
+		/// Practically wipes the slate clean for this user. If includeAchievements is true, will wipe
+		/// any achievements too.
+		/// </summary>
+		/// <returns></returns>
+		public static bool ResetAll( bool includeAchievements )
+		{
+			return Internal.ResetAllStats( includeAchievements );
+		}
 	}
 }
