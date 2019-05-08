@@ -123,6 +123,18 @@ namespace Steamworks.Data
 			return SteamUserStats.Internal.SetStat2( Name, val );
 		}
 
+		public bool Add( int val )
+		{
+			LocalUserOnly();
+			return Set( GetInt() + val );
+		}
+
+		public bool Add( float val )
+		{
+			LocalUserOnly();
+			return Set( GetFloat() + val );
+		}
+
 		public bool UpdateAverageRate( float count, float sessionlength )
 		{
 			LocalUserOnly();
