@@ -330,5 +330,20 @@ namespace Steamworks
 
 			return await InventoryResult.GetAsync( sresult );
 		}
+
+		/// <summary>
+		/// Trigger a promo item drop. You can call this at startup, it won't
+		/// give users multiple promo drops.
+		/// </summary>
+		public static async Task<InventoryResult?> AddPromoItemAsync( InventoryDefId id )
+		{
+			var sresult = default( SteamInventoryResult_t );
+
+			if ( !Internal.AddPromoItem( ref sresult, id ) )
+				return null;
+
+			return await InventoryResult.GetAsync( sresult );
+		}
+
 	}
 }
