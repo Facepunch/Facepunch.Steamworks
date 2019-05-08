@@ -28,20 +28,21 @@ namespace Steamworks
 		public async Task QueryWithTags()
 		{
 			var q = Ugc.Query.All
-							.WithTag( "Fun" )
-							.WithTag( "Movie" )
+							.WithTag( "Version3" )
+							.WithTag( "Hunting Bow" )
 							.MatchAllTags();
 
 			var result = await q.GetPageAsync( 1 );
 			Assert.IsNotNull( result );
+			Assert.IsTrue( result?.ResultCount > 0 );
 
 			Console.WriteLine( $"ResultCount: {result?.ResultCount}" );
 			Console.WriteLine( $"TotalCount: {result?.TotalCount}" );
 
 			foreach ( var entry in result.Value.Entries )
 			{
-				Assert.IsTrue( entry.HasTag( "Fun" ) );
-				Assert.IsTrue( entry.HasTag( "Movie" ) );
+				Assert.IsTrue( entry.HasTag( "Version3" ), "Has Tag Version3" );
+				Assert.IsTrue( entry.HasTag( "Hunting Bow" ), "Has Tag HuntingBow" );
 
 			}
 		}
@@ -83,13 +84,14 @@ namespace Steamworks
 		}
 
 		[TestMethod]
-		public async Task QueryFoohy()
+		public async Task QueryGarry()
 		{
 			var q = Ugc.UserQuery.All
-								.FromUser( 76561197997689747 );
+								.FromUser( 76561197960279927 );
 
 			var result = await q.GetPageAsync( 1 );
 			Assert.IsNotNull( result );
+			Assert.IsTrue( result?.ResultCount > 0 );
 
 			Console.WriteLine( $"ResultCount: {result?.ResultCount}" );
 			Console.WriteLine( $"TotalCount: {result?.TotalCount}" );

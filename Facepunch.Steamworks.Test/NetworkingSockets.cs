@@ -131,7 +131,7 @@ namespace Steamworks
 					Receive();
 					await Task.Delay( 100 );
 
-					if ( sw.Elapsed.TotalSeconds > 5 )
+					if ( sw.Elapsed.TotalSeconds > 10 )
 					{
 						Assert.Fail( "Client Took Too Long" );
 						break;
@@ -250,9 +250,9 @@ namespace Steamworks
 					Receive();
 					await Task.Delay( 100 );
 
-					if ( sw.Elapsed.TotalSeconds > 5 )
+					if ( sw.Elapsed.TotalSeconds > 10 )
 					{
-						Assert.Fail( "Client Took Too Long" );
+						Assert.Fail( "Socket Took Too Long" );
 						break;
 					}
 				}
@@ -277,6 +277,7 @@ namespace Steamworks
 				if ( str.Contains( "bye" ) )
 				{
 					connection.SendMessage( "See you later, hater." );
+					connection.Flush();
 					connection.Close( true, 10, "Said Bye" );
 				}
 			}

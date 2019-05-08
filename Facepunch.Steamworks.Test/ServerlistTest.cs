@@ -77,7 +77,7 @@ namespace Steamworks
 				await Task.Delay( 1000 );
 				list.Cancel();
 
-				foreach ( var s in list.Responsive.Take( 10 ) )
+				foreach ( var s in list.Responsive.Take( 10 ).ToArray() )
 				{
 					Console.WriteLine( $"{s.Name} [{s.Address}]" );
 
