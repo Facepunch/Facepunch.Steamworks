@@ -159,5 +159,68 @@ namespace Steamworks
 			return new Leaderboard { Id = result.Value.SteamLeaderboard };
 		}
 
+
+
+		/// <summary>
+		/// Adds this amount to the named stat. Internally this calls Get() and adds 
+		/// to that value. Steam doesn't provide a mechanism for atomically increasing
+		/// stats like this, this functionality is added here as a convenience.
+		/// </summary>
+		public static bool AddStat( string name, int amount = 1 )
+		{
+			var val = GetStatInt( name );
+			val += amount;
+			return SetStat( name, val );
+		}
+
+		/// <summary>
+		/// Adds this amount to the named stat. Internally this calls Get() and adds 
+		/// to that value. Steam doesn't provide a mechanism for atomically increasing
+		/// stats like this, this functionality is added here as a convenience.
+		/// </summary>
+		public static bool AddStat( string name, float amount = 1.0f )
+		{
+			var val = GetStatFloat( name );
+			val += amount;
+			return SetStat( name, val );
+		}
+
+		/// <summary>
+		/// Set a stat value. This will automatically call StoreStats() after a successful call
+		/// unless you pass false as the last argument.
+		/// </summary>
+		public static bool SetStat( string name, int value )
+		{
+			return Internal.SetStat1( name, value );
+		}
+
+		/// <summary>
+		/// Set a stat value. This will automatically call StoreStats() after a successful call
+		/// unless you pass false as the last argument.
+		/// </summary>
+		public static bool SetStat( string name, float value )
+		{
+			return Internal.SetStat2( name, value );
+		}
+
+		/// <summary>
+		/// Get a Int stat value
+		/// </summary>
+		public static int GetStatInt( string name )
+		{
+			int data = 0;
+			Internal.GetStat1( name, ref data );
+			return data;
+		}
+
+		/// <summary>
+		/// Get a float stat value
+		/// </summary>
+		public static float GetStatFloat( string name )
+		{
+			float data = 0;
+			Internal.GetStat2( name, ref data );
+			return data;
+		}
 	}
 }
