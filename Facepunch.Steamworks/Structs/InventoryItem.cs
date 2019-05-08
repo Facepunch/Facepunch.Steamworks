@@ -131,5 +131,8 @@ namespace Steamworks
 			public InventoryItem Item;
 			public int Quantity;
 		}
+
+		public static bool operator ==( InventoryItem a, InventoryItem b ) => a._id == b._id;
+		public static bool operator !=( InventoryItem a, InventoryItem b ) => a._id != b._id;
 	}
 }
