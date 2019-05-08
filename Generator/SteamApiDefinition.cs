@@ -54,6 +54,22 @@ namespace Generator
 
             public string CallbackId { get; set; }
             public bool IsCallResult { get; set; }
+
+
+			public bool IsPack4OnWindows
+			{
+				get
+				{
+				//	if ( Name.Contains( "LeaderboardEntry_t" ) )
+				//		return false;
+
+					if ( Fields.Any( x => x.Type.Contains( "CSteamID" ) ) )
+						return true;
+
+					return false;
+				}
+			}
+
         }
 
         public List<StructDef> structs { get; set; }

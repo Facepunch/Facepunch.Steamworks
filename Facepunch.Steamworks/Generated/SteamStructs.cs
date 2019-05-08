@@ -5620,21 +5620,7 @@ namespace Steamworks.Data
 		internal ulong UGC; // m_hUGC UGCHandle_t
 		
 		#region Marshalling
-		internal static LeaderboardEntry_t Fill( IntPtr p ) => Config.PackSmall ? ((LeaderboardEntry_t)(LeaderboardEntry_t) Marshal.PtrToStructure( p, typeof(LeaderboardEntry_t) )) : ((LeaderboardEntry_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal ulong SteamIDUser; // m_steamIDUser class CSteamID
-			internal int GlobalRank; // m_nGlobalRank int32
-			internal int Score; // m_nScore int32
-			internal int CDetails; // m_cDetails int32
-			internal ulong UGC; // m_hUGC UGCHandle_t
-			
-			public static implicit operator LeaderboardEntry_t ( LeaderboardEntry_t.Pack8 d ) => new LeaderboardEntry_t{ SteamIDUser = d.SteamIDUser,GlobalRank = d.GlobalRank,Score = d.Score,CDetails = d.CDetails,UGC = d.UGC, };
-		}
+		internal static LeaderboardEntry_t Fill( IntPtr p ) => ((LeaderboardEntry_t)(LeaderboardEntry_t) Marshal.PtrToStructure( p, typeof(LeaderboardEntry_t) ) );
 		#endregion
 	}
 	

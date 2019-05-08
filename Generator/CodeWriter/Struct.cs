@@ -53,10 +53,7 @@ namespace Generator
                 if ( name.Contains( "::" ) )
                     continue;
 
-				int defaultPack = 8;
-
-                if ( c.Fields.Any( x => x.Type.Contains( "CSteamID" ) ) && !ForceLargePackStructs.Contains( c.Name ) )
-                    defaultPack = 4;
+				int defaultPack = c.IsPack4OnWindows ? 4 : 8;
 
 				var isCallback = !string.IsNullOrEmpty( c.CallbackId );
 
