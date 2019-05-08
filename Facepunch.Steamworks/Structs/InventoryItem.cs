@@ -73,12 +73,12 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Transfer x quantity from this item to the target item
+		/// Add x units of the target item to this item
 		/// </summary>
-		public async Task<InventoryResult?> TransferItemQuantity( InventoryItem toItem, int quantity )
+		public async Task<InventoryResult?> Add( InventoryItem add, int quantity = 1 )
 		{
 			var sresult = default( SteamInventoryResult_t );
-			if ( !SteamInventory.Internal.TransferItemQuantity( ref sresult, Id, (uint)quantity, toItem.Id ) )
+			if ( !SteamInventory.Internal.TransferItemQuantity( ref sresult, add.Id, (uint)quantity, Id ) )
 				return null;
 
 			return await InventoryResult.GetAsync( sresult );
