@@ -45,10 +45,12 @@ namespace Steamworks
 			var r = new InventoryResult( x.Handle, false );
 			Items = r.GetItems( false );
 
-			OnInventoryUpdated?.Invoke( x.Handle );
+			OnInventoryUpdated?.Invoke( r );
+
+			r.Dispose();
 		}
 
-		public static event Action<int> OnInventoryUpdated;
+		public static event Action<InventoryResult> OnInventoryUpdated;
 		public static event Action OnDefinitionsUpdated;
 		public static event Action OnServerDefinitionsUpdated;
 
