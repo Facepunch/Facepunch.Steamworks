@@ -16,15 +16,19 @@ namespace Steamworks
 			_GetNumActiveBeacons = Marshal.GetDelegateForFunctionPointer<FGetNumActiveBeacons>( Marshal.ReadIntPtr( VTable, 0) );
 			_GetBeaconByIndex = Marshal.GetDelegateForFunctionPointer<FGetBeaconByIndex>( Marshal.ReadIntPtr( VTable, 8) );
 			_GetBeaconDetails = Marshal.GetDelegateForFunctionPointer<FGetBeaconDetails>( Marshal.ReadIntPtr( VTable, 16) );
+			_GetBeaconDetails_Windows = Marshal.GetDelegateForFunctionPointer<FGetBeaconDetails_Windows>( Marshal.ReadIntPtr( VTable, 16) );
 			_JoinParty = Marshal.GetDelegateForFunctionPointer<FJoinParty>( Marshal.ReadIntPtr( VTable, 24) );
 			_GetNumAvailableBeaconLocations = Marshal.GetDelegateForFunctionPointer<FGetNumAvailableBeaconLocations>( Marshal.ReadIntPtr( VTable, 32) );
 			_GetAvailableBeaconLocations = Marshal.GetDelegateForFunctionPointer<FGetAvailableBeaconLocations>( Marshal.ReadIntPtr( VTable, 40) );
+			_GetAvailableBeaconLocations_Windows = Marshal.GetDelegateForFunctionPointer<FGetAvailableBeaconLocations_Windows>( Marshal.ReadIntPtr( VTable, 40) );
 			_CreateBeacon = Marshal.GetDelegateForFunctionPointer<FCreateBeacon>( Marshal.ReadIntPtr( VTable, 48) );
+			_CreateBeacon_Windows = Marshal.GetDelegateForFunctionPointer<FCreateBeacon_Windows>( Marshal.ReadIntPtr( VTable, 48) );
 			_OnReservationCompleted = Marshal.GetDelegateForFunctionPointer<FOnReservationCompleted>( Marshal.ReadIntPtr( VTable, 56) );
 			_CancelReservation = Marshal.GetDelegateForFunctionPointer<FCancelReservation>( Marshal.ReadIntPtr( VTable, 64) );
 			_ChangeNumOpenSlots = Marshal.GetDelegateForFunctionPointer<FChangeNumOpenSlots>( Marshal.ReadIntPtr( VTable, 72) );
 			_DestroyBeacon = Marshal.GetDelegateForFunctionPointer<FDestroyBeacon>( Marshal.ReadIntPtr( VTable, 80) );
 			_GetBeaconLocationData = Marshal.GetDelegateForFunctionPointer<FGetBeaconLocationData>( Marshal.ReadIntPtr( VTable, 88) );
+			_GetBeaconLocationData_Windows = Marshal.GetDelegateForFunctionPointer<FGetBeaconLocationData_Windows>( Marshal.ReadIntPtr( VTable, 88) );
 		}
 		
 		#region FunctionMeta
@@ -54,10 +58,22 @@ namespace Steamworks
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private delegate bool FGetBeaconDetails( IntPtr self, PartyBeaconID_t ulBeaconID, ref SteamId pSteamIDBeaconOwner, ref SteamPartyBeaconLocation_t pLocation, StringBuilder pchMetadata, int cchMetadata );
 		private FGetBeaconDetails _GetBeaconDetails;
+		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private delegate bool FGetBeaconDetails_Windows( IntPtr self, PartyBeaconID_t ulBeaconID, ref SteamId pSteamIDBeaconOwner, ref SteamPartyBeaconLocation_t.Pack8 pLocation, StringBuilder pchMetadata, int cchMetadata );
+		private FGetBeaconDetails_Windows _GetBeaconDetails_Windows;
 		
 		#endregion
 		internal bool GetBeaconDetails( PartyBeaconID_t ulBeaconID, ref SteamId pSteamIDBeaconOwner, ref SteamPartyBeaconLocation_t pLocation, StringBuilder pchMetadata, int cchMetadata )
 		{
+			if ( Config.Os == OsType.Windows )
+			{
+				SteamPartyBeaconLocation_t.Pack8 pLocation_windows = pLocation;
+				var retVal = _GetBeaconDetails_Windows( Self, ulBeaconID, ref pSteamIDBeaconOwner, ref pLocation_windows, pchMetadata, cchMetadata );
+				pLocation = pLocation_windows;
+				return retVal;
+			}
+			
 			return _GetBeaconDetails( Self, ulBeaconID, ref pSteamIDBeaconOwner, ref pLocation, pchMetadata, cchMetadata );
 		}
 		
@@ -89,10 +105,22 @@ namespace Steamworks
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private delegate bool FGetAvailableBeaconLocations( IntPtr self, ref SteamPartyBeaconLocation_t pLocationList, uint uMaxNumLocations );
 		private FGetAvailableBeaconLocations _GetAvailableBeaconLocations;
+		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private delegate bool FGetAvailableBeaconLocations_Windows( IntPtr self, ref SteamPartyBeaconLocation_t.Pack8 pLocationList, uint uMaxNumLocations );
+		private FGetAvailableBeaconLocations_Windows _GetAvailableBeaconLocations_Windows;
 		
 		#endregion
 		internal bool GetAvailableBeaconLocations( ref SteamPartyBeaconLocation_t pLocationList, uint uMaxNumLocations )
 		{
+			if ( Config.Os == OsType.Windows )
+			{
+				SteamPartyBeaconLocation_t.Pack8 pLocationList_windows = pLocationList;
+				var retVal = _GetAvailableBeaconLocations_Windows( Self, ref pLocationList_windows, uMaxNumLocations );
+				pLocationList = pLocationList_windows;
+				return retVal;
+			}
+			
 			return _GetAvailableBeaconLocations( Self, ref pLocationList, uMaxNumLocations );
 		}
 		
@@ -100,10 +128,21 @@ namespace Steamworks
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		private delegate SteamAPICall_t FCreateBeacon( IntPtr self, uint unOpenSlots, ref SteamPartyBeaconLocation_t pBeaconLocation, string pchConnectString, string pchMetadata );
 		private FCreateBeacon _CreateBeacon;
+		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
+		private delegate SteamAPICall_t FCreateBeacon_Windows( IntPtr self, uint unOpenSlots, ref SteamPartyBeaconLocation_t.Pack8 pBeaconLocation, string pchConnectString, string pchMetadata );
+		private FCreateBeacon_Windows _CreateBeacon_Windows;
 		
 		#endregion
 		internal async Task<CreateBeaconCallback_t?> CreateBeacon( uint unOpenSlots,  /* ref */ SteamPartyBeaconLocation_t pBeaconLocation, string pchConnectString, string pchMetadata )
 		{
+			if ( Config.Os == OsType.Windows )
+			{
+				SteamPartyBeaconLocation_t.Pack8 pBeaconLocation_windows = pBeaconLocation;
+				var retVal = _CreateBeacon_Windows( Self, unOpenSlots, ref pBeaconLocation_windows, pchConnectString, pchMetadata );
+				pBeaconLocation = pBeaconLocation_windows;
+				return await CreateBeaconCallback_t.GetResultAsync( retVal );
+			}
+			
 			return await CreateBeaconCallback_t.GetResultAsync( _CreateBeacon( Self, unOpenSlots, ref pBeaconLocation, pchConnectString, pchMetadata ) );
 		}
 		
@@ -157,10 +196,22 @@ namespace Steamworks
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private delegate bool FGetBeaconLocationData( IntPtr self, SteamPartyBeaconLocation_t BeaconLocation, SteamPartyBeaconLocationData eData, StringBuilder pchDataStringOut, int cchDataStringOut );
 		private FGetBeaconLocationData _GetBeaconLocationData;
+		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private delegate bool FGetBeaconLocationData_Windows( IntPtr self, SteamPartyBeaconLocation_t.Pack8 BeaconLocation, SteamPartyBeaconLocationData eData, StringBuilder pchDataStringOut, int cchDataStringOut );
+		private FGetBeaconLocationData_Windows _GetBeaconLocationData_Windows;
 		
 		#endregion
 		internal bool GetBeaconLocationData( SteamPartyBeaconLocation_t BeaconLocation, SteamPartyBeaconLocationData eData, StringBuilder pchDataStringOut, int cchDataStringOut )
 		{
+			if ( Config.Os == OsType.Windows )
+			{
+				SteamPartyBeaconLocation_t.Pack8 BeaconLocation_windows = BeaconLocation;
+				var retVal = _GetBeaconLocationData_Windows( Self, BeaconLocation, eData, pchDataStringOut, cchDataStringOut );
+				BeaconLocation = BeaconLocation_windows;
+				return retVal;
+			}
+			
 			return _GetBeaconLocationData( Self, BeaconLocation, eData, pchDataStringOut, cchDataStringOut );
 		}
 		

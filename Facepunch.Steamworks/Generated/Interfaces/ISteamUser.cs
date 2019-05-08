@@ -73,6 +73,7 @@ namespace Steamworks
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		private delegate SteamId FGetSteamID( IntPtr self );
 		private FGetSteamID _GetSteamID;
+		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		private delegate void FGetSteamID_Windows( IntPtr self, ref SteamId retVal );
 		private FGetSteamID_Windows _GetSteamID_Windows;
 		

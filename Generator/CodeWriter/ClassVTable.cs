@@ -89,7 +89,9 @@ namespace Generator
 				{
 					var func = clss.Functions[i];
 					var returnType = BaseType.Parse( func.ReturnType );
+					var args = func.Arguments.Select( x => BaseType.Parse( x.Value, x.Key ) ).ToArray();
 					var regularpos = i * 8;
+					var windowsSpecific = NeedsWindowsSpecificFunction( func, returnType, args );
 
 					if ( Cleanup.IsDeprecated( $"{clss.Name}.{func.Name}" ) )
 					{
@@ -97,26 +99,33 @@ namespace Generator
 					}
 					else
 					{
-						if ( regularpos != locations[i] )
-						{
-							WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, Config.Os == OsType.Windows ? {locations[i]} : {regularpos} ) );" );
-							if ( returnType.IsReturnedWeird )
-								throw new System.NotImplementedException();
-						}
-						else
-						{
-							WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, {locations[i]}) );" );
+						var pos = $"Config.Os == OsType.Windows ? {locations[i]} : {regularpos} ";
 
-							if ( returnType.IsReturnedWeird )
-							{
-								WriteLine( $"_{func.Name}_Windows = Marshal.GetDelegateForFunctionPointer<F{func.Name}_Windows>( Marshal.ReadIntPtr( VTable, {locations[i]}) );" );
-							}
+						if ( regularpos == locations[i] )
+							pos = regularpos.ToString();
+
+						WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, {pos}) );" );
+
+						if ( windowsSpecific )
+						{
+							WriteLine( $"_{func.Name}_Windows = Marshal.GetDelegateForFunctionPointer<F{func.Name}_Windows>( Marshal.ReadIntPtr( VTable, {pos}) );" );
 						}
+						
 					}
 				}
 			}
 			EndBlock();
 		}
+
+		private bool NeedsWindowsSpecificFunction( CodeParser.Class.Function func, BaseType returnType, BaseType[] args )
+		{
+			if ( returnType.IsReturnedWeird ) return true;
+			if ( returnType.WindowsSpecific ) return true;
+			if ( args.Any( x => x.WindowsSpecific ) ) return true;
+
+			return false;
+		}
+
 
 		private void Swap( CodeParser.Class clss, string v1, string v2, int[] locations )
 		{
@@ -130,7 +139,6 @@ namespace Generator
 
 		private void WriteFunction( CodeParser.Class clss, CodeParser.Class.Function func )
 		{
-
 			var returnType = BaseType.Parse( func.ReturnType );
 			returnType.Func = func.Name;
 
@@ -142,6 +150,8 @@ namespace Generator
 			} ).ToArray();
 			var argstr = string.Join( ", ", args.Select( x => x.AsArgument() ) );
 			var delegateargstr = string.Join( ", ", args.Select( x => x.AsArgument() ) );
+
+			var windowsSpecific = NeedsWindowsSpecificFunction( func, returnType, args );
 
 			if ( returnType is SteamApiCallType sap )
 			{
@@ -160,11 +170,25 @@ namespace Generator
 			WriteLine( $"private delegate {returnType.TypeNameFrom} F{func.Name}( IntPtr self, {delegateargstr} );".Replace( "( IntPtr self,  )", "( IntPtr self )" ) );
 			WriteLine( $"private F{func.Name} _{func.Name};" );
 
-			if ( returnType.IsReturnedWeird )
+			if ( windowsSpecific )
 			{
-				var windelargs = $"ref {returnType.TypeName} retVal, {delegateargstr}".Trim( ',', ' ' );
+				var delegateargstrw = string.Join( ", ", args.Select( x => x.AsWinArgument() ) );
+				WriteLine( $"[UnmanagedFunctionPointer( CallingConvention.ThisCall )]" );
 
-				WriteLine( $"private delegate void F{func.Name}_Windows( IntPtr self, {windelargs} );".Replace( "( IntPtr self,  )", "( IntPtr self )" ) );
+				if ( returnType.IsReturnedWeird )
+				{
+					var windelargs = $"ref {returnType.TypeName} retVal, {delegateargstrw}".Trim( ',', ' ' );
+					WriteLine( $"private delegate void F{func.Name}_Windows( IntPtr self, {windelargs} );".Replace( "( IntPtr self,  )", "( IntPtr self )" ) );
+				}
+				else
+				{
+					if ( returnType.ReturnAttribute != null )
+						WriteLine( returnType.ReturnAttribute );
+
+					
+					WriteLine( $"private delegate {returnType.TypeNameFrom} F{func.Name}_Windows( IntPtr self, {delegateargstrw} );".Replace( "( IntPtr self,  )", "( IntPtr self )" ) );
+				}
+
 				WriteLine( $"private F{func.Name}_Windows _{func.Name}_Windows;" );
 			}
 
@@ -182,6 +206,48 @@ namespace Generator
 						WriteLine( $"var retVal = default( {returnType.TypeName} );" );
 						WriteLine( $"_{func.Name}_Windows( Self, ref retVal, {callargs} );".Replace( ",  );", " );" ) );
 						WriteLine( $"{returnType.Return( "retVal" )}" );
+					}
+					EndBlock();
+					WriteLine();
+				}
+				else if ( windowsSpecific )
+				{
+					StartBlock( "if ( Config.Os == OsType.Windows )" );
+					{
+						var wincallargs = callargs;
+
+						foreach ( var arg in args )
+						{
+							if ( !arg.WindowsSpecific ) continue;
+
+							if ( arg.IsVector )
+							{
+								WriteLine( $"{arg.TypeName}.Pack8[] {arg.VarName}_windows = {arg.VarName};" );
+							}
+							else
+							{
+								WriteLine( $"{arg.TypeName}.Pack8 {arg.VarName}_windows = {arg.VarName};" );
+							}
+
+							wincallargs = wincallargs.Replace( $" {arg.VarName}", $" {arg.VarName}_windows" );
+						}
+
+						if ( !returnType.IsVoid )
+							Write( "var retVal = " );
+
+						WriteLine( $"_{func.Name}_Windows( Self, {wincallargs} );".Replace( "( Self,  )", "( Self )" ) );
+
+						foreach ( var arg in args )
+						{
+							if ( !arg.WindowsSpecific ) continue;
+
+							WriteLine( $"{arg.VarName} = {arg.VarName}_windows;" );
+						}
+
+						if ( !returnType.IsVoid )
+						{
+							WriteLine( returnType.Return( "retVal" ) );
+						}
 					}
 					EndBlock();
 					WriteLine();

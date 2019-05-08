@@ -194,6 +194,7 @@ namespace Steamworks
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		private delegate SteamId FGetLobbyByIndex( IntPtr self, int iLobby );
 		private FGetLobbyByIndex _GetLobbyByIndex;
+		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		private delegate void FGetLobbyByIndex_Windows( IntPtr self, ref SteamId retVal, int iLobby );
 		private FGetLobbyByIndex_Windows _GetLobbyByIndex_Windows;
 		
@@ -270,6 +271,7 @@ namespace Steamworks
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		private delegate SteamId FGetLobbyMemberByIndex( IntPtr self, SteamId steamIDLobby, int iMember );
 		private FGetLobbyMemberByIndex _GetLobbyMemberByIndex;
+		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		private delegate void FGetLobbyMemberByIndex_Windows( IntPtr self, ref SteamId retVal, SteamId steamIDLobby, int iMember );
 		private FGetLobbyMemberByIndex_Windows _GetLobbyMemberByIndex_Windows;
 		
@@ -475,6 +477,7 @@ namespace Steamworks
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		private delegate SteamId FGetLobbyOwner( IntPtr self, SteamId steamIDLobby );
 		private FGetLobbyOwner _GetLobbyOwner;
+		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		private delegate void FGetLobbyOwner_Windows( IntPtr self, ref SteamId retVal, SteamId steamIDLobby );
 		private FGetLobbyOwner_Windows _GetLobbyOwner_Windows;
 		

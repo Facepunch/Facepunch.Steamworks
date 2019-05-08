@@ -28,6 +28,7 @@ namespace Steamworks.Data
 			internal int ParamCount; // m_cubParam int
 			
 			public static implicit operator CallbackMsg_t ( CallbackMsg_t.Pack8 d ) => new CallbackMsg_t{ SteamUser = d.SteamUser,Callback = d.Callback,ParamPtr = d.ParamPtr,ParamCount = d.ParamCount, };
+			public static implicit operator CallbackMsg_t.Pack8 ( CallbackMsg_t d ) => new CallbackMsg_t.Pack8{ SteamUser = d.SteamUser,Callback = d.Callback,ParamPtr = d.ParamPtr,ParamCount = d.ParamCount, };
 		}
 		#endregion
 	}
@@ -95,6 +96,7 @@ namespace Steamworks.Data
 			internal bool StillRetrying; // m_bStillRetrying _Bool
 			
 			public static implicit operator SteamServerConnectFailure_t ( SteamServerConnectFailure_t.Pack8 d ) => new SteamServerConnectFailure_t{ Result = d.Result,StillRetrying = d.StillRetrying, };
+			public static implicit operator SteamServerConnectFailure_t.Pack8 ( SteamServerConnectFailure_t d ) => new SteamServerConnectFailure_t.Pack8{ Result = d.Result,StillRetrying = d.StillRetrying, };
 		}
 		#endregion
 	}
@@ -158,6 +160,7 @@ namespace Steamworks.Data
 			internal Result Result; // m_eResult enum EResult
 			
 			public static implicit operator SteamServersDisconnected_t ( SteamServersDisconnected_t.Pack8 d ) => new SteamServersDisconnected_t{ Result = d.Result, };
+			public static implicit operator SteamServersDisconnected_t.Pack8 ( SteamServersDisconnected_t d ) => new SteamServersDisconnected_t.Pack8{ Result = d.Result, };
 		}
 		#endregion
 	}
@@ -229,6 +232,7 @@ namespace Steamworks.Data
 			internal uint Reason; // m_uReason uint32
 			
 			public static implicit operator ClientGameServerDeny_t ( ClientGameServerDeny_t.Pack8 d ) => new ClientGameServerDeny_t{ AppID = d.AppID,GameServerIP = d.GameServerIP,GameServerPort = d.GameServerPort,Secure = d.Secure,Reason = d.Reason, };
+			public static implicit operator ClientGameServerDeny_t.Pack8 ( ClientGameServerDeny_t d ) => new ClientGameServerDeny_t.Pack8{ AppID = d.AppID,GameServerIP = d.GameServerIP,GameServerPort = d.GameServerPort,Secure = d.Secure,Reason = d.Reason, };
 		}
 		#endregion
 	}
@@ -351,6 +355,7 @@ namespace Steamworks.Data
 			internal byte Authorized; // m_bAuthorized uint8
 			
 			public static implicit operator MicroTxnAuthorizationResponse_t ( MicroTxnAuthorizationResponse_t.Pack8 d ) => new MicroTxnAuthorizationResponse_t{ AppID = d.AppID,OrderID = d.OrderID,Authorized = d.Authorized, };
+			public static implicit operator MicroTxnAuthorizationResponse_t.Pack8 ( MicroTxnAuthorizationResponse_t d ) => new MicroTxnAuthorizationResponse_t.Pack8{ AppID = d.AppID,OrderID = d.OrderID,Authorized = d.Authorized, };
 		}
 		#endregion
 	}
@@ -414,6 +419,7 @@ namespace Steamworks.Data
 			internal Result Result; // m_eResult enum EResult
 			
 			public static implicit operator EncryptedAppTicketResponse_t ( EncryptedAppTicketResponse_t.Pack8 d ) => new EncryptedAppTicketResponse_t{ Result = d.Result, };
+			public static implicit operator EncryptedAppTicketResponse_t.Pack8 ( EncryptedAppTicketResponse_t d ) => new EncryptedAppTicketResponse_t.Pack8{ Result = d.Result, };
 		}
 		#endregion
 	}
@@ -479,6 +485,7 @@ namespace Steamworks.Data
 			internal Result Result; // m_eResult enum EResult
 			
 			public static implicit operator GetAuthSessionTicketResponse_t ( GetAuthSessionTicketResponse_t.Pack8 d ) => new GetAuthSessionTicketResponse_t{ AuthTicket = d.AuthTicket,Result = d.Result, };
+			public static implicit operator GetAuthSessionTicketResponse_t.Pack8 ( GetAuthSessionTicketResponse_t d ) => new GetAuthSessionTicketResponse_t.Pack8{ AuthTicket = d.AuthTicket,Result = d.Result, };
 		}
 		#endregion
 	}
@@ -544,6 +551,7 @@ namespace Steamworks.Data
 			internal string URL; // m_szURL char [256]
 			
 			public static implicit operator GameWebCallback_t ( GameWebCallback_t.Pack8 d ) => new GameWebCallback_t{ URL = d.URL, };
+			public static implicit operator GameWebCallback_t.Pack8 ( GameWebCallback_t d ) => new GameWebCallback_t.Pack8{ URL = d.URL, };
 		}
 		#endregion
 	}
@@ -609,6 +617,7 @@ namespace Steamworks.Data
 			internal string URL; // m_szURL char [512]
 			
 			public static implicit operator StoreAuthURLResponse_t ( StoreAuthURLResponse_t.Pack8 d ) => new StoreAuthURLResponse_t{ URL = d.URL, };
+			public static implicit operator StoreAuthURLResponse_t.Pack8 ( StoreAuthURLResponse_t d ) => new StoreAuthURLResponse_t.Pack8{ URL = d.URL, };
 		}
 		#endregion
 	}
@@ -682,6 +691,7 @@ namespace Steamworks.Data
 			internal int CdayNewDeviceCooldown; // m_cdayNewDeviceCooldown int
 			
 			public static implicit operator MarketEligibilityResponse_t ( MarketEligibilityResponse_t.Pack8 d ) => new MarketEligibilityResponse_t{ Allowed = d.Allowed,NotAllowedReason = d.NotAllowedReason,TAllowedAtTime = d.TAllowedAtTime,CdaySteamGuardRequiredDays = d.CdaySteamGuardRequiredDays,CdayNewDeviceCooldown = d.CdayNewDeviceCooldown, };
+			public static implicit operator MarketEligibilityResponse_t.Pack8 ( MarketEligibilityResponse_t d ) => new MarketEligibilityResponse_t.Pack8{ Allowed = d.Allowed,NotAllowedReason = d.NotAllowedReason,TAllowedAtTime = d.TAllowedAtTime,CdaySteamGuardRequiredDays = d.CdaySteamGuardRequiredDays,CdayNewDeviceCooldown = d.CdayNewDeviceCooldown, };
 		}
 		#endregion
 	}
@@ -718,6 +728,7 @@ namespace Steamworks.Data
 			internal byte IPublishedToFriendsSessionInstance; // m_uiPublishedToFriendsSessionInstance uint8
 			
 			public static implicit operator FriendSessionStateInfo_t ( FriendSessionStateInfo_t.Pack8 d ) => new FriendSessionStateInfo_t{ IOnlineSessionInstances = d.IOnlineSessionInstances,IPublishedToFriendsSessionInstance = d.IPublishedToFriendsSessionInstance, };
+			public static implicit operator FriendSessionStateInfo_t.Pack8 ( FriendSessionStateInfo_t d ) => new FriendSessionStateInfo_t.Pack8{ IOnlineSessionInstances = d.IOnlineSessionInstances,IPublishedToFriendsSessionInstance = d.IPublishedToFriendsSessionInstance, };
 		}
 		#endregion
 	}
@@ -783,6 +794,7 @@ namespace Steamworks.Data
 			internal int ChangeFlags; // m_nChangeFlags int
 			
 			public static implicit operator FriendStateChange_t ( FriendStateChange_t.Pack8 d ) => new FriendStateChange_t{ SteamID = d.SteamID,ChangeFlags = d.ChangeFlags, };
+			public static implicit operator FriendStateChange_t.Pack8 ( FriendStateChange_t d ) => new FriendStateChange_t.Pack8{ SteamID = d.SteamID,ChangeFlags = d.ChangeFlags, };
 		}
 		#endregion
 	}
@@ -846,6 +858,7 @@ namespace Steamworks.Data
 			internal byte Active; // m_bActive uint8
 			
 			public static implicit operator GameOverlayActivated_t ( GameOverlayActivated_t.Pack8 d ) => new GameOverlayActivated_t{ Active = d.Active, };
+			public static implicit operator GameOverlayActivated_t.Pack8 ( GameOverlayActivated_t d ) => new GameOverlayActivated_t.Pack8{ Active = d.Active, };
 		}
 		#endregion
 	}
@@ -915,6 +928,7 @@ namespace Steamworks.Data
 			internal string Password; // m_rgchPassword char [64]
 			
 			public static implicit operator GameServerChangeRequested_t ( GameServerChangeRequested_t.Pack8 d ) => new GameServerChangeRequested_t{ Server = d.Server,Password = d.Password, };
+			public static implicit operator GameServerChangeRequested_t.Pack8 ( GameServerChangeRequested_t d ) => new GameServerChangeRequested_t.Pack8{ Server = d.Server,Password = d.Password, };
 		}
 		#endregion
 	}
@@ -1421,6 +1435,7 @@ namespace Steamworks.Data
 			internal bool Success; // m_bSuccess _Bool
 			
 			public static implicit operator DownloadClanActivityCountsResult_t ( DownloadClanActivityCountsResult_t.Pack8 d ) => new DownloadClanActivityCountsResult_t{ Success = d.Success, };
+			public static implicit operator DownloadClanActivityCountsResult_t.Pack8 ( DownloadClanActivityCountsResult_t d ) => new DownloadClanActivityCountsResult_t.Pack8{ Success = d.Success, };
 		}
 		#endregion
 	}
@@ -1768,6 +1783,7 @@ namespace Steamworks.Data
 			internal Result Result; // m_result enum EResult
 			
 			public static implicit operator SetPersonaNameResponse_t ( SetPersonaNameResponse_t.Pack8 d ) => new SetPersonaNameResponse_t{ Success = d.Success,LocalSuccess = d.LocalSuccess,Result = d.Result, };
+			public static implicit operator SetPersonaNameResponse_t.Pack8 ( SetPersonaNameResponse_t d ) => new SetPersonaNameResponse_t.Pack8{ Success = d.Success,LocalSuccess = d.LocalSuccess,Result = d.Result, };
 		}
 		#endregion
 	}
@@ -1831,6 +1847,7 @@ namespace Steamworks.Data
 			internal byte MinutesBatteryLeft; // m_nMinutesBatteryLeft uint8
 			
 			public static implicit operator LowBatteryPower_t ( LowBatteryPower_t.Pack8 d ) => new LowBatteryPower_t{ MinutesBatteryLeft = d.MinutesBatteryLeft, };
+			public static implicit operator LowBatteryPower_t.Pack8 ( LowBatteryPower_t d ) => new LowBatteryPower_t.Pack8{ MinutesBatteryLeft = d.MinutesBatteryLeft, };
 		}
 		#endregion
 	}
@@ -1898,6 +1915,7 @@ namespace Steamworks.Data
 			internal uint ParamCount; // m_cubParam uint32
 			
 			public static implicit operator SteamAPICallCompleted_t ( SteamAPICallCompleted_t.Pack8 d ) => new SteamAPICallCompleted_t{ AsyncCall = d.AsyncCall,Callback = d.Callback,ParamCount = d.ParamCount, };
+			public static implicit operator SteamAPICallCompleted_t.Pack8 ( SteamAPICallCompleted_t d ) => new SteamAPICallCompleted_t.Pack8{ AsyncCall = d.AsyncCall,Callback = d.Callback,ParamCount = d.ParamCount, };
 		}
 		#endregion
 	}
@@ -1961,6 +1979,7 @@ namespace Steamworks.Data
 			internal CheckFileSignature CheckFileSignature; // m_eCheckFileSignature enum ECheckFileSignature
 			
 			public static implicit operator CheckFileSignature_t ( CheckFileSignature_t.Pack8 d ) => new CheckFileSignature_t{ CheckFileSignature = d.CheckFileSignature, };
+			public static implicit operator CheckFileSignature_t.Pack8 ( CheckFileSignature_t d ) => new CheckFileSignature_t.Pack8{ CheckFileSignature = d.CheckFileSignature, };
 		}
 		#endregion
 	}
@@ -2028,6 +2047,7 @@ namespace Steamworks.Data
 			internal uint SubmittedText; // m_unSubmittedText uint32
 			
 			public static implicit operator GamepadTextInputDismissed_t ( GamepadTextInputDismissed_t.Pack8 d ) => new GamepadTextInputDismissed_t{ Submitted = d.Submitted,SubmittedText = d.SubmittedText, };
+			public static implicit operator GamepadTextInputDismissed_t.Pack8 ( GamepadTextInputDismissed_t d ) => new GamepadTextInputDismissed_t.Pack8{ Submitted = d.Submitted,SubmittedText = d.SubmittedText, };
 		}
 		#endregion
 	}
@@ -2041,20 +2061,7 @@ namespace Steamworks.Data
 		internal string Value; // m_szValue char [256]
 		
 		#region Marshalling
-		internal static MatchMakingKeyValuePair_t Fill( IntPtr p ) => Config.PackSmall ? ((MatchMakingKeyValuePair_t)(MatchMakingKeyValuePair_t) Marshal.PtrToStructure( p, typeof(MatchMakingKeyValuePair_t) )) : ((MatchMakingKeyValuePair_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-			internal string Key; // m_szKey char [256]
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-			internal string Value; // m_szValue char [256]
-			
-			public static implicit operator MatchMakingKeyValuePair_t ( MatchMakingKeyValuePair_t.Pack8 d ) => new MatchMakingKeyValuePair_t{ Key = d.Key,Value = d.Value, };
-		}
+		internal static MatchMakingKeyValuePair_t Fill( IntPtr p ) => ((MatchMakingKeyValuePair_t)(MatchMakingKeyValuePair_t) Marshal.PtrToStructure( p, typeof(MatchMakingKeyValuePair_t) ) );
 		#endregion
 	}
 	
@@ -2078,6 +2085,7 @@ namespace Steamworks.Data
 			internal uint IP; // m_unIP uint32
 			
 			public static implicit operator servernetadr_t ( servernetadr_t.Pack8 d ) => new servernetadr_t{ ConnectionPort = d.ConnectionPort,QueryPort = d.QueryPort,IP = d.IP, };
+			public static implicit operator servernetadr_t.Pack8 ( servernetadr_t d ) => new servernetadr_t.Pack8{ ConnectionPort = d.ConnectionPort,QueryPort = d.QueryPort,IP = d.IP, };
 		}
 		#endregion
 	}
@@ -2136,6 +2144,7 @@ namespace Steamworks.Data
 			internal ulong LocationID; // m_ulLocationID uint64
 			
 			public static implicit operator SteamPartyBeaconLocation_t ( SteamPartyBeaconLocation_t.Pack8 d ) => new SteamPartyBeaconLocation_t{ Type = d.Type,LocationID = d.LocationID, };
+			public static implicit operator SteamPartyBeaconLocation_t.Pack8 ( SteamPartyBeaconLocation_t d ) => new SteamPartyBeaconLocation_t.Pack8{ Type = d.Type,LocationID = d.LocationID, };
 		}
 		#endregion
 	}
@@ -2213,6 +2222,7 @@ namespace Steamworks.Data
 			internal uint AccountId; // m_unAccountId AccountID_t
 			
 			public static implicit operator FavoritesListChanged_t ( FavoritesListChanged_t.Pack8 d ) => new FavoritesListChanged_t{ IP = d.IP,QueryPort = d.QueryPort,ConnPort = d.ConnPort,AppID = d.AppID,Flags = d.Flags,Add = d.Add,AccountId = d.AccountId, };
+			public static implicit operator FavoritesListChanged_t.Pack8 ( FavoritesListChanged_t d ) => new FavoritesListChanged_t.Pack8{ IP = d.IP,QueryPort = d.QueryPort,ConnPort = d.ConnPort,AppID = d.AppID,Flags = d.Flags,Add = d.Add,AccountId = d.AccountId, };
 		}
 		#endregion
 	}
@@ -2280,6 +2290,7 @@ namespace Steamworks.Data
 			internal ulong GameID; // m_ulGameID uint64
 			
 			public static implicit operator LobbyInvite_t ( LobbyInvite_t.Pack8 d ) => new LobbyInvite_t{ SteamIDUser = d.SteamIDUser,SteamIDLobby = d.SteamIDLobby,GameID = d.GameID, };
+			public static implicit operator LobbyInvite_t.Pack8 ( LobbyInvite_t d ) => new LobbyInvite_t.Pack8{ SteamIDUser = d.SteamIDUser,SteamIDLobby = d.SteamIDLobby,GameID = d.GameID, };
 		}
 		#endregion
 	}
@@ -2351,6 +2362,7 @@ namespace Steamworks.Data
 			internal uint EChatRoomEnterResponse; // m_EChatRoomEnterResponse uint32
 			
 			public static implicit operator LobbyEnter_t ( LobbyEnter_t.Pack8 d ) => new LobbyEnter_t{ SteamIDLobby = d.SteamIDLobby,GfChatPermissions = d.GfChatPermissions,Locked = d.Locked,EChatRoomEnterResponse = d.EChatRoomEnterResponse, };
+			public static implicit operator LobbyEnter_t.Pack8 ( LobbyEnter_t d ) => new LobbyEnter_t.Pack8{ SteamIDLobby = d.SteamIDLobby,GfChatPermissions = d.GfChatPermissions,Locked = d.Locked,EChatRoomEnterResponse = d.EChatRoomEnterResponse, };
 		}
 		#endregion
 	}
@@ -2418,6 +2430,7 @@ namespace Steamworks.Data
 			internal byte Success; // m_bSuccess uint8
 			
 			public static implicit operator LobbyDataUpdate_t ( LobbyDataUpdate_t.Pack8 d ) => new LobbyDataUpdate_t{ SteamIDLobby = d.SteamIDLobby,SteamIDMember = d.SteamIDMember,Success = d.Success, };
+			public static implicit operator LobbyDataUpdate_t.Pack8 ( LobbyDataUpdate_t d ) => new LobbyDataUpdate_t.Pack8{ SteamIDLobby = d.SteamIDLobby,SteamIDMember = d.SteamIDMember,Success = d.Success, };
 		}
 		#endregion
 	}
@@ -2487,6 +2500,7 @@ namespace Steamworks.Data
 			internal uint GfChatMemberStateChange; // m_rgfChatMemberStateChange uint32
 			
 			public static implicit operator LobbyChatUpdate_t ( LobbyChatUpdate_t.Pack8 d ) => new LobbyChatUpdate_t{ SteamIDLobby = d.SteamIDLobby,SteamIDUserChanged = d.SteamIDUserChanged,SteamIDMakingChange = d.SteamIDMakingChange,GfChatMemberStateChange = d.GfChatMemberStateChange, };
+			public static implicit operator LobbyChatUpdate_t.Pack8 ( LobbyChatUpdate_t d ) => new LobbyChatUpdate_t.Pack8{ SteamIDLobby = d.SteamIDLobby,SteamIDUserChanged = d.SteamIDUserChanged,SteamIDMakingChange = d.SteamIDMakingChange,GfChatMemberStateChange = d.GfChatMemberStateChange, };
 		}
 		#endregion
 	}
@@ -2556,6 +2570,7 @@ namespace Steamworks.Data
 			internal uint ChatID; // m_iChatID uint32
 			
 			public static implicit operator LobbyChatMsg_t ( LobbyChatMsg_t.Pack8 d ) => new LobbyChatMsg_t{ SteamIDLobby = d.SteamIDLobby,SteamIDUser = d.SteamIDUser,ChatEntryType = d.ChatEntryType,ChatID = d.ChatID, };
+			public static implicit operator LobbyChatMsg_t.Pack8 ( LobbyChatMsg_t d ) => new LobbyChatMsg_t.Pack8{ SteamIDLobby = d.SteamIDLobby,SteamIDUser = d.SteamIDUser,ChatEntryType = d.ChatEntryType,ChatID = d.ChatID, };
 		}
 		#endregion
 	}
@@ -2625,6 +2640,7 @@ namespace Steamworks.Data
 			internal ushort Port; // m_usPort uint16
 			
 			public static implicit operator LobbyGameCreated_t ( LobbyGameCreated_t.Pack8 d ) => new LobbyGameCreated_t{ SteamIDLobby = d.SteamIDLobby,SteamIDGameServer = d.SteamIDGameServer,IP = d.IP,Port = d.Port, };
+			public static implicit operator LobbyGameCreated_t.Pack8 ( LobbyGameCreated_t d ) => new LobbyGameCreated_t.Pack8{ SteamIDLobby = d.SteamIDLobby,SteamIDGameServer = d.SteamIDGameServer,IP = d.IP,Port = d.Port, };
 		}
 		#endregion
 	}
@@ -2688,6 +2704,7 @@ namespace Steamworks.Data
 			internal uint LobbiesMatching; // m_nLobbiesMatching uint32
 			
 			public static implicit operator LobbyMatchList_t ( LobbyMatchList_t.Pack8 d ) => new LobbyMatchList_t{ LobbiesMatching = d.LobbiesMatching, };
+			public static implicit operator LobbyMatchList_t.Pack8 ( LobbyMatchList_t d ) => new LobbyMatchList_t.Pack8{ LobbiesMatching = d.LobbiesMatching, };
 		}
 		#endregion
 	}
@@ -2755,6 +2772,7 @@ namespace Steamworks.Data
 			internal byte KickedDueToDisconnect; // m_bKickedDueToDisconnect uint8
 			
 			public static implicit operator LobbyKicked_t ( LobbyKicked_t.Pack8 d ) => new LobbyKicked_t{ SteamIDLobby = d.SteamIDLobby,SteamIDAdmin = d.SteamIDAdmin,KickedDueToDisconnect = d.KickedDueToDisconnect, };
+			public static implicit operator LobbyKicked_t.Pack8 ( LobbyKicked_t d ) => new LobbyKicked_t.Pack8{ SteamIDLobby = d.SteamIDLobby,SteamIDAdmin = d.SteamIDAdmin,KickedDueToDisconnect = d.KickedDueToDisconnect, };
 		}
 		#endregion
 	}
@@ -2820,6 +2838,7 @@ namespace Steamworks.Data
 			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 			
 			public static implicit operator LobbyCreated_t ( LobbyCreated_t.Pack8 d ) => new LobbyCreated_t{ Result = d.Result,SteamIDLobby = d.SteamIDLobby, };
+			public static implicit operator LobbyCreated_t.Pack8 ( LobbyCreated_t d ) => new LobbyCreated_t.Pack8{ Result = d.Result,SteamIDLobby = d.SteamIDLobby, };
 		}
 		#endregion
 	}
@@ -2938,6 +2957,7 @@ namespace Steamworks.Data
 			internal Result Result; // m_eResult enum EResult
 			
 			public static implicit operator FavoritesListAccountsUpdated_t ( FavoritesListAccountsUpdated_t.Pack8 d ) => new FavoritesListAccountsUpdated_t{ Result = d.Result, };
+			public static implicit operator FavoritesListAccountsUpdated_t.Pack8 ( FavoritesListAccountsUpdated_t d ) => new FavoritesListAccountsUpdated_t.Pack8{ Result = d.Result, };
 		}
 		#endregion
 	}
@@ -3120,6 +3140,7 @@ namespace Steamworks.Data
 			internal ulong LSearchID; // m_ullSearchID uint64
 			
 			public static implicit operator RequestPlayersForGameProgressCallback_t ( RequestPlayersForGameProgressCallback_t.Pack8 d ) => new RequestPlayersForGameProgressCallback_t{ Result = d.Result,LSearchID = d.LSearchID, };
+			public static implicit operator RequestPlayersForGameProgressCallback_t.Pack8 ( RequestPlayersForGameProgressCallback_t d ) => new RequestPlayersForGameProgressCallback_t.Pack8{ Result = d.Result,LSearchID = d.LSearchID, };
 		}
 		#endregion
 	}
@@ -3249,6 +3270,7 @@ namespace Steamworks.Data
 			internal ulong LUniqueGameID; // m_ullUniqueGameID uint64
 			
 			public static implicit operator RequestPlayersForGameFinalResultCallback_t ( RequestPlayersForGameFinalResultCallback_t.Pack8 d ) => new RequestPlayersForGameFinalResultCallback_t{ Result = d.Result,LSearchID = d.LSearchID,LUniqueGameID = d.LUniqueGameID, };
+			public static implicit operator RequestPlayersForGameFinalResultCallback_t.Pack8 ( RequestPlayersForGameFinalResultCallback_t d ) => new RequestPlayersForGameFinalResultCallback_t.Pack8{ Result = d.Result,LSearchID = d.LSearchID,LUniqueGameID = d.LUniqueGameID, };
 		}
 		#endregion
 	}
@@ -3369,6 +3391,7 @@ namespace Steamworks.Data
 			internal ulong UllUniqueGameID; // ullUniqueGameID uint64
 			
 			public static implicit operator EndGameResultCallback_t ( EndGameResultCallback_t.Pack8 d ) => new EndGameResultCallback_t{ Result = d.Result,UllUniqueGameID = d.UllUniqueGameID, };
+			public static implicit operator EndGameResultCallback_t.Pack8 ( EndGameResultCallback_t d ) => new EndGameResultCallback_t.Pack8{ Result = d.Result,UllUniqueGameID = d.UllUniqueGameID, };
 		}
 		#endregion
 	}
@@ -3491,6 +3514,7 @@ namespace Steamworks.Data
 			internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
 			
 			public static implicit operator CreateBeaconCallback_t ( CreateBeaconCallback_t.Pack8 d ) => new CreateBeaconCallback_t{ Result = d.Result,BeaconID = d.BeaconID, };
+			public static implicit operator CreateBeaconCallback_t.Pack8 ( CreateBeaconCallback_t d ) => new CreateBeaconCallback_t.Pack8{ Result = d.Result,BeaconID = d.BeaconID, };
 		}
 		#endregion
 	}
@@ -3608,6 +3632,7 @@ namespace Steamworks.Data
 			internal Result Result; // m_eResult enum EResult
 			
 			public static implicit operator ChangeNumOpenSlotsCallback_t ( ChangeNumOpenSlotsCallback_t.Pack8 d ) => new ChangeNumOpenSlotsCallback_t{ Result = d.Result, };
+			public static implicit operator ChangeNumOpenSlotsCallback_t.Pack8 ( ChangeNumOpenSlotsCallback_t d ) => new ChangeNumOpenSlotsCallback_t.Pack8{ Result = d.Result, };
 		}
 		#endregion
 	}
@@ -3630,6 +3655,7 @@ namespace Steamworks.Data
 			internal int NumStrings; // m_nNumStrings int32
 			
 			public static implicit operator SteamParamStringArray_t ( SteamParamStringArray_t.Pack8 d ) => new SteamParamStringArray_t{ Strings = d.Strings,NumStrings = d.NumStrings, };
+			public static implicit operator SteamParamStringArray_t.Pack8 ( SteamParamStringArray_t d ) => new SteamParamStringArray_t.Pack8{ Strings = d.Strings,NumStrings = d.NumStrings, };
 		}
 		#endregion
 	}
@@ -3697,6 +3723,7 @@ namespace Steamworks.Data
 			internal int NumDownloads; // m_unNumDownloads int
 			
 			public static implicit operator RemoteStorageAppSyncedClient_t ( RemoteStorageAppSyncedClient_t.Pack8 d ) => new RemoteStorageAppSyncedClient_t{ AppID = d.AppID,Result = d.Result,NumDownloads = d.NumDownloads, };
+			public static implicit operator RemoteStorageAppSyncedClient_t.Pack8 ( RemoteStorageAppSyncedClient_t d ) => new RemoteStorageAppSyncedClient_t.Pack8{ AppID = d.AppID,Result = d.Result,NumDownloads = d.NumDownloads, };
 		}
 		#endregion
 	}
@@ -3764,6 +3791,7 @@ namespace Steamworks.Data
 			internal int NumUploads; // m_unNumUploads int
 			
 			public static implicit operator RemoteStorageAppSyncedServer_t ( RemoteStorageAppSyncedServer_t.Pack8 d ) => new RemoteStorageAppSyncedServer_t{ AppID = d.AppID,Result = d.Result,NumUploads = d.NumUploads, };
+			public static implicit operator RemoteStorageAppSyncedServer_t.Pack8 ( RemoteStorageAppSyncedServer_t d ) => new RemoteStorageAppSyncedServer_t.Pack8{ AppID = d.AppID,Result = d.Result,NumUploads = d.NumUploads, };
 		}
 		#endregion
 	}
@@ -3839,6 +3867,7 @@ namespace Steamworks.Data
 			internal bool Uploading; // m_bUploading _Bool
 			
 			public static implicit operator RemoteStorageAppSyncProgress_t ( RemoteStorageAppSyncProgress_t.Pack8 d ) => new RemoteStorageAppSyncProgress_t{ CurrentFile = d.CurrentFile,AppID = d.AppID,BytesTransferredThisChunk = d.BytesTransferredThisChunk,DAppPercentComplete = d.DAppPercentComplete,Uploading = d.Uploading, };
+			public static implicit operator RemoteStorageAppSyncProgress_t.Pack8 ( RemoteStorageAppSyncProgress_t d ) => new RemoteStorageAppSyncProgress_t.Pack8{ CurrentFile = d.CurrentFile,AppID = d.AppID,BytesTransferredThisChunk = d.BytesTransferredThisChunk,DAppPercentComplete = d.DAppPercentComplete,Uploading = d.Uploading, };
 		}
 		#endregion
 	}
@@ -3904,6 +3933,7 @@ namespace Steamworks.Data
 			internal Result Result; // m_eResult enum EResult
 			
 			public static implicit operator RemoteStorageAppSyncStatusCheck_t ( RemoteStorageAppSyncStatusCheck_t.Pack8 d ) => new RemoteStorageAppSyncStatusCheck_t{ AppID = d.AppID,Result = d.Result, };
+			public static implicit operator RemoteStorageAppSyncStatusCheck_t.Pack8 ( RemoteStorageAppSyncStatusCheck_t d ) => new RemoteStorageAppSyncStatusCheck_t.Pack8{ AppID = d.AppID,Result = d.Result, };
 		}
 		#endregion
 	}
@@ -3973,6 +4003,7 @@ namespace Steamworks.Data
 			internal string Filename; // m_rgchFilename char [260]
 			
 			public static implicit operator RemoteStorageFileShareResult_t ( RemoteStorageFileShareResult_t.Pack8 d ) => new RemoteStorageFileShareResult_t{ Result = d.Result,File = d.File,Filename = d.Filename, };
+			public static implicit operator RemoteStorageFileShareResult_t.Pack8 ( RemoteStorageFileShareResult_t d ) => new RemoteStorageFileShareResult_t.Pack8{ Result = d.Result,File = d.File,Filename = d.Filename, };
 		}
 		#endregion
 	}
@@ -4042,6 +4073,7 @@ namespace Steamworks.Data
 			internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 			
 			public static implicit operator RemoteStoragePublishFileResult_t ( RemoteStoragePublishFileResult_t.Pack8 d ) => new RemoteStoragePublishFileResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement, };
+			public static implicit operator RemoteStoragePublishFileResult_t.Pack8 ( RemoteStoragePublishFileResult_t d ) => new RemoteStoragePublishFileResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId,UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement, };
 		}
 		#endregion
 	}
@@ -4107,6 +4139,7 @@ namespace Steamworks.Data
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
 			public static implicit operator RemoteStorageDeletePublishedFileResult_t ( RemoteStorageDeletePublishedFileResult_t.Pack8 d ) => new RemoteStorageDeletePublishedFileResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
+			public static implicit operator RemoteStorageDeletePublishedFileResult_t.Pack8 ( RemoteStorageDeletePublishedFileResult_t d ) => new RemoteStorageDeletePublishedFileResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
 		}
 		#endregion
 	}
@@ -4178,6 +4211,7 @@ namespace Steamworks.Data
 			internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 			
 			public static implicit operator RemoteStorageEnumerateUserPublishedFilesResult_t ( RemoteStorageEnumerateUserPublishedFilesResult_t.Pack8 d ) => new RemoteStorageEnumerateUserPublishedFilesResult_t{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId, };
+			public static implicit operator RemoteStorageEnumerateUserPublishedFilesResult_t.Pack8 ( RemoteStorageEnumerateUserPublishedFilesResult_t d ) => new RemoteStorageEnumerateUserPublishedFilesResult_t.Pack8{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId, };
 		}
 		#endregion
 	}
@@ -4243,6 +4277,7 @@ namespace Steamworks.Data
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
 			public static implicit operator RemoteStorageSubscribePublishedFileResult_t ( RemoteStorageSubscribePublishedFileResult_t.Pack8 d ) => new RemoteStorageSubscribePublishedFileResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
+			public static implicit operator RemoteStorageSubscribePublishedFileResult_t.Pack8 ( RemoteStorageSubscribePublishedFileResult_t d ) => new RemoteStorageSubscribePublishedFileResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
 		}
 		#endregion
 	}
@@ -4318,6 +4353,7 @@ namespace Steamworks.Data
 			internal uint[] GRTimeSubscribed; // m_rgRTimeSubscribed uint32 [50]
 			
 			public static implicit operator RemoteStorageEnumerateUserSubscribedFilesResult_t ( RemoteStorageEnumerateUserSubscribedFilesResult_t.Pack8 d ) => new RemoteStorageEnumerateUserSubscribedFilesResult_t{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId,GRTimeSubscribed = d.GRTimeSubscribed, };
+			public static implicit operator RemoteStorageEnumerateUserSubscribedFilesResult_t.Pack8 ( RemoteStorageEnumerateUserSubscribedFilesResult_t d ) => new RemoteStorageEnumerateUserSubscribedFilesResult_t.Pack8{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId,GRTimeSubscribed = d.GRTimeSubscribed, };
 		}
 		#endregion
 	}
@@ -4383,6 +4419,7 @@ namespace Steamworks.Data
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
 			public static implicit operator RemoteStorageUnsubscribePublishedFileResult_t ( RemoteStorageUnsubscribePublishedFileResult_t.Pack8 d ) => new RemoteStorageUnsubscribePublishedFileResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
+			public static implicit operator RemoteStorageUnsubscribePublishedFileResult_t.Pack8 ( RemoteStorageUnsubscribePublishedFileResult_t d ) => new RemoteStorageUnsubscribePublishedFileResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
 		}
 		#endregion
 	}
@@ -4452,6 +4489,7 @@ namespace Steamworks.Data
 			internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 			
 			public static implicit operator RemoteStorageUpdatePublishedFileResult_t ( RemoteStorageUpdatePublishedFileResult_t.Pack8 d ) => new RemoteStorageUpdatePublishedFileResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement, };
+			public static implicit operator RemoteStorageUpdatePublishedFileResult_t.Pack8 ( RemoteStorageUpdatePublishedFileResult_t d ) => new RemoteStorageUpdatePublishedFileResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId,UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement, };
 		}
 		#endregion
 	}
@@ -4527,6 +4565,7 @@ namespace Steamworks.Data
 			internal ulong SteamIDOwner; // m_ulSteamIDOwner uint64
 			
 			public static implicit operator RemoteStorageDownloadUGCResult_t ( RemoteStorageDownloadUGCResult_t.Pack8 d ) => new RemoteStorageDownloadUGCResult_t{ Result = d.Result,File = d.File,AppID = d.AppID,SizeInBytes = d.SizeInBytes,PchFileName = d.PchFileName,SteamIDOwner = d.SteamIDOwner, };
+			public static implicit operator RemoteStorageDownloadUGCResult_t.Pack8 ( RemoteStorageDownloadUGCResult_t d ) => new RemoteStorageDownloadUGCResult_t.Pack8{ Result = d.Result,File = d.File,AppID = d.AppID,SizeInBytes = d.SizeInBytes,PchFileName = d.PchFileName,SteamIDOwner = d.SteamIDOwner, };
 		}
 		#endregion
 	}
@@ -4646,6 +4685,7 @@ namespace Steamworks.Data
 			internal bool AcceptedForUse; // m_bAcceptedForUse _Bool
 			
 			public static implicit operator RemoteStorageGetPublishedFileDetailsResult_t ( RemoteStorageGetPublishedFileDetailsResult_t.Pack8 d ) => new RemoteStorageGetPublishedFileDetailsResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,CreatorAppID = d.CreatorAppID,ConsumerAppID = d.ConsumerAppID,Title = d.Title,Description = d.Description,File = d.File,PreviewFile = d.PreviewFile,SteamIDOwner = d.SteamIDOwner,TimeCreated = d.TimeCreated,TimeUpdated = d.TimeUpdated,Visibility = d.Visibility,Banned = d.Banned,Tags = d.Tags,TagsTruncated = d.TagsTruncated,PchFileName = d.PchFileName,FileSize = d.FileSize,PreviewFileSize = d.PreviewFileSize,URL = d.URL,FileType = d.FileType,AcceptedForUse = d.AcceptedForUse, };
+			public static implicit operator RemoteStorageGetPublishedFileDetailsResult_t.Pack8 ( RemoteStorageGetPublishedFileDetailsResult_t d ) => new RemoteStorageGetPublishedFileDetailsResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId,CreatorAppID = d.CreatorAppID,ConsumerAppID = d.ConsumerAppID,Title = d.Title,Description = d.Description,File = d.File,PreviewFile = d.PreviewFile,SteamIDOwner = d.SteamIDOwner,TimeCreated = d.TimeCreated,TimeUpdated = d.TimeUpdated,Visibility = d.Visibility,Banned = d.Banned,Tags = d.Tags,TagsTruncated = d.TagsTruncated,PchFileName = d.PchFileName,FileSize = d.FileSize,PreviewFileSize = d.PreviewFileSize,URL = d.URL,FileType = d.FileType,AcceptedForUse = d.AcceptedForUse, };
 		}
 		#endregion
 	}
@@ -4725,6 +4765,7 @@ namespace Steamworks.Data
 			internal uint StartIndex; // m_unStartIndex uint32
 			
 			public static implicit operator RemoteStorageEnumerateWorkshopFilesResult_t ( RemoteStorageEnumerateWorkshopFilesResult_t.Pack8 d ) => new RemoteStorageEnumerateWorkshopFilesResult_t{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId,GScore = d.GScore,AppId = d.AppId,StartIndex = d.StartIndex, };
+			public static implicit operator RemoteStorageEnumerateWorkshopFilesResult_t.Pack8 ( RemoteStorageEnumerateWorkshopFilesResult_t d ) => new RemoteStorageEnumerateWorkshopFilesResult_t.Pack8{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId,GScore = d.GScore,AppId = d.AppId,StartIndex = d.StartIndex, };
 		}
 		#endregion
 	}
@@ -4798,6 +4839,7 @@ namespace Steamworks.Data
 			internal float FScore; // m_fScore float
 			
 			public static implicit operator RemoteStorageGetPublishedItemVoteDetailsResult_t ( RemoteStorageGetPublishedItemVoteDetailsResult_t.Pack8 d ) => new RemoteStorageGetPublishedItemVoteDetailsResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,VotesFor = d.VotesFor,VotesAgainst = d.VotesAgainst,Reports = d.Reports,FScore = d.FScore, };
+			public static implicit operator RemoteStorageGetPublishedItemVoteDetailsResult_t.Pack8 ( RemoteStorageGetPublishedItemVoteDetailsResult_t d ) => new RemoteStorageGetPublishedItemVoteDetailsResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId,VotesFor = d.VotesFor,VotesAgainst = d.VotesAgainst,Reports = d.Reports,FScore = d.FScore, };
 		}
 		#endregion
 	}
@@ -4863,6 +4905,7 @@ namespace Steamworks.Data
 			internal AppId AppID; // m_nAppID AppId_t
 			
 			public static implicit operator RemoteStoragePublishedFileSubscribed_t ( RemoteStoragePublishedFileSubscribed_t.Pack8 d ) => new RemoteStoragePublishedFileSubscribed_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
+			public static implicit operator RemoteStoragePublishedFileSubscribed_t.Pack8 ( RemoteStoragePublishedFileSubscribed_t d ) => new RemoteStoragePublishedFileSubscribed_t.Pack8{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
 		}
 		#endregion
 	}
@@ -4928,6 +4971,7 @@ namespace Steamworks.Data
 			internal AppId AppID; // m_nAppID AppId_t
 			
 			public static implicit operator RemoteStoragePublishedFileUnsubscribed_t ( RemoteStoragePublishedFileUnsubscribed_t.Pack8 d ) => new RemoteStoragePublishedFileUnsubscribed_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
+			public static implicit operator RemoteStoragePublishedFileUnsubscribed_t.Pack8 ( RemoteStoragePublishedFileUnsubscribed_t d ) => new RemoteStoragePublishedFileUnsubscribed_t.Pack8{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
 		}
 		#endregion
 	}
@@ -4993,6 +5037,7 @@ namespace Steamworks.Data
 			internal AppId AppID; // m_nAppID AppId_t
 			
 			public static implicit operator RemoteStoragePublishedFileDeleted_t ( RemoteStoragePublishedFileDeleted_t.Pack8 d ) => new RemoteStoragePublishedFileDeleted_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
+			public static implicit operator RemoteStoragePublishedFileDeleted_t.Pack8 ( RemoteStoragePublishedFileDeleted_t d ) => new RemoteStoragePublishedFileDeleted_t.Pack8{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
 		}
 		#endregion
 	}
@@ -5058,6 +5103,7 @@ namespace Steamworks.Data
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
 			public static implicit operator RemoteStorageUpdateUserPublishedItemVoteResult_t ( RemoteStorageUpdateUserPublishedItemVoteResult_t.Pack8 d ) => new RemoteStorageUpdateUserPublishedItemVoteResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
+			public static implicit operator RemoteStorageUpdateUserPublishedItemVoteResult_t.Pack8 ( RemoteStorageUpdateUserPublishedItemVoteResult_t d ) => new RemoteStorageUpdateUserPublishedItemVoteResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
 		}
 		#endregion
 	}
@@ -5125,6 +5171,7 @@ namespace Steamworks.Data
 			internal WorkshopVote Vote; // m_eVote enum EWorkshopVote
 			
 			public static implicit operator RemoteStorageUserVoteDetails_t ( RemoteStorageUserVoteDetails_t.Pack8 d ) => new RemoteStorageUserVoteDetails_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,Vote = d.Vote, };
+			public static implicit operator RemoteStorageUserVoteDetails_t.Pack8 ( RemoteStorageUserVoteDetails_t d ) => new RemoteStorageUserVoteDetails_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId,Vote = d.Vote, };
 		}
 		#endregion
 	}
@@ -5196,6 +5243,7 @@ namespace Steamworks.Data
 			internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 			
 			public static implicit operator RemoteStorageEnumerateUserSharedWorkshopFilesResult_t ( RemoteStorageEnumerateUserSharedWorkshopFilesResult_t.Pack8 d ) => new RemoteStorageEnumerateUserSharedWorkshopFilesResult_t{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId, };
+			public static implicit operator RemoteStorageEnumerateUserSharedWorkshopFilesResult_t.Pack8 ( RemoteStorageEnumerateUserSharedWorkshopFilesResult_t d ) => new RemoteStorageEnumerateUserSharedWorkshopFilesResult_t.Pack8{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId, };
 		}
 		#endregion
 	}
@@ -5263,6 +5311,7 @@ namespace Steamworks.Data
 			internal WorkshopFileAction Action; // m_eAction enum EWorkshopFileAction
 			
 			public static implicit operator RemoteStorageSetUserPublishedFileActionResult_t ( RemoteStorageSetUserPublishedFileActionResult_t.Pack8 d ) => new RemoteStorageSetUserPublishedFileActionResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,Action = d.Action, };
+			public static implicit operator RemoteStorageSetUserPublishedFileActionResult_t.Pack8 ( RemoteStorageSetUserPublishedFileActionResult_t d ) => new RemoteStorageSetUserPublishedFileActionResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId,Action = d.Action, };
 		}
 		#endregion
 	}
@@ -5340,6 +5389,7 @@ namespace Steamworks.Data
 			internal uint[] GRTimeUpdated; // m_rgRTimeUpdated uint32 [50]
 			
 			public static implicit operator RemoteStorageEnumeratePublishedFilesByUserActionResult_t ( RemoteStorageEnumeratePublishedFilesByUserActionResult_t.Pack8 d ) => new RemoteStorageEnumeratePublishedFilesByUserActionResult_t{ Result = d.Result,Action = d.Action,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId,GRTimeUpdated = d.GRTimeUpdated, };
+			public static implicit operator RemoteStorageEnumeratePublishedFilesByUserActionResult_t.Pack8 ( RemoteStorageEnumeratePublishedFilesByUserActionResult_t d ) => new RemoteStorageEnumeratePublishedFilesByUserActionResult_t.Pack8{ Result = d.Result,Action = d.Action,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId,GRTimeUpdated = d.GRTimeUpdated, };
 		}
 		#endregion
 	}
@@ -5407,6 +5457,7 @@ namespace Steamworks.Data
 			internal bool Preview; // m_bPreview _Bool
 			
 			public static implicit operator RemoteStoragePublishFileProgress_t ( RemoteStoragePublishFileProgress_t.Pack8 d ) => new RemoteStoragePublishFileProgress_t{ DPercentFile = d.DPercentFile,Preview = d.Preview, };
+			public static implicit operator RemoteStoragePublishFileProgress_t.Pack8 ( RemoteStoragePublishFileProgress_t d ) => new RemoteStoragePublishFileProgress_t.Pack8{ DPercentFile = d.DPercentFile,Preview = d.Preview, };
 		}
 		#endregion
 	}
@@ -5474,6 +5525,7 @@ namespace Steamworks.Data
 			internal ulong Unused; // m_ulUnused uint64
 			
 			public static implicit operator RemoteStoragePublishedFileUpdated_t ( RemoteStoragePublishedFileUpdated_t.Pack8 d ) => new RemoteStoragePublishedFileUpdated_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID,Unused = d.Unused, };
+			public static implicit operator RemoteStoragePublishedFileUpdated_t.Pack8 ( RemoteStoragePublishedFileUpdated_t d ) => new RemoteStoragePublishedFileUpdated_t.Pack8{ PublishedFileId = d.PublishedFileId,AppID = d.AppID,Unused = d.Unused, };
 		}
 		#endregion
 	}
@@ -5537,6 +5589,7 @@ namespace Steamworks.Data
 			internal Result Result; // m_eResult enum EResult
 			
 			public static implicit operator RemoteStorageFileWriteAsyncComplete_t ( RemoteStorageFileWriteAsyncComplete_t.Pack8 d ) => new RemoteStorageFileWriteAsyncComplete_t{ Result = d.Result, };
+			public static implicit operator RemoteStorageFileWriteAsyncComplete_t.Pack8 ( RemoteStorageFileWriteAsyncComplete_t d ) => new RemoteStorageFileWriteAsyncComplete_t.Pack8{ Result = d.Result, };
 		}
 		#endregion
 	}
@@ -5606,6 +5659,7 @@ namespace Steamworks.Data
 			internal uint Read; // m_cubRead uint32
 			
 			public static implicit operator RemoteStorageFileReadAsyncComplete_t ( RemoteStorageFileReadAsyncComplete_t.Pack8 d ) => new RemoteStorageFileReadAsyncComplete_t{ FileReadAsync = d.FileReadAsync,Result = d.Result,Offset = d.Offset,Read = d.Read, };
+			public static implicit operator RemoteStorageFileReadAsyncComplete_t.Pack8 ( RemoteStorageFileReadAsyncComplete_t d ) => new RemoteStorageFileReadAsyncComplete_t.Pack8{ FileReadAsync = d.FileReadAsync,Result = d.Result,Offset = d.Offset,Read = d.Read, };
 		}
 		#endregion
 	}
@@ -5740,6 +5794,7 @@ namespace Steamworks.Data
 			internal Result Result; // m_eResult enum EResult
 			
 			public static implicit operator UserStatsStored_t ( UserStatsStored_t.Pack8 d ) => new UserStatsStored_t{ GameID = d.GameID,Result = d.Result, };
+			public static implicit operator UserStatsStored_t.Pack8 ( UserStatsStored_t d ) => new UserStatsStored_t.Pack8{ GameID = d.GameID,Result = d.Result, };
 		}
 		#endregion
 	}
@@ -5815,6 +5870,7 @@ namespace Steamworks.Data
 			internal uint MaxProgress; // m_nMaxProgress uint32
 			
 			public static implicit operator UserAchievementStored_t ( UserAchievementStored_t.Pack8 d ) => new UserAchievementStored_t{ GameID = d.GameID,GroupAchievement = d.GroupAchievement,AchievementName = d.AchievementName,CurProgress = d.CurProgress,MaxProgress = d.MaxProgress, };
+			public static implicit operator UserAchievementStored_t.Pack8 ( UserAchievementStored_t d ) => new UserAchievementStored_t.Pack8{ GameID = d.GameID,GroupAchievement = d.GroupAchievement,AchievementName = d.AchievementName,CurProgress = d.CurProgress,MaxProgress = d.MaxProgress, };
 		}
 		#endregion
 	}
@@ -5880,6 +5936,7 @@ namespace Steamworks.Data
 			internal byte LeaderboardFound; // m_bLeaderboardFound uint8
 			
 			public static implicit operator LeaderboardFindResult_t ( LeaderboardFindResult_t.Pack8 d ) => new LeaderboardFindResult_t{ SteamLeaderboard = d.SteamLeaderboard,LeaderboardFound = d.LeaderboardFound, };
+			public static implicit operator LeaderboardFindResult_t.Pack8 ( LeaderboardFindResult_t d ) => new LeaderboardFindResult_t.Pack8{ SteamLeaderboard = d.SteamLeaderboard,LeaderboardFound = d.LeaderboardFound, };
 		}
 		#endregion
 	}
@@ -5947,6 +6004,7 @@ namespace Steamworks.Data
 			internal int CEntryCount; // m_cEntryCount int
 			
 			public static implicit operator LeaderboardScoresDownloaded_t ( LeaderboardScoresDownloaded_t.Pack8 d ) => new LeaderboardScoresDownloaded_t{ SteamLeaderboard = d.SteamLeaderboard,SteamLeaderboardEntries = d.SteamLeaderboardEntries,CEntryCount = d.CEntryCount, };
+			public static implicit operator LeaderboardScoresDownloaded_t.Pack8 ( LeaderboardScoresDownloaded_t d ) => new LeaderboardScoresDownloaded_t.Pack8{ SteamLeaderboard = d.SteamLeaderboard,SteamLeaderboardEntries = d.SteamLeaderboardEntries,CEntryCount = d.CEntryCount, };
 		}
 		#endregion
 	}
@@ -6020,6 +6078,7 @@ namespace Steamworks.Data
 			internal int GlobalRankPrevious; // m_nGlobalRankPrevious int
 			
 			public static implicit operator LeaderboardScoreUploaded_t ( LeaderboardScoreUploaded_t.Pack8 d ) => new LeaderboardScoreUploaded_t{ Success = d.Success,SteamLeaderboard = d.SteamLeaderboard,Score = d.Score,ScoreChanged = d.ScoreChanged,GlobalRankNew = d.GlobalRankNew,GlobalRankPrevious = d.GlobalRankPrevious, };
+			public static implicit operator LeaderboardScoreUploaded_t.Pack8 ( LeaderboardScoreUploaded_t d ) => new LeaderboardScoreUploaded_t.Pack8{ Success = d.Success,SteamLeaderboard = d.SteamLeaderboard,Score = d.Score,ScoreChanged = d.ScoreChanged,GlobalRankNew = d.GlobalRankNew,GlobalRankPrevious = d.GlobalRankPrevious, };
 		}
 		#endregion
 	}
@@ -6085,6 +6144,7 @@ namespace Steamworks.Data
 			internal int CPlayers; // m_cPlayers int32
 			
 			public static implicit operator NumberOfCurrentPlayers_t ( NumberOfCurrentPlayers_t.Pack8 d ) => new NumberOfCurrentPlayers_t{ Success = d.Success,CPlayers = d.CPlayers, };
+			public static implicit operator NumberOfCurrentPlayers_t.Pack8 ( NumberOfCurrentPlayers_t d ) => new NumberOfCurrentPlayers_t.Pack8{ Success = d.Success,CPlayers = d.CPlayers, };
 		}
 		#endregion
 	}
@@ -6211,6 +6271,7 @@ namespace Steamworks.Data
 			internal int IconHandle; // m_nIconHandle int
 			
 			public static implicit operator UserAchievementIconFetched_t ( UserAchievementIconFetched_t.Pack8 d ) => new UserAchievementIconFetched_t{ GameID = d.GameID,AchievementName = d.AchievementName,Achieved = d.Achieved,IconHandle = d.IconHandle, };
+			public static implicit operator UserAchievementIconFetched_t.Pack8 ( UserAchievementIconFetched_t d ) => new UserAchievementIconFetched_t.Pack8{ GameID = d.GameID,AchievementName = d.AchievementName,Achieved = d.Achieved,IconHandle = d.IconHandle, };
 		}
 		#endregion
 	}
@@ -6276,6 +6337,7 @@ namespace Steamworks.Data
 			internal Result Result; // m_eResult enum EResult
 			
 			public static implicit operator GlobalAchievementPercentagesReady_t ( GlobalAchievementPercentagesReady_t.Pack8 d ) => new GlobalAchievementPercentagesReady_t{ GameID = d.GameID,Result = d.Result, };
+			public static implicit operator GlobalAchievementPercentagesReady_t.Pack8 ( GlobalAchievementPercentagesReady_t d ) => new GlobalAchievementPercentagesReady_t.Pack8{ GameID = d.GameID,Result = d.Result, };
 		}
 		#endregion
 	}
@@ -6341,6 +6403,7 @@ namespace Steamworks.Data
 			internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
 			
 			public static implicit operator LeaderboardUGCSet_t ( LeaderboardUGCSet_t.Pack8 d ) => new LeaderboardUGCSet_t{ Result = d.Result,SteamLeaderboard = d.SteamLeaderboard, };
+			public static implicit operator LeaderboardUGCSet_t.Pack8 ( LeaderboardUGCSet_t d ) => new LeaderboardUGCSet_t.Pack8{ Result = d.Result,SteamLeaderboard = d.SteamLeaderboard, };
 		}
 		#endregion
 	}
@@ -6408,6 +6471,7 @@ namespace Steamworks.Data
 			internal ulong RequiredDiskSpace; // m_ulRequiredDiskSpace uint64
 			
 			public static implicit operator PS3TrophiesInstalled_t ( PS3TrophiesInstalled_t.Pack8 d ) => new PS3TrophiesInstalled_t{ GameID = d.GameID,Result = d.Result,RequiredDiskSpace = d.RequiredDiskSpace, };
+			public static implicit operator PS3TrophiesInstalled_t.Pack8 ( PS3TrophiesInstalled_t d ) => new PS3TrophiesInstalled_t.Pack8{ GameID = d.GameID,Result = d.Result,RequiredDiskSpace = d.RequiredDiskSpace, };
 		}
 		#endregion
 	}
@@ -6473,6 +6537,7 @@ namespace Steamworks.Data
 			internal Result Result; // m_eResult enum EResult
 			
 			public static implicit operator GlobalStatsReceived_t ( GlobalStatsReceived_t.Pack8 d ) => new GlobalStatsReceived_t{ GameID = d.GameID,Result = d.Result, };
+			public static implicit operator GlobalStatsReceived_t.Pack8 ( GlobalStatsReceived_t d ) => new GlobalStatsReceived_t.Pack8{ GameID = d.GameID,Result = d.Result, };
 		}
 		#endregion
 	}
@@ -6536,6 +6601,7 @@ namespace Steamworks.Data
 			internal AppId AppID; // m_nAppID AppId_t
 			
 			public static implicit operator DlcInstalled_t ( DlcInstalled_t.Pack8 d ) => new DlcInstalled_t{ AppID = d.AppID, };
+			public static implicit operator DlcInstalled_t.Pack8 ( DlcInstalled_t d ) => new DlcInstalled_t.Pack8{ AppID = d.AppID, };
 		}
 		#endregion
 	}
@@ -6601,6 +6667,7 @@ namespace Steamworks.Data
 			internal uint PackageRegistered; // m_unPackageRegistered uint32
 			
 			public static implicit operator RegisterActivationCodeResponse_t ( RegisterActivationCodeResponse_t.Pack8 d ) => new RegisterActivationCodeResponse_t{ Result = d.Result,PackageRegistered = d.PackageRegistered, };
+			public static implicit operator RegisterActivationCodeResponse_t.Pack8 ( RegisterActivationCodeResponse_t d ) => new RegisterActivationCodeResponse_t.Pack8{ Result = d.Result,PackageRegistered = d.PackageRegistered, };
 		}
 		#endregion
 	}
@@ -6672,6 +6739,7 @@ namespace Steamworks.Data
 			internal string Key; // m_rgchKey char [240]
 			
 			public static implicit operator AppProofOfPurchaseKeyResponse_t ( AppProofOfPurchaseKeyResponse_t.Pack8 d ) => new AppProofOfPurchaseKeyResponse_t{ Result = d.Result,AppID = d.AppID,CchKeyLength = d.CchKeyLength,Key = d.Key, };
+			public static implicit operator AppProofOfPurchaseKeyResponse_t.Pack8 ( AppProofOfPurchaseKeyResponse_t d ) => new AppProofOfPurchaseKeyResponse_t.Pack8{ Result = d.Result,AppID = d.AppID,CchKeyLength = d.CchKeyLength,Key = d.Key, };
 		}
 		#endregion
 	}
@@ -6743,6 +6811,7 @@ namespace Steamworks.Data
 			internal uint Flags; // m_unFlags uint32
 			
 			public static implicit operator FileDetailsResult_t ( FileDetailsResult_t.Pack8 d ) => new FileDetailsResult_t{ Result = d.Result,FileSize = d.FileSize,FileSHA = d.FileSHA,Flags = d.Flags, };
+			public static implicit operator FileDetailsResult_t.Pack8 ( FileDetailsResult_t d ) => new FileDetailsResult_t.Pack8{ Result = d.Result,FileSize = d.FileSize,FileSHA = d.FileSHA,Flags = d.Flags, };
 		}
 		#endregion
 	}
@@ -6777,6 +6846,7 @@ namespace Steamworks.Data
 			internal ushort RemotePort; // m_nRemotePort uint16
 			
 			public static implicit operator P2PSessionState_t ( P2PSessionState_t.Pack8 d ) => new P2PSessionState_t{ ConnectionActive = d.ConnectionActive,Connecting = d.Connecting,P2PSessionError = d.P2PSessionError,UsingRelay = d.UsingRelay,BytesQueuedForSend = d.BytesQueuedForSend,PacketsQueuedForSend = d.PacketsQueuedForSend,RemoteIP = d.RemoteIP,RemotePort = d.RemotePort, };
+			public static implicit operator P2PSessionState_t.Pack8 ( P2PSessionState_t d ) => new P2PSessionState_t.Pack8{ ConnectionActive = d.ConnectionActive,Connecting = d.Connecting,P2PSessionError = d.P2PSessionError,UsingRelay = d.UsingRelay,BytesQueuedForSend = d.BytesQueuedForSend,PacketsQueuedForSend = d.PacketsQueuedForSend,RemoteIP = d.RemoteIP,RemotePort = d.RemotePort, };
 		}
 		#endregion
 	}
@@ -7005,6 +7075,7 @@ namespace Steamworks.Data
 			internal Result Result; // m_eResult enum EResult
 			
 			public static implicit operator ScreenshotReady_t ( ScreenshotReady_t.Pack8 d ) => new ScreenshotReady_t{ Local = d.Local,Result = d.Result, };
+			public static implicit operator ScreenshotReady_t.Pack8 ( ScreenshotReady_t d ) => new ScreenshotReady_t.Pack8{ Local = d.Local,Result = d.Result, };
 		}
 		#endregion
 	}
@@ -7068,6 +7139,7 @@ namespace Steamworks.Data
 			internal float NewVolume; // m_flNewVolume float
 			
 			public static implicit operator VolumeHasChanged_t ( VolumeHasChanged_t.Pack8 d ) => new VolumeHasChanged_t{ NewVolume = d.NewVolume, };
+			public static implicit operator VolumeHasChanged_t.Pack8 ( VolumeHasChanged_t d ) => new VolumeHasChanged_t.Pack8{ NewVolume = d.NewVolume, };
 		}
 		#endregion
 	}
@@ -7133,6 +7205,7 @@ namespace Steamworks.Data
 			internal bool Shuffled; // m_bShuffled _Bool
 			
 			public static implicit operator MusicPlayerWantsShuffled_t ( MusicPlayerWantsShuffled_t.Pack8 d ) => new MusicPlayerWantsShuffled_t{ Shuffled = d.Shuffled, };
+			public static implicit operator MusicPlayerWantsShuffled_t.Pack8 ( MusicPlayerWantsShuffled_t d ) => new MusicPlayerWantsShuffled_t.Pack8{ Shuffled = d.Shuffled, };
 		}
 		#endregion
 	}
@@ -7198,6 +7271,7 @@ namespace Steamworks.Data
 			internal bool Looped; // m_bLooped _Bool
 			
 			public static implicit operator MusicPlayerWantsLooped_t ( MusicPlayerWantsLooped_t.Pack8 d ) => new MusicPlayerWantsLooped_t{ Looped = d.Looped, };
+			public static implicit operator MusicPlayerWantsLooped_t.Pack8 ( MusicPlayerWantsLooped_t d ) => new MusicPlayerWantsLooped_t.Pack8{ Looped = d.Looped, };
 		}
 		#endregion
 	}
@@ -7261,6 +7335,7 @@ namespace Steamworks.Data
 			internal float NewVolume; // m_flNewVolume float
 			
 			public static implicit operator MusicPlayerWantsVolume_t ( MusicPlayerWantsVolume_t.Pack8 d ) => new MusicPlayerWantsVolume_t{ NewVolume = d.NewVolume, };
+			public static implicit operator MusicPlayerWantsVolume_t.Pack8 ( MusicPlayerWantsVolume_t d ) => new MusicPlayerWantsVolume_t.Pack8{ NewVolume = d.NewVolume, };
 		}
 		#endregion
 	}
@@ -7324,6 +7399,7 @@ namespace Steamworks.Data
 			internal int NID; // nID int
 			
 			public static implicit operator MusicPlayerSelectsQueueEntry_t ( MusicPlayerSelectsQueueEntry_t.Pack8 d ) => new MusicPlayerSelectsQueueEntry_t{ NID = d.NID, };
+			public static implicit operator MusicPlayerSelectsQueueEntry_t.Pack8 ( MusicPlayerSelectsQueueEntry_t d ) => new MusicPlayerSelectsQueueEntry_t.Pack8{ NID = d.NID, };
 		}
 		#endregion
 	}
@@ -7387,6 +7463,7 @@ namespace Steamworks.Data
 			internal int NID; // nID int
 			
 			public static implicit operator MusicPlayerSelectsPlaylistEntry_t ( MusicPlayerSelectsPlaylistEntry_t.Pack8 d ) => new MusicPlayerSelectsPlaylistEntry_t{ NID = d.NID, };
+			public static implicit operator MusicPlayerSelectsPlaylistEntry_t.Pack8 ( MusicPlayerSelectsPlaylistEntry_t d ) => new MusicPlayerSelectsPlaylistEntry_t.Pack8{ NID = d.NID, };
 		}
 		#endregion
 	}
@@ -7450,6 +7527,7 @@ namespace Steamworks.Data
 			internal int PlayingRepeatStatus; // m_nPlayingRepeatStatus int
 			
 			public static implicit operator MusicPlayerWantsPlayingRepeatStatus_t ( MusicPlayerWantsPlayingRepeatStatus_t.Pack8 d ) => new MusicPlayerWantsPlayingRepeatStatus_t{ PlayingRepeatStatus = d.PlayingRepeatStatus, };
+			public static implicit operator MusicPlayerWantsPlayingRepeatStatus_t.Pack8 ( MusicPlayerWantsPlayingRepeatStatus_t d ) => new MusicPlayerWantsPlayingRepeatStatus_t.Pack8{ PlayingRepeatStatus = d.PlayingRepeatStatus, };
 		}
 		#endregion
 	}
@@ -7523,6 +7601,7 @@ namespace Steamworks.Data
 			internal uint BodySize; // m_unBodySize uint32
 			
 			public static implicit operator HTTPRequestCompleted_t ( HTTPRequestCompleted_t.Pack8 d ) => new HTTPRequestCompleted_t{ Request = d.Request,ContextValue = d.ContextValue,RequestSuccessful = d.RequestSuccessful,StatusCode = d.StatusCode,BodySize = d.BodySize, };
+			public static implicit operator HTTPRequestCompleted_t.Pack8 ( HTTPRequestCompleted_t d ) => new HTTPRequestCompleted_t.Pack8{ Request = d.Request,ContextValue = d.ContextValue,RequestSuccessful = d.RequestSuccessful,StatusCode = d.StatusCode,BodySize = d.BodySize, };
 		}
 		#endregion
 	}
@@ -7588,6 +7667,7 @@ namespace Steamworks.Data
 			internal ulong ContextValue; // m_ulContextValue uint64
 			
 			public static implicit operator HTTPRequestHeadersReceived_t ( HTTPRequestHeadersReceived_t.Pack8 d ) => new HTTPRequestHeadersReceived_t{ Request = d.Request,ContextValue = d.ContextValue, };
+			public static implicit operator HTTPRequestHeadersReceived_t.Pack8 ( HTTPRequestHeadersReceived_t d ) => new HTTPRequestHeadersReceived_t.Pack8{ Request = d.Request,ContextValue = d.ContextValue, };
 		}
 		#endregion
 	}
@@ -7657,6 +7737,7 @@ namespace Steamworks.Data
 			internal uint CBytesReceived; // m_cBytesReceived uint32
 			
 			public static implicit operator HTTPRequestDataReceived_t ( HTTPRequestDataReceived_t.Pack8 d ) => new HTTPRequestDataReceived_t{ Request = d.Request,ContextValue = d.ContextValue,COffset = d.COffset,CBytesReceived = d.CBytesReceived, };
+			public static implicit operator HTTPRequestDataReceived_t.Pack8 ( HTTPRequestDataReceived_t d ) => new HTTPRequestDataReceived_t.Pack8{ Request = d.Request,ContextValue = d.ContextValue,COffset = d.COffset,CBytesReceived = d.CBytesReceived, };
 		}
 		#endregion
 	}
@@ -7743,6 +7824,7 @@ namespace Steamworks.Data
 			internal uint NumChildren; // m_unNumChildren uint32
 			
 			public static implicit operator SteamUGCDetails_t ( SteamUGCDetails_t.Pack8 d ) => new SteamUGCDetails_t{ PublishedFileId = d.PublishedFileId,Result = d.Result,FileType = d.FileType,CreatorAppID = d.CreatorAppID,ConsumerAppID = d.ConsumerAppID,Title = d.Title,Description = d.Description,SteamIDOwner = d.SteamIDOwner,TimeCreated = d.TimeCreated,TimeUpdated = d.TimeUpdated,TimeAddedToUserList = d.TimeAddedToUserList,Visibility = d.Visibility,Banned = d.Banned,AcceptedForUse = d.AcceptedForUse,TagsTruncated = d.TagsTruncated,Tags = d.Tags,File = d.File,PreviewFile = d.PreviewFile,PchFileName = d.PchFileName,FileSize = d.FileSize,PreviewFileSize = d.PreviewFileSize,URL = d.URL,VotesUp = d.VotesUp,VotesDown = d.VotesDown,Score = d.Score,NumChildren = d.NumChildren, };
+			public static implicit operator SteamUGCDetails_t.Pack8 ( SteamUGCDetails_t d ) => new SteamUGCDetails_t.Pack8{ PublishedFileId = d.PublishedFileId,Result = d.Result,FileType = d.FileType,CreatorAppID = d.CreatorAppID,ConsumerAppID = d.ConsumerAppID,Title = d.Title,Description = d.Description,SteamIDOwner = d.SteamIDOwner,TimeCreated = d.TimeCreated,TimeUpdated = d.TimeUpdated,TimeAddedToUserList = d.TimeAddedToUserList,Visibility = d.Visibility,Banned = d.Banned,AcceptedForUse = d.AcceptedForUse,TagsTruncated = d.TagsTruncated,Tags = d.Tags,File = d.File,PreviewFile = d.PreviewFile,PchFileName = d.PchFileName,FileSize = d.FileSize,PreviewFileSize = d.PreviewFileSize,URL = d.URL,VotesUp = d.VotesUp,VotesDown = d.VotesDown,Score = d.Score,NumChildren = d.NumChildren, };
 		}
 		#endregion
 	}
@@ -7820,6 +7902,7 @@ namespace Steamworks.Data
 			internal string NextCursor; // m_rgchNextCursor char [256]
 			
 			public static implicit operator SteamUGCQueryCompleted_t ( SteamUGCQueryCompleted_t.Pack8 d ) => new SteamUGCQueryCompleted_t{ Handle = d.Handle,Result = d.Result,NumResultsReturned = d.NumResultsReturned,TotalMatchingResults = d.TotalMatchingResults,CachedData = d.CachedData,NextCursor = d.NextCursor, };
+			public static implicit operator SteamUGCQueryCompleted_t.Pack8 ( SteamUGCQueryCompleted_t d ) => new SteamUGCQueryCompleted_t.Pack8{ Handle = d.Handle,Result = d.Result,NumResultsReturned = d.NumResultsReturned,TotalMatchingResults = d.TotalMatchingResults,CachedData = d.CachedData,NextCursor = d.NextCursor, };
 		}
 		#endregion
 	}
@@ -7887,6 +7970,7 @@ namespace Steamworks.Data
 			internal bool CachedData; // m_bCachedData _Bool
 			
 			public static implicit operator SteamUGCRequestUGCDetailsResult_t ( SteamUGCRequestUGCDetailsResult_t.Pack8 d ) => new SteamUGCRequestUGCDetailsResult_t{ Details = d.Details,CachedData = d.CachedData, };
+			public static implicit operator SteamUGCRequestUGCDetailsResult_t.Pack8 ( SteamUGCRequestUGCDetailsResult_t d ) => new SteamUGCRequestUGCDetailsResult_t.Pack8{ Details = d.Details,CachedData = d.CachedData, };
 		}
 		#endregion
 	}
@@ -7956,6 +8040,7 @@ namespace Steamworks.Data
 			internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 			
 			public static implicit operator CreateItemResult_t ( CreateItemResult_t.Pack8 d ) => new CreateItemResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement, };
+			public static implicit operator CreateItemResult_t.Pack8 ( CreateItemResult_t d ) => new CreateItemResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId,UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement, };
 		}
 		#endregion
 	}
@@ -8025,6 +8110,7 @@ namespace Steamworks.Data
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
 			public static implicit operator SubmitItemUpdateResult_t ( SubmitItemUpdateResult_t.Pack8 d ) => new SubmitItemUpdateResult_t{ Result = d.Result,UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement,PublishedFileId = d.PublishedFileId, };
+			public static implicit operator SubmitItemUpdateResult_t.Pack8 ( SubmitItemUpdateResult_t d ) => new SubmitItemUpdateResult_t.Pack8{ Result = d.Result,UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement,PublishedFileId = d.PublishedFileId, };
 		}
 		#endregion
 	}
@@ -8092,6 +8178,7 @@ namespace Steamworks.Data
 			internal Result Result; // m_eResult enum EResult
 			
 			public static implicit operator DownloadItemResult_t ( DownloadItemResult_t.Pack8 d ) => new DownloadItemResult_t{ AppID = d.AppID,PublishedFileId = d.PublishedFileId,Result = d.Result, };
+			public static implicit operator DownloadItemResult_t.Pack8 ( DownloadItemResult_t d ) => new DownloadItemResult_t.Pack8{ AppID = d.AppID,PublishedFileId = d.PublishedFileId,Result = d.Result, };
 		}
 		#endregion
 	}
@@ -8161,6 +8248,7 @@ namespace Steamworks.Data
 			internal bool WasAddRequest; // m_bWasAddRequest _Bool
 			
 			public static implicit operator UserFavoriteItemsListChanged_t ( UserFavoriteItemsListChanged_t.Pack8 d ) => new UserFavoriteItemsListChanged_t{ PublishedFileId = d.PublishedFileId,Result = d.Result,WasAddRequest = d.WasAddRequest, };
+			public static implicit operator UserFavoriteItemsListChanged_t.Pack8 ( UserFavoriteItemsListChanged_t d ) => new UserFavoriteItemsListChanged_t.Pack8{ PublishedFileId = d.PublishedFileId,Result = d.Result,WasAddRequest = d.WasAddRequest, };
 		}
 		#endregion
 	}
@@ -8230,6 +8318,7 @@ namespace Steamworks.Data
 			internal bool VoteUp; // m_bVoteUp _Bool
 			
 			public static implicit operator SetUserItemVoteResult_t ( SetUserItemVoteResult_t.Pack8 d ) => new SetUserItemVoteResult_t{ PublishedFileId = d.PublishedFileId,Result = d.Result,VoteUp = d.VoteUp, };
+			public static implicit operator SetUserItemVoteResult_t.Pack8 ( SetUserItemVoteResult_t d ) => new SetUserItemVoteResult_t.Pack8{ PublishedFileId = d.PublishedFileId,Result = d.Result,VoteUp = d.VoteUp, };
 		}
 		#endregion
 	}
@@ -8307,6 +8396,7 @@ namespace Steamworks.Data
 			internal bool VoteSkipped; // m_bVoteSkipped _Bool
 			
 			public static implicit operator GetUserItemVoteResult_t ( GetUserItemVoteResult_t.Pack8 d ) => new GetUserItemVoteResult_t{ PublishedFileId = d.PublishedFileId,Result = d.Result,VotedUp = d.VotedUp,VotedDown = d.VotedDown,VoteSkipped = d.VoteSkipped, };
+			public static implicit operator GetUserItemVoteResult_t.Pack8 ( GetUserItemVoteResult_t d ) => new GetUserItemVoteResult_t.Pack8{ PublishedFileId = d.PublishedFileId,Result = d.Result,VotedUp = d.VotedUp,VotedDown = d.VotedDown,VoteSkipped = d.VoteSkipped, };
 		}
 		#endregion
 	}
@@ -8370,6 +8460,7 @@ namespace Steamworks.Data
 			internal Result Result; // m_eResult enum EResult
 			
 			public static implicit operator StartPlaytimeTrackingResult_t ( StartPlaytimeTrackingResult_t.Pack8 d ) => new StartPlaytimeTrackingResult_t{ Result = d.Result, };
+			public static implicit operator StartPlaytimeTrackingResult_t.Pack8 ( StartPlaytimeTrackingResult_t d ) => new StartPlaytimeTrackingResult_t.Pack8{ Result = d.Result, };
 		}
 		#endregion
 	}
@@ -8433,6 +8524,7 @@ namespace Steamworks.Data
 			internal Result Result; // m_eResult enum EResult
 			
 			public static implicit operator StopPlaytimeTrackingResult_t ( StopPlaytimeTrackingResult_t.Pack8 d ) => new StopPlaytimeTrackingResult_t{ Result = d.Result, };
+			public static implicit operator StopPlaytimeTrackingResult_t.Pack8 ( StopPlaytimeTrackingResult_t d ) => new StopPlaytimeTrackingResult_t.Pack8{ Result = d.Result, };
 		}
 		#endregion
 	}
@@ -8500,6 +8592,7 @@ namespace Steamworks.Data
 			internal PublishedFileId ChildPublishedFileId; // m_nChildPublishedFileId PublishedFileId_t
 			
 			public static implicit operator AddUGCDependencyResult_t ( AddUGCDependencyResult_t.Pack8 d ) => new AddUGCDependencyResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,ChildPublishedFileId = d.ChildPublishedFileId, };
+			public static implicit operator AddUGCDependencyResult_t.Pack8 ( AddUGCDependencyResult_t d ) => new AddUGCDependencyResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId,ChildPublishedFileId = d.ChildPublishedFileId, };
 		}
 		#endregion
 	}
@@ -8567,6 +8660,7 @@ namespace Steamworks.Data
 			internal PublishedFileId ChildPublishedFileId; // m_nChildPublishedFileId PublishedFileId_t
 			
 			public static implicit operator RemoveUGCDependencyResult_t ( RemoveUGCDependencyResult_t.Pack8 d ) => new RemoveUGCDependencyResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,ChildPublishedFileId = d.ChildPublishedFileId, };
+			public static implicit operator RemoveUGCDependencyResult_t.Pack8 ( RemoveUGCDependencyResult_t d ) => new RemoveUGCDependencyResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId,ChildPublishedFileId = d.ChildPublishedFileId, };
 		}
 		#endregion
 	}
@@ -8634,6 +8728,7 @@ namespace Steamworks.Data
 			internal AppId AppID; // m_nAppID AppId_t
 			
 			public static implicit operator AddAppDependencyResult_t ( AddAppDependencyResult_t.Pack8 d ) => new AddAppDependencyResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
+			public static implicit operator AddAppDependencyResult_t.Pack8 ( AddAppDependencyResult_t d ) => new AddAppDependencyResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
 		}
 		#endregion
 	}
@@ -8701,6 +8796,7 @@ namespace Steamworks.Data
 			internal AppId AppID; // m_nAppID AppId_t
 			
 			public static implicit operator RemoveAppDependencyResult_t ( RemoveAppDependencyResult_t.Pack8 d ) => new RemoveAppDependencyResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
+			public static implicit operator RemoveAppDependencyResult_t.Pack8 ( RemoveAppDependencyResult_t d ) => new RemoveAppDependencyResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
 		}
 		#endregion
 	}
@@ -8774,6 +8870,7 @@ namespace Steamworks.Data
 			internal uint TotalNumAppDependencies; // m_nTotalNumAppDependencies uint32
 			
 			public static implicit operator GetAppDependenciesResult_t ( GetAppDependenciesResult_t.Pack8 d ) => new GetAppDependenciesResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,GAppIDs = d.GAppIDs,NumAppDependencies = d.NumAppDependencies,TotalNumAppDependencies = d.TotalNumAppDependencies, };
+			public static implicit operator GetAppDependenciesResult_t.Pack8 ( GetAppDependenciesResult_t d ) => new GetAppDependenciesResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId,GAppIDs = d.GAppIDs,NumAppDependencies = d.NumAppDependencies,TotalNumAppDependencies = d.TotalNumAppDependencies, };
 		}
 		#endregion
 	}
@@ -8839,6 +8936,7 @@ namespace Steamworks.Data
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
 			public static implicit operator DeleteItemResult_t ( DeleteItemResult_t.Pack8 d ) => new DeleteItemResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
+			public static implicit operator DeleteItemResult_t.Pack8 ( DeleteItemResult_t d ) => new DeleteItemResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
 		}
 		#endregion
 	}
@@ -8902,6 +9000,7 @@ namespace Steamworks.Data
 			internal AppId AppID; // m_nAppID AppId_t
 			
 			public static implicit operator SteamAppInstalled_t ( SteamAppInstalled_t.Pack8 d ) => new SteamAppInstalled_t{ AppID = d.AppID, };
+			public static implicit operator SteamAppInstalled_t.Pack8 ( SteamAppInstalled_t d ) => new SteamAppInstalled_t.Pack8{ AppID = d.AppID, };
 		}
 		#endregion
 	}
@@ -8965,6 +9064,7 @@ namespace Steamworks.Data
 			internal AppId AppID; // m_nAppID AppId_t
 			
 			public static implicit operator SteamAppUninstalled_t ( SteamAppUninstalled_t.Pack8 d ) => new SteamAppUninstalled_t{ AppID = d.AppID, };
+			public static implicit operator SteamAppUninstalled_t.Pack8 ( SteamAppUninstalled_t d ) => new SteamAppUninstalled_t.Pack8{ AppID = d.AppID, };
 		}
 		#endregion
 	}
@@ -9028,6 +9128,7 @@ namespace Steamworks.Data
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			
 			public static implicit operator HTML_BrowserReady_t ( HTML_BrowserReady_t.Pack8 d ) => new HTML_BrowserReady_t{ UnBrowserHandle = d.UnBrowserHandle, };
+			public static implicit operator HTML_BrowserReady_t.Pack8 ( HTML_BrowserReady_t d ) => new HTML_BrowserReady_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle, };
 		}
 		#endregion
 	}
@@ -9070,6 +9171,7 @@ namespace Steamworks.Data
 			internal uint UnPageSerial; // unPageSerial uint32
 			
 			public static implicit operator HTML_NeedsPaint_t ( HTML_NeedsPaint_t.Pack8 d ) => new HTML_NeedsPaint_t{ UnBrowserHandle = d.UnBrowserHandle,PBGRA = d.PBGRA,UnWide = d.UnWide,UnTall = d.UnTall,UnUpdateX = d.UnUpdateX,UnUpdateY = d.UnUpdateY,UnUpdateWide = d.UnUpdateWide,UnUpdateTall = d.UnUpdateTall,UnScrollX = d.UnScrollX,UnScrollY = d.UnScrollY,FlPageScale = d.FlPageScale,UnPageSerial = d.UnPageSerial, };
+			public static implicit operator HTML_NeedsPaint_t.Pack8 ( HTML_NeedsPaint_t d ) => new HTML_NeedsPaint_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,PBGRA = d.PBGRA,UnWide = d.UnWide,UnTall = d.UnTall,UnUpdateX = d.UnUpdateX,UnUpdateY = d.UnUpdateY,UnUpdateWide = d.UnUpdateWide,UnUpdateTall = d.UnUpdateTall,UnScrollX = d.UnScrollX,UnScrollY = d.UnScrollY,FlPageScale = d.FlPageScale,UnPageSerial = d.UnPageSerial, };
 		}
 		#endregion
 	}
@@ -9100,6 +9202,7 @@ namespace Steamworks.Data
 			internal bool BIsRedirect; // bIsRedirect _Bool
 			
 			public static implicit operator HTML_StartRequest_t ( HTML_StartRequest_t.Pack8 d ) => new HTML_StartRequest_t{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL,PchTarget = d.PchTarget,PchPostData = d.PchPostData,BIsRedirect = d.BIsRedirect, };
+			public static implicit operator HTML_StartRequest_t.Pack8 ( HTML_StartRequest_t d ) => new HTML_StartRequest_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL,PchTarget = d.PchTarget,PchPostData = d.PchPostData,BIsRedirect = d.BIsRedirect, };
 		}
 		#endregion
 	}
@@ -9120,6 +9223,7 @@ namespace Steamworks.Data
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			
 			public static implicit operator HTML_CloseBrowser_t ( HTML_CloseBrowser_t.Pack8 d ) => new HTML_CloseBrowser_t{ UnBrowserHandle = d.UnBrowserHandle, };
+			public static implicit operator HTML_CloseBrowser_t.Pack8 ( HTML_CloseBrowser_t d ) => new HTML_CloseBrowser_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle, };
 		}
 		#endregion
 	}
@@ -9197,6 +9301,7 @@ namespace Steamworks.Data
 			internal bool BNewNavigation; // bNewNavigation _Bool
 			
 			public static implicit operator HTML_URLChanged_t ( HTML_URLChanged_t.Pack8 d ) => new HTML_URLChanged_t{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL,PchPostData = d.PchPostData,BIsRedirect = d.BIsRedirect,PchPageTitle = d.PchPageTitle,BNewNavigation = d.BNewNavigation, };
+			public static implicit operator HTML_URLChanged_t.Pack8 ( HTML_URLChanged_t d ) => new HTML_URLChanged_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL,PchPostData = d.PchPostData,BIsRedirect = d.BIsRedirect,PchPageTitle = d.PchPageTitle,BNewNavigation = d.BNewNavigation, };
 		}
 		#endregion
 	}
@@ -9264,6 +9369,7 @@ namespace Steamworks.Data
 			internal string PchPageTitle; // pchPageTitle const char *
 			
 			public static implicit operator HTML_FinishedRequest_t ( HTML_FinishedRequest_t.Pack8 d ) => new HTML_FinishedRequest_t{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL,PchPageTitle = d.PchPageTitle, };
+			public static implicit operator HTML_FinishedRequest_t.Pack8 ( HTML_FinishedRequest_t d ) => new HTML_FinishedRequest_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL,PchPageTitle = d.PchPageTitle, };
 		}
 		#endregion
 	}
@@ -9329,6 +9435,7 @@ namespace Steamworks.Data
 			internal string PchURL; // pchURL const char *
 			
 			public static implicit operator HTML_OpenLinkInNewTab_t ( HTML_OpenLinkInNewTab_t.Pack8 d ) => new HTML_OpenLinkInNewTab_t{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL, };
+			public static implicit operator HTML_OpenLinkInNewTab_t.Pack8 ( HTML_OpenLinkInNewTab_t d ) => new HTML_OpenLinkInNewTab_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL, };
 		}
 		#endregion
 	}
@@ -9394,6 +9501,7 @@ namespace Steamworks.Data
 			internal string PchTitle; // pchTitle const char *
 			
 			public static implicit operator HTML_ChangedTitle_t ( HTML_ChangedTitle_t.Pack8 d ) => new HTML_ChangedTitle_t{ UnBrowserHandle = d.UnBrowserHandle,PchTitle = d.PchTitle, };
+			public static implicit operator HTML_ChangedTitle_t.Pack8 ( HTML_ChangedTitle_t d ) => new HTML_ChangedTitle_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,PchTitle = d.PchTitle, };
 		}
 		#endregion
 	}
@@ -9461,6 +9569,7 @@ namespace Steamworks.Data
 			internal uint UnCurrentMatch; // unCurrentMatch uint32
 			
 			public static implicit operator HTML_SearchResults_t ( HTML_SearchResults_t.Pack8 d ) => new HTML_SearchResults_t{ UnBrowserHandle = d.UnBrowserHandle,UnResults = d.UnResults,UnCurrentMatch = d.UnCurrentMatch, };
+			public static implicit operator HTML_SearchResults_t.Pack8 ( HTML_SearchResults_t d ) => new HTML_SearchResults_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,UnResults = d.UnResults,UnCurrentMatch = d.UnCurrentMatch, };
 		}
 		#endregion
 	}
@@ -9532,6 +9641,7 @@ namespace Steamworks.Data
 			internal bool BCanGoForward; // bCanGoForward _Bool
 			
 			public static implicit operator HTML_CanGoBackAndForward_t ( HTML_CanGoBackAndForward_t.Pack8 d ) => new HTML_CanGoBackAndForward_t{ UnBrowserHandle = d.UnBrowserHandle,BCanGoBack = d.BCanGoBack,BCanGoForward = d.BCanGoForward, };
+			public static implicit operator HTML_CanGoBackAndForward_t.Pack8 ( HTML_CanGoBackAndForward_t d ) => new HTML_CanGoBackAndForward_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,BCanGoBack = d.BCanGoBack,BCanGoForward = d.BCanGoForward, };
 		}
 		#endregion
 	}
@@ -9607,6 +9717,7 @@ namespace Steamworks.Data
 			internal uint UnPageSize; // unPageSize uint32
 			
 			public static implicit operator HTML_HorizontalScroll_t ( HTML_HorizontalScroll_t.Pack8 d ) => new HTML_HorizontalScroll_t{ UnBrowserHandle = d.UnBrowserHandle,UnScrollMax = d.UnScrollMax,UnScrollCurrent = d.UnScrollCurrent,FlPageScale = d.FlPageScale,BVisible = d.BVisible,UnPageSize = d.UnPageSize, };
+			public static implicit operator HTML_HorizontalScroll_t.Pack8 ( HTML_HorizontalScroll_t d ) => new HTML_HorizontalScroll_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,UnScrollMax = d.UnScrollMax,UnScrollCurrent = d.UnScrollCurrent,FlPageScale = d.FlPageScale,BVisible = d.BVisible,UnPageSize = d.UnPageSize, };
 		}
 		#endregion
 	}
@@ -9682,6 +9793,7 @@ namespace Steamworks.Data
 			internal uint UnPageSize; // unPageSize uint32
 			
 			public static implicit operator HTML_VerticalScroll_t ( HTML_VerticalScroll_t.Pack8 d ) => new HTML_VerticalScroll_t{ UnBrowserHandle = d.UnBrowserHandle,UnScrollMax = d.UnScrollMax,UnScrollCurrent = d.UnScrollCurrent,FlPageScale = d.FlPageScale,BVisible = d.BVisible,UnPageSize = d.UnPageSize, };
+			public static implicit operator HTML_VerticalScroll_t.Pack8 ( HTML_VerticalScroll_t d ) => new HTML_VerticalScroll_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,UnScrollMax = d.UnScrollMax,UnScrollCurrent = d.UnScrollCurrent,FlPageScale = d.FlPageScale,BVisible = d.BVisible,UnPageSize = d.UnPageSize, };
 		}
 		#endregion
 	}
@@ -9759,6 +9871,7 @@ namespace Steamworks.Data
 			internal bool BLiveLink; // bLiveLink _Bool
 			
 			public static implicit operator HTML_LinkAtPosition_t ( HTML_LinkAtPosition_t.Pack8 d ) => new HTML_LinkAtPosition_t{ UnBrowserHandle = d.UnBrowserHandle,X = d.X,Y = d.Y,PchURL = d.PchURL,BInput = d.BInput,BLiveLink = d.BLiveLink, };
+			public static implicit operator HTML_LinkAtPosition_t.Pack8 ( HTML_LinkAtPosition_t d ) => new HTML_LinkAtPosition_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,X = d.X,Y = d.Y,PchURL = d.PchURL,BInput = d.BInput,BLiveLink = d.BLiveLink, };
 		}
 		#endregion
 	}
@@ -9824,6 +9937,7 @@ namespace Steamworks.Data
 			internal string PchMessage; // pchMessage const char *
 			
 			public static implicit operator HTML_JSAlert_t ( HTML_JSAlert_t.Pack8 d ) => new HTML_JSAlert_t{ UnBrowserHandle = d.UnBrowserHandle,PchMessage = d.PchMessage, };
+			public static implicit operator HTML_JSAlert_t.Pack8 ( HTML_JSAlert_t d ) => new HTML_JSAlert_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,PchMessage = d.PchMessage, };
 		}
 		#endregion
 	}
@@ -9889,6 +10003,7 @@ namespace Steamworks.Data
 			internal string PchMessage; // pchMessage const char *
 			
 			public static implicit operator HTML_JSConfirm_t ( HTML_JSConfirm_t.Pack8 d ) => new HTML_JSConfirm_t{ UnBrowserHandle = d.UnBrowserHandle,PchMessage = d.PchMessage, };
+			public static implicit operator HTML_JSConfirm_t.Pack8 ( HTML_JSConfirm_t d ) => new HTML_JSConfirm_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,PchMessage = d.PchMessage, };
 		}
 		#endregion
 	}
@@ -9956,6 +10071,7 @@ namespace Steamworks.Data
 			internal string PchInitialFile; // pchInitialFile const char *
 			
 			public static implicit operator HTML_FileOpenDialog_t ( HTML_FileOpenDialog_t.Pack8 d ) => new HTML_FileOpenDialog_t{ UnBrowserHandle = d.UnBrowserHandle,PchTitle = d.PchTitle,PchInitialFile = d.PchInitialFile, };
+			public static implicit operator HTML_FileOpenDialog_t.Pack8 ( HTML_FileOpenDialog_t d ) => new HTML_FileOpenDialog_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,PchTitle = d.PchTitle,PchInitialFile = d.PchInitialFile, };
 		}
 		#endregion
 	}
@@ -10031,6 +10147,7 @@ namespace Steamworks.Data
 			internal uint UnNewWindow_BrowserHandle_IGNORE; // unNewWindow_BrowserHandle_IGNORE HHTMLBrowser
 			
 			public static implicit operator HTML_NewWindow_t ( HTML_NewWindow_t.Pack8 d ) => new HTML_NewWindow_t{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL,UnX = d.UnX,UnY = d.UnY,UnWide = d.UnWide,UnTall = d.UnTall,UnNewWindow_BrowserHandle_IGNORE = d.UnNewWindow_BrowserHandle_IGNORE, };
+			public static implicit operator HTML_NewWindow_t.Pack8 ( HTML_NewWindow_t d ) => new HTML_NewWindow_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL,UnX = d.UnX,UnY = d.UnY,UnWide = d.UnWide,UnTall = d.UnTall,UnNewWindow_BrowserHandle_IGNORE = d.UnNewWindow_BrowserHandle_IGNORE, };
 		}
 		#endregion
 	}
@@ -10096,6 +10213,7 @@ namespace Steamworks.Data
 			internal uint EMouseCursor; // eMouseCursor uint32
 			
 			public static implicit operator HTML_SetCursor_t ( HTML_SetCursor_t.Pack8 d ) => new HTML_SetCursor_t{ UnBrowserHandle = d.UnBrowserHandle,EMouseCursor = d.EMouseCursor, };
+			public static implicit operator HTML_SetCursor_t.Pack8 ( HTML_SetCursor_t d ) => new HTML_SetCursor_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,EMouseCursor = d.EMouseCursor, };
 		}
 		#endregion
 	}
@@ -10161,6 +10279,7 @@ namespace Steamworks.Data
 			internal string PchMsg; // pchMsg const char *
 			
 			public static implicit operator HTML_StatusText_t ( HTML_StatusText_t.Pack8 d ) => new HTML_StatusText_t{ UnBrowserHandle = d.UnBrowserHandle,PchMsg = d.PchMsg, };
+			public static implicit operator HTML_StatusText_t.Pack8 ( HTML_StatusText_t d ) => new HTML_StatusText_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,PchMsg = d.PchMsg, };
 		}
 		#endregion
 	}
@@ -10226,6 +10345,7 @@ namespace Steamworks.Data
 			internal string PchMsg; // pchMsg const char *
 			
 			public static implicit operator HTML_ShowToolTip_t ( HTML_ShowToolTip_t.Pack8 d ) => new HTML_ShowToolTip_t{ UnBrowserHandle = d.UnBrowserHandle,PchMsg = d.PchMsg, };
+			public static implicit operator HTML_ShowToolTip_t.Pack8 ( HTML_ShowToolTip_t d ) => new HTML_ShowToolTip_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,PchMsg = d.PchMsg, };
 		}
 		#endregion
 	}
@@ -10291,6 +10411,7 @@ namespace Steamworks.Data
 			internal string PchMsg; // pchMsg const char *
 			
 			public static implicit operator HTML_UpdateToolTip_t ( HTML_UpdateToolTip_t.Pack8 d ) => new HTML_UpdateToolTip_t{ UnBrowserHandle = d.UnBrowserHandle,PchMsg = d.PchMsg, };
+			public static implicit operator HTML_UpdateToolTip_t.Pack8 ( HTML_UpdateToolTip_t d ) => new HTML_UpdateToolTip_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,PchMsg = d.PchMsg, };
 		}
 		#endregion
 	}
@@ -10354,6 +10475,7 @@ namespace Steamworks.Data
 			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 			
 			public static implicit operator HTML_HideToolTip_t ( HTML_HideToolTip_t.Pack8 d ) => new HTML_HideToolTip_t{ UnBrowserHandle = d.UnBrowserHandle, };
+			public static implicit operator HTML_HideToolTip_t.Pack8 ( HTML_HideToolTip_t d ) => new HTML_HideToolTip_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle, };
 		}
 		#endregion
 	}
@@ -10419,6 +10541,7 @@ namespace Steamworks.Data
 			internal uint UnOldBrowserHandle; // unOldBrowserHandle HHTMLBrowser
 			
 			public static implicit operator HTML_BrowserRestarted_t ( HTML_BrowserRestarted_t.Pack8 d ) => new HTML_BrowserRestarted_t{ UnBrowserHandle = d.UnBrowserHandle,UnOldBrowserHandle = d.UnOldBrowserHandle, };
+			public static implicit operator HTML_BrowserRestarted_t.Pack8 ( HTML_BrowserRestarted_t d ) => new HTML_BrowserRestarted_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,UnOldBrowserHandle = d.UnOldBrowserHandle, };
 		}
 		#endregion
 	}
@@ -10432,20 +10555,7 @@ namespace Steamworks.Data
 		internal ushort Flags; // m_unFlags uint16
 		
 		#region Marshalling
-		internal static SteamItemDetails_t Fill( IntPtr p ) => Config.PackSmall ? ((SteamItemDetails_t)(SteamItemDetails_t) Marshal.PtrToStructure( p, typeof(SteamItemDetails_t) )) : ((SteamItemDetails_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal InventoryItemId ItemId; // m_itemId SteamItemInstanceID_t
-			internal InventoryDefId Definition; // m_iDefinition SteamItemDef_t
-			internal ushort Quantity; // m_unQuantity uint16
-			internal ushort Flags; // m_unFlags uint16
-			
-			public static implicit operator SteamItemDetails_t ( SteamItemDetails_t.Pack8 d ) => new SteamItemDetails_t{ ItemId = d.ItemId,Definition = d.Definition,Quantity = d.Quantity,Flags = d.Flags, };
-		}
+		internal static SteamItemDetails_t Fill( IntPtr p ) => ((SteamItemDetails_t)(SteamItemDetails_t) Marshal.PtrToStructure( p, typeof(SteamItemDetails_t) ) );
 		#endregion
 	}
 	
@@ -10510,6 +10620,7 @@ namespace Steamworks.Data
 			internal Result Result; // m_result enum EResult
 			
 			public static implicit operator SteamInventoryResultReady_t ( SteamInventoryResultReady_t.Pack8 d ) => new SteamInventoryResultReady_t{ Handle = d.Handle,Result = d.Result, };
+			public static implicit operator SteamInventoryResultReady_t.Pack8 ( SteamInventoryResultReady_t d ) => new SteamInventoryResultReady_t.Pack8{ Handle = d.Handle,Result = d.Result, };
 		}
 		#endregion
 	}
@@ -10573,6 +10684,7 @@ namespace Steamworks.Data
 			internal int Handle; // m_handle SteamInventoryResult_t
 			
 			public static implicit operator SteamInventoryFullUpdate_t ( SteamInventoryFullUpdate_t.Pack8 d ) => new SteamInventoryFullUpdate_t{ Handle = d.Handle, };
+			public static implicit operator SteamInventoryFullUpdate_t.Pack8 ( SteamInventoryFullUpdate_t d ) => new SteamInventoryFullUpdate_t.Pack8{ Handle = d.Handle, };
 		}
 		#endregion
 	}
@@ -10697,6 +10809,7 @@ namespace Steamworks.Data
 			internal ulong TransID; // m_ulTransID uint64
 			
 			public static implicit operator SteamInventoryStartPurchaseResult_t ( SteamInventoryStartPurchaseResult_t.Pack8 d ) => new SteamInventoryStartPurchaseResult_t{ Result = d.Result,OrderID = d.OrderID,TransID = d.TransID, };
+			public static implicit operator SteamInventoryStartPurchaseResult_t.Pack8 ( SteamInventoryStartPurchaseResult_t d ) => new SteamInventoryStartPurchaseResult_t.Pack8{ Result = d.Result,OrderID = d.OrderID,TransID = d.TransID, };
 		}
 		#endregion
 	}
@@ -10764,6 +10877,7 @@ namespace Steamworks.Data
 			internal string Currency; // m_rgchCurrency char [4]
 			
 			public static implicit operator SteamInventoryRequestPricesResult_t ( SteamInventoryRequestPricesResult_t.Pack8 d ) => new SteamInventoryRequestPricesResult_t{ Result = d.Result,Currency = d.Currency, };
+			public static implicit operator SteamInventoryRequestPricesResult_t.Pack8 ( SteamInventoryRequestPricesResult_t d ) => new SteamInventoryRequestPricesResult_t.Pack8{ Result = d.Result,Currency = d.Currency, };
 		}
 		#endregion
 	}
@@ -10827,6 +10941,7 @@ namespace Steamworks.Data
 			internal BroadcastUploadResult Result; // m_eResult enum EBroadcastUploadResult
 			
 			public static implicit operator BroadcastUploadStop_t ( BroadcastUploadStop_t.Pack8 d ) => new BroadcastUploadStop_t{ Result = d.Result, };
+			public static implicit operator BroadcastUploadStop_t.Pack8 ( BroadcastUploadStop_t d ) => new BroadcastUploadStop_t.Pack8{ Result = d.Result, };
 		}
 		#endregion
 	}
@@ -10896,6 +11011,7 @@ namespace Steamworks.Data
 			internal string URL; // m_rgchURL char [256]
 			
 			public static implicit operator GetVideoURLResult_t ( GetVideoURLResult_t.Pack8 d ) => new GetVideoURLResult_t{ Result = d.Result,VideoAppID = d.VideoAppID,URL = d.URL, };
+			public static implicit operator GetVideoURLResult_t.Pack8 ( GetVideoURLResult_t d ) => new GetVideoURLResult_t.Pack8{ Result = d.Result,VideoAppID = d.VideoAppID,URL = d.URL, };
 		}
 		#endregion
 	}
@@ -10961,6 +11077,7 @@ namespace Steamworks.Data
 			internal AppId VideoAppID; // m_unVideoAppID AppId_t
 			
 			public static implicit operator GetOPFSettingsResult_t ( GetOPFSettingsResult_t.Pack8 d ) => new GetOPFSettingsResult_t{ Result = d.Result,VideoAppID = d.VideoAppID, };
+			public static implicit operator GetOPFSettingsResult_t.Pack8 ( GetOPFSettingsResult_t d ) => new GetOPFSettingsResult_t.Pack8{ Result = d.Result,VideoAppID = d.VideoAppID, };
 		}
 		#endregion
 	}
@@ -11196,6 +11313,7 @@ namespace Steamworks.Data
 			internal bool Unlocked; // m_bUnlocked _Bool
 			
 			public static implicit operator GSClientAchievementStatus_t ( GSClientAchievementStatus_t.Pack8 d ) => new GSClientAchievementStatus_t{ SteamID = d.SteamID,PchAchievement = d.PchAchievement,Unlocked = d.Unlocked, };
+			public static implicit operator GSClientAchievementStatus_t.Pack8 ( GSClientAchievementStatus_t d ) => new GSClientAchievementStatus_t.Pack8{ SteamID = d.SteamID,PchAchievement = d.PchAchievement,Unlocked = d.Unlocked, };
 		}
 		#endregion
 	}
@@ -11259,6 +11377,7 @@ namespace Steamworks.Data
 			internal byte Secure; // m_bSecure uint8
 			
 			public static implicit operator GSPolicyResponse_t ( GSPolicyResponse_t.Pack8 d ) => new GSPolicyResponse_t{ Secure = d.Secure, };
+			public static implicit operator GSPolicyResponse_t.Pack8 ( GSPolicyResponse_t d ) => new GSPolicyResponse_t.Pack8{ Secure = d.Secure, };
 		}
 		#endregion
 	}
@@ -11328,6 +11447,7 @@ namespace Steamworks.Data
 			internal uint TotalMinutesPlayed; // m_unTotalMinutesPlayed uint32
 			
 			public static implicit operator GSGameplayStats_t ( GSGameplayStats_t.Pack8 d ) => new GSGameplayStats_t{ Result = d.Result,Rank = d.Rank,TotalConnects = d.TotalConnects,TotalMinutesPlayed = d.TotalMinutesPlayed, };
+			public static implicit operator GSGameplayStats_t.Pack8 ( GSGameplayStats_t d ) => new GSGameplayStats_t.Pack8{ Result = d.Result,Rank = d.Rank,TotalConnects = d.TotalConnects,TotalMinutesPlayed = d.TotalMinutesPlayed, };
 		}
 		#endregion
 	}
@@ -11463,6 +11583,7 @@ namespace Steamworks.Data
 			internal uint BanExpires; // m_unBanExpires uint32
 			
 			public static implicit operator GSReputation_t ( GSReputation_t.Pack8 d ) => new GSReputation_t{ Result = d.Result,ReputationScore = d.ReputationScore,Banned = d.Banned,BannedIP = d.BannedIP,BannedPort = d.BannedPort,BannedGameID = d.BannedGameID,BanExpires = d.BanExpires, };
+			public static implicit operator GSReputation_t.Pack8 ( GSReputation_t d ) => new GSReputation_t.Pack8{ Result = d.Result,ReputationScore = d.ReputationScore,Banned = d.Banned,BannedIP = d.BannedIP,BannedPort = d.BannedPort,BannedGameID = d.BannedGameID,BanExpires = d.BanExpires, };
 		}
 		#endregion
 	}
@@ -11526,6 +11647,7 @@ namespace Steamworks.Data
 			internal Result Result; // m_eResult enum EResult
 			
 			public static implicit operator AssociateWithClanResult_t ( AssociateWithClanResult_t.Pack8 d ) => new AssociateWithClanResult_t{ Result = d.Result, };
+			public static implicit operator AssociateWithClanResult_t.Pack8 ( AssociateWithClanResult_t d ) => new AssociateWithClanResult_t.Pack8{ Result = d.Result, };
 		}
 		#endregion
 	}
@@ -11805,6 +11927,7 @@ namespace Steamworks.Data
 		{
 			
 			public static implicit operator AvailableBeaconLocationsUpdated_t ( AvailableBeaconLocationsUpdated_t.Pack8 d ) => new AvailableBeaconLocationsUpdated_t{  };
+			public static implicit operator AvailableBeaconLocationsUpdated_t.Pack8 ( AvailableBeaconLocationsUpdated_t d ) => new AvailableBeaconLocationsUpdated_t.Pack8{  };
 		}
 		#endregion
 	}
@@ -11866,6 +11989,7 @@ namespace Steamworks.Data
 		{
 			
 			public static implicit operator ActiveBeaconsUpdated_t ( ActiveBeaconsUpdated_t.Pack8 d ) => new ActiveBeaconsUpdated_t{  };
+			public static implicit operator ActiveBeaconsUpdated_t.Pack8 ( ActiveBeaconsUpdated_t d ) => new ActiveBeaconsUpdated_t.Pack8{  };
 		}
 		#endregion
 	}
@@ -11927,6 +12051,7 @@ namespace Steamworks.Data
 		{
 			
 			public static implicit operator PlaybackStatusHasChanged_t ( PlaybackStatusHasChanged_t.Pack8 d ) => new PlaybackStatusHasChanged_t{  };
+			public static implicit operator PlaybackStatusHasChanged_t.Pack8 ( PlaybackStatusHasChanged_t d ) => new PlaybackStatusHasChanged_t.Pack8{  };
 		}
 		#endregion
 	}
@@ -11988,6 +12113,7 @@ namespace Steamworks.Data
 		{
 			
 			public static implicit operator BroadcastUploadStart_t ( BroadcastUploadStart_t.Pack8 d ) => new BroadcastUploadStart_t{  };
+			public static implicit operator BroadcastUploadStart_t.Pack8 ( BroadcastUploadStart_t d ) => new BroadcastUploadStart_t.Pack8{  };
 		}
 		#endregion
 	}
@@ -12049,6 +12175,7 @@ namespace Steamworks.Data
 		{
 			
 			public static implicit operator NewUrlLaunchParameters_t ( NewUrlLaunchParameters_t.Pack8 d ) => new NewUrlLaunchParameters_t{  };
+			public static implicit operator NewUrlLaunchParameters_t.Pack8 ( NewUrlLaunchParameters_t d ) => new NewUrlLaunchParameters_t.Pack8{  };
 		}
 		#endregion
 	}
@@ -12114,6 +12241,7 @@ namespace Steamworks.Data
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			
 			public static implicit operator ItemInstalled_t ( ItemInstalled_t.Pack8 d ) => new ItemInstalled_t{ AppID = d.AppID,PublishedFileId = d.PublishedFileId, };
+			public static implicit operator ItemInstalled_t.Pack8 ( ItemInstalled_t d ) => new ItemInstalled_t.Pack8{ AppID = d.AppID,PublishedFileId = d.PublishedFileId, };
 		}
 		#endregion
 	}
@@ -12181,6 +12309,7 @@ namespace Steamworks.Data
 			internal ConnectionState OldState; // m_eOldState ESteamNetworkingConnectionState
 			
 			public static implicit operator SteamNetConnectionStatusChangedCallback_t ( SteamNetConnectionStatusChangedCallback_t.Pack8 d ) => new SteamNetConnectionStatusChangedCallback_t{ Conn = d.Conn,Nfo = d.Nfo,OldState = d.OldState, };
+			public static implicit operator SteamNetConnectionStatusChangedCallback_t.Pack8 ( SteamNetConnectionStatusChangedCallback_t d ) => new SteamNetConnectionStatusChangedCallback_t.Pack8{ Conn = d.Conn,Nfo = d.Nfo,OldState = d.OldState, };
 		}
 		#endregion
 	}
@@ -12209,6 +12338,7 @@ namespace Steamworks.Data
 			internal bool BActive; // bActive bool
 			
 			public static implicit operator InputAnalogActionData_t ( InputAnalogActionData_t.Pack8 d ) => new InputAnalogActionData_t{ EMode = d.EMode,X = d.X,Y = d.Y,BActive = d.BActive, };
+			public static implicit operator InputAnalogActionData_t.Pack8 ( InputAnalogActionData_t d ) => new InputAnalogActionData_t.Pack8{ EMode = d.EMode,X = d.X,Y = d.Y,BActive = d.BActive, };
 		}
 		#endregion
 	}
@@ -12247,6 +12377,7 @@ namespace Steamworks.Data
 			internal float RotVelZ; // rotVelZ float
 			
 			public static implicit operator InputMotionData_t ( InputMotionData_t.Pack8 d ) => new InputMotionData_t{ RotQuatX = d.RotQuatX,RotQuatY = d.RotQuatY,RotQuatZ = d.RotQuatZ,RotQuatW = d.RotQuatW,PosAccelX = d.PosAccelX,PosAccelY = d.PosAccelY,PosAccelZ = d.PosAccelZ,RotVelX = d.RotVelX,RotVelY = d.RotVelY,RotVelZ = d.RotVelZ, };
+			public static implicit operator InputMotionData_t.Pack8 ( InputMotionData_t d ) => new InputMotionData_t.Pack8{ RotQuatX = d.RotQuatX,RotQuatY = d.RotQuatY,RotQuatZ = d.RotQuatZ,RotQuatW = d.RotQuatW,PosAccelX = d.PosAccelX,PosAccelY = d.PosAccelY,PosAccelZ = d.PosAccelZ,RotVelX = d.RotVelX,RotVelY = d.RotVelY,RotVelZ = d.RotVelZ, };
 		}
 		#endregion
 	}
@@ -12273,6 +12404,7 @@ namespace Steamworks.Data
 			internal bool BActive; // bActive bool
 			
 			public static implicit operator InputDigitalActionData_t ( InputDigitalActionData_t.Pack8 d ) => new InputDigitalActionData_t{ BState = d.BState,BActive = d.BActive, };
+			public static implicit operator InputDigitalActionData_t.Pack8 ( InputDigitalActionData_t d ) => new InputDigitalActionData_t.Pack8{ BState = d.BState,BActive = d.BActive, };
 		}
 		#endregion
 	}
@@ -12334,6 +12466,7 @@ namespace Steamworks.Data
 		{
 			
 			public static implicit operator SteamInventoryDefinitionUpdate_t ( SteamInventoryDefinitionUpdate_t.Pack8 d ) => new SteamInventoryDefinitionUpdate_t{  };
+			public static implicit operator SteamInventoryDefinitionUpdate_t.Pack8 ( SteamInventoryDefinitionUpdate_t d ) => new SteamInventoryDefinitionUpdate_t.Pack8{  };
 		}
 		#endregion
 	}
@@ -12395,6 +12528,7 @@ namespace Steamworks.Data
 		{
 			
 			public static implicit operator SteamParentalSettingsChanged_t ( SteamParentalSettingsChanged_t.Pack8 d ) => new SteamParentalSettingsChanged_t{  };
+			public static implicit operator SteamParentalSettingsChanged_t.Pack8 ( SteamParentalSettingsChanged_t d ) => new SteamParentalSettingsChanged_t.Pack8{  };
 		}
 		#endregion
 	}
@@ -12456,6 +12590,7 @@ namespace Steamworks.Data
 		{
 			
 			public static implicit operator SteamServersConnected_t ( SteamServersConnected_t.Pack8 d ) => new SteamServersConnected_t{  };
+			public static implicit operator SteamServersConnected_t.Pack8 ( SteamServersConnected_t d ) => new SteamServersConnected_t.Pack8{  };
 		}
 		#endregion
 	}
@@ -12474,6 +12609,7 @@ namespace Steamworks.Data
 		{
 			
 			public static implicit operator NewLaunchQueryParameters_t ( NewLaunchQueryParameters_t.Pack8 d ) => new NewLaunchQueryParameters_t{  };
+			public static implicit operator NewLaunchQueryParameters_t.Pack8 ( NewLaunchQueryParameters_t d ) => new NewLaunchQueryParameters_t.Pack8{  };
 		}
 		#endregion
 	}
@@ -12537,6 +12673,7 @@ namespace Steamworks.Data
 			internal uint MessageSize; // m_nMessageSize uint32
 			
 			public static implicit operator GCMessageAvailable_t ( GCMessageAvailable_t.Pack8 d ) => new GCMessageAvailable_t{ MessageSize = d.MessageSize, };
+			public static implicit operator GCMessageAvailable_t.Pack8 ( GCMessageAvailable_t d ) => new GCMessageAvailable_t.Pack8{ MessageSize = d.MessageSize, };
 		}
 		#endregion
 	}
@@ -12598,6 +12735,7 @@ namespace Steamworks.Data
 		{
 			
 			public static implicit operator GCMessageFailed_t ( GCMessageFailed_t.Pack8 d ) => new GCMessageFailed_t{  };
+			public static implicit operator GCMessageFailed_t.Pack8 ( GCMessageFailed_t d ) => new GCMessageFailed_t.Pack8{  };
 		}
 		#endregion
 	}
@@ -12659,6 +12797,7 @@ namespace Steamworks.Data
 		{
 			
 			public static implicit operator ScreenshotRequested_t ( ScreenshotRequested_t.Pack8 d ) => new ScreenshotRequested_t{  };
+			public static implicit operator ScreenshotRequested_t.Pack8 ( ScreenshotRequested_t d ) => new ScreenshotRequested_t.Pack8{  };
 		}
 		#endregion
 	}
@@ -12720,6 +12859,7 @@ namespace Steamworks.Data
 		{
 			
 			public static implicit operator LicensesUpdated_t ( LicensesUpdated_t.Pack8 d ) => new LicensesUpdated_t{  };
+			public static implicit operator LicensesUpdated_t.Pack8 ( LicensesUpdated_t d ) => new LicensesUpdated_t.Pack8{  };
 		}
 		#endregion
 	}
@@ -12781,6 +12921,7 @@ namespace Steamworks.Data
 		{
 			
 			public static implicit operator SteamShutdown_t ( SteamShutdown_t.Pack8 d ) => new SteamShutdown_t{  };
+			public static implicit operator SteamShutdown_t.Pack8 ( SteamShutdown_t d ) => new SteamShutdown_t.Pack8{  };
 		}
 		#endregion
 	}
@@ -12842,6 +12983,7 @@ namespace Steamworks.Data
 		{
 			
 			public static implicit operator IPCountry_t ( IPCountry_t.Pack8 d ) => new IPCountry_t{  };
+			public static implicit operator IPCountry_t.Pack8 ( IPCountry_t d ) => new IPCountry_t.Pack8{  };
 		}
 		#endregion
 	}
@@ -12905,6 +13047,7 @@ namespace Steamworks.Data
 			internal byte FailureType; // m_eFailureType uint8
 			
 			public static implicit operator IPCFailure_t ( IPCFailure_t.Pack8 d ) => new IPCFailure_t{ FailureType = d.FailureType, };
+			public static implicit operator IPCFailure_t.Pack8 ( IPCFailure_t d ) => new IPCFailure_t.Pack8{ FailureType = d.FailureType, };
 		}
 		#endregion
 	}

@@ -279,6 +279,7 @@ namespace Steamworks
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		private delegate SteamId FGetAppOwner( IntPtr self );
 		private FGetAppOwner _GetAppOwner;
+		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		private delegate void FGetAppOwner_Windows( IntPtr self, ref SteamId retVal );
 		private FGetAppOwner_Windows _GetAppOwner_Windows;
 		

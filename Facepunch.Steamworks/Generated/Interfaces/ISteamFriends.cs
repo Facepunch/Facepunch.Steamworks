@@ -143,6 +143,7 @@ namespace Steamworks
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		private delegate SteamId FGetFriendByIndex( IntPtr self, int iFriend, int iFriendFlags );
 		private FGetFriendByIndex _GetFriendByIndex;
+		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		private delegate void FGetFriendByIndex_Windows( IntPtr self, ref SteamId retVal, int iFriend, int iFriendFlags );
 		private FGetFriendByIndex_Windows _GetFriendByIndex_Windows;
 		
@@ -319,6 +320,7 @@ namespace Steamworks
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		private delegate SteamId FGetClanByIndex( IntPtr self, int iClan );
 		private FGetClanByIndex _GetClanByIndex;
+		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		private delegate void FGetClanByIndex_Windows( IntPtr self, ref SteamId retVal, int iClan );
 		private FGetClanByIndex_Windows _GetClanByIndex_Windows;
 		
@@ -395,6 +397,7 @@ namespace Steamworks
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		private delegate SteamId FGetFriendFromSourceByIndex( IntPtr self, SteamId steamIDSource, int iFriend );
 		private FGetFriendFromSourceByIndex _GetFriendFromSourceByIndex;
+		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		private delegate void FGetFriendFromSourceByIndex_Windows( IntPtr self, ref SteamId retVal, SteamId steamIDSource, int iFriend );
 		private FGetFriendFromSourceByIndex_Windows _GetFriendFromSourceByIndex_Windows;
 		
@@ -560,6 +563,7 @@ namespace Steamworks
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		private delegate SteamId FGetClanOwner( IntPtr self, SteamId steamIDClan );
 		private FGetClanOwner _GetClanOwner;
+		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		private delegate void FGetClanOwner_Windows( IntPtr self, ref SteamId retVal, SteamId steamIDClan );
 		private FGetClanOwner_Windows _GetClanOwner_Windows;
 		
@@ -591,6 +595,7 @@ namespace Steamworks
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		private delegate SteamId FGetClanOfficerByIndex( IntPtr self, SteamId steamIDClan, int iOfficer );
 		private FGetClanOfficerByIndex _GetClanOfficerByIndex;
+		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		private delegate void FGetClanOfficerByIndex_Windows( IntPtr self, ref SteamId retVal, SteamId steamIDClan, int iOfficer );
 		private FGetClanOfficerByIndex_Windows _GetClanOfficerByIndex_Windows;
 		
@@ -712,6 +717,7 @@ namespace Steamworks
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		private delegate SteamId FGetCoplayFriend( IntPtr self, int iCoplayFriend );
 		private FGetCoplayFriend _GetCoplayFriend;
+		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		private delegate void FGetCoplayFriend_Windows( IntPtr self, ref SteamId retVal, int iCoplayFriend );
 		private FGetCoplayFriend_Windows _GetCoplayFriend_Windows;
 		
@@ -788,6 +794,7 @@ namespace Steamworks
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		private delegate SteamId FGetChatMemberByIndex( IntPtr self, SteamId steamIDClan, int iUser );
 		private FGetChatMemberByIndex _GetChatMemberByIndex;
+		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		private delegate void FGetChatMemberByIndex_Windows( IntPtr self, ref SteamId retVal, SteamId steamIDClan, int iUser );
 		private FGetChatMemberByIndex_Windows _GetChatMemberByIndex_Windows;
 		

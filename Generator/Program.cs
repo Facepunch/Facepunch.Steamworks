@@ -9,7 +9,9 @@ namespace Generator
 {
     class Program
     {
-        static void Main( string[] args )
+		public static SteamApiDefinition Definitions;
+
+		static void Main( string[] args )
         {
             var content = System.IO.File.ReadAllText( "steam_sdk/steam_api.json" );
             var def = Newtonsoft.Json.JsonConvert.DeserializeObject<SteamApiDefinition>( content );
@@ -21,7 +23,9 @@ namespace Generator
 			parser.ParseClasses();
 			parser.ExtendDefinition( def );
 
-            var generator = new CodeWriter( parser, def );
+			Definitions = def;
+
+			var generator = new CodeWriter( parser, def );
 
             generator.ToFolder( "../Facepunch.Steamworks/Generated/" );
         }

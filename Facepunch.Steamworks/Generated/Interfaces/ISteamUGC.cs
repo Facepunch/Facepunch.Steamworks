@@ -19,6 +19,7 @@ namespace Steamworks
 			_CreateQueryUGCDetailsRequest = Marshal.GetDelegateForFunctionPointer<FCreateQueryUGCDetailsRequest>( Marshal.ReadIntPtr( VTable, 24) );
 			_SendQueryUGCRequest = Marshal.GetDelegateForFunctionPointer<FSendQueryUGCRequest>( Marshal.ReadIntPtr( VTable, 32) );
 			_GetQueryUGCResult = Marshal.GetDelegateForFunctionPointer<FGetQueryUGCResult>( Marshal.ReadIntPtr( VTable, 40) );
+			_GetQueryUGCResult_Windows = Marshal.GetDelegateForFunctionPointer<FGetQueryUGCResult_Windows>( Marshal.ReadIntPtr( VTable, 40) );
 			_GetQueryUGCPreviewURL = Marshal.GetDelegateForFunctionPointer<FGetQueryUGCPreviewURL>( Marshal.ReadIntPtr( VTable, 48) );
 			_GetQueryUGCMetadata = Marshal.GetDelegateForFunctionPointer<FGetQueryUGCMetadata>( Marshal.ReadIntPtr( VTable, 56) );
 			_GetQueryUGCChildren = Marshal.GetDelegateForFunctionPointer<FGetQueryUGCChildren>( Marshal.ReadIntPtr( VTable, 64) );
@@ -54,6 +55,7 @@ namespace Steamworks
 			_SetItemMetadata = Marshal.GetDelegateForFunctionPointer<FSetItemMetadata>( Marshal.ReadIntPtr( VTable, 304) );
 			_SetItemVisibility = Marshal.GetDelegateForFunctionPointer<FSetItemVisibility>( Marshal.ReadIntPtr( VTable, 312) );
 			_SetItemTags = Marshal.GetDelegateForFunctionPointer<FSetItemTags>( Marshal.ReadIntPtr( VTable, 320) );
+			_SetItemTags_Windows = Marshal.GetDelegateForFunctionPointer<FSetItemTags_Windows>( Marshal.ReadIntPtr( VTable, 320) );
 			_SetItemContent = Marshal.GetDelegateForFunctionPointer<FSetItemContent>( Marshal.ReadIntPtr( VTable, 328) );
 			_SetItemPreview = Marshal.GetDelegateForFunctionPointer<FSetItemPreview>( Marshal.ReadIntPtr( VTable, 336) );
 			_SetAllowLegacyUpload = Marshal.GetDelegateForFunctionPointer<FSetAllowLegacyUpload>( Marshal.ReadIntPtr( VTable, 344) );
@@ -151,10 +153,22 @@ namespace Steamworks
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private delegate bool FGetQueryUGCResult( IntPtr self, UGCQueryHandle_t handle, uint index, ref SteamUGCDetails_t pDetails );
 		private FGetQueryUGCResult _GetQueryUGCResult;
+		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private delegate bool FGetQueryUGCResult_Windows( IntPtr self, UGCQueryHandle_t handle, uint index, ref SteamUGCDetails_t.Pack8 pDetails );
+		private FGetQueryUGCResult_Windows _GetQueryUGCResult_Windows;
 		
 		#endregion
 		internal bool GetQueryUGCResult( UGCQueryHandle_t handle, uint index, ref SteamUGCDetails_t pDetails )
 		{
+			if ( Config.Os == OsType.Windows )
+			{
+				SteamUGCDetails_t.Pack8 pDetails_windows = pDetails;
+				var retVal = _GetQueryUGCResult_Windows( Self, handle, index, ref pDetails_windows );
+				pDetails = pDetails_windows;
+				return retVal;
+			}
+			
 			return _GetQueryUGCResult( Self, handle, index, ref pDetails );
 		}
 		
@@ -566,10 +580,22 @@ namespace Steamworks
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private delegate bool FSetItemTags( IntPtr self, UGCUpdateHandle_t updateHandle, ref SteamParamStringArray_t pTags );
 		private FSetItemTags _SetItemTags;
+		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private delegate bool FSetItemTags_Windows( IntPtr self, UGCUpdateHandle_t updateHandle, ref SteamParamStringArray_t.Pack8 pTags );
+		private FSetItemTags_Windows _SetItemTags_Windows;
 		
 		#endregion
 		internal bool SetItemTags( UGCUpdateHandle_t updateHandle, ref SteamParamStringArray_t pTags )
 		{
+			if ( Config.Os == OsType.Windows )
+			{
+				SteamParamStringArray_t.Pack8 pTags_windows = pTags;
+				var retVal = _SetItemTags_Windows( Self, updateHandle, ref pTags_windows );
+				pTags = pTags_windows;
+				return retVal;
+			}
+			
 			return _SetItemTags( Self, updateHandle, ref pTags );
 		}
 		

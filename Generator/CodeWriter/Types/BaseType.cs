@@ -13,6 +13,8 @@ internal class BaseType
 
 	public string Func;
 
+	public virtual bool WindowsSpecific => false;
+
 	public static BaseType Parse( string type, string varname = null )
 	{
 		type = Cleanup.ConvertType( type );
@@ -59,6 +61,7 @@ internal class BaseType
 	}
 
 	public virtual string AsArgument() => IsVector ? $"[In,Out] {Ref}{TypeName.Trim( '*', ' ' )}[]  {VarName}" : $"{Ref}{TypeName.Trim( '*', ' ' )} {VarName}";
+	public virtual string AsWinArgument() => AsArgument();
 	public virtual string AsCallArgument() => $"{Ref}{VarName}";
 
 	public virtual string Return( string varname ) => $"return {varname};";
@@ -133,6 +136,25 @@ internal class StructType : BaseType
 		}
 
 		return base.Return( varname );
+	}
+
+	public override bool WindowsSpecific
+	{
+		get
+		{
+			var s = Generator.Program.Definitions.structs.FirstOrDefault( x => x.Name == StructName );
+			if ( s == null ) return false;
+
+			return !s.IsPack4OnWindows;
+		}
+	}
+
+	public override string AsWinArgument()
+	{
+		if ( WindowsSpecific )
+			return IsVector ? $"[In,Out] {Ref}{TypeName.Trim( '*', ' ' )}.Pack8[]  {VarName}" : $"{Ref}{TypeName.Trim( '*', ' ' )}.Pack8 {VarName}";
+
+		return AsArgument();
 	}
 }
 

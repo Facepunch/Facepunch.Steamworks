@@ -20,6 +20,7 @@ namespace Steamworks
 			_CloseP2PSessionWithUser = Marshal.GetDelegateForFunctionPointer<FCloseP2PSessionWithUser>( Marshal.ReadIntPtr( VTable, 32) );
 			_CloseP2PChannelWithUser = Marshal.GetDelegateForFunctionPointer<FCloseP2PChannelWithUser>( Marshal.ReadIntPtr( VTable, 40) );
 			_GetP2PSessionState = Marshal.GetDelegateForFunctionPointer<FGetP2PSessionState>( Marshal.ReadIntPtr( VTable, 48) );
+			_GetP2PSessionState_Windows = Marshal.GetDelegateForFunctionPointer<FGetP2PSessionState_Windows>( Marshal.ReadIntPtr( VTable, 48) );
 			_AllowP2PPacketRelay = Marshal.GetDelegateForFunctionPointer<FAllowP2PPacketRelay>( Marshal.ReadIntPtr( VTable, 56) );
 			_CreateListenSocket = Marshal.GetDelegateForFunctionPointer<FCreateListenSocket>( Marshal.ReadIntPtr( VTable, 64) );
 			_CreateP2PConnectionSocket = Marshal.GetDelegateForFunctionPointer<FCreateP2PConnectionSocket>( Marshal.ReadIntPtr( VTable, 72) );
@@ -114,10 +115,22 @@ namespace Steamworks
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private delegate bool FGetP2PSessionState( IntPtr self, SteamId steamIDRemote, ref P2PSessionState_t pConnectionState );
 		private FGetP2PSessionState _GetP2PSessionState;
+		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private delegate bool FGetP2PSessionState_Windows( IntPtr self, SteamId steamIDRemote, ref P2PSessionState_t.Pack8 pConnectionState );
+		private FGetP2PSessionState_Windows _GetP2PSessionState_Windows;
 		
 		#endregion
 		internal bool GetP2PSessionState( SteamId steamIDRemote, ref P2PSessionState_t pConnectionState )
 		{
+			if ( Config.Os == OsType.Windows )
+			{
+				P2PSessionState_t.Pack8 pConnectionState_windows = pConnectionState;
+				var retVal = _GetP2PSessionState_Windows( Self, steamIDRemote, ref pConnectionState_windows );
+				pConnectionState = pConnectionState_windows;
+				return retVal;
+			}
+			
 			return _GetP2PSessionState( Self, steamIDRemote, ref pConnectionState );
 		}
 		

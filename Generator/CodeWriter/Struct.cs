@@ -184,6 +184,17 @@ namespace Generator
 									WriteLine( " };" );
 								}
 
+								Write( $"public static implicit operator {name}.Pack8 ( {name} d ) => " );
+								{
+									Write( $"new {name}.Pack8{{ " );
+									{
+										foreach ( var f in c.Fields )
+										{
+											Write( $"{CleanMemberName( f.Name )} = d.{CleanMemberName( f.Name )}," );
+										}
+									}
+									WriteLine( " };" );
+								}
 							}
 							EndBlock();
 
