@@ -317,5 +317,18 @@ namespace Steamworks
 			return await InventoryResult.GetAsync( sresult );
 		}
 
+
+		/// <summary>
+		/// Trigger an item drop for this user. This is for timed drops.
+		/// </summary>
+		public static async Task<InventoryResult?> TriggerItemDropAsync( InventoryDefId id )
+		{
+			var sresult = default( SteamInventoryResult_t );
+
+			if ( !Internal.TriggerItemDrop( ref sresult, id ) )
+				return null;
+
+			return await InventoryResult.GetAsync( sresult );
+		}
 	}
 }
