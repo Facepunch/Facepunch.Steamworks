@@ -303,5 +303,19 @@ namespace Steamworks
 			return sresult;
 		}
 
+
+		/// <summary>
+		/// Grant all promotional items the user is eligible for
+		/// </summary>
+		public static async Task<InventoryResult?> GrantPromoItemsAsync()
+		{
+			var sresult = default( SteamInventoryResult_t );
+
+			if ( !Internal.GrantPromoItems( ref sresult ) )
+				return null;
+
+			return await InventoryResult.GetAsync( sresult );
+		}
+
 	}
 }
