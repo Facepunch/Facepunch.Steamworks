@@ -22,11 +22,32 @@ namespace Steamworks.Data
 		public bool Secure { get; set; }
 		public uint LastTimePlayed { get; set; }
 		public int Version { get; set; }
-		public string Tags { get; set; }
+		public string TagString { get; set; }
 		public ulong SteamId { get; set; }
 		public IPAddress Address { get; set; }
 		public int ConnectionPort { get; set; }
 		public int QueryPort { get; set; }
+
+		string[] _tags;
+
+		/// <summary>
+		/// Gets the individual tags for this server
+		/// </summary>
+		public string[] Tags
+		{
+			get
+			{
+				if ( _tags == null )
+				{
+					if ( !string.IsNullOrEmpty( TagString ) )
+					{
+						_tags = TagString.Split( ',' );
+					}
+				}
+
+				return _tags;
+			}
+		}
 
 		internal static ServerInfo From( gameserveritem_t item )
 		{
@@ -48,7 +69,7 @@ namespace Steamworks.Data
 				Secure = item.Secure,
 				LastTimePlayed = item.TimeLastPlayed,
 				Version = item.ServerVersion,
-				Tags = item.GameTags,
+				TagString = item.GameTags,
 				SteamId = item.SteamID
 			};
 		}
