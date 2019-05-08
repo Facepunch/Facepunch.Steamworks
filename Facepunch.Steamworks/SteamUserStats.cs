@@ -43,7 +43,7 @@ namespace Steamworks
 			} );
 
 			UserStatsStored_t.Install( x => OnUserStatsStored?.Invoke( x.Result ) );
-			UserAchievementStored_t.Install( x => OnAchievementProgress?.Invoke( x.AchievementName, (int) x.CurProgress, (int)x.MaxProgress ) );
+			UserAchievementStored_t.Install( x => OnAchievementProgress?.Invoke( new Achievement( x.AchievementName ), (int) x.CurProgress, (int)x.MaxProgress ) );
 			UserStatsUnloaded_t.Install( x => OnUserStatsUnloaded?.Invoke( x.SteamIDUser ) );
 			UserAchievementIconFetched_t.Install( x => OnAchievementIconFetched( x.AchievementName, x.IconHandle ) );
 
@@ -71,7 +71,7 @@ namespace Steamworks
 		///	"indicate progress" call. If both m_nCurProgress and m_nMaxProgress
 		///	are zero, that means the achievement has been fully unlocked
 		/// </summary>
-		public static event Action<string, int, int> OnAchievementProgress;
+		public static event Action<Achievement, int, int> OnAchievementProgress;
 
 
 		/// <summary>
