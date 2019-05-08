@@ -31,6 +31,9 @@ namespace Steamworks
 
 		public static bool IsValid => initialized;
 
+
+		public static Action<Exception> OnCallbackException;
+
 		internal static void InstallEvents()
 		{
 			ValidateAuthTicketResponse_t.Install( x => OnValidateAuthTicketResponse?.Invoke( x.SteamID, x.OwnerSteamID, x.AuthSessionResponse ), true );
@@ -98,18 +101,22 @@ namespace Steamworks
 			while ( IsValid )
 			{
 				await Task.Delay( 16 );
-				Update();
+				RunCallbacks();
 			}
 		}
-		public static void Update()
+
+		/// <summary>
+		/// Run the callbacks. This is also called in Async callbacks.
+		/// </summary>
+		public static void RunCallbacks()
 		{
 			try
 			{
 				SteamGameServer.RunCallbacks();
 			}
-			catch ( System.Exception )
+			catch ( System.Exception e )
 			{
-				// TODO - error outputs
+				OnCallbackException?.Invoke( e );
 			}
 		}
 
