@@ -42,7 +42,7 @@ namespace Steamworks
 			GameConnectedFriendChatMsg_t.Install( OnFriendChatMessage );
 			GameOverlayActivated_t.Install( x => OnGameOverlayActivated?.Invoke() );
 			GameServerChangeRequested_t.Install( x => OnGameServerChangeRequested?.Invoke( x.Server, x.Password ) );
-			GameLobbyJoinRequested_t.Install( x => OnGameLobbyJoinRequested?.Invoke( x.SteamIDLobby, x.SteamIDFriend ) );
+			GameLobbyJoinRequested_t.Install( x => OnGameLobbyJoinRequested?.Invoke( new Lobby( x.SteamIDLobby ), x.SteamIDFriend ) );
 			FriendRichPresenceUpdate_t.Install( x => OnFriendRichPresenceUpdate?.Invoke( new Friend( x.SteamIDFriend ) ) );
 		}
 
@@ -80,7 +80,7 @@ namespace Steamworks
 		/// Called when the user tries to join a lobby from their friends list
 		///	game client should attempt to connect to specified lobby when this is received
 		/// </summary>
-		public static event Action<SteamId, SteamId> OnGameLobbyJoinRequested;
+		public static event Action<Lobby, SteamId> OnGameLobbyJoinRequested;
 
 		/// <summary>
 		/// Callback indicating updated data about friends rich presence information
