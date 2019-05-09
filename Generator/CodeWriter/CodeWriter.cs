@@ -71,7 +71,6 @@ namespace Generator
 				GenerateVTableClass( "ISteamMatchmakingServers", $"{folder}../Generated/Interfaces/ISteamMatchmakingServers.cs" );
 				GenerateVTableClass( "ISteamFriends", $"{folder}../Generated/Interfaces/ISteamFriends.cs" );
 				GenerateVTableClass( "ISteamGameServer", $"{folder}../Generated/Interfaces/ISteamGameServer.cs" );
-				GenerateVTableClass( "ISteamGameServer", $"{folder}../Generated/Interfaces/ISteamGameServer.cs" );
 				GenerateVTableClass( "ISteamScreenshots", $"{folder}../Generated/Interfaces/ISteamScreenshots.cs" );
 				GenerateVTableClass( "ISteamUserStats", $"{folder}../Generated/Interfaces/ISteamUserStats.cs" );
 				GenerateVTableClass( "ISteamUGC", $"{folder}../Generated/Interfaces/ISteamUGC.cs" );
@@ -82,6 +81,7 @@ namespace Generator
 				GenerateVTableClass( "ISteamParties", $"{folder}../Generated/Interfaces/ISteamParties.cs" );
 				GenerateVTableClass( "ISteamNetworkingUtils", $"{folder}../Generated/Interfaces/ISteamNetworkingUtils.cs" );
 				GenerateVTableClass( "ISteamNetworkingSockets", $"{folder}../Generated/Interfaces/ISteamNetworkingSockets.cs" );
+				GenerateVTableClass( "ISteamGameServerStats", $"{folder}../Generated/Interfaces/ISteamGameServerStats.cs" );
 			}
 		}
 
