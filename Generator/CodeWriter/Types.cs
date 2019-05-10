@@ -48,7 +48,7 @@ namespace Generator
                 if ( SkipTypesStartingWith.Any( x => o.Name.StartsWith( x ) ) )
                     continue;
 
-				StartBlock( $"{Cleanup.Expose( typeName )} struct {typeName} : IEquatable<{typeName}>" );
+				StartBlock( $"{Cleanup.Expose( typeName )} struct {typeName} : IEquatable<{typeName}>, IComparable<{typeName}>" );
                 {
 					WriteLine( $"public {ToManagedType( o.Type )} Value;" );
 					WriteLine();
@@ -60,6 +60,11 @@ namespace Generator
 					WriteLine( $"public bool Equals( {typeName} p ) => p.Value == Value;" );
 					WriteLine( $"public static bool operator ==( {typeName} a, {typeName} b ) => a.Equals( b );" );
 					WriteLine( $"public static bool operator !=( {typeName} a, {typeName} b ) => !a.Equals( b );" );
+
+					if ( ToManagedType( o.Type ) == "IntPtr" )
+						WriteLine( $"public int CompareTo( {typeName} other ) => Value.ToInt64().CompareTo( other.Value.ToInt64() );" );
+					else
+						WriteLine( $"public int CompareTo( {typeName} other ) => Value.CompareTo( other.Value );" );
 				}
                 EndBlock();
                 WriteLine();

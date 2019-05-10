@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Steamworks.Data
 {
-	internal struct GID_t : IEquatable<GID_t>
+	internal struct GID_t : IEquatable<GID_t>, IComparable<GID_t>
 	{
 		public ulong Value;
 		
@@ -18,9 +18,10 @@ namespace Steamworks.Data
 		public bool Equals( GID_t p ) => p.Value == Value;
 		public static bool operator ==( GID_t a, GID_t b ) => a.Equals( b );
 		public static bool operator !=( GID_t a, GID_t b ) => !a.Equals( b );
+		public int CompareTo( GID_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct JobID_t : IEquatable<JobID_t>
+	internal struct JobID_t : IEquatable<JobID_t>, IComparable<JobID_t>
 	{
 		public ulong Value;
 		
@@ -32,9 +33,10 @@ namespace Steamworks.Data
 		public bool Equals( JobID_t p ) => p.Value == Value;
 		public static bool operator ==( JobID_t a, JobID_t b ) => a.Equals( b );
 		public static bool operator !=( JobID_t a, JobID_t b ) => !a.Equals( b );
+		public int CompareTo( JobID_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct TxnID_t : IEquatable<TxnID_t>
+	internal struct TxnID_t : IEquatable<TxnID_t>, IComparable<TxnID_t>
 	{
 		public GID_t Value;
 		
@@ -46,9 +48,10 @@ namespace Steamworks.Data
 		public bool Equals( TxnID_t p ) => p.Value == Value;
 		public static bool operator ==( TxnID_t a, TxnID_t b ) => a.Equals( b );
 		public static bool operator !=( TxnID_t a, TxnID_t b ) => !a.Equals( b );
+		public int CompareTo( TxnID_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct PackageId_t : IEquatable<PackageId_t>
+	internal struct PackageId_t : IEquatable<PackageId_t>, IComparable<PackageId_t>
 	{
 		public uint Value;
 		
@@ -60,9 +63,10 @@ namespace Steamworks.Data
 		public bool Equals( PackageId_t p ) => p.Value == Value;
 		public static bool operator ==( PackageId_t a, PackageId_t b ) => a.Equals( b );
 		public static bool operator !=( PackageId_t a, PackageId_t b ) => !a.Equals( b );
+		public int CompareTo( PackageId_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct BundleId_t : IEquatable<BundleId_t>
+	internal struct BundleId_t : IEquatable<BundleId_t>, IComparable<BundleId_t>
 	{
 		public uint Value;
 		
@@ -74,9 +78,10 @@ namespace Steamworks.Data
 		public bool Equals( BundleId_t p ) => p.Value == Value;
 		public static bool operator ==( BundleId_t a, BundleId_t b ) => a.Equals( b );
 		public static bool operator !=( BundleId_t a, BundleId_t b ) => !a.Equals( b );
+		public int CompareTo( BundleId_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct AssetClassId_t : IEquatable<AssetClassId_t>
+	internal struct AssetClassId_t : IEquatable<AssetClassId_t>, IComparable<AssetClassId_t>
 	{
 		public ulong Value;
 		
@@ -88,9 +93,10 @@ namespace Steamworks.Data
 		public bool Equals( AssetClassId_t p ) => p.Value == Value;
 		public static bool operator ==( AssetClassId_t a, AssetClassId_t b ) => a.Equals( b );
 		public static bool operator !=( AssetClassId_t a, AssetClassId_t b ) => !a.Equals( b );
+		public int CompareTo( AssetClassId_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct PhysicalItemId_t : IEquatable<PhysicalItemId_t>
+	internal struct PhysicalItemId_t : IEquatable<PhysicalItemId_t>, IComparable<PhysicalItemId_t>
 	{
 		public uint Value;
 		
@@ -102,9 +108,10 @@ namespace Steamworks.Data
 		public bool Equals( PhysicalItemId_t p ) => p.Value == Value;
 		public static bool operator ==( PhysicalItemId_t a, PhysicalItemId_t b ) => a.Equals( b );
 		public static bool operator !=( PhysicalItemId_t a, PhysicalItemId_t b ) => !a.Equals( b );
+		public int CompareTo( PhysicalItemId_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct DepotId_t : IEquatable<DepotId_t>
+	internal struct DepotId_t : IEquatable<DepotId_t>, IComparable<DepotId_t>
 	{
 		public uint Value;
 		
@@ -116,9 +123,10 @@ namespace Steamworks.Data
 		public bool Equals( DepotId_t p ) => p.Value == Value;
 		public static bool operator ==( DepotId_t a, DepotId_t b ) => a.Equals( b );
 		public static bool operator !=( DepotId_t a, DepotId_t b ) => !a.Equals( b );
+		public int CompareTo( DepotId_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct RTime32 : IEquatable<RTime32>
+	internal struct RTime32 : IEquatable<RTime32>, IComparable<RTime32>
 	{
 		public uint Value;
 		
@@ -130,9 +138,10 @@ namespace Steamworks.Data
 		public bool Equals( RTime32 p ) => p.Value == Value;
 		public static bool operator ==( RTime32 a, RTime32 b ) => a.Equals( b );
 		public static bool operator !=( RTime32 a, RTime32 b ) => !a.Equals( b );
+		public int CompareTo( RTime32 other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct CellID_t : IEquatable<CellID_t>
+	internal struct CellID_t : IEquatable<CellID_t>, IComparable<CellID_t>
 	{
 		public uint Value;
 		
@@ -144,9 +153,10 @@ namespace Steamworks.Data
 		public bool Equals( CellID_t p ) => p.Value == Value;
 		public static bool operator ==( CellID_t a, CellID_t b ) => a.Equals( b );
 		public static bool operator !=( CellID_t a, CellID_t b ) => !a.Equals( b );
+		public int CompareTo( CellID_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct SteamAPICall_t : IEquatable<SteamAPICall_t>
+	internal struct SteamAPICall_t : IEquatable<SteamAPICall_t>, IComparable<SteamAPICall_t>
 	{
 		public ulong Value;
 		
@@ -158,9 +168,10 @@ namespace Steamworks.Data
 		public bool Equals( SteamAPICall_t p ) => p.Value == Value;
 		public static bool operator ==( SteamAPICall_t a, SteamAPICall_t b ) => a.Equals( b );
 		public static bool operator !=( SteamAPICall_t a, SteamAPICall_t b ) => !a.Equals( b );
+		public int CompareTo( SteamAPICall_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct AccountID_t : IEquatable<AccountID_t>
+	internal struct AccountID_t : IEquatable<AccountID_t>, IComparable<AccountID_t>
 	{
 		public uint Value;
 		
@@ -172,9 +183,10 @@ namespace Steamworks.Data
 		public bool Equals( AccountID_t p ) => p.Value == Value;
 		public static bool operator ==( AccountID_t a, AccountID_t b ) => a.Equals( b );
 		public static bool operator !=( AccountID_t a, AccountID_t b ) => !a.Equals( b );
+		public int CompareTo( AccountID_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct PartnerId_t : IEquatable<PartnerId_t>
+	internal struct PartnerId_t : IEquatable<PartnerId_t>, IComparable<PartnerId_t>
 	{
 		public uint Value;
 		
@@ -186,9 +198,10 @@ namespace Steamworks.Data
 		public bool Equals( PartnerId_t p ) => p.Value == Value;
 		public static bool operator ==( PartnerId_t a, PartnerId_t b ) => a.Equals( b );
 		public static bool operator !=( PartnerId_t a, PartnerId_t b ) => !a.Equals( b );
+		public int CompareTo( PartnerId_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct ManifestId_t : IEquatable<ManifestId_t>
+	internal struct ManifestId_t : IEquatable<ManifestId_t>, IComparable<ManifestId_t>
 	{
 		public ulong Value;
 		
@@ -200,9 +213,10 @@ namespace Steamworks.Data
 		public bool Equals( ManifestId_t p ) => p.Value == Value;
 		public static bool operator ==( ManifestId_t a, ManifestId_t b ) => a.Equals( b );
 		public static bool operator !=( ManifestId_t a, ManifestId_t b ) => !a.Equals( b );
+		public int CompareTo( ManifestId_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct SiteId_t : IEquatable<SiteId_t>
+	internal struct SiteId_t : IEquatable<SiteId_t>, IComparable<SiteId_t>
 	{
 		public ulong Value;
 		
@@ -214,9 +228,10 @@ namespace Steamworks.Data
 		public bool Equals( SiteId_t p ) => p.Value == Value;
 		public static bool operator ==( SiteId_t a, SiteId_t b ) => a.Equals( b );
 		public static bool operator !=( SiteId_t a, SiteId_t b ) => !a.Equals( b );
+		public int CompareTo( SiteId_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct PartyBeaconID_t : IEquatable<PartyBeaconID_t>
+	internal struct PartyBeaconID_t : IEquatable<PartyBeaconID_t>, IComparable<PartyBeaconID_t>
 	{
 		public ulong Value;
 		
@@ -228,9 +243,10 @@ namespace Steamworks.Data
 		public bool Equals( PartyBeaconID_t p ) => p.Value == Value;
 		public static bool operator ==( PartyBeaconID_t a, PartyBeaconID_t b ) => a.Equals( b );
 		public static bool operator !=( PartyBeaconID_t a, PartyBeaconID_t b ) => !a.Equals( b );
+		public int CompareTo( PartyBeaconID_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct HAuthTicket : IEquatable<HAuthTicket>
+	internal struct HAuthTicket : IEquatable<HAuthTicket>, IComparable<HAuthTicket>
 	{
 		public uint Value;
 		
@@ -242,9 +258,10 @@ namespace Steamworks.Data
 		public bool Equals( HAuthTicket p ) => p.Value == Value;
 		public static bool operator ==( HAuthTicket a, HAuthTicket b ) => a.Equals( b );
 		public static bool operator !=( HAuthTicket a, HAuthTicket b ) => !a.Equals( b );
+		public int CompareTo( HAuthTicket other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct BREAKPAD_HANDLE : IEquatable<BREAKPAD_HANDLE>
+	internal struct BREAKPAD_HANDLE : IEquatable<BREAKPAD_HANDLE>, IComparable<BREAKPAD_HANDLE>
 	{
 		public IntPtr Value;
 		
@@ -256,9 +273,10 @@ namespace Steamworks.Data
 		public bool Equals( BREAKPAD_HANDLE p ) => p.Value == Value;
 		public static bool operator ==( BREAKPAD_HANDLE a, BREAKPAD_HANDLE b ) => a.Equals( b );
 		public static bool operator !=( BREAKPAD_HANDLE a, BREAKPAD_HANDLE b ) => !a.Equals( b );
+		public int CompareTo( BREAKPAD_HANDLE other ) => Value.ToInt64().CompareTo( other.Value.ToInt64() );
 	}
 	
-	internal struct HSteamPipe : IEquatable<HSteamPipe>
+	internal struct HSteamPipe : IEquatable<HSteamPipe>, IComparable<HSteamPipe>
 	{
 		public int Value;
 		
@@ -270,9 +288,10 @@ namespace Steamworks.Data
 		public bool Equals( HSteamPipe p ) => p.Value == Value;
 		public static bool operator ==( HSteamPipe a, HSteamPipe b ) => a.Equals( b );
 		public static bool operator !=( HSteamPipe a, HSteamPipe b ) => !a.Equals( b );
+		public int CompareTo( HSteamPipe other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct HSteamUser : IEquatable<HSteamUser>
+	internal struct HSteamUser : IEquatable<HSteamUser>, IComparable<HSteamUser>
 	{
 		public int Value;
 		
@@ -284,9 +303,10 @@ namespace Steamworks.Data
 		public bool Equals( HSteamUser p ) => p.Value == Value;
 		public static bool operator ==( HSteamUser a, HSteamUser b ) => a.Equals( b );
 		public static bool operator !=( HSteamUser a, HSteamUser b ) => !a.Equals( b );
+		public int CompareTo( HSteamUser other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct FriendsGroupID_t : IEquatable<FriendsGroupID_t>
+	internal struct FriendsGroupID_t : IEquatable<FriendsGroupID_t>, IComparable<FriendsGroupID_t>
 	{
 		public short Value;
 		
@@ -298,9 +318,10 @@ namespace Steamworks.Data
 		public bool Equals( FriendsGroupID_t p ) => p.Value == Value;
 		public static bool operator ==( FriendsGroupID_t a, FriendsGroupID_t b ) => a.Equals( b );
 		public static bool operator !=( FriendsGroupID_t a, FriendsGroupID_t b ) => !a.Equals( b );
+		public int CompareTo( FriendsGroupID_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct HServerListRequest : IEquatable<HServerListRequest>
+	internal struct HServerListRequest : IEquatable<HServerListRequest>, IComparable<HServerListRequest>
 	{
 		public IntPtr Value;
 		
@@ -312,9 +333,10 @@ namespace Steamworks.Data
 		public bool Equals( HServerListRequest p ) => p.Value == Value;
 		public static bool operator ==( HServerListRequest a, HServerListRequest b ) => a.Equals( b );
 		public static bool operator !=( HServerListRequest a, HServerListRequest b ) => !a.Equals( b );
+		public int CompareTo( HServerListRequest other ) => Value.ToInt64().CompareTo( other.Value.ToInt64() );
 	}
 	
-	internal struct HServerQuery : IEquatable<HServerQuery>
+	internal struct HServerQuery : IEquatable<HServerQuery>, IComparable<HServerQuery>
 	{
 		public int Value;
 		
@@ -326,9 +348,10 @@ namespace Steamworks.Data
 		public bool Equals( HServerQuery p ) => p.Value == Value;
 		public static bool operator ==( HServerQuery a, HServerQuery b ) => a.Equals( b );
 		public static bool operator !=( HServerQuery a, HServerQuery b ) => !a.Equals( b );
+		public int CompareTo( HServerQuery other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct UGCHandle_t : IEquatable<UGCHandle_t>
+	internal struct UGCHandle_t : IEquatable<UGCHandle_t>, IComparable<UGCHandle_t>
 	{
 		public ulong Value;
 		
@@ -340,9 +363,10 @@ namespace Steamworks.Data
 		public bool Equals( UGCHandle_t p ) => p.Value == Value;
 		public static bool operator ==( UGCHandle_t a, UGCHandle_t b ) => a.Equals( b );
 		public static bool operator !=( UGCHandle_t a, UGCHandle_t b ) => !a.Equals( b );
+		public int CompareTo( UGCHandle_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct PublishedFileUpdateHandle_t : IEquatable<PublishedFileUpdateHandle_t>
+	internal struct PublishedFileUpdateHandle_t : IEquatable<PublishedFileUpdateHandle_t>, IComparable<PublishedFileUpdateHandle_t>
 	{
 		public ulong Value;
 		
@@ -354,9 +378,10 @@ namespace Steamworks.Data
 		public bool Equals( PublishedFileUpdateHandle_t p ) => p.Value == Value;
 		public static bool operator ==( PublishedFileUpdateHandle_t a, PublishedFileUpdateHandle_t b ) => a.Equals( b );
 		public static bool operator !=( PublishedFileUpdateHandle_t a, PublishedFileUpdateHandle_t b ) => !a.Equals( b );
+		public int CompareTo( PublishedFileUpdateHandle_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	public struct PublishedFileId : IEquatable<PublishedFileId>
+	public struct PublishedFileId : IEquatable<PublishedFileId>, IComparable<PublishedFileId>
 	{
 		public ulong Value;
 		
@@ -368,9 +393,10 @@ namespace Steamworks.Data
 		public bool Equals( PublishedFileId p ) => p.Value == Value;
 		public static bool operator ==( PublishedFileId a, PublishedFileId b ) => a.Equals( b );
 		public static bool operator !=( PublishedFileId a, PublishedFileId b ) => !a.Equals( b );
+		public int CompareTo( PublishedFileId other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct UGCFileWriteStreamHandle_t : IEquatable<UGCFileWriteStreamHandle_t>
+	internal struct UGCFileWriteStreamHandle_t : IEquatable<UGCFileWriteStreamHandle_t>, IComparable<UGCFileWriteStreamHandle_t>
 	{
 		public ulong Value;
 		
@@ -382,9 +408,10 @@ namespace Steamworks.Data
 		public bool Equals( UGCFileWriteStreamHandle_t p ) => p.Value == Value;
 		public static bool operator ==( UGCFileWriteStreamHandle_t a, UGCFileWriteStreamHandle_t b ) => a.Equals( b );
 		public static bool operator !=( UGCFileWriteStreamHandle_t a, UGCFileWriteStreamHandle_t b ) => !a.Equals( b );
+		public int CompareTo( UGCFileWriteStreamHandle_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct SteamLeaderboard_t : IEquatable<SteamLeaderboard_t>
+	internal struct SteamLeaderboard_t : IEquatable<SteamLeaderboard_t>, IComparable<SteamLeaderboard_t>
 	{
 		public ulong Value;
 		
@@ -396,9 +423,10 @@ namespace Steamworks.Data
 		public bool Equals( SteamLeaderboard_t p ) => p.Value == Value;
 		public static bool operator ==( SteamLeaderboard_t a, SteamLeaderboard_t b ) => a.Equals( b );
 		public static bool operator !=( SteamLeaderboard_t a, SteamLeaderboard_t b ) => !a.Equals( b );
+		public int CompareTo( SteamLeaderboard_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct SteamLeaderboardEntries_t : IEquatable<SteamLeaderboardEntries_t>
+	internal struct SteamLeaderboardEntries_t : IEquatable<SteamLeaderboardEntries_t>, IComparable<SteamLeaderboardEntries_t>
 	{
 		public ulong Value;
 		
@@ -410,9 +438,10 @@ namespace Steamworks.Data
 		public bool Equals( SteamLeaderboardEntries_t p ) => p.Value == Value;
 		public static bool operator ==( SteamLeaderboardEntries_t a, SteamLeaderboardEntries_t b ) => a.Equals( b );
 		public static bool operator !=( SteamLeaderboardEntries_t a, SteamLeaderboardEntries_t b ) => !a.Equals( b );
+		public int CompareTo( SteamLeaderboardEntries_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct SNetSocket_t : IEquatable<SNetSocket_t>
+	internal struct SNetSocket_t : IEquatable<SNetSocket_t>, IComparable<SNetSocket_t>
 	{
 		public uint Value;
 		
@@ -424,9 +453,10 @@ namespace Steamworks.Data
 		public bool Equals( SNetSocket_t p ) => p.Value == Value;
 		public static bool operator ==( SNetSocket_t a, SNetSocket_t b ) => a.Equals( b );
 		public static bool operator !=( SNetSocket_t a, SNetSocket_t b ) => !a.Equals( b );
+		public int CompareTo( SNetSocket_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct SNetListenSocket_t : IEquatable<SNetListenSocket_t>
+	internal struct SNetListenSocket_t : IEquatable<SNetListenSocket_t>, IComparable<SNetListenSocket_t>
 	{
 		public uint Value;
 		
@@ -438,9 +468,10 @@ namespace Steamworks.Data
 		public bool Equals( SNetListenSocket_t p ) => p.Value == Value;
 		public static bool operator ==( SNetListenSocket_t a, SNetListenSocket_t b ) => a.Equals( b );
 		public static bool operator !=( SNetListenSocket_t a, SNetListenSocket_t b ) => !a.Equals( b );
+		public int CompareTo( SNetListenSocket_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct ScreenshotHandle : IEquatable<ScreenshotHandle>
+	internal struct ScreenshotHandle : IEquatable<ScreenshotHandle>, IComparable<ScreenshotHandle>
 	{
 		public uint Value;
 		
@@ -452,9 +483,10 @@ namespace Steamworks.Data
 		public bool Equals( ScreenshotHandle p ) => p.Value == Value;
 		public static bool operator ==( ScreenshotHandle a, ScreenshotHandle b ) => a.Equals( b );
 		public static bool operator !=( ScreenshotHandle a, ScreenshotHandle b ) => !a.Equals( b );
+		public int CompareTo( ScreenshotHandle other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct HTTPRequestHandle : IEquatable<HTTPRequestHandle>
+	internal struct HTTPRequestHandle : IEquatable<HTTPRequestHandle>, IComparable<HTTPRequestHandle>
 	{
 		public uint Value;
 		
@@ -466,9 +498,10 @@ namespace Steamworks.Data
 		public bool Equals( HTTPRequestHandle p ) => p.Value == Value;
 		public static bool operator ==( HTTPRequestHandle a, HTTPRequestHandle b ) => a.Equals( b );
 		public static bool operator !=( HTTPRequestHandle a, HTTPRequestHandle b ) => !a.Equals( b );
+		public int CompareTo( HTTPRequestHandle other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct HTTPCookieContainerHandle : IEquatable<HTTPCookieContainerHandle>
+	internal struct HTTPCookieContainerHandle : IEquatable<HTTPCookieContainerHandle>, IComparable<HTTPCookieContainerHandle>
 	{
 		public uint Value;
 		
@@ -480,9 +513,10 @@ namespace Steamworks.Data
 		public bool Equals( HTTPCookieContainerHandle p ) => p.Value == Value;
 		public static bool operator ==( HTTPCookieContainerHandle a, HTTPCookieContainerHandle b ) => a.Equals( b );
 		public static bool operator !=( HTTPCookieContainerHandle a, HTTPCookieContainerHandle b ) => !a.Equals( b );
+		public int CompareTo( HTTPCookieContainerHandle other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct InputHandle_t : IEquatable<InputHandle_t>
+	internal struct InputHandle_t : IEquatable<InputHandle_t>, IComparable<InputHandle_t>
 	{
 		public ulong Value;
 		
@@ -494,9 +528,10 @@ namespace Steamworks.Data
 		public bool Equals( InputHandle_t p ) => p.Value == Value;
 		public static bool operator ==( InputHandle_t a, InputHandle_t b ) => a.Equals( b );
 		public static bool operator !=( InputHandle_t a, InputHandle_t b ) => !a.Equals( b );
+		public int CompareTo( InputHandle_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct InputActionSetHandle_t : IEquatable<InputActionSetHandle_t>
+	internal struct InputActionSetHandle_t : IEquatable<InputActionSetHandle_t>, IComparable<InputActionSetHandle_t>
 	{
 		public ulong Value;
 		
@@ -508,9 +543,10 @@ namespace Steamworks.Data
 		public bool Equals( InputActionSetHandle_t p ) => p.Value == Value;
 		public static bool operator ==( InputActionSetHandle_t a, InputActionSetHandle_t b ) => a.Equals( b );
 		public static bool operator !=( InputActionSetHandle_t a, InputActionSetHandle_t b ) => !a.Equals( b );
+		public int CompareTo( InputActionSetHandle_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct InputDigitalActionHandle_t : IEquatable<InputDigitalActionHandle_t>
+	internal struct InputDigitalActionHandle_t : IEquatable<InputDigitalActionHandle_t>, IComparable<InputDigitalActionHandle_t>
 	{
 		public ulong Value;
 		
@@ -522,9 +558,10 @@ namespace Steamworks.Data
 		public bool Equals( InputDigitalActionHandle_t p ) => p.Value == Value;
 		public static bool operator ==( InputDigitalActionHandle_t a, InputDigitalActionHandle_t b ) => a.Equals( b );
 		public static bool operator !=( InputDigitalActionHandle_t a, InputDigitalActionHandle_t b ) => !a.Equals( b );
+		public int CompareTo( InputDigitalActionHandle_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct InputAnalogActionHandle_t : IEquatable<InputAnalogActionHandle_t>
+	internal struct InputAnalogActionHandle_t : IEquatable<InputAnalogActionHandle_t>, IComparable<InputAnalogActionHandle_t>
 	{
 		public ulong Value;
 		
@@ -536,9 +573,10 @@ namespace Steamworks.Data
 		public bool Equals( InputAnalogActionHandle_t p ) => p.Value == Value;
 		public static bool operator ==( InputAnalogActionHandle_t a, InputAnalogActionHandle_t b ) => a.Equals( b );
 		public static bool operator !=( InputAnalogActionHandle_t a, InputAnalogActionHandle_t b ) => !a.Equals( b );
+		public int CompareTo( InputAnalogActionHandle_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct ControllerHandle_t : IEquatable<ControllerHandle_t>
+	internal struct ControllerHandle_t : IEquatable<ControllerHandle_t>, IComparable<ControllerHandle_t>
 	{
 		public ulong Value;
 		
@@ -550,9 +588,10 @@ namespace Steamworks.Data
 		public bool Equals( ControllerHandle_t p ) => p.Value == Value;
 		public static bool operator ==( ControllerHandle_t a, ControllerHandle_t b ) => a.Equals( b );
 		public static bool operator !=( ControllerHandle_t a, ControllerHandle_t b ) => !a.Equals( b );
+		public int CompareTo( ControllerHandle_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct ControllerActionSetHandle_t : IEquatable<ControllerActionSetHandle_t>
+	internal struct ControllerActionSetHandle_t : IEquatable<ControllerActionSetHandle_t>, IComparable<ControllerActionSetHandle_t>
 	{
 		public ulong Value;
 		
@@ -564,9 +603,10 @@ namespace Steamworks.Data
 		public bool Equals( ControllerActionSetHandle_t p ) => p.Value == Value;
 		public static bool operator ==( ControllerActionSetHandle_t a, ControllerActionSetHandle_t b ) => a.Equals( b );
 		public static bool operator !=( ControllerActionSetHandle_t a, ControllerActionSetHandle_t b ) => !a.Equals( b );
+		public int CompareTo( ControllerActionSetHandle_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct ControllerDigitalActionHandle_t : IEquatable<ControllerDigitalActionHandle_t>
+	internal struct ControllerDigitalActionHandle_t : IEquatable<ControllerDigitalActionHandle_t>, IComparable<ControllerDigitalActionHandle_t>
 	{
 		public ulong Value;
 		
@@ -578,9 +618,10 @@ namespace Steamworks.Data
 		public bool Equals( ControllerDigitalActionHandle_t p ) => p.Value == Value;
 		public static bool operator ==( ControllerDigitalActionHandle_t a, ControllerDigitalActionHandle_t b ) => a.Equals( b );
 		public static bool operator !=( ControllerDigitalActionHandle_t a, ControllerDigitalActionHandle_t b ) => !a.Equals( b );
+		public int CompareTo( ControllerDigitalActionHandle_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct ControllerAnalogActionHandle_t : IEquatable<ControllerAnalogActionHandle_t>
+	internal struct ControllerAnalogActionHandle_t : IEquatable<ControllerAnalogActionHandle_t>, IComparable<ControllerAnalogActionHandle_t>
 	{
 		public ulong Value;
 		
@@ -592,9 +633,10 @@ namespace Steamworks.Data
 		public bool Equals( ControllerAnalogActionHandle_t p ) => p.Value == Value;
 		public static bool operator ==( ControllerAnalogActionHandle_t a, ControllerAnalogActionHandle_t b ) => a.Equals( b );
 		public static bool operator !=( ControllerAnalogActionHandle_t a, ControllerAnalogActionHandle_t b ) => !a.Equals( b );
+		public int CompareTo( ControllerAnalogActionHandle_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct UGCQueryHandle_t : IEquatable<UGCQueryHandle_t>
+	internal struct UGCQueryHandle_t : IEquatable<UGCQueryHandle_t>, IComparable<UGCQueryHandle_t>
 	{
 		public ulong Value;
 		
@@ -606,9 +648,10 @@ namespace Steamworks.Data
 		public bool Equals( UGCQueryHandle_t p ) => p.Value == Value;
 		public static bool operator ==( UGCQueryHandle_t a, UGCQueryHandle_t b ) => a.Equals( b );
 		public static bool operator !=( UGCQueryHandle_t a, UGCQueryHandle_t b ) => !a.Equals( b );
+		public int CompareTo( UGCQueryHandle_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct UGCUpdateHandle_t : IEquatable<UGCUpdateHandle_t>
+	internal struct UGCUpdateHandle_t : IEquatable<UGCUpdateHandle_t>, IComparable<UGCUpdateHandle_t>
 	{
 		public ulong Value;
 		
@@ -620,9 +663,10 @@ namespace Steamworks.Data
 		public bool Equals( UGCUpdateHandle_t p ) => p.Value == Value;
 		public static bool operator ==( UGCUpdateHandle_t a, UGCUpdateHandle_t b ) => a.Equals( b );
 		public static bool operator !=( UGCUpdateHandle_t a, UGCUpdateHandle_t b ) => !a.Equals( b );
+		public int CompareTo( UGCUpdateHandle_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct HHTMLBrowser : IEquatable<HHTMLBrowser>
+	internal struct HHTMLBrowser : IEquatable<HHTMLBrowser>, IComparable<HHTMLBrowser>
 	{
 		public uint Value;
 		
@@ -634,9 +678,10 @@ namespace Steamworks.Data
 		public bool Equals( HHTMLBrowser p ) => p.Value == Value;
 		public static bool operator ==( HHTMLBrowser a, HHTMLBrowser b ) => a.Equals( b );
 		public static bool operator !=( HHTMLBrowser a, HHTMLBrowser b ) => !a.Equals( b );
+		public int CompareTo( HHTMLBrowser other ) => Value.CompareTo( other.Value );
 	}
 	
-	public struct InventoryItemId : IEquatable<InventoryItemId>
+	public struct InventoryItemId : IEquatable<InventoryItemId>, IComparable<InventoryItemId>
 	{
 		public ulong Value;
 		
@@ -648,9 +693,10 @@ namespace Steamworks.Data
 		public bool Equals( InventoryItemId p ) => p.Value == Value;
 		public static bool operator ==( InventoryItemId a, InventoryItemId b ) => a.Equals( b );
 		public static bool operator !=( InventoryItemId a, InventoryItemId b ) => !a.Equals( b );
+		public int CompareTo( InventoryItemId other ) => Value.CompareTo( other.Value );
 	}
 	
-	public struct InventoryDefId : IEquatable<InventoryDefId>
+	public struct InventoryDefId : IEquatable<InventoryDefId>, IComparable<InventoryDefId>
 	{
 		public int Value;
 		
@@ -662,9 +708,10 @@ namespace Steamworks.Data
 		public bool Equals( InventoryDefId p ) => p.Value == Value;
 		public static bool operator ==( InventoryDefId a, InventoryDefId b ) => a.Equals( b );
 		public static bool operator !=( InventoryDefId a, InventoryDefId b ) => !a.Equals( b );
+		public int CompareTo( InventoryDefId other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct SteamInventoryResult_t : IEquatable<SteamInventoryResult_t>
+	internal struct SteamInventoryResult_t : IEquatable<SteamInventoryResult_t>, IComparable<SteamInventoryResult_t>
 	{
 		public int Value;
 		
@@ -676,9 +723,10 @@ namespace Steamworks.Data
 		public bool Equals( SteamInventoryResult_t p ) => p.Value == Value;
 		public static bool operator ==( SteamInventoryResult_t a, SteamInventoryResult_t b ) => a.Equals( b );
 		public static bool operator !=( SteamInventoryResult_t a, SteamInventoryResult_t b ) => !a.Equals( b );
+		public int CompareTo( SteamInventoryResult_t other ) => Value.CompareTo( other.Value );
 	}
 	
-	internal struct SteamInventoryUpdateHandle_t : IEquatable<SteamInventoryUpdateHandle_t>
+	internal struct SteamInventoryUpdateHandle_t : IEquatable<SteamInventoryUpdateHandle_t>, IComparable<SteamInventoryUpdateHandle_t>
 	{
 		public ulong Value;
 		
@@ -690,6 +738,7 @@ namespace Steamworks.Data
 		public bool Equals( SteamInventoryUpdateHandle_t p ) => p.Value == Value;
 		public static bool operator ==( SteamInventoryUpdateHandle_t a, SteamInventoryUpdateHandle_t b ) => a.Equals( b );
 		public static bool operator !=( SteamInventoryUpdateHandle_t a, SteamInventoryUpdateHandle_t b ) => !a.Equals( b );
+		public int CompareTo( SteamInventoryUpdateHandle_t other ) => Value.CompareTo( other.Value );
 	}
 	
 }
