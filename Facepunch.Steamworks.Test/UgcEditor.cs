@@ -90,6 +90,59 @@ namespace Steamworks
 			}
 
 		}
+
+
+		[TestMethod]
+		public async Task CreateAndThenEditFile()
+		{
+			PublishedFileId fileid = default;
+
+			//
+			// Make a file
+			//
+			{
+				var result = await Ugc.Editor.NewCommunityFile
+								  .WithTitle( "Unedited File" )
+								  .SubmitAsync();
+
+				Assert.IsTrue( result.Success );
+				Assert.AreNotEqual( result.FileId.Value, 0 );
+
+				fileid = result.FileId;
+			}
+
+			await Task.Delay( 1000 );
+
+			//
+			// Edit it
+			//
+			{
+				var editor = new Ugc.Editor( fileid );
+				editor = editor.WithTitle( "An Edited File" );
+				var result = await editor.SubmitAsync();
+
+				Assert.IsTrue( result.Success );
+				Assert.AreEqual( result.FileId, fileid );
+			}
+
+			await Task.Delay( 1000 );
+
+			//
+			// Make sure the edited file matches
+			//
+			{
+				var details = await SteamUGC.QueryFileAsync( fileid ) ?? throw new Exception( "Somethign went wrong" );
+				Assert.AreEqual( details.Id, fileid );
+				Assert.AreEqual( details.Title, "An Edited File" );
+			}
+
+			//
+			// Clean up
+			//
+			var deleted = await SteamUGC.DeleteFileAsync( fileid );
+			Assert.IsTrue( deleted );
+
+		}
 	}
 
 }

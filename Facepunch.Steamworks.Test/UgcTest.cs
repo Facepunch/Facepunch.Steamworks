@@ -32,6 +32,8 @@ namespace Steamworks
 			Console.WriteLine( $"IsSubscribed: {itemInfo?.IsSubscribed}" );
 			Console.WriteLine( $"NeedsUpdate: {itemInfo?.NeedsUpdate}" );
 			Console.WriteLine( $"Description: {itemInfo?.Description}" );
+			Console.WriteLine( $"Owner: {itemInfo?.Owner}" );
+			Console.WriteLine( $"Score: {itemInfo?.Score}" );
 		}
 	}
 }

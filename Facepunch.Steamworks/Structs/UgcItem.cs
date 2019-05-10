@@ -18,7 +18,6 @@ namespace Steamworks.Ugc
 			_id = id;
 		}
 
-
 		/// <summary>
 		/// The actual ID of this file
 		/// </summary>
@@ -206,6 +205,14 @@ namespace Steamworks.Ugc
 		/// The URL to the preview image for this item
 		/// </summary>
 		public string PreviewImageUrl { get; internal set; }
+
+		/// <summary>
+		/// Edit this item
+		/// </summary>
+		public Ugc.Editor Edit()
+		{
+			return new Ugc.Editor( Id );
+		}
 	}
 
 }

@@ -3,7 +3,6 @@
 	public struct Socket
 	{
 		internal uint Id;
-
 		public override string ToString() => Id.ToString();
 
 		/// <summary>

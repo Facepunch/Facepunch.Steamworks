@@ -19,8 +19,13 @@ namespace Steamworks.Ugc
 
 		internal Editor( WorkshopFileType filetype ) : this()
 		{
-			creatingNew = true;
-			creatingType = filetype;
+			this.creatingNew = true;
+			this.creatingType = filetype;
+		}
+
+		public Editor( PublishedFileId fileId ) : this()
+		{
+			this.fileId = fileId;
 		}
 
 		/// <summary>
@@ -34,7 +39,6 @@ namespace Steamworks.Ugc
 		public static Editor NewMicrotransactionFile => new Editor( WorkshopFileType.Microtransaction );
 		
 		public Editor ForAppId( AppId id ) { this.consumerAppId = id; return this; }
-
 
 		string Title;
 		public Editor WithTitle( string t ) { this.Title = t; return this; }
@@ -80,14 +84,14 @@ namespace Steamworks.Ugc
 
 			progress?.Report( 0 );
 
+			if ( consumerAppId == 0 )
+				consumerAppId = SteamClient.AppId;
+
 			//
 			// Item Create
 			//
 			if ( creatingNew )
 			{
-				if ( consumerAppId == 0 )
-					consumerAppId = SteamClient.AppId;
-
 				result.Result = Steamworks.Result.Fail;
 
 				var created = await SteamUGC.Internal.CreateItem( consumerAppId, creatingType );
