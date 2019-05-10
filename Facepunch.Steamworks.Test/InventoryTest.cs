@@ -61,7 +61,7 @@ namespace Steamworks
 
 				foreach ( var item in items )
 				{
-					Console.WriteLine( $"{item.Id} / {item.DefId} / {item.Quantity} / {item.Def.Name} " );
+					Console.WriteLine( $"{item.Id} / {item.DefId} / {item.Quantity} / {item.Def?.Name} " );
 
 					foreach ( var prop in item.Properties )
 					{
