@@ -5,7 +5,7 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	public struct InventoryItem
+	public struct InventoryItem : IEquatable<InventoryItem>
 	{
 		internal InventoryItemId _id;
 		internal InventoryDefId _def;
@@ -134,5 +134,8 @@ namespace Steamworks
 
 		public static bool operator ==( InventoryItem a, InventoryItem b ) => a._id == b._id;
 		public static bool operator !=( InventoryItem a, InventoryItem b ) => a._id != b._id;
+		public override bool Equals( object p ) => this.Equals( (InventoryItem)p );
+		public override int GetHashCode() => _id.GetHashCode();
+		public bool Equals( InventoryItem p ) => p._id == _id;
 	}
 }
