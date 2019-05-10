@@ -56,6 +56,45 @@ namespace Steamworks.Ugc
 		public Query RankedByPlaytimeSessionsTrend() { queryType = UGCQuery.RankedByPlaytimeSessionsTrend; return this; }
 		public Query RankedByLifetimePlaytimeSessions() { queryType = UGCQuery.RankedByLifetimePlaytimeSessions; return this; }
 
+		#region UserQuery
+
+		SteamId? steamid;
+
+		UserUGCList userType;
+		UserUGCListSortOrder userSort;
+
+		public Query CreatedBy( SteamId steamid )
+		{
+			this.steamid = steamid;
+			return this;
+		}
+
+		public Query CreatedByMe()
+		{
+			this.steamid = SteamClient.SteamId;
+			return this;
+		}
+
+		public Query WherePublished() { userType = UserUGCList.Published; return this; }
+		public Query SortByCreationDate() { userSort = UserUGCListSortOrder.CreationOrderDesc; return this; }
+		public Query SortByCreationDateAsc() { userSort = UserUGCListSortOrder.CreationOrderAsc; return this; }
+		public Query SortByTitleAsc() { userSort = UserUGCListSortOrder.TitleAsc; return this; }
+		public Query SortByUpdateDate() { userSort = UserUGCListSortOrder.LastUpdatedDesc; return this; }
+		public Query SortBySubscriptionDate() { userSort = UserUGCListSortOrder.SubscriptionDateDesc; return this; }
+		public Query SortByVoteScore() { userSort = UserUGCListSortOrder.VoteScoreDesc; return this; }
+		public Query SortByModeration() { userSort = UserUGCListSortOrder.ForModeration; return this; }
+
+		#endregion
+
+		#region Files
+		PublishedFileId[] Files;
+
+		public Query WithFileId( params PublishedFileId[] files )
+		{
+			Files = files;
+			return this;
+		}
+		#endregion
 
 		public async Task<ResultPage?> GetPageAsync( int page )
 		{
@@ -65,7 +104,19 @@ namespace Steamworks.Ugc
 			if ( creatorApp == 0 ) creatorApp = consumerApp;
 
 			UGCQueryHandle_t handle;
-			handle = SteamUGC.Internal.CreateQueryAllUGCRequest1( queryType, matchingType, creatorApp.Value, consumerApp.Value, (uint)page );
+
+			if ( Files != null )
+			{
+				handle = SteamUGC.Internal.CreateQueryUGCDetailsRequest( Files, (uint)Files.Length );
+			}
+			else if ( steamid.HasValue )
+			{
+				handle = SteamUGC.Internal.CreateQueryUserUGCRequest( steamid.Value.AccountId, userType, matchingType, userSort, creatorApp.Value, consumerApp.Value, (uint)page );
+			}
+			else
+			{
+				handle = SteamUGC.Internal.CreateQueryAllUGCRequest1( queryType, matchingType, creatorApp.Value, consumerApp.Value, (uint)page );
+			}
 
 			ApplyConstraints( handle );
 
@@ -87,7 +138,7 @@ namespace Steamworks.Ugc
 
 
 		#region SharedConstraints
-		public QueryType WithType( UgcType type ){ matchingType = type; return this; }
+		public QueryType WithType( UgcType type ) { matchingType = type; return this; }
 		bool? WantsReturnOnlyIDs;
 		public QueryType WithOnlyIDs( bool b ) { WantsReturnOnlyIDs = b; return this; }
 		bool? WantsReturnKeyValueTags;
@@ -108,6 +159,9 @@ namespace Steamworks.Ugc
 		public QueryType AllowCachedResponse( int maxSecondsAge ) { maxCacheAge = maxSecondsAge; return this; }
 		string language;
 		public QueryType InLanguage( string lang ) { language = lang; return this; }
+
+		int? trendDays;
+		public QueryType WithTrendDays( int days ) { trendDays = days; return this; }
 
 		List<string> requiredTags;
 		bool? matchAnyTag;
@@ -161,6 +215,11 @@ namespace Steamworks.Ugc
 			if ( matchAnyTag.HasValue )
 			{
 				SteamUGC.Internal.SetMatchAnyTag( handle, matchAnyTag.Value );
+			}
+
+			if ( trendDays.HasValue )
+			{
+				SteamUGC.Internal.SetRankedByTrendDays( handle, (uint)trendDays.Value );
 			}
 		}
 

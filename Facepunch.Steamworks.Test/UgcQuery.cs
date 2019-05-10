@@ -68,8 +68,8 @@ namespace Steamworks
 		[TestMethod]
 		public async Task QueryUserOwn()
 		{
-			var q = Ugc.UserQuery.All
-								.FromSelf();
+			var q = Ugc.Query.All
+							.CreatedByMe();
 
 			var result = await q.GetPageAsync( 1 );
 			Assert.IsNotNull( result );
@@ -86,8 +86,8 @@ namespace Steamworks
 		[TestMethod]
 		public async Task QueryGarry()
 		{
-			var q = Ugc.UserQuery.All
-								.FromUser( 76561197960279927 );
+			var q = Ugc.Query.All
+							.CreatedBy( 76561197960279927 );
 
 			var result = await q.GetPageAsync( 1 );
 			Assert.IsNotNull( result );
