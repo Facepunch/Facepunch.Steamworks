@@ -66,7 +66,7 @@ namespace Steamworks.ServerList
 		/// Query the server list. Task result will be true when finished
 		/// </summary>
 		/// <returns></returns>
-		public async Task<bool> RunQueryAsync( float timeoutSeconds = 10 )
+		public virtual async Task<bool> RunQueryAsync( float timeoutSeconds = 10 )
 		{
 			var stopwatch = System.Diagnostics.Stopwatch.StartNew();
 
@@ -92,7 +92,7 @@ namespace Steamworks.ServerList
 
 				if ( r != Responsive.Count )
 				{
-					OnChanges?.Invoke();
+					InvokeChanges();
 				}
 
 				if ( stopwatch.Elapsed.TotalSeconds > timeoutSeconds )
@@ -100,12 +100,12 @@ namespace Steamworks.ServerList
 			}
 
 			MovePendingToUnresponsive();
-			OnChanges?.Invoke();
+			InvokeChanges();
 
 			return true;
 		}
 
-		public void Cancel() => Internal.CancelQuery( request );
+		public virtual void Cancel() => Internal.CancelQuery( request );
 
 		// Overrides
 		internal abstract void LaunchQuery();
@@ -115,7 +115,7 @@ namespace Steamworks.ServerList
 		#region Filters
 
 		internal List<MatchMakingKeyValuePair_t> filters = new List<MatchMakingKeyValuePair_t>();
-		internal MatchMakingKeyValuePair_t[] GetFilters() => filters.ToArray();
+		internal virtual MatchMakingKeyValuePair_t[] GetFilters() => filters.ToArray();
 
 		public void AddFilter( string key, string value )
 		{
@@ -149,6 +149,11 @@ namespace Steamworks.ServerList
 		public void Dispose()
 		{
 			ReleaseQuery();
+		}
+
+		internal void InvokeChanges()
+		{
+			OnChanges?.Invoke();
 		}
 
 		void UpdatePending()

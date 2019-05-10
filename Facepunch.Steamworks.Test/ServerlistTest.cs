@@ -165,5 +165,65 @@ namespace Steamworks
 				}
 			}
 		}
-    }
+
+		[TestMethod]
+		public async Task ServerListIps()
+		{
+			var ips = new string[]
+			{
+				"31.186.251.76",
+				"31.186.251.76",
+				"31.186.251.76",
+				"31.186.251.76",
+				"31.186.251.76",
+				"74.91.119.142",
+				"74.91.119.142",
+				"74.91.119.142",
+				"74.91.119.142",
+				"74.91.119.142",
+				"74.91.119.142",
+				"74.91.119.142",
+				"74.91.119.142",
+				"74.91.119.142",
+				"74.91.119.142",
+				"74.91.119.142",
+				"74.91.119.142",
+				"139.99.144.70",
+				"139.99.144.70",
+				"139.99.144.70",
+				"139.99.144.70",
+				"139.99.144.70",
+				"74.91.119.142",
+				"74.91.119.142",
+				"74.91.119.142",
+				"74.91.119.142",
+				"95.172.92.176",
+				"95.172.92.176",
+				"95.172.92.176",
+				"95.172.92.176",
+				"95.172.92.176",
+				"164.132.205.154",
+				"164.132.205.154",
+				"164.132.205.154",
+				"164.132.205.154",
+				"164.132.205.154",
+			};
+
+			using ( var list = new ServerList.IpList( ips ) )
+			{
+				var success = await list.RunQueryAsync();
+
+				Console.WriteLine( $"success {success}" );
+				Console.WriteLine( $"Found {list.Responsive.Count} Responsive Servers" );
+				Console.WriteLine( $"Found {list.Unresponsive.Count} Unresponsive Servers" );
+
+				Assert.AreNotEqual( list.Responsive.Count, 0 );
+
+				foreach ( var server in list.Responsive )
+				{
+					Console.WriteLine( $"[{server.Address}:{server.ConnectionPort}] - {server.Name}" );
+				}
+			}
+		}
+	}
 }

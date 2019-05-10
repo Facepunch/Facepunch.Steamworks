@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Steamworks.Data
 {
-	public struct ServerInfo
+	public struct ServerInfo : IEquatable<ServerInfo>
 	{
 		public string Name { get; set; }
 		public int Ping { get; set; }
@@ -117,6 +117,16 @@ namespace Steamworks.Data
 		public void RemoveFromFavourites()
 		{
 			//Client.native.matchmaking.RemoveFavoriteGame( AppId, Utility.IpToInt32( Address ), (ushort)ConnectionPort, (ushort)QueryPort, k_unFavoriteFlagFavorite );
+		}
+
+		public bool Equals( ServerInfo other )
+		{
+			return this.GetHashCode() == other.GetHashCode();
+		}
+
+		public override int GetHashCode()
+		{
+			return Address.GetHashCode() + SteamId.GetHashCode() + ConnectionPort.GetHashCode() + QueryPort.GetHashCode();
 		}
 	}
 }
