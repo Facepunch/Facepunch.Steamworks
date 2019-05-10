@@ -82,7 +82,7 @@ namespace Steamworks.ServerList
 				//
 				// The request has been cancelled or changed in some way
 				//
-				if ( request == IntPtr.Zero || thisRequest.Value != request.Value )
+				if ( request.Value == IntPtr.Zero || thisRequest.Value != request.Value )
 					return false;
 
 				var r = Responsive.Count;
@@ -125,7 +125,7 @@ namespace Steamworks.ServerList
 		#endregion
 
 		internal int Count => Internal.GetServerCount( request );
-		internal bool IsRefreshing => request != IntPtr.Zero && Internal.IsRefreshing( request );
+		internal bool IsRefreshing => request.Value != IntPtr.Zero && Internal.IsRefreshing( request );
 		internal List<int> watchList = new List<int>();
 		internal int LastCount = 0;
 
