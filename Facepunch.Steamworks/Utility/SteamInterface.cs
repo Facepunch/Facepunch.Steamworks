@@ -46,6 +46,7 @@ namespace Steamworks
 				throw new System.Exception( $"Invalid VTable for {InterfaceName}" );
 
 			InitInternals();
+			SteamClient.WatchInterface( this );
 		}
 
 		public void InitServer()
@@ -61,6 +62,7 @@ namespace Steamworks
 				throw new System.Exception( $"Invalid VTable for server {InterfaceName}" );
 
 			InitInternals();
+			SteamServer.WatchInterface( this );
 		}
 
 		public virtual void InitUserless()
@@ -75,6 +77,13 @@ namespace Steamworks
 				throw new System.Exception( $"Invalid VTable for {InterfaceName}" );
 
 			InitInternals();
+		}
+
+		internal virtual void Shutdown()
+		{
+			Self = IntPtr.Zero;
+			VTable = IntPtr.Zero;
+
 		}
 
 		public abstract void InitInternals();

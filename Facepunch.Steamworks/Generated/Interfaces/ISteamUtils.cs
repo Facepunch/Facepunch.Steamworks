@@ -44,6 +44,41 @@ namespace Steamworks
 			_IsVRHeadsetStreamingEnabled = Marshal.GetDelegateForFunctionPointer<FIsVRHeadsetStreamingEnabled>( Marshal.ReadIntPtr( VTable, 224) );
 			_SetVRHeadsetStreamingEnabled = Marshal.GetDelegateForFunctionPointer<FSetVRHeadsetStreamingEnabled>( Marshal.ReadIntPtr( VTable, 232) );
 		}
+		internal override void Shutdown()
+		{
+			base.Shutdown();
+			
+			_GetSecondsSinceAppActive = null;
+			_GetSecondsSinceComputerActive = null;
+			_GetConnectedUniverse = null;
+			_GetServerRealTime = null;
+			_GetIPCountry = null;
+			_GetImageSize = null;
+			_GetImageRGBA = null;
+			_GetCSERIPPort = null;
+			_GetCurrentBatteryPower = null;
+			_GetAppID = null;
+			_SetOverlayNotificationPosition = null;
+			_IsAPICallCompleted = null;
+			_GetAPICallFailureReason = null;
+			_GetAPICallResult = null;
+			_RunFrame = null;
+			_GetIPCCallCount = null;
+			_SetWarningMessageHook = null;
+			_IsOverlayEnabled = null;
+			_BOverlayNeedsPresent = null;
+			_CheckFileSignature = null;
+			_ShowGamepadTextInput = null;
+			_GetEnteredGamepadTextLength = null;
+			_GetEnteredGamepadTextInput = null;
+			_GetSteamUILanguage = null;
+			_IsSteamRunningInVR = null;
+			_SetOverlayNotificationInset = null;
+			_IsSteamInBigPictureMode = null;
+			_StartVRDashboard = null;
+			_IsVRHeadsetStreamingEnabled = null;
+			_SetVRHeadsetStreamingEnabled = null;
+		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]

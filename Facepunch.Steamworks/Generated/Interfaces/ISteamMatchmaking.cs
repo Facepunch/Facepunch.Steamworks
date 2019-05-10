@@ -55,6 +55,52 @@ namespace Steamworks
 			_SetLobbyOwner = Marshal.GetDelegateForFunctionPointer<FSetLobbyOwner>( Marshal.ReadIntPtr( VTable, 288) );
 			_SetLinkedLobby = Marshal.GetDelegateForFunctionPointer<FSetLinkedLobby>( Marshal.ReadIntPtr( VTable, 296) );
 		}
+		internal override void Shutdown()
+		{
+			base.Shutdown();
+			
+			_GetFavoriteGameCount = null;
+			_GetFavoriteGame = null;
+			_AddFavoriteGame = null;
+			_RemoveFavoriteGame = null;
+			_RequestLobbyList = null;
+			_AddRequestLobbyListStringFilter = null;
+			_AddRequestLobbyListNumericalFilter = null;
+			_AddRequestLobbyListNearValueFilter = null;
+			_AddRequestLobbyListFilterSlotsAvailable = null;
+			_AddRequestLobbyListDistanceFilter = null;
+			_AddRequestLobbyListResultCountFilter = null;
+			_AddRequestLobbyListCompatibleMembersFilter = null;
+			_GetLobbyByIndex = null;
+			_GetLobbyByIndex_Windows = null;
+			_CreateLobby = null;
+			_JoinLobby = null;
+			_LeaveLobby = null;
+			_InviteUserToLobby = null;
+			_GetNumLobbyMembers = null;
+			_GetLobbyMemberByIndex = null;
+			_GetLobbyMemberByIndex_Windows = null;
+			_GetLobbyData = null;
+			_SetLobbyData = null;
+			_GetLobbyDataCount = null;
+			_GetLobbyDataByIndex = null;
+			_DeleteLobbyData = null;
+			_GetLobbyMemberData = null;
+			_SetLobbyMemberData = null;
+			_SendLobbyChatMsg = null;
+			_GetLobbyChatEntry = null;
+			_RequestLobbyData = null;
+			_SetLobbyGameServer = null;
+			_GetLobbyGameServer = null;
+			_SetLobbyMemberLimit = null;
+			_GetLobbyMemberLimit = null;
+			_SetLobbyType = null;
+			_SetLobbyJoinable = null;
+			_GetLobbyOwner = null;
+			_GetLobbyOwner_Windows = null;
+			_SetLobbyOwner = null;
+			_SetLinkedLobby = null;
+		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]

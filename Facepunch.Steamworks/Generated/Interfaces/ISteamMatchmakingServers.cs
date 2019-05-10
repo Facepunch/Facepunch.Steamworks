@@ -31,6 +31,28 @@ namespace Steamworks
 			_ServerRules = Marshal.GetDelegateForFunctionPointer<FServerRules>( Marshal.ReadIntPtr( VTable, 120) );
 			_CancelServerQuery = Marshal.GetDelegateForFunctionPointer<FCancelServerQuery>( Marshal.ReadIntPtr( VTable, 128) );
 		}
+		internal override void Shutdown()
+		{
+			base.Shutdown();
+			
+			_RequestInternetServerList = null;
+			_RequestLANServerList = null;
+			_RequestFriendsServerList = null;
+			_RequestFavoritesServerList = null;
+			_RequestHistoryServerList = null;
+			_RequestSpectatorServerList = null;
+			_ReleaseRequest = null;
+			_GetServerDetails = null;
+			_CancelQuery = null;
+			_RefreshQuery = null;
+			_IsRefreshing = null;
+			_GetServerCount = null;
+			_RefreshServer = null;
+			_PingServer = null;
+			_PlayerDetails = null;
+			_ServerRules = null;
+			_CancelServerQuery = null;
+		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]

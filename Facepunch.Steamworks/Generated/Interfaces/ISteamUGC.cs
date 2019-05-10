@@ -92,6 +92,89 @@ namespace Steamworks
 			_GetAppDependencies = Marshal.GetDelegateForFunctionPointer<FGetAppDependencies>( Marshal.ReadIntPtr( VTable, 592) );
 			_DeleteItem = Marshal.GetDelegateForFunctionPointer<FDeleteItem>( Marshal.ReadIntPtr( VTable, 600) );
 		}
+		internal override void Shutdown()
+		{
+			base.Shutdown();
+			
+			_CreateQueryUserUGCRequest = null;
+			_CreateQueryAllUGCRequest1 = null;
+			_CreateQueryAllUGCRequest2 = null;
+			_CreateQueryUGCDetailsRequest = null;
+			_SendQueryUGCRequest = null;
+			_GetQueryUGCResult = null;
+			_GetQueryUGCResult_Windows = null;
+			_GetQueryUGCPreviewURL = null;
+			_GetQueryUGCMetadata = null;
+			_GetQueryUGCChildren = null;
+			_GetQueryUGCStatistic = null;
+			_GetQueryUGCNumAdditionalPreviews = null;
+			_GetQueryUGCAdditionalPreview = null;
+			_GetQueryUGCNumKeyValueTags = null;
+			_GetQueryUGCKeyValueTag = null;
+			_ReleaseQueryUGCRequest = null;
+			_AddRequiredTag = null;
+			_AddExcludedTag = null;
+			_SetReturnOnlyIDs = null;
+			_SetReturnKeyValueTags = null;
+			_SetReturnLongDescription = null;
+			_SetReturnMetadata = null;
+			_SetReturnChildren = null;
+			_SetReturnAdditionalPreviews = null;
+			_SetReturnTotalOnly = null;
+			_SetReturnPlaytimeStats = null;
+			_SetLanguage = null;
+			_SetAllowCachedResponse = null;
+			_SetCloudFileNameFilter = null;
+			_SetMatchAnyTag = null;
+			_SetSearchText = null;
+			_SetRankedByTrendDays = null;
+			_AddRequiredKeyValueTag = null;
+			_RequestUGCDetails = null;
+			_CreateItem = null;
+			_StartItemUpdate = null;
+			_SetItemTitle = null;
+			_SetItemDescription = null;
+			_SetItemUpdateLanguage = null;
+			_SetItemMetadata = null;
+			_SetItemVisibility = null;
+			_SetItemTags = null;
+			_SetItemTags_Windows = null;
+			_SetItemContent = null;
+			_SetItemPreview = null;
+			_SetAllowLegacyUpload = null;
+			_RemoveItemKeyValueTags = null;
+			_AddItemKeyValueTag = null;
+			_AddItemPreviewFile = null;
+			_AddItemPreviewVideo = null;
+			_UpdateItemPreviewFile = null;
+			_UpdateItemPreviewVideo = null;
+			_RemoveItemPreview = null;
+			_SubmitItemUpdate = null;
+			_GetItemUpdateProgress = null;
+			_SetUserItemVote = null;
+			_GetUserItemVote = null;
+			_AddItemToFavorites = null;
+			_RemoveItemFromFavorites = null;
+			_SubscribeItem = null;
+			_UnsubscribeItem = null;
+			_GetNumSubscribedItems = null;
+			_GetSubscribedItems = null;
+			_GetItemState = null;
+			_GetItemInstallInfo = null;
+			_GetItemDownloadInfo = null;
+			_DownloadItem = null;
+			_BInitWorkshopForGameServer = null;
+			_SuspendDownloads = null;
+			_StartPlaytimeTracking = null;
+			_StopPlaytimeTracking = null;
+			_StopPlaytimeTrackingForAllItems = null;
+			_AddDependency = null;
+			_RemoveDependency = null;
+			_AddAppDependency = null;
+			_RemoveAppDependency = null;
+			_GetAppDependencies = null;
+			_DeleteItem = null;
+		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]

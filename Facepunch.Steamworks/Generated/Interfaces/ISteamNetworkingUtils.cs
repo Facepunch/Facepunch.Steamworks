@@ -31,6 +31,28 @@ namespace Steamworks
 			_GetConfigValueInfo = Marshal.GetDelegateForFunctionPointer<FGetConfigValueInfo>( Marshal.ReadIntPtr( VTable, 120) );
 			_GetFirstConfigValue = Marshal.GetDelegateForFunctionPointer<FGetFirstConfigValue>( Marshal.ReadIntPtr( VTable, 128) );
 		}
+		internal override void Shutdown()
+		{
+			base.Shutdown();
+			
+			_GetLocalPingLocation = null;
+			_EstimatePingTimeBetweenTwoLocations = null;
+			_EstimatePingTimeFromLocalHost = null;
+			_ConvertPingLocationToString = null;
+			_ParsePingLocationString = null;
+			_CheckPingDataUpToDate = null;
+			_IsPingMeasurementInProgress = null;
+			_GetPingToDataCenter = null;
+			_GetDirectPingToPOP = null;
+			_GetPOPCount = null;
+			_GetPOPList = null;
+			_GetLocalTimestamp = null;
+			_SetDebugOutputFunction = null;
+			_SetConfigValue = null;
+			_GetConfigValue = null;
+			_GetConfigValueInfo = null;
+			_GetFirstConfigValue = null;
+		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]

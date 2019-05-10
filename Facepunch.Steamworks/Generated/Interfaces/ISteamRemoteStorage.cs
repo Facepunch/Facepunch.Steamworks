@@ -68,6 +68,41 @@ namespace Steamworks
 			 // EnumeratePublishedWorkshopFiles is deprecated - 416
 			_UGCDownloadToLocation = Marshal.GetDelegateForFunctionPointer<FUGCDownloadToLocation>( Marshal.ReadIntPtr( VTable, 424) );
 		}
+		internal override void Shutdown()
+		{
+			base.Shutdown();
+			
+			_FileWrite = null;
+			_FileRead = null;
+			_FileWriteAsync = null;
+			_FileReadAsync = null;
+			_FileReadAsyncComplete = null;
+			_FileForget = null;
+			_FileDelete = null;
+			_FileShare = null;
+			_SetSyncPlatforms = null;
+			_FileWriteStreamOpen = null;
+			_FileWriteStreamWriteChunk = null;
+			_FileWriteStreamClose = null;
+			_FileWriteStreamCancel = null;
+			_FileExists = null;
+			_FilePersisted = null;
+			_GetFileSize = null;
+			_GetFileTimestamp = null;
+			_GetSyncPlatforms = null;
+			_GetFileCount = null;
+			_GetFileNameAndSize = null;
+			_GetQuota = null;
+			_IsCloudEnabledForAccount = null;
+			_IsCloudEnabledForApp = null;
+			_SetCloudEnabledForApp = null;
+			_UGCDownload = null;
+			_GetUGCDownloadProgress = null;
+			_GetUGCDetails = null;
+			_UGCRead = null;
+			_GetCachedUGCCount = null;
+			_UGCDownloadToLocation = null;
+		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]

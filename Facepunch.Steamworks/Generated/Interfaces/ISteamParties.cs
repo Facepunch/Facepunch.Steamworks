@@ -30,6 +30,27 @@ namespace Steamworks
 			_GetBeaconLocationData = Marshal.GetDelegateForFunctionPointer<FGetBeaconLocationData>( Marshal.ReadIntPtr( VTable, 88) );
 			_GetBeaconLocationData_Windows = Marshal.GetDelegateForFunctionPointer<FGetBeaconLocationData_Windows>( Marshal.ReadIntPtr( VTable, 88) );
 		}
+		internal override void Shutdown()
+		{
+			base.Shutdown();
+			
+			_GetNumActiveBeacons = null;
+			_GetBeaconByIndex = null;
+			_GetBeaconDetails = null;
+			_GetBeaconDetails_Windows = null;
+			_JoinParty = null;
+			_GetNumAvailableBeaconLocations = null;
+			_GetAvailableBeaconLocations = null;
+			_GetAvailableBeaconLocations_Windows = null;
+			_CreateBeacon = null;
+			_CreateBeacon_Windows = null;
+			_OnReservationCompleted = null;
+			_CancelReservation = null;
+			_ChangeNumOpenSlots = null;
+			_DestroyBeacon = null;
+			_GetBeaconLocationData = null;
+			_GetBeaconLocationData_Windows = null;
+		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]

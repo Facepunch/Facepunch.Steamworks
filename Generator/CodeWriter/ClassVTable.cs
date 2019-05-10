@@ -115,6 +115,33 @@ namespace Generator
 				}
 			}
 			EndBlock();
+
+			StartBlock( $"internal override void Shutdown()" );
+			{
+				WriteLine( $"base.Shutdown();" );
+				WriteLine( "" );
+
+				for ( int i = 0; i < clss.Functions.Count; i++ )
+				{
+					var func = clss.Functions[i];
+					var returnType = BaseType.Parse( func.ReturnType );
+					var args = func.Arguments.Select( x => BaseType.Parse( x.Value, x.Key ) ).ToArray();
+					var windowsSpecific = NeedsWindowsSpecificFunction( func, returnType, args );
+
+					if ( Cleanup.IsDeprecated( $"{clss.Name}.{func.Name}" ) )
+						continue;
+
+					WriteLine( $"_{func.Name} = null;" );
+
+					if ( windowsSpecific )
+					{
+						WriteLine( $"_{func.Name}_Windows = null;" );
+					}
+
+					
+				}
+			}
+			EndBlock();
 		}
 
 		private bool NeedsWindowsSpecificFunction( CodeParser.Class.Function func, BaseType returnType, BaseType[] args )

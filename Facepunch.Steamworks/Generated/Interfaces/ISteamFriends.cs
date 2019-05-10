@@ -94,6 +94,91 @@ namespace Steamworks
 			_IsClanOfficialGameGroup = Marshal.GetDelegateForFunctionPointer<FIsClanOfficialGameGroup>( Marshal.ReadIntPtr( VTable, 568) );
 			_GetNumChatsWithUnreadPriorityMessages = Marshal.GetDelegateForFunctionPointer<FGetNumChatsWithUnreadPriorityMessages>( Marshal.ReadIntPtr( VTable, 576) );
 		}
+		internal override void Shutdown()
+		{
+			base.Shutdown();
+			
+			_GetPersonaName = null;
+			_SetPersonaName = null;
+			_GetPersonaState = null;
+			_GetFriendCount = null;
+			_GetFriendByIndex = null;
+			_GetFriendByIndex_Windows = null;
+			_GetFriendRelationship = null;
+			_GetFriendPersonaState = null;
+			_GetFriendPersonaName = null;
+			_GetFriendGamePlayed = null;
+			_GetFriendPersonaNameHistory = null;
+			_GetFriendSteamLevel = null;
+			_GetPlayerNickname = null;
+			_GetFriendsGroupCount = null;
+			_GetFriendsGroupIDByIndex = null;
+			_GetFriendsGroupName = null;
+			_GetFriendsGroupMembersCount = null;
+			_GetFriendsGroupMembersList = null;
+			_HasFriend = null;
+			_GetClanCount = null;
+			_GetClanByIndex = null;
+			_GetClanByIndex_Windows = null;
+			_GetClanName = null;
+			_GetClanTag = null;
+			_GetClanActivityCounts = null;
+			_DownloadClanActivityCounts = null;
+			_GetFriendCountFromSource = null;
+			_GetFriendFromSourceByIndex = null;
+			_GetFriendFromSourceByIndex_Windows = null;
+			_IsUserInSource = null;
+			_SetInGameVoiceSpeaking = null;
+			_ActivateGameOverlay = null;
+			_ActivateGameOverlayToUser = null;
+			_ActivateGameOverlayToWebPage = null;
+			_ActivateGameOverlayToStore = null;
+			_SetPlayedWith = null;
+			_ActivateGameOverlayInviteDialog = null;
+			_GetSmallFriendAvatar = null;
+			_GetMediumFriendAvatar = null;
+			_GetLargeFriendAvatar = null;
+			_RequestUserInformation = null;
+			_RequestClanOfficerList = null;
+			_GetClanOwner = null;
+			_GetClanOwner_Windows = null;
+			_GetClanOfficerCount = null;
+			_GetClanOfficerByIndex = null;
+			_GetClanOfficerByIndex_Windows = null;
+			_GetUserRestrictions = null;
+			_SetRichPresence = null;
+			_ClearRichPresence = null;
+			_GetFriendRichPresence = null;
+			_GetFriendRichPresenceKeyCount = null;
+			_GetFriendRichPresenceKeyByIndex = null;
+			_RequestFriendRichPresence = null;
+			_InviteUserToGame = null;
+			_GetCoplayFriendCount = null;
+			_GetCoplayFriend = null;
+			_GetCoplayFriend_Windows = null;
+			_GetFriendCoplayTime = null;
+			_GetFriendCoplayGame = null;
+			_JoinClanChatRoom = null;
+			_LeaveClanChatRoom = null;
+			_GetClanChatMemberCount = null;
+			_GetChatMemberByIndex = null;
+			_GetChatMemberByIndex_Windows = null;
+			_SendClanChatMessage = null;
+			_GetClanChatMessage = null;
+			_IsClanChatAdmin = null;
+			_IsClanChatWindowOpenInSteam = null;
+			_OpenClanChatWindowInSteam = null;
+			_CloseClanChatWindowInSteam = null;
+			_SetListenForFriendsMessages = null;
+			_ReplyToFriendMessage = null;
+			_GetFriendMessage = null;
+			_GetFollowerCount = null;
+			_IsFollowing = null;
+			_EnumerateFollowingList = null;
+			_IsClanPublic = null;
+			_IsClanOfficialGameGroup = null;
+			_GetNumChatsWithUnreadPriorityMessages = null;
+		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]

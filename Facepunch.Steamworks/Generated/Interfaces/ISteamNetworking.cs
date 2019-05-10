@@ -37,6 +37,34 @@ namespace Steamworks
 			_GetSocketConnectionType = Marshal.GetDelegateForFunctionPointer<FGetSocketConnectionType>( Marshal.ReadIntPtr( VTable, 160) );
 			_GetMaxPacketSize = Marshal.GetDelegateForFunctionPointer<FGetMaxPacketSize>( Marshal.ReadIntPtr( VTable, 168) );
 		}
+		internal override void Shutdown()
+		{
+			base.Shutdown();
+			
+			_SendP2PPacket = null;
+			_IsP2PPacketAvailable = null;
+			_ReadP2PPacket = null;
+			_AcceptP2PSessionWithUser = null;
+			_CloseP2PSessionWithUser = null;
+			_CloseP2PChannelWithUser = null;
+			_GetP2PSessionState = null;
+			_GetP2PSessionState_Windows = null;
+			_AllowP2PPacketRelay = null;
+			_CreateListenSocket = null;
+			_CreateP2PConnectionSocket = null;
+			_CreateConnectionSocket = null;
+			_DestroySocket = null;
+			_DestroyListenSocket = null;
+			_SendDataOnSocket = null;
+			_IsDataAvailableOnSocket = null;
+			_RetrieveDataFromSocket = null;
+			_IsDataAvailable = null;
+			_RetrieveData = null;
+			_GetSocketInfo = null;
+			_GetListenSocketInfo = null;
+			_GetSocketConnectionType = null;
+			_GetMaxPacketSize = null;
+		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]

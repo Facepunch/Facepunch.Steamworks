@@ -23,6 +23,20 @@ namespace Steamworks
 			_SetVolume = Marshal.GetDelegateForFunctionPointer<FSetVolume>( Marshal.ReadIntPtr( VTable, 56) );
 			_GetVolume = Marshal.GetDelegateForFunctionPointer<FGetVolume>( Marshal.ReadIntPtr( VTable, 64) );
 		}
+		internal override void Shutdown()
+		{
+			base.Shutdown();
+			
+			_BIsEnabled = null;
+			_BIsPlaying = null;
+			_GetPlaybackStatus = null;
+			_Play = null;
+			_Pause = null;
+			_PlayPrevious = null;
+			_PlayNext = null;
+			_SetVolume = null;
+			_GetVolume = null;
+		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]

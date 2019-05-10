@@ -18,6 +18,15 @@ namespace Steamworks
 			_GetOPFSettings = Marshal.GetDelegateForFunctionPointer<FGetOPFSettings>( Marshal.ReadIntPtr( VTable, 16) );
 			_GetOPFStringForApp = Marshal.GetDelegateForFunctionPointer<FGetOPFStringForApp>( Marshal.ReadIntPtr( VTable, 24) );
 		}
+		internal override void Shutdown()
+		{
+			base.Shutdown();
+			
+			_GetVideoURL = null;
+			_IsBroadcasting = null;
+			_GetOPFSettings = null;
+			_GetOPFStringForApp = null;
+		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]

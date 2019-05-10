@@ -47,6 +47,26 @@ namespace Steamworks
 			RunCallbacksAsync();
 		}
 
+		static List<SteamInterface> openIterfaces = new List<SteamInterface>();
+
+		internal static void WatchInterface( SteamInterface steamInterface )
+		{
+			if ( openIterfaces.Contains( steamInterface ) )
+				throw new System.Exception( "openIterfaces already contains interface!" );
+
+			openIterfaces.Add( steamInterface );
+		}
+
+		internal static void ShutdownInterfaces()
+		{
+			foreach ( var e in openIterfaces )
+			{
+				e.Shutdown();
+			}
+
+			openIterfaces.Clear();
+		}
+
 		public static Action<Exception> OnCallbackException;
 
 		public static bool IsValid => initialized;
@@ -66,6 +86,7 @@ namespace Steamworks
 
 			initialized = false;
 
+			ShutdownInterfaces();
 			SteamApps.Shutdown();
 			SteamUtils.Shutdown();
 			SteamParental.Shutdown();

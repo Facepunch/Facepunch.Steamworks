@@ -23,6 +23,20 @@ namespace Steamworks
 			_IsScreenshotsHooked = Marshal.GetDelegateForFunctionPointer<FIsScreenshotsHooked>( Marshal.ReadIntPtr( VTable, 56) );
 			_AddVRScreenshotToLibrary = Marshal.GetDelegateForFunctionPointer<FAddVRScreenshotToLibrary>( Marshal.ReadIntPtr( VTable, 64) );
 		}
+		internal override void Shutdown()
+		{
+			base.Shutdown();
+			
+			_WriteScreenshot = null;
+			_AddScreenshotToLibrary = null;
+			_TriggerScreenshot = null;
+			_HookScreenshots = null;
+			_SetLocation = null;
+			_TagUser = null;
+			_TagPublishedFile = null;
+			_IsScreenshotsHooked = null;
+			_AddVRScreenshotToLibrary = null;
+		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]

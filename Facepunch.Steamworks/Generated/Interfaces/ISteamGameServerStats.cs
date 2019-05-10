@@ -24,6 +24,21 @@ namespace Steamworks
 			_ClearUserAchievement = Marshal.GetDelegateForFunctionPointer<FClearUserAchievement>( Marshal.ReadIntPtr( VTable, 64) );
 			_StoreUserStats = Marshal.GetDelegateForFunctionPointer<FStoreUserStats>( Marshal.ReadIntPtr( VTable, 72) );
 		}
+		internal override void Shutdown()
+		{
+			base.Shutdown();
+			
+			_RequestUserStats = null;
+			_GetUserStat1 = null;
+			_GetUserStat2 = null;
+			_GetUserAchievement = null;
+			_SetUserStat1 = null;
+			_SetUserStat2 = null;
+			_UpdateUserAvgRateStat = null;
+			_SetUserAchievement = null;
+			_ClearUserAchievement = null;
+			_StoreUserStats = null;
+		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]

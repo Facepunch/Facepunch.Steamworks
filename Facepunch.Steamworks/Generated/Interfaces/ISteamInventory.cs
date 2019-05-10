@@ -51,6 +51,48 @@ namespace Steamworks
 			_SetProperty4 = Marshal.GetDelegateForFunctionPointer<FSetProperty4>( Marshal.ReadIntPtr( VTable, 280) );
 			_SubmitUpdateProperties = Marshal.GetDelegateForFunctionPointer<FSubmitUpdateProperties>( Marshal.ReadIntPtr( VTable, 288) );
 		}
+		internal override void Shutdown()
+		{
+			base.Shutdown();
+			
+			_GetResultStatus = null;
+			_GetResultItems = null;
+			_GetResultItemProperty = null;
+			_GetResultTimestamp = null;
+			_CheckResultSteamID = null;
+			_DestroyResult = null;
+			_GetAllItems = null;
+			_GetItemsByID = null;
+			_SerializeResult = null;
+			_DeserializeResult = null;
+			_GenerateItems = null;
+			_GrantPromoItems = null;
+			_AddPromoItem = null;
+			_AddPromoItems = null;
+			_ConsumeItem = null;
+			_ExchangeItems = null;
+			_TransferItemQuantity = null;
+			_SendItemDropHeartbeat = null;
+			_TriggerItemDrop = null;
+			_TradeItems = null;
+			_LoadItemDefinitions = null;
+			_GetItemDefinitionIDs = null;
+			_GetItemDefinitionProperty = null;
+			_RequestEligiblePromoItemDefinitionsIDs = null;
+			_GetEligiblePromoItemDefinitionIDs = null;
+			_StartPurchase = null;
+			_RequestPrices = null;
+			_GetNumItemsWithPrices = null;
+			_GetItemsWithPrices = null;
+			_GetItemPrice = null;
+			_StartUpdateProperties = null;
+			_RemoveProperty = null;
+			_SetProperty1 = null;
+			_SetProperty2 = null;
+			_SetProperty3 = null;
+			_SetProperty4 = null;
+			_SubmitUpdateProperties = null;
+		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]

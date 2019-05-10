@@ -20,6 +20,17 @@ namespace Steamworks
 			_BIsFeatureBlocked = Marshal.GetDelegateForFunctionPointer<FBIsFeatureBlocked>( Marshal.ReadIntPtr( VTable, 32) );
 			_BIsFeatureInBlockList = Marshal.GetDelegateForFunctionPointer<FBIsFeatureInBlockList>( Marshal.ReadIntPtr( VTable, 40) );
 		}
+		internal override void Shutdown()
+		{
+			base.Shutdown();
+			
+			_BIsParentalLockEnabled = null;
+			_BIsParentalLockLocked = null;
+			_BIsAppBlocked = null;
+			_BIsAppInBlockList = null;
+			_BIsFeatureBlocked = null;
+			_BIsFeatureInBlockList = null;
+		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]

@@ -45,6 +45,42 @@ namespace Steamworks
 			_BIsPhoneRequiringVerification = Marshal.GetDelegateForFunctionPointer<FBIsPhoneRequiringVerification>( Marshal.ReadIntPtr( VTable, 224) );
 			_GetMarketEligibility = Marshal.GetDelegateForFunctionPointer<FGetMarketEligibility>( Marshal.ReadIntPtr( VTable, 232) );
 		}
+		internal override void Shutdown()
+		{
+			base.Shutdown();
+			
+			_GetHSteamUser = null;
+			_BLoggedOn = null;
+			_GetSteamID = null;
+			_GetSteamID_Windows = null;
+			_InitiateGameConnection = null;
+			_TerminateGameConnection = null;
+			_TrackAppUsageEvent = null;
+			_GetUserDataFolder = null;
+			_StartVoiceRecording = null;
+			_StopVoiceRecording = null;
+			_GetAvailableVoice = null;
+			_GetVoice = null;
+			_DecompressVoice = null;
+			_GetVoiceOptimalSampleRate = null;
+			_GetAuthSessionTicket = null;
+			_BeginAuthSession = null;
+			_EndAuthSession = null;
+			_CancelAuthTicket = null;
+			_UserHasLicenseForApp = null;
+			_BIsBehindNAT = null;
+			_AdvertiseGame = null;
+			_RequestEncryptedAppTicket = null;
+			_GetEncryptedAppTicket = null;
+			_GetGameBadgeLevel = null;
+			_GetPlayerSteamLevel = null;
+			_RequestStoreAuthURL = null;
+			_BIsPhoneVerified = null;
+			_BIsTwoFactorEnabled = null;
+			_BIsPhoneIdentifying = null;
+			_BIsPhoneRequiringVerification = null;
+			_GetMarketEligibility = null;
+		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]

@@ -43,6 +43,40 @@ namespace Steamworks
 			_GetLaunchCommandLine = Marshal.GetDelegateForFunctionPointer<FGetLaunchCommandLine>( Marshal.ReadIntPtr( VTable, 208) );
 			_BIsSubscribedFromFamilySharing = Marshal.GetDelegateForFunctionPointer<FBIsSubscribedFromFamilySharing>( Marshal.ReadIntPtr( VTable, 216) );
 		}
+		internal override void Shutdown()
+		{
+			base.Shutdown();
+			
+			_BIsSubscribed = null;
+			_BIsLowViolence = null;
+			_BIsCybercafe = null;
+			_BIsVACBanned = null;
+			_GetCurrentGameLanguage = null;
+			_GetAvailableGameLanguages = null;
+			_BIsSubscribedApp = null;
+			_BIsDlcInstalled = null;
+			_GetEarliestPurchaseUnixTime = null;
+			_BIsSubscribedFromFreeWeekend = null;
+			_GetDLCCount = null;
+			_BGetDLCDataByIndex = null;
+			_InstallDLC = null;
+			_UninstallDLC = null;
+			_RequestAppProofOfPurchaseKey = null;
+			_GetCurrentBetaName = null;
+			_MarkContentCorrupt = null;
+			_GetInstalledDepots = null;
+			_GetAppInstallDir = null;
+			_BIsAppInstalled = null;
+			_GetAppOwner = null;
+			_GetAppOwner_Windows = null;
+			_GetLaunchQueryParam = null;
+			_GetDlcDownloadProgress = null;
+			_GetAppBuildId = null;
+			_RequestAllProofOfPurchaseKeys = null;
+			_GetFileDetails = null;
+			_GetLaunchCommandLine = null;
+			_BIsSubscribedFromFamilySharing = null;
+		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]

@@ -43,6 +43,40 @@ namespace Steamworks
 			_CreateHostedDedicatedServerListenSocket = Marshal.GetDelegateForFunctionPointer<FCreateHostedDedicatedServerListenSocket>( Marshal.ReadIntPtr( VTable, 216) );
 			_RunCallbacks = Marshal.GetDelegateForFunctionPointer<FRunCallbacks>( Marshal.ReadIntPtr( VTable, 224) );
 		}
+		internal override void Shutdown()
+		{
+			base.Shutdown();
+			
+			_CreateListenSocketIP = null;
+			_ConnectByIPAddress = null;
+			_CreateListenSocketP2P = null;
+			_ConnectP2P = null;
+			_AcceptConnection = null;
+			_CloseConnection = null;
+			_CloseListenSocket = null;
+			_SetConnectionUserData = null;
+			_GetConnectionUserData = null;
+			_SetConnectionName = null;
+			_GetConnectionName = null;
+			_SendMessageToConnection = null;
+			_FlushMessagesOnConnection = null;
+			_ReceiveMessagesOnConnection = null;
+			_ReceiveMessagesOnListenSocket = null;
+			_GetConnectionInfo = null;
+			_GetQuickConnectionStatus = null;
+			_GetDetailedConnectionStatus = null;
+			_GetListenSocketAddress = null;
+			_CreateSocketPair = null;
+			_GetIdentity = null;
+			_ReceivedRelayAuthTicket = null;
+			_FindRelayAuthTicketForServer = null;
+			_ConnectToHostedDedicatedServer = null;
+			_GetHostedDedicatedServerPort = null;
+			_GetHostedDedicatedServerPOPID = null;
+			_GetHostedDedicatedServerAddress = null;
+			_CreateHostedDedicatedServerListenSocket = null;
+			_RunCallbacks = null;
+		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]

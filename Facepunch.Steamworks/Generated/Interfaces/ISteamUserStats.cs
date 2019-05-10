@@ -57,6 +57,54 @@ namespace Steamworks
 			_GetGlobalStatHistory1 = Marshal.GetDelegateForFunctionPointer<FGetGlobalStatHistory1>( Marshal.ReadIntPtr( VTable, Config.Os == OsType.Windows ? 336 : 328 ) );
 			_GetGlobalStatHistory2 = Marshal.GetDelegateForFunctionPointer<FGetGlobalStatHistory2>( Marshal.ReadIntPtr( VTable, Config.Os == OsType.Windows ? 328 : 336 ) );
 		}
+		internal override void Shutdown()
+		{
+			base.Shutdown();
+			
+			_RequestCurrentStats = null;
+			_GetStat1 = null;
+			_GetStat2 = null;
+			_SetStat1 = null;
+			_SetStat2 = null;
+			_UpdateAvgRateStat = null;
+			_GetAchievement = null;
+			_SetAchievement = null;
+			_ClearAchievement = null;
+			_GetAchievementAndUnlockTime = null;
+			_StoreStats = null;
+			_GetAchievementIcon = null;
+			_GetAchievementDisplayAttribute = null;
+			_IndicateAchievementProgress = null;
+			_GetNumAchievements = null;
+			_GetAchievementName = null;
+			_RequestUserStats = null;
+			_GetUserStat1 = null;
+			_GetUserStat2 = null;
+			_GetUserAchievement = null;
+			_GetUserAchievementAndUnlockTime = null;
+			_ResetAllStats = null;
+			_FindOrCreateLeaderboard = null;
+			_FindLeaderboard = null;
+			_GetLeaderboardName = null;
+			_GetLeaderboardEntryCount = null;
+			_GetLeaderboardSortMethod = null;
+			_GetLeaderboardDisplayType = null;
+			_DownloadLeaderboardEntries = null;
+			_DownloadLeaderboardEntriesForUsers = null;
+			_GetDownloadedLeaderboardEntry = null;
+			_UploadLeaderboardScore = null;
+			_AttachLeaderboardUGC = null;
+			_GetNumberOfCurrentPlayers = null;
+			_RequestGlobalAchievementPercentages = null;
+			_GetMostAchievedAchievementInfo = null;
+			_GetNextMostAchievedAchievementInfo = null;
+			_GetAchievementAchievedPercent = null;
+			_RequestGlobalStats = null;
+			_GetGlobalStat1 = null;
+			_GetGlobalStat2 = null;
+			_GetGlobalStatHistory1 = null;
+			_GetGlobalStatHistory2 = null;
+		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]

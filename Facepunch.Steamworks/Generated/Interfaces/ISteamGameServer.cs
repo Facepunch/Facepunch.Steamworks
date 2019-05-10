@@ -60,6 +60,57 @@ namespace Steamworks
 			_AssociateWithClan = Marshal.GetDelegateForFunctionPointer<FAssociateWithClan>( Marshal.ReadIntPtr( VTable, 336) );
 			_ComputeNewPlayerCompatibility = Marshal.GetDelegateForFunctionPointer<FComputeNewPlayerCompatibility>( Marshal.ReadIntPtr( VTable, 344) );
 		}
+		internal override void Shutdown()
+		{
+			base.Shutdown();
+			
+			_InitGameServer = null;
+			_SetProduct = null;
+			_SetGameDescription = null;
+			_SetModDir = null;
+			_SetDedicatedServer = null;
+			_LogOn = null;
+			_LogOnAnonymous = null;
+			_LogOff = null;
+			_BLoggedOn = null;
+			_BSecure = null;
+			_GetSteamID = null;
+			_GetSteamID_Windows = null;
+			_WasRestartRequested = null;
+			_SetMaxPlayerCount = null;
+			_SetBotPlayerCount = null;
+			_SetServerName = null;
+			_SetMapName = null;
+			_SetPasswordProtected = null;
+			_SetSpectatorPort = null;
+			_SetSpectatorServerName = null;
+			_ClearAllKeyValues = null;
+			_SetKeyValue = null;
+			_SetGameTags = null;
+			_SetGameData = null;
+			_SetRegion = null;
+			_SendUserConnectAndAuthenticate = null;
+			_CreateUnauthenticatedUserConnection = null;
+			_CreateUnauthenticatedUserConnection_Windows = null;
+			_SendUserDisconnect = null;
+			_BUpdateUserData = null;
+			_GetAuthSessionTicket = null;
+			_BeginAuthSession = null;
+			_EndAuthSession = null;
+			_CancelAuthTicket = null;
+			_UserHasLicenseForApp = null;
+			_RequestUserGroupStatus = null;
+			_GetGameplayStats = null;
+			_GetServerReputation = null;
+			_GetPublicIP = null;
+			_HandleIncomingPacket = null;
+			_GetNextOutgoingPacket = null;
+			_EnableHeartbeats = null;
+			_SetHeartbeatInterval = null;
+			_ForceHeartbeat = null;
+			_AssociateWithClan = null;
+			_ComputeNewPlayerCompatibility = null;
+		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
