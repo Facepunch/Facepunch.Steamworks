@@ -31,7 +31,7 @@ namespace Steamworks
 		internal static void InstallEvents()
 		{
 			AvailableBeaconLocationsUpdated_t.Install( x => OnBeaconLocationsUpdated?.Invoke() );
-			ActiveBeaconsUpdated_t.Install( x => OnBeaconLocationsUpdated?.Invoke() );
+			ActiveBeaconsUpdated_t.Install( x => OnActiveBeaconsUpdated?.Invoke() );
 		}
 
 		/// <summary>
