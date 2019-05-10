@@ -27,6 +27,11 @@ namespace Steamworks.ServerList
 			}
 		}
 
+		internal static void Shutdown()
+		{
+			_internal = null;
+		}
+
 		#endregion
 
 
@@ -83,6 +88,9 @@ namespace Steamworks.ServerList
 				// The request has been cancelled or changed in some way
 				//
 				if ( request.Value == IntPtr.Zero || thisRequest.Value != request.Value )
+					return false;
+
+				if ( !SteamClient.IsValid )
 					return false;
 
 				var r = Responsive.Count;
