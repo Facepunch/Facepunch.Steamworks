@@ -48,13 +48,18 @@ namespace Generator
                 if ( SkipTypesStartingWith.Any( x => o.Name.StartsWith( x ) ) )
                     continue;
 
-				StartBlock( $"{Cleanup.Expose( typeName )} struct {typeName}" );
+				StartBlock( $"{Cleanup.Expose( typeName )} struct {typeName} : IEquatable<{typeName}>" );
                 {
 					WriteLine( $"public {ToManagedType( o.Type )} Value;" );
 					WriteLine();
 					WriteLine( $"public static implicit operator {typeName}( {ToManagedType( o.Type )} value ) => new {typeName}(){{ Value = value }};" );
 					WriteLine( $"public static implicit operator {ToManagedType( o.Type )}( {typeName} value ) => value.Value;" );
 					WriteLine( $"public override string ToString() => Value.ToString();" );
+					WriteLine( $"public override int GetHashCode() => Value.GetHashCode();" );
+					WriteLine( $"public override bool Equals( object p ) => this.Equals( ({typeName}) p );" );
+					WriteLine( $"public bool Equals( {typeName} p ) => p.Value == Value;" );
+					WriteLine( $"public static bool operator ==( {typeName} a, {typeName} b ) => a.Equals( b );" );
+					WriteLine( $"public static bool operator !=( {typeName} a, {typeName} b ) => !a.Equals( b );" );
 				}
                 EndBlock();
                 WriteLine();
