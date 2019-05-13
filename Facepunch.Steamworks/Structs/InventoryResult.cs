@@ -58,6 +58,8 @@ namespace Steamworks
 
 		public void Dispose()
 		{
+			if ( _id.Value == -1 ) return;
+
 			SteamInventory.Internal.DestroyResult( _id );
 		}
 

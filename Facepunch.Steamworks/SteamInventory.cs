@@ -46,8 +46,6 @@ namespace Steamworks
 			Items = r.GetItems( false );
 
 			OnInventoryUpdated?.Invoke( r );
-
-			r.Dispose();
 		}
 
 		public static event Action<InventoryResult> OnInventoryUpdated;

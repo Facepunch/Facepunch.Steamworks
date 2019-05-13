@@ -54,10 +54,13 @@ namespace Steamworks
 			var result = await SteamInventory.GetAllItemsAsync();
 
 			Assert.IsTrue( result.HasValue );
+			Assert.IsTrue( result.Value.ItemCount > 0 );
 
 			using ( result )
 			{
-				var items = result?.GetItems( true );
+				var items = result.Value.GetItems( true );
+
+				Assert.IsNotNull( items );
 
 				foreach ( var item in items )
 				{
@@ -69,6 +72,33 @@ namespace Steamworks
 					}
 				}
 			}
+		}
+
+		[TestMethod]
+		public async Task GetAllItemsMultipleTimes()
+		{
+			await SteamInventory.WaitForDefinitions();
+
+			var fresult = await SteamInventory.GetAllItemsAsync();
+
+			Assert.IsTrue( fresult.HasValue );
+			Assert.IsTrue( fresult.Value.ItemCount > 0 );
+
+			await Task.Delay( 1000 );
+
+			var result = await SteamInventory.GetAllItemsAsync();
+
+			Assert.IsTrue( result.HasValue );
+			Assert.IsTrue( result.Value.GetItems().Length == fresult.Value.ItemCount );
+
+
+			await Task.Delay( 1000 );
+
+			result = await SteamInventory.GetAllItemsAsync();
+
+			Assert.IsTrue( result.HasValue );
+			Assert.IsTrue( result.Value.ItemCount == fresult.Value.ItemCount );
+
 		}
 
 		[TestMethod]
