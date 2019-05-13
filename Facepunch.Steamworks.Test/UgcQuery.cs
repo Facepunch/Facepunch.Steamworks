@@ -69,7 +69,7 @@ namespace Steamworks
 		public async Task QueryUserOwn()
 		{
 			var q = Ugc.Query.All
-							.CreatedByMe();
+							.WhereUserPublished();
 
 			var result = await q.GetPageAsync( 1 );
 			Assert.IsNotNull( result );
@@ -87,7 +87,7 @@ namespace Steamworks
 		public async Task QueryGarry()
 		{
 			var q = Ugc.Query.All
-							.CreatedBy( 76561197960279927 );
+							.WhereUserPublished( 76561197960279927 );
 
 			var result = await q.GetPageAsync( 1 );
 			Assert.IsNotNull( result );

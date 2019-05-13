@@ -63,19 +63,25 @@ namespace Steamworks.Ugc
 		UserUGCList userType;
 		UserUGCListSortOrder userSort;
 
-		public Query CreatedBy( SteamId steamid )
+		internal Query LimitUser( SteamId steamid )
 		{
+			if ( steamid.Value == 0 )
+				steamid = SteamClient.SteamId;
+
 			this.steamid = steamid;
 			return this;
 		}
 
-		public Query CreatedByMe()
-		{
-			this.steamid = SteamClient.SteamId;
-			return this;
-		}
+		public Query WhereUserPublished( SteamId user = default ) { userType = UserUGCList.Published; LimitUser( user ); return this; }
+		public Query WhereUserVotedOn( SteamId user = default ) { userType = UserUGCList.VotedOn; LimitUser( user ); return this; }
+		public Query WhereUserVotedUp( SteamId user = default ) { userType = UserUGCList.VotedUp; LimitUser( user ); return this; }
+		public Query WhereUserVotedDown( SteamId user = default ) { userType = UserUGCList.VotedDown; LimitUser( user ); return this; }
+		public Query WhereUserWillVoteLater( SteamId user = default ) { userType = UserUGCList.WillVoteLater; LimitUser( user ); return this; }
+		public Query WhereUserFavorited( SteamId user = default ) { userType = UserUGCList.Favorited; LimitUser( user ); return this; }
+		public Query WhereUserSubscribed( SteamId user = default ) { userType = UserUGCList.Subscribed; LimitUser( user ); return this; }
+		public Query WhereUserUsedOrPlayed( SteamId user = default ) { userType = UserUGCList.UsedOrPlayed; LimitUser( user ); return this; }
+		public Query WhereUserFollowed( SteamId user = default ) { userType = UserUGCList.Followed; LimitUser( user ); return this; }
 
-		public Query WherePublished() { userType = UserUGCList.Published; return this; }
 		public Query SortByCreationDate() { userSort = UserUGCListSortOrder.CreationOrderDesc; return this; }
 		public Query SortByCreationDateAsc() { userSort = UserUGCListSortOrder.CreationOrderAsc; return this; }
 		public Query SortByTitleAsc() { userSort = UserUGCListSortOrder.TitleAsc; return this; }
