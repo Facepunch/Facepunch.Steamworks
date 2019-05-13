@@ -51,7 +51,7 @@ namespace Steamworks
 		/// a high-friction UI confirmation process is highly recommended.ConsumeItem can be restricted to certain item definitions or fully
 		/// blocked via the Steamworks website to minimize support/abuse issues such as the classic "my brother borrowed my laptop and deleted all of my rare items".
 		/// </summary>
-		public async Task<InventoryResult?> Consume( int amount = 1 )
+		public async Task<InventoryResult?> ConsumeAsync( int amount = 1 )
 		{
 			var sresult = default( SteamInventoryResult_t );
 			if ( !SteamInventory.Internal.ConsumeItem( ref sresult, Id, (uint)amount ) )
@@ -63,7 +63,7 @@ namespace Steamworks
 		/// <summary>
 		/// Split stack into two items
 		/// </summary>
-		public async Task<InventoryResult?> SplitStack( int quantity = 1 )
+		public async Task<InventoryResult?> SplitStackAsync( int quantity = 1 )
 		{
 			var sresult = default( SteamInventoryResult_t );
 			if ( !SteamInventory.Internal.TransferItemQuantity( ref sresult, Id, (uint)quantity, ulong.MaxValue ) )
@@ -75,7 +75,7 @@ namespace Steamworks
 		/// <summary>
 		/// Add x units of the target item to this item
 		/// </summary>
-		public async Task<InventoryResult?> Add( InventoryItem add, int quantity = 1 )
+		public async Task<InventoryResult?> AddAsync( InventoryItem add, int quantity = 1 )
 		{
 			var sresult = default( SteamInventoryResult_t );
 			if ( !SteamInventory.Internal.TransferItemQuantity( ref sresult, add.Id, (uint)quantity, Id ) )
