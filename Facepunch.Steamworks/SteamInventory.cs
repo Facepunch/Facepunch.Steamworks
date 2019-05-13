@@ -280,28 +280,28 @@ namespace Steamworks
 		public static async Task<InventoryResult?> DeserializeAsync( byte[] data, int dataLength = -1 )
 		{
 			if ( data == null )
-				throw new ArgumentException( "data should nto be null" );
+				throw new ArgumentException( "data should not be null" );
 
 			if ( dataLength == -1 )
 				dataLength = data.Length;
 
-			var sresult = DeserializeResult( data, dataLength );
-			if ( !sresult.HasValue ) return null;
+			var ptr = Marshal.AllocHGlobal( dataLength );
 
-			return await InventoryResult.GetAsync( sresult.Value );
-		}
-
-		internal static unsafe SteamInventoryResult_t? DeserializeResult( byte[] data, int dataLength = -1 )
-		{
-			var sresult = default( SteamInventoryResult_t );
-
-			fixed ( byte* ptr = data )
+			try
 			{
+				Marshal.Copy( data, 0, ptr, dataLength );
+
+				var sresult = default( SteamInventoryResult_t );
+
 				if ( !Internal.DeserializeResult( ref sresult, (IntPtr)ptr, (uint)dataLength, false ) )
 					return null;
-			}
 
-			return sresult;
+				return await InventoryResult.GetAsync( sresult.Value );
+			}
+			finally
+			{
+				Marshal.FreeHGlobal( ptr );
+			}
 		}
 
 

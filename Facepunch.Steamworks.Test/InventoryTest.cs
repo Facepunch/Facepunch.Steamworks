@@ -146,6 +146,51 @@ namespace Steamworks
 				}
 			}
 		}
+
+		[TestMethod]
+		public async Task Serialize()
+		{
+			await SteamInventory.WaitForDefinitions();
+
+			var result = await SteamInventory.GetAllItemsAsync();
+
+			Assert.IsTrue( result.HasValue );
+
+			var data = result.Value.Serialize();
+
+			Assert.IsNotNull( data );
+
+			Console.WriteLine( string.Join( "", data.Select( x => x.ToString( "x" ) ) ) );
+		}
+
+		[TestMethod]
+		public async Task Deserialize()
+		{
+			await SteamInventory.WaitForDefinitions();
+
+			byte[] data = null;
+			int itemCount = 0;
+
+			// Serialize
+			{
+				var result = await SteamInventory.GetAllItemsAsync();
+				Assert.IsTrue( result.HasValue );
+				itemCount = result.Value.ItemCount;
+				data = result.Value.Serialize();
+				Assert.IsNotNull( data );
+				result.Value.Dispose();
+			}
+
+			await Task.Delay( 2000 );
+
+			// Deserialize
+			{
+				var result = await SteamInventory.DeserializeAsync( data );
+				Assert.IsTrue( result.HasValue );
+				Assert.AreEqual( itemCount, result.Value.ItemCount );
+				result.Value.Dispose();
+			}
+		}
 	}
 
 }
