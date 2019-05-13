@@ -55,6 +55,9 @@ namespace Steamworks
 			if ( init.IpAddress != null )
 				ipaddress = Utility.IpToInt32( init.IpAddress );
 
+			System.Environment.SetEnvironmentVariable( "SteamAppId", appid.ToString() );
+			System.Environment.SetEnvironmentVariable( "SteamGameId", appid.ToString() );
+
 			//
 			// Get other interfaces
 			//
