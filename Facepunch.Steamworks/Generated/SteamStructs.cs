@@ -68,6 +68,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -134,6 +135,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -202,6 +204,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -272,6 +275,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -327,6 +331,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -393,6 +398,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -458,6 +464,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -524,6 +531,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -590,6 +598,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -660,6 +669,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -767,6 +777,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -832,6 +843,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -899,6 +911,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -967,6 +980,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -1023,6 +1037,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -1078,6 +1093,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -1132,6 +1148,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -1187,6 +1204,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -1242,6 +1260,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -1296,6 +1315,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -1354,6 +1374,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -1408,6 +1429,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -1474,6 +1496,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -1528,6 +1551,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -1583,6 +1607,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -1639,6 +1664,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -1696,6 +1722,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -1753,6 +1780,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -1821,6 +1849,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -1887,6 +1916,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -1953,6 +1983,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -2019,6 +2050,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -2189,6 +2221,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -2262,6 +2295,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -2332,6 +2366,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -2402,6 +2437,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -2471,6 +2507,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -2541,6 +2578,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -2611,6 +2649,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -2678,6 +2717,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -2744,6 +2784,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -2811,6 +2852,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -2878,6 +2920,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -2931,6 +2974,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -3000,6 +3044,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -3059,6 +3104,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -3113,6 +3159,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -3187,6 +3234,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -3242,6 +3290,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -3310,6 +3359,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -3364,6 +3414,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -3433,6 +3484,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -3487,6 +3539,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -3553,6 +3606,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -3606,6 +3660,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -3695,6 +3750,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -3763,6 +3819,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -3835,6 +3892,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -3906,6 +3964,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -3974,6 +4033,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -4044,6 +4104,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -4112,6 +4173,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -4181,6 +4243,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -4250,6 +4313,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -4321,6 +4385,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -4392,6 +4457,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -4460,6 +4526,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -4533,6 +4600,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -4631,6 +4699,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -4731,6 +4800,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -4808,6 +4878,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -4878,6 +4949,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -4944,6 +5016,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -5010,6 +5083,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -5076,6 +5150,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -5143,6 +5218,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -5213,6 +5289,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -5283,6 +5360,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -5356,6 +5434,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -5429,6 +5508,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -5497,6 +5577,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -5563,6 +5644,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -5630,6 +5712,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -5713,6 +5796,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -5767,6 +5851,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -5838,6 +5923,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -5909,6 +5995,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -5976,6 +6063,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -6047,6 +6135,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -6117,6 +6206,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -6182,6 +6272,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -6240,6 +6331,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -6310,6 +6402,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -6376,6 +6469,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -6443,6 +6537,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -6510,6 +6605,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -6575,6 +6671,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -6640,6 +6737,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -6709,6 +6807,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -6781,6 +6880,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -6884,6 +6984,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -6938,6 +7039,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -6994,6 +7096,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -7048,6 +7151,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -7113,6 +7217,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -7178,6 +7283,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -7244,6 +7350,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -7309,6 +7416,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -7373,6 +7481,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -7437,6 +7546,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -7501,6 +7611,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -7570,6 +7681,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -7640,6 +7752,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -7708,6 +7821,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -7869,6 +7983,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -7942,6 +8057,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -8011,6 +8127,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -8081,6 +8198,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -8150,6 +8268,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -8219,6 +8338,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -8289,6 +8409,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -8363,6 +8484,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -8434,6 +8556,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -8498,6 +8621,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -8564,6 +8688,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -8632,6 +8757,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -8700,6 +8826,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -8768,6 +8895,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -8839,6 +8967,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -8909,6 +9038,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -8974,6 +9104,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -9038,6 +9169,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -9102,6 +9234,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -9268,6 +9401,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -9341,6 +9475,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -9408,6 +9543,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -9474,6 +9610,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -9541,6 +9678,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -9611,6 +9749,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -9685,6 +9824,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -9761,6 +9901,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -9838,6 +9979,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -9910,6 +10052,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -9976,6 +10119,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -10043,6 +10187,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -10115,6 +10260,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -10186,6 +10332,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -10252,6 +10399,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -10318,6 +10466,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -10384,6 +10533,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -10449,6 +10599,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -10514,6 +10665,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -10593,6 +10745,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -10658,6 +10811,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -10726,6 +10880,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -10781,6 +10936,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -10849,6 +11005,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -10915,6 +11072,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -10982,6 +11140,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -11050,6 +11209,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -11116,6 +11276,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -11172,6 +11333,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -11226,6 +11388,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -11283,6 +11446,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -11351,6 +11515,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -11418,6 +11583,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -11490,6 +11656,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -11550,6 +11717,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -11621,6 +11789,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -11689,6 +11858,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -11743,6 +11913,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -11797,6 +11968,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -11850,6 +12022,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -11902,6 +12075,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -11964,6 +12138,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -12026,6 +12201,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -12088,6 +12264,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -12150,6 +12327,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -12214,6 +12392,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -12281,6 +12460,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -12441,6 +12621,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -12503,6 +12684,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -12565,6 +12747,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -12647,6 +12830,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -12710,6 +12894,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -12772,6 +12957,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -12834,6 +13020,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -12896,6 +13083,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -12958,6 +13146,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			
@@ -13021,6 +13210,7 @@ namespace Steamworks.Data
 			while ( !SteamUtils.IsCallComplete( handle, out failed ) )
 			{
 				await Task.Delay( 1 );
+				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
 			}
 			if ( failed ) return null;
 			

@@ -114,6 +114,7 @@ namespace Generator
 								StartBlock( $"while ( !SteamUtils.IsCallComplete( handle, out failed ) )" );
 								{
 									WriteLine( $"await Task.Delay( 1 );" );
+									WriteLine( $"if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;" );
 								}
 								EndBlock();
 
