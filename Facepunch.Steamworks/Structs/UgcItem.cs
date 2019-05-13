@@ -114,7 +114,8 @@ namespace Steamworks.Ugc
 		}
 
 		/// <summary>
-		/// Start downloading this item
+		/// Start downloading this item.
+		/// If this returns false the item isn#t getting downloaded.
 		/// </summary>
 		public bool Download( bool highPriority = false )
 		{
