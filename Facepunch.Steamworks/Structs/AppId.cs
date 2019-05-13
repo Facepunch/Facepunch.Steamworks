@@ -10,6 +10,8 @@ namespace Steamworks
 	{
 		public uint Value;
 
+		public override string ToString() => Value.ToString();
+
 		public static implicit operator AppId( uint value )
 		{
 			return new AppId{ Value = value };
