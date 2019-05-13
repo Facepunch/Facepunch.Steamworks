@@ -125,6 +125,9 @@ namespace Steamworks
 		/// </summary>
 		public static InventoryDef FindDefinition( InventoryDefId defId )
 		{
+			if ( _defMap == null )
+				return null;
+
 			if ( _defMap.TryGetValue( defId, out var val  ) )
 				return val;
 
