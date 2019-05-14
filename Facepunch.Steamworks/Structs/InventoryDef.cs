@@ -201,5 +201,24 @@ namespace Steamworks
 		}
 
 		public string LocalBasePriceFormatted => Utility.FormatPrice( SteamInventory.Currency, LocalPrice / 100.0 );
+
+		InventoryRecipe[] _recContaining;
+
+		/// <summary>
+		/// Return a list of recepies that contain this item
+		/// </summary>
+		public InventoryRecipe[] GetRecipesContainingThis()
+		{
+			if ( _recContaining != null ) return _recContaining;
+
+			var allRec = SteamInventory.Definitions
+							.Select( x => x.GetRecipes() )
+							.Where( x => x != null ) 
+							.SelectMany( x => x );
+
+			_recContaining = allRec.Where( x => x.ContainsIngredient( this ) ).ToArray();
+			return _recContaining;
+		}
+
 	}
 }

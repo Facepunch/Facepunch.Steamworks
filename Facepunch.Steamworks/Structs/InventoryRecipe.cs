@@ -82,5 +82,10 @@ namespace Steamworks
 			r.Ingredients = parts.Select( x => Ingredient.FromString( x ) ).Where( x => x.DefinitionId != 0 ).ToArray();
 			return r;
 		}
+
+		internal bool ContainsIngredient( InventoryDef inventoryDef )
+		{
+			return Ingredients.Any( x => x.DefinitionId == inventoryDef.Id );
+		}
 	}
 }
