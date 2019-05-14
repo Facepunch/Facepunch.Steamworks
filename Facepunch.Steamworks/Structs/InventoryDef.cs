@@ -5,7 +5,7 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	public class InventoryDef
+	public class InventoryDef : IEquatable<InventoryDef>
 	{
 		internal InventoryDefId _id;
 		internal Dictionary<string, string> _properties;
@@ -218,6 +218,22 @@ namespace Steamworks
 
 			_recContaining = allRec.Where( x => x.ContainsIngredient( this ) ).ToArray();
 			return _recContaining;
+		}
+
+		public static bool operator ==( InventoryDef a, InventoryDef b )
+		{
+			if ( Object.ReferenceEquals( a, null ) )
+				return Object.ReferenceEquals( b, null );
+
+			return a.Equals( b );
+		}
+		public static bool operator !=( InventoryDef a, InventoryDef b ) => !(a == b);
+		public override bool Equals( object p ) => this.Equals( (InventoryDef)p );
+		public override int GetHashCode() => Id.GetHashCode();
+		public bool Equals( InventoryDef p )
+		{
+			if ( p == null ) return false;
+			return p.Id == Id;
 		}
 
 	}

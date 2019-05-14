@@ -9,7 +9,7 @@ namespace Steamworks
 	/// <summary>
 	/// A structured description of an item exchange
 	/// </summary>
-	public struct InventoryRecipe 
+	public struct InventoryRecipe : IEquatable<InventoryRecipe>
 	{
 		public struct Ingredient
 		{
@@ -70,11 +70,14 @@ namespace Steamworks
 		/// </summary>
 		public Ingredient[] Ingredients;
 
+		public string Source;
+
 		internal static InventoryRecipe FromString( string part, InventoryDef Result )
 		{
 			var r = new InventoryRecipe
 			{
-				Result = Result
+				Result = Result,
+				Source = part
 			};
 
 			var parts = part.Split( new[] { ',' }, StringSplitOptions.RemoveEmptyEntries );
@@ -87,5 +90,15 @@ namespace Steamworks
 		{
 			return Ingredients.Any( x => x.DefinitionId == inventoryDef.Id );
 		}
+
+		public static bool operator ==( InventoryRecipe a, InventoryRecipe b ) => a.GetHashCode() == b.GetHashCode();
+		public static bool operator !=( InventoryRecipe a, InventoryRecipe b ) => a.GetHashCode() != b.GetHashCode();
+		public override bool Equals( object p ) => this.Equals( (InventoryRecipe)p );
+		public override int GetHashCode()
+		{
+			return Source.GetHashCode();
+		}
+
+		public bool Equals( InventoryRecipe p ) => p.GetHashCode() == GetHashCode();
 	}
 }
