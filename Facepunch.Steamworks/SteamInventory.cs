@@ -37,7 +37,7 @@ namespace Steamworks
 		{
 			SteamInventoryFullUpdate_t.Install( x => InventoryUpdated( x ) );
 			SteamInventoryDefinitionUpdate_t.Install( x => LoadDefinitions() );
-			SteamInventoryDefinitionUpdate_t.Install( x => OnServerDefinitionsUpdated(), true );
+			SteamInventoryDefinitionUpdate_t.Install( x => LoadDefinitions(), true );
 		}
 
 		private static void InventoryUpdated( SteamInventoryFullUpdate_t x )
@@ -50,7 +50,6 @@ namespace Steamworks
 
 		public static event Action<InventoryResult> OnInventoryUpdated;
 		public static event Action OnDefinitionsUpdated;
-		public static event Action OnServerDefinitionsUpdated;
 
 		static void LoadDefinitions()
 		{
