@@ -47,11 +47,17 @@ namespace Steamworks
 			// CreateInterface doesn't seem to have caused any fires, so we'll just use that.
 			//
 
-			// var user = SteamAPI.GetHSteamUser();
+			//
 			// var pipe = SteamAPI.GetHSteamPipe();
-			// Self = SteamInternal.FindOrCreateUserInterface( user, InterfaceName );
+			//
 
 			Self = SteamInternal.CreateInterface( InterfaceName );
+
+			if ( Self == IntPtr.Zero )
+			{
+				var user = SteamAPI.GetHSteamUser();
+				Self = SteamInternal.FindOrCreateUserInterface( user, InterfaceName );
+			}
 
 			if ( Self == IntPtr.Zero )
 				throw new System.Exception( $"Couldn't find interface {InterfaceName}" );
