@@ -35,8 +35,23 @@ namespace Steamworks
 
 		public void InitClient()
 		{
-			var user = SteamAPI.GetHSteamUser();
-			Self = SteamInternal.FindOrCreateUserInterface( user, InterfaceName );
+
+			//
+			// There's an issue for us using FindOrCreateUserInterface on Rust.
+			// We have a different appid for our staging branch, but we use Rust's
+			// appid so we can still test with the live data/setup. The issue is
+			// if we run the staging branch and get interfaces using FindOrCreate
+			// then some callbacks don't work. I assume this is because these interfaces
+			// have already been initialized using the old appid pipe, but since I
+			// can't see inside Steam this is just a gut feeling. Either way using
+			// CreateInterface doesn't seem to have caused any fires, so we'll just use that.
+			//
+
+			// var user = SteamAPI.GetHSteamUser();
+			// var pipe = SteamAPI.GetHSteamPipe();
+			// Self = SteamInternal.FindOrCreateUserInterface( user, InterfaceName );
+
+			Self = SteamInternal.CreateInterface( InterfaceName );
 
 			if ( Self == IntPtr.Zero )
 				throw new System.Exception( $"Couldn't find interface {InterfaceName}" );
