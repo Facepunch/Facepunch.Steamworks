@@ -75,6 +75,32 @@ namespace Steamworks
 		}
 
 		[TestMethod]
+		public async Task GetItemSpecialProperties()
+		{
+			await SteamInventory.WaitForDefinitions();
+
+			var result = await SteamInventory.GetAllItemsAsync();
+
+			Assert.IsTrue( result.HasValue );
+			Assert.IsTrue( result.Value.ItemCount > 0 );
+
+			using ( result )
+			{
+				var items = result.Value.GetItems( true );
+
+				Assert.IsNotNull( items );
+
+				foreach ( var item in items )
+				{
+					Console.WriteLine( $"{item.Id} / {item.DefId} / {item.Quantity} / {item.Def?.Name} " );
+
+					Console.WriteLine( $"	Acquired: {item.Acquired}" );
+					Console.WriteLine( $"	Origin: {item.Origin}" );
+				}
+			}
+		}
+
+		[TestMethod]
 		public async Task GetAllItemsMultipleTimes()
 		{
 			await SteamInventory.WaitForDefinitions();

@@ -124,6 +124,43 @@ namespace Steamworks
 		}
 
 		/// <summary>
+		/// Will try to return the date that this item was aquired. You need to have for the items
+		/// with their properties for this to work.
+		/// </summary>
+		public DateTime Acquired
+		{
+			get
+			{
+				if ( Properties == null ) return DateTime.UtcNow;
+
+				var str = Properties["acquired"];
+
+				var y = int.Parse( str.Substring( 0, 4 ) );
+				var m = int.Parse( str.Substring( 4, 2 ) );
+				var d = int.Parse( str.Substring( 6, 2 ) );
+
+				var h = int.Parse( str.Substring( 9, 2 ) );
+				var mn = int.Parse( str.Substring( 11, 2 ) );
+				var s = int.Parse( str.Substring( 13, 2 ) );
+
+				return new DateTime( y, m, d, h, mn, s, DateTimeKind.Utc );
+			}
+		}
+
+		/// <summary>
+		/// Tries to get the origin property. Need properties for this to work.
+		/// Will return a string like "market"
+		/// </summary>
+		public string Origin
+		{
+			get
+			{
+				if ( Properties == null ) return null;
+				return Properties["origin"];
+			}
+		}
+
+		/// <summary>
 		/// Small utility class to describe an item with a quantity
 		/// </summary>
 		public struct Amount
