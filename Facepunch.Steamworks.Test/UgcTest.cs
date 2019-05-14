@@ -13,7 +13,7 @@ namespace Steamworks
     public class UgcTest
     {
 		[TestMethod]
-        public async Task Download()
+        public void Download()
         {
 			SteamUGC.Download( 1717844711 );
 		}

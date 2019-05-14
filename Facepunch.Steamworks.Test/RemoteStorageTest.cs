@@ -13,7 +13,7 @@ namespace Steamworks
     public class RemoteStorageTest
 	{
 		[TestMethod]
-        public async Task Quotas()
+        public void Quotas()
         {
 			Console.WriteLine( $"SteamRemoteStorage.QuotaBytes: {SteamRemoteStorage.QuotaBytes}" );
 			Console.WriteLine( $"SteamRemoteStorage.QuotaRemainingBytes: {SteamRemoteStorage.QuotaRemainingBytes}" );
@@ -21,7 +21,7 @@ namespace Steamworks
 		}
 
 		[TestMethod]
-		public async Task IsCloudEnabled()
+		public void IsCloudEnabled()
 		{
 			Console.WriteLine( $"SteamRemoteStorage.IsCloudEnabled: {SteamRemoteStorage.IsCloudEnabled}" );
 			Console.WriteLine( $"SteamRemoteStorage.IsCloudEnabledForAccount: {SteamRemoteStorage.IsCloudEnabledForAccount}" );
