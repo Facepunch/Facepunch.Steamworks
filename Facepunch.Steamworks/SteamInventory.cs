@@ -295,6 +295,8 @@ namespace Steamworks
 				if ( !Internal.DeserializeResult( ref sresult, (IntPtr)ptr, (uint)dataLength, false ) )
 					return null;
 
+				
+
 				return await InventoryResult.GetAsync( sresult.Value );
 			}
 			finally

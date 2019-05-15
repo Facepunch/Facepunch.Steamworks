@@ -30,6 +30,15 @@ namespace Steamworks
 			}
 		}
 
+		/// <summary>
+		/// Checks whether an inventory result handle belongs to the specified Steam ID.
+		/// This is important when using Deserialize, to verify that a remote player is not pretending to have a different user's inventory
+		/// </summary>
+		public bool BelongsTo( SteamId steamId )
+		{
+			return SteamInventory.Internal.CheckResultSteamID( _id, steamId );
+		}
+
 		public InventoryItem[] GetItems( bool includeProperties = false )
 		{
 			uint cnt = (uint) ItemCount;
