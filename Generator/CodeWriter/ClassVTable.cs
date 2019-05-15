@@ -77,6 +77,12 @@ namespace Generator
 				Swap( clss, "GetGlobalStatHistory1", "GetGlobalStatHistory2", locations );
 			}
 
+			if ( clss.Name == "ISteamGameServerStats" )
+			{
+				Swap( clss, "GetUserStat1", "GetUserStat2", locations );
+				Swap( clss, "SetUserStat1", "SetUserStat2", locations );
+			}
+
 			if ( clss.Name == "ISteamUGC" )
 			{
 				Swap( clss, "CreateQueryAllUGCRequest1", "CreateQueryAllUGCRequest2", locations );
