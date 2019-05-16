@@ -37,13 +37,25 @@ namespace Steamworks
 		internal static void InstallEvents()
 		{
 			ValidateAuthTicketResponse_t.Install( x => OnValidateAuthTicketResponse?.Invoke( x.SteamID, x.OwnerSteamID, x.AuthSessionResponse ), true );
-
+			SteamServersConnected_t.Install( x => OnSteamServersConnected?.Invoke(), true );
+			SteamServerConnectFailure_t.Install( x => OnSteamServerConnectFailure?.Invoke(), true );
 		}
 
 		/// <summary>
 		/// User has been authed or rejected
 		/// </summary>
 		public static event Action<SteamId, SteamId, AuthResponse> OnValidateAuthTicketResponse;
+
+		/// <summary>
+		/// Called when a connections to the Steam back-end has been established.
+		/// This means the server now is logged on and has a working connection to the Steam master server.
+		/// </summary>
+		public static event Action OnSteamServersConnected;
+
+		/// <summary>
+		/// Called when a connection attempt has failed.
+		/// </summary>
+		public static event Action OnSteamServerConnectFailure;
 
 		public static void Init( AppId appid, SteamServerInit init )
 		{
