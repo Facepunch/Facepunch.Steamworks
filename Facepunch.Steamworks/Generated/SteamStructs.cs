@@ -10707,7 +10707,21 @@ namespace Steamworks.Data
 		internal ushort Flags; // m_unFlags uint16
 		
 		#region Marshalling
-		internal static SteamItemDetails_t Fill( IntPtr p ) => ((SteamItemDetails_t)(SteamItemDetails_t) Marshal.PtrToStructure( p, typeof(SteamItemDetails_t) ) );
+		internal static SteamItemDetails_t Fill( IntPtr p ) => Config.PackSmall ? ((SteamItemDetails_t)(SteamItemDetails_t) Marshal.PtrToStructure( p, typeof(SteamItemDetails_t) )) : ((SteamItemDetails_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		#endregion
+		#region Packed Versions
+		
+		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
+		public struct Pack8
+		{
+			internal InventoryItemId ItemId; // m_itemId SteamItemInstanceID_t
+			internal InventoryDefId Definition; // m_iDefinition SteamItemDef_t
+			internal ushort Quantity; // m_unQuantity uint16
+			internal ushort Flags; // m_unFlags uint16
+			
+			public static implicit operator SteamItemDetails_t ( SteamItemDetails_t.Pack8 d ) => new SteamItemDetails_t{ ItemId = d.ItemId,Definition = d.Definition,Quantity = d.Quantity,Flags = d.Flags, };
+			public static implicit operator SteamItemDetails_t.Pack8 ( SteamItemDetails_t d ) => new SteamItemDetails_t.Pack8{ ItemId = d.ItemId,Definition = d.Definition,Quantity = d.Quantity,Flags = d.Flags, };
+		}
 		#endregion
 	}
 	

@@ -60,7 +60,6 @@ namespace Generator
 			{
 				get
 				{
-					if ( Name.Contains( "SteamItemDetails_t" ) ) return true;
 					if ( Name.Contains( "MatchMakingKeyValuePair_t" ) ) return true;
 
 					if ( Fields.Any( x => x.Type.Contains( "CSteamID" ) ) )

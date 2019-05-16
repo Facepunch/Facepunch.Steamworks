@@ -255,7 +255,16 @@ namespace Generator
 
 							if ( arg.IsVector )
 							{
-								WriteLine( $"{arg.TypeName}.Pack8[] {arg.VarName}_windows = {arg.VarName};" );
+								WriteLine( $"{arg.TypeName}.Pack8[] {arg.VarName}_windows = {arg.VarName} == null ? null : new {arg.TypeName}.Pack8[ {arg.VarName}.Length ];" );
+								StartBlock( $"if ( {arg.VarName}_windows != null )" );
+								{
+									StartBlock( $"for ( int i=0; i<{arg.VarName}.Length; i++ )" );
+									{
+										WriteLine( $"{arg.VarName}_windows[i] = {arg.VarName}[i];" );
+									}
+									EndBlock();
+								}
+								EndBlock();
 							}
 							else
 							{
@@ -274,7 +283,22 @@ namespace Generator
 						{
 							if ( !arg.WindowsSpecific ) continue;
 
-							WriteLine( $"{arg.VarName} = {arg.VarName}_windows;" );
+							if ( arg.IsVector )
+							{
+								StartBlock( $"if ( {arg.VarName}_windows != null )" );
+								{
+									StartBlock( $"for ( int i=0; i<{arg.VarName}.Length; i++ )" );
+									{
+										WriteLine( $"{arg.VarName}[i] = {arg.VarName}_windows[i];" );
+									}
+									EndBlock();
+								}
+								EndBlock();
+							}
+							else
+							{
+								WriteLine( $"{arg.VarName} = {arg.VarName}_windows;" );
+							}
 						}
 
 						if ( !returnType.IsVoid )

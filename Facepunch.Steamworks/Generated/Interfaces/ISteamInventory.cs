@@ -15,6 +15,7 @@ namespace Steamworks
 		{
 			_GetResultStatus = Marshal.GetDelegateForFunctionPointer<FGetResultStatus>( Marshal.ReadIntPtr( VTable, 0) );
 			_GetResultItems = Marshal.GetDelegateForFunctionPointer<FGetResultItems>( Marshal.ReadIntPtr( VTable, 8) );
+			_GetResultItems_Windows = Marshal.GetDelegateForFunctionPointer<FGetResultItems_Windows>( Marshal.ReadIntPtr( VTable, 8) );
 			_GetResultItemProperty = Marshal.GetDelegateForFunctionPointer<FGetResultItemProperty>( Marshal.ReadIntPtr( VTable, 16) );
 			_GetResultTimestamp = Marshal.GetDelegateForFunctionPointer<FGetResultTimestamp>( Marshal.ReadIntPtr( VTable, 24) );
 			_CheckResultSteamID = Marshal.GetDelegateForFunctionPointer<FCheckResultSteamID>( Marshal.ReadIntPtr( VTable, 32) );
@@ -57,6 +58,7 @@ namespace Steamworks
 			
 			_GetResultStatus = null;
 			_GetResultItems = null;
+			_GetResultItems_Windows = null;
 			_GetResultItemProperty = null;
 			_GetResultTimestamp = null;
 			_CheckResultSteamID = null;
@@ -110,10 +112,35 @@ namespace Steamworks
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private delegate bool FGetResultItems( IntPtr self, SteamInventoryResult_t resultHandle, [In,Out] SteamItemDetails_t[]  pOutItemsArray, ref uint punOutItemsArraySize );
 		private FGetResultItems _GetResultItems;
+		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private delegate bool FGetResultItems_Windows( IntPtr self, SteamInventoryResult_t resultHandle, [In,Out] SteamItemDetails_t.Pack8[]  pOutItemsArray, ref uint punOutItemsArraySize );
+		private FGetResultItems_Windows _GetResultItems_Windows;
 		
 		#endregion
 		internal bool GetResultItems( SteamInventoryResult_t resultHandle, [In,Out] SteamItemDetails_t[]  pOutItemsArray, ref uint punOutItemsArraySize )
 		{
+			if ( Config.Os == OsType.Windows )
+			{
+				SteamItemDetails_t.Pack8[] pOutItemsArray_windows = pOutItemsArray == null ? null : new SteamItemDetails_t.Pack8[ pOutItemsArray.Length ];
+				if ( pOutItemsArray_windows != null )
+				{
+					for ( int i=0; i<pOutItemsArray.Length; i++ )
+					{
+						pOutItemsArray_windows[i] = pOutItemsArray[i];
+					}
+				}
+				var retVal = _GetResultItems_Windows( Self, resultHandle, pOutItemsArray_windows, ref punOutItemsArraySize );
+				if ( pOutItemsArray_windows != null )
+				{
+					for ( int i=0; i<pOutItemsArray.Length; i++ )
+					{
+						pOutItemsArray[i] = pOutItemsArray_windows[i];
+					}
+				}
+				return retVal;
+			}
+			
 			return _GetResultItems( Self, resultHandle, pOutItemsArray, ref punOutItemsArraySize );
 		}
 		
