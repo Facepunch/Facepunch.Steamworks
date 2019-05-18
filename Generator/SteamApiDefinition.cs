@@ -60,6 +60,7 @@ namespace Generator
 			{
 				get
 				{
+					// 4/8 packing is irrevant to these classes
 					if ( Name.Contains( "MatchMakingKeyValuePair_t" ) ) return true;
 
 					if ( Fields.Any( x => x.Type.Contains( "CSteamID" ) ) )
