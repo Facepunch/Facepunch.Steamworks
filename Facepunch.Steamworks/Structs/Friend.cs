@@ -116,9 +116,21 @@ namespace Steamworks
 		{
 			internal ulong GameID; // m_gameID class CGameID
 			internal uint GameIP; // m_unGameIP uint32
-			internal ushort GamePort; // m_usGamePort uint16
-			internal ushort QueryPort; // m_usQueryPort uint16
 			internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
+
+			public int GamePort;
+			public int QueryPort;
+
+			public System.Net.IPAddress IpAddress => Utility.Int32ToIp( GameIP );
+
+			public Lobby? Lobby
+			{
+				get
+				{
+					if ( SteamIDLobby == 0 ) return null;
+					return new Lobby( SteamIDLobby );
+				}
+			}
 
 			internal static FriendGameInfo From( FriendGameInfo_t i )
 			{
