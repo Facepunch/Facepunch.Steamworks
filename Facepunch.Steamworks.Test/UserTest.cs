@@ -74,6 +74,16 @@ namespace Steamworks
 			SteamUser.EndAuthSession( SteamClient.SteamId );
 		}
 
+		[TestMethod]
+		public async Task AuthSessionAsync()
+		{
+			var ticket = await SteamUser.GetAuthSessionTicketAsync( 5.0 );
+
+			Assert.AreNotEqual( 0, ticket.Handle );
+			Assert.AreNotEqual( 0, ticket.Data.Length );
+			Console.WriteLine( $"ticket.Handle: {ticket.Handle}" );
+			Console.WriteLine( $"ticket.Data: { string.Join( "", ticket.Data.Select( x => x.ToString( "x" ) ) ) }" );
+		}
 
 		[TestMethod]
 		public void SteamLevel()

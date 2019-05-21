@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -49,6 +50,7 @@ namespace Steamworks
 			ValidateAuthTicketResponse_t.Install( x => OnValidateAuthTicketResponse?.Invoke( x.SteamID, x.OwnerSteamID, x.AuthSessionResponse ) );
 			MicroTxnAuthorizationResponse_t.Install( x => OnMicroTxnAuthorizationResponse?.Invoke( x.AppID, x.OrderID, x.Authorized != 0 ) );
 			GameWebCallback_t.Install( x => OnGameWebCallback?.Invoke( x.URL ) );
+			GetAuthSessionTicketResponse_t.Install( x => OnGetAuthSessionTicketResponse?.Invoke( x ) );
 		}
 
 		/// <summary>
@@ -88,9 +90,15 @@ namespace Steamworks
 		/// <summary>
 		/// Called when an auth ticket has been validated. 
 		/// The first parameter is the steamid of this user
-		/// The second is the Steam ID that owns the game, this will be different from the first if the game is being borrowed via Steam Family Sharing
+		/// The second is the Steam ID that owns the game, this will be different from the first 
+		/// if the game is being borrowed via Steam Family Sharing
 		/// </summary>
 		public static event Action<SteamId, SteamId, AuthResponse> OnValidateAuthTicketResponse;
+
+		/// <summary>
+		/// Used internally for GetAuthSessionTicketAsync
+		/// </summary>
+		internal static event Action<GetAuthSessionTicketResponse_t> OnGetAuthSessionTicketResponse;
 
 		/// <summary>
 		/// Called when a user has responded to a microtransaction authorization request.
@@ -299,6 +307,55 @@ namespace Steamworks
 					Data = data.Take( (int)ticketLength ).ToArray(),
 					Handle = ticket
 				};
+			}
+		}
+
+		/// <summary>
+		/// Retrieve a authentication ticket to be sent to the entity who wishes to authenticate you.
+		/// This waits for a positive response from the backend before returning the ticket. This means
+		/// the ticket is definitely ready to go as soon as it returns. Will return null if the callback
+		/// times out or returns negatively.
+		/// </summary>
+		public static async Task<AuthTicket> GetAuthSessionTicketAsync( double timeoutSeconds = 10.0f )
+		{
+			var result = Result.Pending;
+			AuthTicket ticket = null;
+			var stopwatch = Stopwatch.StartNew();
+
+			Action<GetAuthSessionTicketResponse_t> f = ( t ) =>
+			{
+				if ( t.AuthTicket != ticket.Handle ) return;
+				result = t.Result;
+			};
+
+			OnGetAuthSessionTicketResponse += f;
+
+			try
+			{
+				ticket = GetAuthSessionTicket();
+				if ( ticket == null )
+					return null;
+
+				while ( result == Result.Pending )
+				{
+					await Task.Delay( 10 );
+
+					if ( stopwatch.Elapsed.TotalSeconds > timeoutSeconds )
+					{
+						ticket.Cancel();
+						return null;
+					}
+				}
+
+				if ( result == Result.OK )
+					return ticket;
+
+				ticket.Cancel();
+				return null;
+			}
+			finally
+			{
+				OnGetAuthSessionTicketResponse -= f;
 			}
 		}
 
