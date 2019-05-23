@@ -9,6 +9,8 @@ namespace Steamworks.Data
 {
 	public struct ServerInfo : IEquatable<ServerInfo>
 	{
+		static ISteamMatchmakingServers Internal => Steamworks.ServerList.Base.Internal;
+
 		public string Name { get; set; }
 		public int Ping { get; set; }
 		public string GameDir { get; set; }
@@ -24,6 +26,7 @@ namespace Steamworks.Data
 		public int Version { get; set; }
 		public string TagString { get; set; }
 		public ulong SteamId { get; set; }
+		public uint AddressRaw { get; set; }
 		public IPAddress Address { get; set; }
 		public int ConnectionPort { get; set; }
 		public int QueryPort { get; set; }
@@ -53,6 +56,7 @@ namespace Steamworks.Data
 		{
 			return new ServerInfo()
 			{
+				AddressRaw = item.NetAdr.IP,
 				Address = Utility.Int32ToIp( item.NetAdr.IP ),
 				ConnectionPort = item.NetAdr.ConnectionPort,
 				QueryPort = item.NetAdr.QueryPort,
@@ -84,7 +88,7 @@ namespace Steamworks.Data
 		/// </summary>
 		public void AddToHistory()
 		{
-			//Client.native.matchmaking.AddFavoriteGame( AppId, Utility.IpToInt32( Address ), (ushort)ConnectionPort, (ushort)QueryPort, k_unFavoriteFlagHistory, (uint)Utility.Epoch.Current );
+			SteamMatchmaking.Internal.AddFavoriteGame( SteamClient.AppId, AddressRaw, (ushort)ConnectionPort, (ushort)QueryPort, k_unFavoriteFlagHistory, (uint)Epoch.Current );
 		}
 
 		/// <summary>
@@ -100,7 +104,7 @@ namespace Steamworks.Data
 		/// </summary>
 		public void RemoveFromHistory()
 		{
-			//Client.native.matchmaking.RemoveFavoriteGame( AppId, Utility.IpToInt32( Address ), (ushort)ConnectionPort, (ushort)QueryPort, k_unFavoriteFlagHistory );
+			SteamMatchmaking.Internal.RemoveFavoriteGame( SteamClient.AppId, AddressRaw, (ushort)ConnectionPort, (ushort)QueryPort, k_unFavoriteFlagHistory );
 		}
 
 		/// <summary>
@@ -108,7 +112,7 @@ namespace Steamworks.Data
 		/// </summary>
 		public void AddToFavourites()
 		{
-			//Client.native.matchmaking.AddFavoriteGame( AppId, Utility.IpToInt32( Address ), (ushort)ConnectionPort, (ushort)QueryPort, k_unFavoriteFlagFavorite, (uint)Utility.Epoch.Current );
+			SteamMatchmaking.Internal.AddFavoriteGame( SteamClient.AppId, AddressRaw, (ushort)ConnectionPort, (ushort)QueryPort, k_unFavoriteFlagFavorite, (uint)Epoch.Current );
 		}
 
 		/// <summary>
@@ -116,7 +120,7 @@ namespace Steamworks.Data
 		/// </summary>
 		public void RemoveFromFavourites()
 		{
-			//Client.native.matchmaking.RemoveFavoriteGame( AppId, Utility.IpToInt32( Address ), (ushort)ConnectionPort, (ushort)QueryPort, k_unFavoriteFlagFavorite );
+			SteamMatchmaking.Internal.RemoveFavoriteGame( SteamClient.AppId, AddressRaw, (ushort)ConnectionPort, (ushort)QueryPort, k_unFavoriteFlagFavorite );
 		}
 
 		public bool Equals( ServerInfo other )
