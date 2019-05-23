@@ -78,9 +78,20 @@ namespace Steamworks.Data
 			};
 		}
 
+		public ServerInfo( uint ip, ushort cport, ushort qport, uint timeplayed ) : this()
+		{
+			AddressRaw = ip;
+			Address = Utility.Int32ToIp( ip );
+			ConnectionPort = cport;
+			QueryPort = qport;
+			LastTimePlayed = timeplayed;
+		}
+
 		internal const uint k_unFavoriteFlagNone = 0x00;
 		internal const uint k_unFavoriteFlagFavorite = 0x01; // this game favorite entry is for the favorites list
 		internal const uint k_unFavoriteFlagHistory = 0x02; // this game favorite entry is for the history list
+
+
 
 		/// <summary>
 		/// Add this server to our history list
