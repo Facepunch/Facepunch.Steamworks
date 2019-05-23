@@ -118,9 +118,10 @@ namespace Steamworks
 			internal uint GameIP; // m_unGameIP uint32
 			internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
 
-			public int GamePort;
+			public int ConnectionPort;
 			public int QueryPort;
 
+			public uint IpAddressRaw => GameIP;
 			public System.Net.IPAddress IpAddress => Utility.Int32ToIp( GameIP );
 
 			public Lobby? Lobby
@@ -138,7 +139,7 @@ namespace Steamworks
 				{
 					GameID = i.GameID,
 					GameIP = i.GameIP,
-					GamePort = i.GamePort,
+					ConnectionPort = i.GamePort,
 					QueryPort = i.QueryPort,
 					SteamIDLobby = i.SteamIDLobby,
 				};
