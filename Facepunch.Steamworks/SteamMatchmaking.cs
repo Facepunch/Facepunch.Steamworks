@@ -161,6 +161,7 @@ namespace Steamworks
 
 				if ( Internal.GetFavoriteGame( i, ref appid, ref ip, ref cport, ref qport, ref flags, ref timeplayed ) )
 				{
+					if ( (flags & ServerInfo.k_unFavoriteFlagFavorite) == 0 ) continue;
 					yield return new ServerInfo( ip, cport, qport, timeplayed );
 				}
 			}
