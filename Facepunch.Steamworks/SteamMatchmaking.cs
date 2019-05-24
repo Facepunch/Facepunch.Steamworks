@@ -167,5 +167,29 @@ namespace Steamworks
 			}
 		}
 
+		/// <summary>
+		/// Get a list of servers that you have added to your play history
+		/// </summary>
+		public static IEnumerable<ServerInfo> GetHistoryServers()
+		{
+			var count = Internal.GetFavoriteGameCount();
+
+			for ( int i = 0; i < count; i++ )
+			{
+				uint timeplayed = 0;
+				uint flags = 0;
+				ushort qport = 0;
+				ushort cport = 0;
+				uint ip = 0;
+				AppId appid = default;
+
+				if ( Internal.GetFavoriteGame( i, ref appid, ref ip, ref cport, ref qport, ref flags, ref timeplayed ) )
+				{
+					if ( (flags & ServerInfo.k_unFavoriteFlagHistory) == 0 ) continue;
+					yield return new ServerInfo( ip, cport, qport, timeplayed );
+				}
+			}
+		}
+
 	}
 }
