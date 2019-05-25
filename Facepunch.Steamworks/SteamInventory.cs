@@ -347,5 +347,26 @@ namespace Steamworks
 			return await InventoryResult.GetAsync( sresult );
 		}
 
+
+		/// <summary>
+		/// Start buying a cart load of items. This will return a positive result is the purchase has
+		/// begun. You should listen out for SteamUser.OnMicroTxnAuthorizationResponse for a success.
+		/// </summary>
+		public static async Task<InventoryPurchaseResult?> StartPurchaseAsync( InventoryDef[] items )
+		{
+			var item_i = items.Select( x => x._id ).ToArray();
+			var item_q = items.Select( x => (uint)1 ).ToArray();
+
+			var r = await Internal.StartPurchase( item_i, item_q, (uint)item_i.Length );
+			if ( !r.HasValue ) return null;
+
+			return new InventoryPurchaseResult
+			{
+				Result = r.Value.Result,
+				OrderID = r.Value.OrderID,
+				TransID = r.Value.TransID
+			};
+		}
+
 	}
 }
