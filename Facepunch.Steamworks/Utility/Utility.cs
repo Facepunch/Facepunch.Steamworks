@@ -29,23 +29,24 @@ namespace Steamworks
 
 		public static string FormatPrice(string currency, double price)
         {
-            var decimaled = price.ToString("0.00");
+			var decimaled = price.ToString("0.00");
 
             switch (currency)
             {
                 case "AED": return $"{decimaled}د.إ";
                 case "ARS": return $"${decimaled} ARS";
-                case "AUD": return $"${decimaled} AUD";
-                case "BRL": return $"R$ {decimaled}";
-                case "CAD": return $"${decimaled} CAD";
+                case "AUD": return $"A${decimaled}";
+                case "BRL": return $"R${decimaled}";
+                case "CAD": return $"C${decimaled}";
                 case "CHF": return $"Fr. {decimaled}";
                 case "CLP": return $"${decimaled} CLP";
                 case "CNY": return $"{decimaled}元";
                 case "COP": return $"COL$ {decimaled}";
                 case "CRC": return $"₡{decimaled}";
                 case "EUR": return $"€{decimaled}";
+                case "SEK": return $"{decimaled}kr";
                 case "GBP": return $"£{decimaled}";
-                case "HKD": return $"HK$ {decimaled}";
+                case "HKD": return $"HK${decimaled}";
                 case "ILS": return $"₪{decimaled}";
                 case "IDR": return $"Rp{decimaled}";
                 case "INR": return $"₹{decimaled}";
@@ -53,17 +54,17 @@ namespace Steamworks
                 case "KRW": return $"₩{decimaled}";
                 case "KWD": return $"KD {decimaled}";
                 case "KZT": return $"{decimaled}₸";
-                case "MXN": return $"Mex$ {decimaled}";
+                case "MXN": return $"Mex${decimaled}";
                 case "MYR": return $"RM {decimaled}";
                 case "NOK": return $"{decimaled} kr";
                 case "NZD": return $"${decimaled} NZD";
                 case "PEN": return $"S/. {decimaled}";
                 case "PHP": return $"₱{decimaled}";
-                case "PLN": return $"zł {decimaled}";
+                case "PLN": return $"{decimaled}zł";
                 case "QAR": return $"QR {decimaled}";
-                case "RUB": return $"₽{decimaled}";
+                case "RUB": return $"{decimaled}₽";
                 case "SAR": return $"SR {decimaled}";
-                case "SGD": return $"S$ {decimaled}";
+                case "SGD": return $"S${decimaled}";
                 case "THB": return $"฿{decimaled}";
                 case "TRY": return $"₺{decimaled}";
                 case "TWD": return $"NT$ {decimaled}";
