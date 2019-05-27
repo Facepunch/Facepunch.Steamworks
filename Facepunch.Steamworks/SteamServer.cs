@@ -274,6 +274,14 @@ namespace Steamworks
 		}
 
 		/// <summary>
+		/// Log onto Steam anonymously.
+		/// </summary>
+		public static void LogOff()
+		{
+			Internal.LogOff();
+		}
+
+		/// <summary>
 		/// Returns true if the server is connected and registered with the Steam master server
 		/// You should have called LogOnAnonymous etc on startup.
 		/// </summary>
