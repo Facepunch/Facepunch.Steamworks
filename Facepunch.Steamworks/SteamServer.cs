@@ -40,7 +40,8 @@ namespace Steamworks
 
 			ValidateAuthTicketResponse_t.Install( x => OnValidateAuthTicketResponse?.Invoke( x.SteamID, x.OwnerSteamID, x.AuthSessionResponse ), true );
 			SteamServersConnected_t.Install( x => OnSteamServersConnected?.Invoke(), true );
-			SteamServerConnectFailure_t.Install( x => OnSteamServerConnectFailure?.Invoke(), true );
+			SteamServerConnectFailure_t.Install( x => OnSteamServerConnectFailure?.Invoke( x.Result, x.StillRetrying ), true );
+			SteamServersDisconnected_t.Install( x => OnSteamServersDisconnected?.Invoke( x.Result ), true );
 		}
 
 		/// <summary>
@@ -55,9 +56,14 @@ namespace Steamworks
 		public static event Action OnSteamServersConnected;
 
 		/// <summary>
-		/// Called when a connection attempt has failed.
+		/// This will occur periodically if the Steam client is not connected, and has failed when retrying to establish a connection (result, stilltrying)
 		/// </summary>
-		public static event Action OnSteamServerConnectFailure;
+		public static event Action<Result, bool> OnSteamServerConnectFailure;
+
+		/// <summary>
+		/// Disconnected from Steam
+		/// </summary>
+		public static event Action<Result> OnSteamServersDisconnected;
 
 		public static void Init( AppId appid, SteamServerInit init )
 		{
@@ -86,14 +92,14 @@ namespace Steamworks
 			//
 			// Initial settings
 			//
-			Internal.EnableHeartbeats( true );
+			AutomaticHeartbeats = true;
 			MaxPlayers = 32;
 			BotCount = 0;
 			Product = $"{appid.Value}";
 			ModDir = init.ModDir;
 			GameDescription = init.GameDescription;
 			Passworded = false;
-			DedicatedServer = true;
+			DedicatedServer = init.DedicatedServer;
 
 			InstallEvents();
 
@@ -140,8 +146,8 @@ namespace Steamworks
 		{
 			while ( IsValid )
 			{
-				await Task.Delay( 16 );
 				RunCallbacks();
+				await Task.Delay( 16 );
 			}
 		}
 
@@ -260,7 +266,12 @@ namespace Steamworks
 		public static string GameTags
 		{
 			get => _gametags;
-			set { if ( _gametags == value ) return; Internal.SetGameTags( value ); _gametags = value; }
+			set
+			{
+				if ( _gametags == value ) return;
+				Internal.SetGameTags( value );
+				_gametags = value;
+			}
 		}
 		private static string _gametags = "";
 
