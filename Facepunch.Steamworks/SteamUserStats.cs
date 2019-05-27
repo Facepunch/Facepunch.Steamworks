@@ -139,7 +139,7 @@ namespace Steamworks
 		/// the Steamworks website and using FindLeaderboard unless you're expected to have a large amount of
 		/// dynamically created leaderboards.
 		/// </summary>
-		public static async Task<Leaderboard?> FindOrCreateLeaderboard( string name, LeaderboardSort sort, LeaderboardDisplay display )
+		public static async Task<Leaderboard?> FindOrCreateLeaderboardAsync( string name, LeaderboardSort sort, LeaderboardDisplay display )
 		{
 			var result = await Internal.FindOrCreateLeaderboard( name, sort, display );
 			if ( !result.HasValue || result.Value.LeaderboardFound == 0 )
@@ -149,7 +149,7 @@ namespace Steamworks
 		}
 
 
-		public static async Task<Leaderboard?> FindLeaderboard( string name )
+		public static async Task<Leaderboard?> FindLeaderboardAsync( string name )
 		{
 			var result = await Internal.FindLeaderboard( name );
 			if ( !result.HasValue || result.Value.LeaderboardFound == 0 )

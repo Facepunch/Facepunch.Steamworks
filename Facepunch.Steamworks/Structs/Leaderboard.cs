@@ -37,7 +37,7 @@ namespace Steamworks.Data
 		/// <summary>
 		/// Submit your new score, but won't replace your high score if it's lower
 		/// </summary>
-		public async Task<LeaderboardUpdate?> SubmitScore( int score, int[] details = null )
+		public async Task<LeaderboardUpdate?> SubmitScoreAsync( int score, int[] details = null )
 		{
 			if ( details == null ) details = noDetails;
 
@@ -90,7 +90,7 @@ namespace Steamworks.Data
 		/// <summary>
 		/// Used to retrieve all leaderboard entries for friends of the current user
 		/// </summary>
-		public async Task<LeaderboardEntry[]> GetScoresFromFriends()
+		public async Task<LeaderboardEntry[]> GetScoresFromFriendsAsync()
 		{
 			var r = await SteamUserStats.Internal.DownloadLeaderboardEntries( Id, LeaderboardDataRequest.Friends, 0, 0 );
 			if ( !r.HasValue )

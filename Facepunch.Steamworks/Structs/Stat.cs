@@ -49,7 +49,7 @@ namespace Steamworks.Data
 			return val;
 		}
 
-		public async Task<long[]> GetGlobalIntDays( int days )
+		public async Task<long[]> GetGlobalIntDaysAsync( int days )
 		{
 			var result = await SteamUserStats.Internal.RequestGlobalStats( days );
 			if ( result?.Result != Result.OK  ) return null;

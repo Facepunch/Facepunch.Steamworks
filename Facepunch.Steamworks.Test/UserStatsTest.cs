@@ -61,7 +61,7 @@ namespace Steamworks
 		[TestMethod]
 		public async Task CreateLeaderboard()
 		{
-			var leaderboard = await SteamUserStats.FindOrCreateLeaderboard( "Testleaderboard", Data.LeaderboardSort.Ascending, Data.LeaderboardDisplay.Numeric );
+			var leaderboard = await SteamUserStats.FindOrCreateLeaderboardAsync( "Testleaderboard", Data.LeaderboardSort.Ascending, Data.LeaderboardDisplay.Numeric );
 			
 			Assert.IsTrue( leaderboard.HasValue );
 		}
@@ -69,17 +69,17 @@ namespace Steamworks
 		[TestMethod]
 		public async Task FindLeaderboard()
 		{
-			var leaderboard = await SteamUserStats.FindLeaderboard( "Testleaderboard" );
+			var leaderboard = await SteamUserStats.FindLeaderboardAsync( "Testleaderboard" );
 			Assert.IsTrue( leaderboard.HasValue );
 		}
 
 		[TestMethod]
 		public async Task SubmitScore()
 		{
-			var leaderboard = await SteamUserStats.FindLeaderboard( "Testleaderboard" );
+			var leaderboard = await SteamUserStats.FindLeaderboardAsync( "Testleaderboard" );
 			Assert.IsTrue( leaderboard.HasValue );
 
-			var result = await leaderboard.Value.SubmitScore( 576 );
+			var result = await leaderboard.Value.SubmitScoreAsync( 576 );
 			Assert.IsTrue( result.HasValue );
 
 			Console.WriteLine( $"result.Changed: {result?.Changed}" );
@@ -92,7 +92,7 @@ namespace Steamworks
 		[TestMethod]
 		public async Task ReplaceScore()
 		{
-			var leaderboard = await SteamUserStats.FindLeaderboard( "Testleaderboard" );
+			var leaderboard = await SteamUserStats.FindLeaderboardAsync( "Testleaderboard" );
 			Assert.IsTrue( leaderboard.HasValue );
 
 			var result = await leaderboard.Value.ReplaceScore( 576 );
@@ -108,15 +108,10 @@ namespace Steamworks
 		[TestMethod]
 		public async Task GetScoresFromFriends()
 		{
-			var leaderboard = await SteamUserStats.FindLeaderboard( "Testleaderboard" );
-			Assert.IsTrue( leaderboard.HasValue );
+			var leaderboard = await SteamUserStats.FindLeaderboardAsync( "Testleaderboard" );
 
-			// Get entries around user
-			var friendScores = await leaderboard.Value.GetScoresFromFriends();
-			Assert.IsNotNull( friendScores );
+			var friendScores = await leaderboard.Value.GetScoresFromFriendsAsync();
 
-			Console.WriteLine( $"" );
-			Console.WriteLine( $"Friend Scores:" );
 			foreach ( var e in friendScores )
 			{
 				Console.WriteLine( $"{e.GlobalRank}: {e.Score} {e.User}" );
@@ -126,7 +121,7 @@ namespace Steamworks
 		[TestMethod]
 		public async Task GetScoresAroundUserAsync()
 		{
-			var leaderboard = await SteamUserStats.FindLeaderboard( "Testleaderboard" );
+			var leaderboard = await SteamUserStats.FindLeaderboardAsync( "Testleaderboard" );
 			Assert.IsTrue( leaderboard.HasValue );
 
 			for ( int i = 1; i < 10; i++ )
@@ -147,7 +142,7 @@ namespace Steamworks
 		[TestMethod]
 		public async Task GetScoresAsync()
 		{
-			var leaderboard = await SteamUserStats.FindLeaderboard( "Testleaderboard" );
+			var leaderboard = await SteamUserStats.FindLeaderboardAsync( "Testleaderboard" );
 			Assert.IsTrue( leaderboard.HasValue );
 
 			// Get top 20 global scores
@@ -176,7 +171,7 @@ namespace Steamworks
 		public async Task GetStatGlobalInt()
 		{
 			var deaths = new Stat( "deaths" );
-			await deaths.GetGlobalIntDays( 5 );
+			await deaths.GetGlobalIntDaysAsync( 5 );
 
 			var totalStartups = deaths.GetGlobalInt();
 			Assert.AreNotEqual( 0, totalStartups );
@@ -188,7 +183,7 @@ namespace Steamworks
 		{
 			var deaths = new Stat( "deaths" );
 
-			var history = await deaths.GetGlobalIntDays( 10 );
+			var history = await deaths.GetGlobalIntDaysAsync( 10 );
 			Assert.AreNotEqual( 0, history.Length );
 
 			for ( int i=0; i< history.Length; i++ )
