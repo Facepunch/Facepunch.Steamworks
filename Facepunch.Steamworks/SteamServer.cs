@@ -366,6 +366,15 @@ namespace Steamworks
 		}
 
 		/// <summary>
+		/// Remove all key values
+		/// </summary>
+		public static void ClearKeys()
+		{
+			KeyValue.Clear();
+			Internal.ClearAllKeyValues();
+		}
+
+		/// <summary>
 		/// Start authorizing a ticket. This user isn't authorized yet. Wait for a call to OnAuthChange.
 		/// </summary>
 		public static unsafe bool BeginAuthSession( byte[] data, SteamId steamid )
