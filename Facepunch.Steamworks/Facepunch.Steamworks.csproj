@@ -46,11 +46,13 @@
 	<PackageId>Facepunch.Steamworks</PackageId>
 	<PackageDescription>Another fucking c# Steamworks implementation</PackageDescription>
 	<PackageProjectUrl>https://github.com/Facepunch/Facepunch.Steamworks</PackageProjectUrl>
-	<PackageLicenseUrl>https://github.com/Facepunch/Facepunch.Steamworks/blob/master/LICENSE</PackageLicenseUrl>
-	<PackageIconUrl>https://avatars2.githubusercontent.com/u/3371040</PackageIconUrl>
+	<PackageIconUrl>https://files.facepunch.com/garry/c5edce1c-0c21-4c5d-95b6-37743be7455d.jpg</PackageIconUrl>
 	<PackageTags>facepunch;steam;unity;steamworks;valve</PackageTags>
-	<PackageVersion>0.7.5</PackageVersion>
+	<PackageVersion>2.0.0</PackageVersion>
 	<LangVersion>latest</LangVersion>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+  <RepositoryUrl>https://github.com/Facepunch/Facepunch.Steamworks.git</RepositoryUrl>
+  <RepositoryType>git</RepositoryType>
  </PropertyGroup>
   
  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
