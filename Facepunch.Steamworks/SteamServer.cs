@@ -444,8 +444,16 @@ namespace Steamworks
 		{
 			fixed ( byte* ptr = data )
 			{
-				Internal.HandleIncomingPacket( (IntPtr)ptr, size, address, port );
+				HandleIncomingPacket( (IntPtr)ptr, size, address, port );
 			}
+		}
+		
+		/// <summary>
+		/// We have received a server query on our game port. Pass it to Steam to handle.
+		/// </summary>
+		public static unsafe void HandleIncomingPacket( IntPtr ptr, int size, uint address, ushort port )
+		{
+			Internal.HandleIncomingPacket( ptr, size, address, port );
 		}
 	}
 }
