@@ -81,9 +81,9 @@ namespace Steamworks
 			ConnectionInterfaces = null;
 		}
 
-		internal static void InstallEvents()
+		internal static void InstallEvents( bool server = false )
 		{
-			SteamNetConnectionStatusChangedCallback_t.Install( x => ConnectionStatusChanged( x ) );
+			SteamNetConnectionStatusChangedCallback_t.Install( x => ConnectionStatusChanged( x ), server );
 		}
 
 		private static void ConnectionStatusChanged( SteamNetConnectionStatusChangedCallback_t data )
