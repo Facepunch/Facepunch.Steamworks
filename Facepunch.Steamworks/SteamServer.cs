@@ -37,8 +37,9 @@ namespace Steamworks
 		internal static void InstallEvents()
 		{
 			SteamInventory.InstallEvents();
+            SteamNetworkingSockets.InstallEvents(true);
 
-			ValidateAuthTicketResponse_t.Install( x => OnValidateAuthTicketResponse?.Invoke( x.SteamID, x.OwnerSteamID, x.AuthSessionResponse ), true );
+            ValidateAuthTicketResponse_t.Install( x => OnValidateAuthTicketResponse?.Invoke( x.SteamID, x.OwnerSteamID, x.AuthSessionResponse ), true );
 			SteamServersConnected_t.Install( x => OnSteamServersConnected?.Invoke(), true );
 			SteamServerConnectFailure_t.Install( x => OnSteamServerConnectFailure?.Invoke( x.Result, x.StillRetrying ), true );
 			SteamServersDisconnected_t.Install( x => OnSteamServersDisconnected?.Invoke( x.Result ), true );
