@@ -18,20 +18,19 @@ namespace Steamworks
             if ( StringBuilderPool == null )
             {
                 //
-                // The pool has 8 items. This should be safe because we shouldn't really
+                // The pool has 4 items. This should be safe because we shouldn't really
                 // ever be using more than 2 StringBuilders at the same time.
                 //
-                StringBuilderPool = new StringBuilder[8];
+                StringBuilderPool = new StringBuilder[4];
 
                 for ( int i = 0; i < StringBuilderPool.Length; i++ )
-                    StringBuilderPool[i] = new StringBuilder( 4096 );
+                    StringBuilderPool[i] = new StringBuilder( 1024 * 32 );
             }
 
             StringBuilderPoolIndex++;
             if ( StringBuilderPoolIndex >= StringBuilderPool.Length )
                 StringBuilderPoolIndex = 0;
 
-            StringBuilderPool[StringBuilderPoolIndex].Capacity = 4096;
             StringBuilderPool[StringBuilderPoolIndex].Length = 0;
 
             return StringBuilderPool[StringBuilderPoolIndex];
