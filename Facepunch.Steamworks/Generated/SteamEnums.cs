@@ -933,7 +933,7 @@ namespace Steamworks
 	//
 	// EP2PSessionError
 	//
-	internal enum P2PSessionError : int
+	public enum P2PSessionError : int
 	{
 		None = 0,
 		NotRunningApp = 1,

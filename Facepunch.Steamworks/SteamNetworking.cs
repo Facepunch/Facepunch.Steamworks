@@ -33,7 +33,7 @@ namespace Steamworks
 		internal static void InstallEvents()
 		{
 			P2PSessionRequest_t.Install( x => OnP2PSessionRequest?.Invoke( x.SteamIDRemote ) );
-			P2PSessionConnectFail_t.Install( x => OnP2PConnectionFailed?.Invoke( x.SteamIDRemote ) );
+			P2PSessionConnectFail_t.Install( x => OnP2PConnectionFailed?.Invoke( x.SteamIDRemote, (P2PSessionError) x.P2PSessionError ) );
 		}
 
 		/// <summary>
@@ -47,7 +47,7 @@ namespace Steamworks
 		/// All queued packets unsent at this point will be dropped, further attempts
 		/// to send will retry making the connection (but will be dropped if we fail again).
 		/// </summary>
-		public static Action<SteamId> OnP2PConnectionFailed;
+		public static Action<SteamId, P2PSessionError> OnP2PConnectionFailed;
 
 		/// <summary>
 		/// This should be called in response to a OnP2PSessionRequest

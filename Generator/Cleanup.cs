@@ -74,6 +74,7 @@ public static class Cleanup
 		if ( name == "InventoryDefId" ) return "public";
 		if ( name == "P2PSend" ) return "public";
 		if ( name == "RoomEnter" ) return "public";
+		if ( name == "P2PSessionError" ) return "public";
 
 		return "internal";
 	}
