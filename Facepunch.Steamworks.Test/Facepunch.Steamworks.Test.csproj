@@ -97,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FriendsTest.cs" />
+    <Compile Include="InputTest.cs" />
     <Compile Include="NetworkingSockets.cs" />
     <Compile Include="SteamMatchmakingTest.cs" />
     <Compile Include="RemoteStorageTest.cs" />
