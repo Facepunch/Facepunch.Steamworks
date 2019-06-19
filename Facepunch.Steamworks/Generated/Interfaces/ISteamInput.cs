@@ -129,13 +129,13 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate int FGetConnectedControllers( IntPtr self, ref InputHandle_t handlesOut );
+		private delegate int FGetConnectedControllers( IntPtr self, [In,Out] InputHandle_t[]  handlesOut );
 		private FGetConnectedControllers _GetConnectedControllers;
 		
 		#endregion
-		internal int GetConnectedControllers( ref InputHandle_t handlesOut )
+		internal int GetConnectedControllers( [In,Out] InputHandle_t[]  handlesOut )
 		{
-			return _GetConnectedControllers( Self, ref handlesOut );
+			return _GetConnectedControllers( Self, handlesOut );
 		}
 		
 		#region FunctionMeta
@@ -206,13 +206,13 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate int FGetActiveActionSetLayers( IntPtr self, InputHandle_t inputHandle, ref InputActionSetHandle_t handlesOut );
+		private delegate int FGetActiveActionSetLayers( IntPtr self, InputHandle_t inputHandle, [In,Out] InputActionSetHandle_t[]  handlesOut );
 		private FGetActiveActionSetLayers _GetActiveActionSetLayers;
 		
 		#endregion
-		internal int GetActiveActionSetLayers( InputHandle_t inputHandle, ref InputActionSetHandle_t handlesOut )
+		internal int GetActiveActionSetLayers( InputHandle_t inputHandle, [In,Out] InputActionSetHandle_t[]  handlesOut )
 		{
-			return _GetActiveActionSetLayers( Self, inputHandle, ref handlesOut );
+			return _GetActiveActionSetLayers( Self, inputHandle, handlesOut );
 		}
 		
 		#region FunctionMeta
