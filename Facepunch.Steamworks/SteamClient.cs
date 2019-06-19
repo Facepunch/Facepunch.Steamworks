@@ -43,6 +43,7 @@ namespace Steamworks
 			SteamMatchmaking.InstallEvents();
 			SteamParties.InstallEvents();
 			SteamNetworkingSockets.InstallEvents();
+			SteamInput.InstallEvents();
 
 			RunCallbacksAsync();
 		}
@@ -102,6 +103,7 @@ namespace Steamworks
 			SteamParties.Shutdown();
 			SteamNetworkingUtils.Shutdown();
 			SteamNetworkingSockets.Shutdown();
+			SteamInput.Shutdown();
 			ServerList.Base.Shutdown();
 
 			SteamAPI.Shutdown();
