@@ -155,6 +155,20 @@ namespace Generator
                 //Console.ReadKey();
             }
 
-        }
+			//
+			// Change all struct bool fields to bytes (they're technically bytes anyway, and it helps with marshalling)
+			//
+			{
+				foreach ( var s in def.structs )
+				{
+					foreach ( var f in s.Fields )
+					{
+						if ( f.Type == "bool" )
+							f.Type = "byte";
+					}
+				}
+			}
+
+		}
     }
 }

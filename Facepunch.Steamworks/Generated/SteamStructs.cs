@@ -12514,8 +12514,7 @@ namespace Steamworks.Data
 		internal InputSourceMode EMode; // eMode EInputSourceMode
 		internal float X; // x float
 		internal float Y; // y float
-		[MarshalAs(UnmanagedType.I1)]
-		internal bool BActive; // bActive bool
+		internal byte BActive; // bActive byte
 		
 		#region Marshalling
 		internal static InputAnalogActionData_t Fill( IntPtr p ) => Config.PackSmall ? ((InputAnalogActionData_t)(InputAnalogActionData_t) Marshal.PtrToStructure( p, typeof(InputAnalogActionData_t) )) : ((InputAnalogActionData_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
@@ -12528,8 +12527,7 @@ namespace Steamworks.Data
 			internal InputSourceMode EMode; // eMode EInputSourceMode
 			internal float X; // x float
 			internal float Y; // y float
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool BActive; // bActive bool
+			internal byte BActive; // bActive byte
 			
 			public static implicit operator InputAnalogActionData_t ( InputAnalogActionData_t.Pack8 d ) => new InputAnalogActionData_t{ EMode = d.EMode,X = d.X,Y = d.Y,BActive = d.BActive, };
 			public static implicit operator InputAnalogActionData_t.Pack8 ( InputAnalogActionData_t d ) => new InputAnalogActionData_t.Pack8{ EMode = d.EMode,X = d.X,Y = d.Y,BActive = d.BActive, };
@@ -12579,10 +12577,8 @@ namespace Steamworks.Data
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	internal struct InputDigitalActionData_t
 	{
-		[MarshalAs(UnmanagedType.I1)]
-		internal bool BState; // bState bool
-		[MarshalAs(UnmanagedType.I1)]
-		internal bool BActive; // bActive bool
+		internal byte BState; // bState byte
+		internal byte BActive; // bActive byte
 		
 		#region Marshalling
 		internal static InputDigitalActionData_t Fill( IntPtr p ) => Config.PackSmall ? ((InputDigitalActionData_t)(InputDigitalActionData_t) Marshal.PtrToStructure( p, typeof(InputDigitalActionData_t) )) : ((InputDigitalActionData_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
@@ -12592,10 +12588,8 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 		public struct Pack8
 		{
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool BState; // bState bool
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool BActive; // bActive bool
+			internal byte BState; // bState byte
+			internal byte BActive; // bActive byte
 			
 			public static implicit operator InputDigitalActionData_t ( InputDigitalActionData_t.Pack8 d ) => new InputDigitalActionData_t{ BState = d.BState,BActive = d.BActive, };
 			public static implicit operator InputDigitalActionData_t.Pack8 ( InputDigitalActionData_t d ) => new InputDigitalActionData_t.Pack8{ BState = d.BState,BActive = d.BActive, };
