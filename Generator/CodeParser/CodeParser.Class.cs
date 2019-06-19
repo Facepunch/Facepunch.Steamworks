@@ -26,6 +26,9 @@ namespace Generator
 
 			internal Function AddFunction( string funcName, string returnType, string args )
 			{
+				if ( funcName == "Init" ) funcName = "DoInit";
+				if ( funcName == "Shutdown" ) funcName = "DoShutdown";
+
 				var f = new Function
 				{
 					Name = funcName,
