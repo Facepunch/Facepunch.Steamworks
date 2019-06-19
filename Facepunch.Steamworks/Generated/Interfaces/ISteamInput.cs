@@ -410,11 +410,11 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamInputType FGetInputTypeForHandle( IntPtr self, InputHandle_t inputHandle );
+		private delegate InputType FGetInputTypeForHandle( IntPtr self, InputHandle_t inputHandle );
 		private FGetInputTypeForHandle _GetInputTypeForHandle;
 		
 		#endregion
-		internal SteamInputType GetInputTypeForHandle( InputHandle_t inputHandle )
+		internal InputType GetInputTypeForHandle( InputHandle_t inputHandle )
 		{
 			return _GetInputTypeForHandle( Self, inputHandle );
 		}
@@ -476,11 +476,11 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate InputActionOrigin FTranslateActionOrigin( IntPtr self, SteamInputType eDestinationInputType, InputActionOrigin eSourceOrigin );
+		private delegate InputActionOrigin FTranslateActionOrigin( IntPtr self, InputType eDestinationInputType, InputActionOrigin eSourceOrigin );
 		private FTranslateActionOrigin _TranslateActionOrigin;
 		
 		#endregion
-		internal InputActionOrigin TranslateActionOrigin( SteamInputType eDestinationInputType, InputActionOrigin eSourceOrigin )
+		internal InputActionOrigin TranslateActionOrigin( InputType eDestinationInputType, InputActionOrigin eSourceOrigin )
 		{
 			return _TranslateActionOrigin( Self, eDestinationInputType, eSourceOrigin );
 		}

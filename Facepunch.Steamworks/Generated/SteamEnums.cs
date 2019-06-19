@@ -1436,7 +1436,7 @@ namespace Steamworks
 	//
 	// ESteamInputType
 	//
-	internal enum SteamInputType : int
+	public enum InputType : int
 	{
 		Unknown = 0,
 		SteamController = 1,

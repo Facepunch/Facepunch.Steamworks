@@ -11,17 +11,18 @@ namespace Steamworks
 {
     [TestClass]
     [DeploymentItem( "steam_api64.dll" )]
+    [DeploymentItem( "controller_config/game_actions_252490.vdf" )]
     public class InputTest
 	{
-
 		[TestMethod]
         public void ControllerList()
         {
-			foreach ( var c in SteamInput.Controllers )
+			foreach ( var controller in SteamInput.Controllers )
 			{
-				Console.WriteLine( "Got Contorller!" );
+				Console.Write( $"Controller: {controller}" );
 			}
 		}
 	}
 
 }
+ 

@@ -39,6 +39,7 @@ public static class Cleanup
 		type = type.Replace( "SteamNetworkingMicroseconds", "long" );
 		type = type.Replace( "SteamNetworkingSocketsDebugOutputType", "DebugOutputType" );
 		type = type.Replace( "SteamNetworkingGetConfigValueResult", "NetConfigResult" );
+		type = type.Replace( "SteamInputType", "InputType" );
 
 		return type;
 	}
@@ -75,6 +76,7 @@ public static class Cleanup
 		if ( name == "P2PSend" ) return "public";
 		if ( name == "RoomEnter" ) return "public";
 		if ( name == "P2PSessionError" ) return "public";
+		if ( name == "InputType" ) return "public";
 
 		return "internal";
 	}

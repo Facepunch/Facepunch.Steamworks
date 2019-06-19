@@ -20,8 +20,6 @@ namespace Steamworks
 				{
 					_internal = new ISteamInput();
 					_internal.Init();
-
-					_internal.DoInit();
 				}
 
 				return _internal;
@@ -36,8 +34,14 @@ namespace Steamworks
 
 		internal static void InstallEvents()
 		{
+			Internal.DoInit();
+			Internal.RunFrame();
+
 			// None?
 		}
+
+
+		static InputHandle_t[] queryArray = new InputHandle_t[STEAM_CONTROLLER_MAX_COUNT];
 
 		/// <summary>
 		/// Return a list of connected controllers. Will return null if none found.
@@ -46,12 +50,11 @@ namespace Steamworks
 		{
 			get
 			{
-				var array = new InputHandle_t[STEAM_CONTROLLER_MAX_COUNT];
-				var num = Internal.GetConnectedControllers( array );
+				var num = Internal.GetConnectedControllers( queryArray );
 
 				for ( int i = 0; i < num; i++ )
 				{
-					yield return new Controller( array[num] );
+					yield return new Controller( queryArray[i] );
 				}
 
 			}

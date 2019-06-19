@@ -10,5 +10,9 @@ namespace Steamworks
 		{
 			this.inputHandle = inputHandle_t;
 		}
+
+		public InputType InputType => SteamInput.Internal.GetInputTypeForHandle( inputHandle );
+
+		public override string ToString() => $"{InputType}.{inputHandle.Value}";
 	}
 }
