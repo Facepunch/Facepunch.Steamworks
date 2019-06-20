@@ -33,6 +33,40 @@ namespace Steamworks
 
 		}
 
+		[TestMethod]
+		public async Task CreateChineseFile()
+		{
+			string fileName = "这是我的项目";
+			string description = "此项目由Facepunch Steamworks单元测试创​​建";
+
+			var result = await Ugc.Editor.NewCommunityFile
+							  .WithTitle( fileName )
+							  .WithDescription( description )
+							  .WithTag( "Arsehole" )
+							  .WithTag( "Spiteful" )
+							  .WithTag( "Fat-Head" )
+							  .SubmitAsync();
+
+			Console.WriteLine( $"Title: {fileName}" );
+			Console.WriteLine( $"Description: {description}" );
+
+			Assert.IsTrue( result.Success );
+			Assert.AreNotEqual( result.FileId.Value, 0 );
+
+			var file = await Steamworks.SteamUGC.QueryFileAsync( result.FileId );
+
+			Console.WriteLine( $"FileId: {result.FileId}" );
+			Console.WriteLine( $"Title: {file.Value.Title}" );
+			Console.WriteLine( $"Description: {file.Value.Description}" );
+
+			Assert.AreEqual( file.Value.Title, fileName );
+			Assert.AreEqual( file.Value.Description, description );
+
+			var deleted = await SteamUGC.DeleteFileAsync( result.FileId );
+			Assert.IsTrue( deleted );
+
+		}
+
 		class ProgressBar : IProgress<float>
 		{
 			float Value = 0;
