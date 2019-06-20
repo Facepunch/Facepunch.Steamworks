@@ -37,7 +37,7 @@ namespace Steamworks
 		{
 			LobbyInvite_t.Install( x => OnLobbyInvite?.Invoke( new Friend( x.SteamIDUser ), new Lobby( x.SteamIDLobby ) ) );
 
-            LobbyEnter_t.Install( x => OnLobbyEntered?.Invoke( new Lobby(x.SteamIDLobby ) ) );
+			LobbyEnter_t.Install( x => OnLobbyEntered?.Invoke( new Lobby(x.SteamIDLobby ) ) );
 
 			LobbyDataUpdate_t.Install( x =>
 			{
@@ -92,10 +92,10 @@ namespace Steamworks
 		/// </summary>
 		public static event Action<Friend, Lobby> OnLobbyInvite;
 
-        /// <summary>
-        /// You joined a lobby
-        /// </summary>
-        public static event Action<Lobby> OnLobbyEntered;
+		/// <summary>
+		/// You joined a lobby
+		/// </summary>
+		public static event Action<Lobby> OnLobbyEntered;
 
 		/// <summary>
 		/// The lobby metadata has changed
@@ -150,16 +150,16 @@ namespace Steamworks
 			return new Lobby { Id = lobby.Value.SteamIDLobby };
 		}
 
-        /// <summmary>
-        /// Attempts to directly join the specified lobby
-        /// </summmary>
-        public static async Task<Lobby?> JoinLobbyAsync( SteamId lobbyId )
-        {
-            var lobby = await Internal.JoinLobby( lobbyId );
-            if ( !lobby.HasValue ) return null;
+		/// <summmary>
+		/// Attempts to directly join the specified lobby
+		/// </summmary>
+		public static async Task<Lobby?> JoinLobbyAsync( SteamId lobbyId )
+		{
+			var lobby = await Internal.JoinLobby( lobbyId );
+			if ( !lobby.HasValue ) return null;
 
-            return new Lobby { Id = lobby.Value.SteamIDLobby };
-        }
+			return new Lobby { Id = lobby.Value.SteamIDLobby };
+		}
 
 		/// <summary>
 		/// Get a list of servers that are on your favorites list
