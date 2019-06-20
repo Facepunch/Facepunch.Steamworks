@@ -57,6 +57,9 @@ internal class BaseType
 		if ( basicType == "NetIdentity" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
 		if ( basicType == "NetAddress" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
 		if ( basicType == "ConnectionInfo" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
+		if ( basicType == "DigitalState" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
+		if ( basicType == "AnalogState" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
+		if ( basicType == "MotionState" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
 		if ( basicType.StartsWith( "E" ) && char.IsUpper( basicType[1] ) ) return new EnumType { NativeType = type.Substring( 1 ), VarName = varname };
 
 		return new BaseType { NativeType = type, VarName = varname };
@@ -164,9 +167,10 @@ internal class StructType : BaseType
 	{
 		"DigitalState",
 		"AnalogState",
+		"MotionState",
 	};
 
-	public override bool IsReturnedWeird => SpecialTypes.Contains( TypeName );
+	public override bool IsReturnedWeird => SpecialTypes.Contains( StructName );
 }
 
 internal class SteamApiCallType : BaseType

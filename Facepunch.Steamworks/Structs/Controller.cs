@@ -21,15 +21,14 @@ namespace Steamworks
 		/// This is cheap, and can be safely called repeatedly. It's often easier to repeatedly call it in
 		/// our state loops, instead of trying to place it in all of your state transitions.
 		/// </summary>
-		public ActionSet ActionSet
+		public string ActionSet
 		{
-			get => new ActionSet( SteamInput.Internal.GetCurrentActionSet( Handle ) );
-			set => SteamInput.Internal.ActivateActionSet( Handle, value.Handle );
+			set => SteamInput.Internal.ActivateActionSet( Handle, SteamInput.Internal.GetActionSetHandle( value ) );
 		}
 
-		public void DeactivateLayer( ActionSet layer ) => SteamInput.Internal.DeactivateActionSetLayer( Handle, layer.Handle );
-		public void ActivateLayer( ActionSet layer ) => SteamInput.Internal.ActivateActionSetLayer( Handle, layer.Handle );
-		public void ClearLayers( ActionSet layer ) => SteamInput.Internal.DeactivateAllActionSetLayers( Handle );
+		public void DeactivateLayer( string layer ) => SteamInput.Internal.DeactivateActionSetLayer( Handle, SteamInput.Internal.GetActionSetHandle( layer ) );
+		public void ActivateLayer( string layer ) => SteamInput.Internal.ActivateActionSetLayer( Handle, SteamInput.Internal.GetActionSetHandle( layer ) );
+		public void ClearLayers() => SteamInput.Internal.DeactivateAllActionSetLayers( Handle );
 
 
 		/// <summary>
@@ -87,7 +86,9 @@ namespace Steamworks
 	[StructLayout( LayoutKind.Sequential, Pack = 1 )]
 	public struct DigitalState
 	{
+		[MarshalAs( UnmanagedType.I1 )]
 		internal byte BState; // bState byte
+		[MarshalAs( UnmanagedType.I1 )]
 		internal byte BActive; // bActive byte
 
 		public bool Pressed => BState != 0;

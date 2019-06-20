@@ -86,13 +86,15 @@ namespace Steamworks
 			return val;
 		}
 
-		/// <summary>
-		/// Lookup the handle for an Action Set. Best to do this once on startup, and store the handles for all future API calls.
-		/// </summary>
-		public static ActionSet GetActionSet( string name )
+		internal static Dictionary<string, InputActionSetHandle_t> ActionSets = new Dictionary<string, InputActionSetHandle_t>();
+		internal static InputActionSetHandle_t GetActionSetHandle( string name )
 		{
-			return new ActionSet( Internal.GetActionSetHandle( name ) );
-		}
+			if ( ActionSets.TryGetValue( name, out var val ) )
+				return val;
 
+			val = Internal.GetActionSetHandle( name );
+			ActionSets.Add( name, val );
+			return val;
+		}
 	}
 }

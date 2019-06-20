@@ -21,7 +21,8 @@ namespace Steamworks
 			{
 				Console.Write( $"Controller: {controller}" );
 
-				var state = controller.GetDigitalState( "fire" );
+				var dstate = controller.GetDigitalState( "fire" );
+				var astate = controller.GetAnalogState( "Move" );
 			}
 		}
 	}
