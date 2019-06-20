@@ -1,15 +1,11 @@
-﻿using System;
+﻿using Steamworks.Data;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using Steamworks.Data;
 
 namespace Steamworks
 {
 	public static class SteamInput
 	{
-		internal const  int STEAM_CONTROLLER_MAX_COUNT = 16;
+		internal const int STEAM_CONTROLLER_MAX_COUNT = 16;
 
 		static ISteamInput _internal;
 		internal static ISteamInput Internal
@@ -40,11 +36,20 @@ namespace Steamworks
 			// None?
 		}
 
+		/// <summary>
+		/// You shouldn't really need to call this because it get called by RunCallbacks on SteamClient
+		/// but Valve think it might be a nice idea if you call it right before you get input info -
+		/// just to make sure the info you're getting is 100% up to date.
+		/// </summary>
+		public static void RunFrame()
+		{
+			Internal.RunFrame();
+		}
 
 		static InputHandle_t[] queryArray = new InputHandle_t[STEAM_CONTROLLER_MAX_COUNT];
 
 		/// <summary>
-		/// Return a list of connected controllers. Will return null if none found.
+		/// Return a list of connected controllers.
 		/// </summary>
 		public static IEnumerable<Controller> Controllers
 		{
@@ -56,8 +61,37 @@ namespace Steamworks
 				{
 					yield return new Controller( queryArray[i] );
 				}
-
 			}
+		}
+
+		internal static Dictionary<string, InputDigitalActionHandle_t> DigitalHandles = new Dictionary<string, InputDigitalActionHandle_t>();
+		internal static InputDigitalActionHandle_t GetDigitalActionHandle( string name )
+		{
+			if ( DigitalHandles.TryGetValue( name, out var val ) )
+				return val;
+
+			val = Internal.GetDigitalActionHandle( name );
+			DigitalHandles.Add( name, val );
+			return val;
+		}
+
+		internal static Dictionary<string, InputAnalogActionHandle_t> AnalogHandles = new Dictionary<string, InputAnalogActionHandle_t>();
+		internal static InputAnalogActionHandle_t GetAnalogActionHandle( string name )
+		{
+			if ( AnalogHandles.TryGetValue( name, out var val ) )
+				return val;
+
+			val = Internal.GetAnalogActionHandle( name );
+			AnalogHandles.Add( name, val );
+			return val;
+		}
+
+		/// <summary>
+		/// Lookup the handle for an Action Set. Best to do this once on startup, and store the handles for all future API calls.
+		/// </summary>
+		public static ActionSet GetActionSet( string name )
+		{
+			return new ActionSet( Internal.GetActionSetHandle( name ) );
 		}
 
 	}

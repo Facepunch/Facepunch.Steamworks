@@ -20,6 +20,8 @@ namespace Steamworks
 			foreach ( var controller in SteamInput.Controllers )
 			{
 				Console.Write( $"Controller: {controller}" );
+
+				var state = controller.GetDigitalState( "fire" );
 			}
 		}
 	}

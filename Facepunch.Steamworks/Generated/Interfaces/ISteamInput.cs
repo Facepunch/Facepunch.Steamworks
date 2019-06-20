@@ -26,17 +26,14 @@ namespace Steamworks
 			_GetActiveActionSetLayers = Marshal.GetDelegateForFunctionPointer<FGetActiveActionSetLayers>( Marshal.ReadIntPtr( VTable, 80) );
 			_GetDigitalActionHandle = Marshal.GetDelegateForFunctionPointer<FGetDigitalActionHandle>( Marshal.ReadIntPtr( VTable, 88) );
 			_GetDigitalActionData = Marshal.GetDelegateForFunctionPointer<FGetDigitalActionData>( Marshal.ReadIntPtr( VTable, 96) );
-			_GetDigitalActionData_Windows = Marshal.GetDelegateForFunctionPointer<FGetDigitalActionData_Windows>( Marshal.ReadIntPtr( VTable, 96) );
 			_GetDigitalActionOrigins = Marshal.GetDelegateForFunctionPointer<FGetDigitalActionOrigins>( Marshal.ReadIntPtr( VTable, 104) );
 			_GetAnalogActionHandle = Marshal.GetDelegateForFunctionPointer<FGetAnalogActionHandle>( Marshal.ReadIntPtr( VTable, 112) );
 			_GetAnalogActionData = Marshal.GetDelegateForFunctionPointer<FGetAnalogActionData>( Marshal.ReadIntPtr( VTable, 120) );
-			_GetAnalogActionData_Windows = Marshal.GetDelegateForFunctionPointer<FGetAnalogActionData_Windows>( Marshal.ReadIntPtr( VTable, 120) );
 			_GetAnalogActionOrigins = Marshal.GetDelegateForFunctionPointer<FGetAnalogActionOrigins>( Marshal.ReadIntPtr( VTable, 128) );
 			_GetGlyphForActionOrigin = Marshal.GetDelegateForFunctionPointer<FGetGlyphForActionOrigin>( Marshal.ReadIntPtr( VTable, 136) );
 			_GetStringForActionOrigin = Marshal.GetDelegateForFunctionPointer<FGetStringForActionOrigin>( Marshal.ReadIntPtr( VTable, 144) );
 			_StopAnalogActionMomentum = Marshal.GetDelegateForFunctionPointer<FStopAnalogActionMomentum>( Marshal.ReadIntPtr( VTable, 152) );
 			_GetMotionData = Marshal.GetDelegateForFunctionPointer<FGetMotionData>( Marshal.ReadIntPtr( VTable, 160) );
-			_GetMotionData_Windows = Marshal.GetDelegateForFunctionPointer<FGetMotionData_Windows>( Marshal.ReadIntPtr( VTable, 160) );
 			_TriggerVibration = Marshal.GetDelegateForFunctionPointer<FTriggerVibration>( Marshal.ReadIntPtr( VTable, 168) );
 			_SetLEDColor = Marshal.GetDelegateForFunctionPointer<FSetLEDColor>( Marshal.ReadIntPtr( VTable, 176) );
 			_TriggerHapticPulse = Marshal.GetDelegateForFunctionPointer<FTriggerHapticPulse>( Marshal.ReadIntPtr( VTable, 184) );
@@ -67,17 +64,14 @@ namespace Steamworks
 			_GetActiveActionSetLayers = null;
 			_GetDigitalActionHandle = null;
 			_GetDigitalActionData = null;
-			_GetDigitalActionData_Windows = null;
 			_GetDigitalActionOrigins = null;
 			_GetAnalogActionHandle = null;
 			_GetAnalogActionData = null;
-			_GetAnalogActionData_Windows = null;
 			_GetAnalogActionOrigins = null;
 			_GetGlyphForActionOrigin = null;
 			_GetStringForActionOrigin = null;
 			_StopAnalogActionMomentum = null;
 			_GetMotionData = null;
-			_GetMotionData_Windows = null;
 			_TriggerVibration = null;
 			_SetLEDColor = null;
 			_TriggerHapticPulse = null;
@@ -228,21 +222,12 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate InputDigitalActionData_t FGetDigitalActionData( IntPtr self, InputHandle_t inputHandle, InputDigitalActionHandle_t digitalActionHandle );
+		private delegate DigitalState FGetDigitalActionData( IntPtr self, InputHandle_t inputHandle, InputDigitalActionHandle_t digitalActionHandle );
 		private FGetDigitalActionData _GetDigitalActionData;
-		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate InputDigitalActionData_t FGetDigitalActionData_Windows( IntPtr self, InputHandle_t inputHandle, InputDigitalActionHandle_t digitalActionHandle );
-		private FGetDigitalActionData_Windows _GetDigitalActionData_Windows;
 		
 		#endregion
-		internal InputDigitalActionData_t GetDigitalActionData( InputHandle_t inputHandle, InputDigitalActionHandle_t digitalActionHandle )
+		internal DigitalState GetDigitalActionData( InputHandle_t inputHandle, InputDigitalActionHandle_t digitalActionHandle )
 		{
-			if ( Config.Os == OsType.Windows )
-			{
-				var retVal = _GetDigitalActionData_Windows( Self, inputHandle, digitalActionHandle );
-				return retVal;
-			}
-			
 			return _GetDigitalActionData( Self, inputHandle, digitalActionHandle );
 		}
 		
@@ -270,21 +255,12 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate InputAnalogActionData_t FGetAnalogActionData( IntPtr self, InputHandle_t inputHandle, InputAnalogActionHandle_t analogActionHandle );
+		private delegate AnalogState FGetAnalogActionData( IntPtr self, InputHandle_t inputHandle, InputAnalogActionHandle_t analogActionHandle );
 		private FGetAnalogActionData _GetAnalogActionData;
-		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate InputAnalogActionData_t FGetAnalogActionData_Windows( IntPtr self, InputHandle_t inputHandle, InputAnalogActionHandle_t analogActionHandle );
-		private FGetAnalogActionData_Windows _GetAnalogActionData_Windows;
 		
 		#endregion
-		internal InputAnalogActionData_t GetAnalogActionData( InputHandle_t inputHandle, InputAnalogActionHandle_t analogActionHandle )
+		internal AnalogState GetAnalogActionData( InputHandle_t inputHandle, InputAnalogActionHandle_t analogActionHandle )
 		{
-			if ( Config.Os == OsType.Windows )
-			{
-				var retVal = _GetAnalogActionData_Windows( Self, inputHandle, analogActionHandle );
-				return retVal;
-			}
-			
 			return _GetAnalogActionData( Self, inputHandle, analogActionHandle );
 		}
 		
@@ -334,21 +310,12 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate InputMotionData_t FGetMotionData( IntPtr self, InputHandle_t inputHandle );
+		private delegate MotionState FGetMotionData( IntPtr self, InputHandle_t inputHandle );
 		private FGetMotionData _GetMotionData;
-		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate InputMotionData_t FGetMotionData_Windows( IntPtr self, InputHandle_t inputHandle );
-		private FGetMotionData_Windows _GetMotionData_Windows;
 		
 		#endregion
-		internal InputMotionData_t GetMotionData( InputHandle_t inputHandle )
+		internal MotionState GetMotionData( InputHandle_t inputHandle )
 		{
-			if ( Config.Os == OsType.Windows )
-			{
-				var retVal = _GetMotionData_Windows( Self, inputHandle );
-				return retVal;
-			}
-			
 			return _GetMotionData( Self, inputHandle );
 		}
 		

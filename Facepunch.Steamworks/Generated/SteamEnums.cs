@@ -1100,7 +1100,7 @@ namespace Steamworks
 	//
 	// EInputSourceMode
 	//
-	internal enum InputSourceMode : int
+	public enum InputSourceMode : int
 	{
 		None = 0,
 		Dpad = 1,

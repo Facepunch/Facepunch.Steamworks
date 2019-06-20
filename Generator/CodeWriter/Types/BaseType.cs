@@ -159,6 +159,14 @@ internal class StructType : BaseType
 
 		return AsArgument();
 	}
+
+	static string[] SpecialTypes = new string[]
+	{
+		"DigitalState",
+		"AnalogState",
+	};
+
+	public override bool IsReturnedWeird => SpecialTypes.Contains( TypeName );
 }
 
 internal class SteamApiCallType : BaseType

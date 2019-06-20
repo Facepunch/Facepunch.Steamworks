@@ -40,6 +40,9 @@ public static class Cleanup
 		type = type.Replace( "SteamNetworkingSocketsDebugOutputType", "DebugOutputType" );
 		type = type.Replace( "SteamNetworkingGetConfigValueResult", "NetConfigResult" );
 		type = type.Replace( "SteamInputType", "InputType" );
+		type = type.Replace( "InputDigitalActionData_t", "DigitalState" );
+		type = type.Replace( "InputAnalogActionData_t", "AnalogState" );
+		type = type.Replace( "InputMotionData_t", "MotionState" );
 
 		return type;
 	}
@@ -50,6 +53,9 @@ public static class Cleanup
 		if ( type == "LeaderboardSort" ) return false;
 		if ( type == "LeaderboardDisplay" ) return false;
 		if ( type == "AppId" ) return false;
+		if ( type == "AnalogState" ) return false;
+		if ( type == "DigitalState" ) return false;
+		if ( type == "MotionState" ) return false;
 
 		return true;
 	}
@@ -77,6 +83,7 @@ public static class Cleanup
 		if ( name == "RoomEnter" ) return "public";
 		if ( name == "P2PSessionError" ) return "public";
 		if ( name == "InputType" ) return "public";
+		if ( name == "InputSourceMode" ) return "public";
 
 		return "internal";
 	}

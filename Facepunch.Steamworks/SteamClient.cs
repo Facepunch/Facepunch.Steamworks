@@ -87,6 +87,8 @@ namespace Steamworks
 
 			initialized = false;
 
+			SteamInput.Shutdown();
+
 			ShutdownInterfaces();
 			SteamApps.Shutdown();
 			SteamUtils.Shutdown();
@@ -103,7 +105,7 @@ namespace Steamworks
 			SteamParties.Shutdown();
 			SteamNetworkingUtils.Shutdown();
 			SteamNetworkingSockets.Shutdown();
-			SteamInput.Shutdown();
+			
 			ServerList.Base.Shutdown();
 
 			SteamAPI.Shutdown();
