@@ -128,24 +128,26 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate IntPtr FGetCurrentGameLanguage( IntPtr self );
+		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
+		private delegate string FGetCurrentGameLanguage( IntPtr self );
 		private FGetCurrentGameLanguage _GetCurrentGameLanguage;
 		
 		#endregion
 		internal string GetCurrentGameLanguage()
 		{
-			return GetString( _GetCurrentGameLanguage( Self ) );
+			return _GetCurrentGameLanguage( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate IntPtr FGetAvailableGameLanguages( IntPtr self );
+		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
+		private delegate string FGetAvailableGameLanguages( IntPtr self );
 		private FGetAvailableGameLanguages _GetAvailableGameLanguages;
 		
 		#endregion
 		internal string GetAvailableGameLanguages()
 		{
-			return GetString( _GetAvailableGameLanguages( Self ) );
+			return _GetAvailableGameLanguages( Self );
 		}
 		
 		#region FunctionMeta
@@ -332,13 +334,14 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate IntPtr FGetLaunchQueryParam( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchKey );
+		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
+		private delegate string FGetLaunchQueryParam( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey );
 		private FGetLaunchQueryParam _GetLaunchQueryParam;
 		
 		#endregion
-		internal string GetLaunchQueryParam( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchKey )
+		internal string GetLaunchQueryParam( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey )
 		{
-			return GetString( _GetLaunchQueryParam( Self, pchKey ) );
+			return _GetLaunchQueryParam( Self, pchKey );
 		}
 		
 		#region FunctionMeta
@@ -377,11 +380,11 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamAPICall_t FGetFileDetails( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszFileName );
+		private delegate SteamAPICall_t FGetFileDetails( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszFileName );
 		private FGetFileDetails _GetFileDetails;
 		
 		#endregion
-		internal async Task<FileDetailsResult_t?> GetFileDetails( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszFileName )
+		internal async Task<FileDetailsResult_t?> GetFileDetails( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszFileName )
 		{
 			return await FileDetailsResult_t.GetResultAsync( _GetFileDetails( Self, pszFileName ) );
 		}

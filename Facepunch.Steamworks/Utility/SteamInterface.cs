@@ -108,26 +108,5 @@ namespace Steamworks
 		}
 
 		public abstract void InitInternals();
-
-
-		//
-		// Dedicated string conversion buffer
-		//
-		static byte[] stringbuffer = new byte[1024 * 128];
-
-		internal string GetString( IntPtr p )
-		{
-			if ( p == IntPtr.Zero )
-				return null;
-
-			// return Marshal.PtrToStringUTF8( p );
-			lock ( stringbuffer )
-			{
-				int len = 0;
-				while ( Marshal.ReadByte( p, len ) != 0 && len < stringbuffer.Length ) { ++len; }
-				Marshal.Copy( p, stringbuffer, 0, len );
-				return Encoding.UTF8.GetString( stringbuffer, 0, len );
-			}
-		}
 	}
 }

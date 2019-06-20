@@ -182,22 +182,23 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate IntPtr FGetPersonaName( IntPtr self );
+		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
+		private delegate string FGetPersonaName( IntPtr self );
 		private FGetPersonaName _GetPersonaName;
 		
 		#endregion
 		internal string GetPersonaName()
 		{
-			return GetString( _GetPersonaName( Self ) );
+			return _GetPersonaName( Self );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamAPICall_t FSetPersonaName( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchPersonaName );
+		private delegate SteamAPICall_t FSetPersonaName( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPersonaName );
 		private FSetPersonaName _SetPersonaName;
 		
 		#endregion
-		internal async Task<SetPersonaNameResponse_t?> SetPersonaName( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchPersonaName )
+		internal async Task<SetPersonaNameResponse_t?> SetPersonaName( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPersonaName )
 		{
 			return await SetPersonaNameResponse_t.GetResultAsync( _SetPersonaName( Self, pchPersonaName ) );
 		}
@@ -269,13 +270,14 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate IntPtr FGetFriendPersonaName( IntPtr self, SteamId steamIDFriend );
+		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
+		private delegate string FGetFriendPersonaName( IntPtr self, SteamId steamIDFriend );
 		private FGetFriendPersonaName _GetFriendPersonaName;
 		
 		#endregion
 		internal string GetFriendPersonaName( SteamId steamIDFriend )
 		{
-			return GetString( _GetFriendPersonaName( Self, steamIDFriend ) );
+			return _GetFriendPersonaName( Self, steamIDFriend );
 		}
 		
 		#region FunctionMeta
@@ -292,13 +294,14 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate IntPtr FGetFriendPersonaNameHistory( IntPtr self, SteamId steamIDFriend, int iPersonaName );
+		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
+		private delegate string FGetFriendPersonaNameHistory( IntPtr self, SteamId steamIDFriend, int iPersonaName );
 		private FGetFriendPersonaNameHistory _GetFriendPersonaNameHistory;
 		
 		#endregion
 		internal string GetFriendPersonaNameHistory( SteamId steamIDFriend, int iPersonaName )
 		{
-			return GetString( _GetFriendPersonaNameHistory( Self, steamIDFriend, iPersonaName ) );
+			return _GetFriendPersonaNameHistory( Self, steamIDFriend, iPersonaName );
 		}
 		
 		#region FunctionMeta
@@ -314,13 +317,14 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate IntPtr FGetPlayerNickname( IntPtr self, SteamId steamIDPlayer );
+		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
+		private delegate string FGetPlayerNickname( IntPtr self, SteamId steamIDPlayer );
 		private FGetPlayerNickname _GetPlayerNickname;
 		
 		#endregion
 		internal string GetPlayerNickname( SteamId steamIDPlayer )
 		{
-			return GetString( _GetPlayerNickname( Self, steamIDPlayer ) );
+			return _GetPlayerNickname( Self, steamIDPlayer );
 		}
 		
 		#region FunctionMeta
@@ -347,13 +351,14 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate IntPtr FGetFriendsGroupName( IntPtr self, FriendsGroupID_t friendsGroupID );
+		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
+		private delegate string FGetFriendsGroupName( IntPtr self, FriendsGroupID_t friendsGroupID );
 		private FGetFriendsGroupName _GetFriendsGroupName;
 		
 		#endregion
 		internal string GetFriendsGroupName( FriendsGroupID_t friendsGroupID )
 		{
-			return GetString( _GetFriendsGroupName( Self, friendsGroupID ) );
+			return _GetFriendsGroupName( Self, friendsGroupID );
 		}
 		
 		#region FunctionMeta
@@ -424,24 +429,26 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate IntPtr FGetClanName( IntPtr self, SteamId steamIDClan );
+		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
+		private delegate string FGetClanName( IntPtr self, SteamId steamIDClan );
 		private FGetClanName _GetClanName;
 		
 		#endregion
 		internal string GetClanName( SteamId steamIDClan )
 		{
-			return GetString( _GetClanName( Self, steamIDClan ) );
+			return _GetClanName( Self, steamIDClan );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate IntPtr FGetClanTag( IntPtr self, SteamId steamIDClan );
+		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
+		private delegate string FGetClanTag( IntPtr self, SteamId steamIDClan );
 		private FGetClanTag _GetClanTag;
 		
 		#endregion
 		internal string GetClanTag( SteamId steamIDClan )
 		{
-			return GetString( _GetClanTag( Self, steamIDClan ) );
+			return _GetClanTag( Self, steamIDClan );
 		}
 		
 		#region FunctionMeta
@@ -524,33 +531,33 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FActivateGameOverlay( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchDialog );
+		private delegate void FActivateGameOverlay( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchDialog );
 		private FActivateGameOverlay _ActivateGameOverlay;
 		
 		#endregion
-		internal void ActivateGameOverlay( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchDialog )
+		internal void ActivateGameOverlay( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchDialog )
 		{
 			_ActivateGameOverlay( Self, pchDialog );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FActivateGameOverlayToUser( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchDialog, SteamId steamID );
+		private delegate void FActivateGameOverlayToUser( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchDialog, SteamId steamID );
 		private FActivateGameOverlayToUser _ActivateGameOverlayToUser;
 		
 		#endregion
-		internal void ActivateGameOverlayToUser( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchDialog, SteamId steamID )
+		internal void ActivateGameOverlayToUser( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchDialog, SteamId steamID )
 		{
 			_ActivateGameOverlayToUser( Self, pchDialog, steamID );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FActivateGameOverlayToWebPage( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchURL, ActivateGameOverlayToWebPageMode eMode );
+		private delegate void FActivateGameOverlayToWebPage( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchURL, ActivateGameOverlayToWebPageMode eMode );
 		private FActivateGameOverlayToWebPage _ActivateGameOverlayToWebPage;
 		
 		#endregion
-		internal void ActivateGameOverlayToWebPage( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchURL, ActivateGameOverlayToWebPageMode eMode )
+		internal void ActivateGameOverlayToWebPage( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchURL, ActivateGameOverlayToWebPageMode eMode )
 		{
 			_ActivateGameOverlayToWebPage( Self, pchURL, eMode );
 		}
@@ -711,11 +718,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetRichPresence( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchValue );
+		private delegate bool FSetRichPresence( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchValue );
 		private FSetRichPresence _SetRichPresence;
 		
 		#endregion
-		internal bool SetRichPresence( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchValue )
+		internal bool SetRichPresence( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchValue )
 		{
 			return _SetRichPresence( Self, pchKey, pchValue );
 		}
@@ -733,13 +740,14 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate IntPtr FGetFriendRichPresence( IntPtr self, SteamId steamIDFriend, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchKey );
+		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
+		private delegate string FGetFriendRichPresence( IntPtr self, SteamId steamIDFriend, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey );
 		private FGetFriendRichPresence _GetFriendRichPresence;
 		
 		#endregion
-		internal string GetFriendRichPresence( SteamId steamIDFriend, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchKey )
+		internal string GetFriendRichPresence( SteamId steamIDFriend, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey )
 		{
-			return GetString( _GetFriendRichPresence( Self, steamIDFriend, pchKey ) );
+			return _GetFriendRichPresence( Self, steamIDFriend, pchKey );
 		}
 		
 		#region FunctionMeta
@@ -755,13 +763,14 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate IntPtr FGetFriendRichPresenceKeyByIndex( IntPtr self, SteamId steamIDFriend, int iKey );
+		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
+		private delegate string FGetFriendRichPresenceKeyByIndex( IntPtr self, SteamId steamIDFriend, int iKey );
 		private FGetFriendRichPresenceKeyByIndex _GetFriendRichPresenceKeyByIndex;
 		
 		#endregion
 		internal string GetFriendRichPresenceKeyByIndex( SteamId steamIDFriend, int iKey )
 		{
-			return GetString( _GetFriendRichPresenceKeyByIndex( Self, steamIDFriend, iKey ) );
+			return _GetFriendRichPresenceKeyByIndex( Self, steamIDFriend, iKey );
 		}
 		
 		#region FunctionMeta
@@ -778,11 +787,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FInviteUserToGame( IntPtr self, SteamId steamIDFriend, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchConnectString );
+		private delegate bool FInviteUserToGame( IntPtr self, SteamId steamIDFriend, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchConnectString );
 		private FInviteUserToGame _InviteUserToGame;
 		
 		#endregion
-		internal bool InviteUserToGame( SteamId steamIDFriend, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchConnectString )
+		internal bool InviteUserToGame( SteamId steamIDFriend, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchConnectString )
 		{
 			return _InviteUserToGame( Self, steamIDFriend, pchConnectString );
 		}
@@ -899,11 +908,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSendClanChatMessage( IntPtr self, SteamId steamIDClanChat, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchText );
+		private delegate bool FSendClanChatMessage( IntPtr self, SteamId steamIDClanChat, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchText );
 		private FSendClanChatMessage _SendClanChatMessage;
 		
 		#endregion
-		internal bool SendClanChatMessage( SteamId steamIDClanChat, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchText )
+		internal bool SendClanChatMessage( SteamId steamIDClanChat, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchText )
 		{
 			return _SendClanChatMessage( Self, steamIDClanChat, pchText );
 		}
@@ -982,11 +991,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FReplyToFriendMessage( IntPtr self, SteamId steamIDFriend, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchMsgToSend );
+		private delegate bool FReplyToFriendMessage( IntPtr self, SteamId steamIDFriend, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchMsgToSend );
 		private FReplyToFriendMessage _ReplyToFriendMessage;
 		
 		#endregion
-		internal bool ReplyToFriendMessage( SteamId steamIDFriend, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchMsgToSend )
+		internal bool ReplyToFriendMessage( SteamId steamIDFriend, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchMsgToSend )
 		{
 			return _ReplyToFriendMessage( Self, steamIDFriend, pchMsgToSend );
 		}
