@@ -37,6 +37,8 @@ namespace Steamworks
 		{
 			LobbyInvite_t.Install( x => OnLobbyInvite?.Invoke( new Friend( x.SteamIDUser ), new Lobby( x.SteamIDLobby ) ) );
 
+			LobbyEnter_t.Install( x => OnLobbyEntered?.Invoke( new Lobby(x.SteamIDLobby ) ) );
+
 			LobbyDataUpdate_t.Install( x =>
 			{
 				if ( x.Success == 0 ) return;
@@ -91,6 +93,11 @@ namespace Steamworks
 		public static event Action<Friend, Lobby> OnLobbyInvite;
 
 		/// <summary>
+		/// You joined a lobby
+		/// </summary>
+		public static event Action<Lobby> OnLobbyEntered;
+
+		/// <summary>
 		/// The lobby metadata has changed
 		/// </summary>
 		public static event Action<Lobby> OnLobbyDataChanged;
@@ -139,6 +146,17 @@ namespace Steamworks
 		{
 			var lobby = await Internal.CreateLobby( LobbyType.Invisible, maxMembers );
 			if ( !lobby.HasValue || lobby.Value.Result != Result.OK ) return null;
+
+			return new Lobby { Id = lobby.Value.SteamIDLobby };
+		}
+
+		/// <summmary>
+		/// Attempts to directly join the specified lobby
+		/// </summmary>
+		public static async Task<Lobby?> JoinLobbyAsync( SteamId lobbyId )
+		{
+			var lobby = await Internal.JoinLobby( lobbyId );
+			if ( !lobby.HasValue ) return null;
 
 			return new Lobby { Id = lobby.Value.SteamIDLobby };
 		}
