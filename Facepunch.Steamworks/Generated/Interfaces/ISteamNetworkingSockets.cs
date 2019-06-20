@@ -136,11 +136,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FCloseConnection( IntPtr self, Connection hPeer, int nReason, string pszDebug, [MarshalAs( UnmanagedType.U1 )] bool bEnableLinger );
+		private delegate bool FCloseConnection( IntPtr self, Connection hPeer, int nReason, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszDebug, [MarshalAs( UnmanagedType.U1 )] bool bEnableLinger );
 		private FCloseConnection _CloseConnection;
 		
 		#endregion
-		internal bool CloseConnection( Connection hPeer, int nReason, string pszDebug, [MarshalAs( UnmanagedType.U1 )] bool bEnableLinger )
+		internal bool CloseConnection( Connection hPeer, int nReason, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszDebug, [MarshalAs( UnmanagedType.U1 )] bool bEnableLinger )
 		{
 			return _CloseConnection( Self, hPeer, nReason, pszDebug, bEnableLinger );
 		}
@@ -182,11 +182,11 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FSetConnectionName( IntPtr self, Connection hPeer, string pszName );
+		private delegate void FSetConnectionName( IntPtr self, Connection hPeer, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszName );
 		private FSetConnectionName _SetConnectionName;
 		
 		#endregion
-		internal void SetConnectionName( Connection hPeer, string pszName )
+		internal void SetConnectionName( Connection hPeer, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszName )
 		{
 			_SetConnectionName( Self, hPeer, pszName );
 		}

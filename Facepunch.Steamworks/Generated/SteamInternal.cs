@@ -13,35 +13,35 @@ namespace Steamworks
 		{
 			[DllImport( "steam_api64", EntryPoint = "SteamInternal_GameServer_Init", CallingConvention = CallingConvention.Cdecl )]
 			[return: MarshalAs( UnmanagedType.I1 )]
-			public static extern bool SteamInternal_GameServer_Init( uint unIP, ushort usPort, ushort usGamePort, ushort usQueryPort, int eServerMode, string pchVersionString );
+			public static extern bool SteamInternal_GameServer_Init( uint unIP, ushort usPort, ushort usGamePort, ushort usQueryPort, int eServerMode, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchVersionString );
 			
 			[DllImport( "steam_api64", EntryPoint = "SteamInternal_FindOrCreateUserInterface", CallingConvention = CallingConvention.Cdecl )]
-			public static extern IntPtr SteamInternal_FindOrCreateUserInterface( int steamuser, string versionname );
+			public static extern IntPtr SteamInternal_FindOrCreateUserInterface( int steamuser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string versionname );
 			
 			[DllImport( "steam_api64", EntryPoint = "SteamInternal_FindOrCreateGameServerInterface", CallingConvention = CallingConvention.Cdecl )]
-			public static extern IntPtr SteamInternal_FindOrCreateGameServerInterface( int steamuser, string versionname );
+			public static extern IntPtr SteamInternal_FindOrCreateGameServerInterface( int steamuser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string versionname );
 			
 			[DllImport( "steam_api64", EntryPoint = "SteamInternal_CreateInterface", CallingConvention = CallingConvention.Cdecl )]
-			public static extern IntPtr SteamInternal_CreateInterface( string version );
+			public static extern IntPtr SteamInternal_CreateInterface( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string version );
 			
 		}
 		internal static class Posix
 		{
 			[DllImport( "libsteam_api", EntryPoint = "SteamInternal_GameServer_Init", CallingConvention = CallingConvention.Cdecl )]
 			[return: MarshalAs( UnmanagedType.I1 )]
-			public static extern bool SteamInternal_GameServer_Init( uint unIP, ushort usPort, ushort usGamePort, ushort usQueryPort, int eServerMode, string pchVersionString );
+			public static extern bool SteamInternal_GameServer_Init( uint unIP, ushort usPort, ushort usGamePort, ushort usQueryPort, int eServerMode, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchVersionString );
 			
 			[DllImport( "libsteam_api", EntryPoint = "SteamInternal_FindOrCreateUserInterface", CallingConvention = CallingConvention.Cdecl )]
-			public static extern IntPtr SteamInternal_FindOrCreateUserInterface( int steamuser, string versionname );
+			public static extern IntPtr SteamInternal_FindOrCreateUserInterface( int steamuser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string versionname );
 			
 			[DllImport( "libsteam_api", EntryPoint = "SteamInternal_FindOrCreateGameServerInterface", CallingConvention = CallingConvention.Cdecl )]
-			public static extern IntPtr SteamInternal_FindOrCreateGameServerInterface( int steamuser, string versionname );
+			public static extern IntPtr SteamInternal_FindOrCreateGameServerInterface( int steamuser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string versionname );
 			
 			[DllImport( "libsteam_api", EntryPoint = "SteamInternal_CreateInterface", CallingConvention = CallingConvention.Cdecl )]
-			public static extern IntPtr SteamInternal_CreateInterface( string version );
+			public static extern IntPtr SteamInternal_CreateInterface( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string version );
 			
 		}
-		static internal bool GameServer_Init( uint unIP, ushort usPort, ushort usGamePort, ushort usQueryPort, int eServerMode, string pchVersionString )
+		static internal bool GameServer_Init( uint unIP, ushort usPort, ushort usGamePort, ushort usQueryPort, int eServerMode, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchVersionString )
 		{
 			if ( Config.Os == OsType.Windows )
 			{
@@ -57,7 +57,7 @@ namespace Steamworks
 			}
 		}
 		
-		static internal IntPtr FindOrCreateUserInterface( int steamuser, string versionname )
+		static internal IntPtr FindOrCreateUserInterface( int steamuser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string versionname )
 		{
 			if ( Config.Os == OsType.Windows )
 			{
@@ -73,7 +73,7 @@ namespace Steamworks
 			}
 		}
 		
-		static internal IntPtr FindOrCreateGameServerInterface( int steamuser, string versionname )
+		static internal IntPtr FindOrCreateGameServerInterface( int steamuser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string versionname )
 		{
 			if ( Config.Os == OsType.Windows )
 			{
@@ -89,7 +89,7 @@ namespace Steamworks
 			}
 		}
 		
-		static internal IntPtr CreateInterface( string version )
+		static internal IntPtr CreateInterface( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string version )
 		{
 			if ( Config.Os == OsType.Windows )
 			{

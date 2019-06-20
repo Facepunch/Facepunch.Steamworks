@@ -332,11 +332,11 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate IntPtr FGetLaunchQueryParam( IntPtr self, string pchKey );
+		private delegate IntPtr FGetLaunchQueryParam( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchKey );
 		private FGetLaunchQueryParam _GetLaunchQueryParam;
 		
 		#endregion
-		internal string GetLaunchQueryParam( string pchKey )
+		internal string GetLaunchQueryParam( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchKey )
 		{
 			return GetString( _GetLaunchQueryParam( Self, pchKey ) );
 		}
@@ -377,11 +377,11 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamAPICall_t FGetFileDetails( IntPtr self, string pszFileName );
+		private delegate SteamAPICall_t FGetFileDetails( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszFileName );
 		private FGetFileDetails _GetFileDetails;
 		
 		#endregion
-		internal async Task<FileDetailsResult_t?> GetFileDetails( string pszFileName )
+		internal async Task<FileDetailsResult_t?> GetFileDetails( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszFileName )
 		{
 			return await FileDetailsResult_t.GetResultAsync( _GetFileDetails( Self, pszFileName ) );
 		}

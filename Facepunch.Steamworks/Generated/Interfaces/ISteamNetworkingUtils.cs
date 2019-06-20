@@ -101,11 +101,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FParsePingLocationString( IntPtr self, string pszString, ref PingLocation result );
+		private delegate bool FParsePingLocationString( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszString, ref PingLocation result );
 		private FParsePingLocationString _ParsePingLocationString;
 		
 		#endregion
-		internal bool ParsePingLocationString( string pszString, ref PingLocation result )
+		internal bool ParsePingLocationString( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszString, ref PingLocation result )
 		{
 			return _ParsePingLocationString( Self, pszString, ref result );
 		}
@@ -226,11 +226,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetConfigValueInfo( IntPtr self, NetConfig eValue, [In,Out] string[]  pOutName, ref NetConfigType pOutDataType, [In,Out] NetScope[]  pOutScope, [In,Out] NetConfig[]  pOutNextValue );
+		private delegate bool FGetConfigValueInfo( IntPtr self, NetConfig eValue, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pOutName, ref NetConfigType pOutDataType, [In,Out] NetScope[]  pOutScope, [In,Out] NetConfig[]  pOutNextValue );
 		private FGetConfigValueInfo _GetConfigValueInfo;
 		
 		#endregion
-		internal bool GetConfigValueInfo( NetConfig eValue, [In,Out] string[]  pOutName, ref NetConfigType pOutDataType, [In,Out] NetScope[]  pOutScope, [In,Out] NetConfig[]  pOutNextValue )
+		internal bool GetConfigValueInfo( NetConfig eValue, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pOutName, ref NetConfigType pOutDataType, [In,Out] NetScope[]  pOutScope, [In,Out] NetConfig[]  pOutNextValue )
 		{
 			return _GetConfigValueInfo( Self, eValue, pOutName, ref pOutDataType, pOutScope, pOutNextValue );
 		}

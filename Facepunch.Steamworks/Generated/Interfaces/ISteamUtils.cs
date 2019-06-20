@@ -298,11 +298,11 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate SteamAPICall_t FCheckFileSignature( IntPtr self, string szFileName );
+		private delegate SteamAPICall_t FCheckFileSignature( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string szFileName );
 		private FCheckFileSignature _CheckFileSignature;
 		
 		#endregion
-		internal async Task<CheckFileSignature_t?> CheckFileSignature( string szFileName )
+		internal async Task<CheckFileSignature_t?> CheckFileSignature( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string szFileName )
 		{
 			return await CheckFileSignature_t.GetResultAsync( _CheckFileSignature( Self, szFileName ) );
 		}
@@ -310,11 +310,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FShowGamepadTextInput( IntPtr self, GamepadTextInputMode eInputMode, GamepadTextInputLineMode eLineInputMode, string pchDescription, uint unCharMax, string pchExistingText );
+		private delegate bool FShowGamepadTextInput( IntPtr self, GamepadTextInputMode eInputMode, GamepadTextInputLineMode eLineInputMode, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchDescription, uint unCharMax, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchExistingText );
 		private FShowGamepadTextInput _ShowGamepadTextInput;
 		
 		#endregion
-		internal bool ShowGamepadTextInput( GamepadTextInputMode eInputMode, GamepadTextInputLineMode eLineInputMode, string pchDescription, uint unCharMax, string pchExistingText )
+		internal bool ShowGamepadTextInput( GamepadTextInputMode eInputMode, GamepadTextInputLineMode eLineInputMode, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchDescription, uint unCharMax, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchExistingText )
 		{
 			return _ShowGamepadTextInput( Self, eInputMode, eLineInputMode, pchDescription, unCharMax, pchExistingText );
 		}

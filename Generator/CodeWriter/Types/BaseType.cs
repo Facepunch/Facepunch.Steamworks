@@ -225,6 +225,8 @@ internal class ConstCharType : BaseType
 {
 	public override string TypeName => $"string";
 	public override string TypeNameFrom => $"IntPtr";
+	public override string AsArgument() => $"[MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] {Ref}{TypeName} {VarName}";
+	
 	public override string Return( string varname ) => $"return GetString( {varname} );";
 
 	public override string Ref => "";

@@ -115,44 +115,44 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FInitGameServer( IntPtr self, uint unIP, ushort usGamePort, ushort usQueryPort, uint unFlags, AppId nGameAppId, string pchVersionString );
+		private delegate bool FInitGameServer( IntPtr self, uint unIP, ushort usGamePort, ushort usQueryPort, uint unFlags, AppId nGameAppId, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchVersionString );
 		private FInitGameServer _InitGameServer;
 		
 		#endregion
-		internal bool InitGameServer( uint unIP, ushort usGamePort, ushort usQueryPort, uint unFlags, AppId nGameAppId, string pchVersionString )
+		internal bool InitGameServer( uint unIP, ushort usGamePort, ushort usQueryPort, uint unFlags, AppId nGameAppId, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchVersionString )
 		{
 			return _InitGameServer( Self, unIP, usGamePort, usQueryPort, unFlags, nGameAppId, pchVersionString );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FSetProduct( IntPtr self, string pszProduct );
+		private delegate void FSetProduct( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszProduct );
 		private FSetProduct _SetProduct;
 		
 		#endregion
-		internal void SetProduct( string pszProduct )
+		internal void SetProduct( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszProduct )
 		{
 			_SetProduct( Self, pszProduct );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FSetGameDescription( IntPtr self, string pszGameDescription );
+		private delegate void FSetGameDescription( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszGameDescription );
 		private FSetGameDescription _SetGameDescription;
 		
 		#endregion
-		internal void SetGameDescription( string pszGameDescription )
+		internal void SetGameDescription( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszGameDescription )
 		{
 			_SetGameDescription( Self, pszGameDescription );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FSetModDir( IntPtr self, string pszModDir );
+		private delegate void FSetModDir( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszModDir );
 		private FSetModDir _SetModDir;
 		
 		#endregion
-		internal void SetModDir( string pszModDir )
+		internal void SetModDir( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszModDir )
 		{
 			_SetModDir( Self, pszModDir );
 		}
@@ -170,11 +170,11 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FLogOn( IntPtr self, string pszToken );
+		private delegate void FLogOn( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszToken );
 		private FLogOn _LogOn;
 		
 		#endregion
-		internal void LogOn( string pszToken )
+		internal void LogOn( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszToken )
 		{
 			_LogOn( Self, pszToken );
 		}
@@ -282,22 +282,22 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FSetServerName( IntPtr self, string pszServerName );
+		private delegate void FSetServerName( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszServerName );
 		private FSetServerName _SetServerName;
 		
 		#endregion
-		internal void SetServerName( string pszServerName )
+		internal void SetServerName( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszServerName )
 		{
 			_SetServerName( Self, pszServerName );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FSetMapName( IntPtr self, string pszMapName );
+		private delegate void FSetMapName( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszMapName );
 		private FSetMapName _SetMapName;
 		
 		#endregion
-		internal void SetMapName( string pszMapName )
+		internal void SetMapName( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszMapName )
 		{
 			_SetMapName( Self, pszMapName );
 		}
@@ -326,11 +326,11 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FSetSpectatorServerName( IntPtr self, string pszSpectatorServerName );
+		private delegate void FSetSpectatorServerName( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszSpectatorServerName );
 		private FSetSpectatorServerName _SetSpectatorServerName;
 		
 		#endregion
-		internal void SetSpectatorServerName( string pszSpectatorServerName )
+		internal void SetSpectatorServerName( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszSpectatorServerName )
 		{
 			_SetSpectatorServerName( Self, pszSpectatorServerName );
 		}
@@ -348,44 +348,44 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FSetKeyValue( IntPtr self, string pKey, string pValue );
+		private delegate void FSetKeyValue( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pValue );
 		private FSetKeyValue _SetKeyValue;
 		
 		#endregion
-		internal void SetKeyValue( string pKey, string pValue )
+		internal void SetKeyValue( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pValue )
 		{
 			_SetKeyValue( Self, pKey, pValue );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FSetGameTags( IntPtr self, string pchGameTags );
+		private delegate void FSetGameTags( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchGameTags );
 		private FSetGameTags _SetGameTags;
 		
 		#endregion
-		internal void SetGameTags( string pchGameTags )
+		internal void SetGameTags( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchGameTags )
 		{
 			_SetGameTags( Self, pchGameTags );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FSetGameData( IntPtr self, string pchGameData );
+		private delegate void FSetGameData( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchGameData );
 		private FSetGameData _SetGameData;
 		
 		#endregion
-		internal void SetGameData( string pchGameData )
+		internal void SetGameData( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchGameData )
 		{
 			_SetGameData( Self, pchGameData );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FSetRegion( IntPtr self, string pszRegion );
+		private delegate void FSetRegion( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszRegion );
 		private FSetRegion _SetRegion;
 		
 		#endregion
-		internal void SetRegion( string pszRegion )
+		internal void SetRegion( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszRegion )
 		{
 			_SetRegion( Self, pszRegion );
 		}
@@ -437,11 +437,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FBUpdateUserData( IntPtr self, SteamId steamIDUser, string pchPlayerName, uint uScore );
+		private delegate bool FBUpdateUserData( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchPlayerName, uint uScore );
 		private FBUpdateUserData _BUpdateUserData;
 		
 		#endregion
-		internal bool BUpdateUserData( SteamId steamIDUser, string pchPlayerName, uint uScore )
+		internal bool BUpdateUserData( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchPlayerName, uint uScore )
 		{
 			return _BUpdateUserData( Self, steamIDUser, pchPlayerName, uScore );
 		}

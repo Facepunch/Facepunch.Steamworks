@@ -140,11 +140,11 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate InputActionSetHandle_t FGetActionSetHandle( IntPtr self, string pszActionSetName );
+		private delegate InputActionSetHandle_t FGetActionSetHandle( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszActionSetName );
 		private FGetActionSetHandle _GetActionSetHandle;
 		
 		#endregion
-		internal InputActionSetHandle_t GetActionSetHandle( string pszActionSetName )
+		internal InputActionSetHandle_t GetActionSetHandle( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszActionSetName )
 		{
 			return _GetActionSetHandle( Self, pszActionSetName );
 		}
@@ -217,11 +217,11 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate InputDigitalActionHandle_t FGetDigitalActionHandle( IntPtr self, string pszActionName );
+		private delegate InputDigitalActionHandle_t FGetDigitalActionHandle( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszActionName );
 		private FGetDigitalActionHandle _GetDigitalActionHandle;
 		
 		#endregion
-		internal InputDigitalActionHandle_t GetDigitalActionHandle( string pszActionName )
+		internal InputDigitalActionHandle_t GetDigitalActionHandle( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszActionName )
 		{
 			return _GetDigitalActionHandle( Self, pszActionName );
 		}
@@ -260,11 +260,11 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate InputAnalogActionHandle_t FGetAnalogActionHandle( IntPtr self, string pszActionName );
+		private delegate InputAnalogActionHandle_t FGetAnalogActionHandle( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszActionName );
 		private FGetAnalogActionHandle _GetAnalogActionHandle;
 		
 		#endregion
-		internal InputAnalogActionHandle_t GetAnalogActionHandle( string pszActionName )
+		internal InputAnalogActionHandle_t GetAnalogActionHandle( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pszActionName )
 		{
 			return _GetAnalogActionHandle( Self, pszActionName );
 		}

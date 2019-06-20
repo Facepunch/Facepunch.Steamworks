@@ -54,11 +54,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetUserStat1( IntPtr self, SteamId steamIDUser, string pchName, ref int pData );
+		private delegate bool FGetUserStat1( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchName, ref int pData );
 		private FGetUserStat1 _GetUserStat1;
 		
 		#endregion
-		internal bool GetUserStat1( SteamId steamIDUser, string pchName, ref int pData )
+		internal bool GetUserStat1( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchName, ref int pData )
 		{
 			return _GetUserStat1( Self, steamIDUser, pchName, ref pData );
 		}
@@ -66,11 +66,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetUserStat2( IntPtr self, SteamId steamIDUser, string pchName, ref float pData );
+		private delegate bool FGetUserStat2( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchName, ref float pData );
 		private FGetUserStat2 _GetUserStat2;
 		
 		#endregion
-		internal bool GetUserStat2( SteamId steamIDUser, string pchName, ref float pData )
+		internal bool GetUserStat2( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchName, ref float pData )
 		{
 			return _GetUserStat2( Self, steamIDUser, pchName, ref pData );
 		}
@@ -78,11 +78,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetUserAchievement( IntPtr self, SteamId steamIDUser, string pchName, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved );
+		private delegate bool FGetUserAchievement( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchName, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved );
 		private FGetUserAchievement _GetUserAchievement;
 		
 		#endregion
-		internal bool GetUserAchievement( SteamId steamIDUser, string pchName, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved )
+		internal bool GetUserAchievement( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchName, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved )
 		{
 			return _GetUserAchievement( Self, steamIDUser, pchName, ref pbAchieved );
 		}
@@ -90,11 +90,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetUserStat1( IntPtr self, SteamId steamIDUser, string pchName, int nData );
+		private delegate bool FSetUserStat1( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchName, int nData );
 		private FSetUserStat1 _SetUserStat1;
 		
 		#endregion
-		internal bool SetUserStat1( SteamId steamIDUser, string pchName, int nData )
+		internal bool SetUserStat1( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchName, int nData )
 		{
 			return _SetUserStat1( Self, steamIDUser, pchName, nData );
 		}
@@ -102,11 +102,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetUserStat2( IntPtr self, SteamId steamIDUser, string pchName, float fData );
+		private delegate bool FSetUserStat2( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchName, float fData );
 		private FSetUserStat2 _SetUserStat2;
 		
 		#endregion
-		internal bool SetUserStat2( SteamId steamIDUser, string pchName, float fData )
+		internal bool SetUserStat2( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchName, float fData )
 		{
 			return _SetUserStat2( Self, steamIDUser, pchName, fData );
 		}
@@ -114,11 +114,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FUpdateUserAvgRateStat( IntPtr self, SteamId steamIDUser, string pchName, float flCountThisSession, double dSessionLength );
+		private delegate bool FUpdateUserAvgRateStat( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchName, float flCountThisSession, double dSessionLength );
 		private FUpdateUserAvgRateStat _UpdateUserAvgRateStat;
 		
 		#endregion
-		internal bool UpdateUserAvgRateStat( SteamId steamIDUser, string pchName, float flCountThisSession, double dSessionLength )
+		internal bool UpdateUserAvgRateStat( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchName, float flCountThisSession, double dSessionLength )
 		{
 			return _UpdateUserAvgRateStat( Self, steamIDUser, pchName, flCountThisSession, dSessionLength );
 		}
@@ -126,11 +126,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetUserAchievement( IntPtr self, SteamId steamIDUser, string pchName );
+		private delegate bool FSetUserAchievement( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchName );
 		private FSetUserAchievement _SetUserAchievement;
 		
 		#endregion
-		internal bool SetUserAchievement( SteamId steamIDUser, string pchName )
+		internal bool SetUserAchievement( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchName )
 		{
 			return _SetUserAchievement( Self, steamIDUser, pchName );
 		}
@@ -138,11 +138,11 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FClearUserAchievement( IntPtr self, SteamId steamIDUser, string pchName );
+		private delegate bool FClearUserAchievement( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchName );
 		private FClearUserAchievement _ClearUserAchievement;
 		
 		#endregion
-		internal bool ClearUserAchievement( SteamId steamIDUser, string pchName )
+		internal bool ClearUserAchievement( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8String ) )] string pchName )
 		{
 			return _ClearUserAchievement( Self, steamIDUser, pchName );
 		}
