@@ -500,8 +500,9 @@ namespace Steamworks.Data
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	internal struct GameWebCallback_t
 	{
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-		internal string URL; // m_szURL char [256]
+		internal string URLUTF8() => System.Text.Encoding.UTF8.GetString( URL, 0, System.Array.IndexOf<byte>( URL, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_szURL
+		internal byte[] URL; // m_szURL char [256]
 		
 		#region SteamCallback
 		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GameWebCallback_t) : typeof(Pack8) );
@@ -555,8 +556,9 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 		public struct Pack8
 		{
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-			internal string URL; // m_szURL char [256]
+			internal string URLUTF8() => System.Text.Encoding.UTF8.GetString( URL, 0, System.Array.IndexOf<byte>( URL, 0 ) );
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_szURL
+			internal byte[] URL; // m_szURL char [256]
 			
 			public static implicit operator GameWebCallback_t ( GameWebCallback_t.Pack8 d ) => new GameWebCallback_t{ URL = d.URL, };
 			public static implicit operator GameWebCallback_t.Pack8 ( GameWebCallback_t d ) => new GameWebCallback_t.Pack8{ URL = d.URL, };
@@ -567,8 +569,9 @@ namespace Steamworks.Data
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	internal struct StoreAuthURLResponse_t
 	{
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
-		internal string URL; // m_szURL char [512]
+		internal string URLUTF8() => System.Text.Encoding.UTF8.GetString( URL, 0, System.Array.IndexOf<byte>( URL, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 512)] // byte[] m_szURL
+		internal byte[] URL; // m_szURL char [512]
 		
 		#region SteamCallback
 		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(StoreAuthURLResponse_t) : typeof(Pack8) );
@@ -622,8 +625,9 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 		public struct Pack8
 		{
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
-			internal string URL; // m_szURL char [512]
+			internal string URLUTF8() => System.Text.Encoding.UTF8.GetString( URL, 0, System.Array.IndexOf<byte>( URL, 0 ) );
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 512)] // byte[] m_szURL
+			internal byte[] URL; // m_szURL char [512]
 			
 			public static implicit operator StoreAuthURLResponse_t ( StoreAuthURLResponse_t.Pack8 d ) => new StoreAuthURLResponse_t{ URL = d.URL, };
 			public static implicit operator StoreAuthURLResponse_t.Pack8 ( StoreAuthURLResponse_t d ) => new StoreAuthURLResponse_t.Pack8{ URL = d.URL, };
@@ -878,10 +882,12 @@ namespace Steamworks.Data
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	internal struct GameServerChangeRequested_t
 	{
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-		internal string Server; // m_rgchServer char [64]
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-		internal string Password; // m_rgchPassword char [64]
+		internal string ServerUTF8() => System.Text.Encoding.UTF8.GetString( Server, 0, System.Array.IndexOf<byte>( Server, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)] // byte[] m_rgchServer
+		internal byte[] Server; // m_rgchServer char [64]
+		internal string PasswordUTF8() => System.Text.Encoding.UTF8.GetString( Password, 0, System.Array.IndexOf<byte>( Password, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)] // byte[] m_rgchPassword
+		internal byte[] Password; // m_rgchPassword char [64]
 		
 		#region SteamCallback
 		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GameServerChangeRequested_t) : typeof(Pack8) );
@@ -935,10 +941,12 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 		public struct Pack8
 		{
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-			internal string Server; // m_rgchServer char [64]
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-			internal string Password; // m_rgchPassword char [64]
+			internal string ServerUTF8() => System.Text.Encoding.UTF8.GetString( Server, 0, System.Array.IndexOf<byte>( Server, 0 ) );
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)] // byte[] m_rgchServer
+			internal byte[] Server; // m_rgchServer char [64]
+			internal string PasswordUTF8() => System.Text.Encoding.UTF8.GetString( Password, 0, System.Array.IndexOf<byte>( Password, 0 ) );
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)] // byte[] m_rgchPassword
+			internal byte[] Password; // m_rgchPassword char [64]
 			
 			public static implicit operator GameServerChangeRequested_t ( GameServerChangeRequested_t.Pack8 d ) => new GameServerChangeRequested_t{ Server = d.Server,Password = d.Password, };
 			public static implicit operator GameServerChangeRequested_t.Pack8 ( GameServerChangeRequested_t d ) => new GameServerChangeRequested_t.Pack8{ Server = d.Server,Password = d.Password, };
@@ -1173,8 +1181,9 @@ namespace Steamworks.Data
 	internal struct GameRichPresenceJoinRequested_t
 	{
 		internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-		internal string Connect; // m_rgchConnect char [256]
+		internal string ConnectUTF8() => System.Text.Encoding.UTF8.GetString( Connect, 0, System.Array.IndexOf<byte>( Connect, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_rgchConnect
+		internal byte[] Connect; // m_rgchConnect char [256]
 		
 		#region SteamCallback
 		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameRichPresenceJoinRequested_t) );
@@ -2087,10 +2096,12 @@ namespace Steamworks.Data
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	internal struct MatchMakingKeyValuePair_t
 	{
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-		internal string Key; // m_szKey char [256]
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-		internal string Value; // m_szValue char [256]
+		internal string KeyUTF8() => System.Text.Encoding.UTF8.GetString( Key, 0, System.Array.IndexOf<byte>( Key, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_szKey
+		internal byte[] Key; // m_szKey char [256]
+		internal string ValueUTF8() => System.Text.Encoding.UTF8.GetString( Value, 0, System.Array.IndexOf<byte>( Value, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_szValue
+		internal byte[] Value; // m_szValue char [256]
 		
 		#region Marshalling
 		internal static MatchMakingKeyValuePair_t Fill( IntPtr p ) => ((MatchMakingKeyValuePair_t)(MatchMakingKeyValuePair_t) Marshal.PtrToStructure( p, typeof(MatchMakingKeyValuePair_t) ) );
@@ -2131,12 +2142,15 @@ namespace Steamworks.Data
 		internal bool HadSuccessfulResponse; // m_bHadSuccessfulResponse _Bool
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool DoNotRefresh; // m_bDoNotRefresh _Bool
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-		internal string GameDir; // m_szGameDir char [32]
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-		internal string Map; // m_szMap char [32]
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-		internal string GameDescription; // m_szGameDescription char [64]
+		internal string GameDirUTF8() => System.Text.Encoding.UTF8.GetString( GameDir, 0, System.Array.IndexOf<byte>( GameDir, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)] // byte[] m_szGameDir
+		internal byte[] GameDir; // m_szGameDir char [32]
+		internal string MapUTF8() => System.Text.Encoding.UTF8.GetString( Map, 0, System.Array.IndexOf<byte>( Map, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)] // byte[] m_szMap
+		internal byte[] Map; // m_szMap char [32]
+		internal string GameDescriptionUTF8() => System.Text.Encoding.UTF8.GetString( GameDescription, 0, System.Array.IndexOf<byte>( GameDescription, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)] // byte[] m_szGameDescription
+		internal byte[] GameDescription; // m_szGameDescription char [64]
 		internal uint AppID; // m_nAppID uint32
 		internal int Players; // m_nPlayers int
 		internal int MaxPlayers; // m_nMaxPlayers int
@@ -2147,10 +2161,12 @@ namespace Steamworks.Data
 		internal bool Secure; // m_bSecure _Bool
 		internal uint TimeLastPlayed; // m_ulTimeLastPlayed uint32
 		internal int ServerVersion; // m_nServerVersion int
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-		internal string ServerName; // m_szServerName char [64]
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-		internal string GameTags; // m_szGameTags char [128]
+		internal string ServerNameUTF8() => System.Text.Encoding.UTF8.GetString( ServerName, 0, System.Array.IndexOf<byte>( ServerName, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)] // byte[] m_szServerName
+		internal byte[] ServerName; // m_szServerName char [64]
+		internal string GameTagsUTF8() => System.Text.Encoding.UTF8.GetString( GameTags, 0, System.Array.IndexOf<byte>( GameTags, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)] // byte[] m_szGameTags
+		internal byte[] GameTags; // m_szGameTags char [128]
 		internal ulong SteamID; // m_steamID class CSteamID
 		
 		#region Marshalling
@@ -3453,8 +3469,9 @@ namespace Steamworks.Data
 		internal Result Result; // m_eResult enum EResult
 		internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
 		internal ulong SteamIDBeaconOwner; // m_SteamIDBeaconOwner class CSteamID
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-		internal string ConnectString; // m_rgchConnectString char [256]
+		internal string ConnectStringUTF8() => System.Text.Encoding.UTF8.GetString( ConnectString, 0, System.Array.IndexOf<byte>( ConnectString, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_rgchConnectString
+		internal byte[] ConnectString; // m_rgchConnectString char [256]
 		
 		#region SteamCallback
 		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(JoinPartyCallback_t) );
@@ -3856,8 +3873,9 @@ namespace Steamworks.Data
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	internal struct RemoteStorageAppSyncProgress_t
 	{
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-		internal string CurrentFile; // m_rgchCurrentFile char [260]
+		internal string CurrentFileUTF8() => System.Text.Encoding.UTF8.GetString( CurrentFile, 0, System.Array.IndexOf<byte>( CurrentFile, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 260)] // byte[] m_rgchCurrentFile
+		internal byte[] CurrentFile; // m_rgchCurrentFile char [260]
 		internal AppId AppID; // m_nAppID AppId_t
 		internal uint BytesTransferredThisChunk; // m_uBytesTransferredThisChunk uint32
 		internal double DAppPercentComplete; // m_dAppPercentComplete double
@@ -3916,8 +3934,9 @@ namespace Steamworks.Data
 		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
 		public struct Pack8
 		{
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-			internal string CurrentFile; // m_rgchCurrentFile char [260]
+			internal string CurrentFileUTF8() => System.Text.Encoding.UTF8.GetString( CurrentFile, 0, System.Array.IndexOf<byte>( CurrentFile, 0 ) );
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 260)] // byte[] m_rgchCurrentFile
+			internal byte[] CurrentFile; // m_rgchCurrentFile char [260]
 			internal AppId AppID; // m_nAppID AppId_t
 			internal uint BytesTransferredThisChunk; // m_uBytesTransferredThisChunk uint32
 			internal double DAppPercentComplete; // m_dAppPercentComplete double
@@ -4002,8 +4021,9 @@ namespace Steamworks.Data
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong File; // m_hFile UGCHandle_t
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-		internal string Filename; // m_rgchFilename char [260]
+		internal string FilenameUTF8() => System.Text.Encoding.UTF8.GetString( Filename, 0, System.Array.IndexOf<byte>( Filename, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 260)] // byte[] m_rgchFilename
+		internal byte[] Filename; // m_rgchFilename char [260]
 		
 		#region SteamCallback
 		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStorageFileShareResult_t) : typeof(Pack8) );
@@ -4059,8 +4079,9 @@ namespace Steamworks.Data
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal ulong File; // m_hFile UGCHandle_t
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-			internal string Filename; // m_rgchFilename char [260]
+			internal string FilenameUTF8() => System.Text.Encoding.UTF8.GetString( Filename, 0, System.Array.IndexOf<byte>( Filename, 0 ) );
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 260)] // byte[] m_rgchFilename
+			internal byte[] Filename; // m_rgchFilename char [260]
 			
 			public static implicit operator RemoteStorageFileShareResult_t ( RemoteStorageFileShareResult_t.Pack8 d ) => new RemoteStorageFileShareResult_t{ Result = d.Result,File = d.File,Filename = d.Filename, };
 			public static implicit operator RemoteStorageFileShareResult_t.Pack8 ( RemoteStorageFileShareResult_t d ) => new RemoteStorageFileShareResult_t.Pack8{ Result = d.Result,File = d.File,Filename = d.Filename, };
@@ -4568,8 +4589,9 @@ namespace Steamworks.Data
 		internal ulong File; // m_hFile UGCHandle_t
 		internal AppId AppID; // m_nAppID AppId_t
 		internal int SizeInBytes; // m_nSizeInBytes int32
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-		internal string PchFileName; // m_pchFileName char [260]
+		internal string PchFileNameUTF8() => System.Text.Encoding.UTF8.GetString( PchFileName, 0, System.Array.IndexOf<byte>( PchFileName, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 260)] // byte[] m_pchFileName
+		internal byte[] PchFileName; // m_pchFileName char [260]
 		internal ulong SteamIDOwner; // m_ulSteamIDOwner uint64
 		
 		#region SteamCallback
@@ -4628,8 +4650,9 @@ namespace Steamworks.Data
 			internal ulong File; // m_hFile UGCHandle_t
 			internal AppId AppID; // m_nAppID AppId_t
 			internal int SizeInBytes; // m_nSizeInBytes int32
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-			internal string PchFileName; // m_pchFileName char [260]
+			internal string PchFileNameUTF8() => System.Text.Encoding.UTF8.GetString( PchFileName, 0, System.Array.IndexOf<byte>( PchFileName, 0 ) );
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 260)] // byte[] m_pchFileName
+			internal byte[] PchFileName; // m_pchFileName char [260]
 			internal ulong SteamIDOwner; // m_ulSteamIDOwner uint64
 			
 			public static implicit operator RemoteStorageDownloadUGCResult_t ( RemoteStorageDownloadUGCResult_t.Pack8 d ) => new RemoteStorageDownloadUGCResult_t{ Result = d.Result,File = d.File,AppID = d.AppID,SizeInBytes = d.SizeInBytes,PchFileName = d.PchFileName,SteamIDOwner = d.SteamIDOwner, };
@@ -4645,10 +4668,12 @@ namespace Steamworks.Data
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal AppId CreatorAppID; // m_nCreatorAppID AppId_t
 		internal AppId ConsumerAppID; // m_nConsumerAppID AppId_t
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 129)]
-		internal string Title; // m_rgchTitle char [129]
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8000)]
-		internal string Description; // m_rgchDescription char [8000]
+		internal string TitleUTF8() => System.Text.Encoding.UTF8.GetString( Title, 0, System.Array.IndexOf<byte>( Title, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 129)] // byte[] m_rgchTitle
+		internal byte[] Title; // m_rgchTitle char [129]
+		internal string DescriptionUTF8() => System.Text.Encoding.UTF8.GetString( Description, 0, System.Array.IndexOf<byte>( Description, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 8000)] // byte[] m_rgchDescription
+		internal byte[] Description; // m_rgchDescription char [8000]
 		internal ulong File; // m_hFile UGCHandle_t
 		internal ulong PreviewFile; // m_hPreviewFile UGCHandle_t
 		internal ulong SteamIDOwner; // m_ulSteamIDOwner uint64
@@ -4657,16 +4682,19 @@ namespace Steamworks.Data
 		internal RemoteStoragePublishedFileVisibility Visibility; // m_eVisibility enum ERemoteStoragePublishedFileVisibility
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool Banned; // m_bBanned _Bool
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1025)]
-		internal string Tags; // m_rgchTags char [1025]
+		internal string TagsUTF8() => System.Text.Encoding.UTF8.GetString( Tags, 0, System.Array.IndexOf<byte>( Tags, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 1025)] // byte[] m_rgchTags
+		internal byte[] Tags; // m_rgchTags char [1025]
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool TagsTruncated; // m_bTagsTruncated _Bool
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-		internal string PchFileName; // m_pchFileName char [260]
+		internal string PchFileNameUTF8() => System.Text.Encoding.UTF8.GetString( PchFileName, 0, System.Array.IndexOf<byte>( PchFileName, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 260)] // byte[] m_pchFileName
+		internal byte[] PchFileName; // m_pchFileName char [260]
 		internal int FileSize; // m_nFileSize int32
 		internal int PreviewFileSize; // m_nPreviewFileSize int32
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-		internal string URL; // m_rgchURL char [256]
+		internal string URLUTF8() => System.Text.Encoding.UTF8.GetString( URL, 0, System.Array.IndexOf<byte>( URL, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_rgchURL
+		internal byte[] URL; // m_rgchURL char [256]
 		internal WorkshopFileType FileType; // m_eFileType enum EWorkshopFileType
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool AcceptedForUse; // m_bAcceptedForUse _Bool
@@ -4727,10 +4755,12 @@ namespace Steamworks.Data
 			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 			internal AppId CreatorAppID; // m_nCreatorAppID AppId_t
 			internal AppId ConsumerAppID; // m_nConsumerAppID AppId_t
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 129)]
-			internal string Title; // m_rgchTitle char [129]
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8000)]
-			internal string Description; // m_rgchDescription char [8000]
+			internal string TitleUTF8() => System.Text.Encoding.UTF8.GetString( Title, 0, System.Array.IndexOf<byte>( Title, 0 ) );
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 129)] // byte[] m_rgchTitle
+			internal byte[] Title; // m_rgchTitle char [129]
+			internal string DescriptionUTF8() => System.Text.Encoding.UTF8.GetString( Description, 0, System.Array.IndexOf<byte>( Description, 0 ) );
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 8000)] // byte[] m_rgchDescription
+			internal byte[] Description; // m_rgchDescription char [8000]
 			internal ulong File; // m_hFile UGCHandle_t
 			internal ulong PreviewFile; // m_hPreviewFile UGCHandle_t
 			internal ulong SteamIDOwner; // m_ulSteamIDOwner uint64
@@ -4739,16 +4769,19 @@ namespace Steamworks.Data
 			internal RemoteStoragePublishedFileVisibility Visibility; // m_eVisibility enum ERemoteStoragePublishedFileVisibility
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool Banned; // m_bBanned _Bool
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1025)]
-			internal string Tags; // m_rgchTags char [1025]
+			internal string TagsUTF8() => System.Text.Encoding.UTF8.GetString( Tags, 0, System.Array.IndexOf<byte>( Tags, 0 ) );
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 1025)] // byte[] m_rgchTags
+			internal byte[] Tags; // m_rgchTags char [1025]
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool TagsTruncated; // m_bTagsTruncated _Bool
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-			internal string PchFileName; // m_pchFileName char [260]
+			internal string PchFileNameUTF8() => System.Text.Encoding.UTF8.GetString( PchFileName, 0, System.Array.IndexOf<byte>( PchFileName, 0 ) );
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 260)] // byte[] m_pchFileName
+			internal byte[] PchFileName; // m_pchFileName char [260]
 			internal int FileSize; // m_nFileSize int32
 			internal int PreviewFileSize; // m_nPreviewFileSize int32
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-			internal string URL; // m_rgchURL char [256]
+			internal string URLUTF8() => System.Text.Encoding.UTF8.GetString( URL, 0, System.Array.IndexOf<byte>( URL, 0 ) );
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_rgchURL
+			internal byte[] URL; // m_rgchURL char [256]
 			internal WorkshopFileType FileType; // m_eFileType enum EWorkshopFileType
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool AcceptedForUse; // m_bAcceptedForUse _Bool
@@ -5890,8 +5923,9 @@ namespace Steamworks.Data
 		internal ulong GameID; // m_nGameID uint64
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool GroupAchievement; // m_bGroupAchievement _Bool
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-		internal string AchievementName; // m_rgchAchievementName char [128]
+		internal string AchievementNameUTF8() => System.Text.Encoding.UTF8.GetString( AchievementName, 0, System.Array.IndexOf<byte>( AchievementName, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)] // byte[] m_rgchAchievementName
+		internal byte[] AchievementName; // m_rgchAchievementName char [128]
 		internal uint CurProgress; // m_nCurProgress uint32
 		internal uint MaxProgress; // m_nMaxProgress uint32
 		
@@ -5950,8 +5984,9 @@ namespace Steamworks.Data
 			internal ulong GameID; // m_nGameID uint64
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool GroupAchievement; // m_bGroupAchievement _Bool
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-			internal string AchievementName; // m_rgchAchievementName char [128]
+			internal string AchievementNameUTF8() => System.Text.Encoding.UTF8.GetString( AchievementName, 0, System.Array.IndexOf<byte>( AchievementName, 0 ) );
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)] // byte[] m_rgchAchievementName
+			internal byte[] AchievementName; // m_rgchAchievementName char [128]
 			internal uint CurProgress; // m_nCurProgress uint32
 			internal uint MaxProgress; // m_nMaxProgress uint32
 			
@@ -6297,8 +6332,9 @@ namespace Steamworks.Data
 	internal struct UserAchievementIconFetched_t
 	{
 		internal GameId GameID; // m_nGameID class CGameID
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-		internal string AchievementName; // m_rgchAchievementName char [128]
+		internal string AchievementNameUTF8() => System.Text.Encoding.UTF8.GetString( AchievementName, 0, System.Array.IndexOf<byte>( AchievementName, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)] // byte[] m_rgchAchievementName
+		internal byte[] AchievementName; // m_rgchAchievementName char [128]
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool Achieved; // m_bAchieved _Bool
 		internal int IconHandle; // m_nIconHandle int
@@ -6356,8 +6392,9 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal GameId GameID; // m_nGameID class CGameID
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-			internal string AchievementName; // m_rgchAchievementName char [128]
+			internal string AchievementNameUTF8() => System.Text.Encoding.UTF8.GetString( AchievementName, 0, System.Array.IndexOf<byte>( AchievementName, 0 ) );
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)] // byte[] m_rgchAchievementName
+			internal byte[] AchievementName; // m_rgchAchievementName char [128]
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool Achieved; // m_bAchieved _Bool
 			internal int IconHandle; // m_nIconHandle int
@@ -6776,8 +6813,9 @@ namespace Steamworks.Data
 		internal Result Result; // m_eResult enum EResult
 		internal uint AppID; // m_nAppID uint32
 		internal uint CchKeyLength; // m_cchKeyLength uint32
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 240)]
-		internal string Key; // m_rgchKey char [240]
+		internal string KeyUTF8() => System.Text.Encoding.UTF8.GetString( Key, 0, System.Array.IndexOf<byte>( Key, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 240)] // byte[] m_rgchKey
+		internal byte[] Key; // m_rgchKey char [240]
 		
 		#region SteamCallback
 		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(AppProofOfPurchaseKeyResponse_t) : typeof(Pack8) );
@@ -6834,8 +6872,9 @@ namespace Steamworks.Data
 			internal Result Result; // m_eResult enum EResult
 			internal uint AppID; // m_nAppID uint32
 			internal uint CchKeyLength; // m_cchKeyLength uint32
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 240)]
-			internal string Key; // m_rgchKey char [240]
+			internal string KeyUTF8() => System.Text.Encoding.UTF8.GetString( Key, 0, System.Array.IndexOf<byte>( Key, 0 ) );
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 240)] // byte[] m_rgchKey
+			internal byte[] Key; // m_rgchKey char [240]
 			
 			public static implicit operator AppProofOfPurchaseKeyResponse_t ( AppProofOfPurchaseKeyResponse_t.Pack8 d ) => new AppProofOfPurchaseKeyResponse_t{ Result = d.Result,AppID = d.AppID,CchKeyLength = d.CchKeyLength,Key = d.Key, };
 			public static implicit operator AppProofOfPurchaseKeyResponse_t.Pack8 ( AppProofOfPurchaseKeyResponse_t d ) => new AppProofOfPurchaseKeyResponse_t.Pack8{ Result = d.Result,AppID = d.AppID,CchKeyLength = d.CchKeyLength,Key = d.Key, };
@@ -7864,10 +7903,12 @@ namespace Steamworks.Data
 		internal WorkshopFileType FileType; // m_eFileType enum EWorkshopFileType
 		internal AppId CreatorAppID; // m_nCreatorAppID AppId_t
 		internal AppId ConsumerAppID; // m_nConsumerAppID AppId_t
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 129)]
-		internal string Title; // m_rgchTitle char [129]
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8000)]
-		internal string Description; // m_rgchDescription char [8000]
+		internal string TitleUTF8() => System.Text.Encoding.UTF8.GetString( Title, 0, System.Array.IndexOf<byte>( Title, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 129)] // byte[] m_rgchTitle
+		internal byte[] Title; // m_rgchTitle char [129]
+		internal string DescriptionUTF8() => System.Text.Encoding.UTF8.GetString( Description, 0, System.Array.IndexOf<byte>( Description, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 8000)] // byte[] m_rgchDescription
+		internal byte[] Description; // m_rgchDescription char [8000]
 		internal ulong SteamIDOwner; // m_ulSteamIDOwner uint64
 		internal uint TimeCreated; // m_rtimeCreated uint32
 		internal uint TimeUpdated; // m_rtimeUpdated uint32
@@ -7879,16 +7920,19 @@ namespace Steamworks.Data
 		internal bool AcceptedForUse; // m_bAcceptedForUse _Bool
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool TagsTruncated; // m_bTagsTruncated _Bool
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1025)]
-		internal string Tags; // m_rgchTags char [1025]
+		internal string TagsUTF8() => System.Text.Encoding.UTF8.GetString( Tags, 0, System.Array.IndexOf<byte>( Tags, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 1025)] // byte[] m_rgchTags
+		internal byte[] Tags; // m_rgchTags char [1025]
 		internal ulong File; // m_hFile UGCHandle_t
 		internal ulong PreviewFile; // m_hPreviewFile UGCHandle_t
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-		internal string PchFileName; // m_pchFileName char [260]
+		internal string PchFileNameUTF8() => System.Text.Encoding.UTF8.GetString( PchFileName, 0, System.Array.IndexOf<byte>( PchFileName, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 260)] // byte[] m_pchFileName
+		internal byte[] PchFileName; // m_pchFileName char [260]
 		internal int FileSize; // m_nFileSize int32
 		internal int PreviewFileSize; // m_nPreviewFileSize int32
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-		internal string URL; // m_rgchURL char [256]
+		internal string URLUTF8() => System.Text.Encoding.UTF8.GetString( URL, 0, System.Array.IndexOf<byte>( URL, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_rgchURL
+		internal byte[] URL; // m_rgchURL char [256]
 		internal uint VotesUp; // m_unVotesUp uint32
 		internal uint VotesDown; // m_unVotesDown uint32
 		internal float Score; // m_flScore float
@@ -7907,10 +7951,12 @@ namespace Steamworks.Data
 			internal WorkshopFileType FileType; // m_eFileType enum EWorkshopFileType
 			internal AppId CreatorAppID; // m_nCreatorAppID AppId_t
 			internal AppId ConsumerAppID; // m_nConsumerAppID AppId_t
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 129)]
-			internal string Title; // m_rgchTitle char [129]
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8000)]
-			internal string Description; // m_rgchDescription char [8000]
+			internal string TitleUTF8() => System.Text.Encoding.UTF8.GetString( Title, 0, System.Array.IndexOf<byte>( Title, 0 ) );
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 129)] // byte[] m_rgchTitle
+			internal byte[] Title; // m_rgchTitle char [129]
+			internal string DescriptionUTF8() => System.Text.Encoding.UTF8.GetString( Description, 0, System.Array.IndexOf<byte>( Description, 0 ) );
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 8000)] // byte[] m_rgchDescription
+			internal byte[] Description; // m_rgchDescription char [8000]
 			internal ulong SteamIDOwner; // m_ulSteamIDOwner uint64
 			internal uint TimeCreated; // m_rtimeCreated uint32
 			internal uint TimeUpdated; // m_rtimeUpdated uint32
@@ -7922,16 +7968,19 @@ namespace Steamworks.Data
 			internal bool AcceptedForUse; // m_bAcceptedForUse _Bool
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool TagsTruncated; // m_bTagsTruncated _Bool
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1025)]
-			internal string Tags; // m_rgchTags char [1025]
+			internal string TagsUTF8() => System.Text.Encoding.UTF8.GetString( Tags, 0, System.Array.IndexOf<byte>( Tags, 0 ) );
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 1025)] // byte[] m_rgchTags
+			internal byte[] Tags; // m_rgchTags char [1025]
 			internal ulong File; // m_hFile UGCHandle_t
 			internal ulong PreviewFile; // m_hPreviewFile UGCHandle_t
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-			internal string PchFileName; // m_pchFileName char [260]
+			internal string PchFileNameUTF8() => System.Text.Encoding.UTF8.GetString( PchFileName, 0, System.Array.IndexOf<byte>( PchFileName, 0 ) );
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 260)] // byte[] m_pchFileName
+			internal byte[] PchFileName; // m_pchFileName char [260]
 			internal int FileSize; // m_nFileSize int32
 			internal int PreviewFileSize; // m_nPreviewFileSize int32
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-			internal string URL; // m_rgchURL char [256]
+			internal string URLUTF8() => System.Text.Encoding.UTF8.GetString( URL, 0, System.Array.IndexOf<byte>( URL, 0 ) );
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_rgchURL
+			internal byte[] URL; // m_rgchURL char [256]
 			internal uint VotesUp; // m_unVotesUp uint32
 			internal uint VotesDown; // m_unVotesDown uint32
 			internal float Score; // m_flScore float
@@ -7952,8 +8001,9 @@ namespace Steamworks.Data
 		internal uint TotalMatchingResults; // m_unTotalMatchingResults uint32
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool CachedData; // m_bCachedData _Bool
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-		internal string NextCursor; // m_rgchNextCursor char [256]
+		internal string NextCursorUTF8() => System.Text.Encoding.UTF8.GetString( NextCursor, 0, System.Array.IndexOf<byte>( NextCursor, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_rgchNextCursor
+		internal byte[] NextCursor; // m_rgchNextCursor char [256]
 		
 		#region SteamCallback
 		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(SteamUGCQueryCompleted_t) : typeof(Pack8) );
@@ -8013,8 +8063,9 @@ namespace Steamworks.Data
 			internal uint TotalMatchingResults; // m_unTotalMatchingResults uint32
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool CachedData; // m_bCachedData _Bool
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-			internal string NextCursor; // m_rgchNextCursor char [256]
+			internal string NextCursorUTF8() => System.Text.Encoding.UTF8.GetString( NextCursor, 0, System.Array.IndexOf<byte>( NextCursor, 0 ) );
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_rgchNextCursor
+			internal byte[] NextCursor; // m_rgchNextCursor char [256]
 			
 			public static implicit operator SteamUGCQueryCompleted_t ( SteamUGCQueryCompleted_t.Pack8 d ) => new SteamUGCQueryCompleted_t{ Handle = d.Handle,Result = d.Result,NumResultsReturned = d.NumResultsReturned,TotalMatchingResults = d.TotalMatchingResults,CachedData = d.CachedData,NextCursor = d.NextCursor, };
 			public static implicit operator SteamUGCQueryCompleted_t.Pack8 ( SteamUGCQueryCompleted_t d ) => new SteamUGCQueryCompleted_t.Pack8{ Handle = d.Handle,Result = d.Result,NumResultsReturned = d.NumResultsReturned,TotalMatchingResults = d.TotalMatchingResults,CachedData = d.CachedData,NextCursor = d.NextCursor, };
@@ -10988,8 +11039,9 @@ namespace Steamworks.Data
 	internal struct SteamInventoryRequestPricesResult_t
 	{
 		internal Result Result; // m_result enum EResult
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
-		internal string Currency; // m_rgchCurrency char [4]
+		internal string CurrencyUTF8() => System.Text.Encoding.UTF8.GetString( Currency, 0, System.Array.IndexOf<byte>( Currency, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)] // byte[] m_rgchCurrency
+		internal byte[] Currency; // m_rgchCurrency char [4]
 		
 		#region SteamCallback
 		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(SteamInventoryRequestPricesResult_t) : typeof(Pack8) );
@@ -11044,8 +11096,9 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal Result Result; // m_result enum EResult
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]
-			internal string Currency; // m_rgchCurrency char [4]
+			internal string CurrencyUTF8() => System.Text.Encoding.UTF8.GetString( Currency, 0, System.Array.IndexOf<byte>( Currency, 0 ) );
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)] // byte[] m_rgchCurrency
+			internal byte[] Currency; // m_rgchCurrency char [4]
 			
 			public static implicit operator SteamInventoryRequestPricesResult_t ( SteamInventoryRequestPricesResult_t.Pack8 d ) => new SteamInventoryRequestPricesResult_t{ Result = d.Result,Currency = d.Currency, };
 			public static implicit operator SteamInventoryRequestPricesResult_t.Pack8 ( SteamInventoryRequestPricesResult_t d ) => new SteamInventoryRequestPricesResult_t.Pack8{ Result = d.Result,Currency = d.Currency, };
@@ -11123,8 +11176,9 @@ namespace Steamworks.Data
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal AppId VideoAppID; // m_unVideoAppID AppId_t
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-		internal string URL; // m_rgchURL char [256]
+		internal string URLUTF8() => System.Text.Encoding.UTF8.GetString( URL, 0, System.Array.IndexOf<byte>( URL, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_rgchURL
+		internal byte[] URL; // m_rgchURL char [256]
 		
 		#region SteamCallback
 		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GetVideoURLResult_t) : typeof(Pack8) );
@@ -11180,8 +11234,9 @@ namespace Steamworks.Data
 		{
 			internal Result Result; // m_eResult enum EResult
 			internal AppId VideoAppID; // m_unVideoAppID AppId_t
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-			internal string URL; // m_rgchURL char [256]
+			internal string URLUTF8() => System.Text.Encoding.UTF8.GetString( URL, 0, System.Array.IndexOf<byte>( URL, 0 ) );
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_rgchURL
+			internal byte[] URL; // m_rgchURL char [256]
 			
 			public static implicit operator GetVideoURLResult_t ( GetVideoURLResult_t.Pack8 d ) => new GetVideoURLResult_t{ Result = d.Result,VideoAppID = d.VideoAppID,URL = d.URL, };
 			public static implicit operator GetVideoURLResult_t.Pack8 ( GetVideoURLResult_t d ) => new GetVideoURLResult_t.Pack8{ Result = d.Result,VideoAppID = d.VideoAppID,URL = d.URL, };
@@ -11316,8 +11371,9 @@ namespace Steamworks.Data
 	{
 		internal ulong SteamID; // m_SteamID class CSteamID
 		internal DenyReason DenyReason; // m_eDenyReason enum EDenyReason
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-		internal string OptionalText; // m_rgchOptionalText char [128]
+		internal string OptionalTextUTF8() => System.Text.Encoding.UTF8.GetString( OptionalText, 0, System.Array.IndexOf<byte>( OptionalText, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)] // byte[] m_rgchOptionalText
+		internal byte[] OptionalText; // m_rgchOptionalText char [128]
 		
 		#region SteamCallback
 		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSClientDeny_t) );
@@ -11427,8 +11483,9 @@ namespace Steamworks.Data
 	internal struct GSClientAchievementStatus_t
 	{
 		internal ulong SteamID; // m_SteamID uint64
-		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-		internal string PchAchievement; // m_pchAchievement char [128]
+		internal string PchAchievementUTF8() => System.Text.Encoding.UTF8.GetString( PchAchievement, 0, System.Array.IndexOf<byte>( PchAchievement, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)] // byte[] m_pchAchievement
+		internal byte[] PchAchievement; // m_pchAchievement char [128]
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool Unlocked; // m_bUnlocked _Bool
 		
@@ -11485,8 +11542,9 @@ namespace Steamworks.Data
 		public struct Pack8
 		{
 			internal ulong SteamID; // m_SteamID uint64
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-			internal string PchAchievement; // m_pchAchievement char [128]
+			internal string PchAchievementUTF8() => System.Text.Encoding.UTF8.GetString( PchAchievement, 0, System.Array.IndexOf<byte>( PchAchievement, 0 ) );
+			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)] // byte[] m_pchAchievement
+			internal byte[] PchAchievement; // m_pchAchievement char [128]
 			[MarshalAs(UnmanagedType.I1)]
 			internal bool Unlocked; // m_bUnlocked _Bool
 			

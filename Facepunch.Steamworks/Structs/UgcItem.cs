@@ -26,12 +26,12 @@ namespace Steamworks.Ugc
 		/// <summary>
 		/// The given title of this item
 		/// </summary>
-		public string Title => details.Title;
+		public string Title { get; internal set; }
 
 		/// <summary>
 		/// The description of this item, in your local language if available
 		/// </summary>
-		public string Description => details.Description;
+		public string Description { get; internal set; }
 
 		/// <summary>
 		/// A list of tags for this item, all lowercase
@@ -138,7 +138,9 @@ namespace Steamworks.Ugc
 			{
 				_id = details.PublishedFileId,
 				details = details,
-				Tags = details.Tags.ToLower().Split( new[] { ',' }, StringSplitOptions.RemoveEmptyEntries )
+				Title = details.TitleUTF8(),
+				Description = details.DescriptionUTF8(),
+				Tags = details.TagsUTF8().ToLower().Split( new[] { ',' }, StringSplitOptions.RemoveEmptyEntries )
 			};
 
 			return d;

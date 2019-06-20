@@ -234,9 +234,11 @@ namespace Generator
 
                 if ( t.StartsWith( "char " ) && t.Contains( "[" ) )
                 {
+					WriteLine( $"internal string {CleanMemberName( m.Name )}UTF8() => System.Text.Encoding.UTF8.GetString( {CleanMemberName( m.Name )}, 0, System.Array.IndexOf<byte>( {CleanMemberName( m.Name )}, 0 ) );" );
+
 					var num = t.Replace( "char", "" ).Trim( '[', ']', ' ' );
-					t = "string";
-					WriteLine( $"[MarshalAs(UnmanagedType.ByValTStr, SizeConst = {num})]" );
+					t = "byte[]";
+					WriteLine( $"[MarshalAs(UnmanagedType.ByValArray, SizeConst = {num})] // {t} {m.Name}" );
                 }
 
                 if ( t.StartsWith( "uint8 " ) && t.Contains( "[" ) )

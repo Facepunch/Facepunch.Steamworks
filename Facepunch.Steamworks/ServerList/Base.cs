@@ -127,7 +127,7 @@ namespace Steamworks.ServerList
 
 		public void AddFilter( string key, string value )
 		{
-			filters.Add( new MatchMakingKeyValuePair_t { Key = key, Value = value } );
+			filters.Add( new MatchMakingKeyValuePair_t { Key = System.Text.Encoding.UTF8.GetBytes( key ), Value = System.Text.Encoding.UTF8.GetBytes( key ) } );
 		}
 
 		#endregion

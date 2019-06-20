@@ -49,7 +49,7 @@ namespace Steamworks
 			if ( !result.HasValue || result.Value.Result != Result.OK )
 				return null;
 
-			return result.Value.ConnectString;
+			return result.Value.ConnectStringUTF8();
 		}
 
 		/// <summary>

@@ -38,10 +38,10 @@ namespace Steamworks
 		internal static void InstallEvents()
 		{
 			FriendStateChange_t.Install( x => OnPersonaStateChange?.Invoke( new Friend( x.SteamID ) ) );
-			GameRichPresenceJoinRequested_t.Install( x => OnGameRichPresenceJoinRequested?.Invoke( new Friend( x.SteamIDFriend), x.Connect ) );
+			GameRichPresenceJoinRequested_t.Install( x => OnGameRichPresenceJoinRequested?.Invoke( new Friend( x.SteamIDFriend), x.ConnectUTF8() ) );
 			GameConnectedFriendChatMsg_t.Install( OnFriendChatMessage );
 			GameOverlayActivated_t.Install( x => OnGameOverlayActivated?.Invoke() );
-			GameServerChangeRequested_t.Install( x => OnGameServerChangeRequested?.Invoke( x.Server, x.Password ) );
+			GameServerChangeRequested_t.Install( x => OnGameServerChangeRequested?.Invoke( x.ServerUTF8(), x.PasswordUTF8() ) );
 			GameLobbyJoinRequested_t.Install( x => OnGameLobbyJoinRequested?.Invoke( new Lobby( x.SteamIDLobby ), x.SteamIDFriend ) );
 			FriendRichPresenceUpdate_t.Install( x => OnFriendRichPresenceUpdate?.Invoke( new Friend( x.SteamIDFriend ) ) );
 		}

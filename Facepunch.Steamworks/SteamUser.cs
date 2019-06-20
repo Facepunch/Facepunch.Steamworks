@@ -49,7 +49,7 @@ namespace Steamworks
 			LicensesUpdated_t.Install( x => OnLicensesUpdated?.Invoke() );
 			ValidateAuthTicketResponse_t.Install( x => OnValidateAuthTicketResponse?.Invoke( x.SteamID, x.OwnerSteamID, x.AuthSessionResponse ) );
 			MicroTxnAuthorizationResponse_t.Install( x => OnMicroTxnAuthorizationResponse?.Invoke( x.AppID, x.OrderID, x.Authorized != 0 ) );
-			GameWebCallback_t.Install( x => OnGameWebCallback?.Invoke( x.URL ) );
+			GameWebCallback_t.Install( x => OnGameWebCallback?.Invoke( x.URLUTF8() ) );
 			GetAuthSessionTicketResponse_t.Install( x => OnGetAuthSessionTicketResponse?.Invoke( x ) );
 		}
 
@@ -395,7 +395,7 @@ namespace Steamworks
 			if ( !response.HasValue )
 				return null;
 
-			return response.Value.URL;
+			return response.Value.URLUTF8();
 		}
 
 		/// <summary>

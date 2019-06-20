@@ -43,9 +43,9 @@ namespace Steamworks
 			} );
 
 			UserStatsStored_t.Install( x => OnUserStatsStored?.Invoke( x.Result ) );
-			UserAchievementStored_t.Install( x => OnAchievementProgress?.Invoke( new Achievement( x.AchievementName ), (int) x.CurProgress, (int)x.MaxProgress ) );
+			UserAchievementStored_t.Install( x => OnAchievementProgress?.Invoke( new Achievement( x.AchievementNameUTF8() ), (int) x.CurProgress, (int)x.MaxProgress ) );
 			UserStatsUnloaded_t.Install( x => OnUserStatsUnloaded?.Invoke( x.SteamIDUser ) );
-			UserAchievementIconFetched_t.Install( x => OnAchievementIconFetched?.Invoke( x.AchievementName, x.IconHandle ) );
+			UserAchievementIconFetched_t.Install( x => OnAchievementIconFetched?.Invoke( x.AchievementNameUTF8(), x.IconHandle ) );
 		}
 
 

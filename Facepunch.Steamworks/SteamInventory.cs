@@ -139,7 +139,7 @@ namespace Steamworks
 			if ( !priceRequest.HasValue || priceRequest.Value.Result != Result.OK )
 				return null;
 
-			Currency = priceRequest?.Currency;
+			Currency = priceRequest?.CurrencyUTF8();
 
 			var num = Internal.GetNumItemsWithPrices();
 
