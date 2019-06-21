@@ -168,5 +168,24 @@ namespace Steamworks
 		/// returns the appID of the current process
 		/// </summary>
 		public static AppId AppId { get; internal set; }
+
+		/// <summary>
+		/// Checks if your executable was launched through Steam and relaunches it through Steam if it wasn't
+		///  this returns true then it starts the Steam client if required and launches your game again through it, 
+		///  and you should quit your process as soon as possible. This effectively runs steam://run/AppId so it 
+		///  may not relaunch the exact executable that called it, as it will always relaunch from the version 
+		///  installed in your Steam library folder/
+		///  Note that during development, when not launching via Steam, this might always return true.
+		/// </summary>
+		public static bool RestartAppIfNecessary( uint appid )
+		{
+			// Having these here would probably mean it always returns false?
+
+			//System.Environment.SetEnvironmentVariable( "SteamAppId", appid.ToString() );
+			//System.Environment.SetEnvironmentVariable( "SteamGameId", appid.ToString() );
+
+			return SteamAPI.RestartAppIfNecessary( appid );
+		}
+
 	}
 }
