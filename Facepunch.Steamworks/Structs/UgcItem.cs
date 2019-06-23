@@ -180,6 +180,8 @@ namespace Steamworks.Ugc
         /// </summary>
         public async Task<bool> Unsubscribe ()
         {
+            var result = await SteamUGC.Internal.UnsubscribeItem( _id );
+            return result?.Result == Result.OK;
         }
 
         /// <summary>
