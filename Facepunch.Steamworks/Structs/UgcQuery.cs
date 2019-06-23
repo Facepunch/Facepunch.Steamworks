@@ -14,6 +14,7 @@ namespace Steamworks.Ugc
 		UGCQuery queryType;
 		AppId consumerApp;
 		AppId creatorApp;
+        string searchText;
 
 		public Query( UgcType type ) : this()
 		{
@@ -89,6 +90,8 @@ namespace Steamworks.Ugc
 		public Query SortBySubscriptionDate() { userSort = UserUGCListSortOrder.SubscriptionDateDesc; return this; }
 		public Query SortByVoteScore() { userSort = UserUGCListSortOrder.VoteScoreDesc; return this; }
 		public Query SortByModeration() { userSort = UserUGCListSortOrder.ForModeration; return this; }
+
+        public Query WhereSearchText(string searchText) { this.searchText = searchText; return this; }
 
 		#endregion
 
@@ -227,6 +230,11 @@ namespace Steamworks.Ugc
 			{
 				SteamUGC.Internal.SetRankedByTrendDays( handle, (uint)trendDays.Value );
 			}
+
+            if ( !string.IsNullOrEmpty( searchText ) )
+            {
+                SteamUGC.Internal.SetSearchText( handle, searchText );
+            }
 		}
 
 		#endregion
