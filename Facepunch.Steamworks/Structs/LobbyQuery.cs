@@ -59,6 +59,13 @@ namespace Steamworks.Data
 
 			return this;
 		}
+
+		public LobbyQuery FilterStringKeyValue ( MatchMakingKeyValuePair_t kv )
+		{
+			stringFilter = kv;
+
+			return this;
+		}
 		#endregion
 
 		#region Slots Filter
