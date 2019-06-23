@@ -93,7 +93,17 @@ namespace Steamworks.Ugc
 		/// </summary>
 		public bool IsAcceptedForUse => details.AcceptedForUse;
 
-		public bool IsInstalled => (State & ItemState.Installed) == ItemState.Installed;
+        /// <summary>
+        /// The number of upvotes of this item
+        /// </summary>
+        public uint VotesUp => details.VotesUp;
+
+        /// <summary>
+        /// The number of downvotes of this item
+        /// </summary>
+        public uint VotesDown => details.VotesDown;
+
+        public bool IsInstalled => (State & ItemState.Installed) == ItemState.Installed;
 		public bool IsDownloading => (State & ItemState.Downloading) == ItemState.Downloading;
 		public bool IsDownloadPending => (State & ItemState.DownloadPending) == ItemState.DownloadPending;
 		public bool IsSubscribed => (State & ItemState.Subscribed) == ItemState.Subscribed;
@@ -122,7 +132,7 @@ namespace Steamworks.Ugc
 			return SteamUGC.Internal.DownloadItem( Id, highPriority );
 		}
 
-		private ItemState State => (ItemState) SteamUGC.Internal.GetItemState( Id );
+        private ItemState State => (ItemState) SteamUGC.Internal.GetItemState( Id );
 
 		public static async Task<Item?> GetAsync( PublishedFileId id, int maxageseconds = 60 * 30 )
 		{
@@ -156,10 +166,28 @@ namespace Steamworks.Ugc
 			return Tags.Contains( find, StringComparer.OrdinalIgnoreCase );
 		}
 
-		/// <summary>
-		/// Allows the user to rate a workshop item up or down.
-		/// </summary>
-		public async Task<bool> Vote( bool up )
+        /// <summary>
+        /// Allows the user to subscribe to this item
+        /// </summary>
+        public async Task<bool> Subscribe ()
+        {
+            var result = await SteamUGC.Internal.SubscribeItem( _id );
+            return result?.Result == Result.OK;
+        }
+
+        /// <summary>
+        /// Allows the user to unsubscribe from this item
+        /// </summary>
+        public async Task<bool> Unsubscribe ()
+        {
+            var result = await SteamUGC.Internal.UnsubscribeItem( _id );
+            return result?.Result == Result.OK;
+        }
+
+        /// <summary>
+        /// Allows the user to rate a workshop item up or down.
+        /// </summary>
+        public async Task<bool> Vote( bool up )
 		{
 			var r = await SteamUGC.Internal.SetUserItemVote( Id, up );
 			return r?.Result == Result.OK;
@@ -204,10 +232,10 @@ namespace Steamworks.Ugc
 		public ulong NumSecondsPlayedDuringTimePeriod { get; internal set; }
 		public ulong NumPlaytimeSessionsDuringTimePeriod { get; internal set; }
 
-		/// <summary>
-		/// The URL to the preview image for this item
-		/// </summary>
-		public string PreviewImageUrl { get; internal set; }
+        /// <summary>
+        /// The URL to the preview image for this item
+        /// </summary>
+        public string PreviewImageUrl { get; internal set; }
 
 		/// <summary>
 		/// Edit this item
