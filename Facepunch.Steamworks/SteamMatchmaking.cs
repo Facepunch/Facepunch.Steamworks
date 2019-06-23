@@ -37,7 +37,7 @@ namespace Steamworks
 		{
 			LobbyInvite_t.Install( x => OnLobbyInvite?.Invoke( new Friend( x.SteamIDUser ), new Lobby( x.SteamIDLobby ) ) );
 
-			LobbyEnter_t.Install( x => OnLobbyEntered?.Invoke( new Lobby(x.SteamIDLobby ) ) );
+			LobbyEnter_t.Install( x => OnLobbyEntered?.Invoke( new Lobby( x.SteamIDLobby ) ) );
 
 			LobbyDataUpdate_t.Install( x =>
 			{

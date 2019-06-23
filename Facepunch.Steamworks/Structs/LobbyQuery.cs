@@ -43,6 +43,24 @@ namespace Steamworks.Data
 		}
 		#endregion
 
+		#region String key/value filter
+		internal MatchMakingKeyValuePair_t? stringFilter;
+
+		/// <summary>
+		/// Filter by specified key/value pair
+		/// </summary>
+		public LobbyQuery FilterStringKeyValue( string nKey, string nValue )
+		{
+			stringFilter = new MatchMakingKeyValuePair_t
+			{
+				Key = nKey,
+				Value = nValue
+			};
+
+			return this;
+		}
+		#endregion
+
 		#region Slots Filter
 		internal int? slotsAvailable;
 
@@ -71,7 +89,6 @@ namespace Steamworks.Data
 
 		#endregion
 
-
 		void ApplyFilters()
 		{
 			if ( distance.HasValue )
@@ -87,6 +104,11 @@ namespace Steamworks.Data
 			if ( maxResults.HasValue )
 			{
 				SteamMatchmaking.Internal.AddRequestLobbyListResultCountFilter( maxResults.Value );
+			}
+
+			if( stringFilter.HasValue )
+			{
+				SteamMatchmaking.Internal.AddRequestLobbyListStringFilter( stringFilter.Value.Key, stringFilter.Value.Value, LobbyComparison.Equal );
 			}
 		}
 
