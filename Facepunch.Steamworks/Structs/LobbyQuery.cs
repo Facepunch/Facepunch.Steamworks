@@ -60,7 +60,7 @@ namespace Steamworks.Data
 			return this;
 		}
 
-		public LobbyQuery FilterStringKeyValue ( MatchMakingKeyValuePair_t kv )
+		public LobbyQuery FilterStringKeyValue( MatchMakingKeyValuePair_t kv )
 		{
 			stringFilter = kv;
 
