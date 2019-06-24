@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Steamworks.Data
 {
@@ -44,24 +45,23 @@ namespace Steamworks.Data
 		#endregion
 
 		#region String key/value filter
-		internal MatchMakingKeyValuePair_t? stringFilter;
+		internal Dictionary<string, string> stringFilters;
 
 		/// <summary>
 		/// Filter by specified key/value pair; string parameters
 		/// </summary>
-		public LobbyQuery FilterStringKeyValue( string nKey, string nValue )
+		public LobbyQuery WithKeyValue( string key, string value )
 		{
-			if ( string.IsNullOrEmpty( nKey ) )
-				throw new System.ArgumentException( "Key string provided for LobbyQuery filter is null or empty", nameof( nKey ) );
+			if ( string.IsNullOrEmpty( key ) )
+				throw new System.ArgumentException( "Key string provided for LobbyQuery filter is null or empty", nameof( key ) );
 
-			if ( nKey.Length > SteamMatchmaking.MaxLobbyKeyLength )
-				throw new System.ArgumentException( "Key length is longer than MaxLobbyKeyLength", nameof( nKey ) );
+			if ( key.Length > SteamMatchmaking.MaxLobbyKeyLength )
+				throw new System.ArgumentException( $"Key length is longer than {SteamMatchmaking.MaxLobbyKeyLength}", nameof( key ) );
 
-			stringFilter = new MatchMakingKeyValuePair_t
-			{
-				Key = nKey,
-				Value = nValue
-			};
+			if ( stringFilters == null )
+				stringFilters = new Dictionary<string, string>();
+
+			stringFilters.Add( key, value );
 
 			return this;
 		}
@@ -113,9 +113,12 @@ namespace Steamworks.Data
 				SteamMatchmaking.Internal.AddRequestLobbyListResultCountFilter( maxResults.Value );
 			}
 
-			if( stringFilter.HasValue )
+			if ( stringFilters != null )
 			{
-				SteamMatchmaking.Internal.AddRequestLobbyListStringFilter( stringFilter.Value.Key, stringFilter.Value.Value, LobbyComparison.Equal );
+				foreach ( var k in stringFilters )
+				{
+					SteamMatchmaking.Internal.AddRequestLobbyListStringFilter( k.Key, k.Value, LobbyComparison.Equal );
+				}
 			}
 		}
 
