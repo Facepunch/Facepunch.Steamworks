@@ -51,21 +51,14 @@ namespace Steamworks.Data
 		/// </summary>
 		public LobbyQuery FilterStringKeyValue( string nKey, string nValue )
 		{
-			stringFilter = new MatchMakingKeyValuePair_t
+			if ( !string.IsNullOrEmpty(nKey) && nKey.Length <= SteamMatchmaking.MaxLobbyKeyLength )
 			{
-				Key = nKey,
-				Value = nValue
-			};
-
-			return this;
-		}
-
-		/// <summary>
-		/// Filter by specified key/value pair; MatchMakingKeyValuePair_t parameter
-		/// </summary>
-		public LobbyQuery FilterStringKeyValue( MatchMakingKeyValuePair_t kv )
-		{
-			stringFilter = kv;
+				stringFilter = new MatchMakingKeyValuePair_t
+				{
+					Key = nKey,
+					Value = nValue
+				};
+			}
 
 			return this;
 		}
@@ -98,6 +91,7 @@ namespace Steamworks.Data
 		}
 
 		#endregion
+
 
 		void ApplyFilters()
 		{
