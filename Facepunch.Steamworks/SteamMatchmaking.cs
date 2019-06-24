@@ -12,12 +12,10 @@ namespace Steamworks
 	/// </summary>
 	public static class SteamMatchmaking
 	{
-		internal const int k_nMaxLobbyKeyLength = 255;
-
 		/// <summary>
 		/// Maximum number of characters a lobby metadata key can be
 		/// </summary>
-		public static int MaxLobbyKeyLength { get { return k_nMaxLobbyKeyLength; } }
+		internal static int MaxLobbyKeyLength => 255;
 
 
 		static ISteamMatchmaking _internal;
