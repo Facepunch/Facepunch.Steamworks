@@ -12,6 +12,12 @@ namespace Steamworks
 	/// </summary>
 	public static class SteamMatchmaking
 	{
+		/// <summary>
+		/// Maximum number of characters a lobby metadata key can be
+		/// </summary>
+		internal static int MaxLobbyKeyLength => 255;
+
+
 		static ISteamMatchmaking _internal;
 
 		internal static ISteamMatchmaking Internal
@@ -37,7 +43,7 @@ namespace Steamworks
 		{
 			LobbyInvite_t.Install( x => OnLobbyInvite?.Invoke( new Friend( x.SteamIDUser ), new Lobby( x.SteamIDLobby ) ) );
 
-			LobbyEnter_t.Install( x => OnLobbyEntered?.Invoke( new Lobby(x.SteamIDLobby ) ) );
+			LobbyEnter_t.Install( x => OnLobbyEntered?.Invoke( new Lobby( x.SteamIDLobby ) ) );
 
 			LobbyDataUpdate_t.Install( x =>
 			{

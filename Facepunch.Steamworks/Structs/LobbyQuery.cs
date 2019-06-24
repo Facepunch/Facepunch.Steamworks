@@ -43,6 +43,30 @@ namespace Steamworks.Data
 		}
 		#endregion
 
+		#region String key/value filter
+		internal MatchMakingKeyValuePair_t? stringFilter;
+
+		/// <summary>
+		/// Filter by specified key/value pair; string parameters
+		/// </summary>
+		public LobbyQuery FilterStringKeyValue( string nKey, string nValue )
+		{
+			if ( string.IsNullOrEmpty( nKey ) )
+				throw new System.ArgumentException( "Key string provided for LobbyQuery filter is null or empty", nameof( nKey ) );
+
+			if ( nKey.Length > SteamMatchmaking.MaxLobbyKeyLength )
+				throw new System.ArgumentException( "Key length is longer than MaxLobbyKeyLength", nameof( nKey ) );
+
+			stringFilter = new MatchMakingKeyValuePair_t
+			{
+				Key = nKey,
+				Value = nValue
+			};
+
+			return this;
+		}
+		#endregion
+
 		#region Slots Filter
 		internal int? slotsAvailable;
 
@@ -87,6 +111,11 @@ namespace Steamworks.Data
 			if ( maxResults.HasValue )
 			{
 				SteamMatchmaking.Internal.AddRequestLobbyListResultCountFilter( maxResults.Value );
+			}
+
+			if( stringFilter.HasValue )
+			{
+				SteamMatchmaking.Internal.AddRequestLobbyListStringFilter( stringFilter.Value.Key, stringFilter.Value.Value, LobbyComparison.Equal );
 			}
 		}
 
