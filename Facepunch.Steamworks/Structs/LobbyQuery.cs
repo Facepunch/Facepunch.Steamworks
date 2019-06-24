@@ -47,7 +47,7 @@ namespace Steamworks.Data
 		internal MatchMakingKeyValuePair_t? stringFilter;
 
 		/// <summary>
-		/// Filter by specified key/value pair
+		/// Filter by specified key/value pair; string parameters
 		/// </summary>
 		public LobbyQuery FilterStringKeyValue( string nKey, string nValue )
 		{
@@ -60,6 +60,9 @@ namespace Steamworks.Data
 			return this;
 		}
 
+		/// <summary>
+		/// Filter by specified key/value pair; MatchMakingKeyValuePair_t parameter
+		/// </summary>
 		public LobbyQuery FilterStringKeyValue( MatchMakingKeyValuePair_t kv )
 		{
 			stringFilter = kv;
