@@ -54,16 +54,14 @@ namespace Steamworks.Data
 			if ( string.IsNullOrEmpty( nKey ) )
 				throw new System.ArgumentException( "Key string provided for LobbyQuery filter is null or empty", nameof( nKey ) );
 
-			if ( nKey.Length <= SteamMatchmaking.MaxLobbyKeyLength )
-			{
-				stringFilter = new MatchMakingKeyValuePair_t
-				{
-					Key = nKey,
-					Value = nValue
-				};
-			}
-			else
+			if ( nKey.Length > SteamMatchmaking.MaxLobbyKeyLength )
 				throw new System.ArgumentException( "Key length is longer than MaxLobbyKeyLength", nameof( nKey ) );
+
+			stringFilter = new MatchMakingKeyValuePair_t
+			{
+				Key = nKey,
+				Value = nValue
+			};
 
 			return this;
 		}
