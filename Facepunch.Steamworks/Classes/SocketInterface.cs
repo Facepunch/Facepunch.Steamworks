@@ -64,9 +64,8 @@ namespace Steamworks
 
 		public void Receive( int bufferSize = 32 )
 		{
-			// #32bit
 			int processed = 0;
-			IntPtr messageBuffer = Marshal.AllocHGlobal( 8 * bufferSize );
+			IntPtr messageBuffer = Marshal.AllocHGlobal( IntPtr.Size * bufferSize );
 
 			try
 			{
@@ -74,8 +73,7 @@ namespace Steamworks
 
 				for ( int i = 0; i < processed; i++ )
 				{
-					// #32bit
-					ReceiveMessage( Marshal.ReadIntPtr( messageBuffer, i * 8 ) );
+					ReceiveMessage( Marshal.ReadIntPtr( messageBuffer, i * IntPtr.Size ) );
 				}
 			}
 			finally
