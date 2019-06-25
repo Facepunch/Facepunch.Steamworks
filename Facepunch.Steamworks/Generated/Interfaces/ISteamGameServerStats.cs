@@ -20,7 +20,7 @@ namespace Steamworks
 			_ClearUserAchievement = Marshal.GetDelegateForFunctionPointer<FClearUserAchievement>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 64 ) ) );
 			_StoreUserStats = Marshal.GetDelegateForFunctionPointer<FStoreUserStats>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 72 ) ) );
 			
-			#if PLATFORM_WIN64
+			#if PLATFORM_WIN
 			_GetUserStat1 = Marshal.GetDelegateForFunctionPointer<FGetUserStat1>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 16 ) ) );
 			_GetUserStat2 = Marshal.GetDelegateForFunctionPointer<FGetUserStat2>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 8 ) ) );
 			_SetUserStat1 = Marshal.GetDelegateForFunctionPointer<FSetUserStat1>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 40 ) ) );

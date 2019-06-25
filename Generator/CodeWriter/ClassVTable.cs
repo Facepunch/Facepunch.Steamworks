@@ -118,7 +118,7 @@ namespace Generator
 				if ( different.Count > 0 )
 				{
 					WriteLine( "" );
-					WriteLine( "#if PLATFORM_WIN64" );
+					WriteLine( "#if PLATFORM_WIN" );
 					foreach ( var i in different )
 					{
 						var func = clss.Functions[i];

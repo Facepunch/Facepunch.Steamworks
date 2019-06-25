@@ -47,7 +47,7 @@ namespace Steamworks
 			_GetAchievementAchievedPercent = Marshal.GetDelegateForFunctionPointer<FGetAchievementAchievedPercent>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 296 ) ) );
 			_RequestGlobalStats = Marshal.GetDelegateForFunctionPointer<FRequestGlobalStats>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 304 ) ) );
 			
-			#if PLATFORM_WIN64
+			#if PLATFORM_WIN
 			_GetStat1 = Marshal.GetDelegateForFunctionPointer<FGetStat1>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 16 ) ) );
 			_GetStat2 = Marshal.GetDelegateForFunctionPointer<FGetStat2>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 8 ) ) );
 			_SetStat1 = Marshal.GetDelegateForFunctionPointer<FSetStat1>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 32 ) ) );

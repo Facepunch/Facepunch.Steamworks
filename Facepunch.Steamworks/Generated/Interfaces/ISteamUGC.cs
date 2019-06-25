@@ -88,7 +88,7 @@ namespace Steamworks
 			_GetAppDependencies = Marshal.GetDelegateForFunctionPointer<FGetAppDependencies>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 592 ) ) );
 			_DeleteItem = Marshal.GetDelegateForFunctionPointer<FDeleteItem>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 600 ) ) );
 			
-			#if PLATFORM_WIN64
+			#if PLATFORM_WIN
 			_CreateQueryAllUGCRequest1 = Marshal.GetDelegateForFunctionPointer<FCreateQueryAllUGCRequest1>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 16 ) ) );
 			_CreateQueryAllUGCRequest2 = Marshal.GetDelegateForFunctionPointer<FCreateQueryAllUGCRequest2>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 8 ) ) );
 			#else
