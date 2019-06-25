@@ -56,11 +56,13 @@ namespace Generator
 		{
 			// TODO - we'll probably have to do this PER platform
 
-			int[] locations = new int[clss.Functions.Count];
+			int[] standardLocations = new int[clss.Functions.Count];
+			int[] windowsLocations = new int[clss.Functions.Count];
 
 			for ( int i = 0; i < clss.Functions.Count; i++ )
 			{
-				locations[i] = i * 8;
+				windowsLocations[i] = i * 8;
+				standardLocations[i] = i * 8;
 			}
 
 			//
@@ -70,50 +72,61 @@ namespace Generator
 			//
 			if ( clss.Name == "ISteamUserStats" )
 			{
-				Swap( clss, "GetStat1", "GetStat2", locations );
-				Swap( clss, "SetStat1", "SetStat2", locations );
-				Swap( clss, "GetUserStat1", "GetUserStat2", locations );
-				Swap( clss, "GetGlobalStat1", "GetGlobalStat2", locations );
-				Swap( clss, "GetGlobalStatHistory1", "GetGlobalStatHistory2", locations );
+				Swap( clss, "GetStat1", "GetStat2", windowsLocations );
+				Swap( clss, "SetStat1", "SetStat2", windowsLocations );
+				Swap( clss, "GetUserStat1", "GetUserStat2", windowsLocations );
+				Swap( clss, "GetGlobalStat1", "GetGlobalStat2", windowsLocations );
+				Swap( clss, "GetGlobalStatHistory1", "GetGlobalStatHistory2", windowsLocations );
 			}
 
 			if ( clss.Name == "ISteamGameServerStats" )
 			{
-				Swap( clss, "GetUserStat1", "GetUserStat2", locations );
-				Swap( clss, "SetUserStat1", "SetUserStat2", locations );
+				Swap( clss, "GetUserStat1", "GetUserStat2", windowsLocations );
+				Swap( clss, "SetUserStat1", "SetUserStat2", windowsLocations );
 			}
 
 			if ( clss.Name == "ISteamUGC" )
 			{
-				Swap( clss, "CreateQueryAllUGCRequest1", "CreateQueryAllUGCRequest2", locations );
+				Swap( clss, "CreateQueryAllUGCRequest1", "CreateQueryAllUGCRequest2", windowsLocations );
 			}
 
 
 			StartBlock( $"public override void InitInternals()" );
 			{
-				for (int i=0; i< clss.Functions.Count; i++ )
+
+				if ( standardLocations.SequenceEqual( windowsLocations ) )
 				{
-					var func = clss.Functions[i];
-					var returnType = BaseType.Parse( func.ReturnType );
-					var args = func.Arguments.Select( x => BaseType.Parse( x.Value, x.Key ) ).ToArray();
-					var regularpos = i * 8;
-					var windowsSpecific = NeedsWindowsSpecificFunction( func, returnType, args );
-
-					if ( Cleanup.IsDeprecated( $"{clss.Name}.{func.Name}" ) )
+					for ( int i = 0; i < clss.Functions.Count; i++ )
 					{
-						WriteLine( $" // {func.Name} is deprecated - {locations[i]}" );
-					}
-					else
-					{
-						var pos = $"Config.Os == OsType.Windows ? {locations[i]} : {regularpos} ";
+						var func = clss.Functions[i];
 
-						if ( regularpos == locations[i] )
-							pos = regularpos.ToString();
-
-						WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, {pos}) );" );
-						
+						if ( Cleanup.IsDeprecated( $"{clss.Name}.{func.Name}" ) )
+							WriteLine( $" // {func.Name} is deprecated" );
+						else
+							WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, {standardLocations[i]}) );" );
 					}
 				}
+				else
+				{
+					WriteLine( "#if PLATFORM_WIN64" );
+					WriteLine( $"int[] loc = new[] {{ {string.Join( ", ", windowsLocations )} }};" );
+					WriteLine( "#else" );
+					WriteLine( $"int[] loc = new[] {{ {string.Join( ", ", standardLocations )} }};" );
+					WriteLine( "#endif" );
+					WriteLine();
+
+					for ( int i = 0; i < clss.Functions.Count; i++ )
+					{
+						var func = clss.Functions[i];
+
+						if ( Cleanup.IsDeprecated( $"{clss.Name}.{func.Name}" ) )
+							WriteLine( $" // {func.Name} is deprecated" );
+						else
+							WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, loc[{i}]) );" );
+					}
+				}
+
+
 			}
 			EndBlock();
 

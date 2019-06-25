@@ -36,8 +36,6 @@ namespace Steamworks
 
 			set => _os = value;
 		}
-
-		public static bool PackSmall => Os != OsType.Windows;
     }
 
 	public enum OsType

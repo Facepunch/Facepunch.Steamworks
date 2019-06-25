@@ -13,16 +13,22 @@ namespace Steamworks
 		
 		public override void InitInternals()
 		{
-			_RequestUserStats = Marshal.GetDelegateForFunctionPointer<FRequestUserStats>( Marshal.ReadIntPtr( VTable, 0) );
-			_GetUserStat1 = Marshal.GetDelegateForFunctionPointer<FGetUserStat1>( Marshal.ReadIntPtr( VTable, Config.Os == OsType.Windows ? 16 : 8 ) );
-			_GetUserStat2 = Marshal.GetDelegateForFunctionPointer<FGetUserStat2>( Marshal.ReadIntPtr( VTable, Config.Os == OsType.Windows ? 8 : 16 ) );
-			_GetUserAchievement = Marshal.GetDelegateForFunctionPointer<FGetUserAchievement>( Marshal.ReadIntPtr( VTable, 24) );
-			_SetUserStat1 = Marshal.GetDelegateForFunctionPointer<FSetUserStat1>( Marshal.ReadIntPtr( VTable, Config.Os == OsType.Windows ? 40 : 32 ) );
-			_SetUserStat2 = Marshal.GetDelegateForFunctionPointer<FSetUserStat2>( Marshal.ReadIntPtr( VTable, Config.Os == OsType.Windows ? 32 : 40 ) );
-			_UpdateUserAvgRateStat = Marshal.GetDelegateForFunctionPointer<FUpdateUserAvgRateStat>( Marshal.ReadIntPtr( VTable, 48) );
-			_SetUserAchievement = Marshal.GetDelegateForFunctionPointer<FSetUserAchievement>( Marshal.ReadIntPtr( VTable, 56) );
-			_ClearUserAchievement = Marshal.GetDelegateForFunctionPointer<FClearUserAchievement>( Marshal.ReadIntPtr( VTable, 64) );
-			_StoreUserStats = Marshal.GetDelegateForFunctionPointer<FStoreUserStats>( Marshal.ReadIntPtr( VTable, 72) );
+			#if PLATFORM_WIN64
+			int[] loc = new[] { 0, 16, 8, 24, 40, 32, 48, 56, 64, 72 };
+			#else
+			int[] loc = new[] { 0, 8, 16, 24, 32, 40, 48, 56, 64, 72 };
+			#endif
+			
+			_RequestUserStats = Marshal.GetDelegateForFunctionPointer<FRequestUserStats>( Marshal.ReadIntPtr( VTable, loc[0]) );
+			_GetUserStat1 = Marshal.GetDelegateForFunctionPointer<FGetUserStat1>( Marshal.ReadIntPtr( VTable, loc[1]) );
+			_GetUserStat2 = Marshal.GetDelegateForFunctionPointer<FGetUserStat2>( Marshal.ReadIntPtr( VTable, loc[2]) );
+			_GetUserAchievement = Marshal.GetDelegateForFunctionPointer<FGetUserAchievement>( Marshal.ReadIntPtr( VTable, loc[3]) );
+			_SetUserStat1 = Marshal.GetDelegateForFunctionPointer<FSetUserStat1>( Marshal.ReadIntPtr( VTable, loc[4]) );
+			_SetUserStat2 = Marshal.GetDelegateForFunctionPointer<FSetUserStat2>( Marshal.ReadIntPtr( VTable, loc[5]) );
+			_UpdateUserAvgRateStat = Marshal.GetDelegateForFunctionPointer<FUpdateUserAvgRateStat>( Marshal.ReadIntPtr( VTable, loc[6]) );
+			_SetUserAchievement = Marshal.GetDelegateForFunctionPointer<FSetUserAchievement>( Marshal.ReadIntPtr( VTable, loc[7]) );
+			_ClearUserAchievement = Marshal.GetDelegateForFunctionPointer<FClearUserAchievement>( Marshal.ReadIntPtr( VTable, loc[8]) );
+			_StoreUserStats = Marshal.GetDelegateForFunctionPointer<FStoreUserStats>( Marshal.ReadIntPtr( VTable, loc[9]) );
 		}
 		internal override void Shutdown()
 		{

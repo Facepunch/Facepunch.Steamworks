@@ -13,49 +13,55 @@ namespace Steamworks
 		
 		public override void InitInternals()
 		{
-			_RequestCurrentStats = Marshal.GetDelegateForFunctionPointer<FRequestCurrentStats>( Marshal.ReadIntPtr( VTable, 0) );
-			_GetStat1 = Marshal.GetDelegateForFunctionPointer<FGetStat1>( Marshal.ReadIntPtr( VTable, Config.Os == OsType.Windows ? 16 : 8 ) );
-			_GetStat2 = Marshal.GetDelegateForFunctionPointer<FGetStat2>( Marshal.ReadIntPtr( VTable, Config.Os == OsType.Windows ? 8 : 16 ) );
-			_SetStat1 = Marshal.GetDelegateForFunctionPointer<FSetStat1>( Marshal.ReadIntPtr( VTable, Config.Os == OsType.Windows ? 32 : 24 ) );
-			_SetStat2 = Marshal.GetDelegateForFunctionPointer<FSetStat2>( Marshal.ReadIntPtr( VTable, Config.Os == OsType.Windows ? 24 : 32 ) );
-			_UpdateAvgRateStat = Marshal.GetDelegateForFunctionPointer<FUpdateAvgRateStat>( Marshal.ReadIntPtr( VTable, 40) );
-			_GetAchievement = Marshal.GetDelegateForFunctionPointer<FGetAchievement>( Marshal.ReadIntPtr( VTable, 48) );
-			_SetAchievement = Marshal.GetDelegateForFunctionPointer<FSetAchievement>( Marshal.ReadIntPtr( VTable, 56) );
-			_ClearAchievement = Marshal.GetDelegateForFunctionPointer<FClearAchievement>( Marshal.ReadIntPtr( VTable, 64) );
-			_GetAchievementAndUnlockTime = Marshal.GetDelegateForFunctionPointer<FGetAchievementAndUnlockTime>( Marshal.ReadIntPtr( VTable, 72) );
-			_StoreStats = Marshal.GetDelegateForFunctionPointer<FStoreStats>( Marshal.ReadIntPtr( VTable, 80) );
-			_GetAchievementIcon = Marshal.GetDelegateForFunctionPointer<FGetAchievementIcon>( Marshal.ReadIntPtr( VTable, 88) );
-			_GetAchievementDisplayAttribute = Marshal.GetDelegateForFunctionPointer<FGetAchievementDisplayAttribute>( Marshal.ReadIntPtr( VTable, 96) );
-			_IndicateAchievementProgress = Marshal.GetDelegateForFunctionPointer<FIndicateAchievementProgress>( Marshal.ReadIntPtr( VTable, 104) );
-			_GetNumAchievements = Marshal.GetDelegateForFunctionPointer<FGetNumAchievements>( Marshal.ReadIntPtr( VTable, 112) );
-			_GetAchievementName = Marshal.GetDelegateForFunctionPointer<FGetAchievementName>( Marshal.ReadIntPtr( VTable, 120) );
-			_RequestUserStats = Marshal.GetDelegateForFunctionPointer<FRequestUserStats>( Marshal.ReadIntPtr( VTable, 128) );
-			_GetUserStat1 = Marshal.GetDelegateForFunctionPointer<FGetUserStat1>( Marshal.ReadIntPtr( VTable, Config.Os == OsType.Windows ? 144 : 136 ) );
-			_GetUserStat2 = Marshal.GetDelegateForFunctionPointer<FGetUserStat2>( Marshal.ReadIntPtr( VTable, Config.Os == OsType.Windows ? 136 : 144 ) );
-			_GetUserAchievement = Marshal.GetDelegateForFunctionPointer<FGetUserAchievement>( Marshal.ReadIntPtr( VTable, 152) );
-			_GetUserAchievementAndUnlockTime = Marshal.GetDelegateForFunctionPointer<FGetUserAchievementAndUnlockTime>( Marshal.ReadIntPtr( VTable, 160) );
-			_ResetAllStats = Marshal.GetDelegateForFunctionPointer<FResetAllStats>( Marshal.ReadIntPtr( VTable, 168) );
-			_FindOrCreateLeaderboard = Marshal.GetDelegateForFunctionPointer<FFindOrCreateLeaderboard>( Marshal.ReadIntPtr( VTable, 176) );
-			_FindLeaderboard = Marshal.GetDelegateForFunctionPointer<FFindLeaderboard>( Marshal.ReadIntPtr( VTable, 184) );
-			_GetLeaderboardName = Marshal.GetDelegateForFunctionPointer<FGetLeaderboardName>( Marshal.ReadIntPtr( VTable, 192) );
-			_GetLeaderboardEntryCount = Marshal.GetDelegateForFunctionPointer<FGetLeaderboardEntryCount>( Marshal.ReadIntPtr( VTable, 200) );
-			_GetLeaderboardSortMethod = Marshal.GetDelegateForFunctionPointer<FGetLeaderboardSortMethod>( Marshal.ReadIntPtr( VTable, 208) );
-			_GetLeaderboardDisplayType = Marshal.GetDelegateForFunctionPointer<FGetLeaderboardDisplayType>( Marshal.ReadIntPtr( VTable, 216) );
-			_DownloadLeaderboardEntries = Marshal.GetDelegateForFunctionPointer<FDownloadLeaderboardEntries>( Marshal.ReadIntPtr( VTable, 224) );
-			_DownloadLeaderboardEntriesForUsers = Marshal.GetDelegateForFunctionPointer<FDownloadLeaderboardEntriesForUsers>( Marshal.ReadIntPtr( VTable, 232) );
-			_GetDownloadedLeaderboardEntry = Marshal.GetDelegateForFunctionPointer<FGetDownloadedLeaderboardEntry>( Marshal.ReadIntPtr( VTable, 240) );
-			_UploadLeaderboardScore = Marshal.GetDelegateForFunctionPointer<FUploadLeaderboardScore>( Marshal.ReadIntPtr( VTable, 248) );
-			_AttachLeaderboardUGC = Marshal.GetDelegateForFunctionPointer<FAttachLeaderboardUGC>( Marshal.ReadIntPtr( VTable, 256) );
-			_GetNumberOfCurrentPlayers = Marshal.GetDelegateForFunctionPointer<FGetNumberOfCurrentPlayers>( Marshal.ReadIntPtr( VTable, 264) );
-			_RequestGlobalAchievementPercentages = Marshal.GetDelegateForFunctionPointer<FRequestGlobalAchievementPercentages>( Marshal.ReadIntPtr( VTable, 272) );
-			_GetMostAchievedAchievementInfo = Marshal.GetDelegateForFunctionPointer<FGetMostAchievedAchievementInfo>( Marshal.ReadIntPtr( VTable, 280) );
-			_GetNextMostAchievedAchievementInfo = Marshal.GetDelegateForFunctionPointer<FGetNextMostAchievedAchievementInfo>( Marshal.ReadIntPtr( VTable, 288) );
-			_GetAchievementAchievedPercent = Marshal.GetDelegateForFunctionPointer<FGetAchievementAchievedPercent>( Marshal.ReadIntPtr( VTable, 296) );
-			_RequestGlobalStats = Marshal.GetDelegateForFunctionPointer<FRequestGlobalStats>( Marshal.ReadIntPtr( VTable, 304) );
-			_GetGlobalStat1 = Marshal.GetDelegateForFunctionPointer<FGetGlobalStat1>( Marshal.ReadIntPtr( VTable, Config.Os == OsType.Windows ? 320 : 312 ) );
-			_GetGlobalStat2 = Marshal.GetDelegateForFunctionPointer<FGetGlobalStat2>( Marshal.ReadIntPtr( VTable, Config.Os == OsType.Windows ? 312 : 320 ) );
-			_GetGlobalStatHistory1 = Marshal.GetDelegateForFunctionPointer<FGetGlobalStatHistory1>( Marshal.ReadIntPtr( VTable, Config.Os == OsType.Windows ? 336 : 328 ) );
-			_GetGlobalStatHistory2 = Marshal.GetDelegateForFunctionPointer<FGetGlobalStatHistory2>( Marshal.ReadIntPtr( VTable, Config.Os == OsType.Windows ? 328 : 336 ) );
+			#if PLATFORM_WIN64
+			int[] loc = new[] { 0, 16, 8, 32, 24, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 144, 136, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 264, 272, 280, 288, 296, 304, 320, 312, 336, 328 };
+			#else
+			int[] loc = new[] { 0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336 };
+			#endif
+			
+			_RequestCurrentStats = Marshal.GetDelegateForFunctionPointer<FRequestCurrentStats>( Marshal.ReadIntPtr( VTable, loc[0]) );
+			_GetStat1 = Marshal.GetDelegateForFunctionPointer<FGetStat1>( Marshal.ReadIntPtr( VTable, loc[1]) );
+			_GetStat2 = Marshal.GetDelegateForFunctionPointer<FGetStat2>( Marshal.ReadIntPtr( VTable, loc[2]) );
+			_SetStat1 = Marshal.GetDelegateForFunctionPointer<FSetStat1>( Marshal.ReadIntPtr( VTable, loc[3]) );
+			_SetStat2 = Marshal.GetDelegateForFunctionPointer<FSetStat2>( Marshal.ReadIntPtr( VTable, loc[4]) );
+			_UpdateAvgRateStat = Marshal.GetDelegateForFunctionPointer<FUpdateAvgRateStat>( Marshal.ReadIntPtr( VTable, loc[5]) );
+			_GetAchievement = Marshal.GetDelegateForFunctionPointer<FGetAchievement>( Marshal.ReadIntPtr( VTable, loc[6]) );
+			_SetAchievement = Marshal.GetDelegateForFunctionPointer<FSetAchievement>( Marshal.ReadIntPtr( VTable, loc[7]) );
+			_ClearAchievement = Marshal.GetDelegateForFunctionPointer<FClearAchievement>( Marshal.ReadIntPtr( VTable, loc[8]) );
+			_GetAchievementAndUnlockTime = Marshal.GetDelegateForFunctionPointer<FGetAchievementAndUnlockTime>( Marshal.ReadIntPtr( VTable, loc[9]) );
+			_StoreStats = Marshal.GetDelegateForFunctionPointer<FStoreStats>( Marshal.ReadIntPtr( VTable, loc[10]) );
+			_GetAchievementIcon = Marshal.GetDelegateForFunctionPointer<FGetAchievementIcon>( Marshal.ReadIntPtr( VTable, loc[11]) );
+			_GetAchievementDisplayAttribute = Marshal.GetDelegateForFunctionPointer<FGetAchievementDisplayAttribute>( Marshal.ReadIntPtr( VTable, loc[12]) );
+			_IndicateAchievementProgress = Marshal.GetDelegateForFunctionPointer<FIndicateAchievementProgress>( Marshal.ReadIntPtr( VTable, loc[13]) );
+			_GetNumAchievements = Marshal.GetDelegateForFunctionPointer<FGetNumAchievements>( Marshal.ReadIntPtr( VTable, loc[14]) );
+			_GetAchievementName = Marshal.GetDelegateForFunctionPointer<FGetAchievementName>( Marshal.ReadIntPtr( VTable, loc[15]) );
+			_RequestUserStats = Marshal.GetDelegateForFunctionPointer<FRequestUserStats>( Marshal.ReadIntPtr( VTable, loc[16]) );
+			_GetUserStat1 = Marshal.GetDelegateForFunctionPointer<FGetUserStat1>( Marshal.ReadIntPtr( VTable, loc[17]) );
+			_GetUserStat2 = Marshal.GetDelegateForFunctionPointer<FGetUserStat2>( Marshal.ReadIntPtr( VTable, loc[18]) );
+			_GetUserAchievement = Marshal.GetDelegateForFunctionPointer<FGetUserAchievement>( Marshal.ReadIntPtr( VTable, loc[19]) );
+			_GetUserAchievementAndUnlockTime = Marshal.GetDelegateForFunctionPointer<FGetUserAchievementAndUnlockTime>( Marshal.ReadIntPtr( VTable, loc[20]) );
+			_ResetAllStats = Marshal.GetDelegateForFunctionPointer<FResetAllStats>( Marshal.ReadIntPtr( VTable, loc[21]) );
+			_FindOrCreateLeaderboard = Marshal.GetDelegateForFunctionPointer<FFindOrCreateLeaderboard>( Marshal.ReadIntPtr( VTable, loc[22]) );
+			_FindLeaderboard = Marshal.GetDelegateForFunctionPointer<FFindLeaderboard>( Marshal.ReadIntPtr( VTable, loc[23]) );
+			_GetLeaderboardName = Marshal.GetDelegateForFunctionPointer<FGetLeaderboardName>( Marshal.ReadIntPtr( VTable, loc[24]) );
+			_GetLeaderboardEntryCount = Marshal.GetDelegateForFunctionPointer<FGetLeaderboardEntryCount>( Marshal.ReadIntPtr( VTable, loc[25]) );
+			_GetLeaderboardSortMethod = Marshal.GetDelegateForFunctionPointer<FGetLeaderboardSortMethod>( Marshal.ReadIntPtr( VTable, loc[26]) );
+			_GetLeaderboardDisplayType = Marshal.GetDelegateForFunctionPointer<FGetLeaderboardDisplayType>( Marshal.ReadIntPtr( VTable, loc[27]) );
+			_DownloadLeaderboardEntries = Marshal.GetDelegateForFunctionPointer<FDownloadLeaderboardEntries>( Marshal.ReadIntPtr( VTable, loc[28]) );
+			_DownloadLeaderboardEntriesForUsers = Marshal.GetDelegateForFunctionPointer<FDownloadLeaderboardEntriesForUsers>( Marshal.ReadIntPtr( VTable, loc[29]) );
+			_GetDownloadedLeaderboardEntry = Marshal.GetDelegateForFunctionPointer<FGetDownloadedLeaderboardEntry>( Marshal.ReadIntPtr( VTable, loc[30]) );
+			_UploadLeaderboardScore = Marshal.GetDelegateForFunctionPointer<FUploadLeaderboardScore>( Marshal.ReadIntPtr( VTable, loc[31]) );
+			_AttachLeaderboardUGC = Marshal.GetDelegateForFunctionPointer<FAttachLeaderboardUGC>( Marshal.ReadIntPtr( VTable, loc[32]) );
+			_GetNumberOfCurrentPlayers = Marshal.GetDelegateForFunctionPointer<FGetNumberOfCurrentPlayers>( Marshal.ReadIntPtr( VTable, loc[33]) );
+			_RequestGlobalAchievementPercentages = Marshal.GetDelegateForFunctionPointer<FRequestGlobalAchievementPercentages>( Marshal.ReadIntPtr( VTable, loc[34]) );
+			_GetMostAchievedAchievementInfo = Marshal.GetDelegateForFunctionPointer<FGetMostAchievedAchievementInfo>( Marshal.ReadIntPtr( VTable, loc[35]) );
+			_GetNextMostAchievedAchievementInfo = Marshal.GetDelegateForFunctionPointer<FGetNextMostAchievedAchievementInfo>( Marshal.ReadIntPtr( VTable, loc[36]) );
+			_GetAchievementAchievedPercent = Marshal.GetDelegateForFunctionPointer<FGetAchievementAchievedPercent>( Marshal.ReadIntPtr( VTable, loc[37]) );
+			_RequestGlobalStats = Marshal.GetDelegateForFunctionPointer<FRequestGlobalStats>( Marshal.ReadIntPtr( VTable, loc[38]) );
+			_GetGlobalStat1 = Marshal.GetDelegateForFunctionPointer<FGetGlobalStat1>( Marshal.ReadIntPtr( VTable, loc[39]) );
+			_GetGlobalStat2 = Marshal.GetDelegateForFunctionPointer<FGetGlobalStat2>( Marshal.ReadIntPtr( VTable, loc[40]) );
+			_GetGlobalStatHistory1 = Marshal.GetDelegateForFunctionPointer<FGetGlobalStatHistory1>( Marshal.ReadIntPtr( VTable, loc[41]) );
+			_GetGlobalStatHistory2 = Marshal.GetDelegateForFunctionPointer<FGetGlobalStatHistory2>( Marshal.ReadIntPtr( VTable, loc[42]) );
 		}
 		internal override void Shutdown()
 		{

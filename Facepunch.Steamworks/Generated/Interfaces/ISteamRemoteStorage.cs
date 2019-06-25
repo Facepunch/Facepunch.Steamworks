@@ -42,30 +42,30 @@ namespace Steamworks
 			_GetUGCDetails = Marshal.GetDelegateForFunctionPointer<FGetUGCDetails>( Marshal.ReadIntPtr( VTable, 208) );
 			_UGCRead = Marshal.GetDelegateForFunctionPointer<FUGCRead>( Marshal.ReadIntPtr( VTable, 216) );
 			_GetCachedUGCCount = Marshal.GetDelegateForFunctionPointer<FGetCachedUGCCount>( Marshal.ReadIntPtr( VTable, 224) );
-			 // PublishWorkshopFile is deprecated - 232
-			 // CreatePublishedFileUpdateRequest is deprecated - 240
-			 // UpdatePublishedFileFile is deprecated - 248
-			 // UpdatePublishedFilePreviewFile is deprecated - 256
-			 // UpdatePublishedFileTitle is deprecated - 264
-			 // UpdatePublishedFileDescription is deprecated - 272
-			 // UpdatePublishedFileVisibility is deprecated - 280
-			 // UpdatePublishedFileTags is deprecated - 288
-			 // CommitPublishedFileUpdate is deprecated - 296
-			 // GetPublishedFileDetails is deprecated - 304
-			 // DeletePublishedFile is deprecated - 312
-			 // EnumerateUserPublishedFiles is deprecated - 320
-			 // SubscribePublishedFile is deprecated - 328
-			 // EnumerateUserSubscribedFiles is deprecated - 336
-			 // UnsubscribePublishedFile is deprecated - 344
-			 // UpdatePublishedFileSetChangeDescription is deprecated - 352
-			 // GetPublishedItemVoteDetails is deprecated - 360
-			 // UpdateUserPublishedItemVote is deprecated - 368
-			 // GetUserPublishedItemVoteDetails is deprecated - 376
-			 // EnumerateUserSharedWorkshopFiles is deprecated - 384
-			 // PublishVideo is deprecated - 392
-			 // SetUserPublishedFileAction is deprecated - 400
-			 // EnumeratePublishedFilesByUserAction is deprecated - 408
-			 // EnumeratePublishedWorkshopFiles is deprecated - 416
+			 // PublishWorkshopFile is deprecated
+			 // CreatePublishedFileUpdateRequest is deprecated
+			 // UpdatePublishedFileFile is deprecated
+			 // UpdatePublishedFilePreviewFile is deprecated
+			 // UpdatePublishedFileTitle is deprecated
+			 // UpdatePublishedFileDescription is deprecated
+			 // UpdatePublishedFileVisibility is deprecated
+			 // UpdatePublishedFileTags is deprecated
+			 // CommitPublishedFileUpdate is deprecated
+			 // GetPublishedFileDetails is deprecated
+			 // DeletePublishedFile is deprecated
+			 // EnumerateUserPublishedFiles is deprecated
+			 // SubscribePublishedFile is deprecated
+			 // EnumerateUserSubscribedFiles is deprecated
+			 // UnsubscribePublishedFile is deprecated
+			 // UpdatePublishedFileSetChangeDescription is deprecated
+			 // GetPublishedItemVoteDetails is deprecated
+			 // UpdateUserPublishedItemVote is deprecated
+			 // GetUserPublishedItemVoteDetails is deprecated
+			 // EnumerateUserSharedWorkshopFiles is deprecated
+			 // PublishVideo is deprecated
+			 // SetUserPublishedFileAction is deprecated
+			 // EnumeratePublishedFilesByUserAction is deprecated
+			 // EnumeratePublishedWorkshopFiles is deprecated
 			_UGCDownloadToLocation = Marshal.GetDelegateForFunctionPointer<FUGCDownloadToLocation>( Marshal.ReadIntPtr( VTable, 424) );
 		}
 		internal override void Shutdown()
