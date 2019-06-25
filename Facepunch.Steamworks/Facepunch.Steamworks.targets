@@ -1,12 +1,8 @@
 ﻿<Project>
 
 	<PropertyGroup>
-		<TargetFrameworks>netstandard2.0;net46</TargetFrameworks>
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<LangVersion>7.1</LangVersion>	
-		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -30,9 +26,6 @@
 
 	<ItemGroup>
 		<Compile Remove="*AssemblyInfo.cs" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<Folder Include="Generated\Interfaces\" />
 	</ItemGroup>
 

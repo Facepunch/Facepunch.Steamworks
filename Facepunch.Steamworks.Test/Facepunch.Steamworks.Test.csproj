@@ -122,9 +122,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Facepunch.Steamworks\Facepunch.Steamworks.csproj">
-      <Project>{91962664-eb42-472a-94c8-c4ffeb44cc4b}</Project>
-      <Name>Facepunch.Steamworks</Name>
+    <ProjectReference Include="..\Facepunch.Steamworks\Facepunch.Steamworks.Win64.csproj">
+      <Project>{8c73da93-73ad-4445-9a2c-15d4a44337d3}</Project>
+      <Name>Facepunch.Steamworks.Win64</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

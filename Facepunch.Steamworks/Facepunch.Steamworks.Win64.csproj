@@ -1,10 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<Import Project=".\Facepunch.Steamworks.props" />
-
 	<PropertyGroup>
 		<AssemblyName>Facepunch.Steamworks.Win64</AssemblyName>
 		<DefineConstants>PLATFORM_WIN64;PLATFORM_WIN</DefineConstants>
+		<TargetFrameworks>netstandard2.0;net46</TargetFrameworks>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<LangVersion>7.1</LangVersion>	
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -31,5 +34,7 @@
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
 		<Exec Command="copy $(TargetDir)\Facepunch.Steamworks.Win64.dll C:\Plastic\Rust\Assets\Plugins\Facepunch.Steamworks&#xD;&#xA;copy $(TargetDir)\Facepunch.Steamworks.Win64.pdb C:\Plastic\Rust\Assets\Plugins\Facepunch.Steamworks&#xD;&#xA;copy $(TargetDir)\Facepunch.Steamworks.Win64.xml C:\Plastic\Rust\Assets\Plugins\Facepunch.Steamworks&#xD;&#xA;&#xD;&#xA;copy $(TargetDir)\Facepunch.Steamworks.Win64.dll C:\GitHub\SteamworksUnityTests\Assets\Steamworks&#xD;&#xA;copy $(TargetDir)\Facepunch.Steamworks.Win64.pdb C:\GitHub\SteamworksUnityTests\Assets\Steamworks&#xD;&#xA;copy $(TargetDir)\Facepunch.Steamworks.Win64.xml C:\GitHub\SteamworksUnityTests\Assets\Steamworks" />
 	</Target>
+
+	<Import Project="Facepunch.Steamworks.targets" />
 
 </Project>
