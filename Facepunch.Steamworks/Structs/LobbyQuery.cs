@@ -64,7 +64,7 @@ namespace Steamworks.Data
 		#endregion
 
 		#region Numerical filters
-		internal Dictionary<KeyValuePair<string, int>, LobbyComparison> numericalFilters;
+		internal List<NumericalFilter> numericalFilters;
 
 		/// <summary>
 		/// Numerical filter where value is less than the value provided
@@ -114,9 +114,9 @@ namespace Steamworks.Data
 				throw new System.ArgumentException( $"Key length is longer than {SteamMatchmaking.MaxLobbyKeyLength}", nameof( key ) );
 
 			if ( numericalFilters == null )
-				numericalFilters = new Dictionary<KeyValuePair<string, int>, LobbyComparison>();
+				numericalFilters = new List<NumericalFilter>();
 
-			numericalFilters.Add( new KeyValuePair<string, int>( key, value ), compare );
+			numericalFilters.Add( new NumericalFilter( key, value, compare ) );
 		}
 		#endregion
 
@@ -201,7 +201,7 @@ namespace Steamworks.Data
 			{
 				foreach ( var n in numericalFilters )
 				{
-					SteamMatchmaking.Internal.AddRequestLobbyListNumericalFilter( n.Key.Key, n.Key.Value, n.Value );
+					SteamMatchmaking.Internal.AddRequestLobbyListNumericalFilter( n.Key, n.Value, n.Comparer );
 				}
 			}
 

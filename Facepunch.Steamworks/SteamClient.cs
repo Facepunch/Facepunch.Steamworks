@@ -171,11 +171,6 @@ namespace Steamworks
 		public static AppId AppId { get; internal set; }
 
 		/// <summary>
-		/// Check if this SteamClient owns the specified lobby
-		/// </summary>
-		public static bool OwnsLobby( Lobby k ) => k.Owner.Id == SteamId;
-
-		/// <summary>
 		/// Checks if your executable was launched through Steam and relaunches it through Steam if it wasn't
 		///  this returns true then it starts the Steam client if required and launches your game again through it, 
 		///  and you should quit your process as soon as possible. This effectively runs steam://run/AppId so it 
