@@ -103,7 +103,7 @@ namespace Steamworks.Data
 		}
 
 		/// <summary>
-		/// Test key, initialize numerical filter dictionary if necessary, then add new numerical filter
+		/// Test key, initialize numerical filter list if necessary, then add new numerical filter
 		/// </summary>
 		internal void AddNumericalFilter( string key, int value, LobbyComparison compare )
 		{
