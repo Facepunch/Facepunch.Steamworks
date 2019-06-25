@@ -7,11 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facepunch.Steamworks.Test",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator", "Generator\Generator.csproj", "{B7225D11-2AAA-49D6-AE93-A73696EA35FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facepunch.Steamworks.Win64", "Facepunch.Steamworks\Facepunch.Steamworks.Win64.csproj", "{8C73DA93-73AD-4445-9A2C-15D4A44337D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Facepunch.Steamworks.Win64", "Facepunch.Steamworks\Facepunch.Steamworks.Win64.csproj", "{8C73DA93-73AD-4445-9A2C-15D4A44337D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facepunch.Steamworks.Posix64", "Facepunch.Steamworks\Facepunch.Steamworks.Posix64.csproj", "{12478BAE-7C1F-4FFD-B903-E1DDA6426DDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Facepunch.Steamworks.Posix64", "Facepunch.Steamworks\Facepunch.Steamworks.Posix64.csproj", "{12478BAE-7C1F-4FFD-B903-E1DDA6426DDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facepunch.Steamworks.Win32", "Facepunch.Steamworks\Facepunch.Steamworks.Win32.csproj", "{2D6247F6-8AB2-405F-A00E-3A364B808A55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Facepunch.Steamworks.Win32", "Facepunch.Steamworks\Facepunch.Steamworks.Win32.csproj", "{2D6247F6-8AB2-405F-A00E-3A364B808A55}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Facepunch.Steamworks.Posix32", "Facepunch.Steamworks\Facepunch.Steamworks.Posix32.csproj", "{C62FF421-BE44-4DB0-B99A-E13E007A30B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{2D6247F6-8AB2-405F-A00E-3A364B808A55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D6247F6-8AB2-405F-A00E-3A364B808A55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D6247F6-8AB2-405F-A00E-3A364B808A55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C62FF421-BE44-4DB0-B99A-E13E007A30B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C62FF421-BE44-4DB0-B99A-E13E007A30B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C62FF421-BE44-4DB0-B99A-E13E007A30B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C62FF421-BE44-4DB0-B99A-E13E007A30B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

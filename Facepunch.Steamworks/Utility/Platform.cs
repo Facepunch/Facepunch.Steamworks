@@ -15,6 +15,9 @@ namespace Steamworks
 #elif PLATFORM_WIN32
 		public const int StructPlatformPackSize = 4;
 		public const string LibraryName = "steam_api";
+#elif PLATFORM_POSIX32
+		public const int StructPlatformPackSize = 4;
+		public const string LibraryName = "libsteam_api";
 #elif PLATFORM_POSIX64
 		public const int StructPlatformPackSize = 4;
 		public const string LibraryName = "libsteam_api";
