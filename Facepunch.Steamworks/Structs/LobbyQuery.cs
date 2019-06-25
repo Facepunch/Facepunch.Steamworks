@@ -105,7 +105,7 @@ namespace Steamworks.Data
 		/// <summary>
 		/// Test key, initialize numerical filter dictionary if necessary, then add new numerical filter
 		/// </summary>
-		internal LobbyQuery AddNumericalFilter( string key, int value, LobbyComparison compare )
+		internal void AddNumericalFilter( string key, int value, LobbyComparison compare )
 		{
 			if ( string.IsNullOrEmpty( key ) )
 				throw new System.ArgumentException( "Key string provided for LobbyQuery filter is null or empty", nameof( key ) );
@@ -117,8 +117,6 @@ namespace Steamworks.Data
 				numericalFilters = new Dictionary<KeyValuePair<string, int>, LobbyComparison>();
 
 			numericalFilters.Add( new KeyValuePair<string, int>( key, value ), compare );
-
-			return this;
 		}
 		#endregion
 
