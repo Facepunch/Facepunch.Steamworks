@@ -79,18 +79,16 @@ namespace Steamworks
 
 			var vt = Marshal.AllocHGlobal( IntPtr.Size * 3 );
 
-			if ( Config.Os == OsType.Windows )
-			{
-				Marshal.WriteIntPtr( vt, IntPtr.Size * 0, b );
-				Marshal.WriteIntPtr( vt, IntPtr.Size * 1, a );
-				Marshal.WriteIntPtr( vt, IntPtr.Size * 2, c );
-			}
-			else
-			{
-				Marshal.WriteIntPtr( vt, IntPtr.Size * 0, a );
-				Marshal.WriteIntPtr( vt, IntPtr.Size * 1, b );
-				Marshal.WriteIntPtr( vt, IntPtr.Size * 2, c );
-			}
+			// Windows switches the function positions
+			#if PLATFORM_WIN
+			Marshal.WriteIntPtr( vt, IntPtr.Size * 0, b );
+			Marshal.WriteIntPtr( vt, IntPtr.Size * 1, a );
+			Marshal.WriteIntPtr( vt, IntPtr.Size * 2, c );
+			#else
+			Marshal.WriteIntPtr( vt, IntPtr.Size * 0, a );
+			Marshal.WriteIntPtr( vt, IntPtr.Size * 1, b );
+			Marshal.WriteIntPtr( vt, IntPtr.Size * 2, c );
+			#endif
 
 			return vt;
 		}
