@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project=".\Facepunch.Steamworks.props" />
+
+	<PropertyGroup>
+		<AssemblyName>Facepunch.Steamworks.Win32</AssemblyName>
+		<DefineConstants>PLATFORM_WIN32;PLATFORM_WIN</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Update="steam_api.dll">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+</Project>
