@@ -222,7 +222,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		#if PLATFORM_WIN64
+		#if PLATFORM_WIN
 		private delegate void FGetDigitalActionData( IntPtr self, ref DigitalState retVal, InputHandle_t inputHandle, InputDigitalActionHandle_t digitalActionHandle );
 		#else
 		private delegate DigitalState FGetDigitalActionData( IntPtr self, InputHandle_t inputHandle, InputDigitalActionHandle_t digitalActionHandle );
@@ -232,7 +232,7 @@ namespace Steamworks
 		#endregion
 		internal DigitalState GetDigitalActionData( InputHandle_t inputHandle, InputDigitalActionHandle_t digitalActionHandle )
 		{
-			#if PLATFORM_WIN64
+			#if PLATFORM_WIN
 			var retVal = default( DigitalState );
 			_GetDigitalActionData( Self, ref retVal, inputHandle, digitalActionHandle );
 			return retVal;
@@ -265,7 +265,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		#if PLATFORM_WIN64
+		#if PLATFORM_WIN
 		private delegate void FGetAnalogActionData( IntPtr self, ref AnalogState retVal, InputHandle_t inputHandle, InputAnalogActionHandle_t analogActionHandle );
 		#else
 		private delegate AnalogState FGetAnalogActionData( IntPtr self, InputHandle_t inputHandle, InputAnalogActionHandle_t analogActionHandle );
@@ -275,7 +275,7 @@ namespace Steamworks
 		#endregion
 		internal AnalogState GetAnalogActionData( InputHandle_t inputHandle, InputAnalogActionHandle_t analogActionHandle )
 		{
-			#if PLATFORM_WIN64
+			#if PLATFORM_WIN
 			var retVal = default( AnalogState );
 			_GetAnalogActionData( Self, ref retVal, inputHandle, analogActionHandle );
 			return retVal;
@@ -332,7 +332,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		#if PLATFORM_WIN64
+		#if PLATFORM_WIN
 		private delegate void FGetMotionData( IntPtr self, ref MotionState retVal, InputHandle_t inputHandle );
 		#else
 		private delegate MotionState FGetMotionData( IntPtr self, InputHandle_t inputHandle );
@@ -342,7 +342,7 @@ namespace Steamworks
 		#endregion
 		internal MotionState GetMotionData( InputHandle_t inputHandle )
 		{
-			#if PLATFORM_WIN64
+			#if PLATFORM_WIN
 			var retVal = default( MotionState );
 			_GetMotionData( Self, ref retVal, inputHandle );
 			return retVal;

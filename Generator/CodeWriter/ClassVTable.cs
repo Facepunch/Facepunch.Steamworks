@@ -209,7 +209,7 @@ namespace Generator
 
 			if ( returnType.IsReturnedWeird )
 			{
-				WriteLine( "#if PLATFORM_WIN64" );
+				WriteLine( "#if PLATFORM_WIN" );
 				WriteLine( $"private delegate void F{func.Name}( IntPtr self, ref {returnType.TypeName} retVal, {delegateargstr} );".Replace( " retVal,  )", " retVal )" ) );
 				WriteLine( "#else" );
 			}
@@ -232,7 +232,7 @@ namespace Generator
 
 				if ( returnType.IsReturnedWeird )
 				{
-					WriteLine( "#if PLATFORM_WIN64" );
+					WriteLine( "#if PLATFORM_WIN" );
 					{
 						WriteLine( $"var retVal = default( {returnType.TypeName} );" );
 						WriteLine( $"_{func.Name}( Self, ref retVal, {callargs} );".Replace( ",  );", " );" ) );

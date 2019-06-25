@@ -232,7 +232,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		#if PLATFORM_WIN64
+		#if PLATFORM_WIN
 		private delegate void FGetLobbyByIndex( IntPtr self, ref SteamId retVal, int iLobby );
 		#else
 		private delegate SteamId FGetLobbyByIndex( IntPtr self, int iLobby );
@@ -242,7 +242,7 @@ namespace Steamworks
 		#endregion
 		internal SteamId GetLobbyByIndex( int iLobby )
 		{
-			#if PLATFORM_WIN64
+			#if PLATFORM_WIN
 			var retVal = default( SteamId );
 			_GetLobbyByIndex( Self, ref retVal, iLobby );
 			return retVal;
@@ -309,7 +309,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		#if PLATFORM_WIN64
+		#if PLATFORM_WIN
 		private delegate void FGetLobbyMemberByIndex( IntPtr self, ref SteamId retVal, SteamId steamIDLobby, int iMember );
 		#else
 		private delegate SteamId FGetLobbyMemberByIndex( IntPtr self, SteamId steamIDLobby, int iMember );
@@ -319,7 +319,7 @@ namespace Steamworks
 		#endregion
 		internal SteamId GetLobbyMemberByIndex( SteamId steamIDLobby, int iMember )
 		{
-			#if PLATFORM_WIN64
+			#if PLATFORM_WIN
 			var retVal = default( SteamId );
 			_GetLobbyMemberByIndex( Self, ref retVal, steamIDLobby, iMember );
 			return retVal;
@@ -517,7 +517,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		#if PLATFORM_WIN64
+		#if PLATFORM_WIN
 		private delegate void FGetLobbyOwner( IntPtr self, ref SteamId retVal, SteamId steamIDLobby );
 		#else
 		private delegate SteamId FGetLobbyOwner( IntPtr self, SteamId steamIDLobby );
@@ -527,7 +527,7 @@ namespace Steamworks
 		#endregion
 		internal SteamId GetLobbyOwner( SteamId steamIDLobby )
 		{
-			#if PLATFORM_WIN64
+			#if PLATFORM_WIN
 			var retVal = default( SteamId );
 			_GetLobbyOwner( Self, ref retVal, steamIDLobby );
 			return retVal;

@@ -223,7 +223,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		#if PLATFORM_WIN64
+		#if PLATFORM_WIN
 		private delegate void FGetSteamID( IntPtr self, ref SteamId retVal );
 		#else
 		private delegate SteamId FGetSteamID( IntPtr self );
@@ -233,7 +233,7 @@ namespace Steamworks
 		#endregion
 		internal SteamId GetSteamID()
 		{
-			#if PLATFORM_WIN64
+			#if PLATFORM_WIN
 			var retVal = default( SteamId );
 			_GetSteamID( Self, ref retVal );
 			return retVal;
@@ -400,7 +400,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		#if PLATFORM_WIN64
+		#if PLATFORM_WIN
 		private delegate void FCreateUnauthenticatedUserConnection( IntPtr self, ref SteamId retVal );
 		#else
 		private delegate SteamId FCreateUnauthenticatedUserConnection( IntPtr self );
@@ -410,7 +410,7 @@ namespace Steamworks
 		#endregion
 		internal SteamId CreateUnauthenticatedUserConnection()
 		{
-			#if PLATFORM_WIN64
+			#if PLATFORM_WIN
 			var retVal = default( SteamId );
 			_CreateUnauthenticatedUserConnection( Self, ref retVal );
 			return retVal;

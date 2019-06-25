@@ -311,7 +311,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		#if PLATFORM_WIN64
+		#if PLATFORM_WIN
 		private delegate void FGetAppOwner( IntPtr self, ref SteamId retVal );
 		#else
 		private delegate SteamId FGetAppOwner( IntPtr self );
@@ -321,7 +321,7 @@ namespace Steamworks
 		#endregion
 		internal SteamId GetAppOwner()
 		{
-			#if PLATFORM_WIN64
+			#if PLATFORM_WIN
 			var retVal = default( SteamId );
 			_GetAppOwner( Self, ref retVal );
 			return retVal;

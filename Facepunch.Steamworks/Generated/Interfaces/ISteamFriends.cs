@@ -394,7 +394,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		#if PLATFORM_WIN64
+		#if PLATFORM_WIN
 		private delegate void FGetClanByIndex( IntPtr self, ref SteamId retVal, int iClan );
 		#else
 		private delegate SteamId FGetClanByIndex( IntPtr self, int iClan );
@@ -404,7 +404,7 @@ namespace Steamworks
 		#endregion
 		internal SteamId GetClanByIndex( int iClan )
 		{
-			#if PLATFORM_WIN64
+			#if PLATFORM_WIN
 			var retVal = default( SteamId );
 			_GetClanByIndex( Self, ref retVal, iClan );
 			return retVal;
@@ -473,7 +473,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		#if PLATFORM_WIN64
+		#if PLATFORM_WIN
 		private delegate void FGetFriendFromSourceByIndex( IntPtr self, ref SteamId retVal, SteamId steamIDSource, int iFriend );
 		#else
 		private delegate SteamId FGetFriendFromSourceByIndex( IntPtr self, SteamId steamIDSource, int iFriend );
@@ -483,7 +483,7 @@ namespace Steamworks
 		#endregion
 		internal SteamId GetFriendFromSourceByIndex( SteamId steamIDSource, int iFriend )
 		{
-			#if PLATFORM_WIN64
+			#if PLATFORM_WIN
 			var retVal = default( SteamId );
 			_GetFriendFromSourceByIndex( Self, ref retVal, steamIDSource, iFriend );
 			return retVal;
@@ -639,7 +639,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		#if PLATFORM_WIN64
+		#if PLATFORM_WIN
 		private delegate void FGetClanOwner( IntPtr self, ref SteamId retVal, SteamId steamIDClan );
 		#else
 		private delegate SteamId FGetClanOwner( IntPtr self, SteamId steamIDClan );
@@ -649,7 +649,7 @@ namespace Steamworks
 		#endregion
 		internal SteamId GetClanOwner( SteamId steamIDClan )
 		{
-			#if PLATFORM_WIN64
+			#if PLATFORM_WIN
 			var retVal = default( SteamId );
 			_GetClanOwner( Self, ref retVal, steamIDClan );
 			return retVal;
@@ -671,7 +671,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		#if PLATFORM_WIN64
+		#if PLATFORM_WIN
 		private delegate void FGetClanOfficerByIndex( IntPtr self, ref SteamId retVal, SteamId steamIDClan, int iOfficer );
 		#else
 		private delegate SteamId FGetClanOfficerByIndex( IntPtr self, SteamId steamIDClan, int iOfficer );
@@ -681,7 +681,7 @@ namespace Steamworks
 		#endregion
 		internal SteamId GetClanOfficerByIndex( SteamId steamIDClan, int iOfficer )
 		{
-			#if PLATFORM_WIN64
+			#if PLATFORM_WIN
 			var retVal = default( SteamId );
 			_GetClanOfficerByIndex( Self, ref retVal, steamIDClan, iOfficer );
 			return retVal;
@@ -795,7 +795,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		#if PLATFORM_WIN64
+		#if PLATFORM_WIN
 		private delegate void FGetCoplayFriend( IntPtr self, ref SteamId retVal, int iCoplayFriend );
 		#else
 		private delegate SteamId FGetCoplayFriend( IntPtr self, int iCoplayFriend );
@@ -805,7 +805,7 @@ namespace Steamworks
 		#endregion
 		internal SteamId GetCoplayFriend( int iCoplayFriend )
 		{
-			#if PLATFORM_WIN64
+			#if PLATFORM_WIN
 			var retVal = default( SteamId );
 			_GetCoplayFriend( Self, ref retVal, iCoplayFriend );
 			return retVal;
@@ -872,7 +872,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		#if PLATFORM_WIN64
+		#if PLATFORM_WIN
 		private delegate void FGetChatMemberByIndex( IntPtr self, ref SteamId retVal, SteamId steamIDClan, int iUser );
 		#else
 		private delegate SteamId FGetChatMemberByIndex( IntPtr self, SteamId steamIDClan, int iUser );
@@ -882,7 +882,7 @@ namespace Steamworks
 		#endregion
 		internal SteamId GetChatMemberByIndex( SteamId steamIDClan, int iUser )
 		{
-			#if PLATFORM_WIN64
+			#if PLATFORM_WIN
 			var retVal = default( SteamId );
 			_GetChatMemberByIndex( Self, ref retVal, steamIDClan, iUser );
 			return retVal;
