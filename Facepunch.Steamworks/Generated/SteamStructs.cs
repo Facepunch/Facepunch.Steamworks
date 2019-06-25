@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Steamworks.Data
 {
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct CallbackMsg_t
 	{
 		internal int SteamUser; // m_hSteamUser HSteamUser
@@ -15,25 +15,11 @@ namespace Steamworks.Data
 		internal int ParamCount; // m_cubParam int
 		
 		#region Marshalling
-		internal static CallbackMsg_t Fill( IntPtr p ) => Config.PackSmall ? ((CallbackMsg_t)(CallbackMsg_t) Marshal.PtrToStructure( p, typeof(CallbackMsg_t) )) : ((CallbackMsg_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal int SteamUser; // m_hSteamUser HSteamUser
-			internal int Callback; // m_iCallback int
-			internal IntPtr ParamPtr; // m_pubParam uint8 *
-			internal int ParamCount; // m_cubParam int
-			
-			public static implicit operator CallbackMsg_t ( CallbackMsg_t.Pack8 d ) => new CallbackMsg_t{ SteamUser = d.SteamUser,Callback = d.Callback,ParamPtr = d.ParamPtr,ParamCount = d.ParamCount, };
-			public static implicit operator CallbackMsg_t.Pack8 ( CallbackMsg_t d ) => new CallbackMsg_t.Pack8{ SteamUser = d.SteamUser,Callback = d.Callback,ParamPtr = d.ParamPtr,ParamCount = d.ParamCount, };
-		}
+		internal static CallbackMsg_t Fill( IntPtr p ) => ((CallbackMsg_t)(CallbackMsg_t) Marshal.PtrToStructure( p, typeof(CallbackMsg_t) ) );
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamServerConnectFailure_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -41,8 +27,8 @@ namespace Steamworks.Data
 		internal bool StillRetrying; // m_bStillRetrying _Bool
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(SteamServerConnectFailure_t) : typeof(Pack8) );
-		internal static SteamServerConnectFailure_t Fill( IntPtr p ) => Config.PackSmall ? ((SteamServerConnectFailure_t)(SteamServerConnectFailure_t) Marshal.PtrToStructure( p, typeof(SteamServerConnectFailure_t) )) : ((SteamServerConnectFailure_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamServerConnectFailure_t) );
+		internal static SteamServerConnectFailure_t Fill( IntPtr p ) => ((SteamServerConnectFailure_t)(SteamServerConnectFailure_t) Marshal.PtrToStructure( p, typeof(SteamServerConnectFailure_t) ) );
 		
 		static Action<SteamServerConnectFailure_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -87,29 +73,16 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool StillRetrying; // m_bStillRetrying _Bool
-			
-			public static implicit operator SteamServerConnectFailure_t ( SteamServerConnectFailure_t.Pack8 d ) => new SteamServerConnectFailure_t{ Result = d.Result,StillRetrying = d.StillRetrying, };
-			public static implicit operator SteamServerConnectFailure_t.Pack8 ( SteamServerConnectFailure_t d ) => new SteamServerConnectFailure_t.Pack8{ Result = d.Result,StillRetrying = d.StillRetrying, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamServersDisconnected_t
 	{
 		internal Result Result; // m_eResult enum EResult
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(SteamServersDisconnected_t) : typeof(Pack8) );
-		internal static SteamServersDisconnected_t Fill( IntPtr p ) => Config.PackSmall ? ((SteamServersDisconnected_t)(SteamServersDisconnected_t) Marshal.PtrToStructure( p, typeof(SteamServersDisconnected_t) )) : ((SteamServersDisconnected_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamServersDisconnected_t) );
+		internal static SteamServersDisconnected_t Fill( IntPtr p ) => ((SteamServersDisconnected_t)(SteamServersDisconnected_t) Marshal.PtrToStructure( p, typeof(SteamServersDisconnected_t) ) );
 		
 		static Action<SteamServersDisconnected_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -154,20 +127,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			
-			public static implicit operator SteamServersDisconnected_t ( SteamServersDisconnected_t.Pack8 d ) => new SteamServersDisconnected_t{ Result = d.Result, };
-			public static implicit operator SteamServersDisconnected_t.Pack8 ( SteamServersDisconnected_t d ) => new SteamServersDisconnected_t.Pack8{ Result = d.Result, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct ClientGameServerDeny_t
 	{
 		internal uint AppID; // m_uAppID uint32
@@ -177,8 +139,8 @@ namespace Steamworks.Data
 		internal uint Reason; // m_uReason uint32
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(ClientGameServerDeny_t) : typeof(Pack8) );
-		internal static ClientGameServerDeny_t Fill( IntPtr p ) => Config.PackSmall ? ((ClientGameServerDeny_t)(ClientGameServerDeny_t) Marshal.PtrToStructure( p, typeof(ClientGameServerDeny_t) )) : ((ClientGameServerDeny_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(ClientGameServerDeny_t) );
+		internal static ClientGameServerDeny_t Fill( IntPtr p ) => ((ClientGameServerDeny_t)(ClientGameServerDeny_t) Marshal.PtrToStructure( p, typeof(ClientGameServerDeny_t) ) );
 		
 		static Action<ClientGameServerDeny_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -223,24 +185,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint AppID; // m_uAppID uint32
-			internal uint GameServerIP; // m_unGameServerIP uint32
-			internal ushort GameServerPort; // m_usGameServerPort uint16
-			internal ushort Secure; // m_bSecure uint16
-			internal uint Reason; // m_uReason uint32
-			
-			public static implicit operator ClientGameServerDeny_t ( ClientGameServerDeny_t.Pack8 d ) => new ClientGameServerDeny_t{ AppID = d.AppID,GameServerIP = d.GameServerIP,GameServerPort = d.GameServerPort,Secure = d.Secure,Reason = d.Reason, };
-			public static implicit operator ClientGameServerDeny_t.Pack8 ( ClientGameServerDeny_t d ) => new ClientGameServerDeny_t.Pack8{ AppID = d.AppID,GameServerIP = d.GameServerIP,GameServerPort = d.GameServerPort,Secure = d.Secure,Reason = d.Reason, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct ValidateAuthTicketResponse_t
 	{
 		internal ulong SteamID; // m_SteamID class CSteamID
@@ -296,7 +243,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct MicroTxnAuthorizationResponse_t
 	{
 		internal uint AppID; // m_unAppID uint32
@@ -304,8 +251,8 @@ namespace Steamworks.Data
 		internal byte Authorized; // m_bAuthorized uint8
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(MicroTxnAuthorizationResponse_t) : typeof(Pack8) );
-		internal static MicroTxnAuthorizationResponse_t Fill( IntPtr p ) => Config.PackSmall ? ((MicroTxnAuthorizationResponse_t)(MicroTxnAuthorizationResponse_t) Marshal.PtrToStructure( p, typeof(MicroTxnAuthorizationResponse_t) )) : ((MicroTxnAuthorizationResponse_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(MicroTxnAuthorizationResponse_t) );
+		internal static MicroTxnAuthorizationResponse_t Fill( IntPtr p ) => ((MicroTxnAuthorizationResponse_t)(MicroTxnAuthorizationResponse_t) Marshal.PtrToStructure( p, typeof(MicroTxnAuthorizationResponse_t) ) );
 		
 		static Action<MicroTxnAuthorizationResponse_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -350,29 +297,16 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint AppID; // m_unAppID uint32
-			internal ulong OrderID; // m_ulOrderID uint64
-			internal byte Authorized; // m_bAuthorized uint8
-			
-			public static implicit operator MicroTxnAuthorizationResponse_t ( MicroTxnAuthorizationResponse_t.Pack8 d ) => new MicroTxnAuthorizationResponse_t{ AppID = d.AppID,OrderID = d.OrderID,Authorized = d.Authorized, };
-			public static implicit operator MicroTxnAuthorizationResponse_t.Pack8 ( MicroTxnAuthorizationResponse_t d ) => new MicroTxnAuthorizationResponse_t.Pack8{ AppID = d.AppID,OrderID = d.OrderID,Authorized = d.Authorized, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct EncryptedAppTicketResponse_t
 	{
 		internal Result Result; // m_eResult enum EResult
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(EncryptedAppTicketResponse_t) : typeof(Pack8) );
-		internal static EncryptedAppTicketResponse_t Fill( IntPtr p ) => Config.PackSmall ? ((EncryptedAppTicketResponse_t)(EncryptedAppTicketResponse_t) Marshal.PtrToStructure( p, typeof(EncryptedAppTicketResponse_t) )) : ((EncryptedAppTicketResponse_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(EncryptedAppTicketResponse_t) );
+		internal static EncryptedAppTicketResponse_t Fill( IntPtr p ) => ((EncryptedAppTicketResponse_t)(EncryptedAppTicketResponse_t) Marshal.PtrToStructure( p, typeof(EncryptedAppTicketResponse_t) ) );
 		
 		static Action<EncryptedAppTicketResponse_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -417,28 +351,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			
-			public static implicit operator EncryptedAppTicketResponse_t ( EncryptedAppTicketResponse_t.Pack8 d ) => new EncryptedAppTicketResponse_t{ Result = d.Result, };
-			public static implicit operator EncryptedAppTicketResponse_t.Pack8 ( EncryptedAppTicketResponse_t d ) => new EncryptedAppTicketResponse_t.Pack8{ Result = d.Result, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct GetAuthSessionTicketResponse_t
 	{
 		internal uint AuthTicket; // m_hAuthTicket HAuthTicket
 		internal Result Result; // m_eResult enum EResult
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GetAuthSessionTicketResponse_t) : typeof(Pack8) );
-		internal static GetAuthSessionTicketResponse_t Fill( IntPtr p ) => Config.PackSmall ? ((GetAuthSessionTicketResponse_t)(GetAuthSessionTicketResponse_t) Marshal.PtrToStructure( p, typeof(GetAuthSessionTicketResponse_t) )) : ((GetAuthSessionTicketResponse_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GetAuthSessionTicketResponse_t) );
+		internal static GetAuthSessionTicketResponse_t Fill( IntPtr p ) => ((GetAuthSessionTicketResponse_t)(GetAuthSessionTicketResponse_t) Marshal.PtrToStructure( p, typeof(GetAuthSessionTicketResponse_t) ) );
 		
 		static Action<GetAuthSessionTicketResponse_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -483,21 +406,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint AuthTicket; // m_hAuthTicket HAuthTicket
-			internal Result Result; // m_eResult enum EResult
-			
-			public static implicit operator GetAuthSessionTicketResponse_t ( GetAuthSessionTicketResponse_t.Pack8 d ) => new GetAuthSessionTicketResponse_t{ AuthTicket = d.AuthTicket,Result = d.Result, };
-			public static implicit operator GetAuthSessionTicketResponse_t.Pack8 ( GetAuthSessionTicketResponse_t d ) => new GetAuthSessionTicketResponse_t.Pack8{ AuthTicket = d.AuthTicket,Result = d.Result, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct GameWebCallback_t
 	{
 		internal string URLUTF8() => System.Text.Encoding.UTF8.GetString( URL, 0, System.Array.IndexOf<byte>( URL, 0 ) );
@@ -505,8 +416,8 @@ namespace Steamworks.Data
 		internal byte[] URL; // m_szURL char [256]
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GameWebCallback_t) : typeof(Pack8) );
-		internal static GameWebCallback_t Fill( IntPtr p ) => Config.PackSmall ? ((GameWebCallback_t)(GameWebCallback_t) Marshal.PtrToStructure( p, typeof(GameWebCallback_t) )) : ((GameWebCallback_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameWebCallback_t) );
+		internal static GameWebCallback_t Fill( IntPtr p ) => ((GameWebCallback_t)(GameWebCallback_t) Marshal.PtrToStructure( p, typeof(GameWebCallback_t) ) );
 		
 		static Action<GameWebCallback_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -551,22 +462,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal string URLUTF8() => System.Text.Encoding.UTF8.GetString( URL, 0, System.Array.IndexOf<byte>( URL, 0 ) );
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_szURL
-			internal byte[] URL; // m_szURL char [256]
-			
-			public static implicit operator GameWebCallback_t ( GameWebCallback_t.Pack8 d ) => new GameWebCallback_t{ URL = d.URL, };
-			public static implicit operator GameWebCallback_t.Pack8 ( GameWebCallback_t d ) => new GameWebCallback_t.Pack8{ URL = d.URL, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct StoreAuthURLResponse_t
 	{
 		internal string URLUTF8() => System.Text.Encoding.UTF8.GetString( URL, 0, System.Array.IndexOf<byte>( URL, 0 ) );
@@ -574,8 +472,8 @@ namespace Steamworks.Data
 		internal byte[] URL; // m_szURL char [512]
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(StoreAuthURLResponse_t) : typeof(Pack8) );
-		internal static StoreAuthURLResponse_t Fill( IntPtr p ) => Config.PackSmall ? ((StoreAuthURLResponse_t)(StoreAuthURLResponse_t) Marshal.PtrToStructure( p, typeof(StoreAuthURLResponse_t) )) : ((StoreAuthURLResponse_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(StoreAuthURLResponse_t) );
+		internal static StoreAuthURLResponse_t Fill( IntPtr p ) => ((StoreAuthURLResponse_t)(StoreAuthURLResponse_t) Marshal.PtrToStructure( p, typeof(StoreAuthURLResponse_t) ) );
 		
 		static Action<StoreAuthURLResponse_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -620,22 +518,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal string URLUTF8() => System.Text.Encoding.UTF8.GetString( URL, 0, System.Array.IndexOf<byte>( URL, 0 ) );
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 512)] // byte[] m_szURL
-			internal byte[] URL; // m_szURL char [512]
-			
-			public static implicit operator StoreAuthURLResponse_t ( StoreAuthURLResponse_t.Pack8 d ) => new StoreAuthURLResponse_t{ URL = d.URL, };
-			public static implicit operator StoreAuthURLResponse_t.Pack8 ( StoreAuthURLResponse_t d ) => new StoreAuthURLResponse_t.Pack8{ URL = d.URL, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct MarketEligibilityResponse_t
 	{
 		[MarshalAs(UnmanagedType.I1)]
@@ -646,8 +531,8 @@ namespace Steamworks.Data
 		internal int CdayNewDeviceCooldown; // m_cdayNewDeviceCooldown int
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(MarketEligibilityResponse_t) : typeof(Pack8) );
-		internal static MarketEligibilityResponse_t Fill( IntPtr p ) => Config.PackSmall ? ((MarketEligibilityResponse_t)(MarketEligibilityResponse_t) Marshal.PtrToStructure( p, typeof(MarketEligibilityResponse_t) )) : ((MarketEligibilityResponse_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(MarketEligibilityResponse_t) );
+		internal static MarketEligibilityResponse_t Fill( IntPtr p ) => ((MarketEligibilityResponse_t)(MarketEligibilityResponse_t) Marshal.PtrToStructure( p, typeof(MarketEligibilityResponse_t) ) );
 		
 		static Action<MarketEligibilityResponse_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -692,25 +577,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool Allowed; // m_bAllowed _Bool
-			internal MarketNotAllowedReasonFlags NotAllowedReason; // m_eNotAllowedReason enum EMarketNotAllowedReasonFlags
-			internal uint TAllowedAtTime; // m_rtAllowedAtTime RTime32
-			internal int CdaySteamGuardRequiredDays; // m_cdaySteamGuardRequiredDays int
-			internal int CdayNewDeviceCooldown; // m_cdayNewDeviceCooldown int
-			
-			public static implicit operator MarketEligibilityResponse_t ( MarketEligibilityResponse_t.Pack8 d ) => new MarketEligibilityResponse_t{ Allowed = d.Allowed,NotAllowedReason = d.NotAllowedReason,TAllowedAtTime = d.TAllowedAtTime,CdaySteamGuardRequiredDays = d.CdaySteamGuardRequiredDays,CdayNewDeviceCooldown = d.CdayNewDeviceCooldown, };
-			public static implicit operator MarketEligibilityResponse_t.Pack8 ( MarketEligibilityResponse_t d ) => new MarketEligibilityResponse_t.Pack8{ Allowed = d.Allowed,NotAllowedReason = d.NotAllowedReason,TAllowedAtTime = d.TAllowedAtTime,CdaySteamGuardRequiredDays = d.CdaySteamGuardRequiredDays,CdayNewDeviceCooldown = d.CdayNewDeviceCooldown, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct FriendGameInfo_t
 	{
 		internal GameId GameID; // m_gameID class CGameID
@@ -724,38 +593,26 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct FriendSessionStateInfo_t
 	{
 		internal uint IOnlineSessionInstances; // m_uiOnlineSessionInstances uint32
 		internal byte IPublishedToFriendsSessionInstance; // m_uiPublishedToFriendsSessionInstance uint8
 		
 		#region Marshalling
-		internal static FriendSessionStateInfo_t Fill( IntPtr p ) => Config.PackSmall ? ((FriendSessionStateInfo_t)(FriendSessionStateInfo_t) Marshal.PtrToStructure( p, typeof(FriendSessionStateInfo_t) )) : ((FriendSessionStateInfo_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint IOnlineSessionInstances; // m_uiOnlineSessionInstances uint32
-			internal byte IPublishedToFriendsSessionInstance; // m_uiPublishedToFriendsSessionInstance uint8
-			
-			public static implicit operator FriendSessionStateInfo_t ( FriendSessionStateInfo_t.Pack8 d ) => new FriendSessionStateInfo_t{ IOnlineSessionInstances = d.IOnlineSessionInstances,IPublishedToFriendsSessionInstance = d.IPublishedToFriendsSessionInstance, };
-			public static implicit operator FriendSessionStateInfo_t.Pack8 ( FriendSessionStateInfo_t d ) => new FriendSessionStateInfo_t.Pack8{ IOnlineSessionInstances = d.IOnlineSessionInstances,IPublishedToFriendsSessionInstance = d.IPublishedToFriendsSessionInstance, };
-		}
+		internal static FriendSessionStateInfo_t Fill( IntPtr p ) => ((FriendSessionStateInfo_t)(FriendSessionStateInfo_t) Marshal.PtrToStructure( p, typeof(FriendSessionStateInfo_t) ) );
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct FriendStateChange_t
 	{
 		internal ulong SteamID; // m_ulSteamID uint64
 		internal int ChangeFlags; // m_nChangeFlags int
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(FriendStateChange_t) : typeof(Pack8) );
-		internal static FriendStateChange_t Fill( IntPtr p ) => Config.PackSmall ? ((FriendStateChange_t)(FriendStateChange_t) Marshal.PtrToStructure( p, typeof(FriendStateChange_t) )) : ((FriendStateChange_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(FriendStateChange_t) );
+		internal static FriendStateChange_t Fill( IntPtr p ) => ((FriendStateChange_t)(FriendStateChange_t) Marshal.PtrToStructure( p, typeof(FriendStateChange_t) ) );
 		
 		static Action<FriendStateChange_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -800,28 +657,16 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal ulong SteamID; // m_ulSteamID uint64
-			internal int ChangeFlags; // m_nChangeFlags int
-			
-			public static implicit operator FriendStateChange_t ( FriendStateChange_t.Pack8 d ) => new FriendStateChange_t{ SteamID = d.SteamID,ChangeFlags = d.ChangeFlags, };
-			public static implicit operator FriendStateChange_t.Pack8 ( FriendStateChange_t d ) => new FriendStateChange_t.Pack8{ SteamID = d.SteamID,ChangeFlags = d.ChangeFlags, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct GameOverlayActivated_t
 	{
 		internal byte Active; // m_bActive uint8
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GameOverlayActivated_t) : typeof(Pack8) );
-		internal static GameOverlayActivated_t Fill( IntPtr p ) => Config.PackSmall ? ((GameOverlayActivated_t)(GameOverlayActivated_t) Marshal.PtrToStructure( p, typeof(GameOverlayActivated_t) )) : ((GameOverlayActivated_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameOverlayActivated_t) );
+		internal static GameOverlayActivated_t Fill( IntPtr p ) => ((GameOverlayActivated_t)(GameOverlayActivated_t) Marshal.PtrToStructure( p, typeof(GameOverlayActivated_t) ) );
 		
 		static Action<GameOverlayActivated_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -866,20 +711,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal byte Active; // m_bActive uint8
-			
-			public static implicit operator GameOverlayActivated_t ( GameOverlayActivated_t.Pack8 d ) => new GameOverlayActivated_t{ Active = d.Active, };
-			public static implicit operator GameOverlayActivated_t.Pack8 ( GameOverlayActivated_t d ) => new GameOverlayActivated_t.Pack8{ Active = d.Active, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct GameServerChangeRequested_t
 	{
 		internal string ServerUTF8() => System.Text.Encoding.UTF8.GetString( Server, 0, System.Array.IndexOf<byte>( Server, 0 ) );
@@ -890,8 +724,8 @@ namespace Steamworks.Data
 		internal byte[] Password; // m_rgchPassword char [64]
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GameServerChangeRequested_t) : typeof(Pack8) );
-		internal static GameServerChangeRequested_t Fill( IntPtr p ) => Config.PackSmall ? ((GameServerChangeRequested_t)(GameServerChangeRequested_t) Marshal.PtrToStructure( p, typeof(GameServerChangeRequested_t) )) : ((GameServerChangeRequested_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameServerChangeRequested_t) );
+		internal static GameServerChangeRequested_t Fill( IntPtr p ) => ((GameServerChangeRequested_t)(GameServerChangeRequested_t) Marshal.PtrToStructure( p, typeof(GameServerChangeRequested_t) ) );
 		
 		static Action<GameServerChangeRequested_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -936,25 +770,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal string ServerUTF8() => System.Text.Encoding.UTF8.GetString( Server, 0, System.Array.IndexOf<byte>( Server, 0 ) );
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)] // byte[] m_rgchServer
-			internal byte[] Server; // m_rgchServer char [64]
-			internal string PasswordUTF8() => System.Text.Encoding.UTF8.GetString( Password, 0, System.Array.IndexOf<byte>( Password, 0 ) );
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)] // byte[] m_rgchPassword
-			internal byte[] Password; // m_rgchPassword char [64]
-			
-			public static implicit operator GameServerChangeRequested_t ( GameServerChangeRequested_t.Pack8 d ) => new GameServerChangeRequested_t{ Server = d.Server,Password = d.Password, };
-			public static implicit operator GameServerChangeRequested_t.Pack8 ( GameServerChangeRequested_t d ) => new GameServerChangeRequested_t.Pack8{ Server = d.Server,Password = d.Password, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct GameLobbyJoinRequested_t
 	{
 		internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
@@ -1009,7 +827,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct AvatarImageLoaded_t
 	{
 		internal ulong SteamID; // m_steamID class CSteamID
@@ -1066,7 +884,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct ClanOfficerListResponse_t
 	{
 		internal ulong SteamIDClan; // m_steamIDClan class CSteamID
@@ -1122,7 +940,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct FriendRichPresenceUpdate_t
 	{
 		internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
@@ -1177,7 +995,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct GameRichPresenceJoinRequested_t
 	{
 		internal ulong SteamIDFriend; // m_steamIDFriend class CSteamID
@@ -1234,7 +1052,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct GameConnectedClanChatMsg_t
 	{
 		internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
@@ -1290,7 +1108,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct GameConnectedChatJoin_t
 	{
 		internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
@@ -1345,7 +1163,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct GameConnectedChatLeave_t
 	{
 		internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
@@ -1404,15 +1222,15 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct DownloadClanActivityCountsResult_t
 	{
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool Success; // m_bSuccess _Bool
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(DownloadClanActivityCountsResult_t) : typeof(Pack8) );
-		internal static DownloadClanActivityCountsResult_t Fill( IntPtr p ) => Config.PackSmall ? ((DownloadClanActivityCountsResult_t)(DownloadClanActivityCountsResult_t) Marshal.PtrToStructure( p, typeof(DownloadClanActivityCountsResult_t) )) : ((DownloadClanActivityCountsResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(DownloadClanActivityCountsResult_t) );
+		internal static DownloadClanActivityCountsResult_t Fill( IntPtr p ) => ((DownloadClanActivityCountsResult_t)(DownloadClanActivityCountsResult_t) Marshal.PtrToStructure( p, typeof(DownloadClanActivityCountsResult_t) ) );
 		
 		static Action<DownloadClanActivityCountsResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -1457,21 +1275,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool Success; // m_bSuccess _Bool
-			
-			public static implicit operator DownloadClanActivityCountsResult_t ( DownloadClanActivityCountsResult_t.Pack8 d ) => new DownloadClanActivityCountsResult_t{ Success = d.Success, };
-			public static implicit operator DownloadClanActivityCountsResult_t.Pack8 ( DownloadClanActivityCountsResult_t d ) => new DownloadClanActivityCountsResult_t.Pack8{ Success = d.Success, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct JoinClanChatRoomCompletionResult_t
 	{
 		internal ulong SteamIDClanChat; // m_steamIDClanChat class CSteamID
@@ -1526,7 +1332,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct GameConnectedFriendChatMsg_t
 	{
 		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
@@ -1581,7 +1387,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct FriendsGetFollowerCount_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -1637,7 +1443,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct FriendsIsFollowing_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -1694,7 +1500,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct FriendsEnumerateFollowingList_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -1752,7 +1558,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SetPersonaNameResponse_t
 	{
 		[MarshalAs(UnmanagedType.I1)]
@@ -1762,8 +1568,8 @@ namespace Steamworks.Data
 		internal Result Result; // m_result enum EResult
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(SetPersonaNameResponse_t) : typeof(Pack8) );
-		internal static SetPersonaNameResponse_t Fill( IntPtr p ) => Config.PackSmall ? ((SetPersonaNameResponse_t)(SetPersonaNameResponse_t) Marshal.PtrToStructure( p, typeof(SetPersonaNameResponse_t) )) : ((SetPersonaNameResponse_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SetPersonaNameResponse_t) );
+		internal static SetPersonaNameResponse_t Fill( IntPtr p ) => ((SetPersonaNameResponse_t)(SetPersonaNameResponse_t) Marshal.PtrToStructure( p, typeof(SetPersonaNameResponse_t) ) );
 		
 		static Action<SetPersonaNameResponse_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -1808,31 +1614,16 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool Success; // m_bSuccess _Bool
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool LocalSuccess; // m_bLocalSuccess _Bool
-			internal Result Result; // m_result enum EResult
-			
-			public static implicit operator SetPersonaNameResponse_t ( SetPersonaNameResponse_t.Pack8 d ) => new SetPersonaNameResponse_t{ Success = d.Success,LocalSuccess = d.LocalSuccess,Result = d.Result, };
-			public static implicit operator SetPersonaNameResponse_t.Pack8 ( SetPersonaNameResponse_t d ) => new SetPersonaNameResponse_t.Pack8{ Success = d.Success,LocalSuccess = d.LocalSuccess,Result = d.Result, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct LowBatteryPower_t
 	{
 		internal byte MinutesBatteryLeft; // m_nMinutesBatteryLeft uint8
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(LowBatteryPower_t) : typeof(Pack8) );
-		internal static LowBatteryPower_t Fill( IntPtr p ) => Config.PackSmall ? ((LowBatteryPower_t)(LowBatteryPower_t) Marshal.PtrToStructure( p, typeof(LowBatteryPower_t) )) : ((LowBatteryPower_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LowBatteryPower_t) );
+		internal static LowBatteryPower_t Fill( IntPtr p ) => ((LowBatteryPower_t)(LowBatteryPower_t) Marshal.PtrToStructure( p, typeof(LowBatteryPower_t) ) );
 		
 		static Action<LowBatteryPower_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -1877,20 +1668,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal byte MinutesBatteryLeft; // m_nMinutesBatteryLeft uint8
-			
-			public static implicit operator LowBatteryPower_t ( LowBatteryPower_t.Pack8 d ) => new LowBatteryPower_t{ MinutesBatteryLeft = d.MinutesBatteryLeft, };
-			public static implicit operator LowBatteryPower_t.Pack8 ( LowBatteryPower_t d ) => new LowBatteryPower_t.Pack8{ MinutesBatteryLeft = d.MinutesBatteryLeft, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamAPICallCompleted_t
 	{
 		internal ulong AsyncCall; // m_hAsyncCall SteamAPICall_t
@@ -1898,8 +1678,8 @@ namespace Steamworks.Data
 		internal uint ParamCount; // m_cubParam uint32
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(SteamAPICallCompleted_t) : typeof(Pack8) );
-		internal static SteamAPICallCompleted_t Fill( IntPtr p ) => Config.PackSmall ? ((SteamAPICallCompleted_t)(SteamAPICallCompleted_t) Marshal.PtrToStructure( p, typeof(SteamAPICallCompleted_t) )) : ((SteamAPICallCompleted_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamAPICallCompleted_t) );
+		internal static SteamAPICallCompleted_t Fill( IntPtr p ) => ((SteamAPICallCompleted_t)(SteamAPICallCompleted_t) Marshal.PtrToStructure( p, typeof(SteamAPICallCompleted_t) ) );
 		
 		static Action<SteamAPICallCompleted_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -1944,29 +1724,16 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal ulong AsyncCall; // m_hAsyncCall SteamAPICall_t
-			internal int Callback; // m_iCallback int
-			internal uint ParamCount; // m_cubParam uint32
-			
-			public static implicit operator SteamAPICallCompleted_t ( SteamAPICallCompleted_t.Pack8 d ) => new SteamAPICallCompleted_t{ AsyncCall = d.AsyncCall,Callback = d.Callback,ParamCount = d.ParamCount, };
-			public static implicit operator SteamAPICallCompleted_t.Pack8 ( SteamAPICallCompleted_t d ) => new SteamAPICallCompleted_t.Pack8{ AsyncCall = d.AsyncCall,Callback = d.Callback,ParamCount = d.ParamCount, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct CheckFileSignature_t
 	{
 		internal CheckFileSignature CheckFileSignature; // m_eCheckFileSignature enum ECheckFileSignature
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(CheckFileSignature_t) : typeof(Pack8) );
-		internal static CheckFileSignature_t Fill( IntPtr p ) => Config.PackSmall ? ((CheckFileSignature_t)(CheckFileSignature_t) Marshal.PtrToStructure( p, typeof(CheckFileSignature_t) )) : ((CheckFileSignature_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(CheckFileSignature_t) );
+		internal static CheckFileSignature_t Fill( IntPtr p ) => ((CheckFileSignature_t)(CheckFileSignature_t) Marshal.PtrToStructure( p, typeof(CheckFileSignature_t) ) );
 		
 		static Action<CheckFileSignature_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -2011,20 +1778,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal CheckFileSignature CheckFileSignature; // m_eCheckFileSignature enum ECheckFileSignature
-			
-			public static implicit operator CheckFileSignature_t ( CheckFileSignature_t.Pack8 d ) => new CheckFileSignature_t{ CheckFileSignature = d.CheckFileSignature, };
-			public static implicit operator CheckFileSignature_t.Pack8 ( CheckFileSignature_t d ) => new CheckFileSignature_t.Pack8{ CheckFileSignature = d.CheckFileSignature, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct GamepadTextInputDismissed_t
 	{
 		[MarshalAs(UnmanagedType.I1)]
@@ -2032,8 +1788,8 @@ namespace Steamworks.Data
 		internal uint SubmittedText; // m_unSubmittedText uint32
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GamepadTextInputDismissed_t) : typeof(Pack8) );
-		internal static GamepadTextInputDismissed_t Fill( IntPtr p ) => Config.PackSmall ? ((GamepadTextInputDismissed_t)(GamepadTextInputDismissed_t) Marshal.PtrToStructure( p, typeof(GamepadTextInputDismissed_t) )) : ((GamepadTextInputDismissed_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GamepadTextInputDismissed_t) );
+		internal static GamepadTextInputDismissed_t Fill( IntPtr p ) => ((GamepadTextInputDismissed_t)(GamepadTextInputDismissed_t) Marshal.PtrToStructure( p, typeof(GamepadTextInputDismissed_t) ) );
 		
 		static Action<GamepadTextInputDismissed_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -2078,22 +1834,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool Submitted; // m_bSubmitted _Bool
-			internal uint SubmittedText; // m_unSubmittedText uint32
-			
-			public static implicit operator GamepadTextInputDismissed_t ( GamepadTextInputDismissed_t.Pack8 d ) => new GamepadTextInputDismissed_t{ Submitted = d.Submitted,SubmittedText = d.SubmittedText, };
-			public static implicit operator GamepadTextInputDismissed_t.Pack8 ( GamepadTextInputDismissed_t d ) => new GamepadTextInputDismissed_t.Pack8{ Submitted = d.Submitted,SubmittedText = d.SubmittedText, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct MatchMakingKeyValuePair_t
 	{
 		internal string KeyUTF8() => System.Text.Encoding.UTF8.GetString( Key, 0, System.Array.IndexOf<byte>( Key, 0 ) );
@@ -2108,7 +1851,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct servernetadr_t
 	{
 		internal ushort ConnectionPort; // m_usConnectionPort uint16
@@ -2116,24 +1859,11 @@ namespace Steamworks.Data
 		internal uint IP; // m_unIP uint32
 		
 		#region Marshalling
-		internal static servernetadr_t Fill( IntPtr p ) => Config.PackSmall ? ((servernetadr_t)(servernetadr_t) Marshal.PtrToStructure( p, typeof(servernetadr_t) )) : ((servernetadr_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal ushort ConnectionPort; // m_usConnectionPort uint16
-			internal ushort QueryPort; // m_usQueryPort uint16
-			internal uint IP; // m_unIP uint32
-			
-			public static implicit operator servernetadr_t ( servernetadr_t.Pack8 d ) => new servernetadr_t{ ConnectionPort = d.ConnectionPort,QueryPort = d.QueryPort,IP = d.IP, };
-			public static implicit operator servernetadr_t.Pack8 ( servernetadr_t d ) => new servernetadr_t.Pack8{ ConnectionPort = d.ConnectionPort,QueryPort = d.QueryPort,IP = d.IP, };
-		}
+		internal static servernetadr_t Fill( IntPtr p ) => ((servernetadr_t)(servernetadr_t) Marshal.PtrToStructure( p, typeof(servernetadr_t) ) );
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct gameserveritem_t
 	{
 		internal servernetadr_t NetAdr; // m_NetAdr class servernetadr_t
@@ -2174,30 +1904,18 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamPartyBeaconLocation_t
 	{
 		internal SteamPartyBeaconLocationType Type; // m_eType enum ESteamPartyBeaconLocationType
 		internal ulong LocationID; // m_ulLocationID uint64
 		
 		#region Marshalling
-		internal static SteamPartyBeaconLocation_t Fill( IntPtr p ) => Config.PackSmall ? ((SteamPartyBeaconLocation_t)(SteamPartyBeaconLocation_t) Marshal.PtrToStructure( p, typeof(SteamPartyBeaconLocation_t) )) : ((SteamPartyBeaconLocation_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal SteamPartyBeaconLocationType Type; // m_eType enum ESteamPartyBeaconLocationType
-			internal ulong LocationID; // m_ulLocationID uint64
-			
-			public static implicit operator SteamPartyBeaconLocation_t ( SteamPartyBeaconLocation_t.Pack8 d ) => new SteamPartyBeaconLocation_t{ Type = d.Type,LocationID = d.LocationID, };
-			public static implicit operator SteamPartyBeaconLocation_t.Pack8 ( SteamPartyBeaconLocation_t d ) => new SteamPartyBeaconLocation_t.Pack8{ Type = d.Type,LocationID = d.LocationID, };
-		}
+		internal static SteamPartyBeaconLocation_t Fill( IntPtr p ) => ((SteamPartyBeaconLocation_t)(SteamPartyBeaconLocation_t) Marshal.PtrToStructure( p, typeof(SteamPartyBeaconLocation_t) ) );
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct FavoritesListChanged_t
 	{
 		internal uint IP; // m_nIP uint32
@@ -2210,8 +1928,8 @@ namespace Steamworks.Data
 		internal uint AccountId; // m_unAccountId AccountID_t
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(FavoritesListChanged_t) : typeof(Pack8) );
-		internal static FavoritesListChanged_t Fill( IntPtr p ) => Config.PackSmall ? ((FavoritesListChanged_t)(FavoritesListChanged_t) Marshal.PtrToStructure( p, typeof(FavoritesListChanged_t) )) : ((FavoritesListChanged_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(FavoritesListChanged_t) );
+		internal static FavoritesListChanged_t Fill( IntPtr p ) => ((FavoritesListChanged_t)(FavoritesListChanged_t) Marshal.PtrToStructure( p, typeof(FavoritesListChanged_t) ) );
 		
 		static Action<FavoritesListChanged_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -2256,27 +1974,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint IP; // m_nIP uint32
-			internal uint QueryPort; // m_nQueryPort uint32
-			internal uint ConnPort; // m_nConnPort uint32
-			internal uint AppID; // m_nAppID uint32
-			internal uint Flags; // m_nFlags uint32
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool Add; // m_bAdd _Bool
-			internal uint AccountId; // m_unAccountId AccountID_t
-			
-			public static implicit operator FavoritesListChanged_t ( FavoritesListChanged_t.Pack8 d ) => new FavoritesListChanged_t{ IP = d.IP,QueryPort = d.QueryPort,ConnPort = d.ConnPort,AppID = d.AppID,Flags = d.Flags,Add = d.Add,AccountId = d.AccountId, };
-			public static implicit operator FavoritesListChanged_t.Pack8 ( FavoritesListChanged_t d ) => new FavoritesListChanged_t.Pack8{ IP = d.IP,QueryPort = d.QueryPort,ConnPort = d.ConnPort,AppID = d.AppID,Flags = d.Flags,Add = d.Add,AccountId = d.AccountId, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct LobbyInvite_t
 	{
 		internal ulong SteamIDUser; // m_ulSteamIDUser uint64
@@ -2284,8 +1984,8 @@ namespace Steamworks.Data
 		internal ulong GameID; // m_ulGameID uint64
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(LobbyInvite_t) : typeof(Pack8) );
-		internal static LobbyInvite_t Fill( IntPtr p ) => Config.PackSmall ? ((LobbyInvite_t)(LobbyInvite_t) Marshal.PtrToStructure( p, typeof(LobbyInvite_t) )) : ((LobbyInvite_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LobbyInvite_t) );
+		internal static LobbyInvite_t Fill( IntPtr p ) => ((LobbyInvite_t)(LobbyInvite_t) Marshal.PtrToStructure( p, typeof(LobbyInvite_t) ) );
 		
 		static Action<LobbyInvite_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -2330,22 +2030,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal ulong SteamIDUser; // m_ulSteamIDUser uint64
-			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
-			internal ulong GameID; // m_ulGameID uint64
-			
-			public static implicit operator LobbyInvite_t ( LobbyInvite_t.Pack8 d ) => new LobbyInvite_t{ SteamIDUser = d.SteamIDUser,SteamIDLobby = d.SteamIDLobby,GameID = d.GameID, };
-			public static implicit operator LobbyInvite_t.Pack8 ( LobbyInvite_t d ) => new LobbyInvite_t.Pack8{ SteamIDUser = d.SteamIDUser,SteamIDLobby = d.SteamIDLobby,GameID = d.GameID, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct LobbyEnter_t
 	{
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
@@ -2355,8 +2042,8 @@ namespace Steamworks.Data
 		internal uint EChatRoomEnterResponse; // m_EChatRoomEnterResponse uint32
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(LobbyEnter_t) : typeof(Pack8) );
-		internal static LobbyEnter_t Fill( IntPtr p ) => Config.PackSmall ? ((LobbyEnter_t)(LobbyEnter_t) Marshal.PtrToStructure( p, typeof(LobbyEnter_t) )) : ((LobbyEnter_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LobbyEnter_t) );
+		internal static LobbyEnter_t Fill( IntPtr p ) => ((LobbyEnter_t)(LobbyEnter_t) Marshal.PtrToStructure( p, typeof(LobbyEnter_t) ) );
 		
 		static Action<LobbyEnter_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -2401,24 +2088,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
-			internal uint GfChatPermissions; // m_rgfChatPermissions uint32
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool Locked; // m_bLocked _Bool
-			internal uint EChatRoomEnterResponse; // m_EChatRoomEnterResponse uint32
-			
-			public static implicit operator LobbyEnter_t ( LobbyEnter_t.Pack8 d ) => new LobbyEnter_t{ SteamIDLobby = d.SteamIDLobby,GfChatPermissions = d.GfChatPermissions,Locked = d.Locked,EChatRoomEnterResponse = d.EChatRoomEnterResponse, };
-			public static implicit operator LobbyEnter_t.Pack8 ( LobbyEnter_t d ) => new LobbyEnter_t.Pack8{ SteamIDLobby = d.SteamIDLobby,GfChatPermissions = d.GfChatPermissions,Locked = d.Locked,EChatRoomEnterResponse = d.EChatRoomEnterResponse, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct LobbyDataUpdate_t
 	{
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
@@ -2426,8 +2098,8 @@ namespace Steamworks.Data
 		internal byte Success; // m_bSuccess uint8
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(LobbyDataUpdate_t) : typeof(Pack8) );
-		internal static LobbyDataUpdate_t Fill( IntPtr p ) => Config.PackSmall ? ((LobbyDataUpdate_t)(LobbyDataUpdate_t) Marshal.PtrToStructure( p, typeof(LobbyDataUpdate_t) )) : ((LobbyDataUpdate_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LobbyDataUpdate_t) );
+		internal static LobbyDataUpdate_t Fill( IntPtr p ) => ((LobbyDataUpdate_t)(LobbyDataUpdate_t) Marshal.PtrToStructure( p, typeof(LobbyDataUpdate_t) ) );
 		
 		static Action<LobbyDataUpdate_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -2472,22 +2144,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
-			internal ulong SteamIDMember; // m_ulSteamIDMember uint64
-			internal byte Success; // m_bSuccess uint8
-			
-			public static implicit operator LobbyDataUpdate_t ( LobbyDataUpdate_t.Pack8 d ) => new LobbyDataUpdate_t{ SteamIDLobby = d.SteamIDLobby,SteamIDMember = d.SteamIDMember,Success = d.Success, };
-			public static implicit operator LobbyDataUpdate_t.Pack8 ( LobbyDataUpdate_t d ) => new LobbyDataUpdate_t.Pack8{ SteamIDLobby = d.SteamIDLobby,SteamIDMember = d.SteamIDMember,Success = d.Success, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct LobbyChatUpdate_t
 	{
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
@@ -2496,8 +2155,8 @@ namespace Steamworks.Data
 		internal uint GfChatMemberStateChange; // m_rgfChatMemberStateChange uint32
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(LobbyChatUpdate_t) : typeof(Pack8) );
-		internal static LobbyChatUpdate_t Fill( IntPtr p ) => Config.PackSmall ? ((LobbyChatUpdate_t)(LobbyChatUpdate_t) Marshal.PtrToStructure( p, typeof(LobbyChatUpdate_t) )) : ((LobbyChatUpdate_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LobbyChatUpdate_t) );
+		internal static LobbyChatUpdate_t Fill( IntPtr p ) => ((LobbyChatUpdate_t)(LobbyChatUpdate_t) Marshal.PtrToStructure( p, typeof(LobbyChatUpdate_t) ) );
 		
 		static Action<LobbyChatUpdate_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -2542,23 +2201,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
-			internal ulong SteamIDUserChanged; // m_ulSteamIDUserChanged uint64
-			internal ulong SteamIDMakingChange; // m_ulSteamIDMakingChange uint64
-			internal uint GfChatMemberStateChange; // m_rgfChatMemberStateChange uint32
-			
-			public static implicit operator LobbyChatUpdate_t ( LobbyChatUpdate_t.Pack8 d ) => new LobbyChatUpdate_t{ SteamIDLobby = d.SteamIDLobby,SteamIDUserChanged = d.SteamIDUserChanged,SteamIDMakingChange = d.SteamIDMakingChange,GfChatMemberStateChange = d.GfChatMemberStateChange, };
-			public static implicit operator LobbyChatUpdate_t.Pack8 ( LobbyChatUpdate_t d ) => new LobbyChatUpdate_t.Pack8{ SteamIDLobby = d.SteamIDLobby,SteamIDUserChanged = d.SteamIDUserChanged,SteamIDMakingChange = d.SteamIDMakingChange,GfChatMemberStateChange = d.GfChatMemberStateChange, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct LobbyChatMsg_t
 	{
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
@@ -2567,8 +2212,8 @@ namespace Steamworks.Data
 		internal uint ChatID; // m_iChatID uint32
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(LobbyChatMsg_t) : typeof(Pack8) );
-		internal static LobbyChatMsg_t Fill( IntPtr p ) => Config.PackSmall ? ((LobbyChatMsg_t)(LobbyChatMsg_t) Marshal.PtrToStructure( p, typeof(LobbyChatMsg_t) )) : ((LobbyChatMsg_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LobbyChatMsg_t) );
+		internal static LobbyChatMsg_t Fill( IntPtr p ) => ((LobbyChatMsg_t)(LobbyChatMsg_t) Marshal.PtrToStructure( p, typeof(LobbyChatMsg_t) ) );
 		
 		static Action<LobbyChatMsg_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -2613,23 +2258,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
-			internal ulong SteamIDUser; // m_ulSteamIDUser uint64
-			internal byte ChatEntryType; // m_eChatEntryType uint8
-			internal uint ChatID; // m_iChatID uint32
-			
-			public static implicit operator LobbyChatMsg_t ( LobbyChatMsg_t.Pack8 d ) => new LobbyChatMsg_t{ SteamIDLobby = d.SteamIDLobby,SteamIDUser = d.SteamIDUser,ChatEntryType = d.ChatEntryType,ChatID = d.ChatID, };
-			public static implicit operator LobbyChatMsg_t.Pack8 ( LobbyChatMsg_t d ) => new LobbyChatMsg_t.Pack8{ SteamIDLobby = d.SteamIDLobby,SteamIDUser = d.SteamIDUser,ChatEntryType = d.ChatEntryType,ChatID = d.ChatID, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct LobbyGameCreated_t
 	{
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
@@ -2638,8 +2269,8 @@ namespace Steamworks.Data
 		internal ushort Port; // m_usPort uint16
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(LobbyGameCreated_t) : typeof(Pack8) );
-		internal static LobbyGameCreated_t Fill( IntPtr p ) => Config.PackSmall ? ((LobbyGameCreated_t)(LobbyGameCreated_t) Marshal.PtrToStructure( p, typeof(LobbyGameCreated_t) )) : ((LobbyGameCreated_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LobbyGameCreated_t) );
+		internal static LobbyGameCreated_t Fill( IntPtr p ) => ((LobbyGameCreated_t)(LobbyGameCreated_t) Marshal.PtrToStructure( p, typeof(LobbyGameCreated_t) ) );
 		
 		static Action<LobbyGameCreated_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -2684,30 +2315,16 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
-			internal ulong SteamIDGameServer; // m_ulSteamIDGameServer uint64
-			internal uint IP; // m_unIP uint32
-			internal ushort Port; // m_usPort uint16
-			
-			public static implicit operator LobbyGameCreated_t ( LobbyGameCreated_t.Pack8 d ) => new LobbyGameCreated_t{ SteamIDLobby = d.SteamIDLobby,SteamIDGameServer = d.SteamIDGameServer,IP = d.IP,Port = d.Port, };
-			public static implicit operator LobbyGameCreated_t.Pack8 ( LobbyGameCreated_t d ) => new LobbyGameCreated_t.Pack8{ SteamIDLobby = d.SteamIDLobby,SteamIDGameServer = d.SteamIDGameServer,IP = d.IP,Port = d.Port, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct LobbyMatchList_t
 	{
 		internal uint LobbiesMatching; // m_nLobbiesMatching uint32
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(LobbyMatchList_t) : typeof(Pack8) );
-		internal static LobbyMatchList_t Fill( IntPtr p ) => Config.PackSmall ? ((LobbyMatchList_t)(LobbyMatchList_t) Marshal.PtrToStructure( p, typeof(LobbyMatchList_t) )) : ((LobbyMatchList_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LobbyMatchList_t) );
+		internal static LobbyMatchList_t Fill( IntPtr p ) => ((LobbyMatchList_t)(LobbyMatchList_t) Marshal.PtrToStructure( p, typeof(LobbyMatchList_t) ) );
 		
 		static Action<LobbyMatchList_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -2752,20 +2369,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint LobbiesMatching; // m_nLobbiesMatching uint32
-			
-			public static implicit operator LobbyMatchList_t ( LobbyMatchList_t.Pack8 d ) => new LobbyMatchList_t{ LobbiesMatching = d.LobbiesMatching, };
-			public static implicit operator LobbyMatchList_t.Pack8 ( LobbyMatchList_t d ) => new LobbyMatchList_t.Pack8{ LobbiesMatching = d.LobbiesMatching, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct LobbyKicked_t
 	{
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
@@ -2773,8 +2379,8 @@ namespace Steamworks.Data
 		internal byte KickedDueToDisconnect; // m_bKickedDueToDisconnect uint8
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(LobbyKicked_t) : typeof(Pack8) );
-		internal static LobbyKicked_t Fill( IntPtr p ) => Config.PackSmall ? ((LobbyKicked_t)(LobbyKicked_t) Marshal.PtrToStructure( p, typeof(LobbyKicked_t) )) : ((LobbyKicked_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LobbyKicked_t) );
+		internal static LobbyKicked_t Fill( IntPtr p ) => ((LobbyKicked_t)(LobbyKicked_t) Marshal.PtrToStructure( p, typeof(LobbyKicked_t) ) );
 		
 		static Action<LobbyKicked_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -2819,30 +2425,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
-			internal ulong SteamIDAdmin; // m_ulSteamIDAdmin uint64
-			internal byte KickedDueToDisconnect; // m_bKickedDueToDisconnect uint8
-			
-			public static implicit operator LobbyKicked_t ( LobbyKicked_t.Pack8 d ) => new LobbyKicked_t{ SteamIDLobby = d.SteamIDLobby,SteamIDAdmin = d.SteamIDAdmin,KickedDueToDisconnect = d.KickedDueToDisconnect, };
-			public static implicit operator LobbyKicked_t.Pack8 ( LobbyKicked_t d ) => new LobbyKicked_t.Pack8{ SteamIDLobby = d.SteamIDLobby,SteamIDAdmin = d.SteamIDAdmin,KickedDueToDisconnect = d.KickedDueToDisconnect, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct LobbyCreated_t
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(LobbyCreated_t) : typeof(Pack8) );
-		internal static LobbyCreated_t Fill( IntPtr p ) => Config.PackSmall ? ((LobbyCreated_t)(LobbyCreated_t) Marshal.PtrToStructure( p, typeof(LobbyCreated_t) )) : ((LobbyCreated_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LobbyCreated_t) );
+		internal static LobbyCreated_t Fill( IntPtr p ) => ((LobbyCreated_t)(LobbyCreated_t) Marshal.PtrToStructure( p, typeof(LobbyCreated_t) ) );
 		
 		static Action<LobbyCreated_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -2887,21 +2480,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal ulong SteamIDLobby; // m_ulSteamIDLobby uint64
-			
-			public static implicit operator LobbyCreated_t ( LobbyCreated_t.Pack8 d ) => new LobbyCreated_t{ Result = d.Result,SteamIDLobby = d.SteamIDLobby, };
-			public static implicit operator LobbyCreated_t.Pack8 ( LobbyCreated_t d ) => new LobbyCreated_t.Pack8{ Result = d.Result,SteamIDLobby = d.SteamIDLobby, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct PSNGameBootInviteResult_t
 	{
 		[MarshalAs(UnmanagedType.I1)]
@@ -2957,14 +2538,14 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct FavoritesListAccountsUpdated_t
 	{
 		internal Result Result; // m_eResult enum EResult
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(FavoritesListAccountsUpdated_t) : typeof(Pack8) );
-		internal static FavoritesListAccountsUpdated_t Fill( IntPtr p ) => Config.PackSmall ? ((FavoritesListAccountsUpdated_t)(FavoritesListAccountsUpdated_t) Marshal.PtrToStructure( p, typeof(FavoritesListAccountsUpdated_t) )) : ((FavoritesListAccountsUpdated_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(FavoritesListAccountsUpdated_t) );
+		internal static FavoritesListAccountsUpdated_t Fill( IntPtr p ) => ((FavoritesListAccountsUpdated_t)(FavoritesListAccountsUpdated_t) Marshal.PtrToStructure( p, typeof(FavoritesListAccountsUpdated_t) ) );
 		
 		static Action<FavoritesListAccountsUpdated_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -3009,20 +2590,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			
-			public static implicit operator FavoritesListAccountsUpdated_t ( FavoritesListAccountsUpdated_t.Pack8 d ) => new FavoritesListAccountsUpdated_t{ Result = d.Result, };
-			public static implicit operator FavoritesListAccountsUpdated_t.Pack8 ( FavoritesListAccountsUpdated_t d ) => new FavoritesListAccountsUpdated_t.Pack8{ Result = d.Result, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct SearchForGameProgressCallback_t
 	{
 		internal ulong LSearchID; // m_ullSearchID uint64
@@ -3081,7 +2651,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct SearchForGameResultCallback_t
 	{
 		internal ulong LSearchID; // m_ullSearchID uint64
@@ -3141,15 +2711,15 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RequestPlayersForGameProgressCallback_t
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong LSearchID; // m_ullSearchID uint64
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RequestPlayersForGameProgressCallback_t) : typeof(Pack8) );
-		internal static RequestPlayersForGameProgressCallback_t Fill( IntPtr p ) => Config.PackSmall ? ((RequestPlayersForGameProgressCallback_t)(RequestPlayersForGameProgressCallback_t) Marshal.PtrToStructure( p, typeof(RequestPlayersForGameProgressCallback_t) )) : ((RequestPlayersForGameProgressCallback_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RequestPlayersForGameProgressCallback_t) );
+		internal static RequestPlayersForGameProgressCallback_t Fill( IntPtr p ) => ((RequestPlayersForGameProgressCallback_t)(RequestPlayersForGameProgressCallback_t) Marshal.PtrToStructure( p, typeof(RequestPlayersForGameProgressCallback_t) ) );
 		
 		static Action<RequestPlayersForGameProgressCallback_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -3194,21 +2764,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal ulong LSearchID; // m_ullSearchID uint64
-			
-			public static implicit operator RequestPlayersForGameProgressCallback_t ( RequestPlayersForGameProgressCallback_t.Pack8 d ) => new RequestPlayersForGameProgressCallback_t{ Result = d.Result,LSearchID = d.LSearchID, };
-			public static implicit operator RequestPlayersForGameProgressCallback_t.Pack8 ( RequestPlayersForGameProgressCallback_t d ) => new RequestPlayersForGameProgressCallback_t.Pack8{ Result = d.Result,LSearchID = d.LSearchID, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct RequestPlayersForGameResultCallback_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -3271,7 +2829,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RequestPlayersForGameFinalResultCallback_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -3279,8 +2837,8 @@ namespace Steamworks.Data
 		internal ulong LUniqueGameID; // m_ullUniqueGameID uint64
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RequestPlayersForGameFinalResultCallback_t) : typeof(Pack8) );
-		internal static RequestPlayersForGameFinalResultCallback_t Fill( IntPtr p ) => Config.PackSmall ? ((RequestPlayersForGameFinalResultCallback_t)(RequestPlayersForGameFinalResultCallback_t) Marshal.PtrToStructure( p, typeof(RequestPlayersForGameFinalResultCallback_t) )) : ((RequestPlayersForGameFinalResultCallback_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RequestPlayersForGameFinalResultCallback_t) );
+		internal static RequestPlayersForGameFinalResultCallback_t Fill( IntPtr p ) => ((RequestPlayersForGameFinalResultCallback_t)(RequestPlayersForGameFinalResultCallback_t) Marshal.PtrToStructure( p, typeof(RequestPlayersForGameFinalResultCallback_t) ) );
 		
 		static Action<RequestPlayersForGameFinalResultCallback_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -3325,22 +2883,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal ulong LSearchID; // m_ullSearchID uint64
-			internal ulong LUniqueGameID; // m_ullUniqueGameID uint64
-			
-			public static implicit operator RequestPlayersForGameFinalResultCallback_t ( RequestPlayersForGameFinalResultCallback_t.Pack8 d ) => new RequestPlayersForGameFinalResultCallback_t{ Result = d.Result,LSearchID = d.LSearchID,LUniqueGameID = d.LUniqueGameID, };
-			public static implicit operator RequestPlayersForGameFinalResultCallback_t.Pack8 ( RequestPlayersForGameFinalResultCallback_t d ) => new RequestPlayersForGameFinalResultCallback_t.Pack8{ Result = d.Result,LSearchID = d.LSearchID,LUniqueGameID = d.LUniqueGameID, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct SubmitPlayerResultResultCallback_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -3396,15 +2941,15 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct EndGameResultCallback_t
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong UllUniqueGameID; // ullUniqueGameID uint64
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(EndGameResultCallback_t) : typeof(Pack8) );
-		internal static EndGameResultCallback_t Fill( IntPtr p ) => Config.PackSmall ? ((EndGameResultCallback_t)(EndGameResultCallback_t) Marshal.PtrToStructure( p, typeof(EndGameResultCallback_t) )) : ((EndGameResultCallback_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(EndGameResultCallback_t) );
+		internal static EndGameResultCallback_t Fill( IntPtr p ) => ((EndGameResultCallback_t)(EndGameResultCallback_t) Marshal.PtrToStructure( p, typeof(EndGameResultCallback_t) ) );
 		
 		static Action<EndGameResultCallback_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -3449,21 +2994,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal ulong UllUniqueGameID; // ullUniqueGameID uint64
-			
-			public static implicit operator EndGameResultCallback_t ( EndGameResultCallback_t.Pack8 d ) => new EndGameResultCallback_t{ Result = d.Result,UllUniqueGameID = d.UllUniqueGameID, };
-			public static implicit operator EndGameResultCallback_t.Pack8 ( EndGameResultCallback_t d ) => new EndGameResultCallback_t.Pack8{ Result = d.Result,UllUniqueGameID = d.UllUniqueGameID, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct JoinPartyCallback_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -3522,15 +3055,15 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct CreateBeaconCallback_t
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(CreateBeaconCallback_t) : typeof(Pack8) );
-		internal static CreateBeaconCallback_t Fill( IntPtr p ) => Config.PackSmall ? ((CreateBeaconCallback_t)(CreateBeaconCallback_t) Marshal.PtrToStructure( p, typeof(CreateBeaconCallback_t) )) : ((CreateBeaconCallback_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(CreateBeaconCallback_t) );
+		internal static CreateBeaconCallback_t Fill( IntPtr p ) => ((CreateBeaconCallback_t)(CreateBeaconCallback_t) Marshal.PtrToStructure( p, typeof(CreateBeaconCallback_t) ) );
 		
 		static Action<CreateBeaconCallback_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -3575,21 +3108,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
-			
-			public static implicit operator CreateBeaconCallback_t ( CreateBeaconCallback_t.Pack8 d ) => new CreateBeaconCallback_t{ Result = d.Result,BeaconID = d.BeaconID, };
-			public static implicit operator CreateBeaconCallback_t.Pack8 ( CreateBeaconCallback_t d ) => new CreateBeaconCallback_t.Pack8{ Result = d.Result,BeaconID = d.BeaconID, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct ReservationNotificationCallback_t
 	{
 		internal ulong BeaconID; // m_ulBeaconID PartyBeaconID_t
@@ -3644,14 +3165,14 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct ChangeNumOpenSlotsCallback_t
 	{
 		internal Result Result; // m_eResult enum EResult
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(ChangeNumOpenSlotsCallback_t) : typeof(Pack8) );
-		internal static ChangeNumOpenSlotsCallback_t Fill( IntPtr p ) => Config.PackSmall ? ((ChangeNumOpenSlotsCallback_t)(ChangeNumOpenSlotsCallback_t) Marshal.PtrToStructure( p, typeof(ChangeNumOpenSlotsCallback_t) )) : ((ChangeNumOpenSlotsCallback_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(ChangeNumOpenSlotsCallback_t) );
+		internal static ChangeNumOpenSlotsCallback_t Fill( IntPtr p ) => ((ChangeNumOpenSlotsCallback_t)(ChangeNumOpenSlotsCallback_t) Marshal.PtrToStructure( p, typeof(ChangeNumOpenSlotsCallback_t) ) );
 		
 		static Action<ChangeNumOpenSlotsCallback_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -3696,43 +3217,20 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			
-			public static implicit operator ChangeNumOpenSlotsCallback_t ( ChangeNumOpenSlotsCallback_t.Pack8 d ) => new ChangeNumOpenSlotsCallback_t{ Result = d.Result, };
-			public static implicit operator ChangeNumOpenSlotsCallback_t.Pack8 ( ChangeNumOpenSlotsCallback_t d ) => new ChangeNumOpenSlotsCallback_t.Pack8{ Result = d.Result, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamParamStringArray_t
 	{
 		internal IntPtr Strings; // m_ppStrings const char **
 		internal int NumStrings; // m_nNumStrings int32
 		
 		#region Marshalling
-		internal static SteamParamStringArray_t Fill( IntPtr p ) => Config.PackSmall ? ((SteamParamStringArray_t)(SteamParamStringArray_t) Marshal.PtrToStructure( p, typeof(SteamParamStringArray_t) )) : ((SteamParamStringArray_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal IntPtr Strings; // m_ppStrings const char **
-			internal int NumStrings; // m_nNumStrings int32
-			
-			public static implicit operator SteamParamStringArray_t ( SteamParamStringArray_t.Pack8 d ) => new SteamParamStringArray_t{ Strings = d.Strings,NumStrings = d.NumStrings, };
-			public static implicit operator SteamParamStringArray_t.Pack8 ( SteamParamStringArray_t d ) => new SteamParamStringArray_t.Pack8{ Strings = d.Strings,NumStrings = d.NumStrings, };
-		}
+		internal static SteamParamStringArray_t Fill( IntPtr p ) => ((SteamParamStringArray_t)(SteamParamStringArray_t) Marshal.PtrToStructure( p, typeof(SteamParamStringArray_t) ) );
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoteStorageAppSyncedClient_t
 	{
 		internal AppId AppID; // m_nAppID AppId_t
@@ -3740,8 +3238,8 @@ namespace Steamworks.Data
 		internal int NumDownloads; // m_unNumDownloads int
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStorageAppSyncedClient_t) : typeof(Pack8) );
-		internal static RemoteStorageAppSyncedClient_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoteStorageAppSyncedClient_t)(RemoteStorageAppSyncedClient_t) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncedClient_t) )) : ((RemoteStorageAppSyncedClient_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageAppSyncedClient_t) );
+		internal static RemoteStorageAppSyncedClient_t Fill( IntPtr p ) => ((RemoteStorageAppSyncedClient_t)(RemoteStorageAppSyncedClient_t) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncedClient_t) ) );
 		
 		static Action<RemoteStorageAppSyncedClient_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -3786,22 +3284,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal AppId AppID; // m_nAppID AppId_t
-			internal Result Result; // m_eResult enum EResult
-			internal int NumDownloads; // m_unNumDownloads int
-			
-			public static implicit operator RemoteStorageAppSyncedClient_t ( RemoteStorageAppSyncedClient_t.Pack8 d ) => new RemoteStorageAppSyncedClient_t{ AppID = d.AppID,Result = d.Result,NumDownloads = d.NumDownloads, };
-			public static implicit operator RemoteStorageAppSyncedClient_t.Pack8 ( RemoteStorageAppSyncedClient_t d ) => new RemoteStorageAppSyncedClient_t.Pack8{ AppID = d.AppID,Result = d.Result,NumDownloads = d.NumDownloads, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoteStorageAppSyncedServer_t
 	{
 		internal AppId AppID; // m_nAppID AppId_t
@@ -3809,8 +3294,8 @@ namespace Steamworks.Data
 		internal int NumUploads; // m_unNumUploads int
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStorageAppSyncedServer_t) : typeof(Pack8) );
-		internal static RemoteStorageAppSyncedServer_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoteStorageAppSyncedServer_t)(RemoteStorageAppSyncedServer_t) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncedServer_t) )) : ((RemoteStorageAppSyncedServer_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageAppSyncedServer_t) );
+		internal static RemoteStorageAppSyncedServer_t Fill( IntPtr p ) => ((RemoteStorageAppSyncedServer_t)(RemoteStorageAppSyncedServer_t) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncedServer_t) ) );
 		
 		static Action<RemoteStorageAppSyncedServer_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -3855,22 +3340,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal AppId AppID; // m_nAppID AppId_t
-			internal Result Result; // m_eResult enum EResult
-			internal int NumUploads; // m_unNumUploads int
-			
-			public static implicit operator RemoteStorageAppSyncedServer_t ( RemoteStorageAppSyncedServer_t.Pack8 d ) => new RemoteStorageAppSyncedServer_t{ AppID = d.AppID,Result = d.Result,NumUploads = d.NumUploads, };
-			public static implicit operator RemoteStorageAppSyncedServer_t.Pack8 ( RemoteStorageAppSyncedServer_t d ) => new RemoteStorageAppSyncedServer_t.Pack8{ AppID = d.AppID,Result = d.Result,NumUploads = d.NumUploads, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoteStorageAppSyncProgress_t
 	{
 		internal string CurrentFileUTF8() => System.Text.Encoding.UTF8.GetString( CurrentFile, 0, System.Array.IndexOf<byte>( CurrentFile, 0 ) );
@@ -3883,8 +3355,8 @@ namespace Steamworks.Data
 		internal bool Uploading; // m_bUploading _Bool
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStorageAppSyncProgress_t) : typeof(Pack8) );
-		internal static RemoteStorageAppSyncProgress_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoteStorageAppSyncProgress_t)(RemoteStorageAppSyncProgress_t) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncProgress_t) )) : ((RemoteStorageAppSyncProgress_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageAppSyncProgress_t) );
+		internal static RemoteStorageAppSyncProgress_t Fill( IntPtr p ) => ((RemoteStorageAppSyncProgress_t)(RemoteStorageAppSyncProgress_t) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncProgress_t) ) );
 		
 		static Action<RemoteStorageAppSyncProgress_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -3929,35 +3401,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal string CurrentFileUTF8() => System.Text.Encoding.UTF8.GetString( CurrentFile, 0, System.Array.IndexOf<byte>( CurrentFile, 0 ) );
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 260)] // byte[] m_rgchCurrentFile
-			internal byte[] CurrentFile; // m_rgchCurrentFile char [260]
-			internal AppId AppID; // m_nAppID AppId_t
-			internal uint BytesTransferredThisChunk; // m_uBytesTransferredThisChunk uint32
-			internal double DAppPercentComplete; // m_dAppPercentComplete double
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool Uploading; // m_bUploading _Bool
-			
-			public static implicit operator RemoteStorageAppSyncProgress_t ( RemoteStorageAppSyncProgress_t.Pack8 d ) => new RemoteStorageAppSyncProgress_t{ CurrentFile = d.CurrentFile,AppID = d.AppID,BytesTransferredThisChunk = d.BytesTransferredThisChunk,DAppPercentComplete = d.DAppPercentComplete,Uploading = d.Uploading, };
-			public static implicit operator RemoteStorageAppSyncProgress_t.Pack8 ( RemoteStorageAppSyncProgress_t d ) => new RemoteStorageAppSyncProgress_t.Pack8{ CurrentFile = d.CurrentFile,AppID = d.AppID,BytesTransferredThisChunk = d.BytesTransferredThisChunk,DAppPercentComplete = d.DAppPercentComplete,Uploading = d.Uploading, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoteStorageAppSyncStatusCheck_t
 	{
 		internal AppId AppID; // m_nAppID AppId_t
 		internal Result Result; // m_eResult enum EResult
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStorageAppSyncStatusCheck_t) : typeof(Pack8) );
-		internal static RemoteStorageAppSyncStatusCheck_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoteStorageAppSyncStatusCheck_t)(RemoteStorageAppSyncStatusCheck_t) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncStatusCheck_t) )) : ((RemoteStorageAppSyncStatusCheck_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageAppSyncStatusCheck_t) );
+		internal static RemoteStorageAppSyncStatusCheck_t Fill( IntPtr p ) => ((RemoteStorageAppSyncStatusCheck_t)(RemoteStorageAppSyncStatusCheck_t) Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncStatusCheck_t) ) );
 		
 		static Action<RemoteStorageAppSyncStatusCheck_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -4002,21 +3456,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal AppId AppID; // m_nAppID AppId_t
-			internal Result Result; // m_eResult enum EResult
-			
-			public static implicit operator RemoteStorageAppSyncStatusCheck_t ( RemoteStorageAppSyncStatusCheck_t.Pack8 d ) => new RemoteStorageAppSyncStatusCheck_t{ AppID = d.AppID,Result = d.Result, };
-			public static implicit operator RemoteStorageAppSyncStatusCheck_t.Pack8 ( RemoteStorageAppSyncStatusCheck_t d ) => new RemoteStorageAppSyncStatusCheck_t.Pack8{ AppID = d.AppID,Result = d.Result, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoteStorageFileShareResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -4026,8 +3468,8 @@ namespace Steamworks.Data
 		internal byte[] Filename; // m_rgchFilename char [260]
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStorageFileShareResult_t) : typeof(Pack8) );
-		internal static RemoteStorageFileShareResult_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoteStorageFileShareResult_t)(RemoteStorageFileShareResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageFileShareResult_t) )) : ((RemoteStorageFileShareResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageFileShareResult_t) );
+		internal static RemoteStorageFileShareResult_t Fill( IntPtr p ) => ((RemoteStorageFileShareResult_t)(RemoteStorageFileShareResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageFileShareResult_t) ) );
 		
 		static Action<RemoteStorageFileShareResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -4072,24 +3514,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal ulong File; // m_hFile UGCHandle_t
-			internal string FilenameUTF8() => System.Text.Encoding.UTF8.GetString( Filename, 0, System.Array.IndexOf<byte>( Filename, 0 ) );
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 260)] // byte[] m_rgchFilename
-			internal byte[] Filename; // m_rgchFilename char [260]
-			
-			public static implicit operator RemoteStorageFileShareResult_t ( RemoteStorageFileShareResult_t.Pack8 d ) => new RemoteStorageFileShareResult_t{ Result = d.Result,File = d.File,Filename = d.Filename, };
-			public static implicit operator RemoteStorageFileShareResult_t.Pack8 ( RemoteStorageFileShareResult_t d ) => new RemoteStorageFileShareResult_t.Pack8{ Result = d.Result,File = d.File,Filename = d.Filename, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoteStoragePublishFileResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -4098,8 +3525,8 @@ namespace Steamworks.Data
 		internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStoragePublishFileResult_t) : typeof(Pack8) );
-		internal static RemoteStoragePublishFileResult_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoteStoragePublishFileResult_t)(RemoteStoragePublishFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishFileResult_t) )) : ((RemoteStoragePublishFileResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStoragePublishFileResult_t) );
+		internal static RemoteStoragePublishFileResult_t Fill( IntPtr p ) => ((RemoteStoragePublishFileResult_t)(RemoteStoragePublishFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishFileResult_t) ) );
 		
 		static Action<RemoteStoragePublishFileResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -4144,31 +3571,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
-			
-			public static implicit operator RemoteStoragePublishFileResult_t ( RemoteStoragePublishFileResult_t.Pack8 d ) => new RemoteStoragePublishFileResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement, };
-			public static implicit operator RemoteStoragePublishFileResult_t.Pack8 ( RemoteStoragePublishFileResult_t d ) => new RemoteStoragePublishFileResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId,UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoteStorageDeletePublishedFileResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStorageDeletePublishedFileResult_t) : typeof(Pack8) );
-		internal static RemoteStorageDeletePublishedFileResult_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoteStorageDeletePublishedFileResult_t)(RemoteStorageDeletePublishedFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageDeletePublishedFileResult_t) )) : ((RemoteStorageDeletePublishedFileResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageDeletePublishedFileResult_t) );
+		internal static RemoteStorageDeletePublishedFileResult_t Fill( IntPtr p ) => ((RemoteStorageDeletePublishedFileResult_t)(RemoteStorageDeletePublishedFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageDeletePublishedFileResult_t) ) );
 		
 		static Action<RemoteStorageDeletePublishedFileResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -4213,21 +3626,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			
-			public static implicit operator RemoteStorageDeletePublishedFileResult_t ( RemoteStorageDeletePublishedFileResult_t.Pack8 d ) => new RemoteStorageDeletePublishedFileResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
-			public static implicit operator RemoteStorageDeletePublishedFileResult_t.Pack8 ( RemoteStorageDeletePublishedFileResult_t d ) => new RemoteStorageDeletePublishedFileResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoteStorageEnumerateUserPublishedFilesResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -4237,8 +3638,8 @@ namespace Steamworks.Data
 		internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStorageEnumerateUserPublishedFilesResult_t) : typeof(Pack8) );
-		internal static RemoteStorageEnumerateUserPublishedFilesResult_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoteStorageEnumerateUserPublishedFilesResult_t)(RemoteStorageEnumerateUserPublishedFilesResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserPublishedFilesResult_t) )) : ((RemoteStorageEnumerateUserPublishedFilesResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageEnumerateUserPublishedFilesResult_t) );
+		internal static RemoteStorageEnumerateUserPublishedFilesResult_t Fill( IntPtr p ) => ((RemoteStorageEnumerateUserPublishedFilesResult_t)(RemoteStorageEnumerateUserPublishedFilesResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserPublishedFilesResult_t) ) );
 		
 		static Action<RemoteStorageEnumerateUserPublishedFilesResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -4283,32 +3684,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal int ResultsReturned; // m_nResultsReturned int32
-			internal int TotalResultCount; // m_nTotalResultCount int32
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-			internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
-			
-			public static implicit operator RemoteStorageEnumerateUserPublishedFilesResult_t ( RemoteStorageEnumerateUserPublishedFilesResult_t.Pack8 d ) => new RemoteStorageEnumerateUserPublishedFilesResult_t{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId, };
-			public static implicit operator RemoteStorageEnumerateUserPublishedFilesResult_t.Pack8 ( RemoteStorageEnumerateUserPublishedFilesResult_t d ) => new RemoteStorageEnumerateUserPublishedFilesResult_t.Pack8{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoteStorageSubscribePublishedFileResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStorageSubscribePublishedFileResult_t) : typeof(Pack8) );
-		internal static RemoteStorageSubscribePublishedFileResult_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoteStorageSubscribePublishedFileResult_t)(RemoteStorageSubscribePublishedFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageSubscribePublishedFileResult_t) )) : ((RemoteStorageSubscribePublishedFileResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageSubscribePublishedFileResult_t) );
+		internal static RemoteStorageSubscribePublishedFileResult_t Fill( IntPtr p ) => ((RemoteStorageSubscribePublishedFileResult_t)(RemoteStorageSubscribePublishedFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageSubscribePublishedFileResult_t) ) );
 		
 		static Action<RemoteStorageSubscribePublishedFileResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -4353,21 +3739,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			
-			public static implicit operator RemoteStorageSubscribePublishedFileResult_t ( RemoteStorageSubscribePublishedFileResult_t.Pack8 d ) => new RemoteStorageSubscribePublishedFileResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
-			public static implicit operator RemoteStorageSubscribePublishedFileResult_t.Pack8 ( RemoteStorageSubscribePublishedFileResult_t d ) => new RemoteStorageSubscribePublishedFileResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoteStorageEnumerateUserSubscribedFilesResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -4379,8 +3753,8 @@ namespace Steamworks.Data
 		internal uint[] GRTimeSubscribed; // m_rgRTimeSubscribed uint32 [50]
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStorageEnumerateUserSubscribedFilesResult_t) : typeof(Pack8) );
-		internal static RemoteStorageEnumerateUserSubscribedFilesResult_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoteStorageEnumerateUserSubscribedFilesResult_t)(RemoteStorageEnumerateUserSubscribedFilesResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserSubscribedFilesResult_t) )) : ((RemoteStorageEnumerateUserSubscribedFilesResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageEnumerateUserSubscribedFilesResult_t) );
+		internal static RemoteStorageEnumerateUserSubscribedFilesResult_t Fill( IntPtr p ) => ((RemoteStorageEnumerateUserSubscribedFilesResult_t)(RemoteStorageEnumerateUserSubscribedFilesResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserSubscribedFilesResult_t) ) );
 		
 		static Action<RemoteStorageEnumerateUserSubscribedFilesResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -4425,34 +3799,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal int ResultsReturned; // m_nResultsReturned int32
-			internal int TotalResultCount; // m_nTotalResultCount int32
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-			internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U4)]
-			internal uint[] GRTimeSubscribed; // m_rgRTimeSubscribed uint32 [50]
-			
-			public static implicit operator RemoteStorageEnumerateUserSubscribedFilesResult_t ( RemoteStorageEnumerateUserSubscribedFilesResult_t.Pack8 d ) => new RemoteStorageEnumerateUserSubscribedFilesResult_t{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId,GRTimeSubscribed = d.GRTimeSubscribed, };
-			public static implicit operator RemoteStorageEnumerateUserSubscribedFilesResult_t.Pack8 ( RemoteStorageEnumerateUserSubscribedFilesResult_t d ) => new RemoteStorageEnumerateUserSubscribedFilesResult_t.Pack8{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId,GRTimeSubscribed = d.GRTimeSubscribed, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoteStorageUnsubscribePublishedFileResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStorageUnsubscribePublishedFileResult_t) : typeof(Pack8) );
-		internal static RemoteStorageUnsubscribePublishedFileResult_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoteStorageUnsubscribePublishedFileResult_t)(RemoteStorageUnsubscribePublishedFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageUnsubscribePublishedFileResult_t) )) : ((RemoteStorageUnsubscribePublishedFileResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageUnsubscribePublishedFileResult_t) );
+		internal static RemoteStorageUnsubscribePublishedFileResult_t Fill( IntPtr p ) => ((RemoteStorageUnsubscribePublishedFileResult_t)(RemoteStorageUnsubscribePublishedFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageUnsubscribePublishedFileResult_t) ) );
 		
 		static Action<RemoteStorageUnsubscribePublishedFileResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -4497,21 +3854,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			
-			public static implicit operator RemoteStorageUnsubscribePublishedFileResult_t ( RemoteStorageUnsubscribePublishedFileResult_t.Pack8 d ) => new RemoteStorageUnsubscribePublishedFileResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
-			public static implicit operator RemoteStorageUnsubscribePublishedFileResult_t.Pack8 ( RemoteStorageUnsubscribePublishedFileResult_t d ) => new RemoteStorageUnsubscribePublishedFileResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoteStorageUpdatePublishedFileResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -4520,8 +3865,8 @@ namespace Steamworks.Data
 		internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStorageUpdatePublishedFileResult_t) : typeof(Pack8) );
-		internal static RemoteStorageUpdatePublishedFileResult_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoteStorageUpdatePublishedFileResult_t)(RemoteStorageUpdatePublishedFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageUpdatePublishedFileResult_t) )) : ((RemoteStorageUpdatePublishedFileResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageUpdatePublishedFileResult_t) );
+		internal static RemoteStorageUpdatePublishedFileResult_t Fill( IntPtr p ) => ((RemoteStorageUpdatePublishedFileResult_t)(RemoteStorageUpdatePublishedFileResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageUpdatePublishedFileResult_t) ) );
 		
 		static Action<RemoteStorageUpdatePublishedFileResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -4566,23 +3911,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
-			
-			public static implicit operator RemoteStorageUpdatePublishedFileResult_t ( RemoteStorageUpdatePublishedFileResult_t.Pack8 d ) => new RemoteStorageUpdatePublishedFileResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement, };
-			public static implicit operator RemoteStorageUpdatePublishedFileResult_t.Pack8 ( RemoteStorageUpdatePublishedFileResult_t d ) => new RemoteStorageUpdatePublishedFileResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId,UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoteStorageDownloadUGCResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -4595,8 +3926,8 @@ namespace Steamworks.Data
 		internal ulong SteamIDOwner; // m_ulSteamIDOwner uint64
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStorageDownloadUGCResult_t) : typeof(Pack8) );
-		internal static RemoteStorageDownloadUGCResult_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoteStorageDownloadUGCResult_t)(RemoteStorageDownloadUGCResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageDownloadUGCResult_t) )) : ((RemoteStorageDownloadUGCResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageDownloadUGCResult_t) );
+		internal static RemoteStorageDownloadUGCResult_t Fill( IntPtr p ) => ((RemoteStorageDownloadUGCResult_t)(RemoteStorageDownloadUGCResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageDownloadUGCResult_t) ) );
 		
 		static Action<RemoteStorageDownloadUGCResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -4641,27 +3972,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal ulong File; // m_hFile UGCHandle_t
-			internal AppId AppID; // m_nAppID AppId_t
-			internal int SizeInBytes; // m_nSizeInBytes int32
-			internal string PchFileNameUTF8() => System.Text.Encoding.UTF8.GetString( PchFileName, 0, System.Array.IndexOf<byte>( PchFileName, 0 ) );
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 260)] // byte[] m_pchFileName
-			internal byte[] PchFileName; // m_pchFileName char [260]
-			internal ulong SteamIDOwner; // m_ulSteamIDOwner uint64
-			
-			public static implicit operator RemoteStorageDownloadUGCResult_t ( RemoteStorageDownloadUGCResult_t.Pack8 d ) => new RemoteStorageDownloadUGCResult_t{ Result = d.Result,File = d.File,AppID = d.AppID,SizeInBytes = d.SizeInBytes,PchFileName = d.PchFileName,SteamIDOwner = d.SteamIDOwner, };
-			public static implicit operator RemoteStorageDownloadUGCResult_t.Pack8 ( RemoteStorageDownloadUGCResult_t d ) => new RemoteStorageDownloadUGCResult_t.Pack8{ Result = d.Result,File = d.File,AppID = d.AppID,SizeInBytes = d.SizeInBytes,PchFileName = d.PchFileName,SteamIDOwner = d.SteamIDOwner, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoteStorageGetPublishedFileDetailsResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -4700,8 +4013,8 @@ namespace Steamworks.Data
 		internal bool AcceptedForUse; // m_bAcceptedForUse _Bool
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStorageGetPublishedFileDetailsResult_t) : typeof(Pack8) );
-		internal static RemoteStorageGetPublishedFileDetailsResult_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoteStorageGetPublishedFileDetailsResult_t)(RemoteStorageGetPublishedFileDetailsResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageGetPublishedFileDetailsResult_t) )) : ((RemoteStorageGetPublishedFileDetailsResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageGetPublishedFileDetailsResult_t) );
+		internal static RemoteStorageGetPublishedFileDetailsResult_t Fill( IntPtr p ) => ((RemoteStorageGetPublishedFileDetailsResult_t)(RemoteStorageGetPublishedFileDetailsResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageGetPublishedFileDetailsResult_t) ) );
 		
 		static Action<RemoteStorageGetPublishedFileDetailsResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -4746,53 +4059,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal AppId CreatorAppID; // m_nCreatorAppID AppId_t
-			internal AppId ConsumerAppID; // m_nConsumerAppID AppId_t
-			internal string TitleUTF8() => System.Text.Encoding.UTF8.GetString( Title, 0, System.Array.IndexOf<byte>( Title, 0 ) );
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 129)] // byte[] m_rgchTitle
-			internal byte[] Title; // m_rgchTitle char [129]
-			internal string DescriptionUTF8() => System.Text.Encoding.UTF8.GetString( Description, 0, System.Array.IndexOf<byte>( Description, 0 ) );
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 8000)] // byte[] m_rgchDescription
-			internal byte[] Description; // m_rgchDescription char [8000]
-			internal ulong File; // m_hFile UGCHandle_t
-			internal ulong PreviewFile; // m_hPreviewFile UGCHandle_t
-			internal ulong SteamIDOwner; // m_ulSteamIDOwner uint64
-			internal uint TimeCreated; // m_rtimeCreated uint32
-			internal uint TimeUpdated; // m_rtimeUpdated uint32
-			internal RemoteStoragePublishedFileVisibility Visibility; // m_eVisibility enum ERemoteStoragePublishedFileVisibility
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool Banned; // m_bBanned _Bool
-			internal string TagsUTF8() => System.Text.Encoding.UTF8.GetString( Tags, 0, System.Array.IndexOf<byte>( Tags, 0 ) );
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 1025)] // byte[] m_rgchTags
-			internal byte[] Tags; // m_rgchTags char [1025]
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool TagsTruncated; // m_bTagsTruncated _Bool
-			internal string PchFileNameUTF8() => System.Text.Encoding.UTF8.GetString( PchFileName, 0, System.Array.IndexOf<byte>( PchFileName, 0 ) );
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 260)] // byte[] m_pchFileName
-			internal byte[] PchFileName; // m_pchFileName char [260]
-			internal int FileSize; // m_nFileSize int32
-			internal int PreviewFileSize; // m_nPreviewFileSize int32
-			internal string URLUTF8() => System.Text.Encoding.UTF8.GetString( URL, 0, System.Array.IndexOf<byte>( URL, 0 ) );
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_rgchURL
-			internal byte[] URL; // m_rgchURL char [256]
-			internal WorkshopFileType FileType; // m_eFileType enum EWorkshopFileType
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool AcceptedForUse; // m_bAcceptedForUse _Bool
-			
-			public static implicit operator RemoteStorageGetPublishedFileDetailsResult_t ( RemoteStorageGetPublishedFileDetailsResult_t.Pack8 d ) => new RemoteStorageGetPublishedFileDetailsResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,CreatorAppID = d.CreatorAppID,ConsumerAppID = d.ConsumerAppID,Title = d.Title,Description = d.Description,File = d.File,PreviewFile = d.PreviewFile,SteamIDOwner = d.SteamIDOwner,TimeCreated = d.TimeCreated,TimeUpdated = d.TimeUpdated,Visibility = d.Visibility,Banned = d.Banned,Tags = d.Tags,TagsTruncated = d.TagsTruncated,PchFileName = d.PchFileName,FileSize = d.FileSize,PreviewFileSize = d.PreviewFileSize,URL = d.URL,FileType = d.FileType,AcceptedForUse = d.AcceptedForUse, };
-			public static implicit operator RemoteStorageGetPublishedFileDetailsResult_t.Pack8 ( RemoteStorageGetPublishedFileDetailsResult_t d ) => new RemoteStorageGetPublishedFileDetailsResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId,CreatorAppID = d.CreatorAppID,ConsumerAppID = d.ConsumerAppID,Title = d.Title,Description = d.Description,File = d.File,PreviewFile = d.PreviewFile,SteamIDOwner = d.SteamIDOwner,TimeCreated = d.TimeCreated,TimeUpdated = d.TimeUpdated,Visibility = d.Visibility,Banned = d.Banned,Tags = d.Tags,TagsTruncated = d.TagsTruncated,PchFileName = d.PchFileName,FileSize = d.FileSize,PreviewFileSize = d.PreviewFileSize,URL = d.URL,FileType = d.FileType,AcceptedForUse = d.AcceptedForUse, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoteStorageEnumerateWorkshopFilesResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -4806,8 +4075,8 @@ namespace Steamworks.Data
 		internal uint StartIndex; // m_unStartIndex uint32
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStorageEnumerateWorkshopFilesResult_t) : typeof(Pack8) );
-		internal static RemoteStorageEnumerateWorkshopFilesResult_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoteStorageEnumerateWorkshopFilesResult_t)(RemoteStorageEnumerateWorkshopFilesResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateWorkshopFilesResult_t) )) : ((RemoteStorageEnumerateWorkshopFilesResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageEnumerateWorkshopFilesResult_t) );
+		internal static RemoteStorageEnumerateWorkshopFilesResult_t Fill( IntPtr p ) => ((RemoteStorageEnumerateWorkshopFilesResult_t)(RemoteStorageEnumerateWorkshopFilesResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateWorkshopFilesResult_t) ) );
 		
 		static Action<RemoteStorageEnumerateWorkshopFilesResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -4852,28 +4121,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal int ResultsReturned; // m_nResultsReturned int32
-			internal int TotalResultCount; // m_nTotalResultCount int32
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-			internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.R4)]
-			internal float[] GScore; // m_rgScore float [50]
-			internal AppId AppId; // m_nAppId AppId_t
-			internal uint StartIndex; // m_unStartIndex uint32
-			
-			public static implicit operator RemoteStorageEnumerateWorkshopFilesResult_t ( RemoteStorageEnumerateWorkshopFilesResult_t.Pack8 d ) => new RemoteStorageEnumerateWorkshopFilesResult_t{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId,GScore = d.GScore,AppId = d.AppId,StartIndex = d.StartIndex, };
-			public static implicit operator RemoteStorageEnumerateWorkshopFilesResult_t.Pack8 ( RemoteStorageEnumerateWorkshopFilesResult_t d ) => new RemoteStorageEnumerateWorkshopFilesResult_t.Pack8{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId,GScore = d.GScore,AppId = d.AppId,StartIndex = d.StartIndex, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoteStorageGetPublishedItemVoteDetailsResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -4884,8 +4134,8 @@ namespace Steamworks.Data
 		internal float FScore; // m_fScore float
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStorageGetPublishedItemVoteDetailsResult_t) : typeof(Pack8) );
-		internal static RemoteStorageGetPublishedItemVoteDetailsResult_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoteStorageGetPublishedItemVoteDetailsResult_t)(RemoteStorageGetPublishedItemVoteDetailsResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageGetPublishedItemVoteDetailsResult_t) )) : ((RemoteStorageGetPublishedItemVoteDetailsResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageGetPublishedItemVoteDetailsResult_t) );
+		internal static RemoteStorageGetPublishedItemVoteDetailsResult_t Fill( IntPtr p ) => ((RemoteStorageGetPublishedItemVoteDetailsResult_t)(RemoteStorageGetPublishedItemVoteDetailsResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageGetPublishedItemVoteDetailsResult_t) ) );
 		
 		static Action<RemoteStorageGetPublishedItemVoteDetailsResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -4930,33 +4180,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal PublishedFileId PublishedFileId; // m_unPublishedFileId PublishedFileId_t
-			internal int VotesFor; // m_nVotesFor int32
-			internal int VotesAgainst; // m_nVotesAgainst int32
-			internal int Reports; // m_nReports int32
-			internal float FScore; // m_fScore float
-			
-			public static implicit operator RemoteStorageGetPublishedItemVoteDetailsResult_t ( RemoteStorageGetPublishedItemVoteDetailsResult_t.Pack8 d ) => new RemoteStorageGetPublishedItemVoteDetailsResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,VotesFor = d.VotesFor,VotesAgainst = d.VotesAgainst,Reports = d.Reports,FScore = d.FScore, };
-			public static implicit operator RemoteStorageGetPublishedItemVoteDetailsResult_t.Pack8 ( RemoteStorageGetPublishedItemVoteDetailsResult_t d ) => new RemoteStorageGetPublishedItemVoteDetailsResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId,VotesFor = d.VotesFor,VotesAgainst = d.VotesAgainst,Reports = d.Reports,FScore = d.FScore, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoteStoragePublishedFileSubscribed_t
 	{
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal AppId AppID; // m_nAppID AppId_t
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStoragePublishedFileSubscribed_t) : typeof(Pack8) );
-		internal static RemoteStoragePublishedFileSubscribed_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoteStoragePublishedFileSubscribed_t)(RemoteStoragePublishedFileSubscribed_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileSubscribed_t) )) : ((RemoteStoragePublishedFileSubscribed_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStoragePublishedFileSubscribed_t) );
+		internal static RemoteStoragePublishedFileSubscribed_t Fill( IntPtr p ) => ((RemoteStoragePublishedFileSubscribed_t)(RemoteStoragePublishedFileSubscribed_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileSubscribed_t) ) );
 		
 		static Action<RemoteStoragePublishedFileSubscribed_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -5001,29 +4235,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal AppId AppID; // m_nAppID AppId_t
-			
-			public static implicit operator RemoteStoragePublishedFileSubscribed_t ( RemoteStoragePublishedFileSubscribed_t.Pack8 d ) => new RemoteStoragePublishedFileSubscribed_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
-			public static implicit operator RemoteStoragePublishedFileSubscribed_t.Pack8 ( RemoteStoragePublishedFileSubscribed_t d ) => new RemoteStoragePublishedFileSubscribed_t.Pack8{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoteStoragePublishedFileUnsubscribed_t
 	{
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal AppId AppID; // m_nAppID AppId_t
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStoragePublishedFileUnsubscribed_t) : typeof(Pack8) );
-		internal static RemoteStoragePublishedFileUnsubscribed_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoteStoragePublishedFileUnsubscribed_t)(RemoteStoragePublishedFileUnsubscribed_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileUnsubscribed_t) )) : ((RemoteStoragePublishedFileUnsubscribed_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStoragePublishedFileUnsubscribed_t) );
+		internal static RemoteStoragePublishedFileUnsubscribed_t Fill( IntPtr p ) => ((RemoteStoragePublishedFileUnsubscribed_t)(RemoteStoragePublishedFileUnsubscribed_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileUnsubscribed_t) ) );
 		
 		static Action<RemoteStoragePublishedFileUnsubscribed_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -5068,29 +4290,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal AppId AppID; // m_nAppID AppId_t
-			
-			public static implicit operator RemoteStoragePublishedFileUnsubscribed_t ( RemoteStoragePublishedFileUnsubscribed_t.Pack8 d ) => new RemoteStoragePublishedFileUnsubscribed_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
-			public static implicit operator RemoteStoragePublishedFileUnsubscribed_t.Pack8 ( RemoteStoragePublishedFileUnsubscribed_t d ) => new RemoteStoragePublishedFileUnsubscribed_t.Pack8{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoteStoragePublishedFileDeleted_t
 	{
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		internal AppId AppID; // m_nAppID AppId_t
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStoragePublishedFileDeleted_t) : typeof(Pack8) );
-		internal static RemoteStoragePublishedFileDeleted_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoteStoragePublishedFileDeleted_t)(RemoteStoragePublishedFileDeleted_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileDeleted_t) )) : ((RemoteStoragePublishedFileDeleted_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStoragePublishedFileDeleted_t) );
+		internal static RemoteStoragePublishedFileDeleted_t Fill( IntPtr p ) => ((RemoteStoragePublishedFileDeleted_t)(RemoteStoragePublishedFileDeleted_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileDeleted_t) ) );
 		
 		static Action<RemoteStoragePublishedFileDeleted_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -5135,29 +4345,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal AppId AppID; // m_nAppID AppId_t
-			
-			public static implicit operator RemoteStoragePublishedFileDeleted_t ( RemoteStoragePublishedFileDeleted_t.Pack8 d ) => new RemoteStoragePublishedFileDeleted_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
-			public static implicit operator RemoteStoragePublishedFileDeleted_t.Pack8 ( RemoteStoragePublishedFileDeleted_t d ) => new RemoteStoragePublishedFileDeleted_t.Pack8{ PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoteStorageUpdateUserPublishedItemVoteResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStorageUpdateUserPublishedItemVoteResult_t) : typeof(Pack8) );
-		internal static RemoteStorageUpdateUserPublishedItemVoteResult_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoteStorageUpdateUserPublishedItemVoteResult_t)(RemoteStorageUpdateUserPublishedItemVoteResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageUpdateUserPublishedItemVoteResult_t) )) : ((RemoteStorageUpdateUserPublishedItemVoteResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageUpdateUserPublishedItemVoteResult_t) );
+		internal static RemoteStorageUpdateUserPublishedItemVoteResult_t Fill( IntPtr p ) => ((RemoteStorageUpdateUserPublishedItemVoteResult_t)(RemoteStorageUpdateUserPublishedItemVoteResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageUpdateUserPublishedItemVoteResult_t) ) );
 		
 		static Action<RemoteStorageUpdateUserPublishedItemVoteResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -5202,21 +4400,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			
-			public static implicit operator RemoteStorageUpdateUserPublishedItemVoteResult_t ( RemoteStorageUpdateUserPublishedItemVoteResult_t.Pack8 d ) => new RemoteStorageUpdateUserPublishedItemVoteResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
-			public static implicit operator RemoteStorageUpdateUserPublishedItemVoteResult_t.Pack8 ( RemoteStorageUpdateUserPublishedItemVoteResult_t d ) => new RemoteStorageUpdateUserPublishedItemVoteResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoteStorageUserVoteDetails_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -5224,8 +4410,8 @@ namespace Steamworks.Data
 		internal WorkshopVote Vote; // m_eVote enum EWorkshopVote
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStorageUserVoteDetails_t) : typeof(Pack8) );
-		internal static RemoteStorageUserVoteDetails_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoteStorageUserVoteDetails_t)(RemoteStorageUserVoteDetails_t) Marshal.PtrToStructure( p, typeof(RemoteStorageUserVoteDetails_t) )) : ((RemoteStorageUserVoteDetails_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageUserVoteDetails_t) );
+		internal static RemoteStorageUserVoteDetails_t Fill( IntPtr p ) => ((RemoteStorageUserVoteDetails_t)(RemoteStorageUserVoteDetails_t) Marshal.PtrToStructure( p, typeof(RemoteStorageUserVoteDetails_t) ) );
 		
 		static Action<RemoteStorageUserVoteDetails_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -5270,22 +4456,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal WorkshopVote Vote; // m_eVote enum EWorkshopVote
-			
-			public static implicit operator RemoteStorageUserVoteDetails_t ( RemoteStorageUserVoteDetails_t.Pack8 d ) => new RemoteStorageUserVoteDetails_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,Vote = d.Vote, };
-			public static implicit operator RemoteStorageUserVoteDetails_t.Pack8 ( RemoteStorageUserVoteDetails_t d ) => new RemoteStorageUserVoteDetails_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId,Vote = d.Vote, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoteStorageEnumerateUserSharedWorkshopFilesResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -5295,8 +4468,8 @@ namespace Steamworks.Data
 		internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStorageEnumerateUserSharedWorkshopFilesResult_t) : typeof(Pack8) );
-		internal static RemoteStorageEnumerateUserSharedWorkshopFilesResult_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoteStorageEnumerateUserSharedWorkshopFilesResult_t)(RemoteStorageEnumerateUserSharedWorkshopFilesResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserSharedWorkshopFilesResult_t) )) : ((RemoteStorageEnumerateUserSharedWorkshopFilesResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageEnumerateUserSharedWorkshopFilesResult_t) );
+		internal static RemoteStorageEnumerateUserSharedWorkshopFilesResult_t Fill( IntPtr p ) => ((RemoteStorageEnumerateUserSharedWorkshopFilesResult_t)(RemoteStorageEnumerateUserSharedWorkshopFilesResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserSharedWorkshopFilesResult_t) ) );
 		
 		static Action<RemoteStorageEnumerateUserSharedWorkshopFilesResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -5341,24 +4514,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal int ResultsReturned; // m_nResultsReturned int32
-			internal int TotalResultCount; // m_nTotalResultCount int32
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-			internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
-			
-			public static implicit operator RemoteStorageEnumerateUserSharedWorkshopFilesResult_t ( RemoteStorageEnumerateUserSharedWorkshopFilesResult_t.Pack8 d ) => new RemoteStorageEnumerateUserSharedWorkshopFilesResult_t{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId, };
-			public static implicit operator RemoteStorageEnumerateUserSharedWorkshopFilesResult_t.Pack8 ( RemoteStorageEnumerateUserSharedWorkshopFilesResult_t d ) => new RemoteStorageEnumerateUserSharedWorkshopFilesResult_t.Pack8{ Result = d.Result,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoteStorageSetUserPublishedFileActionResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -5366,8 +4524,8 @@ namespace Steamworks.Data
 		internal WorkshopFileAction Action; // m_eAction enum EWorkshopFileAction
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStorageSetUserPublishedFileActionResult_t) : typeof(Pack8) );
-		internal static RemoteStorageSetUserPublishedFileActionResult_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoteStorageSetUserPublishedFileActionResult_t)(RemoteStorageSetUserPublishedFileActionResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageSetUserPublishedFileActionResult_t) )) : ((RemoteStorageSetUserPublishedFileActionResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageSetUserPublishedFileActionResult_t) );
+		internal static RemoteStorageSetUserPublishedFileActionResult_t Fill( IntPtr p ) => ((RemoteStorageSetUserPublishedFileActionResult_t)(RemoteStorageSetUserPublishedFileActionResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageSetUserPublishedFileActionResult_t) ) );
 		
 		static Action<RemoteStorageSetUserPublishedFileActionResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -5412,22 +4570,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal WorkshopFileAction Action; // m_eAction enum EWorkshopFileAction
-			
-			public static implicit operator RemoteStorageSetUserPublishedFileActionResult_t ( RemoteStorageSetUserPublishedFileActionResult_t.Pack8 d ) => new RemoteStorageSetUserPublishedFileActionResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,Action = d.Action, };
-			public static implicit operator RemoteStorageSetUserPublishedFileActionResult_t.Pack8 ( RemoteStorageSetUserPublishedFileActionResult_t d ) => new RemoteStorageSetUserPublishedFileActionResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId,Action = d.Action, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoteStorageEnumeratePublishedFilesByUserActionResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -5440,8 +4585,8 @@ namespace Steamworks.Data
 		internal uint[] GRTimeUpdated; // m_rgRTimeUpdated uint32 [50]
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStorageEnumeratePublishedFilesByUserActionResult_t) : typeof(Pack8) );
-		internal static RemoteStorageEnumeratePublishedFilesByUserActionResult_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoteStorageEnumeratePublishedFilesByUserActionResult_t)(RemoteStorageEnumeratePublishedFilesByUserActionResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumeratePublishedFilesByUserActionResult_t) )) : ((RemoteStorageEnumeratePublishedFilesByUserActionResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageEnumeratePublishedFilesByUserActionResult_t) );
+		internal static RemoteStorageEnumeratePublishedFilesByUserActionResult_t Fill( IntPtr p ) => ((RemoteStorageEnumeratePublishedFilesByUserActionResult_t)(RemoteStorageEnumeratePublishedFilesByUserActionResult_t) Marshal.PtrToStructure( p, typeof(RemoteStorageEnumeratePublishedFilesByUserActionResult_t) ) );
 		
 		static Action<RemoteStorageEnumeratePublishedFilesByUserActionResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -5486,27 +4631,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal WorkshopFileAction Action; // m_eAction enum EWorkshopFileAction
-			internal int ResultsReturned; // m_nResultsReturned int32
-			internal int TotalResultCount; // m_nTotalResultCount int32
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
-			internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U4)]
-			internal uint[] GRTimeUpdated; // m_rgRTimeUpdated uint32 [50]
-			
-			public static implicit operator RemoteStorageEnumeratePublishedFilesByUserActionResult_t ( RemoteStorageEnumeratePublishedFilesByUserActionResult_t.Pack8 d ) => new RemoteStorageEnumeratePublishedFilesByUserActionResult_t{ Result = d.Result,Action = d.Action,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId,GRTimeUpdated = d.GRTimeUpdated, };
-			public static implicit operator RemoteStorageEnumeratePublishedFilesByUserActionResult_t.Pack8 ( RemoteStorageEnumeratePublishedFilesByUserActionResult_t d ) => new RemoteStorageEnumeratePublishedFilesByUserActionResult_t.Pack8{ Result = d.Result,Action = d.Action,ResultsReturned = d.ResultsReturned,TotalResultCount = d.TotalResultCount,GPublishedFileId = d.GPublishedFileId,GRTimeUpdated = d.GRTimeUpdated, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoteStoragePublishFileProgress_t
 	{
 		internal double DPercentFile; // m_dPercentFile double
@@ -5514,8 +4641,8 @@ namespace Steamworks.Data
 		internal bool Preview; // m_bPreview _Bool
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStoragePublishFileProgress_t) : typeof(Pack8) );
-		internal static RemoteStoragePublishFileProgress_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoteStoragePublishFileProgress_t)(RemoteStoragePublishFileProgress_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishFileProgress_t) )) : ((RemoteStoragePublishFileProgress_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStoragePublishFileProgress_t) );
+		internal static RemoteStoragePublishFileProgress_t Fill( IntPtr p ) => ((RemoteStoragePublishFileProgress_t)(RemoteStoragePublishFileProgress_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishFileProgress_t) ) );
 		
 		static Action<RemoteStoragePublishFileProgress_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -5560,22 +4687,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal double DPercentFile; // m_dPercentFile double
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool Preview; // m_bPreview _Bool
-			
-			public static implicit operator RemoteStoragePublishFileProgress_t ( RemoteStoragePublishFileProgress_t.Pack8 d ) => new RemoteStoragePublishFileProgress_t{ DPercentFile = d.DPercentFile,Preview = d.Preview, };
-			public static implicit operator RemoteStoragePublishFileProgress_t.Pack8 ( RemoteStoragePublishFileProgress_t d ) => new RemoteStoragePublishFileProgress_t.Pack8{ DPercentFile = d.DPercentFile,Preview = d.Preview, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoteStoragePublishedFileUpdated_t
 	{
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -5583,8 +4697,8 @@ namespace Steamworks.Data
 		internal ulong Unused; // m_ulUnused uint64
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStoragePublishedFileUpdated_t) : typeof(Pack8) );
-		internal static RemoteStoragePublishedFileUpdated_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoteStoragePublishedFileUpdated_t)(RemoteStoragePublishedFileUpdated_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileUpdated_t) )) : ((RemoteStoragePublishedFileUpdated_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStoragePublishedFileUpdated_t) );
+		internal static RemoteStoragePublishedFileUpdated_t Fill( IntPtr p ) => ((RemoteStoragePublishedFileUpdated_t)(RemoteStoragePublishedFileUpdated_t) Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileUpdated_t) ) );
 		
 		static Action<RemoteStoragePublishedFileUpdated_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -5629,29 +4743,16 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal AppId AppID; // m_nAppID AppId_t
-			internal ulong Unused; // m_ulUnused uint64
-			
-			public static implicit operator RemoteStoragePublishedFileUpdated_t ( RemoteStoragePublishedFileUpdated_t.Pack8 d ) => new RemoteStoragePublishedFileUpdated_t{ PublishedFileId = d.PublishedFileId,AppID = d.AppID,Unused = d.Unused, };
-			public static implicit operator RemoteStoragePublishedFileUpdated_t.Pack8 ( RemoteStoragePublishedFileUpdated_t d ) => new RemoteStoragePublishedFileUpdated_t.Pack8{ PublishedFileId = d.PublishedFileId,AppID = d.AppID,Unused = d.Unused, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoteStorageFileWriteAsyncComplete_t
 	{
 		internal Result Result; // m_eResult enum EResult
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStorageFileWriteAsyncComplete_t) : typeof(Pack8) );
-		internal static RemoteStorageFileWriteAsyncComplete_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoteStorageFileWriteAsyncComplete_t)(RemoteStorageFileWriteAsyncComplete_t) Marshal.PtrToStructure( p, typeof(RemoteStorageFileWriteAsyncComplete_t) )) : ((RemoteStorageFileWriteAsyncComplete_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageFileWriteAsyncComplete_t) );
+		internal static RemoteStorageFileWriteAsyncComplete_t Fill( IntPtr p ) => ((RemoteStorageFileWriteAsyncComplete_t)(RemoteStorageFileWriteAsyncComplete_t) Marshal.PtrToStructure( p, typeof(RemoteStorageFileWriteAsyncComplete_t) ) );
 		
 		static Action<RemoteStorageFileWriteAsyncComplete_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -5696,20 +4797,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			
-			public static implicit operator RemoteStorageFileWriteAsyncComplete_t ( RemoteStorageFileWriteAsyncComplete_t.Pack8 d ) => new RemoteStorageFileWriteAsyncComplete_t{ Result = d.Result, };
-			public static implicit operator RemoteStorageFileWriteAsyncComplete_t.Pack8 ( RemoteStorageFileWriteAsyncComplete_t d ) => new RemoteStorageFileWriteAsyncComplete_t.Pack8{ Result = d.Result, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoteStorageFileReadAsyncComplete_t
 	{
 		internal ulong FileReadAsync; // m_hFileReadAsync SteamAPICall_t
@@ -5718,8 +4808,8 @@ namespace Steamworks.Data
 		internal uint Read; // m_cubRead uint32
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoteStorageFileReadAsyncComplete_t) : typeof(Pack8) );
-		internal static RemoteStorageFileReadAsyncComplete_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoteStorageFileReadAsyncComplete_t)(RemoteStorageFileReadAsyncComplete_t) Marshal.PtrToStructure( p, typeof(RemoteStorageFileReadAsyncComplete_t) )) : ((RemoteStorageFileReadAsyncComplete_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageFileReadAsyncComplete_t) );
+		internal static RemoteStorageFileReadAsyncComplete_t Fill( IntPtr p ) => ((RemoteStorageFileReadAsyncComplete_t)(RemoteStorageFileReadAsyncComplete_t) Marshal.PtrToStructure( p, typeof(RemoteStorageFileReadAsyncComplete_t) ) );
 		
 		static Action<RemoteStorageFileReadAsyncComplete_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -5764,23 +4854,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal ulong FileReadAsync; // m_hFileReadAsync SteamAPICall_t
-			internal Result Result; // m_eResult enum EResult
-			internal uint Offset; // m_nOffset uint32
-			internal uint Read; // m_cubRead uint32
-			
-			public static implicit operator RemoteStorageFileReadAsyncComplete_t ( RemoteStorageFileReadAsyncComplete_t.Pack8 d ) => new RemoteStorageFileReadAsyncComplete_t{ FileReadAsync = d.FileReadAsync,Result = d.Result,Offset = d.Offset,Read = d.Read, };
-			public static implicit operator RemoteStorageFileReadAsyncComplete_t.Pack8 ( RemoteStorageFileReadAsyncComplete_t d ) => new RemoteStorageFileReadAsyncComplete_t.Pack8{ FileReadAsync = d.FileReadAsync,Result = d.Result,Offset = d.Offset,Read = d.Read, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct LeaderboardEntry_t
 	{
 		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
@@ -5794,7 +4870,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct UserStatsReceived_t
 	{
 		internal ulong GameID; // m_nGameID uint64
@@ -5850,15 +4926,15 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct UserStatsStored_t
 	{
 		internal ulong GameID; // m_nGameID uint64
 		internal Result Result; // m_eResult enum EResult
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(UserStatsStored_t) : typeof(Pack8) );
-		internal static UserStatsStored_t Fill( IntPtr p ) => Config.PackSmall ? ((UserStatsStored_t)(UserStatsStored_t) Marshal.PtrToStructure( p, typeof(UserStatsStored_t) )) : ((UserStatsStored_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(UserStatsStored_t) );
+		internal static UserStatsStored_t Fill( IntPtr p ) => ((UserStatsStored_t)(UserStatsStored_t) Marshal.PtrToStructure( p, typeof(UserStatsStored_t) ) );
 		
 		static Action<UserStatsStored_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -5903,21 +4979,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal ulong GameID; // m_nGameID uint64
-			internal Result Result; // m_eResult enum EResult
-			
-			public static implicit operator UserStatsStored_t ( UserStatsStored_t.Pack8 d ) => new UserStatsStored_t{ GameID = d.GameID,Result = d.Result, };
-			public static implicit operator UserStatsStored_t.Pack8 ( UserStatsStored_t d ) => new UserStatsStored_t.Pack8{ GameID = d.GameID,Result = d.Result, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct UserAchievementStored_t
 	{
 		internal ulong GameID; // m_nGameID uint64
@@ -5930,8 +4994,8 @@ namespace Steamworks.Data
 		internal uint MaxProgress; // m_nMaxProgress uint32
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(UserAchievementStored_t) : typeof(Pack8) );
-		internal static UserAchievementStored_t Fill( IntPtr p ) => Config.PackSmall ? ((UserAchievementStored_t)(UserAchievementStored_t) Marshal.PtrToStructure( p, typeof(UserAchievementStored_t) )) : ((UserAchievementStored_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(UserAchievementStored_t) );
+		internal static UserAchievementStored_t Fill( IntPtr p ) => ((UserAchievementStored_t)(UserAchievementStored_t) Marshal.PtrToStructure( p, typeof(UserAchievementStored_t) ) );
 		
 		static Action<UserAchievementStored_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -5976,35 +5040,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal ulong GameID; // m_nGameID uint64
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool GroupAchievement; // m_bGroupAchievement _Bool
-			internal string AchievementNameUTF8() => System.Text.Encoding.UTF8.GetString( AchievementName, 0, System.Array.IndexOf<byte>( AchievementName, 0 ) );
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)] // byte[] m_rgchAchievementName
-			internal byte[] AchievementName; // m_rgchAchievementName char [128]
-			internal uint CurProgress; // m_nCurProgress uint32
-			internal uint MaxProgress; // m_nMaxProgress uint32
-			
-			public static implicit operator UserAchievementStored_t ( UserAchievementStored_t.Pack8 d ) => new UserAchievementStored_t{ GameID = d.GameID,GroupAchievement = d.GroupAchievement,AchievementName = d.AchievementName,CurProgress = d.CurProgress,MaxProgress = d.MaxProgress, };
-			public static implicit operator UserAchievementStored_t.Pack8 ( UserAchievementStored_t d ) => new UserAchievementStored_t.Pack8{ GameID = d.GameID,GroupAchievement = d.GroupAchievement,AchievementName = d.AchievementName,CurProgress = d.CurProgress,MaxProgress = d.MaxProgress, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct LeaderboardFindResult_t
 	{
 		internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
 		internal byte LeaderboardFound; // m_bLeaderboardFound uint8
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(LeaderboardFindResult_t) : typeof(Pack8) );
-		internal static LeaderboardFindResult_t Fill( IntPtr p ) => Config.PackSmall ? ((LeaderboardFindResult_t)(LeaderboardFindResult_t) Marshal.PtrToStructure( p, typeof(LeaderboardFindResult_t) )) : ((LeaderboardFindResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LeaderboardFindResult_t) );
+		internal static LeaderboardFindResult_t Fill( IntPtr p ) => ((LeaderboardFindResult_t)(LeaderboardFindResult_t) Marshal.PtrToStructure( p, typeof(LeaderboardFindResult_t) ) );
 		
 		static Action<LeaderboardFindResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -6049,21 +5095,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
-			internal byte LeaderboardFound; // m_bLeaderboardFound uint8
-			
-			public static implicit operator LeaderboardFindResult_t ( LeaderboardFindResult_t.Pack8 d ) => new LeaderboardFindResult_t{ SteamLeaderboard = d.SteamLeaderboard,LeaderboardFound = d.LeaderboardFound, };
-			public static implicit operator LeaderboardFindResult_t.Pack8 ( LeaderboardFindResult_t d ) => new LeaderboardFindResult_t.Pack8{ SteamLeaderboard = d.SteamLeaderboard,LeaderboardFound = d.LeaderboardFound, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct LeaderboardScoresDownloaded_t
 	{
 		internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
@@ -6071,8 +5105,8 @@ namespace Steamworks.Data
 		internal int CEntryCount; // m_cEntryCount int
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(LeaderboardScoresDownloaded_t) : typeof(Pack8) );
-		internal static LeaderboardScoresDownloaded_t Fill( IntPtr p ) => Config.PackSmall ? ((LeaderboardScoresDownloaded_t)(LeaderboardScoresDownloaded_t) Marshal.PtrToStructure( p, typeof(LeaderboardScoresDownloaded_t) )) : ((LeaderboardScoresDownloaded_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LeaderboardScoresDownloaded_t) );
+		internal static LeaderboardScoresDownloaded_t Fill( IntPtr p ) => ((LeaderboardScoresDownloaded_t)(LeaderboardScoresDownloaded_t) Marshal.PtrToStructure( p, typeof(LeaderboardScoresDownloaded_t) ) );
 		
 		static Action<LeaderboardScoresDownloaded_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -6117,22 +5151,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
-			internal ulong SteamLeaderboardEntries; // m_hSteamLeaderboardEntries SteamLeaderboardEntries_t
-			internal int CEntryCount; // m_cEntryCount int
-			
-			public static implicit operator LeaderboardScoresDownloaded_t ( LeaderboardScoresDownloaded_t.Pack8 d ) => new LeaderboardScoresDownloaded_t{ SteamLeaderboard = d.SteamLeaderboard,SteamLeaderboardEntries = d.SteamLeaderboardEntries,CEntryCount = d.CEntryCount, };
-			public static implicit operator LeaderboardScoresDownloaded_t.Pack8 ( LeaderboardScoresDownloaded_t d ) => new LeaderboardScoresDownloaded_t.Pack8{ SteamLeaderboard = d.SteamLeaderboard,SteamLeaderboardEntries = d.SteamLeaderboardEntries,CEntryCount = d.CEntryCount, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct LeaderboardScoreUploaded_t
 	{
 		internal byte Success; // m_bSuccess uint8
@@ -6143,8 +5164,8 @@ namespace Steamworks.Data
 		internal int GlobalRankPrevious; // m_nGlobalRankPrevious int
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(LeaderboardScoreUploaded_t) : typeof(Pack8) );
-		internal static LeaderboardScoreUploaded_t Fill( IntPtr p ) => Config.PackSmall ? ((LeaderboardScoreUploaded_t)(LeaderboardScoreUploaded_t) Marshal.PtrToStructure( p, typeof(LeaderboardScoreUploaded_t) )) : ((LeaderboardScoreUploaded_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LeaderboardScoreUploaded_t) );
+		internal static LeaderboardScoreUploaded_t Fill( IntPtr p ) => ((LeaderboardScoreUploaded_t)(LeaderboardScoreUploaded_t) Marshal.PtrToStructure( p, typeof(LeaderboardScoreUploaded_t) ) );
 		
 		static Action<LeaderboardScoreUploaded_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -6189,33 +5210,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal byte Success; // m_bSuccess uint8
-			internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
-			internal int Score; // m_nScore int32
-			internal byte ScoreChanged; // m_bScoreChanged uint8
-			internal int GlobalRankNew; // m_nGlobalRankNew int
-			internal int GlobalRankPrevious; // m_nGlobalRankPrevious int
-			
-			public static implicit operator LeaderboardScoreUploaded_t ( LeaderboardScoreUploaded_t.Pack8 d ) => new LeaderboardScoreUploaded_t{ Success = d.Success,SteamLeaderboard = d.SteamLeaderboard,Score = d.Score,ScoreChanged = d.ScoreChanged,GlobalRankNew = d.GlobalRankNew,GlobalRankPrevious = d.GlobalRankPrevious, };
-			public static implicit operator LeaderboardScoreUploaded_t.Pack8 ( LeaderboardScoreUploaded_t d ) => new LeaderboardScoreUploaded_t.Pack8{ Success = d.Success,SteamLeaderboard = d.SteamLeaderboard,Score = d.Score,ScoreChanged = d.ScoreChanged,GlobalRankNew = d.GlobalRankNew,GlobalRankPrevious = d.GlobalRankPrevious, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct NumberOfCurrentPlayers_t
 	{
 		internal byte Success; // m_bSuccess uint8
 		internal int CPlayers; // m_cPlayers int32
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(NumberOfCurrentPlayers_t) : typeof(Pack8) );
-		internal static NumberOfCurrentPlayers_t Fill( IntPtr p ) => Config.PackSmall ? ((NumberOfCurrentPlayers_t)(NumberOfCurrentPlayers_t) Marshal.PtrToStructure( p, typeof(NumberOfCurrentPlayers_t) )) : ((NumberOfCurrentPlayers_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(NumberOfCurrentPlayers_t) );
+		internal static NumberOfCurrentPlayers_t Fill( IntPtr p ) => ((NumberOfCurrentPlayers_t)(NumberOfCurrentPlayers_t) Marshal.PtrToStructure( p, typeof(NumberOfCurrentPlayers_t) ) );
 		
 		static Action<NumberOfCurrentPlayers_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -6260,21 +5265,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal byte Success; // m_bSuccess uint8
-			internal int CPlayers; // m_cPlayers int32
-			
-			public static implicit operator NumberOfCurrentPlayers_t ( NumberOfCurrentPlayers_t.Pack8 d ) => new NumberOfCurrentPlayers_t{ Success = d.Success,CPlayers = d.CPlayers, };
-			public static implicit operator NumberOfCurrentPlayers_t.Pack8 ( NumberOfCurrentPlayers_t d ) => new NumberOfCurrentPlayers_t.Pack8{ Success = d.Success,CPlayers = d.CPlayers, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct UserStatsUnloaded_t
 	{
 		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
@@ -6328,7 +5321,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct UserAchievementIconFetched_t
 	{
 		internal GameId GameID; // m_nGameID class CGameID
@@ -6340,8 +5333,8 @@ namespace Steamworks.Data
 		internal int IconHandle; // m_nIconHandle int
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(UserAchievementIconFetched_t) : typeof(Pack8) );
-		internal static UserAchievementIconFetched_t Fill( IntPtr p ) => Config.PackSmall ? ((UserAchievementIconFetched_t)(UserAchievementIconFetched_t) Marshal.PtrToStructure( p, typeof(UserAchievementIconFetched_t) )) : ((UserAchievementIconFetched_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(UserAchievementIconFetched_t) );
+		internal static UserAchievementIconFetched_t Fill( IntPtr p ) => ((UserAchievementIconFetched_t)(UserAchievementIconFetched_t) Marshal.PtrToStructure( p, typeof(UserAchievementIconFetched_t) ) );
 		
 		static Action<UserAchievementIconFetched_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -6386,34 +5379,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal GameId GameID; // m_nGameID class CGameID
-			internal string AchievementNameUTF8() => System.Text.Encoding.UTF8.GetString( AchievementName, 0, System.Array.IndexOf<byte>( AchievementName, 0 ) );
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)] // byte[] m_rgchAchievementName
-			internal byte[] AchievementName; // m_rgchAchievementName char [128]
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool Achieved; // m_bAchieved _Bool
-			internal int IconHandle; // m_nIconHandle int
-			
-			public static implicit operator UserAchievementIconFetched_t ( UserAchievementIconFetched_t.Pack8 d ) => new UserAchievementIconFetched_t{ GameID = d.GameID,AchievementName = d.AchievementName,Achieved = d.Achieved,IconHandle = d.IconHandle, };
-			public static implicit operator UserAchievementIconFetched_t.Pack8 ( UserAchievementIconFetched_t d ) => new UserAchievementIconFetched_t.Pack8{ GameID = d.GameID,AchievementName = d.AchievementName,Achieved = d.Achieved,IconHandle = d.IconHandle, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct GlobalAchievementPercentagesReady_t
 	{
 		internal ulong GameID; // m_nGameID uint64
 		internal Result Result; // m_eResult enum EResult
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GlobalAchievementPercentagesReady_t) : typeof(Pack8) );
-		internal static GlobalAchievementPercentagesReady_t Fill( IntPtr p ) => Config.PackSmall ? ((GlobalAchievementPercentagesReady_t)(GlobalAchievementPercentagesReady_t) Marshal.PtrToStructure( p, typeof(GlobalAchievementPercentagesReady_t) )) : ((GlobalAchievementPercentagesReady_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GlobalAchievementPercentagesReady_t) );
+		internal static GlobalAchievementPercentagesReady_t Fill( IntPtr p ) => ((GlobalAchievementPercentagesReady_t)(GlobalAchievementPercentagesReady_t) Marshal.PtrToStructure( p, typeof(GlobalAchievementPercentagesReady_t) ) );
 		
 		static Action<GlobalAchievementPercentagesReady_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -6458,29 +5434,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal ulong GameID; // m_nGameID uint64
-			internal Result Result; // m_eResult enum EResult
-			
-			public static implicit operator GlobalAchievementPercentagesReady_t ( GlobalAchievementPercentagesReady_t.Pack8 d ) => new GlobalAchievementPercentagesReady_t{ GameID = d.GameID,Result = d.Result, };
-			public static implicit operator GlobalAchievementPercentagesReady_t.Pack8 ( GlobalAchievementPercentagesReady_t d ) => new GlobalAchievementPercentagesReady_t.Pack8{ GameID = d.GameID,Result = d.Result, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct LeaderboardUGCSet_t
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(LeaderboardUGCSet_t) : typeof(Pack8) );
-		internal static LeaderboardUGCSet_t Fill( IntPtr p ) => Config.PackSmall ? ((LeaderboardUGCSet_t)(LeaderboardUGCSet_t) Marshal.PtrToStructure( p, typeof(LeaderboardUGCSet_t) )) : ((LeaderboardUGCSet_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LeaderboardUGCSet_t) );
+		internal static LeaderboardUGCSet_t Fill( IntPtr p ) => ((LeaderboardUGCSet_t)(LeaderboardUGCSet_t) Marshal.PtrToStructure( p, typeof(LeaderboardUGCSet_t) ) );
 		
 		static Action<LeaderboardUGCSet_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -6525,21 +5489,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal ulong SteamLeaderboard; // m_hSteamLeaderboard SteamLeaderboard_t
-			
-			public static implicit operator LeaderboardUGCSet_t ( LeaderboardUGCSet_t.Pack8 d ) => new LeaderboardUGCSet_t{ Result = d.Result,SteamLeaderboard = d.SteamLeaderboard, };
-			public static implicit operator LeaderboardUGCSet_t.Pack8 ( LeaderboardUGCSet_t d ) => new LeaderboardUGCSet_t.Pack8{ Result = d.Result,SteamLeaderboard = d.SteamLeaderboard, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct PS3TrophiesInstalled_t
 	{
 		internal ulong GameID; // m_nGameID uint64
@@ -6547,8 +5499,8 @@ namespace Steamworks.Data
 		internal ulong RequiredDiskSpace; // m_ulRequiredDiskSpace uint64
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(PS3TrophiesInstalled_t) : typeof(Pack8) );
-		internal static PS3TrophiesInstalled_t Fill( IntPtr p ) => Config.PackSmall ? ((PS3TrophiesInstalled_t)(PS3TrophiesInstalled_t) Marshal.PtrToStructure( p, typeof(PS3TrophiesInstalled_t) )) : ((PS3TrophiesInstalled_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(PS3TrophiesInstalled_t) );
+		internal static PS3TrophiesInstalled_t Fill( IntPtr p ) => ((PS3TrophiesInstalled_t)(PS3TrophiesInstalled_t) Marshal.PtrToStructure( p, typeof(PS3TrophiesInstalled_t) ) );
 		
 		static Action<PS3TrophiesInstalled_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -6593,30 +5545,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal ulong GameID; // m_nGameID uint64
-			internal Result Result; // m_eResult enum EResult
-			internal ulong RequiredDiskSpace; // m_ulRequiredDiskSpace uint64
-			
-			public static implicit operator PS3TrophiesInstalled_t ( PS3TrophiesInstalled_t.Pack8 d ) => new PS3TrophiesInstalled_t{ GameID = d.GameID,Result = d.Result,RequiredDiskSpace = d.RequiredDiskSpace, };
-			public static implicit operator PS3TrophiesInstalled_t.Pack8 ( PS3TrophiesInstalled_t d ) => new PS3TrophiesInstalled_t.Pack8{ GameID = d.GameID,Result = d.Result,RequiredDiskSpace = d.RequiredDiskSpace, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct GlobalStatsReceived_t
 	{
 		internal ulong GameID; // m_nGameID uint64
 		internal Result Result; // m_eResult enum EResult
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GlobalStatsReceived_t) : typeof(Pack8) );
-		internal static GlobalStatsReceived_t Fill( IntPtr p ) => Config.PackSmall ? ((GlobalStatsReceived_t)(GlobalStatsReceived_t) Marshal.PtrToStructure( p, typeof(GlobalStatsReceived_t) )) : ((GlobalStatsReceived_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GlobalStatsReceived_t) );
+		internal static GlobalStatsReceived_t Fill( IntPtr p ) => ((GlobalStatsReceived_t)(GlobalStatsReceived_t) Marshal.PtrToStructure( p, typeof(GlobalStatsReceived_t) ) );
 		
 		static Action<GlobalStatsReceived_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -6661,28 +5600,16 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal ulong GameID; // m_nGameID uint64
-			internal Result Result; // m_eResult enum EResult
-			
-			public static implicit operator GlobalStatsReceived_t ( GlobalStatsReceived_t.Pack8 d ) => new GlobalStatsReceived_t{ GameID = d.GameID,Result = d.Result, };
-			public static implicit operator GlobalStatsReceived_t.Pack8 ( GlobalStatsReceived_t d ) => new GlobalStatsReceived_t.Pack8{ GameID = d.GameID,Result = d.Result, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct DlcInstalled_t
 	{
 		internal AppId AppID; // m_nAppID AppId_t
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(DlcInstalled_t) : typeof(Pack8) );
-		internal static DlcInstalled_t Fill( IntPtr p ) => Config.PackSmall ? ((DlcInstalled_t)(DlcInstalled_t) Marshal.PtrToStructure( p, typeof(DlcInstalled_t) )) : ((DlcInstalled_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(DlcInstalled_t) );
+		internal static DlcInstalled_t Fill( IntPtr p ) => ((DlcInstalled_t)(DlcInstalled_t) Marshal.PtrToStructure( p, typeof(DlcInstalled_t) ) );
 		
 		static Action<DlcInstalled_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -6727,28 +5654,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal AppId AppID; // m_nAppID AppId_t
-			
-			public static implicit operator DlcInstalled_t ( DlcInstalled_t.Pack8 d ) => new DlcInstalled_t{ AppID = d.AppID, };
-			public static implicit operator DlcInstalled_t.Pack8 ( DlcInstalled_t d ) => new DlcInstalled_t.Pack8{ AppID = d.AppID, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RegisterActivationCodeResponse_t
 	{
 		internal RegisterActivationCodeResult Result; // m_eResult enum ERegisterActivationCodeResult
 		internal uint PackageRegistered; // m_unPackageRegistered uint32
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RegisterActivationCodeResponse_t) : typeof(Pack8) );
-		internal static RegisterActivationCodeResponse_t Fill( IntPtr p ) => Config.PackSmall ? ((RegisterActivationCodeResponse_t)(RegisterActivationCodeResponse_t) Marshal.PtrToStructure( p, typeof(RegisterActivationCodeResponse_t) )) : ((RegisterActivationCodeResponse_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RegisterActivationCodeResponse_t) );
+		internal static RegisterActivationCodeResponse_t Fill( IntPtr p ) => ((RegisterActivationCodeResponse_t)(RegisterActivationCodeResponse_t) Marshal.PtrToStructure( p, typeof(RegisterActivationCodeResponse_t) ) );
 		
 		static Action<RegisterActivationCodeResponse_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -6793,21 +5709,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal RegisterActivationCodeResult Result; // m_eResult enum ERegisterActivationCodeResult
-			internal uint PackageRegistered; // m_unPackageRegistered uint32
-			
-			public static implicit operator RegisterActivationCodeResponse_t ( RegisterActivationCodeResponse_t.Pack8 d ) => new RegisterActivationCodeResponse_t{ Result = d.Result,PackageRegistered = d.PackageRegistered, };
-			public static implicit operator RegisterActivationCodeResponse_t.Pack8 ( RegisterActivationCodeResponse_t d ) => new RegisterActivationCodeResponse_t.Pack8{ Result = d.Result,PackageRegistered = d.PackageRegistered, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct AppProofOfPurchaseKeyResponse_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -6818,8 +5722,8 @@ namespace Steamworks.Data
 		internal byte[] Key; // m_rgchKey char [240]
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(AppProofOfPurchaseKeyResponse_t) : typeof(Pack8) );
-		internal static AppProofOfPurchaseKeyResponse_t Fill( IntPtr p ) => Config.PackSmall ? ((AppProofOfPurchaseKeyResponse_t)(AppProofOfPurchaseKeyResponse_t) Marshal.PtrToStructure( p, typeof(AppProofOfPurchaseKeyResponse_t) )) : ((AppProofOfPurchaseKeyResponse_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(AppProofOfPurchaseKeyResponse_t) );
+		internal static AppProofOfPurchaseKeyResponse_t Fill( IntPtr p ) => ((AppProofOfPurchaseKeyResponse_t)(AppProofOfPurchaseKeyResponse_t) Marshal.PtrToStructure( p, typeof(AppProofOfPurchaseKeyResponse_t) ) );
 		
 		static Action<AppProofOfPurchaseKeyResponse_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -6864,25 +5768,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal uint AppID; // m_nAppID uint32
-			internal uint CchKeyLength; // m_cchKeyLength uint32
-			internal string KeyUTF8() => System.Text.Encoding.UTF8.GetString( Key, 0, System.Array.IndexOf<byte>( Key, 0 ) );
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 240)] // byte[] m_rgchKey
-			internal byte[] Key; // m_rgchKey char [240]
-			
-			public static implicit operator AppProofOfPurchaseKeyResponse_t ( AppProofOfPurchaseKeyResponse_t.Pack8 d ) => new AppProofOfPurchaseKeyResponse_t{ Result = d.Result,AppID = d.AppID,CchKeyLength = d.CchKeyLength,Key = d.Key, };
-			public static implicit operator AppProofOfPurchaseKeyResponse_t.Pack8 ( AppProofOfPurchaseKeyResponse_t d ) => new AppProofOfPurchaseKeyResponse_t.Pack8{ Result = d.Result,AppID = d.AppID,CchKeyLength = d.CchKeyLength,Key = d.Key, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct FileDetailsResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -6892,8 +5780,8 @@ namespace Steamworks.Data
 		internal uint Flags; // m_unFlags uint32
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(FileDetailsResult_t) : typeof(Pack8) );
-		internal static FileDetailsResult_t Fill( IntPtr p ) => Config.PackSmall ? ((FileDetailsResult_t)(FileDetailsResult_t) Marshal.PtrToStructure( p, typeof(FileDetailsResult_t) )) : ((FileDetailsResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(FileDetailsResult_t) );
+		internal static FileDetailsResult_t Fill( IntPtr p ) => ((FileDetailsResult_t)(FileDetailsResult_t) Marshal.PtrToStructure( p, typeof(FileDetailsResult_t) ) );
 		
 		static Action<FileDetailsResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -6938,24 +5826,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal ulong FileSize; // m_ulFileSize uint64
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 20)] //  m_FileSHA
-			internal byte[] FileSHA; // m_FileSHA uint8 [20]
-			internal uint Flags; // m_unFlags uint32
-			
-			public static implicit operator FileDetailsResult_t ( FileDetailsResult_t.Pack8 d ) => new FileDetailsResult_t{ Result = d.Result,FileSize = d.FileSize,FileSHA = d.FileSHA,Flags = d.Flags, };
-			public static implicit operator FileDetailsResult_t.Pack8 ( FileDetailsResult_t d ) => new FileDetailsResult_t.Pack8{ Result = d.Result,FileSize = d.FileSize,FileSHA = d.FileSHA,Flags = d.Flags, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct P2PSessionState_t
 	{
 		internal byte ConnectionActive; // m_bConnectionActive uint8
@@ -6968,29 +5841,11 @@ namespace Steamworks.Data
 		internal ushort RemotePort; // m_nRemotePort uint16
 		
 		#region Marshalling
-		internal static P2PSessionState_t Fill( IntPtr p ) => Config.PackSmall ? ((P2PSessionState_t)(P2PSessionState_t) Marshal.PtrToStructure( p, typeof(P2PSessionState_t) )) : ((P2PSessionState_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal byte ConnectionActive; // m_bConnectionActive uint8
-			internal byte Connecting; // m_bConnecting uint8
-			internal byte P2PSessionError; // m_eP2PSessionError uint8
-			internal byte UsingRelay; // m_bUsingRelay uint8
-			internal int BytesQueuedForSend; // m_nBytesQueuedForSend int32
-			internal int PacketsQueuedForSend; // m_nPacketsQueuedForSend int32
-			internal uint RemoteIP; // m_nRemoteIP uint32
-			internal ushort RemotePort; // m_nRemotePort uint16
-			
-			public static implicit operator P2PSessionState_t ( P2PSessionState_t.Pack8 d ) => new P2PSessionState_t{ ConnectionActive = d.ConnectionActive,Connecting = d.Connecting,P2PSessionError = d.P2PSessionError,UsingRelay = d.UsingRelay,BytesQueuedForSend = d.BytesQueuedForSend,PacketsQueuedForSend = d.PacketsQueuedForSend,RemoteIP = d.RemoteIP,RemotePort = d.RemotePort, };
-			public static implicit operator P2PSessionState_t.Pack8 ( P2PSessionState_t d ) => new P2PSessionState_t.Pack8{ ConnectionActive = d.ConnectionActive,Connecting = d.Connecting,P2PSessionError = d.P2PSessionError,UsingRelay = d.UsingRelay,BytesQueuedForSend = d.BytesQueuedForSend,PacketsQueuedForSend = d.PacketsQueuedForSend,RemoteIP = d.RemoteIP,RemotePort = d.RemotePort, };
-		}
+		internal static P2PSessionState_t Fill( IntPtr p ) => ((P2PSessionState_t)(P2PSessionState_t) Marshal.PtrToStructure( p, typeof(P2PSessionState_t) ) );
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct P2PSessionRequest_t
 	{
 		internal ulong SteamIDRemote; // m_steamIDRemote class CSteamID
@@ -7044,7 +5899,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct P2PSessionConnectFail_t
 	{
 		internal ulong SteamIDRemote; // m_steamIDRemote class CSteamID
@@ -7099,7 +5954,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct SocketStatusCallback_t
 	{
 		internal uint Socket; // m_hSocket SNetSocket_t
@@ -7156,15 +6011,15 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct ScreenshotReady_t
 	{
 		internal uint Local; // m_hLocal ScreenshotHandle
 		internal Result Result; // m_eResult enum EResult
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(ScreenshotReady_t) : typeof(Pack8) );
-		internal static ScreenshotReady_t Fill( IntPtr p ) => Config.PackSmall ? ((ScreenshotReady_t)(ScreenshotReady_t) Marshal.PtrToStructure( p, typeof(ScreenshotReady_t) )) : ((ScreenshotReady_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(ScreenshotReady_t) );
+		internal static ScreenshotReady_t Fill( IntPtr p ) => ((ScreenshotReady_t)(ScreenshotReady_t) Marshal.PtrToStructure( p, typeof(ScreenshotReady_t) ) );
 		
 		static Action<ScreenshotReady_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -7209,28 +6064,16 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint Local; // m_hLocal ScreenshotHandle
-			internal Result Result; // m_eResult enum EResult
-			
-			public static implicit operator ScreenshotReady_t ( ScreenshotReady_t.Pack8 d ) => new ScreenshotReady_t{ Local = d.Local,Result = d.Result, };
-			public static implicit operator ScreenshotReady_t.Pack8 ( ScreenshotReady_t d ) => new ScreenshotReady_t.Pack8{ Local = d.Local,Result = d.Result, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct VolumeHasChanged_t
 	{
 		internal float NewVolume; // m_flNewVolume float
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(VolumeHasChanged_t) : typeof(Pack8) );
-		internal static VolumeHasChanged_t Fill( IntPtr p ) => Config.PackSmall ? ((VolumeHasChanged_t)(VolumeHasChanged_t) Marshal.PtrToStructure( p, typeof(VolumeHasChanged_t) )) : ((VolumeHasChanged_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(VolumeHasChanged_t) );
+		internal static VolumeHasChanged_t Fill( IntPtr p ) => ((VolumeHasChanged_t)(VolumeHasChanged_t) Marshal.PtrToStructure( p, typeof(VolumeHasChanged_t) ) );
 		
 		static Action<VolumeHasChanged_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -7275,28 +6118,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal float NewVolume; // m_flNewVolume float
-			
-			public static implicit operator VolumeHasChanged_t ( VolumeHasChanged_t.Pack8 d ) => new VolumeHasChanged_t{ NewVolume = d.NewVolume, };
-			public static implicit operator VolumeHasChanged_t.Pack8 ( VolumeHasChanged_t d ) => new VolumeHasChanged_t.Pack8{ NewVolume = d.NewVolume, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct MusicPlayerWantsShuffled_t
 	{
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool Shuffled; // m_bShuffled _Bool
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(MusicPlayerWantsShuffled_t) : typeof(Pack8) );
-		internal static MusicPlayerWantsShuffled_t Fill( IntPtr p ) => Config.PackSmall ? ((MusicPlayerWantsShuffled_t)(MusicPlayerWantsShuffled_t) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsShuffled_t) )) : ((MusicPlayerWantsShuffled_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(MusicPlayerWantsShuffled_t) );
+		internal static MusicPlayerWantsShuffled_t Fill( IntPtr p ) => ((MusicPlayerWantsShuffled_t)(MusicPlayerWantsShuffled_t) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsShuffled_t) ) );
 		
 		static Action<MusicPlayerWantsShuffled_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -7341,29 +6173,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool Shuffled; // m_bShuffled _Bool
-			
-			public static implicit operator MusicPlayerWantsShuffled_t ( MusicPlayerWantsShuffled_t.Pack8 d ) => new MusicPlayerWantsShuffled_t{ Shuffled = d.Shuffled, };
-			public static implicit operator MusicPlayerWantsShuffled_t.Pack8 ( MusicPlayerWantsShuffled_t d ) => new MusicPlayerWantsShuffled_t.Pack8{ Shuffled = d.Shuffled, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct MusicPlayerWantsLooped_t
 	{
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool Looped; // m_bLooped _Bool
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(MusicPlayerWantsLooped_t) : typeof(Pack8) );
-		internal static MusicPlayerWantsLooped_t Fill( IntPtr p ) => Config.PackSmall ? ((MusicPlayerWantsLooped_t)(MusicPlayerWantsLooped_t) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsLooped_t) )) : ((MusicPlayerWantsLooped_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(MusicPlayerWantsLooped_t) );
+		internal static MusicPlayerWantsLooped_t Fill( IntPtr p ) => ((MusicPlayerWantsLooped_t)(MusicPlayerWantsLooped_t) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsLooped_t) ) );
 		
 		static Action<MusicPlayerWantsLooped_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -7408,28 +6228,16 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool Looped; // m_bLooped _Bool
-			
-			public static implicit operator MusicPlayerWantsLooped_t ( MusicPlayerWantsLooped_t.Pack8 d ) => new MusicPlayerWantsLooped_t{ Looped = d.Looped, };
-			public static implicit operator MusicPlayerWantsLooped_t.Pack8 ( MusicPlayerWantsLooped_t d ) => new MusicPlayerWantsLooped_t.Pack8{ Looped = d.Looped, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct MusicPlayerWantsVolume_t
 	{
 		internal float NewVolume; // m_flNewVolume float
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(MusicPlayerWantsVolume_t) : typeof(Pack8) );
-		internal static MusicPlayerWantsVolume_t Fill( IntPtr p ) => Config.PackSmall ? ((MusicPlayerWantsVolume_t)(MusicPlayerWantsVolume_t) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsVolume_t) )) : ((MusicPlayerWantsVolume_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(MusicPlayerWantsVolume_t) );
+		internal static MusicPlayerWantsVolume_t Fill( IntPtr p ) => ((MusicPlayerWantsVolume_t)(MusicPlayerWantsVolume_t) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsVolume_t) ) );
 		
 		static Action<MusicPlayerWantsVolume_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -7474,27 +6282,16 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal float NewVolume; // m_flNewVolume float
-			
-			public static implicit operator MusicPlayerWantsVolume_t ( MusicPlayerWantsVolume_t.Pack8 d ) => new MusicPlayerWantsVolume_t{ NewVolume = d.NewVolume, };
-			public static implicit operator MusicPlayerWantsVolume_t.Pack8 ( MusicPlayerWantsVolume_t d ) => new MusicPlayerWantsVolume_t.Pack8{ NewVolume = d.NewVolume, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct MusicPlayerSelectsQueueEntry_t
 	{
 		internal int NID; // nID int
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(MusicPlayerSelectsQueueEntry_t) : typeof(Pack8) );
-		internal static MusicPlayerSelectsQueueEntry_t Fill( IntPtr p ) => Config.PackSmall ? ((MusicPlayerSelectsQueueEntry_t)(MusicPlayerSelectsQueueEntry_t) Marshal.PtrToStructure( p, typeof(MusicPlayerSelectsQueueEntry_t) )) : ((MusicPlayerSelectsQueueEntry_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(MusicPlayerSelectsQueueEntry_t) );
+		internal static MusicPlayerSelectsQueueEntry_t Fill( IntPtr p ) => ((MusicPlayerSelectsQueueEntry_t)(MusicPlayerSelectsQueueEntry_t) Marshal.PtrToStructure( p, typeof(MusicPlayerSelectsQueueEntry_t) ) );
 		
 		static Action<MusicPlayerSelectsQueueEntry_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -7539,27 +6336,16 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal int NID; // nID int
-			
-			public static implicit operator MusicPlayerSelectsQueueEntry_t ( MusicPlayerSelectsQueueEntry_t.Pack8 d ) => new MusicPlayerSelectsQueueEntry_t{ NID = d.NID, };
-			public static implicit operator MusicPlayerSelectsQueueEntry_t.Pack8 ( MusicPlayerSelectsQueueEntry_t d ) => new MusicPlayerSelectsQueueEntry_t.Pack8{ NID = d.NID, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct MusicPlayerSelectsPlaylistEntry_t
 	{
 		internal int NID; // nID int
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(MusicPlayerSelectsPlaylistEntry_t) : typeof(Pack8) );
-		internal static MusicPlayerSelectsPlaylistEntry_t Fill( IntPtr p ) => Config.PackSmall ? ((MusicPlayerSelectsPlaylistEntry_t)(MusicPlayerSelectsPlaylistEntry_t) Marshal.PtrToStructure( p, typeof(MusicPlayerSelectsPlaylistEntry_t) )) : ((MusicPlayerSelectsPlaylistEntry_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(MusicPlayerSelectsPlaylistEntry_t) );
+		internal static MusicPlayerSelectsPlaylistEntry_t Fill( IntPtr p ) => ((MusicPlayerSelectsPlaylistEntry_t)(MusicPlayerSelectsPlaylistEntry_t) Marshal.PtrToStructure( p, typeof(MusicPlayerSelectsPlaylistEntry_t) ) );
 		
 		static Action<MusicPlayerSelectsPlaylistEntry_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -7604,27 +6390,16 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal int NID; // nID int
-			
-			public static implicit operator MusicPlayerSelectsPlaylistEntry_t ( MusicPlayerSelectsPlaylistEntry_t.Pack8 d ) => new MusicPlayerSelectsPlaylistEntry_t{ NID = d.NID, };
-			public static implicit operator MusicPlayerSelectsPlaylistEntry_t.Pack8 ( MusicPlayerSelectsPlaylistEntry_t d ) => new MusicPlayerSelectsPlaylistEntry_t.Pack8{ NID = d.NID, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct MusicPlayerWantsPlayingRepeatStatus_t
 	{
 		internal int PlayingRepeatStatus; // m_nPlayingRepeatStatus int
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(MusicPlayerWantsPlayingRepeatStatus_t) : typeof(Pack8) );
-		internal static MusicPlayerWantsPlayingRepeatStatus_t Fill( IntPtr p ) => Config.PackSmall ? ((MusicPlayerWantsPlayingRepeatStatus_t)(MusicPlayerWantsPlayingRepeatStatus_t) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsPlayingRepeatStatus_t) )) : ((MusicPlayerWantsPlayingRepeatStatus_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(MusicPlayerWantsPlayingRepeatStatus_t) );
+		internal static MusicPlayerWantsPlayingRepeatStatus_t Fill( IntPtr p ) => ((MusicPlayerWantsPlayingRepeatStatus_t)(MusicPlayerWantsPlayingRepeatStatus_t) Marshal.PtrToStructure( p, typeof(MusicPlayerWantsPlayingRepeatStatus_t) ) );
 		
 		static Action<MusicPlayerWantsPlayingRepeatStatus_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -7669,20 +6444,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal int PlayingRepeatStatus; // m_nPlayingRepeatStatus int
-			
-			public static implicit operator MusicPlayerWantsPlayingRepeatStatus_t ( MusicPlayerWantsPlayingRepeatStatus_t.Pack8 d ) => new MusicPlayerWantsPlayingRepeatStatus_t{ PlayingRepeatStatus = d.PlayingRepeatStatus, };
-			public static implicit operator MusicPlayerWantsPlayingRepeatStatus_t.Pack8 ( MusicPlayerWantsPlayingRepeatStatus_t d ) => new MusicPlayerWantsPlayingRepeatStatus_t.Pack8{ PlayingRepeatStatus = d.PlayingRepeatStatus, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct HTTPRequestCompleted_t
 	{
 		internal uint Request; // m_hRequest HTTPRequestHandle
@@ -7693,8 +6457,8 @@ namespace Steamworks.Data
 		internal uint BodySize; // m_unBodySize uint32
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(HTTPRequestCompleted_t) : typeof(Pack8) );
-		internal static HTTPRequestCompleted_t Fill( IntPtr p ) => Config.PackSmall ? ((HTTPRequestCompleted_t)(HTTPRequestCompleted_t) Marshal.PtrToStructure( p, typeof(HTTPRequestCompleted_t) )) : ((HTTPRequestCompleted_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTTPRequestCompleted_t) );
+		internal static HTTPRequestCompleted_t Fill( IntPtr p ) => ((HTTPRequestCompleted_t)(HTTPRequestCompleted_t) Marshal.PtrToStructure( p, typeof(HTTPRequestCompleted_t) ) );
 		
 		static Action<HTTPRequestCompleted_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -7739,33 +6503,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint Request; // m_hRequest HTTPRequestHandle
-			internal ulong ContextValue; // m_ulContextValue uint64
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool RequestSuccessful; // m_bRequestSuccessful _Bool
-			internal HTTPStatusCode StatusCode; // m_eStatusCode enum EHTTPStatusCode
-			internal uint BodySize; // m_unBodySize uint32
-			
-			public static implicit operator HTTPRequestCompleted_t ( HTTPRequestCompleted_t.Pack8 d ) => new HTTPRequestCompleted_t{ Request = d.Request,ContextValue = d.ContextValue,RequestSuccessful = d.RequestSuccessful,StatusCode = d.StatusCode,BodySize = d.BodySize, };
-			public static implicit operator HTTPRequestCompleted_t.Pack8 ( HTTPRequestCompleted_t d ) => new HTTPRequestCompleted_t.Pack8{ Request = d.Request,ContextValue = d.ContextValue,RequestSuccessful = d.RequestSuccessful,StatusCode = d.StatusCode,BodySize = d.BodySize, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct HTTPRequestHeadersReceived_t
 	{
 		internal uint Request; // m_hRequest HTTPRequestHandle
 		internal ulong ContextValue; // m_ulContextValue uint64
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(HTTPRequestHeadersReceived_t) : typeof(Pack8) );
-		internal static HTTPRequestHeadersReceived_t Fill( IntPtr p ) => Config.PackSmall ? ((HTTPRequestHeadersReceived_t)(HTTPRequestHeadersReceived_t) Marshal.PtrToStructure( p, typeof(HTTPRequestHeadersReceived_t) )) : ((HTTPRequestHeadersReceived_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTTPRequestHeadersReceived_t) );
+		internal static HTTPRequestHeadersReceived_t Fill( IntPtr p ) => ((HTTPRequestHeadersReceived_t)(HTTPRequestHeadersReceived_t) Marshal.PtrToStructure( p, typeof(HTTPRequestHeadersReceived_t) ) );
 		
 		static Action<HTTPRequestHeadersReceived_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -7810,21 +6558,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint Request; // m_hRequest HTTPRequestHandle
-			internal ulong ContextValue; // m_ulContextValue uint64
-			
-			public static implicit operator HTTPRequestHeadersReceived_t ( HTTPRequestHeadersReceived_t.Pack8 d ) => new HTTPRequestHeadersReceived_t{ Request = d.Request,ContextValue = d.ContextValue, };
-			public static implicit operator HTTPRequestHeadersReceived_t.Pack8 ( HTTPRequestHeadersReceived_t d ) => new HTTPRequestHeadersReceived_t.Pack8{ Request = d.Request,ContextValue = d.ContextValue, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct HTTPRequestDataReceived_t
 	{
 		internal uint Request; // m_hRequest HTTPRequestHandle
@@ -7833,8 +6569,8 @@ namespace Steamworks.Data
 		internal uint CBytesReceived; // m_cBytesReceived uint32
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(HTTPRequestDataReceived_t) : typeof(Pack8) );
-		internal static HTTPRequestDataReceived_t Fill( IntPtr p ) => Config.PackSmall ? ((HTTPRequestDataReceived_t)(HTTPRequestDataReceived_t) Marshal.PtrToStructure( p, typeof(HTTPRequestDataReceived_t) )) : ((HTTPRequestDataReceived_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTTPRequestDataReceived_t) );
+		internal static HTTPRequestDataReceived_t Fill( IntPtr p ) => ((HTTPRequestDataReceived_t)(HTTPRequestDataReceived_t) Marshal.PtrToStructure( p, typeof(HTTPRequestDataReceived_t) ) );
 		
 		static Action<HTTPRequestDataReceived_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -7879,23 +6615,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint Request; // m_hRequest HTTPRequestHandle
-			internal ulong ContextValue; // m_ulContextValue uint64
-			internal uint COffset; // m_cOffset uint32
-			internal uint CBytesReceived; // m_cBytesReceived uint32
-			
-			public static implicit operator HTTPRequestDataReceived_t ( HTTPRequestDataReceived_t.Pack8 d ) => new HTTPRequestDataReceived_t{ Request = d.Request,ContextValue = d.ContextValue,COffset = d.COffset,CBytesReceived = d.CBytesReceived, };
-			public static implicit operator HTTPRequestDataReceived_t.Pack8 ( HTTPRequestDataReceived_t d ) => new HTTPRequestDataReceived_t.Pack8{ Request = d.Request,ContextValue = d.ContextValue,COffset = d.COffset,CBytesReceived = d.CBytesReceived, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamUGCDetails_t
 	{
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -7939,60 +6661,11 @@ namespace Steamworks.Data
 		internal uint NumChildren; // m_unNumChildren uint32
 		
 		#region Marshalling
-		internal static SteamUGCDetails_t Fill( IntPtr p ) => Config.PackSmall ? ((SteamUGCDetails_t)(SteamUGCDetails_t) Marshal.PtrToStructure( p, typeof(SteamUGCDetails_t) )) : ((SteamUGCDetails_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal Result Result; // m_eResult enum EResult
-			internal WorkshopFileType FileType; // m_eFileType enum EWorkshopFileType
-			internal AppId CreatorAppID; // m_nCreatorAppID AppId_t
-			internal AppId ConsumerAppID; // m_nConsumerAppID AppId_t
-			internal string TitleUTF8() => System.Text.Encoding.UTF8.GetString( Title, 0, System.Array.IndexOf<byte>( Title, 0 ) );
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 129)] // byte[] m_rgchTitle
-			internal byte[] Title; // m_rgchTitle char [129]
-			internal string DescriptionUTF8() => System.Text.Encoding.UTF8.GetString( Description, 0, System.Array.IndexOf<byte>( Description, 0 ) );
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 8000)] // byte[] m_rgchDescription
-			internal byte[] Description; // m_rgchDescription char [8000]
-			internal ulong SteamIDOwner; // m_ulSteamIDOwner uint64
-			internal uint TimeCreated; // m_rtimeCreated uint32
-			internal uint TimeUpdated; // m_rtimeUpdated uint32
-			internal uint TimeAddedToUserList; // m_rtimeAddedToUserList uint32
-			internal RemoteStoragePublishedFileVisibility Visibility; // m_eVisibility enum ERemoteStoragePublishedFileVisibility
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool Banned; // m_bBanned _Bool
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool AcceptedForUse; // m_bAcceptedForUse _Bool
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool TagsTruncated; // m_bTagsTruncated _Bool
-			internal string TagsUTF8() => System.Text.Encoding.UTF8.GetString( Tags, 0, System.Array.IndexOf<byte>( Tags, 0 ) );
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 1025)] // byte[] m_rgchTags
-			internal byte[] Tags; // m_rgchTags char [1025]
-			internal ulong File; // m_hFile UGCHandle_t
-			internal ulong PreviewFile; // m_hPreviewFile UGCHandle_t
-			internal string PchFileNameUTF8() => System.Text.Encoding.UTF8.GetString( PchFileName, 0, System.Array.IndexOf<byte>( PchFileName, 0 ) );
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 260)] // byte[] m_pchFileName
-			internal byte[] PchFileName; // m_pchFileName char [260]
-			internal int FileSize; // m_nFileSize int32
-			internal int PreviewFileSize; // m_nPreviewFileSize int32
-			internal string URLUTF8() => System.Text.Encoding.UTF8.GetString( URL, 0, System.Array.IndexOf<byte>( URL, 0 ) );
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_rgchURL
-			internal byte[] URL; // m_rgchURL char [256]
-			internal uint VotesUp; // m_unVotesUp uint32
-			internal uint VotesDown; // m_unVotesDown uint32
-			internal float Score; // m_flScore float
-			internal uint NumChildren; // m_unNumChildren uint32
-			
-			public static implicit operator SteamUGCDetails_t ( SteamUGCDetails_t.Pack8 d ) => new SteamUGCDetails_t{ PublishedFileId = d.PublishedFileId,Result = d.Result,FileType = d.FileType,CreatorAppID = d.CreatorAppID,ConsumerAppID = d.ConsumerAppID,Title = d.Title,Description = d.Description,SteamIDOwner = d.SteamIDOwner,TimeCreated = d.TimeCreated,TimeUpdated = d.TimeUpdated,TimeAddedToUserList = d.TimeAddedToUserList,Visibility = d.Visibility,Banned = d.Banned,AcceptedForUse = d.AcceptedForUse,TagsTruncated = d.TagsTruncated,Tags = d.Tags,File = d.File,PreviewFile = d.PreviewFile,PchFileName = d.PchFileName,FileSize = d.FileSize,PreviewFileSize = d.PreviewFileSize,URL = d.URL,VotesUp = d.VotesUp,VotesDown = d.VotesDown,Score = d.Score,NumChildren = d.NumChildren, };
-			public static implicit operator SteamUGCDetails_t.Pack8 ( SteamUGCDetails_t d ) => new SteamUGCDetails_t.Pack8{ PublishedFileId = d.PublishedFileId,Result = d.Result,FileType = d.FileType,CreatorAppID = d.CreatorAppID,ConsumerAppID = d.ConsumerAppID,Title = d.Title,Description = d.Description,SteamIDOwner = d.SteamIDOwner,TimeCreated = d.TimeCreated,TimeUpdated = d.TimeUpdated,TimeAddedToUserList = d.TimeAddedToUserList,Visibility = d.Visibility,Banned = d.Banned,AcceptedForUse = d.AcceptedForUse,TagsTruncated = d.TagsTruncated,Tags = d.Tags,File = d.File,PreviewFile = d.PreviewFile,PchFileName = d.PchFileName,FileSize = d.FileSize,PreviewFileSize = d.PreviewFileSize,URL = d.URL,VotesUp = d.VotesUp,VotesDown = d.VotesDown,Score = d.Score,NumChildren = d.NumChildren, };
-		}
+		internal static SteamUGCDetails_t Fill( IntPtr p ) => ((SteamUGCDetails_t)(SteamUGCDetails_t) Marshal.PtrToStructure( p, typeof(SteamUGCDetails_t) ) );
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamUGCQueryCompleted_t
 	{
 		internal ulong Handle; // m_handle UGCQueryHandle_t
@@ -8006,8 +6679,8 @@ namespace Steamworks.Data
 		internal byte[] NextCursor; // m_rgchNextCursor char [256]
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(SteamUGCQueryCompleted_t) : typeof(Pack8) );
-		internal static SteamUGCQueryCompleted_t Fill( IntPtr p ) => Config.PackSmall ? ((SteamUGCQueryCompleted_t)(SteamUGCQueryCompleted_t) Marshal.PtrToStructure( p, typeof(SteamUGCQueryCompleted_t) )) : ((SteamUGCQueryCompleted_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamUGCQueryCompleted_t) );
+		internal static SteamUGCQueryCompleted_t Fill( IntPtr p ) => ((SteamUGCQueryCompleted_t)(SteamUGCQueryCompleted_t) Marshal.PtrToStructure( p, typeof(SteamUGCQueryCompleted_t) ) );
 		
 		static Action<SteamUGCQueryCompleted_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -8052,28 +6725,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal ulong Handle; // m_handle UGCQueryHandle_t
-			internal Result Result; // m_eResult enum EResult
-			internal uint NumResultsReturned; // m_unNumResultsReturned uint32
-			internal uint TotalMatchingResults; // m_unTotalMatchingResults uint32
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool CachedData; // m_bCachedData _Bool
-			internal string NextCursorUTF8() => System.Text.Encoding.UTF8.GetString( NextCursor, 0, System.Array.IndexOf<byte>( NextCursor, 0 ) );
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_rgchNextCursor
-			internal byte[] NextCursor; // m_rgchNextCursor char [256]
-			
-			public static implicit operator SteamUGCQueryCompleted_t ( SteamUGCQueryCompleted_t.Pack8 d ) => new SteamUGCQueryCompleted_t{ Handle = d.Handle,Result = d.Result,NumResultsReturned = d.NumResultsReturned,TotalMatchingResults = d.TotalMatchingResults,CachedData = d.CachedData,NextCursor = d.NextCursor, };
-			public static implicit operator SteamUGCQueryCompleted_t.Pack8 ( SteamUGCQueryCompleted_t d ) => new SteamUGCQueryCompleted_t.Pack8{ Handle = d.Handle,Result = d.Result,NumResultsReturned = d.NumResultsReturned,TotalMatchingResults = d.TotalMatchingResults,CachedData = d.CachedData,NextCursor = d.NextCursor, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamUGCRequestUGCDetailsResult_t
 	{
 		internal SteamUGCDetails_t Details; // m_details struct SteamUGCDetails_t
@@ -8081,8 +6735,8 @@ namespace Steamworks.Data
 		internal bool CachedData; // m_bCachedData _Bool
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(SteamUGCRequestUGCDetailsResult_t) : typeof(Pack8) );
-		internal static SteamUGCRequestUGCDetailsResult_t Fill( IntPtr p ) => Config.PackSmall ? ((SteamUGCRequestUGCDetailsResult_t)(SteamUGCRequestUGCDetailsResult_t) Marshal.PtrToStructure( p, typeof(SteamUGCRequestUGCDetailsResult_t) )) : ((SteamUGCRequestUGCDetailsResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamUGCRequestUGCDetailsResult_t) );
+		internal static SteamUGCRequestUGCDetailsResult_t Fill( IntPtr p ) => ((SteamUGCRequestUGCDetailsResult_t)(SteamUGCRequestUGCDetailsResult_t) Marshal.PtrToStructure( p, typeof(SteamUGCRequestUGCDetailsResult_t) ) );
 		
 		static Action<SteamUGCRequestUGCDetailsResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -8127,22 +6781,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal SteamUGCDetails_t Details; // m_details struct SteamUGCDetails_t
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool CachedData; // m_bCachedData _Bool
-			
-			public static implicit operator SteamUGCRequestUGCDetailsResult_t ( SteamUGCRequestUGCDetailsResult_t.Pack8 d ) => new SteamUGCRequestUGCDetailsResult_t{ Details = d.Details,CachedData = d.CachedData, };
-			public static implicit operator SteamUGCRequestUGCDetailsResult_t.Pack8 ( SteamUGCRequestUGCDetailsResult_t d ) => new SteamUGCRequestUGCDetailsResult_t.Pack8{ Details = d.Details,CachedData = d.CachedData, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct CreateItemResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -8151,8 +6792,8 @@ namespace Steamworks.Data
 		internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(CreateItemResult_t) : typeof(Pack8) );
-		internal static CreateItemResult_t Fill( IntPtr p ) => Config.PackSmall ? ((CreateItemResult_t)(CreateItemResult_t) Marshal.PtrToStructure( p, typeof(CreateItemResult_t) )) : ((CreateItemResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(CreateItemResult_t) );
+		internal static CreateItemResult_t Fill( IntPtr p ) => ((CreateItemResult_t)(CreateItemResult_t) Marshal.PtrToStructure( p, typeof(CreateItemResult_t) ) );
 		
 		static Action<CreateItemResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -8197,23 +6838,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
-			
-			public static implicit operator CreateItemResult_t ( CreateItemResult_t.Pack8 d ) => new CreateItemResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement, };
-			public static implicit operator CreateItemResult_t.Pack8 ( CreateItemResult_t d ) => new CreateItemResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId,UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SubmitItemUpdateResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -8222,8 +6849,8 @@ namespace Steamworks.Data
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(SubmitItemUpdateResult_t) : typeof(Pack8) );
-		internal static SubmitItemUpdateResult_t Fill( IntPtr p ) => Config.PackSmall ? ((SubmitItemUpdateResult_t)(SubmitItemUpdateResult_t) Marshal.PtrToStructure( p, typeof(SubmitItemUpdateResult_t) )) : ((SubmitItemUpdateResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SubmitItemUpdateResult_t) );
+		internal static SubmitItemUpdateResult_t Fill( IntPtr p ) => ((SubmitItemUpdateResult_t)(SubmitItemUpdateResult_t) Marshal.PtrToStructure( p, typeof(SubmitItemUpdateResult_t) ) );
 		
 		static Action<SubmitItemUpdateResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -8268,23 +6895,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool UserNeedsToAcceptWorkshopLegalAgreement; // m_bUserNeedsToAcceptWorkshopLegalAgreement _Bool
-			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			
-			public static implicit operator SubmitItemUpdateResult_t ( SubmitItemUpdateResult_t.Pack8 d ) => new SubmitItemUpdateResult_t{ Result = d.Result,UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement,PublishedFileId = d.PublishedFileId, };
-			public static implicit operator SubmitItemUpdateResult_t.Pack8 ( SubmitItemUpdateResult_t d ) => new SubmitItemUpdateResult_t.Pack8{ Result = d.Result,UserNeedsToAcceptWorkshopLegalAgreement = d.UserNeedsToAcceptWorkshopLegalAgreement,PublishedFileId = d.PublishedFileId, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct DownloadItemResult_t
 	{
 		internal AppId AppID; // m_unAppID AppId_t
@@ -8292,8 +6905,8 @@ namespace Steamworks.Data
 		internal Result Result; // m_eResult enum EResult
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(DownloadItemResult_t) : typeof(Pack8) );
-		internal static DownloadItemResult_t Fill( IntPtr p ) => Config.PackSmall ? ((DownloadItemResult_t)(DownloadItemResult_t) Marshal.PtrToStructure( p, typeof(DownloadItemResult_t) )) : ((DownloadItemResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(DownloadItemResult_t) );
+		internal static DownloadItemResult_t Fill( IntPtr p ) => ((DownloadItemResult_t)(DownloadItemResult_t) Marshal.PtrToStructure( p, typeof(DownloadItemResult_t) ) );
 		
 		static Action<DownloadItemResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -8338,22 +6951,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal AppId AppID; // m_unAppID AppId_t
-			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal Result Result; // m_eResult enum EResult
-			
-			public static implicit operator DownloadItemResult_t ( DownloadItemResult_t.Pack8 d ) => new DownloadItemResult_t{ AppID = d.AppID,PublishedFileId = d.PublishedFileId,Result = d.Result, };
-			public static implicit operator DownloadItemResult_t.Pack8 ( DownloadItemResult_t d ) => new DownloadItemResult_t.Pack8{ AppID = d.AppID,PublishedFileId = d.PublishedFileId,Result = d.Result, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct UserFavoriteItemsListChanged_t
 	{
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -8362,8 +6962,8 @@ namespace Steamworks.Data
 		internal bool WasAddRequest; // m_bWasAddRequest _Bool
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(UserFavoriteItemsListChanged_t) : typeof(Pack8) );
-		internal static UserFavoriteItemsListChanged_t Fill( IntPtr p ) => Config.PackSmall ? ((UserFavoriteItemsListChanged_t)(UserFavoriteItemsListChanged_t) Marshal.PtrToStructure( p, typeof(UserFavoriteItemsListChanged_t) )) : ((UserFavoriteItemsListChanged_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(UserFavoriteItemsListChanged_t) );
+		internal static UserFavoriteItemsListChanged_t Fill( IntPtr p ) => ((UserFavoriteItemsListChanged_t)(UserFavoriteItemsListChanged_t) Marshal.PtrToStructure( p, typeof(UserFavoriteItemsListChanged_t) ) );
 		
 		static Action<UserFavoriteItemsListChanged_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -8408,23 +7008,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal Result Result; // m_eResult enum EResult
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool WasAddRequest; // m_bWasAddRequest _Bool
-			
-			public static implicit operator UserFavoriteItemsListChanged_t ( UserFavoriteItemsListChanged_t.Pack8 d ) => new UserFavoriteItemsListChanged_t{ PublishedFileId = d.PublishedFileId,Result = d.Result,WasAddRequest = d.WasAddRequest, };
-			public static implicit operator UserFavoriteItemsListChanged_t.Pack8 ( UserFavoriteItemsListChanged_t d ) => new UserFavoriteItemsListChanged_t.Pack8{ PublishedFileId = d.PublishedFileId,Result = d.Result,WasAddRequest = d.WasAddRequest, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SetUserItemVoteResult_t
 	{
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -8433,8 +7019,8 @@ namespace Steamworks.Data
 		internal bool VoteUp; // m_bVoteUp _Bool
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(SetUserItemVoteResult_t) : typeof(Pack8) );
-		internal static SetUserItemVoteResult_t Fill( IntPtr p ) => Config.PackSmall ? ((SetUserItemVoteResult_t)(SetUserItemVoteResult_t) Marshal.PtrToStructure( p, typeof(SetUserItemVoteResult_t) )) : ((SetUserItemVoteResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SetUserItemVoteResult_t) );
+		internal static SetUserItemVoteResult_t Fill( IntPtr p ) => ((SetUserItemVoteResult_t)(SetUserItemVoteResult_t) Marshal.PtrToStructure( p, typeof(SetUserItemVoteResult_t) ) );
 		
 		static Action<SetUserItemVoteResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -8479,23 +7065,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal Result Result; // m_eResult enum EResult
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool VoteUp; // m_bVoteUp _Bool
-			
-			public static implicit operator SetUserItemVoteResult_t ( SetUserItemVoteResult_t.Pack8 d ) => new SetUserItemVoteResult_t{ PublishedFileId = d.PublishedFileId,Result = d.Result,VoteUp = d.VoteUp, };
-			public static implicit operator SetUserItemVoteResult_t.Pack8 ( SetUserItemVoteResult_t d ) => new SetUserItemVoteResult_t.Pack8{ PublishedFileId = d.PublishedFileId,Result = d.Result,VoteUp = d.VoteUp, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct GetUserItemVoteResult_t
 	{
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
@@ -8508,8 +7080,8 @@ namespace Steamworks.Data
 		internal bool VoteSkipped; // m_bVoteSkipped _Bool
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GetUserItemVoteResult_t) : typeof(Pack8) );
-		internal static GetUserItemVoteResult_t Fill( IntPtr p ) => Config.PackSmall ? ((GetUserItemVoteResult_t)(GetUserItemVoteResult_t) Marshal.PtrToStructure( p, typeof(GetUserItemVoteResult_t) )) : ((GetUserItemVoteResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GetUserItemVoteResult_t) );
+		internal static GetUserItemVoteResult_t Fill( IntPtr p ) => ((GetUserItemVoteResult_t)(GetUserItemVoteResult_t) Marshal.PtrToStructure( p, typeof(GetUserItemVoteResult_t) ) );
 		
 		static Action<GetUserItemVoteResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -8554,34 +7126,16 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal Result Result; // m_eResult enum EResult
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool VotedUp; // m_bVotedUp _Bool
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool VotedDown; // m_bVotedDown _Bool
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool VoteSkipped; // m_bVoteSkipped _Bool
-			
-			public static implicit operator GetUserItemVoteResult_t ( GetUserItemVoteResult_t.Pack8 d ) => new GetUserItemVoteResult_t{ PublishedFileId = d.PublishedFileId,Result = d.Result,VotedUp = d.VotedUp,VotedDown = d.VotedDown,VoteSkipped = d.VoteSkipped, };
-			public static implicit operator GetUserItemVoteResult_t.Pack8 ( GetUserItemVoteResult_t d ) => new GetUserItemVoteResult_t.Pack8{ PublishedFileId = d.PublishedFileId,Result = d.Result,VotedUp = d.VotedUp,VotedDown = d.VotedDown,VoteSkipped = d.VoteSkipped, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct StartPlaytimeTrackingResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(StartPlaytimeTrackingResult_t) : typeof(Pack8) );
-		internal static StartPlaytimeTrackingResult_t Fill( IntPtr p ) => Config.PackSmall ? ((StartPlaytimeTrackingResult_t)(StartPlaytimeTrackingResult_t) Marshal.PtrToStructure( p, typeof(StartPlaytimeTrackingResult_t) )) : ((StartPlaytimeTrackingResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(StartPlaytimeTrackingResult_t) );
+		internal static StartPlaytimeTrackingResult_t Fill( IntPtr p ) => ((StartPlaytimeTrackingResult_t)(StartPlaytimeTrackingResult_t) Marshal.PtrToStructure( p, typeof(StartPlaytimeTrackingResult_t) ) );
 		
 		static Action<StartPlaytimeTrackingResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -8626,27 +7180,16 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			
-			public static implicit operator StartPlaytimeTrackingResult_t ( StartPlaytimeTrackingResult_t.Pack8 d ) => new StartPlaytimeTrackingResult_t{ Result = d.Result, };
-			public static implicit operator StartPlaytimeTrackingResult_t.Pack8 ( StartPlaytimeTrackingResult_t d ) => new StartPlaytimeTrackingResult_t.Pack8{ Result = d.Result, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct StopPlaytimeTrackingResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(StopPlaytimeTrackingResult_t) : typeof(Pack8) );
-		internal static StopPlaytimeTrackingResult_t Fill( IntPtr p ) => Config.PackSmall ? ((StopPlaytimeTrackingResult_t)(StopPlaytimeTrackingResult_t) Marshal.PtrToStructure( p, typeof(StopPlaytimeTrackingResult_t) )) : ((StopPlaytimeTrackingResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(StopPlaytimeTrackingResult_t) );
+		internal static StopPlaytimeTrackingResult_t Fill( IntPtr p ) => ((StopPlaytimeTrackingResult_t)(StopPlaytimeTrackingResult_t) Marshal.PtrToStructure( p, typeof(StopPlaytimeTrackingResult_t) ) );
 		
 		static Action<StopPlaytimeTrackingResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -8691,20 +7234,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			
-			public static implicit operator StopPlaytimeTrackingResult_t ( StopPlaytimeTrackingResult_t.Pack8 d ) => new StopPlaytimeTrackingResult_t{ Result = d.Result, };
-			public static implicit operator StopPlaytimeTrackingResult_t.Pack8 ( StopPlaytimeTrackingResult_t d ) => new StopPlaytimeTrackingResult_t.Pack8{ Result = d.Result, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct AddUGCDependencyResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -8712,8 +7244,8 @@ namespace Steamworks.Data
 		internal PublishedFileId ChildPublishedFileId; // m_nChildPublishedFileId PublishedFileId_t
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(AddUGCDependencyResult_t) : typeof(Pack8) );
-		internal static AddUGCDependencyResult_t Fill( IntPtr p ) => Config.PackSmall ? ((AddUGCDependencyResult_t)(AddUGCDependencyResult_t) Marshal.PtrToStructure( p, typeof(AddUGCDependencyResult_t) )) : ((AddUGCDependencyResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(AddUGCDependencyResult_t) );
+		internal static AddUGCDependencyResult_t Fill( IntPtr p ) => ((AddUGCDependencyResult_t)(AddUGCDependencyResult_t) Marshal.PtrToStructure( p, typeof(AddUGCDependencyResult_t) ) );
 		
 		static Action<AddUGCDependencyResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -8758,22 +7290,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal PublishedFileId ChildPublishedFileId; // m_nChildPublishedFileId PublishedFileId_t
-			
-			public static implicit operator AddUGCDependencyResult_t ( AddUGCDependencyResult_t.Pack8 d ) => new AddUGCDependencyResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,ChildPublishedFileId = d.ChildPublishedFileId, };
-			public static implicit operator AddUGCDependencyResult_t.Pack8 ( AddUGCDependencyResult_t d ) => new AddUGCDependencyResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId,ChildPublishedFileId = d.ChildPublishedFileId, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoveUGCDependencyResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -8781,8 +7300,8 @@ namespace Steamworks.Data
 		internal PublishedFileId ChildPublishedFileId; // m_nChildPublishedFileId PublishedFileId_t
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoveUGCDependencyResult_t) : typeof(Pack8) );
-		internal static RemoveUGCDependencyResult_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoveUGCDependencyResult_t)(RemoveUGCDependencyResult_t) Marshal.PtrToStructure( p, typeof(RemoveUGCDependencyResult_t) )) : ((RemoveUGCDependencyResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoveUGCDependencyResult_t) );
+		internal static RemoveUGCDependencyResult_t Fill( IntPtr p ) => ((RemoveUGCDependencyResult_t)(RemoveUGCDependencyResult_t) Marshal.PtrToStructure( p, typeof(RemoveUGCDependencyResult_t) ) );
 		
 		static Action<RemoveUGCDependencyResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -8827,22 +7346,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal PublishedFileId ChildPublishedFileId; // m_nChildPublishedFileId PublishedFileId_t
-			
-			public static implicit operator RemoveUGCDependencyResult_t ( RemoveUGCDependencyResult_t.Pack8 d ) => new RemoveUGCDependencyResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,ChildPublishedFileId = d.ChildPublishedFileId, };
-			public static implicit operator RemoveUGCDependencyResult_t.Pack8 ( RemoveUGCDependencyResult_t d ) => new RemoveUGCDependencyResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId,ChildPublishedFileId = d.ChildPublishedFileId, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct AddAppDependencyResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -8850,8 +7356,8 @@ namespace Steamworks.Data
 		internal AppId AppID; // m_nAppID AppId_t
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(AddAppDependencyResult_t) : typeof(Pack8) );
-		internal static AddAppDependencyResult_t Fill( IntPtr p ) => Config.PackSmall ? ((AddAppDependencyResult_t)(AddAppDependencyResult_t) Marshal.PtrToStructure( p, typeof(AddAppDependencyResult_t) )) : ((AddAppDependencyResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(AddAppDependencyResult_t) );
+		internal static AddAppDependencyResult_t Fill( IntPtr p ) => ((AddAppDependencyResult_t)(AddAppDependencyResult_t) Marshal.PtrToStructure( p, typeof(AddAppDependencyResult_t) ) );
 		
 		static Action<AddAppDependencyResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -8896,22 +7402,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal AppId AppID; // m_nAppID AppId_t
-			
-			public static implicit operator AddAppDependencyResult_t ( AddAppDependencyResult_t.Pack8 d ) => new AddAppDependencyResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
-			public static implicit operator AddAppDependencyResult_t.Pack8 ( AddAppDependencyResult_t d ) => new AddAppDependencyResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct RemoveAppDependencyResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -8919,8 +7412,8 @@ namespace Steamworks.Data
 		internal AppId AppID; // m_nAppID AppId_t
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(RemoveAppDependencyResult_t) : typeof(Pack8) );
-		internal static RemoveAppDependencyResult_t Fill( IntPtr p ) => Config.PackSmall ? ((RemoveAppDependencyResult_t)(RemoveAppDependencyResult_t) Marshal.PtrToStructure( p, typeof(RemoveAppDependencyResult_t) )) : ((RemoveAppDependencyResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoveAppDependencyResult_t) );
+		internal static RemoveAppDependencyResult_t Fill( IntPtr p ) => ((RemoveAppDependencyResult_t)(RemoveAppDependencyResult_t) Marshal.PtrToStructure( p, typeof(RemoveAppDependencyResult_t) ) );
 		
 		static Action<RemoveAppDependencyResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -8965,22 +7458,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			internal AppId AppID; // m_nAppID AppId_t
-			
-			public static implicit operator RemoveAppDependencyResult_t ( RemoveAppDependencyResult_t.Pack8 d ) => new RemoveAppDependencyResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
-			public static implicit operator RemoveAppDependencyResult_t.Pack8 ( RemoveAppDependencyResult_t d ) => new RemoveAppDependencyResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId,AppID = d.AppID, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct GetAppDependenciesResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -8991,8 +7471,8 @@ namespace Steamworks.Data
 		internal uint TotalNumAppDependencies; // m_nTotalNumAppDependencies uint32
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GetAppDependenciesResult_t) : typeof(Pack8) );
-		internal static GetAppDependenciesResult_t Fill( IntPtr p ) => Config.PackSmall ? ((GetAppDependenciesResult_t)(GetAppDependenciesResult_t) Marshal.PtrToStructure( p, typeof(GetAppDependenciesResult_t) )) : ((GetAppDependenciesResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GetAppDependenciesResult_t) );
+		internal static GetAppDependenciesResult_t Fill( IntPtr p ) => ((GetAppDependenciesResult_t)(GetAppDependenciesResult_t) Marshal.PtrToStructure( p, typeof(GetAppDependenciesResult_t) ) );
 		
 		static Action<GetAppDependenciesResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -9037,33 +7517,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 32, ArraySubType = UnmanagedType.U4)]
-			internal AppId[] GAppIDs; // m_rgAppIDs AppId_t [32]
-			internal uint NumAppDependencies; // m_nNumAppDependencies uint32
-			internal uint TotalNumAppDependencies; // m_nTotalNumAppDependencies uint32
-			
-			public static implicit operator GetAppDependenciesResult_t ( GetAppDependenciesResult_t.Pack8 d ) => new GetAppDependenciesResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId,GAppIDs = d.GAppIDs,NumAppDependencies = d.NumAppDependencies,TotalNumAppDependencies = d.TotalNumAppDependencies, };
-			public static implicit operator GetAppDependenciesResult_t.Pack8 ( GetAppDependenciesResult_t d ) => new GetAppDependenciesResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId,GAppIDs = d.GAppIDs,NumAppDependencies = d.NumAppDependencies,TotalNumAppDependencies = d.TotalNumAppDependencies, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct DeleteItemResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(DeleteItemResult_t) : typeof(Pack8) );
-		internal static DeleteItemResult_t Fill( IntPtr p ) => Config.PackSmall ? ((DeleteItemResult_t)(DeleteItemResult_t) Marshal.PtrToStructure( p, typeof(DeleteItemResult_t) )) : ((DeleteItemResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(DeleteItemResult_t) );
+		internal static DeleteItemResult_t Fill( IntPtr p ) => ((DeleteItemResult_t)(DeleteItemResult_t) Marshal.PtrToStructure( p, typeof(DeleteItemResult_t) ) );
 		
 		static Action<DeleteItemResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -9108,28 +7572,16 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			
-			public static implicit operator DeleteItemResult_t ( DeleteItemResult_t.Pack8 d ) => new DeleteItemResult_t{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
-			public static implicit operator DeleteItemResult_t.Pack8 ( DeleteItemResult_t d ) => new DeleteItemResult_t.Pack8{ Result = d.Result,PublishedFileId = d.PublishedFileId, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamAppInstalled_t
 	{
 		internal AppId AppID; // m_nAppID AppId_t
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(SteamAppInstalled_t) : typeof(Pack8) );
-		internal static SteamAppInstalled_t Fill( IntPtr p ) => Config.PackSmall ? ((SteamAppInstalled_t)(SteamAppInstalled_t) Marshal.PtrToStructure( p, typeof(SteamAppInstalled_t) )) : ((SteamAppInstalled_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamAppInstalled_t) );
+		internal static SteamAppInstalled_t Fill( IntPtr p ) => ((SteamAppInstalled_t)(SteamAppInstalled_t) Marshal.PtrToStructure( p, typeof(SteamAppInstalled_t) ) );
 		
 		static Action<SteamAppInstalled_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -9174,27 +7626,16 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal AppId AppID; // m_nAppID AppId_t
-			
-			public static implicit operator SteamAppInstalled_t ( SteamAppInstalled_t.Pack8 d ) => new SteamAppInstalled_t{ AppID = d.AppID, };
-			public static implicit operator SteamAppInstalled_t.Pack8 ( SteamAppInstalled_t d ) => new SteamAppInstalled_t.Pack8{ AppID = d.AppID, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamAppUninstalled_t
 	{
 		internal AppId AppID; // m_nAppID AppId_t
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(SteamAppUninstalled_t) : typeof(Pack8) );
-		internal static SteamAppUninstalled_t Fill( IntPtr p ) => Config.PackSmall ? ((SteamAppUninstalled_t)(SteamAppUninstalled_t) Marshal.PtrToStructure( p, typeof(SteamAppUninstalled_t) )) : ((SteamAppUninstalled_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamAppUninstalled_t) );
+		internal static SteamAppUninstalled_t Fill( IntPtr p ) => ((SteamAppUninstalled_t)(SteamAppUninstalled_t) Marshal.PtrToStructure( p, typeof(SteamAppUninstalled_t) ) );
 		
 		static Action<SteamAppUninstalled_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -9239,27 +7680,16 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal AppId AppID; // m_nAppID AppId_t
-			
-			public static implicit operator SteamAppUninstalled_t ( SteamAppUninstalled_t.Pack8 d ) => new SteamAppUninstalled_t{ AppID = d.AppID, };
-			public static implicit operator SteamAppUninstalled_t.Pack8 ( SteamAppUninstalled_t d ) => new SteamAppUninstalled_t.Pack8{ AppID = d.AppID, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct HTML_BrowserReady_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(HTML_BrowserReady_t) : typeof(Pack8) );
-		internal static HTML_BrowserReady_t Fill( IntPtr p ) => Config.PackSmall ? ((HTML_BrowserReady_t)(HTML_BrowserReady_t) Marshal.PtrToStructure( p, typeof(HTML_BrowserReady_t) )) : ((HTML_BrowserReady_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_BrowserReady_t) );
+		internal static HTML_BrowserReady_t Fill( IntPtr p ) => ((HTML_BrowserReady_t)(HTML_BrowserReady_t) Marshal.PtrToStructure( p, typeof(HTML_BrowserReady_t) ) );
 		
 		static Action<HTML_BrowserReady_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -9304,20 +7734,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
-			
-			public static implicit operator HTML_BrowserReady_t ( HTML_BrowserReady_t.Pack8 d ) => new HTML_BrowserReady_t{ UnBrowserHandle = d.UnBrowserHandle, };
-			public static implicit operator HTML_BrowserReady_t.Pack8 ( HTML_BrowserReady_t d ) => new HTML_BrowserReady_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct HTML_NeedsPaint_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -9334,33 +7753,11 @@ namespace Steamworks.Data
 		internal uint UnPageSerial; // unPageSerial uint32
 		
 		#region Marshalling
-		internal static HTML_NeedsPaint_t Fill( IntPtr p ) => Config.PackSmall ? ((HTML_NeedsPaint_t)(HTML_NeedsPaint_t) Marshal.PtrToStructure( p, typeof(HTML_NeedsPaint_t) )) : ((HTML_NeedsPaint_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
-			internal string PBGRA; // pBGRA const char *
-			internal uint UnWide; // unWide uint32
-			internal uint UnTall; // unTall uint32
-			internal uint UnUpdateX; // unUpdateX uint32
-			internal uint UnUpdateY; // unUpdateY uint32
-			internal uint UnUpdateWide; // unUpdateWide uint32
-			internal uint UnUpdateTall; // unUpdateTall uint32
-			internal uint UnScrollX; // unScrollX uint32
-			internal uint UnScrollY; // unScrollY uint32
-			internal float FlPageScale; // flPageScale float
-			internal uint UnPageSerial; // unPageSerial uint32
-			
-			public static implicit operator HTML_NeedsPaint_t ( HTML_NeedsPaint_t.Pack8 d ) => new HTML_NeedsPaint_t{ UnBrowserHandle = d.UnBrowserHandle,PBGRA = d.PBGRA,UnWide = d.UnWide,UnTall = d.UnTall,UnUpdateX = d.UnUpdateX,UnUpdateY = d.UnUpdateY,UnUpdateWide = d.UnUpdateWide,UnUpdateTall = d.UnUpdateTall,UnScrollX = d.UnScrollX,UnScrollY = d.UnScrollY,FlPageScale = d.FlPageScale,UnPageSerial = d.UnPageSerial, };
-			public static implicit operator HTML_NeedsPaint_t.Pack8 ( HTML_NeedsPaint_t d ) => new HTML_NeedsPaint_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,PBGRA = d.PBGRA,UnWide = d.UnWide,UnTall = d.UnTall,UnUpdateX = d.UnUpdateX,UnUpdateY = d.UnUpdateY,UnUpdateWide = d.UnUpdateWide,UnUpdateTall = d.UnUpdateTall,UnScrollX = d.UnScrollX,UnScrollY = d.UnScrollY,FlPageScale = d.FlPageScale,UnPageSerial = d.UnPageSerial, };
-		}
+		internal static HTML_NeedsPaint_t Fill( IntPtr p ) => ((HTML_NeedsPaint_t)(HTML_NeedsPaint_t) Marshal.PtrToStructure( p, typeof(HTML_NeedsPaint_t) ) );
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct HTML_StartRequest_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -9371,48 +7768,21 @@ namespace Steamworks.Data
 		internal bool BIsRedirect; // bIsRedirect _Bool
 		
 		#region Marshalling
-		internal static HTML_StartRequest_t Fill( IntPtr p ) => Config.PackSmall ? ((HTML_StartRequest_t)(HTML_StartRequest_t) Marshal.PtrToStructure( p, typeof(HTML_StartRequest_t) )) : ((HTML_StartRequest_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
-			internal string PchURL; // pchURL const char *
-			internal string PchTarget; // pchTarget const char *
-			internal string PchPostData; // pchPostData const char *
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool BIsRedirect; // bIsRedirect _Bool
-			
-			public static implicit operator HTML_StartRequest_t ( HTML_StartRequest_t.Pack8 d ) => new HTML_StartRequest_t{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL,PchTarget = d.PchTarget,PchPostData = d.PchPostData,BIsRedirect = d.BIsRedirect, };
-			public static implicit operator HTML_StartRequest_t.Pack8 ( HTML_StartRequest_t d ) => new HTML_StartRequest_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL,PchTarget = d.PchTarget,PchPostData = d.PchPostData,BIsRedirect = d.BIsRedirect, };
-		}
+		internal static HTML_StartRequest_t Fill( IntPtr p ) => ((HTML_StartRequest_t)(HTML_StartRequest_t) Marshal.PtrToStructure( p, typeof(HTML_StartRequest_t) ) );
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct HTML_CloseBrowser_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		
 		#region Marshalling
-		internal static HTML_CloseBrowser_t Fill( IntPtr p ) => Config.PackSmall ? ((HTML_CloseBrowser_t)(HTML_CloseBrowser_t) Marshal.PtrToStructure( p, typeof(HTML_CloseBrowser_t) )) : ((HTML_CloseBrowser_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
-			
-			public static implicit operator HTML_CloseBrowser_t ( HTML_CloseBrowser_t.Pack8 d ) => new HTML_CloseBrowser_t{ UnBrowserHandle = d.UnBrowserHandle, };
-			public static implicit operator HTML_CloseBrowser_t.Pack8 ( HTML_CloseBrowser_t d ) => new HTML_CloseBrowser_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle, };
-		}
+		internal static HTML_CloseBrowser_t Fill( IntPtr p ) => ((HTML_CloseBrowser_t)(HTML_CloseBrowser_t) Marshal.PtrToStructure( p, typeof(HTML_CloseBrowser_t) ) );
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct HTML_URLChanged_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -9425,8 +7795,8 @@ namespace Steamworks.Data
 		internal bool BNewNavigation; // bNewNavigation _Bool
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(HTML_URLChanged_t) : typeof(Pack8) );
-		internal static HTML_URLChanged_t Fill( IntPtr p ) => Config.PackSmall ? ((HTML_URLChanged_t)(HTML_URLChanged_t) Marshal.PtrToStructure( p, typeof(HTML_URLChanged_t) )) : ((HTML_URLChanged_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_URLChanged_t) );
+		internal static HTML_URLChanged_t Fill( IntPtr p ) => ((HTML_URLChanged_t)(HTML_URLChanged_t) Marshal.PtrToStructure( p, typeof(HTML_URLChanged_t) ) );
 		
 		static Action<HTML_URLChanged_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -9471,27 +7841,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
-			internal string PchURL; // pchURL const char *
-			internal string PchPostData; // pchPostData const char *
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool BIsRedirect; // bIsRedirect _Bool
-			internal string PchPageTitle; // pchPageTitle const char *
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool BNewNavigation; // bNewNavigation _Bool
-			
-			public static implicit operator HTML_URLChanged_t ( HTML_URLChanged_t.Pack8 d ) => new HTML_URLChanged_t{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL,PchPostData = d.PchPostData,BIsRedirect = d.BIsRedirect,PchPageTitle = d.PchPageTitle,BNewNavigation = d.BNewNavigation, };
-			public static implicit operator HTML_URLChanged_t.Pack8 ( HTML_URLChanged_t d ) => new HTML_URLChanged_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL,PchPostData = d.PchPostData,BIsRedirect = d.BIsRedirect,PchPageTitle = d.PchPageTitle,BNewNavigation = d.BNewNavigation, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct HTML_FinishedRequest_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -9499,8 +7851,8 @@ namespace Steamworks.Data
 		internal string PchPageTitle; // pchPageTitle const char *
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(HTML_FinishedRequest_t) : typeof(Pack8) );
-		internal static HTML_FinishedRequest_t Fill( IntPtr p ) => Config.PackSmall ? ((HTML_FinishedRequest_t)(HTML_FinishedRequest_t) Marshal.PtrToStructure( p, typeof(HTML_FinishedRequest_t) )) : ((HTML_FinishedRequest_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_FinishedRequest_t) );
+		internal static HTML_FinishedRequest_t Fill( IntPtr p ) => ((HTML_FinishedRequest_t)(HTML_FinishedRequest_t) Marshal.PtrToStructure( p, typeof(HTML_FinishedRequest_t) ) );
 		
 		static Action<HTML_FinishedRequest_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -9545,30 +7897,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
-			internal string PchURL; // pchURL const char *
-			internal string PchPageTitle; // pchPageTitle const char *
-			
-			public static implicit operator HTML_FinishedRequest_t ( HTML_FinishedRequest_t.Pack8 d ) => new HTML_FinishedRequest_t{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL,PchPageTitle = d.PchPageTitle, };
-			public static implicit operator HTML_FinishedRequest_t.Pack8 ( HTML_FinishedRequest_t d ) => new HTML_FinishedRequest_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL,PchPageTitle = d.PchPageTitle, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct HTML_OpenLinkInNewTab_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchURL; // pchURL const char *
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(HTML_OpenLinkInNewTab_t) : typeof(Pack8) );
-		internal static HTML_OpenLinkInNewTab_t Fill( IntPtr p ) => Config.PackSmall ? ((HTML_OpenLinkInNewTab_t)(HTML_OpenLinkInNewTab_t) Marshal.PtrToStructure( p, typeof(HTML_OpenLinkInNewTab_t) )) : ((HTML_OpenLinkInNewTab_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_OpenLinkInNewTab_t) );
+		internal static HTML_OpenLinkInNewTab_t Fill( IntPtr p ) => ((HTML_OpenLinkInNewTab_t)(HTML_OpenLinkInNewTab_t) Marshal.PtrToStructure( p, typeof(HTML_OpenLinkInNewTab_t) ) );
 		
 		static Action<HTML_OpenLinkInNewTab_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -9613,29 +7952,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
-			internal string PchURL; // pchURL const char *
-			
-			public static implicit operator HTML_OpenLinkInNewTab_t ( HTML_OpenLinkInNewTab_t.Pack8 d ) => new HTML_OpenLinkInNewTab_t{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL, };
-			public static implicit operator HTML_OpenLinkInNewTab_t.Pack8 ( HTML_OpenLinkInNewTab_t d ) => new HTML_OpenLinkInNewTab_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct HTML_ChangedTitle_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchTitle; // pchTitle const char *
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(HTML_ChangedTitle_t) : typeof(Pack8) );
-		internal static HTML_ChangedTitle_t Fill( IntPtr p ) => Config.PackSmall ? ((HTML_ChangedTitle_t)(HTML_ChangedTitle_t) Marshal.PtrToStructure( p, typeof(HTML_ChangedTitle_t) )) : ((HTML_ChangedTitle_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_ChangedTitle_t) );
+		internal static HTML_ChangedTitle_t Fill( IntPtr p ) => ((HTML_ChangedTitle_t)(HTML_ChangedTitle_t) Marshal.PtrToStructure( p, typeof(HTML_ChangedTitle_t) ) );
 		
 		static Action<HTML_ChangedTitle_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -9680,21 +8007,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
-			internal string PchTitle; // pchTitle const char *
-			
-			public static implicit operator HTML_ChangedTitle_t ( HTML_ChangedTitle_t.Pack8 d ) => new HTML_ChangedTitle_t{ UnBrowserHandle = d.UnBrowserHandle,PchTitle = d.PchTitle, };
-			public static implicit operator HTML_ChangedTitle_t.Pack8 ( HTML_ChangedTitle_t d ) => new HTML_ChangedTitle_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,PchTitle = d.PchTitle, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct HTML_SearchResults_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -9702,8 +8017,8 @@ namespace Steamworks.Data
 		internal uint UnCurrentMatch; // unCurrentMatch uint32
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(HTML_SearchResults_t) : typeof(Pack8) );
-		internal static HTML_SearchResults_t Fill( IntPtr p ) => Config.PackSmall ? ((HTML_SearchResults_t)(HTML_SearchResults_t) Marshal.PtrToStructure( p, typeof(HTML_SearchResults_t) )) : ((HTML_SearchResults_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_SearchResults_t) );
+		internal static HTML_SearchResults_t Fill( IntPtr p ) => ((HTML_SearchResults_t)(HTML_SearchResults_t) Marshal.PtrToStructure( p, typeof(HTML_SearchResults_t) ) );
 		
 		static Action<HTML_SearchResults_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -9748,22 +8063,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
-			internal uint UnResults; // unResults uint32
-			internal uint UnCurrentMatch; // unCurrentMatch uint32
-			
-			public static implicit operator HTML_SearchResults_t ( HTML_SearchResults_t.Pack8 d ) => new HTML_SearchResults_t{ UnBrowserHandle = d.UnBrowserHandle,UnResults = d.UnResults,UnCurrentMatch = d.UnCurrentMatch, };
-			public static implicit operator HTML_SearchResults_t.Pack8 ( HTML_SearchResults_t d ) => new HTML_SearchResults_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,UnResults = d.UnResults,UnCurrentMatch = d.UnCurrentMatch, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct HTML_CanGoBackAndForward_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -9773,8 +8075,8 @@ namespace Steamworks.Data
 		internal bool BCanGoForward; // bCanGoForward _Bool
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(HTML_CanGoBackAndForward_t) : typeof(Pack8) );
-		internal static HTML_CanGoBackAndForward_t Fill( IntPtr p ) => Config.PackSmall ? ((HTML_CanGoBackAndForward_t)(HTML_CanGoBackAndForward_t) Marshal.PtrToStructure( p, typeof(HTML_CanGoBackAndForward_t) )) : ((HTML_CanGoBackAndForward_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_CanGoBackAndForward_t) );
+		internal static HTML_CanGoBackAndForward_t Fill( IntPtr p ) => ((HTML_CanGoBackAndForward_t)(HTML_CanGoBackAndForward_t) Marshal.PtrToStructure( p, typeof(HTML_CanGoBackAndForward_t) ) );
 		
 		static Action<HTML_CanGoBackAndForward_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -9819,24 +8121,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool BCanGoBack; // bCanGoBack _Bool
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool BCanGoForward; // bCanGoForward _Bool
-			
-			public static implicit operator HTML_CanGoBackAndForward_t ( HTML_CanGoBackAndForward_t.Pack8 d ) => new HTML_CanGoBackAndForward_t{ UnBrowserHandle = d.UnBrowserHandle,BCanGoBack = d.BCanGoBack,BCanGoForward = d.BCanGoForward, };
-			public static implicit operator HTML_CanGoBackAndForward_t.Pack8 ( HTML_CanGoBackAndForward_t d ) => new HTML_CanGoBackAndForward_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,BCanGoBack = d.BCanGoBack,BCanGoForward = d.BCanGoForward, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct HTML_HorizontalScroll_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -9848,8 +8135,8 @@ namespace Steamworks.Data
 		internal uint UnPageSize; // unPageSize uint32
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(HTML_HorizontalScroll_t) : typeof(Pack8) );
-		internal static HTML_HorizontalScroll_t Fill( IntPtr p ) => Config.PackSmall ? ((HTML_HorizontalScroll_t)(HTML_HorizontalScroll_t) Marshal.PtrToStructure( p, typeof(HTML_HorizontalScroll_t) )) : ((HTML_HorizontalScroll_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_HorizontalScroll_t) );
+		internal static HTML_HorizontalScroll_t Fill( IntPtr p ) => ((HTML_HorizontalScroll_t)(HTML_HorizontalScroll_t) Marshal.PtrToStructure( p, typeof(HTML_HorizontalScroll_t) ) );
 		
 		static Action<HTML_HorizontalScroll_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -9894,26 +8181,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
-			internal uint UnScrollMax; // unScrollMax uint32
-			internal uint UnScrollCurrent; // unScrollCurrent uint32
-			internal float FlPageScale; // flPageScale float
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool BVisible; // bVisible _Bool
-			internal uint UnPageSize; // unPageSize uint32
-			
-			public static implicit operator HTML_HorizontalScroll_t ( HTML_HorizontalScroll_t.Pack8 d ) => new HTML_HorizontalScroll_t{ UnBrowserHandle = d.UnBrowserHandle,UnScrollMax = d.UnScrollMax,UnScrollCurrent = d.UnScrollCurrent,FlPageScale = d.FlPageScale,BVisible = d.BVisible,UnPageSize = d.UnPageSize, };
-			public static implicit operator HTML_HorizontalScroll_t.Pack8 ( HTML_HorizontalScroll_t d ) => new HTML_HorizontalScroll_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,UnScrollMax = d.UnScrollMax,UnScrollCurrent = d.UnScrollCurrent,FlPageScale = d.FlPageScale,BVisible = d.BVisible,UnPageSize = d.UnPageSize, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct HTML_VerticalScroll_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -9925,8 +8195,8 @@ namespace Steamworks.Data
 		internal uint UnPageSize; // unPageSize uint32
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(HTML_VerticalScroll_t) : typeof(Pack8) );
-		internal static HTML_VerticalScroll_t Fill( IntPtr p ) => Config.PackSmall ? ((HTML_VerticalScroll_t)(HTML_VerticalScroll_t) Marshal.PtrToStructure( p, typeof(HTML_VerticalScroll_t) )) : ((HTML_VerticalScroll_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_VerticalScroll_t) );
+		internal static HTML_VerticalScroll_t Fill( IntPtr p ) => ((HTML_VerticalScroll_t)(HTML_VerticalScroll_t) Marshal.PtrToStructure( p, typeof(HTML_VerticalScroll_t) ) );
 		
 		static Action<HTML_VerticalScroll_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -9971,26 +8241,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
-			internal uint UnScrollMax; // unScrollMax uint32
-			internal uint UnScrollCurrent; // unScrollCurrent uint32
-			internal float FlPageScale; // flPageScale float
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool BVisible; // bVisible _Bool
-			internal uint UnPageSize; // unPageSize uint32
-			
-			public static implicit operator HTML_VerticalScroll_t ( HTML_VerticalScroll_t.Pack8 d ) => new HTML_VerticalScroll_t{ UnBrowserHandle = d.UnBrowserHandle,UnScrollMax = d.UnScrollMax,UnScrollCurrent = d.UnScrollCurrent,FlPageScale = d.FlPageScale,BVisible = d.BVisible,UnPageSize = d.UnPageSize, };
-			public static implicit operator HTML_VerticalScroll_t.Pack8 ( HTML_VerticalScroll_t d ) => new HTML_VerticalScroll_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,UnScrollMax = d.UnScrollMax,UnScrollCurrent = d.UnScrollCurrent,FlPageScale = d.FlPageScale,BVisible = d.BVisible,UnPageSize = d.UnPageSize, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct HTML_LinkAtPosition_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -10003,8 +8256,8 @@ namespace Steamworks.Data
 		internal bool BLiveLink; // bLiveLink _Bool
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(HTML_LinkAtPosition_t) : typeof(Pack8) );
-		internal static HTML_LinkAtPosition_t Fill( IntPtr p ) => Config.PackSmall ? ((HTML_LinkAtPosition_t)(HTML_LinkAtPosition_t) Marshal.PtrToStructure( p, typeof(HTML_LinkAtPosition_t) )) : ((HTML_LinkAtPosition_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_LinkAtPosition_t) );
+		internal static HTML_LinkAtPosition_t Fill( IntPtr p ) => ((HTML_LinkAtPosition_t)(HTML_LinkAtPosition_t) Marshal.PtrToStructure( p, typeof(HTML_LinkAtPosition_t) ) );
 		
 		static Action<HTML_LinkAtPosition_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -10049,35 +8302,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
-			internal uint X; // x uint32
-			internal uint Y; // y uint32
-			internal string PchURL; // pchURL const char *
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool BInput; // bInput _Bool
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool BLiveLink; // bLiveLink _Bool
-			
-			public static implicit operator HTML_LinkAtPosition_t ( HTML_LinkAtPosition_t.Pack8 d ) => new HTML_LinkAtPosition_t{ UnBrowserHandle = d.UnBrowserHandle,X = d.X,Y = d.Y,PchURL = d.PchURL,BInput = d.BInput,BLiveLink = d.BLiveLink, };
-			public static implicit operator HTML_LinkAtPosition_t.Pack8 ( HTML_LinkAtPosition_t d ) => new HTML_LinkAtPosition_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,X = d.X,Y = d.Y,PchURL = d.PchURL,BInput = d.BInput,BLiveLink = d.BLiveLink, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct HTML_JSAlert_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchMessage; // pchMessage const char *
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(HTML_JSAlert_t) : typeof(Pack8) );
-		internal static HTML_JSAlert_t Fill( IntPtr p ) => Config.PackSmall ? ((HTML_JSAlert_t)(HTML_JSAlert_t) Marshal.PtrToStructure( p, typeof(HTML_JSAlert_t) )) : ((HTML_JSAlert_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_JSAlert_t) );
+		internal static HTML_JSAlert_t Fill( IntPtr p ) => ((HTML_JSAlert_t)(HTML_JSAlert_t) Marshal.PtrToStructure( p, typeof(HTML_JSAlert_t) ) );
 		
 		static Action<HTML_JSAlert_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -10122,29 +8357,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
-			internal string PchMessage; // pchMessage const char *
-			
-			public static implicit operator HTML_JSAlert_t ( HTML_JSAlert_t.Pack8 d ) => new HTML_JSAlert_t{ UnBrowserHandle = d.UnBrowserHandle,PchMessage = d.PchMessage, };
-			public static implicit operator HTML_JSAlert_t.Pack8 ( HTML_JSAlert_t d ) => new HTML_JSAlert_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,PchMessage = d.PchMessage, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct HTML_JSConfirm_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchMessage; // pchMessage const char *
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(HTML_JSConfirm_t) : typeof(Pack8) );
-		internal static HTML_JSConfirm_t Fill( IntPtr p ) => Config.PackSmall ? ((HTML_JSConfirm_t)(HTML_JSConfirm_t) Marshal.PtrToStructure( p, typeof(HTML_JSConfirm_t) )) : ((HTML_JSConfirm_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_JSConfirm_t) );
+		internal static HTML_JSConfirm_t Fill( IntPtr p ) => ((HTML_JSConfirm_t)(HTML_JSConfirm_t) Marshal.PtrToStructure( p, typeof(HTML_JSConfirm_t) ) );
 		
 		static Action<HTML_JSConfirm_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -10189,21 +8412,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
-			internal string PchMessage; // pchMessage const char *
-			
-			public static implicit operator HTML_JSConfirm_t ( HTML_JSConfirm_t.Pack8 d ) => new HTML_JSConfirm_t{ UnBrowserHandle = d.UnBrowserHandle,PchMessage = d.PchMessage, };
-			public static implicit operator HTML_JSConfirm_t.Pack8 ( HTML_JSConfirm_t d ) => new HTML_JSConfirm_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,PchMessage = d.PchMessage, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct HTML_FileOpenDialog_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -10211,8 +8422,8 @@ namespace Steamworks.Data
 		internal string PchInitialFile; // pchInitialFile const char *
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(HTML_FileOpenDialog_t) : typeof(Pack8) );
-		internal static HTML_FileOpenDialog_t Fill( IntPtr p ) => Config.PackSmall ? ((HTML_FileOpenDialog_t)(HTML_FileOpenDialog_t) Marshal.PtrToStructure( p, typeof(HTML_FileOpenDialog_t) )) : ((HTML_FileOpenDialog_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_FileOpenDialog_t) );
+		internal static HTML_FileOpenDialog_t Fill( IntPtr p ) => ((HTML_FileOpenDialog_t)(HTML_FileOpenDialog_t) Marshal.PtrToStructure( p, typeof(HTML_FileOpenDialog_t) ) );
 		
 		static Action<HTML_FileOpenDialog_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -10257,22 +8468,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
-			internal string PchTitle; // pchTitle const char *
-			internal string PchInitialFile; // pchInitialFile const char *
-			
-			public static implicit operator HTML_FileOpenDialog_t ( HTML_FileOpenDialog_t.Pack8 d ) => new HTML_FileOpenDialog_t{ UnBrowserHandle = d.UnBrowserHandle,PchTitle = d.PchTitle,PchInitialFile = d.PchInitialFile, };
-			public static implicit operator HTML_FileOpenDialog_t.Pack8 ( HTML_FileOpenDialog_t d ) => new HTML_FileOpenDialog_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,PchTitle = d.PchTitle,PchInitialFile = d.PchInitialFile, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct HTML_NewWindow_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
@@ -10284,8 +8482,8 @@ namespace Steamworks.Data
 		internal uint UnNewWindow_BrowserHandle_IGNORE; // unNewWindow_BrowserHandle_IGNORE HHTMLBrowser
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(HTML_NewWindow_t) : typeof(Pack8) );
-		internal static HTML_NewWindow_t Fill( IntPtr p ) => Config.PackSmall ? ((HTML_NewWindow_t)(HTML_NewWindow_t) Marshal.PtrToStructure( p, typeof(HTML_NewWindow_t) )) : ((HTML_NewWindow_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_NewWindow_t) );
+		internal static HTML_NewWindow_t Fill( IntPtr p ) => ((HTML_NewWindow_t)(HTML_NewWindow_t) Marshal.PtrToStructure( p, typeof(HTML_NewWindow_t) ) );
 		
 		static Action<HTML_NewWindow_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -10330,34 +8528,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
-			internal string PchURL; // pchURL const char *
-			internal uint UnX; // unX uint32
-			internal uint UnY; // unY uint32
-			internal uint UnWide; // unWide uint32
-			internal uint UnTall; // unTall uint32
-			internal uint UnNewWindow_BrowserHandle_IGNORE; // unNewWindow_BrowserHandle_IGNORE HHTMLBrowser
-			
-			public static implicit operator HTML_NewWindow_t ( HTML_NewWindow_t.Pack8 d ) => new HTML_NewWindow_t{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL,UnX = d.UnX,UnY = d.UnY,UnWide = d.UnWide,UnTall = d.UnTall,UnNewWindow_BrowserHandle_IGNORE = d.UnNewWindow_BrowserHandle_IGNORE, };
-			public static implicit operator HTML_NewWindow_t.Pack8 ( HTML_NewWindow_t d ) => new HTML_NewWindow_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,PchURL = d.PchURL,UnX = d.UnX,UnY = d.UnY,UnWide = d.UnWide,UnTall = d.UnTall,UnNewWindow_BrowserHandle_IGNORE = d.UnNewWindow_BrowserHandle_IGNORE, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct HTML_SetCursor_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal uint EMouseCursor; // eMouseCursor uint32
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(HTML_SetCursor_t) : typeof(Pack8) );
-		internal static HTML_SetCursor_t Fill( IntPtr p ) => Config.PackSmall ? ((HTML_SetCursor_t)(HTML_SetCursor_t) Marshal.PtrToStructure( p, typeof(HTML_SetCursor_t) )) : ((HTML_SetCursor_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_SetCursor_t) );
+		internal static HTML_SetCursor_t Fill( IntPtr p ) => ((HTML_SetCursor_t)(HTML_SetCursor_t) Marshal.PtrToStructure( p, typeof(HTML_SetCursor_t) ) );
 		
 		static Action<HTML_SetCursor_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -10402,29 +8583,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
-			internal uint EMouseCursor; // eMouseCursor uint32
-			
-			public static implicit operator HTML_SetCursor_t ( HTML_SetCursor_t.Pack8 d ) => new HTML_SetCursor_t{ UnBrowserHandle = d.UnBrowserHandle,EMouseCursor = d.EMouseCursor, };
-			public static implicit operator HTML_SetCursor_t.Pack8 ( HTML_SetCursor_t d ) => new HTML_SetCursor_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,EMouseCursor = d.EMouseCursor, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct HTML_StatusText_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchMsg; // pchMsg const char *
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(HTML_StatusText_t) : typeof(Pack8) );
-		internal static HTML_StatusText_t Fill( IntPtr p ) => Config.PackSmall ? ((HTML_StatusText_t)(HTML_StatusText_t) Marshal.PtrToStructure( p, typeof(HTML_StatusText_t) )) : ((HTML_StatusText_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_StatusText_t) );
+		internal static HTML_StatusText_t Fill( IntPtr p ) => ((HTML_StatusText_t)(HTML_StatusText_t) Marshal.PtrToStructure( p, typeof(HTML_StatusText_t) ) );
 		
 		static Action<HTML_StatusText_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -10469,29 +8638,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
-			internal string PchMsg; // pchMsg const char *
-			
-			public static implicit operator HTML_StatusText_t ( HTML_StatusText_t.Pack8 d ) => new HTML_StatusText_t{ UnBrowserHandle = d.UnBrowserHandle,PchMsg = d.PchMsg, };
-			public static implicit operator HTML_StatusText_t.Pack8 ( HTML_StatusText_t d ) => new HTML_StatusText_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,PchMsg = d.PchMsg, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct HTML_ShowToolTip_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchMsg; // pchMsg const char *
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(HTML_ShowToolTip_t) : typeof(Pack8) );
-		internal static HTML_ShowToolTip_t Fill( IntPtr p ) => Config.PackSmall ? ((HTML_ShowToolTip_t)(HTML_ShowToolTip_t) Marshal.PtrToStructure( p, typeof(HTML_ShowToolTip_t) )) : ((HTML_ShowToolTip_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_ShowToolTip_t) );
+		internal static HTML_ShowToolTip_t Fill( IntPtr p ) => ((HTML_ShowToolTip_t)(HTML_ShowToolTip_t) Marshal.PtrToStructure( p, typeof(HTML_ShowToolTip_t) ) );
 		
 		static Action<HTML_ShowToolTip_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -10536,29 +8693,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
-			internal string PchMsg; // pchMsg const char *
-			
-			public static implicit operator HTML_ShowToolTip_t ( HTML_ShowToolTip_t.Pack8 d ) => new HTML_ShowToolTip_t{ UnBrowserHandle = d.UnBrowserHandle,PchMsg = d.PchMsg, };
-			public static implicit operator HTML_ShowToolTip_t.Pack8 ( HTML_ShowToolTip_t d ) => new HTML_ShowToolTip_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,PchMsg = d.PchMsg, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct HTML_UpdateToolTip_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal string PchMsg; // pchMsg const char *
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(HTML_UpdateToolTip_t) : typeof(Pack8) );
-		internal static HTML_UpdateToolTip_t Fill( IntPtr p ) => Config.PackSmall ? ((HTML_UpdateToolTip_t)(HTML_UpdateToolTip_t) Marshal.PtrToStructure( p, typeof(HTML_UpdateToolTip_t) )) : ((HTML_UpdateToolTip_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_UpdateToolTip_t) );
+		internal static HTML_UpdateToolTip_t Fill( IntPtr p ) => ((HTML_UpdateToolTip_t)(HTML_UpdateToolTip_t) Marshal.PtrToStructure( p, typeof(HTML_UpdateToolTip_t) ) );
 		
 		static Action<HTML_UpdateToolTip_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -10603,28 +8748,16 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
-			internal string PchMsg; // pchMsg const char *
-			
-			public static implicit operator HTML_UpdateToolTip_t ( HTML_UpdateToolTip_t.Pack8 d ) => new HTML_UpdateToolTip_t{ UnBrowserHandle = d.UnBrowserHandle,PchMsg = d.PchMsg, };
-			public static implicit operator HTML_UpdateToolTip_t.Pack8 ( HTML_UpdateToolTip_t d ) => new HTML_UpdateToolTip_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,PchMsg = d.PchMsg, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct HTML_HideToolTip_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(HTML_HideToolTip_t) : typeof(Pack8) );
-		internal static HTML_HideToolTip_t Fill( IntPtr p ) => Config.PackSmall ? ((HTML_HideToolTip_t)(HTML_HideToolTip_t) Marshal.PtrToStructure( p, typeof(HTML_HideToolTip_t) )) : ((HTML_HideToolTip_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_HideToolTip_t) );
+		internal static HTML_HideToolTip_t Fill( IntPtr p ) => ((HTML_HideToolTip_t)(HTML_HideToolTip_t) Marshal.PtrToStructure( p, typeof(HTML_HideToolTip_t) ) );
 		
 		static Action<HTML_HideToolTip_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -10669,28 +8802,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
-			
-			public static implicit operator HTML_HideToolTip_t ( HTML_HideToolTip_t.Pack8 d ) => new HTML_HideToolTip_t{ UnBrowserHandle = d.UnBrowserHandle, };
-			public static implicit operator HTML_HideToolTip_t.Pack8 ( HTML_HideToolTip_t d ) => new HTML_HideToolTip_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct HTML_BrowserRestarted_t
 	{
 		internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
 		internal uint UnOldBrowserHandle; // unOldBrowserHandle HHTMLBrowser
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(HTML_BrowserRestarted_t) : typeof(Pack8) );
-		internal static HTML_BrowserRestarted_t Fill( IntPtr p ) => Config.PackSmall ? ((HTML_BrowserRestarted_t)(HTML_BrowserRestarted_t) Marshal.PtrToStructure( p, typeof(HTML_BrowserRestarted_t) )) : ((HTML_BrowserRestarted_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_BrowserRestarted_t) );
+		internal static HTML_BrowserRestarted_t Fill( IntPtr p ) => ((HTML_BrowserRestarted_t)(HTML_BrowserRestarted_t) Marshal.PtrToStructure( p, typeof(HTML_BrowserRestarted_t) ) );
 		
 		static Action<HTML_BrowserRestarted_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -10735,21 +8857,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint UnBrowserHandle; // unBrowserHandle HHTMLBrowser
-			internal uint UnOldBrowserHandle; // unOldBrowserHandle HHTMLBrowser
-			
-			public static implicit operator HTML_BrowserRestarted_t ( HTML_BrowserRestarted_t.Pack8 d ) => new HTML_BrowserRestarted_t{ UnBrowserHandle = d.UnBrowserHandle,UnOldBrowserHandle = d.UnOldBrowserHandle, };
-			public static implicit operator HTML_BrowserRestarted_t.Pack8 ( HTML_BrowserRestarted_t d ) => new HTML_BrowserRestarted_t.Pack8{ UnBrowserHandle = d.UnBrowserHandle,UnOldBrowserHandle = d.UnOldBrowserHandle, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamItemDetails_t
 	{
 		internal InventoryItemId ItemId; // m_itemId SteamItemInstanceID_t
@@ -10758,33 +8868,19 @@ namespace Steamworks.Data
 		internal ushort Flags; // m_unFlags uint16
 		
 		#region Marshalling
-		internal static SteamItemDetails_t Fill( IntPtr p ) => Config.PackSmall ? ((SteamItemDetails_t)(SteamItemDetails_t) Marshal.PtrToStructure( p, typeof(SteamItemDetails_t) )) : ((SteamItemDetails_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal InventoryItemId ItemId; // m_itemId SteamItemInstanceID_t
-			internal InventoryDefId Definition; // m_iDefinition SteamItemDef_t
-			internal ushort Quantity; // m_unQuantity uint16
-			internal ushort Flags; // m_unFlags uint16
-			
-			public static implicit operator SteamItemDetails_t ( SteamItemDetails_t.Pack8 d ) => new SteamItemDetails_t{ ItemId = d.ItemId,Definition = d.Definition,Quantity = d.Quantity,Flags = d.Flags, };
-			public static implicit operator SteamItemDetails_t.Pack8 ( SteamItemDetails_t d ) => new SteamItemDetails_t.Pack8{ ItemId = d.ItemId,Definition = d.Definition,Quantity = d.Quantity,Flags = d.Flags, };
-		}
+		internal static SteamItemDetails_t Fill( IntPtr p ) => ((SteamItemDetails_t)(SteamItemDetails_t) Marshal.PtrToStructure( p, typeof(SteamItemDetails_t) ) );
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamInventoryResultReady_t
 	{
 		internal int Handle; // m_handle SteamInventoryResult_t
 		internal Result Result; // m_result enum EResult
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(SteamInventoryResultReady_t) : typeof(Pack8) );
-		internal static SteamInventoryResultReady_t Fill( IntPtr p ) => Config.PackSmall ? ((SteamInventoryResultReady_t)(SteamInventoryResultReady_t) Marshal.PtrToStructure( p, typeof(SteamInventoryResultReady_t) )) : ((SteamInventoryResultReady_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamInventoryResultReady_t) );
+		internal static SteamInventoryResultReady_t Fill( IntPtr p ) => ((SteamInventoryResultReady_t)(SteamInventoryResultReady_t) Marshal.PtrToStructure( p, typeof(SteamInventoryResultReady_t) ) );
 		
 		static Action<SteamInventoryResultReady_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -10829,28 +8925,16 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal int Handle; // m_handle SteamInventoryResult_t
-			internal Result Result; // m_result enum EResult
-			
-			public static implicit operator SteamInventoryResultReady_t ( SteamInventoryResultReady_t.Pack8 d ) => new SteamInventoryResultReady_t{ Handle = d.Handle,Result = d.Result, };
-			public static implicit operator SteamInventoryResultReady_t.Pack8 ( SteamInventoryResultReady_t d ) => new SteamInventoryResultReady_t.Pack8{ Handle = d.Handle,Result = d.Result, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamInventoryFullUpdate_t
 	{
 		internal int Handle; // m_handle SteamInventoryResult_t
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(SteamInventoryFullUpdate_t) : typeof(Pack8) );
-		internal static SteamInventoryFullUpdate_t Fill( IntPtr p ) => Config.PackSmall ? ((SteamInventoryFullUpdate_t)(SteamInventoryFullUpdate_t) Marshal.PtrToStructure( p, typeof(SteamInventoryFullUpdate_t) )) : ((SteamInventoryFullUpdate_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamInventoryFullUpdate_t) );
+		internal static SteamInventoryFullUpdate_t Fill( IntPtr p ) => ((SteamInventoryFullUpdate_t)(SteamInventoryFullUpdate_t) Marshal.PtrToStructure( p, typeof(SteamInventoryFullUpdate_t) ) );
 		
 		static Action<SteamInventoryFullUpdate_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -10895,20 +8979,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal int Handle; // m_handle SteamInventoryResult_t
-			
-			public static implicit operator SteamInventoryFullUpdate_t ( SteamInventoryFullUpdate_t.Pack8 d ) => new SteamInventoryFullUpdate_t{ Handle = d.Handle, };
-			public static implicit operator SteamInventoryFullUpdate_t.Pack8 ( SteamInventoryFullUpdate_t d ) => new SteamInventoryFullUpdate_t.Pack8{ Handle = d.Handle, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct SteamInventoryEligiblePromoItemDefIDs_t
 	{
 		internal Result Result; // m_result enum EResult
@@ -10966,7 +9039,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamInventoryStartPurchaseResult_t
 	{
 		internal Result Result; // m_result enum EResult
@@ -10974,8 +9047,8 @@ namespace Steamworks.Data
 		internal ulong TransID; // m_ulTransID uint64
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(SteamInventoryStartPurchaseResult_t) : typeof(Pack8) );
-		internal static SteamInventoryStartPurchaseResult_t Fill( IntPtr p ) => Config.PackSmall ? ((SteamInventoryStartPurchaseResult_t)(SteamInventoryStartPurchaseResult_t) Marshal.PtrToStructure( p, typeof(SteamInventoryStartPurchaseResult_t) )) : ((SteamInventoryStartPurchaseResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamInventoryStartPurchaseResult_t) );
+		internal static SteamInventoryStartPurchaseResult_t Fill( IntPtr p ) => ((SteamInventoryStartPurchaseResult_t)(SteamInventoryStartPurchaseResult_t) Marshal.PtrToStructure( p, typeof(SteamInventoryStartPurchaseResult_t) ) );
 		
 		static Action<SteamInventoryStartPurchaseResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -11020,22 +9093,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_result enum EResult
-			internal ulong OrderID; // m_ulOrderID uint64
-			internal ulong TransID; // m_ulTransID uint64
-			
-			public static implicit operator SteamInventoryStartPurchaseResult_t ( SteamInventoryStartPurchaseResult_t.Pack8 d ) => new SteamInventoryStartPurchaseResult_t{ Result = d.Result,OrderID = d.OrderID,TransID = d.TransID, };
-			public static implicit operator SteamInventoryStartPurchaseResult_t.Pack8 ( SteamInventoryStartPurchaseResult_t d ) => new SteamInventoryStartPurchaseResult_t.Pack8{ Result = d.Result,OrderID = d.OrderID,TransID = d.TransID, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamInventoryRequestPricesResult_t
 	{
 		internal Result Result; // m_result enum EResult
@@ -11044,8 +9104,8 @@ namespace Steamworks.Data
 		internal byte[] Currency; // m_rgchCurrency char [4]
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(SteamInventoryRequestPricesResult_t) : typeof(Pack8) );
-		internal static SteamInventoryRequestPricesResult_t Fill( IntPtr p ) => Config.PackSmall ? ((SteamInventoryRequestPricesResult_t)(SteamInventoryRequestPricesResult_t) Marshal.PtrToStructure( p, typeof(SteamInventoryRequestPricesResult_t) )) : ((SteamInventoryRequestPricesResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamInventoryRequestPricesResult_t) );
+		internal static SteamInventoryRequestPricesResult_t Fill( IntPtr p ) => ((SteamInventoryRequestPricesResult_t)(SteamInventoryRequestPricesResult_t) Marshal.PtrToStructure( p, typeof(SteamInventoryRequestPricesResult_t) ) );
 		
 		static Action<SteamInventoryRequestPricesResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -11090,30 +9150,16 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_result enum EResult
-			internal string CurrencyUTF8() => System.Text.Encoding.UTF8.GetString( Currency, 0, System.Array.IndexOf<byte>( Currency, 0 ) );
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)] // byte[] m_rgchCurrency
-			internal byte[] Currency; // m_rgchCurrency char [4]
-			
-			public static implicit operator SteamInventoryRequestPricesResult_t ( SteamInventoryRequestPricesResult_t.Pack8 d ) => new SteamInventoryRequestPricesResult_t{ Result = d.Result,Currency = d.Currency, };
-			public static implicit operator SteamInventoryRequestPricesResult_t.Pack8 ( SteamInventoryRequestPricesResult_t d ) => new SteamInventoryRequestPricesResult_t.Pack8{ Result = d.Result,Currency = d.Currency, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct BroadcastUploadStop_t
 	{
 		internal BroadcastUploadResult Result; // m_eResult enum EBroadcastUploadResult
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(BroadcastUploadStop_t) : typeof(Pack8) );
-		internal static BroadcastUploadStop_t Fill( IntPtr p ) => Config.PackSmall ? ((BroadcastUploadStop_t)(BroadcastUploadStop_t) Marshal.PtrToStructure( p, typeof(BroadcastUploadStop_t) )) : ((BroadcastUploadStop_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(BroadcastUploadStop_t) );
+		internal static BroadcastUploadStop_t Fill( IntPtr p ) => ((BroadcastUploadStop_t)(BroadcastUploadStop_t) Marshal.PtrToStructure( p, typeof(BroadcastUploadStop_t) ) );
 		
 		static Action<BroadcastUploadStop_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -11158,20 +9204,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal BroadcastUploadResult Result; // m_eResult enum EBroadcastUploadResult
-			
-			public static implicit operator BroadcastUploadStop_t ( BroadcastUploadStop_t.Pack8 d ) => new BroadcastUploadStop_t{ Result = d.Result, };
-			public static implicit operator BroadcastUploadStop_t.Pack8 ( BroadcastUploadStop_t d ) => new BroadcastUploadStop_t.Pack8{ Result = d.Result, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct GetVideoURLResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -11181,8 +9216,8 @@ namespace Steamworks.Data
 		internal byte[] URL; // m_rgchURL char [256]
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GetVideoURLResult_t) : typeof(Pack8) );
-		internal static GetVideoURLResult_t Fill( IntPtr p ) => Config.PackSmall ? ((GetVideoURLResult_t)(GetVideoURLResult_t) Marshal.PtrToStructure( p, typeof(GetVideoURLResult_t) )) : ((GetVideoURLResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GetVideoURLResult_t) );
+		internal static GetVideoURLResult_t Fill( IntPtr p ) => ((GetVideoURLResult_t)(GetVideoURLResult_t) Marshal.PtrToStructure( p, typeof(GetVideoURLResult_t) ) );
 		
 		static Action<GetVideoURLResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -11227,32 +9262,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal AppId VideoAppID; // m_unVideoAppID AppId_t
-			internal string URLUTF8() => System.Text.Encoding.UTF8.GetString( URL, 0, System.Array.IndexOf<byte>( URL, 0 ) );
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_rgchURL
-			internal byte[] URL; // m_rgchURL char [256]
-			
-			public static implicit operator GetVideoURLResult_t ( GetVideoURLResult_t.Pack8 d ) => new GetVideoURLResult_t{ Result = d.Result,VideoAppID = d.VideoAppID,URL = d.URL, };
-			public static implicit operator GetVideoURLResult_t.Pack8 ( GetVideoURLResult_t d ) => new GetVideoURLResult_t.Pack8{ Result = d.Result,VideoAppID = d.VideoAppID,URL = d.URL, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct GetOPFSettingsResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
 		internal AppId VideoAppID; // m_unVideoAppID AppId_t
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GetOPFSettingsResult_t) : typeof(Pack8) );
-		internal static GetOPFSettingsResult_t Fill( IntPtr p ) => Config.PackSmall ? ((GetOPFSettingsResult_t)(GetOPFSettingsResult_t) Marshal.PtrToStructure( p, typeof(GetOPFSettingsResult_t) )) : ((GetOPFSettingsResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GetOPFSettingsResult_t) );
+		internal static GetOPFSettingsResult_t Fill( IntPtr p ) => ((GetOPFSettingsResult_t)(GetOPFSettingsResult_t) Marshal.PtrToStructure( p, typeof(GetOPFSettingsResult_t) ) );
 		
 		static Action<GetOPFSettingsResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -11297,21 +9317,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal AppId VideoAppID; // m_unVideoAppID AppId_t
-			
-			public static implicit operator GetOPFSettingsResult_t ( GetOPFSettingsResult_t.Pack8 d ) => new GetOPFSettingsResult_t{ Result = d.Result,VideoAppID = d.VideoAppID, };
-			public static implicit operator GetOPFSettingsResult_t.Pack8 ( GetOPFSettingsResult_t d ) => new GetOPFSettingsResult_t.Pack8{ Result = d.Result,VideoAppID = d.VideoAppID, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct GSClientApprove_t
 	{
 		internal ulong SteamID; // m_SteamID class CSteamID
@@ -11366,7 +9374,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct GSClientDeny_t
 	{
 		internal ulong SteamID; // m_SteamID class CSteamID
@@ -11424,7 +9432,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct GSClientKick_t
 	{
 		internal ulong SteamID; // m_SteamID class CSteamID
@@ -11479,7 +9487,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct GSClientAchievementStatus_t
 	{
 		internal ulong SteamID; // m_SteamID uint64
@@ -11490,8 +9498,8 @@ namespace Steamworks.Data
 		internal bool Unlocked; // m_bUnlocked _Bool
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GSClientAchievementStatus_t) : typeof(Pack8) );
-		internal static GSClientAchievementStatus_t Fill( IntPtr p ) => Config.PackSmall ? ((GSClientAchievementStatus_t)(GSClientAchievementStatus_t) Marshal.PtrToStructure( p, typeof(GSClientAchievementStatus_t) )) : ((GSClientAchievementStatus_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSClientAchievementStatus_t) );
+		internal static GSClientAchievementStatus_t Fill( IntPtr p ) => ((GSClientAchievementStatus_t)(GSClientAchievementStatus_t) Marshal.PtrToStructure( p, typeof(GSClientAchievementStatus_t) ) );
 		
 		static Action<GSClientAchievementStatus_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -11536,32 +9544,16 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal ulong SteamID; // m_SteamID uint64
-			internal string PchAchievementUTF8() => System.Text.Encoding.UTF8.GetString( PchAchievement, 0, System.Array.IndexOf<byte>( PchAchievement, 0 ) );
-			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)] // byte[] m_pchAchievement
-			internal byte[] PchAchievement; // m_pchAchievement char [128]
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool Unlocked; // m_bUnlocked _Bool
-			
-			public static implicit operator GSClientAchievementStatus_t ( GSClientAchievementStatus_t.Pack8 d ) => new GSClientAchievementStatus_t{ SteamID = d.SteamID,PchAchievement = d.PchAchievement,Unlocked = d.Unlocked, };
-			public static implicit operator GSClientAchievementStatus_t.Pack8 ( GSClientAchievementStatus_t d ) => new GSClientAchievementStatus_t.Pack8{ SteamID = d.SteamID,PchAchievement = d.PchAchievement,Unlocked = d.Unlocked, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct GSPolicyResponse_t
 	{
 		internal byte Secure; // m_bSecure uint8
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GSPolicyResponse_t) : typeof(Pack8) );
-		internal static GSPolicyResponse_t Fill( IntPtr p ) => Config.PackSmall ? ((GSPolicyResponse_t)(GSPolicyResponse_t) Marshal.PtrToStructure( p, typeof(GSPolicyResponse_t) )) : ((GSPolicyResponse_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSPolicyResponse_t) );
+		internal static GSPolicyResponse_t Fill( IntPtr p ) => ((GSPolicyResponse_t)(GSPolicyResponse_t) Marshal.PtrToStructure( p, typeof(GSPolicyResponse_t) ) );
 		
 		static Action<GSPolicyResponse_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -11606,20 +9598,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal byte Secure; // m_bSecure uint8
-			
-			public static implicit operator GSPolicyResponse_t ( GSPolicyResponse_t.Pack8 d ) => new GSPolicyResponse_t{ Secure = d.Secure, };
-			public static implicit operator GSPolicyResponse_t.Pack8 ( GSPolicyResponse_t d ) => new GSPolicyResponse_t.Pack8{ Secure = d.Secure, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct GSGameplayStats_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -11628,8 +9609,8 @@ namespace Steamworks.Data
 		internal uint TotalMinutesPlayed; // m_unTotalMinutesPlayed uint32
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GSGameplayStats_t) : typeof(Pack8) );
-		internal static GSGameplayStats_t Fill( IntPtr p ) => Config.PackSmall ? ((GSGameplayStats_t)(GSGameplayStats_t) Marshal.PtrToStructure( p, typeof(GSGameplayStats_t) )) : ((GSGameplayStats_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSGameplayStats_t) );
+		internal static GSGameplayStats_t Fill( IntPtr p ) => ((GSGameplayStats_t)(GSGameplayStats_t) Marshal.PtrToStructure( p, typeof(GSGameplayStats_t) ) );
 		
 		static Action<GSGameplayStats_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -11674,23 +9655,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal int Rank; // m_nRank int32
-			internal uint TotalConnects; // m_unTotalConnects uint32
-			internal uint TotalMinutesPlayed; // m_unTotalMinutesPlayed uint32
-			
-			public static implicit operator GSGameplayStats_t ( GSGameplayStats_t.Pack8 d ) => new GSGameplayStats_t{ Result = d.Result,Rank = d.Rank,TotalConnects = d.TotalConnects,TotalMinutesPlayed = d.TotalMinutesPlayed, };
-			public static implicit operator GSGameplayStats_t.Pack8 ( GSGameplayStats_t d ) => new GSGameplayStats_t.Pack8{ Result = d.Result,Rank = d.Rank,TotalConnects = d.TotalConnects,TotalMinutesPlayed = d.TotalMinutesPlayed, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct GSClientGroupStatus_t
 	{
 		internal ulong SteamIDUser; // m_SteamIDUser class CSteamID
@@ -11749,7 +9716,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct GSReputation_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -11762,8 +9729,8 @@ namespace Steamworks.Data
 		internal uint BanExpires; // m_unBanExpires uint32
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GSReputation_t) : typeof(Pack8) );
-		internal static GSReputation_t Fill( IntPtr p ) => Config.PackSmall ? ((GSReputation_t)(GSReputation_t) Marshal.PtrToStructure( p, typeof(GSReputation_t) )) : ((GSReputation_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSReputation_t) );
+		internal static GSReputation_t Fill( IntPtr p ) => ((GSReputation_t)(GSReputation_t) Marshal.PtrToStructure( p, typeof(GSReputation_t) ) );
 		
 		static Action<GSReputation_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -11808,34 +9775,16 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			internal uint ReputationScore; // m_unReputationScore uint32
-			[MarshalAs(UnmanagedType.I1)]
-			internal bool Banned; // m_bBanned _Bool
-			internal uint BannedIP; // m_unBannedIP uint32
-			internal ushort BannedPort; // m_usBannedPort uint16
-			internal ulong BannedGameID; // m_ulBannedGameID uint64
-			internal uint BanExpires; // m_unBanExpires uint32
-			
-			public static implicit operator GSReputation_t ( GSReputation_t.Pack8 d ) => new GSReputation_t{ Result = d.Result,ReputationScore = d.ReputationScore,Banned = d.Banned,BannedIP = d.BannedIP,BannedPort = d.BannedPort,BannedGameID = d.BannedGameID,BanExpires = d.BanExpires, };
-			public static implicit operator GSReputation_t.Pack8 ( GSReputation_t d ) => new GSReputation_t.Pack8{ Result = d.Result,ReputationScore = d.ReputationScore,Banned = d.Banned,BannedIP = d.BannedIP,BannedPort = d.BannedPort,BannedGameID = d.BannedGameID,BanExpires = d.BanExpires, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct AssociateWithClanResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(AssociateWithClanResult_t) : typeof(Pack8) );
-		internal static AssociateWithClanResult_t Fill( IntPtr p ) => Config.PackSmall ? ((AssociateWithClanResult_t)(AssociateWithClanResult_t) Marshal.PtrToStructure( p, typeof(AssociateWithClanResult_t) )) : ((AssociateWithClanResult_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(AssociateWithClanResult_t) );
+		internal static AssociateWithClanResult_t Fill( IntPtr p ) => ((AssociateWithClanResult_t)(AssociateWithClanResult_t) Marshal.PtrToStructure( p, typeof(AssociateWithClanResult_t) ) );
 		
 		static Action<AssociateWithClanResult_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -11880,20 +9829,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Result Result; // m_eResult enum EResult
-			
-			public static implicit operator AssociateWithClanResult_t ( AssociateWithClanResult_t.Pack8 d ) => new AssociateWithClanResult_t{ Result = d.Result, };
-			public static implicit operator AssociateWithClanResult_t.Pack8 ( AssociateWithClanResult_t d ) => new AssociateWithClanResult_t.Pack8{ Result = d.Result, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct ComputeNewPlayerCompatibilityResult_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -11951,7 +9889,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct GSStatsReceived_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -12006,7 +9944,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct GSStatsStored_t
 	{
 		internal Result Result; // m_eResult enum EResult
@@ -12061,7 +9999,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct GSStatsUnloaded_t
 	{
 		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
@@ -12115,13 +10053,13 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct AvailableBeaconLocationsUpdated_t
 	{
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(AvailableBeaconLocationsUpdated_t) : typeof(Pack8) );
-		internal static AvailableBeaconLocationsUpdated_t Fill( IntPtr p ) => Config.PackSmall ? ((AvailableBeaconLocationsUpdated_t)(AvailableBeaconLocationsUpdated_t) Marshal.PtrToStructure( p, typeof(AvailableBeaconLocationsUpdated_t) )) : ((AvailableBeaconLocationsUpdated_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(AvailableBeaconLocationsUpdated_t) );
+		internal static AvailableBeaconLocationsUpdated_t Fill( IntPtr p ) => ((AvailableBeaconLocationsUpdated_t)(AvailableBeaconLocationsUpdated_t) Marshal.PtrToStructure( p, typeof(AvailableBeaconLocationsUpdated_t) ) );
 		
 		static Action<AvailableBeaconLocationsUpdated_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -12166,25 +10104,15 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			
-			public static implicit operator AvailableBeaconLocationsUpdated_t ( AvailableBeaconLocationsUpdated_t.Pack8 d ) => new AvailableBeaconLocationsUpdated_t{  };
-			public static implicit operator AvailableBeaconLocationsUpdated_t.Pack8 ( AvailableBeaconLocationsUpdated_t d ) => new AvailableBeaconLocationsUpdated_t.Pack8{  };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct ActiveBeaconsUpdated_t
 	{
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(ActiveBeaconsUpdated_t) : typeof(Pack8) );
-		internal static ActiveBeaconsUpdated_t Fill( IntPtr p ) => Config.PackSmall ? ((ActiveBeaconsUpdated_t)(ActiveBeaconsUpdated_t) Marshal.PtrToStructure( p, typeof(ActiveBeaconsUpdated_t) )) : ((ActiveBeaconsUpdated_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(ActiveBeaconsUpdated_t) );
+		internal static ActiveBeaconsUpdated_t Fill( IntPtr p ) => ((ActiveBeaconsUpdated_t)(ActiveBeaconsUpdated_t) Marshal.PtrToStructure( p, typeof(ActiveBeaconsUpdated_t) ) );
 		
 		static Action<ActiveBeaconsUpdated_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -12229,25 +10157,15 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			
-			public static implicit operator ActiveBeaconsUpdated_t ( ActiveBeaconsUpdated_t.Pack8 d ) => new ActiveBeaconsUpdated_t{  };
-			public static implicit operator ActiveBeaconsUpdated_t.Pack8 ( ActiveBeaconsUpdated_t d ) => new ActiveBeaconsUpdated_t.Pack8{  };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct PlaybackStatusHasChanged_t
 	{
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(PlaybackStatusHasChanged_t) : typeof(Pack8) );
-		internal static PlaybackStatusHasChanged_t Fill( IntPtr p ) => Config.PackSmall ? ((PlaybackStatusHasChanged_t)(PlaybackStatusHasChanged_t) Marshal.PtrToStructure( p, typeof(PlaybackStatusHasChanged_t) )) : ((PlaybackStatusHasChanged_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(PlaybackStatusHasChanged_t) );
+		internal static PlaybackStatusHasChanged_t Fill( IntPtr p ) => ((PlaybackStatusHasChanged_t)(PlaybackStatusHasChanged_t) Marshal.PtrToStructure( p, typeof(PlaybackStatusHasChanged_t) ) );
 		
 		static Action<PlaybackStatusHasChanged_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -12292,25 +10210,15 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			
-			public static implicit operator PlaybackStatusHasChanged_t ( PlaybackStatusHasChanged_t.Pack8 d ) => new PlaybackStatusHasChanged_t{  };
-			public static implicit operator PlaybackStatusHasChanged_t.Pack8 ( PlaybackStatusHasChanged_t d ) => new PlaybackStatusHasChanged_t.Pack8{  };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct BroadcastUploadStart_t
 	{
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(BroadcastUploadStart_t) : typeof(Pack8) );
-		internal static BroadcastUploadStart_t Fill( IntPtr p ) => Config.PackSmall ? ((BroadcastUploadStart_t)(BroadcastUploadStart_t) Marshal.PtrToStructure( p, typeof(BroadcastUploadStart_t) )) : ((BroadcastUploadStart_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(BroadcastUploadStart_t) );
+		internal static BroadcastUploadStart_t Fill( IntPtr p ) => ((BroadcastUploadStart_t)(BroadcastUploadStart_t) Marshal.PtrToStructure( p, typeof(BroadcastUploadStart_t) ) );
 		
 		static Action<BroadcastUploadStart_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -12355,25 +10263,15 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			
-			public static implicit operator BroadcastUploadStart_t ( BroadcastUploadStart_t.Pack8 d ) => new BroadcastUploadStart_t{  };
-			public static implicit operator BroadcastUploadStart_t.Pack8 ( BroadcastUploadStart_t d ) => new BroadcastUploadStart_t.Pack8{  };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct NewUrlLaunchParameters_t
 	{
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(NewUrlLaunchParameters_t) : typeof(Pack8) );
-		internal static NewUrlLaunchParameters_t Fill( IntPtr p ) => Config.PackSmall ? ((NewUrlLaunchParameters_t)(NewUrlLaunchParameters_t) Marshal.PtrToStructure( p, typeof(NewUrlLaunchParameters_t) )) : ((NewUrlLaunchParameters_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(NewUrlLaunchParameters_t) );
+		internal static NewUrlLaunchParameters_t Fill( IntPtr p ) => ((NewUrlLaunchParameters_t)(NewUrlLaunchParameters_t) Marshal.PtrToStructure( p, typeof(NewUrlLaunchParameters_t) ) );
 		
 		static Action<NewUrlLaunchParameters_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -12418,27 +10316,17 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			
-			public static implicit operator NewUrlLaunchParameters_t ( NewUrlLaunchParameters_t.Pack8 d ) => new NewUrlLaunchParameters_t{  };
-			public static implicit operator NewUrlLaunchParameters_t.Pack8 ( NewUrlLaunchParameters_t d ) => new NewUrlLaunchParameters_t.Pack8{  };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct ItemInstalled_t
 	{
 		internal AppId AppID; // m_unAppID AppId_t
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(ItemInstalled_t) : typeof(Pack8) );
-		internal static ItemInstalled_t Fill( IntPtr p ) => Config.PackSmall ? ((ItemInstalled_t)(ItemInstalled_t) Marshal.PtrToStructure( p, typeof(ItemInstalled_t) )) : ((ItemInstalled_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(ItemInstalled_t) );
+		internal static ItemInstalled_t Fill( IntPtr p ) => ((ItemInstalled_t)(ItemInstalled_t) Marshal.PtrToStructure( p, typeof(ItemInstalled_t) ) );
 		
 		static Action<ItemInstalled_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -12483,21 +10371,9 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal AppId AppID; // m_unAppID AppId_t
-			internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
-			
-			public static implicit operator ItemInstalled_t ( ItemInstalled_t.Pack8 d ) => new ItemInstalled_t{ AppID = d.AppID,PublishedFileId = d.PublishedFileId, };
-			public static implicit operator ItemInstalled_t.Pack8 ( ItemInstalled_t d ) => new ItemInstalled_t.Pack8{ AppID = d.AppID,PublishedFileId = d.PublishedFileId, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamNetConnectionStatusChangedCallback_t
 	{
 		internal Connection Conn; // m_hConn HSteamNetConnection
@@ -12505,8 +10381,8 @@ namespace Steamworks.Data
 		internal ConnectionState OldState; // m_eOldState ESteamNetworkingConnectionState
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(SteamNetConnectionStatusChangedCallback_t) : typeof(Pack8) );
-		internal static SteamNetConnectionStatusChangedCallback_t Fill( IntPtr p ) => Config.PackSmall ? ((SteamNetConnectionStatusChangedCallback_t)(SteamNetConnectionStatusChangedCallback_t) Marshal.PtrToStructure( p, typeof(SteamNetConnectionStatusChangedCallback_t) )) : ((SteamNetConnectionStatusChangedCallback_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamNetConnectionStatusChangedCallback_t) );
+		internal static SteamNetConnectionStatusChangedCallback_t Fill( IntPtr p ) => ((SteamNetConnectionStatusChangedCallback_t)(SteamNetConnectionStatusChangedCallback_t) Marshal.PtrToStructure( p, typeof(SteamNetConnectionStatusChangedCallback_t) ) );
 		
 		static Action<SteamNetConnectionStatusChangedCallback_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -12551,28 +10427,15 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal Connection Conn; // m_hConn HSteamNetConnection
-			internal ConnectionInfo Nfo; // m_info SteamNetConnectionInfo_t
-			internal ConnectionState OldState; // m_eOldState ESteamNetworkingConnectionState
-			
-			public static implicit operator SteamNetConnectionStatusChangedCallback_t ( SteamNetConnectionStatusChangedCallback_t.Pack8 d ) => new SteamNetConnectionStatusChangedCallback_t{ Conn = d.Conn,Nfo = d.Nfo,OldState = d.OldState, };
-			public static implicit operator SteamNetConnectionStatusChangedCallback_t.Pack8 ( SteamNetConnectionStatusChangedCallback_t d ) => new SteamNetConnectionStatusChangedCallback_t.Pack8{ Conn = d.Conn,Nfo = d.Nfo,OldState = d.OldState, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamInventoryDefinitionUpdate_t
 	{
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(SteamInventoryDefinitionUpdate_t) : typeof(Pack8) );
-		internal static SteamInventoryDefinitionUpdate_t Fill( IntPtr p ) => Config.PackSmall ? ((SteamInventoryDefinitionUpdate_t)(SteamInventoryDefinitionUpdate_t) Marshal.PtrToStructure( p, typeof(SteamInventoryDefinitionUpdate_t) )) : ((SteamInventoryDefinitionUpdate_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamInventoryDefinitionUpdate_t) );
+		internal static SteamInventoryDefinitionUpdate_t Fill( IntPtr p ) => ((SteamInventoryDefinitionUpdate_t)(SteamInventoryDefinitionUpdate_t) Marshal.PtrToStructure( p, typeof(SteamInventoryDefinitionUpdate_t) ) );
 		
 		static Action<SteamInventoryDefinitionUpdate_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -12617,25 +10480,15 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			
-			public static implicit operator SteamInventoryDefinitionUpdate_t ( SteamInventoryDefinitionUpdate_t.Pack8 d ) => new SteamInventoryDefinitionUpdate_t{  };
-			public static implicit operator SteamInventoryDefinitionUpdate_t.Pack8 ( SteamInventoryDefinitionUpdate_t d ) => new SteamInventoryDefinitionUpdate_t.Pack8{  };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamParentalSettingsChanged_t
 	{
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(SteamParentalSettingsChanged_t) : typeof(Pack8) );
-		internal static SteamParentalSettingsChanged_t Fill( IntPtr p ) => Config.PackSmall ? ((SteamParentalSettingsChanged_t)(SteamParentalSettingsChanged_t) Marshal.PtrToStructure( p, typeof(SteamParentalSettingsChanged_t) )) : ((SteamParentalSettingsChanged_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamParentalSettingsChanged_t) );
+		internal static SteamParentalSettingsChanged_t Fill( IntPtr p ) => ((SteamParentalSettingsChanged_t)(SteamParentalSettingsChanged_t) Marshal.PtrToStructure( p, typeof(SteamParentalSettingsChanged_t) ) );
 		
 		static Action<SteamParentalSettingsChanged_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -12680,25 +10533,15 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			
-			public static implicit operator SteamParentalSettingsChanged_t ( SteamParentalSettingsChanged_t.Pack8 d ) => new SteamParentalSettingsChanged_t{  };
-			public static implicit operator SteamParentalSettingsChanged_t.Pack8 ( SteamParentalSettingsChanged_t d ) => new SteamParentalSettingsChanged_t.Pack8{  };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamServersConnected_t
 	{
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(SteamServersConnected_t) : typeof(Pack8) );
-		internal static SteamServersConnected_t Fill( IntPtr p ) => Config.PackSmall ? ((SteamServersConnected_t)(SteamServersConnected_t) Marshal.PtrToStructure( p, typeof(SteamServersConnected_t) )) : ((SteamServersConnected_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamServersConnected_t) );
+		internal static SteamServersConnected_t Fill( IntPtr p ) => ((SteamServersConnected_t)(SteamServersConnected_t) Marshal.PtrToStructure( p, typeof(SteamServersConnected_t) ) );
 		
 		static Action<SteamServersConnected_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -12743,45 +10586,25 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			
-			public static implicit operator SteamServersConnected_t ( SteamServersConnected_t.Pack8 d ) => new SteamServersConnected_t{  };
-			public static implicit operator SteamServersConnected_t.Pack8 ( SteamServersConnected_t d ) => new SteamServersConnected_t.Pack8{  };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct NewLaunchQueryParameters_t
 	{
 		
 		#region Marshalling
-		internal static NewLaunchQueryParameters_t Fill( IntPtr p ) => Config.PackSmall ? ((NewLaunchQueryParameters_t)(NewLaunchQueryParameters_t) Marshal.PtrToStructure( p, typeof(NewLaunchQueryParameters_t) )) : ((NewLaunchQueryParameters_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			
-			public static implicit operator NewLaunchQueryParameters_t ( NewLaunchQueryParameters_t.Pack8 d ) => new NewLaunchQueryParameters_t{  };
-			public static implicit operator NewLaunchQueryParameters_t.Pack8 ( NewLaunchQueryParameters_t d ) => new NewLaunchQueryParameters_t.Pack8{  };
-		}
+		internal static NewLaunchQueryParameters_t Fill( IntPtr p ) => ((NewLaunchQueryParameters_t)(NewLaunchQueryParameters_t) Marshal.PtrToStructure( p, typeof(NewLaunchQueryParameters_t) ) );
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct GCMessageAvailable_t
 	{
 		internal uint MessageSize; // m_nMessageSize uint32
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GCMessageAvailable_t) : typeof(Pack8) );
-		internal static GCMessageAvailable_t Fill( IntPtr p ) => Config.PackSmall ? ((GCMessageAvailable_t)(GCMessageAvailable_t) Marshal.PtrToStructure( p, typeof(GCMessageAvailable_t) )) : ((GCMessageAvailable_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GCMessageAvailable_t) );
+		internal static GCMessageAvailable_t Fill( IntPtr p ) => ((GCMessageAvailable_t)(GCMessageAvailable_t) Marshal.PtrToStructure( p, typeof(GCMessageAvailable_t) ) );
 		
 		static Action<GCMessageAvailable_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -12826,26 +10649,15 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal uint MessageSize; // m_nMessageSize uint32
-			
-			public static implicit operator GCMessageAvailable_t ( GCMessageAvailable_t.Pack8 d ) => new GCMessageAvailable_t{ MessageSize = d.MessageSize, };
-			public static implicit operator GCMessageAvailable_t.Pack8 ( GCMessageAvailable_t d ) => new GCMessageAvailable_t.Pack8{ MessageSize = d.MessageSize, };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct GCMessageFailed_t
 	{
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(GCMessageFailed_t) : typeof(Pack8) );
-		internal static GCMessageFailed_t Fill( IntPtr p ) => Config.PackSmall ? ((GCMessageFailed_t)(GCMessageFailed_t) Marshal.PtrToStructure( p, typeof(GCMessageFailed_t) )) : ((GCMessageFailed_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GCMessageFailed_t) );
+		internal static GCMessageFailed_t Fill( IntPtr p ) => ((GCMessageFailed_t)(GCMessageFailed_t) Marshal.PtrToStructure( p, typeof(GCMessageFailed_t) ) );
 		
 		static Action<GCMessageFailed_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -12890,25 +10702,15 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			
-			public static implicit operator GCMessageFailed_t ( GCMessageFailed_t.Pack8 d ) => new GCMessageFailed_t{  };
-			public static implicit operator GCMessageFailed_t.Pack8 ( GCMessageFailed_t d ) => new GCMessageFailed_t.Pack8{  };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct ScreenshotRequested_t
 	{
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(ScreenshotRequested_t) : typeof(Pack8) );
-		internal static ScreenshotRequested_t Fill( IntPtr p ) => Config.PackSmall ? ((ScreenshotRequested_t)(ScreenshotRequested_t) Marshal.PtrToStructure( p, typeof(ScreenshotRequested_t) )) : ((ScreenshotRequested_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(ScreenshotRequested_t) );
+		internal static ScreenshotRequested_t Fill( IntPtr p ) => ((ScreenshotRequested_t)(ScreenshotRequested_t) Marshal.PtrToStructure( p, typeof(ScreenshotRequested_t) ) );
 		
 		static Action<ScreenshotRequested_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -12953,25 +10755,15 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			
-			public static implicit operator ScreenshotRequested_t ( ScreenshotRequested_t.Pack8 d ) => new ScreenshotRequested_t{  };
-			public static implicit operator ScreenshotRequested_t.Pack8 ( ScreenshotRequested_t d ) => new ScreenshotRequested_t.Pack8{  };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct LicensesUpdated_t
 	{
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(LicensesUpdated_t) : typeof(Pack8) );
-		internal static LicensesUpdated_t Fill( IntPtr p ) => Config.PackSmall ? ((LicensesUpdated_t)(LicensesUpdated_t) Marshal.PtrToStructure( p, typeof(LicensesUpdated_t) )) : ((LicensesUpdated_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LicensesUpdated_t) );
+		internal static LicensesUpdated_t Fill( IntPtr p ) => ((LicensesUpdated_t)(LicensesUpdated_t) Marshal.PtrToStructure( p, typeof(LicensesUpdated_t) ) );
 		
 		static Action<LicensesUpdated_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -13016,25 +10808,15 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			
-			public static implicit operator LicensesUpdated_t ( LicensesUpdated_t.Pack8 d ) => new LicensesUpdated_t{  };
-			public static implicit operator LicensesUpdated_t.Pack8 ( LicensesUpdated_t d ) => new LicensesUpdated_t.Pack8{  };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamShutdown_t
 	{
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(SteamShutdown_t) : typeof(Pack8) );
-		internal static SteamShutdown_t Fill( IntPtr p ) => Config.PackSmall ? ((SteamShutdown_t)(SteamShutdown_t) Marshal.PtrToStructure( p, typeof(SteamShutdown_t) )) : ((SteamShutdown_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamShutdown_t) );
+		internal static SteamShutdown_t Fill( IntPtr p ) => ((SteamShutdown_t)(SteamShutdown_t) Marshal.PtrToStructure( p, typeof(SteamShutdown_t) ) );
 		
 		static Action<SteamShutdown_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -13079,25 +10861,15 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			
-			public static implicit operator SteamShutdown_t ( SteamShutdown_t.Pack8 d ) => new SteamShutdown_t{  };
-			public static implicit operator SteamShutdown_t.Pack8 ( SteamShutdown_t d ) => new SteamShutdown_t.Pack8{  };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct IPCountry_t
 	{
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(IPCountry_t) : typeof(Pack8) );
-		internal static IPCountry_t Fill( IntPtr p ) => Config.PackSmall ? ((IPCountry_t)(IPCountry_t) Marshal.PtrToStructure( p, typeof(IPCountry_t) )) : ((IPCountry_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(IPCountry_t) );
+		internal static IPCountry_t Fill( IntPtr p ) => ((IPCountry_t)(IPCountry_t) Marshal.PtrToStructure( p, typeof(IPCountry_t) ) );
 		
 		static Action<IPCountry_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -13142,26 +10914,16 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			
-			public static implicit operator IPCountry_t ( IPCountry_t.Pack8 d ) => new IPCountry_t{  };
-			public static implicit operator IPCountry_t.Pack8 ( IPCountry_t d ) => new IPCountry_t.Pack8{  };
-		}
-		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct IPCFailure_t
 	{
 		internal byte FailureType; // m_eFailureType uint8
 		
 		#region SteamCallback
-		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( Config.PackSmall ? typeof(IPCFailure_t) : typeof(Pack8) );
-		internal static IPCFailure_t Fill( IntPtr p ) => Config.PackSmall ? ((IPCFailure_t)(IPCFailure_t) Marshal.PtrToStructure( p, typeof(IPCFailure_t) )) : ((IPCFailure_t)(Pack8) Marshal.PtrToStructure( p, typeof(Pack8) ));
+		internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(IPCFailure_t) );
+		internal static IPCFailure_t Fill( IntPtr p ) => ((IPCFailure_t)(IPCFailure_t) Marshal.PtrToStructure( p, typeof(IPCFailure_t) ) );
 		
 		static Action<IPCFailure_t> actionClient;
 		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
@@ -13204,17 +10966,6 @@ namespace Steamworks.Data
 			{
 				Marshal.FreeHGlobal( ptr );
 			}
-		}
-		#endregion
-		#region Packed Versions
-		
-		[StructLayout( LayoutKind.Sequential, Pack = 8 )]
-		public struct Pack8
-		{
-			internal byte FailureType; // m_eFailureType uint8
-			
-			public static implicit operator IPCFailure_t ( IPCFailure_t.Pack8 d ) => new IPCFailure_t{ FailureType = d.FailureType, };
-			public static implicit operator IPCFailure_t.Pack8 ( IPCFailure_t d ) => new IPCFailure_t.Pack8{ FailureType = d.FailureType, };
 		}
 		#endregion
 	}
