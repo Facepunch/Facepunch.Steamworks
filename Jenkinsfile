@@ -36,4 +36,9 @@ node ( 'vs2017' )
 		bat( "copy /Y Facepunch.Steamworks\\bin\\Debug\\netstandard2.0\\Facepunch.Steamworks.Posix64.pdb UnityPlugin\\" )
 		bat( "copy /Y Facepunch.Steamworks\\bin\\Debug\\netstandard2.0\\Facepunch.Steamworks.Posix64.xml UnityPlugin\\" )
 		archiveArtifacts artifacts: 'UnityPlugin/**/*'
+		
+
+	post
+		always
+			cleanWs()
 }
