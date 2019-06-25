@@ -7,8 +7,8 @@
     <ProjectGuid>{3F6183AD-D966-44F2-A6EB-42E61E591B49}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Facepunch.Steamworks.Test</RootNamespace>
-    <AssemblyName>Facepunch.Steamworks.Test</AssemblyName>
+    <RootNamespace>Facepunch.Steamworks.TestWin32</RootNamespace>
+    <AssemblyName>Facepunch.Steamworks.TestWin32</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -26,17 +26,17 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;TEST_WIN32</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;TEST_WIN32</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x64</PlatformTarget>
@@ -122,9 +122,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Facepunch.Steamworks\Facepunch.Steamworks.Win64.csproj">
-      <Project>{8c73da93-73ad-4445-9a2c-15d4a44337d3}</Project>
-      <Name>Facepunch.Steamworks.Win64</Name>
+    <ProjectReference Include="..\Facepunch.Steamworks\Facepunch.Steamworks.Win32.csproj">
+      <Project>{2d6247f6-8ab2-405f-a00e-3a364b808a55}</Project>
+      <Name>Facepunch.Steamworks.Win32</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
