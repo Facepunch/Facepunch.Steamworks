@@ -93,39 +93,45 @@ namespace Generator
 
 			StartBlock( $"public override void InitInternals()" );
 			{
+				var different = new List<int>();
 
-				if ( standardLocations.SequenceEqual( windowsLocations ) )
+				for ( int i = 0; i < clss.Functions.Count; i++ )
 				{
-					for ( int i = 0; i < clss.Functions.Count; i++ )
-					{
-						var func = clss.Functions[i];
+					var func = clss.Functions[i];
 
-						if ( Cleanup.IsDeprecated( $"{clss.Name}.{func.Name}" ) )
-							WriteLine( $" // {func.Name} is deprecated" );
-						else
-							WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, {standardLocations[i]} ) );" );
+					if ( Cleanup.IsDeprecated( $"{clss.Name}.{func.Name}" ) )
+					{
+						WriteLine( $" // {func.Name} is deprecated" );
+					}
+					else
+					{
+						if ( standardLocations[i] != windowsLocations[i] )
+						{
+							different.Add( i );
+							continue;
+						}
+
+						WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, {standardLocations[i]} ) );" );
 					}
 				}
-				else
+
+				if ( different.Count > 0 )
 				{
+					WriteLine( "" );
 					WriteLine( "#if PLATFORM_WIN64" );
-					WriteLine( $"int[] loc = new[] {{ {string.Join( ", ", windowsLocations )} }};" );
-					WriteLine( "#else" );
-					WriteLine( $"int[] loc = new[] {{ {string.Join( ", ", standardLocations )} }};" );
-					WriteLine( "#endif" );
-					WriteLine();
-
-					for ( int i = 0; i < clss.Functions.Count; i++ )
+					foreach ( var i in different )
 					{
 						var func = clss.Functions[i];
-
-						if ( Cleanup.IsDeprecated( $"{clss.Name}.{func.Name}" ) )
-							WriteLine( $" // {func.Name} is deprecated" );
-						else
-							WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, loc[{i}] ) );" );
+						WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, {windowsLocations[i]} ) );" );
 					}
+					WriteLine( "#else" );
+					foreach ( var i in different )
+					{
+						var func = clss.Functions[i];
+						WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, {standardLocations[i]} ) );" );
+					}
+					WriteLine( "#endif" );
 				}
-
 
 			}
 			EndBlock();
