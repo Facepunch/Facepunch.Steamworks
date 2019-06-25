@@ -24,5 +24,15 @@ namespace Steamworks
 #endif
 
 		public const int StructPackSize = 4;
+
+
+		public static int MemoryOffset( int memLocation )
+		{
+#if PLATFORM_WIN64 || PLATFORM_POSIX64
+			return memLocation;
+#else
+			return memLocation / 2;
+#endif
+		}
 	}
 }

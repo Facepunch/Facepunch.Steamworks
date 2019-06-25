@@ -13,39 +13,39 @@ namespace Steamworks
 		
 		public override void InitInternals()
 		{
-			_DoInit = Marshal.GetDelegateForFunctionPointer<FDoInit>( Marshal.ReadIntPtr( VTable, 0 ) );
-			_DoShutdown = Marshal.GetDelegateForFunctionPointer<FDoShutdown>( Marshal.ReadIntPtr( VTable, 8 ) );
-			_RunFrame = Marshal.GetDelegateForFunctionPointer<FRunFrame>( Marshal.ReadIntPtr( VTable, 16 ) );
-			_GetConnectedControllers = Marshal.GetDelegateForFunctionPointer<FGetConnectedControllers>( Marshal.ReadIntPtr( VTable, 24 ) );
-			_GetActionSetHandle = Marshal.GetDelegateForFunctionPointer<FGetActionSetHandle>( Marshal.ReadIntPtr( VTable, 32 ) );
-			_ActivateActionSet = Marshal.GetDelegateForFunctionPointer<FActivateActionSet>( Marshal.ReadIntPtr( VTable, 40 ) );
-			_GetCurrentActionSet = Marshal.GetDelegateForFunctionPointer<FGetCurrentActionSet>( Marshal.ReadIntPtr( VTable, 48 ) );
-			_ActivateActionSetLayer = Marshal.GetDelegateForFunctionPointer<FActivateActionSetLayer>( Marshal.ReadIntPtr( VTable, 56 ) );
-			_DeactivateActionSetLayer = Marshal.GetDelegateForFunctionPointer<FDeactivateActionSetLayer>( Marshal.ReadIntPtr( VTable, 64 ) );
-			_DeactivateAllActionSetLayers = Marshal.GetDelegateForFunctionPointer<FDeactivateAllActionSetLayers>( Marshal.ReadIntPtr( VTable, 72 ) );
-			_GetActiveActionSetLayers = Marshal.GetDelegateForFunctionPointer<FGetActiveActionSetLayers>( Marshal.ReadIntPtr( VTable, 80 ) );
-			_GetDigitalActionHandle = Marshal.GetDelegateForFunctionPointer<FGetDigitalActionHandle>( Marshal.ReadIntPtr( VTable, 88 ) );
-			_GetDigitalActionData = Marshal.GetDelegateForFunctionPointer<FGetDigitalActionData>( Marshal.ReadIntPtr( VTable, 96 ) );
-			_GetDigitalActionOrigins = Marshal.GetDelegateForFunctionPointer<FGetDigitalActionOrigins>( Marshal.ReadIntPtr( VTable, 104 ) );
-			_GetAnalogActionHandle = Marshal.GetDelegateForFunctionPointer<FGetAnalogActionHandle>( Marshal.ReadIntPtr( VTable, 112 ) );
-			_GetAnalogActionData = Marshal.GetDelegateForFunctionPointer<FGetAnalogActionData>( Marshal.ReadIntPtr( VTable, 120 ) );
-			_GetAnalogActionOrigins = Marshal.GetDelegateForFunctionPointer<FGetAnalogActionOrigins>( Marshal.ReadIntPtr( VTable, 128 ) );
-			_GetGlyphForActionOrigin = Marshal.GetDelegateForFunctionPointer<FGetGlyphForActionOrigin>( Marshal.ReadIntPtr( VTable, 136 ) );
-			_GetStringForActionOrigin = Marshal.GetDelegateForFunctionPointer<FGetStringForActionOrigin>( Marshal.ReadIntPtr( VTable, 144 ) );
-			_StopAnalogActionMomentum = Marshal.GetDelegateForFunctionPointer<FStopAnalogActionMomentum>( Marshal.ReadIntPtr( VTable, 152 ) );
-			_GetMotionData = Marshal.GetDelegateForFunctionPointer<FGetMotionData>( Marshal.ReadIntPtr( VTable, 160 ) );
-			_TriggerVibration = Marshal.GetDelegateForFunctionPointer<FTriggerVibration>( Marshal.ReadIntPtr( VTable, 168 ) );
-			_SetLEDColor = Marshal.GetDelegateForFunctionPointer<FSetLEDColor>( Marshal.ReadIntPtr( VTable, 176 ) );
-			_TriggerHapticPulse = Marshal.GetDelegateForFunctionPointer<FTriggerHapticPulse>( Marshal.ReadIntPtr( VTable, 184 ) );
-			_TriggerRepeatedHapticPulse = Marshal.GetDelegateForFunctionPointer<FTriggerRepeatedHapticPulse>( Marshal.ReadIntPtr( VTable, 192 ) );
-			_ShowBindingPanel = Marshal.GetDelegateForFunctionPointer<FShowBindingPanel>( Marshal.ReadIntPtr( VTable, 200 ) );
-			_GetInputTypeForHandle = Marshal.GetDelegateForFunctionPointer<FGetInputTypeForHandle>( Marshal.ReadIntPtr( VTable, 208 ) );
-			_GetControllerForGamepadIndex = Marshal.GetDelegateForFunctionPointer<FGetControllerForGamepadIndex>( Marshal.ReadIntPtr( VTable, 216 ) );
-			_GetGamepadIndexForController = Marshal.GetDelegateForFunctionPointer<FGetGamepadIndexForController>( Marshal.ReadIntPtr( VTable, 224 ) );
-			_GetStringForXboxOrigin = Marshal.GetDelegateForFunctionPointer<FGetStringForXboxOrigin>( Marshal.ReadIntPtr( VTable, 232 ) );
-			_GetGlyphForXboxOrigin = Marshal.GetDelegateForFunctionPointer<FGetGlyphForXboxOrigin>( Marshal.ReadIntPtr( VTable, 240 ) );
-			_GetActionOriginFromXboxOrigin = Marshal.GetDelegateForFunctionPointer<FGetActionOriginFromXboxOrigin>( Marshal.ReadIntPtr( VTable, 248 ) );
-			_TranslateActionOrigin = Marshal.GetDelegateForFunctionPointer<FTranslateActionOrigin>( Marshal.ReadIntPtr( VTable, 256 ) );
+			_DoInit = Marshal.GetDelegateForFunctionPointer<FDoInit>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 0 ) ) );
+			_DoShutdown = Marshal.GetDelegateForFunctionPointer<FDoShutdown>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 8 ) ) );
+			_RunFrame = Marshal.GetDelegateForFunctionPointer<FRunFrame>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 16 ) ) );
+			_GetConnectedControllers = Marshal.GetDelegateForFunctionPointer<FGetConnectedControllers>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 24 ) ) );
+			_GetActionSetHandle = Marshal.GetDelegateForFunctionPointer<FGetActionSetHandle>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 32 ) ) );
+			_ActivateActionSet = Marshal.GetDelegateForFunctionPointer<FActivateActionSet>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 40 ) ) );
+			_GetCurrentActionSet = Marshal.GetDelegateForFunctionPointer<FGetCurrentActionSet>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 48 ) ) );
+			_ActivateActionSetLayer = Marshal.GetDelegateForFunctionPointer<FActivateActionSetLayer>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 56 ) ) );
+			_DeactivateActionSetLayer = Marshal.GetDelegateForFunctionPointer<FDeactivateActionSetLayer>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 64 ) ) );
+			_DeactivateAllActionSetLayers = Marshal.GetDelegateForFunctionPointer<FDeactivateAllActionSetLayers>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 72 ) ) );
+			_GetActiveActionSetLayers = Marshal.GetDelegateForFunctionPointer<FGetActiveActionSetLayers>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 80 ) ) );
+			_GetDigitalActionHandle = Marshal.GetDelegateForFunctionPointer<FGetDigitalActionHandle>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 88 ) ) );
+			_GetDigitalActionData = Marshal.GetDelegateForFunctionPointer<FGetDigitalActionData>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 96 ) ) );
+			_GetDigitalActionOrigins = Marshal.GetDelegateForFunctionPointer<FGetDigitalActionOrigins>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 104 ) ) );
+			_GetAnalogActionHandle = Marshal.GetDelegateForFunctionPointer<FGetAnalogActionHandle>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 112 ) ) );
+			_GetAnalogActionData = Marshal.GetDelegateForFunctionPointer<FGetAnalogActionData>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 120 ) ) );
+			_GetAnalogActionOrigins = Marshal.GetDelegateForFunctionPointer<FGetAnalogActionOrigins>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 128 ) ) );
+			_GetGlyphForActionOrigin = Marshal.GetDelegateForFunctionPointer<FGetGlyphForActionOrigin>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 136 ) ) );
+			_GetStringForActionOrigin = Marshal.GetDelegateForFunctionPointer<FGetStringForActionOrigin>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 144 ) ) );
+			_StopAnalogActionMomentum = Marshal.GetDelegateForFunctionPointer<FStopAnalogActionMomentum>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 152 ) ) );
+			_GetMotionData = Marshal.GetDelegateForFunctionPointer<FGetMotionData>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 160 ) ) );
+			_TriggerVibration = Marshal.GetDelegateForFunctionPointer<FTriggerVibration>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 168 ) ) );
+			_SetLEDColor = Marshal.GetDelegateForFunctionPointer<FSetLEDColor>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 176 ) ) );
+			_TriggerHapticPulse = Marshal.GetDelegateForFunctionPointer<FTriggerHapticPulse>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 184 ) ) );
+			_TriggerRepeatedHapticPulse = Marshal.GetDelegateForFunctionPointer<FTriggerRepeatedHapticPulse>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 192 ) ) );
+			_ShowBindingPanel = Marshal.GetDelegateForFunctionPointer<FShowBindingPanel>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 200 ) ) );
+			_GetInputTypeForHandle = Marshal.GetDelegateForFunctionPointer<FGetInputTypeForHandle>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 208 ) ) );
+			_GetControllerForGamepadIndex = Marshal.GetDelegateForFunctionPointer<FGetControllerForGamepadIndex>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 216 ) ) );
+			_GetGamepadIndexForController = Marshal.GetDelegateForFunctionPointer<FGetGamepadIndexForController>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 224 ) ) );
+			_GetStringForXboxOrigin = Marshal.GetDelegateForFunctionPointer<FGetStringForXboxOrigin>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 232 ) ) );
+			_GetGlyphForXboxOrigin = Marshal.GetDelegateForFunctionPointer<FGetGlyphForXboxOrigin>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 240 ) ) );
+			_GetActionOriginFromXboxOrigin = Marshal.GetDelegateForFunctionPointer<FGetActionOriginFromXboxOrigin>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 248 ) ) );
+			_TranslateActionOrigin = Marshal.GetDelegateForFunctionPointer<FTranslateActionOrigin>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 256 ) ) );
 		}
 		internal override void Shutdown()
 		{

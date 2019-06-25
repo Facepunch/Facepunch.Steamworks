@@ -13,23 +13,23 @@ namespace Steamworks
 		
 		public override void InitInternals()
 		{
-			_GetLocalPingLocation = Marshal.GetDelegateForFunctionPointer<FGetLocalPingLocation>( Marshal.ReadIntPtr( VTable, 0 ) );
-			_EstimatePingTimeBetweenTwoLocations = Marshal.GetDelegateForFunctionPointer<FEstimatePingTimeBetweenTwoLocations>( Marshal.ReadIntPtr( VTable, 8 ) );
-			_EstimatePingTimeFromLocalHost = Marshal.GetDelegateForFunctionPointer<FEstimatePingTimeFromLocalHost>( Marshal.ReadIntPtr( VTable, 16 ) );
-			_ConvertPingLocationToString = Marshal.GetDelegateForFunctionPointer<FConvertPingLocationToString>( Marshal.ReadIntPtr( VTable, 24 ) );
-			_ParsePingLocationString = Marshal.GetDelegateForFunctionPointer<FParsePingLocationString>( Marshal.ReadIntPtr( VTable, 32 ) );
-			_CheckPingDataUpToDate = Marshal.GetDelegateForFunctionPointer<FCheckPingDataUpToDate>( Marshal.ReadIntPtr( VTable, 40 ) );
-			_IsPingMeasurementInProgress = Marshal.GetDelegateForFunctionPointer<FIsPingMeasurementInProgress>( Marshal.ReadIntPtr( VTable, 48 ) );
-			_GetPingToDataCenter = Marshal.GetDelegateForFunctionPointer<FGetPingToDataCenter>( Marshal.ReadIntPtr( VTable, 56 ) );
-			_GetDirectPingToPOP = Marshal.GetDelegateForFunctionPointer<FGetDirectPingToPOP>( Marshal.ReadIntPtr( VTable, 64 ) );
-			_GetPOPCount = Marshal.GetDelegateForFunctionPointer<FGetPOPCount>( Marshal.ReadIntPtr( VTable, 72 ) );
-			_GetPOPList = Marshal.GetDelegateForFunctionPointer<FGetPOPList>( Marshal.ReadIntPtr( VTable, 80 ) );
-			_GetLocalTimestamp = Marshal.GetDelegateForFunctionPointer<FGetLocalTimestamp>( Marshal.ReadIntPtr( VTable, 88 ) );
-			_SetDebugOutputFunction = Marshal.GetDelegateForFunctionPointer<FSetDebugOutputFunction>( Marshal.ReadIntPtr( VTable, 96 ) );
-			_SetConfigValue = Marshal.GetDelegateForFunctionPointer<FSetConfigValue>( Marshal.ReadIntPtr( VTable, 104 ) );
-			_GetConfigValue = Marshal.GetDelegateForFunctionPointer<FGetConfigValue>( Marshal.ReadIntPtr( VTable, 112 ) );
-			_GetConfigValueInfo = Marshal.GetDelegateForFunctionPointer<FGetConfigValueInfo>( Marshal.ReadIntPtr( VTable, 120 ) );
-			_GetFirstConfigValue = Marshal.GetDelegateForFunctionPointer<FGetFirstConfigValue>( Marshal.ReadIntPtr( VTable, 128 ) );
+			_GetLocalPingLocation = Marshal.GetDelegateForFunctionPointer<FGetLocalPingLocation>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 0 ) ) );
+			_EstimatePingTimeBetweenTwoLocations = Marshal.GetDelegateForFunctionPointer<FEstimatePingTimeBetweenTwoLocations>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 8 ) ) );
+			_EstimatePingTimeFromLocalHost = Marshal.GetDelegateForFunctionPointer<FEstimatePingTimeFromLocalHost>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 16 ) ) );
+			_ConvertPingLocationToString = Marshal.GetDelegateForFunctionPointer<FConvertPingLocationToString>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 24 ) ) );
+			_ParsePingLocationString = Marshal.GetDelegateForFunctionPointer<FParsePingLocationString>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 32 ) ) );
+			_CheckPingDataUpToDate = Marshal.GetDelegateForFunctionPointer<FCheckPingDataUpToDate>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 40 ) ) );
+			_IsPingMeasurementInProgress = Marshal.GetDelegateForFunctionPointer<FIsPingMeasurementInProgress>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 48 ) ) );
+			_GetPingToDataCenter = Marshal.GetDelegateForFunctionPointer<FGetPingToDataCenter>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 56 ) ) );
+			_GetDirectPingToPOP = Marshal.GetDelegateForFunctionPointer<FGetDirectPingToPOP>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 64 ) ) );
+			_GetPOPCount = Marshal.GetDelegateForFunctionPointer<FGetPOPCount>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 72 ) ) );
+			_GetPOPList = Marshal.GetDelegateForFunctionPointer<FGetPOPList>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 80 ) ) );
+			_GetLocalTimestamp = Marshal.GetDelegateForFunctionPointer<FGetLocalTimestamp>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 88 ) ) );
+			_SetDebugOutputFunction = Marshal.GetDelegateForFunctionPointer<FSetDebugOutputFunction>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 96 ) ) );
+			_SetConfigValue = Marshal.GetDelegateForFunctionPointer<FSetConfigValue>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 104 ) ) );
+			_GetConfigValue = Marshal.GetDelegateForFunctionPointer<FGetConfigValue>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 112 ) ) );
+			_GetConfigValueInfo = Marshal.GetDelegateForFunctionPointer<FGetConfigValueInfo>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 120 ) ) );
+			_GetFirstConfigValue = Marshal.GetDelegateForFunctionPointer<FGetFirstConfigValue>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 128 ) ) );
 		}
 		internal override void Shutdown()
 		{

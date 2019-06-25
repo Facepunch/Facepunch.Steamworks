@@ -13,15 +13,15 @@ namespace Steamworks
 		
 		public override void InitInternals()
 		{
-			_WriteScreenshot = Marshal.GetDelegateForFunctionPointer<FWriteScreenshot>( Marshal.ReadIntPtr( VTable, 0 ) );
-			_AddScreenshotToLibrary = Marshal.GetDelegateForFunctionPointer<FAddScreenshotToLibrary>( Marshal.ReadIntPtr( VTable, 8 ) );
-			_TriggerScreenshot = Marshal.GetDelegateForFunctionPointer<FTriggerScreenshot>( Marshal.ReadIntPtr( VTable, 16 ) );
-			_HookScreenshots = Marshal.GetDelegateForFunctionPointer<FHookScreenshots>( Marshal.ReadIntPtr( VTable, 24 ) );
-			_SetLocation = Marshal.GetDelegateForFunctionPointer<FSetLocation>( Marshal.ReadIntPtr( VTable, 32 ) );
-			_TagUser = Marshal.GetDelegateForFunctionPointer<FTagUser>( Marshal.ReadIntPtr( VTable, 40 ) );
-			_TagPublishedFile = Marshal.GetDelegateForFunctionPointer<FTagPublishedFile>( Marshal.ReadIntPtr( VTable, 48 ) );
-			_IsScreenshotsHooked = Marshal.GetDelegateForFunctionPointer<FIsScreenshotsHooked>( Marshal.ReadIntPtr( VTable, 56 ) );
-			_AddVRScreenshotToLibrary = Marshal.GetDelegateForFunctionPointer<FAddVRScreenshotToLibrary>( Marshal.ReadIntPtr( VTable, 64 ) );
+			_WriteScreenshot = Marshal.GetDelegateForFunctionPointer<FWriteScreenshot>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 0 ) ) );
+			_AddScreenshotToLibrary = Marshal.GetDelegateForFunctionPointer<FAddScreenshotToLibrary>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 8 ) ) );
+			_TriggerScreenshot = Marshal.GetDelegateForFunctionPointer<FTriggerScreenshot>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 16 ) ) );
+			_HookScreenshots = Marshal.GetDelegateForFunctionPointer<FHookScreenshots>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 24 ) ) );
+			_SetLocation = Marshal.GetDelegateForFunctionPointer<FSetLocation>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 32 ) ) );
+			_TagUser = Marshal.GetDelegateForFunctionPointer<FTagUser>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 40 ) ) );
+			_TagPublishedFile = Marshal.GetDelegateForFunctionPointer<FTagPublishedFile>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 48 ) ) );
+			_IsScreenshotsHooked = Marshal.GetDelegateForFunctionPointer<FIsScreenshotsHooked>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 56 ) ) );
+			_AddVRScreenshotToLibrary = Marshal.GetDelegateForFunctionPointer<FAddVRScreenshotToLibrary>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 64 ) ) );
 		}
 		internal override void Shutdown()
 		{

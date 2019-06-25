@@ -13,36 +13,36 @@ namespace Steamworks
 		
 		public override void InitInternals()
 		{
-			_GetHSteamUser = Marshal.GetDelegateForFunctionPointer<FGetHSteamUser>( Marshal.ReadIntPtr( VTable, 0 ) );
-			_BLoggedOn = Marshal.GetDelegateForFunctionPointer<FBLoggedOn>( Marshal.ReadIntPtr( VTable, 8 ) );
-			_GetSteamID = Marshal.GetDelegateForFunctionPointer<FGetSteamID>( Marshal.ReadIntPtr( VTable, 16 ) );
-			_InitiateGameConnection = Marshal.GetDelegateForFunctionPointer<FInitiateGameConnection>( Marshal.ReadIntPtr( VTable, 24 ) );
-			_TerminateGameConnection = Marshal.GetDelegateForFunctionPointer<FTerminateGameConnection>( Marshal.ReadIntPtr( VTable, 32 ) );
-			_TrackAppUsageEvent = Marshal.GetDelegateForFunctionPointer<FTrackAppUsageEvent>( Marshal.ReadIntPtr( VTable, 40 ) );
-			_GetUserDataFolder = Marshal.GetDelegateForFunctionPointer<FGetUserDataFolder>( Marshal.ReadIntPtr( VTable, 48 ) );
-			_StartVoiceRecording = Marshal.GetDelegateForFunctionPointer<FStartVoiceRecording>( Marshal.ReadIntPtr( VTable, 56 ) );
-			_StopVoiceRecording = Marshal.GetDelegateForFunctionPointer<FStopVoiceRecording>( Marshal.ReadIntPtr( VTable, 64 ) );
-			_GetAvailableVoice = Marshal.GetDelegateForFunctionPointer<FGetAvailableVoice>( Marshal.ReadIntPtr( VTable, 72 ) );
-			_GetVoice = Marshal.GetDelegateForFunctionPointer<FGetVoice>( Marshal.ReadIntPtr( VTable, 80 ) );
-			_DecompressVoice = Marshal.GetDelegateForFunctionPointer<FDecompressVoice>( Marshal.ReadIntPtr( VTable, 88 ) );
-			_GetVoiceOptimalSampleRate = Marshal.GetDelegateForFunctionPointer<FGetVoiceOptimalSampleRate>( Marshal.ReadIntPtr( VTable, 96 ) );
-			_GetAuthSessionTicket = Marshal.GetDelegateForFunctionPointer<FGetAuthSessionTicket>( Marshal.ReadIntPtr( VTable, 104 ) );
-			_BeginAuthSession = Marshal.GetDelegateForFunctionPointer<FBeginAuthSession>( Marshal.ReadIntPtr( VTable, 112 ) );
-			_EndAuthSession = Marshal.GetDelegateForFunctionPointer<FEndAuthSession>( Marshal.ReadIntPtr( VTable, 120 ) );
-			_CancelAuthTicket = Marshal.GetDelegateForFunctionPointer<FCancelAuthTicket>( Marshal.ReadIntPtr( VTable, 128 ) );
-			_UserHasLicenseForApp = Marshal.GetDelegateForFunctionPointer<FUserHasLicenseForApp>( Marshal.ReadIntPtr( VTable, 136 ) );
-			_BIsBehindNAT = Marshal.GetDelegateForFunctionPointer<FBIsBehindNAT>( Marshal.ReadIntPtr( VTable, 144 ) );
-			_AdvertiseGame = Marshal.GetDelegateForFunctionPointer<FAdvertiseGame>( Marshal.ReadIntPtr( VTable, 152 ) );
-			_RequestEncryptedAppTicket = Marshal.GetDelegateForFunctionPointer<FRequestEncryptedAppTicket>( Marshal.ReadIntPtr( VTable, 160 ) );
-			_GetEncryptedAppTicket = Marshal.GetDelegateForFunctionPointer<FGetEncryptedAppTicket>( Marshal.ReadIntPtr( VTable, 168 ) );
-			_GetGameBadgeLevel = Marshal.GetDelegateForFunctionPointer<FGetGameBadgeLevel>( Marshal.ReadIntPtr( VTable, 176 ) );
-			_GetPlayerSteamLevel = Marshal.GetDelegateForFunctionPointer<FGetPlayerSteamLevel>( Marshal.ReadIntPtr( VTable, 184 ) );
-			_RequestStoreAuthURL = Marshal.GetDelegateForFunctionPointer<FRequestStoreAuthURL>( Marshal.ReadIntPtr( VTable, 192 ) );
-			_BIsPhoneVerified = Marshal.GetDelegateForFunctionPointer<FBIsPhoneVerified>( Marshal.ReadIntPtr( VTable, 200 ) );
-			_BIsTwoFactorEnabled = Marshal.GetDelegateForFunctionPointer<FBIsTwoFactorEnabled>( Marshal.ReadIntPtr( VTable, 208 ) );
-			_BIsPhoneIdentifying = Marshal.GetDelegateForFunctionPointer<FBIsPhoneIdentifying>( Marshal.ReadIntPtr( VTable, 216 ) );
-			_BIsPhoneRequiringVerification = Marshal.GetDelegateForFunctionPointer<FBIsPhoneRequiringVerification>( Marshal.ReadIntPtr( VTable, 224 ) );
-			_GetMarketEligibility = Marshal.GetDelegateForFunctionPointer<FGetMarketEligibility>( Marshal.ReadIntPtr( VTable, 232 ) );
+			_GetHSteamUser = Marshal.GetDelegateForFunctionPointer<FGetHSteamUser>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 0 ) ) );
+			_BLoggedOn = Marshal.GetDelegateForFunctionPointer<FBLoggedOn>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 8 ) ) );
+			_GetSteamID = Marshal.GetDelegateForFunctionPointer<FGetSteamID>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 16 ) ) );
+			_InitiateGameConnection = Marshal.GetDelegateForFunctionPointer<FInitiateGameConnection>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 24 ) ) );
+			_TerminateGameConnection = Marshal.GetDelegateForFunctionPointer<FTerminateGameConnection>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 32 ) ) );
+			_TrackAppUsageEvent = Marshal.GetDelegateForFunctionPointer<FTrackAppUsageEvent>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 40 ) ) );
+			_GetUserDataFolder = Marshal.GetDelegateForFunctionPointer<FGetUserDataFolder>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 48 ) ) );
+			_StartVoiceRecording = Marshal.GetDelegateForFunctionPointer<FStartVoiceRecording>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 56 ) ) );
+			_StopVoiceRecording = Marshal.GetDelegateForFunctionPointer<FStopVoiceRecording>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 64 ) ) );
+			_GetAvailableVoice = Marshal.GetDelegateForFunctionPointer<FGetAvailableVoice>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 72 ) ) );
+			_GetVoice = Marshal.GetDelegateForFunctionPointer<FGetVoice>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 80 ) ) );
+			_DecompressVoice = Marshal.GetDelegateForFunctionPointer<FDecompressVoice>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 88 ) ) );
+			_GetVoiceOptimalSampleRate = Marshal.GetDelegateForFunctionPointer<FGetVoiceOptimalSampleRate>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 96 ) ) );
+			_GetAuthSessionTicket = Marshal.GetDelegateForFunctionPointer<FGetAuthSessionTicket>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 104 ) ) );
+			_BeginAuthSession = Marshal.GetDelegateForFunctionPointer<FBeginAuthSession>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 112 ) ) );
+			_EndAuthSession = Marshal.GetDelegateForFunctionPointer<FEndAuthSession>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 120 ) ) );
+			_CancelAuthTicket = Marshal.GetDelegateForFunctionPointer<FCancelAuthTicket>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 128 ) ) );
+			_UserHasLicenseForApp = Marshal.GetDelegateForFunctionPointer<FUserHasLicenseForApp>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 136 ) ) );
+			_BIsBehindNAT = Marshal.GetDelegateForFunctionPointer<FBIsBehindNAT>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 144 ) ) );
+			_AdvertiseGame = Marshal.GetDelegateForFunctionPointer<FAdvertiseGame>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 152 ) ) );
+			_RequestEncryptedAppTicket = Marshal.GetDelegateForFunctionPointer<FRequestEncryptedAppTicket>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 160 ) ) );
+			_GetEncryptedAppTicket = Marshal.GetDelegateForFunctionPointer<FGetEncryptedAppTicket>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 168 ) ) );
+			_GetGameBadgeLevel = Marshal.GetDelegateForFunctionPointer<FGetGameBadgeLevel>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 176 ) ) );
+			_GetPlayerSteamLevel = Marshal.GetDelegateForFunctionPointer<FGetPlayerSteamLevel>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 184 ) ) );
+			_RequestStoreAuthURL = Marshal.GetDelegateForFunctionPointer<FRequestStoreAuthURL>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 192 ) ) );
+			_BIsPhoneVerified = Marshal.GetDelegateForFunctionPointer<FBIsPhoneVerified>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 200 ) ) );
+			_BIsTwoFactorEnabled = Marshal.GetDelegateForFunctionPointer<FBIsTwoFactorEnabled>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 208 ) ) );
+			_BIsPhoneIdentifying = Marshal.GetDelegateForFunctionPointer<FBIsPhoneIdentifying>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 216 ) ) );
+			_BIsPhoneRequiringVerification = Marshal.GetDelegateForFunctionPointer<FBIsPhoneRequiringVerification>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 224 ) ) );
+			_GetMarketEligibility = Marshal.GetDelegateForFunctionPointer<FGetMarketEligibility>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 232 ) ) );
 		}
 		internal override void Shutdown()
 		{

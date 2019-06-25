@@ -13,79 +13,79 @@ namespace Steamworks
 		
 		public override void InitInternals()
 		{
-			_GetPersonaName = Marshal.GetDelegateForFunctionPointer<FGetPersonaName>( Marshal.ReadIntPtr( VTable, 0 ) );
-			_SetPersonaName = Marshal.GetDelegateForFunctionPointer<FSetPersonaName>( Marshal.ReadIntPtr( VTable, 8 ) );
-			_GetPersonaState = Marshal.GetDelegateForFunctionPointer<FGetPersonaState>( Marshal.ReadIntPtr( VTable, 16 ) );
-			_GetFriendCount = Marshal.GetDelegateForFunctionPointer<FGetFriendCount>( Marshal.ReadIntPtr( VTable, 24 ) );
-			_GetFriendByIndex = Marshal.GetDelegateForFunctionPointer<FGetFriendByIndex>( Marshal.ReadIntPtr( VTable, 32 ) );
-			_GetFriendRelationship = Marshal.GetDelegateForFunctionPointer<FGetFriendRelationship>( Marshal.ReadIntPtr( VTable, 40 ) );
-			_GetFriendPersonaState = Marshal.GetDelegateForFunctionPointer<FGetFriendPersonaState>( Marshal.ReadIntPtr( VTable, 48 ) );
-			_GetFriendPersonaName = Marshal.GetDelegateForFunctionPointer<FGetFriendPersonaName>( Marshal.ReadIntPtr( VTable, 56 ) );
-			_GetFriendGamePlayed = Marshal.GetDelegateForFunctionPointer<FGetFriendGamePlayed>( Marshal.ReadIntPtr( VTable, 64 ) );
-			_GetFriendPersonaNameHistory = Marshal.GetDelegateForFunctionPointer<FGetFriendPersonaNameHistory>( Marshal.ReadIntPtr( VTable, 72 ) );
-			_GetFriendSteamLevel = Marshal.GetDelegateForFunctionPointer<FGetFriendSteamLevel>( Marshal.ReadIntPtr( VTable, 80 ) );
-			_GetPlayerNickname = Marshal.GetDelegateForFunctionPointer<FGetPlayerNickname>( Marshal.ReadIntPtr( VTable, 88 ) );
-			_GetFriendsGroupCount = Marshal.GetDelegateForFunctionPointer<FGetFriendsGroupCount>( Marshal.ReadIntPtr( VTable, 96 ) );
-			_GetFriendsGroupIDByIndex = Marshal.GetDelegateForFunctionPointer<FGetFriendsGroupIDByIndex>( Marshal.ReadIntPtr( VTable, 104 ) );
-			_GetFriendsGroupName = Marshal.GetDelegateForFunctionPointer<FGetFriendsGroupName>( Marshal.ReadIntPtr( VTable, 112 ) );
-			_GetFriendsGroupMembersCount = Marshal.GetDelegateForFunctionPointer<FGetFriendsGroupMembersCount>( Marshal.ReadIntPtr( VTable, 120 ) );
-			_GetFriendsGroupMembersList = Marshal.GetDelegateForFunctionPointer<FGetFriendsGroupMembersList>( Marshal.ReadIntPtr( VTable, 128 ) );
-			_HasFriend = Marshal.GetDelegateForFunctionPointer<FHasFriend>( Marshal.ReadIntPtr( VTable, 136 ) );
-			_GetClanCount = Marshal.GetDelegateForFunctionPointer<FGetClanCount>( Marshal.ReadIntPtr( VTable, 144 ) );
-			_GetClanByIndex = Marshal.GetDelegateForFunctionPointer<FGetClanByIndex>( Marshal.ReadIntPtr( VTable, 152 ) );
-			_GetClanName = Marshal.GetDelegateForFunctionPointer<FGetClanName>( Marshal.ReadIntPtr( VTable, 160 ) );
-			_GetClanTag = Marshal.GetDelegateForFunctionPointer<FGetClanTag>( Marshal.ReadIntPtr( VTable, 168 ) );
-			_GetClanActivityCounts = Marshal.GetDelegateForFunctionPointer<FGetClanActivityCounts>( Marshal.ReadIntPtr( VTable, 176 ) );
-			_DownloadClanActivityCounts = Marshal.GetDelegateForFunctionPointer<FDownloadClanActivityCounts>( Marshal.ReadIntPtr( VTable, 184 ) );
-			_GetFriendCountFromSource = Marshal.GetDelegateForFunctionPointer<FGetFriendCountFromSource>( Marshal.ReadIntPtr( VTable, 192 ) );
-			_GetFriendFromSourceByIndex = Marshal.GetDelegateForFunctionPointer<FGetFriendFromSourceByIndex>( Marshal.ReadIntPtr( VTable, 200 ) );
-			_IsUserInSource = Marshal.GetDelegateForFunctionPointer<FIsUserInSource>( Marshal.ReadIntPtr( VTable, 208 ) );
-			_SetInGameVoiceSpeaking = Marshal.GetDelegateForFunctionPointer<FSetInGameVoiceSpeaking>( Marshal.ReadIntPtr( VTable, 216 ) );
-			_ActivateGameOverlay = Marshal.GetDelegateForFunctionPointer<FActivateGameOverlay>( Marshal.ReadIntPtr( VTable, 224 ) );
-			_ActivateGameOverlayToUser = Marshal.GetDelegateForFunctionPointer<FActivateGameOverlayToUser>( Marshal.ReadIntPtr( VTable, 232 ) );
-			_ActivateGameOverlayToWebPage = Marshal.GetDelegateForFunctionPointer<FActivateGameOverlayToWebPage>( Marshal.ReadIntPtr( VTable, 240 ) );
-			_ActivateGameOverlayToStore = Marshal.GetDelegateForFunctionPointer<FActivateGameOverlayToStore>( Marshal.ReadIntPtr( VTable, 248 ) );
-			_SetPlayedWith = Marshal.GetDelegateForFunctionPointer<FSetPlayedWith>( Marshal.ReadIntPtr( VTable, 256 ) );
-			_ActivateGameOverlayInviteDialog = Marshal.GetDelegateForFunctionPointer<FActivateGameOverlayInviteDialog>( Marshal.ReadIntPtr( VTable, 264 ) );
-			_GetSmallFriendAvatar = Marshal.GetDelegateForFunctionPointer<FGetSmallFriendAvatar>( Marshal.ReadIntPtr( VTable, 272 ) );
-			_GetMediumFriendAvatar = Marshal.GetDelegateForFunctionPointer<FGetMediumFriendAvatar>( Marshal.ReadIntPtr( VTable, 280 ) );
-			_GetLargeFriendAvatar = Marshal.GetDelegateForFunctionPointer<FGetLargeFriendAvatar>( Marshal.ReadIntPtr( VTable, 288 ) );
-			_RequestUserInformation = Marshal.GetDelegateForFunctionPointer<FRequestUserInformation>( Marshal.ReadIntPtr( VTable, 296 ) );
-			_RequestClanOfficerList = Marshal.GetDelegateForFunctionPointer<FRequestClanOfficerList>( Marshal.ReadIntPtr( VTable, 304 ) );
-			_GetClanOwner = Marshal.GetDelegateForFunctionPointer<FGetClanOwner>( Marshal.ReadIntPtr( VTable, 312 ) );
-			_GetClanOfficerCount = Marshal.GetDelegateForFunctionPointer<FGetClanOfficerCount>( Marshal.ReadIntPtr( VTable, 320 ) );
-			_GetClanOfficerByIndex = Marshal.GetDelegateForFunctionPointer<FGetClanOfficerByIndex>( Marshal.ReadIntPtr( VTable, 328 ) );
-			_GetUserRestrictions = Marshal.GetDelegateForFunctionPointer<FGetUserRestrictions>( Marshal.ReadIntPtr( VTable, 336 ) );
-			_SetRichPresence = Marshal.GetDelegateForFunctionPointer<FSetRichPresence>( Marshal.ReadIntPtr( VTable, 344 ) );
-			_ClearRichPresence = Marshal.GetDelegateForFunctionPointer<FClearRichPresence>( Marshal.ReadIntPtr( VTable, 352 ) );
-			_GetFriendRichPresence = Marshal.GetDelegateForFunctionPointer<FGetFriendRichPresence>( Marshal.ReadIntPtr( VTable, 360 ) );
-			_GetFriendRichPresenceKeyCount = Marshal.GetDelegateForFunctionPointer<FGetFriendRichPresenceKeyCount>( Marshal.ReadIntPtr( VTable, 368 ) );
-			_GetFriendRichPresenceKeyByIndex = Marshal.GetDelegateForFunctionPointer<FGetFriendRichPresenceKeyByIndex>( Marshal.ReadIntPtr( VTable, 376 ) );
-			_RequestFriendRichPresence = Marshal.GetDelegateForFunctionPointer<FRequestFriendRichPresence>( Marshal.ReadIntPtr( VTable, 384 ) );
-			_InviteUserToGame = Marshal.GetDelegateForFunctionPointer<FInviteUserToGame>( Marshal.ReadIntPtr( VTable, 392 ) );
-			_GetCoplayFriendCount = Marshal.GetDelegateForFunctionPointer<FGetCoplayFriendCount>( Marshal.ReadIntPtr( VTable, 400 ) );
-			_GetCoplayFriend = Marshal.GetDelegateForFunctionPointer<FGetCoplayFriend>( Marshal.ReadIntPtr( VTable, 408 ) );
-			_GetFriendCoplayTime = Marshal.GetDelegateForFunctionPointer<FGetFriendCoplayTime>( Marshal.ReadIntPtr( VTable, 416 ) );
-			_GetFriendCoplayGame = Marshal.GetDelegateForFunctionPointer<FGetFriendCoplayGame>( Marshal.ReadIntPtr( VTable, 424 ) );
-			_JoinClanChatRoom = Marshal.GetDelegateForFunctionPointer<FJoinClanChatRoom>( Marshal.ReadIntPtr( VTable, 432 ) );
-			_LeaveClanChatRoom = Marshal.GetDelegateForFunctionPointer<FLeaveClanChatRoom>( Marshal.ReadIntPtr( VTable, 440 ) );
-			_GetClanChatMemberCount = Marshal.GetDelegateForFunctionPointer<FGetClanChatMemberCount>( Marshal.ReadIntPtr( VTable, 448 ) );
-			_GetChatMemberByIndex = Marshal.GetDelegateForFunctionPointer<FGetChatMemberByIndex>( Marshal.ReadIntPtr( VTable, 456 ) );
-			_SendClanChatMessage = Marshal.GetDelegateForFunctionPointer<FSendClanChatMessage>( Marshal.ReadIntPtr( VTable, 464 ) );
-			_GetClanChatMessage = Marshal.GetDelegateForFunctionPointer<FGetClanChatMessage>( Marshal.ReadIntPtr( VTable, 472 ) );
-			_IsClanChatAdmin = Marshal.GetDelegateForFunctionPointer<FIsClanChatAdmin>( Marshal.ReadIntPtr( VTable, 480 ) );
-			_IsClanChatWindowOpenInSteam = Marshal.GetDelegateForFunctionPointer<FIsClanChatWindowOpenInSteam>( Marshal.ReadIntPtr( VTable, 488 ) );
-			_OpenClanChatWindowInSteam = Marshal.GetDelegateForFunctionPointer<FOpenClanChatWindowInSteam>( Marshal.ReadIntPtr( VTable, 496 ) );
-			_CloseClanChatWindowInSteam = Marshal.GetDelegateForFunctionPointer<FCloseClanChatWindowInSteam>( Marshal.ReadIntPtr( VTable, 504 ) );
-			_SetListenForFriendsMessages = Marshal.GetDelegateForFunctionPointer<FSetListenForFriendsMessages>( Marshal.ReadIntPtr( VTable, 512 ) );
-			_ReplyToFriendMessage = Marshal.GetDelegateForFunctionPointer<FReplyToFriendMessage>( Marshal.ReadIntPtr( VTable, 520 ) );
-			_GetFriendMessage = Marshal.GetDelegateForFunctionPointer<FGetFriendMessage>( Marshal.ReadIntPtr( VTable, 528 ) );
-			_GetFollowerCount = Marshal.GetDelegateForFunctionPointer<FGetFollowerCount>( Marshal.ReadIntPtr( VTable, 536 ) );
-			_IsFollowing = Marshal.GetDelegateForFunctionPointer<FIsFollowing>( Marshal.ReadIntPtr( VTable, 544 ) );
-			_EnumerateFollowingList = Marshal.GetDelegateForFunctionPointer<FEnumerateFollowingList>( Marshal.ReadIntPtr( VTable, 552 ) );
-			_IsClanPublic = Marshal.GetDelegateForFunctionPointer<FIsClanPublic>( Marshal.ReadIntPtr( VTable, 560 ) );
-			_IsClanOfficialGameGroup = Marshal.GetDelegateForFunctionPointer<FIsClanOfficialGameGroup>( Marshal.ReadIntPtr( VTable, 568 ) );
-			_GetNumChatsWithUnreadPriorityMessages = Marshal.GetDelegateForFunctionPointer<FGetNumChatsWithUnreadPriorityMessages>( Marshal.ReadIntPtr( VTable, 576 ) );
+			_GetPersonaName = Marshal.GetDelegateForFunctionPointer<FGetPersonaName>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 0 ) ) );
+			_SetPersonaName = Marshal.GetDelegateForFunctionPointer<FSetPersonaName>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 8 ) ) );
+			_GetPersonaState = Marshal.GetDelegateForFunctionPointer<FGetPersonaState>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 16 ) ) );
+			_GetFriendCount = Marshal.GetDelegateForFunctionPointer<FGetFriendCount>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 24 ) ) );
+			_GetFriendByIndex = Marshal.GetDelegateForFunctionPointer<FGetFriendByIndex>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 32 ) ) );
+			_GetFriendRelationship = Marshal.GetDelegateForFunctionPointer<FGetFriendRelationship>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 40 ) ) );
+			_GetFriendPersonaState = Marshal.GetDelegateForFunctionPointer<FGetFriendPersonaState>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 48 ) ) );
+			_GetFriendPersonaName = Marshal.GetDelegateForFunctionPointer<FGetFriendPersonaName>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 56 ) ) );
+			_GetFriendGamePlayed = Marshal.GetDelegateForFunctionPointer<FGetFriendGamePlayed>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 64 ) ) );
+			_GetFriendPersonaNameHistory = Marshal.GetDelegateForFunctionPointer<FGetFriendPersonaNameHistory>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 72 ) ) );
+			_GetFriendSteamLevel = Marshal.GetDelegateForFunctionPointer<FGetFriendSteamLevel>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 80 ) ) );
+			_GetPlayerNickname = Marshal.GetDelegateForFunctionPointer<FGetPlayerNickname>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 88 ) ) );
+			_GetFriendsGroupCount = Marshal.GetDelegateForFunctionPointer<FGetFriendsGroupCount>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 96 ) ) );
+			_GetFriendsGroupIDByIndex = Marshal.GetDelegateForFunctionPointer<FGetFriendsGroupIDByIndex>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 104 ) ) );
+			_GetFriendsGroupName = Marshal.GetDelegateForFunctionPointer<FGetFriendsGroupName>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 112 ) ) );
+			_GetFriendsGroupMembersCount = Marshal.GetDelegateForFunctionPointer<FGetFriendsGroupMembersCount>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 120 ) ) );
+			_GetFriendsGroupMembersList = Marshal.GetDelegateForFunctionPointer<FGetFriendsGroupMembersList>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 128 ) ) );
+			_HasFriend = Marshal.GetDelegateForFunctionPointer<FHasFriend>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 136 ) ) );
+			_GetClanCount = Marshal.GetDelegateForFunctionPointer<FGetClanCount>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 144 ) ) );
+			_GetClanByIndex = Marshal.GetDelegateForFunctionPointer<FGetClanByIndex>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 152 ) ) );
+			_GetClanName = Marshal.GetDelegateForFunctionPointer<FGetClanName>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 160 ) ) );
+			_GetClanTag = Marshal.GetDelegateForFunctionPointer<FGetClanTag>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 168 ) ) );
+			_GetClanActivityCounts = Marshal.GetDelegateForFunctionPointer<FGetClanActivityCounts>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 176 ) ) );
+			_DownloadClanActivityCounts = Marshal.GetDelegateForFunctionPointer<FDownloadClanActivityCounts>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 184 ) ) );
+			_GetFriendCountFromSource = Marshal.GetDelegateForFunctionPointer<FGetFriendCountFromSource>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 192 ) ) );
+			_GetFriendFromSourceByIndex = Marshal.GetDelegateForFunctionPointer<FGetFriendFromSourceByIndex>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 200 ) ) );
+			_IsUserInSource = Marshal.GetDelegateForFunctionPointer<FIsUserInSource>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 208 ) ) );
+			_SetInGameVoiceSpeaking = Marshal.GetDelegateForFunctionPointer<FSetInGameVoiceSpeaking>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 216 ) ) );
+			_ActivateGameOverlay = Marshal.GetDelegateForFunctionPointer<FActivateGameOverlay>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 224 ) ) );
+			_ActivateGameOverlayToUser = Marshal.GetDelegateForFunctionPointer<FActivateGameOverlayToUser>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 232 ) ) );
+			_ActivateGameOverlayToWebPage = Marshal.GetDelegateForFunctionPointer<FActivateGameOverlayToWebPage>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 240 ) ) );
+			_ActivateGameOverlayToStore = Marshal.GetDelegateForFunctionPointer<FActivateGameOverlayToStore>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 248 ) ) );
+			_SetPlayedWith = Marshal.GetDelegateForFunctionPointer<FSetPlayedWith>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 256 ) ) );
+			_ActivateGameOverlayInviteDialog = Marshal.GetDelegateForFunctionPointer<FActivateGameOverlayInviteDialog>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 264 ) ) );
+			_GetSmallFriendAvatar = Marshal.GetDelegateForFunctionPointer<FGetSmallFriendAvatar>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 272 ) ) );
+			_GetMediumFriendAvatar = Marshal.GetDelegateForFunctionPointer<FGetMediumFriendAvatar>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 280 ) ) );
+			_GetLargeFriendAvatar = Marshal.GetDelegateForFunctionPointer<FGetLargeFriendAvatar>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 288 ) ) );
+			_RequestUserInformation = Marshal.GetDelegateForFunctionPointer<FRequestUserInformation>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 296 ) ) );
+			_RequestClanOfficerList = Marshal.GetDelegateForFunctionPointer<FRequestClanOfficerList>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 304 ) ) );
+			_GetClanOwner = Marshal.GetDelegateForFunctionPointer<FGetClanOwner>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 312 ) ) );
+			_GetClanOfficerCount = Marshal.GetDelegateForFunctionPointer<FGetClanOfficerCount>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 320 ) ) );
+			_GetClanOfficerByIndex = Marshal.GetDelegateForFunctionPointer<FGetClanOfficerByIndex>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 328 ) ) );
+			_GetUserRestrictions = Marshal.GetDelegateForFunctionPointer<FGetUserRestrictions>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 336 ) ) );
+			_SetRichPresence = Marshal.GetDelegateForFunctionPointer<FSetRichPresence>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 344 ) ) );
+			_ClearRichPresence = Marshal.GetDelegateForFunctionPointer<FClearRichPresence>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 352 ) ) );
+			_GetFriendRichPresence = Marshal.GetDelegateForFunctionPointer<FGetFriendRichPresence>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 360 ) ) );
+			_GetFriendRichPresenceKeyCount = Marshal.GetDelegateForFunctionPointer<FGetFriendRichPresenceKeyCount>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 368 ) ) );
+			_GetFriendRichPresenceKeyByIndex = Marshal.GetDelegateForFunctionPointer<FGetFriendRichPresenceKeyByIndex>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 376 ) ) );
+			_RequestFriendRichPresence = Marshal.GetDelegateForFunctionPointer<FRequestFriendRichPresence>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 384 ) ) );
+			_InviteUserToGame = Marshal.GetDelegateForFunctionPointer<FInviteUserToGame>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 392 ) ) );
+			_GetCoplayFriendCount = Marshal.GetDelegateForFunctionPointer<FGetCoplayFriendCount>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 400 ) ) );
+			_GetCoplayFriend = Marshal.GetDelegateForFunctionPointer<FGetCoplayFriend>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 408 ) ) );
+			_GetFriendCoplayTime = Marshal.GetDelegateForFunctionPointer<FGetFriendCoplayTime>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 416 ) ) );
+			_GetFriendCoplayGame = Marshal.GetDelegateForFunctionPointer<FGetFriendCoplayGame>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 424 ) ) );
+			_JoinClanChatRoom = Marshal.GetDelegateForFunctionPointer<FJoinClanChatRoom>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 432 ) ) );
+			_LeaveClanChatRoom = Marshal.GetDelegateForFunctionPointer<FLeaveClanChatRoom>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 440 ) ) );
+			_GetClanChatMemberCount = Marshal.GetDelegateForFunctionPointer<FGetClanChatMemberCount>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 448 ) ) );
+			_GetChatMemberByIndex = Marshal.GetDelegateForFunctionPointer<FGetChatMemberByIndex>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 456 ) ) );
+			_SendClanChatMessage = Marshal.GetDelegateForFunctionPointer<FSendClanChatMessage>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 464 ) ) );
+			_GetClanChatMessage = Marshal.GetDelegateForFunctionPointer<FGetClanChatMessage>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 472 ) ) );
+			_IsClanChatAdmin = Marshal.GetDelegateForFunctionPointer<FIsClanChatAdmin>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 480 ) ) );
+			_IsClanChatWindowOpenInSteam = Marshal.GetDelegateForFunctionPointer<FIsClanChatWindowOpenInSteam>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 488 ) ) );
+			_OpenClanChatWindowInSteam = Marshal.GetDelegateForFunctionPointer<FOpenClanChatWindowInSteam>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 496 ) ) );
+			_CloseClanChatWindowInSteam = Marshal.GetDelegateForFunctionPointer<FCloseClanChatWindowInSteam>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 504 ) ) );
+			_SetListenForFriendsMessages = Marshal.GetDelegateForFunctionPointer<FSetListenForFriendsMessages>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 512 ) ) );
+			_ReplyToFriendMessage = Marshal.GetDelegateForFunctionPointer<FReplyToFriendMessage>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 520 ) ) );
+			_GetFriendMessage = Marshal.GetDelegateForFunctionPointer<FGetFriendMessage>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 528 ) ) );
+			_GetFollowerCount = Marshal.GetDelegateForFunctionPointer<FGetFollowerCount>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 536 ) ) );
+			_IsFollowing = Marshal.GetDelegateForFunctionPointer<FIsFollowing>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 544 ) ) );
+			_EnumerateFollowingList = Marshal.GetDelegateForFunctionPointer<FEnumerateFollowingList>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 552 ) ) );
+			_IsClanPublic = Marshal.GetDelegateForFunctionPointer<FIsClanPublic>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 560 ) ) );
+			_IsClanOfficialGameGroup = Marshal.GetDelegateForFunctionPointer<FIsClanOfficialGameGroup>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 568 ) ) );
+			_GetNumChatsWithUnreadPriorityMessages = Marshal.GetDelegateForFunctionPointer<FGetNumChatsWithUnreadPriorityMessages>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 576 ) ) );
 		}
 		internal override void Shutdown()
 		{
@@ -213,7 +213,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		#if PLATFORM_WIN64
+		#if PLATFORM_WIN
 		private delegate void FGetFriendByIndex( IntPtr self, ref SteamId retVal, int iFriend, int iFriendFlags );
 		#else
 		private delegate SteamId FGetFriendByIndex( IntPtr self, int iFriend, int iFriendFlags );
@@ -223,7 +223,7 @@ namespace Steamworks
 		#endregion
 		internal SteamId GetFriendByIndex( int iFriend, int iFriendFlags )
 		{
-			#if PLATFORM_WIN64
+			#if PLATFORM_WIN
 			var retVal = default( SteamId );
 			_GetFriendByIndex( Self, ref retVal, iFriend, iFriendFlags );
 			return retVal;

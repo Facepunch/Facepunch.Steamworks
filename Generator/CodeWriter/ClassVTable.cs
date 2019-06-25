@@ -111,7 +111,7 @@ namespace Generator
 							continue;
 						}
 
-						WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, {standardLocations[i]} ) );" );
+						WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( {standardLocations[i]} ) ) );" );
 					}
 				}
 
@@ -122,13 +122,13 @@ namespace Generator
 					foreach ( var i in different )
 					{
 						var func = clss.Functions[i];
-						WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, {windowsLocations[i]} ) );" );
+						WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( {windowsLocations[i]} ) ) );" );
 					}
 					WriteLine( "#else" );
 					foreach ( var i in different )
 					{
 						var func = clss.Functions[i];
-						WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, {standardLocations[i]} ) );" );
+						WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( {standardLocations[i]} ) ) );" );
 					}
 					WriteLine( "#endif" );
 				}
