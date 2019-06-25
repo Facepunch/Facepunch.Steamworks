@@ -71,6 +71,11 @@ namespace Steamworks
 		/// </summary>
 		public bool IsSnoozing => State == FriendState.Snooze;
 
+		/// <summary>
+		/// Check if this Friend owns the specified lobby
+		/// </summary>
+		public bool OwnsLobby( Lobby k ) => k.Owner.Id == this.Id;
+
 
 
 		public Relationship Relationship => SteamFriends.Internal.GetFriendRelationship( Id );

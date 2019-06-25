@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Steamworks.Data;
 
 namespace Steamworks
 {
@@ -105,7 +106,7 @@ namespace Steamworks
 			SteamParties.Shutdown();
 			SteamNetworkingUtils.Shutdown();
 			SteamNetworkingSockets.Shutdown();
-			
+
 			ServerList.Base.Shutdown();
 
 			SteamAPI.Shutdown();
@@ -168,6 +169,11 @@ namespace Steamworks
 		/// returns the appID of the current process
 		/// </summary>
 		public static AppId AppId { get; internal set; }
+
+		/// <summary>
+		/// Check if this SteamClient owns the specified lobby
+		/// </summary>
+		public static bool OwnsLobby( Lobby k ) => k.Owner.Id == SteamId;
 
 		/// <summary>
 		/// Checks if your executable was launched through Steam and relaunches it through Steam if it wasn't
