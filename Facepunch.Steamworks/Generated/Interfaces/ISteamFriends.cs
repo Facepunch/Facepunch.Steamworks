@@ -18,7 +18,6 @@ namespace Steamworks
 			_GetPersonaState = Marshal.GetDelegateForFunctionPointer<FGetPersonaState>( Marshal.ReadIntPtr( VTable, 16) );
 			_GetFriendCount = Marshal.GetDelegateForFunctionPointer<FGetFriendCount>( Marshal.ReadIntPtr( VTable, 24) );
 			_GetFriendByIndex = Marshal.GetDelegateForFunctionPointer<FGetFriendByIndex>( Marshal.ReadIntPtr( VTable, 32) );
-			_GetFriendByIndex_Windows = Marshal.GetDelegateForFunctionPointer<FGetFriendByIndex_Windows>( Marshal.ReadIntPtr( VTable, 32) );
 			_GetFriendRelationship = Marshal.GetDelegateForFunctionPointer<FGetFriendRelationship>( Marshal.ReadIntPtr( VTable, 40) );
 			_GetFriendPersonaState = Marshal.GetDelegateForFunctionPointer<FGetFriendPersonaState>( Marshal.ReadIntPtr( VTable, 48) );
 			_GetFriendPersonaName = Marshal.GetDelegateForFunctionPointer<FGetFriendPersonaName>( Marshal.ReadIntPtr( VTable, 56) );
@@ -34,14 +33,12 @@ namespace Steamworks
 			_HasFriend = Marshal.GetDelegateForFunctionPointer<FHasFriend>( Marshal.ReadIntPtr( VTable, 136) );
 			_GetClanCount = Marshal.GetDelegateForFunctionPointer<FGetClanCount>( Marshal.ReadIntPtr( VTable, 144) );
 			_GetClanByIndex = Marshal.GetDelegateForFunctionPointer<FGetClanByIndex>( Marshal.ReadIntPtr( VTable, 152) );
-			_GetClanByIndex_Windows = Marshal.GetDelegateForFunctionPointer<FGetClanByIndex_Windows>( Marshal.ReadIntPtr( VTable, 152) );
 			_GetClanName = Marshal.GetDelegateForFunctionPointer<FGetClanName>( Marshal.ReadIntPtr( VTable, 160) );
 			_GetClanTag = Marshal.GetDelegateForFunctionPointer<FGetClanTag>( Marshal.ReadIntPtr( VTable, 168) );
 			_GetClanActivityCounts = Marshal.GetDelegateForFunctionPointer<FGetClanActivityCounts>( Marshal.ReadIntPtr( VTable, 176) );
 			_DownloadClanActivityCounts = Marshal.GetDelegateForFunctionPointer<FDownloadClanActivityCounts>( Marshal.ReadIntPtr( VTable, 184) );
 			_GetFriendCountFromSource = Marshal.GetDelegateForFunctionPointer<FGetFriendCountFromSource>( Marshal.ReadIntPtr( VTable, 192) );
 			_GetFriendFromSourceByIndex = Marshal.GetDelegateForFunctionPointer<FGetFriendFromSourceByIndex>( Marshal.ReadIntPtr( VTable, 200) );
-			_GetFriendFromSourceByIndex_Windows = Marshal.GetDelegateForFunctionPointer<FGetFriendFromSourceByIndex_Windows>( Marshal.ReadIntPtr( VTable, 200) );
 			_IsUserInSource = Marshal.GetDelegateForFunctionPointer<FIsUserInSource>( Marshal.ReadIntPtr( VTable, 208) );
 			_SetInGameVoiceSpeaking = Marshal.GetDelegateForFunctionPointer<FSetInGameVoiceSpeaking>( Marshal.ReadIntPtr( VTable, 216) );
 			_ActivateGameOverlay = Marshal.GetDelegateForFunctionPointer<FActivateGameOverlay>( Marshal.ReadIntPtr( VTable, 224) );
@@ -56,10 +53,8 @@ namespace Steamworks
 			_RequestUserInformation = Marshal.GetDelegateForFunctionPointer<FRequestUserInformation>( Marshal.ReadIntPtr( VTable, 296) );
 			_RequestClanOfficerList = Marshal.GetDelegateForFunctionPointer<FRequestClanOfficerList>( Marshal.ReadIntPtr( VTable, 304) );
 			_GetClanOwner = Marshal.GetDelegateForFunctionPointer<FGetClanOwner>( Marshal.ReadIntPtr( VTable, 312) );
-			_GetClanOwner_Windows = Marshal.GetDelegateForFunctionPointer<FGetClanOwner_Windows>( Marshal.ReadIntPtr( VTable, 312) );
 			_GetClanOfficerCount = Marshal.GetDelegateForFunctionPointer<FGetClanOfficerCount>( Marshal.ReadIntPtr( VTable, 320) );
 			_GetClanOfficerByIndex = Marshal.GetDelegateForFunctionPointer<FGetClanOfficerByIndex>( Marshal.ReadIntPtr( VTable, 328) );
-			_GetClanOfficerByIndex_Windows = Marshal.GetDelegateForFunctionPointer<FGetClanOfficerByIndex_Windows>( Marshal.ReadIntPtr( VTable, 328) );
 			_GetUserRestrictions = Marshal.GetDelegateForFunctionPointer<FGetUserRestrictions>( Marshal.ReadIntPtr( VTable, 336) );
 			_SetRichPresence = Marshal.GetDelegateForFunctionPointer<FSetRichPresence>( Marshal.ReadIntPtr( VTable, 344) );
 			_ClearRichPresence = Marshal.GetDelegateForFunctionPointer<FClearRichPresence>( Marshal.ReadIntPtr( VTable, 352) );
@@ -70,14 +65,12 @@ namespace Steamworks
 			_InviteUserToGame = Marshal.GetDelegateForFunctionPointer<FInviteUserToGame>( Marshal.ReadIntPtr( VTable, 392) );
 			_GetCoplayFriendCount = Marshal.GetDelegateForFunctionPointer<FGetCoplayFriendCount>( Marshal.ReadIntPtr( VTable, 400) );
 			_GetCoplayFriend = Marshal.GetDelegateForFunctionPointer<FGetCoplayFriend>( Marshal.ReadIntPtr( VTable, 408) );
-			_GetCoplayFriend_Windows = Marshal.GetDelegateForFunctionPointer<FGetCoplayFriend_Windows>( Marshal.ReadIntPtr( VTable, 408) );
 			_GetFriendCoplayTime = Marshal.GetDelegateForFunctionPointer<FGetFriendCoplayTime>( Marshal.ReadIntPtr( VTable, 416) );
 			_GetFriendCoplayGame = Marshal.GetDelegateForFunctionPointer<FGetFriendCoplayGame>( Marshal.ReadIntPtr( VTable, 424) );
 			_JoinClanChatRoom = Marshal.GetDelegateForFunctionPointer<FJoinClanChatRoom>( Marshal.ReadIntPtr( VTable, 432) );
 			_LeaveClanChatRoom = Marshal.GetDelegateForFunctionPointer<FLeaveClanChatRoom>( Marshal.ReadIntPtr( VTable, 440) );
 			_GetClanChatMemberCount = Marshal.GetDelegateForFunctionPointer<FGetClanChatMemberCount>( Marshal.ReadIntPtr( VTable, 448) );
 			_GetChatMemberByIndex = Marshal.GetDelegateForFunctionPointer<FGetChatMemberByIndex>( Marshal.ReadIntPtr( VTable, 456) );
-			_GetChatMemberByIndex_Windows = Marshal.GetDelegateForFunctionPointer<FGetChatMemberByIndex_Windows>( Marshal.ReadIntPtr( VTable, 456) );
 			_SendClanChatMessage = Marshal.GetDelegateForFunctionPointer<FSendClanChatMessage>( Marshal.ReadIntPtr( VTable, 464) );
 			_GetClanChatMessage = Marshal.GetDelegateForFunctionPointer<FGetClanChatMessage>( Marshal.ReadIntPtr( VTable, 472) );
 			_IsClanChatAdmin = Marshal.GetDelegateForFunctionPointer<FIsClanChatAdmin>( Marshal.ReadIntPtr( VTable, 480) );
@@ -103,7 +96,6 @@ namespace Steamworks
 			_GetPersonaState = null;
 			_GetFriendCount = null;
 			_GetFriendByIndex = null;
-			_GetFriendByIndex_Windows = null;
 			_GetFriendRelationship = null;
 			_GetFriendPersonaState = null;
 			_GetFriendPersonaName = null;
@@ -119,14 +111,12 @@ namespace Steamworks
 			_HasFriend = null;
 			_GetClanCount = null;
 			_GetClanByIndex = null;
-			_GetClanByIndex_Windows = null;
 			_GetClanName = null;
 			_GetClanTag = null;
 			_GetClanActivityCounts = null;
 			_DownloadClanActivityCounts = null;
 			_GetFriendCountFromSource = null;
 			_GetFriendFromSourceByIndex = null;
-			_GetFriendFromSourceByIndex_Windows = null;
 			_IsUserInSource = null;
 			_SetInGameVoiceSpeaking = null;
 			_ActivateGameOverlay = null;
@@ -141,10 +131,8 @@ namespace Steamworks
 			_RequestUserInformation = null;
 			_RequestClanOfficerList = null;
 			_GetClanOwner = null;
-			_GetClanOwner_Windows = null;
 			_GetClanOfficerCount = null;
 			_GetClanOfficerByIndex = null;
-			_GetClanOfficerByIndex_Windows = null;
 			_GetUserRestrictions = null;
 			_SetRichPresence = null;
 			_ClearRichPresence = null;
@@ -155,14 +143,12 @@ namespace Steamworks
 			_InviteUserToGame = null;
 			_GetCoplayFriendCount = null;
 			_GetCoplayFriend = null;
-			_GetCoplayFriend_Windows = null;
 			_GetFriendCoplayTime = null;
 			_GetFriendCoplayGame = null;
 			_JoinClanChatRoom = null;
 			_LeaveClanChatRoom = null;
 			_GetClanChatMemberCount = null;
 			_GetChatMemberByIndex = null;
-			_GetChatMemberByIndex_Windows = null;
 			_SendClanChatMessage = null;
 			_GetClanChatMessage = null;
 			_IsClanChatAdmin = null;
@@ -227,23 +213,23 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
+		#if PLATFORM_WIN64
+		private delegate void FGetFriendByIndex( IntPtr self, ref SteamId retVal, int iFriend, int iFriendFlags );
+		#else
 		private delegate SteamId FGetFriendByIndex( IntPtr self, int iFriend, int iFriendFlags );
+		#endif
 		private FGetFriendByIndex _GetFriendByIndex;
-		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FGetFriendByIndex_Windows( IntPtr self, ref SteamId retVal, int iFriend, int iFriendFlags );
-		private FGetFriendByIndex_Windows _GetFriendByIndex_Windows;
 		
 		#endregion
 		internal SteamId GetFriendByIndex( int iFriend, int iFriendFlags )
 		{
-			if ( Config.Os == OsType.Windows )
-			{
-				var retVal = default( SteamId );
-				_GetFriendByIndex_Windows( Self, ref retVal, iFriend, iFriendFlags );
-				return retVal;
-			}
-			
+			#if PLATFORM_WIN64
+			var retVal = default( SteamId );
+			_GetFriendByIndex( Self, ref retVal, iFriend, iFriendFlags );
+			return retVal;
+			#else
 			return _GetFriendByIndex( Self, iFriend, iFriendFlags );
+			#endif
 		}
 		
 		#region FunctionMeta
@@ -408,23 +394,23 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
+		#if PLATFORM_WIN64
+		private delegate void FGetClanByIndex( IntPtr self, ref SteamId retVal, int iClan );
+		#else
 		private delegate SteamId FGetClanByIndex( IntPtr self, int iClan );
+		#endif
 		private FGetClanByIndex _GetClanByIndex;
-		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FGetClanByIndex_Windows( IntPtr self, ref SteamId retVal, int iClan );
-		private FGetClanByIndex_Windows _GetClanByIndex_Windows;
 		
 		#endregion
 		internal SteamId GetClanByIndex( int iClan )
 		{
-			if ( Config.Os == OsType.Windows )
-			{
-				var retVal = default( SteamId );
-				_GetClanByIndex_Windows( Self, ref retVal, iClan );
-				return retVal;
-			}
-			
+			#if PLATFORM_WIN64
+			var retVal = default( SteamId );
+			_GetClanByIndex( Self, ref retVal, iClan );
+			return retVal;
+			#else
 			return _GetClanByIndex( Self, iClan );
+			#endif
 		}
 		
 		#region FunctionMeta
@@ -487,23 +473,23 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
+		#if PLATFORM_WIN64
+		private delegate void FGetFriendFromSourceByIndex( IntPtr self, ref SteamId retVal, SteamId steamIDSource, int iFriend );
+		#else
 		private delegate SteamId FGetFriendFromSourceByIndex( IntPtr self, SteamId steamIDSource, int iFriend );
+		#endif
 		private FGetFriendFromSourceByIndex _GetFriendFromSourceByIndex;
-		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FGetFriendFromSourceByIndex_Windows( IntPtr self, ref SteamId retVal, SteamId steamIDSource, int iFriend );
-		private FGetFriendFromSourceByIndex_Windows _GetFriendFromSourceByIndex_Windows;
 		
 		#endregion
 		internal SteamId GetFriendFromSourceByIndex( SteamId steamIDSource, int iFriend )
 		{
-			if ( Config.Os == OsType.Windows )
-			{
-				var retVal = default( SteamId );
-				_GetFriendFromSourceByIndex_Windows( Self, ref retVal, steamIDSource, iFriend );
-				return retVal;
-			}
-			
+			#if PLATFORM_WIN64
+			var retVal = default( SteamId );
+			_GetFriendFromSourceByIndex( Self, ref retVal, steamIDSource, iFriend );
+			return retVal;
+			#else
 			return _GetFriendFromSourceByIndex( Self, steamIDSource, iFriend );
+			#endif
 		}
 		
 		#region FunctionMeta
@@ -653,23 +639,23 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
+		#if PLATFORM_WIN64
+		private delegate void FGetClanOwner( IntPtr self, ref SteamId retVal, SteamId steamIDClan );
+		#else
 		private delegate SteamId FGetClanOwner( IntPtr self, SteamId steamIDClan );
+		#endif
 		private FGetClanOwner _GetClanOwner;
-		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FGetClanOwner_Windows( IntPtr self, ref SteamId retVal, SteamId steamIDClan );
-		private FGetClanOwner_Windows _GetClanOwner_Windows;
 		
 		#endregion
 		internal SteamId GetClanOwner( SteamId steamIDClan )
 		{
-			if ( Config.Os == OsType.Windows )
-			{
-				var retVal = default( SteamId );
-				_GetClanOwner_Windows( Self, ref retVal, steamIDClan );
-				return retVal;
-			}
-			
+			#if PLATFORM_WIN64
+			var retVal = default( SteamId );
+			_GetClanOwner( Self, ref retVal, steamIDClan );
+			return retVal;
+			#else
 			return _GetClanOwner( Self, steamIDClan );
+			#endif
 		}
 		
 		#region FunctionMeta
@@ -685,23 +671,23 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
+		#if PLATFORM_WIN64
+		private delegate void FGetClanOfficerByIndex( IntPtr self, ref SteamId retVal, SteamId steamIDClan, int iOfficer );
+		#else
 		private delegate SteamId FGetClanOfficerByIndex( IntPtr self, SteamId steamIDClan, int iOfficer );
+		#endif
 		private FGetClanOfficerByIndex _GetClanOfficerByIndex;
-		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FGetClanOfficerByIndex_Windows( IntPtr self, ref SteamId retVal, SteamId steamIDClan, int iOfficer );
-		private FGetClanOfficerByIndex_Windows _GetClanOfficerByIndex_Windows;
 		
 		#endregion
 		internal SteamId GetClanOfficerByIndex( SteamId steamIDClan, int iOfficer )
 		{
-			if ( Config.Os == OsType.Windows )
-			{
-				var retVal = default( SteamId );
-				_GetClanOfficerByIndex_Windows( Self, ref retVal, steamIDClan, iOfficer );
-				return retVal;
-			}
-			
+			#if PLATFORM_WIN64
+			var retVal = default( SteamId );
+			_GetClanOfficerByIndex( Self, ref retVal, steamIDClan, iOfficer );
+			return retVal;
+			#else
 			return _GetClanOfficerByIndex( Self, steamIDClan, iOfficer );
+			#endif
 		}
 		
 		#region FunctionMeta
@@ -809,23 +795,23 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
+		#if PLATFORM_WIN64
+		private delegate void FGetCoplayFriend( IntPtr self, ref SteamId retVal, int iCoplayFriend );
+		#else
 		private delegate SteamId FGetCoplayFriend( IntPtr self, int iCoplayFriend );
+		#endif
 		private FGetCoplayFriend _GetCoplayFriend;
-		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FGetCoplayFriend_Windows( IntPtr self, ref SteamId retVal, int iCoplayFriend );
-		private FGetCoplayFriend_Windows _GetCoplayFriend_Windows;
 		
 		#endregion
 		internal SteamId GetCoplayFriend( int iCoplayFriend )
 		{
-			if ( Config.Os == OsType.Windows )
-			{
-				var retVal = default( SteamId );
-				_GetCoplayFriend_Windows( Self, ref retVal, iCoplayFriend );
-				return retVal;
-			}
-			
+			#if PLATFORM_WIN64
+			var retVal = default( SteamId );
+			_GetCoplayFriend( Self, ref retVal, iCoplayFriend );
+			return retVal;
+			#else
 			return _GetCoplayFriend( Self, iCoplayFriend );
+			#endif
 		}
 		
 		#region FunctionMeta
@@ -886,23 +872,23 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
+		#if PLATFORM_WIN64
+		private delegate void FGetChatMemberByIndex( IntPtr self, ref SteamId retVal, SteamId steamIDClan, int iUser );
+		#else
 		private delegate SteamId FGetChatMemberByIndex( IntPtr self, SteamId steamIDClan, int iUser );
+		#endif
 		private FGetChatMemberByIndex _GetChatMemberByIndex;
-		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FGetChatMemberByIndex_Windows( IntPtr self, ref SteamId retVal, SteamId steamIDClan, int iUser );
-		private FGetChatMemberByIndex_Windows _GetChatMemberByIndex_Windows;
 		
 		#endregion
 		internal SteamId GetChatMemberByIndex( SteamId steamIDClan, int iUser )
 		{
-			if ( Config.Os == OsType.Windows )
-			{
-				var retVal = default( SteamId );
-				_GetChatMemberByIndex_Windows( Self, ref retVal, steamIDClan, iUser );
-				return retVal;
-			}
-			
+			#if PLATFORM_WIN64
+			var retVal = default( SteamId );
+			_GetChatMemberByIndex( Self, ref retVal, steamIDClan, iUser );
+			return retVal;
+			#else
 			return _GetChatMemberByIndex( Self, steamIDClan, iUser );
+			#endif
 		}
 		
 		#region FunctionMeta

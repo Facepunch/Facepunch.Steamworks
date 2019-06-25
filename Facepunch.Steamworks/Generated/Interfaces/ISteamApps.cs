@@ -34,7 +34,6 @@ namespace Steamworks
 			_GetAppInstallDir = Marshal.GetDelegateForFunctionPointer<FGetAppInstallDir>( Marshal.ReadIntPtr( VTable, 144) );
 			_BIsAppInstalled = Marshal.GetDelegateForFunctionPointer<FBIsAppInstalled>( Marshal.ReadIntPtr( VTable, 152) );
 			_GetAppOwner = Marshal.GetDelegateForFunctionPointer<FGetAppOwner>( Marshal.ReadIntPtr( VTable, 160) );
-			_GetAppOwner_Windows = Marshal.GetDelegateForFunctionPointer<FGetAppOwner_Windows>( Marshal.ReadIntPtr( VTable, 160) );
 			_GetLaunchQueryParam = Marshal.GetDelegateForFunctionPointer<FGetLaunchQueryParam>( Marshal.ReadIntPtr( VTable, 168) );
 			_GetDlcDownloadProgress = Marshal.GetDelegateForFunctionPointer<FGetDlcDownloadProgress>( Marshal.ReadIntPtr( VTable, 176) );
 			_GetAppBuildId = Marshal.GetDelegateForFunctionPointer<FGetAppBuildId>( Marshal.ReadIntPtr( VTable, 184) );
@@ -68,7 +67,6 @@ namespace Steamworks
 			_GetAppInstallDir = null;
 			_BIsAppInstalled = null;
 			_GetAppOwner = null;
-			_GetAppOwner_Windows = null;
 			_GetLaunchQueryParam = null;
 			_GetDlcDownloadProgress = null;
 			_GetAppBuildId = null;
@@ -313,23 +311,23 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
+		#if PLATFORM_WIN64
+		private delegate void FGetAppOwner( IntPtr self, ref SteamId retVal );
+		#else
 		private delegate SteamId FGetAppOwner( IntPtr self );
+		#endif
 		private FGetAppOwner _GetAppOwner;
-		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FGetAppOwner_Windows( IntPtr self, ref SteamId retVal );
-		private FGetAppOwner_Windows _GetAppOwner_Windows;
 		
 		#endregion
 		internal SteamId GetAppOwner()
 		{
-			if ( Config.Os == OsType.Windows )
-			{
-				var retVal = default( SteamId );
-				_GetAppOwner_Windows( Self, ref retVal );
-				return retVal;
-			}
-			
+			#if PLATFORM_WIN64
+			var retVal = default( SteamId );
+			_GetAppOwner( Self, ref retVal );
+			return retVal;
+			#else
 			return _GetAppOwner( Self );
+			#endif
 		}
 		
 		#region FunctionMeta

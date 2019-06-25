@@ -16,7 +16,6 @@ namespace Steamworks
 			_GetHSteamUser = Marshal.GetDelegateForFunctionPointer<FGetHSteamUser>( Marshal.ReadIntPtr( VTable, 0) );
 			_BLoggedOn = Marshal.GetDelegateForFunctionPointer<FBLoggedOn>( Marshal.ReadIntPtr( VTable, 8) );
 			_GetSteamID = Marshal.GetDelegateForFunctionPointer<FGetSteamID>( Marshal.ReadIntPtr( VTable, 16) );
-			_GetSteamID_Windows = Marshal.GetDelegateForFunctionPointer<FGetSteamID_Windows>( Marshal.ReadIntPtr( VTable, 16) );
 			_InitiateGameConnection = Marshal.GetDelegateForFunctionPointer<FInitiateGameConnection>( Marshal.ReadIntPtr( VTable, 24) );
 			_TerminateGameConnection = Marshal.GetDelegateForFunctionPointer<FTerminateGameConnection>( Marshal.ReadIntPtr( VTable, 32) );
 			_TrackAppUsageEvent = Marshal.GetDelegateForFunctionPointer<FTrackAppUsageEvent>( Marshal.ReadIntPtr( VTable, 40) );
@@ -52,7 +51,6 @@ namespace Steamworks
 			_GetHSteamUser = null;
 			_BLoggedOn = null;
 			_GetSteamID = null;
-			_GetSteamID_Windows = null;
 			_InitiateGameConnection = null;
 			_TerminateGameConnection = null;
 			_TrackAppUsageEvent = null;
@@ -107,23 +105,23 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
+		#if PLATFORM_WIN64
+		private delegate void FGetSteamID( IntPtr self, ref SteamId retVal );
+		#else
 		private delegate SteamId FGetSteamID( IntPtr self );
+		#endif
 		private FGetSteamID _GetSteamID;
-		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FGetSteamID_Windows( IntPtr self, ref SteamId retVal );
-		private FGetSteamID_Windows _GetSteamID_Windows;
 		
 		#endregion
 		internal SteamId GetSteamID()
 		{
-			if ( Config.Os == OsType.Windows )
-			{
-				var retVal = default( SteamId );
-				_GetSteamID_Windows( Self, ref retVal );
-				return retVal;
-			}
-			
+			#if PLATFORM_WIN64
+			var retVal = default( SteamId );
+			_GetSteamID( Self, ref retVal );
+			return retVal;
+			#else
 			return _GetSteamID( Self );
+			#endif
 		}
 		
 		#region FunctionMeta

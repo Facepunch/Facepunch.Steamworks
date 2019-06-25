@@ -26,14 +26,12 @@ namespace Steamworks
 			_AddRequestLobbyListResultCountFilter = Marshal.GetDelegateForFunctionPointer<FAddRequestLobbyListResultCountFilter>( Marshal.ReadIntPtr( VTable, 80) );
 			_AddRequestLobbyListCompatibleMembersFilter = Marshal.GetDelegateForFunctionPointer<FAddRequestLobbyListCompatibleMembersFilter>( Marshal.ReadIntPtr( VTable, 88) );
 			_GetLobbyByIndex = Marshal.GetDelegateForFunctionPointer<FGetLobbyByIndex>( Marshal.ReadIntPtr( VTable, 96) );
-			_GetLobbyByIndex_Windows = Marshal.GetDelegateForFunctionPointer<FGetLobbyByIndex_Windows>( Marshal.ReadIntPtr( VTable, 96) );
 			_CreateLobby = Marshal.GetDelegateForFunctionPointer<FCreateLobby>( Marshal.ReadIntPtr( VTable, 104) );
 			_JoinLobby = Marshal.GetDelegateForFunctionPointer<FJoinLobby>( Marshal.ReadIntPtr( VTable, 112) );
 			_LeaveLobby = Marshal.GetDelegateForFunctionPointer<FLeaveLobby>( Marshal.ReadIntPtr( VTable, 120) );
 			_InviteUserToLobby = Marshal.GetDelegateForFunctionPointer<FInviteUserToLobby>( Marshal.ReadIntPtr( VTable, 128) );
 			_GetNumLobbyMembers = Marshal.GetDelegateForFunctionPointer<FGetNumLobbyMembers>( Marshal.ReadIntPtr( VTable, 136) );
 			_GetLobbyMemberByIndex = Marshal.GetDelegateForFunctionPointer<FGetLobbyMemberByIndex>( Marshal.ReadIntPtr( VTable, 144) );
-			_GetLobbyMemberByIndex_Windows = Marshal.GetDelegateForFunctionPointer<FGetLobbyMemberByIndex_Windows>( Marshal.ReadIntPtr( VTable, 144) );
 			_GetLobbyData = Marshal.GetDelegateForFunctionPointer<FGetLobbyData>( Marshal.ReadIntPtr( VTable, 152) );
 			_SetLobbyData = Marshal.GetDelegateForFunctionPointer<FSetLobbyData>( Marshal.ReadIntPtr( VTable, 160) );
 			_GetLobbyDataCount = Marshal.GetDelegateForFunctionPointer<FGetLobbyDataCount>( Marshal.ReadIntPtr( VTable, 168) );
@@ -51,7 +49,6 @@ namespace Steamworks
 			_SetLobbyType = Marshal.GetDelegateForFunctionPointer<FSetLobbyType>( Marshal.ReadIntPtr( VTable, 264) );
 			_SetLobbyJoinable = Marshal.GetDelegateForFunctionPointer<FSetLobbyJoinable>( Marshal.ReadIntPtr( VTable, 272) );
 			_GetLobbyOwner = Marshal.GetDelegateForFunctionPointer<FGetLobbyOwner>( Marshal.ReadIntPtr( VTable, 280) );
-			_GetLobbyOwner_Windows = Marshal.GetDelegateForFunctionPointer<FGetLobbyOwner_Windows>( Marshal.ReadIntPtr( VTable, 280) );
 			_SetLobbyOwner = Marshal.GetDelegateForFunctionPointer<FSetLobbyOwner>( Marshal.ReadIntPtr( VTable, 288) );
 			_SetLinkedLobby = Marshal.GetDelegateForFunctionPointer<FSetLinkedLobby>( Marshal.ReadIntPtr( VTable, 296) );
 		}
@@ -72,14 +69,12 @@ namespace Steamworks
 			_AddRequestLobbyListResultCountFilter = null;
 			_AddRequestLobbyListCompatibleMembersFilter = null;
 			_GetLobbyByIndex = null;
-			_GetLobbyByIndex_Windows = null;
 			_CreateLobby = null;
 			_JoinLobby = null;
 			_LeaveLobby = null;
 			_InviteUserToLobby = null;
 			_GetNumLobbyMembers = null;
 			_GetLobbyMemberByIndex = null;
-			_GetLobbyMemberByIndex_Windows = null;
 			_GetLobbyData = null;
 			_SetLobbyData = null;
 			_GetLobbyDataCount = null;
@@ -97,7 +92,6 @@ namespace Steamworks
 			_SetLobbyType = null;
 			_SetLobbyJoinable = null;
 			_GetLobbyOwner = null;
-			_GetLobbyOwner_Windows = null;
 			_SetLobbyOwner = null;
 			_SetLinkedLobby = null;
 		}
@@ -238,23 +232,23 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
+		#if PLATFORM_WIN64
+		private delegate void FGetLobbyByIndex( IntPtr self, ref SteamId retVal, int iLobby );
+		#else
 		private delegate SteamId FGetLobbyByIndex( IntPtr self, int iLobby );
+		#endif
 		private FGetLobbyByIndex _GetLobbyByIndex;
-		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FGetLobbyByIndex_Windows( IntPtr self, ref SteamId retVal, int iLobby );
-		private FGetLobbyByIndex_Windows _GetLobbyByIndex_Windows;
 		
 		#endregion
 		internal SteamId GetLobbyByIndex( int iLobby )
 		{
-			if ( Config.Os == OsType.Windows )
-			{
-				var retVal = default( SteamId );
-				_GetLobbyByIndex_Windows( Self, ref retVal, iLobby );
-				return retVal;
-			}
-			
+			#if PLATFORM_WIN64
+			var retVal = default( SteamId );
+			_GetLobbyByIndex( Self, ref retVal, iLobby );
+			return retVal;
+			#else
 			return _GetLobbyByIndex( Self, iLobby );
+			#endif
 		}
 		
 		#region FunctionMeta
@@ -315,23 +309,23 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
+		#if PLATFORM_WIN64
+		private delegate void FGetLobbyMemberByIndex( IntPtr self, ref SteamId retVal, SteamId steamIDLobby, int iMember );
+		#else
 		private delegate SteamId FGetLobbyMemberByIndex( IntPtr self, SteamId steamIDLobby, int iMember );
+		#endif
 		private FGetLobbyMemberByIndex _GetLobbyMemberByIndex;
-		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FGetLobbyMemberByIndex_Windows( IntPtr self, ref SteamId retVal, SteamId steamIDLobby, int iMember );
-		private FGetLobbyMemberByIndex_Windows _GetLobbyMemberByIndex_Windows;
 		
 		#endregion
 		internal SteamId GetLobbyMemberByIndex( SteamId steamIDLobby, int iMember )
 		{
-			if ( Config.Os == OsType.Windows )
-			{
-				var retVal = default( SteamId );
-				_GetLobbyMemberByIndex_Windows( Self, ref retVal, steamIDLobby, iMember );
-				return retVal;
-			}
-			
+			#if PLATFORM_WIN64
+			var retVal = default( SteamId );
+			_GetLobbyMemberByIndex( Self, ref retVal, steamIDLobby, iMember );
+			return retVal;
+			#else
 			return _GetLobbyMemberByIndex( Self, steamIDLobby, iMember );
+			#endif
 		}
 		
 		#region FunctionMeta
@@ -523,23 +517,23 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
+		#if PLATFORM_WIN64
+		private delegate void FGetLobbyOwner( IntPtr self, ref SteamId retVal, SteamId steamIDLobby );
+		#else
 		private delegate SteamId FGetLobbyOwner( IntPtr self, SteamId steamIDLobby );
+		#endif
 		private FGetLobbyOwner _GetLobbyOwner;
-		[UnmanagedFunctionPointer( CallingConvention.ThisCall )]
-		private delegate void FGetLobbyOwner_Windows( IntPtr self, ref SteamId retVal, SteamId steamIDLobby );
-		private FGetLobbyOwner_Windows _GetLobbyOwner_Windows;
 		
 		#endregion
 		internal SteamId GetLobbyOwner( SteamId steamIDLobby )
 		{
-			if ( Config.Os == OsType.Windows )
-			{
-				var retVal = default( SteamId );
-				_GetLobbyOwner_Windows( Self, ref retVal, steamIDLobby );
-				return retVal;
-			}
-			
+			#if PLATFORM_WIN64
+			var retVal = default( SteamId );
+			_GetLobbyOwner( Self, ref retVal, steamIDLobby );
+			return retVal;
+			#else
 			return _GetLobbyOwner( Self, steamIDLobby );
+			#endif
 		}
 		
 		#region FunctionMeta
