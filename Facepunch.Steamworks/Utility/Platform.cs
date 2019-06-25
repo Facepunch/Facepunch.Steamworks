@@ -13,7 +13,7 @@ namespace Steamworks
 		public const int StructPlatformPackSize = 8;
 		public const string LibraryName = "steam_api64";
 #elif PLATFORM_WIN32
-		public const int StructPlatformPackSize = 4;
+		public const int StructPlatformPackSize = 8;
 		public const string LibraryName = "steam_api";
 #elif PLATFORM_POSIX32
 		public const int StructPlatformPackSize = 4;
