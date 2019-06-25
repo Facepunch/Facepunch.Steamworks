@@ -103,7 +103,7 @@ namespace Generator
 						if ( Cleanup.IsDeprecated( $"{clss.Name}.{func.Name}" ) )
 							WriteLine( $" // {func.Name} is deprecated" );
 						else
-							WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, {standardLocations[i]}) );" );
+							WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, {standardLocations[i]} ) );" );
 					}
 				}
 				else
@@ -122,7 +122,7 @@ namespace Generator
 						if ( Cleanup.IsDeprecated( $"{clss.Name}.{func.Name}" ) )
 							WriteLine( $" // {func.Name} is deprecated" );
 						else
-							WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, loc[{i}]) );" );
+							WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, loc[{i}] ) );" );
 					}
 				}
 

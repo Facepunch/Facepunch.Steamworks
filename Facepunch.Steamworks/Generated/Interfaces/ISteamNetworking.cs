@@ -13,28 +13,28 @@ namespace Steamworks
 		
 		public override void InitInternals()
 		{
-			_SendP2PPacket = Marshal.GetDelegateForFunctionPointer<FSendP2PPacket>( Marshal.ReadIntPtr( VTable, 0) );
-			_IsP2PPacketAvailable = Marshal.GetDelegateForFunctionPointer<FIsP2PPacketAvailable>( Marshal.ReadIntPtr( VTable, 8) );
-			_ReadP2PPacket = Marshal.GetDelegateForFunctionPointer<FReadP2PPacket>( Marshal.ReadIntPtr( VTable, 16) );
-			_AcceptP2PSessionWithUser = Marshal.GetDelegateForFunctionPointer<FAcceptP2PSessionWithUser>( Marshal.ReadIntPtr( VTable, 24) );
-			_CloseP2PSessionWithUser = Marshal.GetDelegateForFunctionPointer<FCloseP2PSessionWithUser>( Marshal.ReadIntPtr( VTable, 32) );
-			_CloseP2PChannelWithUser = Marshal.GetDelegateForFunctionPointer<FCloseP2PChannelWithUser>( Marshal.ReadIntPtr( VTable, 40) );
-			_GetP2PSessionState = Marshal.GetDelegateForFunctionPointer<FGetP2PSessionState>( Marshal.ReadIntPtr( VTable, 48) );
-			_AllowP2PPacketRelay = Marshal.GetDelegateForFunctionPointer<FAllowP2PPacketRelay>( Marshal.ReadIntPtr( VTable, 56) );
-			_CreateListenSocket = Marshal.GetDelegateForFunctionPointer<FCreateListenSocket>( Marshal.ReadIntPtr( VTable, 64) );
-			_CreateP2PConnectionSocket = Marshal.GetDelegateForFunctionPointer<FCreateP2PConnectionSocket>( Marshal.ReadIntPtr( VTable, 72) );
-			_CreateConnectionSocket = Marshal.GetDelegateForFunctionPointer<FCreateConnectionSocket>( Marshal.ReadIntPtr( VTable, 80) );
-			_DestroySocket = Marshal.GetDelegateForFunctionPointer<FDestroySocket>( Marshal.ReadIntPtr( VTable, 88) );
-			_DestroyListenSocket = Marshal.GetDelegateForFunctionPointer<FDestroyListenSocket>( Marshal.ReadIntPtr( VTable, 96) );
-			_SendDataOnSocket = Marshal.GetDelegateForFunctionPointer<FSendDataOnSocket>( Marshal.ReadIntPtr( VTable, 104) );
-			_IsDataAvailableOnSocket = Marshal.GetDelegateForFunctionPointer<FIsDataAvailableOnSocket>( Marshal.ReadIntPtr( VTable, 112) );
-			_RetrieveDataFromSocket = Marshal.GetDelegateForFunctionPointer<FRetrieveDataFromSocket>( Marshal.ReadIntPtr( VTable, 120) );
-			_IsDataAvailable = Marshal.GetDelegateForFunctionPointer<FIsDataAvailable>( Marshal.ReadIntPtr( VTable, 128) );
-			_RetrieveData = Marshal.GetDelegateForFunctionPointer<FRetrieveData>( Marshal.ReadIntPtr( VTable, 136) );
-			_GetSocketInfo = Marshal.GetDelegateForFunctionPointer<FGetSocketInfo>( Marshal.ReadIntPtr( VTable, 144) );
-			_GetListenSocketInfo = Marshal.GetDelegateForFunctionPointer<FGetListenSocketInfo>( Marshal.ReadIntPtr( VTable, 152) );
-			_GetSocketConnectionType = Marshal.GetDelegateForFunctionPointer<FGetSocketConnectionType>( Marshal.ReadIntPtr( VTable, 160) );
-			_GetMaxPacketSize = Marshal.GetDelegateForFunctionPointer<FGetMaxPacketSize>( Marshal.ReadIntPtr( VTable, 168) );
+			_SendP2PPacket = Marshal.GetDelegateForFunctionPointer<FSendP2PPacket>( Marshal.ReadIntPtr( VTable, 0 ) );
+			_IsP2PPacketAvailable = Marshal.GetDelegateForFunctionPointer<FIsP2PPacketAvailable>( Marshal.ReadIntPtr( VTable, 8 ) );
+			_ReadP2PPacket = Marshal.GetDelegateForFunctionPointer<FReadP2PPacket>( Marshal.ReadIntPtr( VTable, 16 ) );
+			_AcceptP2PSessionWithUser = Marshal.GetDelegateForFunctionPointer<FAcceptP2PSessionWithUser>( Marshal.ReadIntPtr( VTable, 24 ) );
+			_CloseP2PSessionWithUser = Marshal.GetDelegateForFunctionPointer<FCloseP2PSessionWithUser>( Marshal.ReadIntPtr( VTable, 32 ) );
+			_CloseP2PChannelWithUser = Marshal.GetDelegateForFunctionPointer<FCloseP2PChannelWithUser>( Marshal.ReadIntPtr( VTable, 40 ) );
+			_GetP2PSessionState = Marshal.GetDelegateForFunctionPointer<FGetP2PSessionState>( Marshal.ReadIntPtr( VTable, 48 ) );
+			_AllowP2PPacketRelay = Marshal.GetDelegateForFunctionPointer<FAllowP2PPacketRelay>( Marshal.ReadIntPtr( VTable, 56 ) );
+			_CreateListenSocket = Marshal.GetDelegateForFunctionPointer<FCreateListenSocket>( Marshal.ReadIntPtr( VTable, 64 ) );
+			_CreateP2PConnectionSocket = Marshal.GetDelegateForFunctionPointer<FCreateP2PConnectionSocket>( Marshal.ReadIntPtr( VTable, 72 ) );
+			_CreateConnectionSocket = Marshal.GetDelegateForFunctionPointer<FCreateConnectionSocket>( Marshal.ReadIntPtr( VTable, 80 ) );
+			_DestroySocket = Marshal.GetDelegateForFunctionPointer<FDestroySocket>( Marshal.ReadIntPtr( VTable, 88 ) );
+			_DestroyListenSocket = Marshal.GetDelegateForFunctionPointer<FDestroyListenSocket>( Marshal.ReadIntPtr( VTable, 96 ) );
+			_SendDataOnSocket = Marshal.GetDelegateForFunctionPointer<FSendDataOnSocket>( Marshal.ReadIntPtr( VTable, 104 ) );
+			_IsDataAvailableOnSocket = Marshal.GetDelegateForFunctionPointer<FIsDataAvailableOnSocket>( Marshal.ReadIntPtr( VTable, 112 ) );
+			_RetrieveDataFromSocket = Marshal.GetDelegateForFunctionPointer<FRetrieveDataFromSocket>( Marshal.ReadIntPtr( VTable, 120 ) );
+			_IsDataAvailable = Marshal.GetDelegateForFunctionPointer<FIsDataAvailable>( Marshal.ReadIntPtr( VTable, 128 ) );
+			_RetrieveData = Marshal.GetDelegateForFunctionPointer<FRetrieveData>( Marshal.ReadIntPtr( VTable, 136 ) );
+			_GetSocketInfo = Marshal.GetDelegateForFunctionPointer<FGetSocketInfo>( Marshal.ReadIntPtr( VTable, 144 ) );
+			_GetListenSocketInfo = Marshal.GetDelegateForFunctionPointer<FGetListenSocketInfo>( Marshal.ReadIntPtr( VTable, 152 ) );
+			_GetSocketConnectionType = Marshal.GetDelegateForFunctionPointer<FGetSocketConnectionType>( Marshal.ReadIntPtr( VTable, 160 ) );
+			_GetMaxPacketSize = Marshal.GetDelegateForFunctionPointer<FGetMaxPacketSize>( Marshal.ReadIntPtr( VTable, 168 ) );
 		}
 		internal override void Shutdown()
 		{

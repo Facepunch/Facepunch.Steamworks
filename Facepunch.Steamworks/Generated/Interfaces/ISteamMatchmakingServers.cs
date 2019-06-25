@@ -13,23 +13,23 @@ namespace Steamworks
 		
 		public override void InitInternals()
 		{
-			_RequestInternetServerList = Marshal.GetDelegateForFunctionPointer<FRequestInternetServerList>( Marshal.ReadIntPtr( VTable, 0) );
-			_RequestLANServerList = Marshal.GetDelegateForFunctionPointer<FRequestLANServerList>( Marshal.ReadIntPtr( VTable, 8) );
-			_RequestFriendsServerList = Marshal.GetDelegateForFunctionPointer<FRequestFriendsServerList>( Marshal.ReadIntPtr( VTable, 16) );
-			_RequestFavoritesServerList = Marshal.GetDelegateForFunctionPointer<FRequestFavoritesServerList>( Marshal.ReadIntPtr( VTable, 24) );
-			_RequestHistoryServerList = Marshal.GetDelegateForFunctionPointer<FRequestHistoryServerList>( Marshal.ReadIntPtr( VTable, 32) );
-			_RequestSpectatorServerList = Marshal.GetDelegateForFunctionPointer<FRequestSpectatorServerList>( Marshal.ReadIntPtr( VTable, 40) );
-			_ReleaseRequest = Marshal.GetDelegateForFunctionPointer<FReleaseRequest>( Marshal.ReadIntPtr( VTable, 48) );
-			_GetServerDetails = Marshal.GetDelegateForFunctionPointer<FGetServerDetails>( Marshal.ReadIntPtr( VTable, 56) );
-			_CancelQuery = Marshal.GetDelegateForFunctionPointer<FCancelQuery>( Marshal.ReadIntPtr( VTable, 64) );
-			_RefreshQuery = Marshal.GetDelegateForFunctionPointer<FRefreshQuery>( Marshal.ReadIntPtr( VTable, 72) );
-			_IsRefreshing = Marshal.GetDelegateForFunctionPointer<FIsRefreshing>( Marshal.ReadIntPtr( VTable, 80) );
-			_GetServerCount = Marshal.GetDelegateForFunctionPointer<FGetServerCount>( Marshal.ReadIntPtr( VTable, 88) );
-			_RefreshServer = Marshal.GetDelegateForFunctionPointer<FRefreshServer>( Marshal.ReadIntPtr( VTable, 96) );
-			_PingServer = Marshal.GetDelegateForFunctionPointer<FPingServer>( Marshal.ReadIntPtr( VTable, 104) );
-			_PlayerDetails = Marshal.GetDelegateForFunctionPointer<FPlayerDetails>( Marshal.ReadIntPtr( VTable, 112) );
-			_ServerRules = Marshal.GetDelegateForFunctionPointer<FServerRules>( Marshal.ReadIntPtr( VTable, 120) );
-			_CancelServerQuery = Marshal.GetDelegateForFunctionPointer<FCancelServerQuery>( Marshal.ReadIntPtr( VTable, 128) );
+			_RequestInternetServerList = Marshal.GetDelegateForFunctionPointer<FRequestInternetServerList>( Marshal.ReadIntPtr( VTable, 0 ) );
+			_RequestLANServerList = Marshal.GetDelegateForFunctionPointer<FRequestLANServerList>( Marshal.ReadIntPtr( VTable, 8 ) );
+			_RequestFriendsServerList = Marshal.GetDelegateForFunctionPointer<FRequestFriendsServerList>( Marshal.ReadIntPtr( VTable, 16 ) );
+			_RequestFavoritesServerList = Marshal.GetDelegateForFunctionPointer<FRequestFavoritesServerList>( Marshal.ReadIntPtr( VTable, 24 ) );
+			_RequestHistoryServerList = Marshal.GetDelegateForFunctionPointer<FRequestHistoryServerList>( Marshal.ReadIntPtr( VTable, 32 ) );
+			_RequestSpectatorServerList = Marshal.GetDelegateForFunctionPointer<FRequestSpectatorServerList>( Marshal.ReadIntPtr( VTable, 40 ) );
+			_ReleaseRequest = Marshal.GetDelegateForFunctionPointer<FReleaseRequest>( Marshal.ReadIntPtr( VTable, 48 ) );
+			_GetServerDetails = Marshal.GetDelegateForFunctionPointer<FGetServerDetails>( Marshal.ReadIntPtr( VTable, 56 ) );
+			_CancelQuery = Marshal.GetDelegateForFunctionPointer<FCancelQuery>( Marshal.ReadIntPtr( VTable, 64 ) );
+			_RefreshQuery = Marshal.GetDelegateForFunctionPointer<FRefreshQuery>( Marshal.ReadIntPtr( VTable, 72 ) );
+			_IsRefreshing = Marshal.GetDelegateForFunctionPointer<FIsRefreshing>( Marshal.ReadIntPtr( VTable, 80 ) );
+			_GetServerCount = Marshal.GetDelegateForFunctionPointer<FGetServerCount>( Marshal.ReadIntPtr( VTable, 88 ) );
+			_RefreshServer = Marshal.GetDelegateForFunctionPointer<FRefreshServer>( Marshal.ReadIntPtr( VTable, 96 ) );
+			_PingServer = Marshal.GetDelegateForFunctionPointer<FPingServer>( Marshal.ReadIntPtr( VTable, 104 ) );
+			_PlayerDetails = Marshal.GetDelegateForFunctionPointer<FPlayerDetails>( Marshal.ReadIntPtr( VTable, 112 ) );
+			_ServerRules = Marshal.GetDelegateForFunctionPointer<FServerRules>( Marshal.ReadIntPtr( VTable, 120 ) );
+			_CancelServerQuery = Marshal.GetDelegateForFunctionPointer<FCancelServerQuery>( Marshal.ReadIntPtr( VTable, 128 ) );
 		}
 		internal override void Shutdown()
 		{
