@@ -29,4 +29,8 @@
 		<Folder Include="Generated\Interfaces\" />
 	</ItemGroup>
 
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="$(COMPUTERNAME) == 'GarrysPC' AND '$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+		<Exec Command="copy $(TargetDir)\$(AssemblyName).dll C:\Plastic\Rust\Assets\Plugins\Facepunch.Steamworks&#xD;&#xA;copy $(TargetDir)\$(AssemblyName).pdb C:\Plastic\Rust\Assets\Plugins\Facepunch.Steamworks&#xD;&#xA;copy $(TargetDir)\$(AssemblyName).xml C:\Plastic\Rust\Assets\Plugins\Facepunch.Steamworks&#xD;&#xA;&#xD;&#xA;copy $(TargetDir)\$(AssemblyName).dll C:\GitHub\SteamworksUnityTests\Assets\Steamworks&#xD;&#xA;copy $(TargetDir)\$(AssemblyName).pdb C:\GitHub\SteamworksUnityTests\Assets\Steamworks&#xD;&#xA;copy $(TargetDir)\$(AssemblyName).xml C:\GitHub\SteamworksUnityTests\Assets\Steamworks" />
+	</Target>
+
 </Project>
