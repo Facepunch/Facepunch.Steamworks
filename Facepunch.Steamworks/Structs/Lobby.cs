@@ -210,5 +210,9 @@ namespace Steamworks.Data
 			set => SteamMatchmaking.Internal.SetLobbyOwner( Id, value.Id );
 		}
 
+		/// <summary>
+		/// Check if the specified SteamId owns the lobby
+		/// </summary>
+		public bool IsOwnedBy( SteamId k ) => Owner.Id == k;
 	}
 }
