@@ -204,8 +204,8 @@ namespace Steamworks.Data
 
 		/// <summary>
 		/// [SteamID variant]
-		/// Allows the owner to set the game server associated with the lobby. Triggers a 
-		/// LobbyGameCreated_t callback.
+		/// Allows the owner to set the game server associated with the lobby. Triggers the 
+		/// Steammatchmaking.OnLobbyGameCreated event.
 		/// </summary>
 		public void SetGameServer( SteamId steamServer )
 		{
@@ -217,8 +217,8 @@ namespace Steamworks.Data
 
 		/// <summary>
 		/// [IP/Port variant]
-		/// Allows the owner to set the game server associated with the lobby. Triggers a 
-		/// LobbyGameCreated_t callback.
+		/// Allows the owner to set the game server associated with the lobby. Triggers the 
+		/// Steammatchmaking.OnLobbyGameCreated event.
 		/// </summary>
 		public void SetGameServer( string ip, ushort port )
 		{
