@@ -93,6 +93,23 @@ namespace Steamworks
 		}
 
 		/// <summary>
+		/// Show the user a pop-up notification with the current progress toward an achievement.
+		/// Will return false if RequestCurrentStats has not completed and successfully returned 
+		/// its callback, if the achievement doesn't exist/has unpublished changes in the app's 
+		/// Steamworks Admin page, or if the achievement is unlocked. 
+		/// </summary>
+		public static bool IndicateAchievementProgress( string achName, int curProg, int maxProg )
+		{
+			if ( string.IsNullOrEmpty( achName ) )
+				throw new ArgumentNullException( "Achievement string is null or void " );
+
+			if ( curProg >= maxProg )
+				throw new ArgumentException( $" Current progress [{curProg}] arguement toward achievement greater than or equal to max [{maxProg}]" );
+
+			return Internal.IndicateAchievementProgress( achName, (uint)curProg, (uint)maxProg );
+		}
+
+		/// <summary>
 		/// Tries to get the number of players currently playing this game.
 		/// Or -1 if failed.
 		/// </summary>

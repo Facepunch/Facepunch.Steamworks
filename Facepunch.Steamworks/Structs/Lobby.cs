@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Steamworks.Data
@@ -199,6 +200,41 @@ namespace Steamworks.Data
 		public bool SetJoinable( bool b )
 		{
 			return SteamMatchmaking.Internal.SetLobbyJoinable( Id, b );
+		}
+
+		/// <summary>
+		/// [SteamID variant]
+		/// Allows the owner to set the game server associated with the lobby. Triggers a 
+		/// LobbyGameCreated_t callback.
+		/// </summary>
+		public void SetGameServer( SteamId steamServer )
+		{
+			if ( !steamServer.IsValid )
+				throw new ArgumentException( $"SteamId for server is invalid" );
+
+			SteamMatchmaking.Internal.SetLobbyGameServer( Id, 0, 0, steamServer );
+		}
+
+		/// <summary>
+		/// [IP/Port variant]
+		/// Allows the owner to set the game server associated with the lobby. Triggers a 
+		/// LobbyGameCreated_t callback.
+		/// </summary>
+		public void SetGameServer( string ip, ushort port )
+		{
+			if ( !IPAddress.TryParse( ip, out IPAddress add ) )
+				throw new ArgumentException( $"IP address for server is invalid" );
+
+			SteamMatchmaking.Internal.SetLobbyGameServer( Id, add.IpToInt32(), port, new SteamId() );
+		}
+
+		/// <summary>
+		/// Gets the details of the lobby's game server, if set. Returns true if the lobby is 
+		/// valid and has a server set, otherwise returns false.
+		/// </summary>
+		public bool GetGameServer( ref uint ip, ref ushort port, ref SteamId serverId )
+		{
+			return SteamMatchmaking.Internal.GetLobbyGameServer( Id, ref ip, ref port, ref serverId );
 		}
 
 		/// <summary>

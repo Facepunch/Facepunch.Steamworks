@@ -45,6 +45,8 @@ namespace Steamworks
 
 			LobbyEnter_t.Install( x => OnLobbyEntered?.Invoke( new Lobby( x.SteamIDLobby ) ) );
 
+			LobbyGameCreated_t.Install( x => OnLobbyGameCreated?.Invoke( new Lobby( x.SteamIDLobby ), x.IP, x.Port, x.SteamIDGameServer ) );
+
 			LobbyDataUpdate_t.Install( x =>
 			{
 				if ( x.Success == 0 ) return;
@@ -102,6 +104,11 @@ namespace Steamworks
 		/// You joined a lobby
 		/// </summary>
 		public static event Action<Lobby> OnLobbyEntered;
+
+		/// <summary>
+		/// A game server has been associated with the lobby
+		/// </summary>
+		public static event Action<Lobby, uint, ushort, SteamId> OnLobbyGameCreated;
 
 		/// <summary>
 		/// The lobby metadata has changed
