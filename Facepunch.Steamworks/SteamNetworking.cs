@@ -55,6 +55,13 @@ namespace Steamworks
 		public static bool AcceptP2PSessionWithUser( SteamId user ) => Internal.AcceptP2PSessionWithUser( user );
 
 		/// <summary>
+		/// Allow or disallow P2P connects to fall back on Steam server relay if direct 
+		/// connection or NAT traversal can't be established. Applies to connections 
+		/// created after setting or old connections that need to reconnect.
+		/// </summary>
+		public static bool AllowP2PPacketRelay( bool allow ) => Internal.AllowP2PPacketRelay( allow );
+
+		/// <summary>
 		/// This should be called when you're done communicating with a user, as this will
 		/// free up all of the resources allocated for the connection under-the-hood.
 		/// If the remote user tries to send data to you again, a new OnP2PSessionRequest 
