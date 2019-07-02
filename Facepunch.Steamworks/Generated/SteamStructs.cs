@@ -1836,21 +1836,6 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
-	internal struct MatchMakingKeyValuePair_t
-	{
-		internal string KeyUTF8() => System.Text.Encoding.UTF8.GetString( Key, 0, System.Array.IndexOf<byte>( Key, 0 ) );
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_szKey
-		internal byte[] Key; // m_szKey char [256]
-		internal string ValueUTF8() => System.Text.Encoding.UTF8.GetString( Value, 0, System.Array.IndexOf<byte>( Value, 0 ) );
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_szValue
-		internal byte[] Value; // m_szValue char [256]
-		
-		#region Marshalling
-		internal static MatchMakingKeyValuePair_t Fill( IntPtr p ) => ((MatchMakingKeyValuePair_t)(MatchMakingKeyValuePair_t) Marshal.PtrToStructure( p, typeof(MatchMakingKeyValuePair_t) ) );
-		#endregion
-	}
-	
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct servernetadr_t
 	{

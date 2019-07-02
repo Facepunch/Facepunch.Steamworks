@@ -122,12 +122,12 @@ namespace Steamworks.ServerList
 
 		#region Filters
 
-		internal List<MatchMakingKeyValuePair_t> filters = new List<MatchMakingKeyValuePair_t>();
-		internal virtual MatchMakingKeyValuePair_t[] GetFilters() => filters.ToArray();
+		internal List<MatchMakingKeyValuePair> filters = new List<MatchMakingKeyValuePair>();
+		internal virtual MatchMakingKeyValuePair[] GetFilters() => filters.ToArray();
 
 		public void AddFilter( string key, string value )
 		{
-			filters.Add( new MatchMakingKeyValuePair_t { Key = System.Text.Encoding.UTF8.GetBytes( key ), Value = System.Text.Encoding.UTF8.GetBytes( key ) } );
+			filters.Add( new MatchMakingKeyValuePair { Key = key, Value = value } );
 		}
 
 		#endregion

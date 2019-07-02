@@ -43,6 +43,7 @@ public static class Cleanup
 		type = type.Replace( "InputDigitalActionData_t", "DigitalState" );
 		type = type.Replace( "InputAnalogActionData_t", "AnalogState" );
 		type = type.Replace( "InputMotionData_t", "MotionState" );
+		type = type.Replace( "MatchMakingKeyValuePair_t", "MatchMakingKeyValuePair" );
 
 		return type;
 	}
@@ -56,6 +57,7 @@ public static class Cleanup
 		if ( type == "AnalogState" ) return false;
 		if ( type == "DigitalState" ) return false;
 		if ( type == "MotionState" ) return false;
+		if ( type == "MatchMakingKeyValuePair" ) return false;
 
 		return true;
 	}
