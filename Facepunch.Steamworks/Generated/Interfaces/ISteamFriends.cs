@@ -168,8 +168,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
-		private delegate string FGetPersonaName( IntPtr self );
+		private delegate Utf8StringPointer FGetPersonaName( IntPtr self );
 		private FGetPersonaName _GetPersonaName;
 		
 		#endregion
@@ -256,8 +255,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
-		private delegate string FGetFriendPersonaName( IntPtr self, SteamId steamIDFriend );
+		private delegate Utf8StringPointer FGetFriendPersonaName( IntPtr self, SteamId steamIDFriend );
 		private FGetFriendPersonaName _GetFriendPersonaName;
 		
 		#endregion
@@ -280,8 +278,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
-		private delegate string FGetFriendPersonaNameHistory( IntPtr self, SteamId steamIDFriend, int iPersonaName );
+		private delegate Utf8StringPointer FGetFriendPersonaNameHistory( IntPtr self, SteamId steamIDFriend, int iPersonaName );
 		private FGetFriendPersonaNameHistory _GetFriendPersonaNameHistory;
 		
 		#endregion
@@ -303,8 +300,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
-		private delegate string FGetPlayerNickname( IntPtr self, SteamId steamIDPlayer );
+		private delegate Utf8StringPointer FGetPlayerNickname( IntPtr self, SteamId steamIDPlayer );
 		private FGetPlayerNickname _GetPlayerNickname;
 		
 		#endregion
@@ -337,8 +333,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
-		private delegate string FGetFriendsGroupName( IntPtr self, FriendsGroupID_t friendsGroupID );
+		private delegate Utf8StringPointer FGetFriendsGroupName( IntPtr self, FriendsGroupID_t friendsGroupID );
 		private FGetFriendsGroupName _GetFriendsGroupName;
 		
 		#endregion
@@ -415,8 +410,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
-		private delegate string FGetClanName( IntPtr self, SteamId steamIDClan );
+		private delegate Utf8StringPointer FGetClanName( IntPtr self, SteamId steamIDClan );
 		private FGetClanName _GetClanName;
 		
 		#endregion
@@ -427,8 +421,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
-		private delegate string FGetClanTag( IntPtr self, SteamId steamIDClan );
+		private delegate Utf8StringPointer FGetClanTag( IntPtr self, SteamId steamIDClan );
 		private FGetClanTag _GetClanTag;
 		
 		#endregion
@@ -726,8 +719,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
-		private delegate string FGetFriendRichPresence( IntPtr self, SteamId steamIDFriend, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey );
+		private delegate Utf8StringPointer FGetFriendRichPresence( IntPtr self, SteamId steamIDFriend, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey );
 		private FGetFriendRichPresence _GetFriendRichPresence;
 		
 		#endregion
@@ -749,8 +741,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
-		private delegate string FGetFriendRichPresenceKeyByIndex( IntPtr self, SteamId steamIDFriend, int iKey );
+		private delegate Utf8StringPointer FGetFriendRichPresenceKeyByIndex( IntPtr self, SteamId steamIDFriend, int iKey );
 		private FGetFriendRichPresenceKeyByIndex _GetFriendRichPresenceKeyByIndex;
 		
 		#endregion

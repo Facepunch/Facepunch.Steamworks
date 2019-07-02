@@ -325,8 +325,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
-		private delegate string FGetFileNameAndSize( IntPtr self, int iFile, ref int pnFileSizeInBytes );
+		private delegate Utf8StringPointer FGetFileNameAndSize( IntPtr self, int iFile, ref int pnFileSizeInBytes );
 		private FGetFileNameAndSize _GetFileNameAndSize;
 		
 		#endregion

@@ -126,8 +126,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
-		private delegate string FGetIPCountry( IntPtr self );
+		private delegate Utf8StringPointer FGetIPCountry( IntPtr self );
 		private FGetIPCountry _GetIPCountry;
 		
 		#endregion
@@ -345,8 +344,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
-		private delegate string FGetSteamUILanguage( IntPtr self );
+		private delegate Utf8StringPointer FGetSteamUILanguage( IntPtr self );
 		private FGetSteamUILanguage _GetSteamUILanguage;
 		
 		#endregion

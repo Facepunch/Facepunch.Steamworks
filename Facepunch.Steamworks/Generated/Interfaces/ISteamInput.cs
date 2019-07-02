@@ -297,8 +297,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
-		private delegate string FGetGlyphForActionOrigin( IntPtr self, InputActionOrigin eOrigin );
+		private delegate Utf8StringPointer FGetGlyphForActionOrigin( IntPtr self, InputActionOrigin eOrigin );
 		private FGetGlyphForActionOrigin _GetGlyphForActionOrigin;
 		
 		#endregion
@@ -309,8 +308,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
-		private delegate string FGetStringForActionOrigin( IntPtr self, InputActionOrigin eOrigin );
+		private delegate Utf8StringPointer FGetStringForActionOrigin( IntPtr self, InputActionOrigin eOrigin );
 		private FGetStringForActionOrigin _GetStringForActionOrigin;
 		
 		#endregion
@@ -442,8 +440,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
-		private delegate string FGetStringForXboxOrigin( IntPtr self, XboxOrigin eOrigin );
+		private delegate Utf8StringPointer FGetStringForXboxOrigin( IntPtr self, XboxOrigin eOrigin );
 		private FGetStringForXboxOrigin _GetStringForXboxOrigin;
 		
 		#endregion
@@ -454,8 +451,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
-		private delegate string FGetGlyphForXboxOrigin( IntPtr self, XboxOrigin eOrigin );
+		private delegate Utf8StringPointer FGetGlyphForXboxOrigin( IntPtr self, XboxOrigin eOrigin );
 		private FGetGlyphForXboxOrigin _GetGlyphForXboxOrigin;
 		
 		#endregion

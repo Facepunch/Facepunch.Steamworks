@@ -126,8 +126,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
-		private delegate string FGetCurrentGameLanguage( IntPtr self );
+		private delegate Utf8StringPointer FGetCurrentGameLanguage( IntPtr self );
 		private FGetCurrentGameLanguage _GetCurrentGameLanguage;
 		
 		#endregion
@@ -138,8 +137,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
-		private delegate string FGetAvailableGameLanguages( IntPtr self );
+		private delegate Utf8StringPointer FGetAvailableGameLanguages( IntPtr self );
 		private FGetAvailableGameLanguages _GetAvailableGameLanguages;
 		
 		#endregion
@@ -332,8 +330,7 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		[return: MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringFromNative ) )]
-		private delegate string FGetLaunchQueryParam( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey );
+		private delegate Utf8StringPointer FGetLaunchQueryParam( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey );
 		private FGetLaunchQueryParam _GetLaunchQueryParam;
 		
 		#endregion

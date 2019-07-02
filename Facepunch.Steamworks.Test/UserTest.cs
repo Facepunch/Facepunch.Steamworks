@@ -93,6 +93,12 @@ namespace Steamworks
 		}
 
 		[TestMethod]
+		public void Name()
+		{
+			Console.WriteLine( $"SteamClient.Name: {SteamClient.Name}" );
+		}
+
+		[TestMethod]
 		public async Task GetStoreAuthUrlAsync()
 		{
 			var rustskins = await SteamUser.GetStoreAuthUrlAsync( "https://store.steampowered.com/itemstore/252490/" );
