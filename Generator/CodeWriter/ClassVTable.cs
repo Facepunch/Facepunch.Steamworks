@@ -202,7 +202,7 @@ namespace Generator
 
 			WriteLine( $"#region FunctionMeta" );
 
-			WriteLine( $"[UnmanagedFunctionPointer( CallingConvention.ThisCall )]" );
+			WriteLine( $"[UnmanagedFunctionPointer( Platform.MemberConvention )]" );
 
 			if ( returnType.ReturnAttribute != null)
 				WriteLine( returnType.ReturnAttribute );
