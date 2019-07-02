@@ -34,7 +34,7 @@ namespace Steamworks
 
 		public static int MemoryOffset( int memLocation )
 		{
-#if PLATFORM_WIN64 || PLATFORM_POSIX64
+#if PLATFORM_64
 			return memLocation;
 #else
 			return memLocation / 2;

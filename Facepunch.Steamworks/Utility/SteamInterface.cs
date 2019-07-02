@@ -15,6 +15,7 @@ namespace Steamworks
 		public IntPtr VTable;
 
 		public virtual string InterfaceName => null;
+		public bool IsValid => Self != IntPtr.Zero && VTable != IntPtr.Zero;
 
 		public void Init()
 		{

@@ -79,13 +79,23 @@ namespace Steamworks
 
 		public static void Shutdown()
 		{
-			Event.DisposeAllClient();
-
-			initialized = false;
+			if ( !IsValid ) return;
 
 			SteamInput.Shutdown();
 
+			Cleanup();
+
+			SteamAPI.Shutdown();
+		}
+
+		internal static void Cleanup()
+		{
+			initialized = false;
+
+			Event.DisposeAllClient();
 			ShutdownInterfaces();
+
+			SteamInput.Shutdown();
 			SteamApps.Shutdown();
 			SteamUtils.Shutdown();
 			SteamParental.Shutdown();
@@ -101,10 +111,7 @@ namespace Steamworks
 			SteamParties.Shutdown();
 			SteamNetworkingUtils.Shutdown();
 			SteamNetworkingSockets.Shutdown();
-
 			ServerList.Base.Shutdown();
-
-			SteamAPI.Shutdown();
 		}
 
 		internal static void RegisterCallback( IntPtr intPtr, int callbackId )
@@ -114,6 +121,8 @@ namespace Steamworks
 
 		public static void RunCallbacks()
 		{
+			if ( !IsValid ) return;
+
 			try
 			{
 				SteamAPI.RunCallbacks();

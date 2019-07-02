@@ -24,7 +24,11 @@ namespace Steamworks
 
 		internal static void Shutdown()
 		{
-			_internal?.DoShutdown();
+			if ( _internal != null && _internal.IsValid )
+			{
+				_internal.DoShutdown();
+			}
+
 			_internal = null;
 		}
 

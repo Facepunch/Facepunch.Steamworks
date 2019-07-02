@@ -36,8 +36,15 @@ namespace Steamworks
 		{
 			IPCountry_t.Install( x => OnIpCountryChanged?.Invoke() );
 			LowBatteryPower_t.Install( x => OnLowBatteryPower?.Invoke( x.MinutesBatteryLeft ) );
-			SteamShutdown_t.Install( x => OnSteamShutdown?.Invoke() );
+			SteamShutdown_t.Install( x => SteamClosed() );
 			GamepadTextInputDismissed_t.Install( x => OnGamepadTextInputDismissed?.Invoke( x.Submitted ) );
+		}
+
+		private static void SteamClosed()
+		{
+			SteamClient.Cleanup();
+
+			OnSteamShutdown?.Invoke();
 		}
 
 		/// <summary>
