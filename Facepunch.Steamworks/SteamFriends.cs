@@ -114,7 +114,7 @@ namespace Steamworks
 		{
 			for ( int i=0; i<Internal.GetFriendCount( (int) FriendFlags.Immediate ); i++ )
 			{
-				yield return new Friend( Internal.GetFriendByIndex( i, 0xFFFF ) );
+				yield return new Friend( Internal.GetFriendByIndex( i, (int)FriendFlags.Immediate ) );
 			}
 		}
 
@@ -122,7 +122,7 @@ namespace Steamworks
 		{
 			for ( int i = 0; i < Internal.GetFriendCount( (int)FriendFlags.Blocked ); i++ )
 			{
-				yield return new Friend( Internal.GetFriendByIndex( i, 0xFFFF ) );
+				yield return new Friend( Internal.GetFriendByIndex( i, (int)FriendFlags.Blocked) );
 			}
 		}
 
