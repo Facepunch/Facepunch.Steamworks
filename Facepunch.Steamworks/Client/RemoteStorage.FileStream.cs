@@ -80,6 +80,8 @@ namespace Facepunch.Steamworks
             if ( _closed ) return;
 
             _closed = true;
+            _file.SizeInBytes = _written;
+
             remoteStorage.native.FileWriteStreamClose( _handle );
 
             _file.remoteStorage.OnWrittenNewFile( _file );

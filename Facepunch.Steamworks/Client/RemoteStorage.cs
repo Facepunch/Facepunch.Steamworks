@@ -12,7 +12,7 @@ namespace Facepunch.Steamworks
     /// </summary>
     public class RemoteStorage : IDisposable
     {
-        private static string NormalizePath( string path )
+        public static string NormalizePath( string path )
         {
             // TODO: DUMB HACK ALERT
 
@@ -79,7 +79,7 @@ namespace Facepunch.Steamworks
 
             InvalidateFiles();
             var existing = Files.FirstOrDefault( x => x.FileName == path );
-            return existing ?? new RemoteFile( this, path, client.SteamId, 0 );
+            return existing ?? new RemoteFile( this, path, client.SteamId, -1 );
         }
 
         /// <summary>
@@ -149,7 +149,17 @@ namespace Facepunch.Steamworks
 
         internal void OnWrittenNewFile( RemoteFile file )
         {
-            if ( _files.Any( x => x.FileName == file.FileName ) ) return;
+            var match = _files.FirstOrDefault( x => x.FileName == file.FileName );
+
+            if ( match != null )
+            {
+                if ( match != file )
+                {
+                    match.SizeInBytes = file.SizeInBytes;
+                }
+
+                return;
+            }
 
             _files.Add( file );
             file.Exists = true;
@@ -177,7 +187,12 @@ namespace Facepunch.Steamworks
             {
                 int size;
                 var name = NormalizePath( native.GetFileNameAndSize( i, out size ) );
-                var timestamp = native.GetFileTimestamp(name);
+                var timestamp = native.GetFileTimestamp( name );
+
+                if ( size == 0 )
+                {
+                    continue;
+                }
 
                 var existing = _files.FirstOrDefault( x => x.FileName == name );
                 if ( existing == null )
