@@ -31,6 +31,7 @@ namespace Steamworks
 				return;
 			}
 
+			PreservationHack();
 			throw new System.Exception( "Trying to initialize Steam Interface but Steam not initialized" );
 		}
 
@@ -109,5 +110,15 @@ namespace Steamworks
 		}
 
 		public abstract void InitInternals();
+
+		internal void PreservationHack()
+		{
+			//
+			// Stop Utf8StringToNative.GetInstance getting culled by stuff like Unity's
+			// asselmbly optimization stuff. Here we just call it so it can't not exist.
+			//
+			var i = Utf8StringToNative.GetInstance( "don't cull this function" );
+			i.GetNativeDataSize();
+		}
 	}
 }
