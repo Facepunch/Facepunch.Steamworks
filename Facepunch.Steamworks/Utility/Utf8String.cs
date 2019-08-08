@@ -38,6 +38,7 @@ namespace Steamworks
 		public void CleanUpManagedData(object managedObj) => throw new System.NotImplementedException();
 		public int GetNativeDataSize() => -1;
 
+		[Preserve]
 		public static ICustomMarshaler GetInstance(string cookie) => new Utf8StringToNative();
 	}
 
