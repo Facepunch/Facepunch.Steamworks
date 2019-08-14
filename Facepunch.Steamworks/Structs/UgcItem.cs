@@ -132,7 +132,86 @@ namespace Steamworks.Ugc
 			return SteamUGC.Internal.DownloadItem( Id, highPriority );
 		}
 
-        private ItemState State => (ItemState) SteamUGC.Internal.GetItemState( Id );
+		/// <summary>
+		/// If we're downloading, how big the total download is 
+		/// </summary>
+		public long DownloadBytesTotal
+		{
+			get
+			{
+				if ( !NeedsUpdate )
+					return SizeBytes;
+
+				ulong downloaded = 0;
+				ulong total = 0;
+				if ( SteamUGC.Internal.GetItemDownloadInfo( Id, ref downloaded, ref total ) )
+					return (long) total;
+
+				return -1;
+			}
+		}
+
+		/// <summary>
+		/// If we're downloading, how much we've downloaded
+		/// </summary>
+		public long DownloadBytesDownloaded
+		{
+			get
+			{
+				if ( !NeedsUpdate )
+					return SizeBytes;
+
+				ulong downloaded = 0;
+				ulong total = 0;
+				if ( SteamUGC.Internal.GetItemDownloadInfo( Id, ref downloaded, ref total ) )
+					return (long)downloaded;
+
+				return -1;
+			}
+		}
+
+		/// <summary>
+		/// If we're installed, how big is the install
+		/// </summary>
+		public long SizeBytes
+		{
+			get
+			{
+				if ( NeedsUpdate )
+					return DownloadBytesDownloaded;
+
+				ulong size = 0;
+				uint ts = 0;
+				var sb = Helpers.TakeStringBuilder();
+				if ( !SteamUGC.Internal.GetItemInstallInfo( Id, ref size, sb, (uint)sb.Capacity, ref ts ) )
+					return 0;
+
+				return (long) size;
+			}
+		}
+
+		/// <summary>
+		/// If we're downloading our current progress as a delta betwen 0-1
+		/// </summary>
+		public float DownloadAmount
+		{
+			get
+			{
+				if ( !NeedsUpdate ) return 1;
+
+				ulong downloaded = 0;
+				ulong total = 0;
+				if ( SteamUGC.Internal.GetItemDownloadInfo( Id, ref downloaded, ref total ) && total > 0 )
+					return (float)((double)downloaded / (double)total);
+
+				if ( NeedsUpdate || !IsInstalled || IsDownloading )
+					return 0;
+
+				return 1;
+			}
+		}
+
+		private ItemState State => (ItemState) SteamUGC.Internal.GetItemState( Id );
 
 		public static async Task<Item?> GetAsync( PublishedFileId id, int maxageseconds = 60 * 30 )
 		{
