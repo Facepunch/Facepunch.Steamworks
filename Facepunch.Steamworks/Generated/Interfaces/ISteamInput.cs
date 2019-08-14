@@ -95,7 +95,8 @@ namespace Steamworks
 		#endregion
 		internal bool DoInit()
 		{
-			return _DoInit( Self );
+			var returnValue = _DoInit( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -107,7 +108,8 @@ namespace Steamworks
 		#endregion
 		internal bool DoShutdown()
 		{
-			return _DoShutdown( Self );
+			var returnValue = _DoShutdown( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -129,7 +131,8 @@ namespace Steamworks
 		#endregion
 		internal int GetConnectedControllers( [In,Out] InputHandle_t[]  handlesOut )
 		{
-			return _GetConnectedControllers( Self, handlesOut );
+			var returnValue = _GetConnectedControllers( Self, handlesOut );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -140,7 +143,8 @@ namespace Steamworks
 		#endregion
 		internal InputActionSetHandle_t GetActionSetHandle( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszActionSetName )
 		{
-			return _GetActionSetHandle( Self, pszActionSetName );
+			var returnValue = _GetActionSetHandle( Self, pszActionSetName );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -162,7 +166,8 @@ namespace Steamworks
 		#endregion
 		internal InputActionSetHandle_t GetCurrentActionSet( InputHandle_t inputHandle )
 		{
-			return _GetCurrentActionSet( Self, inputHandle );
+			var returnValue = _GetCurrentActionSet( Self, inputHandle );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -206,7 +211,8 @@ namespace Steamworks
 		#endregion
 		internal int GetActiveActionSetLayers( InputHandle_t inputHandle, [In,Out] InputActionSetHandle_t[]  handlesOut )
 		{
-			return _GetActiveActionSetLayers( Self, inputHandle, handlesOut );
+			var returnValue = _GetActiveActionSetLayers( Self, inputHandle, handlesOut );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -217,7 +223,8 @@ namespace Steamworks
 		#endregion
 		internal InputDigitalActionHandle_t GetDigitalActionHandle( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszActionName )
 		{
-			return _GetDigitalActionHandle( Self, pszActionName );
+			var returnValue = _GetDigitalActionHandle( Self, pszActionName );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -237,7 +244,8 @@ namespace Steamworks
 			_GetDigitalActionData( Self, ref retVal, inputHandle, digitalActionHandle );
 			return retVal;
 			#else
-			return _GetDigitalActionData( Self, inputHandle, digitalActionHandle );
+			var returnValue = _GetDigitalActionData( Self, inputHandle, digitalActionHandle );
+			return returnValue;
 			#endif
 		}
 		
@@ -249,7 +257,8 @@ namespace Steamworks
 		#endregion
 		internal int GetDigitalActionOrigins( InputHandle_t inputHandle, InputActionSetHandle_t actionSetHandle, InputDigitalActionHandle_t digitalActionHandle, ref InputActionOrigin originsOut )
 		{
-			return _GetDigitalActionOrigins( Self, inputHandle, actionSetHandle, digitalActionHandle, ref originsOut );
+			var returnValue = _GetDigitalActionOrigins( Self, inputHandle, actionSetHandle, digitalActionHandle, ref originsOut );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -260,7 +269,8 @@ namespace Steamworks
 		#endregion
 		internal InputAnalogActionHandle_t GetAnalogActionHandle( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszActionName )
 		{
-			return _GetAnalogActionHandle( Self, pszActionName );
+			var returnValue = _GetAnalogActionHandle( Self, pszActionName );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -280,7 +290,8 @@ namespace Steamworks
 			_GetAnalogActionData( Self, ref retVal, inputHandle, analogActionHandle );
 			return retVal;
 			#else
-			return _GetAnalogActionData( Self, inputHandle, analogActionHandle );
+			var returnValue = _GetAnalogActionData( Self, inputHandle, analogActionHandle );
+			return returnValue;
 			#endif
 		}
 		
@@ -292,7 +303,8 @@ namespace Steamworks
 		#endregion
 		internal int GetAnalogActionOrigins( InputHandle_t inputHandle, InputActionSetHandle_t actionSetHandle, InputAnalogActionHandle_t analogActionHandle, ref InputActionOrigin originsOut )
 		{
-			return _GetAnalogActionOrigins( Self, inputHandle, actionSetHandle, analogActionHandle, ref originsOut );
+			var returnValue = _GetAnalogActionOrigins( Self, inputHandle, actionSetHandle, analogActionHandle, ref originsOut );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -303,7 +315,8 @@ namespace Steamworks
 		#endregion
 		internal string GetGlyphForActionOrigin( InputActionOrigin eOrigin )
 		{
-			return _GetGlyphForActionOrigin( Self, eOrigin );
+			var returnValue = _GetGlyphForActionOrigin( Self, eOrigin );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -314,7 +327,8 @@ namespace Steamworks
 		#endregion
 		internal string GetStringForActionOrigin( InputActionOrigin eOrigin )
 		{
-			return _GetStringForActionOrigin( Self, eOrigin );
+			var returnValue = _GetStringForActionOrigin( Self, eOrigin );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -345,7 +359,8 @@ namespace Steamworks
 			_GetMotionData( Self, ref retVal, inputHandle );
 			return retVal;
 			#else
-			return _GetMotionData( Self, inputHandle );
+			var returnValue = _GetMotionData( Self, inputHandle );
+			return returnValue;
 			#endif
 		}
 		
@@ -402,7 +417,8 @@ namespace Steamworks
 		#endregion
 		internal bool ShowBindingPanel( InputHandle_t inputHandle )
 		{
-			return _ShowBindingPanel( Self, inputHandle );
+			var returnValue = _ShowBindingPanel( Self, inputHandle );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -413,7 +429,8 @@ namespace Steamworks
 		#endregion
 		internal InputType GetInputTypeForHandle( InputHandle_t inputHandle )
 		{
-			return _GetInputTypeForHandle( Self, inputHandle );
+			var returnValue = _GetInputTypeForHandle( Self, inputHandle );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -424,7 +441,8 @@ namespace Steamworks
 		#endregion
 		internal InputHandle_t GetControllerForGamepadIndex( int nIndex )
 		{
-			return _GetControllerForGamepadIndex( Self, nIndex );
+			var returnValue = _GetControllerForGamepadIndex( Self, nIndex );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -435,7 +453,8 @@ namespace Steamworks
 		#endregion
 		internal int GetGamepadIndexForController( InputHandle_t ulinputHandle )
 		{
-			return _GetGamepadIndexForController( Self, ulinputHandle );
+			var returnValue = _GetGamepadIndexForController( Self, ulinputHandle );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -446,7 +465,8 @@ namespace Steamworks
 		#endregion
 		internal string GetStringForXboxOrigin( XboxOrigin eOrigin )
 		{
-			return _GetStringForXboxOrigin( Self, eOrigin );
+			var returnValue = _GetStringForXboxOrigin( Self, eOrigin );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -457,7 +477,8 @@ namespace Steamworks
 		#endregion
 		internal string GetGlyphForXboxOrigin( XboxOrigin eOrigin )
 		{
-			return _GetGlyphForXboxOrigin( Self, eOrigin );
+			var returnValue = _GetGlyphForXboxOrigin( Self, eOrigin );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -468,7 +489,8 @@ namespace Steamworks
 		#endregion
 		internal InputActionOrigin GetActionOriginFromXboxOrigin( InputHandle_t inputHandle, XboxOrigin eOrigin )
 		{
-			return _GetActionOriginFromXboxOrigin( Self, inputHandle, eOrigin );
+			var returnValue = _GetActionOriginFromXboxOrigin( Self, inputHandle, eOrigin );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -479,7 +501,8 @@ namespace Steamworks
 		#endregion
 		internal InputActionOrigin TranslateActionOrigin( InputType eDestinationInputType, InputActionOrigin eSourceOrigin )
 		{
-			return _TranslateActionOrigin( Self, eDestinationInputType, eSourceOrigin );
+			var returnValue = _TranslateActionOrigin( Self, eDestinationInputType, eSourceOrigin );
+			return returnValue;
 		}
 		
 	}

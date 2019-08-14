@@ -88,7 +88,8 @@ namespace Steamworks
 		#endregion
 		internal uint GetSecondsSinceAppActive()
 		{
-			return _GetSecondsSinceAppActive( Self );
+			var returnValue = _GetSecondsSinceAppActive( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -99,7 +100,8 @@ namespace Steamworks
 		#endregion
 		internal uint GetSecondsSinceComputerActive()
 		{
-			return _GetSecondsSinceComputerActive( Self );
+			var returnValue = _GetSecondsSinceComputerActive( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -110,7 +112,8 @@ namespace Steamworks
 		#endregion
 		internal Universe GetConnectedUniverse()
 		{
-			return _GetConnectedUniverse( Self );
+			var returnValue = _GetConnectedUniverse( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -121,7 +124,8 @@ namespace Steamworks
 		#endregion
 		internal uint GetServerRealTime()
 		{
-			return _GetServerRealTime( Self );
+			var returnValue = _GetServerRealTime( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -132,7 +136,8 @@ namespace Steamworks
 		#endregion
 		internal string GetIPCountry()
 		{
-			return _GetIPCountry( Self );
+			var returnValue = _GetIPCountry( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -144,7 +149,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetImageSize( int iImage, ref uint pnWidth, ref uint pnHeight )
 		{
-			return _GetImageSize( Self, iImage, ref pnWidth, ref pnHeight );
+			var returnValue = _GetImageSize( Self, iImage, ref pnWidth, ref pnHeight );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -156,7 +162,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetImageRGBA( int iImage, [In,Out] byte[]  pubDest, int nDestBufferSize )
 		{
-			return _GetImageRGBA( Self, iImage, pubDest, nDestBufferSize );
+			var returnValue = _GetImageRGBA( Self, iImage, pubDest, nDestBufferSize );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -168,7 +175,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetCSERIPPort( ref uint unIP, ref ushort usPort )
 		{
-			return _GetCSERIPPort( Self, ref unIP, ref usPort );
+			var returnValue = _GetCSERIPPort( Self, ref unIP, ref usPort );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -179,7 +187,8 @@ namespace Steamworks
 		#endregion
 		internal byte GetCurrentBatteryPower()
 		{
-			return _GetCurrentBatteryPower( Self );
+			var returnValue = _GetCurrentBatteryPower( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -190,7 +199,8 @@ namespace Steamworks
 		#endregion
 		internal uint GetAppID()
 		{
-			return _GetAppID( Self );
+			var returnValue = _GetAppID( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -213,7 +223,8 @@ namespace Steamworks
 		#endregion
 		internal bool IsAPICallCompleted( SteamAPICall_t hSteamAPICall, [MarshalAs( UnmanagedType.U1 )] ref bool pbFailed )
 		{
-			return _IsAPICallCompleted( Self, hSteamAPICall, ref pbFailed );
+			var returnValue = _IsAPICallCompleted( Self, hSteamAPICall, ref pbFailed );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -224,7 +235,8 @@ namespace Steamworks
 		#endregion
 		internal SteamAPICallFailure GetAPICallFailureReason( SteamAPICall_t hSteamAPICall )
 		{
-			return _GetAPICallFailureReason( Self, hSteamAPICall );
+			var returnValue = _GetAPICallFailureReason( Self, hSteamAPICall );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -236,7 +248,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetAPICallResult( SteamAPICall_t hSteamAPICall, IntPtr pCallback, int cubCallback, int iCallbackExpected, [MarshalAs( UnmanagedType.U1 )] ref bool pbFailed )
 		{
-			return _GetAPICallResult( Self, hSteamAPICall, pCallback, cubCallback, iCallbackExpected, ref pbFailed );
+			var returnValue = _GetAPICallResult( Self, hSteamAPICall, pCallback, cubCallback, iCallbackExpected, ref pbFailed );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -258,7 +271,8 @@ namespace Steamworks
 		#endregion
 		internal uint GetIPCCallCount()
 		{
-			return _GetIPCCallCount( Self );
+			var returnValue = _GetIPCCallCount( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -281,7 +295,8 @@ namespace Steamworks
 		#endregion
 		internal bool IsOverlayEnabled()
 		{
-			return _IsOverlayEnabled( Self );
+			var returnValue = _IsOverlayEnabled( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -293,7 +308,8 @@ namespace Steamworks
 		#endregion
 		internal bool BOverlayNeedsPresent()
 		{
-			return _BOverlayNeedsPresent( Self );
+			var returnValue = _BOverlayNeedsPresent( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -304,7 +320,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<CheckFileSignature_t?> CheckFileSignature( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string szFileName )
 		{
-			return await CheckFileSignature_t.GetResultAsync( _CheckFileSignature( Self, szFileName ) );
+			var returnValue = _CheckFileSignature( Self, szFileName );
+			return await CheckFileSignature_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -316,7 +333,8 @@ namespace Steamworks
 		#endregion
 		internal bool ShowGamepadTextInput( GamepadTextInputMode eInputMode, GamepadTextInputLineMode eLineInputMode, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchDescription, uint unCharMax, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchExistingText )
 		{
-			return _ShowGamepadTextInput( Self, eInputMode, eLineInputMode, pchDescription, unCharMax, pchExistingText );
+			var returnValue = _ShowGamepadTextInput( Self, eInputMode, eLineInputMode, pchDescription, unCharMax, pchExistingText );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -327,19 +345,23 @@ namespace Steamworks
 		#endregion
 		internal uint GetEnteredGamepadTextLength()
 		{
-			return _GetEnteredGamepadTextLength( Self );
+			var returnValue = _GetEnteredGamepadTextLength( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetEnteredGamepadTextInput( IntPtr self, StringBuilder pchText, uint cchText );
+		private delegate bool FGetEnteredGamepadTextInput( IntPtr self, IntPtr pchText, uint cchText );
 		private FGetEnteredGamepadTextInput _GetEnteredGamepadTextInput;
 		
 		#endregion
-		internal bool GetEnteredGamepadTextInput( StringBuilder pchText, uint cchText )
+		internal bool GetEnteredGamepadTextInput( out string pchText )
 		{
-			return _GetEnteredGamepadTextInput( Self, pchText, cchText );
+			IntPtr mempchText = Helpers.TakeMemory();
+			var returnValue = _GetEnteredGamepadTextInput( Self, mempchText, (1024 * 32) );
+			pchText = Helpers.MemoryToString( mempchText );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -350,7 +372,8 @@ namespace Steamworks
 		#endregion
 		internal string GetSteamUILanguage()
 		{
-			return _GetSteamUILanguage( Self );
+			var returnValue = _GetSteamUILanguage( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -362,7 +385,8 @@ namespace Steamworks
 		#endregion
 		internal bool IsSteamRunningInVR()
 		{
-			return _IsSteamRunningInVR( Self );
+			var returnValue = _IsSteamRunningInVR( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -385,7 +409,8 @@ namespace Steamworks
 		#endregion
 		internal bool IsSteamInBigPictureMode()
 		{
-			return _IsSteamInBigPictureMode( Self );
+			var returnValue = _IsSteamInBigPictureMode( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -408,7 +433,8 @@ namespace Steamworks
 		#endregion
 		internal bool IsVRHeadsetStreamingEnabled()
 		{
-			return _IsVRHeadsetStreamingEnabled( Self );
+			var returnValue = _IsVRHeadsetStreamingEnabled( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta

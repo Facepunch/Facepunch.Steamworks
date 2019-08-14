@@ -47,7 +47,8 @@ namespace Steamworks
 		#endregion
 		internal bool BIsEnabled()
 		{
-			return _BIsEnabled( Self );
+			var returnValue = _BIsEnabled( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -59,7 +60,8 @@ namespace Steamworks
 		#endregion
 		internal bool BIsPlaying()
 		{
-			return _BIsPlaying( Self );
+			var returnValue = _BIsPlaying( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -70,7 +72,8 @@ namespace Steamworks
 		#endregion
 		internal MusicStatus GetPlaybackStatus()
 		{
-			return _GetPlaybackStatus( Self );
+			var returnValue = _GetPlaybackStatus( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -136,7 +139,8 @@ namespace Steamworks
 		#endregion
 		internal float GetVolume()
 		{
-			return _GetVolume( Self );
+			var returnValue = _GetVolume( Self );
+			return returnValue;
 		}
 		
 	}

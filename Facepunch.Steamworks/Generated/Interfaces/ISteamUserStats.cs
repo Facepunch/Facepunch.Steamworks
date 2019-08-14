@@ -129,7 +129,8 @@ namespace Steamworks
 		#endregion
 		internal bool RequestCurrentStats()
 		{
-			return _RequestCurrentStats( Self );
+			var returnValue = _RequestCurrentStats( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -141,7 +142,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetStat1( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, ref int pData )
 		{
-			return _GetStat1( Self, pchName, ref pData );
+			var returnValue = _GetStat1( Self, pchName, ref pData );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -153,7 +155,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetStat2( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, ref float pData )
 		{
-			return _GetStat2( Self, pchName, ref pData );
+			var returnValue = _GetStat2( Self, pchName, ref pData );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -165,7 +168,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetStat1( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, int nData )
 		{
-			return _SetStat1( Self, pchName, nData );
+			var returnValue = _SetStat1( Self, pchName, nData );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -177,7 +181,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetStat2( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, float fData )
 		{
-			return _SetStat2( Self, pchName, fData );
+			var returnValue = _SetStat2( Self, pchName, fData );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -189,7 +194,8 @@ namespace Steamworks
 		#endregion
 		internal bool UpdateAvgRateStat( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, float flCountThisSession, double dSessionLength )
 		{
-			return _UpdateAvgRateStat( Self, pchName, flCountThisSession, dSessionLength );
+			var returnValue = _UpdateAvgRateStat( Self, pchName, flCountThisSession, dSessionLength );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -201,7 +207,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetAchievement( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved )
 		{
-			return _GetAchievement( Self, pchName, ref pbAchieved );
+			var returnValue = _GetAchievement( Self, pchName, ref pbAchieved );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -213,7 +220,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetAchievement( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName )
 		{
-			return _SetAchievement( Self, pchName );
+			var returnValue = _SetAchievement( Self, pchName );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -225,7 +233,8 @@ namespace Steamworks
 		#endregion
 		internal bool ClearAchievement( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName )
 		{
-			return _ClearAchievement( Self, pchName );
+			var returnValue = _ClearAchievement( Self, pchName );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -237,7 +246,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetAchievementAndUnlockTime( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved, ref uint punUnlockTime )
 		{
-			return _GetAchievementAndUnlockTime( Self, pchName, ref pbAchieved, ref punUnlockTime );
+			var returnValue = _GetAchievementAndUnlockTime( Self, pchName, ref pbAchieved, ref punUnlockTime );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -249,7 +259,8 @@ namespace Steamworks
 		#endregion
 		internal bool StoreStats()
 		{
-			return _StoreStats( Self );
+			var returnValue = _StoreStats( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -260,7 +271,8 @@ namespace Steamworks
 		#endregion
 		internal int GetAchievementIcon( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName )
 		{
-			return _GetAchievementIcon( Self, pchName );
+			var returnValue = _GetAchievementIcon( Self, pchName );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -271,7 +283,8 @@ namespace Steamworks
 		#endregion
 		internal string GetAchievementDisplayAttribute( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey )
 		{
-			return _GetAchievementDisplayAttribute( Self, pchName, pchKey );
+			var returnValue = _GetAchievementDisplayAttribute( Self, pchName, pchKey );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -283,7 +296,8 @@ namespace Steamworks
 		#endregion
 		internal bool IndicateAchievementProgress( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, uint nCurProgress, uint nMaxProgress )
 		{
-			return _IndicateAchievementProgress( Self, pchName, nCurProgress, nMaxProgress );
+			var returnValue = _IndicateAchievementProgress( Self, pchName, nCurProgress, nMaxProgress );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -294,7 +308,8 @@ namespace Steamworks
 		#endregion
 		internal uint GetNumAchievements()
 		{
-			return _GetNumAchievements( Self );
+			var returnValue = _GetNumAchievements( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -305,7 +320,8 @@ namespace Steamworks
 		#endregion
 		internal string GetAchievementName( uint iAchievement )
 		{
-			return _GetAchievementName( Self, iAchievement );
+			var returnValue = _GetAchievementName( Self, iAchievement );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -316,7 +332,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<UserStatsReceived_t?> RequestUserStats( SteamId steamIDUser )
 		{
-			return await UserStatsReceived_t.GetResultAsync( _RequestUserStats( Self, steamIDUser ) );
+			var returnValue = _RequestUserStats( Self, steamIDUser );
+			return await UserStatsReceived_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -328,7 +345,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetUserStat1( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, ref int pData )
 		{
-			return _GetUserStat1( Self, steamIDUser, pchName, ref pData );
+			var returnValue = _GetUserStat1( Self, steamIDUser, pchName, ref pData );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -340,7 +358,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetUserStat2( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, ref float pData )
 		{
-			return _GetUserStat2( Self, steamIDUser, pchName, ref pData );
+			var returnValue = _GetUserStat2( Self, steamIDUser, pchName, ref pData );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -352,7 +371,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetUserAchievement( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved )
 		{
-			return _GetUserAchievement( Self, steamIDUser, pchName, ref pbAchieved );
+			var returnValue = _GetUserAchievement( Self, steamIDUser, pchName, ref pbAchieved );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -364,7 +384,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetUserAchievementAndUnlockTime( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved, ref uint punUnlockTime )
 		{
-			return _GetUserAchievementAndUnlockTime( Self, steamIDUser, pchName, ref pbAchieved, ref punUnlockTime );
+			var returnValue = _GetUserAchievementAndUnlockTime( Self, steamIDUser, pchName, ref pbAchieved, ref punUnlockTime );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -376,7 +397,8 @@ namespace Steamworks
 		#endregion
 		internal bool ResetAllStats( [MarshalAs( UnmanagedType.U1 )] bool bAchievementsToo )
 		{
-			return _ResetAllStats( Self, bAchievementsToo );
+			var returnValue = _ResetAllStats( Self, bAchievementsToo );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -387,7 +409,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<LeaderboardFindResult_t?> FindOrCreateLeaderboard( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchLeaderboardName, LeaderboardSort eLeaderboardSortMethod, LeaderboardDisplay eLeaderboardDisplayType )
 		{
-			return await LeaderboardFindResult_t.GetResultAsync( _FindOrCreateLeaderboard( Self, pchLeaderboardName, eLeaderboardSortMethod, eLeaderboardDisplayType ) );
+			var returnValue = _FindOrCreateLeaderboard( Self, pchLeaderboardName, eLeaderboardSortMethod, eLeaderboardDisplayType );
+			return await LeaderboardFindResult_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -398,7 +421,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<LeaderboardFindResult_t?> FindLeaderboard( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchLeaderboardName )
 		{
-			return await LeaderboardFindResult_t.GetResultAsync( _FindLeaderboard( Self, pchLeaderboardName ) );
+			var returnValue = _FindLeaderboard( Self, pchLeaderboardName );
+			return await LeaderboardFindResult_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -409,7 +433,8 @@ namespace Steamworks
 		#endregion
 		internal string GetLeaderboardName( SteamLeaderboard_t hSteamLeaderboard )
 		{
-			return _GetLeaderboardName( Self, hSteamLeaderboard );
+			var returnValue = _GetLeaderboardName( Self, hSteamLeaderboard );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -420,7 +445,8 @@ namespace Steamworks
 		#endregion
 		internal int GetLeaderboardEntryCount( SteamLeaderboard_t hSteamLeaderboard )
 		{
-			return _GetLeaderboardEntryCount( Self, hSteamLeaderboard );
+			var returnValue = _GetLeaderboardEntryCount( Self, hSteamLeaderboard );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -431,7 +457,8 @@ namespace Steamworks
 		#endregion
 		internal LeaderboardSort GetLeaderboardSortMethod( SteamLeaderboard_t hSteamLeaderboard )
 		{
-			return _GetLeaderboardSortMethod( Self, hSteamLeaderboard );
+			var returnValue = _GetLeaderboardSortMethod( Self, hSteamLeaderboard );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -442,7 +469,8 @@ namespace Steamworks
 		#endregion
 		internal LeaderboardDisplay GetLeaderboardDisplayType( SteamLeaderboard_t hSteamLeaderboard )
 		{
-			return _GetLeaderboardDisplayType( Self, hSteamLeaderboard );
+			var returnValue = _GetLeaderboardDisplayType( Self, hSteamLeaderboard );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -453,7 +481,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<LeaderboardScoresDownloaded_t?> DownloadLeaderboardEntries( SteamLeaderboard_t hSteamLeaderboard, LeaderboardDataRequest eLeaderboardDataRequest, int nRangeStart, int nRangeEnd )
 		{
-			return await LeaderboardScoresDownloaded_t.GetResultAsync( _DownloadLeaderboardEntries( Self, hSteamLeaderboard, eLeaderboardDataRequest, nRangeStart, nRangeEnd ) );
+			var returnValue = _DownloadLeaderboardEntries( Self, hSteamLeaderboard, eLeaderboardDataRequest, nRangeStart, nRangeEnd );
+			return await LeaderboardScoresDownloaded_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -464,7 +493,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<LeaderboardScoresDownloaded_t?> DownloadLeaderboardEntriesForUsers( SteamLeaderboard_t hSteamLeaderboard, [In,Out] SteamId[]  prgUsers, int cUsers )
 		{
-			return await LeaderboardScoresDownloaded_t.GetResultAsync( _DownloadLeaderboardEntriesForUsers( Self, hSteamLeaderboard, prgUsers, cUsers ) );
+			var returnValue = _DownloadLeaderboardEntriesForUsers( Self, hSteamLeaderboard, prgUsers, cUsers );
+			return await LeaderboardScoresDownloaded_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -476,7 +506,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetDownloadedLeaderboardEntry( SteamLeaderboardEntries_t hSteamLeaderboardEntries, int index, ref LeaderboardEntry_t pLeaderboardEntry, [In,Out] int[]  pDetails, int cDetailsMax )
 		{
-			return _GetDownloadedLeaderboardEntry( Self, hSteamLeaderboardEntries, index, ref pLeaderboardEntry, pDetails, cDetailsMax );
+			var returnValue = _GetDownloadedLeaderboardEntry( Self, hSteamLeaderboardEntries, index, ref pLeaderboardEntry, pDetails, cDetailsMax );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -487,7 +518,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<LeaderboardScoreUploaded_t?> UploadLeaderboardScore( SteamLeaderboard_t hSteamLeaderboard, LeaderboardUploadScoreMethod eLeaderboardUploadScoreMethod, int nScore, [In,Out] int[]  pScoreDetails, int cScoreDetailsCount )
 		{
-			return await LeaderboardScoreUploaded_t.GetResultAsync( _UploadLeaderboardScore( Self, hSteamLeaderboard, eLeaderboardUploadScoreMethod, nScore, pScoreDetails, cScoreDetailsCount ) );
+			var returnValue = _UploadLeaderboardScore( Self, hSteamLeaderboard, eLeaderboardUploadScoreMethod, nScore, pScoreDetails, cScoreDetailsCount );
+			return await LeaderboardScoreUploaded_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -498,7 +530,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<LeaderboardUGCSet_t?> AttachLeaderboardUGC( SteamLeaderboard_t hSteamLeaderboard, UGCHandle_t hUGC )
 		{
-			return await LeaderboardUGCSet_t.GetResultAsync( _AttachLeaderboardUGC( Self, hSteamLeaderboard, hUGC ) );
+			var returnValue = _AttachLeaderboardUGC( Self, hSteamLeaderboard, hUGC );
+			return await LeaderboardUGCSet_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -509,7 +542,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<NumberOfCurrentPlayers_t?> GetNumberOfCurrentPlayers()
 		{
-			return await NumberOfCurrentPlayers_t.GetResultAsync( _GetNumberOfCurrentPlayers( Self ) );
+			var returnValue = _GetNumberOfCurrentPlayers( Self );
+			return await NumberOfCurrentPlayers_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -520,29 +554,36 @@ namespace Steamworks
 		#endregion
 		internal async Task<GlobalAchievementPercentagesReady_t?> RequestGlobalAchievementPercentages()
 		{
-			return await GlobalAchievementPercentagesReady_t.GetResultAsync( _RequestGlobalAchievementPercentages( Self ) );
+			var returnValue = _RequestGlobalAchievementPercentages( Self );
+			return await GlobalAchievementPercentagesReady_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate int FGetMostAchievedAchievementInfo( IntPtr self, StringBuilder pchName, uint unNameBufLen, ref float pflPercent, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved );
+		private delegate int FGetMostAchievedAchievementInfo( IntPtr self, IntPtr pchName, uint unNameBufLen, ref float pflPercent, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved );
 		private FGetMostAchievedAchievementInfo _GetMostAchievedAchievementInfo;
 		
 		#endregion
-		internal int GetMostAchievedAchievementInfo( StringBuilder pchName, uint unNameBufLen, ref float pflPercent, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved )
+		internal int GetMostAchievedAchievementInfo( out string pchName, ref float pflPercent, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved )
 		{
-			return _GetMostAchievedAchievementInfo( Self, pchName, unNameBufLen, ref pflPercent, ref pbAchieved );
+			IntPtr mempchName = Helpers.TakeMemory();
+			var returnValue = _GetMostAchievedAchievementInfo( Self, mempchName, (1024 * 32), ref pflPercent, ref pbAchieved );
+			pchName = Helpers.MemoryToString( mempchName );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate int FGetNextMostAchievedAchievementInfo( IntPtr self, int iIteratorPrevious, StringBuilder pchName, uint unNameBufLen, ref float pflPercent, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved );
+		private delegate int FGetNextMostAchievedAchievementInfo( IntPtr self, int iIteratorPrevious, IntPtr pchName, uint unNameBufLen, ref float pflPercent, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved );
 		private FGetNextMostAchievedAchievementInfo _GetNextMostAchievedAchievementInfo;
 		
 		#endregion
-		internal int GetNextMostAchievedAchievementInfo( int iIteratorPrevious, StringBuilder pchName, uint unNameBufLen, ref float pflPercent, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved )
+		internal int GetNextMostAchievedAchievementInfo( int iIteratorPrevious, out string pchName, ref float pflPercent, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved )
 		{
-			return _GetNextMostAchievedAchievementInfo( Self, iIteratorPrevious, pchName, unNameBufLen, ref pflPercent, ref pbAchieved );
+			IntPtr mempchName = Helpers.TakeMemory();
+			var returnValue = _GetNextMostAchievedAchievementInfo( Self, iIteratorPrevious, mempchName, (1024 * 32), ref pflPercent, ref pbAchieved );
+			pchName = Helpers.MemoryToString( mempchName );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -554,7 +595,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetAchievementAchievedPercent( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, ref float pflPercent )
 		{
-			return _GetAchievementAchievedPercent( Self, pchName, ref pflPercent );
+			var returnValue = _GetAchievementAchievedPercent( Self, pchName, ref pflPercent );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -565,7 +607,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<GlobalStatsReceived_t?> RequestGlobalStats( int nHistoryDays )
 		{
-			return await GlobalStatsReceived_t.GetResultAsync( _RequestGlobalStats( Self, nHistoryDays ) );
+			var returnValue = _RequestGlobalStats( Self, nHistoryDays );
+			return await GlobalStatsReceived_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -577,7 +620,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetGlobalStat1( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchStatName, ref long pData )
 		{
-			return _GetGlobalStat1( Self, pchStatName, ref pData );
+			var returnValue = _GetGlobalStat1( Self, pchStatName, ref pData );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -589,7 +633,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetGlobalStat2( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchStatName, ref double pData )
 		{
-			return _GetGlobalStat2( Self, pchStatName, ref pData );
+			var returnValue = _GetGlobalStat2( Self, pchStatName, ref pData );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -600,7 +645,8 @@ namespace Steamworks
 		#endregion
 		internal int GetGlobalStatHistory1( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchStatName, [In,Out] long[]  pData, uint cubData )
 		{
-			return _GetGlobalStatHistory1( Self, pchStatName, pData, cubData );
+			var returnValue = _GetGlobalStatHistory1( Self, pchStatName, pData, cubData );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -611,7 +657,8 @@ namespace Steamworks
 		#endregion
 		internal int GetGlobalStatHistory2( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchStatName, [In,Out] double[]  pData, uint cubData )
 		{
-			return _GetGlobalStatHistory2( Self, pchStatName, pData, cubData );
+			var returnValue = _GetGlobalStatHistory2( Self, pchStatName, pData, cubData );
+			return returnValue;
 		}
 		
 	}

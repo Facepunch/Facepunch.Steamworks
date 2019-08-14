@@ -33,9 +33,8 @@ namespace Steamworks.Data
 
 		public override string ToString()
 		{
-			var sb = Helpers.TakeStringBuilder();
-			SteamNetworkingUtils.Internal.ConvertPingLocationToString( ref this, sb, sb.Capacity );
-			return sb.ToString();
+			SteamNetworkingUtils.Internal.ConvertPingLocationToString( ref this, out var strVal );
+			return strVal;
 		}
 
 		/// Estimate the round-trip latency between two arbitrary locations, in

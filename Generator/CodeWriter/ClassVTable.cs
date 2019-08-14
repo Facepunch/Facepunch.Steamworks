@@ -188,8 +188,27 @@ namespace Generator
 				bt.Func = func.Name;
 				return bt;
 			} ).ToArray();
-			var argstr = string.Join( ", ", args.Select( x => x.AsArgument() ) );
-			var delegateargstr = string.Join( ", ", args.Select( x => x.AsArgument() ) );
+
+			for( int i=0; i<args.Length; i++ )
+			{
+				if ( args[i] is StringType )
+				{
+					if ( args[i + 1] is IntType  || args[i + 1] is UIntType )
+					{
+						if ( args[i + 1].Ref == string.Empty )
+						{
+							args[i + 1] = new ConstValueType( args[i + 1], "(1024 * 32)" );
+						}
+					}
+					else
+					{
+						throw new System.Exception( $"String Builder Next Type Is {args[i+1].GetType()}" );
+					}
+				}
+			}
+
+			var argstr = string.Join( ", ", args.Where( x => !x.ShouldSkipAsArgument ).Select( x => x.AsArgument() ) ); ;
+			var delegateargstr = string.Join( ", ", args.Select( x => x.AsNativeArgument() ) );
 
 			var windowsSpecific = NeedsWindowsSpecificFunction( func, returnType, args );
 
@@ -230,6 +249,20 @@ namespace Generator
 			{
 				var callargs = string.Join( ", ", args.Select( x => x.AsCallArgument() ) );
 
+				//
+				// Code before any calls
+				//
+				foreach ( var arg in args )
+				{
+					if ( arg is StringType sb )
+					{
+						WriteLine( $"IntPtr mem{sb.VarName} = Helpers.TakeMemory();" );
+					}
+				}
+
+				//
+				// The actual call
+				//
 				if ( returnType.IsReturnedWeird )
 				{
 					WriteLine( "#if PLATFORM_WIN" );
@@ -247,9 +280,26 @@ namespace Generator
 				}
 				else
 				{
-					var v = $"_{func.Name}( Self, {callargs} )".Replace( "( Self,  )", "( Self )" );
+					WriteLine( $"var returnValue = _{func.Name}( Self, {callargs} );".Replace( "( Self,  )", "( Self )" ) );
+				}
 
-					WriteLine( returnType.Return( v ) );
+				//
+				// Code after the call
+				//
+				foreach ( var arg in args )
+				{
+					if ( arg is StringType sb )
+					{
+						WriteLine( $"{sb.VarName} = Helpers.MemoryToString( mem{sb.VarName} );" );
+					}
+				}
+
+				//
+				// Return
+				//
+				if ( !returnType.IsVoid )
+				{
+					WriteLine( returnType.Return( "returnValue" ) );
 				}
 
 				if ( returnType.IsReturnedWeird )

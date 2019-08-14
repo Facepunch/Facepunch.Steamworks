@@ -98,16 +98,14 @@ namespace Steamworks
 			if ( _properties!= null && _properties.TryGetValue( name, out string val ) )
 				return val;
 
-			var sb = Helpers.TakeStringBuilder();
-			uint _ = (uint)sb.Capacity;
+			uint _ = (uint)Helpers.MaxStringSize;
 
-			if ( !SteamInventory.Internal.GetItemDefinitionProperty( Id, name, sb, ref _ ) )
+			if ( !SteamInventory.Internal.GetItemDefinitionProperty( Id, name, out var vl, ref _ ) )
 				return null;
 
 			if ( _properties == null )
 				_properties = new Dictionary<string, string>();
 
-			var vl = sb.ToString();
 			_properties[name] = vl;
 
 			return vl;

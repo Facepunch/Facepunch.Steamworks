@@ -88,7 +88,8 @@ namespace Steamworks
 		#endregion
 		internal HSteamUser GetHSteamUser()
 		{
-			return _GetHSteamUser( Self );
+			var returnValue = _GetHSteamUser( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -100,7 +101,8 @@ namespace Steamworks
 		#endregion
 		internal bool BLoggedOn()
 		{
-			return _BLoggedOn( Self );
+			var returnValue = _BLoggedOn( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -120,7 +122,8 @@ namespace Steamworks
 			_GetSteamID( Self, ref retVal );
 			return retVal;
 			#else
-			return _GetSteamID( Self );
+			var returnValue = _GetSteamID( Self );
+			return returnValue;
 			#endif
 		}
 		
@@ -132,7 +135,8 @@ namespace Steamworks
 		#endregion
 		internal int InitiateGameConnection( IntPtr pAuthBlob, int cbMaxAuthBlob, SteamId steamIDGameServer, uint unIPServer, ushort usPortServer, [MarshalAs( UnmanagedType.U1 )] bool bSecure )
 		{
-			return _InitiateGameConnection( Self, pAuthBlob, cbMaxAuthBlob, steamIDGameServer, unIPServer, usPortServer, bSecure );
+			var returnValue = _InitiateGameConnection( Self, pAuthBlob, cbMaxAuthBlob, steamIDGameServer, unIPServer, usPortServer, bSecure );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -160,13 +164,16 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetUserDataFolder( IntPtr self, StringBuilder pchBuffer, int cubBuffer );
+		private delegate bool FGetUserDataFolder( IntPtr self, IntPtr pchBuffer, int cubBuffer );
 		private FGetUserDataFolder _GetUserDataFolder;
 		
 		#endregion
-		internal bool GetUserDataFolder( StringBuilder pchBuffer, int cubBuffer )
+		internal bool GetUserDataFolder( out string pchBuffer )
 		{
-			return _GetUserDataFolder( Self, pchBuffer, cubBuffer );
+			IntPtr mempchBuffer = Helpers.TakeMemory();
+			var returnValue = _GetUserDataFolder( Self, mempchBuffer, (1024 * 32) );
+			pchBuffer = Helpers.MemoryToString( mempchBuffer );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -199,7 +206,8 @@ namespace Steamworks
 		#endregion
 		internal VoiceResult GetAvailableVoice( ref uint pcbCompressed, ref uint pcbUncompressed_Deprecated, uint nUncompressedVoiceDesiredSampleRate_Deprecated )
 		{
-			return _GetAvailableVoice( Self, ref pcbCompressed, ref pcbUncompressed_Deprecated, nUncompressedVoiceDesiredSampleRate_Deprecated );
+			var returnValue = _GetAvailableVoice( Self, ref pcbCompressed, ref pcbUncompressed_Deprecated, nUncompressedVoiceDesiredSampleRate_Deprecated );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -210,7 +218,8 @@ namespace Steamworks
 		#endregion
 		internal VoiceResult GetVoice( [MarshalAs( UnmanagedType.U1 )] bool bWantCompressed, IntPtr pDestBuffer, uint cbDestBufferSize, ref uint nBytesWritten, [MarshalAs( UnmanagedType.U1 )] bool bWantUncompressed_Deprecated, IntPtr pUncompressedDestBuffer_Deprecated, uint cbUncompressedDestBufferSize_Deprecated, ref uint nUncompressBytesWritten_Deprecated, uint nUncompressedVoiceDesiredSampleRate_Deprecated )
 		{
-			return _GetVoice( Self, bWantCompressed, pDestBuffer, cbDestBufferSize, ref nBytesWritten, bWantUncompressed_Deprecated, pUncompressedDestBuffer_Deprecated, cbUncompressedDestBufferSize_Deprecated, ref nUncompressBytesWritten_Deprecated, nUncompressedVoiceDesiredSampleRate_Deprecated );
+			var returnValue = _GetVoice( Self, bWantCompressed, pDestBuffer, cbDestBufferSize, ref nBytesWritten, bWantUncompressed_Deprecated, pUncompressedDestBuffer_Deprecated, cbUncompressedDestBufferSize_Deprecated, ref nUncompressBytesWritten_Deprecated, nUncompressedVoiceDesiredSampleRate_Deprecated );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -221,7 +230,8 @@ namespace Steamworks
 		#endregion
 		internal VoiceResult DecompressVoice( IntPtr pCompressed, uint cbCompressed, IntPtr pDestBuffer, uint cbDestBufferSize, ref uint nBytesWritten, uint nDesiredSampleRate )
 		{
-			return _DecompressVoice( Self, pCompressed, cbCompressed, pDestBuffer, cbDestBufferSize, ref nBytesWritten, nDesiredSampleRate );
+			var returnValue = _DecompressVoice( Self, pCompressed, cbCompressed, pDestBuffer, cbDestBufferSize, ref nBytesWritten, nDesiredSampleRate );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -232,7 +242,8 @@ namespace Steamworks
 		#endregion
 		internal uint GetVoiceOptimalSampleRate()
 		{
-			return _GetVoiceOptimalSampleRate( Self );
+			var returnValue = _GetVoiceOptimalSampleRate( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -243,7 +254,8 @@ namespace Steamworks
 		#endregion
 		internal HAuthTicket GetAuthSessionTicket( IntPtr pTicket, int cbMaxTicket, ref uint pcbTicket )
 		{
-			return _GetAuthSessionTicket( Self, pTicket, cbMaxTicket, ref pcbTicket );
+			var returnValue = _GetAuthSessionTicket( Self, pTicket, cbMaxTicket, ref pcbTicket );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -254,7 +266,8 @@ namespace Steamworks
 		#endregion
 		internal BeginAuthResult BeginAuthSession( IntPtr pAuthTicket, int cbAuthTicket, SteamId steamID )
 		{
-			return _BeginAuthSession( Self, pAuthTicket, cbAuthTicket, steamID );
+			var returnValue = _BeginAuthSession( Self, pAuthTicket, cbAuthTicket, steamID );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -287,7 +300,8 @@ namespace Steamworks
 		#endregion
 		internal UserHasLicenseForAppResult UserHasLicenseForApp( SteamId steamID, AppId appID )
 		{
-			return _UserHasLicenseForApp( Self, steamID, appID );
+			var returnValue = _UserHasLicenseForApp( Self, steamID, appID );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -299,7 +313,8 @@ namespace Steamworks
 		#endregion
 		internal bool BIsBehindNAT()
 		{
-			return _BIsBehindNAT( Self );
+			var returnValue = _BIsBehindNAT( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -321,7 +336,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<EncryptedAppTicketResponse_t?> RequestEncryptedAppTicket( IntPtr pDataToInclude, int cbDataToInclude )
 		{
-			return await EncryptedAppTicketResponse_t.GetResultAsync( _RequestEncryptedAppTicket( Self, pDataToInclude, cbDataToInclude ) );
+			var returnValue = _RequestEncryptedAppTicket( Self, pDataToInclude, cbDataToInclude );
+			return await EncryptedAppTicketResponse_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -333,7 +349,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetEncryptedAppTicket( IntPtr pTicket, int cbMaxTicket, ref uint pcbTicket )
 		{
-			return _GetEncryptedAppTicket( Self, pTicket, cbMaxTicket, ref pcbTicket );
+			var returnValue = _GetEncryptedAppTicket( Self, pTicket, cbMaxTicket, ref pcbTicket );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -344,7 +361,8 @@ namespace Steamworks
 		#endregion
 		internal int GetGameBadgeLevel( int nSeries, [MarshalAs( UnmanagedType.U1 )] bool bFoil )
 		{
-			return _GetGameBadgeLevel( Self, nSeries, bFoil );
+			var returnValue = _GetGameBadgeLevel( Self, nSeries, bFoil );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -355,7 +373,8 @@ namespace Steamworks
 		#endregion
 		internal int GetPlayerSteamLevel()
 		{
-			return _GetPlayerSteamLevel( Self );
+			var returnValue = _GetPlayerSteamLevel( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -366,7 +385,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<StoreAuthURLResponse_t?> RequestStoreAuthURL( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchRedirectURL )
 		{
-			return await StoreAuthURLResponse_t.GetResultAsync( _RequestStoreAuthURL( Self, pchRedirectURL ) );
+			var returnValue = _RequestStoreAuthURL( Self, pchRedirectURL );
+			return await StoreAuthURLResponse_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -378,7 +398,8 @@ namespace Steamworks
 		#endregion
 		internal bool BIsPhoneVerified()
 		{
-			return _BIsPhoneVerified( Self );
+			var returnValue = _BIsPhoneVerified( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -390,7 +411,8 @@ namespace Steamworks
 		#endregion
 		internal bool BIsTwoFactorEnabled()
 		{
-			return _BIsTwoFactorEnabled( Self );
+			var returnValue = _BIsTwoFactorEnabled( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -402,7 +424,8 @@ namespace Steamworks
 		#endregion
 		internal bool BIsPhoneIdentifying()
 		{
-			return _BIsPhoneIdentifying( Self );
+			var returnValue = _BIsPhoneIdentifying( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -414,7 +437,8 @@ namespace Steamworks
 		#endregion
 		internal bool BIsPhoneRequiringVerification()
 		{
-			return _BIsPhoneRequiringVerification( Self );
+			var returnValue = _BIsPhoneRequiringVerification( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -425,7 +449,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<MarketEligibilityResponse_t?> GetMarketEligibility()
 		{
-			return await MarketEligibilityResponse_t.GetResultAsync( _GetMarketEligibility( Self ) );
+			var returnValue = _GetMarketEligibility( Self );
+			return await MarketEligibilityResponse_t.GetResultAsync( returnValue );
 		}
 		
 	}

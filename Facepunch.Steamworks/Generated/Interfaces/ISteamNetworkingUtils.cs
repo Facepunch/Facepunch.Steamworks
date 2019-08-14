@@ -62,7 +62,8 @@ namespace Steamworks
 		#endregion
 		internal float GetLocalPingLocation( ref PingLocation result )
 		{
-			return _GetLocalPingLocation( Self, ref result );
+			var returnValue = _GetLocalPingLocation( Self, ref result );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -73,7 +74,8 @@ namespace Steamworks
 		#endregion
 		internal int EstimatePingTimeBetweenTwoLocations( ref PingLocation location1, ref PingLocation location2 )
 		{
-			return _EstimatePingTimeBetweenTwoLocations( Self, ref location1, ref location2 );
+			var returnValue = _EstimatePingTimeBetweenTwoLocations( Self, ref location1, ref location2 );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -84,18 +86,21 @@ namespace Steamworks
 		#endregion
 		internal int EstimatePingTimeFromLocalHost( ref PingLocation remoteLocation )
 		{
-			return _EstimatePingTimeFromLocalHost( Self, ref remoteLocation );
+			var returnValue = _EstimatePingTimeFromLocalHost( Self, ref remoteLocation );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FConvertPingLocationToString( IntPtr self, ref PingLocation location, StringBuilder pszBuf, int cchBufSize );
+		private delegate void FConvertPingLocationToString( IntPtr self, ref PingLocation location, IntPtr pszBuf, int cchBufSize );
 		private FConvertPingLocationToString _ConvertPingLocationToString;
 		
 		#endregion
-		internal void ConvertPingLocationToString( ref PingLocation location, StringBuilder pszBuf, int cchBufSize )
+		internal void ConvertPingLocationToString( ref PingLocation location, out string pszBuf )
 		{
-			_ConvertPingLocationToString( Self, ref location, pszBuf, cchBufSize );
+			IntPtr mempszBuf = Helpers.TakeMemory();
+			_ConvertPingLocationToString( Self, ref location, mempszBuf, (1024 * 32) );
+			pszBuf = Helpers.MemoryToString( mempszBuf );
 		}
 		
 		#region FunctionMeta
@@ -107,7 +112,8 @@ namespace Steamworks
 		#endregion
 		internal bool ParsePingLocationString( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszString, ref PingLocation result )
 		{
-			return _ParsePingLocationString( Self, pszString, ref result );
+			var returnValue = _ParsePingLocationString( Self, pszString, ref result );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -119,7 +125,8 @@ namespace Steamworks
 		#endregion
 		internal bool CheckPingDataUpToDate( float flMaxAgeSeconds )
 		{
-			return _CheckPingDataUpToDate( Self, flMaxAgeSeconds );
+			var returnValue = _CheckPingDataUpToDate( Self, flMaxAgeSeconds );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -131,7 +138,8 @@ namespace Steamworks
 		#endregion
 		internal bool IsPingMeasurementInProgress()
 		{
-			return _IsPingMeasurementInProgress( Self );
+			var returnValue = _IsPingMeasurementInProgress( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -142,7 +150,8 @@ namespace Steamworks
 		#endregion
 		internal int GetPingToDataCenter( SteamNetworkingPOPID popID, ref SteamNetworkingPOPID pViaRelayPoP )
 		{
-			return _GetPingToDataCenter( Self, popID, ref pViaRelayPoP );
+			var returnValue = _GetPingToDataCenter( Self, popID, ref pViaRelayPoP );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -153,7 +162,8 @@ namespace Steamworks
 		#endregion
 		internal int GetDirectPingToPOP( SteamNetworkingPOPID popID )
 		{
-			return _GetDirectPingToPOP( Self, popID );
+			var returnValue = _GetDirectPingToPOP( Self, popID );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -164,7 +174,8 @@ namespace Steamworks
 		#endregion
 		internal int GetPOPCount()
 		{
-			return _GetPOPCount( Self );
+			var returnValue = _GetPOPCount( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -175,7 +186,8 @@ namespace Steamworks
 		#endregion
 		internal int GetPOPList( ref SteamNetworkingPOPID list, int nListSz )
 		{
-			return _GetPOPList( Self, ref list, nListSz );
+			var returnValue = _GetPOPList( Self, ref list, nListSz );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -186,7 +198,8 @@ namespace Steamworks
 		#endregion
 		internal long GetLocalTimestamp()
 		{
-			return _GetLocalTimestamp( Self );
+			var returnValue = _GetLocalTimestamp( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -209,7 +222,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetConfigValue( NetConfig eValue, NetScope eScopeType, long scopeObj, NetConfigType eDataType, IntPtr pArg )
 		{
-			return _SetConfigValue( Self, eValue, eScopeType, scopeObj, eDataType, pArg );
+			var returnValue = _SetConfigValue( Self, eValue, eScopeType, scopeObj, eDataType, pArg );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -220,7 +234,8 @@ namespace Steamworks
 		#endregion
 		internal NetConfigResult GetConfigValue( NetConfig eValue, NetScope eScopeType, long scopeObj, ref NetConfigType pOutDataType, IntPtr pResult, ref ulong cbResult )
 		{
-			return _GetConfigValue( Self, eValue, eScopeType, scopeObj, ref pOutDataType, pResult, ref cbResult );
+			var returnValue = _GetConfigValue( Self, eValue, eScopeType, scopeObj, ref pOutDataType, pResult, ref cbResult );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -232,7 +247,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetConfigValueInfo( NetConfig eValue, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pOutName, ref NetConfigType pOutDataType, [In,Out] NetScope[]  pOutScope, [In,Out] NetConfig[]  pOutNextValue )
 		{
-			return _GetConfigValueInfo( Self, eValue, pOutName, ref pOutDataType, pOutScope, pOutNextValue );
+			var returnValue = _GetConfigValueInfo( Self, eValue, pOutName, ref pOutDataType, pOutScope, pOutNextValue );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -243,7 +259,8 @@ namespace Steamworks
 		#endregion
 		internal NetConfig GetFirstConfigValue()
 		{
-			return _GetFirstConfigValue( Self );
+			var returnValue = _GetFirstConfigValue( Self );
+			return returnValue;
 		}
 		
 	}

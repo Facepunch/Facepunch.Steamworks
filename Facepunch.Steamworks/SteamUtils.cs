@@ -207,11 +207,10 @@ namespace Steamworks
 			var len = Internal.GetEnteredGamepadTextLength();
 			if ( len == 0 ) return string.Empty;
 
-			var sb = Helpers.TakeStringBuilder();
-			if ( !Internal.GetEnteredGamepadTextInput( sb, len ) )
+			if ( !Internal.GetEnteredGamepadTextInput( out var strVal ) )
 				return string.Empty;
 
-			return sb.ToString();
+			return strVal;
 		}
 
 		/// <summary>

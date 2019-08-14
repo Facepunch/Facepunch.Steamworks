@@ -115,11 +115,11 @@ namespace Steamworks.Ugc
 			{
 				ulong size = 0;
 				uint ts = 0;
-				var sb = Helpers.TakeStringBuilder();
-				if ( !SteamUGC.Internal.GetItemInstallInfo( Id, ref size, sb, (uint)sb.Capacity, ref ts ) )
+
+				if ( !SteamUGC.Internal.GetItemInstallInfo( Id, ref size, out var strVal, ref ts ) )
 					return null;
 
-				return sb.ToString();
+				return strVal;
 			}
 		}
 
@@ -182,8 +182,8 @@ namespace Steamworks.Ugc
 
 				ulong size = 0;
 				uint ts = 0;
-				var sb = Helpers.TakeStringBuilder();
-				if ( !SteamUGC.Internal.GetItemInstallInfo( Id, ref size, sb, (uint)sb.Capacity, ref ts ) )
+
+				if ( !SteamUGC.Internal.GetItemInstallInfo( Id, ref size, out var strVal, ref ts ) )
 					return 0;
 
 				return (long) size;

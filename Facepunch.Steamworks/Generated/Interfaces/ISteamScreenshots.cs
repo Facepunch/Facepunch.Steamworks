@@ -46,7 +46,8 @@ namespace Steamworks
 		#endregion
 		internal ScreenshotHandle WriteScreenshot( IntPtr pubRGB, uint cubRGB, int nWidth, int nHeight )
 		{
-			return _WriteScreenshot( Self, pubRGB, cubRGB, nWidth, nHeight );
+			var returnValue = _WriteScreenshot( Self, pubRGB, cubRGB, nWidth, nHeight );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -57,7 +58,8 @@ namespace Steamworks
 		#endregion
 		internal ScreenshotHandle AddScreenshotToLibrary( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFilename, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchThumbnailFilename, int nWidth, int nHeight )
 		{
-			return _AddScreenshotToLibrary( Self, pchFilename, pchThumbnailFilename, nWidth, nHeight );
+			var returnValue = _AddScreenshotToLibrary( Self, pchFilename, pchThumbnailFilename, nWidth, nHeight );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -91,7 +93,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetLocation( ScreenshotHandle hScreenshot, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchLocation )
 		{
-			return _SetLocation( Self, hScreenshot, pchLocation );
+			var returnValue = _SetLocation( Self, hScreenshot, pchLocation );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -103,7 +106,8 @@ namespace Steamworks
 		#endregion
 		internal bool TagUser( ScreenshotHandle hScreenshot, SteamId steamID )
 		{
-			return _TagUser( Self, hScreenshot, steamID );
+			var returnValue = _TagUser( Self, hScreenshot, steamID );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -115,7 +119,8 @@ namespace Steamworks
 		#endregion
 		internal bool TagPublishedFile( ScreenshotHandle hScreenshot, PublishedFileId unPublishedFileID )
 		{
-			return _TagPublishedFile( Self, hScreenshot, unPublishedFileID );
+			var returnValue = _TagPublishedFile( Self, hScreenshot, unPublishedFileID );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -127,7 +132,8 @@ namespace Steamworks
 		#endregion
 		internal bool IsScreenshotsHooked()
 		{
-			return _IsScreenshotsHooked( Self );
+			var returnValue = _IsScreenshotsHooked( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -138,7 +144,8 @@ namespace Steamworks
 		#endregion
 		internal ScreenshotHandle AddVRScreenshotToLibrary( VRScreenshotType eType, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFilename, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVRFilename )
 		{
-			return _AddVRScreenshotToLibrary( Self, eType, pchFilename, pchVRFilename );
+			var returnValue = _AddVRScreenshotToLibrary( Self, eType, pchFilename, pchVRFilename );
+			return returnValue;
 		}
 		
 	}

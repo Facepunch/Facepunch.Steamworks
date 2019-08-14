@@ -117,7 +117,8 @@ namespace Steamworks
 		#endregion
 		internal bool InitGameServer( uint unIP, ushort usGamePort, ushort usQueryPort, uint unFlags, AppId nGameAppId, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersionString )
 		{
-			return _InitGameServer( Self, unIP, usGamePort, usQueryPort, unFlags, nGameAppId, pchVersionString );
+			var returnValue = _InitGameServer( Self, unIP, usGamePort, usQueryPort, unFlags, nGameAppId, pchVersionString );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -206,7 +207,8 @@ namespace Steamworks
 		#endregion
 		internal bool BLoggedOn()
 		{
-			return _BLoggedOn( Self );
+			var returnValue = _BLoggedOn( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -218,7 +220,8 @@ namespace Steamworks
 		#endregion
 		internal bool BSecure()
 		{
-			return _BSecure( Self );
+			var returnValue = _BSecure( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -238,7 +241,8 @@ namespace Steamworks
 			_GetSteamID( Self, ref retVal );
 			return retVal;
 			#else
-			return _GetSteamID( Self );
+			var returnValue = _GetSteamID( Self );
+			return returnValue;
 			#endif
 		}
 		
@@ -251,7 +255,8 @@ namespace Steamworks
 		#endregion
 		internal bool WasRestartRequested()
 		{
-			return _WasRestartRequested( Self );
+			var returnValue = _WasRestartRequested( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -395,7 +400,8 @@ namespace Steamworks
 		#endregion
 		internal bool SendUserConnectAndAuthenticate( uint unIPClient, IntPtr pvAuthBlob, uint cubAuthBlobSize, ref SteamId pSteamIDUser )
 		{
-			return _SendUserConnectAndAuthenticate( Self, unIPClient, pvAuthBlob, cubAuthBlobSize, ref pSteamIDUser );
+			var returnValue = _SendUserConnectAndAuthenticate( Self, unIPClient, pvAuthBlob, cubAuthBlobSize, ref pSteamIDUser );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -415,7 +421,8 @@ namespace Steamworks
 			_CreateUnauthenticatedUserConnection( Self, ref retVal );
 			return retVal;
 			#else
-			return _CreateUnauthenticatedUserConnection( Self );
+			var returnValue = _CreateUnauthenticatedUserConnection( Self );
+			return returnValue;
 			#endif
 		}
 		
@@ -439,7 +446,8 @@ namespace Steamworks
 		#endregion
 		internal bool BUpdateUserData( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPlayerName, uint uScore )
 		{
-			return _BUpdateUserData( Self, steamIDUser, pchPlayerName, uScore );
+			var returnValue = _BUpdateUserData( Self, steamIDUser, pchPlayerName, uScore );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -450,7 +458,8 @@ namespace Steamworks
 		#endregion
 		internal HAuthTicket GetAuthSessionTicket( IntPtr pTicket, int cbMaxTicket, ref uint pcbTicket )
 		{
-			return _GetAuthSessionTicket( Self, pTicket, cbMaxTicket, ref pcbTicket );
+			var returnValue = _GetAuthSessionTicket( Self, pTicket, cbMaxTicket, ref pcbTicket );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -461,7 +470,8 @@ namespace Steamworks
 		#endregion
 		internal BeginAuthResult BeginAuthSession( IntPtr pAuthTicket, int cbAuthTicket, SteamId steamID )
 		{
-			return _BeginAuthSession( Self, pAuthTicket, cbAuthTicket, steamID );
+			var returnValue = _BeginAuthSession( Self, pAuthTicket, cbAuthTicket, steamID );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -494,7 +504,8 @@ namespace Steamworks
 		#endregion
 		internal UserHasLicenseForAppResult UserHasLicenseForApp( SteamId steamID, AppId appID )
 		{
-			return _UserHasLicenseForApp( Self, steamID, appID );
+			var returnValue = _UserHasLicenseForApp( Self, steamID, appID );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -506,7 +517,8 @@ namespace Steamworks
 		#endregion
 		internal bool RequestUserGroupStatus( SteamId steamIDUser, SteamId steamIDGroup )
 		{
-			return _RequestUserGroupStatus( Self, steamIDUser, steamIDGroup );
+			var returnValue = _RequestUserGroupStatus( Self, steamIDUser, steamIDGroup );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -528,7 +540,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<GSReputation_t?> GetServerReputation()
 		{
-			return await GSReputation_t.GetResultAsync( _GetServerReputation( Self ) );
+			var returnValue = _GetServerReputation( Self );
+			return await GSReputation_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -539,7 +552,8 @@ namespace Steamworks
 		#endregion
 		internal uint GetPublicIP()
 		{
-			return _GetPublicIP( Self );
+			var returnValue = _GetPublicIP( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -551,7 +565,8 @@ namespace Steamworks
 		#endregion
 		internal bool HandleIncomingPacket( IntPtr pData, int cbData, uint srcIP, ushort srcPort )
 		{
-			return _HandleIncomingPacket( Self, pData, cbData, srcIP, srcPort );
+			var returnValue = _HandleIncomingPacket( Self, pData, cbData, srcIP, srcPort );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -562,7 +577,8 @@ namespace Steamworks
 		#endregion
 		internal int GetNextOutgoingPacket( IntPtr pOut, int cbMaxOut, ref uint pNetAdr, ref ushort pPort )
 		{
-			return _GetNextOutgoingPacket( Self, pOut, cbMaxOut, ref pNetAdr, ref pPort );
+			var returnValue = _GetNextOutgoingPacket( Self, pOut, cbMaxOut, ref pNetAdr, ref pPort );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -606,7 +622,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<AssociateWithClanResult_t?> AssociateWithClan( SteamId steamIDClan )
 		{
-			return await AssociateWithClanResult_t.GetResultAsync( _AssociateWithClan( Self, steamIDClan ) );
+			var returnValue = _AssociateWithClan( Self, steamIDClan );
+			return await AssociateWithClanResult_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -617,7 +634,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<ComputeNewPlayerCompatibilityResult_t?> ComputeNewPlayerCompatibility( SteamId steamIDNewPlayer )
 		{
-			return await ComputeNewPlayerCompatibilityResult_t.GetResultAsync( _ComputeNewPlayerCompatibility( Self, steamIDNewPlayer ) );
+			var returnValue = _ComputeNewPlayerCompatibility( Self, steamIDNewPlayer );
+			return await ComputeNewPlayerCompatibilityResult_t.GetResultAsync( returnValue );
 		}
 		
 	}

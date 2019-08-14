@@ -86,7 +86,8 @@ namespace Steamworks
 		#endregion
 		internal Socket CreateListenSocketIP( ref NetAddress localAddress )
 		{
-			return _CreateListenSocketIP( Self, ref localAddress );
+			var returnValue = _CreateListenSocketIP( Self, ref localAddress );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -97,7 +98,8 @@ namespace Steamworks
 		#endregion
 		internal Connection ConnectByIPAddress( ref NetAddress address )
 		{
-			return _ConnectByIPAddress( Self, ref address );
+			var returnValue = _ConnectByIPAddress( Self, ref address );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -108,7 +110,8 @@ namespace Steamworks
 		#endregion
 		internal Socket CreateListenSocketP2P( int nVirtualPort )
 		{
-			return _CreateListenSocketP2P( Self, nVirtualPort );
+			var returnValue = _CreateListenSocketP2P( Self, nVirtualPort );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -119,7 +122,8 @@ namespace Steamworks
 		#endregion
 		internal Connection ConnectP2P( ref NetIdentity identityRemote, int nVirtualPort )
 		{
-			return _ConnectP2P( Self, ref identityRemote, nVirtualPort );
+			var returnValue = _ConnectP2P( Self, ref identityRemote, nVirtualPort );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -130,7 +134,8 @@ namespace Steamworks
 		#endregion
 		internal Result AcceptConnection( Connection hConn )
 		{
-			return _AcceptConnection( Self, hConn );
+			var returnValue = _AcceptConnection( Self, hConn );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -142,7 +147,8 @@ namespace Steamworks
 		#endregion
 		internal bool CloseConnection( Connection hPeer, int nReason, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszDebug, [MarshalAs( UnmanagedType.U1 )] bool bEnableLinger )
 		{
-			return _CloseConnection( Self, hPeer, nReason, pszDebug, bEnableLinger );
+			var returnValue = _CloseConnection( Self, hPeer, nReason, pszDebug, bEnableLinger );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -154,7 +160,8 @@ namespace Steamworks
 		#endregion
 		internal bool CloseListenSocket( Socket hSocket )
 		{
-			return _CloseListenSocket( Self, hSocket );
+			var returnValue = _CloseListenSocket( Self, hSocket );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -166,7 +173,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetConnectionUserData( Connection hPeer, long nUserData )
 		{
-			return _SetConnectionUserData( Self, hPeer, nUserData );
+			var returnValue = _SetConnectionUserData( Self, hPeer, nUserData );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -177,7 +185,8 @@ namespace Steamworks
 		#endregion
 		internal long GetConnectionUserData( Connection hPeer )
 		{
-			return _GetConnectionUserData( Self, hPeer );
+			var returnValue = _GetConnectionUserData( Self, hPeer );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -194,13 +203,16 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetConnectionName( IntPtr self, Connection hPeer, StringBuilder pszName, int nMaxLen );
+		private delegate bool FGetConnectionName( IntPtr self, Connection hPeer, IntPtr pszName, int nMaxLen );
 		private FGetConnectionName _GetConnectionName;
 		
 		#endregion
-		internal bool GetConnectionName( Connection hPeer, StringBuilder pszName, int nMaxLen )
+		internal bool GetConnectionName( Connection hPeer, out string pszName )
 		{
-			return _GetConnectionName( Self, hPeer, pszName, nMaxLen );
+			IntPtr mempszName = Helpers.TakeMemory();
+			var returnValue = _GetConnectionName( Self, hPeer, mempszName, (1024 * 32) );
+			pszName = Helpers.MemoryToString( mempszName );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -211,7 +223,8 @@ namespace Steamworks
 		#endregion
 		internal Result SendMessageToConnection( Connection hConn, IntPtr pData, uint cbData, int nSendFlags )
 		{
-			return _SendMessageToConnection( Self, hConn, pData, cbData, nSendFlags );
+			var returnValue = _SendMessageToConnection( Self, hConn, pData, cbData, nSendFlags );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -222,7 +235,8 @@ namespace Steamworks
 		#endregion
 		internal Result FlushMessagesOnConnection( Connection hConn )
 		{
-			return _FlushMessagesOnConnection( Self, hConn );
+			var returnValue = _FlushMessagesOnConnection( Self, hConn );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -233,7 +247,8 @@ namespace Steamworks
 		#endregion
 		internal int ReceiveMessagesOnConnection( Connection hConn, IntPtr ppOutMessages, int nMaxMessages )
 		{
-			return _ReceiveMessagesOnConnection( Self, hConn, ppOutMessages, nMaxMessages );
+			var returnValue = _ReceiveMessagesOnConnection( Self, hConn, ppOutMessages, nMaxMessages );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -244,7 +259,8 @@ namespace Steamworks
 		#endregion
 		internal int ReceiveMessagesOnListenSocket( Socket hSocket, IntPtr ppOutMessages, int nMaxMessages )
 		{
-			return _ReceiveMessagesOnListenSocket( Self, hSocket, ppOutMessages, nMaxMessages );
+			var returnValue = _ReceiveMessagesOnListenSocket( Self, hSocket, ppOutMessages, nMaxMessages );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -256,7 +272,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetConnectionInfo( Connection hConn, ref ConnectionInfo pInfo )
 		{
-			return _GetConnectionInfo( Self, hConn, ref pInfo );
+			var returnValue = _GetConnectionInfo( Self, hConn, ref pInfo );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -268,18 +285,22 @@ namespace Steamworks
 		#endregion
 		internal bool GetQuickConnectionStatus( Connection hConn, ref SteamNetworkingQuickConnectionStatus pStats )
 		{
-			return _GetQuickConnectionStatus( Self, hConn, ref pStats );
+			var returnValue = _GetQuickConnectionStatus( Self, hConn, ref pStats );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate int FGetDetailedConnectionStatus( IntPtr self, Connection hConn, StringBuilder pszBuf, int cbBuf );
+		private delegate int FGetDetailedConnectionStatus( IntPtr self, Connection hConn, IntPtr pszBuf, int cbBuf );
 		private FGetDetailedConnectionStatus _GetDetailedConnectionStatus;
 		
 		#endregion
-		internal int GetDetailedConnectionStatus( Connection hConn, StringBuilder pszBuf, int cbBuf )
+		internal int GetDetailedConnectionStatus( Connection hConn, out string pszBuf )
 		{
-			return _GetDetailedConnectionStatus( Self, hConn, pszBuf, cbBuf );
+			IntPtr mempszBuf = Helpers.TakeMemory();
+			var returnValue = _GetDetailedConnectionStatus( Self, hConn, mempszBuf, (1024 * 32) );
+			pszBuf = Helpers.MemoryToString( mempszBuf );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -291,7 +312,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetListenSocketAddress( Socket hSocket, ref NetAddress address )
 		{
-			return _GetListenSocketAddress( Self, hSocket, ref address );
+			var returnValue = _GetListenSocketAddress( Self, hSocket, ref address );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -303,7 +325,8 @@ namespace Steamworks
 		#endregion
 		internal bool CreateSocketPair( [In,Out] Connection[]  pOutConnection1, [In,Out] Connection[]  pOutConnection2, [MarshalAs( UnmanagedType.U1 )] bool bUseNetworkLoopback, ref NetIdentity pIdentity1, ref NetIdentity pIdentity2 )
 		{
-			return _CreateSocketPair( Self, pOutConnection1, pOutConnection2, bUseNetworkLoopback, ref pIdentity1, ref pIdentity2 );
+			var returnValue = _CreateSocketPair( Self, pOutConnection1, pOutConnection2, bUseNetworkLoopback, ref pIdentity1, ref pIdentity2 );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -315,7 +338,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetIdentity( ref NetIdentity pIdentity )
 		{
-			return _GetIdentity( Self, ref pIdentity );
+			var returnValue = _GetIdentity( Self, ref pIdentity );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -327,7 +351,8 @@ namespace Steamworks
 		#endregion
 		internal bool ReceivedRelayAuthTicket( IntPtr pvTicket, int cbTicket, [In,Out] SteamDatagramRelayAuthTicket[]  pOutParsedTicket )
 		{
-			return _ReceivedRelayAuthTicket( Self, pvTicket, cbTicket, pOutParsedTicket );
+			var returnValue = _ReceivedRelayAuthTicket( Self, pvTicket, cbTicket, pOutParsedTicket );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -338,7 +363,8 @@ namespace Steamworks
 		#endregion
 		internal int FindRelayAuthTicketForServer( ref NetIdentity identityGameServer, int nVirtualPort, [In,Out] SteamDatagramRelayAuthTicket[]  pOutParsedTicket )
 		{
-			return _FindRelayAuthTicketForServer( Self, ref identityGameServer, nVirtualPort, pOutParsedTicket );
+			var returnValue = _FindRelayAuthTicketForServer( Self, ref identityGameServer, nVirtualPort, pOutParsedTicket );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -349,7 +375,8 @@ namespace Steamworks
 		#endregion
 		internal Connection ConnectToHostedDedicatedServer( ref NetIdentity identityTarget, int nVirtualPort )
 		{
-			return _ConnectToHostedDedicatedServer( Self, ref identityTarget, nVirtualPort );
+			var returnValue = _ConnectToHostedDedicatedServer( Self, ref identityTarget, nVirtualPort );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -360,7 +387,8 @@ namespace Steamworks
 		#endregion
 		internal ushort GetHostedDedicatedServerPort()
 		{
-			return _GetHostedDedicatedServerPort( Self );
+			var returnValue = _GetHostedDedicatedServerPort( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -371,7 +399,8 @@ namespace Steamworks
 		#endregion
 		internal SteamNetworkingPOPID GetHostedDedicatedServerPOPID()
 		{
-			return _GetHostedDedicatedServerPOPID( Self );
+			var returnValue = _GetHostedDedicatedServerPOPID( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -383,7 +412,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetHostedDedicatedServerAddress( ref SteamDatagramHostedAddress pRouting )
 		{
-			return _GetHostedDedicatedServerAddress( Self, ref pRouting );
+			var returnValue = _GetHostedDedicatedServerAddress( Self, ref pRouting );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -394,7 +424,8 @@ namespace Steamworks
 		#endregion
 		internal Socket CreateHostedDedicatedServerListenSocket( int nVirtualPort )
 		{
-			return _CreateHostedDedicatedServerListenSocket( Self, nVirtualPort );
+			var returnValue = _CreateHostedDedicatedServerListenSocket( Self, nVirtualPort );
+			return returnValue;
 		}
 		
 		#region FunctionMeta

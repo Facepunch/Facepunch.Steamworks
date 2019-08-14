@@ -100,23 +100,20 @@ namespace Steamworks
 
 		internal static Dictionary<string, string> GetProperties( SteamInventoryResult_t result, int index )
 		{
-			var sb = Helpers.TakeStringBuilder();
-			var strlen = (uint) sb.Capacity;
+			var strlen = (uint) Helpers.MaxStringSize;
 
-			if ( !SteamInventory.Internal.GetResultItemProperty( result, (uint)index, null, sb, ref strlen ) )
+			if ( !SteamInventory.Internal.GetResultItemProperty( result, (uint)index, null, out var propNames, ref strlen ) )
 				return null;
-
-			var propNames = sb.ToString();
 
 			var props = new Dictionary<string, string>();
 
 			foreach ( var propertyName in propNames.Split( ',' ) )
 			{
-				strlen = (uint)sb.Capacity;
+				strlen = (uint)Helpers.MaxStringSize;
 
-				if ( SteamInventory.Internal.GetResultItemProperty( result, (uint)index, propertyName, sb, ref strlen ) )
+				if ( SteamInventory.Internal.GetResultItemProperty( result, (uint)index, propertyName, out var strVal, ref strlen ) )
 				{
-					props.Add( propertyName, sb.ToString() );
+					props.Add( propertyName, strVal );
 				}
 			}
 
