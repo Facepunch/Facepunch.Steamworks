@@ -11,7 +11,11 @@ namespace Steamworks
 	{
 		static bool initialized;
 
-		public static void Init( uint appid )
+		/// <summary>
+		/// Initialize the steam client.
+		/// If asyncCallbacks is false you need to call RunCallbacks manually every frame.
+		/// </summary>
+		public static void Init( uint appid, bool asyncCallbacks = true )
 		{
 			System.Environment.SetEnvironmentVariable( "SteamAppId", appid.ToString() );
 			System.Environment.SetEnvironmentVariable( "SteamGameId", appid.ToString() );

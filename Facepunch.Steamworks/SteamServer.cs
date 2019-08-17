@@ -66,7 +66,12 @@ namespace Steamworks
 		/// </summary>
 		public static event Action<Result> OnSteamServersDisconnected;
 
-		public static void Init( AppId appid, SteamServerInit init )
+
+		/// <summary>
+		/// Initialize the steam server.
+		/// If asyncCallbacks is false you need to call RunCallbacks manually every frame.
+		/// </summary>
+		public static void Init( AppId appid, SteamServerInit init, bool asyncCallbacks = true )
 		{
 			uint ipaddress = 0; // Any Port
 
