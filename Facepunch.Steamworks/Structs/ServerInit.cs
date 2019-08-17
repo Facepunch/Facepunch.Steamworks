@@ -36,21 +36,17 @@ namespace Steamworks
         /// </summary>
         public string GameDescription;
 
-		/// <summary>
-		/// Is a dedicated server
-		/// </summary>
-		public bool DedicatedServer;
 
-
-		public SteamServerInit( string modDir, string gameDesc )
+        public SteamServerInit( string modDir, string gameDesc )
         {
-			DedicatedServer = true;
-			ModDir = modDir;
+            ModDir = modDir;
             GameDescription = gameDesc;
 			GamePort = 27015;
 			QueryPort = 27016;
 			Secure = true;
 			VersionString = "1.0.0.0";
+			ModDir = "unset";
+			GameDescription = "unset";
 			IpAddress = null;
 			SteamPort = 0;
 		}
