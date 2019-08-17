@@ -200,5 +200,14 @@ namespace Steamworks
 			return SteamAPI.RestartAppIfNecessary( appid );
 		}
 
+		/// <summary>
+		/// Called in interfaces that rely on this being initialized
+		/// </summary>
+		internal static void ValidCheck()
+		{
+			if ( !IsValid )
+				throw new System.Exception( "SteamClient isn't initialized" );
+		}
+
 	}
 }
