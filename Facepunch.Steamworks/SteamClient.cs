@@ -41,7 +41,10 @@ namespace Steamworks
 			SteamNetworkingSockets.InstallEvents();
 			SteamInput.InstallEvents();
 
-			RunCallbacksAsync();
+			if ( asyncCallbacks )
+			{
+				RunCallbacksAsync();
+			}
 		}
 
 		static List<SteamInterface> openIterfaces = new List<SteamInterface>();
@@ -73,7 +76,15 @@ namespace Steamworks
 			while ( IsValid )
 			{
 				await Task.Delay( 16 );
-				RunCallbacks();
+
+				try
+				{
+					RunCallbacks();
+				}
+				catch ( System.Exception e )
+				{
+					OnCallbackException?.Invoke( e );
+				}
 			}
 		}
 
@@ -123,14 +134,7 @@ namespace Steamworks
 		{
 			if ( !IsValid ) return;
 
-			try
-			{
-				SteamAPI.RunCallbacks();
-			}
-			catch ( System.Exception e )
-			{
-				OnCallbackException?.Invoke( e );
-			}
+			SteamAPI.RunCallbacks();
 		}
 
 		internal static void UnregisterCallback( IntPtr intPtr )

@@ -104,7 +104,10 @@ namespace Steamworks
 
 			InstallEvents();
 
-			RunCallbacksAsync();
+			if ( asyncCallbacks )
+			{
+				RunCallbacksAsync();
+			}
 		}
 
 		static List<SteamInterface> openIterfaces = new List<SteamInterface>();
@@ -147,7 +150,15 @@ namespace Steamworks
 		{
 			while ( IsValid )
 			{
-				RunCallbacks();
+				try
+				{
+					RunCallbacks();
+				}
+				catch ( System.Exception e )
+				{
+					OnCallbackException?.Invoke( e );
+				}
+
 				await Task.Delay( 16 );
 			}
 		}
@@ -157,14 +168,7 @@ namespace Steamworks
 		/// </summary>
 		public static void RunCallbacks()
 		{
-			try
-			{
-				SteamGameServer.RunCallbacks();
-			}
-			catch ( System.Exception e )
-			{
-				OnCallbackException?.Invoke( e );
-			}
+			SteamGameServer.RunCallbacks();
 		}
 
 		/// <summary>
