@@ -7,41 +7,42 @@ namespace Steamworks
 {
 	internal static class Helpers
 	{
-        private static StringBuilder[] StringBuilderPool;
-        private static int StringBuilderPoolIndex;
+		public const int MaxStringSize = 1024 * 32;
 
-        /// <summary>
-        /// Returns a StringBuilder. This will get returned and reused later on.
-        /// </summary>
-        public static StringBuilder TakeStringBuilder()
-        {
-            if ( StringBuilderPool == null )
-            {
-                //
-                // The pool has 4 items. This should be safe because we shouldn't really
-                // ever be using more than 2 StringBuilders at the same time.
-                //
-                StringBuilderPool = new StringBuilder[4];
+		private static IntPtr[] MemoryPool;
+		private static int MemoryPoolIndex;
 
-                for ( int i = 0; i < StringBuilderPool.Length; i++ )
-                    StringBuilderPool[i] = new StringBuilder( 1024 * 32 );
-            }
+		public static unsafe IntPtr TakeMemory()
+		{
+			if ( MemoryPool == null )
+			{
+				//
+				// The pool has 5 items. This should be safe because we shouldn't really
+				// ever be using more than 2 memory pools
+				//
+				MemoryPool = new IntPtr[5];
 
-            StringBuilderPoolIndex++;
-            if ( StringBuilderPoolIndex >= StringBuilderPool.Length )
-                StringBuilderPoolIndex = 0;
+				for ( int i = 0; i < MemoryPool.Length; i++ )
+					MemoryPool[i] = Marshal.AllocHGlobal( MaxStringSize );
+			}
 
-            StringBuilderPool[StringBuilderPoolIndex].Length = 0;
+			MemoryPoolIndex++;
+			if ( MemoryPoolIndex >= MemoryPool.Length )
+				MemoryPoolIndex = 0;
 
-            return StringBuilderPool[StringBuilderPoolIndex];
-        }
+			var take = MemoryPool[MemoryPoolIndex];
+
+			((byte*)take)[0] = 0;
+
+			return take;
+		}
 
 
 		private static byte[][] BufferPool;
 		private static int BufferPoolIndex;
 
 		/// <summary>
-		/// Returns a StringBuilder. This will get returned and reused later on.
+		/// Returns a buffer. This will get returned and reused later on.
 		/// </summary>
 		public static byte[] TakeBuffer( int minSize )
 		{
@@ -67,10 +68,32 @@ namespace Steamworks
 
 			return BufferPool[BufferPoolIndex];
 		}
+
+		internal unsafe static string MemoryToString( IntPtr ptr )
+		{
+			var len = 0;
+
+			for( len = 0; len < MaxStringSize; len++ )
+			{
+				if ( ((byte*)ptr)[len] == 0 )
+					break;
+			}
+
+			if ( len == 0 )
+				return string.Empty;
+
+			return UTF8Encoding.UTF8.GetString( (byte*)ptr, len );
+		}
 	}
 
 	internal class MonoPInvokeCallbackAttribute : Attribute
 	{
 		public MonoPInvokeCallbackAttribute() { }
 	}
+
+	/// <summary>
+	/// Prevent unity from stripping shit we depend on
+	/// https://docs.unity3d.com/Manual/ManagedCodeStripping.html
+	/// </summary>
+	internal class PreserveAttribute : System.Attribute { }
 }

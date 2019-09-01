@@ -48,7 +48,8 @@ namespace Steamworks
 		#endregion
 		internal bool IsBroadcasting( ref int pnNumViewers )
 		{
-			return _IsBroadcasting( Self, ref pnNumViewers );
+			var returnValue = _IsBroadcasting( Self, ref pnNumViewers );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -65,13 +66,16 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetOPFStringForApp( IntPtr self, AppId unVideoAppID, StringBuilder pchBuffer, ref int pnBufferSize );
+		private delegate bool FGetOPFStringForApp( IntPtr self, AppId unVideoAppID, IntPtr pchBuffer, ref int pnBufferSize );
 		private FGetOPFStringForApp _GetOPFStringForApp;
 		
 		#endregion
-		internal bool GetOPFStringForApp( AppId unVideoAppID, StringBuilder pchBuffer, ref int pnBufferSize )
+		internal bool GetOPFStringForApp( AppId unVideoAppID, out string pchBuffer, ref int pnBufferSize )
 		{
-			return _GetOPFStringForApp( Self, unVideoAppID, pchBuffer, ref pnBufferSize );
+			IntPtr mempchBuffer = Helpers.TakeMemory();
+			var returnValue = _GetOPFStringForApp( Self, unVideoAppID, mempchBuffer, ref pnBufferSize );
+			pchBuffer = Helpers.MemoryToString( mempchBuffer );
+			return returnValue;
 		}
 		
 	}

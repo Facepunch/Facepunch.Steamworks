@@ -24,7 +24,7 @@
 		<PackageProjectUrl>https://github.com/Facepunch/Facepunch.Steamworks</PackageProjectUrl>
 		<PackageIconUrl>https://files.facepunch.com/garry/c5edce1c-0c21-4c5d-95b6-37743be7455d.jpg</PackageIconUrl>
 		<PackageTags>facepunch;steam;unity;steamworks;valve</PackageTags>
-		<PackageVersion>2.1.0</PackageVersion>
+		<PackageVersion>2.2.0</PackageVersion>
 		<LangVersion>latest</LangVersion>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<RepositoryUrl>https://github.com/Facepunch/Facepunch.Steamworks.git</RepositoryUrl>

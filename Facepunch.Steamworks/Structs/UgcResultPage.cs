@@ -38,10 +38,9 @@ namespace Steamworks.Ugc
 						item.NumSecondsPlayedDuringTimePeriod = GetStat( i, ItemStatistic.NumSecondsPlayedDuringTimePeriod );
 						item.NumPlaytimeSessionsDuringTimePeriod = GetStat( i, ItemStatistic.NumPlaytimeSessionsDuringTimePeriod );
 
-						var sb = Helpers.TakeStringBuilder();
-						if ( SteamUGC.Internal.GetQueryUGCPreviewURL( Handle, i, sb, (uint)sb.Capacity ) )
+						if ( SteamUGC.Internal.GetQueryUGCPreviewURL( Handle, i, out string preview ) )
 						{
-							item.PreviewImageUrl = sb.ToString();
+							item.PreviewImageUrl = preview;
 						}
 
 						// TODO GetQueryUGCAdditionalPreview

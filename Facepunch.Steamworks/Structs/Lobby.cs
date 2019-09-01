@@ -102,14 +102,11 @@ namespace Steamworks.Data
 			{
 				var cnt = SteamMatchmaking.Internal.GetLobbyDataCount( Id );
 
-				var a = Helpers.TakeStringBuilder();
-				var b = Helpers.TakeStringBuilder();
-
 				for ( int i =0; i<cnt; i++)
 				{
-					if ( SteamMatchmaking.Internal.GetLobbyDataByIndex( Id, i, a, a.Capacity, b, b.Capacity ) )
+					if ( SteamMatchmaking.Internal.GetLobbyDataByIndex( Id, i, out var a, out var b ) )
 					{
-						yield return new KeyValuePair<string, string>( a.ToString(), b.ToString() );
+						yield return new KeyValuePair<string, string>( a, b );
 					}
 				}
 			}

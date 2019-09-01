@@ -41,7 +41,8 @@ namespace Steamworks
 		#endregion
 		internal bool BIsParentalLockEnabled()
 		{
-			return _BIsParentalLockEnabled( Self );
+			var returnValue = _BIsParentalLockEnabled( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -53,7 +54,8 @@ namespace Steamworks
 		#endregion
 		internal bool BIsParentalLockLocked()
 		{
-			return _BIsParentalLockLocked( Self );
+			var returnValue = _BIsParentalLockLocked( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -65,7 +67,8 @@ namespace Steamworks
 		#endregion
 		internal bool BIsAppBlocked( AppId nAppID )
 		{
-			return _BIsAppBlocked( Self, nAppID );
+			var returnValue = _BIsAppBlocked( Self, nAppID );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -77,7 +80,8 @@ namespace Steamworks
 		#endregion
 		internal bool BIsAppInBlockList( AppId nAppID )
 		{
-			return _BIsAppInBlockList( Self, nAppID );
+			var returnValue = _BIsAppInBlockList( Self, nAppID );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -89,7 +93,8 @@ namespace Steamworks
 		#endregion
 		internal bool BIsFeatureBlocked( ParentalFeature eFeature )
 		{
-			return _BIsFeatureBlocked( Self, eFeature );
+			var returnValue = _BIsFeatureBlocked( Self, eFeature );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -101,7 +106,8 @@ namespace Steamworks
 		#endregion
 		internal bool BIsFeatureInBlockList( ParentalFeature eFeature )
 		{
-			return _BIsFeatureInBlockList( Self, eFeature );
+			var returnValue = _BIsFeatureInBlockList( Self, eFeature );
+			return returnValue;
 		}
 		
 	}

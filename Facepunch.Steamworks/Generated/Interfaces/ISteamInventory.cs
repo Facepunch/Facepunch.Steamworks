@@ -102,7 +102,8 @@ namespace Steamworks
 		#endregion
 		internal Result GetResultStatus( SteamInventoryResult_t resultHandle )
 		{
-			return _GetResultStatus( Self, resultHandle );
+			var returnValue = _GetResultStatus( Self, resultHandle );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -114,19 +115,23 @@ namespace Steamworks
 		#endregion
 		internal bool GetResultItems( SteamInventoryResult_t resultHandle, [In,Out] SteamItemDetails_t[]  pOutItemsArray, ref uint punOutItemsArraySize )
 		{
-			return _GetResultItems( Self, resultHandle, pOutItemsArray, ref punOutItemsArraySize );
+			var returnValue = _GetResultItems( Self, resultHandle, pOutItemsArray, ref punOutItemsArraySize );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetResultItemProperty( IntPtr self, SteamInventoryResult_t resultHandle, uint unItemIndex, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPropertyName, StringBuilder pchValueBuffer, ref uint punValueBufferSizeOut );
+		private delegate bool FGetResultItemProperty( IntPtr self, SteamInventoryResult_t resultHandle, uint unItemIndex, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPropertyName, IntPtr pchValueBuffer, ref uint punValueBufferSizeOut );
 		private FGetResultItemProperty _GetResultItemProperty;
 		
 		#endregion
-		internal bool GetResultItemProperty( SteamInventoryResult_t resultHandle, uint unItemIndex, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPropertyName, StringBuilder pchValueBuffer, ref uint punValueBufferSizeOut )
+		internal bool GetResultItemProperty( SteamInventoryResult_t resultHandle, uint unItemIndex, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPropertyName, out string pchValueBuffer, ref uint punValueBufferSizeOut )
 		{
-			return _GetResultItemProperty( Self, resultHandle, unItemIndex, pchPropertyName, pchValueBuffer, ref punValueBufferSizeOut );
+			IntPtr mempchValueBuffer = Helpers.TakeMemory();
+			var returnValue = _GetResultItemProperty( Self, resultHandle, unItemIndex, pchPropertyName, mempchValueBuffer, ref punValueBufferSizeOut );
+			pchValueBuffer = Helpers.MemoryToString( mempchValueBuffer );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -137,7 +142,8 @@ namespace Steamworks
 		#endregion
 		internal uint GetResultTimestamp( SteamInventoryResult_t resultHandle )
 		{
-			return _GetResultTimestamp( Self, resultHandle );
+			var returnValue = _GetResultTimestamp( Self, resultHandle );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -149,7 +155,8 @@ namespace Steamworks
 		#endregion
 		internal bool CheckResultSteamID( SteamInventoryResult_t resultHandle, SteamId steamIDExpected )
 		{
-			return _CheckResultSteamID( Self, resultHandle, steamIDExpected );
+			var returnValue = _CheckResultSteamID( Self, resultHandle, steamIDExpected );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -172,7 +179,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetAllItems( ref SteamInventoryResult_t pResultHandle )
 		{
-			return _GetAllItems( Self, ref pResultHandle );
+			var returnValue = _GetAllItems( Self, ref pResultHandle );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -184,7 +192,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetItemsByID( ref SteamInventoryResult_t pResultHandle, ref InventoryItemId pInstanceIDs, uint unCountInstanceIDs )
 		{
-			return _GetItemsByID( Self, ref pResultHandle, ref pInstanceIDs, unCountInstanceIDs );
+			var returnValue = _GetItemsByID( Self, ref pResultHandle, ref pInstanceIDs, unCountInstanceIDs );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -196,7 +205,8 @@ namespace Steamworks
 		#endregion
 		internal bool SerializeResult( SteamInventoryResult_t resultHandle, IntPtr pOutBuffer, ref uint punOutBufferSize )
 		{
-			return _SerializeResult( Self, resultHandle, pOutBuffer, ref punOutBufferSize );
+			var returnValue = _SerializeResult( Self, resultHandle, pOutBuffer, ref punOutBufferSize );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -208,7 +218,8 @@ namespace Steamworks
 		#endregion
 		internal bool DeserializeResult( ref SteamInventoryResult_t pOutResultHandle, IntPtr pBuffer, uint unBufferSize, [MarshalAs( UnmanagedType.U1 )] bool bRESERVED_MUST_BE_FALSE )
 		{
-			return _DeserializeResult( Self, ref pOutResultHandle, pBuffer, unBufferSize, bRESERVED_MUST_BE_FALSE );
+			var returnValue = _DeserializeResult( Self, ref pOutResultHandle, pBuffer, unBufferSize, bRESERVED_MUST_BE_FALSE );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -220,7 +231,8 @@ namespace Steamworks
 		#endregion
 		internal bool GenerateItems( ref SteamInventoryResult_t pResultHandle, [In,Out] InventoryDefId[]  pArrayItemDefs, [In,Out] uint[]  punArrayQuantity, uint unArrayLength )
 		{
-			return _GenerateItems( Self, ref pResultHandle, pArrayItemDefs, punArrayQuantity, unArrayLength );
+			var returnValue = _GenerateItems( Self, ref pResultHandle, pArrayItemDefs, punArrayQuantity, unArrayLength );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -232,7 +244,8 @@ namespace Steamworks
 		#endregion
 		internal bool GrantPromoItems( ref SteamInventoryResult_t pResultHandle )
 		{
-			return _GrantPromoItems( Self, ref pResultHandle );
+			var returnValue = _GrantPromoItems( Self, ref pResultHandle );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -244,7 +257,8 @@ namespace Steamworks
 		#endregion
 		internal bool AddPromoItem( ref SteamInventoryResult_t pResultHandle, InventoryDefId itemDef )
 		{
-			return _AddPromoItem( Self, ref pResultHandle, itemDef );
+			var returnValue = _AddPromoItem( Self, ref pResultHandle, itemDef );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -256,7 +270,8 @@ namespace Steamworks
 		#endregion
 		internal bool AddPromoItems( ref SteamInventoryResult_t pResultHandle, [In,Out] InventoryDefId[]  pArrayItemDefs, uint unArrayLength )
 		{
-			return _AddPromoItems( Self, ref pResultHandle, pArrayItemDefs, unArrayLength );
+			var returnValue = _AddPromoItems( Self, ref pResultHandle, pArrayItemDefs, unArrayLength );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -268,7 +283,8 @@ namespace Steamworks
 		#endregion
 		internal bool ConsumeItem( ref SteamInventoryResult_t pResultHandle, InventoryItemId itemConsume, uint unQuantity )
 		{
-			return _ConsumeItem( Self, ref pResultHandle, itemConsume, unQuantity );
+			var returnValue = _ConsumeItem( Self, ref pResultHandle, itemConsume, unQuantity );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -280,7 +296,8 @@ namespace Steamworks
 		#endregion
 		internal bool ExchangeItems( ref SteamInventoryResult_t pResultHandle, [In,Out] InventoryDefId[]  pArrayGenerate, [In,Out] uint[]  punArrayGenerateQuantity, uint unArrayGenerateLength, [In,Out] InventoryItemId[]  pArrayDestroy, [In,Out] uint[]  punArrayDestroyQuantity, uint unArrayDestroyLength )
 		{
-			return _ExchangeItems( Self, ref pResultHandle, pArrayGenerate, punArrayGenerateQuantity, unArrayGenerateLength, pArrayDestroy, punArrayDestroyQuantity, unArrayDestroyLength );
+			var returnValue = _ExchangeItems( Self, ref pResultHandle, pArrayGenerate, punArrayGenerateQuantity, unArrayGenerateLength, pArrayDestroy, punArrayDestroyQuantity, unArrayDestroyLength );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -292,7 +309,8 @@ namespace Steamworks
 		#endregion
 		internal bool TransferItemQuantity( ref SteamInventoryResult_t pResultHandle, InventoryItemId itemIdSource, uint unQuantity, InventoryItemId itemIdDest )
 		{
-			return _TransferItemQuantity( Self, ref pResultHandle, itemIdSource, unQuantity, itemIdDest );
+			var returnValue = _TransferItemQuantity( Self, ref pResultHandle, itemIdSource, unQuantity, itemIdDest );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -315,7 +333,8 @@ namespace Steamworks
 		#endregion
 		internal bool TriggerItemDrop( ref SteamInventoryResult_t pResultHandle, InventoryDefId dropListDefinition )
 		{
-			return _TriggerItemDrop( Self, ref pResultHandle, dropListDefinition );
+			var returnValue = _TriggerItemDrop( Self, ref pResultHandle, dropListDefinition );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -327,7 +346,8 @@ namespace Steamworks
 		#endregion
 		internal bool TradeItems( ref SteamInventoryResult_t pResultHandle, SteamId steamIDTradePartner, [In,Out] InventoryItemId[]  pArrayGive, [In,Out] uint[]  pArrayGiveQuantity, uint nArrayGiveLength, [In,Out] InventoryItemId[]  pArrayGet, [In,Out] uint[]  pArrayGetQuantity, uint nArrayGetLength )
 		{
-			return _TradeItems( Self, ref pResultHandle, steamIDTradePartner, pArrayGive, pArrayGiveQuantity, nArrayGiveLength, pArrayGet, pArrayGetQuantity, nArrayGetLength );
+			var returnValue = _TradeItems( Self, ref pResultHandle, steamIDTradePartner, pArrayGive, pArrayGiveQuantity, nArrayGiveLength, pArrayGet, pArrayGetQuantity, nArrayGetLength );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -339,7 +359,8 @@ namespace Steamworks
 		#endregion
 		internal bool LoadItemDefinitions()
 		{
-			return _LoadItemDefinitions( Self );
+			var returnValue = _LoadItemDefinitions( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -351,19 +372,23 @@ namespace Steamworks
 		#endregion
 		internal bool GetItemDefinitionIDs( [In,Out] InventoryDefId[]  pItemDefIDs, ref uint punItemDefIDsArraySize )
 		{
-			return _GetItemDefinitionIDs( Self, pItemDefIDs, ref punItemDefIDsArraySize );
+			var returnValue = _GetItemDefinitionIDs( Self, pItemDefIDs, ref punItemDefIDsArraySize );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetItemDefinitionProperty( IntPtr self, InventoryDefId iDefinition, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPropertyName, StringBuilder pchValueBuffer, ref uint punValueBufferSizeOut );
+		private delegate bool FGetItemDefinitionProperty( IntPtr self, InventoryDefId iDefinition, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPropertyName, IntPtr pchValueBuffer, ref uint punValueBufferSizeOut );
 		private FGetItemDefinitionProperty _GetItemDefinitionProperty;
 		
 		#endregion
-		internal bool GetItemDefinitionProperty( InventoryDefId iDefinition, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPropertyName, StringBuilder pchValueBuffer, ref uint punValueBufferSizeOut )
+		internal bool GetItemDefinitionProperty( InventoryDefId iDefinition, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPropertyName, out string pchValueBuffer, ref uint punValueBufferSizeOut )
 		{
-			return _GetItemDefinitionProperty( Self, iDefinition, pchPropertyName, pchValueBuffer, ref punValueBufferSizeOut );
+			IntPtr mempchValueBuffer = Helpers.TakeMemory();
+			var returnValue = _GetItemDefinitionProperty( Self, iDefinition, pchPropertyName, mempchValueBuffer, ref punValueBufferSizeOut );
+			pchValueBuffer = Helpers.MemoryToString( mempchValueBuffer );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -374,7 +399,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<SteamInventoryEligiblePromoItemDefIDs_t?> RequestEligiblePromoItemDefinitionsIDs( SteamId steamID )
 		{
-			return await SteamInventoryEligiblePromoItemDefIDs_t.GetResultAsync( _RequestEligiblePromoItemDefinitionsIDs( Self, steamID ) );
+			var returnValue = _RequestEligiblePromoItemDefinitionsIDs( Self, steamID );
+			return await SteamInventoryEligiblePromoItemDefIDs_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -386,7 +412,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetEligiblePromoItemDefinitionIDs( SteamId steamID, [In,Out] InventoryDefId[]  pItemDefIDs, ref uint punItemDefIDsArraySize )
 		{
-			return _GetEligiblePromoItemDefinitionIDs( Self, steamID, pItemDefIDs, ref punItemDefIDsArraySize );
+			var returnValue = _GetEligiblePromoItemDefinitionIDs( Self, steamID, pItemDefIDs, ref punItemDefIDsArraySize );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -397,7 +424,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<SteamInventoryStartPurchaseResult_t?> StartPurchase( [In,Out] InventoryDefId[]  pArrayItemDefs, [In,Out] uint[]  punArrayQuantity, uint unArrayLength )
 		{
-			return await SteamInventoryStartPurchaseResult_t.GetResultAsync( _StartPurchase( Self, pArrayItemDefs, punArrayQuantity, unArrayLength ) );
+			var returnValue = _StartPurchase( Self, pArrayItemDefs, punArrayQuantity, unArrayLength );
+			return await SteamInventoryStartPurchaseResult_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -408,7 +436,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<SteamInventoryRequestPricesResult_t?> RequestPrices()
 		{
-			return await SteamInventoryRequestPricesResult_t.GetResultAsync( _RequestPrices( Self ) );
+			var returnValue = _RequestPrices( Self );
+			return await SteamInventoryRequestPricesResult_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -419,7 +448,8 @@ namespace Steamworks
 		#endregion
 		internal uint GetNumItemsWithPrices()
 		{
-			return _GetNumItemsWithPrices( Self );
+			var returnValue = _GetNumItemsWithPrices( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -431,7 +461,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetItemsWithPrices( [In,Out] InventoryDefId[]  pArrayItemDefs, [In,Out] ulong[]  pCurrentPrices, [In,Out] ulong[]  pBasePrices, uint unArrayLength )
 		{
-			return _GetItemsWithPrices( Self, pArrayItemDefs, pCurrentPrices, pBasePrices, unArrayLength );
+			var returnValue = _GetItemsWithPrices( Self, pArrayItemDefs, pCurrentPrices, pBasePrices, unArrayLength );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -443,7 +474,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetItemPrice( InventoryDefId iDefinition, ref ulong pCurrentPrice, ref ulong pBasePrice )
 		{
-			return _GetItemPrice( Self, iDefinition, ref pCurrentPrice, ref pBasePrice );
+			var returnValue = _GetItemPrice( Self, iDefinition, ref pCurrentPrice, ref pBasePrice );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -454,7 +486,8 @@ namespace Steamworks
 		#endregion
 		internal SteamInventoryUpdateHandle_t StartUpdateProperties()
 		{
-			return _StartUpdateProperties( Self );
+			var returnValue = _StartUpdateProperties( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -466,7 +499,8 @@ namespace Steamworks
 		#endregion
 		internal bool RemoveProperty( SteamInventoryUpdateHandle_t handle, InventoryItemId nItemID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPropertyName )
 		{
-			return _RemoveProperty( Self, handle, nItemID, pchPropertyName );
+			var returnValue = _RemoveProperty( Self, handle, nItemID, pchPropertyName );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -478,7 +512,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetProperty1( SteamInventoryUpdateHandle_t handle, InventoryItemId nItemID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPropertyName, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPropertyValue )
 		{
-			return _SetProperty1( Self, handle, nItemID, pchPropertyName, pchPropertyValue );
+			var returnValue = _SetProperty1( Self, handle, nItemID, pchPropertyName, pchPropertyValue );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -490,7 +525,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetProperty2( SteamInventoryUpdateHandle_t handle, InventoryItemId nItemID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPropertyName, [MarshalAs( UnmanagedType.U1 )] bool bValue )
 		{
-			return _SetProperty2( Self, handle, nItemID, pchPropertyName, bValue );
+			var returnValue = _SetProperty2( Self, handle, nItemID, pchPropertyName, bValue );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -502,7 +538,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetProperty3( SteamInventoryUpdateHandle_t handle, InventoryItemId nItemID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPropertyName, long nValue )
 		{
-			return _SetProperty3( Self, handle, nItemID, pchPropertyName, nValue );
+			var returnValue = _SetProperty3( Self, handle, nItemID, pchPropertyName, nValue );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -514,7 +551,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetProperty4( SteamInventoryUpdateHandle_t handle, InventoryItemId nItemID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPropertyName, float flValue )
 		{
-			return _SetProperty4( Self, handle, nItemID, pchPropertyName, flValue );
+			var returnValue = _SetProperty4( Self, handle, nItemID, pchPropertyName, flValue );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -526,7 +564,8 @@ namespace Steamworks
 		#endregion
 		internal bool SubmitUpdateProperties( SteamInventoryUpdateHandle_t handle, ref SteamInventoryResult_t pResultHandle )
 		{
-			return _SubmitUpdateProperties( Self, handle, ref pResultHandle );
+			var returnValue = _SubmitUpdateProperties( Self, handle, ref pResultHandle );
+			return returnValue;
 		}
 		
 	}

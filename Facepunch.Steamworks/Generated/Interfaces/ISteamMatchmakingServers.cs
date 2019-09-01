@@ -62,7 +62,8 @@ namespace Steamworks
 		#endregion
 		internal HServerListRequest RequestInternetServerList( AppId iApp, [In,Out] ref MatchMakingKeyValuePair[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
 		{
-			return _RequestInternetServerList( Self, iApp, ref ppchFilters, nFilters, pRequestServersResponse );
+			var returnValue = _RequestInternetServerList( Self, iApp, ref ppchFilters, nFilters, pRequestServersResponse );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -73,7 +74,8 @@ namespace Steamworks
 		#endregion
 		internal HServerListRequest RequestLANServerList( AppId iApp, IntPtr pRequestServersResponse )
 		{
-			return _RequestLANServerList( Self, iApp, pRequestServersResponse );
+			var returnValue = _RequestLANServerList( Self, iApp, pRequestServersResponse );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -84,7 +86,8 @@ namespace Steamworks
 		#endregion
 		internal HServerListRequest RequestFriendsServerList( AppId iApp, [In,Out] ref MatchMakingKeyValuePair[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
 		{
-			return _RequestFriendsServerList( Self, iApp, ref ppchFilters, nFilters, pRequestServersResponse );
+			var returnValue = _RequestFriendsServerList( Self, iApp, ref ppchFilters, nFilters, pRequestServersResponse );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -95,7 +98,8 @@ namespace Steamworks
 		#endregion
 		internal HServerListRequest RequestFavoritesServerList( AppId iApp, [In,Out] ref MatchMakingKeyValuePair[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
 		{
-			return _RequestFavoritesServerList( Self, iApp, ref ppchFilters, nFilters, pRequestServersResponse );
+			var returnValue = _RequestFavoritesServerList( Self, iApp, ref ppchFilters, nFilters, pRequestServersResponse );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -106,7 +110,8 @@ namespace Steamworks
 		#endregion
 		internal HServerListRequest RequestHistoryServerList( AppId iApp, [In,Out] ref MatchMakingKeyValuePair[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
 		{
-			return _RequestHistoryServerList( Self, iApp, ref ppchFilters, nFilters, pRequestServersResponse );
+			var returnValue = _RequestHistoryServerList( Self, iApp, ref ppchFilters, nFilters, pRequestServersResponse );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -117,7 +122,8 @@ namespace Steamworks
 		#endregion
 		internal HServerListRequest RequestSpectatorServerList( AppId iApp, [In,Out] ref MatchMakingKeyValuePair[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
 		{
-			return _RequestSpectatorServerList( Self, iApp, ref ppchFilters, nFilters, pRequestServersResponse );
+			var returnValue = _RequestSpectatorServerList( Self, iApp, ref ppchFilters, nFilters, pRequestServersResponse );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -139,7 +145,8 @@ namespace Steamworks
 		#endregion
 		internal gameserveritem_t GetServerDetails( HServerListRequest hRequest, int iServer )
 		{
-			return gameserveritem_t.Fill( _GetServerDetails( Self, hRequest, iServer ) );
+			var returnValue = _GetServerDetails( Self, hRequest, iServer );
+			return gameserveritem_t.Fill( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -173,7 +180,8 @@ namespace Steamworks
 		#endregion
 		internal bool IsRefreshing( HServerListRequest hRequest )
 		{
-			return _IsRefreshing( Self, hRequest );
+			var returnValue = _IsRefreshing( Self, hRequest );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -184,7 +192,8 @@ namespace Steamworks
 		#endregion
 		internal int GetServerCount( HServerListRequest hRequest )
 		{
-			return _GetServerCount( Self, hRequest );
+			var returnValue = _GetServerCount( Self, hRequest );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -206,7 +215,8 @@ namespace Steamworks
 		#endregion
 		internal HServerQuery PingServer( uint unIP, ushort usPort, IntPtr pRequestServersResponse )
 		{
-			return _PingServer( Self, unIP, usPort, pRequestServersResponse );
+			var returnValue = _PingServer( Self, unIP, usPort, pRequestServersResponse );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -217,7 +227,8 @@ namespace Steamworks
 		#endregion
 		internal HServerQuery PlayerDetails( uint unIP, ushort usPort, IntPtr pRequestServersResponse )
 		{
-			return _PlayerDetails( Self, unIP, usPort, pRequestServersResponse );
+			var returnValue = _PlayerDetails( Self, unIP, usPort, pRequestServersResponse );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -228,7 +239,8 @@ namespace Steamworks
 		#endregion
 		internal HServerQuery ServerRules( uint unIP, ushort usPort, IntPtr pRequestServersResponse )
 		{
-			return _ServerRules( Self, unIP, usPort, pRequestServersResponse );
+			var returnValue = _ServerRules( Self, unIP, usPort, pRequestServersResponse );
+			return returnValue;
 		}
 		
 		#region FunctionMeta

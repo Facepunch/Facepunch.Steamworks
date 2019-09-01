@@ -26,7 +26,7 @@ internal class BaseType
 
 		if ( type == "void" ) return new VoidType { NativeType = type, VarName = varname };
 		if ( type.Replace( " ", "" ).StartsWith( "constchar*" ) ) return new ConstCharType { NativeType = type, VarName = varname };
-		if ( type == "char *" ) return new StringBuilderType { NativeType = type, VarName = varname };
+		if ( type == "char *" ) return new StringType { NativeType = type, VarName = varname };
 
 		var basicType = type.Replace( "const ", "" ).Trim( ' ', '*', '&' );
 
@@ -65,6 +65,9 @@ internal class BaseType
 		return new BaseType { NativeType = type, VarName = varname };
 	}
 
+	public virtual bool ShouldSkipAsArgument => false;
+
+	public virtual string AsNativeArgument() => AsArgument();
 	public virtual string AsArgument() => IsVector ? $"[In,Out] {Ref}{TypeName.Trim( '*', ' ' )}[]  {VarName}" : $"{Ref}{TypeName.Trim( '*', ' ' )} {VarName}";
 	public virtual string AsCallArgument() => $"{Ref}{VarName}";
 
@@ -221,9 +224,14 @@ internal class ConstCharType : BaseType
 	public override string Ref => "";
 }
 
-internal class StringBuilderType : BaseType
+internal class StringType : BaseType
 {
-	public override string TypeName => $"StringBuilder";
+	public override string TypeName => $"string";
+	public override string AsArgument() => $"out string {VarName}";
+
+	public override string AsNativeArgument() => $"IntPtr {VarName}";
+
+	public override string AsCallArgument() => $"mem{VarName}";
 	public override string Ref => "";
 }
 
@@ -238,4 +246,23 @@ internal class VoidType : BaseType
 internal class EnumType : BaseType
 {
 
+}
+
+internal class ConstValueType : BaseType
+{
+	private string Value;
+	BaseType basetype;
+
+	public ConstValueType( BaseType basetype, string value )
+	{
+		this.basetype = basetype;
+		this.Value = value;
+	}
+
+	public override bool ShouldSkipAsArgument => true;
+
+	public override string Ref => "";
+	public override bool IsVector => false;
+	public override string AsArgument() => basetype.AsArgument();
+	public override string AsCallArgument() => Value;
 }

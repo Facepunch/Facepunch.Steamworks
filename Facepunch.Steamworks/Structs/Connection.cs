@@ -42,11 +42,10 @@ namespace Steamworks.Data
 		{
 			get
 			{
-				var sb = Helpers.TakeStringBuilder();
-				if ( !SteamNetworkingSockets.Internal.GetConnectionName( this, sb, sb.Capacity ) )
+				if ( !SteamNetworkingSockets.Internal.GetConnectionName( this, out var strVal ) )
 					return "ERROR";
 
-				return sb.ToString();
+				return strVal;
 			}
 
 			set => SteamNetworkingSockets.Internal.SetConnectionName( this, value );
@@ -87,12 +86,10 @@ namespace Steamworks.Data
 
 		public string DetailedStatus()
 		{
-			var sb = Helpers.TakeStringBuilder();
-
-			if ( SteamNetworkingSockets.Internal.GetDetailedConnectionStatus( this, sb, sb.Capacity ) != 0 )
+			if ( SteamNetworkingSockets.Internal.GetDetailedConnectionStatus( this, out var strVal ) != 0 )
 				return null;
 
-			return sb.ToString();
+			return strVal;
 		}
 
 		/*

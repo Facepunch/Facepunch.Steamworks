@@ -18,8 +18,7 @@ namespace Steamworks
 			{
 				var owner = default( SteamId );
 				var location = default( SteamPartyBeaconLocation_t );
-				var sb = Helpers.TakeStringBuilder();
-				Internal.GetBeaconDetails( Id, ref owner, ref location, sb, sb.Capacity );
+				Internal.GetBeaconDetails( Id, ref owner, ref location, out var strVal );
 				return owner;
 			}
 		}
@@ -33,9 +32,8 @@ namespace Steamworks
 			{
 				var owner = default( SteamId );
 				var location = default( SteamPartyBeaconLocation_t );
-				var sb = Helpers.TakeStringBuilder();
-				Internal.GetBeaconDetails( Id, ref owner, ref location, sb, sb.Capacity );
-				return sb.ToString();
+				Internal.GetBeaconDetails( Id, ref owner, ref location, out var strVal );
+				return strVal;
 			}
 		}
 

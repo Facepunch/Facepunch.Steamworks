@@ -11,7 +11,11 @@ namespace Steamworks
 	{
 		static bool initialized;
 
-		public static void Init( uint appid )
+		/// <summary>
+		/// Initialize the steam client.
+		/// If asyncCallbacks is false you need to call RunCallbacks manually every frame.
+		/// </summary>
+		public static void Init( uint appid, bool asyncCallbacks = true )
 		{
 			System.Environment.SetEnvironmentVariable( "SteamAppId", appid.ToString() );
 			System.Environment.SetEnvironmentVariable( "SteamGameId", appid.ToString() );
@@ -41,7 +45,10 @@ namespace Steamworks
 			SteamNetworkingSockets.InstallEvents();
 			SteamInput.InstallEvents();
 
-			RunCallbacksAsync();
+			if ( asyncCallbacks )
+			{
+				RunCallbacksAsync();
+			}
 		}
 
 		static List<SteamInterface> openIterfaces = new List<SteamInterface>();
@@ -73,7 +80,15 @@ namespace Steamworks
 			while ( IsValid )
 			{
 				await Task.Delay( 16 );
-				RunCallbacks();
+
+				try
+				{
+					RunCallbacks();
+				}
+				catch ( System.Exception e )
+				{
+					OnCallbackException?.Invoke( e );
+				}
 			}
 		}
 
@@ -123,14 +138,7 @@ namespace Steamworks
 		{
 			if ( !IsValid ) return;
 
-			try
-			{
-				SteamAPI.RunCallbacks();
-			}
-			catch ( System.Exception e )
-			{
-				OnCallbackException?.Invoke( e );
-			}
+			SteamAPI.RunCallbacks();
 		}
 
 		internal static void UnregisterCallback( IntPtr intPtr )
@@ -190,6 +198,15 @@ namespace Steamworks
 			//System.Environment.SetEnvironmentVariable( "SteamGameId", appid.ToString() );
 
 			return SteamAPI.RestartAppIfNecessary( appid );
+		}
+
+		/// <summary>
+		/// Called in interfaces that rely on this being initialized
+		/// </summary>
+		internal static void ValidCheck()
+		{
+			if ( !IsValid )
+				throw new System.Exception( "SteamClient isn't initialized" );
 		}
 
 	}

@@ -113,7 +113,8 @@ namespace Steamworks
 		#endregion
 		internal bool FileWrite( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFile, IntPtr pvData, int cubData )
 		{
-			return _FileWrite( Self, pchFile, pvData, cubData );
+			var returnValue = _FileWrite( Self, pchFile, pvData, cubData );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -124,7 +125,8 @@ namespace Steamworks
 		#endregion
 		internal int FileRead( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFile, IntPtr pvData, int cubDataToRead )
 		{
-			return _FileRead( Self, pchFile, pvData, cubDataToRead );
+			var returnValue = _FileRead( Self, pchFile, pvData, cubDataToRead );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -135,7 +137,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<RemoteStorageFileWriteAsyncComplete_t?> FileWriteAsync( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFile, IntPtr pvData, uint cubData )
 		{
-			return await RemoteStorageFileWriteAsyncComplete_t.GetResultAsync( _FileWriteAsync( Self, pchFile, pvData, cubData ) );
+			var returnValue = _FileWriteAsync( Self, pchFile, pvData, cubData );
+			return await RemoteStorageFileWriteAsyncComplete_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -146,7 +149,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<RemoteStorageFileReadAsyncComplete_t?> FileReadAsync( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFile, uint nOffset, uint cubToRead )
 		{
-			return await RemoteStorageFileReadAsyncComplete_t.GetResultAsync( _FileReadAsync( Self, pchFile, nOffset, cubToRead ) );
+			var returnValue = _FileReadAsync( Self, pchFile, nOffset, cubToRead );
+			return await RemoteStorageFileReadAsyncComplete_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -158,7 +162,8 @@ namespace Steamworks
 		#endregion
 		internal bool FileReadAsyncComplete( SteamAPICall_t hReadCall, IntPtr pvBuffer, uint cubToRead )
 		{
-			return _FileReadAsyncComplete( Self, hReadCall, pvBuffer, cubToRead );
+			var returnValue = _FileReadAsyncComplete( Self, hReadCall, pvBuffer, cubToRead );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -170,7 +175,8 @@ namespace Steamworks
 		#endregion
 		internal bool FileForget( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFile )
 		{
-			return _FileForget( Self, pchFile );
+			var returnValue = _FileForget( Self, pchFile );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -182,7 +188,8 @@ namespace Steamworks
 		#endregion
 		internal bool FileDelete( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFile )
 		{
-			return _FileDelete( Self, pchFile );
+			var returnValue = _FileDelete( Self, pchFile );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -193,7 +200,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<RemoteStorageFileShareResult_t?> FileShare( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFile )
 		{
-			return await RemoteStorageFileShareResult_t.GetResultAsync( _FileShare( Self, pchFile ) );
+			var returnValue = _FileShare( Self, pchFile );
+			return await RemoteStorageFileShareResult_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -205,7 +213,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetSyncPlatforms( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFile, RemoteStoragePlatform eRemoteStoragePlatform )
 		{
-			return _SetSyncPlatforms( Self, pchFile, eRemoteStoragePlatform );
+			var returnValue = _SetSyncPlatforms( Self, pchFile, eRemoteStoragePlatform );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -216,7 +225,8 @@ namespace Steamworks
 		#endregion
 		internal UGCFileWriteStreamHandle_t FileWriteStreamOpen( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFile )
 		{
-			return _FileWriteStreamOpen( Self, pchFile );
+			var returnValue = _FileWriteStreamOpen( Self, pchFile );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -228,7 +238,8 @@ namespace Steamworks
 		#endregion
 		internal bool FileWriteStreamWriteChunk( UGCFileWriteStreamHandle_t writeHandle, IntPtr pvData, int cubData )
 		{
-			return _FileWriteStreamWriteChunk( Self, writeHandle, pvData, cubData );
+			var returnValue = _FileWriteStreamWriteChunk( Self, writeHandle, pvData, cubData );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -240,7 +251,8 @@ namespace Steamworks
 		#endregion
 		internal bool FileWriteStreamClose( UGCFileWriteStreamHandle_t writeHandle )
 		{
-			return _FileWriteStreamClose( Self, writeHandle );
+			var returnValue = _FileWriteStreamClose( Self, writeHandle );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -252,7 +264,8 @@ namespace Steamworks
 		#endregion
 		internal bool FileWriteStreamCancel( UGCFileWriteStreamHandle_t writeHandle )
 		{
-			return _FileWriteStreamCancel( Self, writeHandle );
+			var returnValue = _FileWriteStreamCancel( Self, writeHandle );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -264,7 +277,8 @@ namespace Steamworks
 		#endregion
 		internal bool FileExists( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFile )
 		{
-			return _FileExists( Self, pchFile );
+			var returnValue = _FileExists( Self, pchFile );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -276,7 +290,8 @@ namespace Steamworks
 		#endregion
 		internal bool FilePersisted( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFile )
 		{
-			return _FilePersisted( Self, pchFile );
+			var returnValue = _FilePersisted( Self, pchFile );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -287,7 +302,8 @@ namespace Steamworks
 		#endregion
 		internal int GetFileSize( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFile )
 		{
-			return _GetFileSize( Self, pchFile );
+			var returnValue = _GetFileSize( Self, pchFile );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -298,7 +314,8 @@ namespace Steamworks
 		#endregion
 		internal long GetFileTimestamp( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFile )
 		{
-			return _GetFileTimestamp( Self, pchFile );
+			var returnValue = _GetFileTimestamp( Self, pchFile );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -309,7 +326,8 @@ namespace Steamworks
 		#endregion
 		internal RemoteStoragePlatform GetSyncPlatforms( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFile )
 		{
-			return _GetSyncPlatforms( Self, pchFile );
+			var returnValue = _GetSyncPlatforms( Self, pchFile );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -320,7 +338,8 @@ namespace Steamworks
 		#endregion
 		internal int GetFileCount()
 		{
-			return _GetFileCount( Self );
+			var returnValue = _GetFileCount( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -331,7 +350,8 @@ namespace Steamworks
 		#endregion
 		internal string GetFileNameAndSize( int iFile, ref int pnFileSizeInBytes )
 		{
-			return _GetFileNameAndSize( Self, iFile, ref pnFileSizeInBytes );
+			var returnValue = _GetFileNameAndSize( Self, iFile, ref pnFileSizeInBytes );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -343,7 +363,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetQuota( ref ulong pnTotalBytes, ref ulong puAvailableBytes )
 		{
-			return _GetQuota( Self, ref pnTotalBytes, ref puAvailableBytes );
+			var returnValue = _GetQuota( Self, ref pnTotalBytes, ref puAvailableBytes );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -355,7 +376,8 @@ namespace Steamworks
 		#endregion
 		internal bool IsCloudEnabledForAccount()
 		{
-			return _IsCloudEnabledForAccount( Self );
+			var returnValue = _IsCloudEnabledForAccount( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -367,7 +389,8 @@ namespace Steamworks
 		#endregion
 		internal bool IsCloudEnabledForApp()
 		{
-			return _IsCloudEnabledForApp( Self );
+			var returnValue = _IsCloudEnabledForApp( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -389,7 +412,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<RemoteStorageDownloadUGCResult_t?> UGCDownload( UGCHandle_t hContent, uint unPriority )
 		{
-			return await RemoteStorageDownloadUGCResult_t.GetResultAsync( _UGCDownload( Self, hContent, unPriority ) );
+			var returnValue = _UGCDownload( Self, hContent, unPriority );
+			return await RemoteStorageDownloadUGCResult_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -401,7 +425,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetUGCDownloadProgress( UGCHandle_t hContent, ref int pnBytesDownloaded, ref int pnBytesExpected )
 		{
-			return _GetUGCDownloadProgress( Self, hContent, ref pnBytesDownloaded, ref pnBytesExpected );
+			var returnValue = _GetUGCDownloadProgress( Self, hContent, ref pnBytesDownloaded, ref pnBytesExpected );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -413,7 +438,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetUGCDetails( UGCHandle_t hContent, ref AppId pnAppID, [In,Out] ref char[]  ppchName, ref int pnFileSizeInBytes, ref SteamId pSteamIDOwner )
 		{
-			return _GetUGCDetails( Self, hContent, ref pnAppID, ref ppchName, ref pnFileSizeInBytes, ref pSteamIDOwner );
+			var returnValue = _GetUGCDetails( Self, hContent, ref pnAppID, ref ppchName, ref pnFileSizeInBytes, ref pSteamIDOwner );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -424,7 +450,8 @@ namespace Steamworks
 		#endregion
 		internal int UGCRead( UGCHandle_t hContent, IntPtr pvData, int cubDataToRead, uint cOffset, UGCReadAction eAction )
 		{
-			return _UGCRead( Self, hContent, pvData, cubDataToRead, cOffset, eAction );
+			var returnValue = _UGCRead( Self, hContent, pvData, cubDataToRead, cOffset, eAction );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -435,7 +462,8 @@ namespace Steamworks
 		#endregion
 		internal int GetCachedUGCCount()
 		{
-			return _GetCachedUGCCount( Self );
+			var returnValue = _GetCachedUGCCount( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -446,7 +474,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<RemoteStorageDownloadUGCResult_t?> UGCDownloadToLocation( UGCHandle_t hContent, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchLocation, uint unPriority )
 		{
-			return await RemoteStorageDownloadUGCResult_t.GetResultAsync( _UGCDownloadToLocation( Self, hContent, pchLocation, unPriority ) );
+			var returnValue = _UGCDownloadToLocation( Self, hContent, pchLocation, unPriority );
+			return await RemoteStorageDownloadUGCResult_t.GetResultAsync( returnValue );
 		}
 		
 	}

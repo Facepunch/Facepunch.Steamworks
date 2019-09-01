@@ -186,7 +186,8 @@ namespace Steamworks
 		#endregion
 		internal UGCQueryHandle_t CreateQueryUserUGCRequest( AccountID_t unAccountID, UserUGCList eListType, UgcType eMatchingUGCType, UserUGCListSortOrder eSortOrder, AppId nCreatorAppID, AppId nConsumerAppID, uint unPage )
 		{
-			return _CreateQueryUserUGCRequest( Self, unAccountID, eListType, eMatchingUGCType, eSortOrder, nCreatorAppID, nConsumerAppID, unPage );
+			var returnValue = _CreateQueryUserUGCRequest( Self, unAccountID, eListType, eMatchingUGCType, eSortOrder, nCreatorAppID, nConsumerAppID, unPage );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -197,7 +198,8 @@ namespace Steamworks
 		#endregion
 		internal UGCQueryHandle_t CreateQueryAllUGCRequest1( UGCQuery eQueryType, UgcType eMatchingeMatchingUGCTypeFileType, AppId nCreatorAppID, AppId nConsumerAppID, uint unPage )
 		{
-			return _CreateQueryAllUGCRequest1( Self, eQueryType, eMatchingeMatchingUGCTypeFileType, nCreatorAppID, nConsumerAppID, unPage );
+			var returnValue = _CreateQueryAllUGCRequest1( Self, eQueryType, eMatchingeMatchingUGCTypeFileType, nCreatorAppID, nConsumerAppID, unPage );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -208,7 +210,8 @@ namespace Steamworks
 		#endregion
 		internal UGCQueryHandle_t CreateQueryAllUGCRequest2( UGCQuery eQueryType, UgcType eMatchingeMatchingUGCTypeFileType, AppId nCreatorAppID, AppId nConsumerAppID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchCursor )
 		{
-			return _CreateQueryAllUGCRequest2( Self, eQueryType, eMatchingeMatchingUGCTypeFileType, nCreatorAppID, nConsumerAppID, pchCursor );
+			var returnValue = _CreateQueryAllUGCRequest2( Self, eQueryType, eMatchingeMatchingUGCTypeFileType, nCreatorAppID, nConsumerAppID, pchCursor );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -219,7 +222,8 @@ namespace Steamworks
 		#endregion
 		internal UGCQueryHandle_t CreateQueryUGCDetailsRequest( [In,Out] PublishedFileId[]  pvecPublishedFileID, uint unNumPublishedFileIDs )
 		{
-			return _CreateQueryUGCDetailsRequest( Self, pvecPublishedFileID, unNumPublishedFileIDs );
+			var returnValue = _CreateQueryUGCDetailsRequest( Self, pvecPublishedFileID, unNumPublishedFileIDs );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -230,7 +234,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<SteamUGCQueryCompleted_t?> SendQueryUGCRequest( UGCQueryHandle_t handle )
 		{
-			return await SteamUGCQueryCompleted_t.GetResultAsync( _SendQueryUGCRequest( Self, handle ) );
+			var returnValue = _SendQueryUGCRequest( Self, handle );
+			return await SteamUGCQueryCompleted_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -242,31 +247,38 @@ namespace Steamworks
 		#endregion
 		internal bool GetQueryUGCResult( UGCQueryHandle_t handle, uint index, ref SteamUGCDetails_t pDetails )
 		{
-			return _GetQueryUGCResult( Self, handle, index, ref pDetails );
+			var returnValue = _GetQueryUGCResult( Self, handle, index, ref pDetails );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetQueryUGCPreviewURL( IntPtr self, UGCQueryHandle_t handle, uint index, StringBuilder pchURL, uint cchURLSize );
+		private delegate bool FGetQueryUGCPreviewURL( IntPtr self, UGCQueryHandle_t handle, uint index, IntPtr pchURL, uint cchURLSize );
 		private FGetQueryUGCPreviewURL _GetQueryUGCPreviewURL;
 		
 		#endregion
-		internal bool GetQueryUGCPreviewURL( UGCQueryHandle_t handle, uint index, StringBuilder pchURL, uint cchURLSize )
+		internal bool GetQueryUGCPreviewURL( UGCQueryHandle_t handle, uint index, out string pchURL )
 		{
-			return _GetQueryUGCPreviewURL( Self, handle, index, pchURL, cchURLSize );
+			IntPtr mempchURL = Helpers.TakeMemory();
+			var returnValue = _GetQueryUGCPreviewURL( Self, handle, index, mempchURL, (1024 * 32) );
+			pchURL = Helpers.MemoryToString( mempchURL );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetQueryUGCMetadata( IntPtr self, UGCQueryHandle_t handle, uint index, StringBuilder pchMetadata, uint cchMetadatasize );
+		private delegate bool FGetQueryUGCMetadata( IntPtr self, UGCQueryHandle_t handle, uint index, IntPtr pchMetadata, uint cchMetadatasize );
 		private FGetQueryUGCMetadata _GetQueryUGCMetadata;
 		
 		#endregion
-		internal bool GetQueryUGCMetadata( UGCQueryHandle_t handle, uint index, StringBuilder pchMetadata, uint cchMetadatasize )
+		internal bool GetQueryUGCMetadata( UGCQueryHandle_t handle, uint index, out string pchMetadata )
 		{
-			return _GetQueryUGCMetadata( Self, handle, index, pchMetadata, cchMetadatasize );
+			IntPtr mempchMetadata = Helpers.TakeMemory();
+			var returnValue = _GetQueryUGCMetadata( Self, handle, index, mempchMetadata, (1024 * 32) );
+			pchMetadata = Helpers.MemoryToString( mempchMetadata );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -278,7 +290,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetQueryUGCChildren( UGCQueryHandle_t handle, uint index, [In,Out] PublishedFileId[]  pvecPublishedFileID, uint cMaxEntries )
 		{
-			return _GetQueryUGCChildren( Self, handle, index, pvecPublishedFileID, cMaxEntries );
+			var returnValue = _GetQueryUGCChildren( Self, handle, index, pvecPublishedFileID, cMaxEntries );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -290,7 +303,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetQueryUGCStatistic( UGCQueryHandle_t handle, uint index, ItemStatistic eStatType, ref ulong pStatValue )
 		{
-			return _GetQueryUGCStatistic( Self, handle, index, eStatType, ref pStatValue );
+			var returnValue = _GetQueryUGCStatistic( Self, handle, index, eStatType, ref pStatValue );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -301,19 +315,25 @@ namespace Steamworks
 		#endregion
 		internal uint GetQueryUGCNumAdditionalPreviews( UGCQueryHandle_t handle, uint index )
 		{
-			return _GetQueryUGCNumAdditionalPreviews( Self, handle, index );
+			var returnValue = _GetQueryUGCNumAdditionalPreviews( Self, handle, index );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetQueryUGCAdditionalPreview( IntPtr self, UGCQueryHandle_t handle, uint index, uint previewIndex, StringBuilder pchURLOrVideoID, uint cchURLSize, StringBuilder pchOriginalFileName, uint cchOriginalFileNameSize, ref ItemPreviewType pPreviewType );
+		private delegate bool FGetQueryUGCAdditionalPreview( IntPtr self, UGCQueryHandle_t handle, uint index, uint previewIndex, IntPtr pchURLOrVideoID, uint cchURLSize, IntPtr pchOriginalFileName, uint cchOriginalFileNameSize, ref ItemPreviewType pPreviewType );
 		private FGetQueryUGCAdditionalPreview _GetQueryUGCAdditionalPreview;
 		
 		#endregion
-		internal bool GetQueryUGCAdditionalPreview( UGCQueryHandle_t handle, uint index, uint previewIndex, StringBuilder pchURLOrVideoID, uint cchURLSize, StringBuilder pchOriginalFileName, uint cchOriginalFileNameSize, ref ItemPreviewType pPreviewType )
+		internal bool GetQueryUGCAdditionalPreview( UGCQueryHandle_t handle, uint index, uint previewIndex, out string pchURLOrVideoID, out string pchOriginalFileName, ref ItemPreviewType pPreviewType )
 		{
-			return _GetQueryUGCAdditionalPreview( Self, handle, index, previewIndex, pchURLOrVideoID, cchURLSize, pchOriginalFileName, cchOriginalFileNameSize, ref pPreviewType );
+			IntPtr mempchURLOrVideoID = Helpers.TakeMemory();
+			IntPtr mempchOriginalFileName = Helpers.TakeMemory();
+			var returnValue = _GetQueryUGCAdditionalPreview( Self, handle, index, previewIndex, mempchURLOrVideoID, (1024 * 32), mempchOriginalFileName, (1024 * 32), ref pPreviewType );
+			pchURLOrVideoID = Helpers.MemoryToString( mempchURLOrVideoID );
+			pchOriginalFileName = Helpers.MemoryToString( mempchOriginalFileName );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -324,19 +344,25 @@ namespace Steamworks
 		#endregion
 		internal uint GetQueryUGCNumKeyValueTags( UGCQueryHandle_t handle, uint index )
 		{
-			return _GetQueryUGCNumKeyValueTags( Self, handle, index );
+			var returnValue = _GetQueryUGCNumKeyValueTags( Self, handle, index );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetQueryUGCKeyValueTag( IntPtr self, UGCQueryHandle_t handle, uint index, uint keyValueTagIndex, StringBuilder pchKey, uint cchKeySize, StringBuilder pchValue, uint cchValueSize );
+		private delegate bool FGetQueryUGCKeyValueTag( IntPtr self, UGCQueryHandle_t handle, uint index, uint keyValueTagIndex, IntPtr pchKey, uint cchKeySize, IntPtr pchValue, uint cchValueSize );
 		private FGetQueryUGCKeyValueTag _GetQueryUGCKeyValueTag;
 		
 		#endregion
-		internal bool GetQueryUGCKeyValueTag( UGCQueryHandle_t handle, uint index, uint keyValueTagIndex, StringBuilder pchKey, uint cchKeySize, StringBuilder pchValue, uint cchValueSize )
+		internal bool GetQueryUGCKeyValueTag( UGCQueryHandle_t handle, uint index, uint keyValueTagIndex, out string pchKey, out string pchValue )
 		{
-			return _GetQueryUGCKeyValueTag( Self, handle, index, keyValueTagIndex, pchKey, cchKeySize, pchValue, cchValueSize );
+			IntPtr mempchKey = Helpers.TakeMemory();
+			IntPtr mempchValue = Helpers.TakeMemory();
+			var returnValue = _GetQueryUGCKeyValueTag( Self, handle, index, keyValueTagIndex, mempchKey, (1024 * 32), mempchValue, (1024 * 32) );
+			pchKey = Helpers.MemoryToString( mempchKey );
+			pchValue = Helpers.MemoryToString( mempchValue );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -348,7 +374,8 @@ namespace Steamworks
 		#endregion
 		internal bool ReleaseQueryUGCRequest( UGCQueryHandle_t handle )
 		{
-			return _ReleaseQueryUGCRequest( Self, handle );
+			var returnValue = _ReleaseQueryUGCRequest( Self, handle );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -360,7 +387,8 @@ namespace Steamworks
 		#endregion
 		internal bool AddRequiredTag( UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pTagName )
 		{
-			return _AddRequiredTag( Self, handle, pTagName );
+			var returnValue = _AddRequiredTag( Self, handle, pTagName );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -372,7 +400,8 @@ namespace Steamworks
 		#endregion
 		internal bool AddExcludedTag( UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pTagName )
 		{
-			return _AddExcludedTag( Self, handle, pTagName );
+			var returnValue = _AddExcludedTag( Self, handle, pTagName );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -384,7 +413,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetReturnOnlyIDs( UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bReturnOnlyIDs )
 		{
-			return _SetReturnOnlyIDs( Self, handle, bReturnOnlyIDs );
+			var returnValue = _SetReturnOnlyIDs( Self, handle, bReturnOnlyIDs );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -396,7 +426,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetReturnKeyValueTags( UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bReturnKeyValueTags )
 		{
-			return _SetReturnKeyValueTags( Self, handle, bReturnKeyValueTags );
+			var returnValue = _SetReturnKeyValueTags( Self, handle, bReturnKeyValueTags );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -408,7 +439,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetReturnLongDescription( UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bReturnLongDescription )
 		{
-			return _SetReturnLongDescription( Self, handle, bReturnLongDescription );
+			var returnValue = _SetReturnLongDescription( Self, handle, bReturnLongDescription );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -420,7 +452,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetReturnMetadata( UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bReturnMetadata )
 		{
-			return _SetReturnMetadata( Self, handle, bReturnMetadata );
+			var returnValue = _SetReturnMetadata( Self, handle, bReturnMetadata );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -432,7 +465,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetReturnChildren( UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bReturnChildren )
 		{
-			return _SetReturnChildren( Self, handle, bReturnChildren );
+			var returnValue = _SetReturnChildren( Self, handle, bReturnChildren );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -444,7 +478,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetReturnAdditionalPreviews( UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bReturnAdditionalPreviews )
 		{
-			return _SetReturnAdditionalPreviews( Self, handle, bReturnAdditionalPreviews );
+			var returnValue = _SetReturnAdditionalPreviews( Self, handle, bReturnAdditionalPreviews );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -456,7 +491,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetReturnTotalOnly( UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bReturnTotalOnly )
 		{
-			return _SetReturnTotalOnly( Self, handle, bReturnTotalOnly );
+			var returnValue = _SetReturnTotalOnly( Self, handle, bReturnTotalOnly );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -468,7 +504,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetReturnPlaytimeStats( UGCQueryHandle_t handle, uint unDays )
 		{
-			return _SetReturnPlaytimeStats( Self, handle, unDays );
+			var returnValue = _SetReturnPlaytimeStats( Self, handle, unDays );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -480,7 +517,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetLanguage( UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchLanguage )
 		{
-			return _SetLanguage( Self, handle, pchLanguage );
+			var returnValue = _SetLanguage( Self, handle, pchLanguage );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -492,7 +530,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetAllowCachedResponse( UGCQueryHandle_t handle, uint unMaxAgeSeconds )
 		{
-			return _SetAllowCachedResponse( Self, handle, unMaxAgeSeconds );
+			var returnValue = _SetAllowCachedResponse( Self, handle, unMaxAgeSeconds );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -504,7 +543,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetCloudFileNameFilter( UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pMatchCloudFileName )
 		{
-			return _SetCloudFileNameFilter( Self, handle, pMatchCloudFileName );
+			var returnValue = _SetCloudFileNameFilter( Self, handle, pMatchCloudFileName );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -516,7 +556,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetMatchAnyTag( UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bMatchAnyTag )
 		{
-			return _SetMatchAnyTag( Self, handle, bMatchAnyTag );
+			var returnValue = _SetMatchAnyTag( Self, handle, bMatchAnyTag );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -528,7 +569,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetSearchText( UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pSearchText )
 		{
-			return _SetSearchText( Self, handle, pSearchText );
+			var returnValue = _SetSearchText( Self, handle, pSearchText );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -540,7 +582,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetRankedByTrendDays( UGCQueryHandle_t handle, uint unDays )
 		{
-			return _SetRankedByTrendDays( Self, handle, unDays );
+			var returnValue = _SetRankedByTrendDays( Self, handle, unDays );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -552,7 +595,8 @@ namespace Steamworks
 		#endregion
 		internal bool AddRequiredKeyValueTag( UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pValue )
 		{
-			return _AddRequiredKeyValueTag( Self, handle, pKey, pValue );
+			var returnValue = _AddRequiredKeyValueTag( Self, handle, pKey, pValue );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -563,7 +607,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<SteamUGCRequestUGCDetailsResult_t?> RequestUGCDetails( PublishedFileId nPublishedFileID, uint unMaxAgeSeconds )
 		{
-			return await SteamUGCRequestUGCDetailsResult_t.GetResultAsync( _RequestUGCDetails( Self, nPublishedFileID, unMaxAgeSeconds ) );
+			var returnValue = _RequestUGCDetails( Self, nPublishedFileID, unMaxAgeSeconds );
+			return await SteamUGCRequestUGCDetailsResult_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -574,7 +619,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<CreateItemResult_t?> CreateItem( AppId nConsumerAppId, WorkshopFileType eFileType )
 		{
-			return await CreateItemResult_t.GetResultAsync( _CreateItem( Self, nConsumerAppId, eFileType ) );
+			var returnValue = _CreateItem( Self, nConsumerAppId, eFileType );
+			return await CreateItemResult_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -585,7 +631,8 @@ namespace Steamworks
 		#endregion
 		internal UGCUpdateHandle_t StartItemUpdate( AppId nConsumerAppId, PublishedFileId nPublishedFileID )
 		{
-			return _StartItemUpdate( Self, nConsumerAppId, nPublishedFileID );
+			var returnValue = _StartItemUpdate( Self, nConsumerAppId, nPublishedFileID );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -597,7 +644,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetItemTitle( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchTitle )
 		{
-			return _SetItemTitle( Self, handle, pchTitle );
+			var returnValue = _SetItemTitle( Self, handle, pchTitle );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -609,7 +657,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetItemDescription( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchDescription )
 		{
-			return _SetItemDescription( Self, handle, pchDescription );
+			var returnValue = _SetItemDescription( Self, handle, pchDescription );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -621,7 +670,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetItemUpdateLanguage( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchLanguage )
 		{
-			return _SetItemUpdateLanguage( Self, handle, pchLanguage );
+			var returnValue = _SetItemUpdateLanguage( Self, handle, pchLanguage );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -633,7 +683,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetItemMetadata( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchMetaData )
 		{
-			return _SetItemMetadata( Self, handle, pchMetaData );
+			var returnValue = _SetItemMetadata( Self, handle, pchMetaData );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -645,7 +696,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetItemVisibility( UGCUpdateHandle_t handle, RemoteStoragePublishedFileVisibility eVisibility )
 		{
-			return _SetItemVisibility( Self, handle, eVisibility );
+			var returnValue = _SetItemVisibility( Self, handle, eVisibility );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -657,7 +709,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetItemTags( UGCUpdateHandle_t updateHandle, ref SteamParamStringArray_t pTags )
 		{
-			return _SetItemTags( Self, updateHandle, ref pTags );
+			var returnValue = _SetItemTags( Self, updateHandle, ref pTags );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -669,7 +722,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetItemContent( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszContentFolder )
 		{
-			return _SetItemContent( Self, handle, pszContentFolder );
+			var returnValue = _SetItemContent( Self, handle, pszContentFolder );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -681,7 +735,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetItemPreview( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszPreviewFile )
 		{
-			return _SetItemPreview( Self, handle, pszPreviewFile );
+			var returnValue = _SetItemPreview( Self, handle, pszPreviewFile );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -693,7 +748,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetAllowLegacyUpload( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bAllowLegacyUpload )
 		{
-			return _SetAllowLegacyUpload( Self, handle, bAllowLegacyUpload );
+			var returnValue = _SetAllowLegacyUpload( Self, handle, bAllowLegacyUpload );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -705,7 +761,8 @@ namespace Steamworks
 		#endregion
 		internal bool RemoveItemKeyValueTags( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey )
 		{
-			return _RemoveItemKeyValueTags( Self, handle, pchKey );
+			var returnValue = _RemoveItemKeyValueTags( Self, handle, pchKey );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -717,7 +774,8 @@ namespace Steamworks
 		#endregion
 		internal bool AddItemKeyValueTag( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchValue )
 		{
-			return _AddItemKeyValueTag( Self, handle, pchKey, pchValue );
+			var returnValue = _AddItemKeyValueTag( Self, handle, pchKey, pchValue );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -729,7 +787,8 @@ namespace Steamworks
 		#endregion
 		internal bool AddItemPreviewFile( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszPreviewFile, ItemPreviewType type )
 		{
-			return _AddItemPreviewFile( Self, handle, pszPreviewFile, type );
+			var returnValue = _AddItemPreviewFile( Self, handle, pszPreviewFile, type );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -741,7 +800,8 @@ namespace Steamworks
 		#endregion
 		internal bool AddItemPreviewVideo( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszVideoID )
 		{
-			return _AddItemPreviewVideo( Self, handle, pszVideoID );
+			var returnValue = _AddItemPreviewVideo( Self, handle, pszVideoID );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -753,7 +813,8 @@ namespace Steamworks
 		#endregion
 		internal bool UpdateItemPreviewFile( UGCUpdateHandle_t handle, uint index, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszPreviewFile )
 		{
-			return _UpdateItemPreviewFile( Self, handle, index, pszPreviewFile );
+			var returnValue = _UpdateItemPreviewFile( Self, handle, index, pszPreviewFile );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -765,7 +826,8 @@ namespace Steamworks
 		#endregion
 		internal bool UpdateItemPreviewVideo( UGCUpdateHandle_t handle, uint index, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszVideoID )
 		{
-			return _UpdateItemPreviewVideo( Self, handle, index, pszVideoID );
+			var returnValue = _UpdateItemPreviewVideo( Self, handle, index, pszVideoID );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -777,7 +839,8 @@ namespace Steamworks
 		#endregion
 		internal bool RemoveItemPreview( UGCUpdateHandle_t handle, uint index )
 		{
-			return _RemoveItemPreview( Self, handle, index );
+			var returnValue = _RemoveItemPreview( Self, handle, index );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -788,7 +851,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<SubmitItemUpdateResult_t?> SubmitItemUpdate( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchChangeNote )
 		{
-			return await SubmitItemUpdateResult_t.GetResultAsync( _SubmitItemUpdate( Self, handle, pchChangeNote ) );
+			var returnValue = _SubmitItemUpdate( Self, handle, pchChangeNote );
+			return await SubmitItemUpdateResult_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -799,7 +863,8 @@ namespace Steamworks
 		#endregion
 		internal ItemUpdateStatus GetItemUpdateProgress( UGCUpdateHandle_t handle, ref ulong punBytesProcessed, ref ulong punBytesTotal )
 		{
-			return _GetItemUpdateProgress( Self, handle, ref punBytesProcessed, ref punBytesTotal );
+			var returnValue = _GetItemUpdateProgress( Self, handle, ref punBytesProcessed, ref punBytesTotal );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -810,7 +875,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<SetUserItemVoteResult_t?> SetUserItemVote( PublishedFileId nPublishedFileID, [MarshalAs( UnmanagedType.U1 )] bool bVoteUp )
 		{
-			return await SetUserItemVoteResult_t.GetResultAsync( _SetUserItemVote( Self, nPublishedFileID, bVoteUp ) );
+			var returnValue = _SetUserItemVote( Self, nPublishedFileID, bVoteUp );
+			return await SetUserItemVoteResult_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -821,7 +887,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<GetUserItemVoteResult_t?> GetUserItemVote( PublishedFileId nPublishedFileID )
 		{
-			return await GetUserItemVoteResult_t.GetResultAsync( _GetUserItemVote( Self, nPublishedFileID ) );
+			var returnValue = _GetUserItemVote( Self, nPublishedFileID );
+			return await GetUserItemVoteResult_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -832,7 +899,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<UserFavoriteItemsListChanged_t?> AddItemToFavorites( AppId nAppId, PublishedFileId nPublishedFileID )
 		{
-			return await UserFavoriteItemsListChanged_t.GetResultAsync( _AddItemToFavorites( Self, nAppId, nPublishedFileID ) );
+			var returnValue = _AddItemToFavorites( Self, nAppId, nPublishedFileID );
+			return await UserFavoriteItemsListChanged_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -843,7 +911,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<UserFavoriteItemsListChanged_t?> RemoveItemFromFavorites( AppId nAppId, PublishedFileId nPublishedFileID )
 		{
-			return await UserFavoriteItemsListChanged_t.GetResultAsync( _RemoveItemFromFavorites( Self, nAppId, nPublishedFileID ) );
+			var returnValue = _RemoveItemFromFavorites( Self, nAppId, nPublishedFileID );
+			return await UserFavoriteItemsListChanged_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -854,7 +923,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<RemoteStorageSubscribePublishedFileResult_t?> SubscribeItem( PublishedFileId nPublishedFileID )
 		{
-			return await RemoteStorageSubscribePublishedFileResult_t.GetResultAsync( _SubscribeItem( Self, nPublishedFileID ) );
+			var returnValue = _SubscribeItem( Self, nPublishedFileID );
+			return await RemoteStorageSubscribePublishedFileResult_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -865,7 +935,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<RemoteStorageUnsubscribePublishedFileResult_t?> UnsubscribeItem( PublishedFileId nPublishedFileID )
 		{
-			return await RemoteStorageUnsubscribePublishedFileResult_t.GetResultAsync( _UnsubscribeItem( Self, nPublishedFileID ) );
+			var returnValue = _UnsubscribeItem( Self, nPublishedFileID );
+			return await RemoteStorageUnsubscribePublishedFileResult_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -876,7 +947,8 @@ namespace Steamworks
 		#endregion
 		internal uint GetNumSubscribedItems()
 		{
-			return _GetNumSubscribedItems( Self );
+			var returnValue = _GetNumSubscribedItems( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -887,7 +959,8 @@ namespace Steamworks
 		#endregion
 		internal uint GetSubscribedItems( [In,Out] PublishedFileId[]  pvecPublishedFileID, uint cMaxEntries )
 		{
-			return _GetSubscribedItems( Self, pvecPublishedFileID, cMaxEntries );
+			var returnValue = _GetSubscribedItems( Self, pvecPublishedFileID, cMaxEntries );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -898,19 +971,23 @@ namespace Steamworks
 		#endregion
 		internal uint GetItemState( PublishedFileId nPublishedFileID )
 		{
-			return _GetItemState( Self, nPublishedFileID );
+			var returnValue = _GetItemState( Self, nPublishedFileID );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetItemInstallInfo( IntPtr self, PublishedFileId nPublishedFileID, ref ulong punSizeOnDisk, StringBuilder pchFolder, uint cchFolderSize, ref uint punTimeStamp );
+		private delegate bool FGetItemInstallInfo( IntPtr self, PublishedFileId nPublishedFileID, ref ulong punSizeOnDisk, IntPtr pchFolder, uint cchFolderSize, ref uint punTimeStamp );
 		private FGetItemInstallInfo _GetItemInstallInfo;
 		
 		#endregion
-		internal bool GetItemInstallInfo( PublishedFileId nPublishedFileID, ref ulong punSizeOnDisk, StringBuilder pchFolder, uint cchFolderSize, ref uint punTimeStamp )
+		internal bool GetItemInstallInfo( PublishedFileId nPublishedFileID, ref ulong punSizeOnDisk, out string pchFolder, ref uint punTimeStamp )
 		{
-			return _GetItemInstallInfo( Self, nPublishedFileID, ref punSizeOnDisk, pchFolder, cchFolderSize, ref punTimeStamp );
+			IntPtr mempchFolder = Helpers.TakeMemory();
+			var returnValue = _GetItemInstallInfo( Self, nPublishedFileID, ref punSizeOnDisk, mempchFolder, (1024 * 32), ref punTimeStamp );
+			pchFolder = Helpers.MemoryToString( mempchFolder );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -922,7 +999,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetItemDownloadInfo( PublishedFileId nPublishedFileID, ref ulong punBytesDownloaded, ref ulong punBytesTotal )
 		{
-			return _GetItemDownloadInfo( Self, nPublishedFileID, ref punBytesDownloaded, ref punBytesTotal );
+			var returnValue = _GetItemDownloadInfo( Self, nPublishedFileID, ref punBytesDownloaded, ref punBytesTotal );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -934,7 +1012,8 @@ namespace Steamworks
 		#endregion
 		internal bool DownloadItem( PublishedFileId nPublishedFileID, [MarshalAs( UnmanagedType.U1 )] bool bHighPriority )
 		{
-			return _DownloadItem( Self, nPublishedFileID, bHighPriority );
+			var returnValue = _DownloadItem( Self, nPublishedFileID, bHighPriority );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -946,7 +1025,8 @@ namespace Steamworks
 		#endregion
 		internal bool BInitWorkshopForGameServer( DepotId_t unWorkshopDepotID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszFolder )
 		{
-			return _BInitWorkshopForGameServer( Self, unWorkshopDepotID, pszFolder );
+			var returnValue = _BInitWorkshopForGameServer( Self, unWorkshopDepotID, pszFolder );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -968,7 +1048,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<StartPlaytimeTrackingResult_t?> StartPlaytimeTracking( [In,Out] PublishedFileId[]  pvecPublishedFileID, uint unNumPublishedFileIDs )
 		{
-			return await StartPlaytimeTrackingResult_t.GetResultAsync( _StartPlaytimeTracking( Self, pvecPublishedFileID, unNumPublishedFileIDs ) );
+			var returnValue = _StartPlaytimeTracking( Self, pvecPublishedFileID, unNumPublishedFileIDs );
+			return await StartPlaytimeTrackingResult_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -979,7 +1060,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<StopPlaytimeTrackingResult_t?> StopPlaytimeTracking( [In,Out] PublishedFileId[]  pvecPublishedFileID, uint unNumPublishedFileIDs )
 		{
-			return await StopPlaytimeTrackingResult_t.GetResultAsync( _StopPlaytimeTracking( Self, pvecPublishedFileID, unNumPublishedFileIDs ) );
+			var returnValue = _StopPlaytimeTracking( Self, pvecPublishedFileID, unNumPublishedFileIDs );
+			return await StopPlaytimeTrackingResult_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -990,7 +1072,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<StopPlaytimeTrackingResult_t?> StopPlaytimeTrackingForAllItems()
 		{
-			return await StopPlaytimeTrackingResult_t.GetResultAsync( _StopPlaytimeTrackingForAllItems( Self ) );
+			var returnValue = _StopPlaytimeTrackingForAllItems( Self );
+			return await StopPlaytimeTrackingResult_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -1001,7 +1084,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<AddUGCDependencyResult_t?> AddDependency( PublishedFileId nParentPublishedFileID, PublishedFileId nChildPublishedFileID )
 		{
-			return await AddUGCDependencyResult_t.GetResultAsync( _AddDependency( Self, nParentPublishedFileID, nChildPublishedFileID ) );
+			var returnValue = _AddDependency( Self, nParentPublishedFileID, nChildPublishedFileID );
+			return await AddUGCDependencyResult_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -1012,7 +1096,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<RemoveUGCDependencyResult_t?> RemoveDependency( PublishedFileId nParentPublishedFileID, PublishedFileId nChildPublishedFileID )
 		{
-			return await RemoveUGCDependencyResult_t.GetResultAsync( _RemoveDependency( Self, nParentPublishedFileID, nChildPublishedFileID ) );
+			var returnValue = _RemoveDependency( Self, nParentPublishedFileID, nChildPublishedFileID );
+			return await RemoveUGCDependencyResult_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -1023,7 +1108,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<AddAppDependencyResult_t?> AddAppDependency( PublishedFileId nPublishedFileID, AppId nAppID )
 		{
-			return await AddAppDependencyResult_t.GetResultAsync( _AddAppDependency( Self, nPublishedFileID, nAppID ) );
+			var returnValue = _AddAppDependency( Self, nPublishedFileID, nAppID );
+			return await AddAppDependencyResult_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -1034,7 +1120,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<RemoveAppDependencyResult_t?> RemoveAppDependency( PublishedFileId nPublishedFileID, AppId nAppID )
 		{
-			return await RemoveAppDependencyResult_t.GetResultAsync( _RemoveAppDependency( Self, nPublishedFileID, nAppID ) );
+			var returnValue = _RemoveAppDependency( Self, nPublishedFileID, nAppID );
+			return await RemoveAppDependencyResult_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -1045,7 +1132,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<GetAppDependenciesResult_t?> GetAppDependencies( PublishedFileId nPublishedFileID )
 		{
-			return await GetAppDependenciesResult_t.GetResultAsync( _GetAppDependencies( Self, nPublishedFileID ) );
+			var returnValue = _GetAppDependencies( Self, nPublishedFileID );
+			return await GetAppDependenciesResult_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -1056,7 +1144,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<DeleteItemResult_t?> DeleteItem( PublishedFileId nPublishedFileID )
 		{
-			return await DeleteItemResult_t.GetResultAsync( _DeleteItem( Self, nPublishedFileID ) );
+			var returnValue = _DeleteItem( Self, nPublishedFileID );
+			return await DeleteItemResult_t.GetResultAsync( returnValue );
 		}
 		
 	}

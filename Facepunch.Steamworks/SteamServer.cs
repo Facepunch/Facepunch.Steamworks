@@ -66,7 +66,12 @@ namespace Steamworks
 		/// </summary>
 		public static event Action<Result> OnSteamServersDisconnected;
 
-		public static void Init( AppId appid, SteamServerInit init )
+
+		/// <summary>
+		/// Initialize the steam server.
+		/// If asyncCallbacks is false you need to call RunCallbacks manually every frame.
+		/// </summary>
+		public static void Init( AppId appid, SteamServerInit init, bool asyncCallbacks = true )
 		{
 			uint ipaddress = 0; // Any Port
 
@@ -104,7 +109,10 @@ namespace Steamworks
 
 			InstallEvents();
 
-			RunCallbacksAsync();
+			if ( asyncCallbacks )
+			{
+				RunCallbacksAsync();
+			}
 		}
 
 		static List<SteamInterface> openIterfaces = new List<SteamInterface>();
@@ -147,7 +155,15 @@ namespace Steamworks
 		{
 			while ( IsValid )
 			{
-				RunCallbacks();
+				try
+				{
+					RunCallbacks();
+				}
+				catch ( System.Exception e )
+				{
+					OnCallbackException?.Invoke( e );
+				}
+
 				await Task.Delay( 16 );
 			}
 		}
@@ -157,14 +173,7 @@ namespace Steamworks
 		/// </summary>
 		public static void RunCallbacks()
 		{
-			try
-			{
-				SteamGameServer.RunCallbacks();
-			}
-			catch ( System.Exception e )
-			{
-				OnCallbackException?.Invoke( e );
-			}
+			SteamGameServer.RunCallbacks();
 		}
 
 		/// <summary>

@@ -73,7 +73,8 @@ namespace Steamworks
 		#endregion
 		internal bool SendP2PPacket( SteamId steamIDRemote, IntPtr pubData, uint cubData, P2PSend eP2PSendType, int nChannel )
 		{
-			return _SendP2PPacket( Self, steamIDRemote, pubData, cubData, eP2PSendType, nChannel );
+			var returnValue = _SendP2PPacket( Self, steamIDRemote, pubData, cubData, eP2PSendType, nChannel );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -85,7 +86,8 @@ namespace Steamworks
 		#endregion
 		internal bool IsP2PPacketAvailable( ref uint pcubMsgSize, int nChannel )
 		{
-			return _IsP2PPacketAvailable( Self, ref pcubMsgSize, nChannel );
+			var returnValue = _IsP2PPacketAvailable( Self, ref pcubMsgSize, nChannel );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -97,7 +99,8 @@ namespace Steamworks
 		#endregion
 		internal bool ReadP2PPacket( IntPtr pubDest, uint cubDest, ref uint pcubMsgSize, ref SteamId psteamIDRemote, int nChannel )
 		{
-			return _ReadP2PPacket( Self, pubDest, cubDest, ref pcubMsgSize, ref psteamIDRemote, nChannel );
+			var returnValue = _ReadP2PPacket( Self, pubDest, cubDest, ref pcubMsgSize, ref psteamIDRemote, nChannel );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -109,7 +112,8 @@ namespace Steamworks
 		#endregion
 		internal bool AcceptP2PSessionWithUser( SteamId steamIDRemote )
 		{
-			return _AcceptP2PSessionWithUser( Self, steamIDRemote );
+			var returnValue = _AcceptP2PSessionWithUser( Self, steamIDRemote );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -121,7 +125,8 @@ namespace Steamworks
 		#endregion
 		internal bool CloseP2PSessionWithUser( SteamId steamIDRemote )
 		{
-			return _CloseP2PSessionWithUser( Self, steamIDRemote );
+			var returnValue = _CloseP2PSessionWithUser( Self, steamIDRemote );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -133,7 +138,8 @@ namespace Steamworks
 		#endregion
 		internal bool CloseP2PChannelWithUser( SteamId steamIDRemote, int nChannel )
 		{
-			return _CloseP2PChannelWithUser( Self, steamIDRemote, nChannel );
+			var returnValue = _CloseP2PChannelWithUser( Self, steamIDRemote, nChannel );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -145,7 +151,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetP2PSessionState( SteamId steamIDRemote, ref P2PSessionState_t pConnectionState )
 		{
-			return _GetP2PSessionState( Self, steamIDRemote, ref pConnectionState );
+			var returnValue = _GetP2PSessionState( Self, steamIDRemote, ref pConnectionState );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -157,7 +164,8 @@ namespace Steamworks
 		#endregion
 		internal bool AllowP2PPacketRelay( [MarshalAs( UnmanagedType.U1 )] bool bAllow )
 		{
-			return _AllowP2PPacketRelay( Self, bAllow );
+			var returnValue = _AllowP2PPacketRelay( Self, bAllow );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -168,7 +176,8 @@ namespace Steamworks
 		#endregion
 		internal SNetListenSocket_t CreateListenSocket( int nVirtualP2PPort, uint nIP, ushort nPort, [MarshalAs( UnmanagedType.U1 )] bool bAllowUseOfPacketRelay )
 		{
-			return _CreateListenSocket( Self, nVirtualP2PPort, nIP, nPort, bAllowUseOfPacketRelay );
+			var returnValue = _CreateListenSocket( Self, nVirtualP2PPort, nIP, nPort, bAllowUseOfPacketRelay );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -179,7 +188,8 @@ namespace Steamworks
 		#endregion
 		internal SNetSocket_t CreateP2PConnectionSocket( SteamId steamIDTarget, int nVirtualPort, int nTimeoutSec, [MarshalAs( UnmanagedType.U1 )] bool bAllowUseOfPacketRelay )
 		{
-			return _CreateP2PConnectionSocket( Self, steamIDTarget, nVirtualPort, nTimeoutSec, bAllowUseOfPacketRelay );
+			var returnValue = _CreateP2PConnectionSocket( Self, steamIDTarget, nVirtualPort, nTimeoutSec, bAllowUseOfPacketRelay );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -190,7 +200,8 @@ namespace Steamworks
 		#endregion
 		internal SNetSocket_t CreateConnectionSocket( uint nIP, ushort nPort, int nTimeoutSec )
 		{
-			return _CreateConnectionSocket( Self, nIP, nPort, nTimeoutSec );
+			var returnValue = _CreateConnectionSocket( Self, nIP, nPort, nTimeoutSec );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -202,7 +213,8 @@ namespace Steamworks
 		#endregion
 		internal bool DestroySocket( SNetSocket_t hSocket, [MarshalAs( UnmanagedType.U1 )] bool bNotifyRemoteEnd )
 		{
-			return _DestroySocket( Self, hSocket, bNotifyRemoteEnd );
+			var returnValue = _DestroySocket( Self, hSocket, bNotifyRemoteEnd );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -214,7 +226,8 @@ namespace Steamworks
 		#endregion
 		internal bool DestroyListenSocket( SNetListenSocket_t hSocket, [MarshalAs( UnmanagedType.U1 )] bool bNotifyRemoteEnd )
 		{
-			return _DestroyListenSocket( Self, hSocket, bNotifyRemoteEnd );
+			var returnValue = _DestroyListenSocket( Self, hSocket, bNotifyRemoteEnd );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -226,7 +239,8 @@ namespace Steamworks
 		#endregion
 		internal bool SendDataOnSocket( SNetSocket_t hSocket, [In,Out] IntPtr[]  pubData, uint cubData, [MarshalAs( UnmanagedType.U1 )] bool bReliable )
 		{
-			return _SendDataOnSocket( Self, hSocket, pubData, cubData, bReliable );
+			var returnValue = _SendDataOnSocket( Self, hSocket, pubData, cubData, bReliable );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -238,7 +252,8 @@ namespace Steamworks
 		#endregion
 		internal bool IsDataAvailableOnSocket( SNetSocket_t hSocket, ref uint pcubMsgSize )
 		{
-			return _IsDataAvailableOnSocket( Self, hSocket, ref pcubMsgSize );
+			var returnValue = _IsDataAvailableOnSocket( Self, hSocket, ref pcubMsgSize );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -250,7 +265,8 @@ namespace Steamworks
 		#endregion
 		internal bool RetrieveDataFromSocket( SNetSocket_t hSocket, [In,Out] IntPtr[]  pubDest, uint cubDest, ref uint pcubMsgSize )
 		{
-			return _RetrieveDataFromSocket( Self, hSocket, pubDest, cubDest, ref pcubMsgSize );
+			var returnValue = _RetrieveDataFromSocket( Self, hSocket, pubDest, cubDest, ref pcubMsgSize );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -262,7 +278,8 @@ namespace Steamworks
 		#endregion
 		internal bool IsDataAvailable( SNetListenSocket_t hListenSocket, ref uint pcubMsgSize, ref SNetSocket_t phSocket )
 		{
-			return _IsDataAvailable( Self, hListenSocket, ref pcubMsgSize, ref phSocket );
+			var returnValue = _IsDataAvailable( Self, hListenSocket, ref pcubMsgSize, ref phSocket );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -274,7 +291,8 @@ namespace Steamworks
 		#endregion
 		internal bool RetrieveData( SNetListenSocket_t hListenSocket, [In,Out] IntPtr[]  pubDest, uint cubDest, ref uint pcubMsgSize, ref SNetSocket_t phSocket )
 		{
-			return _RetrieveData( Self, hListenSocket, pubDest, cubDest, ref pcubMsgSize, ref phSocket );
+			var returnValue = _RetrieveData( Self, hListenSocket, pubDest, cubDest, ref pcubMsgSize, ref phSocket );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -286,7 +304,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetSocketInfo( SNetSocket_t hSocket, ref SteamId pSteamIDRemote, ref int peSocketStatus, ref uint punIPRemote, ref ushort punPortRemote )
 		{
-			return _GetSocketInfo( Self, hSocket, ref pSteamIDRemote, ref peSocketStatus, ref punIPRemote, ref punPortRemote );
+			var returnValue = _GetSocketInfo( Self, hSocket, ref pSteamIDRemote, ref peSocketStatus, ref punIPRemote, ref punPortRemote );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -298,7 +317,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetListenSocketInfo( SNetListenSocket_t hListenSocket, ref uint pnIP, ref ushort pnPort )
 		{
-			return _GetListenSocketInfo( Self, hListenSocket, ref pnIP, ref pnPort );
+			var returnValue = _GetListenSocketInfo( Self, hListenSocket, ref pnIP, ref pnPort );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -309,7 +329,8 @@ namespace Steamworks
 		#endregion
 		internal SNetSocketConnectionType GetSocketConnectionType( SNetSocket_t hSocket )
 		{
-			return _GetSocketConnectionType( Self, hSocket );
+			var returnValue = _GetSocketConnectionType( Self, hSocket );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -320,7 +341,8 @@ namespace Steamworks
 		#endregion
 		internal int GetMaxPacketSize( SNetSocket_t hSocket )
 		{
-			return _GetMaxPacketSize( Self, hSocket );
+			var returnValue = _GetMaxPacketSize( Self, hSocket );
+			return returnValue;
 		}
 		
 	}

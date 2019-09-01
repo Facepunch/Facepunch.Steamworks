@@ -128,15 +128,13 @@ namespace Steamworks
 
 			for ( int i = 0; i < Internal.GetDLCCount(); i++ )
 			{
-				var sb = Helpers.TakeStringBuilder();
-
-				if ( !Internal.BGetDLCDataByIndex( i, ref appid, ref available, sb, sb.Capacity ) )
+				if ( !Internal.BGetDLCDataByIndex( i, ref appid, ref available, out var strVal ) )
 					continue;
 
 				yield return new DlcInformation
 				{
 					AppId = appid.Value,
-					Name = sb.ToString(),
+					Name = strVal,
 					Available = available
 				};
 			}
@@ -159,12 +157,10 @@ namespace Steamworks
 		{
 			get
 			{
-				var sb = Helpers.TakeStringBuilder();
-
-				if ( !Internal.GetCurrentBetaName( sb, sb.Capacity ) )
+				if ( !Internal.GetCurrentBetaName( out var strVal ) )
 					return null;
 
-				return sb.ToString();
+				return strVal;
 			}
 		}
 
@@ -204,12 +200,10 @@ namespace Steamworks
 			if ( appid == 0 )
 				appid = SteamClient.AppId;
 
-			var sb = Helpers.TakeStringBuilder();
-
-			if ( Internal.GetAppInstallDir( appid.Value, sb, (uint) sb.Capacity ) == 0 )
+			if ( Internal.GetAppInstallDir( appid.Value, out var strVal ) == 0 )
 				return null;
 
-			return sb.ToString();
+			return strVal;
 		}
 
 		/// <summary>
@@ -282,9 +276,8 @@ namespace Steamworks
 		{
 			get
 			{
-				var sb = Helpers.TakeStringBuilder();
-				var len = Internal.GetLaunchCommandLine( sb, sb.Capacity );
-				return sb.ToString();
+				var len = Internal.GetLaunchCommandLine( out var strVal );
+				return strVal;
 			}
 		}
 

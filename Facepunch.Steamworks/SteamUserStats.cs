@@ -14,6 +14,8 @@ namespace Steamworks
 		{
 			get
 			{
+				SteamClient.ValidCheck();
+
 				if ( _internal == null )
 				{
 					_internal = new ISteamUserStats();

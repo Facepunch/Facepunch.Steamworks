@@ -85,7 +85,8 @@ namespace Steamworks
 		#endregion
 		internal bool BIsSubscribed()
 		{
-			return _BIsSubscribed( Self );
+			var returnValue = _BIsSubscribed( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -97,7 +98,8 @@ namespace Steamworks
 		#endregion
 		internal bool BIsLowViolence()
 		{
-			return _BIsLowViolence( Self );
+			var returnValue = _BIsLowViolence( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -109,7 +111,8 @@ namespace Steamworks
 		#endregion
 		internal bool BIsCybercafe()
 		{
-			return _BIsCybercafe( Self );
+			var returnValue = _BIsCybercafe( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -121,7 +124,8 @@ namespace Steamworks
 		#endregion
 		internal bool BIsVACBanned()
 		{
-			return _BIsVACBanned( Self );
+			var returnValue = _BIsVACBanned( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -132,7 +136,8 @@ namespace Steamworks
 		#endregion
 		internal string GetCurrentGameLanguage()
 		{
-			return _GetCurrentGameLanguage( Self );
+			var returnValue = _GetCurrentGameLanguage( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -143,7 +148,8 @@ namespace Steamworks
 		#endregion
 		internal string GetAvailableGameLanguages()
 		{
-			return _GetAvailableGameLanguages( Self );
+			var returnValue = _GetAvailableGameLanguages( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -155,7 +161,8 @@ namespace Steamworks
 		#endregion
 		internal bool BIsSubscribedApp( AppId appID )
 		{
-			return _BIsSubscribedApp( Self, appID );
+			var returnValue = _BIsSubscribedApp( Self, appID );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -167,7 +174,8 @@ namespace Steamworks
 		#endregion
 		internal bool BIsDlcInstalled( AppId appID )
 		{
-			return _BIsDlcInstalled( Self, appID );
+			var returnValue = _BIsDlcInstalled( Self, appID );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -178,7 +186,8 @@ namespace Steamworks
 		#endregion
 		internal uint GetEarliestPurchaseUnixTime( AppId nAppID )
 		{
-			return _GetEarliestPurchaseUnixTime( Self, nAppID );
+			var returnValue = _GetEarliestPurchaseUnixTime( Self, nAppID );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -190,7 +199,8 @@ namespace Steamworks
 		#endregion
 		internal bool BIsSubscribedFromFreeWeekend()
 		{
-			return _BIsSubscribedFromFreeWeekend( Self );
+			var returnValue = _BIsSubscribedFromFreeWeekend( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -201,19 +211,23 @@ namespace Steamworks
 		#endregion
 		internal int GetDLCCount()
 		{
-			return _GetDLCCount( Self );
+			var returnValue = _GetDLCCount( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FBGetDLCDataByIndex( IntPtr self, int iDLC, ref AppId pAppID, [MarshalAs( UnmanagedType.U1 )] ref bool pbAvailable, StringBuilder pchName, int cchNameBufferSize );
+		private delegate bool FBGetDLCDataByIndex( IntPtr self, int iDLC, ref AppId pAppID, [MarshalAs( UnmanagedType.U1 )] ref bool pbAvailable, IntPtr pchName, int cchNameBufferSize );
 		private FBGetDLCDataByIndex _BGetDLCDataByIndex;
 		
 		#endregion
-		internal bool BGetDLCDataByIndex( int iDLC, ref AppId pAppID, [MarshalAs( UnmanagedType.U1 )] ref bool pbAvailable, StringBuilder pchName, int cchNameBufferSize )
+		internal bool BGetDLCDataByIndex( int iDLC, ref AppId pAppID, [MarshalAs( UnmanagedType.U1 )] ref bool pbAvailable, out string pchName )
 		{
-			return _BGetDLCDataByIndex( Self, iDLC, ref pAppID, ref pbAvailable, pchName, cchNameBufferSize );
+			IntPtr mempchName = Helpers.TakeMemory();
+			var returnValue = _BGetDLCDataByIndex( Self, iDLC, ref pAppID, ref pbAvailable, mempchName, (1024 * 32) );
+			pchName = Helpers.MemoryToString( mempchName );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -252,13 +266,16 @@ namespace Steamworks
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetCurrentBetaName( IntPtr self, StringBuilder pchName, int cchNameBufferSize );
+		private delegate bool FGetCurrentBetaName( IntPtr self, IntPtr pchName, int cchNameBufferSize );
 		private FGetCurrentBetaName _GetCurrentBetaName;
 		
 		#endregion
-		internal bool GetCurrentBetaName( StringBuilder pchName, int cchNameBufferSize )
+		internal bool GetCurrentBetaName( out string pchName )
 		{
-			return _GetCurrentBetaName( Self, pchName, cchNameBufferSize );
+			IntPtr mempchName = Helpers.TakeMemory();
+			var returnValue = _GetCurrentBetaName( Self, mempchName, (1024 * 32) );
+			pchName = Helpers.MemoryToString( mempchName );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -270,7 +287,8 @@ namespace Steamworks
 		#endregion
 		internal bool MarkContentCorrupt( [MarshalAs( UnmanagedType.U1 )] bool bMissingFilesOnly )
 		{
-			return _MarkContentCorrupt( Self, bMissingFilesOnly );
+			var returnValue = _MarkContentCorrupt( Self, bMissingFilesOnly );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -281,18 +299,22 @@ namespace Steamworks
 		#endregion
 		internal uint GetInstalledDepots( AppId appID, [In,Out] DepotId_t[]  pvecDepots, uint cMaxDepots )
 		{
-			return _GetInstalledDepots( Self, appID, pvecDepots, cMaxDepots );
+			var returnValue = _GetInstalledDepots( Self, appID, pvecDepots, cMaxDepots );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate uint FGetAppInstallDir( IntPtr self, AppId appID, StringBuilder pchFolder, uint cchFolderBufferSize );
+		private delegate uint FGetAppInstallDir( IntPtr self, AppId appID, IntPtr pchFolder, uint cchFolderBufferSize );
 		private FGetAppInstallDir _GetAppInstallDir;
 		
 		#endregion
-		internal uint GetAppInstallDir( AppId appID, StringBuilder pchFolder, uint cchFolderBufferSize )
+		internal uint GetAppInstallDir( AppId appID, out string pchFolder )
 		{
-			return _GetAppInstallDir( Self, appID, pchFolder, cchFolderBufferSize );
+			IntPtr mempchFolder = Helpers.TakeMemory();
+			var returnValue = _GetAppInstallDir( Self, appID, mempchFolder, (1024 * 32) );
+			pchFolder = Helpers.MemoryToString( mempchFolder );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -304,7 +326,8 @@ namespace Steamworks
 		#endregion
 		internal bool BIsAppInstalled( AppId appID )
 		{
-			return _BIsAppInstalled( Self, appID );
+			var returnValue = _BIsAppInstalled( Self, appID );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -324,7 +347,8 @@ namespace Steamworks
 			_GetAppOwner( Self, ref retVal );
 			return retVal;
 			#else
-			return _GetAppOwner( Self );
+			var returnValue = _GetAppOwner( Self );
+			return returnValue;
 			#endif
 		}
 		
@@ -336,7 +360,8 @@ namespace Steamworks
 		#endregion
 		internal string GetLaunchQueryParam( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey )
 		{
-			return _GetLaunchQueryParam( Self, pchKey );
+			var returnValue = _GetLaunchQueryParam( Self, pchKey );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -348,7 +373,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetDlcDownloadProgress( AppId nAppID, ref ulong punBytesDownloaded, ref ulong punBytesTotal )
 		{
-			return _GetDlcDownloadProgress( Self, nAppID, ref punBytesDownloaded, ref punBytesTotal );
+			var returnValue = _GetDlcDownloadProgress( Self, nAppID, ref punBytesDownloaded, ref punBytesTotal );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -359,7 +385,8 @@ namespace Steamworks
 		#endregion
 		internal int GetAppBuildId()
 		{
-			return _GetAppBuildId( Self );
+			var returnValue = _GetAppBuildId( Self );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -381,18 +408,22 @@ namespace Steamworks
 		#endregion
 		internal async Task<FileDetailsResult_t?> GetFileDetails( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszFileName )
 		{
-			return await FileDetailsResult_t.GetResultAsync( _GetFileDetails( Self, pszFileName ) );
+			var returnValue = _GetFileDetails( Self, pszFileName );
+			return await FileDetailsResult_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
 		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate int FGetLaunchCommandLine( IntPtr self, StringBuilder pszCommandLine, int cubCommandLine );
+		private delegate int FGetLaunchCommandLine( IntPtr self, IntPtr pszCommandLine, int cubCommandLine );
 		private FGetLaunchCommandLine _GetLaunchCommandLine;
 		
 		#endregion
-		internal int GetLaunchCommandLine( StringBuilder pszCommandLine, int cubCommandLine )
+		internal int GetLaunchCommandLine( out string pszCommandLine )
 		{
-			return _GetLaunchCommandLine( Self, pszCommandLine, cubCommandLine );
+			IntPtr mempszCommandLine = Helpers.TakeMemory();
+			var returnValue = _GetLaunchCommandLine( Self, mempszCommandLine, (1024 * 32) );
+			pszCommandLine = Helpers.MemoryToString( mempszCommandLine );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -404,7 +435,8 @@ namespace Steamworks
 		#endregion
 		internal bool BIsSubscribedFromFamilySharing()
 		{
-			return _BIsSubscribedFromFamilySharing( Self );
+			var returnValue = _BIsSubscribedFromFamilySharing( Self );
+			return returnValue;
 		}
 		
 	}

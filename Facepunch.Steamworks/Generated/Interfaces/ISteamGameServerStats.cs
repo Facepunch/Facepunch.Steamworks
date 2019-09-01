@@ -56,7 +56,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<GSStatsReceived_t?> RequestUserStats( SteamId steamIDUser )
 		{
-			return await GSStatsReceived_t.GetResultAsync( _RequestUserStats( Self, steamIDUser ) );
+			var returnValue = _RequestUserStats( Self, steamIDUser );
+			return await GSStatsReceived_t.GetResultAsync( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -68,7 +69,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetUserStat1( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, ref int pData )
 		{
-			return _GetUserStat1( Self, steamIDUser, pchName, ref pData );
+			var returnValue = _GetUserStat1( Self, steamIDUser, pchName, ref pData );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -80,7 +82,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetUserStat2( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, ref float pData )
 		{
-			return _GetUserStat2( Self, steamIDUser, pchName, ref pData );
+			var returnValue = _GetUserStat2( Self, steamIDUser, pchName, ref pData );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -92,7 +95,8 @@ namespace Steamworks
 		#endregion
 		internal bool GetUserAchievement( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, [MarshalAs( UnmanagedType.U1 )] ref bool pbAchieved )
 		{
-			return _GetUserAchievement( Self, steamIDUser, pchName, ref pbAchieved );
+			var returnValue = _GetUserAchievement( Self, steamIDUser, pchName, ref pbAchieved );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -104,7 +108,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetUserStat1( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, int nData )
 		{
-			return _SetUserStat1( Self, steamIDUser, pchName, nData );
+			var returnValue = _SetUserStat1( Self, steamIDUser, pchName, nData );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -116,7 +121,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetUserStat2( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, float fData )
 		{
-			return _SetUserStat2( Self, steamIDUser, pchName, fData );
+			var returnValue = _SetUserStat2( Self, steamIDUser, pchName, fData );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -128,7 +134,8 @@ namespace Steamworks
 		#endregion
 		internal bool UpdateUserAvgRateStat( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, float flCountThisSession, double dSessionLength )
 		{
-			return _UpdateUserAvgRateStat( Self, steamIDUser, pchName, flCountThisSession, dSessionLength );
+			var returnValue = _UpdateUserAvgRateStat( Self, steamIDUser, pchName, flCountThisSession, dSessionLength );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -140,7 +147,8 @@ namespace Steamworks
 		#endregion
 		internal bool SetUserAchievement( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName )
 		{
-			return _SetUserAchievement( Self, steamIDUser, pchName );
+			var returnValue = _SetUserAchievement( Self, steamIDUser, pchName );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -152,7 +160,8 @@ namespace Steamworks
 		#endregion
 		internal bool ClearUserAchievement( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName )
 		{
-			return _ClearUserAchievement( Self, steamIDUser, pchName );
+			var returnValue = _ClearUserAchievement( Self, steamIDUser, pchName );
+			return returnValue;
 		}
 		
 		#region FunctionMeta
@@ -163,7 +172,8 @@ namespace Steamworks
 		#endregion
 		internal async Task<GSStatsStored_t?> StoreUserStats( SteamId steamIDUser )
 		{
-			return await GSStatsStored_t.GetResultAsync( _StoreUserStats( Self, steamIDUser ) );
+			var returnValue = _StoreUserStats( Self, steamIDUser );
+			return await GSStatsStored_t.GetResultAsync( returnValue );
 		}
 		
 	}
