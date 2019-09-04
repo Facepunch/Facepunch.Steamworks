@@ -35,6 +35,8 @@ namespace Facepunch.Steamworks
 
             public ulong? UserId { get; set; }
 
+            public bool ReturnKeyValueTags { get; set; }
+
             /// <summary>
             /// If order is RankedByTrend, this value represents how many days to take
             /// into account.
@@ -63,7 +65,7 @@ namespace Facepunch.Steamworks
             private int _resultSkip = 0;
             private List<Item> _results;
 
-            public  void Run()
+            public void Run()
             {
                 if ( Callback != null )
                     return;
@@ -83,7 +85,7 @@ namespace Facepunch.Steamworks
                 RunInternal();
             }
 
-            unsafe void RunInternal()
+            void RunInternal()
             {
                 if ( FileId.Count != 0 )
                 {
@@ -111,11 +113,16 @@ namespace Facepunch.Steamworks
                 if ( RequireTags.Count > 0 )
                     workshop.ugc.SetMatchAnyTag( Handle, !RequireAllTags );
 
+                foreach ( var keyValueTag in RequireKeyValueTags )
+                    workshop.ugc.AddRequiredKeyValueTag( Handle, keyValueTag.Key, keyValueTag.Value );
+
                 if ( RankedByTrendDays > 0 )
                     workshop.ugc.SetRankedByTrendDays( Handle, (uint) RankedByTrendDays );
 
                 foreach ( var tag in ExcludeTags )
                     workshop.ugc.AddExcludedTag( Handle, tag );
+
+                workshop.ugc.SetReturnKeyValueTags( Handle, ReturnKeyValueTags );
 
                 Callback = workshop.ugc.SendQueryUGCRequest( Handle, ResultCallback );
             }
@@ -149,6 +156,9 @@ namespace Facepunch.Steamworks
                     item.FollowerCount = GetStat( data.Handle, i, ItemStatistic.NumFollowers );
                     item.WebsiteViews = GetStat( data.Handle, i, ItemStatistic.NumUniqueWebsiteViews );
                     item.ReportScore = GetStat( data.Handle, i, ItemStatistic.ReportScore );
+
+                    if ( ReturnKeyValueTags )
+                        item.ReadKeyValueTags( data, (uint)i );
 
                     string url = null;
                     if ( workshop.ugc.GetQueryUGCPreviewURL( data.Handle, (uint)i, out url ) )
@@ -202,7 +212,7 @@ namespace Facepunch.Steamworks
             /// <summary>
             /// Only return items with these tags
             /// </summary>
-            public List<string> RequireTags { get; set; } = new List<string>();
+            public List<string> RequireTags { get; } = new List<string>();
 
             /// <summary>
             /// If true, return items that have all RequireTags
@@ -213,14 +223,14 @@ namespace Facepunch.Steamworks
             /// <summary>
             /// Don't return any items with this tag
             /// </summary>
-            public List<string> ExcludeTags { get; set; } = new List<string>();
+            public List<string> ExcludeTags { get; } = new List<string>();
 
             /// <summary>
             /// If you're querying for a particular file or files, add them to this.
             /// </summary>
-            public List<ulong> FileId { get; set; } = new List<ulong>();
+            public List<ulong> FileId { get; } = new List<ulong>();
 
-
+            public List<KeyValuePair<string, string>> RequireKeyValueTags { get; } = new List<KeyValuePair<string, string>>();
 
             /// <summary>
             /// Don't call this in production!

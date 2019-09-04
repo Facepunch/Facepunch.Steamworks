@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using SteamNative;
 
 namespace Facepunch.Steamworks
@@ -19,6 +17,7 @@ namespace Facepunch.Steamworks
             public ulong OwnerId { get; private set; }
             public float Score { get; private set; }
             public string[] Tags { get; private set; }
+            public Dictionary<string, string[]> KeyValueTags { get; private set; }
             public string Title { get; private set; }
             public uint VotesDown { get; private set; }
             public uint VotesUp { get; private set; }
@@ -46,6 +45,34 @@ namespace Facepunch.Steamworks
                 item.Created = Utility.Epoch.ToDateTime( details.TimeCreated );
 
                 return item;
+            }
+
+            internal void ReadKeyValueTags( SteamUGCQueryCompleted_t data, uint index )
+            {
+                var tempDict = new Dictionary<string, List<string>>( StringComparer.InvariantCultureIgnoreCase );
+
+                var numKeyValTags = workshop.ugc.GetQueryUGCNumKeyValueTags( data.Handle, index );
+
+                for ( uint kvTagIndex = 0; kvTagIndex < numKeyValTags; ++kvTagIndex )
+                {
+                    if ( !workshop.ugc.GetQueryUGCKeyValueTag( data.Handle, index, kvTagIndex, out var key, out var value ) )
+                        continue;
+
+                    if ( !tempDict.TryGetValue( key, out var list ) )
+                    {
+                        list = new List<string>();
+                        tempDict.Add( key, list );
+                    }
+
+                    list.Add( value );
+                }
+
+                KeyValueTags = new Dictionary<string, string[]>( StringComparer.InvariantCultureIgnoreCase );
+
+                foreach ( var keyValues in tempDict )
+                {
+                    KeyValueTags.Add( keyValues.Key, keyValues.Value.ToArray() );
+                }
             }
 
             public bool Download( bool highPriority = true )
