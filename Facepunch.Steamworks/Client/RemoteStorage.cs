@@ -76,8 +76,6 @@ namespace Facepunch.Steamworks
         public RemoteFile CreateFile( string path )
         {
             path = NormalizePath( path );
-
-            InvalidateFiles();
             var existing = Files.FirstOrDefault( x => x.FileName == path );
             return existing ?? new RemoteFile( this, path, client.SteamId, -1 );
         }
@@ -88,8 +86,6 @@ namespace Facepunch.Steamworks
         public RemoteFile OpenFile( string path )
         {
             path = NormalizePath( path );
-
-            InvalidateFiles();
             var existing = Files.FirstOrDefault( x => x.FileName == path );
             return existing;
         }
@@ -163,13 +159,16 @@ namespace Facepunch.Steamworks
 
             _files.Add( file );
             file.Exists = true;
-
-            InvalidateFiles();
         }
 
         internal void InvalidateFiles()
         {
             _filesInvalid = true;
+        }
+
+        internal void FileDeleted( RemoteFile file )
+        {
+            _files.Remove( file );
         }
 
         private void UpdateFiles()

@@ -290,7 +290,7 @@ namespace Facepunch.Steamworks
             if ( !remoteStorage.native.FileDelete( FileName ) ) return false;
 
             Exists = false;
-            remoteStorage.InvalidateFiles();
+            remoteStorage.FileDeleted( this );
 
             return true;
         }
