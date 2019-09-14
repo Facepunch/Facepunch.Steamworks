@@ -229,6 +229,7 @@ namespace Facepunch.Steamworks
             public int WebsiteViews { get; internal set; }
             public int ReportScore { get; internal set; }
             public string PreviewImageUrl { get; internal set; }
+            public string Metadata { get; internal set; }
 
             string _ownerName = null;
 

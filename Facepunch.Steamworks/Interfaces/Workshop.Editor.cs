@@ -26,7 +26,7 @@ namespace Facepunch.Steamworks
             public string Error { get; internal set; } = null;
             public string ChangeNote { get; set; } = "";
             public uint WorkshopUploadAppId { get; set; }
-            public string MetaData { get; set; } = null;
+            public string Metadata { get; set; } = null;
             public Dictionary<string, string[]> KeyValues { get; set; } = new Dictionary<string, string[]>();
 
             public enum VisibilityType : int
@@ -182,9 +182,9 @@ namespace Facepunch.Steamworks
                     workshop.ugc.SetItemPreview( UpdateHandle, PreviewImage );
                 }
 
-                if ( MetaData != null )
+                if ( Metadata != null )
                 {
-                    workshop.ugc.SetItemMetadata( UpdateHandle, MetaData );
+                    workshop.ugc.SetItemMetadata( UpdateHandle, Metadata );
                 }
 
                 if ( KeyValues != null )

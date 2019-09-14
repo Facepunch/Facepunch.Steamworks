@@ -35,7 +35,11 @@ namespace Facepunch.Steamworks
 
             public ulong? UserId { get; set; }
 
+            public TimeSpan? MaxCacheAge { get; set; }
+
             public bool ReturnKeyValueTags { get; set; }
+
+            public bool ReturnMetadata { get; set; }
 
             /// <summary>
             /// If order is RankedByTrend, this value represents how many days to take
@@ -123,6 +127,10 @@ namespace Facepunch.Steamworks
                     workshop.ugc.AddExcludedTag( Handle, tag );
 
                 workshop.ugc.SetReturnKeyValueTags( Handle, ReturnKeyValueTags );
+                workshop.ugc.SetReturnMetadata( Handle, ReturnMetadata );
+
+                if ( MaxCacheAge.HasValue )
+                    workshop.ugc.SetAllowCachedResponse( Handle, (uint) MaxCacheAge.Value.TotalSeconds );
 
                 Callback = workshop.ugc.SendQueryUGCRequest( Handle, ResultCallback );
             }
@@ -160,9 +168,13 @@ namespace Facepunch.Steamworks
                     if ( ReturnKeyValueTags )
                         item.ReadKeyValueTags( data, (uint)i );
 
-                    string url = null;
+                    string url;
                     if ( workshop.ugc.GetQueryUGCPreviewURL( data.Handle, (uint)i, out url ) )
                         item.PreviewImageUrl = url;
+
+                    string metadata;
+                    if ( workshop.ugc.GetQueryUGCMetadata( data.Handle, (uint)i, out metadata ) )
+                        item.Metadata = metadata;
 
                     _results.Add( item );
 
