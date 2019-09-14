@@ -253,8 +253,12 @@ namespace Steamworks
 		/// </summary>
 		public static bool SetRichPresence( string key, string value )
 		{
-			richPresence[key] = value;
-			return Internal.SetRichPresence( key, value );
+			bool success = Internal.SetRichPresence( key, value );
+
+			if ( success ) 
+				richPresence[key] = value;
+
+			return success;
 		}
 
 		/// <summary>
