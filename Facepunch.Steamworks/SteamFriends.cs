@@ -136,6 +136,14 @@ namespace Steamworks
 			}
 		}
 
+		public static IEnumerable<Friend> GetFromSource( SteamId steamid )
+		{
+		    for ( int i = 0; i < Internal.GetFriendCountFromSource( steamid ); i++ )
+		    {
+		        yield return new Friend( Internal.GetFriendFromSourceByIndex( steamid, i ) );
+		    }
+		}
+
 		/// <summary>
 		/// The dialog to open. Valid options are: 
 		/// "friends", 
