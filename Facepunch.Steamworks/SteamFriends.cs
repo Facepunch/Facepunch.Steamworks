@@ -136,6 +136,14 @@ namespace Steamworks
 			}
 		}
 
+		public static IEnumerable<Friend> GetFromSource( SteamId steamid )
+		{
+		    for ( int i = 0; i < Internal.GetFriendCountFromSource( steamid ); i++ )
+		    {
+		        yield return new Friend( Internal.GetFriendFromSourceByIndex( steamid, i ) );
+		    }
+		}
+
 		/// <summary>
 		/// The dialog to open. Valid options are: 
 		/// "friends", 
@@ -253,8 +261,12 @@ namespace Steamworks
 		/// </summary>
 		public static bool SetRichPresence( string key, string value )
 		{
-			richPresence[key] = value;
-			return Internal.SetRichPresence( key, value );
+			bool success = Internal.SetRichPresence( key, value );
+
+			if ( success ) 
+				richPresence[key] = value;
+
+			return success;
 		}
 
 		/// <summary>
