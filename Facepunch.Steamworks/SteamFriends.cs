@@ -135,14 +135,6 @@ namespace Steamworks
 				yield return new Friend( Internal.GetFriendByIndex( i, (int)FriendFlags.All) );
 			}
 		}
-		
-		public static IEnumerable<Friend> GetFriendsWithFlag(FriendFlags flag)
-		{
-			for ( int i=0; i<Internal.GetFriendCount( (int) flag ); i++ )
-			{
-				yield return new Friend( Internal.GetFriendByIndex( i, (int) flag ) );
-			}
-		}
 
 		public static IEnumerable<Friend> GetPlayedWith()
 		{
