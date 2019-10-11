@@ -111,7 +111,7 @@ namespace Steamworks
 				OnChatMessage( friend, typeName, message );
 			}
 		}
-
+		
 		public static IEnumerable<Friend> GetFriends()
 		{
 			for ( int i=0; i<Internal.GetFriendCount( (int) FriendFlags.Immediate ); i++ )
@@ -125,6 +125,22 @@ namespace Steamworks
 			for ( int i = 0; i < Internal.GetFriendCount( (int)FriendFlags.Blocked ); i++ )
 			{
 				yield return new Friend( Internal.GetFriendByIndex( i, (int)FriendFlags.Blocked) );
+			}
+		}
+		
+		public static IEnumerable<Friend> GetAllFriends()
+		{
+			for ( int i = 0; i < Internal.GetFriendCount( (int)FriendFlags.All ); i++ )
+			{
+				yield return new Friend( Internal.GetFriendByIndex( i, (int)FriendFlags.All) );
+			}
+		}
+		
+		public static IEnumerable<Friend> GetFriendsWithFlag(FriendFlags flag)
+		{
+			for ( int i=0; i<Internal.GetFriendCount( (int) flag ); i++ )
+			{
+				yield return new Friend( Internal.GetFriendByIndex( i, (int) flag ) );
 			}
 		}
 
