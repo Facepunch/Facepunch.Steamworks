@@ -580,12 +580,12 @@ namespace Steamworks
 		LookingToPlay = 6,
 		Invisible = 7,
 		Max = 8,
-	}
+	}	
 	
 	//
 	// EFriendFlags
 	//
-	internal enum FriendFlags : int
+	public enum FriendFlags : int
 	{
 		None = 0,
 		Blocked = 1,
@@ -600,7 +600,7 @@ namespace Steamworks
 		ChatMember = 4096,
 		All = 65535,
 	}
-	
+
 	//
 	// EUserRestriction
 	//
