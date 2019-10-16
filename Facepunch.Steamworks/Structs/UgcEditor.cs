@@ -69,12 +69,21 @@ namespace Steamworks.Ugc
 		public Editor WithPrivateVisibility() { Visibility = RemoteStoragePublishedFileVisibility.Private; return this; }
 
 		List<string> Tags;
+		Dictionary<string, string> KeyValueTags;
+		
 		public Editor WithTag( string tag )
 		{
 			if ( Tags == null ) Tags = new List<string>();
 
 			Tags.Add( tag );
 
+			return this;
+		}
+
+		public Editor AddKeyValueTag(string key, string value)
+		{
+			if (KeyValueTags == null) KeyValueTags = new Dictionary<string, string>();
+			KeyValueTags.Add(key, value);
 			return this;
 		}
 
@@ -134,6 +143,14 @@ namespace Steamworks.Ugc
 					}
 				}
 
+				if (KeyValueTags != null && KeyValueTags.Count > 0)
+				{
+					foreach (var keyValueTag in KeyValueTags)
+					{
+						SteamUGC.Internal.AddItemKeyValueTag(handle, keyValueTag.Key, keyValueTag.Value);
+					}
+				}
+
 				result.Result = Steamworks.Result.Fail;
 
 				if ( ChangeLog == null )
@@ -171,7 +188,7 @@ namespace Steamworks.Ugc
 								}
 							case ItemUpdateStatus.UploadingPreviewFile:
 								{
-									progress?.Report( 8f );
+									progress?.Report( 0.8f );
 									break;
 								}
 							case ItemUpdateStatus.CommittingChanges:

@@ -194,6 +194,13 @@ namespace Steamworks.Ugc
 			return this;
 		}
 
+		public QueryType AddRequiredKeyValueTag(string key, string value)
+		{
+			if (requiredKv == null) requiredKv = new Dictionary<string, string>();
+			requiredKv.Add(key, value);
+			return this;
+		}
+
 		public QueryType WithoutTag( string tag )
 		{
 			if ( excludedTags == null ) excludedTags = new List<string>();
