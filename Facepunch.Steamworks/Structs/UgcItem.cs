@@ -352,6 +352,7 @@ namespace Steamworks.Ugc
 		{
 			return new Ugc.Editor( Id );
 		}
+		
+		public Result Result => details.Result;
 	}
-
 }
