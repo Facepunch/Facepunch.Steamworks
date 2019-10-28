@@ -284,10 +284,10 @@ namespace Steamworks.Ugc
         /// <summary>
         /// Allows the user to rate a workshop item up or down.
         /// </summary>
-        public async Task<bool> Vote( bool up )
+        public async Task<Result?> Vote( bool up )
 		{
 			var r = await SteamUGC.Internal.SetUserItemVote( Id, up );
-			return r?.Result == Result.OK;
+			return r?.Result;
 		}
 
         /// <summary>
