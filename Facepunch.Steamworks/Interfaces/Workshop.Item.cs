@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Facepunch.Steamworks.Callbacks;
 using SteamNative;
+using Result = SteamNative.Result;
 
 namespace Facepunch.Steamworks
 {
@@ -13,7 +15,7 @@ namespace Facepunch.Steamworks
             internal Workshop workshop;
 
             public string Description { get; private set; }
-            public ulong Id { get; private set; }
+            public ulong Id { get; }
             public ulong OwnerId { get; private set; }
             public float Score { get; private set; }
             public string[] Tags { get; private set; }
@@ -202,6 +204,39 @@ namespace Facepunch.Steamworks
                 VotesDown++;
                 workshop.ugc.SetUserItemVote( Id, false );
                 YourVote = -1;
+            }
+
+            public struct UserItemVoteResult
+            {
+                public readonly bool VotedUp;
+                public readonly bool VotedDown;
+                public readonly bool VoteSkipped;
+
+                internal UserItemVoteResult( GetUserItemVoteResult_t result )
+                {
+                    VotedUp = result.VotedUp;
+                    VotedDown = result.VotedDown;
+                    VoteSkipped = result.VoteSkipped;
+                }
+            }
+
+            public delegate void GetUserVoteCallback( UserItemVoteResult result );
+
+            public bool GetUserItemVote( GetUserVoteCallback onSuccess, FailureCallback onFailure = null )
+            {
+                workshop.ugc.GetUserItemVote( Id, ( result, error ) =>
+                {
+                    if ( !error && result.Result == Result.OK )
+                    {
+                        onSuccess?.Invoke( new UserItemVoteResult( result ) );
+                    }
+                    else
+                    {
+                        onFailure?.Invoke( result.Result == 0 ? Callbacks.Result.IOFailure : (Callbacks.Result) result.Result );
+                    }
+                } );
+
+                return true;
             }
 
             public Editor Edit()
