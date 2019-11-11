@@ -108,6 +108,24 @@ namespace Steamworks
 		}
 
 		/// <summary>
+		/// Reads in a packet that has been sent from another user via SendP2PPacket..
+		/// </summary>
+		public unsafe static bool ReadP2PPacket( byte[] buffer, ref uint size, ref SteamId steamid, int channel = 0 )
+		{
+      fixed (byte* p = buffer) {
+        return Internal.ReadP2PPacket( (IntPtr)p, (uint)buffer.Length, ref size, ref steamid, channel );
+      }
+		}
+
+		/// <summary>
+		/// Reads in a packet that has been sent from another user via SendP2PPacket..
+		/// </summary>
+		public unsafe static bool ReadP2PPacket( byte* buffer, uint cbuf, ref uint size, ref SteamId steamid, int channel = 0 )
+		{
+      return Internal.ReadP2PPacket( (IntPtr)buffer, cbuf, ref size, ref steamid, channel );
+		}
+
+		/// <summary>
 		/// Sends a P2P packet to the specified user.
 		/// This is a session-less API which automatically establishes NAT-traversing or Steam relay server connections.
 		/// NOTE: The first packet send may be delayed as the NAT-traversal code runs.
@@ -123,6 +141,15 @@ namespace Steamworks
 			}
 		}
 
+		/// <summary>
+		/// Sends a P2P packet to the specified user.
+		/// This is a session-less API which automatically establishes NAT-traversing or Steam relay server connections.
+		/// NOTE: The first packet send may be delayed as the NAT-traversal code runs.
+		/// </summary>
+		public static unsafe bool SendP2PPacket( SteamId steamid, byte* data, uint length, int nChannel = 1, P2PSend sendType = P2PSend.Reliable )
+		{
+      return Internal.SendP2PPacket( steamid, (IntPtr)data, (uint)length, (P2PSend)sendType, nChannel );
+		}
 
 	}
 }
