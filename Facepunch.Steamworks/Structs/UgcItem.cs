@@ -264,18 +264,47 @@ namespace Steamworks.Ugc
         }
 
         /// <summary>
+        /// Adds item to user favorite list
+        /// </summary>
+	    public async Task<bool> AddFavorite()
+	    {
+	        var result = await SteamUGC.Internal.AddItemToFavorites(details.ConsumerAppID, _id);
+	        return result?.Result == Result.OK;
+	    }
+
+	    /// <summary>
+	    /// Removes item from user favorite list
+	    /// </summary>
+        public async Task<bool> RemoveFavorite()
+	    {
+	        var result = await SteamUGC.Internal.RemoveItemFromFavorites(details.ConsumerAppID, _id);
+	        return result?.Result == Result.OK;
+	    }
+
+        /// <summary>
         /// Allows the user to rate a workshop item up or down.
         /// </summary>
-        public async Task<bool> Vote( bool up )
+        public async Task<Result?> Vote( bool up )
 		{
 			var r = await SteamUGC.Internal.SetUserItemVote( Id, up );
-			return r?.Result == Result.OK;
+			return r?.Result;
 		}
 
-		/// <summary>
-		/// Return a URL to view this item online
-		/// </summary>
-		public string Url => $"http://steamcommunity.com/sharedfiles/filedetails/?source=Facepunch.Steamworks&id={Id}";
+        /// <summary>
+        /// Gets the current users vote on the item
+        /// </summary>
+	    public async Task<UserItemVote?> GetUserVote()
+	    {
+	        var result = await SteamUGC.Internal.GetUserItemVote(_id);
+	        if (!result.HasValue)
+	            return null;
+	        return UserItemVote.From(result.Value);
+	    }
+
+        /// <summary>
+        /// Return a URL to view this item online
+        /// </summary>
+        public string Url => $"http://steamcommunity.com/sharedfiles/filedetails/?source=Facepunch.Steamworks&id={Id}";
 
 		/// <summary>
 		/// The URl to view this item's changelog
@@ -323,6 +352,7 @@ namespace Steamworks.Ugc
 		{
 			return new Ugc.Editor( Id );
 		}
+		
+		public Result Result => details.Result;
 	}
-
 }
