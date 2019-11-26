@@ -53,12 +53,13 @@ namespace Steamworks
 
 		static void LoadDefinitions()
 		{
-			Definitions = GetDefinitions();
+			var defs = GetDefinitions();
 
-			if ( Definitions == null )
+			if (defs == null)
 				return;
 
-			_defMap = new Dictionary<int, InventoryDef>();
+			DefinitionsLoaded = true;
+			Definitions.UnionWith( GetDefinitions() );
 
 			foreach ( var d in Definitions )
 			{
@@ -76,12 +77,12 @@ namespace Steamworks
 		/// </summary>
 		public static void LoadItemDefinitions()
 		{
-			// If they're null, try to load them immediately
+			// If they're not loaded, try to do it immediately
 			// my hunch is that this loads a disk cached version
 			// but waiting for LoadItemDefinitions downloads a new copy
 			// from Steam's servers. So this will give us immediate data
 			// where as Steam's inventory servers could be slow/down
-			if ( Definitions == null )
+			if ( !DefinitionsLoaded )
 			{
 				LoadDefinitions();
 			}
@@ -90,22 +91,22 @@ namespace Steamworks
 		}
 
 		/// <summary>
-		/// Will call LoadItemDefinitions and wait until Definitions is not null
+		/// Will call LoadItemDefinitions and wait until Definitions are loaded
 		/// </summary>
 		public static async Task<bool> WaitForDefinitions( float timeoutSeconds = 30 )
 		{
-			if ( Definitions != null )
+			if ( DefinitionsLoaded )
 				return true;
 
 			LoadDefinitions();
 			LoadItemDefinitions();
 
-			if ( Definitions != null )
+			if ( DefinitionsLoaded )
 				return true;
 
 			var sw = Stopwatch.StartNew();
 
-			while ( Definitions == null )
+			while ( !DefinitionsLoaded )
 			{
 				if ( sw.Elapsed.TotalSeconds > timeoutSeconds )
 					return false;
@@ -118,15 +119,24 @@ namespace Steamworks
 
 		/// <summary>
 		/// Try to find the definition that matches this definition ID.
+		/// Call LoadItemDefinitions before using to skip validation.
 		/// Uses a dictionary so should be about as fast as possible.
 		/// </summary>
 		public static InventoryDef FindDefinition( InventoryDefId defId )
 		{
-			if ( _defMap == null )
-				return null;
-
-			if ( _defMap.TryGetValue( defId, out var val  ) )
+			
+			if ( _defMap.TryGetValue( defId, out var val  ) ) //can be replaced with Definitions.TryGetValue in .NET Framework 4.7.2+ and _defMap deleted
 				return val;
+
+			//add missing def for ex. with id above 1000000
+			var notLoaded = new InventoryDef( defId );
+			var notLoadedExists = !string.IsNullOrEmpty( notLoaded.Type );
+			if ( notLoadedExists )
+			{
+				_defMap[defId] = notLoaded;
+				Definitions.Add( notLoaded );
+				return notLoaded;
+			}
 
 			return null;
 		}
@@ -162,10 +172,18 @@ namespace Steamworks
 		/// </summary>
 		public static InventoryItem[] Items { get; internal set; }
 
-		public static InventoryDef[] Definitions { get; internal set; }
-		static Dictionary<int, InventoryDef> _defMap;
+		/// <summary>
+		/// Call LoadItemDefinitions or WaitForDefinitions before using.
+		/// </summary>
+		public static HashSet<InventoryDef> Definitions { get; internal set; } = new HashSet<InventoryDef>();
+		static Dictionary<int, InventoryDef> _defMap = new Dictionary<int, InventoryDef>();
 
-		internal static InventoryDef[] GetDefinitions()
+		/// <summary>
+		/// True after at least one successful LoadDefinitions or WaitForDefinitions run.
+		/// </summary>
+		public static bool DefinitionsLoaded { get; internal set; } = false;
+
+		internal static IEnumerable<InventoryDef> GetDefinitions()
 		{
 			uint num = 0;
 			if ( !Internal.GetItemDefinitionIDs( null, ref num ) )
@@ -176,7 +194,7 @@ namespace Steamworks
 			if ( !Internal.GetItemDefinitionIDs( defs, ref num ) )
 				return null;
 
-			return defs.Select( x => new InventoryDef( x ) ).ToArray();
+			return defs.Select( x => new InventoryDef( x ) );
 		}
 
 		/// <summary>
