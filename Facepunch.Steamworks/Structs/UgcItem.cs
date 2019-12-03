@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Steamworks.Data;
 
@@ -254,10 +255,46 @@ namespace Steamworks.Ugc
             return result?.Result == Result.OK;
         }
 
-        /// <summary>
-        /// Allows the user to unsubscribe from this item
-        /// </summary>
-        public async Task<bool> Unsubscribe ()
+		/// <summary>
+		/// Allows the user to subscribe to this item and wait for it to be downloaded
+		/// If CancellationToken is default then there is 60 seconds timeout
+		/// Progress will be set to 0-1
+		/// </summary>
+		public async Task<bool> SubscribeDownloadAsync( Action<float> progress = null, CancellationToken ct = default, int milisecondsUpdateDelay = 60 )
+		{
+			if ( ct == default )
+				ct = new CancellationTokenSource( TimeSpan.FromSeconds( 60 ) ).Token;
+
+			progress?.Invoke( 0 );
+
+			var subResult = await SteamUGC.Internal.SubscribeItem( _id );
+			if ( subResult?.Result != Result.OK )
+				return false;
+
+			var downloading = Download( true );
+			if ( !downloading )
+				return State == ItemState.Installed;
+
+			while ( true )
+			{
+				if ( ct.IsCancellationRequested )
+					return false;
+
+				progress?.Invoke( DownloadAmount );
+
+				if ( !IsDownloading )
+					break;
+
+				await Task.Delay( milisecondsUpdateDelay );
+			}
+
+			return State.HasFlag( ItemState.Installed );
+		}
+
+		/// <summary>
+		/// Allows the user to unsubscribe from this item
+		/// </summary>
+		public async Task<bool> Unsubscribe ()
         {
             var result = await SteamUGC.Internal.UnsubscribeItem( _id );
             return result?.Result == Result.OK;
