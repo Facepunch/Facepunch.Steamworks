@@ -273,7 +273,7 @@ namespace Steamworks.Ugc
 
 			var downloading = Download( true );
 			if ( !downloading )
-				return State == ItemState.Installed;
+				return State.HasFlag( ItemState.Installed );
 
 			while ( true )
 			{
