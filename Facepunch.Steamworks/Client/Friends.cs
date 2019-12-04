@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using SteamNative;
@@ -348,13 +349,94 @@ namespace Facepunch.Steamworks
             }
         }
 
-        
+        public delegate void FetchInformationCallback(ulong steamid);
+
+        private const int PersonaChangeName = 0x0001;
+        private const int PersonaChangeAvatar = 0x0040;
+
+        private readonly Dictionary<ulong, Dictionary<int, FetchInformationCallback>> _fetchInformationRequests =
+            new Dictionary<ulong, Dictionary<int, FetchInformationCallback>>();
+        private static readonly List<KeyValuePair<int, FetchInformationCallback>> _tempCallbackList
+            = new List<KeyValuePair<int, FetchInformationCallback>>();
+
+        public void FetchUserInformation( ulong steamid, bool nameOnly, FetchInformationCallback callback )
+        {
+            if ( callback == null ) throw new ArgumentNullException( nameof(callback) );
+
+            if ( !client.native.friends.RequestUserInformation( steamid, nameOnly ) )
+            {
+                // Already got this user's info
+                callback( steamid );
+                return;
+            }
+
+            var flags = PersonaChangeName | (nameOnly ? 0 : PersonaChangeAvatar);
+
+            if ( !_fetchInformationRequests.TryGetValue( steamid, out var outer) )
+            {
+                outer = new Dictionary<int, FetchInformationCallback>();
+                _fetchInformationRequests.Add( steamid, outer );
+            }
+
+            FetchInformationCallback inner;
+            if ( !outer.TryGetValue( flags, out inner ) )
+            {
+                outer.Add( flags, callback );
+                return;
+            }
+
+            outer[flags] = inner + callback;
+        }
+
         private void OnPersonaStateChange( PersonaStateChange_t data )
         {
             // k_EPersonaChangeAvatar	
-            if ( (data.ChangeFlags & 0x0040) == 0x0040 )
+            if ( (data.ChangeFlags & PersonaChangeAvatar) != 0 )
             {
                 LoadAvatarForSteamId( data.SteamID );
+            }
+
+            if ( _fetchInformationRequests.TryGetValue( data.SteamID, out var outer ) )
+            {
+                var list = _tempCallbackList;
+
+                list.Clear();
+
+                foreach ( var pair in outer )
+                {
+                    list.Add(pair);
+                }
+
+                foreach ( var pair in list )
+                {
+                    var flags = pair.Key & data.ChangeFlags;
+                    if ( flags == 0 )
+                    {
+                        // No new information for this request
+                        continue;
+                    }
+
+                    outer.Remove( pair.Key );
+
+                    if ( flags == pair.Key )
+                    {
+                        // All requested information has been provided
+                        pair.Value( data.SteamID );
+                        continue;
+                    }
+
+                    // Still missing some information
+                    var remainingFlags = pair.Key ^ flags;
+
+                    if ( outer.TryGetValue( remainingFlags, out var existing ) )
+                    {
+                        outer[remainingFlags] = existing + pair.Value;
+                    }
+                    else
+                    {
+                        outer.Add( remainingFlags, pair.Value );
+                    }
+                }
             }
 
             //
