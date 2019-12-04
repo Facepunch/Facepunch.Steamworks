@@ -4841,7 +4841,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct LeaderboardEntry_t
 	{
 		internal ulong SteamIDUser; // m_steamIDUser class CSteamID
