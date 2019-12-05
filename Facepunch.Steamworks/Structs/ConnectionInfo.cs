@@ -21,5 +21,6 @@ namespace Steamworks.Data
 
 		public ConnectionState State => state;
 		public SteamId SteamId => identity.steamID;
+		public int EndReason => endReason;
 	}
 }
