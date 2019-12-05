@@ -283,7 +283,6 @@ namespace Facepunch.Steamworks
                             Score = entry.Score,
                             SteamId = entry.SteamIDUser,
                             SubScores = entry.CDetails == 0 ? null : subEntriesBuffer.Take( entry.CDetails ).ToArray(),
-                            Name = client.Friends.GetName( entry.SteamIDUser ),
                             AttachedFile = (entry.UGC >> 32) == 0xffffffff ? null : new RemoteFile( client.RemoteStorage, entry.UGC )
                         } );
                 }
@@ -379,12 +378,6 @@ namespace Facepunch.Steamworks
             public int[] SubScores;
             public int GlobalRank;
             public RemoteFile AttachedFile;
-
-            /// <summary>
-            ///     Note that the player's name might not be immediately available.
-            ///     If that's the case you'll have to use Friends.GetName to find the name
-            /// </summary>
-            public string Name;
         }
     }
 }

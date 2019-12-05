@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 
@@ -95,6 +96,35 @@ namespace Facepunch.Steamworks.Test
                     Assert.AreEqual(image.Height, 64);
                     Assert.AreEqual(image.Data.Length, image.Width * image.Height * 4);
                 }
+            }
+        }
+
+        [TestMethod]
+        public void FetchUsername()
+        {
+            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
+            {
+                Assert.IsTrue(client.IsValid);
+
+                const ulong id = 76561198095600584u;
+
+                var passed = false;
+                var timeout = TimeSpan.FromSeconds(10d);
+
+                client.Friends.GetName( id, name =>
+                {
+                    Console.WriteLine( name );
+                    passed = true;
+                } );
+
+                while ( !passed && timeout > TimeSpan.Zero )
+                {
+                    client.Update();
+                    System.Threading.Thread.Sleep( 10 );
+                    timeout -= TimeSpan.FromMilliseconds( 10 );
+                }
+
+                Assert.IsTrue( passed );
             }
         }
 

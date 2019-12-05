@@ -276,8 +276,8 @@ namespace Facepunch.Steamworks
                 {
                     if ( _ownerName == null && workshop.friends != null )
                     {
-                        _ownerName = workshop.friends.GetName( OwnerId );
-                        if ( _ownerName == "[unknown]" )
+                        _ownerName = workshop.friends.GetCachedName( OwnerId );
+                        if ( _ownerName == Friends.DefaultName )
                         {
                             _ownerName = null;
                             return string.Empty;

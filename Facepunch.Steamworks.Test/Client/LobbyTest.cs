@@ -365,7 +365,7 @@ namespace Facepunch.Steamworks.Test
 
                 client.Lobby.OnLobbyMemberDataUpdated = (steamID) =>
                 {
-                    string name = client.Friends.GetName(steamID);
+                    string name = client.Friends.GetCachedName(steamID);
                     Console.WriteLine(name + " updated data");
                     Assert.IsTrue(client.Lobby.GetMemberData(steamID, "testkey") == "testvalue");
                     Console.WriteLine("testkey is now: " + client.Lobby.GetMemberData(steamID, "testkey"));

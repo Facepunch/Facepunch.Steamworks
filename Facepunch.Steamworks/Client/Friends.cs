@@ -121,13 +121,12 @@ namespace Facepunch.Steamworks
         {
             return !client.native.friends.RequestUserInformation( steamid, false );
         }
-        
+
         /// <summary>
-        /// Get this user's name
+        /// Get this user's name immediately. This should work for people on your friends list.
         /// </summary>
-        public string GetName( ulong steamid )
+        public string GetCachedName( ulong steamid )
         {
-            client.native.friends.RequestUserInformation( steamid, true );
             return client.native.friends.GetFriendPersonaName( steamid );
         }
 
@@ -270,7 +269,7 @@ namespace Facepunch.Steamworks
             }
 
             // Lets request it from Steam
-            if (!client.native.friends.RequestUserInformation(steamid, false))
+            if ( !client.native.friends.RequestUserInformation( steamid, false ) )
             {
                 // from docs: false means that we already have all the details about that user, and functions that require this information can be used immediately
                 // but that's probably not true because we just checked the cache
@@ -287,7 +286,7 @@ namespace Facepunch.Steamworks
                 // if not it'll time out anyway
             }
 
-            PersonaCallbacks.Add( new PersonaCallback
+            AvatarCallbacks.Add( new PersonaCallback<Image>
             {
                 SteamId = steamid,
                 Size = size,
@@ -296,15 +295,54 @@ namespace Facepunch.Steamworks
             });
         }
 
-        private class PersonaCallback
+        public const string DefaultName = "[unknown]";
+
+        public void GetName( ulong steamid, Action<string> callback )
+        {
+            // Maybe we already have it downloaded?
+            var name = GetCachedName( steamid );
+            if ( name != null && name != DefaultName )
+            {
+                callback( name );
+                return;
+            }
+
+            // Lets request it from Steam
+            if ( !client.native.friends.RequestUserInformation( steamid, true ) )
+            {
+                // from docs: false means that we already have all the details about that user, and functions that require this information can be used immediately
+                // but that's probably not true because we just checked the cache
+
+                // check again in case it was just a race
+                name = GetCachedName( steamid );
+                if ( name != null && name != DefaultName )
+                {
+                    callback( name );
+                    return;
+                }
+
+                // maybe Steam returns false if it was already requested? just add another callback and hope it comes
+                // if not it'll time out anyway
+            }
+
+            NameCallbacks.Add( new PersonaCallback<string>
+            {
+                SteamId = steamid,
+                Callback = callback,
+                Time = DateTime.Now
+            } );
+        }
+
+        private class PersonaCallback<T>
         {
             public ulong SteamId;
             public AvatarSize Size;
-            public Action<Image> Callback;
+            public Action<T> Callback;
             public DateTime Time;
         }
 
-        List<PersonaCallback> PersonaCallbacks = new List<PersonaCallback>();
+        List<PersonaCallback<Image>> AvatarCallbacks = new List<PersonaCallback<Image>>();
+        List<PersonaCallback<string>> NameCallbacks = new List<PersonaCallback<string>>();
 
         public SteamFriend Get( ulong steamid )
         {
@@ -324,119 +362,48 @@ namespace Facepunch.Steamworks
 
         internal void Cycle()
         {
-            if ( PersonaCallbacks.Count == 0 ) return;
+            CycleCallbacks( AvatarCallbacks, callback => GetCachedAvatar( callback.Size, callback.SteamId ) );
+            CycleCallbacks( NameCallbacks, callback => GetCachedName( callback.SteamId ) );
+        }
+
+        private void CycleCallbacks<T>( List<PersonaCallback<T>> callbacks, Func<PersonaCallback<T>, T> getter )
+        {
+            if ( callbacks.Count == 0 ) return;
 
             var timeOut = DateTime.Now.AddSeconds( -10 );
 
-            for ( int i = PersonaCallbacks.Count-1; i >= 0; i-- )
+            for ( int i = callbacks.Count-1; i >= 0; i-- )
             {
-                var cb = PersonaCallbacks[i];
+                var cb = callbacks[i];
 
                 // Timeout
-                if ( cb.Time < timeOut )
+                if ( cb.Time >= timeOut ) continue;
+
+                if ( cb.Callback != null )
                 {
-                    if ( cb.Callback != null )
-                    {
-                        // final attempt, will be null unless the callback was missed somehow
-                        var image = GetCachedAvatar( cb.Size, cb.SteamId );
+                    // final attempt, will be null unless the callback was missed somehow
+                    var image = getter( cb );
 
-                        cb.Callback( image );
-                    }
-
-                    PersonaCallbacks.Remove( cb );
-                    continue;
+                    cb.Callback( image );
                 }
+
+                callbacks.Remove( cb );
             }
         }
-
-        public delegate void FetchInformationCallback(ulong steamid);
 
         private const int PersonaChangeName = 0x0001;
         private const int PersonaChangeAvatar = 0x0040;
 
-        private readonly Dictionary<ulong, Dictionary<int, FetchInformationCallback>> _fetchInformationRequests =
-            new Dictionary<ulong, Dictionary<int, FetchInformationCallback>>();
-        private static readonly List<KeyValuePair<int, FetchInformationCallback>> _tempCallbackList
-            = new List<KeyValuePair<int, FetchInformationCallback>>();
-
-        public void FetchUserInformation( ulong steamid, bool nameOnly, FetchInformationCallback callback )
-        {
-            if ( callback == null ) throw new ArgumentNullException( nameof(callback) );
-
-            if ( !client.native.friends.RequestUserInformation( steamid, nameOnly ) )
-            {
-                // Already got this user's info
-                callback( steamid );
-                return;
-            }
-
-            var flags = PersonaChangeName | (nameOnly ? 0 : PersonaChangeAvatar);
-
-            if ( !_fetchInformationRequests.TryGetValue( steamid, out var outer) )
-            {
-                outer = new Dictionary<int, FetchInformationCallback>();
-                _fetchInformationRequests.Add( steamid, outer );
-            }
-
-            FetchInformationCallback inner;
-            if ( !outer.TryGetValue( flags, out inner ) )
-            {
-                outer.Add( flags, callback );
-                return;
-            }
-
-            outer[flags] = inner + callback;
-        }
-
         private void OnPersonaStateChange( PersonaStateChange_t data )
         {
-            // k_EPersonaChangeAvatar	
+            if ( (data.ChangeFlags & PersonaChangeName) != 0 )
+            {
+                LoadNameForSteamId( data.SteamID );
+            }
+
             if ( (data.ChangeFlags & PersonaChangeAvatar) != 0 )
             {
                 LoadAvatarForSteamId( data.SteamID );
-            }
-
-            if ( _fetchInformationRequests.TryGetValue( data.SteamID, out var outer ) )
-            {
-                var list = _tempCallbackList;
-
-                list.Clear();
-
-                foreach ( var pair in outer )
-                {
-                    list.Add(pair);
-                }
-
-                foreach ( var pair in list )
-                {
-                    var flags = pair.Key & data.ChangeFlags;
-                    if ( flags == 0 )
-                    {
-                        // No new information for this request
-                        continue;
-                    }
-
-                    outer.Remove( pair.Key );
-
-                    if ( flags == pair.Key )
-                    {
-                        // All requested information has been provided
-                        pair.Value( data.SteamID );
-                        continue;
-                    }
-
-                    // Still missing some information
-                    var remainingFlags = pair.Key ^ flags;
-
-                    if ( outer.TryGetValue( remainingFlags, out var existing ) )
-                    {
-                        outer[remainingFlags] = existing + pair.Value;
-                    }
-                    else
-                    {
-                        outer.Add( remainingFlags, pair.Value );
-                    }
-                }
             }
 
             //
@@ -452,20 +419,33 @@ namespace Facepunch.Steamworks
 
         void LoadAvatarForSteamId( ulong Steamid )
         {
-            for ( int i = PersonaCallbacks.Count - 1; i >= 0; i-- )
+            for ( int i = AvatarCallbacks.Count - 1; i >= 0; i-- )
             {
-                var cb = PersonaCallbacks[i];
+                var cb = AvatarCallbacks[i];
                 if ( cb.SteamId != Steamid ) continue;
 
                 var image = GetCachedAvatar( cb.Size, cb.SteamId );
                 if ( image == null ) continue;
 
-                PersonaCallbacks.Remove( cb );
+                AvatarCallbacks.Remove( cb );
 
-                if ( cb.Callback != null )
-                {
-                    cb.Callback( image );
-                }
+                cb.Callback?.Invoke( image );
+            }
+        }
+
+        void LoadNameForSteamId( ulong Steamid )
+        {
+            for ( int i = NameCallbacks.Count - 1; i >= 0; i-- )
+            {
+                var cb = NameCallbacks[i];
+                if ( cb.SteamId != Steamid ) continue;
+
+                var name = GetCachedName( cb.SteamId );
+                if ( name == null ) continue;
+
+                NameCallbacks.Remove( cb );
+
+                cb.Callback?.Invoke( name );
             }
         }
 

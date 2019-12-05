@@ -58,7 +58,7 @@ namespace Facepunch.Steamworks.Test
 
                 foreach ( var entry in board.Results )
                 {
-                    Console.WriteLine( $"{entry.GlobalRank}: {entry.SteamId} ({entry.Name}) with {entry.Score}" );
+                    Console.WriteLine( $"{entry.GlobalRank}: {entry.SteamId} ({client.Friends.GetCachedName(entry.SteamId)}) with {entry.Score}" );
 
                     if ( entry.SubScores != null )
                         Console.WriteLine( " - " + string.Join( ";", entry.SubScores.Select( x => x.ToString() ).ToArray() ) );
@@ -97,7 +97,7 @@ namespace Facepunch.Steamworks.Test
                 {
                     foreach ( var entry in results )
                     {
-                        Console.WriteLine( $"{entry.GlobalRank}: {entry.SteamId} ({entry.Name}) with {entry.Score}" );
+                        Console.WriteLine( $"{entry.GlobalRank}: {entry.SteamId} ({client.Friends.GetCachedName(entry.SteamId)}) with {entry.Score}" );
 
                         if ( entry.SubScores != null )
                             Console.WriteLine( " - " + string.Join( ";", entry.SubScores.Select( x => x.ToString() ).ToArray() ) );
