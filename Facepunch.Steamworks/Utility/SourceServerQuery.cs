@@ -32,7 +32,7 @@ namespace Steamworks
 			}
 			catch ( System.Exception e )
 			{
-				Console.Error.WriteLine( e.Message );
+				//Console.Error.WriteLine( e.Message );
 				return null;
 			}
 		}
@@ -54,14 +54,14 @@ namespace Steamworks
 				var numRules = br.ReadUInt16();
 				for ( int index = 0; index < numRules; index++ )
 				{
-					rules.Add( br.ReadNullTerminatedUTF8String( readBuffer ), br.ReadNullTerminatedUTF8String( readBuffer ) );
+					rules.Add( br.ReadNullTerminatedUTF8String(), br.ReadNullTerminatedUTF8String() );
 				}
 			}
 
 			return rules;
 		}
 
-		static byte[] readBuffer = new byte[1024 * 8];
+
 
 		static async Task<byte[]> Receive( UdpClient client )
 		{
@@ -120,10 +120,10 @@ namespace Steamworks
 			return challengeData;
 		}
 
-		static byte[] sendBuffer = new byte[1024];
-
 		static async Task Send( UdpClient client, byte[] message )
 		{
+			var sendBuffer = new byte[message.Length + 4];
+
 			sendBuffer[0] = 0xFF;
 			sendBuffer[1] = 0xFF;
 			sendBuffer[2] = 0xFF;
