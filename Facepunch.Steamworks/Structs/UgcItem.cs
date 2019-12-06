@@ -278,11 +278,11 @@ namespace Steamworks.Ugc
 			while ( true )
 			{
 				if ( ct.IsCancellationRequested )
-					return false;
+					break;
 
 				progress?.Invoke( DownloadAmount );
 
-				if ( !IsDownloading )
+				if ( !IsDownloading && State.HasFlag( ItemState.Installed ) )
 					break;
 
 				await Task.Delay( milisecondsUpdateDelay );
