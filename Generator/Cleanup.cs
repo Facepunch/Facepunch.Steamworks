@@ -65,6 +65,7 @@ public static class Cleanup
 	internal static string Expose( string name )
 	{
 		if ( name == "FriendState" ) return "public";
+		if (name == "FriendFlags") return "public";
 		if ( name == "MusicStatus" ) return "public";
 		if ( name == "ParentalFeature" ) return "public";
 		if ( name == "AuthResponse" ) return "public";
@@ -86,6 +87,7 @@ public static class Cleanup
 		if ( name == "P2PSessionError" ) return "public";
 		if ( name == "InputType" ) return "public";
 		if ( name == "InputSourceMode" ) return "public";
+		if ( name == "UserHasLicenseForAppResult" ) return "public";
 
 		return "internal";
 	}

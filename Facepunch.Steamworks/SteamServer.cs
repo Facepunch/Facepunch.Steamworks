@@ -464,6 +464,14 @@ namespace Steamworks
 		public static unsafe void HandleIncomingPacket( IntPtr ptr, int size, uint address, ushort port )
 		{
 			Internal.HandleIncomingPacket( ptr, size, address, port );
+		}		
+		
+		/// <summary>
+		/// Does the user own this app (which could be DLC)
+		/// </summary>
+		public static UserHasLicenseForAppResult UserHasLicenseForApp( SteamId steamid, AppId appid )
+		{
+			return Internal.UserHasLicenseForApp( steamid, appid );
 		}
 	}
 }

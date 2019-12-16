@@ -111,21 +111,23 @@ namespace Steamworks
 				OnChatMessage( friend, typeName, message );
 			}
 		}
+		
+		public static IEnumerable<Friend> GetFriendsWithFlag(FriendFlags flag)
+		{
+			for ( int i=0; i<Internal.GetFriendCount( (int)flag); i++ )
+			{
+				yield return new Friend( Internal.GetFriendByIndex( i, (int)flag ) );
+			}
+		}
 
 		public static IEnumerable<Friend> GetFriends()
 		{
-			for ( int i=0; i<Internal.GetFriendCount( (int) FriendFlags.Immediate ); i++ )
-			{
-				yield return new Friend( Internal.GetFriendByIndex( i, (int)FriendFlags.Immediate ) );
-			}
+			return GetFriendsWithFlag(FriendFlags.Immediate);
 		}
 
 		public static IEnumerable<Friend> GetBlocked()
 		{
-			for ( int i = 0; i < Internal.GetFriendCount( (int)FriendFlags.Blocked ); i++ )
-			{
-				yield return new Friend( Internal.GetFriendByIndex( i, (int)FriendFlags.Blocked) );
-			}
+			return GetFriendsWithFlag(FriendFlags.Blocked);
 		}
 
 		public static IEnumerable<Friend> GetPlayedWith()

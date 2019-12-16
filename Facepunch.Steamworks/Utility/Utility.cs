@@ -80,20 +80,22 @@ namespace Steamworks
             }
         }
 
-		public static string ReadNullTerminatedUTF8String( this BinaryReader br, byte[] buffer = null )
+		static byte[] readBuffer = new byte[1024 * 8];
+
+		public static string ReadNullTerminatedUTF8String( this BinaryReader br )
 		{
-			if ( buffer == null )
-				buffer = new byte[1024];
-
-			byte chr;
-			int i = 0;
-			while ( (chr = br.ReadByte()) != 0 && i < buffer.Length )
+			lock ( readBuffer )
 			{
-				buffer[i] = chr;
-				i++;
-			}
+				byte chr;
+				int i = 0;
+				while ( (chr = br.ReadByte()) != 0 && i < readBuffer.Length )
+				{
+					readBuffer[i] = chr;
+					i++;
+				}
 
-			return Encoding.UTF8.GetString( buffer, 0, i );
+				return Encoding.UTF8.GetString( readBuffer, 0, i );
+			}
 		}
 	}
 }

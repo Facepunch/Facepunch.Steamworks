@@ -211,7 +211,7 @@ namespace Steamworks
 	//
 	// EUserHasLicenseForAppResult
 	//
-	internal enum UserHasLicenseForAppResult : int
+	public enum UserHasLicenseForAppResult : int
 	{
 		HasLicense = 0,
 		DoesNotHaveLicense = 1,
@@ -585,7 +585,7 @@ namespace Steamworks
 	//
 	// EFriendFlags
 	//
-	internal enum FriendFlags : int
+	public enum FriendFlags : int
 	{
 		None = 0,
 		Blocked = 1,
