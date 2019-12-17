@@ -23,8 +23,6 @@ namespace Steamworks
 				{
 					_internal = new ISteamFriends();
 					_internal.Init();
-
-					richPresence = new Dictionary<string, string>();
 				}
 
 				return _internal;
@@ -35,7 +33,7 @@ namespace Steamworks
 			_internal = null;
 		}
 
-		static Dictionary<string, string> richPresence;
+		static readonly Dictionary<string, string> richPresence = new Dictionary<string, string>();
 
 		internal static void InstallEvents()
 		{
