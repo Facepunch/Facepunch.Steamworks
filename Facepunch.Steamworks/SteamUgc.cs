@@ -29,6 +29,16 @@ namespace Steamworks
 			}
 		}
 
+		internal static void InstallEvents()
+		{
+			DownloadItemResult_t.Install( x => OnDownloadItemResult?.Invoke( x.Result ) );
+		}
+
+		/// <summary>
+		/// Posted after Download call
+		/// </summary>
+		public static event Action<Result> OnDownloadItemResult;
+
 		internal static void Shutdown()
 		{
 			_internal = null;
