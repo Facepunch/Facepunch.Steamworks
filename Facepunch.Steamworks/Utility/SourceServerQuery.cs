@@ -15,26 +15,53 @@ namespace Steamworks
 		//      private static readonly byte A2S_PLAYER = 0x55;
 		private static readonly byte A2S_RULES = 0x56;
 
-		internal static async Task<Dictionary<string, string>> GetRules( ServerInfo server )
-		{
-			try
-			{
-				var endpoint = new IPEndPoint( server.Address, server.QueryPort );
+        private static readonly Dictionary<IPEndPoint, Task<Dictionary<string, string>>> PendingQueries =
+            new Dictionary<IPEndPoint, Task<Dictionary<string, string>>>();
 
-				using ( var client = new UdpClient() )
-				{
-					client.Client.SendTimeout = 3000;
-					client.Client.ReceiveTimeout = 3000;
-					client.Connect( endpoint );
+        internal static Task<Dictionary<string, string>> GetRules( ServerInfo server )
+        {
+            var endpoint = new IPEndPoint(server.Address, server.QueryPort);
 
-					return await GetRules( client );
-				}
-			}
-			catch ( System.Exception e )
-			{
-				Console.Error.WriteLine( e.Message );
-				return null;
-			}
+            lock (PendingQueries)
+            {
+                if (PendingQueries.TryGetValue(endpoint, out var pending))
+                    return pending;
+
+                var task = GetRulesImpl(endpoint, server)
+                    .ContinueWith(t =>
+                    {
+                        lock (PendingQueries)
+                        {
+                            PendingQueries.Remove(endpoint);
+                        }
+
+                        return t;
+                    })
+                    .Unwrap();
+
+                PendingQueries.Add(endpoint, task);
+                return task;
+            }
+        }
+
+		private static async Task<Dictionary<string, string>> GetRulesImpl( IPEndPoint endpoint, ServerInfo server )
+        {
+            try
+            {
+                using (var client = new UdpClient())
+                {
+                    client.Client.SendTimeout = 3000;
+                    client.Client.ReceiveTimeout = 3000;
+                    client.Connect(endpoint);
+
+                    return await GetRules(client);
+                }
+            }
+            catch (System.Exception e)
+            {
+                //Console.Error.WriteLine( e.Message );
+                return null;
+            }
 		}
 
 		static async Task<Dictionary<string, string>> GetRules( UdpClient client )
@@ -54,14 +81,14 @@ namespace Steamworks
 				var numRules = br.ReadUInt16();
 				for ( int index = 0; index < numRules; index++ )
 				{
-					rules.Add( br.ReadNullTerminatedUTF8String( readBuffer ), br.ReadNullTerminatedUTF8String( readBuffer ) );
+					rules.Add( br.ReadNullTerminatedUTF8String(), br.ReadNullTerminatedUTF8String() );
 				}
 			}
 
 			return rules;
 		}
 
-		static byte[] readBuffer = new byte[1024 * 8];
+
 
 		static async Task<byte[]> Receive( UdpClient client )
 		{
@@ -120,10 +147,10 @@ namespace Steamworks
 			return challengeData;
 		}
 
-		static byte[] sendBuffer = new byte[1024];
-
 		static async Task Send( UdpClient client, byte[] message )
 		{
+			var sendBuffer = new byte[message.Length + 4];
+
 			sendBuffer[0] = 0xFF;
 			sendBuffer[1] = 0xFF;
 			sendBuffer[2] = 0xFF;
