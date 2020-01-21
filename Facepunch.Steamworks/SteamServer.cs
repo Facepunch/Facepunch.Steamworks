@@ -148,6 +148,8 @@ namespace Steamworks
 			SteamNetworkingSockets.Shutdown();
 			SteamInventory.Shutdown();
 
+			SteamServerStats.Shutdown();
+
 			SteamGameServer.Shutdown();
 		}
 
