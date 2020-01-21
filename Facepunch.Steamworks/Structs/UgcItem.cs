@@ -198,7 +198,9 @@ namespace Steamworks.Ugc
 		{
 			get
 			{
-				if ( !NeedsUpdate ) return 1;
+				//changed from NeedsUpdate as it's false when validating and redownloading ugc
+				//possibly similar properties should also be changed
+				if ( !IsDownloading ) return 1;
 
 				ulong downloaded = 0;
 				ulong total = 0;
@@ -266,26 +268,66 @@ namespace Steamworks.Ugc
 				ct = new CancellationTokenSource( TimeSpan.FromSeconds( 60 ) ).Token;
 
 			progress?.Invoke( 0 );
+			await Task.Delay( milisecondsUpdateDelay );
 
-			var subResult = await SteamUGC.Internal.SubscribeItem( _id );
-			if ( subResult?.Result != Result.OK )
-				return false;
-
-			var downloading = Download( true );
-			if ( !downloading )
-				return State.HasFlag( ItemState.Installed );
-
-			while ( true )
+			//Subscribe
 			{
-				if ( ct.IsCancellationRequested )
-					break;
+				var subResult = await SteamUGC.Internal.SubscribeItem( _id );
+				if ( subResult?.Result != Result.OK )
+					return false;
+			}
 
-				progress?.Invoke( DownloadAmount );
+			progress?.Invoke( 0.1f );
+			await Task.Delay( milisecondsUpdateDelay );
 
-				if ( !IsDownloading && State.HasFlag( ItemState.Installed ) )
-					break;
+			//Try to start downloading
+			{
+				if ( Download( true ) == false )
+					return State.HasFlag( ItemState.Installed );
 
-				await Task.Delay( milisecondsUpdateDelay );
+				//Steam docs about Download:
+				//If the return value is true then register and wait
+				//for the Callback DownloadItemResult_t before calling 
+				//GetItemInstallInfo or accessing the workshop item on disk.
+
+				//Wait for DownloadItemResult_t
+				{
+					var downloadStarted = false;
+					Action<Result> onDownloadStarted = null;
+					onDownloadStarted = r =>
+					{
+						SteamUGC.OnDownloadItemResult -= onDownloadStarted;
+						downloadStarted = true;
+					};
+					SteamUGC.OnDownloadItemResult += onDownloadStarted;
+
+					while ( downloadStarted == false )
+					{
+						if ( ct.IsCancellationRequested )
+							break;
+
+						await Task.Delay( milisecondsUpdateDelay );
+					}
+				}
+			}
+
+			progress?.Invoke( 0.2f );
+			await Task.Delay( milisecondsUpdateDelay );
+
+			//Wait for downloading completion
+			{
+				while ( true )
+				{
+					if ( ct.IsCancellationRequested )
+						break;
+
+					progress?.Invoke( 0.2f + DownloadAmount * 0.8f );
+
+					if ( !IsDownloading && State.HasFlag( ItemState.Installed ) )
+						break;
+
+					await Task.Delay( milisecondsUpdateDelay );
+				}
 			}
 
 			return State.HasFlag( ItemState.Installed );
