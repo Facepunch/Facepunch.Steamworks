@@ -54,6 +54,22 @@ namespace Generator
 
             public string CallbackId { get; set; }
             public bool IsCallResult { get; set; }
+
+
+			public bool IsPack4OnWindows
+			{
+				get
+				{
+					// 4/8 packing is irrevant to these classes
+					if ( Name.Contains( "MatchMakingKeyValuePair_t" ) ) return true;
+
+					if ( Fields.Any( x => x.Type.Contains( "CSteamID" ) ) )
+						return true;
+
+					return false;
+				}
+			}
+
         }
 
         public List<StructDef> structs { get; set; }

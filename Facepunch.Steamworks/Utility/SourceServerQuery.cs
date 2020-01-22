@@ -4,203 +4,174 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading.Tasks;
+using Steamworks.Data;
 
-namespace Facepunch.Steamworks
+namespace Steamworks
 {
+	internal static class SourceServerQuery
+	{
+		private static readonly byte[] A2S_SERVERQUERY_GETCHALLENGE = { 0x55, 0xFF, 0xFF, 0xFF, 0xFF };
+		//      private static readonly byte A2S_PLAYER = 0x55;
+		private static readonly byte A2S_RULES = 0x56;
 
-    internal class SourceServerQuery : IDisposable
-    {
-        public static List<SourceServerQuery> Current = new List<SourceServerQuery>();
+        private static readonly Dictionary<IPEndPoint, Task<Dictionary<string, string>>> PendingQueries =
+            new Dictionary<IPEndPoint, Task<Dictionary<string, string>>>();
 
-        public static void Cycle()
+        internal static Task<Dictionary<string, string>> GetRules( ServerInfo server )
         {
-            if ( Current.Count == 0 )
-                return;
+            var endpoint = new IPEndPoint(server.Address, server.QueryPort);
 
-            for( int i = Current.Count; i>0; i-- )
+            lock (PendingQueries)
             {
-                Current[i-1].Update();
+                if (PendingQueries.TryGetValue(endpoint, out var pending))
+                    return pending;
+
+                var task = GetRulesImpl(endpoint, server)
+                    .ContinueWith(t =>
+                    {
+                        lock (PendingQueries)
+                        {
+                            PendingQueries.Remove(endpoint);
+                        }
+
+                        return t;
+                    })
+                    .Unwrap();
+
+                PendingQueries.Add(endpoint, task);
+                return task;
             }
         }
 
-        private static readonly byte[] A2S_SERVERQUERY_GETCHALLENGE = { 0x55, 0xFF, 0xFF, 0xFF, 0xFF };
-        private static readonly byte A2S_PLAYER = 0x55;
-        private static readonly byte A2S_RULES = 0x56;
-
-        public volatile bool IsRunning;
-        public volatile bool IsSuccessful;
-
-        private ServerList.Server Server;
-        private UdpClient udpClient;
-        private IPEndPoint endPoint;
-        private System.Threading.Thread thread;
-        private byte[] _challengeBytes;
-
-        private Dictionary<string, string> rules = new Dictionary<string, string>();
-
-        public SourceServerQuery( ServerList.Server server, IPAddress address, int queryPort )
-        {
-            Server = server;
-            endPoint = new IPEndPoint( address, queryPort );
-
-            Current.Add( this );
-
-            IsRunning = true;
-            IsSuccessful = false;
-            thread = new System.Threading.Thread( ThreadedStart );
-            thread.Start();
-        }
-
-        void Update()
-        {
-            if ( !IsRunning )
-            {
-                Current.Remove( this );
-                Server.OnServerRulesReceiveFinished( rules, IsSuccessful );
-            }              
-        }
-
-        private void ThreadedStart( object obj )
+		private static async Task<Dictionary<string, string>> GetRulesImpl( IPEndPoint endpoint, ServerInfo server )
         {
             try
             {
-                using ( udpClient = new UdpClient() )
+                using (var client = new UdpClient())
                 {
-                    udpClient.Client.SendTimeout = 3000;
-                    udpClient.Client.ReceiveTimeout = 3000;
-                    udpClient.Connect( endPoint );
+                    client.Client.SendTimeout = 3000;
+                    client.Client.ReceiveTimeout = 3000;
+                    client.Connect(endpoint);
 
-                    GetRules();
-
-                    IsSuccessful = true;
+                    return await GetRules(client);
                 }
             }
-            catch ( System.Exception )
+            catch (System.Exception e)
             {
-                IsSuccessful = false;
+                //Console.Error.WriteLine( e.Message );
+                return null;
             }
+		}
 
-            udpClient = null;
-            IsRunning = false;
-        }
+		static async Task<Dictionary<string, string>> GetRules( UdpClient client )
+		{
+			var challengeBytes = await GetChallengeData( client );
+			challengeBytes[0] = A2S_RULES;
+			await Send( client, challengeBytes );
+			var ruleData = await Receive( client );
 
-        void GetRules()
-        {
-            GetChallengeData();
+			var rules = new Dictionary<string, string>();
 
-            _challengeBytes[0] = A2S_RULES;
-            Send( _challengeBytes );
-            var ruleData = Receive();
+			using ( var br = new BinaryReader( new MemoryStream( ruleData ) ) )
+			{
+				if ( br.ReadByte() != 0x45 )
+					throw new Exception( "Invalid data received in response to A2S_RULES request" );
 
-            using ( var br = new BinaryReader( new MemoryStream( ruleData ) ) )
-            {
-                if ( br.ReadByte() != 0x45 )
-                    throw new Exception( "Invalid data received in response to A2S_RULES request" );
+				var numRules = br.ReadUInt16();
+				for ( int index = 0; index < numRules; index++ )
+				{
+					rules.Add( br.ReadNullTerminatedUTF8String(), br.ReadNullTerminatedUTF8String() );
+				}
+			}
 
-                var numRules = br.ReadUInt16();
-                for ( int index = 0; index < numRules; index++ )
-                {
-                    rules.Add( br.ReadNullTerminatedUTF8String( readBuffer ), br.ReadNullTerminatedUTF8String( readBuffer ) );
-                }
-            }
+			return rules;
+		}
 
-        }
 
-        byte[] readBuffer = new byte[1024 * 4];
 
-        private byte[] Receive()
-        {
-            byte[][] packets = null;
-            byte packetNumber = 0, packetCount = 1;
+		static async Task<byte[]> Receive( UdpClient client )
+		{
+			byte[][] packets = null;
+			byte packetNumber = 0, packetCount = 1;
 
-            do
-            {
-                var result = udpClient.Receive( ref endPoint );
+			do
+			{
+				var result = await client.ReceiveAsync();
+				var buffer = result.Buffer;
 
-                using ( var br = new BinaryReader( new MemoryStream( result ) ) )
-                {
-                    var header = br.ReadInt32();
+				using ( var br = new BinaryReader( new MemoryStream( buffer ) ) )
+				{
+					var header = br.ReadInt32();
 
-                    if ( header == -1 )
-                    {
-                        var unsplitdata = new byte[result.Length - br.BaseStream.Position];
-                        Buffer.BlockCopy( result, (int)br.BaseStream.Position, unsplitdata, 0, unsplitdata.Length );
-                        return unsplitdata;
-                    }
-                    else  if ( header == -2 )
-                    {
-                        int requestId = br.ReadInt32();
-                        packetNumber = br.ReadByte();
-                        packetCount = br.ReadByte();
-                        int splitSize = br.ReadInt32();
-                    }
-                    else
-                    {
-                        throw new System.Exception( "Invalid Header" );
-                    }
+					if ( header == -1 )
+					{
+						var unsplitdata = new byte[buffer.Length - br.BaseStream.Position];
+						Buffer.BlockCopy( buffer, (int)br.BaseStream.Position, unsplitdata, 0, unsplitdata.Length );
+						return unsplitdata;
+					}
+					else if ( header == -2 )
+					{
+						int requestId = br.ReadInt32();
+						packetNumber = br.ReadByte();
+						packetCount = br.ReadByte();
+						int splitSize = br.ReadInt32();
+					}
+					else
+					{
+						throw new System.Exception( "Invalid Header" );
+					}
 
-                    if ( packets == null ) packets = new byte[packetCount][];
+					if ( packets == null ) packets = new byte[packetCount][];
 
-                    var data = new byte[result.Length - br.BaseStream.Position];
-                    Buffer.BlockCopy( result, (int)br.BaseStream.Position, data, 0, data.Length );
-                    packets[packetNumber] = data;
-                }
-            }
-            while ( packets.Any( p => p == null ) );
+					var data = new byte[buffer.Length - br.BaseStream.Position];
+					Buffer.BlockCopy( buffer, (int)br.BaseStream.Position, data, 0, data.Length );
+					packets[packetNumber] = data;
+				}
+			}
+			while ( packets.Any( p => p == null ) );
 
-            var combinedData = Combine( packets );
-            return combinedData;
-        }
+			var combinedData = Combine( packets );
+			return combinedData;
+		}
 
-        private void GetChallengeData()
-        {
-            if ( _challengeBytes != null ) return;
+		private static async Task<byte[]> GetChallengeData( UdpClient client )
+		{
+			await Send( client, A2S_SERVERQUERY_GETCHALLENGE );
 
-            Send( A2S_SERVERQUERY_GETCHALLENGE );
+			var challengeData = await Receive( client );
 
-            var challengeData = Receive();
+			if ( challengeData[0] != 0x41 )
+				throw new Exception( "Invalid Challenge" );
 
-            if ( challengeData[0] != 0x41 )
-                throw new Exception( "Invalid Challenge" );
+			return challengeData;
+		}
 
-            _challengeBytes = challengeData;
-        }
+		static async Task Send( UdpClient client, byte[] message )
+		{
+			var sendBuffer = new byte[message.Length + 4];
 
-        byte[] sendBuffer = new byte[1024];
+			sendBuffer[0] = 0xFF;
+			sendBuffer[1] = 0xFF;
+			sendBuffer[2] = 0xFF;
+			sendBuffer[3] = 0xFF;
 
-        private void Send( byte[] message )
-        {
-            sendBuffer[0] = 0xFF;
-            sendBuffer[1] = 0xFF;
-            sendBuffer[2] = 0xFF;
-            sendBuffer[3] = 0xFF;
+			Buffer.BlockCopy( message, 0, sendBuffer, 4, message.Length );
 
-            Buffer.BlockCopy( message, 0, sendBuffer, 4, message.Length );
+			await client.SendAsync( sendBuffer, message.Length + 4 );
+		}
 
-            udpClient.Send( sendBuffer, message.Length + 4 );
-        }
+		static byte[] Combine( byte[][] arrays )
+		{
+			var rv = new byte[arrays.Sum( a => a.Length )];
+			int offset = 0;
+			foreach ( byte[] array in arrays )
+			{
+				Buffer.BlockCopy( array, 0, rv, offset, array.Length );
+				offset += array.Length;
+			}
+			return rv;
+		}
+	};
 
-        private byte[] Combine( byte[][] arrays )
-        {
-            var rv = new byte[arrays.Sum( a => a.Length )];
-            int offset = 0;
-            foreach ( byte[] array in arrays )
-            {
-                Buffer.BlockCopy( array, 0, rv, offset, array.Length );
-                offset += array.Length;
-            }
-            return rv;
-        }
-
-        public void Dispose()
-        {
-            if ( thread != null && thread.IsAlive )
-            {
-                thread.Abort();
-            }
-
-            thread = null;
-        }
-    };
-    
 }

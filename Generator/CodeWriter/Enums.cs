@@ -25,7 +25,12 @@ namespace Generator
                 if ( name[0] == 'E' )
                     name = name.Substring( 1 );
 
-                StartBlock( $"internal enum {name} : int" );
+				name = Cleanup.ConvertType( name );
+
+				if ( !Cleanup.ShouldCreate( name ) )
+					continue;
+
+                StartBlock( $"{Cleanup.Expose( name )} enum {name} : int" );
                 {
                     //
                     // If all the enum values start with the same 

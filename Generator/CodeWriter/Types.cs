@@ -37,28 +37,35 @@ namespace Generator
         {
             foreach ( var o in def.typedefs.Where( x => !x.Name.Contains( "::" ) ) )
             {
-                if ( SkipTypes.Contains( o.Name ) )
+				var typeName = Cleanup.ConvertType( o.Name );
+
+				if ( !Cleanup.ShouldCreate( typeName ) )
+					continue;
+
+				if ( SkipTypes.Contains( o.Name ) )
                     continue;
 
                 if ( SkipTypesStartingWith.Any( x => o.Name.StartsWith( x ) ) )
                     continue;
 
-                StartBlock( $"internal struct {o.Name}" );
+				StartBlock( $"{Cleanup.Expose( typeName )} struct {typeName} : IEquatable<{typeName}>, IComparable<{typeName}>" );
                 {
-                    WriteLine( $"public {ToManagedType( o.Type )} Value;" );
-                    WriteLine();
-                    StartBlock( $"public static implicit operator {o.Name}( {ToManagedType( o.Type )} value )" );
-                    {
-                        WriteLine( $"return new {o.Name}(){{ Value = value }};" );
-                    }
-                    EndBlock();
-                    WriteLine();
-                    StartBlock( $"public static implicit operator {ToManagedType( o.Type )}( {o.Name} value )" );
-                    {
-                        WriteLine( $"return value.Value;" );
-                    }
-                    EndBlock();
-                }
+					WriteLine( $"public {ToManagedType( o.Type )} Value;" );
+					WriteLine();
+					WriteLine( $"public static implicit operator {typeName}( {ToManagedType( o.Type )} value ) => new {typeName}(){{ Value = value }};" );
+					WriteLine( $"public static implicit operator {ToManagedType( o.Type )}( {typeName} value ) => value.Value;" );
+					WriteLine( $"public override string ToString() => Value.ToString();" );
+					WriteLine( $"public override int GetHashCode() => Value.GetHashCode();" );
+					WriteLine( $"public override bool Equals( object p ) => this.Equals( ({typeName}) p );" );
+					WriteLine( $"public bool Equals( {typeName} p ) => p.Value == Value;" );
+					WriteLine( $"public static bool operator ==( {typeName} a, {typeName} b ) => a.Equals( b );" );
+					WriteLine( $"public static bool operator !=( {typeName} a, {typeName} b ) => !a.Equals( b );" );
+
+					if ( ToManagedType( o.Type ) == "IntPtr" )
+						WriteLine( $"public int CompareTo( {typeName} other ) => Value.ToInt64().CompareTo( other.Value.ToInt64() );" );
+					else
+						WriteLine( $"public int CompareTo( {typeName} other ) => Value.CompareTo( other.Value );" );
+				}
                 EndBlock();
                 WriteLine();
             }

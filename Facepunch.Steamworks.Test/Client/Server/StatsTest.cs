@@ -2,7 +2,7 @@
 using System.Text;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+/*
 namespace Facepunch.Steamworks.Test
 {
     public partial class Server
@@ -40,3 +40,4 @@ namespace Facepunch.Steamworks.Test
         
     }
 }
+*/
