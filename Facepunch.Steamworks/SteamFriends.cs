@@ -298,5 +298,36 @@ namespace Steamworks
 			}
 		}
 
-	}
+		public static async Task<bool> IsFollowing(SteamId steamID)
+		{
+			var r = await Internal.IsFollowing(steamID);
+			return r.Value.IsFollowing;
+		}
+
+		public static async Task<int> GetFollowerCount(SteamId steamID)
+		{
+			var r = await Internal.GetFollowerCount(steamID);
+			return r.Value.Count;
+		}
+
+        public static async Task<SteamId[]> GetFollowingList()
+        {
+            int resultCount = 0;
+            var steamIds = new List<SteamId>();
+
+            FriendsEnumerateFollowingList_t? result;
+
+            do
+            {
+                if ((result = await Internal.EnumerateFollowingList((uint)resultCount)) != null)
+                {
+                    resultCount += result.Value.ResultsReturned;
+
+                    Array.ForEach(result.Value.GSteamID, id => { if (id > 0) steamIds.Add(id); });
+                }
+            } while (result != null && resultCount < result.Value.TotalResultCount);
+
+            return steamIds.ToArray();
+        }
+    }
 }
