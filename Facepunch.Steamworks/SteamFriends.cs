@@ -310,10 +310,24 @@ namespace Steamworks
 			return r.Value.Count;
 		}
 
-		public static async Task<ulong[]> EnumerateFollowingList(uint StartIndex)
-		{
-			var r = await Internal.EnumerateFollowingList(StartIndex);
-			return r.Value.GSteamID;
-		}
-	}
+        public static async Task<SteamId[]> GetFollowingList()
+        {
+            int resultCount = 0;
+            var steamIds = new List<SteamId>();
+
+            FriendsEnumerateFollowingList_t? result;
+
+            do
+            {
+                if ((result = await Internal.EnumerateFollowingList((uint)resultCount)) != null)
+                {
+                    resultCount += result.Value.ResultsReturned;
+
+                    Array.ForEach(result.Value.GSteamID, id => { if (id > 0) steamIds.Add(id); });
+                }
+            } while (result != null && resultCount < result.Value.TotalResultCount);
+
+            return steamIds.ToArray();
+        }
+    }
 }
