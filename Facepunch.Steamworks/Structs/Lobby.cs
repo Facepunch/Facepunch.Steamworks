@@ -10,7 +10,7 @@ namespace Steamworks.Data
 		public SteamId Id { get; internal set; }
 
 
-		internal Lobby( SteamId id )
+		public Lobby( SteamId id )
 		{
 			Id = id;
 		}
