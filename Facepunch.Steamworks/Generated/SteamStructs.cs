@@ -5584,8 +5584,33 @@ namespace Steamworks.Data
 				Marshal.FreeHGlobal( ptr );
 			}
 		}
-		#endregion
-	}
+
+        public static GlobalStatsReceived_t? GetResult(SteamAPICall_t handle)
+        {
+            bool failed = false;
+
+            while (!SteamUtils.IsCallComplete(handle, out failed))
+            {
+                if (!SteamClient.IsValid && !SteamServer.IsValid) return null;
+            }
+            if (failed) return null;
+
+            var ptr = Marshal.AllocHGlobal(StructSize);
+
+            try
+            {
+                if (!SteamUtils.Internal.GetAPICallResult(handle, ptr, StructSize, CallbackIdentifiers.SteamUserStats + 12, ref failed) || failed)
+                    return null;
+
+                return Fill(ptr);
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(ptr);
+            }
+        }
+        #endregion
+    }
 	
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct DlcInstalled_t

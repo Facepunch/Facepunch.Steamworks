@@ -605,14 +605,20 @@ namespace Steamworks
 		private FRequestGlobalStats _RequestGlobalStats;
 		
 		#endregion
-		internal async Task<GlobalStatsReceived_t?> RequestGlobalStats( int nHistoryDays )
+		internal async Task<GlobalStatsReceived_t?> RequestGlobalStatsAsync( int nHistoryDays )
 		{
 			var returnValue = _RequestGlobalStats( Self, nHistoryDays );
 			return await GlobalStatsReceived_t.GetResultAsync( returnValue );
 		}
-		
-		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+
+        internal GlobalStatsReceived_t? RequestGlobalStats(int nHistoryDays)
+        {
+            var returnValue = _RequestGlobalStats(Self, nHistoryDays);
+			return GlobalStatsReceived_t.GetResult(returnValue);
+        }
+
+        #region FunctionMeta
+        [UnmanagedFunctionPointer( Platform.MemberConvention )]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private delegate bool FGetGlobalStat1( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchStatName, ref long pData );
 		private FGetGlobalStat1 _GetGlobalStat1;

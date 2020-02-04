@@ -49,9 +49,24 @@ namespace Steamworks.Data
 			return val;
 		}
 
+		public long[] GetGlobalIntDays(int days)
+		{
+            var result = SteamUserStats.Internal.RequestGlobalStats(days);
+            if (result?.Result != Result.OK) return null;
+
+            var r = new long[days];
+
+            var rows = SteamUserStats.Internal.GetGlobalStatHistory1(Name, r, (uint)r.Length * sizeof(long));
+
+            if (days != rows)
+                r = r.Take(rows).ToArray();
+
+            return r;
+        }
+
 		public async Task<long[]> GetGlobalIntDaysAsync( int days )
 		{
-			var result = await SteamUserStats.Internal.RequestGlobalStats( days );
+			var result = await SteamUserStats.Internal.RequestGlobalStatsAsync( days );
 			if ( result?.Result != Result.OK  ) return null;
 
 			var r = new long[days];
@@ -62,11 +77,26 @@ namespace Steamworks.Data
 				r = r.Take( rows ).ToArray();
 
 			return r;
-		}
+        }
 
-		public async Task<double[]> GetGlobalFloatDays( int days )
+        public double[] GetGlobalFloatDays(int days)
+        {
+            var result = SteamUserStats.Internal.RequestGlobalStats(days);
+            if (result?.Result != Result.OK) return null;
+
+            var r = new double[days];
+
+            var rows = SteamUserStats.Internal.GetGlobalStatHistory2(Name, r, (uint)r.Length * sizeof(double));
+
+            if (days != rows)
+                r = r.Take(rows).ToArray();
+
+            return r;
+        }
+
+        public async Task<double[]> GetGlobalFloatDaysAsync( int days )
 		{
-			var result = await SteamUserStats.Internal.RequestGlobalStats( days );
+			var result = await SteamUserStats.Internal.RequestGlobalStatsAsync( days );
 			if ( result?.Result != Result.OK ) return null;
 
 			var r = new double[days];
