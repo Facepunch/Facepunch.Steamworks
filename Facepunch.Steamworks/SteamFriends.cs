@@ -42,7 +42,7 @@ namespace Steamworks
 			FriendStateChange_t.Install( x => OnPersonaStateChange?.Invoke( new Friend( x.SteamID ) ) );
 			GameRichPresenceJoinRequested_t.Install( x => OnGameRichPresenceJoinRequested?.Invoke( new Friend( x.SteamIDFriend), x.ConnectUTF8() ) );
 			GameConnectedFriendChatMsg_t.Install( OnFriendChatMessage );
-			GameOverlayActivated_t.Install( x => OnGameOverlayActivated?.Invoke() );
+			GameOverlayActivated_t.Install( x => OnGameOverlayActivated?.Invoke(x.Active == 0 ? false : true) );
 			GameServerChangeRequested_t.Install( x => OnGameServerChangeRequested?.Invoke( x.ServerUTF8(), x.PasswordUTF8() ) );
 			GameLobbyJoinRequested_t.Install( x => OnGameLobbyJoinRequested?.Invoke( new Lobby( x.SteamIDLobby ), x.SteamIDFriend ) );
 			FriendRichPresenceUpdate_t.Install( x => OnFriendRichPresenceUpdate?.Invoke( new Friend( x.SteamIDFriend ) ) );
@@ -70,7 +70,7 @@ namespace Steamworks
 		/// Posted when game overlay activates or deactivates
 		///	the game can use this to be pause or resume single player games
 		/// </summary>
-		public static event Action OnGameOverlayActivated;
+		public static event Action<bool> OnGameOverlayActivated;
 
 		/// <summary>
 		/// Called when the user tries to join a different game server from their friends list
