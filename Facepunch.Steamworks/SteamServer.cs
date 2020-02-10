@@ -10,26 +10,18 @@ namespace Steamworks
 	/// <summary>
 	/// Provides the core of the Steam Game Servers API
 	/// </summary>
-	public static partial class SteamServer
+	public partial class SteamServer : SteamClass
 	{
-		static bool initialized;
+		internal static ISteamGameServer Internal;
+		internal override SteamInterface Interface => Internal;
 
-		static ISteamGameServer _internal;
-		internal static ISteamGameServer Internal
+		internal override void InitializeInterface()
 		{
-			get
-			{
-				if ( _internal == null )
-				{
-					_internal = new ISteamGameServer( );
-					_internal.InitServer();
-				}
-
-				return _internal;
-			}
+			Internal = new ISteamGameServer();
+			InstallEvents();
 		}
 
-		public static bool IsValid => initialized;
+		public static bool IsValid => Internal != null && Internal.IsValid;
 
 
 		public static Action<Exception> OnCallbackException;
@@ -93,8 +85,6 @@ namespace Steamworks
 				throw new System.Exception( $"InitGameServer returned false ({ipaddress},{init.SteamPort},{init.GamePort},{init.QueryPort},{secure},\"{init.VersionString}\")" );
 			}
 
-			initialized = true;
-
 			//
 			// Initial settings
 			//
@@ -129,7 +119,7 @@ namespace Steamworks
 		{
 			foreach ( var e in openIterfaces )
 			{
-				e.Shutdown();
+				e.ShutdownInterface();
 			}
 
 			openIterfaces.Clear();
@@ -139,9 +129,7 @@ namespace Steamworks
 		{
 			Event.DisposeAllServer();
 
-			initialized = false;
-
-			_internal = null;
+			Internal = null;
 
 			ShutdownInterfaces();
 			SteamGameServer.Shutdown();

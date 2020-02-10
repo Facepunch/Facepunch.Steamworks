@@ -197,7 +197,7 @@ namespace Steamworks
 		/// </summary>
 		public static bool SetStat( string name, int value )
 		{
-			return Internal.SetStat1( name, value );
+			return Internal.SetStat( name, value );
 		}
 
 		/// <summary>
@@ -206,7 +206,7 @@ namespace Steamworks
 		/// </summary>
 		public static bool SetStat( string name, float value )
 		{
-			return Internal.SetStat2( name, value );
+			return Internal.SetStat0( name, value );
 		}
 
 		/// <summary>
@@ -215,7 +215,7 @@ namespace Steamworks
 		public static int GetStatInt( string name )
 		{
 			int data = 0;
-			Internal.GetStat1( name, ref data );
+			Internal.GetStat( name, ref data );
 			return data;
 		}
 
@@ -225,7 +225,7 @@ namespace Steamworks
 		public static float GetStatFloat( string name )
 		{
 			float data = 0;
-			Internal.GetStat2( name, ref data );
+			Internal.GetStat0( name, ref data );
 			return data;
 		}
 

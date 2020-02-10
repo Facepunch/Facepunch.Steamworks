@@ -124,7 +124,7 @@ namespace Steamworks.Ugc
 			}
 			else
 			{
-				handle = SteamUGC.Internal.CreateQueryAllUGCRequest1( queryType, matchingType, creatorApp.Value, consumerApp.Value, (uint)page );
+				handle = SteamUGC.Internal.CreateQueryAllUGCRequest( queryType, matchingType, creatorApp.Value, consumerApp.Value, (uint)page );
 			}
 
 		    ApplyReturns(handle);
@@ -136,7 +136,7 @@ namespace Steamworks.Ugc
 
 			ApplyConstraints( handle );
 
-			var result = await SteamUGC.Internal.SendQueryUGCRequest( handle );
+			var result = await SteamUGC.Internal.SendQueryUGCRequest( handle ).GetAsync<SteamUGCQueryCompleted_t>();
 			if ( !result.HasValue )
 				return null;
 

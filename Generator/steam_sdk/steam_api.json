@@ -5346,7 +5346,7 @@
 }
 ,{
 	"classname": "ISteamUserStats",
-	"methodname": "SetStat",
+	"methodname": "SetStat0",
 	"returntype": "bool",
 	"params": [ 
 {	"paramname": "pchName" ,"paramtype": "const char *"},

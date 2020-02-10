@@ -60,14 +60,14 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUserStats_SetStat")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUserStats_SetStat0")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SetStat( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, float fData );
+		private static extern bool _SetStat0( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, float fData );
 		
 		#endregion
-		internal bool SetStat( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, float fData )
+		internal bool SetStat0( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, float fData )
 		{
-			var returnValue = _SetStat( Self, pchName, fData );
+			var returnValue = _SetStat0( Self, pchName, fData );
 			return returnValue;
 		}
 		
