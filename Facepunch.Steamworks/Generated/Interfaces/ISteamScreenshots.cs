@@ -13,29 +13,11 @@ namespace Steamworks
 		
 		public override void InitInternals()
 		{
-			_WriteScreenshot = Marshal.GetDelegateForFunctionPointer<FWriteScreenshot>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 0 ) ) );
-			_AddScreenshotToLibrary = Marshal.GetDelegateForFunctionPointer<FAddScreenshotToLibrary>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 8 ) ) );
-			_TriggerScreenshot = Marshal.GetDelegateForFunctionPointer<FTriggerScreenshot>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 16 ) ) );
-			_HookScreenshots = Marshal.GetDelegateForFunctionPointer<FHookScreenshots>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 24 ) ) );
-			_SetLocation = Marshal.GetDelegateForFunctionPointer<FSetLocation>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 32 ) ) );
-			_TagUser = Marshal.GetDelegateForFunctionPointer<FTagUser>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 40 ) ) );
-			_TagPublishedFile = Marshal.GetDelegateForFunctionPointer<FTagPublishedFile>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 48 ) ) );
-			_IsScreenshotsHooked = Marshal.GetDelegateForFunctionPointer<FIsScreenshotsHooked>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 56 ) ) );
-			_AddVRScreenshotToLibrary = Marshal.GetDelegateForFunctionPointer<FAddVRScreenshotToLibrary>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 64 ) ) );
 		}
 		internal override void Shutdown()
 		{
 			base.Shutdown();
 			
-			_WriteScreenshot = null;
-			_AddScreenshotToLibrary = null;
-			_TriggerScreenshot = null;
-			_HookScreenshots = null;
-			_SetLocation = null;
-			_TagUser = null;
-			_TagPublishedFile = null;
-			_IsScreenshotsHooked = null;
-			_AddVRScreenshotToLibrary = null;
 		}
 		
 		#region FunctionMeta

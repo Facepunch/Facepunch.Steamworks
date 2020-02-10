@@ -13,85 +13,11 @@ namespace Steamworks
 		
 		public override void InitInternals()
 		{
-			_GetResultStatus = Marshal.GetDelegateForFunctionPointer<FGetResultStatus>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 0 ) ) );
-			_GetResultItems = Marshal.GetDelegateForFunctionPointer<FGetResultItems>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 8 ) ) );
-			_GetResultItemProperty = Marshal.GetDelegateForFunctionPointer<FGetResultItemProperty>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 16 ) ) );
-			_GetResultTimestamp = Marshal.GetDelegateForFunctionPointer<FGetResultTimestamp>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 24 ) ) );
-			_CheckResultSteamID = Marshal.GetDelegateForFunctionPointer<FCheckResultSteamID>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 32 ) ) );
-			_DestroyResult = Marshal.GetDelegateForFunctionPointer<FDestroyResult>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 40 ) ) );
-			_GetAllItems = Marshal.GetDelegateForFunctionPointer<FGetAllItems>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 48 ) ) );
-			_GetItemsByID = Marshal.GetDelegateForFunctionPointer<FGetItemsByID>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 56 ) ) );
-			_SerializeResult = Marshal.GetDelegateForFunctionPointer<FSerializeResult>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 64 ) ) );
-			_DeserializeResult = Marshal.GetDelegateForFunctionPointer<FDeserializeResult>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 72 ) ) );
-			_GenerateItems = Marshal.GetDelegateForFunctionPointer<FGenerateItems>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 80 ) ) );
-			_GrantPromoItems = Marshal.GetDelegateForFunctionPointer<FGrantPromoItems>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 88 ) ) );
-			_AddPromoItem = Marshal.GetDelegateForFunctionPointer<FAddPromoItem>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 96 ) ) );
-			_AddPromoItems = Marshal.GetDelegateForFunctionPointer<FAddPromoItems>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 104 ) ) );
-			_ConsumeItem = Marshal.GetDelegateForFunctionPointer<FConsumeItem>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 112 ) ) );
-			_ExchangeItems = Marshal.GetDelegateForFunctionPointer<FExchangeItems>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 120 ) ) );
-			_TransferItemQuantity = Marshal.GetDelegateForFunctionPointer<FTransferItemQuantity>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 128 ) ) );
-			_SendItemDropHeartbeat = Marshal.GetDelegateForFunctionPointer<FSendItemDropHeartbeat>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 136 ) ) );
-			_TriggerItemDrop = Marshal.GetDelegateForFunctionPointer<FTriggerItemDrop>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 144 ) ) );
-			_TradeItems = Marshal.GetDelegateForFunctionPointer<FTradeItems>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 152 ) ) );
-			_LoadItemDefinitions = Marshal.GetDelegateForFunctionPointer<FLoadItemDefinitions>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 160 ) ) );
-			_GetItemDefinitionIDs = Marshal.GetDelegateForFunctionPointer<FGetItemDefinitionIDs>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 168 ) ) );
-			_GetItemDefinitionProperty = Marshal.GetDelegateForFunctionPointer<FGetItemDefinitionProperty>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 176 ) ) );
-			_RequestEligiblePromoItemDefinitionsIDs = Marshal.GetDelegateForFunctionPointer<FRequestEligiblePromoItemDefinitionsIDs>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 184 ) ) );
-			_GetEligiblePromoItemDefinitionIDs = Marshal.GetDelegateForFunctionPointer<FGetEligiblePromoItemDefinitionIDs>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 192 ) ) );
-			_StartPurchase = Marshal.GetDelegateForFunctionPointer<FStartPurchase>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 200 ) ) );
-			_RequestPrices = Marshal.GetDelegateForFunctionPointer<FRequestPrices>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 208 ) ) );
-			_GetNumItemsWithPrices = Marshal.GetDelegateForFunctionPointer<FGetNumItemsWithPrices>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 216 ) ) );
-			_GetItemsWithPrices = Marshal.GetDelegateForFunctionPointer<FGetItemsWithPrices>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 224 ) ) );
-			_GetItemPrice = Marshal.GetDelegateForFunctionPointer<FGetItemPrice>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 232 ) ) );
-			_StartUpdateProperties = Marshal.GetDelegateForFunctionPointer<FStartUpdateProperties>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 240 ) ) );
-			_RemoveProperty = Marshal.GetDelegateForFunctionPointer<FRemoveProperty>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 248 ) ) );
-			_SetProperty1 = Marshal.GetDelegateForFunctionPointer<FSetProperty1>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 256 ) ) );
-			_SetProperty2 = Marshal.GetDelegateForFunctionPointer<FSetProperty2>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 264 ) ) );
-			_SetProperty3 = Marshal.GetDelegateForFunctionPointer<FSetProperty3>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 272 ) ) );
-			_SetProperty4 = Marshal.GetDelegateForFunctionPointer<FSetProperty4>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 280 ) ) );
-			_SubmitUpdateProperties = Marshal.GetDelegateForFunctionPointer<FSubmitUpdateProperties>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 288 ) ) );
 		}
 		internal override void Shutdown()
 		{
 			base.Shutdown();
 			
-			_GetResultStatus = null;
-			_GetResultItems = null;
-			_GetResultItemProperty = null;
-			_GetResultTimestamp = null;
-			_CheckResultSteamID = null;
-			_DestroyResult = null;
-			_GetAllItems = null;
-			_GetItemsByID = null;
-			_SerializeResult = null;
-			_DeserializeResult = null;
-			_GenerateItems = null;
-			_GrantPromoItems = null;
-			_AddPromoItem = null;
-			_AddPromoItems = null;
-			_ConsumeItem = null;
-			_ExchangeItems = null;
-			_TransferItemQuantity = null;
-			_SendItemDropHeartbeat = null;
-			_TriggerItemDrop = null;
-			_TradeItems = null;
-			_LoadItemDefinitions = null;
-			_GetItemDefinitionIDs = null;
-			_GetItemDefinitionProperty = null;
-			_RequestEligiblePromoItemDefinitionsIDs = null;
-			_GetEligiblePromoItemDefinitionIDs = null;
-			_StartPurchase = null;
-			_RequestPrices = null;
-			_GetNumItemsWithPrices = null;
-			_GetItemsWithPrices = null;
-			_GetItemPrice = null;
-			_StartUpdateProperties = null;
-			_RemoveProperty = null;
-			_SetProperty1 = null;
-			_SetProperty2 = null;
-			_SetProperty3 = null;
-			_SetProperty4 = null;
-			_SubmitUpdateProperties = null;
 		}
 		
 		#region FunctionMeta

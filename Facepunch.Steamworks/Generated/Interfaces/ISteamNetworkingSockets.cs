@@ -13,69 +13,11 @@ namespace Steamworks
 		
 		public override void InitInternals()
 		{
-			_CreateListenSocketIP = Marshal.GetDelegateForFunctionPointer<FCreateListenSocketIP>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 0 ) ) );
-			_ConnectByIPAddress = Marshal.GetDelegateForFunctionPointer<FConnectByIPAddress>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 8 ) ) );
-			_CreateListenSocketP2P = Marshal.GetDelegateForFunctionPointer<FCreateListenSocketP2P>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 16 ) ) );
-			_ConnectP2P = Marshal.GetDelegateForFunctionPointer<FConnectP2P>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 24 ) ) );
-			_AcceptConnection = Marshal.GetDelegateForFunctionPointer<FAcceptConnection>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 32 ) ) );
-			_CloseConnection = Marshal.GetDelegateForFunctionPointer<FCloseConnection>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 40 ) ) );
-			_CloseListenSocket = Marshal.GetDelegateForFunctionPointer<FCloseListenSocket>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 48 ) ) );
-			_SetConnectionUserData = Marshal.GetDelegateForFunctionPointer<FSetConnectionUserData>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 56 ) ) );
-			_GetConnectionUserData = Marshal.GetDelegateForFunctionPointer<FGetConnectionUserData>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 64 ) ) );
-			_SetConnectionName = Marshal.GetDelegateForFunctionPointer<FSetConnectionName>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 72 ) ) );
-			_GetConnectionName = Marshal.GetDelegateForFunctionPointer<FGetConnectionName>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 80 ) ) );
-			_SendMessageToConnection = Marshal.GetDelegateForFunctionPointer<FSendMessageToConnection>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 88 ) ) );
-			_FlushMessagesOnConnection = Marshal.GetDelegateForFunctionPointer<FFlushMessagesOnConnection>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 96 ) ) );
-			_ReceiveMessagesOnConnection = Marshal.GetDelegateForFunctionPointer<FReceiveMessagesOnConnection>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 104 ) ) );
-			_ReceiveMessagesOnListenSocket = Marshal.GetDelegateForFunctionPointer<FReceiveMessagesOnListenSocket>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 112 ) ) );
-			_GetConnectionInfo = Marshal.GetDelegateForFunctionPointer<FGetConnectionInfo>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 120 ) ) );
-			_GetQuickConnectionStatus = Marshal.GetDelegateForFunctionPointer<FGetQuickConnectionStatus>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 128 ) ) );
-			_GetDetailedConnectionStatus = Marshal.GetDelegateForFunctionPointer<FGetDetailedConnectionStatus>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 136 ) ) );
-			_GetListenSocketAddress = Marshal.GetDelegateForFunctionPointer<FGetListenSocketAddress>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 144 ) ) );
-			_CreateSocketPair = Marshal.GetDelegateForFunctionPointer<FCreateSocketPair>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 152 ) ) );
-			_GetIdentity = Marshal.GetDelegateForFunctionPointer<FGetIdentity>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 160 ) ) );
-			_ReceivedRelayAuthTicket = Marshal.GetDelegateForFunctionPointer<FReceivedRelayAuthTicket>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 168 ) ) );
-			_FindRelayAuthTicketForServer = Marshal.GetDelegateForFunctionPointer<FFindRelayAuthTicketForServer>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 176 ) ) );
-			_ConnectToHostedDedicatedServer = Marshal.GetDelegateForFunctionPointer<FConnectToHostedDedicatedServer>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 184 ) ) );
-			_GetHostedDedicatedServerPort = Marshal.GetDelegateForFunctionPointer<FGetHostedDedicatedServerPort>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 192 ) ) );
-			_GetHostedDedicatedServerPOPID = Marshal.GetDelegateForFunctionPointer<FGetHostedDedicatedServerPOPID>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 200 ) ) );
-			_GetHostedDedicatedServerAddress = Marshal.GetDelegateForFunctionPointer<FGetHostedDedicatedServerAddress>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 208 ) ) );
-			_CreateHostedDedicatedServerListenSocket = Marshal.GetDelegateForFunctionPointer<FCreateHostedDedicatedServerListenSocket>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 216 ) ) );
-			_RunCallbacks = Marshal.GetDelegateForFunctionPointer<FRunCallbacks>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 224 ) ) );
 		}
 		internal override void Shutdown()
 		{
 			base.Shutdown();
 			
-			_CreateListenSocketIP = null;
-			_ConnectByIPAddress = null;
-			_CreateListenSocketP2P = null;
-			_ConnectP2P = null;
-			_AcceptConnection = null;
-			_CloseConnection = null;
-			_CloseListenSocket = null;
-			_SetConnectionUserData = null;
-			_GetConnectionUserData = null;
-			_SetConnectionName = null;
-			_GetConnectionName = null;
-			_SendMessageToConnection = null;
-			_FlushMessagesOnConnection = null;
-			_ReceiveMessagesOnConnection = null;
-			_ReceiveMessagesOnListenSocket = null;
-			_GetConnectionInfo = null;
-			_GetQuickConnectionStatus = null;
-			_GetDetailedConnectionStatus = null;
-			_GetListenSocketAddress = null;
-			_CreateSocketPair = null;
-			_GetIdentity = null;
-			_ReceivedRelayAuthTicket = null;
-			_FindRelayAuthTicketForServer = null;
-			_ConnectToHostedDedicatedServer = null;
-			_GetHostedDedicatedServerPort = null;
-			_GetHostedDedicatedServerPOPID = null;
-			_GetHostedDedicatedServerAddress = null;
-			_CreateHostedDedicatedServerListenSocket = null;
-			_RunCallbacks = null;
 		}
 		
 		#region FunctionMeta

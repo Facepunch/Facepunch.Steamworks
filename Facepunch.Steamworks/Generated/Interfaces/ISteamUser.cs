@@ -13,71 +13,11 @@ namespace Steamworks
 		
 		public override void InitInternals()
 		{
-			_GetHSteamUser = Marshal.GetDelegateForFunctionPointer<FGetHSteamUser>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 0 ) ) );
-			_BLoggedOn = Marshal.GetDelegateForFunctionPointer<FBLoggedOn>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 8 ) ) );
-			_GetSteamID = Marshal.GetDelegateForFunctionPointer<FGetSteamID>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 16 ) ) );
-			_InitiateGameConnection = Marshal.GetDelegateForFunctionPointer<FInitiateGameConnection>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 24 ) ) );
-			_TerminateGameConnection = Marshal.GetDelegateForFunctionPointer<FTerminateGameConnection>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 32 ) ) );
-			_TrackAppUsageEvent = Marshal.GetDelegateForFunctionPointer<FTrackAppUsageEvent>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 40 ) ) );
-			_GetUserDataFolder = Marshal.GetDelegateForFunctionPointer<FGetUserDataFolder>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 48 ) ) );
-			_StartVoiceRecording = Marshal.GetDelegateForFunctionPointer<FStartVoiceRecording>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 56 ) ) );
-			_StopVoiceRecording = Marshal.GetDelegateForFunctionPointer<FStopVoiceRecording>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 64 ) ) );
-			_GetAvailableVoice = Marshal.GetDelegateForFunctionPointer<FGetAvailableVoice>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 72 ) ) );
-			_GetVoice = Marshal.GetDelegateForFunctionPointer<FGetVoice>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 80 ) ) );
-			_DecompressVoice = Marshal.GetDelegateForFunctionPointer<FDecompressVoice>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 88 ) ) );
-			_GetVoiceOptimalSampleRate = Marshal.GetDelegateForFunctionPointer<FGetVoiceOptimalSampleRate>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 96 ) ) );
-			_GetAuthSessionTicket = Marshal.GetDelegateForFunctionPointer<FGetAuthSessionTicket>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 104 ) ) );
-			_BeginAuthSession = Marshal.GetDelegateForFunctionPointer<FBeginAuthSession>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 112 ) ) );
-			_EndAuthSession = Marshal.GetDelegateForFunctionPointer<FEndAuthSession>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 120 ) ) );
-			_CancelAuthTicket = Marshal.GetDelegateForFunctionPointer<FCancelAuthTicket>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 128 ) ) );
-			_UserHasLicenseForApp = Marshal.GetDelegateForFunctionPointer<FUserHasLicenseForApp>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 136 ) ) );
-			_BIsBehindNAT = Marshal.GetDelegateForFunctionPointer<FBIsBehindNAT>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 144 ) ) );
-			_AdvertiseGame = Marshal.GetDelegateForFunctionPointer<FAdvertiseGame>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 152 ) ) );
-			_RequestEncryptedAppTicket = Marshal.GetDelegateForFunctionPointer<FRequestEncryptedAppTicket>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 160 ) ) );
-			_GetEncryptedAppTicket = Marshal.GetDelegateForFunctionPointer<FGetEncryptedAppTicket>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 168 ) ) );
-			_GetGameBadgeLevel = Marshal.GetDelegateForFunctionPointer<FGetGameBadgeLevel>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 176 ) ) );
-			_GetPlayerSteamLevel = Marshal.GetDelegateForFunctionPointer<FGetPlayerSteamLevel>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 184 ) ) );
-			_RequestStoreAuthURL = Marshal.GetDelegateForFunctionPointer<FRequestStoreAuthURL>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 192 ) ) );
-			_BIsPhoneVerified = Marshal.GetDelegateForFunctionPointer<FBIsPhoneVerified>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 200 ) ) );
-			_BIsTwoFactorEnabled = Marshal.GetDelegateForFunctionPointer<FBIsTwoFactorEnabled>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 208 ) ) );
-			_BIsPhoneIdentifying = Marshal.GetDelegateForFunctionPointer<FBIsPhoneIdentifying>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 216 ) ) );
-			_BIsPhoneRequiringVerification = Marshal.GetDelegateForFunctionPointer<FBIsPhoneRequiringVerification>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 224 ) ) );
-			_GetMarketEligibility = Marshal.GetDelegateForFunctionPointer<FGetMarketEligibility>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 232 ) ) );
 		}
 		internal override void Shutdown()
 		{
 			base.Shutdown();
 			
-			_GetHSteamUser = null;
-			_BLoggedOn = null;
-			_GetSteamID = null;
-			_InitiateGameConnection = null;
-			_TerminateGameConnection = null;
-			_TrackAppUsageEvent = null;
-			_GetUserDataFolder = null;
-			_StartVoiceRecording = null;
-			_StopVoiceRecording = null;
-			_GetAvailableVoice = null;
-			_GetVoice = null;
-			_DecompressVoice = null;
-			_GetVoiceOptimalSampleRate = null;
-			_GetAuthSessionTicket = null;
-			_BeginAuthSession = null;
-			_EndAuthSession = null;
-			_CancelAuthTicket = null;
-			_UserHasLicenseForApp = null;
-			_BIsBehindNAT = null;
-			_AdvertiseGame = null;
-			_RequestEncryptedAppTicket = null;
-			_GetEncryptedAppTicket = null;
-			_GetGameBadgeLevel = null;
-			_GetPlayerSteamLevel = null;
-			_RequestStoreAuthURL = null;
-			_BIsPhoneVerified = null;
-			_BIsTwoFactorEnabled = null;
-			_BIsPhoneIdentifying = null;
-			_BIsPhoneRequiringVerification = null;
-			_GetMarketEligibility = null;
 		}
 		
 		#region FunctionMeta

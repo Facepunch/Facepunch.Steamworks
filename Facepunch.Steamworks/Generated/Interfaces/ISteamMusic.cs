@@ -13,29 +13,11 @@ namespace Steamworks
 		
 		public override void InitInternals()
 		{
-			_BIsEnabled = Marshal.GetDelegateForFunctionPointer<FBIsEnabled>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 0 ) ) );
-			_BIsPlaying = Marshal.GetDelegateForFunctionPointer<FBIsPlaying>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 8 ) ) );
-			_GetPlaybackStatus = Marshal.GetDelegateForFunctionPointer<FGetPlaybackStatus>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 16 ) ) );
-			_Play = Marshal.GetDelegateForFunctionPointer<FPlay>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 24 ) ) );
-			_Pause = Marshal.GetDelegateForFunctionPointer<FPause>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 32 ) ) );
-			_PlayPrevious = Marshal.GetDelegateForFunctionPointer<FPlayPrevious>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 40 ) ) );
-			_PlayNext = Marshal.GetDelegateForFunctionPointer<FPlayNext>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 48 ) ) );
-			_SetVolume = Marshal.GetDelegateForFunctionPointer<FSetVolume>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 56 ) ) );
-			_GetVolume = Marshal.GetDelegateForFunctionPointer<FGetVolume>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 64 ) ) );
 		}
 		internal override void Shutdown()
 		{
 			base.Shutdown();
 			
-			_BIsEnabled = null;
-			_BIsPlaying = null;
-			_GetPlaybackStatus = null;
-			_Play = null;
-			_Pause = null;
-			_PlayPrevious = null;
-			_PlayNext = null;
-			_SetVolume = null;
-			_GetVolume = null;
 		}
 		
 		#region FunctionMeta

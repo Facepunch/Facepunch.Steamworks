@@ -13,111 +13,11 @@ namespace Steamworks
 		
 		public override void InitInternals()
 		{
-			_RequestCurrentStats = Marshal.GetDelegateForFunctionPointer<FRequestCurrentStats>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 0 ) ) );
-			_UpdateAvgRateStat = Marshal.GetDelegateForFunctionPointer<FUpdateAvgRateStat>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 40 ) ) );
-			_GetAchievement = Marshal.GetDelegateForFunctionPointer<FGetAchievement>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 48 ) ) );
-			_SetAchievement = Marshal.GetDelegateForFunctionPointer<FSetAchievement>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 56 ) ) );
-			_ClearAchievement = Marshal.GetDelegateForFunctionPointer<FClearAchievement>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 64 ) ) );
-			_GetAchievementAndUnlockTime = Marshal.GetDelegateForFunctionPointer<FGetAchievementAndUnlockTime>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 72 ) ) );
-			_StoreStats = Marshal.GetDelegateForFunctionPointer<FStoreStats>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 80 ) ) );
-			_GetAchievementIcon = Marshal.GetDelegateForFunctionPointer<FGetAchievementIcon>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 88 ) ) );
-			_GetAchievementDisplayAttribute = Marshal.GetDelegateForFunctionPointer<FGetAchievementDisplayAttribute>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 96 ) ) );
-			_IndicateAchievementProgress = Marshal.GetDelegateForFunctionPointer<FIndicateAchievementProgress>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 104 ) ) );
-			_GetNumAchievements = Marshal.GetDelegateForFunctionPointer<FGetNumAchievements>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 112 ) ) );
-			_GetAchievementName = Marshal.GetDelegateForFunctionPointer<FGetAchievementName>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 120 ) ) );
-			_RequestUserStats = Marshal.GetDelegateForFunctionPointer<FRequestUserStats>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 128 ) ) );
-			_GetUserAchievement = Marshal.GetDelegateForFunctionPointer<FGetUserAchievement>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 152 ) ) );
-			_GetUserAchievementAndUnlockTime = Marshal.GetDelegateForFunctionPointer<FGetUserAchievementAndUnlockTime>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 160 ) ) );
-			_ResetAllStats = Marshal.GetDelegateForFunctionPointer<FResetAllStats>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 168 ) ) );
-			_FindOrCreateLeaderboard = Marshal.GetDelegateForFunctionPointer<FFindOrCreateLeaderboard>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 176 ) ) );
-			_FindLeaderboard = Marshal.GetDelegateForFunctionPointer<FFindLeaderboard>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 184 ) ) );
-			_GetLeaderboardName = Marshal.GetDelegateForFunctionPointer<FGetLeaderboardName>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 192 ) ) );
-			_GetLeaderboardEntryCount = Marshal.GetDelegateForFunctionPointer<FGetLeaderboardEntryCount>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 200 ) ) );
-			_GetLeaderboardSortMethod = Marshal.GetDelegateForFunctionPointer<FGetLeaderboardSortMethod>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 208 ) ) );
-			_GetLeaderboardDisplayType = Marshal.GetDelegateForFunctionPointer<FGetLeaderboardDisplayType>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 216 ) ) );
-			_DownloadLeaderboardEntries = Marshal.GetDelegateForFunctionPointer<FDownloadLeaderboardEntries>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 224 ) ) );
-			_DownloadLeaderboardEntriesForUsers = Marshal.GetDelegateForFunctionPointer<FDownloadLeaderboardEntriesForUsers>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 232 ) ) );
-			_GetDownloadedLeaderboardEntry = Marshal.GetDelegateForFunctionPointer<FGetDownloadedLeaderboardEntry>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 240 ) ) );
-			_UploadLeaderboardScore = Marshal.GetDelegateForFunctionPointer<FUploadLeaderboardScore>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 248 ) ) );
-			_AttachLeaderboardUGC = Marshal.GetDelegateForFunctionPointer<FAttachLeaderboardUGC>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 256 ) ) );
-			_GetNumberOfCurrentPlayers = Marshal.GetDelegateForFunctionPointer<FGetNumberOfCurrentPlayers>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 264 ) ) );
-			_RequestGlobalAchievementPercentages = Marshal.GetDelegateForFunctionPointer<FRequestGlobalAchievementPercentages>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 272 ) ) );
-			_GetMostAchievedAchievementInfo = Marshal.GetDelegateForFunctionPointer<FGetMostAchievedAchievementInfo>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 280 ) ) );
-			_GetNextMostAchievedAchievementInfo = Marshal.GetDelegateForFunctionPointer<FGetNextMostAchievedAchievementInfo>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 288 ) ) );
-			_GetAchievementAchievedPercent = Marshal.GetDelegateForFunctionPointer<FGetAchievementAchievedPercent>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 296 ) ) );
-			_RequestGlobalStats = Marshal.GetDelegateForFunctionPointer<FRequestGlobalStats>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 304 ) ) );
-			
-			#if PLATFORM_WIN
-			_GetStat1 = Marshal.GetDelegateForFunctionPointer<FGetStat1>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 16 ) ) );
-			_GetStat2 = Marshal.GetDelegateForFunctionPointer<FGetStat2>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 8 ) ) );
-			_SetStat1 = Marshal.GetDelegateForFunctionPointer<FSetStat1>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 32 ) ) );
-			_SetStat2 = Marshal.GetDelegateForFunctionPointer<FSetStat2>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 24 ) ) );
-			_GetUserStat1 = Marshal.GetDelegateForFunctionPointer<FGetUserStat1>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 144 ) ) );
-			_GetUserStat2 = Marshal.GetDelegateForFunctionPointer<FGetUserStat2>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 136 ) ) );
-			_GetGlobalStat1 = Marshal.GetDelegateForFunctionPointer<FGetGlobalStat1>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 320 ) ) );
-			_GetGlobalStat2 = Marshal.GetDelegateForFunctionPointer<FGetGlobalStat2>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 312 ) ) );
-			_GetGlobalStatHistory1 = Marshal.GetDelegateForFunctionPointer<FGetGlobalStatHistory1>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 336 ) ) );
-			_GetGlobalStatHistory2 = Marshal.GetDelegateForFunctionPointer<FGetGlobalStatHistory2>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 328 ) ) );
-			#else
-			_GetStat1 = Marshal.GetDelegateForFunctionPointer<FGetStat1>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 8 ) ) );
-			_GetStat2 = Marshal.GetDelegateForFunctionPointer<FGetStat2>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 16 ) ) );
-			_SetStat1 = Marshal.GetDelegateForFunctionPointer<FSetStat1>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 24 ) ) );
-			_SetStat2 = Marshal.GetDelegateForFunctionPointer<FSetStat2>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 32 ) ) );
-			_GetUserStat1 = Marshal.GetDelegateForFunctionPointer<FGetUserStat1>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 136 ) ) );
-			_GetUserStat2 = Marshal.GetDelegateForFunctionPointer<FGetUserStat2>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 144 ) ) );
-			_GetGlobalStat1 = Marshal.GetDelegateForFunctionPointer<FGetGlobalStat1>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 312 ) ) );
-			_GetGlobalStat2 = Marshal.GetDelegateForFunctionPointer<FGetGlobalStat2>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 320 ) ) );
-			_GetGlobalStatHistory1 = Marshal.GetDelegateForFunctionPointer<FGetGlobalStatHistory1>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 328 ) ) );
-			_GetGlobalStatHistory2 = Marshal.GetDelegateForFunctionPointer<FGetGlobalStatHistory2>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 336 ) ) );
-			#endif
 		}
 		internal override void Shutdown()
 		{
 			base.Shutdown();
 			
-			_RequestCurrentStats = null;
-			_GetStat1 = null;
-			_GetStat2 = null;
-			_SetStat1 = null;
-			_SetStat2 = null;
-			_UpdateAvgRateStat = null;
-			_GetAchievement = null;
-			_SetAchievement = null;
-			_ClearAchievement = null;
-			_GetAchievementAndUnlockTime = null;
-			_StoreStats = null;
-			_GetAchievementIcon = null;
-			_GetAchievementDisplayAttribute = null;
-			_IndicateAchievementProgress = null;
-			_GetNumAchievements = null;
-			_GetAchievementName = null;
-			_RequestUserStats = null;
-			_GetUserStat1 = null;
-			_GetUserStat2 = null;
-			_GetUserAchievement = null;
-			_GetUserAchievementAndUnlockTime = null;
-			_ResetAllStats = null;
-			_FindOrCreateLeaderboard = null;
-			_FindLeaderboard = null;
-			_GetLeaderboardName = null;
-			_GetLeaderboardEntryCount = null;
-			_GetLeaderboardSortMethod = null;
-			_GetLeaderboardDisplayType = null;
-			_DownloadLeaderboardEntries = null;
-			_DownloadLeaderboardEntriesForUsers = null;
-			_GetDownloadedLeaderboardEntry = null;
-			_UploadLeaderboardScore = null;
-			_AttachLeaderboardUGC = null;
-			_GetNumberOfCurrentPlayers = null;
-			_RequestGlobalAchievementPercentages = null;
-			_GetMostAchievedAchievementInfo = null;
-			_GetNextMostAchievedAchievementInfo = null;
-			_GetAchievementAchievedPercent = null;
-			_RequestGlobalStats = null;
-			_GetGlobalStat1 = null;
-			_GetGlobalStat2 = null;
-			_GetGlobalStatHistory1 = null;
-			_GetGlobalStatHistory2 = null;
 		}
 		
 		#region FunctionMeta

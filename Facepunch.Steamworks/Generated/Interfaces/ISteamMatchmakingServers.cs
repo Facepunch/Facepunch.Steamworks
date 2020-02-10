@@ -13,45 +13,11 @@ namespace Steamworks
 		
 		public override void InitInternals()
 		{
-			_RequestInternetServerList = Marshal.GetDelegateForFunctionPointer<FRequestInternetServerList>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 0 ) ) );
-			_RequestLANServerList = Marshal.GetDelegateForFunctionPointer<FRequestLANServerList>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 8 ) ) );
-			_RequestFriendsServerList = Marshal.GetDelegateForFunctionPointer<FRequestFriendsServerList>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 16 ) ) );
-			_RequestFavoritesServerList = Marshal.GetDelegateForFunctionPointer<FRequestFavoritesServerList>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 24 ) ) );
-			_RequestHistoryServerList = Marshal.GetDelegateForFunctionPointer<FRequestHistoryServerList>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 32 ) ) );
-			_RequestSpectatorServerList = Marshal.GetDelegateForFunctionPointer<FRequestSpectatorServerList>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 40 ) ) );
-			_ReleaseRequest = Marshal.GetDelegateForFunctionPointer<FReleaseRequest>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 48 ) ) );
-			_GetServerDetails = Marshal.GetDelegateForFunctionPointer<FGetServerDetails>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 56 ) ) );
-			_CancelQuery = Marshal.GetDelegateForFunctionPointer<FCancelQuery>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 64 ) ) );
-			_RefreshQuery = Marshal.GetDelegateForFunctionPointer<FRefreshQuery>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 72 ) ) );
-			_IsRefreshing = Marshal.GetDelegateForFunctionPointer<FIsRefreshing>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 80 ) ) );
-			_GetServerCount = Marshal.GetDelegateForFunctionPointer<FGetServerCount>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 88 ) ) );
-			_RefreshServer = Marshal.GetDelegateForFunctionPointer<FRefreshServer>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 96 ) ) );
-			_PingServer = Marshal.GetDelegateForFunctionPointer<FPingServer>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 104 ) ) );
-			_PlayerDetails = Marshal.GetDelegateForFunctionPointer<FPlayerDetails>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 112 ) ) );
-			_ServerRules = Marshal.GetDelegateForFunctionPointer<FServerRules>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 120 ) ) );
-			_CancelServerQuery = Marshal.GetDelegateForFunctionPointer<FCancelServerQuery>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 128 ) ) );
 		}
 		internal override void Shutdown()
 		{
 			base.Shutdown();
 			
-			_RequestInternetServerList = null;
-			_RequestLANServerList = null;
-			_RequestFriendsServerList = null;
-			_RequestFavoritesServerList = null;
-			_RequestHistoryServerList = null;
-			_RequestSpectatorServerList = null;
-			_ReleaseRequest = null;
-			_GetServerDetails = null;
-			_CancelQuery = null;
-			_RefreshQuery = null;
-			_IsRefreshing = null;
-			_GetServerCount = null;
-			_RefreshServer = null;
-			_PingServer = null;
-			_PlayerDetails = null;
-			_ServerRules = null;
-			_CancelServerQuery = null;
 		}
 		
 		#region FunctionMeta

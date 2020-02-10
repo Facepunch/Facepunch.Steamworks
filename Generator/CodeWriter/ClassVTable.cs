@@ -95,6 +95,7 @@ namespace Generator
 			{
 				var different = new List<int>();
 
+				/*
 				for ( int i = 0; i < clss.Functions.Count; i++ )
 				{
 					var func = clss.Functions[i];
@@ -111,10 +112,11 @@ namespace Generator
 							continue;
 						}
 
-						WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( {standardLocations[i]} ) ) );" );
+						//WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( {standardLocations[i]} ) ) );" );
 					}
 				}
 
+				
 				if ( different.Count > 0 )
 				{
 					WriteLine( "" );
@@ -131,7 +133,7 @@ namespace Generator
 						WriteLine( $"_{func.Name} = Marshal.GetDelegateForFunctionPointer<F{func.Name}>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( {standardLocations[i]} ) ) );" );
 					}
 					WriteLine( "#endif" );
-				}
+				}*/
 
 			}
 			EndBlock();
@@ -151,7 +153,7 @@ namespace Generator
 					if ( Cleanup.IsDeprecated( $"{clss.Name}.{func.Name}" ) )
 						continue;
 
-					WriteLine( $"_{func.Name} = null;" );					
+					//WriteLine( $"_{func.Name} = null;" );					
 				}
 			}
 			EndBlock();

@@ -13,95 +13,11 @@ namespace Steamworks
 		
 		public override void InitInternals()
 		{
-			_FileWrite = Marshal.GetDelegateForFunctionPointer<FFileWrite>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 0 ) ) );
-			_FileRead = Marshal.GetDelegateForFunctionPointer<FFileRead>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 8 ) ) );
-			_FileWriteAsync = Marshal.GetDelegateForFunctionPointer<FFileWriteAsync>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 16 ) ) );
-			_FileReadAsync = Marshal.GetDelegateForFunctionPointer<FFileReadAsync>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 24 ) ) );
-			_FileReadAsyncComplete = Marshal.GetDelegateForFunctionPointer<FFileReadAsyncComplete>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 32 ) ) );
-			_FileForget = Marshal.GetDelegateForFunctionPointer<FFileForget>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 40 ) ) );
-			_FileDelete = Marshal.GetDelegateForFunctionPointer<FFileDelete>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 48 ) ) );
-			_FileShare = Marshal.GetDelegateForFunctionPointer<FFileShare>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 56 ) ) );
-			_SetSyncPlatforms = Marshal.GetDelegateForFunctionPointer<FSetSyncPlatforms>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 64 ) ) );
-			_FileWriteStreamOpen = Marshal.GetDelegateForFunctionPointer<FFileWriteStreamOpen>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 72 ) ) );
-			_FileWriteStreamWriteChunk = Marshal.GetDelegateForFunctionPointer<FFileWriteStreamWriteChunk>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 80 ) ) );
-			_FileWriteStreamClose = Marshal.GetDelegateForFunctionPointer<FFileWriteStreamClose>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 88 ) ) );
-			_FileWriteStreamCancel = Marshal.GetDelegateForFunctionPointer<FFileWriteStreamCancel>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 96 ) ) );
-			_FileExists = Marshal.GetDelegateForFunctionPointer<FFileExists>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 104 ) ) );
-			_FilePersisted = Marshal.GetDelegateForFunctionPointer<FFilePersisted>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 112 ) ) );
-			_GetFileSize = Marshal.GetDelegateForFunctionPointer<FGetFileSize>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 120 ) ) );
-			_GetFileTimestamp = Marshal.GetDelegateForFunctionPointer<FGetFileTimestamp>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 128 ) ) );
-			_GetSyncPlatforms = Marshal.GetDelegateForFunctionPointer<FGetSyncPlatforms>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 136 ) ) );
-			_GetFileCount = Marshal.GetDelegateForFunctionPointer<FGetFileCount>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 144 ) ) );
-			_GetFileNameAndSize = Marshal.GetDelegateForFunctionPointer<FGetFileNameAndSize>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 152 ) ) );
-			_GetQuota = Marshal.GetDelegateForFunctionPointer<FGetQuota>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 160 ) ) );
-			_IsCloudEnabledForAccount = Marshal.GetDelegateForFunctionPointer<FIsCloudEnabledForAccount>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 168 ) ) );
-			_IsCloudEnabledForApp = Marshal.GetDelegateForFunctionPointer<FIsCloudEnabledForApp>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 176 ) ) );
-			_SetCloudEnabledForApp = Marshal.GetDelegateForFunctionPointer<FSetCloudEnabledForApp>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 184 ) ) );
-			_UGCDownload = Marshal.GetDelegateForFunctionPointer<FUGCDownload>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 192 ) ) );
-			_GetUGCDownloadProgress = Marshal.GetDelegateForFunctionPointer<FGetUGCDownloadProgress>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 200 ) ) );
-			_GetUGCDetails = Marshal.GetDelegateForFunctionPointer<FGetUGCDetails>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 208 ) ) );
-			_UGCRead = Marshal.GetDelegateForFunctionPointer<FUGCRead>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 216 ) ) );
-			_GetCachedUGCCount = Marshal.GetDelegateForFunctionPointer<FGetCachedUGCCount>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 224 ) ) );
-			 // PublishWorkshopFile is deprecated
-			 // CreatePublishedFileUpdateRequest is deprecated
-			 // UpdatePublishedFileFile is deprecated
-			 // UpdatePublishedFilePreviewFile is deprecated
-			 // UpdatePublishedFileTitle is deprecated
-			 // UpdatePublishedFileDescription is deprecated
-			 // UpdatePublishedFileVisibility is deprecated
-			 // UpdatePublishedFileTags is deprecated
-			 // CommitPublishedFileUpdate is deprecated
-			 // GetPublishedFileDetails is deprecated
-			 // DeletePublishedFile is deprecated
-			 // EnumerateUserPublishedFiles is deprecated
-			 // SubscribePublishedFile is deprecated
-			 // EnumerateUserSubscribedFiles is deprecated
-			 // UnsubscribePublishedFile is deprecated
-			 // UpdatePublishedFileSetChangeDescription is deprecated
-			 // GetPublishedItemVoteDetails is deprecated
-			 // UpdateUserPublishedItemVote is deprecated
-			 // GetUserPublishedItemVoteDetails is deprecated
-			 // EnumerateUserSharedWorkshopFiles is deprecated
-			 // PublishVideo is deprecated
-			 // SetUserPublishedFileAction is deprecated
-			 // EnumeratePublishedFilesByUserAction is deprecated
-			 // EnumeratePublishedWorkshopFiles is deprecated
-			_UGCDownloadToLocation = Marshal.GetDelegateForFunctionPointer<FUGCDownloadToLocation>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 424 ) ) );
 		}
 		internal override void Shutdown()
 		{
 			base.Shutdown();
 			
-			_FileWrite = null;
-			_FileRead = null;
-			_FileWriteAsync = null;
-			_FileReadAsync = null;
-			_FileReadAsyncComplete = null;
-			_FileForget = null;
-			_FileDelete = null;
-			_FileShare = null;
-			_SetSyncPlatforms = null;
-			_FileWriteStreamOpen = null;
-			_FileWriteStreamWriteChunk = null;
-			_FileWriteStreamClose = null;
-			_FileWriteStreamCancel = null;
-			_FileExists = null;
-			_FilePersisted = null;
-			_GetFileSize = null;
-			_GetFileTimestamp = null;
-			_GetSyncPlatforms = null;
-			_GetFileCount = null;
-			_GetFileNameAndSize = null;
-			_GetQuota = null;
-			_IsCloudEnabledForAccount = null;
-			_IsCloudEnabledForApp = null;
-			_SetCloudEnabledForApp = null;
-			_UGCDownload = null;
-			_GetUGCDownloadProgress = null;
-			_GetUGCDetails = null;
-			_UGCRead = null;
-			_GetCachedUGCCount = null;
-			_UGCDownloadToLocation = null;
 		}
 		
 		#region FunctionMeta

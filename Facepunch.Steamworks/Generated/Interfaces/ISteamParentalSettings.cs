@@ -13,23 +13,11 @@ namespace Steamworks
 		
 		public override void InitInternals()
 		{
-			_BIsParentalLockEnabled = Marshal.GetDelegateForFunctionPointer<FBIsParentalLockEnabled>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 0 ) ) );
-			_BIsParentalLockLocked = Marshal.GetDelegateForFunctionPointer<FBIsParentalLockLocked>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 8 ) ) );
-			_BIsAppBlocked = Marshal.GetDelegateForFunctionPointer<FBIsAppBlocked>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 16 ) ) );
-			_BIsAppInBlockList = Marshal.GetDelegateForFunctionPointer<FBIsAppInBlockList>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 24 ) ) );
-			_BIsFeatureBlocked = Marshal.GetDelegateForFunctionPointer<FBIsFeatureBlocked>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 32 ) ) );
-			_BIsFeatureInBlockList = Marshal.GetDelegateForFunctionPointer<FBIsFeatureInBlockList>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 40 ) ) );
 		}
 		internal override void Shutdown()
 		{
 			base.Shutdown();
 			
-			_BIsParentalLockEnabled = null;
-			_BIsParentalLockLocked = null;
-			_BIsAppBlocked = null;
-			_BIsAppInBlockList = null;
-			_BIsFeatureBlocked = null;
-			_BIsFeatureInBlockList = null;
 		}
 		
 		#region FunctionMeta

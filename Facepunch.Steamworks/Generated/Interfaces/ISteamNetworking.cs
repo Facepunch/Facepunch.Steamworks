@@ -13,55 +13,11 @@ namespace Steamworks
 		
 		public override void InitInternals()
 		{
-			_SendP2PPacket = Marshal.GetDelegateForFunctionPointer<FSendP2PPacket>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 0 ) ) );
-			_IsP2PPacketAvailable = Marshal.GetDelegateForFunctionPointer<FIsP2PPacketAvailable>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 8 ) ) );
-			_ReadP2PPacket = Marshal.GetDelegateForFunctionPointer<FReadP2PPacket>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 16 ) ) );
-			_AcceptP2PSessionWithUser = Marshal.GetDelegateForFunctionPointer<FAcceptP2PSessionWithUser>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 24 ) ) );
-			_CloseP2PSessionWithUser = Marshal.GetDelegateForFunctionPointer<FCloseP2PSessionWithUser>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 32 ) ) );
-			_CloseP2PChannelWithUser = Marshal.GetDelegateForFunctionPointer<FCloseP2PChannelWithUser>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 40 ) ) );
-			_GetP2PSessionState = Marshal.GetDelegateForFunctionPointer<FGetP2PSessionState>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 48 ) ) );
-			_AllowP2PPacketRelay = Marshal.GetDelegateForFunctionPointer<FAllowP2PPacketRelay>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 56 ) ) );
-			_CreateListenSocket = Marshal.GetDelegateForFunctionPointer<FCreateListenSocket>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 64 ) ) );
-			_CreateP2PConnectionSocket = Marshal.GetDelegateForFunctionPointer<FCreateP2PConnectionSocket>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 72 ) ) );
-			_CreateConnectionSocket = Marshal.GetDelegateForFunctionPointer<FCreateConnectionSocket>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 80 ) ) );
-			_DestroySocket = Marshal.GetDelegateForFunctionPointer<FDestroySocket>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 88 ) ) );
-			_DestroyListenSocket = Marshal.GetDelegateForFunctionPointer<FDestroyListenSocket>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 96 ) ) );
-			_SendDataOnSocket = Marshal.GetDelegateForFunctionPointer<FSendDataOnSocket>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 104 ) ) );
-			_IsDataAvailableOnSocket = Marshal.GetDelegateForFunctionPointer<FIsDataAvailableOnSocket>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 112 ) ) );
-			_RetrieveDataFromSocket = Marshal.GetDelegateForFunctionPointer<FRetrieveDataFromSocket>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 120 ) ) );
-			_IsDataAvailable = Marshal.GetDelegateForFunctionPointer<FIsDataAvailable>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 128 ) ) );
-			_RetrieveData = Marshal.GetDelegateForFunctionPointer<FRetrieveData>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 136 ) ) );
-			_GetSocketInfo = Marshal.GetDelegateForFunctionPointer<FGetSocketInfo>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 144 ) ) );
-			_GetListenSocketInfo = Marshal.GetDelegateForFunctionPointer<FGetListenSocketInfo>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 152 ) ) );
-			_GetSocketConnectionType = Marshal.GetDelegateForFunctionPointer<FGetSocketConnectionType>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 160 ) ) );
-			_GetMaxPacketSize = Marshal.GetDelegateForFunctionPointer<FGetMaxPacketSize>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 168 ) ) );
 		}
 		internal override void Shutdown()
 		{
 			base.Shutdown();
 			
-			_SendP2PPacket = null;
-			_IsP2PPacketAvailable = null;
-			_ReadP2PPacket = null;
-			_AcceptP2PSessionWithUser = null;
-			_CloseP2PSessionWithUser = null;
-			_CloseP2PChannelWithUser = null;
-			_GetP2PSessionState = null;
-			_AllowP2PPacketRelay = null;
-			_CreateListenSocket = null;
-			_CreateP2PConnectionSocket = null;
-			_CreateConnectionSocket = null;
-			_DestroySocket = null;
-			_DestroyListenSocket = null;
-			_SendDataOnSocket = null;
-			_IsDataAvailableOnSocket = null;
-			_RetrieveDataFromSocket = null;
-			_IsDataAvailable = null;
-			_RetrieveData = null;
-			_GetSocketInfo = null;
-			_GetListenSocketInfo = null;
-			_GetSocketConnectionType = null;
-			_GetMaxPacketSize = null;
 		}
 		
 		#region FunctionMeta

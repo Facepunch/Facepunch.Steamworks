@@ -13,19 +13,11 @@ namespace Steamworks
 		
 		public override void InitInternals()
 		{
-			_GetVideoURL = Marshal.GetDelegateForFunctionPointer<FGetVideoURL>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 0 ) ) );
-			_IsBroadcasting = Marshal.GetDelegateForFunctionPointer<FIsBroadcasting>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 8 ) ) );
-			_GetOPFSettings = Marshal.GetDelegateForFunctionPointer<FGetOPFSettings>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 16 ) ) );
-			_GetOPFStringForApp = Marshal.GetDelegateForFunctionPointer<FGetOPFStringForApp>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 24 ) ) );
 		}
 		internal override void Shutdown()
 		{
 			base.Shutdown();
 			
-			_GetVideoURL = null;
-			_IsBroadcasting = null;
-			_GetOPFSettings = null;
-			_GetOPFStringForApp = null;
 		}
 		
 		#region FunctionMeta

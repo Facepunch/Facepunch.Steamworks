@@ -13,67 +13,11 @@ namespace Steamworks
 		
 		public override void InitInternals()
 		{
-			_BIsSubscribed = Marshal.GetDelegateForFunctionPointer<FBIsSubscribed>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 0 ) ) );
-			_BIsLowViolence = Marshal.GetDelegateForFunctionPointer<FBIsLowViolence>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 8 ) ) );
-			_BIsCybercafe = Marshal.GetDelegateForFunctionPointer<FBIsCybercafe>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 16 ) ) );
-			_BIsVACBanned = Marshal.GetDelegateForFunctionPointer<FBIsVACBanned>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 24 ) ) );
-			_GetCurrentGameLanguage = Marshal.GetDelegateForFunctionPointer<FGetCurrentGameLanguage>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 32 ) ) );
-			_GetAvailableGameLanguages = Marshal.GetDelegateForFunctionPointer<FGetAvailableGameLanguages>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 40 ) ) );
-			_BIsSubscribedApp = Marshal.GetDelegateForFunctionPointer<FBIsSubscribedApp>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 48 ) ) );
-			_BIsDlcInstalled = Marshal.GetDelegateForFunctionPointer<FBIsDlcInstalled>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 56 ) ) );
-			_GetEarliestPurchaseUnixTime = Marshal.GetDelegateForFunctionPointer<FGetEarliestPurchaseUnixTime>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 64 ) ) );
-			_BIsSubscribedFromFreeWeekend = Marshal.GetDelegateForFunctionPointer<FBIsSubscribedFromFreeWeekend>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 72 ) ) );
-			_GetDLCCount = Marshal.GetDelegateForFunctionPointer<FGetDLCCount>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 80 ) ) );
-			_BGetDLCDataByIndex = Marshal.GetDelegateForFunctionPointer<FBGetDLCDataByIndex>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 88 ) ) );
-			_InstallDLC = Marshal.GetDelegateForFunctionPointer<FInstallDLC>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 96 ) ) );
-			_UninstallDLC = Marshal.GetDelegateForFunctionPointer<FUninstallDLC>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 104 ) ) );
-			_RequestAppProofOfPurchaseKey = Marshal.GetDelegateForFunctionPointer<FRequestAppProofOfPurchaseKey>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 112 ) ) );
-			_GetCurrentBetaName = Marshal.GetDelegateForFunctionPointer<FGetCurrentBetaName>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 120 ) ) );
-			_MarkContentCorrupt = Marshal.GetDelegateForFunctionPointer<FMarkContentCorrupt>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 128 ) ) );
-			_GetInstalledDepots = Marshal.GetDelegateForFunctionPointer<FGetInstalledDepots>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 136 ) ) );
-			_GetAppInstallDir = Marshal.GetDelegateForFunctionPointer<FGetAppInstallDir>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 144 ) ) );
-			_BIsAppInstalled = Marshal.GetDelegateForFunctionPointer<FBIsAppInstalled>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 152 ) ) );
-			_GetAppOwner = Marshal.GetDelegateForFunctionPointer<FGetAppOwner>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 160 ) ) );
-			_GetLaunchQueryParam = Marshal.GetDelegateForFunctionPointer<FGetLaunchQueryParam>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 168 ) ) );
-			_GetDlcDownloadProgress = Marshal.GetDelegateForFunctionPointer<FGetDlcDownloadProgress>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 176 ) ) );
-			_GetAppBuildId = Marshal.GetDelegateForFunctionPointer<FGetAppBuildId>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 184 ) ) );
-			_RequestAllProofOfPurchaseKeys = Marshal.GetDelegateForFunctionPointer<FRequestAllProofOfPurchaseKeys>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 192 ) ) );
-			_GetFileDetails = Marshal.GetDelegateForFunctionPointer<FGetFileDetails>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 200 ) ) );
-			_GetLaunchCommandLine = Marshal.GetDelegateForFunctionPointer<FGetLaunchCommandLine>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 208 ) ) );
-			_BIsSubscribedFromFamilySharing = Marshal.GetDelegateForFunctionPointer<FBIsSubscribedFromFamilySharing>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 216 ) ) );
 		}
 		internal override void Shutdown()
 		{
 			base.Shutdown();
 			
-			_BIsSubscribed = null;
-			_BIsLowViolence = null;
-			_BIsCybercafe = null;
-			_BIsVACBanned = null;
-			_GetCurrentGameLanguage = null;
-			_GetAvailableGameLanguages = null;
-			_BIsSubscribedApp = null;
-			_BIsDlcInstalled = null;
-			_GetEarliestPurchaseUnixTime = null;
-			_BIsSubscribedFromFreeWeekend = null;
-			_GetDLCCount = null;
-			_BGetDLCDataByIndex = null;
-			_InstallDLC = null;
-			_UninstallDLC = null;
-			_RequestAppProofOfPurchaseKey = null;
-			_GetCurrentBetaName = null;
-			_MarkContentCorrupt = null;
-			_GetInstalledDepots = null;
-			_GetAppInstallDir = null;
-			_BIsAppInstalled = null;
-			_GetAppOwner = null;
-			_GetLaunchQueryParam = null;
-			_GetDlcDownloadProgress = null;
-			_GetAppBuildId = null;
-			_RequestAllProofOfPurchaseKeys = null;
-			_GetFileDetails = null;
-			_GetLaunchCommandLine = null;
-			_BIsSubscribedFromFamilySharing = null;
 		}
 		
 		#region FunctionMeta

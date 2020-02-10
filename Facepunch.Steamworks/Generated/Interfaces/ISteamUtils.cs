@@ -13,71 +13,11 @@ namespace Steamworks
 		
 		public override void InitInternals()
 		{
-			_GetSecondsSinceAppActive = Marshal.GetDelegateForFunctionPointer<FGetSecondsSinceAppActive>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 0 ) ) );
-			_GetSecondsSinceComputerActive = Marshal.GetDelegateForFunctionPointer<FGetSecondsSinceComputerActive>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 8 ) ) );
-			_GetConnectedUniverse = Marshal.GetDelegateForFunctionPointer<FGetConnectedUniverse>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 16 ) ) );
-			_GetServerRealTime = Marshal.GetDelegateForFunctionPointer<FGetServerRealTime>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 24 ) ) );
-			_GetIPCountry = Marshal.GetDelegateForFunctionPointer<FGetIPCountry>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 32 ) ) );
-			_GetImageSize = Marshal.GetDelegateForFunctionPointer<FGetImageSize>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 40 ) ) );
-			_GetImageRGBA = Marshal.GetDelegateForFunctionPointer<FGetImageRGBA>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 48 ) ) );
-			_GetCSERIPPort = Marshal.GetDelegateForFunctionPointer<FGetCSERIPPort>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 56 ) ) );
-			_GetCurrentBatteryPower = Marshal.GetDelegateForFunctionPointer<FGetCurrentBatteryPower>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 64 ) ) );
-			_GetAppID = Marshal.GetDelegateForFunctionPointer<FGetAppID>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 72 ) ) );
-			_SetOverlayNotificationPosition = Marshal.GetDelegateForFunctionPointer<FSetOverlayNotificationPosition>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 80 ) ) );
-			_IsAPICallCompleted = Marshal.GetDelegateForFunctionPointer<FIsAPICallCompleted>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 88 ) ) );
-			_GetAPICallFailureReason = Marshal.GetDelegateForFunctionPointer<FGetAPICallFailureReason>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 96 ) ) );
-			_GetAPICallResult = Marshal.GetDelegateForFunctionPointer<FGetAPICallResult>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 104 ) ) );
-			_RunFrame = Marshal.GetDelegateForFunctionPointer<FRunFrame>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 112 ) ) );
-			_GetIPCCallCount = Marshal.GetDelegateForFunctionPointer<FGetIPCCallCount>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 120 ) ) );
-			_SetWarningMessageHook = Marshal.GetDelegateForFunctionPointer<FSetWarningMessageHook>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 128 ) ) );
-			_IsOverlayEnabled = Marshal.GetDelegateForFunctionPointer<FIsOverlayEnabled>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 136 ) ) );
-			_BOverlayNeedsPresent = Marshal.GetDelegateForFunctionPointer<FBOverlayNeedsPresent>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 144 ) ) );
-			_CheckFileSignature = Marshal.GetDelegateForFunctionPointer<FCheckFileSignature>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 152 ) ) );
-			_ShowGamepadTextInput = Marshal.GetDelegateForFunctionPointer<FShowGamepadTextInput>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 160 ) ) );
-			_GetEnteredGamepadTextLength = Marshal.GetDelegateForFunctionPointer<FGetEnteredGamepadTextLength>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 168 ) ) );
-			_GetEnteredGamepadTextInput = Marshal.GetDelegateForFunctionPointer<FGetEnteredGamepadTextInput>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 176 ) ) );
-			_GetSteamUILanguage = Marshal.GetDelegateForFunctionPointer<FGetSteamUILanguage>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 184 ) ) );
-			_IsSteamRunningInVR = Marshal.GetDelegateForFunctionPointer<FIsSteamRunningInVR>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 192 ) ) );
-			_SetOverlayNotificationInset = Marshal.GetDelegateForFunctionPointer<FSetOverlayNotificationInset>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 200 ) ) );
-			_IsSteamInBigPictureMode = Marshal.GetDelegateForFunctionPointer<FIsSteamInBigPictureMode>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 208 ) ) );
-			_StartVRDashboard = Marshal.GetDelegateForFunctionPointer<FStartVRDashboard>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 216 ) ) );
-			_IsVRHeadsetStreamingEnabled = Marshal.GetDelegateForFunctionPointer<FIsVRHeadsetStreamingEnabled>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 224 ) ) );
-			_SetVRHeadsetStreamingEnabled = Marshal.GetDelegateForFunctionPointer<FSetVRHeadsetStreamingEnabled>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 232 ) ) );
 		}
 		internal override void Shutdown()
 		{
 			base.Shutdown();
 			
-			_GetSecondsSinceAppActive = null;
-			_GetSecondsSinceComputerActive = null;
-			_GetConnectedUniverse = null;
-			_GetServerRealTime = null;
-			_GetIPCountry = null;
-			_GetImageSize = null;
-			_GetImageRGBA = null;
-			_GetCSERIPPort = null;
-			_GetCurrentBatteryPower = null;
-			_GetAppID = null;
-			_SetOverlayNotificationPosition = null;
-			_IsAPICallCompleted = null;
-			_GetAPICallFailureReason = null;
-			_GetAPICallResult = null;
-			_RunFrame = null;
-			_GetIPCCallCount = null;
-			_SetWarningMessageHook = null;
-			_IsOverlayEnabled = null;
-			_BOverlayNeedsPresent = null;
-			_CheckFileSignature = null;
-			_ShowGamepadTextInput = null;
-			_GetEnteredGamepadTextLength = null;
-			_GetEnteredGamepadTextInput = null;
-			_GetSteamUILanguage = null;
-			_IsSteamRunningInVR = null;
-			_SetOverlayNotificationInset = null;
-			_IsSteamInBigPictureMode = null;
-			_StartVRDashboard = null;
-			_IsVRHeadsetStreamingEnabled = null;
-			_SetVRHeadsetStreamingEnabled = null;
 		}
 		
 		#region FunctionMeta

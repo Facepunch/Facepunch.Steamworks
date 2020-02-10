@@ -13,87 +13,11 @@ namespace Steamworks
 		
 		public override void InitInternals()
 		{
-			_GetFavoriteGameCount = Marshal.GetDelegateForFunctionPointer<FGetFavoriteGameCount>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 0 ) ) );
-			_GetFavoriteGame = Marshal.GetDelegateForFunctionPointer<FGetFavoriteGame>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 8 ) ) );
-			_AddFavoriteGame = Marshal.GetDelegateForFunctionPointer<FAddFavoriteGame>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 16 ) ) );
-			_RemoveFavoriteGame = Marshal.GetDelegateForFunctionPointer<FRemoveFavoriteGame>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 24 ) ) );
-			_RequestLobbyList = Marshal.GetDelegateForFunctionPointer<FRequestLobbyList>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 32 ) ) );
-			_AddRequestLobbyListStringFilter = Marshal.GetDelegateForFunctionPointer<FAddRequestLobbyListStringFilter>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 40 ) ) );
-			_AddRequestLobbyListNumericalFilter = Marshal.GetDelegateForFunctionPointer<FAddRequestLobbyListNumericalFilter>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 48 ) ) );
-			_AddRequestLobbyListNearValueFilter = Marshal.GetDelegateForFunctionPointer<FAddRequestLobbyListNearValueFilter>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 56 ) ) );
-			_AddRequestLobbyListFilterSlotsAvailable = Marshal.GetDelegateForFunctionPointer<FAddRequestLobbyListFilterSlotsAvailable>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 64 ) ) );
-			_AddRequestLobbyListDistanceFilter = Marshal.GetDelegateForFunctionPointer<FAddRequestLobbyListDistanceFilter>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 72 ) ) );
-			_AddRequestLobbyListResultCountFilter = Marshal.GetDelegateForFunctionPointer<FAddRequestLobbyListResultCountFilter>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 80 ) ) );
-			_AddRequestLobbyListCompatibleMembersFilter = Marshal.GetDelegateForFunctionPointer<FAddRequestLobbyListCompatibleMembersFilter>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 88 ) ) );
-			_GetLobbyByIndex = Marshal.GetDelegateForFunctionPointer<FGetLobbyByIndex>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 96 ) ) );
-			_CreateLobby = Marshal.GetDelegateForFunctionPointer<FCreateLobby>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 104 ) ) );
-			_JoinLobby = Marshal.GetDelegateForFunctionPointer<FJoinLobby>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 112 ) ) );
-			_LeaveLobby = Marshal.GetDelegateForFunctionPointer<FLeaveLobby>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 120 ) ) );
-			_InviteUserToLobby = Marshal.GetDelegateForFunctionPointer<FInviteUserToLobby>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 128 ) ) );
-			_GetNumLobbyMembers = Marshal.GetDelegateForFunctionPointer<FGetNumLobbyMembers>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 136 ) ) );
-			_GetLobbyMemberByIndex = Marshal.GetDelegateForFunctionPointer<FGetLobbyMemberByIndex>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 144 ) ) );
-			_GetLobbyData = Marshal.GetDelegateForFunctionPointer<FGetLobbyData>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 152 ) ) );
-			_SetLobbyData = Marshal.GetDelegateForFunctionPointer<FSetLobbyData>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 160 ) ) );
-			_GetLobbyDataCount = Marshal.GetDelegateForFunctionPointer<FGetLobbyDataCount>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 168 ) ) );
-			_GetLobbyDataByIndex = Marshal.GetDelegateForFunctionPointer<FGetLobbyDataByIndex>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 176 ) ) );
-			_DeleteLobbyData = Marshal.GetDelegateForFunctionPointer<FDeleteLobbyData>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 184 ) ) );
-			_GetLobbyMemberData = Marshal.GetDelegateForFunctionPointer<FGetLobbyMemberData>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 192 ) ) );
-			_SetLobbyMemberData = Marshal.GetDelegateForFunctionPointer<FSetLobbyMemberData>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 200 ) ) );
-			_SendLobbyChatMsg = Marshal.GetDelegateForFunctionPointer<FSendLobbyChatMsg>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 208 ) ) );
-			_GetLobbyChatEntry = Marshal.GetDelegateForFunctionPointer<FGetLobbyChatEntry>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 216 ) ) );
-			_RequestLobbyData = Marshal.GetDelegateForFunctionPointer<FRequestLobbyData>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 224 ) ) );
-			_SetLobbyGameServer = Marshal.GetDelegateForFunctionPointer<FSetLobbyGameServer>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 232 ) ) );
-			_GetLobbyGameServer = Marshal.GetDelegateForFunctionPointer<FGetLobbyGameServer>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 240 ) ) );
-			_SetLobbyMemberLimit = Marshal.GetDelegateForFunctionPointer<FSetLobbyMemberLimit>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 248 ) ) );
-			_GetLobbyMemberLimit = Marshal.GetDelegateForFunctionPointer<FGetLobbyMemberLimit>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 256 ) ) );
-			_SetLobbyType = Marshal.GetDelegateForFunctionPointer<FSetLobbyType>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 264 ) ) );
-			_SetLobbyJoinable = Marshal.GetDelegateForFunctionPointer<FSetLobbyJoinable>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 272 ) ) );
-			_GetLobbyOwner = Marshal.GetDelegateForFunctionPointer<FGetLobbyOwner>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 280 ) ) );
-			_SetLobbyOwner = Marshal.GetDelegateForFunctionPointer<FSetLobbyOwner>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 288 ) ) );
-			_SetLinkedLobby = Marshal.GetDelegateForFunctionPointer<FSetLinkedLobby>( Marshal.ReadIntPtr( VTable, Platform.MemoryOffset( 296 ) ) );
 		}
 		internal override void Shutdown()
 		{
 			base.Shutdown();
 			
-			_GetFavoriteGameCount = null;
-			_GetFavoriteGame = null;
-			_AddFavoriteGame = null;
-			_RemoveFavoriteGame = null;
-			_RequestLobbyList = null;
-			_AddRequestLobbyListStringFilter = null;
-			_AddRequestLobbyListNumericalFilter = null;
-			_AddRequestLobbyListNearValueFilter = null;
-			_AddRequestLobbyListFilterSlotsAvailable = null;
-			_AddRequestLobbyListDistanceFilter = null;
-			_AddRequestLobbyListResultCountFilter = null;
-			_AddRequestLobbyListCompatibleMembersFilter = null;
-			_GetLobbyByIndex = null;
-			_CreateLobby = null;
-			_JoinLobby = null;
-			_LeaveLobby = null;
-			_InviteUserToLobby = null;
-			_GetNumLobbyMembers = null;
-			_GetLobbyMemberByIndex = null;
-			_GetLobbyData = null;
-			_SetLobbyData = null;
-			_GetLobbyDataCount = null;
-			_GetLobbyDataByIndex = null;
-			_DeleteLobbyData = null;
-			_GetLobbyMemberData = null;
-			_SetLobbyMemberData = null;
-			_SendLobbyChatMsg = null;
-			_GetLobbyChatEntry = null;
-			_RequestLobbyData = null;
-			_SetLobbyGameServer = null;
-			_GetLobbyGameServer = null;
-			_SetLobbyMemberLimit = null;
-			_GetLobbyMemberLimit = null;
-			_SetLobbyType = null;
-			_SetLobbyJoinable = null;
-			_GetLobbyOwner = null;
-			_SetLobbyOwner = null;
-			_SetLinkedLobby = null;
 		}
 		
 		#region FunctionMeta
