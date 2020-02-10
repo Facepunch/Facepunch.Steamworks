@@ -39,10 +39,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _FileWriteAsync( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFile, IntPtr pvData, uint cubData );
 		
 		#endregion
-		internal CallbackResult FileWriteAsync( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFile, IntPtr pvData, uint cubData )
+		internal CallbackResult<RemoteStorageFileWriteAsyncComplete_t> FileWriteAsync( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFile, IntPtr pvData, uint cubData )
 		{
 			var returnValue = _FileWriteAsync( Self, pchFile, pvData, cubData );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<RemoteStorageFileWriteAsyncComplete_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -50,10 +50,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _FileReadAsync( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFile, uint nOffset, uint cubToRead );
 		
 		#endregion
-		internal CallbackResult FileReadAsync( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFile, uint nOffset, uint cubToRead )
+		internal CallbackResult<RemoteStorageFileReadAsyncComplete_t> FileReadAsync( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFile, uint nOffset, uint cubToRead )
 		{
 			var returnValue = _FileReadAsync( Self, pchFile, nOffset, cubToRead );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<RemoteStorageFileReadAsyncComplete_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -97,10 +97,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _FileShare( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFile );
 		
 		#endregion
-		internal CallbackResult FileShare( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFile )
+		internal CallbackResult<RemoteStorageFileShareResult_t> FileShare( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFile )
 		{
 			var returnValue = _FileShare( Self, pchFile );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<RemoteStorageFileShareResult_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -292,10 +292,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _UGCDownload( IntPtr self, UGCHandle_t hContent, uint unPriority );
 		
 		#endregion
-		internal CallbackResult UGCDownload( UGCHandle_t hContent, uint unPriority )
+		internal CallbackResult<RemoteStorageDownloadUGCResult_t> UGCDownload( UGCHandle_t hContent, uint unPriority )
 		{
 			var returnValue = _UGCDownload( Self, hContent, unPriority );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<RemoteStorageDownloadUGCResult_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -360,10 +360,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _UGCDownloadToLocation( IntPtr self, UGCHandle_t hContent, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchLocation, uint unPriority );
 		
 		#endregion
-		internal CallbackResult UGCDownloadToLocation( UGCHandle_t hContent, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchLocation, uint unPriority )
+		internal CallbackResult<RemoteStorageDownloadUGCResult_t> UGCDownloadToLocation( UGCHandle_t hContent, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchLocation, uint unPriority )
 		{
 			var returnValue = _UGCDownloadToLocation( Self, hContent, pchLocation, unPriority );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<RemoteStorageDownloadUGCResult_t>( returnValue );
 		}
 		
 	}

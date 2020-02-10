@@ -305,10 +305,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _GetFileDetails( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszFileName );
 		
 		#endregion
-		internal CallbackResult GetFileDetails( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszFileName )
+		internal CallbackResult<FileDetailsResult_t> GetFileDetails( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszFileName )
 		{
 			var returnValue = _GetFileDetails( Self, pszFileName );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<FileDetailsResult_t>( returnValue );
 		}
 		
 		#region FunctionMeta

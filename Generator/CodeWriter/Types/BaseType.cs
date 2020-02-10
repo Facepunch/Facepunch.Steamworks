@@ -15,14 +15,14 @@ internal class BaseType
 
 	public virtual bool WindowsSpecific => false;
 
-	public static BaseType Parse( string type, string varname = null )
+	public static BaseType Parse( string type, string varname = null, string callresult = null )
 	{
 		type = Cleanup.ConvertType( type );
 
 		if ( varname == "ppOutMessages" ) return new PointerType { NativeType = "void *", VarName = varname };
 		if ( type == "SteamAPIWarningMessageHook_t" ) return new PointerType { NativeType = type, VarName = varname };
 
-		if ( type == "SteamAPICall_t" ) return new SteamApiCallType { NativeType = type, VarName = varname };
+		if ( type == "SteamAPICall_t" ) return new SteamApiCallType { NativeType = type, VarName = varname, CallResult = callresult };
 
 		if ( type == "void" ) return new VoidType { NativeType = type, VarName = varname };
 		if ( type.Replace( " ", "" ).StartsWith( "constchar*" ) ) return new ConstCharType { NativeType = type, VarName = varname };
@@ -172,8 +172,25 @@ internal class SteamApiCallType : BaseType
 {
 	public string CallResult;
 	public override string TypeName => "SteamAPICall_t";
-	public override string Return( string varname ) => $"return new CallbackResult( {varname} );";
-	public override string ReturnType => $"CallbackResult";
+	public override string Return( string varname )
+	{
+		if ( !string.IsNullOrEmpty( CallResult ) )
+			return $"return new CallbackResult<{CallResult}>( {varname} );";
+
+		return $"return new CallbackResult( {varname} );";
+		
+	}
+
+	public override string ReturnType
+	{
+		get
+		{
+			if ( !string.IsNullOrEmpty( CallResult ) )
+				return $"CallbackResult<{CallResult}>";
+
+			return $"CallbackResult";
+		}
+	}
 }
 
 internal class CSteamIdType : BaseType

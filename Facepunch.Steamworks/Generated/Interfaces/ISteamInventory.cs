@@ -290,10 +290,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _RequestEligiblePromoItemDefinitionsIDs( IntPtr self, SteamId steamID );
 		
 		#endregion
-		internal CallbackResult RequestEligiblePromoItemDefinitionsIDs( SteamId steamID )
+		internal CallbackResult<SteamInventoryEligiblePromoItemDefIDs_t> RequestEligiblePromoItemDefinitionsIDs( SteamId steamID )
 		{
 			var returnValue = _RequestEligiblePromoItemDefinitionsIDs( Self, steamID );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<SteamInventoryEligiblePromoItemDefIDs_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -313,10 +313,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _StartPurchase( IntPtr self, [In,Out] InventoryDefId[]  pArrayItemDefs, [In,Out] uint[]  punArrayQuantity, uint unArrayLength );
 		
 		#endregion
-		internal CallbackResult StartPurchase( [In,Out] InventoryDefId[]  pArrayItemDefs, [In,Out] uint[]  punArrayQuantity, uint unArrayLength )
+		internal CallbackResult<SteamInventoryStartPurchaseResult_t> StartPurchase( [In,Out] InventoryDefId[]  pArrayItemDefs, [In,Out] uint[]  punArrayQuantity, uint unArrayLength )
 		{
 			var returnValue = _StartPurchase( Self, pArrayItemDefs, punArrayQuantity, unArrayLength );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<SteamInventoryStartPurchaseResult_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -324,10 +324,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _RequestPrices( IntPtr self );
 		
 		#endregion
-		internal CallbackResult RequestPrices()
+		internal CallbackResult<SteamInventoryRequestPricesResult_t> RequestPrices()
 		{
 			var returnValue = _RequestPrices( Self );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<SteamInventoryRequestPricesResult_t>( returnValue );
 		}
 		
 		#region FunctionMeta

@@ -3398,7 +3398,7 @@
 	"classname": "ISteamFriends",
 	"methodname": "DownloadClanActivityCounts",
 	"returntype": "SteamAPICall_t",
-	"callbackdata": "DownloadClanActivityCountsResult_t",
+	"callresult": "DownloadClanActivityCountsResult_t",
 	"callbackid": 341,
 	"params": 
 	[ 
@@ -7583,7 +7583,7 @@
 }
 ,{
 	"classname": "ISteamUGC",
-	"methodname": "RequestUGCDetails",
+	"methodname": "RequestUGCDetails", "callresult": "SteamUGCRequestUGCDetailsResult_t",
 	"returntype": "SteamAPICall_t",
 	"params": [ 
 {	"paramname": "nPublishedFileID" ,"paramtype": "PublishedFileId_t"},

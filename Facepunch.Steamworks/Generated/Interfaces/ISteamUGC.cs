@@ -60,10 +60,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _SendQueryUGCRequest( IntPtr self, UGCQueryHandle_t handle );
 		
 		#endregion
-		internal CallbackResult SendQueryUGCRequest( UGCQueryHandle_t handle )
+		internal CallbackResult<SteamUGCQueryCompleted_t> SendQueryUGCRequest( UGCQueryHandle_t handle )
 		{
 			var returnValue = _SendQueryUGCRequest( Self, handle );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<SteamUGCQueryCompleted_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -405,10 +405,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _RequestUGCDetails( IntPtr self, PublishedFileId nPublishedFileID, uint unMaxAgeSeconds );
 		
 		#endregion
-		internal CallbackResult RequestUGCDetails( PublishedFileId nPublishedFileID, uint unMaxAgeSeconds )
+		internal CallbackResult<SteamUGCRequestUGCDetailsResult_t> RequestUGCDetails( PublishedFileId nPublishedFileID, uint unMaxAgeSeconds )
 		{
 			var returnValue = _RequestUGCDetails( Self, nPublishedFileID, unMaxAgeSeconds );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<SteamUGCRequestUGCDetailsResult_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -416,10 +416,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _CreateItem( IntPtr self, AppId nConsumerAppId, WorkshopFileType eFileType );
 		
 		#endregion
-		internal CallbackResult CreateItem( AppId nConsumerAppId, WorkshopFileType eFileType )
+		internal CallbackResult<CreateItemResult_t> CreateItem( AppId nConsumerAppId, WorkshopFileType eFileType )
 		{
 			var returnValue = _CreateItem( Self, nConsumerAppId, eFileType );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<CreateItemResult_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -630,10 +630,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _SubmitItemUpdate( IntPtr self, UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchChangeNote );
 		
 		#endregion
-		internal CallbackResult SubmitItemUpdate( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchChangeNote )
+		internal CallbackResult<SubmitItemUpdateResult_t> SubmitItemUpdate( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchChangeNote )
 		{
 			var returnValue = _SubmitItemUpdate( Self, handle, pchChangeNote );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<SubmitItemUpdateResult_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -652,10 +652,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _SetUserItemVote( IntPtr self, PublishedFileId nPublishedFileID, [MarshalAs( UnmanagedType.U1 )] bool bVoteUp );
 		
 		#endregion
-		internal CallbackResult SetUserItemVote( PublishedFileId nPublishedFileID, [MarshalAs( UnmanagedType.U1 )] bool bVoteUp )
+		internal CallbackResult<SetUserItemVoteResult_t> SetUserItemVote( PublishedFileId nPublishedFileID, [MarshalAs( UnmanagedType.U1 )] bool bVoteUp )
 		{
 			var returnValue = _SetUserItemVote( Self, nPublishedFileID, bVoteUp );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<SetUserItemVoteResult_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -663,10 +663,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _GetUserItemVote( IntPtr self, PublishedFileId nPublishedFileID );
 		
 		#endregion
-		internal CallbackResult GetUserItemVote( PublishedFileId nPublishedFileID )
+		internal CallbackResult<GetUserItemVoteResult_t> GetUserItemVote( PublishedFileId nPublishedFileID )
 		{
 			var returnValue = _GetUserItemVote( Self, nPublishedFileID );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<GetUserItemVoteResult_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -674,10 +674,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _AddItemToFavorites( IntPtr self, AppId nAppId, PublishedFileId nPublishedFileID );
 		
 		#endregion
-		internal CallbackResult AddItemToFavorites( AppId nAppId, PublishedFileId nPublishedFileID )
+		internal CallbackResult<UserFavoriteItemsListChanged_t> AddItemToFavorites( AppId nAppId, PublishedFileId nPublishedFileID )
 		{
 			var returnValue = _AddItemToFavorites( Self, nAppId, nPublishedFileID );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<UserFavoriteItemsListChanged_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -685,10 +685,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _RemoveItemFromFavorites( IntPtr self, AppId nAppId, PublishedFileId nPublishedFileID );
 		
 		#endregion
-		internal CallbackResult RemoveItemFromFavorites( AppId nAppId, PublishedFileId nPublishedFileID )
+		internal CallbackResult<UserFavoriteItemsListChanged_t> RemoveItemFromFavorites( AppId nAppId, PublishedFileId nPublishedFileID )
 		{
 			var returnValue = _RemoveItemFromFavorites( Self, nAppId, nPublishedFileID );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<UserFavoriteItemsListChanged_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -696,10 +696,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _SubscribeItem( IntPtr self, PublishedFileId nPublishedFileID );
 		
 		#endregion
-		internal CallbackResult SubscribeItem( PublishedFileId nPublishedFileID )
+		internal CallbackResult<RemoteStorageSubscribePublishedFileResult_t> SubscribeItem( PublishedFileId nPublishedFileID )
 		{
 			var returnValue = _SubscribeItem( Self, nPublishedFileID );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<RemoteStorageSubscribePublishedFileResult_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -707,10 +707,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _UnsubscribeItem( IntPtr self, PublishedFileId nPublishedFileID );
 		
 		#endregion
-		internal CallbackResult UnsubscribeItem( PublishedFileId nPublishedFileID )
+		internal CallbackResult<RemoteStorageUnsubscribePublishedFileResult_t> UnsubscribeItem( PublishedFileId nPublishedFileID )
 		{
 			var returnValue = _UnsubscribeItem( Self, nPublishedFileID );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<RemoteStorageUnsubscribePublishedFileResult_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -811,10 +811,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _StartPlaytimeTracking( IntPtr self, [In,Out] PublishedFileId[]  pvecPublishedFileID, uint unNumPublishedFileIDs );
 		
 		#endregion
-		internal CallbackResult StartPlaytimeTracking( [In,Out] PublishedFileId[]  pvecPublishedFileID, uint unNumPublishedFileIDs )
+		internal CallbackResult<StartPlaytimeTrackingResult_t> StartPlaytimeTracking( [In,Out] PublishedFileId[]  pvecPublishedFileID, uint unNumPublishedFileIDs )
 		{
 			var returnValue = _StartPlaytimeTracking( Self, pvecPublishedFileID, unNumPublishedFileIDs );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<StartPlaytimeTrackingResult_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -822,10 +822,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _StopPlaytimeTracking( IntPtr self, [In,Out] PublishedFileId[]  pvecPublishedFileID, uint unNumPublishedFileIDs );
 		
 		#endregion
-		internal CallbackResult StopPlaytimeTracking( [In,Out] PublishedFileId[]  pvecPublishedFileID, uint unNumPublishedFileIDs )
+		internal CallbackResult<StopPlaytimeTrackingResult_t> StopPlaytimeTracking( [In,Out] PublishedFileId[]  pvecPublishedFileID, uint unNumPublishedFileIDs )
 		{
 			var returnValue = _StopPlaytimeTracking( Self, pvecPublishedFileID, unNumPublishedFileIDs );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<StopPlaytimeTrackingResult_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -833,10 +833,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _StopPlaytimeTrackingForAllItems( IntPtr self );
 		
 		#endregion
-		internal CallbackResult StopPlaytimeTrackingForAllItems()
+		internal CallbackResult<StopPlaytimeTrackingResult_t> StopPlaytimeTrackingForAllItems()
 		{
 			var returnValue = _StopPlaytimeTrackingForAllItems( Self );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<StopPlaytimeTrackingResult_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -844,10 +844,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _AddDependency( IntPtr self, PublishedFileId nParentPublishedFileID, PublishedFileId nChildPublishedFileID );
 		
 		#endregion
-		internal CallbackResult AddDependency( PublishedFileId nParentPublishedFileID, PublishedFileId nChildPublishedFileID )
+		internal CallbackResult<AddUGCDependencyResult_t> AddDependency( PublishedFileId nParentPublishedFileID, PublishedFileId nChildPublishedFileID )
 		{
 			var returnValue = _AddDependency( Self, nParentPublishedFileID, nChildPublishedFileID );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<AddUGCDependencyResult_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -855,10 +855,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _RemoveDependency( IntPtr self, PublishedFileId nParentPublishedFileID, PublishedFileId nChildPublishedFileID );
 		
 		#endregion
-		internal CallbackResult RemoveDependency( PublishedFileId nParentPublishedFileID, PublishedFileId nChildPublishedFileID )
+		internal CallbackResult<RemoveUGCDependencyResult_t> RemoveDependency( PublishedFileId nParentPublishedFileID, PublishedFileId nChildPublishedFileID )
 		{
 			var returnValue = _RemoveDependency( Self, nParentPublishedFileID, nChildPublishedFileID );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<RemoveUGCDependencyResult_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -866,10 +866,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _AddAppDependency( IntPtr self, PublishedFileId nPublishedFileID, AppId nAppID );
 		
 		#endregion
-		internal CallbackResult AddAppDependency( PublishedFileId nPublishedFileID, AppId nAppID )
+		internal CallbackResult<AddAppDependencyResult_t> AddAppDependency( PublishedFileId nPublishedFileID, AppId nAppID )
 		{
 			var returnValue = _AddAppDependency( Self, nPublishedFileID, nAppID );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<AddAppDependencyResult_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -877,10 +877,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _RemoveAppDependency( IntPtr self, PublishedFileId nPublishedFileID, AppId nAppID );
 		
 		#endregion
-		internal CallbackResult RemoveAppDependency( PublishedFileId nPublishedFileID, AppId nAppID )
+		internal CallbackResult<RemoveAppDependencyResult_t> RemoveAppDependency( PublishedFileId nPublishedFileID, AppId nAppID )
 		{
 			var returnValue = _RemoveAppDependency( Self, nPublishedFileID, nAppID );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<RemoveAppDependencyResult_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -888,10 +888,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _GetAppDependencies( IntPtr self, PublishedFileId nPublishedFileID );
 		
 		#endregion
-		internal CallbackResult GetAppDependencies( PublishedFileId nPublishedFileID )
+		internal CallbackResult<GetAppDependenciesResult_t> GetAppDependencies( PublishedFileId nPublishedFileID )
 		{
 			var returnValue = _GetAppDependencies( Self, nPublishedFileID );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<GetAppDependenciesResult_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -899,10 +899,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _DeleteItem( IntPtr self, PublishedFileId nPublishedFileID );
 		
 		#endregion
-		internal CallbackResult DeleteItem( PublishedFileId nPublishedFileID )
+		internal CallbackResult<DeleteItemResult_t> DeleteItem( PublishedFileId nPublishedFileID )
 		{
 			var returnValue = _DeleteItem( Self, nPublishedFileID );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<DeleteItemResult_t>( returnValue );
 		}
 		
 	}

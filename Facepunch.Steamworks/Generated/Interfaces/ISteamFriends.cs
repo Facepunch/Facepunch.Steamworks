@@ -27,10 +27,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _SetPersonaName( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPersonaName );
 		
 		#endregion
-		internal CallbackResult SetPersonaName( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPersonaName )
+		internal CallbackResult<SetPersonaNameResponse_t> SetPersonaName( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPersonaName )
 		{
 			var returnValue = _SetPersonaName( Self, pchPersonaName );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<SetPersonaNameResponse_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -271,10 +271,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _DownloadClanActivityCounts( IntPtr self, [In,Out] SteamId[]  psteamIDClans, int cClansToRequest );
 		
 		#endregion
-		internal CallbackResult DownloadClanActivityCounts( [In,Out] SteamId[]  psteamIDClans, int cClansToRequest )
+		internal CallbackResult<DownloadClanActivityCountsResult_t> DownloadClanActivityCounts( [In,Out] SteamId[]  psteamIDClans, int cClansToRequest )
 		{
 			var returnValue = _DownloadClanActivityCounts( Self, psteamIDClans, cClansToRequest );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<DownloadClanActivityCountsResult_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -431,10 +431,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _RequestClanOfficerList( IntPtr self, SteamId steamIDClan );
 		
 		#endregion
-		internal CallbackResult RequestClanOfficerList( SteamId steamIDClan )
+		internal CallbackResult<ClanOfficerListResponse_t> RequestClanOfficerList( SteamId steamIDClan )
 		{
 			var returnValue = _RequestClanOfficerList( Self, steamIDClan );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<ClanOfficerListResponse_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -607,10 +607,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _JoinClanChatRoom( IntPtr self, SteamId steamIDClan );
 		
 		#endregion
-		internal CallbackResult JoinClanChatRoom( SteamId steamIDClan )
+		internal CallbackResult<JoinClanChatRoomCompletionResult_t> JoinClanChatRoom( SteamId steamIDClan )
 		{
 			var returnValue = _JoinClanChatRoom( Self, steamIDClan );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<JoinClanChatRoomCompletionResult_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -758,10 +758,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _GetFollowerCount( IntPtr self, SteamId steamID );
 		
 		#endregion
-		internal CallbackResult GetFollowerCount( SteamId steamID )
+		internal CallbackResult<FriendsGetFollowerCount_t> GetFollowerCount( SteamId steamID )
 		{
 			var returnValue = _GetFollowerCount( Self, steamID );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<FriendsGetFollowerCount_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -769,10 +769,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _IsFollowing( IntPtr self, SteamId steamID );
 		
 		#endregion
-		internal CallbackResult IsFollowing( SteamId steamID )
+		internal CallbackResult<FriendsIsFollowing_t> IsFollowing( SteamId steamID )
 		{
 			var returnValue = _IsFollowing( Self, steamID );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<FriendsIsFollowing_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -780,10 +780,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _EnumerateFollowingList( IntPtr self, uint unStartIndex );
 		
 		#endregion
-		internal CallbackResult EnumerateFollowingList( uint unStartIndex )
+		internal CallbackResult<FriendsEnumerateFollowingList_t> EnumerateFollowingList( uint unStartIndex )
 		{
 			var returnValue = _EnumerateFollowingList( Self, unStartIndex );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<FriendsEnumerateFollowingList_t>( returnValue );
 		}
 		
 		#region FunctionMeta

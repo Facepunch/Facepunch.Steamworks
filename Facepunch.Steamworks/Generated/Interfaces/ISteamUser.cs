@@ -234,10 +234,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _RequestEncryptedAppTicket( IntPtr self, IntPtr pDataToInclude, int cbDataToInclude );
 		
 		#endregion
-		internal CallbackResult RequestEncryptedAppTicket( IntPtr pDataToInclude, int cbDataToInclude )
+		internal CallbackResult<EncryptedAppTicketResponse_t> RequestEncryptedAppTicket( IntPtr pDataToInclude, int cbDataToInclude )
 		{
 			var returnValue = _RequestEncryptedAppTicket( Self, pDataToInclude, cbDataToInclude );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<EncryptedAppTicketResponse_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -279,10 +279,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _RequestStoreAuthURL( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchRedirectURL );
 		
 		#endregion
-		internal CallbackResult RequestStoreAuthURL( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchRedirectURL )
+		internal CallbackResult<StoreAuthURLResponse_t> RequestStoreAuthURL( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchRedirectURL )
 		{
 			var returnValue = _RequestStoreAuthURL( Self, pchRedirectURL );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<StoreAuthURLResponse_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -338,10 +338,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _GetMarketEligibility( IntPtr self );
 		
 		#endregion
-		internal CallbackResult GetMarketEligibility()
+		internal CallbackResult<MarketEligibilityResponse_t> GetMarketEligibility()
 		{
 			var returnValue = _GetMarketEligibility( Self );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<MarketEligibilityResponse_t>( returnValue );
 		}
 		
 	}

@@ -136,7 +136,7 @@ namespace Steamworks.Ugc
 
 			ApplyConstraints( handle );
 
-			var result = await SteamUGC.Internal.SendQueryUGCRequest( handle ).GetAsync<SteamUGCQueryCompleted_t>();
+			var result = await SteamUGC.Internal.SendQueryUGCRequest( handle );
 			if ( !result.HasValue )
 				return null;
 

@@ -51,7 +51,7 @@ namespace Steamworks.Data
 
 		public async Task<long[]> GetGlobalIntDaysAsync( int days )
 		{
-			var result = await SteamUserStats.Internal.RequestGlobalStats( days ).GetAsync<GlobalStatsReceived_t>();
+			var result = await SteamUserStats.Internal.RequestGlobalStats( days );
 			if ( result?.Result != Result.OK  ) return null;
 
 			var r = new long[days];
@@ -66,7 +66,7 @@ namespace Steamworks.Data
 
 		public async Task<double[]> GetGlobalFloatDays( int days )
 		{
-			var result = await SteamUserStats.Internal.RequestGlobalStats( days ).GetAsync<GlobalStatsReceived_t>();
+			var result = await SteamUserStats.Internal.RequestGlobalStats( days );
 			if ( result?.Result != Result.OK ) return null;
 
 			var r = new double[days];

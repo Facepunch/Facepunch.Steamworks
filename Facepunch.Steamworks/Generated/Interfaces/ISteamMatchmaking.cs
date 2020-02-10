@@ -62,10 +62,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _RequestLobbyList( IntPtr self );
 		
 		#endregion
-		internal CallbackResult RequestLobbyList()
+		internal CallbackResult<LobbyMatchList_t> RequestLobbyList()
 		{
 			var returnValue = _RequestLobbyList( Self );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<LobbyMatchList_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -154,10 +154,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _CreateLobby( IntPtr self, LobbyType eLobbyType, int cMaxMembers );
 		
 		#endregion
-		internal CallbackResult CreateLobby( LobbyType eLobbyType, int cMaxMembers )
+		internal CallbackResult<LobbyCreated_t> CreateLobby( LobbyType eLobbyType, int cMaxMembers )
 		{
 			var returnValue = _CreateLobby( Self, eLobbyType, cMaxMembers );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<LobbyCreated_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -165,10 +165,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _JoinLobby( IntPtr self, SteamId steamIDLobby );
 		
 		#endregion
-		internal CallbackResult JoinLobby( SteamId steamIDLobby )
+		internal CallbackResult<LobbyEnter_t> JoinLobby( SteamId steamIDLobby )
 		{
 			var returnValue = _JoinLobby( Self, steamIDLobby );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<LobbyEnter_t>( returnValue );
 		}
 		
 		#region FunctionMeta

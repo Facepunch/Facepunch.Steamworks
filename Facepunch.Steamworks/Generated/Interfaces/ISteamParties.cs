@@ -52,10 +52,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _JoinParty( IntPtr self, PartyBeaconID_t ulBeaconID );
 		
 		#endregion
-		internal CallbackResult JoinParty( PartyBeaconID_t ulBeaconID )
+		internal CallbackResult<JoinPartyCallback_t> JoinParty( PartyBeaconID_t ulBeaconID )
 		{
 			var returnValue = _JoinParty( Self, ulBeaconID );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<JoinPartyCallback_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -87,10 +87,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _CreateBeacon( IntPtr self, uint unOpenSlots, ref SteamPartyBeaconLocation_t pBeaconLocation, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchConnectString, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchMetadata );
 		
 		#endregion
-		internal CallbackResult CreateBeacon( uint unOpenSlots,  /* ref */ SteamPartyBeaconLocation_t pBeaconLocation, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchConnectString, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchMetadata )
+		internal CallbackResult<CreateBeaconCallback_t> CreateBeacon( uint unOpenSlots,  /* ref */ SteamPartyBeaconLocation_t pBeaconLocation, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchConnectString, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchMetadata )
 		{
 			var returnValue = _CreateBeacon( Self, unOpenSlots, ref pBeaconLocation, pchConnectString, pchMetadata );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<CreateBeaconCallback_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -118,10 +118,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _ChangeNumOpenSlots( IntPtr self, PartyBeaconID_t ulBeacon, uint unOpenSlots );
 		
 		#endregion
-		internal CallbackResult ChangeNumOpenSlots( PartyBeaconID_t ulBeacon, uint unOpenSlots )
+		internal CallbackResult<ChangeNumOpenSlotsCallback_t> ChangeNumOpenSlots( PartyBeaconID_t ulBeacon, uint unOpenSlots )
 		{
 			var returnValue = _ChangeNumOpenSlots( Self, ulBeacon, unOpenSlots );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<ChangeNumOpenSlotsCallback_t>( returnValue );
 		}
 		
 		#region FunctionMeta

@@ -48,7 +48,7 @@ namespace Generator
 		}
 		private void WriteFunction( SteamApiDefinition.MethodDef func )
 		{
-			var returnType = BaseType.Parse( func.ReturnType );
+			var returnType = BaseType.Parse( func.ReturnType, null, func.CallResult );
 			returnType.Func = func.Name;
 
 			if ( func.Params == null )

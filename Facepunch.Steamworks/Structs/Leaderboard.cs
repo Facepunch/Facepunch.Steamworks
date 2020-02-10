@@ -28,7 +28,7 @@ namespace Steamworks.Data
 		{
 			if ( details == null ) details = noDetails;
 
-			var r = await SteamUserStats.Internal.UploadLeaderboardScore( Id, LeaderboardUploadScoreMethod.ForceUpdate, score, details, details.Length ).GetAsync<LeaderboardScoreUploaded_t>();
+			var r = await SteamUserStats.Internal.UploadLeaderboardScore( Id, LeaderboardUploadScoreMethod.ForceUpdate, score, details, details.Length );
 			if ( !r.HasValue ) return null;
 
 			return LeaderboardUpdate.From( r.Value );
@@ -41,7 +41,7 @@ namespace Steamworks.Data
 		{
 			if ( details == null ) details = noDetails;
 
-			var r = await SteamUserStats.Internal.UploadLeaderboardScore( Id, LeaderboardUploadScoreMethod.KeepBest, score, details, details.Length ).GetAsync<LeaderboardScoreUploaded_t>();
+			var r = await SteamUserStats.Internal.UploadLeaderboardScore( Id, LeaderboardUploadScoreMethod.KeepBest, score, details, details.Length );
 			if ( !r.HasValue ) return null;
 
 			return LeaderboardUpdate.From( r.Value );
@@ -52,7 +52,7 @@ namespace Steamworks.Data
 		/// </summary>
 		public async Task<Result> AttachUgc( Ugc file )
 		{
-			var r = await SteamUserStats.Internal.AttachLeaderboardUGC( Id, file.Handle ).GetAsync<LeaderboardUGCSet_t>();
+			var r = await SteamUserStats.Internal.AttachLeaderboardUGC( Id, file.Handle );
 			if ( !r.HasValue ) return Result.Fail;
 
 			return r.Value.Result;
@@ -65,7 +65,7 @@ namespace Steamworks.Data
 		{
 			if ( offset <= 0 ) throw new System.ArgumentException( "Should be 1+", nameof( offset ) );
 
-			var r = await SteamUserStats.Internal.DownloadLeaderboardEntries( Id, LeaderboardDataRequest.Global, offset, offset + count ).GetAsync<LeaderboardScoresDownloaded_t>();
+			var r = await SteamUserStats.Internal.DownloadLeaderboardEntries( Id, LeaderboardDataRequest.Global, offset, offset + count );
 			if ( !r.HasValue )
 				return null;
 
@@ -80,7 +80,7 @@ namespace Steamworks.Data
 		/// </summary>
 		public async Task<LeaderboardEntry[]> GetScoresAroundUserAsync( int start = -10, int end = 10 )
 		{
-			var r = await SteamUserStats.Internal.DownloadLeaderboardEntries( Id, LeaderboardDataRequest.GlobalAroundUser, start, end ).GetAsync<LeaderboardScoresDownloaded_t>();
+			var r = await SteamUserStats.Internal.DownloadLeaderboardEntries( Id, LeaderboardDataRequest.GlobalAroundUser, start, end );
 			if ( !r.HasValue )
 				return null;
 
@@ -92,7 +92,7 @@ namespace Steamworks.Data
 		/// </summary>
 		public async Task<LeaderboardEntry[]> GetScoresFromFriendsAsync()
 		{
-			var r = await SteamUserStats.Internal.DownloadLeaderboardEntries( Id, LeaderboardDataRequest.Friends, 0, 0 ).GetAsync<LeaderboardScoresDownloaded_t>();
+			var r = await SteamUserStats.Internal.DownloadLeaderboardEntries( Id, LeaderboardDataRequest.Friends, 0, 0 );
 			if ( !r.HasValue )
 				return null;
 

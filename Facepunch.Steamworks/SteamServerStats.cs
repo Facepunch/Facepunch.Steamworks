@@ -24,7 +24,7 @@ namespace Steamworks
 		/// </summary>
 		public static async Task<Result> RequestUserStats( SteamId steamid )
 		{
-			var r = await Internal.RequestUserStats( steamid ).GetAsync<UserStatsReceived_t>();
+			var r = await Internal.RequestUserStats( steamid );
 			if ( !r.HasValue ) return Result.Fail;
 			return r.Value.Result;
 		}
@@ -115,7 +115,7 @@ namespace Steamworks
 		/// </summary>
 		public static async Task<Result> StoreUserStats( SteamId steamid )
 		{
-			var r = await Internal.StoreUserStats( steamid ).GetAsync<UserStatsStored_t>();
+			var r = await Internal.StoreUserStats( steamid );
 			if ( !r.HasValue ) return Result.Fail;
 			return r.Value.Result;
 		}

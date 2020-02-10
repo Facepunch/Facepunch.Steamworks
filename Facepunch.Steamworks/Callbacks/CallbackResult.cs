@@ -1,15 +1,13 @@
 ﻿using Steamworks.Data;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace Steamworks
 {
-	//
-	// Created on registration of a callback
-	//
-	internal struct CallbackResult 
+	internal struct CallbackResult<T> : INotifyCompletion where T : struct, ICallbackData
 	{
 		SteamAPICall_t call;
 
@@ -18,19 +16,18 @@ namespace Steamworks
 			this.call = call;
 		}
 
-		public async Task<T?> GetAsync<T>() where T : struct, ICallbackData
+		public void OnCompleted( Action continuation )
 		{
-			bool failed = false;
+			throw new NotImplementedException();
+		}
+
+		public T? GetResult()
+		{
+			if ( !SteamUtils.IsCallComplete( call, out var failed ) || failed )
+				return null;
+
 			var t = default( T );
 			var size = t.DataSize;
-
-			while ( !SteamUtils.IsCallComplete( call, out failed ) )
-			{
-				await Task.Delay( 1 );
-				if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;
-			}
-			if ( failed ) return null;
-
 			var ptr = Marshal.AllocHGlobal( size );
 
 			try
@@ -46,5 +43,20 @@ namespace Steamworks
 			}
 		}
 
+		public bool IsCompleted
+		{
+			get
+			{
+				if ( SteamUtils.IsCallComplete( call, out var failed ) || failed )
+					return true;
+
+				return false;
+			}
+		}
+
+		internal CallbackResult<T> GetAwaiter()
+		{
+			return this;
+		}
 	}
 }
