@@ -9,14 +9,7 @@ namespace Steamworks
 {
 	internal class ISteamScreenshots : SteamInterface
 	{
-		public override void InitInternals()
-		{
-		}
-		internal override void Shutdown()
-		{
-			base.Shutdown();
-			
-		}
+		public override IntPtr GetInterfacePointer() => GetApi.SteamScreenshots();
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamScreenshots_WriteScreenshot")]

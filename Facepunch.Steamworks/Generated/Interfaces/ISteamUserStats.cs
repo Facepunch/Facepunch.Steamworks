@@ -9,14 +9,7 @@ namespace Steamworks
 {
 	internal class ISteamUserStats : SteamInterface
 	{
-		public override void InitInternals()
-		{
-		}
-		internal override void Shutdown()
-		{
-			base.Shutdown();
-			
-		}
+		public override IntPtr GetInterfacePointer() => GetApi.SteamUserStats();
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUserStats_RequestCurrentStats")]

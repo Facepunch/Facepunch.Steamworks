@@ -7,26 +7,14 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	public static class SteamServerStats
+	public class SteamServerStats : SteamClass
 	{
-		static ISteamGameServerStats _internal;
-		internal static ISteamGameServerStats Internal
-		{
-			get
-			{
-				if ( _internal == null )
-				{
-					_internal = new ISteamGameServerStats();
-					_internal.InitServer();
-				}
+		internal static ISteamGameServerStats Internal;
+		internal override SteamInterface Interface => Internal;
 
-				return _internal;
-			}
-		}
-
-		internal static void Shutdown()
+		internal override void InitializeInterface()
 		{
-			_internal = null;
+			Internal = new ISteamGameServerStats();
 		}
 
 		/// <summary>
@@ -36,7 +24,7 @@ namespace Steamworks
 		/// </summary>
 		public static async Task<Result> RequestUserStats( SteamId steamid )
 		{
-			var r = await Internal.RequestUserStats( steamid );
+			var r = await Internal.RequestUserStats( steamid ).GetAsync<UserStatsReceived_t>();
 			if ( !r.HasValue ) return Result.Fail;
 			return r.Value.Result;
 		}
@@ -56,7 +44,7 @@ namespace Steamworks
 		/// </summary>
 		public static bool SetFloat( SteamId steamid, string name, float stat )
 		{
-			return Internal.SetUserStat( steamid, name, stat );
+			return Internal.SetUserStat0( steamid, name, stat );
 		}
 
 		/// <summary>
@@ -68,7 +56,7 @@ namespace Steamworks
 		{
 			int data = defaultValue;
 
-			if ( !Internal.GetUserStat1( steamid, name, ref data ) )
+			if ( !Internal.GetUserStat( steamid, name, ref data ) )
 				return defaultValue;
 
 			return data;
@@ -83,7 +71,7 @@ namespace Steamworks
 		{
 			float data = defaultValue;
 
-			if ( !Internal.GetUserStat2( steamid, name, ref data ) )
+			if ( !Internal.GetUserStat0( steamid, name, ref data ) )
 				return defaultValue;
 
 			return data;
@@ -127,7 +115,7 @@ namespace Steamworks
 		/// </summary>
 		public static async Task<Result> StoreUserStats( SteamId steamid )
 		{
-			var r = await Internal.StoreUserStats( steamid );
+			var r = await Internal.StoreUserStats( steamid ).GetAsync<UserStatsStored_t>();
 			if ( !r.HasValue ) return Result.Fail;
 			return r.Value.Result;
 		}

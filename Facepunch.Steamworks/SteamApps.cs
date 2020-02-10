@@ -11,27 +11,16 @@ namespace Steamworks
 	/// <summary>
 	/// Exposes a wide range of information and actions for applications and Downloadable Content (DLC).
 	/// </summary>
-	public static class SteamApps
+	public class SteamApps : SteamClass
 	{
-		static ISteamApps _internal;
-		internal static ISteamApps Internal
-		{
-			get
-			{
-				if ( _internal == null )
-				{
-					_internal = new ISteamApps();
-					_internal.Init();
-				}
+		internal static ISteamApps Internal;
+		internal override SteamInterface Interface => Internal;
 
-				return _internal;
-			}
-		}
-
-		internal static void Shutdown()
+		internal override void InitializeInterface()
 		{
-			_internal = null;
+			Internal = new ISteamApps();
 		}
+		
 
 		internal static void InstallEvents()
 		{

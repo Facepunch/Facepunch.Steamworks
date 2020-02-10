@@ -9,14 +9,7 @@ namespace Steamworks
 {
 	internal class ISteamNetworking : SteamInterface
 	{
-		public override void InitInternals()
-		{
-		}
-		internal override void Shutdown()
-		{
-			base.Shutdown();
-			
-		}
+		public override IntPtr GetInterfacePointer() => GetApi.SteamNetworking();
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_SendP2PPacket")]

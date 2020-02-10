@@ -9,14 +9,7 @@ namespace Steamworks
 {
 	internal class ISteamNetworkingSockets : SteamInterface
 	{
-		public override void InitInternals()
-		{
-		}
-		internal override void Shutdown()
-		{
-			base.Shutdown();
-			
-		}
+		public override IntPtr GetInterfacePointer() => GetApi.SteamNetworkingSockets();
 		
 	}
 }

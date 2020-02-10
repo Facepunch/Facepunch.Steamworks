@@ -9,14 +9,7 @@ namespace Steamworks
 {
 	internal class ISteamMusic : SteamInterface
 	{
-		public override void InitInternals()
-		{
-		}
-		internal override void Shutdown()
-		{
-			base.Shutdown();
-			
-		}
+		public override IntPtr GetInterfacePointer() => GetApi.SteamMusic();
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMusic_BIsEnabled")]

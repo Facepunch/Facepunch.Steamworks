@@ -10,36 +10,24 @@ namespace Steamworks
 	/// <summary>
 	/// Functions for clients to access matchmaking services, favorites, and to operate on game lobbies
 	/// </summary>
-	public static class SteamMatchmaking
+	public class SteamMatchmaking : SteamClass
 	{
+		internal static ISteamMatchmaking Internal;
+		internal override SteamInterface Interface => Internal;
+
+		internal override void InitializeInterface()
+		{
+			Internal = new ISteamMatchmaking();
+
+			InstallEvents();
+		}
+
+	
 		/// <summary>
 		/// Maximum number of characters a lobby metadata key can be
 		/// </summary>
 		internal static int MaxLobbyKeyLength => 255;
 
-
-		static ISteamMatchmaking _internal;
-
-		internal static ISteamMatchmaking Internal
-		{
-			get
-			{
-				SteamClient.ValidCheck();
-
-				if ( _internal == null )
-				{
-					_internal = new ISteamMatchmaking();
-					_internal.Init();
-				}
-
-				return _internal;
-			}
-		}
-
-		internal static void Shutdown()
-		{
-			_internal = null;
-		}
 
 		internal static void InstallEvents()
 		{

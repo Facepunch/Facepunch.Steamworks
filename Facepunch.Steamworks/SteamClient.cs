@@ -29,22 +29,24 @@ namespace Steamworks
 
 			initialized = true;
 
-			SteamApps.InstallEvents();
-			SteamUtils.InstallEvents();
-			SteamParental.InstallEvents();
-			SteamMusic.InstallEvents();
-			SteamVideo.InstallEvents();
-			SteamUser.InstallEvents();
-			SteamFriends.InstallEvents();
-			SteamScreenshots.InstallEvents();
-			SteamUserStats.InstallEvents();
-			SteamInventory.InstallEvents();
-			SteamNetworking.InstallEvents();
-			SteamMatchmaking.InstallEvents();
-			SteamParties.InstallEvents();
-			SteamNetworkingSockets.InstallEvents();
-			SteamInput.InstallEvents();
-			SteamUGC.InstallEvents();
+			AddInterface<SteamApps>();
+			AddInterface<SteamFriends>();
+			AddInterface<SteamInput>();
+			AddInterface<SteamInventory>();
+			AddInterface<SteamMatchmaking>();
+			AddInterface<SteamMusic>();
+			AddInterface<SteamNetworking>();
+			AddInterface<SteamNetworkingSockets>();
+			AddInterface<SteamNetworkingUtils>();
+			AddInterface<SteamParental>();
+			AddInterface<SteamParties>();
+			AddInterface<SteamRemoteStorage>();
+			AddInterface<SteamScreenshots>();
+			AddInterface<SteamUGC>();
+			AddInterface<SteamUser>();
+			AddInterface<SteamUserStats>();
+			AddInterface<SteamUtils>();
+			AddInterface<SteamVideo>();
 
 			if ( asyncCallbacks )
 			{
@@ -52,24 +54,29 @@ namespace Steamworks
 			}
 		}
 
-		static List<SteamInterface> openIterfaces = new List<SteamInterface>();
+		internal static void AddInterface<T>() where T : SteamClass, new()
+		{
+			var t = new T();
+		}
+
+		static List<SteamInterface> openInterfaces = new List<SteamInterface>();
 
 		internal static void WatchInterface( SteamInterface steamInterface )
 		{
-			if ( openIterfaces.Contains( steamInterface ) )
+			if ( openInterfaces.Contains( steamInterface ) )
 				throw new System.Exception( "openIterfaces already contains interface!" );
 
-			openIterfaces.Add( steamInterface );
+			openInterfaces.Add( steamInterface );
 		}
 
 		internal static void ShutdownInterfaces()
 		{
-			foreach ( var e in openIterfaces )
+			foreach ( var e in openInterfaces )
 			{
-				e.Shutdown();
+				e.ShutdownInterface();
 			}
 
-			openIterfaces.Clear();
+			openInterfaces.Clear();
 		}
 
 		public static Action<Exception> OnCallbackException;
@@ -97,8 +104,6 @@ namespace Steamworks
 		{
 			if ( !IsValid ) return;
 
-			SteamInput.Shutdown();
-
 			Cleanup();
 
 			SteamAPI.Shutdown();
@@ -111,22 +116,6 @@ namespace Steamworks
 			Event.DisposeAllClient();
 			ShutdownInterfaces();
 
-			SteamInput.Shutdown();
-			SteamApps.Shutdown();
-			SteamUtils.Shutdown();
-			SteamParental.Shutdown();
-			SteamMusic.Shutdown();
-			SteamVideo.Shutdown();
-			SteamUser.Shutdown();
-			SteamFriends.Shutdown();
-			SteamScreenshots.Shutdown();
-			SteamUserStats.Shutdown();
-			SteamInventory.Shutdown();
-			SteamNetworking.Shutdown();
-			SteamMatchmaking.Shutdown();
-			SteamParties.Shutdown();
-			SteamNetworkingUtils.Shutdown();
-			SteamNetworkingSockets.Shutdown();
 			ServerList.Base.Shutdown();
 		}
 

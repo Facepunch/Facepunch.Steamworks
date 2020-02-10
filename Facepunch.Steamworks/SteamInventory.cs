@@ -12,27 +12,18 @@ namespace Steamworks
 	/// <summary>
 	/// Undocumented Parental Settings
 	/// </summary>
-	public static class SteamInventory
+	public class SteamInventory : SteamClass
 	{
-		static ISteamInventory _internal;
-		internal static ISteamInventory Internal
-		{
-			get
-			{
-				if ( _internal == null )
-				{ 
-					_internal = new ISteamInventory();
-					_internal.Init();
-				}
+		internal static ISteamInventory Internal;
+		internal override SteamInterface Interface => Internal;
 
-				return _internal;
-			}
-		}
-		internal static void Shutdown()
+		internal override void InitializeInterface()
 		{
-			_internal = null;
-		}
+			Internal = new ISteamInventory();
 
+			InstallEvents();
+		}
+	
 		internal static void InstallEvents()
 		{
 			SteamInventoryFullUpdate_t.Install( x => InventoryUpdated( x ) );

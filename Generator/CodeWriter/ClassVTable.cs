@@ -25,11 +25,7 @@ namespace Generator
 			{
 				StartBlock( $"internal class {className} : SteamInterface" );
 				{
-					//WriteLine( $"public override string InterfaceName => \"{clss.InterfaceString}\";" );
-					//WriteLine();
-
-					WriteFunctionPointerReader();
-
+					WriteLine( $"public override IntPtr GetInterfacePointer() => GetApi.{className.Substring( 1 )}();" );
 					WriteLine();
 
 					var functions = def.methods.Where( x => x.ClassName == className );
@@ -50,22 +46,6 @@ namespace Generator
 
 			System.IO.File.WriteAllText( $"{filename}", sb.ToString() );
 		}
-
-		void WriteFunctionPointerReader()
-		{
-			StartBlock( $"public override void InitInternals()" );
-			{
-			}
-			EndBlock();
-
-			StartBlock( $"internal override void Shutdown()" );
-			{
-				WriteLine( $"base.Shutdown();" );
-				WriteLine( "" );
-			}
-			EndBlock();
-		}
-
 		private void WriteFunction( SteamApiDefinition.MethodDef func )
 		{
 			var returnType = BaseType.Parse( func.ReturnType );

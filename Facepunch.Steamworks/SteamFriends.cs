@@ -10,29 +10,16 @@ namespace Steamworks
 	/// <summary>
 	/// Undocumented Parental Settings
 	/// </summary>
-	public static class SteamFriends
+	public class SteamFriends : SteamClass
 	{
-		static ISteamFriends _internal;
-		internal static ISteamFriends Internal
+		internal static ISteamFriends Internal;
+		internal override SteamInterface Interface => Internal;
+
+		internal override void InitializeInterface()
 		{
-			get
-			{
-				SteamClient.ValidCheck();
+			Internal = new ISteamFriends();
 
-				if ( _internal == null )
-				{
-					_internal = new ISteamFriends();
-					_internal.Init();
-
-					richPresence = new Dictionary<string, string>();
-				}
-
-				return _internal;
-			}
-		}
-		internal static void Shutdown()
-		{
-			_internal = null;
+			richPresence = new Dictionary<string, string>();
 		}
 
 		static Dictionary<string, string> richPresence;

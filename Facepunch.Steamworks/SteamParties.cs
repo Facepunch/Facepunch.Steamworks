@@ -7,25 +7,15 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	public static class SteamParties
+	public class SteamParties : SteamClass
 	{
-		static ISteamParties _internal;
-		internal static ISteamParties Internal
-		{
-			get
-			{
-				if ( _internal == null )
-				{
-					_internal = new ISteamParties();
-					_internal.Init();
-				}
+		internal static ISteamParties Internal;
+		internal override SteamInterface Interface => Internal;
 
-				return _internal;
-			}
-		}
-		internal static void Shutdown()
+		internal override void InitializeInterface()
 		{
-			_internal = null;
+			Internal = new ISteamParties();
+			InstallEvents();
 		}
 
 		internal static void InstallEvents()

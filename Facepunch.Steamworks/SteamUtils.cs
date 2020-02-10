@@ -10,26 +10,16 @@ namespace Steamworks
 	/// <summary>
 	/// Interface which provides access to a range of miscellaneous utility functions
 	/// </summary>
-	public static class SteamUtils
+	public class SteamUtils : SteamClass
 	{
-		static ISteamUtils _internal;
-		internal static ISteamUtils Internal
-		{
-			get
-			{
-				if ( _internal == null )
-				{
-					_internal = new ISteamUtils();
-					_internal.Init();
-				}
+		internal static ISteamUtils Internal;
+		internal override SteamInterface Interface => Internal;
 
-				return _internal;
-			}
-		}
-
-		internal static void Shutdown()
+		internal override void InitializeInterface()
 		{
-			_internal = null;
+			Internal = new ISteamUtils();
+
+			InstallEvents();
 		}
 
 		internal static void InstallEvents()

@@ -10,26 +10,14 @@ namespace Steamworks
 	/// <summary>
 	/// Undocumented Parental Settings
 	/// </summary>
-	public static class SteamNetworkingUtils
+	public class SteamNetworkingUtils : SteamClass
 	{
-		static ISteamNetworkingUtils _internal;
-		internal static ISteamNetworkingUtils Internal
-		{
-			get
-			{
-				if ( _internal == null )
-				{
-					_internal = new ISteamNetworkingUtils();
-					_internal.InitUserless();
-				}
+		internal static ISteamNetworkingUtils Internal;
+		internal override SteamInterface Interface => Internal;
 
-				return _internal;
-			}
-		}
-
-		internal static void Shutdown()
+		internal override void InitializeInterface()
 		{
-			_internal = null;
+			Internal = new ISteamNetworkingUtils();
 		}
 
 		/// <summary>

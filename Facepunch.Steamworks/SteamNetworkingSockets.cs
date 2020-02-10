@@ -8,24 +8,19 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	public static class SteamNetworkingSockets
+	public class SteamNetworkingSockets : SteamClass
 	{
-		static ISteamNetworkingSockets _internal;
-		internal static ISteamNetworkingSockets Internal
+		internal static ISteamNetworkingSockets Internal;
+		internal override SteamInterface Interface => Internal;
+
+		internal override void InitializeInterface()
 		{
-			get
-			{
-				if ( _internal == null )
-				{
-					_internal = new ISteamNetworkingSockets();
-					_internal.Init();
+			Internal = new ISteamNetworkingSockets();
 
-					SocketInterfaces = new Dictionary<uint, SocketInterface>();
-					ConnectionInterfaces = new Dictionary<uint, ConnectionInterface>();
-				}
+			SocketInterfaces = new Dictionary<uint, SocketInterface>();
+			ConnectionInterfaces = new Dictionary<uint, ConnectionInterface>();
 
-				return _internal;
-			}
+			InstallEvents();
 		}
 
 		#region SocketInterface
@@ -73,13 +68,6 @@ namespace Steamworks
 			ConnectionInterfaces[id] = iface;
 		}
 		#endregion
-
-		internal static void Shutdown()
-		{
-			_internal = null;
-			SocketInterfaces = null;
-			ConnectionInterfaces = null;
-		}
 
 		internal static void InstallEvents( bool server = false )
 		{

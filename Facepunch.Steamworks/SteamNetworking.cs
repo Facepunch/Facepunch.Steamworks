@@ -8,26 +8,16 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	public static class SteamNetworking
+	public class SteamNetworking : SteamClass
 	{
-		static ISteamNetworking _internal;
-		internal static ISteamNetworking Internal
-		{
-			get
-			{
-				if ( _internal == null )
-				{
-					_internal = new ISteamNetworking();
-					_internal.Init();
-				}
+		internal static ISteamNetworking Internal;
+		internal override SteamInterface Interface => Internal;
 
-				return _internal;
-			}
-		}
-
-		internal static void Shutdown()
+		internal override void InitializeInterface()
 		{
-			_internal = null;
+			Internal = new ISteamNetworking();
+
+			InstallEvents();
 		}
 
 		internal static void InstallEvents()

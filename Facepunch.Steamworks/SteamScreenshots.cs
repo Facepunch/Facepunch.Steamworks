@@ -10,27 +10,15 @@ namespace Steamworks
 	/// <summary>
 	/// Undocumented Parental Settings
 	/// </summary>
-	public static class SteamScreenshots
+	public class SteamScreenshots : SteamClass
 	{
-		static ISteamScreenshots _internal;
-		internal static ISteamScreenshots Internal
-		{
-			get
-			{
-				SteamClient.ValidCheck();
+		internal static ISteamScreenshots Internal;
+		internal override SteamInterface Interface => Internal;
 
-				if ( _internal == null )
-				{
-					_internal = new ISteamScreenshots();
-					_internal.Init();
-				}
-
-				return _internal;
-			}
-		}
-		internal static void Shutdown()
+		internal override void InitializeInterface()
 		{
-			_internal = null;
+			Internal = new ISteamScreenshots();
+			InstallEvents();
 		}
 
 		internal static void InstallEvents()

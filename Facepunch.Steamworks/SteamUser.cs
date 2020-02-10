@@ -13,31 +13,18 @@ namespace Steamworks
 	/// Functions for accessing and manipulating Steam user information.
 	/// This is also where the APIs for Steam Voice are exposed.
 	/// </summary>
-	public static class SteamUser
+	public class SteamUser : SteamClass
 	{
-		static ISteamUser _internal;
-		internal static ISteamUser Internal
+		internal static ISteamUser Internal;
+		internal override SteamInterface Interface => Internal;
+
+		internal override void InitializeInterface()
 		{
-			get
-			{
-				SteamClient.ValidCheck();
+			Internal = new ISteamUser();
+			InstallEvents();
 
-				if ( _internal == null )
-				{
-					_internal = new ISteamUser();
-					_internal.Init();
-
-					richPresence = new Dictionary<string, string>();
-
-					SampleRate = OptimalSampleRate;
-				}
-
-				return _internal;
-			}
-		}
-		internal static void Shutdown()
-		{
-			_internal = null;
+			richPresence = new Dictionary<string, string>();
+			SampleRate = OptimalSampleRate;
 		}
 
 		static Dictionary<string, string> richPresence;

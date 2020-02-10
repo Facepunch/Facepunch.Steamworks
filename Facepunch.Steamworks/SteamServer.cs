@@ -144,12 +144,6 @@ namespace Steamworks
 			_internal = null;
 
 			ShutdownInterfaces();
-			SteamNetworkingUtils.Shutdown();
-			SteamNetworkingSockets.Shutdown();
-			SteamInventory.Shutdown();
-
-			SteamServerStats.Shutdown();
-
 			SteamGameServer.Shutdown();
 		}
 

@@ -7,29 +7,17 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	public static class SteamUserStats
+	public class SteamUserStats : SteamClass
 	{
-		static ISteamUserStats _internal;
-		internal static ISteamUserStats Internal
+		internal static ISteamUserStats Internal;
+		internal override SteamInterface Interface => Internal;
+
+		internal override void InitializeInterface()
 		{
-			get
-			{
-				SteamClient.ValidCheck();
+			Internal = new ISteamUserStats();
 
-				if ( _internal == null )
-				{
-					_internal = new ISteamUserStats();
-					_internal.Init();
-
-					RequestCurrentStats();
-				}
-
-				return _internal;
-			}
-		}
-		internal static void Shutdown()
-		{
-			_internal = null;
+			InstallEvents();
+			RequestCurrentStats();
 		}
 
 		public static bool StatsRecieved { get; internal set; }
