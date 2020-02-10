@@ -42,7 +42,7 @@ namespace Steamworks
 			FriendStateChange_t.Install( x => OnPersonaStateChange?.Invoke( new Friend( x.SteamID ) ) );
 			GameRichPresenceJoinRequested_t.Install( x => OnGameRichPresenceJoinRequested?.Invoke( new Friend( x.SteamIDFriend), x.ConnectUTF8() ) );
 			GameConnectedFriendChatMsg_t.Install( OnFriendChatMessage );
-			GameOverlayActivated_t.Install( x => OnGameOverlayActivated?.Invoke(x.Active == 0 ? false : true) );
+			GameOverlayActivated_t.Install( x => OnGameOverlayActivated?.Invoke( x.Active != 0 ) );
 			GameServerChangeRequested_t.Install( x => OnGameServerChangeRequested?.Invoke( x.ServerUTF8(), x.PasswordUTF8() ) );
 			GameLobbyJoinRequested_t.Install( x => OnGameLobbyJoinRequested?.Invoke( new Lobby( x.SteamIDLobby ), x.SteamIDFriend ) );
 			FriendRichPresenceUpdate_t.Install( x => OnFriendRichPresenceUpdate?.Invoke( new Friend( x.SteamIDFriend ) ) );
