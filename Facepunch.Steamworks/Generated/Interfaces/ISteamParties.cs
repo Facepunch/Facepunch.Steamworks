@@ -9,8 +9,6 @@ namespace Steamworks
 {
 	internal class ISteamParties : SteamInterface
 	{
-		public override string InterfaceName => "SteamParties002";
-		
 		public override void InitInternals()
 		{
 		}
@@ -21,9 +19,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate uint FGetNumActiveBeacons( IntPtr self );
-		private FGetNumActiveBeacons _GetNumActiveBeacons;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamParties_GetNumActiveBeacons")]
+		private static extern uint _GetNumActiveBeacons( IntPtr self );
 		
 		#endregion
 		internal uint GetNumActiveBeacons()
@@ -33,9 +30,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate PartyBeaconID_t FGetBeaconByIndex( IntPtr self, uint unIndex );
-		private FGetBeaconByIndex _GetBeaconByIndex;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamParties_GetBeaconByIndex")]
+		private static extern PartyBeaconID_t _GetBeaconByIndex( IntPtr self, uint unIndex );
 		
 		#endregion
 		internal PartyBeaconID_t GetBeaconByIndex( uint unIndex )
@@ -45,10 +41,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamParties_GetBeaconDetails")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetBeaconDetails( IntPtr self, PartyBeaconID_t ulBeaconID, ref SteamId pSteamIDBeaconOwner, ref SteamPartyBeaconLocation_t pLocation, IntPtr pchMetadata, int cchMetadata );
-		private FGetBeaconDetails _GetBeaconDetails;
+		private static extern bool _GetBeaconDetails( IntPtr self, PartyBeaconID_t ulBeaconID, ref SteamId pSteamIDBeaconOwner, ref SteamPartyBeaconLocation_t pLocation, IntPtr pchMetadata, int cchMetadata );
 		
 		#endregion
 		internal bool GetBeaconDetails( PartyBeaconID_t ulBeaconID, ref SteamId pSteamIDBeaconOwner, ref SteamPartyBeaconLocation_t pLocation, out string pchMetadata )
@@ -60,22 +55,20 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FJoinParty( IntPtr self, PartyBeaconID_t ulBeaconID );
-		private FJoinParty _JoinParty;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamParties_JoinParty")]
+		private static extern SteamAPICall_t _JoinParty( IntPtr self, PartyBeaconID_t ulBeaconID );
 		
 		#endregion
-		internal async Task<JoinPartyCallback_t?> JoinParty( PartyBeaconID_t ulBeaconID )
+		internal CallbackResult JoinParty( PartyBeaconID_t ulBeaconID )
 		{
 			var returnValue = _JoinParty( Self, ulBeaconID );
-			return await JoinPartyCallback_t.GetResultAsync( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamParties_GetNumAvailableBeaconLocations")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetNumAvailableBeaconLocations( IntPtr self, ref uint puNumLocations );
-		private FGetNumAvailableBeaconLocations _GetNumAvailableBeaconLocations;
+		private static extern bool _GetNumAvailableBeaconLocations( IntPtr self, ref uint puNumLocations );
 		
 		#endregion
 		internal bool GetNumAvailableBeaconLocations( ref uint puNumLocations )
@@ -85,10 +78,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamParties_GetAvailableBeaconLocations")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetAvailableBeaconLocations( IntPtr self, ref SteamPartyBeaconLocation_t pLocationList, uint uMaxNumLocations );
-		private FGetAvailableBeaconLocations _GetAvailableBeaconLocations;
+		private static extern bool _GetAvailableBeaconLocations( IntPtr self, ref SteamPartyBeaconLocation_t pLocationList, uint uMaxNumLocations );
 		
 		#endregion
 		internal bool GetAvailableBeaconLocations( ref SteamPartyBeaconLocation_t pLocationList, uint uMaxNumLocations )
@@ -98,21 +90,19 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FCreateBeacon( IntPtr self, uint unOpenSlots, ref SteamPartyBeaconLocation_t pBeaconLocation, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchConnectString, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchMetadata );
-		private FCreateBeacon _CreateBeacon;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamParties_CreateBeacon")]
+		private static extern SteamAPICall_t _CreateBeacon( IntPtr self, uint unOpenSlots, ref SteamPartyBeaconLocation_t pBeaconLocation, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchConnectString, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchMetadata );
 		
 		#endregion
-		internal async Task<CreateBeaconCallback_t?> CreateBeacon( uint unOpenSlots,  /* ref */ SteamPartyBeaconLocation_t pBeaconLocation, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchConnectString, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchMetadata )
+		internal CallbackResult CreateBeacon( uint unOpenSlots,  /* ref */ SteamPartyBeaconLocation_t pBeaconLocation, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchConnectString, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchMetadata )
 		{
 			var returnValue = _CreateBeacon( Self, unOpenSlots, ref pBeaconLocation, pchConnectString, pchMetadata );
-			return await CreateBeaconCallback_t.GetResultAsync( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FOnReservationCompleted( IntPtr self, PartyBeaconID_t ulBeacon, SteamId steamIDUser );
-		private FOnReservationCompleted _OnReservationCompleted;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamParties_OnReservationCompleted")]
+		private static extern void _OnReservationCompleted( IntPtr self, PartyBeaconID_t ulBeacon, SteamId steamIDUser );
 		
 		#endregion
 		internal void OnReservationCompleted( PartyBeaconID_t ulBeacon, SteamId steamIDUser )
@@ -121,9 +111,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FCancelReservation( IntPtr self, PartyBeaconID_t ulBeacon, SteamId steamIDUser );
-		private FCancelReservation _CancelReservation;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamParties_CancelReservation")]
+		private static extern void _CancelReservation( IntPtr self, PartyBeaconID_t ulBeacon, SteamId steamIDUser );
 		
 		#endregion
 		internal void CancelReservation( PartyBeaconID_t ulBeacon, SteamId steamIDUser )
@@ -132,22 +121,20 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FChangeNumOpenSlots( IntPtr self, PartyBeaconID_t ulBeacon, uint unOpenSlots );
-		private FChangeNumOpenSlots _ChangeNumOpenSlots;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamParties_ChangeNumOpenSlots")]
+		private static extern SteamAPICall_t _ChangeNumOpenSlots( IntPtr self, PartyBeaconID_t ulBeacon, uint unOpenSlots );
 		
 		#endregion
-		internal async Task<ChangeNumOpenSlotsCallback_t?> ChangeNumOpenSlots( PartyBeaconID_t ulBeacon, uint unOpenSlots )
+		internal CallbackResult ChangeNumOpenSlots( PartyBeaconID_t ulBeacon, uint unOpenSlots )
 		{
 			var returnValue = _ChangeNumOpenSlots( Self, ulBeacon, unOpenSlots );
-			return await ChangeNumOpenSlotsCallback_t.GetResultAsync( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamParties_DestroyBeacon")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FDestroyBeacon( IntPtr self, PartyBeaconID_t ulBeacon );
-		private FDestroyBeacon _DestroyBeacon;
+		private static extern bool _DestroyBeacon( IntPtr self, PartyBeaconID_t ulBeacon );
 		
 		#endregion
 		internal bool DestroyBeacon( PartyBeaconID_t ulBeacon )
@@ -157,10 +144,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamParties_GetBeaconLocationData")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetBeaconLocationData( IntPtr self, SteamPartyBeaconLocation_t BeaconLocation, SteamPartyBeaconLocationData eData, IntPtr pchDataStringOut, int cchDataStringOut );
-		private FGetBeaconLocationData _GetBeaconLocationData;
+		private static extern bool _GetBeaconLocationData( IntPtr self, SteamPartyBeaconLocation_t BeaconLocation, SteamPartyBeaconLocationData eData, IntPtr pchDataStringOut, int cchDataStringOut );
 		
 		#endregion
 		internal bool GetBeaconLocationData( SteamPartyBeaconLocation_t BeaconLocation, SteamPartyBeaconLocationData eData, out string pchDataStringOut )

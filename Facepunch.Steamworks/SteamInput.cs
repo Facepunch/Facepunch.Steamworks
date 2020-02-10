@@ -28,7 +28,7 @@ namespace Steamworks
 		{
 			if ( _internal != null && _internal.IsValid )
 			{
-				_internal.DoShutdown();
+				_internal.Shutdown();
 			}
 
 			_internal = null;
@@ -36,7 +36,7 @@ namespace Steamworks
 
 		internal static void InstallEvents()
 		{
-			Internal.DoInit();
+			Internal.Init();
 			Internal.RunFrame();
 
 			// None?

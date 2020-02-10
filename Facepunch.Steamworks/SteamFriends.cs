@@ -300,13 +300,13 @@ namespace Steamworks
 
 		public static async Task<bool> IsFollowing(SteamId steamID)
 		{
-			var r = await Internal.IsFollowing(steamID);
+			var r = await Internal.IsFollowing(steamID).GetAsync<FriendsIsFollowing_t>();
 			return r.Value.IsFollowing;
 		}
 
 		public static async Task<int> GetFollowerCount(SteamId steamID)
 		{
-			var r = await Internal.GetFollowerCount(steamID);
+			var r = await Internal.GetFollowerCount(steamID).GetAsync<FriendsGetFollowerCount_t>();
 			return r.Value.Count;
 		}
 
@@ -319,7 +319,7 @@ namespace Steamworks
 
             do
             {
-                if ((result = await Internal.EnumerateFollowingList((uint)resultCount)) != null)
+                if ( (result = await Internal.EnumerateFollowingList((uint)resultCount).GetAsync<FriendsEnumerateFollowingList_t>()) != null)
                 {
                     resultCount += result.Value.ResultsReturned;
 

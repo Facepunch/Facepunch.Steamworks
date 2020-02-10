@@ -9,8 +9,6 @@ namespace Steamworks
 {
 	internal class ISteamMatchmaking : SteamInterface
 	{
-		public override string InterfaceName => "SteamMatchMaking009";
-		
 		public override void InitInternals()
 		{
 		}
@@ -21,9 +19,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate int FGetFavoriteGameCount( IntPtr self );
-		private FGetFavoriteGameCount _GetFavoriteGameCount;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_GetFavoriteGameCount")]
+		private static extern int _GetFavoriteGameCount( IntPtr self );
 		
 		#endregion
 		internal int GetFavoriteGameCount()
@@ -33,10 +30,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_GetFavoriteGame")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetFavoriteGame( IntPtr self, int iGame, ref AppId pnAppID, ref uint pnIP, ref ushort pnConnPort, ref ushort pnQueryPort, ref uint punFlags, ref uint pRTime32LastPlayedOnServer );
-		private FGetFavoriteGame _GetFavoriteGame;
+		private static extern bool _GetFavoriteGame( IntPtr self, int iGame, ref AppId pnAppID, ref uint pnIP, ref ushort pnConnPort, ref ushort pnQueryPort, ref uint punFlags, ref uint pRTime32LastPlayedOnServer );
 		
 		#endregion
 		internal bool GetFavoriteGame( int iGame, ref AppId pnAppID, ref uint pnIP, ref ushort pnConnPort, ref ushort pnQueryPort, ref uint punFlags, ref uint pRTime32LastPlayedOnServer )
@@ -46,9 +42,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate int FAddFavoriteGame( IntPtr self, AppId nAppID, uint nIP, ushort nConnPort, ushort nQueryPort, uint unFlags, uint rTime32LastPlayedOnServer );
-		private FAddFavoriteGame _AddFavoriteGame;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_AddFavoriteGame")]
+		private static extern int _AddFavoriteGame( IntPtr self, AppId nAppID, uint nIP, ushort nConnPort, ushort nQueryPort, uint unFlags, uint rTime32LastPlayedOnServer );
 		
 		#endregion
 		internal int AddFavoriteGame( AppId nAppID, uint nIP, ushort nConnPort, ushort nQueryPort, uint unFlags, uint rTime32LastPlayedOnServer )
@@ -58,10 +53,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_RemoveFavoriteGame")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FRemoveFavoriteGame( IntPtr self, AppId nAppID, uint nIP, ushort nConnPort, ushort nQueryPort, uint unFlags );
-		private FRemoveFavoriteGame _RemoveFavoriteGame;
+		private static extern bool _RemoveFavoriteGame( IntPtr self, AppId nAppID, uint nIP, ushort nConnPort, ushort nQueryPort, uint unFlags );
 		
 		#endregion
 		internal bool RemoveFavoriteGame( AppId nAppID, uint nIP, ushort nConnPort, ushort nQueryPort, uint unFlags )
@@ -71,21 +65,19 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FRequestLobbyList( IntPtr self );
-		private FRequestLobbyList _RequestLobbyList;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_RequestLobbyList")]
+		private static extern SteamAPICall_t _RequestLobbyList( IntPtr self );
 		
 		#endregion
-		internal async Task<LobbyMatchList_t?> RequestLobbyList()
+		internal CallbackResult RequestLobbyList()
 		{
 			var returnValue = _RequestLobbyList( Self );
-			return await LobbyMatchList_t.GetResultAsync( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FAddRequestLobbyListStringFilter( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKeyToMatch, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchValueToMatch, LobbyComparison eComparisonType );
-		private FAddRequestLobbyListStringFilter _AddRequestLobbyListStringFilter;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_AddRequestLobbyListStringFilter")]
+		private static extern void _AddRequestLobbyListStringFilter( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKeyToMatch, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchValueToMatch, LobbyComparison eComparisonType );
 		
 		#endregion
 		internal void AddRequestLobbyListStringFilter( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKeyToMatch, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchValueToMatch, LobbyComparison eComparisonType )
@@ -94,9 +86,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FAddRequestLobbyListNumericalFilter( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKeyToMatch, int nValueToMatch, LobbyComparison eComparisonType );
-		private FAddRequestLobbyListNumericalFilter _AddRequestLobbyListNumericalFilter;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_AddRequestLobbyListNumericalFilter")]
+		private static extern void _AddRequestLobbyListNumericalFilter( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKeyToMatch, int nValueToMatch, LobbyComparison eComparisonType );
 		
 		#endregion
 		internal void AddRequestLobbyListNumericalFilter( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKeyToMatch, int nValueToMatch, LobbyComparison eComparisonType )
@@ -105,9 +96,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FAddRequestLobbyListNearValueFilter( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKeyToMatch, int nValueToBeCloseTo );
-		private FAddRequestLobbyListNearValueFilter _AddRequestLobbyListNearValueFilter;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_AddRequestLobbyListNearValueFilter")]
+		private static extern void _AddRequestLobbyListNearValueFilter( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKeyToMatch, int nValueToBeCloseTo );
 		
 		#endregion
 		internal void AddRequestLobbyListNearValueFilter( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKeyToMatch, int nValueToBeCloseTo )
@@ -116,9 +106,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FAddRequestLobbyListFilterSlotsAvailable( IntPtr self, int nSlotsAvailable );
-		private FAddRequestLobbyListFilterSlotsAvailable _AddRequestLobbyListFilterSlotsAvailable;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_AddRequestLobbyListFilterSlotsAvailable")]
+		private static extern void _AddRequestLobbyListFilterSlotsAvailable( IntPtr self, int nSlotsAvailable );
 		
 		#endregion
 		internal void AddRequestLobbyListFilterSlotsAvailable( int nSlotsAvailable )
@@ -127,9 +116,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FAddRequestLobbyListDistanceFilter( IntPtr self, LobbyDistanceFilter eLobbyDistanceFilter );
-		private FAddRequestLobbyListDistanceFilter _AddRequestLobbyListDistanceFilter;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_AddRequestLobbyListDistanceFilter")]
+		private static extern void _AddRequestLobbyListDistanceFilter( IntPtr self, LobbyDistanceFilter eLobbyDistanceFilter );
 		
 		#endregion
 		internal void AddRequestLobbyListDistanceFilter( LobbyDistanceFilter eLobbyDistanceFilter )
@@ -138,9 +126,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FAddRequestLobbyListResultCountFilter( IntPtr self, int cMaxResults );
-		private FAddRequestLobbyListResultCountFilter _AddRequestLobbyListResultCountFilter;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_AddRequestLobbyListResultCountFilter")]
+		private static extern void _AddRequestLobbyListResultCountFilter( IntPtr self, int cMaxResults );
 		
 		#endregion
 		internal void AddRequestLobbyListResultCountFilter( int cMaxResults )
@@ -149,9 +136,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FAddRequestLobbyListCompatibleMembersFilter( IntPtr self, SteamId steamIDLobby );
-		private FAddRequestLobbyListCompatibleMembersFilter _AddRequestLobbyListCompatibleMembersFilter;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_AddRequestLobbyListCompatibleMembersFilter")]
+		private static extern void _AddRequestLobbyListCompatibleMembersFilter( IntPtr self, SteamId steamIDLobby );
 		
 		#endregion
 		internal void AddRequestLobbyListCompatibleMembersFilter( SteamId steamIDLobby )
@@ -160,55 +146,41 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		#if PLATFORM_WIN
-		private delegate void FGetLobbyByIndex( IntPtr self, ref SteamId retVal, int iLobby );
-		#else
-		private delegate SteamId FGetLobbyByIndex( IntPtr self, int iLobby );
-		#endif
-		private FGetLobbyByIndex _GetLobbyByIndex;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyByIndex")]
+		private static extern SteamId _GetLobbyByIndex( IntPtr self, int iLobby );
 		
 		#endregion
 		internal SteamId GetLobbyByIndex( int iLobby )
 		{
-			#if PLATFORM_WIN
-			var retVal = default( SteamId );
-			_GetLobbyByIndex( Self, ref retVal, iLobby );
-			return retVal;
-			#else
 			var returnValue = _GetLobbyByIndex( Self, iLobby );
 			return returnValue;
-			#endif
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FCreateLobby( IntPtr self, LobbyType eLobbyType, int cMaxMembers );
-		private FCreateLobby _CreateLobby;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_CreateLobby")]
+		private static extern SteamAPICall_t _CreateLobby( IntPtr self, LobbyType eLobbyType, int cMaxMembers );
 		
 		#endregion
-		internal async Task<LobbyCreated_t?> CreateLobby( LobbyType eLobbyType, int cMaxMembers )
+		internal CallbackResult CreateLobby( LobbyType eLobbyType, int cMaxMembers )
 		{
 			var returnValue = _CreateLobby( Self, eLobbyType, cMaxMembers );
-			return await LobbyCreated_t.GetResultAsync( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FJoinLobby( IntPtr self, SteamId steamIDLobby );
-		private FJoinLobby _JoinLobby;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_JoinLobby")]
+		private static extern SteamAPICall_t _JoinLobby( IntPtr self, SteamId steamIDLobby );
 		
 		#endregion
-		internal async Task<LobbyEnter_t?> JoinLobby( SteamId steamIDLobby )
+		internal CallbackResult JoinLobby( SteamId steamIDLobby )
 		{
 			var returnValue = _JoinLobby( Self, steamIDLobby );
-			return await LobbyEnter_t.GetResultAsync( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FLeaveLobby( IntPtr self, SteamId steamIDLobby );
-		private FLeaveLobby _LeaveLobby;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_LeaveLobby")]
+		private static extern void _LeaveLobby( IntPtr self, SteamId steamIDLobby );
 		
 		#endregion
 		internal void LeaveLobby( SteamId steamIDLobby )
@@ -217,10 +189,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_InviteUserToLobby")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FInviteUserToLobby( IntPtr self, SteamId steamIDLobby, SteamId steamIDInvitee );
-		private FInviteUserToLobby _InviteUserToLobby;
+		private static extern bool _InviteUserToLobby( IntPtr self, SteamId steamIDLobby, SteamId steamIDInvitee );
 		
 		#endregion
 		internal bool InviteUserToLobby( SteamId steamIDLobby, SteamId steamIDInvitee )
@@ -230,9 +201,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate int FGetNumLobbyMembers( IntPtr self, SteamId steamIDLobby );
-		private FGetNumLobbyMembers _GetNumLobbyMembers;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_GetNumLobbyMembers")]
+		private static extern int _GetNumLobbyMembers( IntPtr self, SteamId steamIDLobby );
 		
 		#endregion
 		internal int GetNumLobbyMembers( SteamId steamIDLobby )
@@ -242,31 +212,19 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		#if PLATFORM_WIN
-		private delegate void FGetLobbyMemberByIndex( IntPtr self, ref SteamId retVal, SteamId steamIDLobby, int iMember );
-		#else
-		private delegate SteamId FGetLobbyMemberByIndex( IntPtr self, SteamId steamIDLobby, int iMember );
-		#endif
-		private FGetLobbyMemberByIndex _GetLobbyMemberByIndex;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyMemberByIndex")]
+		private static extern SteamId _GetLobbyMemberByIndex( IntPtr self, SteamId steamIDLobby, int iMember );
 		
 		#endregion
 		internal SteamId GetLobbyMemberByIndex( SteamId steamIDLobby, int iMember )
 		{
-			#if PLATFORM_WIN
-			var retVal = default( SteamId );
-			_GetLobbyMemberByIndex( Self, ref retVal, steamIDLobby, iMember );
-			return retVal;
-			#else
 			var returnValue = _GetLobbyMemberByIndex( Self, steamIDLobby, iMember );
 			return returnValue;
-			#endif
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate Utf8StringPointer FGetLobbyData( IntPtr self, SteamId steamIDLobby, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey );
-		private FGetLobbyData _GetLobbyData;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyData")]
+		private static extern Utf8StringPointer _GetLobbyData( IntPtr self, SteamId steamIDLobby, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey );
 		
 		#endregion
 		internal string GetLobbyData( SteamId steamIDLobby, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey )
@@ -276,10 +234,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_SetLobbyData")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetLobbyData( IntPtr self, SteamId steamIDLobby, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchValue );
-		private FSetLobbyData _SetLobbyData;
+		private static extern bool _SetLobbyData( IntPtr self, SteamId steamIDLobby, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchValue );
 		
 		#endregion
 		internal bool SetLobbyData( SteamId steamIDLobby, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchValue )
@@ -289,9 +246,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate int FGetLobbyDataCount( IntPtr self, SteamId steamIDLobby );
-		private FGetLobbyDataCount _GetLobbyDataCount;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyDataCount")]
+		private static extern int _GetLobbyDataCount( IntPtr self, SteamId steamIDLobby );
 		
 		#endregion
 		internal int GetLobbyDataCount( SteamId steamIDLobby )
@@ -301,10 +257,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyDataByIndex")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetLobbyDataByIndex( IntPtr self, SteamId steamIDLobby, int iLobbyData, IntPtr pchKey, int cchKeyBufferSize, IntPtr pchValue, int cchValueBufferSize );
-		private FGetLobbyDataByIndex _GetLobbyDataByIndex;
+		private static extern bool _GetLobbyDataByIndex( IntPtr self, SteamId steamIDLobby, int iLobbyData, IntPtr pchKey, int cchKeyBufferSize, IntPtr pchValue, int cchValueBufferSize );
 		
 		#endregion
 		internal bool GetLobbyDataByIndex( SteamId steamIDLobby, int iLobbyData, out string pchKey, out string pchValue )
@@ -318,10 +273,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_DeleteLobbyData")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FDeleteLobbyData( IntPtr self, SteamId steamIDLobby, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey );
-		private FDeleteLobbyData _DeleteLobbyData;
+		private static extern bool _DeleteLobbyData( IntPtr self, SteamId steamIDLobby, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey );
 		
 		#endregion
 		internal bool DeleteLobbyData( SteamId steamIDLobby, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey )
@@ -331,9 +285,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate Utf8StringPointer FGetLobbyMemberData( IntPtr self, SteamId steamIDLobby, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey );
-		private FGetLobbyMemberData _GetLobbyMemberData;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyMemberData")]
+		private static extern Utf8StringPointer _GetLobbyMemberData( IntPtr self, SteamId steamIDLobby, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey );
 		
 		#endregion
 		internal string GetLobbyMemberData( SteamId steamIDLobby, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey )
@@ -343,9 +296,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FSetLobbyMemberData( IntPtr self, SteamId steamIDLobby, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchValue );
-		private FSetLobbyMemberData _SetLobbyMemberData;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_SetLobbyMemberData")]
+		private static extern void _SetLobbyMemberData( IntPtr self, SteamId steamIDLobby, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchValue );
 		
 		#endregion
 		internal void SetLobbyMemberData( SteamId steamIDLobby, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchValue )
@@ -354,10 +306,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_SendLobbyChatMsg")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSendLobbyChatMsg( IntPtr self, SteamId steamIDLobby, IntPtr pvMsgBody, int cubMsgBody );
-		private FSendLobbyChatMsg _SendLobbyChatMsg;
+		private static extern bool _SendLobbyChatMsg( IntPtr self, SteamId steamIDLobby, IntPtr pvMsgBody, int cubMsgBody );
 		
 		#endregion
 		internal bool SendLobbyChatMsg( SteamId steamIDLobby, IntPtr pvMsgBody, int cubMsgBody )
@@ -367,9 +318,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate int FGetLobbyChatEntry( IntPtr self, SteamId steamIDLobby, int iChatID, ref SteamId pSteamIDUser, IntPtr pvData, int cubData, ref ChatEntryType peChatEntryType );
-		private FGetLobbyChatEntry _GetLobbyChatEntry;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyChatEntry")]
+		private static extern int _GetLobbyChatEntry( IntPtr self, SteamId steamIDLobby, int iChatID, ref SteamId pSteamIDUser, IntPtr pvData, int cubData, ref ChatEntryType peChatEntryType );
 		
 		#endregion
 		internal int GetLobbyChatEntry( SteamId steamIDLobby, int iChatID, ref SteamId pSteamIDUser, IntPtr pvData, int cubData, ref ChatEntryType peChatEntryType )
@@ -379,10 +329,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_RequestLobbyData")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FRequestLobbyData( IntPtr self, SteamId steamIDLobby );
-		private FRequestLobbyData _RequestLobbyData;
+		private static extern bool _RequestLobbyData( IntPtr self, SteamId steamIDLobby );
 		
 		#endregion
 		internal bool RequestLobbyData( SteamId steamIDLobby )
@@ -392,9 +341,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FSetLobbyGameServer( IntPtr self, SteamId steamIDLobby, uint unGameServerIP, ushort unGameServerPort, SteamId steamIDGameServer );
-		private FSetLobbyGameServer _SetLobbyGameServer;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_SetLobbyGameServer")]
+		private static extern void _SetLobbyGameServer( IntPtr self, SteamId steamIDLobby, uint unGameServerIP, ushort unGameServerPort, SteamId steamIDGameServer );
 		
 		#endregion
 		internal void SetLobbyGameServer( SteamId steamIDLobby, uint unGameServerIP, ushort unGameServerPort, SteamId steamIDGameServer )
@@ -403,10 +351,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyGameServer")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetLobbyGameServer( IntPtr self, SteamId steamIDLobby, ref uint punGameServerIP, ref ushort punGameServerPort, ref SteamId psteamIDGameServer );
-		private FGetLobbyGameServer _GetLobbyGameServer;
+		private static extern bool _GetLobbyGameServer( IntPtr self, SteamId steamIDLobby, ref uint punGameServerIP, ref ushort punGameServerPort, ref SteamId psteamIDGameServer );
 		
 		#endregion
 		internal bool GetLobbyGameServer( SteamId steamIDLobby, ref uint punGameServerIP, ref ushort punGameServerPort, ref SteamId psteamIDGameServer )
@@ -416,10 +363,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_SetLobbyMemberLimit")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetLobbyMemberLimit( IntPtr self, SteamId steamIDLobby, int cMaxMembers );
-		private FSetLobbyMemberLimit _SetLobbyMemberLimit;
+		private static extern bool _SetLobbyMemberLimit( IntPtr self, SteamId steamIDLobby, int cMaxMembers );
 		
 		#endregion
 		internal bool SetLobbyMemberLimit( SteamId steamIDLobby, int cMaxMembers )
@@ -429,9 +375,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate int FGetLobbyMemberLimit( IntPtr self, SteamId steamIDLobby );
-		private FGetLobbyMemberLimit _GetLobbyMemberLimit;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyMemberLimit")]
+		private static extern int _GetLobbyMemberLimit( IntPtr self, SteamId steamIDLobby );
 		
 		#endregion
 		internal int GetLobbyMemberLimit( SteamId steamIDLobby )
@@ -441,10 +386,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_SetLobbyType")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetLobbyType( IntPtr self, SteamId steamIDLobby, LobbyType eLobbyType );
-		private FSetLobbyType _SetLobbyType;
+		private static extern bool _SetLobbyType( IntPtr self, SteamId steamIDLobby, LobbyType eLobbyType );
 		
 		#endregion
 		internal bool SetLobbyType( SteamId steamIDLobby, LobbyType eLobbyType )
@@ -454,10 +398,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_SetLobbyJoinable")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetLobbyJoinable( IntPtr self, SteamId steamIDLobby, [MarshalAs( UnmanagedType.U1 )] bool bLobbyJoinable );
-		private FSetLobbyJoinable _SetLobbyJoinable;
+		private static extern bool _SetLobbyJoinable( IntPtr self, SteamId steamIDLobby, [MarshalAs( UnmanagedType.U1 )] bool bLobbyJoinable );
 		
 		#endregion
 		internal bool SetLobbyJoinable( SteamId steamIDLobby, [MarshalAs( UnmanagedType.U1 )] bool bLobbyJoinable )
@@ -467,32 +410,20 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		#if PLATFORM_WIN
-		private delegate void FGetLobbyOwner( IntPtr self, ref SteamId retVal, SteamId steamIDLobby );
-		#else
-		private delegate SteamId FGetLobbyOwner( IntPtr self, SteamId steamIDLobby );
-		#endif
-		private FGetLobbyOwner _GetLobbyOwner;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_GetLobbyOwner")]
+		private static extern SteamId _GetLobbyOwner( IntPtr self, SteamId steamIDLobby );
 		
 		#endregion
 		internal SteamId GetLobbyOwner( SteamId steamIDLobby )
 		{
-			#if PLATFORM_WIN
-			var retVal = default( SteamId );
-			_GetLobbyOwner( Self, ref retVal, steamIDLobby );
-			return retVal;
-			#else
 			var returnValue = _GetLobbyOwner( Self, steamIDLobby );
 			return returnValue;
-			#endif
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_SetLobbyOwner")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetLobbyOwner( IntPtr self, SteamId steamIDLobby, SteamId steamIDNewOwner );
-		private FSetLobbyOwner _SetLobbyOwner;
+		private static extern bool _SetLobbyOwner( IntPtr self, SteamId steamIDLobby, SteamId steamIDNewOwner );
 		
 		#endregion
 		internal bool SetLobbyOwner( SteamId steamIDLobby, SteamId steamIDNewOwner )
@@ -502,10 +433,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_SetLinkedLobby")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetLinkedLobby( IntPtr self, SteamId steamIDLobby, SteamId steamIDLobbyDependent );
-		private FSetLinkedLobby _SetLinkedLobby;
+		private static extern bool _SetLinkedLobby( IntPtr self, SteamId steamIDLobby, SteamId steamIDLobbyDependent );
 		
 		#endregion
 		internal bool SetLinkedLobby( SteamId steamIDLobby, SteamId steamIDLobbyDependent )

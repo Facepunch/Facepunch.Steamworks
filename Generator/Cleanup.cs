@@ -10,6 +10,9 @@ public static class Cleanup
 {
 	public static string ConvertType( string type )
 	{
+		type = type.Replace( "class ", "" );
+		type = type.Replace( "struct ", "" );
+
 		type = type.Replace( "CSteamID", "SteamId" );
 		type = type.Replace( "CGameID", "GameId" );
 		type = type.Replace( "PersonaState", "FriendState" );

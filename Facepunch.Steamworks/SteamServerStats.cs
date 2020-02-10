@@ -47,7 +47,7 @@ namespace Steamworks
 		/// </summary>
 		public static bool SetInt( SteamId steamid, string name, int stat )
 		{
-			return Internal.SetUserStat1( steamid, name, stat );
+			return Internal.SetUserStat( steamid, name, stat );
 		}
 
 		/// <summary>
@@ -56,7 +56,7 @@ namespace Steamworks
 		/// </summary>
 		public static bool SetFloat( SteamId steamid, string name, float stat )
 		{
-			return Internal.SetUserStat2( steamid, name, stat );
+			return Internal.SetUserStat( steamid, name, stat );
 		}
 
 		/// <summary>

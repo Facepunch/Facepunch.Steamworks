@@ -56,12 +56,15 @@ namespace Generator
 				int defaultPack = c.IsPack4OnWindows ? 4 : 8;
 
 				var isCallback = !string.IsNullOrEmpty( c.CallbackId );
+                var iface = "";
+                if ( isCallback )
+                    iface = " : ICallbackData";
 
-				//
-				// Main struct
-				//
-				WriteLine( $"[StructLayout( LayoutKind.Sequential, Pack = Platform.{(c.IsPack4OnWindows?"StructPackSize": "StructPlatformPackSize")} )]" );
-                StartBlock( $"{Cleanup.Expose( name )} struct {name}" );
+                //
+                // Main struct
+                //
+                WriteLine( $"[StructLayout( LayoutKind.Sequential, Pack = Platform.{(c.IsPack4OnWindows?"StructPackSize": "StructPlatformPackSize")} )]" );
+                StartBlock( $"{Cleanup.Expose( name )} struct {name}{iface}" );
                 {
 					//
 					// The fields
@@ -74,8 +77,11 @@ namespace Generator
 						WriteLine( "#region SteamCallback" );
 						{
 
-							WriteLine( $"internal static readonly int StructSize = System.Runtime.InteropServices.Marshal.SizeOf( typeof({name}) );" );
-							WriteLine( $"internal static {name} Fill( IntPtr p ) => (({name})({name}) Marshal.PtrToStructure( p, typeof({name}) ) );" );
+							WriteLine( $"public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof({name}) );" );
+							WriteLine( $"public int DataSize => _datasize;" );
+                            WriteLine( $"public int CallbackId => {c.CallbackId};" );
+
+                            WriteLine( $"internal static {name} Fill( IntPtr p ) => (({name})Marshal.PtrToStructure( p, typeof({name}) ) );" );
 							WriteLine();
 							WriteLine( $"static Action<{name}> actionClient;" );
 							WriteLine( $"[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );" );
@@ -87,45 +93,16 @@ namespace Generator
 							{
 								StartBlock( "if ( server )" );
 								{
-									WriteLine( $"Event.Register( OnServer, StructSize, {c.CallbackId}, true );" );
+									WriteLine( $"Event.Register( OnServer, _datasize, {c.CallbackId}, true );" );
 									WriteLine( $"actionServer = action;" );
 								}
 								Else();
 								{
-									WriteLine( $"Event.Register( OnClient, StructSize, {c.CallbackId}, false );" );
+									WriteLine( $"Event.Register( OnClient, _datasize, {c.CallbackId}, false );" );
 									WriteLine( $"actionClient = action;" );
 								}
 								EndBlock();
 
-							}
-							EndBlock();
-
-							StartBlock( $"public static async Task<{name}?> GetResultAsync( SteamAPICall_t handle )" );
-							{
-								WriteLine( $"bool failed = false;" );
-								WriteLine();
-								StartBlock( $"while ( !SteamUtils.IsCallComplete( handle, out failed ) )" );
-								{
-									WriteLine( $"await Task.Delay( 1 );" );
-									WriteLine( $"if ( !SteamClient.IsValid && !SteamServer.IsValid ) return null;" );
-								}
-								EndBlock();
-
-								WriteLine( $"if ( failed ) return null;" );
-								WriteLine( $"" );
-								WriteLine( $"var ptr = Marshal.AllocHGlobal( StructSize );" );
-								WriteLine( $"" );
-								WriteLine( $"try" );
-								WriteLine( $"{{" );
-								WriteLine( $"	if ( !SteamUtils.Internal.GetAPICallResult( handle, ptr, StructSize, {c.CallbackId}, ref failed ) || failed )" );
-								WriteLine( $"		return null;" );
-								WriteLine( $"" );
-								WriteLine( $"	return Fill( ptr );" );
-								WriteLine( $"}}" );
-								WriteLine( $"finally" );
-								WriteLine( $"{{" );
-								WriteLine( $"	Marshal.FreeHGlobal( ptr );" );
-								WriteLine( $"}}" );
 							}
 							EndBlock();
 						}

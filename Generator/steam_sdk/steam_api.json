@@ -3392,15 +3392,21 @@
 {	"paramname": "pnChatting" ,"paramtype": "int *"}
 	 ]
 }
-,{
+,
+
+{
 	"classname": "ISteamFriends",
 	"methodname": "DownloadClanActivityCounts",
 	"returntype": "SteamAPICall_t",
-	"params": [ 
-{	"paramname": "psteamIDClans" ,"array_count": "cClansToRequest" ,"paramtype": "class CSteamID *"},
-{	"paramname": "cClansToRequest" ,"paramtype": "int"}
+	"callbackdata": "DownloadClanActivityCountsResult_t",
+	"callbackid": 341,
+	"params": 
+	[ 
+		{	"paramname": "psteamIDClans" ,"array_count": "cClansToRequest" ,"paramtype": "class CSteamID *"},
+		{	"paramname": "cClansToRequest" ,"paramtype": "int"}
 	 ]
 }
+
 ,{
 	"classname": "ISteamFriends",
 	"methodname": "GetFriendCountFromSource",
@@ -5322,7 +5328,7 @@
 }
 ,{
 	"classname": "ISteamUserStats",
-	"methodname": "GetStat",
+	"methodname": "GetStat0",
 	"returntype": "bool",
 	"params": [ 
 {	"paramname": "pchName" ,"paramtype": "const char *"},
@@ -5457,7 +5463,7 @@
 }
 ,{
 	"classname": "ISteamUserStats",
-	"methodname": "GetUserStat",
+	"methodname": "GetUserStat0",
 	"returntype": "bool",
 	"params": [ 
 {	"paramname": "steamIDUser" ,"paramtype": "class CSteamID"},
@@ -5659,7 +5665,7 @@
 }
 ,{
 	"classname": "ISteamUserStats",
-	"methodname": "GetGlobalStat",
+	"methodname": "GetGlobalStat0",
 	"returntype": "bool",
 	"params": [ 
 {	"paramname": "pchStatName" ,"paramtype": "const char *"},
@@ -5678,7 +5684,7 @@
 }
 ,{
 	"classname": "ISteamUserStats",
-	"methodname": "GetGlobalStatHistory",
+	"methodname": "GetGlobalStatHistory0",
 	"returntype": "int32",
 	"params": [ 
 {	"paramname": "pchStatName" ,"paramtype": "const char *"},
@@ -7285,7 +7291,7 @@
 }
 ,{
 	"classname": "ISteamUGC",
-	"methodname": "CreateQueryAllUGCRequest",
+	"methodname": "CreateQueryAllUGCRequest0",
 	"returntype": "UGCQueryHandle_t",
 	"params": [ 
 {	"paramname": "eQueryType" ,"paramtype": "EUGCQuery"},
@@ -8644,7 +8650,7 @@
 }
 ,{
 	"classname": "ISteamInventory",
-	"methodname": "SetProperty",
+	"methodname": "SetProperty0",
 	"returntype": "bool",
 	"params": [ 
 {	"paramname": "handle" ,"paramtype": "SteamInventoryUpdateHandle_t"},
@@ -8655,7 +8661,7 @@
 }
 ,{
 	"classname": "ISteamInventory",
-	"methodname": "SetProperty",
+	"methodname": "SetProperty1",
 	"returntype": "bool",
 	"params": [ 
 {	"paramname": "handle" ,"paramtype": "SteamInventoryUpdateHandle_t"},
@@ -8666,7 +8672,7 @@
 }
 ,{
 	"classname": "ISteamInventory",
-	"methodname": "SetProperty",
+	"methodname": "SetProperty2",
 	"returntype": "bool",
 	"params": [ 
 {	"paramname": "handle" ,"paramtype": "SteamInventoryUpdateHandle_t"},
@@ -9119,7 +9125,7 @@
 }
 ,{
 	"classname": "ISteamGameServerStats",
-	"methodname": "GetUserStat",
+	"methodname": "GetUserStat0",
 	"returntype": "bool",
 	"params": [ 
 {	"paramname": "steamIDUser" ,"paramtype": "class CSteamID"},
@@ -9149,7 +9155,7 @@
 }
 ,{
 	"classname": "ISteamGameServerStats",
-	"methodname": "SetUserStat",
+	"methodname": "SetUserStat0",
 	"returntype": "bool",
 	"params": [ 
 {	"paramname": "steamIDUser" ,"paramtype": "class CSteamID"},

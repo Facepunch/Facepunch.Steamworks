@@ -9,8 +9,6 @@ namespace Steamworks
 {
 	internal class ISteamMusic : SteamInterface
 	{
-		public override string InterfaceName => "STEAMMUSIC_INTERFACE_VERSION001";
-		
 		public override void InitInternals()
 		{
 		}
@@ -21,10 +19,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMusic_BIsEnabled")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FBIsEnabled( IntPtr self );
-		private FBIsEnabled _BIsEnabled;
+		private static extern bool _BIsEnabled( IntPtr self );
 		
 		#endregion
 		internal bool BIsEnabled()
@@ -34,10 +31,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMusic_BIsPlaying")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FBIsPlaying( IntPtr self );
-		private FBIsPlaying _BIsPlaying;
+		private static extern bool _BIsPlaying( IntPtr self );
 		
 		#endregion
 		internal bool BIsPlaying()
@@ -47,9 +43,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate MusicStatus FGetPlaybackStatus( IntPtr self );
-		private FGetPlaybackStatus _GetPlaybackStatus;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMusic_GetPlaybackStatus")]
+		private static extern MusicStatus _GetPlaybackStatus( IntPtr self );
 		
 		#endregion
 		internal MusicStatus GetPlaybackStatus()
@@ -59,9 +54,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FPlay( IntPtr self );
-		private FPlay _Play;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMusic_Play")]
+		private static extern void _Play( IntPtr self );
 		
 		#endregion
 		internal void Play()
@@ -70,9 +64,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FPause( IntPtr self );
-		private FPause _Pause;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMusic_Pause")]
+		private static extern void _Pause( IntPtr self );
 		
 		#endregion
 		internal void Pause()
@@ -81,9 +74,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FPlayPrevious( IntPtr self );
-		private FPlayPrevious _PlayPrevious;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMusic_PlayPrevious")]
+		private static extern void _PlayPrevious( IntPtr self );
 		
 		#endregion
 		internal void PlayPrevious()
@@ -92,9 +84,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FPlayNext( IntPtr self );
-		private FPlayNext _PlayNext;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMusic_PlayNext")]
+		private static extern void _PlayNext( IntPtr self );
 		
 		#endregion
 		internal void PlayNext()
@@ -103,9 +94,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FSetVolume( IntPtr self, float flVolume );
-		private FSetVolume _SetVolume;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMusic_SetVolume")]
+		private static extern void _SetVolume( IntPtr self, float flVolume );
 		
 		#endregion
 		internal void SetVolume( float flVolume )
@@ -114,9 +104,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate float FGetVolume( IntPtr self );
-		private FGetVolume _GetVolume;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMusic_GetVolume")]
+		private static extern float _GetVolume( IntPtr self );
 		
 		#endregion
 		internal float GetVolume()

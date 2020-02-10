@@ -251,7 +251,7 @@ namespace Steamworks
 		/// </summary>
 		public static async Task<FileDetails?> GetFileDetailsAsync( string filename )
 		{
-			var r = await Internal.GetFileDetails( filename );
+			var r = await Internal.GetFileDetails( filename ).GetAsync<FileDetailsResult_t>();
 
 			if ( !r.HasValue || r.Value.Result != Result.OK )
 				return null;

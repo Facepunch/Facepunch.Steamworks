@@ -9,8 +9,6 @@ namespace Steamworks
 {
 	internal class ISteamUGC : SteamInterface
 	{
-		public override string InterfaceName => "STEAMUGC_INTERFACE_VERSION012";
-		
 		public override void InitInternals()
 		{
 		}
@@ -21,9 +19,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate UGCQueryHandle_t FCreateQueryUserUGCRequest( IntPtr self, AccountID_t unAccountID, UserUGCList eListType, UgcType eMatchingUGCType, UserUGCListSortOrder eSortOrder, AppId nCreatorAppID, AppId nConsumerAppID, uint unPage );
-		private FCreateQueryUserUGCRequest _CreateQueryUserUGCRequest;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_CreateQueryUserUGCRequest")]
+		private static extern UGCQueryHandle_t _CreateQueryUserUGCRequest( IntPtr self, AccountID_t unAccountID, UserUGCList eListType, UgcType eMatchingUGCType, UserUGCListSortOrder eSortOrder, AppId nCreatorAppID, AppId nConsumerAppID, uint unPage );
 		
 		#endregion
 		internal UGCQueryHandle_t CreateQueryUserUGCRequest( AccountID_t unAccountID, UserUGCList eListType, UgcType eMatchingUGCType, UserUGCListSortOrder eSortOrder, AppId nCreatorAppID, AppId nConsumerAppID, uint unPage )
@@ -33,33 +30,30 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate UGCQueryHandle_t FCreateQueryAllUGCRequest1( IntPtr self, UGCQuery eQueryType, UgcType eMatchingeMatchingUGCTypeFileType, AppId nCreatorAppID, AppId nConsumerAppID, uint unPage );
-		private FCreateQueryAllUGCRequest1 _CreateQueryAllUGCRequest1;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_CreateQueryAllUGCRequest")]
+		private static extern UGCQueryHandle_t _CreateQueryAllUGCRequest( IntPtr self, UGCQuery eQueryType, UgcType eMatchingeMatchingUGCTypeFileType, AppId nCreatorAppID, AppId nConsumerAppID, uint unPage );
 		
 		#endregion
-		internal UGCQueryHandle_t CreateQueryAllUGCRequest1( UGCQuery eQueryType, UgcType eMatchingeMatchingUGCTypeFileType, AppId nCreatorAppID, AppId nConsumerAppID, uint unPage )
+		internal UGCQueryHandle_t CreateQueryAllUGCRequest( UGCQuery eQueryType, UgcType eMatchingeMatchingUGCTypeFileType, AppId nCreatorAppID, AppId nConsumerAppID, uint unPage )
 		{
-			var returnValue = _CreateQueryAllUGCRequest1( Self, eQueryType, eMatchingeMatchingUGCTypeFileType, nCreatorAppID, nConsumerAppID, unPage );
+			var returnValue = _CreateQueryAllUGCRequest( Self, eQueryType, eMatchingeMatchingUGCTypeFileType, nCreatorAppID, nConsumerAppID, unPage );
 			return returnValue;
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate UGCQueryHandle_t FCreateQueryAllUGCRequest2( IntPtr self, UGCQuery eQueryType, UgcType eMatchingeMatchingUGCTypeFileType, AppId nCreatorAppID, AppId nConsumerAppID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchCursor );
-		private FCreateQueryAllUGCRequest2 _CreateQueryAllUGCRequest2;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_CreateQueryAllUGCRequest0")]
+		private static extern UGCQueryHandle_t _CreateQueryAllUGCRequest0( IntPtr self, UGCQuery eQueryType, UgcType eMatchingeMatchingUGCTypeFileType, AppId nCreatorAppID, AppId nConsumerAppID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchCursor );
 		
 		#endregion
-		internal UGCQueryHandle_t CreateQueryAllUGCRequest2( UGCQuery eQueryType, UgcType eMatchingeMatchingUGCTypeFileType, AppId nCreatorAppID, AppId nConsumerAppID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchCursor )
+		internal UGCQueryHandle_t CreateQueryAllUGCRequest0( UGCQuery eQueryType, UgcType eMatchingeMatchingUGCTypeFileType, AppId nCreatorAppID, AppId nConsumerAppID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchCursor )
 		{
-			var returnValue = _CreateQueryAllUGCRequest2( Self, eQueryType, eMatchingeMatchingUGCTypeFileType, nCreatorAppID, nConsumerAppID, pchCursor );
+			var returnValue = _CreateQueryAllUGCRequest0( Self, eQueryType, eMatchingeMatchingUGCTypeFileType, nCreatorAppID, nConsumerAppID, pchCursor );
 			return returnValue;
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate UGCQueryHandle_t FCreateQueryUGCDetailsRequest( IntPtr self, [In,Out] PublishedFileId[]  pvecPublishedFileID, uint unNumPublishedFileIDs );
-		private FCreateQueryUGCDetailsRequest _CreateQueryUGCDetailsRequest;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_CreateQueryUGCDetailsRequest")]
+		private static extern UGCQueryHandle_t _CreateQueryUGCDetailsRequest( IntPtr self, [In,Out] PublishedFileId[]  pvecPublishedFileID, uint unNumPublishedFileIDs );
 		
 		#endregion
 		internal UGCQueryHandle_t CreateQueryUGCDetailsRequest( [In,Out] PublishedFileId[]  pvecPublishedFileID, uint unNumPublishedFileIDs )
@@ -69,22 +63,20 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FSendQueryUGCRequest( IntPtr self, UGCQueryHandle_t handle );
-		private FSendQueryUGCRequest _SendQueryUGCRequest;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SendQueryUGCRequest")]
+		private static extern SteamAPICall_t _SendQueryUGCRequest( IntPtr self, UGCQueryHandle_t handle );
 		
 		#endregion
-		internal async Task<SteamUGCQueryCompleted_t?> SendQueryUGCRequest( UGCQueryHandle_t handle )
+		internal CallbackResult SendQueryUGCRequest( UGCQueryHandle_t handle )
 		{
 			var returnValue = _SendQueryUGCRequest( Self, handle );
-			return await SteamUGCQueryCompleted_t.GetResultAsync( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCResult")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetQueryUGCResult( IntPtr self, UGCQueryHandle_t handle, uint index, ref SteamUGCDetails_t pDetails );
-		private FGetQueryUGCResult _GetQueryUGCResult;
+		private static extern bool _GetQueryUGCResult( IntPtr self, UGCQueryHandle_t handle, uint index, ref SteamUGCDetails_t pDetails );
 		
 		#endregion
 		internal bool GetQueryUGCResult( UGCQueryHandle_t handle, uint index, ref SteamUGCDetails_t pDetails )
@@ -94,10 +86,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCPreviewURL")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetQueryUGCPreviewURL( IntPtr self, UGCQueryHandle_t handle, uint index, IntPtr pchURL, uint cchURLSize );
-		private FGetQueryUGCPreviewURL _GetQueryUGCPreviewURL;
+		private static extern bool _GetQueryUGCPreviewURL( IntPtr self, UGCQueryHandle_t handle, uint index, IntPtr pchURL, uint cchURLSize );
 		
 		#endregion
 		internal bool GetQueryUGCPreviewURL( UGCQueryHandle_t handle, uint index, out string pchURL )
@@ -109,10 +100,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCMetadata")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetQueryUGCMetadata( IntPtr self, UGCQueryHandle_t handle, uint index, IntPtr pchMetadata, uint cchMetadatasize );
-		private FGetQueryUGCMetadata _GetQueryUGCMetadata;
+		private static extern bool _GetQueryUGCMetadata( IntPtr self, UGCQueryHandle_t handle, uint index, IntPtr pchMetadata, uint cchMetadatasize );
 		
 		#endregion
 		internal bool GetQueryUGCMetadata( UGCQueryHandle_t handle, uint index, out string pchMetadata )
@@ -124,10 +114,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCChildren")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetQueryUGCChildren( IntPtr self, UGCQueryHandle_t handle, uint index, [In,Out] PublishedFileId[]  pvecPublishedFileID, uint cMaxEntries );
-		private FGetQueryUGCChildren _GetQueryUGCChildren;
+		private static extern bool _GetQueryUGCChildren( IntPtr self, UGCQueryHandle_t handle, uint index, [In,Out] PublishedFileId[]  pvecPublishedFileID, uint cMaxEntries );
 		
 		#endregion
 		internal bool GetQueryUGCChildren( UGCQueryHandle_t handle, uint index, [In,Out] PublishedFileId[]  pvecPublishedFileID, uint cMaxEntries )
@@ -137,10 +126,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCStatistic")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetQueryUGCStatistic( IntPtr self, UGCQueryHandle_t handle, uint index, ItemStatistic eStatType, ref ulong pStatValue );
-		private FGetQueryUGCStatistic _GetQueryUGCStatistic;
+		private static extern bool _GetQueryUGCStatistic( IntPtr self, UGCQueryHandle_t handle, uint index, ItemStatistic eStatType, ref ulong pStatValue );
 		
 		#endregion
 		internal bool GetQueryUGCStatistic( UGCQueryHandle_t handle, uint index, ItemStatistic eStatType, ref ulong pStatValue )
@@ -150,9 +138,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate uint FGetQueryUGCNumAdditionalPreviews( IntPtr self, UGCQueryHandle_t handle, uint index );
-		private FGetQueryUGCNumAdditionalPreviews _GetQueryUGCNumAdditionalPreviews;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCNumAdditionalPreviews")]
+		private static extern uint _GetQueryUGCNumAdditionalPreviews( IntPtr self, UGCQueryHandle_t handle, uint index );
 		
 		#endregion
 		internal uint GetQueryUGCNumAdditionalPreviews( UGCQueryHandle_t handle, uint index )
@@ -162,10 +149,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCAdditionalPreview")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetQueryUGCAdditionalPreview( IntPtr self, UGCQueryHandle_t handle, uint index, uint previewIndex, IntPtr pchURLOrVideoID, uint cchURLSize, IntPtr pchOriginalFileName, uint cchOriginalFileNameSize, ref ItemPreviewType pPreviewType );
-		private FGetQueryUGCAdditionalPreview _GetQueryUGCAdditionalPreview;
+		private static extern bool _GetQueryUGCAdditionalPreview( IntPtr self, UGCQueryHandle_t handle, uint index, uint previewIndex, IntPtr pchURLOrVideoID, uint cchURLSize, IntPtr pchOriginalFileName, uint cchOriginalFileNameSize, ref ItemPreviewType pPreviewType );
 		
 		#endregion
 		internal bool GetQueryUGCAdditionalPreview( UGCQueryHandle_t handle, uint index, uint previewIndex, out string pchURLOrVideoID, out string pchOriginalFileName, ref ItemPreviewType pPreviewType )
@@ -179,9 +165,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate uint FGetQueryUGCNumKeyValueTags( IntPtr self, UGCQueryHandle_t handle, uint index );
-		private FGetQueryUGCNumKeyValueTags _GetQueryUGCNumKeyValueTags;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCNumKeyValueTags")]
+		private static extern uint _GetQueryUGCNumKeyValueTags( IntPtr self, UGCQueryHandle_t handle, uint index );
 		
 		#endregion
 		internal uint GetQueryUGCNumKeyValueTags( UGCQueryHandle_t handle, uint index )
@@ -191,10 +176,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_GetQueryUGCKeyValueTag")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetQueryUGCKeyValueTag( IntPtr self, UGCQueryHandle_t handle, uint index, uint keyValueTagIndex, IntPtr pchKey, uint cchKeySize, IntPtr pchValue, uint cchValueSize );
-		private FGetQueryUGCKeyValueTag _GetQueryUGCKeyValueTag;
+		private static extern bool _GetQueryUGCKeyValueTag( IntPtr self, UGCQueryHandle_t handle, uint index, uint keyValueTagIndex, IntPtr pchKey, uint cchKeySize, IntPtr pchValue, uint cchValueSize );
 		
 		#endregion
 		internal bool GetQueryUGCKeyValueTag( UGCQueryHandle_t handle, uint index, uint keyValueTagIndex, out string pchKey, out string pchValue )
@@ -208,10 +192,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_ReleaseQueryUGCRequest")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FReleaseQueryUGCRequest( IntPtr self, UGCQueryHandle_t handle );
-		private FReleaseQueryUGCRequest _ReleaseQueryUGCRequest;
+		private static extern bool _ReleaseQueryUGCRequest( IntPtr self, UGCQueryHandle_t handle );
 		
 		#endregion
 		internal bool ReleaseQueryUGCRequest( UGCQueryHandle_t handle )
@@ -221,10 +204,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_AddRequiredTag")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FAddRequiredTag( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pTagName );
-		private FAddRequiredTag _AddRequiredTag;
+		private static extern bool _AddRequiredTag( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pTagName );
 		
 		#endregion
 		internal bool AddRequiredTag( UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pTagName )
@@ -234,10 +216,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_AddExcludedTag")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FAddExcludedTag( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pTagName );
-		private FAddExcludedTag _AddExcludedTag;
+		private static extern bool _AddExcludedTag( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pTagName );
 		
 		#endregion
 		internal bool AddExcludedTag( UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pTagName )
@@ -247,10 +228,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetReturnOnlyIDs")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetReturnOnlyIDs( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bReturnOnlyIDs );
-		private FSetReturnOnlyIDs _SetReturnOnlyIDs;
+		private static extern bool _SetReturnOnlyIDs( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bReturnOnlyIDs );
 		
 		#endregion
 		internal bool SetReturnOnlyIDs( UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bReturnOnlyIDs )
@@ -260,10 +240,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetReturnKeyValueTags")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetReturnKeyValueTags( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bReturnKeyValueTags );
-		private FSetReturnKeyValueTags _SetReturnKeyValueTags;
+		private static extern bool _SetReturnKeyValueTags( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bReturnKeyValueTags );
 		
 		#endregion
 		internal bool SetReturnKeyValueTags( UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bReturnKeyValueTags )
@@ -273,10 +252,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetReturnLongDescription")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetReturnLongDescription( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bReturnLongDescription );
-		private FSetReturnLongDescription _SetReturnLongDescription;
+		private static extern bool _SetReturnLongDescription( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bReturnLongDescription );
 		
 		#endregion
 		internal bool SetReturnLongDescription( UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bReturnLongDescription )
@@ -286,10 +264,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetReturnMetadata")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetReturnMetadata( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bReturnMetadata );
-		private FSetReturnMetadata _SetReturnMetadata;
+		private static extern bool _SetReturnMetadata( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bReturnMetadata );
 		
 		#endregion
 		internal bool SetReturnMetadata( UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bReturnMetadata )
@@ -299,10 +276,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetReturnChildren")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetReturnChildren( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bReturnChildren );
-		private FSetReturnChildren _SetReturnChildren;
+		private static extern bool _SetReturnChildren( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bReturnChildren );
 		
 		#endregion
 		internal bool SetReturnChildren( UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bReturnChildren )
@@ -312,10 +288,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetReturnAdditionalPreviews")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetReturnAdditionalPreviews( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bReturnAdditionalPreviews );
-		private FSetReturnAdditionalPreviews _SetReturnAdditionalPreviews;
+		private static extern bool _SetReturnAdditionalPreviews( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bReturnAdditionalPreviews );
 		
 		#endregion
 		internal bool SetReturnAdditionalPreviews( UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bReturnAdditionalPreviews )
@@ -325,10 +300,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetReturnTotalOnly")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetReturnTotalOnly( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bReturnTotalOnly );
-		private FSetReturnTotalOnly _SetReturnTotalOnly;
+		private static extern bool _SetReturnTotalOnly( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bReturnTotalOnly );
 		
 		#endregion
 		internal bool SetReturnTotalOnly( UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bReturnTotalOnly )
@@ -338,10 +312,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetReturnPlaytimeStats")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetReturnPlaytimeStats( IntPtr self, UGCQueryHandle_t handle, uint unDays );
-		private FSetReturnPlaytimeStats _SetReturnPlaytimeStats;
+		private static extern bool _SetReturnPlaytimeStats( IntPtr self, UGCQueryHandle_t handle, uint unDays );
 		
 		#endregion
 		internal bool SetReturnPlaytimeStats( UGCQueryHandle_t handle, uint unDays )
@@ -351,10 +324,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetLanguage")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetLanguage( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchLanguage );
-		private FSetLanguage _SetLanguage;
+		private static extern bool _SetLanguage( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchLanguage );
 		
 		#endregion
 		internal bool SetLanguage( UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchLanguage )
@@ -364,10 +336,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetAllowCachedResponse")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetAllowCachedResponse( IntPtr self, UGCQueryHandle_t handle, uint unMaxAgeSeconds );
-		private FSetAllowCachedResponse _SetAllowCachedResponse;
+		private static extern bool _SetAllowCachedResponse( IntPtr self, UGCQueryHandle_t handle, uint unMaxAgeSeconds );
 		
 		#endregion
 		internal bool SetAllowCachedResponse( UGCQueryHandle_t handle, uint unMaxAgeSeconds )
@@ -377,10 +348,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetCloudFileNameFilter")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetCloudFileNameFilter( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pMatchCloudFileName );
-		private FSetCloudFileNameFilter _SetCloudFileNameFilter;
+		private static extern bool _SetCloudFileNameFilter( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pMatchCloudFileName );
 		
 		#endregion
 		internal bool SetCloudFileNameFilter( UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pMatchCloudFileName )
@@ -390,10 +360,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetMatchAnyTag")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetMatchAnyTag( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bMatchAnyTag );
-		private FSetMatchAnyTag _SetMatchAnyTag;
+		private static extern bool _SetMatchAnyTag( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bMatchAnyTag );
 		
 		#endregion
 		internal bool SetMatchAnyTag( UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bMatchAnyTag )
@@ -403,10 +372,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetSearchText")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetSearchText( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pSearchText );
-		private FSetSearchText _SetSearchText;
+		private static extern bool _SetSearchText( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pSearchText );
 		
 		#endregion
 		internal bool SetSearchText( UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pSearchText )
@@ -416,10 +384,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetRankedByTrendDays")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetRankedByTrendDays( IntPtr self, UGCQueryHandle_t handle, uint unDays );
-		private FSetRankedByTrendDays _SetRankedByTrendDays;
+		private static extern bool _SetRankedByTrendDays( IntPtr self, UGCQueryHandle_t handle, uint unDays );
 		
 		#endregion
 		internal bool SetRankedByTrendDays( UGCQueryHandle_t handle, uint unDays )
@@ -429,10 +396,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_AddRequiredKeyValueTag")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FAddRequiredKeyValueTag( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pValue );
-		private FAddRequiredKeyValueTag _AddRequiredKeyValueTag;
+		private static extern bool _AddRequiredKeyValueTag( IntPtr self, UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pValue );
 		
 		#endregion
 		internal bool AddRequiredKeyValueTag( UGCQueryHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pValue )
@@ -442,33 +408,30 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FRequestUGCDetails( IntPtr self, PublishedFileId nPublishedFileID, uint unMaxAgeSeconds );
-		private FRequestUGCDetails _RequestUGCDetails;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_RequestUGCDetails")]
+		private static extern SteamAPICall_t _RequestUGCDetails( IntPtr self, PublishedFileId nPublishedFileID, uint unMaxAgeSeconds );
 		
 		#endregion
-		internal async Task<SteamUGCRequestUGCDetailsResult_t?> RequestUGCDetails( PublishedFileId nPublishedFileID, uint unMaxAgeSeconds )
+		internal CallbackResult RequestUGCDetails( PublishedFileId nPublishedFileID, uint unMaxAgeSeconds )
 		{
 			var returnValue = _RequestUGCDetails( Self, nPublishedFileID, unMaxAgeSeconds );
-			return await SteamUGCRequestUGCDetailsResult_t.GetResultAsync( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FCreateItem( IntPtr self, AppId nConsumerAppId, WorkshopFileType eFileType );
-		private FCreateItem _CreateItem;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_CreateItem")]
+		private static extern SteamAPICall_t _CreateItem( IntPtr self, AppId nConsumerAppId, WorkshopFileType eFileType );
 		
 		#endregion
-		internal async Task<CreateItemResult_t?> CreateItem( AppId nConsumerAppId, WorkshopFileType eFileType )
+		internal CallbackResult CreateItem( AppId nConsumerAppId, WorkshopFileType eFileType )
 		{
 			var returnValue = _CreateItem( Self, nConsumerAppId, eFileType );
-			return await CreateItemResult_t.GetResultAsync( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate UGCUpdateHandle_t FStartItemUpdate( IntPtr self, AppId nConsumerAppId, PublishedFileId nPublishedFileID );
-		private FStartItemUpdate _StartItemUpdate;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_StartItemUpdate")]
+		private static extern UGCUpdateHandle_t _StartItemUpdate( IntPtr self, AppId nConsumerAppId, PublishedFileId nPublishedFileID );
 		
 		#endregion
 		internal UGCUpdateHandle_t StartItemUpdate( AppId nConsumerAppId, PublishedFileId nPublishedFileID )
@@ -478,10 +441,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetItemTitle")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetItemTitle( IntPtr self, UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchTitle );
-		private FSetItemTitle _SetItemTitle;
+		private static extern bool _SetItemTitle( IntPtr self, UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchTitle );
 		
 		#endregion
 		internal bool SetItemTitle( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchTitle )
@@ -491,10 +453,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetItemDescription")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetItemDescription( IntPtr self, UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchDescription );
-		private FSetItemDescription _SetItemDescription;
+		private static extern bool _SetItemDescription( IntPtr self, UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchDescription );
 		
 		#endregion
 		internal bool SetItemDescription( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchDescription )
@@ -504,10 +465,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetItemUpdateLanguage")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetItemUpdateLanguage( IntPtr self, UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchLanguage );
-		private FSetItemUpdateLanguage _SetItemUpdateLanguage;
+		private static extern bool _SetItemUpdateLanguage( IntPtr self, UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchLanguage );
 		
 		#endregion
 		internal bool SetItemUpdateLanguage( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchLanguage )
@@ -517,10 +477,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetItemMetadata")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetItemMetadata( IntPtr self, UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchMetaData );
-		private FSetItemMetadata _SetItemMetadata;
+		private static extern bool _SetItemMetadata( IntPtr self, UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchMetaData );
 		
 		#endregion
 		internal bool SetItemMetadata( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchMetaData )
@@ -530,10 +489,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetItemVisibility")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetItemVisibility( IntPtr self, UGCUpdateHandle_t handle, RemoteStoragePublishedFileVisibility eVisibility );
-		private FSetItemVisibility _SetItemVisibility;
+		private static extern bool _SetItemVisibility( IntPtr self, UGCUpdateHandle_t handle, RemoteStoragePublishedFileVisibility eVisibility );
 		
 		#endregion
 		internal bool SetItemVisibility( UGCUpdateHandle_t handle, RemoteStoragePublishedFileVisibility eVisibility )
@@ -543,10 +501,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetItemTags")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetItemTags( IntPtr self, UGCUpdateHandle_t updateHandle, ref SteamParamStringArray_t pTags );
-		private FSetItemTags _SetItemTags;
+		private static extern bool _SetItemTags( IntPtr self, UGCUpdateHandle_t updateHandle, ref SteamParamStringArray_t pTags );
 		
 		#endregion
 		internal bool SetItemTags( UGCUpdateHandle_t updateHandle, ref SteamParamStringArray_t pTags )
@@ -556,10 +513,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetItemContent")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetItemContent( IntPtr self, UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszContentFolder );
-		private FSetItemContent _SetItemContent;
+		private static extern bool _SetItemContent( IntPtr self, UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszContentFolder );
 		
 		#endregion
 		internal bool SetItemContent( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszContentFolder )
@@ -569,10 +525,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetItemPreview")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetItemPreview( IntPtr self, UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszPreviewFile );
-		private FSetItemPreview _SetItemPreview;
+		private static extern bool _SetItemPreview( IntPtr self, UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszPreviewFile );
 		
 		#endregion
 		internal bool SetItemPreview( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszPreviewFile )
@@ -582,10 +537,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetAllowLegacyUpload")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSetAllowLegacyUpload( IntPtr self, UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bAllowLegacyUpload );
-		private FSetAllowLegacyUpload _SetAllowLegacyUpload;
+		private static extern bool _SetAllowLegacyUpload( IntPtr self, UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bAllowLegacyUpload );
 		
 		#endregion
 		internal bool SetAllowLegacyUpload( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.U1 )] bool bAllowLegacyUpload )
@@ -595,10 +549,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_RemoveItemKeyValueTags")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FRemoveItemKeyValueTags( IntPtr self, UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey );
-		private FRemoveItemKeyValueTags _RemoveItemKeyValueTags;
+		private static extern bool _RemoveItemKeyValueTags( IntPtr self, UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey );
 		
 		#endregion
 		internal bool RemoveItemKeyValueTags( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey )
@@ -608,10 +561,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_AddItemKeyValueTag")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FAddItemKeyValueTag( IntPtr self, UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchValue );
-		private FAddItemKeyValueTag _AddItemKeyValueTag;
+		private static extern bool _AddItemKeyValueTag( IntPtr self, UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchValue );
 		
 		#endregion
 		internal bool AddItemKeyValueTag( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchValue )
@@ -621,10 +573,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_AddItemPreviewFile")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FAddItemPreviewFile( IntPtr self, UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszPreviewFile, ItemPreviewType type );
-		private FAddItemPreviewFile _AddItemPreviewFile;
+		private static extern bool _AddItemPreviewFile( IntPtr self, UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszPreviewFile, ItemPreviewType type );
 		
 		#endregion
 		internal bool AddItemPreviewFile( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszPreviewFile, ItemPreviewType type )
@@ -634,10 +585,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_AddItemPreviewVideo")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FAddItemPreviewVideo( IntPtr self, UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszVideoID );
-		private FAddItemPreviewVideo _AddItemPreviewVideo;
+		private static extern bool _AddItemPreviewVideo( IntPtr self, UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszVideoID );
 		
 		#endregion
 		internal bool AddItemPreviewVideo( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszVideoID )
@@ -647,10 +597,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_UpdateItemPreviewFile")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FUpdateItemPreviewFile( IntPtr self, UGCUpdateHandle_t handle, uint index, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszPreviewFile );
-		private FUpdateItemPreviewFile _UpdateItemPreviewFile;
+		private static extern bool _UpdateItemPreviewFile( IntPtr self, UGCUpdateHandle_t handle, uint index, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszPreviewFile );
 		
 		#endregion
 		internal bool UpdateItemPreviewFile( UGCUpdateHandle_t handle, uint index, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszPreviewFile )
@@ -660,10 +609,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_UpdateItemPreviewVideo")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FUpdateItemPreviewVideo( IntPtr self, UGCUpdateHandle_t handle, uint index, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszVideoID );
-		private FUpdateItemPreviewVideo _UpdateItemPreviewVideo;
+		private static extern bool _UpdateItemPreviewVideo( IntPtr self, UGCUpdateHandle_t handle, uint index, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszVideoID );
 		
 		#endregion
 		internal bool UpdateItemPreviewVideo( UGCUpdateHandle_t handle, uint index, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszVideoID )
@@ -673,10 +621,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_RemoveItemPreview")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FRemoveItemPreview( IntPtr self, UGCUpdateHandle_t handle, uint index );
-		private FRemoveItemPreview _RemoveItemPreview;
+		private static extern bool _RemoveItemPreview( IntPtr self, UGCUpdateHandle_t handle, uint index );
 		
 		#endregion
 		internal bool RemoveItemPreview( UGCUpdateHandle_t handle, uint index )
@@ -686,21 +633,19 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FSubmitItemUpdate( IntPtr self, UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchChangeNote );
-		private FSubmitItemUpdate _SubmitItemUpdate;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SubmitItemUpdate")]
+		private static extern SteamAPICall_t _SubmitItemUpdate( IntPtr self, UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchChangeNote );
 		
 		#endregion
-		internal async Task<SubmitItemUpdateResult_t?> SubmitItemUpdate( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchChangeNote )
+		internal CallbackResult SubmitItemUpdate( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchChangeNote )
 		{
 			var returnValue = _SubmitItemUpdate( Self, handle, pchChangeNote );
-			return await SubmitItemUpdateResult_t.GetResultAsync( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate ItemUpdateStatus FGetItemUpdateProgress( IntPtr self, UGCUpdateHandle_t handle, ref ulong punBytesProcessed, ref ulong punBytesTotal );
-		private FGetItemUpdateProgress _GetItemUpdateProgress;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_GetItemUpdateProgress")]
+		private static extern ItemUpdateStatus _GetItemUpdateProgress( IntPtr self, UGCUpdateHandle_t handle, ref ulong punBytesProcessed, ref ulong punBytesTotal );
 		
 		#endregion
 		internal ItemUpdateStatus GetItemUpdateProgress( UGCUpdateHandle_t handle, ref ulong punBytesProcessed, ref ulong punBytesTotal )
@@ -710,81 +655,74 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FSetUserItemVote( IntPtr self, PublishedFileId nPublishedFileID, [MarshalAs( UnmanagedType.U1 )] bool bVoteUp );
-		private FSetUserItemVote _SetUserItemVote;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SetUserItemVote")]
+		private static extern SteamAPICall_t _SetUserItemVote( IntPtr self, PublishedFileId nPublishedFileID, [MarshalAs( UnmanagedType.U1 )] bool bVoteUp );
 		
 		#endregion
-		internal async Task<SetUserItemVoteResult_t?> SetUserItemVote( PublishedFileId nPublishedFileID, [MarshalAs( UnmanagedType.U1 )] bool bVoteUp )
+		internal CallbackResult SetUserItemVote( PublishedFileId nPublishedFileID, [MarshalAs( UnmanagedType.U1 )] bool bVoteUp )
 		{
 			var returnValue = _SetUserItemVote( Self, nPublishedFileID, bVoteUp );
-			return await SetUserItemVoteResult_t.GetResultAsync( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FGetUserItemVote( IntPtr self, PublishedFileId nPublishedFileID );
-		private FGetUserItemVote _GetUserItemVote;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_GetUserItemVote")]
+		private static extern SteamAPICall_t _GetUserItemVote( IntPtr self, PublishedFileId nPublishedFileID );
 		
 		#endregion
-		internal async Task<GetUserItemVoteResult_t?> GetUserItemVote( PublishedFileId nPublishedFileID )
+		internal CallbackResult GetUserItemVote( PublishedFileId nPublishedFileID )
 		{
 			var returnValue = _GetUserItemVote( Self, nPublishedFileID );
-			return await GetUserItemVoteResult_t.GetResultAsync( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FAddItemToFavorites( IntPtr self, AppId nAppId, PublishedFileId nPublishedFileID );
-		private FAddItemToFavorites _AddItemToFavorites;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_AddItemToFavorites")]
+		private static extern SteamAPICall_t _AddItemToFavorites( IntPtr self, AppId nAppId, PublishedFileId nPublishedFileID );
 		
 		#endregion
-		internal async Task<UserFavoriteItemsListChanged_t?> AddItemToFavorites( AppId nAppId, PublishedFileId nPublishedFileID )
+		internal CallbackResult AddItemToFavorites( AppId nAppId, PublishedFileId nPublishedFileID )
 		{
 			var returnValue = _AddItemToFavorites( Self, nAppId, nPublishedFileID );
-			return await UserFavoriteItemsListChanged_t.GetResultAsync( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FRemoveItemFromFavorites( IntPtr self, AppId nAppId, PublishedFileId nPublishedFileID );
-		private FRemoveItemFromFavorites _RemoveItemFromFavorites;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_RemoveItemFromFavorites")]
+		private static extern SteamAPICall_t _RemoveItemFromFavorites( IntPtr self, AppId nAppId, PublishedFileId nPublishedFileID );
 		
 		#endregion
-		internal async Task<UserFavoriteItemsListChanged_t?> RemoveItemFromFavorites( AppId nAppId, PublishedFileId nPublishedFileID )
+		internal CallbackResult RemoveItemFromFavorites( AppId nAppId, PublishedFileId nPublishedFileID )
 		{
 			var returnValue = _RemoveItemFromFavorites( Self, nAppId, nPublishedFileID );
-			return await UserFavoriteItemsListChanged_t.GetResultAsync( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FSubscribeItem( IntPtr self, PublishedFileId nPublishedFileID );
-		private FSubscribeItem _SubscribeItem;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SubscribeItem")]
+		private static extern SteamAPICall_t _SubscribeItem( IntPtr self, PublishedFileId nPublishedFileID );
 		
 		#endregion
-		internal async Task<RemoteStorageSubscribePublishedFileResult_t?> SubscribeItem( PublishedFileId nPublishedFileID )
+		internal CallbackResult SubscribeItem( PublishedFileId nPublishedFileID )
 		{
 			var returnValue = _SubscribeItem( Self, nPublishedFileID );
-			return await RemoteStorageSubscribePublishedFileResult_t.GetResultAsync( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FUnsubscribeItem( IntPtr self, PublishedFileId nPublishedFileID );
-		private FUnsubscribeItem _UnsubscribeItem;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_UnsubscribeItem")]
+		private static extern SteamAPICall_t _UnsubscribeItem( IntPtr self, PublishedFileId nPublishedFileID );
 		
 		#endregion
-		internal async Task<RemoteStorageUnsubscribePublishedFileResult_t?> UnsubscribeItem( PublishedFileId nPublishedFileID )
+		internal CallbackResult UnsubscribeItem( PublishedFileId nPublishedFileID )
 		{
 			var returnValue = _UnsubscribeItem( Self, nPublishedFileID );
-			return await RemoteStorageUnsubscribePublishedFileResult_t.GetResultAsync( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate uint FGetNumSubscribedItems( IntPtr self );
-		private FGetNumSubscribedItems _GetNumSubscribedItems;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_GetNumSubscribedItems")]
+		private static extern uint _GetNumSubscribedItems( IntPtr self );
 		
 		#endregion
 		internal uint GetNumSubscribedItems()
@@ -794,9 +732,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate uint FGetSubscribedItems( IntPtr self, [In,Out] PublishedFileId[]  pvecPublishedFileID, uint cMaxEntries );
-		private FGetSubscribedItems _GetSubscribedItems;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_GetSubscribedItems")]
+		private static extern uint _GetSubscribedItems( IntPtr self, [In,Out] PublishedFileId[]  pvecPublishedFileID, uint cMaxEntries );
 		
 		#endregion
 		internal uint GetSubscribedItems( [In,Out] PublishedFileId[]  pvecPublishedFileID, uint cMaxEntries )
@@ -806,9 +743,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate uint FGetItemState( IntPtr self, PublishedFileId nPublishedFileID );
-		private FGetItemState _GetItemState;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_GetItemState")]
+		private static extern uint _GetItemState( IntPtr self, PublishedFileId nPublishedFileID );
 		
 		#endregion
 		internal uint GetItemState( PublishedFileId nPublishedFileID )
@@ -818,10 +754,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_GetItemInstallInfo")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetItemInstallInfo( IntPtr self, PublishedFileId nPublishedFileID, ref ulong punSizeOnDisk, IntPtr pchFolder, uint cchFolderSize, ref uint punTimeStamp );
-		private FGetItemInstallInfo _GetItemInstallInfo;
+		private static extern bool _GetItemInstallInfo( IntPtr self, PublishedFileId nPublishedFileID, ref ulong punSizeOnDisk, IntPtr pchFolder, uint cchFolderSize, ref uint punTimeStamp );
 		
 		#endregion
 		internal bool GetItemInstallInfo( PublishedFileId nPublishedFileID, ref ulong punSizeOnDisk, out string pchFolder, ref uint punTimeStamp )
@@ -833,10 +768,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_GetItemDownloadInfo")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FGetItemDownloadInfo( IntPtr self, PublishedFileId nPublishedFileID, ref ulong punBytesDownloaded, ref ulong punBytesTotal );
-		private FGetItemDownloadInfo _GetItemDownloadInfo;
+		private static extern bool _GetItemDownloadInfo( IntPtr self, PublishedFileId nPublishedFileID, ref ulong punBytesDownloaded, ref ulong punBytesTotal );
 		
 		#endregion
 		internal bool GetItemDownloadInfo( PublishedFileId nPublishedFileID, ref ulong punBytesDownloaded, ref ulong punBytesTotal )
@@ -846,10 +780,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_DownloadItem")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FDownloadItem( IntPtr self, PublishedFileId nPublishedFileID, [MarshalAs( UnmanagedType.U1 )] bool bHighPriority );
-		private FDownloadItem _DownloadItem;
+		private static extern bool _DownloadItem( IntPtr self, PublishedFileId nPublishedFileID, [MarshalAs( UnmanagedType.U1 )] bool bHighPriority );
 		
 		#endregion
 		internal bool DownloadItem( PublishedFileId nPublishedFileID, [MarshalAs( UnmanagedType.U1 )] bool bHighPriority )
@@ -859,10 +792,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_BInitWorkshopForGameServer")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FBInitWorkshopForGameServer( IntPtr self, DepotId_t unWorkshopDepotID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszFolder );
-		private FBInitWorkshopForGameServer _BInitWorkshopForGameServer;
+		private static extern bool _BInitWorkshopForGameServer( IntPtr self, DepotId_t unWorkshopDepotID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszFolder );
 		
 		#endregion
 		internal bool BInitWorkshopForGameServer( DepotId_t unWorkshopDepotID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszFolder )
@@ -872,9 +804,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FSuspendDownloads( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bSuspend );
-		private FSuspendDownloads _SuspendDownloads;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_SuspendDownloads")]
+		private static extern void _SuspendDownloads( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bSuspend );
 		
 		#endregion
 		internal void SuspendDownloads( [MarshalAs( UnmanagedType.U1 )] bool bSuspend )
@@ -883,111 +814,102 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FStartPlaytimeTracking( IntPtr self, [In,Out] PublishedFileId[]  pvecPublishedFileID, uint unNumPublishedFileIDs );
-		private FStartPlaytimeTracking _StartPlaytimeTracking;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_StartPlaytimeTracking")]
+		private static extern SteamAPICall_t _StartPlaytimeTracking( IntPtr self, [In,Out] PublishedFileId[]  pvecPublishedFileID, uint unNumPublishedFileIDs );
 		
 		#endregion
-		internal async Task<StartPlaytimeTrackingResult_t?> StartPlaytimeTracking( [In,Out] PublishedFileId[]  pvecPublishedFileID, uint unNumPublishedFileIDs )
+		internal CallbackResult StartPlaytimeTracking( [In,Out] PublishedFileId[]  pvecPublishedFileID, uint unNumPublishedFileIDs )
 		{
 			var returnValue = _StartPlaytimeTracking( Self, pvecPublishedFileID, unNumPublishedFileIDs );
-			return await StartPlaytimeTrackingResult_t.GetResultAsync( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FStopPlaytimeTracking( IntPtr self, [In,Out] PublishedFileId[]  pvecPublishedFileID, uint unNumPublishedFileIDs );
-		private FStopPlaytimeTracking _StopPlaytimeTracking;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_StopPlaytimeTracking")]
+		private static extern SteamAPICall_t _StopPlaytimeTracking( IntPtr self, [In,Out] PublishedFileId[]  pvecPublishedFileID, uint unNumPublishedFileIDs );
 		
 		#endregion
-		internal async Task<StopPlaytimeTrackingResult_t?> StopPlaytimeTracking( [In,Out] PublishedFileId[]  pvecPublishedFileID, uint unNumPublishedFileIDs )
+		internal CallbackResult StopPlaytimeTracking( [In,Out] PublishedFileId[]  pvecPublishedFileID, uint unNumPublishedFileIDs )
 		{
 			var returnValue = _StopPlaytimeTracking( Self, pvecPublishedFileID, unNumPublishedFileIDs );
-			return await StopPlaytimeTrackingResult_t.GetResultAsync( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FStopPlaytimeTrackingForAllItems( IntPtr self );
-		private FStopPlaytimeTrackingForAllItems _StopPlaytimeTrackingForAllItems;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_StopPlaytimeTrackingForAllItems")]
+		private static extern SteamAPICall_t _StopPlaytimeTrackingForAllItems( IntPtr self );
 		
 		#endregion
-		internal async Task<StopPlaytimeTrackingResult_t?> StopPlaytimeTrackingForAllItems()
+		internal CallbackResult StopPlaytimeTrackingForAllItems()
 		{
 			var returnValue = _StopPlaytimeTrackingForAllItems( Self );
-			return await StopPlaytimeTrackingResult_t.GetResultAsync( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FAddDependency( IntPtr self, PublishedFileId nParentPublishedFileID, PublishedFileId nChildPublishedFileID );
-		private FAddDependency _AddDependency;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_AddDependency")]
+		private static extern SteamAPICall_t _AddDependency( IntPtr self, PublishedFileId nParentPublishedFileID, PublishedFileId nChildPublishedFileID );
 		
 		#endregion
-		internal async Task<AddUGCDependencyResult_t?> AddDependency( PublishedFileId nParentPublishedFileID, PublishedFileId nChildPublishedFileID )
+		internal CallbackResult AddDependency( PublishedFileId nParentPublishedFileID, PublishedFileId nChildPublishedFileID )
 		{
 			var returnValue = _AddDependency( Self, nParentPublishedFileID, nChildPublishedFileID );
-			return await AddUGCDependencyResult_t.GetResultAsync( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FRemoveDependency( IntPtr self, PublishedFileId nParentPublishedFileID, PublishedFileId nChildPublishedFileID );
-		private FRemoveDependency _RemoveDependency;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_RemoveDependency")]
+		private static extern SteamAPICall_t _RemoveDependency( IntPtr self, PublishedFileId nParentPublishedFileID, PublishedFileId nChildPublishedFileID );
 		
 		#endregion
-		internal async Task<RemoveUGCDependencyResult_t?> RemoveDependency( PublishedFileId nParentPublishedFileID, PublishedFileId nChildPublishedFileID )
+		internal CallbackResult RemoveDependency( PublishedFileId nParentPublishedFileID, PublishedFileId nChildPublishedFileID )
 		{
 			var returnValue = _RemoveDependency( Self, nParentPublishedFileID, nChildPublishedFileID );
-			return await RemoveUGCDependencyResult_t.GetResultAsync( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FAddAppDependency( IntPtr self, PublishedFileId nPublishedFileID, AppId nAppID );
-		private FAddAppDependency _AddAppDependency;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_AddAppDependency")]
+		private static extern SteamAPICall_t _AddAppDependency( IntPtr self, PublishedFileId nPublishedFileID, AppId nAppID );
 		
 		#endregion
-		internal async Task<AddAppDependencyResult_t?> AddAppDependency( PublishedFileId nPublishedFileID, AppId nAppID )
+		internal CallbackResult AddAppDependency( PublishedFileId nPublishedFileID, AppId nAppID )
 		{
 			var returnValue = _AddAppDependency( Self, nPublishedFileID, nAppID );
-			return await AddAppDependencyResult_t.GetResultAsync( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FRemoveAppDependency( IntPtr self, PublishedFileId nPublishedFileID, AppId nAppID );
-		private FRemoveAppDependency _RemoveAppDependency;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_RemoveAppDependency")]
+		private static extern SteamAPICall_t _RemoveAppDependency( IntPtr self, PublishedFileId nPublishedFileID, AppId nAppID );
 		
 		#endregion
-		internal async Task<RemoveAppDependencyResult_t?> RemoveAppDependency( PublishedFileId nPublishedFileID, AppId nAppID )
+		internal CallbackResult RemoveAppDependency( PublishedFileId nPublishedFileID, AppId nAppID )
 		{
 			var returnValue = _RemoveAppDependency( Self, nPublishedFileID, nAppID );
-			return await RemoveAppDependencyResult_t.GetResultAsync( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FGetAppDependencies( IntPtr self, PublishedFileId nPublishedFileID );
-		private FGetAppDependencies _GetAppDependencies;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_GetAppDependencies")]
+		private static extern SteamAPICall_t _GetAppDependencies( IntPtr self, PublishedFileId nPublishedFileID );
 		
 		#endregion
-		internal async Task<GetAppDependenciesResult_t?> GetAppDependencies( PublishedFileId nPublishedFileID )
+		internal CallbackResult GetAppDependencies( PublishedFileId nPublishedFileID )
 		{
 			var returnValue = _GetAppDependencies( Self, nPublishedFileID );
-			return await GetAppDependenciesResult_t.GetResultAsync( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FDeleteItem( IntPtr self, PublishedFileId nPublishedFileID );
-		private FDeleteItem _DeleteItem;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_DeleteItem")]
+		private static extern SteamAPICall_t _DeleteItem( IntPtr self, PublishedFileId nPublishedFileID );
 		
 		#endregion
-		internal async Task<DeleteItemResult_t?> DeleteItem( PublishedFileId nPublishedFileID )
+		internal CallbackResult DeleteItem( PublishedFileId nPublishedFileID )
 		{
 			var returnValue = _DeleteItem( Self, nPublishedFileID );
-			return await DeleteItemResult_t.GetResultAsync( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 	}

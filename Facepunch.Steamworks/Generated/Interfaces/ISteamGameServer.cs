@@ -9,8 +9,6 @@ namespace Steamworks
 {
 	internal class ISteamGameServer : SteamInterface
 	{
-		public override string InterfaceName => "SteamGameServer012";
-		
 		public override void InitInternals()
 		{
 		}
@@ -21,10 +19,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_InitGameServer")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FInitGameServer( IntPtr self, uint unIP, ushort usGamePort, ushort usQueryPort, uint unFlags, AppId nGameAppId, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersionString );
-		private FInitGameServer _InitGameServer;
+		private static extern bool _InitGameServer( IntPtr self, uint unIP, ushort usGamePort, ushort usQueryPort, uint unFlags, AppId nGameAppId, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersionString );
 		
 		#endregion
 		internal bool InitGameServer( uint unIP, ushort usGamePort, ushort usQueryPort, uint unFlags, AppId nGameAppId, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersionString )
@@ -34,9 +31,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FSetProduct( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszProduct );
-		private FSetProduct _SetProduct;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SetProduct")]
+		private static extern void _SetProduct( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszProduct );
 		
 		#endregion
 		internal void SetProduct( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszProduct )
@@ -45,9 +41,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FSetGameDescription( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszGameDescription );
-		private FSetGameDescription _SetGameDescription;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SetGameDescription")]
+		private static extern void _SetGameDescription( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszGameDescription );
 		
 		#endregion
 		internal void SetGameDescription( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszGameDescription )
@@ -56,9 +51,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FSetModDir( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszModDir );
-		private FSetModDir _SetModDir;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SetModDir")]
+		private static extern void _SetModDir( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszModDir );
 		
 		#endregion
 		internal void SetModDir( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszModDir )
@@ -67,9 +61,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FSetDedicatedServer( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bDedicated );
-		private FSetDedicatedServer _SetDedicatedServer;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SetDedicatedServer")]
+		private static extern void _SetDedicatedServer( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bDedicated );
 		
 		#endregion
 		internal void SetDedicatedServer( [MarshalAs( UnmanagedType.U1 )] bool bDedicated )
@@ -78,9 +71,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FLogOn( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszToken );
-		private FLogOn _LogOn;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_LogOn")]
+		private static extern void _LogOn( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszToken );
 		
 		#endregion
 		internal void LogOn( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszToken )
@@ -89,9 +81,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FLogOnAnonymous( IntPtr self );
-		private FLogOnAnonymous _LogOnAnonymous;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_LogOnAnonymous")]
+		private static extern void _LogOnAnonymous( IntPtr self );
 		
 		#endregion
 		internal void LogOnAnonymous()
@@ -100,9 +91,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FLogOff( IntPtr self );
-		private FLogOff _LogOff;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_LogOff")]
+		private static extern void _LogOff( IntPtr self );
 		
 		#endregion
 		internal void LogOff()
@@ -111,10 +101,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_BLoggedOn")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FBLoggedOn( IntPtr self );
-		private FBLoggedOn _BLoggedOn;
+		private static extern bool _BLoggedOn( IntPtr self );
 		
 		#endregion
 		internal bool BLoggedOn()
@@ -124,10 +113,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_BSecure")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FBSecure( IntPtr self );
-		private FBSecure _BSecure;
+		private static extern bool _BSecure( IntPtr self );
 		
 		#endregion
 		internal bool BSecure()
@@ -137,32 +125,20 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		#if PLATFORM_WIN
-		private delegate void FGetSteamID( IntPtr self, ref SteamId retVal );
-		#else
-		private delegate SteamId FGetSteamID( IntPtr self );
-		#endif
-		private FGetSteamID _GetSteamID;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_GetSteamID")]
+		private static extern SteamId _GetSteamID( IntPtr self );
 		
 		#endregion
 		internal SteamId GetSteamID()
 		{
-			#if PLATFORM_WIN
-			var retVal = default( SteamId );
-			_GetSteamID( Self, ref retVal );
-			return retVal;
-			#else
 			var returnValue = _GetSteamID( Self );
 			return returnValue;
-			#endif
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_WasRestartRequested")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FWasRestartRequested( IntPtr self );
-		private FWasRestartRequested _WasRestartRequested;
+		private static extern bool _WasRestartRequested( IntPtr self );
 		
 		#endregion
 		internal bool WasRestartRequested()
@@ -172,9 +148,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FSetMaxPlayerCount( IntPtr self, int cPlayersMax );
-		private FSetMaxPlayerCount _SetMaxPlayerCount;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SetMaxPlayerCount")]
+		private static extern void _SetMaxPlayerCount( IntPtr self, int cPlayersMax );
 		
 		#endregion
 		internal void SetMaxPlayerCount( int cPlayersMax )
@@ -183,9 +158,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FSetBotPlayerCount( IntPtr self, int cBotplayers );
-		private FSetBotPlayerCount _SetBotPlayerCount;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SetBotPlayerCount")]
+		private static extern void _SetBotPlayerCount( IntPtr self, int cBotplayers );
 		
 		#endregion
 		internal void SetBotPlayerCount( int cBotplayers )
@@ -194,9 +168,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FSetServerName( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszServerName );
-		private FSetServerName _SetServerName;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SetServerName")]
+		private static extern void _SetServerName( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszServerName );
 		
 		#endregion
 		internal void SetServerName( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszServerName )
@@ -205,9 +178,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FSetMapName( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszMapName );
-		private FSetMapName _SetMapName;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SetMapName")]
+		private static extern void _SetMapName( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszMapName );
 		
 		#endregion
 		internal void SetMapName( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszMapName )
@@ -216,9 +188,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FSetPasswordProtected( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bPasswordProtected );
-		private FSetPasswordProtected _SetPasswordProtected;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SetPasswordProtected")]
+		private static extern void _SetPasswordProtected( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bPasswordProtected );
 		
 		#endregion
 		internal void SetPasswordProtected( [MarshalAs( UnmanagedType.U1 )] bool bPasswordProtected )
@@ -227,9 +198,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FSetSpectatorPort( IntPtr self, ushort unSpectatorPort );
-		private FSetSpectatorPort _SetSpectatorPort;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SetSpectatorPort")]
+		private static extern void _SetSpectatorPort( IntPtr self, ushort unSpectatorPort );
 		
 		#endregion
 		internal void SetSpectatorPort( ushort unSpectatorPort )
@@ -238,9 +208,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FSetSpectatorServerName( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszSpectatorServerName );
-		private FSetSpectatorServerName _SetSpectatorServerName;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SetSpectatorServerName")]
+		private static extern void _SetSpectatorServerName( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszSpectatorServerName );
 		
 		#endregion
 		internal void SetSpectatorServerName( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszSpectatorServerName )
@@ -249,9 +218,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FClearAllKeyValues( IntPtr self );
-		private FClearAllKeyValues _ClearAllKeyValues;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_ClearAllKeyValues")]
+		private static extern void _ClearAllKeyValues( IntPtr self );
 		
 		#endregion
 		internal void ClearAllKeyValues()
@@ -260,9 +228,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FSetKeyValue( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pValue );
-		private FSetKeyValue _SetKeyValue;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SetKeyValue")]
+		private static extern void _SetKeyValue( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pValue );
 		
 		#endregion
 		internal void SetKeyValue( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pValue )
@@ -271,9 +238,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FSetGameTags( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchGameTags );
-		private FSetGameTags _SetGameTags;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SetGameTags")]
+		private static extern void _SetGameTags( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchGameTags );
 		
 		#endregion
 		internal void SetGameTags( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchGameTags )
@@ -282,9 +248,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FSetGameData( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchGameData );
-		private FSetGameData _SetGameData;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SetGameData")]
+		private static extern void _SetGameData( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchGameData );
 		
 		#endregion
 		internal void SetGameData( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchGameData )
@@ -293,9 +258,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FSetRegion( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszRegion );
-		private FSetRegion _SetRegion;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SetRegion")]
+		private static extern void _SetRegion( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszRegion );
 		
 		#endregion
 		internal void SetRegion( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszRegion )
@@ -304,10 +268,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SendUserConnectAndAuthenticate")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FSendUserConnectAndAuthenticate( IntPtr self, uint unIPClient, IntPtr pvAuthBlob, uint cubAuthBlobSize, ref SteamId pSteamIDUser );
-		private FSendUserConnectAndAuthenticate _SendUserConnectAndAuthenticate;
+		private static extern bool _SendUserConnectAndAuthenticate( IntPtr self, uint unIPClient, IntPtr pvAuthBlob, uint cubAuthBlobSize, ref SteamId pSteamIDUser );
 		
 		#endregion
 		internal bool SendUserConnectAndAuthenticate( uint unIPClient, IntPtr pvAuthBlob, uint cubAuthBlobSize, ref SteamId pSteamIDUser )
@@ -317,31 +280,19 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		#if PLATFORM_WIN
-		private delegate void FCreateUnauthenticatedUserConnection( IntPtr self, ref SteamId retVal );
-		#else
-		private delegate SteamId FCreateUnauthenticatedUserConnection( IntPtr self );
-		#endif
-		private FCreateUnauthenticatedUserConnection _CreateUnauthenticatedUserConnection;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_CreateUnauthenticatedUserConnection")]
+		private static extern SteamId _CreateUnauthenticatedUserConnection( IntPtr self );
 		
 		#endregion
 		internal SteamId CreateUnauthenticatedUserConnection()
 		{
-			#if PLATFORM_WIN
-			var retVal = default( SteamId );
-			_CreateUnauthenticatedUserConnection( Self, ref retVal );
-			return retVal;
-			#else
 			var returnValue = _CreateUnauthenticatedUserConnection( Self );
 			return returnValue;
-			#endif
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FSendUserDisconnect( IntPtr self, SteamId steamIDUser );
-		private FSendUserDisconnect _SendUserDisconnect;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SendUserDisconnect")]
+		private static extern void _SendUserDisconnect( IntPtr self, SteamId steamIDUser );
 		
 		#endregion
 		internal void SendUserDisconnect( SteamId steamIDUser )
@@ -350,10 +301,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_BUpdateUserData")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FBUpdateUserData( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPlayerName, uint uScore );
-		private FBUpdateUserData _BUpdateUserData;
+		private static extern bool _BUpdateUserData( IntPtr self, SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPlayerName, uint uScore );
 		
 		#endregion
 		internal bool BUpdateUserData( SteamId steamIDUser, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPlayerName, uint uScore )
@@ -363,9 +313,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate HAuthTicket FGetAuthSessionTicket( IntPtr self, IntPtr pTicket, int cbMaxTicket, ref uint pcbTicket );
-		private FGetAuthSessionTicket _GetAuthSessionTicket;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_GetAuthSessionTicket")]
+		private static extern HAuthTicket _GetAuthSessionTicket( IntPtr self, IntPtr pTicket, int cbMaxTicket, ref uint pcbTicket );
 		
 		#endregion
 		internal HAuthTicket GetAuthSessionTicket( IntPtr pTicket, int cbMaxTicket, ref uint pcbTicket )
@@ -375,9 +324,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate BeginAuthResult FBeginAuthSession( IntPtr self, IntPtr pAuthTicket, int cbAuthTicket, SteamId steamID );
-		private FBeginAuthSession _BeginAuthSession;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_BeginAuthSession")]
+		private static extern BeginAuthResult _BeginAuthSession( IntPtr self, IntPtr pAuthTicket, int cbAuthTicket, SteamId steamID );
 		
 		#endregion
 		internal BeginAuthResult BeginAuthSession( IntPtr pAuthTicket, int cbAuthTicket, SteamId steamID )
@@ -387,9 +335,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FEndAuthSession( IntPtr self, SteamId steamID );
-		private FEndAuthSession _EndAuthSession;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_EndAuthSession")]
+		private static extern void _EndAuthSession( IntPtr self, SteamId steamID );
 		
 		#endregion
 		internal void EndAuthSession( SteamId steamID )
@@ -398,9 +345,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FCancelAuthTicket( IntPtr self, HAuthTicket hAuthTicket );
-		private FCancelAuthTicket _CancelAuthTicket;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_CancelAuthTicket")]
+		private static extern void _CancelAuthTicket( IntPtr self, HAuthTicket hAuthTicket );
 		
 		#endregion
 		internal void CancelAuthTicket( HAuthTicket hAuthTicket )
@@ -409,9 +355,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate UserHasLicenseForAppResult FUserHasLicenseForApp( IntPtr self, SteamId steamID, AppId appID );
-		private FUserHasLicenseForApp _UserHasLicenseForApp;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_UserHasLicenseForApp")]
+		private static extern UserHasLicenseForAppResult _UserHasLicenseForApp( IntPtr self, SteamId steamID, AppId appID );
 		
 		#endregion
 		internal UserHasLicenseForAppResult UserHasLicenseForApp( SteamId steamID, AppId appID )
@@ -421,10 +366,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_RequestUserGroupStatus")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FRequestUserGroupStatus( IntPtr self, SteamId steamIDUser, SteamId steamIDGroup );
-		private FRequestUserGroupStatus _RequestUserGroupStatus;
+		private static extern bool _RequestUserGroupStatus( IntPtr self, SteamId steamIDUser, SteamId steamIDGroup );
 		
 		#endregion
 		internal bool RequestUserGroupStatus( SteamId steamIDUser, SteamId steamIDGroup )
@@ -434,9 +378,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FGetGameplayStats( IntPtr self );
-		private FGetGameplayStats _GetGameplayStats;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_GetGameplayStats")]
+		private static extern void _GetGameplayStats( IntPtr self );
 		
 		#endregion
 		internal void GetGameplayStats()
@@ -445,21 +388,19 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FGetServerReputation( IntPtr self );
-		private FGetServerReputation _GetServerReputation;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_GetServerReputation")]
+		private static extern SteamAPICall_t _GetServerReputation( IntPtr self );
 		
 		#endregion
-		internal async Task<GSReputation_t?> GetServerReputation()
+		internal CallbackResult GetServerReputation()
 		{
 			var returnValue = _GetServerReputation( Self );
-			return await GSReputation_t.GetResultAsync( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate uint FGetPublicIP( IntPtr self );
-		private FGetPublicIP _GetPublicIP;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_GetPublicIP")]
+		private static extern uint _GetPublicIP( IntPtr self );
 		
 		#endregion
 		internal uint GetPublicIP()
@@ -469,10 +410,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_HandleIncomingPacket")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FHandleIncomingPacket( IntPtr self, IntPtr pData, int cbData, uint srcIP, ushort srcPort );
-		private FHandleIncomingPacket _HandleIncomingPacket;
+		private static extern bool _HandleIncomingPacket( IntPtr self, IntPtr pData, int cbData, uint srcIP, ushort srcPort );
 		
 		#endregion
 		internal bool HandleIncomingPacket( IntPtr pData, int cbData, uint srcIP, ushort srcPort )
@@ -482,9 +422,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate int FGetNextOutgoingPacket( IntPtr self, IntPtr pOut, int cbMaxOut, ref uint pNetAdr, ref ushort pPort );
-		private FGetNextOutgoingPacket _GetNextOutgoingPacket;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_GetNextOutgoingPacket")]
+		private static extern int _GetNextOutgoingPacket( IntPtr self, IntPtr pOut, int cbMaxOut, ref uint pNetAdr, ref ushort pPort );
 		
 		#endregion
 		internal int GetNextOutgoingPacket( IntPtr pOut, int cbMaxOut, ref uint pNetAdr, ref ushort pPort )
@@ -494,9 +433,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FEnableHeartbeats( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bActive );
-		private FEnableHeartbeats _EnableHeartbeats;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_EnableHeartbeats")]
+		private static extern void _EnableHeartbeats( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bActive );
 		
 		#endregion
 		internal void EnableHeartbeats( [MarshalAs( UnmanagedType.U1 )] bool bActive )
@@ -505,9 +443,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FSetHeartbeatInterval( IntPtr self, int iHeartbeatInterval );
-		private FSetHeartbeatInterval _SetHeartbeatInterval;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_SetHeartbeatInterval")]
+		private static extern void _SetHeartbeatInterval( IntPtr self, int iHeartbeatInterval );
 		
 		#endregion
 		internal void SetHeartbeatInterval( int iHeartbeatInterval )
@@ -516,9 +453,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FForceHeartbeat( IntPtr self );
-		private FForceHeartbeat _ForceHeartbeat;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_ForceHeartbeat")]
+		private static extern void _ForceHeartbeat( IntPtr self );
 		
 		#endregion
 		internal void ForceHeartbeat()
@@ -527,27 +463,25 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FAssociateWithClan( IntPtr self, SteamId steamIDClan );
-		private FAssociateWithClan _AssociateWithClan;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_AssociateWithClan")]
+		private static extern SteamAPICall_t _AssociateWithClan( IntPtr self, SteamId steamIDClan );
 		
 		#endregion
-		internal async Task<AssociateWithClanResult_t?> AssociateWithClan( SteamId steamIDClan )
+		internal CallbackResult AssociateWithClan( SteamId steamIDClan )
 		{
 			var returnValue = _AssociateWithClan( Self, steamIDClan );
-			return await AssociateWithClanResult_t.GetResultAsync( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate SteamAPICall_t FComputeNewPlayerCompatibility( IntPtr self, SteamId steamIDNewPlayer );
-		private FComputeNewPlayerCompatibility _ComputeNewPlayerCompatibility;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_ComputeNewPlayerCompatibility")]
+		private static extern SteamAPICall_t _ComputeNewPlayerCompatibility( IntPtr self, SteamId steamIDNewPlayer );
 		
 		#endregion
-		internal async Task<ComputeNewPlayerCompatibilityResult_t?> ComputeNewPlayerCompatibility( SteamId steamIDNewPlayer )
+		internal CallbackResult ComputeNewPlayerCompatibility( SteamId steamIDNewPlayer )
 		{
 			var returnValue = _ComputeNewPlayerCompatibility( Self, steamIDNewPlayer );
-			return await ComputeNewPlayerCompatibilityResult_t.GetResultAsync( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 	}

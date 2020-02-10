@@ -20,7 +20,6 @@ namespace Generator
 
             var parser = new CodeParser( @"steam_sdk" );
 
-			parser.ParseClasses();
 			parser.ExtendDefinition( def );
 
 			Definitions = def;

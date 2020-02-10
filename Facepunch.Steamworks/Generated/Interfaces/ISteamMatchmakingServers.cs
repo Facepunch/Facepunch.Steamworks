@@ -9,8 +9,6 @@ namespace Steamworks
 {
 	internal class ISteamMatchmakingServers : SteamInterface
 	{
-		public override string InterfaceName => "SteamMatchMakingServers002";
-		
 		public override void InitInternals()
 		{
 		}
@@ -21,9 +19,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate HServerListRequest FRequestInternetServerList( IntPtr self, AppId iApp, [In,Out] ref MatchMakingKeyValuePair[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
-		private FRequestInternetServerList _RequestInternetServerList;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmakingServers_RequestInternetServerList")]
+		private static extern HServerListRequest _RequestInternetServerList( IntPtr self, AppId iApp, [In,Out] ref MatchMakingKeyValuePair[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
 		
 		#endregion
 		internal HServerListRequest RequestInternetServerList( AppId iApp, [In,Out] ref MatchMakingKeyValuePair[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
@@ -33,9 +30,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate HServerListRequest FRequestLANServerList( IntPtr self, AppId iApp, IntPtr pRequestServersResponse );
-		private FRequestLANServerList _RequestLANServerList;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmakingServers_RequestLANServerList")]
+		private static extern HServerListRequest _RequestLANServerList( IntPtr self, AppId iApp, IntPtr pRequestServersResponse );
 		
 		#endregion
 		internal HServerListRequest RequestLANServerList( AppId iApp, IntPtr pRequestServersResponse )
@@ -45,9 +41,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate HServerListRequest FRequestFriendsServerList( IntPtr self, AppId iApp, [In,Out] ref MatchMakingKeyValuePair[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
-		private FRequestFriendsServerList _RequestFriendsServerList;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmakingServers_RequestFriendsServerList")]
+		private static extern HServerListRequest _RequestFriendsServerList( IntPtr self, AppId iApp, [In,Out] ref MatchMakingKeyValuePair[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
 		
 		#endregion
 		internal HServerListRequest RequestFriendsServerList( AppId iApp, [In,Out] ref MatchMakingKeyValuePair[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
@@ -57,9 +52,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate HServerListRequest FRequestFavoritesServerList( IntPtr self, AppId iApp, [In,Out] ref MatchMakingKeyValuePair[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
-		private FRequestFavoritesServerList _RequestFavoritesServerList;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmakingServers_RequestFavoritesServerList")]
+		private static extern HServerListRequest _RequestFavoritesServerList( IntPtr self, AppId iApp, [In,Out] ref MatchMakingKeyValuePair[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
 		
 		#endregion
 		internal HServerListRequest RequestFavoritesServerList( AppId iApp, [In,Out] ref MatchMakingKeyValuePair[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
@@ -69,9 +63,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate HServerListRequest FRequestHistoryServerList( IntPtr self, AppId iApp, [In,Out] ref MatchMakingKeyValuePair[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
-		private FRequestHistoryServerList _RequestHistoryServerList;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmakingServers_RequestHistoryServerList")]
+		private static extern HServerListRequest _RequestHistoryServerList( IntPtr self, AppId iApp, [In,Out] ref MatchMakingKeyValuePair[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
 		
 		#endregion
 		internal HServerListRequest RequestHistoryServerList( AppId iApp, [In,Out] ref MatchMakingKeyValuePair[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
@@ -81,9 +74,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate HServerListRequest FRequestSpectatorServerList( IntPtr self, AppId iApp, [In,Out] ref MatchMakingKeyValuePair[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
-		private FRequestSpectatorServerList _RequestSpectatorServerList;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmakingServers_RequestSpectatorServerList")]
+		private static extern HServerListRequest _RequestSpectatorServerList( IntPtr self, AppId iApp, [In,Out] ref MatchMakingKeyValuePair[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse );
 		
 		#endregion
 		internal HServerListRequest RequestSpectatorServerList( AppId iApp, [In,Out] ref MatchMakingKeyValuePair[]  ppchFilters, uint nFilters, IntPtr pRequestServersResponse )
@@ -93,9 +85,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FReleaseRequest( IntPtr self, HServerListRequest hServerListRequest );
-		private FReleaseRequest _ReleaseRequest;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmakingServers_ReleaseRequest")]
+		private static extern void _ReleaseRequest( IntPtr self, HServerListRequest hServerListRequest );
 		
 		#endregion
 		internal void ReleaseRequest( HServerListRequest hServerListRequest )
@@ -104,9 +95,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate IntPtr FGetServerDetails( IntPtr self, HServerListRequest hRequest, int iServer );
-		private FGetServerDetails _GetServerDetails;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmakingServers_GetServerDetails")]
+		private static extern IntPtr _GetServerDetails( IntPtr self, HServerListRequest hRequest, int iServer );
 		
 		#endregion
 		internal gameserveritem_t GetServerDetails( HServerListRequest hRequest, int iServer )
@@ -116,9 +106,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FCancelQuery( IntPtr self, HServerListRequest hRequest );
-		private FCancelQuery _CancelQuery;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmakingServers_CancelQuery")]
+		private static extern void _CancelQuery( IntPtr self, HServerListRequest hRequest );
 		
 		#endregion
 		internal void CancelQuery( HServerListRequest hRequest )
@@ -127,9 +116,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FRefreshQuery( IntPtr self, HServerListRequest hRequest );
-		private FRefreshQuery _RefreshQuery;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmakingServers_RefreshQuery")]
+		private static extern void _RefreshQuery( IntPtr self, HServerListRequest hRequest );
 		
 		#endregion
 		internal void RefreshQuery( HServerListRequest hRequest )
@@ -138,10 +126,9 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmakingServers_IsRefreshing")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private delegate bool FIsRefreshing( IntPtr self, HServerListRequest hRequest );
-		private FIsRefreshing _IsRefreshing;
+		private static extern bool _IsRefreshing( IntPtr self, HServerListRequest hRequest );
 		
 		#endregion
 		internal bool IsRefreshing( HServerListRequest hRequest )
@@ -151,9 +138,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate int FGetServerCount( IntPtr self, HServerListRequest hRequest );
-		private FGetServerCount _GetServerCount;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmakingServers_GetServerCount")]
+		private static extern int _GetServerCount( IntPtr self, HServerListRequest hRequest );
 		
 		#endregion
 		internal int GetServerCount( HServerListRequest hRequest )
@@ -163,9 +149,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FRefreshServer( IntPtr self, HServerListRequest hRequest, int iServer );
-		private FRefreshServer _RefreshServer;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmakingServers_RefreshServer")]
+		private static extern void _RefreshServer( IntPtr self, HServerListRequest hRequest, int iServer );
 		
 		#endregion
 		internal void RefreshServer( HServerListRequest hRequest, int iServer )
@@ -174,9 +159,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate HServerQuery FPingServer( IntPtr self, uint unIP, ushort usPort, IntPtr pRequestServersResponse );
-		private FPingServer _PingServer;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmakingServers_PingServer")]
+		private static extern HServerQuery _PingServer( IntPtr self, uint unIP, ushort usPort, IntPtr pRequestServersResponse );
 		
 		#endregion
 		internal HServerQuery PingServer( uint unIP, ushort usPort, IntPtr pRequestServersResponse )
@@ -186,9 +170,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate HServerQuery FPlayerDetails( IntPtr self, uint unIP, ushort usPort, IntPtr pRequestServersResponse );
-		private FPlayerDetails _PlayerDetails;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmakingServers_PlayerDetails")]
+		private static extern HServerQuery _PlayerDetails( IntPtr self, uint unIP, ushort usPort, IntPtr pRequestServersResponse );
 		
 		#endregion
 		internal HServerQuery PlayerDetails( uint unIP, ushort usPort, IntPtr pRequestServersResponse )
@@ -198,9 +181,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate HServerQuery FServerRules( IntPtr self, uint unIP, ushort usPort, IntPtr pRequestServersResponse );
-		private FServerRules _ServerRules;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmakingServers_ServerRules")]
+		private static extern HServerQuery _ServerRules( IntPtr self, uint unIP, ushort usPort, IntPtr pRequestServersResponse );
 		
 		#endregion
 		internal HServerQuery ServerRules( uint unIP, ushort usPort, IntPtr pRequestServersResponse )
@@ -210,9 +192,8 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[UnmanagedFunctionPointer( Platform.MemberConvention )]
-		private delegate void FCancelServerQuery( IntPtr self, HServerQuery hServerQuery );
-		private FCancelServerQuery _CancelServerQuery;
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmakingServers_CancelServerQuery")]
+		private static extern void _CancelServerQuery( IntPtr self, HServerQuery hServerQuery );
 		
 		#endregion
 		internal void CancelServerQuery( HServerQuery hServerQuery )
