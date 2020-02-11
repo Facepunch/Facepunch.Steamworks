@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Steamworks.Data;
 
+#if false
+
 namespace Steamworks
 {
 	/// <summary>
@@ -106,7 +108,7 @@ namespace Steamworks
 			set => SetConfigFloat( NetConfig.FakePacketLag_Recv, value );
 		}
 
-		#region Config Internals
+#region Config Internals
 
 		internal unsafe static bool GetConfigInt( NetConfig type, int value )
 		{
@@ -199,6 +201,8 @@ namespace Steamworks
 			}
 		}*/
 
-		#endregion
+#endregion
 	}
 }
+
+#endif

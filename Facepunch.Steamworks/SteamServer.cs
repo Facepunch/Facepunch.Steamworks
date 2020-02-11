@@ -29,7 +29,7 @@ namespace Steamworks
 		internal static void InstallEvents()
 		{
 			SteamInventory.InstallEvents();
-            SteamNetworkingSockets.InstallEvents(true);
+            //SteamNetworkingSockets.InstallEvents(true);
 
             ValidateAuthTicketResponse_t.Install( x => OnValidateAuthTicketResponse?.Invoke( x.SteamID, x.OwnerSteamID, x.AuthSessionResponse ), true );
 			SteamServersConnected_t.Install( x => OnSteamServersConnected?.Invoke(), true );
@@ -84,6 +84,8 @@ namespace Steamworks
 			{
 				throw new System.Exception( $"InitGameServer returned false ({ipaddress},{init.SteamPort},{init.GamePort},{init.QueryPort},{secure},\"{init.VersionString}\")" );
 			}
+
+			Install
 
 			//
 			// Initial settings

@@ -5,6 +5,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+#if false
+
 namespace Steamworks
 {
     [TestClass]
@@ -60,3 +62,5 @@ namespace Steamworks
 	}
 
 }
+
+#endif

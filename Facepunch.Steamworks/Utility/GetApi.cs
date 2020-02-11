@@ -70,6 +70,14 @@ namespace Steamworks
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamGameServer" )]
 		internal static extern IntPtr SteamGameServer();
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamGameServerStats" )]
-		internal static extern IntPtr SteamGameServerStats();
+		internal static extern IntPtr SteamGameServerStats();		
+		
+		//
+		// NOTE: Stubs - these don't exist
+		//
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamNetworkingSockets" )]
+		internal static extern IntPtr SteamNetworkingSockets();		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamNetworkingUtils" )]
+		internal static extern IntPtr SteamNetworkingUtils();
 	}
 }

@@ -34,10 +34,11 @@ namespace Steamworks
 			AddInterface<SteamInput>();
 			AddInterface<SteamInventory>();
 			AddInterface<SteamMatchmaking>();
+			AddInterface<SteamMatchmakingServers>();
 			AddInterface<SteamMusic>();
 			AddInterface<SteamNetworking>();
-			AddInterface<SteamNetworkingSockets>();
-			AddInterface<SteamNetworkingUtils>();
+			//AddInterface<SteamNetworkingSockets>();
+			//AddInterface<SteamNetworkingUtils>();
 			AddInterface<SteamParental>();
 			AddInterface<SteamParties>();
 			AddInterface<SteamRemoteStorage>();
@@ -115,8 +116,6 @@ namespace Steamworks
 
 			Event.DisposeAllClient();
 			ShutdownInterfaces();
-
-			ServerList.Base.Shutdown();
 		}
 
 		internal static void RegisterCallback( IntPtr intPtr, int callbackId )

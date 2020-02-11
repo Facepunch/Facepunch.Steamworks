@@ -1,4 +1,5 @@
-﻿namespace Steamworks.Data
+﻿#if false
+namespace Steamworks.Data
 {
 	public struct Socket
 	{
@@ -21,3 +22,12 @@
 		}
 	}
 }
+#else
+namespace Steamworks.Data
+{
+	public struct Socket
+	{
+		public uint Id { get; }
+	}
+}
+#endif

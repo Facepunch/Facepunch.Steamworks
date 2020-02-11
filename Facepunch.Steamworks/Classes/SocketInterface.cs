@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Steamworks.Data;
 
+#if false
+
 namespace Steamworks
 {
 	public class SocketInterface
@@ -110,3 +112,5 @@ namespace Steamworks
 		}
 	}
 }
+
+#endif

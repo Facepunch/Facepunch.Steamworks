@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#if false
+
 namespace Steamworks.Data
 {
 	public struct Connection
@@ -115,3 +117,12 @@ namespace Steamworks.Data
 
 	}
 }
+#else
+namespace Steamworks.Data
+{
+	public struct Connection
+	{
+		public uint Id { get; }
+	}
+}
+#endif

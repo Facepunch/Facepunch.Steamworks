@@ -2,6 +2,8 @@
 using System;
 using System.Runtime.InteropServices;
 
+#if false
+
 namespace Steamworks
 {
 	public class ConnectionInterface
@@ -118,3 +120,5 @@ namespace Steamworks
 		}
 	}
 }
+
+#endif

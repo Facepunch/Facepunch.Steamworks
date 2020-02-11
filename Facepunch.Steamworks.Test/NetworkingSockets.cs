@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Steamworks.Data;
 
+#if false
+
 namespace Steamworks
 {
     [TestClass]
@@ -285,3 +287,5 @@ namespace Steamworks
 	}
 
 }
+
+#endif

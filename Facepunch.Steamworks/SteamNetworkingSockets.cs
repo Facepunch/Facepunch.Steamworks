@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Steamworks.Data;
 
+#if false
+
 namespace Steamworks
 {
 	public class SteamNetworkingSockets : SteamClass
@@ -23,7 +25,7 @@ namespace Steamworks
 			InstallEvents();
 		}
 
-		#region SocketInterface
+#region SocketInterface
 
 		static Dictionary<uint, SocketInterface> SocketInterfaces;
 
@@ -45,9 +47,9 @@ namespace Steamworks
 			Console.WriteLine( $"Installing Socket For {id}" );
 			SocketInterfaces[id] = iface;
 		}
-		#endregion
+#endregion
 
-		#region ConnectionInterface
+#region ConnectionInterface
 		static Dictionary<uint, ConnectionInterface> ConnectionInterfaces;
 
 
@@ -67,7 +69,7 @@ namespace Steamworks
 			if ( id == 0 ) throw new System.ArgumentException( "Invalid Connection" );
 			ConnectionInterfaces[id] = iface;
 		}
-		#endregion
+#endregion
 
 		internal static void InstallEvents( bool server = false )
 		{
@@ -143,3 +145,5 @@ namespace Steamworks
 		}
 	}
 }
+
+#endif
