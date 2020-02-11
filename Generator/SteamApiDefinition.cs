@@ -53,8 +53,6 @@ namespace Generator
             public StructFields[] Fields { get; set; }
 
             public string CallbackId { get; set; }
-            public bool IsCallResult { get; set; }
-
 
 			public bool IsPack4OnWindows
 			{

@@ -116,27 +116,6 @@ namespace Generator
             }
 
             //
-            // Find CALL_RESULTs
-            //
-            {
-                var r = new Regex( @"CALL_RESULT\( (.+) \)(?:.+)?\n(?:.+)virtual\s+SteamAPICall_t\s+(\w+)\(" );
-                var ma = r.Matches( Content );
-
-                foreach ( Match m in ma )
-                {
-                    var s = def.structs.Single( x => x.Name == m.Groups[1].Value );
-                    s.IsCallResult = true;
-
-                    foreach ( var t in def.methods.Where( x => x.Name == m.Groups[2].Value ) )
-                    {
-                        if ( !string.IsNullOrEmpty( t.CallResult ) ) continue;
-
-                        t.CallResult = s.Name;
-                    }
-                }
-            }
-
-            //
             // Find missing structs
             //
             {
