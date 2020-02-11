@@ -11,6 +11,12 @@ namespace Steamworks
 	{
 		public override IntPtr GetInterfacePointer() => GetApi.SteamGameServer();
 		
+		
+		internal ISteamGameServer()
+		{
+			SetupInterface();
+		}
+		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_InitGameServer")]
 		[return: MarshalAs( UnmanagedType.I1 )]

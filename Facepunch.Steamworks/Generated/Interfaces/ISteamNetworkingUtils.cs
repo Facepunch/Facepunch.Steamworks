@@ -11,5 +11,11 @@ namespace Steamworks
 	{
 		public override IntPtr GetInterfacePointer() => GetApi.SteamNetworkingUtils();
 		
+		
+		internal ISteamNetworkingUtils()
+		{
+			SetupInterface();
+		}
+		
 	}
 }

@@ -27,6 +27,13 @@ namespace Generator
 				{
 					WriteLine( $"public override IntPtr GetInterfacePointer() => GetApi.{className.Substring( 1 )}();" );
 					WriteLine();
+					WriteLine();
+					StartBlock( $"internal {className}()" );
+					{
+						WriteLine( $"SetupInterface();" );
+					}
+					EndBlock();
+					WriteLine();
 
 					var functions = def.methods.Where( x => x.ClassName == className );
 

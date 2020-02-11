@@ -11,6 +11,12 @@ namespace Steamworks
 	{
 		public override IntPtr GetInterfacePointer() => GetApi.SteamNetworking();
 		
+		
+		internal ISteamNetworking()
+		{
+			SetupInterface();
+		}
+		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_SendP2PPacket")]
 		[return: MarshalAs( UnmanagedType.I1 )]

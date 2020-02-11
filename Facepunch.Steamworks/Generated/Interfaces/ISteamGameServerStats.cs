@@ -11,6 +11,12 @@ namespace Steamworks
 	{
 		public override IntPtr GetInterfacePointer() => GetApi.SteamGameServerStats();
 		
+		
+		internal ISteamGameServerStats()
+		{
+			SetupInterface();
+		}
+		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServerStats_RequestUserStats")]
 		private static extern SteamAPICall_t _RequestUserStats( IntPtr self, SteamId steamIDUser );

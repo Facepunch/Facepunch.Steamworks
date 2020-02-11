@@ -11,6 +11,12 @@ namespace Steamworks
 	{
 		public override IntPtr GetInterfacePointer() => GetApi.SteamInput();
 		
+		
+		internal ISteamInput()
+		{
+			SetupInterface();
+		}
+		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_Init")]
 		[return: MarshalAs( UnmanagedType.I1 )]

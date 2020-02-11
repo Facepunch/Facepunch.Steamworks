@@ -11,6 +11,12 @@ namespace Steamworks
 	{
 		public override IntPtr GetInterfacePointer() => GetApi.SteamInventory();
 		
+		
+		internal ISteamInventory()
+		{
+			SetupInterface();
+		}
+		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInventory_GetResultStatus")]
 		private static extern Result _GetResultStatus( IntPtr self, SteamInventoryResult_t resultHandle );
