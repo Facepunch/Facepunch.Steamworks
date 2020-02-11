@@ -85,7 +85,7 @@ namespace Steamworks
 				throw new System.Exception( $"InitGameServer returned false ({ipaddress},{init.SteamPort},{init.GamePort},{init.QueryPort},{secure},\"{init.VersionString}\")" );
 			}
 
-			Install
+			AddInterface<SteamServer>();
 
 			//
 			// Initial settings
@@ -107,24 +107,23 @@ namespace Steamworks
 			}
 		}
 
-		static List<SteamInterface> openIterfaces = new List<SteamInterface>();
-
-		internal static void WatchInterface( SteamInterface steamInterface )
+		internal static void AddInterface<T>() where T : SteamClass, new()
 		{
-			if ( openIterfaces.Contains( steamInterface ) )
-				throw new System.Exception( "openIterfaces already contains interface!" );
-
-			openIterfaces.Add( steamInterface );
+			var t = new T();
+			t.InitializeInterface();
+			openInterfaces.Add( t );
 		}
+
+		static List<SteamClass> openInterfaces = new List<SteamClass>();
 
 		internal static void ShutdownInterfaces()
 		{
-			foreach ( var e in openIterfaces )
+			foreach ( var e in openInterfaces )
 			{
-				e.ShutdownInterface();
+				e.DestroyInterface();
 			}
 
-			openIterfaces.Clear();
+			openInterfaces.Clear();
 		}
 
 		public static void Shutdown()

@@ -58,23 +58,17 @@ namespace Steamworks
 		internal static void AddInterface<T>() where T : SteamClass, new()
 		{
 			var t = new T();
+			t.InitializeInterface();
+			openInterfaces.Add( t );
 		}
 
-		static List<SteamInterface> openInterfaces = new List<SteamInterface>();
-
-		internal static void WatchInterface( SteamInterface steamInterface )
-		{
-			if ( openInterfaces.Contains( steamInterface ) )
-				throw new System.Exception( "openIterfaces already contains interface!" );
-
-			openInterfaces.Add( steamInterface );
-		}
+		static List<SteamClass> openInterfaces = new List<SteamClass>();
 
 		internal static void ShutdownInterfaces()
 		{
 			foreach ( var e in openInterfaces )
 			{
-				e.ShutdownInterface();
+				e.DestroyInterface();
 			}
 
 			openInterfaces.Clear();

@@ -31,7 +31,7 @@ namespace Steamworks
 	public abstract class SteamClass
 	{
 		internal abstract void InitializeInterface();
-		internal void DestroyInterface()
+		internal virtual void DestroyInterface()
 		{
 			Interface.ShutdownInterface();
 		}
