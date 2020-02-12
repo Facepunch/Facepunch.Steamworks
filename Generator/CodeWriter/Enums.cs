@@ -30,7 +30,16 @@ namespace Generator
 				if ( !Cleanup.ShouldCreate( name ) )
 					continue;
 
-                StartBlock( $"{Cleanup.Expose( name )} enum {name} : uint" );
+                var lowest = o.Values.Min( x => long.Parse( x.Value ) );
+                var highest = o.Values.Max( x => long.Parse( x.Value ) );
+
+                var t = "int";
+
+                if ( highest > int.MaxValue )
+                    t = "uint";
+
+
+                StartBlock( $"{Cleanup.Expose( name )} enum {name} : {t}" );
                 {
                     //
                     // If all the enum values start with the same 
@@ -66,7 +75,14 @@ namespace Generator
                         // So just stick the enum name on the front
                         //
                         if ( char.IsNumber( ename[0] ) )
-                            ename = name + ename;
+                        {
+                            var p = name;
+
+                            if ( p == "HTTPStatusCode" ) p = "Code";
+                            if ( p == "SteamIPType" ) p = "Type";
+
+                            ename = p + ename;
+                        }
 
                         WriteLine( $"{ename} = {entry.Value}," );
                     }
