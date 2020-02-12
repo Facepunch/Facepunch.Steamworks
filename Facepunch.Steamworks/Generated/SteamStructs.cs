@@ -201,29 +201,6 @@ namespace Steamworks.Data
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
-	internal struct ConnectionInfo
-	{
-		internal NetIdentity DentityRemote; // m_identityRemote SteamNetworkingIdentity
-		internal long UserData; // m_nUserData int64
-		internal Socket ListenSocket; // m_hListenSocket HSteamListenSocket
-		internal NetAddress AddrRemote; // m_addrRemote SteamNetworkingIPAddr
-		internal ushort _pad1; // m__pad1 uint16
-		internal uint DPOPRemote; // m_idPOPRemote SteamNetworkingPOPID
-		internal uint DPOPRelay; // m_idPOPRelay SteamNetworkingPOPID
-		internal ConnectionState State; // m_eState ESteamNetworkingConnectionState
-		internal int EndReason; // m_eEndReason int
-		internal string EndDebugUTF8() => System.Text.Encoding.UTF8.GetString( EndDebug, 0, System.Array.IndexOf<byte>( EndDebug, 0 ) );
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)] // byte[] m_szEndDebug
-		internal byte[] EndDebug; // m_szEndDebug char [128]
-		internal string ConnectionDescriptionUTF8() => System.Text.Encoding.UTF8.GetString( ConnectionDescription, 0, System.Array.IndexOf<byte>( ConnectionDescription, 0 ) );
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)] // byte[] m_szConnectionDescription
-		internal byte[] ConnectionDescription; // m_szConnectionDescription char [128]
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 64, ArraySubType = UnmanagedType.U4)]
-		internal uint[] Reserved; // reserved uint32 [64]
-		
-	}
-	
-	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamNetworkingQuickConnectionStatus
 	{
 		internal ConnectionState State; // m_eState ESteamNetworkingConnectionState
@@ -249,15 +226,6 @@ namespace Steamworks.Data
 	{
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 512)] //  m_data
 		internal byte[] Data; // m_data uint8 [512]
-		
-	}
-	
-	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
-	internal struct NetConfig_t
-	{
-		internal NetConfig Value; // m_eValue ESteamNetworkingConfigValue
-		internal NetConfigType DataType; // m_eDataType ESteamNetworkingConfigDataType
-		internal (anonymous at ../public/steam/steamnetworkingtypes.h:1171:2) Val; // m_val union (anonymous union at ../public/steam/steamnetworkingtypes.h:1171:2)
 		
 	}
 	

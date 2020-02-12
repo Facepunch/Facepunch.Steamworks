@@ -71,6 +71,9 @@ public static class Cleanup
 		if ( type == "FSteamNetworkingSocketsDebugOutput" ) return false;
 		if ( type == "SteamNetworkingMessage_t" ) return false;
 		if ( type == "SteamDatagramErrMsg" ) return false;
+		if ( type == "NetConfig_t" ) return false;
+		if ( type == "ConnectionInfo" ) return false;
+		if ( type == "SteamNetworkingIPAddr" ) return false;
 
 		return true;
 	}
