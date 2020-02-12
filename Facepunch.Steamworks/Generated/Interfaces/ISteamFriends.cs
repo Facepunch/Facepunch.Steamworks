@@ -277,10 +277,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _DownloadClanActivityCounts( IntPtr self, [In,Out] SteamId[]  psteamIDClans, int cClansToRequest );
 		
 		#endregion
-		internal CallbackResult<DownloadClanActivityCountsResult_t> DownloadClanActivityCounts( [In,Out] SteamId[]  psteamIDClans, int cClansToRequest )
+		internal CallbackResult DownloadClanActivityCounts( [In,Out] SteamId[]  psteamIDClans, int cClansToRequest )
 		{
 			var returnValue = _DownloadClanActivityCounts( Self, psteamIDClans, cClansToRequest );
-			return new CallbackResult<DownloadClanActivityCountsResult_t>( returnValue );
+			return new CallbackResult( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -825,6 +825,16 @@ namespace Steamworks
 		{
 			var returnValue = _GetNumChatsWithUnreadPriorityMessages( Self );
 			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamFriends_ActivateGameOverlayRemotePlayTogetherInviteDialog")]
+		private static extern void _ActivateGameOverlayRemotePlayTogetherInviteDialog( IntPtr self, SteamId steamIDLobby );
+		
+		#endregion
+		internal void ActivateGameOverlayRemotePlayTogetherInviteDialog( SteamId steamIDLobby )
+		{
+			_ActivateGameOverlayRemotePlayTogetherInviteDialog( Self, steamIDLobby );
 		}
 		
 	}

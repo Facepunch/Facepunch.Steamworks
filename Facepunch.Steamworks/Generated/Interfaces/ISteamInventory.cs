@@ -407,38 +407,38 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInventory_SetProperty0")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInventory_SetProperty")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SetProperty0( IntPtr self, SteamInventoryUpdateHandle_t handle, InventoryItemId nItemID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPropertyName, [MarshalAs( UnmanagedType.U1 )] bool bValue );
+		private static extern bool _SetProperty( IntPtr self, SteamInventoryUpdateHandle_t handle, InventoryItemId nItemID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPropertyName, [MarshalAs( UnmanagedType.U1 )] bool bValue );
 		
 		#endregion
-		internal bool SetProperty0( SteamInventoryUpdateHandle_t handle, InventoryItemId nItemID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPropertyName, [MarshalAs( UnmanagedType.U1 )] bool bValue )
+		internal bool SetProperty( SteamInventoryUpdateHandle_t handle, InventoryItemId nItemID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPropertyName, [MarshalAs( UnmanagedType.U1 )] bool bValue )
 		{
-			var returnValue = _SetProperty0( Self, handle, nItemID, pchPropertyName, bValue );
+			var returnValue = _SetProperty( Self, handle, nItemID, pchPropertyName, bValue );
 			return returnValue;
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInventory_SetProperty1")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInventory_SetProperty")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SetProperty1( IntPtr self, SteamInventoryUpdateHandle_t handle, InventoryItemId nItemID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPropertyName, long nValue );
+		private static extern bool _SetProperty( IntPtr self, SteamInventoryUpdateHandle_t handle, InventoryItemId nItemID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPropertyName, long nValue );
 		
 		#endregion
-		internal bool SetProperty1( SteamInventoryUpdateHandle_t handle, InventoryItemId nItemID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPropertyName, long nValue )
+		internal bool SetProperty( SteamInventoryUpdateHandle_t handle, InventoryItemId nItemID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPropertyName, long nValue )
 		{
-			var returnValue = _SetProperty1( Self, handle, nItemID, pchPropertyName, nValue );
+			var returnValue = _SetProperty( Self, handle, nItemID, pchPropertyName, nValue );
 			return returnValue;
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInventory_SetProperty2")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInventory_SetProperty")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SetProperty2( IntPtr self, SteamInventoryUpdateHandle_t handle, InventoryItemId nItemID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPropertyName, float flValue );
+		private static extern bool _SetProperty( IntPtr self, SteamInventoryUpdateHandle_t handle, InventoryItemId nItemID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPropertyName, float flValue );
 		
 		#endregion
-		internal bool SetProperty2( SteamInventoryUpdateHandle_t handle, InventoryItemId nItemID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPropertyName, float flValue )
+		internal bool SetProperty( SteamInventoryUpdateHandle_t handle, InventoryItemId nItemID, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPropertyName, float flValue )
 		{
-			var returnValue = _SetProperty2( Self, handle, nItemID, pchPropertyName, flValue );
+			var returnValue = _SetProperty( Self, handle, nItemID, pchPropertyName, flValue );
 			return returnValue;
 		}
 		

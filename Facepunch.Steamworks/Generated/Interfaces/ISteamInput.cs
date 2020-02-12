@@ -373,5 +373,28 @@ namespace Steamworks
 			return returnValue;
 		}
 		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetDeviceBindingRevision")]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _GetDeviceBindingRevision( IntPtr self, InputHandle_t inputHandle, ref int pMajor, ref int pMinor );
+		
+		#endregion
+		internal bool GetDeviceBindingRevision( InputHandle_t inputHandle, ref int pMajor, ref int pMinor )
+		{
+			var returnValue = _GetDeviceBindingRevision( Self, inputHandle, ref pMajor, ref pMinor );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_GetRemotePlaySessionID")]
+		private static extern uint _GetRemotePlaySessionID( IntPtr self, InputHandle_t inputHandle );
+		
+		#endregion
+		internal uint GetRemotePlaySessionID( InputHandle_t inputHandle )
+		{
+			var returnValue = _GetRemotePlaySessionID( Self, inputHandle );
+			return returnValue;
+		}
+		
 	}
 }

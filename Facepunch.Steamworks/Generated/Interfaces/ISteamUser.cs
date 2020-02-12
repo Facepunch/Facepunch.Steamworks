@@ -350,5 +350,16 @@ namespace Steamworks
 			return new CallbackResult<MarketEligibilityResponse_t>( returnValue );
 		}
 		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUser_GetDurationControl")]
+		private static extern SteamAPICall_t _GetDurationControl( IntPtr self );
+		
+		#endregion
+		internal CallbackResult<DurationControl_t> GetDurationControl()
+		{
+			var returnValue = _GetDurationControl( Self );
+			return new CallbackResult<DurationControl_t>( returnValue );
+		}
+		
 	}
 }

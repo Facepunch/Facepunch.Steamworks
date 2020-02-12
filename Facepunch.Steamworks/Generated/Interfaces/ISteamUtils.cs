@@ -345,5 +345,53 @@ namespace Steamworks
 			_SetVRHeadsetStreamingEnabled( Self, bEnabled );
 		}
 		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_IsSteamChinaLauncher")]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _IsSteamChinaLauncher( IntPtr self );
+		
+		#endregion
+		internal bool IsSteamChinaLauncher()
+		{
+			var returnValue = _IsSteamChinaLauncher( Self );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_InitFilterText")]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _InitFilterText( IntPtr self );
+		
+		#endregion
+		internal bool InitFilterText()
+		{
+			var returnValue = _InitFilterText( Self );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_FilterText")]
+		private static extern int _FilterText( IntPtr self, IntPtr pchOutFilteredText, uint nByteSizeOutFilteredText, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchInputMessage, [MarshalAs( UnmanagedType.U1 )] bool bLegalOnly );
+		
+		#endregion
+		internal int FilterText( out string pchOutFilteredText, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchInputMessage, [MarshalAs( UnmanagedType.U1 )] bool bLegalOnly )
+		{
+			IntPtr mempchOutFilteredText = Helpers.TakeMemory();
+			var returnValue = _FilterText( Self, mempchOutFilteredText, (1024 * 32), pchInputMessage, bLegalOnly );
+			pchOutFilteredText = Helpers.MemoryToString( mempchOutFilteredText );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetIPv6ConnectivityState")]
+		private static extern SteamIPv6ConnectivityState _GetIPv6ConnectivityState( IntPtr self, SteamIPv6ConnectivityProtocol eProtocol );
+		
+		#endregion
+		internal SteamIPv6ConnectivityState GetIPv6ConnectivityState( SteamIPv6ConnectivityProtocol eProtocol )
+		{
+			var returnValue = _GetIPv6ConnectivityState( Self, eProtocol );
+			return returnValue;
+		}
+		
 	}
 }

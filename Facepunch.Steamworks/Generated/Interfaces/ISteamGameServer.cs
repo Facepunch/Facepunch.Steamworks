@@ -399,10 +399,10 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServer_GetPublicIP")]
-		private static extern uint _GetPublicIP( IntPtr self );
+		private static extern SteamIPAddress_t _GetPublicIP( IntPtr self );
 		
 		#endregion
-		internal uint GetPublicIP()
+		internal SteamIPAddress_t GetPublicIP()
 		{
 			var returnValue = _GetPublicIP( Self );
 			return returnValue;
