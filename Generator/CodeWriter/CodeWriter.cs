@@ -39,6 +39,14 @@ namespace Generator
             {
                 sb = new StringBuilder();
                 Header( "Steamworks.Data" );
+                StructCallbacks();
+                Footer();
+                System.IO.File.WriteAllText( $"{folder}SteamCallbacks.cs", sb.ToString() );
+            }
+
+            {
+                sb = new StringBuilder();
+                Header( "Steamworks.Data" );
                 Structs();
                 Footer();
                 System.IO.File.WriteAllText( $"{folder}SteamStructs.cs", sb.ToString() );
