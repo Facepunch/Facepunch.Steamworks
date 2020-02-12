@@ -50,6 +50,7 @@
     <Compile Include="CodeWriter\GlobalFunctions.cs" />
     <Compile Include="CodeWriter\ClassVTable.cs" />
     <Compile Include="CodeWriter\Constants.cs" />
+    <Compile Include="CodeWriter\StructCallbacks.cs" />
     <Compile Include="CodeWriter\Types\BaseType.cs" />
     <Compile Include="CodeWriter\Writing.cs" />
     <Compile Include="CodeWriter\CodeWriter.cs" />
