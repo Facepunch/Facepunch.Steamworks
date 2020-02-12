@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Generator
 {
+	/*
 	public partial class CodeWriter
 	{
 		public void GenerateGlobalFunctions( string startingWith, string filename )
@@ -124,5 +125,8 @@ namespace Generator
 			WriteLine( $"public static extern {(returnType.IsReturnedWeird ? "void" : returnType.TypeNameFrom)} {func.Name}( {delegateargstr} );" );
 			WriteLine();
 		}
+
+	
 	}
+	*/
 }

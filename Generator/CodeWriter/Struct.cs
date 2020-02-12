@@ -40,7 +40,7 @@ namespace Generator
         {
             var callbackList = new List<SteamApiDefinition.StructDef>();
 
-            foreach ( var c in def.structs )
+            foreach ( var c in def.callback_structs )
             {
 				var name = Cleanup.ConvertType( c.Name );
 
@@ -55,7 +55,7 @@ namespace Generator
 
 				int defaultPack = c.IsPack4OnWindows ? 4 : 8;
 
-				var isCallback = !string.IsNullOrEmpty( c.CallbackId );
+				var isCallback = true;
                 var iface = "";
                 if ( isCallback )
                     iface = " : ICallbackData";
@@ -117,7 +117,7 @@ namespace Generator
 						WriteLine( "#endregion" );
 					}
 
-                    if ( !string.IsNullOrEmpty( c.CallbackId ) )
+                   // if (  c.CallbackId ) )
                     {
                         callbackList.Add( c );
                     }

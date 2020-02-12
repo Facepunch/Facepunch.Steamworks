@@ -10,6 +10,7 @@ namespace Generator
     {
         private void Constants()
         {
+            /*
             StartBlock( "internal static class CallbackIdentifiers" );
             foreach ( var o in def.CallbackIds )
             {
@@ -23,6 +24,7 @@ namespace Generator
                 WriteLine( $"internal const string {o.Key} = \"{o.Value}\";" );
             }
             EndBlock();
+            */
         }
     }
 }

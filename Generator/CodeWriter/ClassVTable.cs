@@ -8,7 +8,7 @@ namespace Generator
 {
 	public partial class CodeWriter
 	{
-		public void GenerateVTableClass( string className, string filename )
+		public void GenerateVTableClass( SteamApiDefinition.Interface iface, string folder )
 		{
 			sb = new StringBuilder();
 
@@ -23,26 +23,24 @@ namespace Generator
 
 			StartBlock( $"namespace Steamworks" );
 			{
-				StartBlock( $"internal class {className} : SteamInterface" );
+				StartBlock( $"internal class {iface.Name} : SteamInterface" );
 				{
-					WriteLine( $"public override IntPtr GetInterfacePointer() => GetApi.{className.Substring( 1 )}();" );
+					WriteLine( $"public override IntPtr GetInterfacePointer() => GetApi.{iface.Name.Substring( 1 )}();" );
 					WriteLine();
 					WriteLine();
-					StartBlock( $"internal {className}()" );
+					StartBlock( $"internal {iface.Name}()" );
 					{
 						WriteLine( $"SetupInterface();" );
 					}
 					EndBlock();
 					WriteLine();
 
-					var functions = def.methods.Where( x => x.ClassName == className );
-
-					foreach ( var func in functions )
+					foreach ( var func in iface.Methods )
 					{
-						if ( Cleanup.IsDeprecated( $"{func.ClassName}.{func.Name}" ) )
+						if ( Cleanup.IsDeprecated( $"{iface.Name}.{func.Name}" ) )
 							continue;
 
-						WriteFunction( func );
+						WriteFunction( iface, func );
 						WriteLine();
 					}
 
@@ -51,19 +49,19 @@ namespace Generator
 			}
 			EndBlock();
 
-			System.IO.File.WriteAllText( $"{filename}", sb.ToString() );
+			System.IO.File.WriteAllText( $"{folder}{iface.Name}.cs", sb.ToString() );
 		}
-		private void WriteFunction( SteamApiDefinition.MethodDef func )
+		private void WriteFunction( SteamApiDefinition.Interface iface, SteamApiDefinition.Interface.Method func )
 		{
-			var returnType = BaseType.Parse( func.ReturnType, null, func.CallResult );
+			var returnType = BaseType.Parse( func.ReturnType, null );
 			returnType.Func = func.Name;
 
 			if ( func.Params == null )
-				func.Params = new SteamApiDefinition.MethodDef.ParamType[0];
+				func.Params = new SteamApiDefinition.Interface.Method.Param[0];
 
 			var args = func.Params.Select( x =>
 			{
-				var bt = BaseType.Parse( x.Type, x.Name );
+				var bt = BaseType.Parse( x.ParamType, x.ParamName );
 				bt.Func = func.Name;
 				return bt;
 			} ).ToArray();
@@ -89,16 +87,16 @@ namespace Generator
 			var argstr = string.Join( ", ", args.Where( x => !x.ShouldSkipAsArgument ).Select( x => x.AsArgument() ) ); ;
 			var delegateargstr = string.Join( ", ", args.Select( x => x.AsNativeArgument() ) );
 
-			if ( returnType is SteamApiCallType sap )
-			{
-				sap.CallResult = func.CallResult;
+			//if ( returnType is SteamApiCallType sap )
+		//	{
+			//	sap.CallResult = func.CallResult;
 
-				argstr = string.Join( ", ", args.Select( x => x.AsArgument().Replace( "ref ", " /* ref */ " )  ) );
-			}
+		//		argstr = string.Join( ", ", args.Select( x => x.AsArgument().Replace( "ref ", " /* ref */ " )  ) );
+		//	}
 
 			WriteLine( $"#region FunctionMeta" );
 
-			WriteLine( $"[DllImport( Platform.LibraryName, EntryPoint = \"SteamAPI_{func.ClassName}_{func.Name}\")]" );
+			WriteLine( $"[DllImport( Platform.LibraryName, EntryPoint = \"{func.FlatName}\")]" );
 			
 			if ( returnType.ReturnAttribute != null )
 				WriteLine( returnType.ReturnAttribute );

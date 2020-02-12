@@ -11,12 +11,9 @@ namespace Generator
     public partial class CodeWriter
     {
         private SteamApiDefinition def;
-		public CodeParser Parser;
 
-		public CodeWriter( CodeParser parser, SteamApiDefinition def )
+		public CodeWriter( SteamApiDefinition def )
         {
-			Parser = parser;
-
 			this.def = def;
             WorkoutTypes();
         }
@@ -56,34 +53,15 @@ namespace Generator
             }
 
 			{
-				GenerateGlobalFunctions( "SteamAPI", $"{folder}../Generated/SteamAPI.cs" );
-				GenerateGlobalFunctions( "SteamGameServer", $"{folder}../Generated/SteamGameServer.cs" );
-				GenerateGlobalFunctions( "SteamInternal", $"{folder}../Generated/SteamInternal.cs" );
+			//	GenerateGlobalFunctions( "SteamAPI", $"{folder}../Generated/SteamAPI.cs" );
+			//	GenerateGlobalFunctions( "SteamGameServer", $"{folder}../Generated/SteamGameServer.cs" );
+			//	GenerateGlobalFunctions( "SteamInternal", $"{folder}../Generated/SteamInternal.cs" );
 			}
 
-			{
-				GenerateVTableClass( "ISteamApps", $"{folder}../Generated/Interfaces/ISteamApps.cs" );
-				GenerateVTableClass( "ISteamUtils", $"{folder}../Generated/Interfaces/ISteamUtils.cs" );
-				GenerateVTableClass( "ISteamParentalSettings", $"{folder}../Generated/Interfaces/ISteamParentalSettings.cs" );
-				GenerateVTableClass( "ISteamMusic", $"{folder}../Generated/Interfaces/ISteamMusic.cs" );
-				GenerateVTableClass( "ISteamVideo", $"{folder}../Generated/Interfaces/ISteamVideo.cs" );
-				GenerateVTableClass( "ISteamUser", $"{folder}../Generated/Interfaces/ISteamUser.cs" );
-				GenerateVTableClass( "ISteamMatchmakingServers", $"{folder}../Generated/Interfaces/ISteamMatchmakingServers.cs" );
-				GenerateVTableClass( "ISteamFriends", $"{folder}../Generated/Interfaces/ISteamFriends.cs" );
-				GenerateVTableClass( "ISteamGameServer", $"{folder}../Generated/Interfaces/ISteamGameServer.cs" );
-				GenerateVTableClass( "ISteamScreenshots", $"{folder}../Generated/Interfaces/ISteamScreenshots.cs" );
-				GenerateVTableClass( "ISteamUserStats", $"{folder}../Generated/Interfaces/ISteamUserStats.cs" );
-				GenerateVTableClass( "ISteamUGC", $"{folder}../Generated/Interfaces/ISteamUGC.cs" );
-				GenerateVTableClass( "ISteamRemoteStorage", $"{folder}../Generated/Interfaces/ISteamRemoteStorage.cs" );
-				GenerateVTableClass( "ISteamInventory", $"{folder}../Generated/Interfaces/ISteamInventory.cs" );
-				GenerateVTableClass( "ISteamNetworking", $"{folder}../Generated/Interfaces/ISteamNetworking.cs" );
-				GenerateVTableClass( "ISteamMatchmaking", $"{folder}../Generated/Interfaces/ISteamMatchmaking.cs" );
-				GenerateVTableClass( "ISteamParties", $"{folder}../Generated/Interfaces/ISteamParties.cs" );
-				GenerateVTableClass( "ISteamNetworkingUtils", $"{folder}../Generated/Interfaces/ISteamNetworkingUtils.cs" );
-				GenerateVTableClass( "ISteamNetworkingSockets", $"{folder}../Generated/Interfaces/ISteamNetworkingSockets.cs" );
-				GenerateVTableClass( "ISteamGameServerStats", $"{folder}../Generated/Interfaces/ISteamGameServerStats.cs" );
-				GenerateVTableClass( "ISteamInput", $"{folder}../Generated/Interfaces/ISteamInput.cs" );
-			}
+            foreach ( var iface in def.Interfaces )
+            {
+                GenerateVTableClass( iface, $"{folder}../Generated/Interfaces/" );
+            }
 		}
 
         void WorkoutTypes()
