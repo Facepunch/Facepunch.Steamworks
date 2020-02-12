@@ -69,7 +69,6 @@ public static class Cleanup
 		if ( type == "MatchMakingKeyValuePair" ) return false;
 		if ( type == "Connection" ) return false;
 		if ( type == "Socket" ) return false;
-		if ( type == "SteamNetworkingErrMsg" ) return false;
 		if ( type == "SteamNetworkingMicroseconds" ) return false;
 		if ( type == "FSteamNetworkingSocketsDebugOutput" ) return false;
 		if ( type == "NetMsg" ) return false;
@@ -79,6 +78,7 @@ public static class Cleanup
 		if ( type == "NetAddress" ) return false;
 		if ( type == "NetIdentity" ) return false;
 		if ( type == "SteamNetworkingQuickConnectionStatus" ) return false;
+		if ( type == "SteamNetworkingErrMsg" ) return false;
 
 		return true;
 	}
