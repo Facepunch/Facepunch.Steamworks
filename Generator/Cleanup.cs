@@ -32,9 +32,9 @@ public static class Cleanup
 		type = type.Replace( "SteamItemDef_t", "InventoryDefId" );
 		type = type.Replace( "ChatRoomEnterResponse", "RoomEnter" );
 		type = type.Replace( "SteamNetworkPingLocation_t", "PingLocation" );
-		type = type.Replace( "SteamNetworkingConfigValue", "NetConfig" );
-		type = type.Replace( "SteamNetworkingConfigScope", "NetScope" );
-		type = type.Replace( "SteamNetworkingConfigDataType", "NetConfigType" );
+		//type = type.Replace( "SteamNetworkingConfigValue", "NetConfig" );
+		//type = type.Replace( "SteamNetworkingConfigScope", "NetScope" );
+		//type = type.Replace( "SteamNetworkingConfigDataType", "NetConfigType" );
 		type = type.Replace( "HSteamNetConnection", "Connection" );
 		type = type.Replace( "HSteamListenSocket", "Socket" );
 		type = type.Replace( "SteamNetworkingIPAddr", "NetAddress" );
@@ -49,7 +49,10 @@ public static class Cleanup
 		type = type.Replace( "InputAnalogActionData_t", "AnalogState" );
 		type = type.Replace( "InputMotionData_t", "MotionState" );
 		type = type.Replace( "MatchMakingKeyValuePair_t", "MatchMakingKeyValuePair" );
-		type = type.Replace( "ISteamNetworkingMessage", "SteamNetworkingMessage_t" );
+		type = type.Replace( "ISteamNetworkingMessage", "NetMsg" );
+		type = type.Replace( "SteamNetworkingMessage_t", "NetMsg" );
+
+		type = type.Replace( "RequestPlayersForGameResultCallback_t_PlayerAcceptState_t", "PlayerAcceptState_t" );
 
 		return type;
 	}
@@ -69,11 +72,11 @@ public static class Cleanup
 		if ( type == "SteamNetworkingErrMsg" ) return false;
 		if ( type == "SteamNetworkingMicroseconds" ) return false;
 		if ( type == "FSteamNetworkingSocketsDebugOutput" ) return false;
-		if ( type == "SteamNetworkingMessage_t" ) return false;
+		if ( type == "NetMsg" ) return false;
 		if ( type == "SteamDatagramErrMsg" ) return false;
-		if ( type == "NetConfig_t" ) return false;
 		if ( type == "ConnectionInfo" ) return false;
 		if ( type == "SteamNetworkingIPAddr" ) return false;
+		if ( type == "NetAddress" ) return false;
 		if ( type == "NetIdentity" ) return false;
 		if ( type == "SteamNetworkingQuickConnectionStatus" ) return false;
 

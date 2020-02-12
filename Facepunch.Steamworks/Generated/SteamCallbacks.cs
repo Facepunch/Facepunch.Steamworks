@@ -1795,7 +1795,7 @@ namespace Steamworks.Data
 		internal ulong LSearchID; // m_ullSearchID uint64
 		internal ulong SteamIDPlayerFound; // m_SteamIDPlayerFound CSteamID
 		internal ulong SteamIDLobby; // m_SteamIDLobby CSteamID
-		internal RequestPlayersForGameResultCallback_t_PlayerAcceptState_t PlayerAcceptState; // m_ePlayerAcceptState RequestPlayersForGameResultCallback_t_PlayerAcceptState_t
+		internal PlayerAcceptState_t PlayerAcceptState; // m_ePlayerAcceptState RequestPlayersForGameResultCallback_t_PlayerAcceptState_t
 		internal int PlayerIndex; // m_nPlayerIndex int32
 		internal int TotalPlayersFound; // m_nTotalPlayersFound int32
 		internal int TotalPlayersAcceptedGame; // m_nTotalPlayersAcceptedGame int32

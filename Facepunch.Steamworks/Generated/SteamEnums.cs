@@ -2126,7 +2126,7 @@ namespace Steamworks
 	//
 	// ESteamNetworkingConfigScope
 	//
-	internal enum NetScope : int
+	internal enum SteamNetworkingConfigScope : int
 	{
 		_Global = 1,
 		_SocketsInterface = 2,
@@ -2138,7 +2138,7 @@ namespace Steamworks
 	//
 	// ESteamNetworkingConfigDataType
 	//
-	internal enum NetConfigType : int
+	internal enum SteamNetworkingConfigDataType : int
 	{
 		_Int32 = 1,
 		_Int64 = 2,
@@ -2151,7 +2151,7 @@ namespace Steamworks
 	//
 	// ESteamNetworkingConfigValue
 	//
-	internal enum NetConfig : int
+	internal enum SteamNetworkingConfigValue : int
 	{
 		_Invalid = 0,
 		_FakePacketLoss_Send = 2,

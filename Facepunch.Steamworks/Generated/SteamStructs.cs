@@ -186,17 +186,19 @@ namespace Steamworks.Data
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
-	internal struct NetAddress
-	{
-		internal ushort Port; // m_port uint16
-		
-	}
-	
-	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct PingLocation
 	{
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 512)] //  m_data
 		internal byte[] Data; // m_data uint8 [512]
+		
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
+	internal struct SteamNetworkingConfigValue_t
+	{
+		internal SteamNetworkingConfigValue Value; // m_eValue ESteamNetworkingConfigValue
+		internal SteamNetworkingConfigDataType DataType; // m_eDataType ESteamNetworkingConfigDataType
+		//internal (anonymous at ../public/steam/steamnetworkingtypes.h:1171:2) Val; // m_val union (anonymous union at ../public/steam/steamnetworkingtypes.h:1171:2)
 		
 	}
 	

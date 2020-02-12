@@ -62,6 +62,7 @@ internal class BaseType
 		if ( basicType == "DigitalState" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
 		if ( basicType == "AnalogState" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
 		if ( basicType == "MotionState" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
+		if ( basicType == "NetMsg" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
 		if ( basicType.StartsWith( "E" ) && char.IsUpper( basicType[1] ) ) return new EnumType { NativeType = type.Substring( 1 ), VarName = varname };
 		if ( basicType.EndsWith( "_t" ) ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
 
