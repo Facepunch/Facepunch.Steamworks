@@ -75,6 +75,7 @@ public static class Cleanup
 		if ( type == "ConnectionInfo" ) return false;
 		if ( type == "SteamNetworkingIPAddr" ) return false;
 		if ( type == "NetIdentity" ) return false;
+		if ( type == "SteamNetworkingQuickConnectionStatus" ) return false;
 
 		return true;
 	}
