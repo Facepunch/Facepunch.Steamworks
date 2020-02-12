@@ -193,14 +193,6 @@ namespace Steamworks.Data
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
-	internal struct NetIdentity
-	{
-		internal NetIdentityType Type; // m_eType ESteamNetworkingIdentityType
-		internal int CbSize; // m_cbSize int
-		
-	}
-	
-	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamNetworkingQuickConnectionStatus
 	{
 		internal ConnectionState State; // m_eState ESteamNetworkingConnectionState
