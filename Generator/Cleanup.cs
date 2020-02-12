@@ -13,6 +13,8 @@ public static class Cleanup
 		type = type.Replace( "class ", "" );
 		type = type.Replace( "struct ", "" );
 
+		type = type.Replace( "unsigned long long", "uint64" );
+
 		type = type.Replace( "CSteamID", "SteamId" );
 		type = type.Replace( "CGameID", "GameId" );
 		type = type.Replace( "PersonaState", "FriendState" );
@@ -47,6 +49,7 @@ public static class Cleanup
 		type = type.Replace( "InputAnalogActionData_t", "AnalogState" );
 		type = type.Replace( "InputMotionData_t", "MotionState" );
 		type = type.Replace( "MatchMakingKeyValuePair_t", "MatchMakingKeyValuePair" );
+		type = type.Replace( "ISteamNetworkingMessage", "SteamNetworkingMessage_t" );
 
 		return type;
 	}
@@ -61,6 +64,13 @@ public static class Cleanup
 		if ( type == "DigitalState" ) return false;
 		if ( type == "MotionState" ) return false;
 		if ( type == "MatchMakingKeyValuePair" ) return false;
+		if ( type == "Connection" ) return false;
+		if ( type == "Socket" ) return false;
+		if ( type == "SteamNetworkingErrMsg" ) return false;
+		if ( type == "SteamNetworkingMicroseconds" ) return false;
+		if ( type == "FSteamNetworkingSocketsDebugOutput" ) return false;
+		if ( type == "SteamNetworkingMessage_t" ) return false;
+		if ( type == "SteamDatagramErrMsg" ) return false;
 
 		return true;
 	}

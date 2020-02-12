@@ -30,7 +30,7 @@ namespace Generator
 				if ( !Cleanup.ShouldCreate( name ) )
 					continue;
 
-                StartBlock( $"{Cleanup.Expose( name )} enum {name} : int" );
+                StartBlock( $"{Cleanup.Expose( name )} enum {name} : uint" );
                 {
                     //
                     // If all the enum values start with the same 

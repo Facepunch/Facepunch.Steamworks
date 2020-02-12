@@ -41,8 +41,11 @@ internal class BaseType
 		if ( basicType == "unsigned short" ) return new UInt16Type { NativeType = type, VarName = varname };
 		if ( basicType == "SteamId" ) return new CSteamIdType { NativeType = type, VarName = varname };
 
+
+		if ( basicType == "size_t" ) return new UIntPtrType{ NativeType = type, VarName = varname };
+
 		// DANGER DANGER Danger
-		if ( basicType == "size_t" ) return new ULongType { NativeType = type, VarName = varname };
+
 		if ( basicType == "intptr_t" ) return new LongType { NativeType = type, VarName = varname };
 		if ( basicType == "ptrdiff_t" ) return new LongType { NativeType = type, VarName = varname };
 
@@ -68,7 +71,7 @@ internal class BaseType
 	public virtual bool ShouldSkipAsArgument => false;
 
 	public virtual string AsNativeArgument() => AsArgument();
-	public virtual string AsArgument() => IsVector ? $"[In,Out] {Ref}{TypeName.Trim( '*', ' ' )}[]  {VarName}" : $"{Ref}{TypeName.Trim( '*', ' ' )} {VarName}";
+	public virtual string AsArgument() => IsVector ? $"[In,Out] {Ref}{TypeName.Trim( '*', ' ', '&' )}[]  {VarName}" : $"{Ref}{TypeName.Trim( '*', ' ', '&' )} {VarName}";
 	public virtual string AsCallArgument() => $"{Ref}{VarName}";
 
 	public virtual string Return( string varname ) => $"return {varname};";
@@ -215,6 +218,11 @@ internal class UInt8Type : BaseType
 internal class UInt16Type : BaseType
 {
 	public override string TypeName => $"ushort";
+}
+
+internal class UIntPtrType : BaseType
+{
+	public override string TypeName => $"UIntPtr";
 }
 
 internal class PointerType : BaseType

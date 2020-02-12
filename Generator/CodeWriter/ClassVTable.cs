@@ -53,7 +53,7 @@ namespace Generator
 		}
 		private void WriteFunction( SteamApiDefinition.Interface iface, SteamApiDefinition.Interface.Method func )
 		{
-			var returnType = BaseType.Parse( func.ReturnType, null );
+			var returnType = BaseType.Parse( func.ReturnType, null, func.CallResult );
 			returnType.Func = func.Name;
 
 			if ( func.Params == null )
@@ -70,7 +70,7 @@ namespace Generator
 			{
 				if ( args[i] is StringType )
 				{
-					if ( args[i + 1] is IntType  || args[i + 1] is UIntType )
+					if ( args[i + 1] is IntType || args[i + 1] is UIntType || args[i + 1] is UIntPtrType )
 					{
 						if ( args[i + 1].Ref == string.Empty )
 						{
@@ -87,12 +87,11 @@ namespace Generator
 			var argstr = string.Join( ", ", args.Where( x => !x.ShouldSkipAsArgument ).Select( x => x.AsArgument() ) ); ;
 			var delegateargstr = string.Join( ", ", args.Select( x => x.AsNativeArgument() ) );
 
-			//if ( returnType is SteamApiCallType sap )
-		//	{
-			//	sap.CallResult = func.CallResult;
-
-		//		argstr = string.Join( ", ", args.Select( x => x.AsArgument().Replace( "ref ", " /* ref */ " )  ) );
-		//	}
+			if ( returnType is SteamApiCallType sap )
+			{
+				sap.CallResult = func.CallResult;
+				argstr = string.Join( ", ", args.Select( x => x.AsArgument().Replace( "ref ", " /* ref */ " )  ) );
+			}
 
 			WriteLine( $"#region FunctionMeta" );
 
