@@ -53,7 +53,6 @@ internal class BaseType
 		if ( basicType == "int64" ) return new LongType { NativeType = type, VarName = varname };
 		if ( basicType == "bool" ) return new BoolType { NativeType = type, VarName = varname };
 
-		if ( basicType.EndsWith( "_t" ) ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
 		if ( basicType == "InventoryItemId" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
 		if ( basicType == "InventoryDefId" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
 		if ( basicType == "PingLocation" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
@@ -64,6 +63,7 @@ internal class BaseType
 		if ( basicType == "AnalogState" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
 		if ( basicType == "MotionState" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
 		if ( basicType.StartsWith( "E" ) && char.IsUpper( basicType[1] ) ) return new EnumType { NativeType = type.Substring( 1 ), VarName = varname };
+		if ( basicType.EndsWith( "_t" ) ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
 
 		return new BaseType { NativeType = type, VarName = varname };
 	}
