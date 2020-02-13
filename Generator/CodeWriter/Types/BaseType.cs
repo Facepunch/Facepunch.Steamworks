@@ -34,8 +34,7 @@ internal class BaseType
 		if ( basicType.StartsWith( "ISteam" ) ) return new PointerType { NativeType = type, VarName = varname };
 		if ( basicType == "const void" ) return new PointerType { NativeType = type, VarName = varname };
 		if ( basicType == "int32" || basicType == "int" ) return new IntType { NativeType = type, VarName = varname };
-		if ( basicType == "uint32" ) return new UIntType { NativeType = type, VarName = varname };
-		if ( basicType == "unsigned int" ) return new UIntType { NativeType = type, VarName = varname };
+		if ( basicType == "uint" ) return new UIntType { NativeType = type, VarName = varname };
 		if ( basicType == "uint8" ) return new UInt8Type { NativeType = type, VarName = varname };
 		if ( basicType == "uint16" ) return new UInt16Type { NativeType = type, VarName = varname };
 		if ( basicType == "unsigned short" ) return new UInt16Type { NativeType = type, VarName = varname };

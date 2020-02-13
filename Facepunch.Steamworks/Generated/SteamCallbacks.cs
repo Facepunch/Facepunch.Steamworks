@@ -2429,8 +2429,7 @@ namespace Steamworks.Data
 		internal int TotalResultCount; // m_nTotalResultCount int32
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
 		internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U4)]
-		internal uint[] GRTimeSubscribed; // m_rgRTimeSubscribed uint32 [50]
+		internal uint [50] GRTimeSubscribed; // m_rgRTimeSubscribed uint32 [50]
 		
 		#region SteamCallback
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageEnumerateUserSubscribedFilesResult_t) );
@@ -2939,8 +2938,7 @@ namespace Steamworks.Data
 		internal int TotalResultCount; // m_nTotalResultCount int32
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
 		internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U4)]
-		internal uint[] GRTimeUpdated; // m_rgRTimeUpdated uint32 [50]
+		internal uint [50] GRTimeUpdated; // m_rgRTimeUpdated uint32 [50]
 		
 		#region SteamCallback
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageEnumeratePublishedFilesByUserActionResult_t) );

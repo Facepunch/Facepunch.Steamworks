@@ -112,5 +112,22 @@ namespace Generator
         }
 
         public List<CallbackStructDef> callback_structs { get; set; }
+
+        public class Const
+        {
+            [JsonProperty( PropertyName = "consttype" )]
+            public string Type { get; set; }
+
+            [JsonProperty( PropertyName = "constname" )]
+            public string Name { get; set; }
+
+
+            [JsonProperty( PropertyName = "constval" )]
+            public string Val { get; set; }
+        }
+
+        public List<Const> Consts { get; set; }
     }
+
+
 }
