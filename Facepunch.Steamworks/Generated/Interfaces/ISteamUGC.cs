@@ -437,10 +437,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _RequestUGCDetails( IntPtr self, PublishedFileId nPublishedFileID, uint unMaxAgeSeconds );
 		
 		#endregion
-		internal CallbackResult RequestUGCDetails( PublishedFileId nPublishedFileID, uint unMaxAgeSeconds )
+		internal CallbackResult<SteamUGCQueryCompleted_t> RequestUGCDetails( PublishedFileId nPublishedFileID, uint unMaxAgeSeconds )
 		{
 			var returnValue = _RequestUGCDetails( Self, nPublishedFileID, unMaxAgeSeconds );
-			return new CallbackResult( returnValue );
+			return new CallbackResult<SteamUGCQueryCompleted_t>( returnValue );
 		}
 		
 		#region FunctionMeta

@@ -9,6 +9,8 @@ namespace Steamworks.Data
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamIPAddress_t
 	{
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)] //  m_rgubIPv6
+		internal byte[] GubIPv6; // m_rgubIPv6 uint8 [16]
 		internal SteamIPType Type; // m_eType ESteamIPType
 		
 	}
@@ -190,15 +192,6 @@ namespace Steamworks.Data
 	{
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 512)] //  m_data
 		internal byte[] Data; // m_data uint8 [512]
-		
-	}
-	
-	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
-	internal struct SteamNetworkingConfigValue_t
-	{
-		internal SteamNetworkingConfigValue Value; // m_eValue ESteamNetworkingConfigValue
-		internal SteamNetworkingConfigDataType DataType; // m_eDataType ESteamNetworkingConfigDataType
-		//internal (anonymous at ../public/steam/steamnetworkingtypes.h:1171:2) Val; // m_val union (anonymous union at ../public/steam/steamnetworkingtypes.h:1171:2)
 		
 	}
 	

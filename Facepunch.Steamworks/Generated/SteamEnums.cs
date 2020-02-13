@@ -293,7 +293,7 @@ namespace Steamworks
 	//
 	// EAppType
 	//
-	internal enum AppType : uint
+	internal enum AppType : int
 	{
 		Invalid = 0,
 		Game = 1,
@@ -314,7 +314,7 @@ namespace Steamworks
 		Comic_UNUSED = 32768,
 		Beta = 65536,
 		Shortcut = 1073741824,
-		DepotOnly = 2147483648,
+		DepotOnly = -2147483648,
 	}
 	
 	//
@@ -549,17 +549,6 @@ namespace Steamworks
 		ExitSoon_3h = 5,
 		ExitSoon_5h = 6,
 		ExitSoon_Night = 7,
-	}
-	
-	//
-	// EGameIDType
-	//
-	internal enum GameIDType : int
-	{
-		App = 0,
-		GameMod = 1,
-		Shortcut = 2,
-		P2P = 3,
 	}
 	
 	//
@@ -861,7 +850,7 @@ namespace Steamworks
 	//
 	// ERemoteStoragePlatform
 	//
-	internal enum RemoteStoragePlatform : uint
+	internal enum RemoteStoragePlatform : int
 	{
 		None = 0,
 		Windows = 1,
@@ -871,7 +860,7 @@ namespace Steamworks
 		Switch = 16,
 		Android = 32,
 		IOS = 64,
-		All = 4294967295,
+		All = -1,
 	}
 	
 	//
