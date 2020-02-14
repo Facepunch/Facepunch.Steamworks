@@ -5,7 +5,7 @@ namespace Steamworks.Data
 {
 	public struct Connection
 	{
-		internal uint Id;
+		public uint Id { get; }
 
 		public override string ToString() => Id.ToString();
 

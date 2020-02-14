@@ -70,7 +70,30 @@ namespace Steamworks
 			}
 		}
 
-		internal static Dictionary<string, InputDigitalActionHandle_t> DigitalHandles = new Dictionary<string, InputDigitalActionHandle_t>();
+
+        /// <summary>
+        /// Return an absolute path to the PNG image glyph for the provided digital action name. The current
+        /// action set in use for the controller will be used for the lookup. You should cache the result and
+        /// maintain your own list of loaded PNG assets.
+        /// </summary>
+        /// <param name="controller"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public static string GetDigitalActionGlyph( Controller controller, string action )
+        {
+            InputActionOrigin origin = InputActionOrigin.None;
+
+            Internal.GetDigitalActionOrigins(
+                controller.Handle,
+                Internal.GetCurrentActionSet(controller.Handle),
+                GetDigitalActionHandle(action),
+                ref origin
+            );
+
+            return Internal.GetGlyphForActionOrigin(origin);
+        }
+
+        internal static Dictionary<string, InputDigitalActionHandle_t> DigitalHandles = new Dictionary<string, InputDigitalActionHandle_t>();
 		internal static InputDigitalActionHandle_t GetDigitalActionHandle( string name )
 		{
 			if ( DigitalHandles.TryGetValue( name, out var val ) )

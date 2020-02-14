@@ -29,6 +29,16 @@ namespace Steamworks
 			}
 		}
 
+		internal static void InstallEvents()
+		{
+			DownloadItemResult_t.Install( x => OnDownloadItemResult?.Invoke( x.Result ) );
+		}
+
+		/// <summary>
+		/// Posted after Download call
+		/// </summary>
+		public static event Action<Result> OnDownloadItemResult;
+
 		internal static void Shutdown()
 		{
 			_internal = null;
@@ -63,6 +73,24 @@ namespace Steamworks
 			result.Value.Dispose();
 
 			return item;
+		}
+
+		public static async Task<bool> StartPlaytimeTracking(PublishedFileId fileId)
+		{
+			var result = await Internal.StartPlaytimeTracking(new[] {fileId}, 1);
+			return result.Value.Result == Result.OK;
+		}
+		
+		public static async Task<bool> StopPlaytimeTracking(PublishedFileId fileId)
+		{
+			var result = await Internal.StopPlaytimeTracking(new[] {fileId}, 1);
+			return result.Value.Result == Result.OK;
+		}
+		
+		public static async Task<bool> StopPlaytimeTrackingForAllItems()
+		{
+			var result = await Internal.StopPlaytimeTrackingForAllItems();
+			return result.Value.Result == Result.OK;
 		}
 	}
 }

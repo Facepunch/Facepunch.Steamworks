@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Steamworks.Data;
 
@@ -197,7 +198,9 @@ namespace Steamworks.Ugc
 		{
 			get
 			{
-				if ( !NeedsUpdate ) return 1;
+				//changed from NeedsUpdate as it's false when validating and redownloading ugc
+				//possibly similar properties should also be changed
+				if ( !IsDownloading ) return 1;
 
 				ulong downloaded = 0;
 				ulong total = 0;
@@ -254,28 +257,133 @@ namespace Steamworks.Ugc
             return result?.Result == Result.OK;
         }
 
-        /// <summary>
-        /// Allows the user to unsubscribe from this item
-        /// </summary>
-        public async Task<bool> Unsubscribe ()
+		/// <summary>
+		/// Allows the user to subscribe to this item and wait for it to be downloaded
+		/// If CancellationToken is default then there is 60 seconds timeout
+		/// Progress will be set to 0-1
+		/// </summary>
+		public async Task<bool> SubscribeDownloadAsync( Action<float> progress = null, CancellationToken ct = default, int milisecondsUpdateDelay = 60 )
+		{
+			if ( ct == default )
+				ct = new CancellationTokenSource( TimeSpan.FromSeconds( 60 ) ).Token;
+
+			progress?.Invoke( 0 );
+			await Task.Delay( milisecondsUpdateDelay );
+
+			//Subscribe
+			{
+				var subResult = await SteamUGC.Internal.SubscribeItem( _id );
+				if ( subResult?.Result != Result.OK )
+					return false;
+			}
+
+			progress?.Invoke( 0.1f );
+			await Task.Delay( milisecondsUpdateDelay );
+
+			//Try to start downloading
+			{
+				if ( Download( true ) == false )
+					return State.HasFlag( ItemState.Installed );
+
+				//Steam docs about Download:
+				//If the return value is true then register and wait
+				//for the Callback DownloadItemResult_t before calling 
+				//GetItemInstallInfo or accessing the workshop item on disk.
+
+				//Wait for DownloadItemResult_t
+				{
+					var downloadStarted = false;
+					Action<Result> onDownloadStarted = null;
+					onDownloadStarted = r =>
+					{
+						SteamUGC.OnDownloadItemResult -= onDownloadStarted;
+						downloadStarted = true;
+					};
+					SteamUGC.OnDownloadItemResult += onDownloadStarted;
+
+					while ( downloadStarted == false )
+					{
+						if ( ct.IsCancellationRequested )
+							break;
+
+						await Task.Delay( milisecondsUpdateDelay );
+					}
+				}
+			}
+
+			progress?.Invoke( 0.2f );
+			await Task.Delay( milisecondsUpdateDelay );
+
+			//Wait for downloading completion
+			{
+				while ( true )
+				{
+					if ( ct.IsCancellationRequested )
+						break;
+
+					progress?.Invoke( 0.2f + DownloadAmount * 0.8f );
+
+					if ( !IsDownloading && State.HasFlag( ItemState.Installed ) )
+						break;
+
+					await Task.Delay( milisecondsUpdateDelay );
+				}
+			}
+
+			return State.HasFlag( ItemState.Installed );
+		}
+
+		/// <summary>
+		/// Allows the user to unsubscribe from this item
+		/// </summary>
+		public async Task<bool> Unsubscribe ()
         {
             var result = await SteamUGC.Internal.UnsubscribeItem( _id );
             return result?.Result == Result.OK;
         }
 
         /// <summary>
+        /// Adds item to user favorite list
+        /// </summary>
+	    public async Task<bool> AddFavorite()
+	    {
+	        var result = await SteamUGC.Internal.AddItemToFavorites(details.ConsumerAppID, _id);
+	        return result?.Result == Result.OK;
+	    }
+
+	    /// <summary>
+	    /// Removes item from user favorite list
+	    /// </summary>
+        public async Task<bool> RemoveFavorite()
+	    {
+	        var result = await SteamUGC.Internal.RemoveItemFromFavorites(details.ConsumerAppID, _id);
+	        return result?.Result == Result.OK;
+	    }
+
+        /// <summary>
         /// Allows the user to rate a workshop item up or down.
         /// </summary>
-        public async Task<bool> Vote( bool up )
+        public async Task<Result?> Vote( bool up )
 		{
 			var r = await SteamUGC.Internal.SetUserItemVote( Id, up );
-			return r?.Result == Result.OK;
+			return r?.Result;
 		}
 
-		/// <summary>
-		/// Return a URL to view this item online
-		/// </summary>
-		public string Url => $"http://steamcommunity.com/sharedfiles/filedetails/?source=Facepunch.Steamworks&id={Id}";
+        /// <summary>
+        /// Gets the current users vote on the item
+        /// </summary>
+	    public async Task<UserItemVote?> GetUserVote()
+	    {
+	        var result = await SteamUGC.Internal.GetUserItemVote(_id);
+	        if (!result.HasValue)
+	            return null;
+	        return UserItemVote.From(result.Value);
+	    }
+
+        /// <summary>
+        /// Return a URL to view this item online
+        /// </summary>
+        public string Url => $"http://steamcommunity.com/sharedfiles/filedetails/?source=Facepunch.Steamworks&id={Id}";
 
 		/// <summary>
 		/// The URl to view this item's changelog
@@ -323,6 +431,7 @@ namespace Steamworks.Ugc
 		{
 			return new Ugc.Editor( Id );
 		}
+		
+		public Result Result => details.Result;
 	}
-
 }

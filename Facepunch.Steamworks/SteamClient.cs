@@ -44,6 +44,7 @@ namespace Steamworks
 			SteamParties.InstallEvents();
 			SteamNetworkingSockets.InstallEvents();
 			SteamInput.InstallEvents();
+			SteamUGC.InstallEvents();
 
 			if ( asyncCallbacks )
 			{
