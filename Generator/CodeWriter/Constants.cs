@@ -13,7 +13,7 @@ namespace Generator
             StartBlock( "internal static class Defines" );
             foreach ( var o in def.Consts )
             {
-                var type = o.Type.Substring( "const ".Length );
+                var type = o.Type;
                 type = Cleanup.ConvertType( type );
 
                 var val = o.Val;
