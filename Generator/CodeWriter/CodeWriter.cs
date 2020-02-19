@@ -26,6 +26,14 @@ namespace Generator
                 Enums();
                 Footer();
                 System.IO.File.WriteAllText( $"{folder}SteamEnums.cs", sb.ToString() );
+            }            
+            
+            {
+                sb = new StringBuilder();
+                Header();
+                CustomEnums();
+                Footer();
+                System.IO.File.WriteAllText( $"{folder}CustomEnums.cs", sb.ToString() );
             }
 
             {
