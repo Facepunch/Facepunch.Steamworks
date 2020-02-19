@@ -31,7 +31,7 @@ namespace Generator
                 public Param[] Params { get; set; }
                 [JsonProperty( PropertyName = "methodname" )]
                 public string Name { get; set; }
-                [JsonProperty( PropertyName = "flat_name" )]
+                [JsonProperty( PropertyName = "methodname_flat" )]
                 public string FlatName { get; set; }
 
             }
