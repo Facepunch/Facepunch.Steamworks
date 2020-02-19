@@ -411,6 +411,7 @@ namespace Steamworks
 		/// Requests an application ticket encrypted with the secret "encrypted app ticket key".
 		/// The encryption key can be obtained from the Encrypted App Ticket Key page on the App Admin for your app.
 		/// There can only be one call pending, and this call is subject to a 60 second rate limit.
+		/// If you get a null result from this it's probably because you're calling it too often.
 		/// This can fail if you don't have an encrypted ticket set for your app here https://partner.steamgames.com/apps/sdkauth/
 		/// </summary>
 		public static async Task<byte[]> RequestEncryptedAppTicketAsync( byte[] dataToInclude )
