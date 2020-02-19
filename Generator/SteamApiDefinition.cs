@@ -101,6 +101,8 @@ namespace Generator
                 }
             }
 
+            public EnumDef[] Enums { get; set; }
+
         }
 
         public List<StructDef> structs { get; set; }

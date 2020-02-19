@@ -67,6 +67,14 @@ namespace Generator
 					StructFields( c.Fields );
 					WriteLine();
 
+                    if ( c.Enums != null )
+                    {
+                        foreach ( var e in c.Enums )
+                        {
+                            WriteEnum( e, e.Name );
+                        }
+                    }
+
                 }
                 EndBlock();
                 WriteLine();

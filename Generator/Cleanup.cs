@@ -54,7 +54,7 @@ public static class Cleanup
 		type = type.Replace( "ISteamNetworkingMessage", "NetMsg" );
 		type = type.Replace( "SteamNetworkingMessage_t", "NetMsg" );
 
-		type = type.Replace( "RequestPlayersForGameResultCallback_t_PlayerAcceptState_t", "PlayerAcceptState_t" );
+		type = type.Replace( "::", "." );
 
 		return type;
 	}

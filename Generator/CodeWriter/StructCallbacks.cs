@@ -89,8 +89,16 @@ namespace Generator
 						WriteLine( "#endregion" );
 					}
 
-                   // if (  c.CallbackId ) )
-                    {
+					if ( c.Enums != null )
+					{
+						foreach ( var e in c.Enums )
+						{
+							WriteEnum( e, e.Name );
+						}
+					}
+
+					// if (  c.CallbackId ) )
+					{
                         callbackList.Add( c );
                     }
 
