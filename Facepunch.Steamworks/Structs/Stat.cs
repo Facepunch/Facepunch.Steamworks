@@ -36,7 +36,7 @@ namespace Steamworks.Data
 		{
 			double val = 0.0;
 
-			if ( SteamUserStats.Internal.GetGlobalStat0( Name, ref val ) )
+			if ( SteamUserStats.Internal.GetGlobalStat( Name, ref val ) )
 				return val;
 
 			return 0;
@@ -71,7 +71,7 @@ namespace Steamworks.Data
 
 			var r = new double[days];
 
-			var rows = SteamUserStats.Internal.GetGlobalStatHistory0( Name, r, (uint)r.Length * sizeof( double ) );
+			var rows = SteamUserStats.Internal.GetGlobalStatHistory( Name, r, (uint)r.Length * sizeof( double ) );
 
 			if ( days != rows )
 				r = r.Take( rows ).ToArray();
@@ -85,11 +85,11 @@ namespace Steamworks.Data
 
 			if ( UserId > 0 )
 			{
-				SteamUserStats.Internal.GetUserStat0( UserId, Name, ref val );
+				SteamUserStats.Internal.GetUserStat( UserId, Name, ref val );
 			}
 			else
 			{
-				SteamUserStats.Internal.GetStat0( Name, ref val );
+				SteamUserStats.Internal.GetStat( Name, ref val );
 			}
 
 			return 0;
@@ -120,7 +120,7 @@ namespace Steamworks.Data
 		public bool Set( float val )
 		{
 			LocalUserOnly();
-			return SteamUserStats.Internal.SetStat0( Name, val );
+			return SteamUserStats.Internal.SetStat( Name, val );
 		}
 
 		public bool Add( int val )
