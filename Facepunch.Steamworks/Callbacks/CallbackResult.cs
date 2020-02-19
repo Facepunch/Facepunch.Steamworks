@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Steamworks
@@ -18,7 +19,15 @@ namespace Steamworks
 
 		public void OnCompleted( Action continuation )
 		{
-			throw new NotImplementedException();
+			var ts = TaskScheduler.Current;
+			var sc = SynchronizationContext.Current;
+
+			while ( !IsCompleted )
+			{
+				// Nothing
+			}
+
+			continuation();
 		}
 
 		public T? GetResult()
