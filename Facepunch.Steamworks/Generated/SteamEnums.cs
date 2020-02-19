@@ -531,9 +531,9 @@ namespace Steamworks
 		Progress_Full = 0,
 		Progress_Half = 1,
 		Progress_None = 2,
-		_ExitSoon_3h = 3,
-		_ExitSoon_5h = 4,
-		_ExitSoon_Night = 5,
+		ExitSoon_3h = 3,
+		ExitSoon_5h = 4,
+		ExitSoon_Night = 5,
 	}
 	
 	//
@@ -1961,7 +1961,7 @@ namespace Steamworks
 		Attempting = 3,
 		Current = 100,
 		Unknown = 0,
-		_Force32bit = 2147483647,
+		Force32bit = 2147483647,
 	}
 	
 	//
@@ -1976,13 +1976,13 @@ namespace Steamworks
 		GenericString = 2,
 		GenericBytes = 3,
 		UnknownType = 4,
-		_Force32bit = 2147483647,
+		Force32bit = 2147483647,
 	}
 	
 	//
 	// ESteamNetworkingConnectionState
 	//
-	internal enum ConnectionState : int
+	public enum ConnectionState : int
 	{
 		None = 0,
 		Connecting = 1,
@@ -1993,7 +1993,7 @@ namespace Steamworks
 		FinWait = -1,
 		Linger = -2,
 		Dead = -3,
-		_Force32Bit = 2147483647,
+		Force32Bit = 2147483647,
 	}
 	
 	//
@@ -2031,7 +2031,7 @@ namespace Steamworks
 		Misc_SteamConnectivity = 5005,
 		Misc_NoRelaySessionsToClient = 5006,
 		Misc_Max = 5999,
-		_Force32Bit = 2147483647,
+		Force32Bit = 2147483647,
 	}
 	
 	//
@@ -2039,10 +2039,10 @@ namespace Steamworks
 	//
 	internal enum SteamNetworkingConfigScope : int
 	{
-		_Global = 1,
-		_SocketsInterface = 2,
-		_ListenSocket = 3,
-		_Connection = 4,
+		Global = 1,
+		SocketsInterface = 2,
+		ListenSocket = 3,
+		Connection = 4,
 		Scope__Force32Bit = 2147483647,
 	}
 	
@@ -2051,11 +2051,11 @@ namespace Steamworks
 	//
 	internal enum NetConfigType : int
 	{
-		_Int32 = 1,
-		_Int64 = 2,
-		_Float = 3,
-		_String = 4,
-		_FunctionPtr = 5,
+		Int32 = 1,
+		Int64 = 2,
+		Float = 3,
+		String = 4,
+		FunctionPtr = 5,
 		DataType__Force32Bit = 2147483647,
 	}
 	
@@ -2064,42 +2064,42 @@ namespace Steamworks
 	//
 	internal enum NetConfig : int
 	{
-		_Invalid = 0,
-		_FakePacketLoss_Send = 2,
-		_FakePacketLoss_Recv = 3,
-		_FakePacketLag_Send = 4,
-		_FakePacketLag_Recv = 5,
-		_FakePacketReorder_Send = 6,
-		_FakePacketReorder_Recv = 7,
-		_FakePacketReorder_Time = 8,
-		_FakePacketDup_Send = 26,
-		_FakePacketDup_Recv = 27,
-		_FakePacketDup_TimeMax = 28,
-		_TimeoutInitial = 24,
-		_TimeoutConnected = 25,
-		_SendBufferSize = 9,
-		_SendRateMin = 10,
-		_SendRateMax = 11,
-		_NagleTime = 12,
-		_IP_AllowWithoutAuth = 23,
-		_MTU_PacketSize = 32,
-		_MTU_DataSize = 33,
-		_Unencrypted = 34,
-		_EnumerateDevVars = 35,
-		_SDRClient_ConsecutitivePingTimeoutsFailInitial = 19,
-		_SDRClient_ConsecutitivePingTimeoutsFail = 20,
-		_SDRClient_MinPingsBeforePingAccurate = 21,
-		_SDRClient_SingleSocket = 22,
-		_SDRClient_ForceRelayCluster = 29,
-		_SDRClient_DebugTicketAddress = 30,
-		_SDRClient_ForceProxyAddr = 31,
-		_SDRClient_FakeClusterPing = 36,
-		_LogLevel_AckRTT = 13,
-		_LogLevel_PacketDecode = 14,
-		_LogLevel_Message = 15,
-		_LogLevel_PacketGaps = 16,
-		_LogLevel_P2PRendezvous = 17,
-		_LogLevel_SDRRelayPings = 18,
+		Invalid = 0,
+		FakePacketLoss_Send = 2,
+		FakePacketLoss_Recv = 3,
+		FakePacketLag_Send = 4,
+		FakePacketLag_Recv = 5,
+		FakePacketReorder_Send = 6,
+		FakePacketReorder_Recv = 7,
+		FakePacketReorder_Time = 8,
+		FakePacketDup_Send = 26,
+		FakePacketDup_Recv = 27,
+		FakePacketDup_TimeMax = 28,
+		TimeoutInitial = 24,
+		TimeoutConnected = 25,
+		SendBufferSize = 9,
+		SendRateMin = 10,
+		SendRateMax = 11,
+		NagleTime = 12,
+		IP_AllowWithoutAuth = 23,
+		MTU_PacketSize = 32,
+		MTU_DataSize = 33,
+		Unencrypted = 34,
+		EnumerateDevVars = 35,
+		SDRClient_ConsecutitivePingTimeoutsFailInitial = 19,
+		SDRClient_ConsecutitivePingTimeoutsFail = 20,
+		SDRClient_MinPingsBeforePingAccurate = 21,
+		SDRClient_SingleSocket = 22,
+		SDRClient_ForceRelayCluster = 29,
+		SDRClient_DebugTicketAddress = 30,
+		SDRClient_ForceProxyAddr = 31,
+		SDRClient_FakeClusterPing = 36,
+		LogLevel_AckRTT = 13,
+		LogLevel_PacketDecode = 14,
+		LogLevel_Message = 15,
+		LogLevel_PacketGaps = 16,
+		LogLevel_P2PRendezvous = 17,
+		LogLevel_SDRRelayPings = 18,
 		Value__Force32Bit = 2147483647,
 	}
 	
@@ -2108,11 +2108,11 @@ namespace Steamworks
 	//
 	internal enum NetConfigResult : int
 	{
-		_BadValue = -1,
-		_BadScopeObj = -2,
-		_BufferTooSmall = -3,
-		_OK = 1,
-		_OKInherited = 2,
+		BadValue = -1,
+		BadScopeObj = -2,
+		BufferTooSmall = -3,
+		OK = 1,
+		OKInherited = 2,
 		Result__Force32Bit = 2147483647,
 	}
 	
@@ -2130,7 +2130,7 @@ namespace Steamworks
 		Verbose = 6,
 		Debug = 7,
 		Everything = 8,
-		_Force32Bit = 2147483647,
+		Force32Bit = 2147483647,
 	}
 	
 	//

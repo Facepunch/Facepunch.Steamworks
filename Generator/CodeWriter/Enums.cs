@@ -89,7 +89,7 @@ namespace Generator
                         ename = p + ename;
                     }
 
-                    WriteLine( $"{ename} = {entry.Value}," );
+                    WriteLine( $"{ename.Trim( ' ', '_' )} = {entry.Value}," );
                 }
             }
             EndBlock();
