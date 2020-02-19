@@ -115,10 +115,10 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_CreateListenSocket")]
-		private static extern SNetListenSocket_t _CreateListenSocket( IntPtr self, int nVirtualP2PPort, SteamIPAddress_t nIP, ushort nPort, [MarshalAs( UnmanagedType.U1 )] bool bAllowUseOfPacketRelay );
+		private static extern SNetListenSocket_t _CreateListenSocket( IntPtr self, int nVirtualP2PPort, SteamIPAddress nIP, ushort nPort, [MarshalAs( UnmanagedType.U1 )] bool bAllowUseOfPacketRelay );
 		
 		#endregion
-		internal SNetListenSocket_t CreateListenSocket( int nVirtualP2PPort, SteamIPAddress_t nIP, ushort nPort, [MarshalAs( UnmanagedType.U1 )] bool bAllowUseOfPacketRelay )
+		internal SNetListenSocket_t CreateListenSocket( int nVirtualP2PPort, SteamIPAddress nIP, ushort nPort, [MarshalAs( UnmanagedType.U1 )] bool bAllowUseOfPacketRelay )
 		{
 			var returnValue = _CreateListenSocket( Self, nVirtualP2PPort, nIP, nPort, bAllowUseOfPacketRelay );
 			return returnValue;
@@ -137,10 +137,10 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_CreateConnectionSocket")]
-		private static extern SNetSocket_t _CreateConnectionSocket( IntPtr self, SteamIPAddress_t nIP, ushort nPort, int nTimeoutSec );
+		private static extern SNetSocket_t _CreateConnectionSocket( IntPtr self, SteamIPAddress nIP, ushort nPort, int nTimeoutSec );
 		
 		#endregion
-		internal SNetSocket_t CreateConnectionSocket( SteamIPAddress_t nIP, ushort nPort, int nTimeoutSec )
+		internal SNetSocket_t CreateConnectionSocket( SteamIPAddress nIP, ushort nPort, int nTimeoutSec )
 		{
 			var returnValue = _CreateConnectionSocket( Self, nIP, nPort, nTimeoutSec );
 			return returnValue;
@@ -233,10 +233,10 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_GetSocketInfo")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _GetSocketInfo( IntPtr self, SNetSocket_t hSocket, ref SteamId pSteamIDRemote, ref int peSocketStatus, ref SteamIPAddress_t punIPRemote, ref ushort punPortRemote );
+		private static extern bool _GetSocketInfo( IntPtr self, SNetSocket_t hSocket, ref SteamId pSteamIDRemote, ref int peSocketStatus, ref SteamIPAddress punIPRemote, ref ushort punPortRemote );
 		
 		#endregion
-		internal bool GetSocketInfo( SNetSocket_t hSocket, ref SteamId pSteamIDRemote, ref int peSocketStatus, ref SteamIPAddress_t punIPRemote, ref ushort punPortRemote )
+		internal bool GetSocketInfo( SNetSocket_t hSocket, ref SteamId pSteamIDRemote, ref int peSocketStatus, ref SteamIPAddress punIPRemote, ref ushort punPortRemote )
 		{
 			var returnValue = _GetSocketInfo( Self, hSocket, ref pSteamIDRemote, ref peSocketStatus, ref punIPRemote, ref punPortRemote );
 			return returnValue;
@@ -245,10 +245,10 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_GetListenSocketInfo")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _GetListenSocketInfo( IntPtr self, SNetListenSocket_t hListenSocket, ref SteamIPAddress_t pnIP, ref ushort pnPort );
+		private static extern bool _GetListenSocketInfo( IntPtr self, SNetListenSocket_t hListenSocket, ref SteamIPAddress pnIP, ref ushort pnPort );
 		
 		#endregion
-		internal bool GetListenSocketInfo( SNetListenSocket_t hListenSocket, ref SteamIPAddress_t pnIP, ref ushort pnPort )
+		internal bool GetListenSocketInfo( SNetListenSocket_t hListenSocket, ref SteamIPAddress pnIP, ref ushort pnPort )
 		{
 			var returnValue = _GetListenSocketInfo( Self, hListenSocket, ref pnIP, ref pnPort );
 			return returnValue;

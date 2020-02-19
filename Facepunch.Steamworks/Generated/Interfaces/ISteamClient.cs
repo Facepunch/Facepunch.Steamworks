@@ -96,10 +96,10 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_SetLocalIPBinding")]
-		private static extern void _SetLocalIPBinding( IntPtr self, ref SteamIPAddress_t unIP, ushort usPort );
+		private static extern void _SetLocalIPBinding( IntPtr self, ref SteamIPAddress unIP, ushort usPort );
 		
 		#endregion
-		internal void SetLocalIPBinding( ref SteamIPAddress_t unIP, ushort usPort )
+		internal void SetLocalIPBinding( ref SteamIPAddress unIP, ushort usPort )
 		{
 			_SetLocalIPBinding( Self, ref unIP, usPort );
 		}

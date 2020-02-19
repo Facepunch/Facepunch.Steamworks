@@ -54,6 +54,7 @@ public static class Cleanup
 		type = type.Replace( "MatchMakingKeyValuePair_t", "MatchMakingKeyValuePair" );
 		type = type.Replace( "ISteamNetworkingMessage", "NetMsg" );
 		type = type.Replace( "SteamNetworkingMessage_t", "NetMsg" );
+		type = type.Replace( "SteamIPAddress_t", "SteamIPAddress" );
 
 		type = type.Replace( "::", "." );
 
@@ -83,6 +84,7 @@ public static class Cleanup
 		if ( type == "SteamNetworkingQuickConnectionStatus" ) return false;
 		if ( type == "SteamNetworkingErrMsg" ) return false;
 		if ( type == "NetKeyValue" ) return false;
+		if ( type == "SteamIPAddress" ) return false;
 
 		return true;
 	}

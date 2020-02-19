@@ -298,16 +298,7 @@ namespace Steamworks
 		/// current public ip address. Be aware that this is likely to return
 		/// null for the first few seconds after initialization.
 		/// </summary>
-		public static System.Net.IPAddress PublicIp
-		{
-			get
-			{
-				var ip = Internal.GetPublicIP();
-				if ( ip == 0 ) return null;
-
-				return Utility.Int32ToIp( ip );
-			}
-		}
+		public static System.Net.IPAddress PublicIp => Internal.GetPublicIP();
 
 		/// <summary>
 		/// Enable or disable heartbeats, which are sent regularly to the master server.
