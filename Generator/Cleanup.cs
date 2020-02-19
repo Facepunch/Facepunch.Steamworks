@@ -112,6 +112,7 @@ public static class Cleanup
 		if ( name == "InputSourceMode" ) return "public";
 		if ( name == "UserHasLicenseForAppResult" ) return "public";
 		if ( name == "PingLocation" ) return "public";
+		if ( name == "ConnectionState" ) return "public";
 
 		return "internal";
 	}
