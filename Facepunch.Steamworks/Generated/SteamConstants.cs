@@ -97,5 +97,8 @@ namespace Steamworks.Data
 		internal static readonly uint k_unServerFlagLinux = 0x08;
 		internal static readonly uint k_unServerFlagPassworded = 0x10;
 		internal static readonly uint k_unServerFlagPrivate = 0x20;
+		internal static readonly uint k_cbSteamDatagramMaxSerializedTicket = 512;
+		internal static readonly uint k_cbMaxSteamDatagramGameCoordinatorServerLoginAppData = 2048;
+		internal static readonly uint k_cbMaxSteamDatagramGameCoordinatorServerLoginSerialized = 4096;
 	}
 }

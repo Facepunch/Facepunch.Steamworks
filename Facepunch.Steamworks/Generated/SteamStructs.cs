@@ -195,4 +195,42 @@ namespace Steamworks.Data
 		
 	}
 	
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
+	internal struct SteamNetworkingConfigValue_t
+	{
+		internal SteamNetworkingConfigValue Value; // m_eValue ESteamNetworkingConfigValue
+		internal SteamNetworkingConfigDataType DataType; // m_eDataType ESteamNetworkingConfigDataType
+		internal long Nt64; // m_int64 int64_t
+		internal int Val_int32; // m_val_int32 int32_t
+		internal long Val_int64; // m_val_int64 int64_t
+		internal float Val_float; // m_val_float float
+		internal string Val_string; // m_val_string const char *
+		internal IntPtr Val_functionPtr; // m_val_functionPtr void *
+		
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
+	internal struct SteamDatagramHostedAddress
+	{
+		internal int CbSize; // m_cbSize int
+		internal string DataUTF8() => System.Text.Encoding.UTF8.GetString( Data, 0, System.Array.IndexOf<byte>( Data, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)] // byte[] m_data
+		internal byte[] Data; // m_data char [128]
+		
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
+	internal struct SteamDatagramGameCoordinatorServerLogin
+	{
+		internal NetIdentity Dentity; // m_identity SteamNetworkingIdentity
+		internal SteamDatagramHostedAddress Outing; // m_routing SteamDatagramHostedAddress
+		internal AppId AppID; // m_nAppID AppId_t
+		internal uint Time; // m_rtime RTime32
+		internal int CbAppData; // m_cbAppData int
+		internal string AppDataUTF8() => System.Text.Encoding.UTF8.GetString( AppData, 0, System.Array.IndexOf<byte>( AppData, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2048)] // byte[] m_appData
+		internal byte[] AppData; // m_appData char [2048]
+		
+	}
+	
 }

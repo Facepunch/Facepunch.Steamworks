@@ -164,6 +164,12 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
+		internal enum EFailureType : int
+		{
+			FlushedCallbackQueue = 0,
+			PipeFail = 1,
+		}
+		
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
@@ -1795,7 +1801,7 @@ namespace Steamworks.Data
 		internal ulong LSearchID; // m_ullSearchID uint64
 		internal ulong SteamIDPlayerFound; // m_SteamIDPlayerFound CSteamID
 		internal ulong SteamIDLobby; // m_SteamIDLobby CSteamID
-		internal PlayerAcceptState_t PlayerAcceptState; // m_ePlayerAcceptState RequestPlayersForGameResultCallback_t_PlayerAcceptState_t
+		internal RequestPlayersForGameResultCallback_t.PlayerAcceptState_t PlayerAcceptState; // m_ePlayerAcceptState RequestPlayersForGameResultCallback_t::PlayerAcceptState_t
 		internal int PlayerIndex; // m_nPlayerIndex int32
 		internal int TotalPlayersFound; // m_nTotalPlayersFound int32
 		internal int TotalPlayersAcceptedGame; // m_nTotalPlayersAcceptedGame int32
@@ -1826,6 +1832,13 @@ namespace Steamworks.Data
 			}
 		}
 		#endregion
+		internal enum PlayerAcceptState_t : int
+		{
+			Unknown = 0,
+			PlayerAccepted = 1,
+			PlayerDeclined = 2,
+		}
+		
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
@@ -2429,7 +2442,8 @@ namespace Steamworks.Data
 		internal int TotalResultCount; // m_nTotalResultCount int32
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
 		internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
-		internal uint [50] GRTimeSubscribed; // m_rgRTimeSubscribed uint32 [50]
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U4)]
+		internal uint[] GRTimeSubscribed; // m_rgRTimeSubscribed uint32 [50]
 		
 		#region SteamCallback
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageEnumerateUserSubscribedFilesResult_t) );
@@ -2938,7 +2952,8 @@ namespace Steamworks.Data
 		internal int TotalResultCount; // m_nTotalResultCount int32
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U8)]
 		internal PublishedFileId[] GPublishedFileId; // m_rgPublishedFileId PublishedFileId_t [50]
-		internal uint [50] GRTimeUpdated; // m_rgRTimeUpdated uint32 [50]
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 50, ArraySubType = UnmanagedType.U4)]
+		internal uint[] GRTimeUpdated; // m_rgRTimeUpdated uint32 [50]
 		
 		#region SteamCallback
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageEnumeratePublishedFilesByUserActionResult_t) );
@@ -6270,6 +6285,73 @@ namespace Steamworks.Data
 			else
 			{
 				Event.Register( OnClient, _datasize, 5702, false );
+				actionClient = action;
+			}
+		}
+		#endregion
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
+	internal struct SteamNetConnectionStatusChangedCallback_t : ICallbackData
+	{
+		internal Connection Conn; // m_hConn HSteamNetConnection
+		internal ConnectionInfo Nfo; // m_info SteamNetConnectionInfo_t
+		internal ConnectionState OldState; // m_eOldState ESteamNetworkingConnectionState
+		
+		#region SteamCallback
+		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamNetConnectionStatusChangedCallback_t) );
+		public int DataSize => _datasize;
+		public int CallbackId => 1221;
+		internal static SteamNetConnectionStatusChangedCallback_t Fill( IntPtr p ) => ((SteamNetConnectionStatusChangedCallback_t)Marshal.PtrToStructure( p, typeof(SteamNetConnectionStatusChangedCallback_t) ) );
+		
+		static Action<SteamNetConnectionStatusChangedCallback_t> actionClient;
+		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
+		static Action<SteamNetConnectionStatusChangedCallback_t> actionServer;
+		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
+		public static void Install( Action<SteamNetConnectionStatusChangedCallback_t> action, bool server = false )
+		{
+			if ( server )
+			{
+				Event.Register( OnServer, _datasize, 1221, true );
+				actionServer = action;
+			}
+			else
+			{
+				Event.Register( OnClient, _datasize, 1221, false );
+				actionClient = action;
+			}
+		}
+		#endregion
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
+	internal struct SteamNetAuthenticationStatus_t : ICallbackData
+	{
+		internal SteamNetworkingAvailability Avail; // m_eAvail ESteamNetworkingAvailability
+		internal string DebugMsgUTF8() => System.Text.Encoding.UTF8.GetString( DebugMsg, 0, System.Array.IndexOf<byte>( DebugMsg, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)] // byte[] m_debugMsg
+		internal byte[] DebugMsg; // m_debugMsg char [256]
+		
+		#region SteamCallback
+		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamNetAuthenticationStatus_t) );
+		public int DataSize => _datasize;
+		public int CallbackId => 1222;
+		internal static SteamNetAuthenticationStatus_t Fill( IntPtr p ) => ((SteamNetAuthenticationStatus_t)Marshal.PtrToStructure( p, typeof(SteamNetAuthenticationStatus_t) ) );
+		
+		static Action<SteamNetAuthenticationStatus_t> actionClient;
+		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
+		static Action<SteamNetAuthenticationStatus_t> actionServer;
+		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
+		public static void Install( Action<SteamNetAuthenticationStatus_t> action, bool server = false )
+		{
+			if ( server )
+			{
+				Event.Register( OnServer, _datasize, 1222, true );
+				actionServer = action;
+			}
+			else
+			{
+				Event.Register( OnClient, _datasize, 1222, false );
 				actionClient = action;
 			}
 		}

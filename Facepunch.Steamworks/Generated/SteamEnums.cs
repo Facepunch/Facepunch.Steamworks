@@ -552,6 +552,17 @@ namespace Steamworks
 	}
 	
 	//
+	// EDurationControlOnlineState
+	//
+	internal enum DurationControlOnlineState : int
+	{
+		Invalid = 0,
+		Offline = 1,
+		Online = 2,
+		OnlineHighPri = 3,
+	}
+	
+	//
 	// EGameSearchErrorCode_t
 	//
 	internal enum GameSearchErrorCode_t : int
@@ -597,15 +608,6 @@ namespace Steamworks
 		Unknown = 0,
 		Good = 1,
 		Bad = 2,
-	}
-	
-	//
-	// EFailureType
-	//
-	internal enum FailureType : int
-	{
-		FlushedCallbackQueue = 0,
-		PipeFail = 1,
 	}
 	
 	//
@@ -835,16 +837,6 @@ namespace Steamworks
 		IconURLSmall = 2,
 		IconURLMedium = 3,
 		IconURLLarge = 4,
-	}
-	
-	//
-	// PlayerAcceptState_t
-	//
-	internal enum PlayerAcceptState_t : int
-	{
-		Unknown = 0,
-		PlayerAccepted = 1,
-		PlayerDeclined = 2,
 	}
 	
 	//
@@ -1898,76 +1890,6 @@ namespace Steamworks
 		EnvironmentMap_HorizontalCross = 3,
 		EnvironmentMap_LatLong = 4,
 		ReservedMax = 255,
-	}
-	
-	//
-	// EHTMLMouseButton
-	//
-	internal enum HTMLMouseButton : int
-	{
-		Left = 0,
-		Right = 1,
-		Middle = 2,
-	}
-	
-	//
-	// EMouseCursor
-	//
-	internal enum MouseCursor : int
-	{
-		user = 0,
-		none = 1,
-		arrow = 2,
-		ibeam = 3,
-		hourglass = 4,
-		waitarrow = 5,
-		crosshair = 6,
-		up = 7,
-		sizenw = 8,
-		sizese = 9,
-		sizene = 10,
-		sizesw = 11,
-		sizew = 12,
-		sizee = 13,
-		sizen = 14,
-		sizes = 15,
-		sizewe = 16,
-		sizens = 17,
-		sizeall = 18,
-		no = 19,
-		hand = 20,
-		blank = 21,
-		middle_pan = 22,
-		north_pan = 23,
-		north_east_pan = 24,
-		east_pan = 25,
-		south_east_pan = 26,
-		south_pan = 27,
-		south_west_pan = 28,
-		west_pan = 29,
-		north_west_pan = 30,
-		alias = 31,
-		cell = 32,
-		colresize = 33,
-		copycur = 34,
-		verticaltext = 35,
-		rowresize = 36,
-		zoomin = 37,
-		zoomout = 38,
-		help = 39,
-		custom = 40,
-		last = 41,
-	}
-	
-	//
-	// EHTMLKeyModifiers
-	//
-	internal enum HTMLKeyModifiers : int
-	{
-		None = 0,
-		AltDown = 1,
-		CtrlDown = 2,
-		ShiftDown = 4,
 	}
 	
 	//
