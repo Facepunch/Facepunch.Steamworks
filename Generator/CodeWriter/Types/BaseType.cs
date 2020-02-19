@@ -62,6 +62,7 @@ internal class BaseType
 		if ( basicType == "AnalogState" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
 		if ( basicType == "MotionState" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
 		if ( basicType == "NetMsg" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
+		if ( basicType == "NetKeyValue" ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
 		if ( basicType.StartsWith( "E" ) && char.IsUpper( basicType[1] ) ) return new EnumType { NativeType = type.Substring( 1 ), VarName = varname };
 		if ( basicType.EndsWith( "_t" ) ) return new StructType { NativeType = type, VarName = varname, StructName = basicType };
 
@@ -87,6 +88,7 @@ internal class BaseType
 			if ( Func == "ReadP2PPacket" ) return false;
 			if ( Func == "SendP2PPacket" ) return false;
 			if ( VarName == "pOutMessageNumber" ) return false;
+			if ( VarName == "pOptions" ) return true;
 
 			if ( VarName == "pOut" ) return false;
 			if ( VarName == "pOutBuffer" ) return false;

@@ -270,10 +270,10 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_SetConfigValueStruct")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SetConfigValueStruct( IntPtr self, ref NetConfig_t opt, NetConfigScope eScopeType, long scopeObj );
+		private static extern bool _SetConfigValueStruct( IntPtr self, ref NetKeyValue opt, NetConfigScope eScopeType, long scopeObj );
 		
 		#endregion
-		internal bool SetConfigValueStruct( ref NetConfig_t opt, NetConfigScope eScopeType, long scopeObj )
+		internal bool SetConfigValueStruct( ref NetKeyValue opt, NetConfigScope eScopeType, long scopeObj )
 		{
 			var returnValue = _SetConfigValueStruct( Self, ref opt, eScopeType, scopeObj );
 			return returnValue;

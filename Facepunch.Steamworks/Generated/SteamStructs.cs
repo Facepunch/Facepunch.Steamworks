@@ -196,20 +196,6 @@ namespace Steamworks.Data
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
-	internal struct NetConfig_t
-	{
-		internal NetConfig Value; // m_eValue ESteamNetworkingConfigValue
-		internal NetConfigType DataType; // m_eDataType ESteamNetworkingConfigDataType
-		internal long Nt64; // m_int64 int64_t
-		internal int Val_int32; // m_val_int32 int32_t
-		internal long Val_int64; // m_val_int64 int64_t
-		internal float Val_float; // m_val_float float
-		internal string Val_string; // m_val_string const char *
-		internal IntPtr Val_functionPtr; // m_val_functionPtr void *
-		
-	}
-	
-	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamDatagramHostedAddress
 	{
 		internal int CbSize; // m_cbSize int

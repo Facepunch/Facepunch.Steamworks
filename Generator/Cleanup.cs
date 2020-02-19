@@ -34,6 +34,7 @@ public static class Cleanup
 		type = type.Replace( "SteamItemDef_t", "InventoryDefId" );
 		type = type.Replace( "ChatRoomEnterResponse", "RoomEnter" );
 		type = type.Replace( "SteamNetworkPingLocation_t", "PingLocation" );
+		type = type.Replace( "SteamNetworkingConfigValue_t", "NetKeyValue" );
 		type = type.Replace( "SteamNetworkingConfigValue", "NetConfig" );
 		type = type.Replace( "SteamNetworkingConfigScope", "NetConfigScope" );
 		type = type.Replace( "SteamNetworkingConfigDataType", "NetConfigType" );
@@ -81,6 +82,7 @@ public static class Cleanup
 		if ( type == "NetIdentity" ) return false;
 		if ( type == "SteamNetworkingQuickConnectionStatus" ) return false;
 		if ( type == "SteamNetworkingErrMsg" ) return false;
+		if ( type == "NetKeyValue" ) return false;
 
 		return true;
 	}

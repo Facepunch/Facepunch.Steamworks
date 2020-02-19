@@ -2037,7 +2037,7 @@ namespace Steamworks
 	//
 	// ESteamNetworkingConfigScope
 	//
-	internal enum SteamNetworkingConfigScope : int
+	internal enum NetConfigScope : int
 	{
 		Global = 1,
 		SocketsInterface = 2,
