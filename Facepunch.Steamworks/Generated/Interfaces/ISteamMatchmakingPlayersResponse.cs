@@ -16,7 +16,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmakingPlayersResponse_AddPlayerToList")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmakingPlayersResponse_AddPlayerToList", CallingConvention = Platform.CC)]
 		private static extern void _AddPlayerToList( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchName, int nScore, float flTimePlayed );
 		
 		#endregion
@@ -26,7 +26,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmakingPlayersResponse_PlayersFailedToRespond")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmakingPlayersResponse_PlayersFailedToRespond", CallingConvention = Platform.CC)]
 		private static extern void _PlayersFailedToRespond( IntPtr self );
 		
 		#endregion
@@ -36,7 +36,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmakingPlayersResponse_PlayersRefreshComplete")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmakingPlayersResponse_PlayersRefreshComplete", CallingConvention = Platform.CC)]
 		private static extern void _PlayersRefreshComplete( IntPtr self );
 		
 		#endregion

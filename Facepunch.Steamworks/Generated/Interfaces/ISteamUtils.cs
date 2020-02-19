@@ -15,16 +15,16 @@ namespace Steamworks
 			SetupInterface( IsGameServer );
 		}
 		
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamUtils_v009")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamUtils_v009", CallingConvention = Platform.CC)]
 		internal static extern IntPtr SteamAPI_SteamUtils_v009();
 		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamUtils_v009();
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServerUtils_v009")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServerUtils_v009", CallingConvention = Platform.CC)]
 		internal static extern IntPtr SteamAPI_SteamGameServerUtils_v009();
 		public override IntPtr GetServerInterfacePointer() => SteamAPI_SteamGameServerUtils_v009();
 		
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetSecondsSinceAppActive")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetSecondsSinceAppActive", CallingConvention = Platform.CC)]
 		private static extern uint _GetSecondsSinceAppActive( IntPtr self );
 		
 		#endregion
@@ -35,7 +35,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetSecondsSinceComputerActive")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetSecondsSinceComputerActive", CallingConvention = Platform.CC)]
 		private static extern uint _GetSecondsSinceComputerActive( IntPtr self );
 		
 		#endregion
@@ -46,7 +46,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetConnectedUniverse")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetConnectedUniverse", CallingConvention = Platform.CC)]
 		private static extern Universe _GetConnectedUniverse( IntPtr self );
 		
 		#endregion
@@ -57,7 +57,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetServerRealTime")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetServerRealTime", CallingConvention = Platform.CC)]
 		private static extern uint _GetServerRealTime( IntPtr self );
 		
 		#endregion
@@ -68,7 +68,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetIPCountry")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetIPCountry", CallingConvention = Platform.CC)]
 		private static extern Utf8StringPointer _GetIPCountry( IntPtr self );
 		
 		#endregion
@@ -79,7 +79,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetImageSize")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetImageSize", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _GetImageSize( IntPtr self, int iImage, ref uint pnWidth, ref uint pnHeight );
 		
@@ -91,7 +91,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetImageRGBA")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetImageRGBA", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _GetImageRGBA( IntPtr self, int iImage, [In,Out] byte[]  pubDest, int nDestBufferSize );
 		
@@ -103,7 +103,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetCSERIPPort")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetCSERIPPort", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _GetCSERIPPort( IntPtr self, ref uint unIP, ref ushort usPort );
 		
@@ -115,7 +115,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetCurrentBatteryPower")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetCurrentBatteryPower", CallingConvention = Platform.CC)]
 		private static extern byte _GetCurrentBatteryPower( IntPtr self );
 		
 		#endregion
@@ -126,7 +126,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetAppID")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetAppID", CallingConvention = Platform.CC)]
 		private static extern uint _GetAppID( IntPtr self );
 		
 		#endregion
@@ -137,7 +137,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_SetOverlayNotificationPosition")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_SetOverlayNotificationPosition", CallingConvention = Platform.CC)]
 		private static extern void _SetOverlayNotificationPosition( IntPtr self, NotificationPosition eNotificationPosition );
 		
 		#endregion
@@ -147,7 +147,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_IsAPICallCompleted")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_IsAPICallCompleted", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _IsAPICallCompleted( IntPtr self, SteamAPICall_t hSteamAPICall, [MarshalAs( UnmanagedType.U1 )] ref bool pbFailed );
 		
@@ -159,7 +159,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetAPICallFailureReason")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetAPICallFailureReason", CallingConvention = Platform.CC)]
 		private static extern SteamAPICallFailure _GetAPICallFailureReason( IntPtr self, SteamAPICall_t hSteamAPICall );
 		
 		#endregion
@@ -170,7 +170,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetAPICallResult")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetAPICallResult", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _GetAPICallResult( IntPtr self, SteamAPICall_t hSteamAPICall, IntPtr pCallback, int cubCallback, int iCallbackExpected, [MarshalAs( UnmanagedType.U1 )] ref bool pbFailed );
 		
@@ -182,7 +182,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetIPCCallCount")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetIPCCallCount", CallingConvention = Platform.CC)]
 		private static extern uint _GetIPCCallCount( IntPtr self );
 		
 		#endregion
@@ -193,7 +193,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_SetWarningMessageHook")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_SetWarningMessageHook", CallingConvention = Platform.CC)]
 		private static extern void _SetWarningMessageHook( IntPtr self, IntPtr pFunction );
 		
 		#endregion
@@ -203,7 +203,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_IsOverlayEnabled")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_IsOverlayEnabled", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _IsOverlayEnabled( IntPtr self );
 		
@@ -215,7 +215,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_BOverlayNeedsPresent")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_BOverlayNeedsPresent", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _BOverlayNeedsPresent( IntPtr self );
 		
@@ -227,7 +227,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_CheckFileSignature")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_CheckFileSignature", CallingConvention = Platform.CC)]
 		private static extern SteamAPICall_t _CheckFileSignature( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string szFileName );
 		
 		#endregion
@@ -238,7 +238,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_ShowGamepadTextInput")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_ShowGamepadTextInput", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _ShowGamepadTextInput( IntPtr self, GamepadTextInputMode eInputMode, GamepadTextInputLineMode eLineInputMode, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchDescription, uint unCharMax, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchExistingText );
 		
@@ -250,7 +250,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetEnteredGamepadTextLength")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetEnteredGamepadTextLength", CallingConvention = Platform.CC)]
 		private static extern uint _GetEnteredGamepadTextLength( IntPtr self );
 		
 		#endregion
@@ -261,7 +261,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetEnteredGamepadTextInput")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetEnteredGamepadTextInput", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _GetEnteredGamepadTextInput( IntPtr self, IntPtr pchText, uint cchText );
 		
@@ -275,7 +275,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetSteamUILanguage")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetSteamUILanguage", CallingConvention = Platform.CC)]
 		private static extern Utf8StringPointer _GetSteamUILanguage( IntPtr self );
 		
 		#endregion
@@ -286,7 +286,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_IsSteamRunningInVR")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_IsSteamRunningInVR", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _IsSteamRunningInVR( IntPtr self );
 		
@@ -298,7 +298,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_SetOverlayNotificationInset")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_SetOverlayNotificationInset", CallingConvention = Platform.CC)]
 		private static extern void _SetOverlayNotificationInset( IntPtr self, int nHorizontalInset, int nVerticalInset );
 		
 		#endregion
@@ -308,7 +308,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_IsSteamInBigPictureMode")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_IsSteamInBigPictureMode", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _IsSteamInBigPictureMode( IntPtr self );
 		
@@ -320,7 +320,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_StartVRDashboard")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_StartVRDashboard", CallingConvention = Platform.CC)]
 		private static extern void _StartVRDashboard( IntPtr self );
 		
 		#endregion
@@ -330,7 +330,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_IsVRHeadsetStreamingEnabled")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_IsVRHeadsetStreamingEnabled", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _IsVRHeadsetStreamingEnabled( IntPtr self );
 		
@@ -342,7 +342,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_SetVRHeadsetStreamingEnabled")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_SetVRHeadsetStreamingEnabled", CallingConvention = Platform.CC)]
 		private static extern void _SetVRHeadsetStreamingEnabled( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bEnabled );
 		
 		#endregion
@@ -352,7 +352,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_IsSteamChinaLauncher")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_IsSteamChinaLauncher", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _IsSteamChinaLauncher( IntPtr self );
 		
@@ -364,7 +364,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_InitFilterText")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_InitFilterText", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _InitFilterText( IntPtr self );
 		
@@ -376,7 +376,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_FilterText")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_FilterText", CallingConvention = Platform.CC)]
 		private static extern int _FilterText( IntPtr self, IntPtr pchOutFilteredText, uint nByteSizeOutFilteredText, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchInputMessage, [MarshalAs( UnmanagedType.U1 )] bool bLegalOnly );
 		
 		#endregion
@@ -389,7 +389,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetIPv6ConnectivityState")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetIPv6ConnectivityState", CallingConvention = Platform.CC)]
 		private static extern SteamIPv6ConnectivityState _GetIPv6ConnectivityState( IntPtr self, SteamIPv6ConnectivityProtocol eProtocol );
 		
 		#endregion

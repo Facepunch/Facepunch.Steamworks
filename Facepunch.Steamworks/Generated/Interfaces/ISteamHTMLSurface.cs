@@ -15,13 +15,13 @@ namespace Steamworks
 			SetupInterface( IsGameServer );
 		}
 		
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamHTMLSurface_v005")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamHTMLSurface_v005", CallingConvention = Platform.CC)]
 		internal static extern IntPtr SteamAPI_SteamHTMLSurface_v005();
 		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamHTMLSurface_v005();
 		
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_Init")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_Init", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _Init( IntPtr self );
 		
@@ -33,7 +33,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_Shutdown")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_Shutdown", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _Shutdown( IntPtr self );
 		
@@ -45,7 +45,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_CreateBrowser")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_CreateBrowser", CallingConvention = Platform.CC)]
 		private static extern SteamAPICall_t _CreateBrowser( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchUserAgent, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchUserCSS );
 		
 		#endregion
@@ -56,7 +56,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_RemoveBrowser")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_RemoveBrowser", CallingConvention = Platform.CC)]
 		private static extern void _RemoveBrowser( IntPtr self, HHTMLBrowser unBrowserHandle );
 		
 		#endregion
@@ -66,7 +66,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_LoadURL")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_LoadURL", CallingConvention = Platform.CC)]
 		private static extern void _LoadURL( IntPtr self, HHTMLBrowser unBrowserHandle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchURL, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPostData );
 		
 		#endregion
@@ -76,7 +76,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_SetSize")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_SetSize", CallingConvention = Platform.CC)]
 		private static extern void _SetSize( IntPtr self, HHTMLBrowser unBrowserHandle, uint unWidth, uint unHeight );
 		
 		#endregion
@@ -86,7 +86,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_StopLoad")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_StopLoad", CallingConvention = Platform.CC)]
 		private static extern void _StopLoad( IntPtr self, HHTMLBrowser unBrowserHandle );
 		
 		#endregion
@@ -96,7 +96,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_Reload")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_Reload", CallingConvention = Platform.CC)]
 		private static extern void _Reload( IntPtr self, HHTMLBrowser unBrowserHandle );
 		
 		#endregion
@@ -106,7 +106,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_GoBack")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_GoBack", CallingConvention = Platform.CC)]
 		private static extern void _GoBack( IntPtr self, HHTMLBrowser unBrowserHandle );
 		
 		#endregion
@@ -116,7 +116,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_GoForward")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_GoForward", CallingConvention = Platform.CC)]
 		private static extern void _GoForward( IntPtr self, HHTMLBrowser unBrowserHandle );
 		
 		#endregion
@@ -126,7 +126,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_AddHeader")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_AddHeader", CallingConvention = Platform.CC)]
 		private static extern void _AddHeader( IntPtr self, HHTMLBrowser unBrowserHandle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchValue );
 		
 		#endregion
@@ -136,7 +136,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_ExecuteJavascript")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_ExecuteJavascript", CallingConvention = Platform.CC)]
 		private static extern void _ExecuteJavascript( IntPtr self, HHTMLBrowser unBrowserHandle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchScript );
 		
 		#endregion
@@ -146,7 +146,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_MouseUp")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_MouseUp", CallingConvention = Platform.CC)]
 		private static extern void _MouseUp( IntPtr self, HHTMLBrowser unBrowserHandle, IntPtr eMouseButton );
 		
 		#endregion
@@ -156,7 +156,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_MouseDown")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_MouseDown", CallingConvention = Platform.CC)]
 		private static extern void _MouseDown( IntPtr self, HHTMLBrowser unBrowserHandle, IntPtr eMouseButton );
 		
 		#endregion
@@ -166,7 +166,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_MouseDoubleClick")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_MouseDoubleClick", CallingConvention = Platform.CC)]
 		private static extern void _MouseDoubleClick( IntPtr self, HHTMLBrowser unBrowserHandle, IntPtr eMouseButton );
 		
 		#endregion
@@ -176,7 +176,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_MouseMove")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_MouseMove", CallingConvention = Platform.CC)]
 		private static extern void _MouseMove( IntPtr self, HHTMLBrowser unBrowserHandle, int x, int y );
 		
 		#endregion
@@ -186,7 +186,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_MouseWheel")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_MouseWheel", CallingConvention = Platform.CC)]
 		private static extern void _MouseWheel( IntPtr self, HHTMLBrowser unBrowserHandle, int nDelta );
 		
 		#endregion
@@ -196,7 +196,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_KeyDown")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_KeyDown", CallingConvention = Platform.CC)]
 		private static extern void _KeyDown( IntPtr self, HHTMLBrowser unBrowserHandle, uint nNativeKeyCode, IntPtr eHTMLKeyModifiers, [MarshalAs( UnmanagedType.U1 )] bool bIsSystemKey );
 		
 		#endregion
@@ -206,7 +206,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_KeyUp")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_KeyUp", CallingConvention = Platform.CC)]
 		private static extern void _KeyUp( IntPtr self, HHTMLBrowser unBrowserHandle, uint nNativeKeyCode, IntPtr eHTMLKeyModifiers );
 		
 		#endregion
@@ -216,7 +216,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_KeyChar")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_KeyChar", CallingConvention = Platform.CC)]
 		private static extern void _KeyChar( IntPtr self, HHTMLBrowser unBrowserHandle, uint cUnicodeChar, IntPtr eHTMLKeyModifiers );
 		
 		#endregion
@@ -226,7 +226,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_SetHorizontalScroll")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_SetHorizontalScroll", CallingConvention = Platform.CC)]
 		private static extern void _SetHorizontalScroll( IntPtr self, HHTMLBrowser unBrowserHandle, uint nAbsolutePixelScroll );
 		
 		#endregion
@@ -236,7 +236,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_SetVerticalScroll")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_SetVerticalScroll", CallingConvention = Platform.CC)]
 		private static extern void _SetVerticalScroll( IntPtr self, HHTMLBrowser unBrowserHandle, uint nAbsolutePixelScroll );
 		
 		#endregion
@@ -246,7 +246,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_SetKeyFocus")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_SetKeyFocus", CallingConvention = Platform.CC)]
 		private static extern void _SetKeyFocus( IntPtr self, HHTMLBrowser unBrowserHandle, [MarshalAs( UnmanagedType.U1 )] bool bHasKeyFocus );
 		
 		#endregion
@@ -256,7 +256,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_ViewSource")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_ViewSource", CallingConvention = Platform.CC)]
 		private static extern void _ViewSource( IntPtr self, HHTMLBrowser unBrowserHandle );
 		
 		#endregion
@@ -266,7 +266,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_CopyToClipboard")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_CopyToClipboard", CallingConvention = Platform.CC)]
 		private static extern void _CopyToClipboard( IntPtr self, HHTMLBrowser unBrowserHandle );
 		
 		#endregion
@@ -276,7 +276,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_PasteFromClipboard")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_PasteFromClipboard", CallingConvention = Platform.CC)]
 		private static extern void _PasteFromClipboard( IntPtr self, HHTMLBrowser unBrowserHandle );
 		
 		#endregion
@@ -286,7 +286,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_Find")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_Find", CallingConvention = Platform.CC)]
 		private static extern void _Find( IntPtr self, HHTMLBrowser unBrowserHandle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchSearchStr, [MarshalAs( UnmanagedType.U1 )] bool bCurrentlyInFind, [MarshalAs( UnmanagedType.U1 )] bool bReverse );
 		
 		#endregion
@@ -296,7 +296,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_StopFind")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_StopFind", CallingConvention = Platform.CC)]
 		private static extern void _StopFind( IntPtr self, HHTMLBrowser unBrowserHandle );
 		
 		#endregion
@@ -306,7 +306,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_GetLinkAtPosition")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_GetLinkAtPosition", CallingConvention = Platform.CC)]
 		private static extern void _GetLinkAtPosition( IntPtr self, HHTMLBrowser unBrowserHandle, int x, int y );
 		
 		#endregion
@@ -316,7 +316,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_SetCookie")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_SetCookie", CallingConvention = Platform.CC)]
 		private static extern void _SetCookie( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchHostname, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchValue, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPath, RTime32 nExpires, [MarshalAs( UnmanagedType.U1 )] bool bSecure, [MarshalAs( UnmanagedType.U1 )] bool bHTTPOnly );
 		
 		#endregion
@@ -326,7 +326,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_SetPageScaleFactor")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_SetPageScaleFactor", CallingConvention = Platform.CC)]
 		private static extern void _SetPageScaleFactor( IntPtr self, HHTMLBrowser unBrowserHandle, float flZoom, int nPointX, int nPointY );
 		
 		#endregion
@@ -336,7 +336,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_SetBackgroundMode")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_SetBackgroundMode", CallingConvention = Platform.CC)]
 		private static extern void _SetBackgroundMode( IntPtr self, HHTMLBrowser unBrowserHandle, [MarshalAs( UnmanagedType.U1 )] bool bBackgroundMode );
 		
 		#endregion
@@ -346,7 +346,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_SetDPIScalingFactor")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_SetDPIScalingFactor", CallingConvention = Platform.CC)]
 		private static extern void _SetDPIScalingFactor( IntPtr self, HHTMLBrowser unBrowserHandle, float flDPIScaling );
 		
 		#endregion
@@ -356,7 +356,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_OpenDeveloperTools")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_OpenDeveloperTools", CallingConvention = Platform.CC)]
 		private static extern void _OpenDeveloperTools( IntPtr self, HHTMLBrowser unBrowserHandle );
 		
 		#endregion
@@ -366,7 +366,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_AllowStartRequest")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_AllowStartRequest", CallingConvention = Platform.CC)]
 		private static extern void _AllowStartRequest( IntPtr self, HHTMLBrowser unBrowserHandle, [MarshalAs( UnmanagedType.U1 )] bool bAllowed );
 		
 		#endregion
@@ -376,7 +376,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_JSDialogResponse")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_JSDialogResponse", CallingConvention = Platform.CC)]
 		private static extern void _JSDialogResponse( IntPtr self, HHTMLBrowser unBrowserHandle, [MarshalAs( UnmanagedType.U1 )] bool bResult );
 		
 		#endregion
@@ -386,7 +386,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_FileLoadDialogResponse")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_FileLoadDialogResponse", CallingConvention = Platform.CC)]
 		private static extern void _FileLoadDialogResponse( IntPtr self, HHTMLBrowser unBrowserHandle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchSelectedFiles );
 		
 		#endregion

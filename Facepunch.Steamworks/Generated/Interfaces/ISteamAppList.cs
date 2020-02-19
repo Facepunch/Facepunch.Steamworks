@@ -15,13 +15,13 @@ namespace Steamworks
 			SetupInterface( IsGameServer );
 		}
 		
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamAppList_v001")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamAppList_v001", CallingConvention = Platform.CC)]
 		internal static extern IntPtr SteamAPI_SteamAppList_v001();
 		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamAppList_v001();
 		
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamAppList_GetNumInstalledApps")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamAppList_GetNumInstalledApps", CallingConvention = Platform.CC)]
 		private static extern uint _GetNumInstalledApps( IntPtr self );
 		
 		#endregion
@@ -32,7 +32,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamAppList_GetInstalledApps")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamAppList_GetInstalledApps", CallingConvention = Platform.CC)]
 		private static extern uint _GetInstalledApps( IntPtr self, [In,Out] AppId[]  pvecAppID, uint unMaxAppIDs );
 		
 		#endregion
@@ -43,7 +43,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamAppList_GetAppName")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamAppList_GetAppName", CallingConvention = Platform.CC)]
 		private static extern int _GetAppName( IntPtr self, AppId nAppID, IntPtr pchName, int cchNameMax );
 		
 		#endregion
@@ -56,7 +56,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamAppList_GetAppInstallDir")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamAppList_GetAppInstallDir", CallingConvention = Platform.CC)]
 		private static extern int _GetAppInstallDir( IntPtr self, AppId nAppID, IntPtr pchDirectory, int cchNameMax );
 		
 		#endregion
@@ -69,7 +69,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamAppList_GetAppBuildId")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamAppList_GetAppBuildId", CallingConvention = Platform.CC)]
 		private static extern int _GetAppBuildId( IntPtr self, AppId nAppID );
 		
 		#endregion

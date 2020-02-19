@@ -16,7 +16,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingCustomSignalingRecvContext_OnConnectRequest")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingCustomSignalingRecvContext_OnConnectRequest", CallingConvention = Platform.CC)]
 		private static extern IntPtr _OnConnectRequest( IntPtr self, Connection hConn, ref NetIdentity identityPeer );
 		
 		#endregion
@@ -27,7 +27,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingCustomSignalingRecvContext_SendRejectionSignal")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingCustomSignalingRecvContext_SendRejectionSignal", CallingConvention = Platform.CC)]
 		private static extern void _SendRejectionSignal( IntPtr self, ref NetIdentity identityPeer, IntPtr pMsg, int cbMsg );
 		
 		#endregion

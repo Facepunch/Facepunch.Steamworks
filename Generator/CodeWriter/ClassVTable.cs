@@ -37,7 +37,7 @@ namespace Generator
 					{
 						foreach ( var func in iface.Accessors )
 						{
-							WriteLine( $"[DllImport( Platform.LibraryName, EntryPoint = \"{func.Name_Flat}\")]" );
+							WriteLine( $"[DllImport( Platform.LibraryName, EntryPoint = \"{func.Name_Flat}\", CallingConvention = Platform.CC)]" );
 							WriteLine( $"internal static extern IntPtr {func.Name_Flat}();" );
 
 							if ( func.Kind == "user" )
@@ -123,7 +123,7 @@ namespace Generator
 
 			WriteLine( $"#region FunctionMeta" );
 
-			WriteLine( $"[DllImport( Platform.LibraryName, EntryPoint = \"{func.FlatName}\")]" );
+			WriteLine( $"[DllImport( Platform.LibraryName, EntryPoint = \"{func.FlatName}\", CallingConvention = Platform.CC)]" );
 			
 			if ( returnType.ReturnAttribute != null )
 				WriteLine( returnType.ReturnAttribute );

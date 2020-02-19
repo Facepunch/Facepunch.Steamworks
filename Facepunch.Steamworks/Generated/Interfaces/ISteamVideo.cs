@@ -15,13 +15,13 @@ namespace Steamworks
 			SetupInterface( IsGameServer );
 		}
 		
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamVideo_v002")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamVideo_v002", CallingConvention = Platform.CC)]
 		internal static extern IntPtr SteamAPI_SteamVideo_v002();
 		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamVideo_v002();
 		
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamVideo_GetVideoURL")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamVideo_GetVideoURL", CallingConvention = Platform.CC)]
 		private static extern void _GetVideoURL( IntPtr self, AppId unVideoAppID );
 		
 		#endregion
@@ -31,7 +31,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamVideo_IsBroadcasting")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamVideo_IsBroadcasting", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _IsBroadcasting( IntPtr self, ref int pnNumViewers );
 		
@@ -43,7 +43,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamVideo_GetOPFSettings")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamVideo_GetOPFSettings", CallingConvention = Platform.CC)]
 		private static extern void _GetOPFSettings( IntPtr self, AppId unVideoAppID );
 		
 		#endregion
@@ -53,7 +53,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamVideo_GetOPFStringForApp")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamVideo_GetOPFStringForApp", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _GetOPFStringForApp( IntPtr self, AppId unVideoAppID, IntPtr pchBuffer, ref int pnBufferSize );
 		

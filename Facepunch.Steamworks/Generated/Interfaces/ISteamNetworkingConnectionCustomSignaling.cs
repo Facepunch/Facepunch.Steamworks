@@ -16,7 +16,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingConnectionCustomSignaling_SendSignal")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingConnectionCustomSignaling_SendSignal", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _SendSignal( IntPtr self, Connection hConn, ref ConnectionInfo info, IntPtr pMsg, int cbMsg );
 		
@@ -28,7 +28,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingConnectionCustomSignaling_Release")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingConnectionCustomSignaling_Release", CallingConvention = Platform.CC)]
 		private static extern void _Release( IntPtr self );
 		
 		#endregion

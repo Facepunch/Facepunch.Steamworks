@@ -15,16 +15,16 @@ namespace Steamworks
 			SetupInterface( IsGameServer );
 		}
 		
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworking_v006")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworking_v006", CallingConvention = Platform.CC)]
 		internal static extern IntPtr SteamAPI_SteamNetworking_v006();
 		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamNetworking_v006();
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServerNetworking_v006")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServerNetworking_v006", CallingConvention = Platform.CC)]
 		internal static extern IntPtr SteamAPI_SteamGameServerNetworking_v006();
 		public override IntPtr GetServerInterfacePointer() => SteamAPI_SteamGameServerNetworking_v006();
 		
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_SendP2PPacket")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_SendP2PPacket", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _SendP2PPacket( IntPtr self, SteamId steamIDRemote, IntPtr pubData, uint cubData, P2PSend eP2PSendType, int nChannel );
 		
@@ -36,7 +36,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_IsP2PPacketAvailable")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_IsP2PPacketAvailable", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _IsP2PPacketAvailable( IntPtr self, ref uint pcubMsgSize, int nChannel );
 		
@@ -48,7 +48,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_ReadP2PPacket")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_ReadP2PPacket", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _ReadP2PPacket( IntPtr self, IntPtr pubDest, uint cubDest, ref uint pcubMsgSize, ref SteamId psteamIDRemote, int nChannel );
 		
@@ -60,7 +60,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_AcceptP2PSessionWithUser")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_AcceptP2PSessionWithUser", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _AcceptP2PSessionWithUser( IntPtr self, SteamId steamIDRemote );
 		
@@ -72,7 +72,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_CloseP2PSessionWithUser")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_CloseP2PSessionWithUser", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _CloseP2PSessionWithUser( IntPtr self, SteamId steamIDRemote );
 		
@@ -84,7 +84,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_CloseP2PChannelWithUser")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_CloseP2PChannelWithUser", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _CloseP2PChannelWithUser( IntPtr self, SteamId steamIDRemote, int nChannel );
 		
@@ -96,7 +96,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_GetP2PSessionState")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_GetP2PSessionState", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _GetP2PSessionState( IntPtr self, SteamId steamIDRemote, ref P2PSessionState_t pConnectionState );
 		
@@ -108,7 +108,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_AllowP2PPacketRelay")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_AllowP2PPacketRelay", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _AllowP2PPacketRelay( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bAllow );
 		
@@ -120,7 +120,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_CreateListenSocket")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_CreateListenSocket", CallingConvention = Platform.CC)]
 		private static extern SNetListenSocket_t _CreateListenSocket( IntPtr self, int nVirtualP2PPort, SteamIPAddress nIP, ushort nPort, [MarshalAs( UnmanagedType.U1 )] bool bAllowUseOfPacketRelay );
 		
 		#endregion
@@ -131,7 +131,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_CreateP2PConnectionSocket")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_CreateP2PConnectionSocket", CallingConvention = Platform.CC)]
 		private static extern SNetSocket_t _CreateP2PConnectionSocket( IntPtr self, SteamId steamIDTarget, int nVirtualPort, int nTimeoutSec, [MarshalAs( UnmanagedType.U1 )] bool bAllowUseOfPacketRelay );
 		
 		#endregion
@@ -142,7 +142,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_CreateConnectionSocket")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_CreateConnectionSocket", CallingConvention = Platform.CC)]
 		private static extern SNetSocket_t _CreateConnectionSocket( IntPtr self, SteamIPAddress nIP, ushort nPort, int nTimeoutSec );
 		
 		#endregion
@@ -153,7 +153,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_DestroySocket")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_DestroySocket", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _DestroySocket( IntPtr self, SNetSocket_t hSocket, [MarshalAs( UnmanagedType.U1 )] bool bNotifyRemoteEnd );
 		
@@ -165,7 +165,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_DestroyListenSocket")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_DestroyListenSocket", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _DestroyListenSocket( IntPtr self, SNetListenSocket_t hSocket, [MarshalAs( UnmanagedType.U1 )] bool bNotifyRemoteEnd );
 		
@@ -177,7 +177,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_SendDataOnSocket")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_SendDataOnSocket", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _SendDataOnSocket( IntPtr self, SNetSocket_t hSocket, [In,Out] IntPtr[]  pubData, uint cubData, [MarshalAs( UnmanagedType.U1 )] bool bReliable );
 		
@@ -189,7 +189,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_IsDataAvailableOnSocket")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_IsDataAvailableOnSocket", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _IsDataAvailableOnSocket( IntPtr self, SNetSocket_t hSocket, ref uint pcubMsgSize );
 		
@@ -201,7 +201,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_RetrieveDataFromSocket")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_RetrieveDataFromSocket", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _RetrieveDataFromSocket( IntPtr self, SNetSocket_t hSocket, [In,Out] IntPtr[]  pubDest, uint cubDest, ref uint pcubMsgSize );
 		
@@ -213,7 +213,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_IsDataAvailable")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_IsDataAvailable", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _IsDataAvailable( IntPtr self, SNetListenSocket_t hListenSocket, ref uint pcubMsgSize, ref SNetSocket_t phSocket );
 		
@@ -225,7 +225,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_RetrieveData")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_RetrieveData", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _RetrieveData( IntPtr self, SNetListenSocket_t hListenSocket, [In,Out] IntPtr[]  pubDest, uint cubDest, ref uint pcubMsgSize, ref SNetSocket_t phSocket );
 		
@@ -237,7 +237,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_GetSocketInfo")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_GetSocketInfo", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _GetSocketInfo( IntPtr self, SNetSocket_t hSocket, ref SteamId pSteamIDRemote, ref int peSocketStatus, ref SteamIPAddress punIPRemote, ref ushort punPortRemote );
 		
@@ -249,7 +249,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_GetListenSocketInfo")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_GetListenSocketInfo", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _GetListenSocketInfo( IntPtr self, SNetListenSocket_t hListenSocket, ref SteamIPAddress pnIP, ref ushort pnPort );
 		
@@ -261,7 +261,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_GetSocketConnectionType")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_GetSocketConnectionType", CallingConvention = Platform.CC)]
 		private static extern SNetSocketConnectionType _GetSocketConnectionType( IntPtr self, SNetSocket_t hSocket );
 		
 		#endregion
@@ -272,7 +272,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_GetMaxPacketSize")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_GetMaxPacketSize", CallingConvention = Platform.CC)]
 		private static extern int _GetMaxPacketSize( IntPtr self, SNetSocket_t hSocket );
 		
 		#endregion

@@ -16,7 +16,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_CreateSteamPipe")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_CreateSteamPipe", CallingConvention = Platform.CC)]
 		private static extern HSteamPipe _CreateSteamPipe( IntPtr self );
 		
 		#endregion
@@ -27,7 +27,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_BReleaseSteamPipe")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_BReleaseSteamPipe", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _BReleaseSteamPipe( IntPtr self, HSteamPipe hSteamPipe );
 		
@@ -39,7 +39,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_ConnectToGlobalUser")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_ConnectToGlobalUser", CallingConvention = Platform.CC)]
 		private static extern HSteamUser _ConnectToGlobalUser( IntPtr self, HSteamPipe hSteamPipe );
 		
 		#endregion
@@ -50,7 +50,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_CreateLocalUser")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_CreateLocalUser", CallingConvention = Platform.CC)]
 		private static extern HSteamUser _CreateLocalUser( IntPtr self, ref HSteamPipe phSteamPipe, AccountType eAccountType );
 		
 		#endregion
@@ -61,7 +61,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_ReleaseUser")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_ReleaseUser", CallingConvention = Platform.CC)]
 		private static extern void _ReleaseUser( IntPtr self, HSteamPipe hSteamPipe, HSteamUser hUser );
 		
 		#endregion
@@ -71,7 +71,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamUser")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamUser", CallingConvention = Platform.CC)]
 		private static extern IntPtr _GetISteamUser( IntPtr self, HSteamUser hSteamUser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion );
 		
 		#endregion
@@ -82,7 +82,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamGameServer")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamGameServer", CallingConvention = Platform.CC)]
 		private static extern IntPtr _GetISteamGameServer( IntPtr self, HSteamUser hSteamUser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion );
 		
 		#endregion
@@ -93,7 +93,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_SetLocalIPBinding")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_SetLocalIPBinding", CallingConvention = Platform.CC)]
 		private static extern void _SetLocalIPBinding( IntPtr self, ref SteamIPAddress unIP, ushort usPort );
 		
 		#endregion
@@ -103,7 +103,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamFriends")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamFriends", CallingConvention = Platform.CC)]
 		private static extern IntPtr _GetISteamFriends( IntPtr self, HSteamUser hSteamUser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion );
 		
 		#endregion
@@ -114,7 +114,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamUtils")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamUtils", CallingConvention = Platform.CC)]
 		private static extern IntPtr _GetISteamUtils( IntPtr self, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion );
 		
 		#endregion
@@ -125,7 +125,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamMatchmaking")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamMatchmaking", CallingConvention = Platform.CC)]
 		private static extern IntPtr _GetISteamMatchmaking( IntPtr self, HSteamUser hSteamUser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion );
 		
 		#endregion
@@ -136,7 +136,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamMatchmakingServers")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamMatchmakingServers", CallingConvention = Platform.CC)]
 		private static extern IntPtr _GetISteamMatchmakingServers( IntPtr self, HSteamUser hSteamUser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion );
 		
 		#endregion
@@ -147,7 +147,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamGenericInterface")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamGenericInterface", CallingConvention = Platform.CC)]
 		private static extern IntPtr _GetISteamGenericInterface( IntPtr self, HSteamUser hSteamUser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion );
 		
 		#endregion
@@ -158,7 +158,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamUserStats")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamUserStats", CallingConvention = Platform.CC)]
 		private static extern IntPtr _GetISteamUserStats( IntPtr self, HSteamUser hSteamUser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion );
 		
 		#endregion
@@ -169,7 +169,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamGameServerStats")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamGameServerStats", CallingConvention = Platform.CC)]
 		private static extern IntPtr _GetISteamGameServerStats( IntPtr self, HSteamUser hSteamuser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion );
 		
 		#endregion
@@ -180,7 +180,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamApps")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamApps", CallingConvention = Platform.CC)]
 		private static extern IntPtr _GetISteamApps( IntPtr self, HSteamUser hSteamUser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion );
 		
 		#endregion
@@ -191,7 +191,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamNetworking")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamNetworking", CallingConvention = Platform.CC)]
 		private static extern IntPtr _GetISteamNetworking( IntPtr self, HSteamUser hSteamUser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion );
 		
 		#endregion
@@ -202,7 +202,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamRemoteStorage")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamRemoteStorage", CallingConvention = Platform.CC)]
 		private static extern IntPtr _GetISteamRemoteStorage( IntPtr self, HSteamUser hSteamuser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion );
 		
 		#endregion
@@ -213,7 +213,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamScreenshots")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamScreenshots", CallingConvention = Platform.CC)]
 		private static extern IntPtr _GetISteamScreenshots( IntPtr self, HSteamUser hSteamuser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion );
 		
 		#endregion
@@ -224,7 +224,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamGameSearch")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamGameSearch", CallingConvention = Platform.CC)]
 		private static extern IntPtr _GetISteamGameSearch( IntPtr self, HSteamUser hSteamuser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion );
 		
 		#endregion
@@ -235,7 +235,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetIPCCallCount")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetIPCCallCount", CallingConvention = Platform.CC)]
 		private static extern uint _GetIPCCallCount( IntPtr self );
 		
 		#endregion
@@ -246,7 +246,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_SetWarningMessageHook")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_SetWarningMessageHook", CallingConvention = Platform.CC)]
 		private static extern void _SetWarningMessageHook( IntPtr self, IntPtr pFunction );
 		
 		#endregion
@@ -256,7 +256,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_BShutdownIfAllPipesClosed")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_BShutdownIfAllPipesClosed", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _BShutdownIfAllPipesClosed( IntPtr self );
 		
@@ -268,7 +268,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamHTTP")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamHTTP", CallingConvention = Platform.CC)]
 		private static extern IntPtr _GetISteamHTTP( IntPtr self, HSteamUser hSteamuser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion );
 		
 		#endregion
@@ -279,7 +279,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamController")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamController", CallingConvention = Platform.CC)]
 		private static extern IntPtr _GetISteamController( IntPtr self, HSteamUser hSteamUser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion );
 		
 		#endregion
@@ -290,7 +290,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamUGC")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamUGC", CallingConvention = Platform.CC)]
 		private static extern IntPtr _GetISteamUGC( IntPtr self, HSteamUser hSteamUser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion );
 		
 		#endregion
@@ -301,7 +301,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamAppList")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamAppList", CallingConvention = Platform.CC)]
 		private static extern IntPtr _GetISteamAppList( IntPtr self, HSteamUser hSteamUser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion );
 		
 		#endregion
@@ -312,7 +312,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamMusic")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamMusic", CallingConvention = Platform.CC)]
 		private static extern IntPtr _GetISteamMusic( IntPtr self, HSteamUser hSteamuser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion );
 		
 		#endregion
@@ -323,7 +323,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamMusicRemote")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamMusicRemote", CallingConvention = Platform.CC)]
 		private static extern IntPtr _GetISteamMusicRemote( IntPtr self, HSteamUser hSteamuser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion );
 		
 		#endregion
@@ -334,7 +334,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamHTMLSurface")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamHTMLSurface", CallingConvention = Platform.CC)]
 		private static extern IntPtr _GetISteamHTMLSurface( IntPtr self, HSteamUser hSteamuser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion );
 		
 		#endregion
@@ -345,7 +345,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamInventory")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamInventory", CallingConvention = Platform.CC)]
 		private static extern IntPtr _GetISteamInventory( IntPtr self, HSteamUser hSteamuser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion );
 		
 		#endregion
@@ -356,7 +356,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamVideo")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamVideo", CallingConvention = Platform.CC)]
 		private static extern IntPtr _GetISteamVideo( IntPtr self, HSteamUser hSteamuser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion );
 		
 		#endregion
@@ -367,7 +367,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamParentalSettings")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamParentalSettings", CallingConvention = Platform.CC)]
 		private static extern IntPtr _GetISteamParentalSettings( IntPtr self, HSteamUser hSteamuser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion );
 		
 		#endregion
@@ -378,7 +378,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamInput")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamInput", CallingConvention = Platform.CC)]
 		private static extern IntPtr _GetISteamInput( IntPtr self, HSteamUser hSteamUser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion );
 		
 		#endregion
@@ -389,7 +389,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamParties")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamParties", CallingConvention = Platform.CC)]
 		private static extern IntPtr _GetISteamParties( IntPtr self, HSteamUser hSteamUser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion );
 		
 		#endregion
@@ -400,7 +400,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamRemotePlay")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamClient_GetISteamRemotePlay", CallingConvention = Platform.CC)]
 		private static extern IntPtr _GetISteamRemotePlay( IntPtr self, HSteamUser hSteamUser, HSteamPipe hSteamPipe, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchVersion );
 		
 		#endregion

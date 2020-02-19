@@ -15,13 +15,13 @@ namespace Steamworks
 			SetupInterface( IsGameServer );
 		}
 		
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamTV_v001")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamTV_v001", CallingConvention = Platform.CC)]
 		internal static extern IntPtr SteamAPI_SteamTV_v001();
 		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamTV_v001();
 		
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamTV_IsBroadcasting")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamTV_IsBroadcasting", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		private static extern bool _IsBroadcasting( IntPtr self, ref int pnNumViewers );
 		
@@ -33,7 +33,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamTV_AddBroadcastGameData")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamTV_AddBroadcastGameData", CallingConvention = Platform.CC)]
 		private static extern void _AddBroadcastGameData( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchValue );
 		
 		#endregion
@@ -43,7 +43,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamTV_RemoveBroadcastGameData")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamTV_RemoveBroadcastGameData", CallingConvention = Platform.CC)]
 		private static extern void _RemoveBroadcastGameData( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchKey );
 		
 		#endregion
@@ -53,7 +53,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamTV_AddTimelineMarker")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamTV_AddTimelineMarker", CallingConvention = Platform.CC)]
 		private static extern void _AddTimelineMarker( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchTemplateName, [MarshalAs( UnmanagedType.U1 )] bool bPersistent, byte nColorR, byte nColorG, byte nColorB );
 		
 		#endregion
@@ -63,7 +63,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamTV_RemoveTimelineMarker")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamTV_RemoveTimelineMarker", CallingConvention = Platform.CC)]
 		private static extern void _RemoveTimelineMarker( IntPtr self );
 		
 		#endregion
@@ -73,7 +73,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamTV_AddRegion")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamTV_AddRegion", CallingConvention = Platform.CC)]
 		private static extern uint _AddRegion( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchElementName, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchTimelineDataSection, ref SteamTVRegion_t pSteamTVRegion, SteamTVRegionBehavior eSteamTVRegionBehavior );
 		
 		#endregion
@@ -84,7 +84,7 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamTV_RemoveRegion")]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamTV_RemoveRegion", CallingConvention = Platform.CC)]
 		private static extern void _RemoveRegion( IntPtr self, uint unRegionHandle );
 		
 		#endregion
