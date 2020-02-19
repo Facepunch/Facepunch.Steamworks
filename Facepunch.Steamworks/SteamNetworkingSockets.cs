@@ -69,6 +69,8 @@ namespace Steamworks
 		}
 #endregion
 
+
+
 		internal static void InstallEvents( bool server = false )
 		{
 			Dispatch.Install<SteamNetConnectionStatusChangedCallback_t>( x => ConnectionStatusChanged( x ), server );

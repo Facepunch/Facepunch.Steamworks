@@ -1,7 +1,5 @@
 ﻿using System.Runtime.InteropServices;
 
-#if false
-
 namespace Steamworks.Data
 {
 	/// <summary>
@@ -67,5 +65,3 @@ namespace Steamworks.Data
 		}
 	}
 }
-
-#endif

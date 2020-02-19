@@ -1950,7 +1950,7 @@ namespace Steamworks
 	//
 	// ESteamNetworkingAvailability
 	//
-	internal enum SteamNetworkingAvailability : int
+	public enum SteamNetworkingAvailability : int
 	{
 		CannotTry = -102,
 		Failed = -101,

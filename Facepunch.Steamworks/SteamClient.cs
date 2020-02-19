@@ -45,8 +45,8 @@ namespace Steamworks
 			AddInterface<SteamMatchmakingServers>();
 			AddInterface<SteamMusic>();
 			AddInterface<SteamNetworking>();
-			//AddInterface<SteamNetworkingSockets>();
-			//AddInterface<SteamNetworkingUtils>();
+			AddInterface<SteamNetworkingSockets>();
+			AddInterface<SteamNetworkingUtils>();
 			AddInterface<SteamParental>();
 			AddInterface<SteamParties>();
 			AddInterface<SteamRemoteStorage>();

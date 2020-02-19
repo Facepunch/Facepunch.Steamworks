@@ -85,6 +85,7 @@ public static class Cleanup
 		if ( type == "SteamNetworkingErrMsg" ) return false;
 		if ( type == "NetKeyValue" ) return false;
 		if ( type == "SteamIPAddress" ) return false;
+		if ( type == "PingLocation" ) return false;
 
 		return true;
 	}
@@ -117,6 +118,7 @@ public static class Cleanup
 		if ( name == "UserHasLicenseForAppResult" ) return "public";
 		if ( name == "PingLocation" ) return "public";
 		if ( name == "ConnectionState" ) return "public";
+		if ( name == "SteamNetworkingAvailability" ) return "public";
 
 		return "internal";
 	}

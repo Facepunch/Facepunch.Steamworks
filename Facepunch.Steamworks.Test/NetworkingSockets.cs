@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Steamworks.Data;
 
-#if false
-
 namespace Steamworks
 {
     [TestClass]
     [DeploymentItem( "steam_api64.dll" )]
+    [DeploymentItem( "steam_api.dll" )]
     public class NetworkingSocketsTest
 	{
 
@@ -45,11 +44,17 @@ namespace Steamworks
 		[TestMethod]
 		public async Task RelayEndtoEnd()
 		{
+			SteamNetworkingUtils.InitRelayNetworkAccess();
+
+			Console.WriteLine( $"----- Creating Socket Relay Socket.." );
 			var socket = SteamNetworkingSockets.CreateRelaySocket<TestSocketInterface>( 7788 );
 			var server = socket.RunAsync();
 
-			await Task.Delay( 1000 );
+			Console.WriteLine( $"----- Created Relay Socket: {(uint)socket.Socket}" );
 
+			await Task.Delay( 5000 );
+
+			Console.WriteLine( $"----- Connecting To Socket via SteamId ({SteamClient.SteamId})" );
 			var connection = SteamNetworkingSockets.ConnectRelay<TestConnectionInterface>( SteamClient.SteamId, 7788 );
 			var client = connection.RunAsync();
 
@@ -62,7 +67,7 @@ namespace Steamworks
 			var socket = SteamNetworkingSockets.CreateNormalSocket<TestSocketInterface>( NetAddress.AnyIp( 12445 ) );
 			var server = socket.RunAsync();
 
-			await Task.Delay( 1000 );
+			await Task.Delay( 5000 );
 
 			var connection = SteamNetworkingSockets.ConnectNormal<TestConnectionInterface>( NetAddress.From( System.Net.IPAddress.Parse( "127.0.0.1" ), 12445 ) );
 			var client = connection.RunAsync();
@@ -287,5 +292,3 @@ namespace Steamworks
 	}
 
 }
-
-#endif

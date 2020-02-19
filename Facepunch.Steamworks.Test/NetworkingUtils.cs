@@ -5,15 +5,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-#if false
-
 namespace Steamworks
 {
     [TestClass]
     [DeploymentItem( "steam_api64.dll" )]
+    [DeploymentItem( "steam_api.dll" )]
     public class NetworkUtilsTest
 	{
-		static string GarrysLocation = "lhr=19+1,ams=25+2/25+1,par=29+2,fra=31+3/30+1,lux=33+3,vie=44+4/41+1,waw=47+4/45+1,sto2=48+4/46+2,sto=50+5/46+2,iad=107+10/91+1,sgp=186+18,gru=252+25/234+1";
+		static string GarrysLocation = "lhr=4+0,ams=13+1/10+0,par=17+1/12+0,lux=17+1,fra=18+1/18+0,sto=25+2,sto2=26+2,mad=27+2,vie=31+3/30+0,iad=90+9/75+0,sgp=173+17/174+17,gru=200+20/219+0";
 
 		[TestMethod]
         public async Task LocalPingLocation()
@@ -62,5 +61,3 @@ namespace Steamworks
 	}
 
 }
-
-#endif

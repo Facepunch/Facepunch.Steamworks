@@ -20,6 +20,43 @@ namespace Steamworks
 			Internal = new ISteamNetworkingUtils( server );
 		}
 
+		static void InstallCallbacks()
+		{
+			Dispatch.Install<SteamRelayNetworkStatus_t>( x =>
+			{
+				Status = x.Avail;
+			} );
+		}
+
+		public static SteamNetworkingAvailability Status { get; private set; }
+
+		/// <summary>
+		/// If you know that you are going to be using the relay network (for example,
+		/// because you anticipate making P2P connections), call this to initialize the
+		/// relay network.  If you do not call this, the initialization will
+		/// be delayed until the first time you use a feature that requires access
+		/// to the relay network, which will delay that first access.
+		///
+		/// You can also call this to force a retry if the previous attempt has failed.
+		/// Performing any action that requires access to the relay network will also
+		/// trigger a retry, and so calling this function is never strictly necessary,
+		/// but it can be useful to call it a program launch time, if access to the
+		/// relay network is anticipated.
+		///
+		/// Use GetRelayNetworkStatus or listen for SteamRelayNetworkStatus_t
+		/// callbacks to know when initialization has completed.
+		/// Typically initialization completes in a few seconds.
+		///
+		/// Note: dedicated servers hosted in known data centers do *not* need
+		/// to call this, since they do not make routing decisions.  However, if
+		/// the dedicated server will be using P2P functionality, it will act as
+		/// a "client" and this should be called.
+		/// </summary>
+		public static void InitRelayNetworkAccess()
+		{
+			Internal.InitRelayNetworkAccess();
+		}
+
 		/// <summary>
 		/// Return location info for the current host.
 		///
@@ -58,15 +95,15 @@ namespace Steamworks
 		/// </summary>
 		public static async Task WaitForPingDataAsync( float maxAgeInSeconds = 60 * 5 )
 		{
-			if ( Internal.CheckPingDataUpToDate( 60.0f ) )
+			if ( Internal.CheckPingDataUpToDate( 120.0f ) )
 				return;
 
-			await Task.Delay( 2000 );
+			SteamRelayNetworkStatus_t status = default;
 
-			//while ( Internal.IsPingMeasurementInProgress() )
-			//{
-			//	await Task.Delay( 10 );
-			//}
+			while ( Internal.GetRelayNetworkStatus( ref status ) != SteamNetworkingAvailability.Current )
+			{
+				await Task.Delay( 10 );
+			}
 		}
 
 		public static long LocalTimestamp => Internal.GetLocalTimestamp();

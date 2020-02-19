@@ -94,6 +94,8 @@ namespace Steamworks
 			Console.WriteLine( $"Dispatch.ServerPipe = {Dispatch.ServerPipe.Value}" );
 
 			AddInterface<SteamServer>();
+			AddInterface<SteamNetworkingUtils>();
+			AddInterface<SteamNetworkingSockets>();
 
 			//
 			// Initial settings

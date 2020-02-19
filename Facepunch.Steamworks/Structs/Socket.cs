@@ -1,6 +1,9 @@
 ﻿
+using System.Runtime.InteropServices;
+
 namespace Steamworks.Data
 {
+	[StructLayout( LayoutKind.Sequential )]
 	public struct Socket
 	{
 		internal uint Id;
