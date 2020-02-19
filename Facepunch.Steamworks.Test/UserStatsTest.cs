@@ -10,7 +10,8 @@ namespace Steamworks
 {
     [TestClass]
     [DeploymentItem( "steam_api64.dll" )]
-    public class UserStatsTest
+	[DeploymentItem( "steam_api.dll" )]
+	public class UserStatsTest
 	{
 		[TestMethod]
         public async Task AchievementList()
