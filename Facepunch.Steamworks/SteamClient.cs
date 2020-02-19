@@ -109,20 +109,10 @@ namespace Steamworks
 			ShutdownInterfaces();
 		}
 
-		internal static void RegisterCallback( IntPtr intPtr, int callbackId )
-		{
-			SteamAPI.RegisterCallback( intPtr, callbackId );
-		}
-
 		public static void RunCallbacks()
 		{
 			if ( Dispatch.ClientPipe != 0 )
 				Dispatch.Frame( Dispatch.ClientPipe );
-		}
-
-		internal static void UnregisterCallback( IntPtr intPtr )
-		{
-			SteamAPI.UnregisterCallback( intPtr );
 		}
 
 		/// <summary>

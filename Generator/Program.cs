@@ -16,27 +16,11 @@ namespace Generator
             var content = System.IO.File.ReadAllText( "steam_api.json" );
             var def = Newtonsoft.Json.JsonConvert.DeserializeObject<SteamApiDefinition>( content );
 
-         //  AddMissing( def );
-
 			Definitions = def;
 
 			var generator = new CodeWriter( def );
 
             generator.ToFolder( "../Facepunch.Steamworks/Generated/" );
-        }
-
-        private static void AddMissing( SteamApiDefinition output )
-        {
-            var content = System.IO.File.ReadAllText( "steam_api_missing.json" );
-            var missing = Newtonsoft.Json.JsonConvert.DeserializeObject<SteamApiDefinition>( content );
-
-            output.structs.AddRange( missing.structs );
-          //  output.methods.AddRange( missing.methods );
-
-            foreach ( var s in output.structs )
-            {
-                if ( s.Fields == null ) s.Fields = new SteamApiDefinition.StructDef.StructFields[0];
-            }
         }
     }
 }

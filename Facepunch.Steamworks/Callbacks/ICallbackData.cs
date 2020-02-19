@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Steamworks
 {
-	//
-	// Created on registration of a callback
-	//
+	/// <summary>
+	/// Gives us a generic way to get the CallbackId of structs
+	/// </summary>
 	internal interface ICallbackData
 	{
-		int CallbackId { get; }
+		CallbackType CallbackType { get; }
 		int DataSize { get; }
 	}
 }

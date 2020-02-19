@@ -8,7 +8,7 @@ namespace Generator
 {
 	public partial class CodeWriter
 	{
-		public void GenerateVTableClass( SteamApiDefinition.Interface iface, string folder )
+		public void GenerateInterface( SteamApiDefinition.Interface iface, string folder )
 		{
 			sb = new StringBuilder();
 

@@ -16,9 +16,6 @@ namespace Generator
             {
 				var name = Cleanup.ConvertType( c.Name );
 
-				if ( SkipStructs.Contains( c.Name ) )
-                    continue;
-
 				if ( !Cleanup.ShouldCreate( name ) )
 					continue;
 
@@ -51,7 +48,7 @@ namespace Generator
 
 							WriteLine( $"public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof({name}) );" );
 							WriteLine( $"public int DataSize => _datasize;" );
-                            WriteLine( $"public int CallbackId => {c.CallbackId};" );
+                            WriteLine( $"public CallbackType CallbackType => CallbackType.{name.Replace( "_t", "" )};" );
 						}
 						WriteLine( "#endregion" );
 					}

@@ -17,20 +17,6 @@ namespace Generator
 
         private Dictionary<string, TypeDef> TypeDefs = new Dictionary<string, TypeDef>();
 
-        //
-        // Don't give a fuck about these classes, they just cause us trouble
-        //
-        public readonly static string[] SkipStructs = new string[]
-        {
-            "CSteamID",
-            "CSteamAPIContext",
-            "CCallResult",
-            "CCallback",
-            "ValvePackingSentinel_t",
-            "CCallbackBase",
-			"CSteamGameServerAPIContext"
-		};
-
         public readonly static string[] ForceLargePackStructs = new string[]
         {
             "LeaderboardEntry_t"
@@ -38,14 +24,9 @@ namespace Generator
 
         void Structs()
         {
-            var callbackList = new List<SteamApiDefinition.StructDef>();
-
             foreach ( var c in def.structs )
             {
 				var name = Cleanup.ConvertType( c.Name );
-
-				if ( SkipStructs.Contains( c.Name ) )
-                    continue;
 
 				if ( !Cleanup.ShouldCreate( name ) )
 					continue;

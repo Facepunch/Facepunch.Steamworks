@@ -76,7 +76,7 @@ namespace Generator
 
             foreach ( var iface in def.Interfaces )
             {
-                GenerateVTableClass( iface, $"{folder}../Generated/Interfaces/" );
+                GenerateInterface( iface, $"{folder}../Generated/Interfaces/" );
             }
 		}
 

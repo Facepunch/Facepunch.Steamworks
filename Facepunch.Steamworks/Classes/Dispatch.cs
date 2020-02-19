@@ -7,6 +7,10 @@ using Steamworks;
 
 namespace Steamworks
 {
+	/// <summary>
+	/// Manually pumps Steam's message queue and dispatches those
+	/// events to any waiting callbacks/callresults.
+	/// </summary>
 	internal static class Dispatch
 	{
 		#region interop
@@ -38,20 +42,19 @@ namespace Steamworks
 		internal static HSteamPipe ClientPipe { get; set; }
 		internal static HSteamPipe ServerPipe { get; set; }
 
+		/// <summary>
+		/// This gets called from Client/Server Init
+		/// It's important to switch to the manual dipatcher
+		/// </summary>
 		public static void Init()
 		{
 			SteamAPI_ManualDispatch_Init();
 		}
 
-		public static void Frame()
-		{
-			if ( ClientPipe != 0 )
-				Frame( ClientPipe );
-		
-			if ( ServerPipe != 0)
-				Frame( ServerPipe );
-		}
 
+		/// <summary>
+		/// Calls RunFrame and processes events from this Steam Pipe
+		/// </summary>
 		public static void Frame( HSteamPipe pipe )
 		{ 
 			SteamAPI_ManualDispatch_RunFrame( pipe );
@@ -71,15 +74,17 @@ namespace Steamworks
 			}
 		}
 
+		/// <summary>
+		/// A callback is a general global message
+		/// </summary>
 		private static void ProcessCallback( CallbackMsg_t msg )
 		{
+			// Is this a special callback telling us that the call result is ready?
 			if ( msg.Type == CallbackType.SteamAPICallCompleted )
 			{
 				ProcessResult( msg );
 				return;
 			}
-
-			Console.WriteLine( $"Callback: {msg.Type}" );
 
 			if ( Callbacks.TryGetValue( msg.Type, out var list ) )
 			{
@@ -90,11 +95,12 @@ namespace Steamworks
 			}
 		}
 
+		/// <summary>
+		/// A result is a reply to a specific command
+		/// </summary>
 		private static void ProcessResult( CallbackMsg_t msg )
 		{
 			var result = msg.Data.ToType<SteamAPICallCompleted_t>();
-
-			Console.WriteLine( $"Result: {result.AsyncCall} / {result.Callback}" );
 
 			//
 			// Do we have an entry added via OnCallComplete
@@ -105,6 +111,7 @@ namespace Steamworks
 				return;
 			}
 
+			// Remove it before we do anything, incase the continuation throws exceptions
 			ResultCallbacks.Remove( result.AsyncCall );
 
 			// At this point whatever async routine called this 
@@ -112,6 +119,11 @@ namespace Steamworks
 			callbackInfo.continuation();
 		}
 
+		/// <summary>
+		/// Pumps the queue in an async loop so we don't
+		/// have to think about it. This has the advantage that
+		/// you can call .Wait() on async shit and it still works.
+		/// </summary>
 		public static async void LoopClientAsync()
 		{
 			while ( ClientPipe != 0 )
@@ -119,10 +131,13 @@ namespace Steamworks
 				Frame( ClientPipe );
 				await Task.Delay( 16 );
 			}
-
-			Console.WriteLine( $"Exiting ClientPipe: {ClientPipe}" );
 		}
 
+		/// <summary>
+		/// Pumps the queue in an async loop so we don't
+		/// have to think about it. This has the advantage that
+		/// you can call .Wait() on async shit and it still works.
+		/// </summary>
 		public static async void LoopServerAsync()
 		{
 			while ( ServerPipe != 0 )
@@ -130,8 +145,6 @@ namespace Steamworks
 				Frame( ServerPipe );
 				await Task.Delay( 32 );
 			}
-
-			Console.WriteLine( $"Exiting ServerPipe: {ServerPipe}" );
 		}
 
 		struct ResultCallback
@@ -160,10 +173,13 @@ namespace Steamworks
 
 		static Dictionary<CallbackType, List<Callback>> Callbacks = new Dictionary<CallbackType, List<Callback>>();
 
+		/// <summary>
+		/// Install a global callback. The passed function will get called if it's all good.
+		/// </summary>
 		internal static void Install<T>( Action<T> p, bool server = false ) where T : ICallbackData
 		{
 			var t = default( T );
-			var type = (CallbackType)t.CallbackId;
+			var type = t.CallbackType;
 
 			if ( !Callbacks.TryGetValue( type, out var list ) )
 			{

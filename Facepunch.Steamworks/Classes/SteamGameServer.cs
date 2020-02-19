@@ -17,9 +17,6 @@ namespace Steamworks
 			[DllImport( Platform.LibraryName, EntryPoint = "SteamGameServer_Shutdown", CallingConvention = CallingConvention.Cdecl )]
 			public static extern void SteamGameServer_Shutdown();
 			
-			[DllImport( Platform.LibraryName, EntryPoint = "SteamGameServer_GetHSteamUser", CallingConvention = CallingConvention.Cdecl )]
-			public static extern HSteamUser SteamGameServer_GetHSteamUser();
-			
 			[DllImport( Platform.LibraryName, EntryPoint = "SteamGameServer_GetHSteamPipe", CallingConvention = CallingConvention.Cdecl )]
 			public static extern HSteamPipe SteamGameServer_GetHSteamPipe();
 			
@@ -32,11 +29,6 @@ namespace Steamworks
 		static internal void Shutdown()
 		{
 			Native.SteamGameServer_Shutdown();
-		}
-		
-		static internal HSteamUser GetHSteamUser()
-		{
-			return Native.SteamGameServer_GetHSteamUser();
 		}
 		
 		static internal HSteamPipe GetHSteamPipe()

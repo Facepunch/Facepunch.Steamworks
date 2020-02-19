@@ -19,7 +19,6 @@ public static class Cleanup
 
 		type = type.Replace( "CSteamID", "SteamId" );
 		type = type.Replace( "CGameID", "GameId" );
-		type = type.Replace( "PersonaState", "FriendState" );
 		type = type.Replace( "AudioPlayback_Status", "MusicStatus" );
 		type = type.Replace( "AuthSessionResponse", "AuthResponse" );
 		type = type.Replace( "FriendRelationship", "Relationship" );
@@ -58,6 +57,10 @@ public static class Cleanup
 
 		type = type.Replace( "::", "." );
 
+
+		if ( type == "EPersonaState" ) return "EFriendState";
+		if ( type == "PersonaState" ) return "FriendState";
+
 		return type;
 	}
 
@@ -86,6 +89,13 @@ public static class Cleanup
 		if ( type == "NetKeyValue" ) return false;
 		if ( type == "SteamIPAddress" ) return false;
 		if ( type == "PingLocation" ) return false;
+		if ( type == "CSteamID" ) return false;
+		if ( type == "CSteamAPIContext" ) return false;
+		if ( type == "CCallResult" ) return false;
+		if ( type == "CCallback" ) return false;
+		if ( type == "ValvePackingSentinel_t" ) return false;
+		if ( type == "CCallbackBase" ) return false;
+		if ( type == "CSteamGameServerAPIContext" ) return false;
 
 		return true;
 	}

@@ -26,7 +26,7 @@ namespace Steamworks
 
 		internal static void InstallEvents()
 		{
-			Dispatch.Install<FriendStateChange_t>( x => OnPersonaStateChange?.Invoke( new Friend( x.SteamID ) ) );
+			Dispatch.Install<PersonaStateChange_t>( x => OnPersonaStateChange?.Invoke( new Friend( x.SteamID ) ) );
 			Dispatch.Install<GameRichPresenceJoinRequested_t>( x => OnGameRichPresenceJoinRequested?.Invoke( new Friend( x.SteamIDFriend), x.ConnectUTF8() ) );
 			Dispatch.Install<GameConnectedFriendChatMsg_t>( OnFriendChatMessage );
 			Dispatch.Install<GameOverlayActivated_t>( x => OnGameOverlayActivated?.Invoke() );
