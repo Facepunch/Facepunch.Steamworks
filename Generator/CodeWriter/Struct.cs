@@ -136,6 +136,13 @@ namespace Generator
                     WriteLine( $"[MarshalAs(UnmanagedType.ByValArray, SizeConst = {num}, ArraySubType = UnmanagedType.U4)]" );
                 }
 
+                if ( t.StartsWith( "uint " ) && t.Contains( "[" ) )
+                {
+                    var num = t.Replace( "uint", "" ).Trim( '[', ']', ' ' );
+                    t = $"uint[]";
+                    WriteLine( $"[MarshalAs(UnmanagedType.ByValArray, SizeConst = {num}, ArraySubType = UnmanagedType.U4)]" );
+                }
+
                 if ( t.StartsWith( "float " ) && t.Contains( "[" ) )
                 {
                     var num = t.Replace( "float", "" ).Trim( '[', ']', ' ' );
