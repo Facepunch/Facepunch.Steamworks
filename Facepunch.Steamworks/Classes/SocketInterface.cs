@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Steamworks.Data;
 
-#if false
-
 namespace Steamworks
 {
 	public class SocketInterface
@@ -69,6 +67,7 @@ namespace Steamworks
 			int processed = 0;
 			IntPtr messageBuffer = Marshal.AllocHGlobal( IntPtr.Size * bufferSize );
 
+			/*
 			try
 			{
 				processed = SteamNetworkingSockets.Internal.ReceiveMessagesOnListenSocket( Socket, messageBuffer, bufferSize );
@@ -82,6 +81,7 @@ namespace Steamworks
 			{
 				Marshal.FreeHGlobal( messageBuffer );
 			}
+			*/
 
 			//
 			// Overwhelmed our buffer, keep going
@@ -112,5 +112,3 @@ namespace Steamworks
 		}
 	}
 }
-
-#endif

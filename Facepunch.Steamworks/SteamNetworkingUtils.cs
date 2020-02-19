@@ -5,8 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Steamworks.Data;
 
-#if false
-
 namespace Steamworks
 {
 	/// <summary>
@@ -63,10 +61,12 @@ namespace Steamworks
 			if ( Internal.CheckPingDataUpToDate( 60.0f ) )
 				return;
 
-			while ( Internal.IsPingMeasurementInProgress() )
-			{
-				await Task.Delay( 10 );
-			}
+			await Task.Delay( 2000 );
+
+			//while ( Internal.IsPingMeasurementInProgress() )
+			//{
+			//	await Task.Delay( 10 );
+			//}
 		}
 
 		public static long LocalTimestamp => Internal.GetLocalTimestamp();
@@ -113,7 +113,7 @@ namespace Steamworks
 		internal unsafe static bool GetConfigInt( NetConfig type, int value )
 		{
 			int* ptr = &value;
-			return Internal.SetConfigValue( type, NetScope.Global, 0, NetConfigType.Int32, (IntPtr)ptr );
+			return Internal.SetConfigValue( type, NetConfigScope.Global, 0, NetConfigType.Int32, (IntPtr)ptr );
 		}
 
 		internal unsafe static int GetConfigInt( NetConfig type )
@@ -121,8 +121,8 @@ namespace Steamworks
 			int value = 0;
 			NetConfigType dtype = NetConfigType.Int32;
 			int* ptr = &value;
-			ulong size = sizeof( int );
-			var result = Internal.GetConfigValue( type, NetScope.Global, 0, ref dtype, (IntPtr) ptr, ref size );
+			UIntPtr size = new UIntPtr( sizeof( int ) );
+			var result = Internal.GetConfigValue( type, NetConfigScope.Global, 0, ref dtype, (IntPtr) ptr, ref size );
 			if ( result != NetConfigResult.OK )
 				return 0;
 
@@ -132,7 +132,7 @@ namespace Steamworks
 		internal unsafe static bool SetConfigFloat( NetConfig type, float value )
 		{
 			float* ptr = &value;
-			return Internal.SetConfigValue( type, NetScope.Global, 0, NetConfigType.Float, (IntPtr)ptr );
+			return Internal.SetConfigValue( type, NetConfigScope.Global, 0, NetConfigType.Float, (IntPtr)ptr );
 		}
 
 		internal unsafe static float GetConfigFloat( NetConfig type )
@@ -140,8 +140,8 @@ namespace Steamworks
 			float value = 0;
 			NetConfigType dtype = NetConfigType.Float;
 			float* ptr = &value;
-			ulong size = sizeof( float );
-			var result = Internal.GetConfigValue( type, NetScope.Global, 0, ref dtype, (IntPtr)ptr, ref size );
+			UIntPtr size = new UIntPtr( sizeof( float ) );
+			var result = Internal.GetConfigValue( type, NetConfigScope.Global, 0, ref dtype, (IntPtr)ptr, ref size );
 			if ( result != NetConfigResult.OK )
 				return 0;
 
@@ -154,7 +154,7 @@ namespace Steamworks
 
 			fixed ( byte* ptr = bytes )
 			{
-				return Internal.SetConfigValue( type, NetScope.Global, 0, NetConfigType.String, (IntPtr)ptr );
+				return Internal.SetConfigValue( type, NetConfigScope.Global, 0, NetConfigType.String, (IntPtr)ptr );
 			}
 		}
 
@@ -204,5 +204,3 @@ namespace Steamworks
 #endregion
 	}
 }
-
-#endif

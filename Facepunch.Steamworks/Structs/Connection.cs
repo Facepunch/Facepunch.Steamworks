@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 
-#if false
-
 namespace Steamworks.Data
 {
 	public struct Connection
 	{
-		public uint Id { get; }
+		public uint Id { get; set; }
 
 		public override string ToString() => Id.ToString();
+		public static implicit operator Connection( uint value ) => new Connection() { Id = value };
+		public static implicit operator uint( Connection value ) => value.Id;
 
 		/// <summary>
 		/// Accept an incoming connection that has been received on a listen socket.
@@ -56,7 +56,8 @@ namespace Steamworks.Data
 
 		public Result SendMessage( IntPtr ptr, int size, SendType sendType = SendType.Reliable )
 		{
-			return SteamNetworkingSockets.Internal.SendMessageToConnection( this, ptr, (uint) size, (int)sendType );
+			long messageNumber = 0;
+			return SteamNetworkingSockets.Internal.SendMessageToConnection( this, ptr, (uint) size, (int)sendType, ref messageNumber );
 		}
 
 		public unsafe Result SendMessage( byte[] data, SendType sendType = SendType.Reliable )
@@ -117,12 +118,3 @@ namespace Steamworks.Data
 
 	}
 }
-#else
-namespace Steamworks.Data
-{
-	public struct Connection
-	{
-		public uint Id { get; }
-	}
-}
-#endif
