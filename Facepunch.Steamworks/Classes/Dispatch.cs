@@ -29,8 +29,8 @@ namespace Steamworks
 		{
 			public HSteamUser m_hSteamUser; // Specific user to whom this callback applies.
 			public CallbackType Type; // Callback identifier.  (Corresponds to the k_iCallback enum in the callback structure.)
-			public IntPtr m_pubParam; // Points to the callback structure
-			public int m_cubParam; // Size of the data pointed to by m_pubParam
+			public IntPtr Data; // Points to the callback structure
+			public int DataSize; // Size of the data pointed to by m_pubParam
 		};
 
 		#endregion
@@ -80,11 +80,19 @@ namespace Steamworks
 			}
 
 			Console.WriteLine( $"Callback: {msg.Type}" );
+
+			if ( Callbacks.TryGetValue( msg.Type, out var list ) )
+			{
+				foreach ( var item in list )
+				{
+					item.action( msg.Data );
+				}
+			}
 		}
 
 		private static void ProcessResult( CallbackMsg_t msg )
 		{
-			var result = msg.m_pubParam.ToType<SteamAPICallCompleted_t>();
+			var result = msg.Data.ToType<SteamAPICallCompleted_t>();
 
 			Console.WriteLine( $"Result: {result.AsyncCall} / {result.Callback}" );
 
@@ -150,16 +158,17 @@ namespace Steamworks
 			public bool server;
 		}
 
-		static Dictionary<int, List<Callback>> Callbacks = new Dictionary<int, List<Callback>>();
+		static Dictionary<CallbackType, List<Callback>> Callbacks = new Dictionary<CallbackType, List<Callback>>();
 
 		internal static void Install<T>( Action<T> p, bool server = false ) where T : ICallbackData
 		{
 			var t = default( T );
+			var type = (CallbackType)t.CallbackId;
 
-			if ( !Callbacks.TryGetValue( t.CallbackId, out var list ) )
+			if ( !Callbacks.TryGetValue( type, out var list ) )
 			{
 				list = new List<Callback>();
-				Callbacks[t.CallbackId] = list;
+				Callbacks[type] = list;
 			}
 
 			list.Add( new Callback
@@ -171,7 +180,7 @@ namespace Steamworks
 
 		internal static void Wipe()
 		{
-			Callbacks = new Dictionary<int, List<Callback>>();
+			Callbacks = new Dictionary<CallbackType, List<Callback>>();
 			ResultCallbacks = new Dictionary<ulong, ResultCallback>();
 			ClientPipe = 0;
 			ServerPipe = 0;
