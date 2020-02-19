@@ -85,6 +85,14 @@ namespace Steamworks
 				throw new System.Exception( $"InitGameServer returned false ({ipaddress},{init.SteamPort},{init.GamePort},{init.QueryPort},{secure},\"{init.VersionString}\")" );
 			}
 
+			//
+			// Dispatch is responsible for pumping the
+			// event loop.
+			//
+			Dispatch.Init();
+			Dispatch.ServerPipe = SteamGameServer.GetHSteamPipe();
+			Console.WriteLine( $"Dispatch.ServerPipe = {Dispatch.ServerPipe.Value}" );
+
 			AddInterface<SteamServer>();
 
 			//
@@ -103,7 +111,11 @@ namespace Steamworks
 
 			if ( asyncCallbacks )
 			{
-				RunCallbacksAsync();
+				//
+				// This will keep looping in the background every 16 ms
+				// until we shut down.
+				//
+				Dispatch.LoopServerAsync();
 			}
 		}
 
@@ -136,29 +148,15 @@ namespace Steamworks
 			SteamGameServer.Shutdown();
 		}
 
-		internal static async void RunCallbacksAsync()
-		{
-			while ( IsValid )
-			{
-				try
-				{
-					RunCallbacks();
-				}
-				catch ( System.Exception e )
-				{
-					OnCallbackException?.Invoke( e );
-				}
-
-				await Task.Delay( 16 );
-			}
-		}
-
 		/// <summary>
 		/// Run the callbacks. This is also called in Async callbacks.
 		/// </summary>
 		public static void RunCallbacks()
 		{
-			SteamGameServer.RunCallbacks();
+			if ( Dispatch.ServerPipe != 0 )
+			{
+				Dispatch.Frame( Dispatch.ServerPipe );
+			}
 		}
 
 		/// <summary>

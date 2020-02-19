@@ -15,19 +15,12 @@ namespace Steamworks
 		public CallbackResult( SteamAPICall_t call )
 		{
 			this.call = call;
+			Console.WriteLine( $"{this.GetType().ToString()} == {call.Value}" );
 		}
 
 		public void OnCompleted( Action continuation )
 		{
-			var ts = TaskScheduler.Current;
-			var sc = SynchronizationContext.Current;
-
-			while ( !IsCompleted )
-			{
-				// Nothing
-			}
-
-			continuation();
+			Dispatch.OnCallComplete( call, continuation );
 		}
 
 		public T? GetResult()

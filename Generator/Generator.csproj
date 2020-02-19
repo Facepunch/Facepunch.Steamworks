@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="CodeWriter\ClassVTable.cs" />
     <Compile Include="CodeWriter\Constants.cs" />
+    <Compile Include="CodeWriter\CustomEnums.cs" />
     <Compile Include="CodeWriter\StructCallbacks.cs" />
     <Compile Include="CodeWriter\Types\BaseType.cs" />
     <Compile Include="CodeWriter\Writing.cs" />

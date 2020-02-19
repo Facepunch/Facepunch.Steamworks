@@ -29,6 +29,14 @@ namespace Steamworks
 
 			initialized = true;
 
+			//
+			// Dispatch is responsible for pumping the
+			// event loop.
+			//
+			Dispatch.Init();
+			Dispatch.ClientPipe = SteamAPI.GetHSteamPipe();
+			Console.WriteLine( $"Dispatch.ClientPipe = {Dispatch.ClientPipe.Value}" );
+
 			AddInterface<SteamApps>();
 			AddInterface<SteamFriends>();
 			AddInterface<SteamInput>();
@@ -51,7 +59,11 @@ namespace Steamworks
 
 			if ( asyncCallbacks )
 			{
-				RunCallbacksAsync();
+				//
+				// This will keep looping in the background every 16 ms
+				// until we shut down.
+				//
+				Dispatch.LoopClientAsync();
 			}
 		}
 
@@ -78,22 +90,6 @@ namespace Steamworks
 
 		public static bool IsValid => initialized;
 
-		internal static async void RunCallbacksAsync()
-		{
-			while ( IsValid )
-			{
-				await Task.Delay( 16 );
-
-				try
-				{
-					RunCallbacks();
-				}
-				catch ( System.Exception e )
-				{
-					OnCallbackException?.Invoke( e );
-				}
-			}
-		}
 
 		public static void Shutdown()
 		{
@@ -106,6 +102,8 @@ namespace Steamworks
 
 		internal static void Cleanup()
 		{
+			Dispatch.ClientPipe = 0;
+
 			initialized = false;
 
 			Event.DisposeAllClient();
@@ -119,9 +117,8 @@ namespace Steamworks
 
 		public static void RunCallbacks()
 		{
-			if ( !IsValid ) return;
-
-			SteamAPI.RunCallbacks();
+			if ( Dispatch.ClientPipe != 0 )
+				Dispatch.Frame( Dispatch.ClientPipe );
 		}
 
 		internal static void UnregisterCallback( IntPtr intPtr )
