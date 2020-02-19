@@ -9489,7 +9489,7 @@
           "returntype": "bool"
         },
         {
-          "callresult": "SteamUGCQueryCompleted_t",
+          "callresult": "SteamUGCRequestUGCDetailsResult_t",
           "methodname": "RequestUGCDetails",
           "methodname_flat": "SteamAPI_ISteamUGC_RequestUGCDetails",
           "params": [
