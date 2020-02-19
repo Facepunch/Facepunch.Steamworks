@@ -9,13 +9,16 @@ namespace Steamworks
 {
 	internal class ISteamUser : SteamInterface
 	{
-		public override IntPtr GetInterfacePointer() => GetApi.SteamUser();
 		
-		
-		internal ISteamUser()
+		internal ISteamUser( bool IsGameServer )
 		{
-			SetupInterface();
+			SetupInterface( IsGameServer );
 		}
+		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamUser_v020")]
+		internal static extern IntPtr SteamAPI_SteamUser_v020();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamUser_v020();
+		
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUser_GetHSteamUser")]

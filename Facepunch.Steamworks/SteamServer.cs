@@ -15,9 +15,9 @@ namespace Steamworks
 		internal static ISteamGameServer Internal;
 		internal override SteamInterface Interface => Internal;
 
-		internal override void InitializeInterface()
+		internal override void InitializeInterface( bool server )
 		{
-			Internal = new ISteamGameServer();
+			Internal = new ISteamGameServer( server );
 			InstallEvents();
 		}
 
@@ -110,7 +110,7 @@ namespace Steamworks
 		internal static void AddInterface<T>() where T : SteamClass, new()
 		{
 			var t = new T();
-			t.InitializeInterface();
+			t.InitializeInterface( true );
 			openInterfaces.Add( t );
 		}
 

@@ -13,9 +13,9 @@ namespace Steamworks
 		internal static ISteamNetworkingSockets Internal;
 		internal override SteamInterface Interface => Internal;
 
-		internal override void InitializeInterface()
+		internal override void InitializeInterface( bool server )
 		{
-			Internal = new ISteamNetworkingSockets();
+			Internal = new ISteamNetworkingSockets( server );
 
 			SocketInterfaces = new Dictionary<uint, SocketInterface>();
 			ConnectionInterfaces = new Dictionary<uint, ConnectionInterface>();

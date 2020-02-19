@@ -16,9 +16,9 @@ namespace Steamworks
 		internal static ISteamApps Internal;
 		internal override SteamInterface Interface => Internal;
 
-		internal override void InitializeInterface()
+		internal override void InitializeInterface( bool server )
 		{
-			Internal = new ISteamApps();
+			Internal = new ISteamApps( server );
 		}
 		
 

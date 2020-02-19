@@ -9,13 +9,16 @@ namespace Steamworks
 {
 	internal class ISteamFriends : SteamInterface
 	{
-		public override IntPtr GetInterfacePointer() => GetApi.SteamFriends();
 		
-		
-		internal ISteamFriends()
+		internal ISteamFriends( bool IsGameServer )
 		{
-			SetupInterface();
+			SetupInterface( IsGameServer );
 		}
+		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamFriends_v017")]
+		internal static extern IntPtr SteamAPI_SteamFriends_v017();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamFriends_v017();
+		
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamFriends_GetPersonaName")]

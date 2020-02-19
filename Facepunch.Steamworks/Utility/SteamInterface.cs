@@ -11,15 +11,25 @@ namespace Steamworks
 {
 	internal abstract class SteamInterface
 	{
-		public abstract IntPtr GetInterfacePointer();
+		public virtual IntPtr GetUserInterfacePointer() => IntPtr.Zero;
+		public virtual IntPtr GetServerInterfacePointer() => IntPtr.Zero;
+		public virtual IntPtr GetGlobalInterfacePointer() => IntPtr.Zero;
 
 		public IntPtr Self;
 
 		public bool IsValid => Self != IntPtr.Zero;
 
-		internal void SetupInterface()
+		internal void SetupInterface( bool gameServer )
 		{
-			Self = GetInterfacePointer();
+			Self = GetGlobalInterfacePointer();
+
+			if ( Self != IntPtr.Zero )
+				return;
+
+			if ( gameServer )
+				Self = GetServerInterfacePointer();
+			else
+				Self = GetUserInterfacePointer();
 		}
 
 		internal void ShutdownInterface()
@@ -30,7 +40,7 @@ namespace Steamworks
 
 	public abstract class SteamClass
 	{
-		internal abstract void InitializeInterface();
+		internal abstract void InitializeInterface( bool server );
 		internal virtual void DestroyInterface()
 		{
 			Interface.ShutdownInterface();

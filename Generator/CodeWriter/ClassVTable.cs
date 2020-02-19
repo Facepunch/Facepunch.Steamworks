@@ -25,15 +25,42 @@ namespace Generator
 			{
 				StartBlock( $"internal class {iface.Name} : SteamInterface" );
 				{
-					WriteLine( $"public override IntPtr GetInterfacePointer() => GetApi.{iface.Name.Substring( 1 )}();" );
 					WriteLine();
-					WriteLine();
-					StartBlock( $"internal {iface.Name}()" );
+					StartBlock( $"internal {iface.Name}( bool IsGameServer )" );
 					{
-						WriteLine( $"SetupInterface();" );
+						WriteLine( $"SetupInterface( IsGameServer );" );
 					}
 					EndBlock();
 					WriteLine();
+
+					if ( iface.Accessors != null )
+					{
+						foreach ( var func in iface.Accessors )
+						{
+							WriteLine( $"[DllImport( Platform.LibraryName, EntryPoint = \"{func.Name_Flat}\")]" );
+							WriteLine( $"internal static extern IntPtr {func.Name_Flat}();" );
+
+							if ( func.Kind == "user" )
+							{
+								WriteLine( $"public override IntPtr GetUserInterfacePointer() => {func.Name_Flat}();" );
+							}
+							else  if ( func.Kind == "gameserver" )
+							{
+								WriteLine( $"public override IntPtr GetServerInterfacePointer() => {func.Name_Flat}();" );
+							}
+							else if ( func.Kind == "global" )
+							{
+								WriteLine( $"public override IntPtr GetGlobalInterfacePointer() => {func.Name_Flat}();" );
+							}
+							else
+							{
+								throw new Exception( $"unknown Kind {func.Kind}" );
+							}
+						}
+
+						WriteLine();
+						WriteLine();
+					}
 
 					foreach ( var func in iface.Methods )
 					{

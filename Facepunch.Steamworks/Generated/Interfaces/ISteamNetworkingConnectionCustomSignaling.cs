@@ -9,12 +9,10 @@ namespace Steamworks
 {
 	internal class ISteamNetworkingConnectionCustomSignaling : SteamInterface
 	{
-		public override IntPtr GetInterfacePointer() => GetApi.SteamNetworkingConnectionCustomSignaling();
 		
-		
-		internal ISteamNetworkingConnectionCustomSignaling()
+		internal ISteamNetworkingConnectionCustomSignaling( bool IsGameServer )
 		{
-			SetupInterface();
+			SetupInterface( IsGameServer );
 		}
 		
 		#region FunctionMeta

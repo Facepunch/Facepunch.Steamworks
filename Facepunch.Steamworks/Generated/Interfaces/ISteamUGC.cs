@@ -9,13 +9,19 @@ namespace Steamworks
 {
 	internal class ISteamUGC : SteamInterface
 	{
-		public override IntPtr GetInterfacePointer() => GetApi.SteamUGC();
 		
-		
-		internal ISteamUGC()
+		internal ISteamUGC( bool IsGameServer )
 		{
-			SetupInterface();
+			SetupInterface( IsGameServer );
 		}
+		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamUGC_v014")]
+		internal static extern IntPtr SteamAPI_SteamUGC_v014();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamUGC_v014();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServerUGC_v014")]
+		internal static extern IntPtr SteamAPI_SteamGameServerUGC_v014();
+		public override IntPtr GetServerInterfacePointer() => SteamAPI_SteamGameServerUGC_v014();
+		
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_CreateQueryUserUGCRequest")]

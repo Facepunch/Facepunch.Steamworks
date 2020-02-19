@@ -9,13 +9,16 @@ namespace Steamworks
 {
 	internal class ISteamVideo : SteamInterface
 	{
-		public override IntPtr GetInterfacePointer() => GetApi.SteamVideo();
 		
-		
-		internal ISteamVideo()
+		internal ISteamVideo( bool IsGameServer )
 		{
-			SetupInterface();
+			SetupInterface( IsGameServer );
 		}
+		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamVideo_v002")]
+		internal static extern IntPtr SteamAPI_SteamVideo_v002();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamVideo_v002();
+		
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamVideo_GetVideoURL")]

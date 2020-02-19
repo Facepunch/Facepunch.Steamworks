@@ -9,13 +9,16 @@ namespace Steamworks
 {
 	internal class ISteamHTMLSurface : SteamInterface
 	{
-		public override IntPtr GetInterfacePointer() => GetApi.SteamHTMLSurface();
 		
-		
-		internal ISteamHTMLSurface()
+		internal ISteamHTMLSurface( bool IsGameServer )
 		{
-			SetupInterface();
+			SetupInterface( IsGameServer );
 		}
+		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamHTMLSurface_v005")]
+		internal static extern IntPtr SteamAPI_SteamHTMLSurface_v005();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamHTMLSurface_v005();
+		
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTMLSurface_Init")]

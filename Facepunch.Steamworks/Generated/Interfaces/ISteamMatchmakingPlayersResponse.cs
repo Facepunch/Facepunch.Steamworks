@@ -9,12 +9,10 @@ namespace Steamworks
 {
 	internal class ISteamMatchmakingPlayersResponse : SteamInterface
 	{
-		public override IntPtr GetInterfacePointer() => GetApi.SteamMatchmakingPlayersResponse();
 		
-		
-		internal ISteamMatchmakingPlayersResponse()
+		internal ISteamMatchmakingPlayersResponse( bool IsGameServer )
 		{
-			SetupInterface();
+			SetupInterface( IsGameServer );
 		}
 		
 		#region FunctionMeta

@@ -9,13 +9,16 @@ namespace Steamworks
 {
 	internal class ISteamGameSearch : SteamInterface
 	{
-		public override IntPtr GetInterfacePointer() => GetApi.SteamGameSearch();
 		
-		
-		internal ISteamGameSearch()
+		internal ISteamGameSearch( bool IsGameServer )
 		{
-			SetupInterface();
+			SetupInterface( IsGameServer );
 		}
+		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameSearch_v001")]
+		internal static extern IntPtr SteamAPI_SteamGameSearch_v001();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamGameSearch_v001();
+		
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameSearch_AddGameSearchParams")]

@@ -9,13 +9,19 @@ namespace Steamworks
 {
 	internal class ISteamHTTP : SteamInterface
 	{
-		public override IntPtr GetInterfacePointer() => GetApi.SteamHTTP();
 		
-		
-		internal ISteamHTTP()
+		internal ISteamHTTP( bool IsGameServer )
 		{
-			SetupInterface();
+			SetupInterface( IsGameServer );
 		}
+		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamHTTP_v003")]
+		internal static extern IntPtr SteamAPI_SteamHTTP_v003();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamHTTP_v003();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServerHTTP_v003")]
+		internal static extern IntPtr SteamAPI_SteamGameServerHTTP_v003();
+		public override IntPtr GetServerInterfacePointer() => SteamAPI_SteamGameServerHTTP_v003();
+		
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamHTTP_CreateHTTPRequest")]

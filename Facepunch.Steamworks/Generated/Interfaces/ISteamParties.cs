@@ -9,13 +9,16 @@ namespace Steamworks
 {
 	internal class ISteamParties : SteamInterface
 	{
-		public override IntPtr GetInterfacePointer() => GetApi.SteamParties();
 		
-		
-		internal ISteamParties()
+		internal ISteamParties( bool IsGameServer )
 		{
-			SetupInterface();
+			SetupInterface( IsGameServer );
 		}
+		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamParties_v002")]
+		internal static extern IntPtr SteamAPI_SteamParties_v002();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamParties_v002();
+		
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamParties_GetNumActiveBeacons")]

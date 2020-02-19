@@ -9,13 +9,19 @@ namespace Steamworks
 {
 	internal class ISteamNetworking : SteamInterface
 	{
-		public override IntPtr GetInterfacePointer() => GetApi.SteamNetworking();
 		
-		
-		internal ISteamNetworking()
+		internal ISteamNetworking( bool IsGameServer )
 		{
-			SetupInterface();
+			SetupInterface( IsGameServer );
 		}
+		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworking_v006")]
+		internal static extern IntPtr SteamAPI_SteamNetworking_v006();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamNetworking_v006();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServerNetworking_v006")]
+		internal static extern IntPtr SteamAPI_SteamGameServerNetworking_v006();
+		public override IntPtr GetServerInterfacePointer() => SteamAPI_SteamGameServerNetworking_v006();
+		
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworking_SendP2PPacket")]

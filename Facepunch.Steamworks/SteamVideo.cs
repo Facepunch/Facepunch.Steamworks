@@ -15,9 +15,9 @@ namespace Steamworks
 		internal static ISteamVideo Internal;
 		internal override SteamInterface Interface => Internal;
 
-		internal override void InitializeInterface()
+		internal override void InitializeInterface( bool server )
 		{
-			Internal = new ISteamVideo();
+			Internal = new ISteamVideo( server );
 
 			InstallEvents();
 		}

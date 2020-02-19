@@ -9,13 +9,19 @@ namespace Steamworks
 {
 	internal class ISteamNetworkingSockets : SteamInterface
 	{
-		public override IntPtr GetInterfacePointer() => GetApi.SteamNetworkingSockets();
 		
-		
-		internal ISteamNetworkingSockets()
+		internal ISteamNetworkingSockets( bool IsGameServer )
 		{
-			SetupInterface();
+			SetupInterface( IsGameServer );
 		}
+		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingSockets_v008")]
+		internal static extern IntPtr SteamAPI_SteamNetworkingSockets_v008();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamNetworkingSockets_v008();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServerNetworkingSockets_v008")]
+		internal static extern IntPtr SteamAPI_SteamGameServerNetworkingSockets_v008();
+		public override IntPtr GetServerInterfacePointer() => SteamAPI_SteamGameServerNetworkingSockets_v008();
+		
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingSockets_CreateListenSocketIP")]

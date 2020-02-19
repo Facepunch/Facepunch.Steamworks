@@ -9,13 +9,16 @@ namespace Steamworks
 {
 	internal class ISteamGameServerStats : SteamInterface
 	{
-		public override IntPtr GetInterfacePointer() => GetApi.SteamGameServerStats();
 		
-		
-		internal ISteamGameServerStats()
+		internal ISteamGameServerStats( bool IsGameServer )
 		{
-			SetupInterface();
+			SetupInterface( IsGameServer );
 		}
+		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServerStats_v001")]
+		internal static extern IntPtr SteamAPI_SteamGameServerStats_v001();
+		public override IntPtr GetServerInterfacePointer() => SteamAPI_SteamGameServerStats_v001();
+		
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamGameServerStats_RequestUserStats")]

@@ -15,9 +15,9 @@ namespace Steamworks
 		internal static ISteamMatchmaking Internal;
 		internal override SteamInterface Interface => Internal;
 
-		internal override void InitializeInterface()
+		internal override void InitializeInterface( bool server )
 		{
-			Internal = new ISteamMatchmaking();
+			Internal = new ISteamMatchmaking( server );
 
 			InstallEvents();
 		}

@@ -17,9 +17,9 @@ namespace Steamworks
 		internal static ISteamUGC Internal;
 		internal override SteamInterface Interface => Internal;
 
-		internal override void InitializeInterface()
+		internal override void InitializeInterface( bool server )
 		{
-			Internal = new ISteamUGC();
+			Internal = new ISteamUGC( server );
 			InstallEvents();
 		}
 

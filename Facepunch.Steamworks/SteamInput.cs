@@ -8,9 +8,9 @@ namespace Steamworks
 		internal static ISteamInput Internal;
 		internal override SteamInterface Interface => Internal;
 
-		internal override void InitializeInterface()
+		internal override void InitializeInterface( bool server )
 		{
-			Internal = new ISteamInput();
+			Internal = new ISteamInput( server );
 		}
 
 		internal const int STEAM_CONTROLLER_MAX_COUNT = 16;

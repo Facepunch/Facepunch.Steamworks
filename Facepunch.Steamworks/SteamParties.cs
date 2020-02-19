@@ -12,9 +12,9 @@ namespace Steamworks
 		internal static ISteamParties Internal;
 		internal override SteamInterface Interface => Internal;
 
-		internal override void InitializeInterface()
+		internal override void InitializeInterface( bool server )
 		{
-			Internal = new ISteamParties();
+			Internal = new ISteamParties( server );
 			InstallEvents();
 		}
 

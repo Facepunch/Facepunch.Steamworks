@@ -17,9 +17,9 @@ namespace Steamworks
 		internal static ISteamInventory Internal;
 		internal override SteamInterface Interface => Internal;
 
-		internal override void InitializeInterface()
+		internal override void InitializeInterface( bool server )
 		{
-			Internal = new ISteamInventory();
+			Internal = new ISteamInventory( server );
 
 			InstallEvents();
 		}

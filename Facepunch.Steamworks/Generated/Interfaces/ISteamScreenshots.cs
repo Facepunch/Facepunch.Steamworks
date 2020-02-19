@@ -9,13 +9,16 @@ namespace Steamworks
 {
 	internal class ISteamScreenshots : SteamInterface
 	{
-		public override IntPtr GetInterfacePointer() => GetApi.SteamScreenshots();
 		
-		
-		internal ISteamScreenshots()
+		internal ISteamScreenshots( bool IsGameServer )
 		{
-			SetupInterface();
+			SetupInterface( IsGameServer );
 		}
+		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamScreenshots_v003")]
+		internal static extern IntPtr SteamAPI_SteamScreenshots_v003();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamScreenshots_v003();
+		
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamScreenshots_WriteScreenshot")]

@@ -15,9 +15,9 @@ namespace Steamworks
 		internal static ISteamRemoteStorage Internal;
 		internal override SteamInterface Interface => Internal;
 
-		internal override void InitializeInterface()
+		internal override void InitializeInterface( bool server )
 		{
-			Internal = new ISteamRemoteStorage();
+			Internal = new ISteamRemoteStorage( server );
 		}
 
 		/// <summary>

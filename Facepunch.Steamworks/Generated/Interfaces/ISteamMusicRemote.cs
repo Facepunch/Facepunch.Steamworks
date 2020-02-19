@@ -9,13 +9,16 @@ namespace Steamworks
 {
 	internal class ISteamMusicRemote : SteamInterface
 	{
-		public override IntPtr GetInterfacePointer() => GetApi.SteamMusicRemote();
 		
-		
-		internal ISteamMusicRemote()
+		internal ISteamMusicRemote( bool IsGameServer )
 		{
-			SetupInterface();
+			SetupInterface( IsGameServer );
 		}
+		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamMusicRemote_v001")]
+		internal static extern IntPtr SteamAPI_SteamMusicRemote_v001();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamMusicRemote_v001();
+		
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMusicRemote_RegisterSteamMusicRemote")]

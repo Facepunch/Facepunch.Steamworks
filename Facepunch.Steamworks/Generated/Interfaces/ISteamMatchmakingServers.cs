@@ -9,13 +9,16 @@ namespace Steamworks
 {
 	internal class ISteamMatchmakingServers : SteamInterface
 	{
-		public override IntPtr GetInterfacePointer() => GetApi.SteamMatchmakingServers();
 		
-		
-		internal ISteamMatchmakingServers()
+		internal ISteamMatchmakingServers( bool IsGameServer )
 		{
-			SetupInterface();
+			SetupInterface( IsGameServer );
 		}
+		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamMatchmakingServers_v002")]
+		internal static extern IntPtr SteamAPI_SteamMatchmakingServers_v002();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamMatchmakingServers_v002();
+		
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmakingServers_RequestInternetServerList")]

@@ -9,13 +9,16 @@ namespace Steamworks
 {
 	internal class ISteamMatchmaking : SteamInterface
 	{
-		public override IntPtr GetInterfacePointer() => GetApi.SteamMatchmaking();
 		
-		
-		internal ISteamMatchmaking()
+		internal ISteamMatchmaking( bool IsGameServer )
 		{
-			SetupInterface();
+			SetupInterface( IsGameServer );
 		}
+		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamMatchmaking_v009")]
+		internal static extern IntPtr SteamAPI_SteamMatchmaking_v009();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamMatchmaking_v009();
+		
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamMatchmaking_GetFavoriteGameCount")]

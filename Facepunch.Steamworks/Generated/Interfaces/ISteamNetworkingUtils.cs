@@ -9,13 +9,16 @@ namespace Steamworks
 {
 	internal class ISteamNetworkingUtils : SteamInterface
 	{
-		public override IntPtr GetInterfacePointer() => GetApi.SteamNetworkingUtils();
 		
-		
-		internal ISteamNetworkingUtils()
+		internal ISteamNetworkingUtils( bool IsGameServer )
 		{
-			SetupInterface();
+			SetupInterface( IsGameServer );
 		}
+		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingUtils_v003")]
+		internal static extern IntPtr SteamAPI_SteamNetworkingUtils_v003();
+		public override IntPtr GetGlobalInterfacePointer() => SteamAPI_SteamNetworkingUtils_v003();
+		
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_AllocateMessage")]

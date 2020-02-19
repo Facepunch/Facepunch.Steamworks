@@ -58,7 +58,7 @@ namespace Steamworks
 		internal static void AddInterface<T>() where T : SteamClass, new()
 		{
 			var t = new T();
-			t.InitializeInterface();
+			t.InitializeInterface( false );
 			openInterfaces.Add( t );
 		}
 

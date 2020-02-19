@@ -9,13 +9,16 @@ namespace Steamworks
 {
 	internal class ISteamParentalSettings : SteamInterface
 	{
-		public override IntPtr GetInterfacePointer() => GetApi.SteamParentalSettings();
 		
-		
-		internal ISteamParentalSettings()
+		internal ISteamParentalSettings( bool IsGameServer )
 		{
-			SetupInterface();
+			SetupInterface( IsGameServer );
 		}
+		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamParentalSettings_v001")]
+		internal static extern IntPtr SteamAPI_SteamParentalSettings_v001();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamParentalSettings_v001();
+		
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamParentalSettings_BIsParentalLockEnabled")]

@@ -9,12 +9,10 @@ namespace Steamworks
 {
 	internal class ISteamClient : SteamInterface
 	{
-		public override IntPtr GetInterfacePointer() => GetApi.SteamClient();
 		
-		
-		internal ISteamClient()
+		internal ISteamClient( bool IsGameServer )
 		{
-			SetupInterface();
+			SetupInterface( IsGameServer );
 		}
 		
 		#region FunctionMeta

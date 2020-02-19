@@ -9,13 +9,16 @@ namespace Steamworks
 {
 	internal class ISteamRemotePlay : SteamInterface
 	{
-		public override IntPtr GetInterfacePointer() => GetApi.SteamRemotePlay();
 		
-		
-		internal ISteamRemotePlay()
+		internal ISteamRemotePlay( bool IsGameServer )
 		{
-			SetupInterface();
+			SetupInterface( IsGameServer );
 		}
+		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamRemotePlay_v001")]
+		internal static extern IntPtr SteamAPI_SteamRemotePlay_v001();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamRemotePlay_v001();
+		
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamRemotePlay_GetSessionCount")]

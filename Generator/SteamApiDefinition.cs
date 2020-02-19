@@ -38,6 +38,16 @@ namespace Generator
 
             public Method[] Methods { get; set; }
 
+
+            public class Accessor
+            {
+                public string Kind { get; set; }
+                public string Name { get; set; }
+                public string Name_Flat { get; set; }
+            }
+
+            public Accessor[] Accessors { get; set; }
+
         }
 
         public Interface[] Interfaces { get; set; }

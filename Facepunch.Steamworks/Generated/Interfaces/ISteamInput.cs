@@ -9,13 +9,16 @@ namespace Steamworks
 {
 	internal class ISteamInput : SteamInterface
 	{
-		public override IntPtr GetInterfacePointer() => GetApi.SteamInput();
 		
-		
-		internal ISteamInput()
+		internal ISteamInput( bool IsGameServer )
 		{
-			SetupInterface();
+			SetupInterface( IsGameServer );
 		}
+		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamInput_v001")]
+		internal static extern IntPtr SteamAPI_SteamInput_v001();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamInput_v001();
+		
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInput_Init")]

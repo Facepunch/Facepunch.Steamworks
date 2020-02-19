@@ -9,13 +9,19 @@ namespace Steamworks
 {
 	internal class ISteamInventory : SteamInterface
 	{
-		public override IntPtr GetInterfacePointer() => GetApi.SteamInventory();
 		
-		
-		internal ISteamInventory()
+		internal ISteamInventory( bool IsGameServer )
 		{
-			SetupInterface();
+			SetupInterface( IsGameServer );
 		}
+		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamInventory_v003")]
+		internal static extern IntPtr SteamAPI_SteamInventory_v003();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamInventory_v003();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServerInventory_v003")]
+		internal static extern IntPtr SteamAPI_SteamGameServerInventory_v003();
+		public override IntPtr GetServerInterfacePointer() => SteamAPI_SteamGameServerInventory_v003();
+		
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInventory_GetResultStatus")]

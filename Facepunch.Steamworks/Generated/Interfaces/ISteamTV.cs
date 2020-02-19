@@ -9,13 +9,16 @@ namespace Steamworks
 {
 	internal class ISteamTV : SteamInterface
 	{
-		public override IntPtr GetInterfacePointer() => GetApi.SteamTV();
 		
-		
-		internal ISteamTV()
+		internal ISteamTV( bool IsGameServer )
 		{
-			SetupInterface();
+			SetupInterface( IsGameServer );
 		}
+		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamTV_v001")]
+		internal static extern IntPtr SteamAPI_SteamTV_v001();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamTV_v001();
+		
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamTV_IsBroadcasting")]

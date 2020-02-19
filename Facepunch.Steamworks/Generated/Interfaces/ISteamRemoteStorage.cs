@@ -9,13 +9,16 @@ namespace Steamworks
 {
 	internal class ISteamRemoteStorage : SteamInterface
 	{
-		public override IntPtr GetInterfacePointer() => GetApi.SteamRemoteStorage();
 		
-		
-		internal ISteamRemoteStorage()
+		internal ISteamRemoteStorage( bool IsGameServer )
 		{
-			SetupInterface();
+			SetupInterface( IsGameServer );
 		}
+		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamRemoteStorage_v014")]
+		internal static extern IntPtr SteamAPI_SteamRemoteStorage_v014();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamRemoteStorage_v014();
+		
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamRemoteStorage_FileWrite")]

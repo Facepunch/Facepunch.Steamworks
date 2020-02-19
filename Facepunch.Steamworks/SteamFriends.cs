@@ -15,9 +15,9 @@ namespace Steamworks
 		internal static ISteamFriends Internal;
 		internal override SteamInterface Interface => Internal;
 
-		internal override void InitializeInterface()
+		internal override void InitializeInterface( bool server )
 		{
-			Internal = new ISteamFriends();
+			Internal = new ISteamFriends( server );
 
 			richPresence = new Dictionary<string, string>();
 		}

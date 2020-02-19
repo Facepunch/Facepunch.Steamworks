@@ -9,13 +9,19 @@ namespace Steamworks
 {
 	internal class ISteamUtils : SteamInterface
 	{
-		public override IntPtr GetInterfacePointer() => GetApi.SteamUtils();
 		
-		
-		internal ISteamUtils()
+		internal ISteamUtils( bool IsGameServer )
 		{
-			SetupInterface();
+			SetupInterface( IsGameServer );
 		}
+		
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamUtils_v009")]
+		internal static extern IntPtr SteamAPI_SteamUtils_v009();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamUtils_v009();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamGameServerUtils_v009")]
+		internal static extern IntPtr SteamAPI_SteamGameServerUtils_v009();
+		public override IntPtr GetServerInterfacePointer() => SteamAPI_SteamGameServerUtils_v009();
+		
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUtils_GetSecondsSinceAppActive")]
