@@ -24,8 +24,8 @@ namespace Steamworks
 
 		internal static void InstallEvents()
 		{
-			BroadcastUploadStart_t.Install( x => OnBroadcastStarted?.Invoke() );
-			BroadcastUploadStop_t.Install( x => OnBroadcastStopped?.Invoke( x.Result ) );
+			Dispatch.Install<BroadcastUploadStart_t>( x => OnBroadcastStarted?.Invoke() );
+			Dispatch.Install<BroadcastUploadStop_t>( x => OnBroadcastStopped?.Invoke( x.Result ) );
 		}
 
 		public static event Action OnBroadcastStarted;

@@ -182,10 +182,9 @@ internal class SteamApiCallType : BaseType
 	public override string Return( string varname )
 	{
 		if ( !string.IsNullOrEmpty( CallResult ) )
-			return $"return new CallbackResult<{CallResult}>( {varname} );";
+			return $"return new CallResult<{CallResult}>( {varname} );";
 
-		return $"return new CallbackResult( {varname} );";
-		
+		return $"return new CallResult( {varname} );";
 	}
 
 	public override string ReturnType
@@ -193,9 +192,9 @@ internal class SteamApiCallType : BaseType
 		get
 		{
 			if ( !string.IsNullOrEmpty( CallResult ) )
-				return $"CallbackResult<{CallResult}>";
+				return $"CallResult<{CallResult}>";
 
-			return $"CallbackResult";
+			return $"CallResult";
 		}
 	}
 }

@@ -24,7 +24,7 @@ namespace Steamworks
 
 		internal static void InstallEvents()
 		{
-			UserStatsReceived_t.Install( x =>
+			Dispatch.Install<UserStatsReceived_t>( x =>
 			{
 				if ( x.SteamIDUser == SteamClient.SteamId )
 					StatsRecieved = true;
@@ -32,10 +32,10 @@ namespace Steamworks
 				OnUserStatsReceived?.Invoke( x.SteamIDUser, x.Result );
 			} );
 
-			UserStatsStored_t.Install( x => OnUserStatsStored?.Invoke( x.Result ) );
-			UserAchievementStored_t.Install( x => OnAchievementProgress?.Invoke( new Achievement( x.AchievementNameUTF8() ), (int) x.CurProgress, (int)x.MaxProgress ) );
-			UserStatsUnloaded_t.Install( x => OnUserStatsUnloaded?.Invoke( x.SteamIDUser ) );
-			UserAchievementIconFetched_t.Install( x => OnAchievementIconFetched?.Invoke( x.AchievementNameUTF8(), x.IconHandle ) );
+			Dispatch.Install<UserStatsStored_t>( x => OnUserStatsStored?.Invoke( x.Result ) );
+			Dispatch.Install<UserAchievementStored_t>( x => OnAchievementProgress?.Invoke( new Achievement( x.AchievementNameUTF8() ), (int) x.CurProgress, (int)x.MaxProgress ) );
+			Dispatch.Install<UserStatsUnloaded_t>( x => OnUserStatsUnloaded?.Invoke( x.SteamIDUser ) );
+			Dispatch.Install<UserAchievementIconFetched_t>( x => OnAchievementIconFetched?.Invoke( x.AchievementNameUTF8(), x.IconHandle ) );
 		}
 
 

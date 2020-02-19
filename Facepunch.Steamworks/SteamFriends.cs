@@ -26,13 +26,13 @@ namespace Steamworks
 
 		internal static void InstallEvents()
 		{
-			FriendStateChange_t.Install( x => OnPersonaStateChange?.Invoke( new Friend( x.SteamID ) ) );
-			GameRichPresenceJoinRequested_t.Install( x => OnGameRichPresenceJoinRequested?.Invoke( new Friend( x.SteamIDFriend), x.ConnectUTF8() ) );
-			GameConnectedFriendChatMsg_t.Install( OnFriendChatMessage );
-			GameOverlayActivated_t.Install( x => OnGameOverlayActivated?.Invoke() );
-			GameServerChangeRequested_t.Install( x => OnGameServerChangeRequested?.Invoke( x.ServerUTF8(), x.PasswordUTF8() ) );
-			GameLobbyJoinRequested_t.Install( x => OnGameLobbyJoinRequested?.Invoke( new Lobby( x.SteamIDLobby ), x.SteamIDFriend ) );
-			FriendRichPresenceUpdate_t.Install( x => OnFriendRichPresenceUpdate?.Invoke( new Friend( x.SteamIDFriend ) ) );
+			Dispatch.Install<FriendStateChange_t>( x => OnPersonaStateChange?.Invoke( new Friend( x.SteamID ) ) );
+			Dispatch.Install<GameRichPresenceJoinRequested_t>( x => OnGameRichPresenceJoinRequested?.Invoke( new Friend( x.SteamIDFriend), x.ConnectUTF8() ) );
+			Dispatch.Install<GameConnectedFriendChatMsg_t>( OnFriendChatMessage );
+			Dispatch.Install<GameOverlayActivated_t>( x => OnGameOverlayActivated?.Invoke() );
+			Dispatch.Install<GameServerChangeRequested_t>( x => OnGameServerChangeRequested?.Invoke( x.ServerUTF8(), x.PasswordUTF8() ) );
+			Dispatch.Install<GameLobbyJoinRequested_t>( x => OnGameLobbyJoinRequested?.Invoke( new Lobby( x.SteamIDLobby ), x.SteamIDFriend ) );
+			Dispatch.Install<FriendRichPresenceUpdate_t>( x => OnFriendRichPresenceUpdate?.Invoke( new Friend( x.SteamIDFriend ) ) );
 		}
 
 		/// <summary>

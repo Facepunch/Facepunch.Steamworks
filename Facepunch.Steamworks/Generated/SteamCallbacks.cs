@@ -14,25 +14,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamServersConnected_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 101;
-		internal static SteamServersConnected_t Fill( IntPtr p ) => ((SteamServersConnected_t)Marshal.PtrToStructure( p, typeof(SteamServersConnected_t) ) );
-		
-		static Action<SteamServersConnected_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<SteamServersConnected_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<SteamServersConnected_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 101, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 101, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -47,25 +28,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamServerConnectFailure_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 102;
-		internal static SteamServerConnectFailure_t Fill( IntPtr p ) => ((SteamServerConnectFailure_t)Marshal.PtrToStructure( p, typeof(SteamServerConnectFailure_t) ) );
-		
-		static Action<SteamServerConnectFailure_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<SteamServerConnectFailure_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<SteamServerConnectFailure_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 102, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 102, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -78,25 +40,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamServersDisconnected_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 103;
-		internal static SteamServersDisconnected_t Fill( IntPtr p ) => ((SteamServersDisconnected_t)Marshal.PtrToStructure( p, typeof(SteamServersDisconnected_t) ) );
-		
-		static Action<SteamServersDisconnected_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<SteamServersDisconnected_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<SteamServersDisconnected_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 103, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 103, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -113,25 +56,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(ClientGameServerDeny_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 113;
-		internal static ClientGameServerDeny_t Fill( IntPtr p ) => ((ClientGameServerDeny_t)Marshal.PtrToStructure( p, typeof(ClientGameServerDeny_t) ) );
-		
-		static Action<ClientGameServerDeny_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<ClientGameServerDeny_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<ClientGameServerDeny_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 113, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 113, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -144,25 +68,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(IPCFailure_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 117;
-		internal static IPCFailure_t Fill( IntPtr p ) => ((IPCFailure_t)Marshal.PtrToStructure( p, typeof(IPCFailure_t) ) );
-		
-		static Action<IPCFailure_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<IPCFailure_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<IPCFailure_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 117, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 117, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 		internal enum EFailureType : int
 		{
@@ -180,25 +85,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LicensesUpdated_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 125;
-		internal static LicensesUpdated_t Fill( IntPtr p ) => ((LicensesUpdated_t)Marshal.PtrToStructure( p, typeof(LicensesUpdated_t) ) );
-		
-		static Action<LicensesUpdated_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<LicensesUpdated_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<LicensesUpdated_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 125, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 125, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -213,25 +99,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(ValidateAuthTicketResponse_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 143;
-		internal static ValidateAuthTicketResponse_t Fill( IntPtr p ) => ((ValidateAuthTicketResponse_t)Marshal.PtrToStructure( p, typeof(ValidateAuthTicketResponse_t) ) );
-		
-		static Action<ValidateAuthTicketResponse_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<ValidateAuthTicketResponse_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<ValidateAuthTicketResponse_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 143, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 143, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -246,25 +113,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(MicroTxnAuthorizationResponse_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 152;
-		internal static MicroTxnAuthorizationResponse_t Fill( IntPtr p ) => ((MicroTxnAuthorizationResponse_t)Marshal.PtrToStructure( p, typeof(MicroTxnAuthorizationResponse_t) ) );
-		
-		static Action<MicroTxnAuthorizationResponse_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<MicroTxnAuthorizationResponse_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<MicroTxnAuthorizationResponse_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 152, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 152, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -277,25 +125,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(EncryptedAppTicketResponse_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 154;
-		internal static EncryptedAppTicketResponse_t Fill( IntPtr p ) => ((EncryptedAppTicketResponse_t)Marshal.PtrToStructure( p, typeof(EncryptedAppTicketResponse_t) ) );
-		
-		static Action<EncryptedAppTicketResponse_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<EncryptedAppTicketResponse_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<EncryptedAppTicketResponse_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 154, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 154, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -309,25 +138,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GetAuthSessionTicketResponse_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 163;
-		internal static GetAuthSessionTicketResponse_t Fill( IntPtr p ) => ((GetAuthSessionTicketResponse_t)Marshal.PtrToStructure( p, typeof(GetAuthSessionTicketResponse_t) ) );
-		
-		static Action<GetAuthSessionTicketResponse_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<GetAuthSessionTicketResponse_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<GetAuthSessionTicketResponse_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 163, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 163, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -342,25 +152,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameWebCallback_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 164;
-		internal static GameWebCallback_t Fill( IntPtr p ) => ((GameWebCallback_t)Marshal.PtrToStructure( p, typeof(GameWebCallback_t) ) );
-		
-		static Action<GameWebCallback_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<GameWebCallback_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<GameWebCallback_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 164, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 164, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -375,25 +166,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(StoreAuthURLResponse_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 165;
-		internal static StoreAuthURLResponse_t Fill( IntPtr p ) => ((StoreAuthURLResponse_t)Marshal.PtrToStructure( p, typeof(StoreAuthURLResponse_t) ) );
-		
-		static Action<StoreAuthURLResponse_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<StoreAuthURLResponse_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<StoreAuthURLResponse_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 165, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 165, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -411,25 +183,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(MarketEligibilityResponse_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 166;
-		internal static MarketEligibilityResponse_t Fill( IntPtr p ) => ((MarketEligibilityResponse_t)Marshal.PtrToStructure( p, typeof(MarketEligibilityResponse_t) ) );
-		
-		static Action<MarketEligibilityResponse_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<MarketEligibilityResponse_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<MarketEligibilityResponse_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 166, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 166, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -450,25 +203,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(DurationControl_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 167;
-		internal static DurationControl_t Fill( IntPtr p ) => ((DurationControl_t)Marshal.PtrToStructure( p, typeof(DurationControl_t) ) );
-		
-		static Action<DurationControl_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<DurationControl_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<DurationControl_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 167, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 167, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -482,25 +216,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(FriendStateChange_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 304;
-		internal static FriendStateChange_t Fill( IntPtr p ) => ((FriendStateChange_t)Marshal.PtrToStructure( p, typeof(FriendStateChange_t) ) );
-		
-		static Action<FriendStateChange_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<FriendStateChange_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<FriendStateChange_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 304, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 304, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -513,25 +228,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameOverlayActivated_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 331;
-		internal static GameOverlayActivated_t Fill( IntPtr p ) => ((GameOverlayActivated_t)Marshal.PtrToStructure( p, typeof(GameOverlayActivated_t) ) );
-		
-		static Action<GameOverlayActivated_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<GameOverlayActivated_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<GameOverlayActivated_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 331, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 331, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -549,25 +245,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameServerChangeRequested_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 332;
-		internal static GameServerChangeRequested_t Fill( IntPtr p ) => ((GameServerChangeRequested_t)Marshal.PtrToStructure( p, typeof(GameServerChangeRequested_t) ) );
-		
-		static Action<GameServerChangeRequested_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<GameServerChangeRequested_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<GameServerChangeRequested_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 332, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 332, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -581,25 +258,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameLobbyJoinRequested_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 333;
-		internal static GameLobbyJoinRequested_t Fill( IntPtr p ) => ((GameLobbyJoinRequested_t)Marshal.PtrToStructure( p, typeof(GameLobbyJoinRequested_t) ) );
-		
-		static Action<GameLobbyJoinRequested_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<GameLobbyJoinRequested_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<GameLobbyJoinRequested_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 333, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 333, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -615,25 +273,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(AvatarImageLoaded_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 334;
-		internal static AvatarImageLoaded_t Fill( IntPtr p ) => ((AvatarImageLoaded_t)Marshal.PtrToStructure( p, typeof(AvatarImageLoaded_t) ) );
-		
-		static Action<AvatarImageLoaded_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<AvatarImageLoaded_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<AvatarImageLoaded_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 334, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 334, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -648,25 +287,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(ClanOfficerListResponse_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 335;
-		internal static ClanOfficerListResponse_t Fill( IntPtr p ) => ((ClanOfficerListResponse_t)Marshal.PtrToStructure( p, typeof(ClanOfficerListResponse_t) ) );
-		
-		static Action<ClanOfficerListResponse_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<ClanOfficerListResponse_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<ClanOfficerListResponse_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 335, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 335, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -680,25 +300,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(FriendRichPresenceUpdate_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 336;
-		internal static FriendRichPresenceUpdate_t Fill( IntPtr p ) => ((FriendRichPresenceUpdate_t)Marshal.PtrToStructure( p, typeof(FriendRichPresenceUpdate_t) ) );
-		
-		static Action<FriendRichPresenceUpdate_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<FriendRichPresenceUpdate_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<FriendRichPresenceUpdate_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 336, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 336, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -714,25 +315,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameRichPresenceJoinRequested_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 337;
-		internal static GameRichPresenceJoinRequested_t Fill( IntPtr p ) => ((GameRichPresenceJoinRequested_t)Marshal.PtrToStructure( p, typeof(GameRichPresenceJoinRequested_t) ) );
-		
-		static Action<GameRichPresenceJoinRequested_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<GameRichPresenceJoinRequested_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<GameRichPresenceJoinRequested_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 337, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 337, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -747,25 +329,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameConnectedClanChatMsg_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 338;
-		internal static GameConnectedClanChatMsg_t Fill( IntPtr p ) => ((GameConnectedClanChatMsg_t)Marshal.PtrToStructure( p, typeof(GameConnectedClanChatMsg_t) ) );
-		
-		static Action<GameConnectedClanChatMsg_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<GameConnectedClanChatMsg_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<GameConnectedClanChatMsg_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 338, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 338, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -779,25 +342,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameConnectedChatJoin_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 339;
-		internal static GameConnectedChatJoin_t Fill( IntPtr p ) => ((GameConnectedChatJoin_t)Marshal.PtrToStructure( p, typeof(GameConnectedChatJoin_t) ) );
-		
-		static Action<GameConnectedChatJoin_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<GameConnectedChatJoin_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<GameConnectedChatJoin_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 339, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 339, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -815,25 +359,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameConnectedChatLeave_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 340;
-		internal static GameConnectedChatLeave_t Fill( IntPtr p ) => ((GameConnectedChatLeave_t)Marshal.PtrToStructure( p, typeof(GameConnectedChatLeave_t) ) );
-		
-		static Action<GameConnectedChatLeave_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<GameConnectedChatLeave_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<GameConnectedChatLeave_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 340, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 340, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -847,25 +372,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(DownloadClanActivityCountsResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 341;
-		internal static DownloadClanActivityCountsResult_t Fill( IntPtr p ) => ((DownloadClanActivityCountsResult_t)Marshal.PtrToStructure( p, typeof(DownloadClanActivityCountsResult_t) ) );
-		
-		static Action<DownloadClanActivityCountsResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<DownloadClanActivityCountsResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<DownloadClanActivityCountsResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 341, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 341, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -879,25 +385,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(JoinClanChatRoomCompletionResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 342;
-		internal static JoinClanChatRoomCompletionResult_t Fill( IntPtr p ) => ((JoinClanChatRoomCompletionResult_t)Marshal.PtrToStructure( p, typeof(JoinClanChatRoomCompletionResult_t) ) );
-		
-		static Action<JoinClanChatRoomCompletionResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<JoinClanChatRoomCompletionResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<JoinClanChatRoomCompletionResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 342, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 342, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -911,25 +398,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GameConnectedFriendChatMsg_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 343;
-		internal static GameConnectedFriendChatMsg_t Fill( IntPtr p ) => ((GameConnectedFriendChatMsg_t)Marshal.PtrToStructure( p, typeof(GameConnectedFriendChatMsg_t) ) );
-		
-		static Action<GameConnectedFriendChatMsg_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<GameConnectedFriendChatMsg_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<GameConnectedFriendChatMsg_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 343, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 343, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -944,25 +412,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(FriendsGetFollowerCount_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 344;
-		internal static FriendsGetFollowerCount_t Fill( IntPtr p ) => ((FriendsGetFollowerCount_t)Marshal.PtrToStructure( p, typeof(FriendsGetFollowerCount_t) ) );
-		
-		static Action<FriendsGetFollowerCount_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<FriendsGetFollowerCount_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<FriendsGetFollowerCount_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 344, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 344, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -978,25 +427,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(FriendsIsFollowing_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 345;
-		internal static FriendsIsFollowing_t Fill( IntPtr p ) => ((FriendsIsFollowing_t)Marshal.PtrToStructure( p, typeof(FriendsIsFollowing_t) ) );
-		
-		static Action<FriendsIsFollowing_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<FriendsIsFollowing_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<FriendsIsFollowing_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 345, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 345, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1013,25 +443,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(FriendsEnumerateFollowingList_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 346;
-		internal static FriendsEnumerateFollowingList_t Fill( IntPtr p ) => ((FriendsEnumerateFollowingList_t)Marshal.PtrToStructure( p, typeof(FriendsEnumerateFollowingList_t) ) );
-		
-		static Action<FriendsEnumerateFollowingList_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<FriendsEnumerateFollowingList_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<FriendsEnumerateFollowingList_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 346, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 346, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1048,25 +459,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SetPersonaNameResponse_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 347;
-		internal static SetPersonaNameResponse_t Fill( IntPtr p ) => ((SetPersonaNameResponse_t)Marshal.PtrToStructure( p, typeof(SetPersonaNameResponse_t) ) );
-		
-		static Action<SetPersonaNameResponse_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<SetPersonaNameResponse_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<SetPersonaNameResponse_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 347, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 347, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1078,25 +470,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(UnreadChatMessagesChanged_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 348;
-		internal static UnreadChatMessagesChanged_t Fill( IntPtr p ) => ((UnreadChatMessagesChanged_t)Marshal.PtrToStructure( p, typeof(UnreadChatMessagesChanged_t) ) );
-		
-		static Action<UnreadChatMessagesChanged_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<UnreadChatMessagesChanged_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<UnreadChatMessagesChanged_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 348, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 348, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1108,25 +481,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(IPCountry_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 701;
-		internal static IPCountry_t Fill( IntPtr p ) => ((IPCountry_t)Marshal.PtrToStructure( p, typeof(IPCountry_t) ) );
-		
-		static Action<IPCountry_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<IPCountry_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<IPCountry_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 701, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 701, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1139,25 +493,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LowBatteryPower_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 702;
-		internal static LowBatteryPower_t Fill( IntPtr p ) => ((LowBatteryPower_t)Marshal.PtrToStructure( p, typeof(LowBatteryPower_t) ) );
-		
-		static Action<LowBatteryPower_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<LowBatteryPower_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<LowBatteryPower_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 702, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 702, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1172,25 +507,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamAPICallCompleted_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 703;
-		internal static SteamAPICallCompleted_t Fill( IntPtr p ) => ((SteamAPICallCompleted_t)Marshal.PtrToStructure( p, typeof(SteamAPICallCompleted_t) ) );
-		
-		static Action<SteamAPICallCompleted_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<SteamAPICallCompleted_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<SteamAPICallCompleted_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 703, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 703, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1202,25 +518,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamShutdown_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 704;
-		internal static SteamShutdown_t Fill( IntPtr p ) => ((SteamShutdown_t)Marshal.PtrToStructure( p, typeof(SteamShutdown_t) ) );
-		
-		static Action<SteamShutdown_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<SteamShutdown_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<SteamShutdown_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 704, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 704, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1233,25 +530,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(CheckFileSignature_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 705;
-		internal static CheckFileSignature_t Fill( IntPtr p ) => ((CheckFileSignature_t)Marshal.PtrToStructure( p, typeof(CheckFileSignature_t) ) );
-		
-		static Action<CheckFileSignature_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<CheckFileSignature_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<CheckFileSignature_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 705, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 705, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1266,25 +544,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GamepadTextInputDismissed_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 714;
-		internal static GamepadTextInputDismissed_t Fill( IntPtr p ) => ((GamepadTextInputDismissed_t)Marshal.PtrToStructure( p, typeof(GamepadTextInputDismissed_t) ) );
-		
-		static Action<GamepadTextInputDismissed_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<GamepadTextInputDismissed_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<GamepadTextInputDismissed_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 714, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 714, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1304,25 +563,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(FavoritesListChanged_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 502;
-		internal static FavoritesListChanged_t Fill( IntPtr p ) => ((FavoritesListChanged_t)Marshal.PtrToStructure( p, typeof(FavoritesListChanged_t) ) );
-		
-		static Action<FavoritesListChanged_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<FavoritesListChanged_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<FavoritesListChanged_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 502, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 502, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1337,25 +577,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LobbyInvite_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 503;
-		internal static LobbyInvite_t Fill( IntPtr p ) => ((LobbyInvite_t)Marshal.PtrToStructure( p, typeof(LobbyInvite_t) ) );
-		
-		static Action<LobbyInvite_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<LobbyInvite_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<LobbyInvite_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 503, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 503, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1372,25 +593,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LobbyEnter_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 504;
-		internal static LobbyEnter_t Fill( IntPtr p ) => ((LobbyEnter_t)Marshal.PtrToStructure( p, typeof(LobbyEnter_t) ) );
-		
-		static Action<LobbyEnter_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<LobbyEnter_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<LobbyEnter_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 504, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 504, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1405,25 +607,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LobbyDataUpdate_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 505;
-		internal static LobbyDataUpdate_t Fill( IntPtr p ) => ((LobbyDataUpdate_t)Marshal.PtrToStructure( p, typeof(LobbyDataUpdate_t) ) );
-		
-		static Action<LobbyDataUpdate_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<LobbyDataUpdate_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<LobbyDataUpdate_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 505, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 505, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1439,25 +622,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LobbyChatUpdate_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 506;
-		internal static LobbyChatUpdate_t Fill( IntPtr p ) => ((LobbyChatUpdate_t)Marshal.PtrToStructure( p, typeof(LobbyChatUpdate_t) ) );
-		
-		static Action<LobbyChatUpdate_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<LobbyChatUpdate_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<LobbyChatUpdate_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 506, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 506, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1473,25 +637,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LobbyChatMsg_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 507;
-		internal static LobbyChatMsg_t Fill( IntPtr p ) => ((LobbyChatMsg_t)Marshal.PtrToStructure( p, typeof(LobbyChatMsg_t) ) );
-		
-		static Action<LobbyChatMsg_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<LobbyChatMsg_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<LobbyChatMsg_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 507, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 507, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1507,25 +652,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LobbyGameCreated_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 509;
-		internal static LobbyGameCreated_t Fill( IntPtr p ) => ((LobbyGameCreated_t)Marshal.PtrToStructure( p, typeof(LobbyGameCreated_t) ) );
-		
-		static Action<LobbyGameCreated_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<LobbyGameCreated_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<LobbyGameCreated_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 509, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 509, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1538,25 +664,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LobbyMatchList_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 510;
-		internal static LobbyMatchList_t Fill( IntPtr p ) => ((LobbyMatchList_t)Marshal.PtrToStructure( p, typeof(LobbyMatchList_t) ) );
-		
-		static Action<LobbyMatchList_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<LobbyMatchList_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<LobbyMatchList_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 510, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 510, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1571,25 +678,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LobbyKicked_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 512;
-		internal static LobbyKicked_t Fill( IntPtr p ) => ((LobbyKicked_t)Marshal.PtrToStructure( p, typeof(LobbyKicked_t) ) );
-		
-		static Action<LobbyKicked_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<LobbyKicked_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<LobbyKicked_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 512, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 512, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1603,25 +691,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LobbyCreated_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 513;
-		internal static LobbyCreated_t Fill( IntPtr p ) => ((LobbyCreated_t)Marshal.PtrToStructure( p, typeof(LobbyCreated_t) ) );
-		
-		static Action<LobbyCreated_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<LobbyCreated_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<LobbyCreated_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 513, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 513, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1636,25 +705,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(PSNGameBootInviteResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 515;
-		internal static PSNGameBootInviteResult_t Fill( IntPtr p ) => ((PSNGameBootInviteResult_t)Marshal.PtrToStructure( p, typeof(PSNGameBootInviteResult_t) ) );
-		
-		static Action<PSNGameBootInviteResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<PSNGameBootInviteResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<PSNGameBootInviteResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 515, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 515, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1667,25 +717,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(FavoritesListAccountsUpdated_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 516;
-		internal static FavoritesListAccountsUpdated_t Fill( IntPtr p ) => ((FavoritesListAccountsUpdated_t)Marshal.PtrToStructure( p, typeof(FavoritesListAccountsUpdated_t) ) );
-		
-		static Action<FavoritesListAccountsUpdated_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<FavoritesListAccountsUpdated_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<FavoritesListAccountsUpdated_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 516, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 516, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1703,25 +734,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SearchForGameProgressCallback_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 5201;
-		internal static SearchForGameProgressCallback_t Fill( IntPtr p ) => ((SearchForGameProgressCallback_t)Marshal.PtrToStructure( p, typeof(SearchForGameProgressCallback_t) ) );
-		
-		static Action<SearchForGameProgressCallback_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<SearchForGameProgressCallback_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<SearchForGameProgressCallback_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 5201, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 5201, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1740,25 +752,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SearchForGameResultCallback_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 5202;
-		internal static SearchForGameResultCallback_t Fill( IntPtr p ) => ((SearchForGameResultCallback_t)Marshal.PtrToStructure( p, typeof(SearchForGameResultCallback_t) ) );
-		
-		static Action<SearchForGameResultCallback_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<SearchForGameResultCallback_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<SearchForGameResultCallback_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 5202, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 5202, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1772,25 +765,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RequestPlayersForGameProgressCallback_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 5211;
-		internal static RequestPlayersForGameProgressCallback_t Fill( IntPtr p ) => ((RequestPlayersForGameProgressCallback_t)Marshal.PtrToStructure( p, typeof(RequestPlayersForGameProgressCallback_t) ) );
-		
-		static Action<RequestPlayersForGameProgressCallback_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RequestPlayersForGameProgressCallback_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RequestPlayersForGameProgressCallback_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 5211, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 5211, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1812,25 +786,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RequestPlayersForGameResultCallback_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 5212;
-		internal static RequestPlayersForGameResultCallback_t Fill( IntPtr p ) => ((RequestPlayersForGameResultCallback_t)Marshal.PtrToStructure( p, typeof(RequestPlayersForGameResultCallback_t) ) );
-		
-		static Action<RequestPlayersForGameResultCallback_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RequestPlayersForGameResultCallback_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RequestPlayersForGameResultCallback_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 5212, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 5212, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 		internal enum PlayerAcceptState_t : int
 		{
@@ -1852,25 +807,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RequestPlayersForGameFinalResultCallback_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 5213;
-		internal static RequestPlayersForGameFinalResultCallback_t Fill( IntPtr p ) => ((RequestPlayersForGameFinalResultCallback_t)Marshal.PtrToStructure( p, typeof(RequestPlayersForGameFinalResultCallback_t) ) );
-		
-		static Action<RequestPlayersForGameFinalResultCallback_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RequestPlayersForGameFinalResultCallback_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RequestPlayersForGameFinalResultCallback_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 5213, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 5213, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1885,25 +821,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SubmitPlayerResultResultCallback_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 5214;
-		internal static SubmitPlayerResultResultCallback_t Fill( IntPtr p ) => ((SubmitPlayerResultResultCallback_t)Marshal.PtrToStructure( p, typeof(SubmitPlayerResultResultCallback_t) ) );
-		
-		static Action<SubmitPlayerResultResultCallback_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<SubmitPlayerResultResultCallback_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<SubmitPlayerResultResultCallback_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 5214, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 5214, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1917,25 +834,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(EndGameResultCallback_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 5215;
-		internal static EndGameResultCallback_t Fill( IntPtr p ) => ((EndGameResultCallback_t)Marshal.PtrToStructure( p, typeof(EndGameResultCallback_t) ) );
-		
-		static Action<EndGameResultCallback_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<EndGameResultCallback_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<EndGameResultCallback_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 5215, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 5215, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1953,25 +851,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(JoinPartyCallback_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 5301;
-		internal static JoinPartyCallback_t Fill( IntPtr p ) => ((JoinPartyCallback_t)Marshal.PtrToStructure( p, typeof(JoinPartyCallback_t) ) );
-		
-		static Action<JoinPartyCallback_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<JoinPartyCallback_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<JoinPartyCallback_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 5301, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 5301, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -1985,25 +864,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(CreateBeaconCallback_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 5302;
-		internal static CreateBeaconCallback_t Fill( IntPtr p ) => ((CreateBeaconCallback_t)Marshal.PtrToStructure( p, typeof(CreateBeaconCallback_t) ) );
-		
-		static Action<CreateBeaconCallback_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<CreateBeaconCallback_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<CreateBeaconCallback_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 5302, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 5302, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2017,25 +877,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(ReservationNotificationCallback_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 5303;
-		internal static ReservationNotificationCallback_t Fill( IntPtr p ) => ((ReservationNotificationCallback_t)Marshal.PtrToStructure( p, typeof(ReservationNotificationCallback_t) ) );
-		
-		static Action<ReservationNotificationCallback_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<ReservationNotificationCallback_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<ReservationNotificationCallback_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 5303, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 5303, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2048,25 +889,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(ChangeNumOpenSlotsCallback_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 5304;
-		internal static ChangeNumOpenSlotsCallback_t Fill( IntPtr p ) => ((ChangeNumOpenSlotsCallback_t)Marshal.PtrToStructure( p, typeof(ChangeNumOpenSlotsCallback_t) ) );
-		
-		static Action<ChangeNumOpenSlotsCallback_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<ChangeNumOpenSlotsCallback_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<ChangeNumOpenSlotsCallback_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 5304, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 5304, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2078,25 +900,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(AvailableBeaconLocationsUpdated_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 5305;
-		internal static AvailableBeaconLocationsUpdated_t Fill( IntPtr p ) => ((AvailableBeaconLocationsUpdated_t)Marshal.PtrToStructure( p, typeof(AvailableBeaconLocationsUpdated_t) ) );
-		
-		static Action<AvailableBeaconLocationsUpdated_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<AvailableBeaconLocationsUpdated_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<AvailableBeaconLocationsUpdated_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 5305, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 5305, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2108,25 +911,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(ActiveBeaconsUpdated_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 5306;
-		internal static ActiveBeaconsUpdated_t Fill( IntPtr p ) => ((ActiveBeaconsUpdated_t)Marshal.PtrToStructure( p, typeof(ActiveBeaconsUpdated_t) ) );
-		
-		static Action<ActiveBeaconsUpdated_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<ActiveBeaconsUpdated_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<ActiveBeaconsUpdated_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 5306, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 5306, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2141,25 +925,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageAppSyncedClient_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1301;
-		internal static RemoteStorageAppSyncedClient_t Fill( IntPtr p ) => ((RemoteStorageAppSyncedClient_t)Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncedClient_t) ) );
-		
-		static Action<RemoteStorageAppSyncedClient_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoteStorageAppSyncedClient_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoteStorageAppSyncedClient_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1301, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1301, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2174,25 +939,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageAppSyncedServer_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1302;
-		internal static RemoteStorageAppSyncedServer_t Fill( IntPtr p ) => ((RemoteStorageAppSyncedServer_t)Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncedServer_t) ) );
-		
-		static Action<RemoteStorageAppSyncedServer_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoteStorageAppSyncedServer_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoteStorageAppSyncedServer_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1302, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1302, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2212,25 +958,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageAppSyncProgress_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1303;
-		internal static RemoteStorageAppSyncProgress_t Fill( IntPtr p ) => ((RemoteStorageAppSyncProgress_t)Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncProgress_t) ) );
-		
-		static Action<RemoteStorageAppSyncProgress_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoteStorageAppSyncProgress_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoteStorageAppSyncProgress_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1303, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1303, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2244,25 +971,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageAppSyncStatusCheck_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1305;
-		internal static RemoteStorageAppSyncStatusCheck_t Fill( IntPtr p ) => ((RemoteStorageAppSyncStatusCheck_t)Marshal.PtrToStructure( p, typeof(RemoteStorageAppSyncStatusCheck_t) ) );
-		
-		static Action<RemoteStorageAppSyncStatusCheck_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoteStorageAppSyncStatusCheck_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoteStorageAppSyncStatusCheck_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1305, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1305, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2279,25 +987,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageFileShareResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1307;
-		internal static RemoteStorageFileShareResult_t Fill( IntPtr p ) => ((RemoteStorageFileShareResult_t)Marshal.PtrToStructure( p, typeof(RemoteStorageFileShareResult_t) ) );
-		
-		static Action<RemoteStorageFileShareResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoteStorageFileShareResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoteStorageFileShareResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1307, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1307, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2313,25 +1002,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStoragePublishFileResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1309;
-		internal static RemoteStoragePublishFileResult_t Fill( IntPtr p ) => ((RemoteStoragePublishFileResult_t)Marshal.PtrToStructure( p, typeof(RemoteStoragePublishFileResult_t) ) );
-		
-		static Action<RemoteStoragePublishFileResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoteStoragePublishFileResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoteStoragePublishFileResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1309, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1309, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2345,25 +1015,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageDeletePublishedFileResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1311;
-		internal static RemoteStorageDeletePublishedFileResult_t Fill( IntPtr p ) => ((RemoteStorageDeletePublishedFileResult_t)Marshal.PtrToStructure( p, typeof(RemoteStorageDeletePublishedFileResult_t) ) );
-		
-		static Action<RemoteStorageDeletePublishedFileResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoteStorageDeletePublishedFileResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoteStorageDeletePublishedFileResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1311, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1311, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2380,25 +1031,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageEnumerateUserPublishedFilesResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1312;
-		internal static RemoteStorageEnumerateUserPublishedFilesResult_t Fill( IntPtr p ) => ((RemoteStorageEnumerateUserPublishedFilesResult_t)Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserPublishedFilesResult_t) ) );
-		
-		static Action<RemoteStorageEnumerateUserPublishedFilesResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoteStorageEnumerateUserPublishedFilesResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoteStorageEnumerateUserPublishedFilesResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1312, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1312, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2412,25 +1044,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageSubscribePublishedFileResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1313;
-		internal static RemoteStorageSubscribePublishedFileResult_t Fill( IntPtr p ) => ((RemoteStorageSubscribePublishedFileResult_t)Marshal.PtrToStructure( p, typeof(RemoteStorageSubscribePublishedFileResult_t) ) );
-		
-		static Action<RemoteStorageSubscribePublishedFileResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoteStorageSubscribePublishedFileResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoteStorageSubscribePublishedFileResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1313, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1313, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2449,25 +1062,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageEnumerateUserSubscribedFilesResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1314;
-		internal static RemoteStorageEnumerateUserSubscribedFilesResult_t Fill( IntPtr p ) => ((RemoteStorageEnumerateUserSubscribedFilesResult_t)Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserSubscribedFilesResult_t) ) );
-		
-		static Action<RemoteStorageEnumerateUserSubscribedFilesResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoteStorageEnumerateUserSubscribedFilesResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoteStorageEnumerateUserSubscribedFilesResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1314, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1314, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2481,25 +1075,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageUnsubscribePublishedFileResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1315;
-		internal static RemoteStorageUnsubscribePublishedFileResult_t Fill( IntPtr p ) => ((RemoteStorageUnsubscribePublishedFileResult_t)Marshal.PtrToStructure( p, typeof(RemoteStorageUnsubscribePublishedFileResult_t) ) );
-		
-		static Action<RemoteStorageUnsubscribePublishedFileResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoteStorageUnsubscribePublishedFileResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoteStorageUnsubscribePublishedFileResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1315, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1315, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2515,25 +1090,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageUpdatePublishedFileResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1316;
-		internal static RemoteStorageUpdatePublishedFileResult_t Fill( IntPtr p ) => ((RemoteStorageUpdatePublishedFileResult_t)Marshal.PtrToStructure( p, typeof(RemoteStorageUpdatePublishedFileResult_t) ) );
-		
-		static Action<RemoteStorageUpdatePublishedFileResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoteStorageUpdatePublishedFileResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoteStorageUpdatePublishedFileResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1316, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1316, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2553,25 +1109,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageDownloadUGCResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1317;
-		internal static RemoteStorageDownloadUGCResult_t Fill( IntPtr p ) => ((RemoteStorageDownloadUGCResult_t)Marshal.PtrToStructure( p, typeof(RemoteStorageDownloadUGCResult_t) ) );
-		
-		static Action<RemoteStorageDownloadUGCResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoteStorageDownloadUGCResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoteStorageDownloadUGCResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1317, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1317, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2617,25 +1154,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageGetPublishedFileDetailsResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1318;
-		internal static RemoteStorageGetPublishedFileDetailsResult_t Fill( IntPtr p ) => ((RemoteStorageGetPublishedFileDetailsResult_t)Marshal.PtrToStructure( p, typeof(RemoteStorageGetPublishedFileDetailsResult_t) ) );
-		
-		static Action<RemoteStorageGetPublishedFileDetailsResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoteStorageGetPublishedFileDetailsResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoteStorageGetPublishedFileDetailsResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1318, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1318, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2656,25 +1174,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageEnumerateWorkshopFilesResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1319;
-		internal static RemoteStorageEnumerateWorkshopFilesResult_t Fill( IntPtr p ) => ((RemoteStorageEnumerateWorkshopFilesResult_t)Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateWorkshopFilesResult_t) ) );
-		
-		static Action<RemoteStorageEnumerateWorkshopFilesResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoteStorageEnumerateWorkshopFilesResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoteStorageEnumerateWorkshopFilesResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1319, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1319, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2692,25 +1191,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageGetPublishedItemVoteDetailsResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1320;
-		internal static RemoteStorageGetPublishedItemVoteDetailsResult_t Fill( IntPtr p ) => ((RemoteStorageGetPublishedItemVoteDetailsResult_t)Marshal.PtrToStructure( p, typeof(RemoteStorageGetPublishedItemVoteDetailsResult_t) ) );
-		
-		static Action<RemoteStorageGetPublishedItemVoteDetailsResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoteStorageGetPublishedItemVoteDetailsResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoteStorageGetPublishedItemVoteDetailsResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1320, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1320, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2724,25 +1204,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStoragePublishedFileSubscribed_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1321;
-		internal static RemoteStoragePublishedFileSubscribed_t Fill( IntPtr p ) => ((RemoteStoragePublishedFileSubscribed_t)Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileSubscribed_t) ) );
-		
-		static Action<RemoteStoragePublishedFileSubscribed_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoteStoragePublishedFileSubscribed_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoteStoragePublishedFileSubscribed_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1321, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1321, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2756,25 +1217,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStoragePublishedFileUnsubscribed_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1322;
-		internal static RemoteStoragePublishedFileUnsubscribed_t Fill( IntPtr p ) => ((RemoteStoragePublishedFileUnsubscribed_t)Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileUnsubscribed_t) ) );
-		
-		static Action<RemoteStoragePublishedFileUnsubscribed_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoteStoragePublishedFileUnsubscribed_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoteStoragePublishedFileUnsubscribed_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1322, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1322, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2788,25 +1230,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStoragePublishedFileDeleted_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1323;
-		internal static RemoteStoragePublishedFileDeleted_t Fill( IntPtr p ) => ((RemoteStoragePublishedFileDeleted_t)Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileDeleted_t) ) );
-		
-		static Action<RemoteStoragePublishedFileDeleted_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoteStoragePublishedFileDeleted_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoteStoragePublishedFileDeleted_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1323, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1323, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2820,25 +1243,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageUpdateUserPublishedItemVoteResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1324;
-		internal static RemoteStorageUpdateUserPublishedItemVoteResult_t Fill( IntPtr p ) => ((RemoteStorageUpdateUserPublishedItemVoteResult_t)Marshal.PtrToStructure( p, typeof(RemoteStorageUpdateUserPublishedItemVoteResult_t) ) );
-		
-		static Action<RemoteStorageUpdateUserPublishedItemVoteResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoteStorageUpdateUserPublishedItemVoteResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoteStorageUpdateUserPublishedItemVoteResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1324, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1324, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2853,25 +1257,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageUserVoteDetails_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1325;
-		internal static RemoteStorageUserVoteDetails_t Fill( IntPtr p ) => ((RemoteStorageUserVoteDetails_t)Marshal.PtrToStructure( p, typeof(RemoteStorageUserVoteDetails_t) ) );
-		
-		static Action<RemoteStorageUserVoteDetails_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoteStorageUserVoteDetails_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoteStorageUserVoteDetails_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1325, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1325, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2888,25 +1273,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageEnumerateUserSharedWorkshopFilesResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1326;
-		internal static RemoteStorageEnumerateUserSharedWorkshopFilesResult_t Fill( IntPtr p ) => ((RemoteStorageEnumerateUserSharedWorkshopFilesResult_t)Marshal.PtrToStructure( p, typeof(RemoteStorageEnumerateUserSharedWorkshopFilesResult_t) ) );
-		
-		static Action<RemoteStorageEnumerateUserSharedWorkshopFilesResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoteStorageEnumerateUserSharedWorkshopFilesResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoteStorageEnumerateUserSharedWorkshopFilesResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1326, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1326, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2921,25 +1287,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageSetUserPublishedFileActionResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1327;
-		internal static RemoteStorageSetUserPublishedFileActionResult_t Fill( IntPtr p ) => ((RemoteStorageSetUserPublishedFileActionResult_t)Marshal.PtrToStructure( p, typeof(RemoteStorageSetUserPublishedFileActionResult_t) ) );
-		
-		static Action<RemoteStorageSetUserPublishedFileActionResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoteStorageSetUserPublishedFileActionResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoteStorageSetUserPublishedFileActionResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1327, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1327, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2959,25 +1306,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageEnumeratePublishedFilesByUserActionResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1328;
-		internal static RemoteStorageEnumeratePublishedFilesByUserActionResult_t Fill( IntPtr p ) => ((RemoteStorageEnumeratePublishedFilesByUserActionResult_t)Marshal.PtrToStructure( p, typeof(RemoteStorageEnumeratePublishedFilesByUserActionResult_t) ) );
-		
-		static Action<RemoteStorageEnumeratePublishedFilesByUserActionResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoteStorageEnumeratePublishedFilesByUserActionResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoteStorageEnumeratePublishedFilesByUserActionResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1328, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1328, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -2992,25 +1320,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStoragePublishFileProgress_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1329;
-		internal static RemoteStoragePublishFileProgress_t Fill( IntPtr p ) => ((RemoteStoragePublishFileProgress_t)Marshal.PtrToStructure( p, typeof(RemoteStoragePublishFileProgress_t) ) );
-		
-		static Action<RemoteStoragePublishFileProgress_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoteStoragePublishFileProgress_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoteStoragePublishFileProgress_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1329, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1329, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3025,25 +1334,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStoragePublishedFileUpdated_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1330;
-		internal static RemoteStoragePublishedFileUpdated_t Fill( IntPtr p ) => ((RemoteStoragePublishedFileUpdated_t)Marshal.PtrToStructure( p, typeof(RemoteStoragePublishedFileUpdated_t) ) );
-		
-		static Action<RemoteStoragePublishedFileUpdated_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoteStoragePublishedFileUpdated_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoteStoragePublishedFileUpdated_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1330, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1330, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3056,25 +1346,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageFileWriteAsyncComplete_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1331;
-		internal static RemoteStorageFileWriteAsyncComplete_t Fill( IntPtr p ) => ((RemoteStorageFileWriteAsyncComplete_t)Marshal.PtrToStructure( p, typeof(RemoteStorageFileWriteAsyncComplete_t) ) );
-		
-		static Action<RemoteStorageFileWriteAsyncComplete_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoteStorageFileWriteAsyncComplete_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoteStorageFileWriteAsyncComplete_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1331, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1331, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3090,25 +1361,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoteStorageFileReadAsyncComplete_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1332;
-		internal static RemoteStorageFileReadAsyncComplete_t Fill( IntPtr p ) => ((RemoteStorageFileReadAsyncComplete_t)Marshal.PtrToStructure( p, typeof(RemoteStorageFileReadAsyncComplete_t) ) );
-		
-		static Action<RemoteStorageFileReadAsyncComplete_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoteStorageFileReadAsyncComplete_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoteStorageFileReadAsyncComplete_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1332, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1332, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3123,25 +1375,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(UserStatsReceived_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1101;
-		internal static UserStatsReceived_t Fill( IntPtr p ) => ((UserStatsReceived_t)Marshal.PtrToStructure( p, typeof(UserStatsReceived_t) ) );
-		
-		static Action<UserStatsReceived_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<UserStatsReceived_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<UserStatsReceived_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1101, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1101, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3155,25 +1388,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(UserStatsStored_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1102;
-		internal static UserStatsStored_t Fill( IntPtr p ) => ((UserStatsStored_t)Marshal.PtrToStructure( p, typeof(UserStatsStored_t) ) );
-		
-		static Action<UserStatsStored_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<UserStatsStored_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<UserStatsStored_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1102, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1102, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3193,25 +1407,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(UserAchievementStored_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1103;
-		internal static UserAchievementStored_t Fill( IntPtr p ) => ((UserAchievementStored_t)Marshal.PtrToStructure( p, typeof(UserAchievementStored_t) ) );
-		
-		static Action<UserAchievementStored_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<UserAchievementStored_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<UserAchievementStored_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1103, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1103, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3225,25 +1420,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LeaderboardFindResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1104;
-		internal static LeaderboardFindResult_t Fill( IntPtr p ) => ((LeaderboardFindResult_t)Marshal.PtrToStructure( p, typeof(LeaderboardFindResult_t) ) );
-		
-		static Action<LeaderboardFindResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<LeaderboardFindResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<LeaderboardFindResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1104, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1104, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3258,25 +1434,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LeaderboardScoresDownloaded_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1105;
-		internal static LeaderboardScoresDownloaded_t Fill( IntPtr p ) => ((LeaderboardScoresDownloaded_t)Marshal.PtrToStructure( p, typeof(LeaderboardScoresDownloaded_t) ) );
-		
-		static Action<LeaderboardScoresDownloaded_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<LeaderboardScoresDownloaded_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<LeaderboardScoresDownloaded_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1105, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1105, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3294,25 +1451,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LeaderboardScoreUploaded_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1106;
-		internal static LeaderboardScoreUploaded_t Fill( IntPtr p ) => ((LeaderboardScoreUploaded_t)Marshal.PtrToStructure( p, typeof(LeaderboardScoreUploaded_t) ) );
-		
-		static Action<LeaderboardScoreUploaded_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<LeaderboardScoreUploaded_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<LeaderboardScoreUploaded_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1106, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1106, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3326,25 +1464,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(NumberOfCurrentPlayers_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1107;
-		internal static NumberOfCurrentPlayers_t Fill( IntPtr p ) => ((NumberOfCurrentPlayers_t)Marshal.PtrToStructure( p, typeof(NumberOfCurrentPlayers_t) ) );
-		
-		static Action<NumberOfCurrentPlayers_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<NumberOfCurrentPlayers_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<NumberOfCurrentPlayers_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1107, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1107, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3357,25 +1476,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(UserStatsUnloaded_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1108;
-		internal static UserStatsUnloaded_t Fill( IntPtr p ) => ((UserStatsUnloaded_t)Marshal.PtrToStructure( p, typeof(UserStatsUnloaded_t) ) );
-		
-		static Action<UserStatsUnloaded_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<UserStatsUnloaded_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<UserStatsUnloaded_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1108, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1108, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3394,25 +1494,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(UserAchievementIconFetched_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1109;
-		internal static UserAchievementIconFetched_t Fill( IntPtr p ) => ((UserAchievementIconFetched_t)Marshal.PtrToStructure( p, typeof(UserAchievementIconFetched_t) ) );
-		
-		static Action<UserAchievementIconFetched_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<UserAchievementIconFetched_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<UserAchievementIconFetched_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1109, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1109, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3426,25 +1507,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GlobalAchievementPercentagesReady_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1110;
-		internal static GlobalAchievementPercentagesReady_t Fill( IntPtr p ) => ((GlobalAchievementPercentagesReady_t)Marshal.PtrToStructure( p, typeof(GlobalAchievementPercentagesReady_t) ) );
-		
-		static Action<GlobalAchievementPercentagesReady_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<GlobalAchievementPercentagesReady_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<GlobalAchievementPercentagesReady_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1110, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1110, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3458,25 +1520,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LeaderboardUGCSet_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1111;
-		internal static LeaderboardUGCSet_t Fill( IntPtr p ) => ((LeaderboardUGCSet_t)Marshal.PtrToStructure( p, typeof(LeaderboardUGCSet_t) ) );
-		
-		static Action<LeaderboardUGCSet_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<LeaderboardUGCSet_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<LeaderboardUGCSet_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1111, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1111, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3491,25 +1534,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(PS3TrophiesInstalled_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1112;
-		internal static PS3TrophiesInstalled_t Fill( IntPtr p ) => ((PS3TrophiesInstalled_t)Marshal.PtrToStructure( p, typeof(PS3TrophiesInstalled_t) ) );
-		
-		static Action<PS3TrophiesInstalled_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<PS3TrophiesInstalled_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<PS3TrophiesInstalled_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1112, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1112, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3523,25 +1547,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GlobalStatsReceived_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1112;
-		internal static GlobalStatsReceived_t Fill( IntPtr p ) => ((GlobalStatsReceived_t)Marshal.PtrToStructure( p, typeof(GlobalStatsReceived_t) ) );
-		
-		static Action<GlobalStatsReceived_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<GlobalStatsReceived_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<GlobalStatsReceived_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1112, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1112, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3554,25 +1559,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(DlcInstalled_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1005;
-		internal static DlcInstalled_t Fill( IntPtr p ) => ((DlcInstalled_t)Marshal.PtrToStructure( p, typeof(DlcInstalled_t) ) );
-		
-		static Action<DlcInstalled_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<DlcInstalled_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<DlcInstalled_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1005, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1005, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3586,25 +1572,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RegisterActivationCodeResponse_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1008;
-		internal static RegisterActivationCodeResponse_t Fill( IntPtr p ) => ((RegisterActivationCodeResponse_t)Marshal.PtrToStructure( p, typeof(RegisterActivationCodeResponse_t) ) );
-		
-		static Action<RegisterActivationCodeResponse_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RegisterActivationCodeResponse_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RegisterActivationCodeResponse_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1008, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1008, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3616,25 +1583,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(NewUrlLaunchParameters_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1014;
-		internal static NewUrlLaunchParameters_t Fill( IntPtr p ) => ((NewUrlLaunchParameters_t)Marshal.PtrToStructure( p, typeof(NewUrlLaunchParameters_t) ) );
-		
-		static Action<NewUrlLaunchParameters_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<NewUrlLaunchParameters_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<NewUrlLaunchParameters_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1014, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1014, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3652,25 +1600,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(AppProofOfPurchaseKeyResponse_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1021;
-		internal static AppProofOfPurchaseKeyResponse_t Fill( IntPtr p ) => ((AppProofOfPurchaseKeyResponse_t)Marshal.PtrToStructure( p, typeof(AppProofOfPurchaseKeyResponse_t) ) );
-		
-		static Action<AppProofOfPurchaseKeyResponse_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<AppProofOfPurchaseKeyResponse_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<AppProofOfPurchaseKeyResponse_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1021, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1021, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3687,25 +1616,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(FileDetailsResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1023;
-		internal static FileDetailsResult_t Fill( IntPtr p ) => ((FileDetailsResult_t)Marshal.PtrToStructure( p, typeof(FileDetailsResult_t) ) );
-		
-		static Action<FileDetailsResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<FileDetailsResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<FileDetailsResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1023, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1023, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3718,25 +1628,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(P2PSessionRequest_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1202;
-		internal static P2PSessionRequest_t Fill( IntPtr p ) => ((P2PSessionRequest_t)Marshal.PtrToStructure( p, typeof(P2PSessionRequest_t) ) );
-		
-		static Action<P2PSessionRequest_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<P2PSessionRequest_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<P2PSessionRequest_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1202, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1202, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3750,25 +1641,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(P2PSessionConnectFail_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1203;
-		internal static P2PSessionConnectFail_t Fill( IntPtr p ) => ((P2PSessionConnectFail_t)Marshal.PtrToStructure( p, typeof(P2PSessionConnectFail_t) ) );
-		
-		static Action<P2PSessionConnectFail_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<P2PSessionConnectFail_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<P2PSessionConnectFail_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1203, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1203, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3784,25 +1656,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SocketStatusCallback_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1201;
-		internal static SocketStatusCallback_t Fill( IntPtr p ) => ((SocketStatusCallback_t)Marshal.PtrToStructure( p, typeof(SocketStatusCallback_t) ) );
-		
-		static Action<SocketStatusCallback_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<SocketStatusCallback_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<SocketStatusCallback_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1201, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1201, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3816,25 +1669,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(ScreenshotReady_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 2301;
-		internal static ScreenshotReady_t Fill( IntPtr p ) => ((ScreenshotReady_t)Marshal.PtrToStructure( p, typeof(ScreenshotReady_t) ) );
-		
-		static Action<ScreenshotReady_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<ScreenshotReady_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<ScreenshotReady_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 2301, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 2301, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3846,25 +1680,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(ScreenshotRequested_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 2302;
-		internal static ScreenshotRequested_t Fill( IntPtr p ) => ((ScreenshotRequested_t)Marshal.PtrToStructure( p, typeof(ScreenshotRequested_t) ) );
-		
-		static Action<ScreenshotRequested_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<ScreenshotRequested_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<ScreenshotRequested_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 2302, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 2302, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3876,25 +1691,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(PlaybackStatusHasChanged_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4001;
-		internal static PlaybackStatusHasChanged_t Fill( IntPtr p ) => ((PlaybackStatusHasChanged_t)Marshal.PtrToStructure( p, typeof(PlaybackStatusHasChanged_t) ) );
-		
-		static Action<PlaybackStatusHasChanged_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<PlaybackStatusHasChanged_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<PlaybackStatusHasChanged_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4001, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4001, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3907,25 +1703,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(VolumeHasChanged_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4002;
-		internal static VolumeHasChanged_t Fill( IntPtr p ) => ((VolumeHasChanged_t)Marshal.PtrToStructure( p, typeof(VolumeHasChanged_t) ) );
-		
-		static Action<VolumeHasChanged_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<VolumeHasChanged_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<VolumeHasChanged_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4002, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4002, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3937,25 +1714,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(MusicPlayerRemoteWillActivate_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4101;
-		internal static MusicPlayerRemoteWillActivate_t Fill( IntPtr p ) => ((MusicPlayerRemoteWillActivate_t)Marshal.PtrToStructure( p, typeof(MusicPlayerRemoteWillActivate_t) ) );
-		
-		static Action<MusicPlayerRemoteWillActivate_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<MusicPlayerRemoteWillActivate_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<MusicPlayerRemoteWillActivate_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4101, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4101, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3967,25 +1725,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(MusicPlayerRemoteWillDeactivate_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4102;
-		internal static MusicPlayerRemoteWillDeactivate_t Fill( IntPtr p ) => ((MusicPlayerRemoteWillDeactivate_t)Marshal.PtrToStructure( p, typeof(MusicPlayerRemoteWillDeactivate_t) ) );
-		
-		static Action<MusicPlayerRemoteWillDeactivate_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<MusicPlayerRemoteWillDeactivate_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<MusicPlayerRemoteWillDeactivate_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4102, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4102, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -3997,25 +1736,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(MusicPlayerRemoteToFront_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4103;
-		internal static MusicPlayerRemoteToFront_t Fill( IntPtr p ) => ((MusicPlayerRemoteToFront_t)Marshal.PtrToStructure( p, typeof(MusicPlayerRemoteToFront_t) ) );
-		
-		static Action<MusicPlayerRemoteToFront_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<MusicPlayerRemoteToFront_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<MusicPlayerRemoteToFront_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4103, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4103, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4027,25 +1747,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(MusicPlayerWillQuit_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4104;
-		internal static MusicPlayerWillQuit_t Fill( IntPtr p ) => ((MusicPlayerWillQuit_t)Marshal.PtrToStructure( p, typeof(MusicPlayerWillQuit_t) ) );
-		
-		static Action<MusicPlayerWillQuit_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<MusicPlayerWillQuit_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<MusicPlayerWillQuit_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4104, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4104, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4057,25 +1758,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(MusicPlayerWantsPlay_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4105;
-		internal static MusicPlayerWantsPlay_t Fill( IntPtr p ) => ((MusicPlayerWantsPlay_t)Marshal.PtrToStructure( p, typeof(MusicPlayerWantsPlay_t) ) );
-		
-		static Action<MusicPlayerWantsPlay_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<MusicPlayerWantsPlay_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<MusicPlayerWantsPlay_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4105, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4105, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4087,25 +1769,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(MusicPlayerWantsPause_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4106;
-		internal static MusicPlayerWantsPause_t Fill( IntPtr p ) => ((MusicPlayerWantsPause_t)Marshal.PtrToStructure( p, typeof(MusicPlayerWantsPause_t) ) );
-		
-		static Action<MusicPlayerWantsPause_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<MusicPlayerWantsPause_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<MusicPlayerWantsPause_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4106, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4106, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4117,25 +1780,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(MusicPlayerWantsPlayPrevious_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4107;
-		internal static MusicPlayerWantsPlayPrevious_t Fill( IntPtr p ) => ((MusicPlayerWantsPlayPrevious_t)Marshal.PtrToStructure( p, typeof(MusicPlayerWantsPlayPrevious_t) ) );
-		
-		static Action<MusicPlayerWantsPlayPrevious_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<MusicPlayerWantsPlayPrevious_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<MusicPlayerWantsPlayPrevious_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4107, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4107, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4147,25 +1791,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(MusicPlayerWantsPlayNext_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4108;
-		internal static MusicPlayerWantsPlayNext_t Fill( IntPtr p ) => ((MusicPlayerWantsPlayNext_t)Marshal.PtrToStructure( p, typeof(MusicPlayerWantsPlayNext_t) ) );
-		
-		static Action<MusicPlayerWantsPlayNext_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<MusicPlayerWantsPlayNext_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<MusicPlayerWantsPlayNext_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4108, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4108, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4179,25 +1804,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(MusicPlayerWantsShuffled_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4109;
-		internal static MusicPlayerWantsShuffled_t Fill( IntPtr p ) => ((MusicPlayerWantsShuffled_t)Marshal.PtrToStructure( p, typeof(MusicPlayerWantsShuffled_t) ) );
-		
-		static Action<MusicPlayerWantsShuffled_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<MusicPlayerWantsShuffled_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<MusicPlayerWantsShuffled_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4109, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4109, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4211,25 +1817,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(MusicPlayerWantsLooped_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4110;
-		internal static MusicPlayerWantsLooped_t Fill( IntPtr p ) => ((MusicPlayerWantsLooped_t)Marshal.PtrToStructure( p, typeof(MusicPlayerWantsLooped_t) ) );
-		
-		static Action<MusicPlayerWantsLooped_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<MusicPlayerWantsLooped_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<MusicPlayerWantsLooped_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4110, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4110, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4242,25 +1829,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(MusicPlayerWantsVolume_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4011;
-		internal static MusicPlayerWantsVolume_t Fill( IntPtr p ) => ((MusicPlayerWantsVolume_t)Marshal.PtrToStructure( p, typeof(MusicPlayerWantsVolume_t) ) );
-		
-		static Action<MusicPlayerWantsVolume_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<MusicPlayerWantsVolume_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<MusicPlayerWantsVolume_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4011, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4011, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4273,25 +1841,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(MusicPlayerSelectsQueueEntry_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4012;
-		internal static MusicPlayerSelectsQueueEntry_t Fill( IntPtr p ) => ((MusicPlayerSelectsQueueEntry_t)Marshal.PtrToStructure( p, typeof(MusicPlayerSelectsQueueEntry_t) ) );
-		
-		static Action<MusicPlayerSelectsQueueEntry_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<MusicPlayerSelectsQueueEntry_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<MusicPlayerSelectsQueueEntry_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4012, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4012, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4304,25 +1853,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(MusicPlayerSelectsPlaylistEntry_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4013;
-		internal static MusicPlayerSelectsPlaylistEntry_t Fill( IntPtr p ) => ((MusicPlayerSelectsPlaylistEntry_t)Marshal.PtrToStructure( p, typeof(MusicPlayerSelectsPlaylistEntry_t) ) );
-		
-		static Action<MusicPlayerSelectsPlaylistEntry_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<MusicPlayerSelectsPlaylistEntry_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<MusicPlayerSelectsPlaylistEntry_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4013, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4013, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4335,25 +1865,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(MusicPlayerWantsPlayingRepeatStatus_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4114;
-		internal static MusicPlayerWantsPlayingRepeatStatus_t Fill( IntPtr p ) => ((MusicPlayerWantsPlayingRepeatStatus_t)Marshal.PtrToStructure( p, typeof(MusicPlayerWantsPlayingRepeatStatus_t) ) );
-		
-		static Action<MusicPlayerWantsPlayingRepeatStatus_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<MusicPlayerWantsPlayingRepeatStatus_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<MusicPlayerWantsPlayingRepeatStatus_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4114, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4114, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4371,25 +1882,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTTPRequestCompleted_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 2101;
-		internal static HTTPRequestCompleted_t Fill( IntPtr p ) => ((HTTPRequestCompleted_t)Marshal.PtrToStructure( p, typeof(HTTPRequestCompleted_t) ) );
-		
-		static Action<HTTPRequestCompleted_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<HTTPRequestCompleted_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<HTTPRequestCompleted_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 2101, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 2101, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4403,25 +1895,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTTPRequestHeadersReceived_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 2102;
-		internal static HTTPRequestHeadersReceived_t Fill( IntPtr p ) => ((HTTPRequestHeadersReceived_t)Marshal.PtrToStructure( p, typeof(HTTPRequestHeadersReceived_t) ) );
-		
-		static Action<HTTPRequestHeadersReceived_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<HTTPRequestHeadersReceived_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<HTTPRequestHeadersReceived_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 2102, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 2102, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4437,25 +1910,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTTPRequestDataReceived_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 2103;
-		internal static HTTPRequestDataReceived_t Fill( IntPtr p ) => ((HTTPRequestDataReceived_t)Marshal.PtrToStructure( p, typeof(HTTPRequestDataReceived_t) ) );
-		
-		static Action<HTTPRequestDataReceived_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<HTTPRequestDataReceived_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<HTTPRequestDataReceived_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 2103, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 2103, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4476,25 +1930,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamUGCQueryCompleted_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 3401;
-		internal static SteamUGCQueryCompleted_t Fill( IntPtr p ) => ((SteamUGCQueryCompleted_t)Marshal.PtrToStructure( p, typeof(SteamUGCQueryCompleted_t) ) );
-		
-		static Action<SteamUGCQueryCompleted_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<SteamUGCQueryCompleted_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<SteamUGCQueryCompleted_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 3401, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 3401, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4509,25 +1944,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamUGCRequestUGCDetailsResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 3402;
-		internal static SteamUGCRequestUGCDetailsResult_t Fill( IntPtr p ) => ((SteamUGCRequestUGCDetailsResult_t)Marshal.PtrToStructure( p, typeof(SteamUGCRequestUGCDetailsResult_t) ) );
-		
-		static Action<SteamUGCRequestUGCDetailsResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<SteamUGCRequestUGCDetailsResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<SteamUGCRequestUGCDetailsResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 3402, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 3402, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4543,25 +1959,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(CreateItemResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 3403;
-		internal static CreateItemResult_t Fill( IntPtr p ) => ((CreateItemResult_t)Marshal.PtrToStructure( p, typeof(CreateItemResult_t) ) );
-		
-		static Action<CreateItemResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<CreateItemResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<CreateItemResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 3403, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 3403, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4577,25 +1974,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SubmitItemUpdateResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 3404;
-		internal static SubmitItemUpdateResult_t Fill( IntPtr p ) => ((SubmitItemUpdateResult_t)Marshal.PtrToStructure( p, typeof(SubmitItemUpdateResult_t) ) );
-		
-		static Action<SubmitItemUpdateResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<SubmitItemUpdateResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<SubmitItemUpdateResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 3404, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 3404, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4609,25 +1987,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(ItemInstalled_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 3405;
-		internal static ItemInstalled_t Fill( IntPtr p ) => ((ItemInstalled_t)Marshal.PtrToStructure( p, typeof(ItemInstalled_t) ) );
-		
-		static Action<ItemInstalled_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<ItemInstalled_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<ItemInstalled_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 3405, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 3405, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4642,25 +2001,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(DownloadItemResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 3406;
-		internal static DownloadItemResult_t Fill( IntPtr p ) => ((DownloadItemResult_t)Marshal.PtrToStructure( p, typeof(DownloadItemResult_t) ) );
-		
-		static Action<DownloadItemResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<DownloadItemResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<DownloadItemResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 3406, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 3406, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4676,25 +2016,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(UserFavoriteItemsListChanged_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 3407;
-		internal static UserFavoriteItemsListChanged_t Fill( IntPtr p ) => ((UserFavoriteItemsListChanged_t)Marshal.PtrToStructure( p, typeof(UserFavoriteItemsListChanged_t) ) );
-		
-		static Action<UserFavoriteItemsListChanged_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<UserFavoriteItemsListChanged_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<UserFavoriteItemsListChanged_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 3407, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 3407, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4710,25 +2031,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SetUserItemVoteResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 3408;
-		internal static SetUserItemVoteResult_t Fill( IntPtr p ) => ((SetUserItemVoteResult_t)Marshal.PtrToStructure( p, typeof(SetUserItemVoteResult_t) ) );
-		
-		static Action<SetUserItemVoteResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<SetUserItemVoteResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<SetUserItemVoteResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 3408, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 3408, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4748,25 +2050,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GetUserItemVoteResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 3409;
-		internal static GetUserItemVoteResult_t Fill( IntPtr p ) => ((GetUserItemVoteResult_t)Marshal.PtrToStructure( p, typeof(GetUserItemVoteResult_t) ) );
-		
-		static Action<GetUserItemVoteResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<GetUserItemVoteResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<GetUserItemVoteResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 3409, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 3409, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4779,25 +2062,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(StartPlaytimeTrackingResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 3410;
-		internal static StartPlaytimeTrackingResult_t Fill( IntPtr p ) => ((StartPlaytimeTrackingResult_t)Marshal.PtrToStructure( p, typeof(StartPlaytimeTrackingResult_t) ) );
-		
-		static Action<StartPlaytimeTrackingResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<StartPlaytimeTrackingResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<StartPlaytimeTrackingResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 3410, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 3410, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4810,25 +2074,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(StopPlaytimeTrackingResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 3411;
-		internal static StopPlaytimeTrackingResult_t Fill( IntPtr p ) => ((StopPlaytimeTrackingResult_t)Marshal.PtrToStructure( p, typeof(StopPlaytimeTrackingResult_t) ) );
-		
-		static Action<StopPlaytimeTrackingResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<StopPlaytimeTrackingResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<StopPlaytimeTrackingResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 3411, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 3411, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4843,25 +2088,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(AddUGCDependencyResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 3412;
-		internal static AddUGCDependencyResult_t Fill( IntPtr p ) => ((AddUGCDependencyResult_t)Marshal.PtrToStructure( p, typeof(AddUGCDependencyResult_t) ) );
-		
-		static Action<AddUGCDependencyResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<AddUGCDependencyResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<AddUGCDependencyResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 3412, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 3412, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4876,25 +2102,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoveUGCDependencyResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 3413;
-		internal static RemoveUGCDependencyResult_t Fill( IntPtr p ) => ((RemoveUGCDependencyResult_t)Marshal.PtrToStructure( p, typeof(RemoveUGCDependencyResult_t) ) );
-		
-		static Action<RemoveUGCDependencyResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoveUGCDependencyResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoveUGCDependencyResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 3413, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 3413, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4909,25 +2116,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(AddAppDependencyResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 3414;
-		internal static AddAppDependencyResult_t Fill( IntPtr p ) => ((AddAppDependencyResult_t)Marshal.PtrToStructure( p, typeof(AddAppDependencyResult_t) ) );
-		
-		static Action<AddAppDependencyResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<AddAppDependencyResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<AddAppDependencyResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 3414, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 3414, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4942,25 +2130,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(RemoveAppDependencyResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 3415;
-		internal static RemoveAppDependencyResult_t Fill( IntPtr p ) => ((RemoveAppDependencyResult_t)Marshal.PtrToStructure( p, typeof(RemoveAppDependencyResult_t) ) );
-		
-		static Action<RemoveAppDependencyResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<RemoveAppDependencyResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<RemoveAppDependencyResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 3415, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 3415, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -4978,25 +2147,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GetAppDependenciesResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 3416;
-		internal static GetAppDependenciesResult_t Fill( IntPtr p ) => ((GetAppDependenciesResult_t)Marshal.PtrToStructure( p, typeof(GetAppDependenciesResult_t) ) );
-		
-		static Action<GetAppDependenciesResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<GetAppDependenciesResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<GetAppDependenciesResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 3416, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 3416, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5010,25 +2160,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(DeleteItemResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 3417;
-		internal static DeleteItemResult_t Fill( IntPtr p ) => ((DeleteItemResult_t)Marshal.PtrToStructure( p, typeof(DeleteItemResult_t) ) );
-		
-		static Action<DeleteItemResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<DeleteItemResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<DeleteItemResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 3417, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 3417, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5041,25 +2172,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamAppInstalled_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 3901;
-		internal static SteamAppInstalled_t Fill( IntPtr p ) => ((SteamAppInstalled_t)Marshal.PtrToStructure( p, typeof(SteamAppInstalled_t) ) );
-		
-		static Action<SteamAppInstalled_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<SteamAppInstalled_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<SteamAppInstalled_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 3901, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 3901, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5072,25 +2184,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamAppUninstalled_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 3902;
-		internal static SteamAppUninstalled_t Fill( IntPtr p ) => ((SteamAppUninstalled_t)Marshal.PtrToStructure( p, typeof(SteamAppUninstalled_t) ) );
-		
-		static Action<SteamAppUninstalled_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<SteamAppUninstalled_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<SteamAppUninstalled_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 3902, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 3902, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5103,25 +2196,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_BrowserReady_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4501;
-		internal static HTML_BrowserReady_t Fill( IntPtr p ) => ((HTML_BrowserReady_t)Marshal.PtrToStructure( p, typeof(HTML_BrowserReady_t) ) );
-		
-		static Action<HTML_BrowserReady_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<HTML_BrowserReady_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<HTML_BrowserReady_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4501, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4501, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5145,25 +2219,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_NeedsPaint_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4502;
-		internal static HTML_NeedsPaint_t Fill( IntPtr p ) => ((HTML_NeedsPaint_t)Marshal.PtrToStructure( p, typeof(HTML_NeedsPaint_t) ) );
-		
-		static Action<HTML_NeedsPaint_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<HTML_NeedsPaint_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<HTML_NeedsPaint_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4502, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4502, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5181,25 +2236,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_StartRequest_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4503;
-		internal static HTML_StartRequest_t Fill( IntPtr p ) => ((HTML_StartRequest_t)Marshal.PtrToStructure( p, typeof(HTML_StartRequest_t) ) );
-		
-		static Action<HTML_StartRequest_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<HTML_StartRequest_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<HTML_StartRequest_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4503, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4503, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5212,25 +2248,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_CloseBrowser_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4504;
-		internal static HTML_CloseBrowser_t Fill( IntPtr p ) => ((HTML_CloseBrowser_t)Marshal.PtrToStructure( p, typeof(HTML_CloseBrowser_t) ) );
-		
-		static Action<HTML_CloseBrowser_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<HTML_CloseBrowser_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<HTML_CloseBrowser_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4504, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4504, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5250,25 +2267,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_URLChanged_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4505;
-		internal static HTML_URLChanged_t Fill( IntPtr p ) => ((HTML_URLChanged_t)Marshal.PtrToStructure( p, typeof(HTML_URLChanged_t) ) );
-		
-		static Action<HTML_URLChanged_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<HTML_URLChanged_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<HTML_URLChanged_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4505, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4505, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5283,25 +2281,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_FinishedRequest_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4506;
-		internal static HTML_FinishedRequest_t Fill( IntPtr p ) => ((HTML_FinishedRequest_t)Marshal.PtrToStructure( p, typeof(HTML_FinishedRequest_t) ) );
-		
-		static Action<HTML_FinishedRequest_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<HTML_FinishedRequest_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<HTML_FinishedRequest_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4506, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4506, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5315,25 +2294,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_OpenLinkInNewTab_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4507;
-		internal static HTML_OpenLinkInNewTab_t Fill( IntPtr p ) => ((HTML_OpenLinkInNewTab_t)Marshal.PtrToStructure( p, typeof(HTML_OpenLinkInNewTab_t) ) );
-		
-		static Action<HTML_OpenLinkInNewTab_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<HTML_OpenLinkInNewTab_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<HTML_OpenLinkInNewTab_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4507, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4507, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5347,25 +2307,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_ChangedTitle_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4508;
-		internal static HTML_ChangedTitle_t Fill( IntPtr p ) => ((HTML_ChangedTitle_t)Marshal.PtrToStructure( p, typeof(HTML_ChangedTitle_t) ) );
-		
-		static Action<HTML_ChangedTitle_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<HTML_ChangedTitle_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<HTML_ChangedTitle_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4508, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4508, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5380,25 +2321,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_SearchResults_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4509;
-		internal static HTML_SearchResults_t Fill( IntPtr p ) => ((HTML_SearchResults_t)Marshal.PtrToStructure( p, typeof(HTML_SearchResults_t) ) );
-		
-		static Action<HTML_SearchResults_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<HTML_SearchResults_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<HTML_SearchResults_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4509, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4509, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5415,25 +2337,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_CanGoBackAndForward_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4510;
-		internal static HTML_CanGoBackAndForward_t Fill( IntPtr p ) => ((HTML_CanGoBackAndForward_t)Marshal.PtrToStructure( p, typeof(HTML_CanGoBackAndForward_t) ) );
-		
-		static Action<HTML_CanGoBackAndForward_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<HTML_CanGoBackAndForward_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<HTML_CanGoBackAndForward_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4510, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4510, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5452,25 +2355,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_HorizontalScroll_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4511;
-		internal static HTML_HorizontalScroll_t Fill( IntPtr p ) => ((HTML_HorizontalScroll_t)Marshal.PtrToStructure( p, typeof(HTML_HorizontalScroll_t) ) );
-		
-		static Action<HTML_HorizontalScroll_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<HTML_HorizontalScroll_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<HTML_HorizontalScroll_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4511, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4511, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5489,25 +2373,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_VerticalScroll_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4512;
-		internal static HTML_VerticalScroll_t Fill( IntPtr p ) => ((HTML_VerticalScroll_t)Marshal.PtrToStructure( p, typeof(HTML_VerticalScroll_t) ) );
-		
-		static Action<HTML_VerticalScroll_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<HTML_VerticalScroll_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<HTML_VerticalScroll_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4512, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4512, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5527,25 +2392,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_LinkAtPosition_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4513;
-		internal static HTML_LinkAtPosition_t Fill( IntPtr p ) => ((HTML_LinkAtPosition_t)Marshal.PtrToStructure( p, typeof(HTML_LinkAtPosition_t) ) );
-		
-		static Action<HTML_LinkAtPosition_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<HTML_LinkAtPosition_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<HTML_LinkAtPosition_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4513, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4513, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5559,25 +2405,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_JSAlert_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4514;
-		internal static HTML_JSAlert_t Fill( IntPtr p ) => ((HTML_JSAlert_t)Marshal.PtrToStructure( p, typeof(HTML_JSAlert_t) ) );
-		
-		static Action<HTML_JSAlert_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<HTML_JSAlert_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<HTML_JSAlert_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4514, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4514, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5591,25 +2418,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_JSConfirm_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4515;
-		internal static HTML_JSConfirm_t Fill( IntPtr p ) => ((HTML_JSConfirm_t)Marshal.PtrToStructure( p, typeof(HTML_JSConfirm_t) ) );
-		
-		static Action<HTML_JSConfirm_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<HTML_JSConfirm_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<HTML_JSConfirm_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4515, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4515, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5624,25 +2432,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_FileOpenDialog_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4516;
-		internal static HTML_FileOpenDialog_t Fill( IntPtr p ) => ((HTML_FileOpenDialog_t)Marshal.PtrToStructure( p, typeof(HTML_FileOpenDialog_t) ) );
-		
-		static Action<HTML_FileOpenDialog_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<HTML_FileOpenDialog_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<HTML_FileOpenDialog_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4516, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4516, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5661,25 +2450,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_NewWindow_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4521;
-		internal static HTML_NewWindow_t Fill( IntPtr p ) => ((HTML_NewWindow_t)Marshal.PtrToStructure( p, typeof(HTML_NewWindow_t) ) );
-		
-		static Action<HTML_NewWindow_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<HTML_NewWindow_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<HTML_NewWindow_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4521, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4521, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5693,25 +2463,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_SetCursor_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4522;
-		internal static HTML_SetCursor_t Fill( IntPtr p ) => ((HTML_SetCursor_t)Marshal.PtrToStructure( p, typeof(HTML_SetCursor_t) ) );
-		
-		static Action<HTML_SetCursor_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<HTML_SetCursor_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<HTML_SetCursor_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4522, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4522, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5725,25 +2476,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_StatusText_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4523;
-		internal static HTML_StatusText_t Fill( IntPtr p ) => ((HTML_StatusText_t)Marshal.PtrToStructure( p, typeof(HTML_StatusText_t) ) );
-		
-		static Action<HTML_StatusText_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<HTML_StatusText_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<HTML_StatusText_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4523, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4523, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5757,25 +2489,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_ShowToolTip_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4524;
-		internal static HTML_ShowToolTip_t Fill( IntPtr p ) => ((HTML_ShowToolTip_t)Marshal.PtrToStructure( p, typeof(HTML_ShowToolTip_t) ) );
-		
-		static Action<HTML_ShowToolTip_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<HTML_ShowToolTip_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<HTML_ShowToolTip_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4524, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4524, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5789,25 +2502,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_UpdateToolTip_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4525;
-		internal static HTML_UpdateToolTip_t Fill( IntPtr p ) => ((HTML_UpdateToolTip_t)Marshal.PtrToStructure( p, typeof(HTML_UpdateToolTip_t) ) );
-		
-		static Action<HTML_UpdateToolTip_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<HTML_UpdateToolTip_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<HTML_UpdateToolTip_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4525, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4525, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5820,25 +2514,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_HideToolTip_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4526;
-		internal static HTML_HideToolTip_t Fill( IntPtr p ) => ((HTML_HideToolTip_t)Marshal.PtrToStructure( p, typeof(HTML_HideToolTip_t) ) );
-		
-		static Action<HTML_HideToolTip_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<HTML_HideToolTip_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<HTML_HideToolTip_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4526, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4526, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5852,25 +2527,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(HTML_BrowserRestarted_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4527;
-		internal static HTML_BrowserRestarted_t Fill( IntPtr p ) => ((HTML_BrowserRestarted_t)Marshal.PtrToStructure( p, typeof(HTML_BrowserRestarted_t) ) );
-		
-		static Action<HTML_BrowserRestarted_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<HTML_BrowserRestarted_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<HTML_BrowserRestarted_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4527, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4527, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5884,25 +2540,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamInventoryResultReady_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4700;
-		internal static SteamInventoryResultReady_t Fill( IntPtr p ) => ((SteamInventoryResultReady_t)Marshal.PtrToStructure( p, typeof(SteamInventoryResultReady_t) ) );
-		
-		static Action<SteamInventoryResultReady_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<SteamInventoryResultReady_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<SteamInventoryResultReady_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4700, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4700, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5915,25 +2552,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamInventoryFullUpdate_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4701;
-		internal static SteamInventoryFullUpdate_t Fill( IntPtr p ) => ((SteamInventoryFullUpdate_t)Marshal.PtrToStructure( p, typeof(SteamInventoryFullUpdate_t) ) );
-		
-		static Action<SteamInventoryFullUpdate_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<SteamInventoryFullUpdate_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<SteamInventoryFullUpdate_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4701, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4701, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5945,25 +2563,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamInventoryDefinitionUpdate_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4702;
-		internal static SteamInventoryDefinitionUpdate_t Fill( IntPtr p ) => ((SteamInventoryDefinitionUpdate_t)Marshal.PtrToStructure( p, typeof(SteamInventoryDefinitionUpdate_t) ) );
-		
-		static Action<SteamInventoryDefinitionUpdate_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<SteamInventoryDefinitionUpdate_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<SteamInventoryDefinitionUpdate_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4702, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4702, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -5980,25 +2579,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamInventoryEligiblePromoItemDefIDs_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4703;
-		internal static SteamInventoryEligiblePromoItemDefIDs_t Fill( IntPtr p ) => ((SteamInventoryEligiblePromoItemDefIDs_t)Marshal.PtrToStructure( p, typeof(SteamInventoryEligiblePromoItemDefIDs_t) ) );
-		
-		static Action<SteamInventoryEligiblePromoItemDefIDs_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<SteamInventoryEligiblePromoItemDefIDs_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<SteamInventoryEligiblePromoItemDefIDs_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4703, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4703, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -6013,25 +2593,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamInventoryStartPurchaseResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4704;
-		internal static SteamInventoryStartPurchaseResult_t Fill( IntPtr p ) => ((SteamInventoryStartPurchaseResult_t)Marshal.PtrToStructure( p, typeof(SteamInventoryStartPurchaseResult_t) ) );
-		
-		static Action<SteamInventoryStartPurchaseResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<SteamInventoryStartPurchaseResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<SteamInventoryStartPurchaseResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4704, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4704, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -6047,25 +2608,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamInventoryRequestPricesResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4705;
-		internal static SteamInventoryRequestPricesResult_t Fill( IntPtr p ) => ((SteamInventoryRequestPricesResult_t)Marshal.PtrToStructure( p, typeof(SteamInventoryRequestPricesResult_t) ) );
-		
-		static Action<SteamInventoryRequestPricesResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<SteamInventoryRequestPricesResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<SteamInventoryRequestPricesResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4705, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4705, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -6082,25 +2624,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GetVideoURLResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4611;
-		internal static GetVideoURLResult_t Fill( IntPtr p ) => ((GetVideoURLResult_t)Marshal.PtrToStructure( p, typeof(GetVideoURLResult_t) ) );
-		
-		static Action<GetVideoURLResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<GetVideoURLResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<GetVideoURLResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4611, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4611, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -6114,25 +2637,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GetOPFSettingsResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4624;
-		internal static GetOPFSettingsResult_t Fill( IntPtr p ) => ((GetOPFSettingsResult_t)Marshal.PtrToStructure( p, typeof(GetOPFSettingsResult_t) ) );
-		
-		static Action<GetOPFSettingsResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<GetOPFSettingsResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<GetOPFSettingsResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4624, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4624, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -6146,25 +2650,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(BroadcastUploadStart_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4604;
-		internal static BroadcastUploadStart_t Fill( IntPtr p ) => ((BroadcastUploadStart_t)Marshal.PtrToStructure( p, typeof(BroadcastUploadStart_t) ) );
-		
-		static Action<BroadcastUploadStart_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<BroadcastUploadStart_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<BroadcastUploadStart_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4604, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4604, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -6177,25 +2662,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(BroadcastUploadStop_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 4605;
-		internal static BroadcastUploadStop_t Fill( IntPtr p ) => ((BroadcastUploadStop_t)Marshal.PtrToStructure( p, typeof(BroadcastUploadStop_t) ) );
-		
-		static Action<BroadcastUploadStop_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<BroadcastUploadStop_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<BroadcastUploadStop_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 4605, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 4605, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -6207,25 +2673,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamParentalSettingsChanged_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 5001;
-		internal static SteamParentalSettingsChanged_t Fill( IntPtr p ) => ((SteamParentalSettingsChanged_t)Marshal.PtrToStructure( p, typeof(SteamParentalSettingsChanged_t) ) );
-		
-		static Action<SteamParentalSettingsChanged_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<SteamParentalSettingsChanged_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<SteamParentalSettingsChanged_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 5001, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 5001, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -6238,25 +2685,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamRemotePlaySessionConnected_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 5701;
-		internal static SteamRemotePlaySessionConnected_t Fill( IntPtr p ) => ((SteamRemotePlaySessionConnected_t)Marshal.PtrToStructure( p, typeof(SteamRemotePlaySessionConnected_t) ) );
-		
-		static Action<SteamRemotePlaySessionConnected_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<SteamRemotePlaySessionConnected_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<SteamRemotePlaySessionConnected_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 5701, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 5701, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -6269,25 +2697,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamRemotePlaySessionDisconnected_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 5702;
-		internal static SteamRemotePlaySessionDisconnected_t Fill( IntPtr p ) => ((SteamRemotePlaySessionDisconnected_t)Marshal.PtrToStructure( p, typeof(SteamRemotePlaySessionDisconnected_t) ) );
-		
-		static Action<SteamRemotePlaySessionDisconnected_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<SteamRemotePlaySessionDisconnected_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<SteamRemotePlaySessionDisconnected_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 5702, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 5702, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -6302,25 +2711,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamNetConnectionStatusChangedCallback_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1221;
-		internal static SteamNetConnectionStatusChangedCallback_t Fill( IntPtr p ) => ((SteamNetConnectionStatusChangedCallback_t)Marshal.PtrToStructure( p, typeof(SteamNetConnectionStatusChangedCallback_t) ) );
-		
-		static Action<SteamNetConnectionStatusChangedCallback_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<SteamNetConnectionStatusChangedCallback_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<SteamNetConnectionStatusChangedCallback_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1221, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1221, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -6336,25 +2726,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamNetAuthenticationStatus_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1222;
-		internal static SteamNetAuthenticationStatus_t Fill( IntPtr p ) => ((SteamNetAuthenticationStatus_t)Marshal.PtrToStructure( p, typeof(SteamNetAuthenticationStatus_t) ) );
-		
-		static Action<SteamNetAuthenticationStatus_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<SteamNetAuthenticationStatus_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<SteamNetAuthenticationStatus_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1222, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1222, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -6373,25 +2744,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamRelayNetworkStatus_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1281;
-		internal static SteamRelayNetworkStatus_t Fill( IntPtr p ) => ((SteamRelayNetworkStatus_t)Marshal.PtrToStructure( p, typeof(SteamRelayNetworkStatus_t) ) );
-		
-		static Action<SteamRelayNetworkStatus_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<SteamRelayNetworkStatus_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<SteamRelayNetworkStatus_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1281, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1281, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -6405,25 +2757,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSClientApprove_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 201;
-		internal static GSClientApprove_t Fill( IntPtr p ) => ((GSClientApprove_t)Marshal.PtrToStructure( p, typeof(GSClientApprove_t) ) );
-		
-		static Action<GSClientApprove_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<GSClientApprove_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<GSClientApprove_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 201, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 201, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -6440,25 +2773,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSClientDeny_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 202;
-		internal static GSClientDeny_t Fill( IntPtr p ) => ((GSClientDeny_t)Marshal.PtrToStructure( p, typeof(GSClientDeny_t) ) );
-		
-		static Action<GSClientDeny_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<GSClientDeny_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<GSClientDeny_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 202, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 202, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -6472,25 +2786,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSClientKick_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 203;
-		internal static GSClientKick_t Fill( IntPtr p ) => ((GSClientKick_t)Marshal.PtrToStructure( p, typeof(GSClientKick_t) ) );
-		
-		static Action<GSClientKick_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<GSClientKick_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<GSClientKick_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 203, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 203, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -6508,25 +2803,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSClientAchievementStatus_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 206;
-		internal static GSClientAchievementStatus_t Fill( IntPtr p ) => ((GSClientAchievementStatus_t)Marshal.PtrToStructure( p, typeof(GSClientAchievementStatus_t) ) );
-		
-		static Action<GSClientAchievementStatus_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<GSClientAchievementStatus_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<GSClientAchievementStatus_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 206, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 206, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -6539,25 +2815,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSPolicyResponse_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 115;
-		internal static GSPolicyResponse_t Fill( IntPtr p ) => ((GSPolicyResponse_t)Marshal.PtrToStructure( p, typeof(GSPolicyResponse_t) ) );
-		
-		static Action<GSPolicyResponse_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<GSPolicyResponse_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<GSPolicyResponse_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 115, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 115, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -6573,25 +2830,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSGameplayStats_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 207;
-		internal static GSGameplayStats_t Fill( IntPtr p ) => ((GSGameplayStats_t)Marshal.PtrToStructure( p, typeof(GSGameplayStats_t) ) );
-		
-		static Action<GSGameplayStats_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<GSGameplayStats_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<GSGameplayStats_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 207, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 207, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -6609,25 +2847,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSClientGroupStatus_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 208;
-		internal static GSClientGroupStatus_t Fill( IntPtr p ) => ((GSClientGroupStatus_t)Marshal.PtrToStructure( p, typeof(GSClientGroupStatus_t) ) );
-		
-		static Action<GSClientGroupStatus_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<GSClientGroupStatus_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<GSClientGroupStatus_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 208, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 208, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -6647,25 +2866,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSReputation_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 209;
-		internal static GSReputation_t Fill( IntPtr p ) => ((GSReputation_t)Marshal.PtrToStructure( p, typeof(GSReputation_t) ) );
-		
-		static Action<GSReputation_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<GSReputation_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<GSReputation_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 209, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 209, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -6678,25 +2878,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(AssociateWithClanResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 210;
-		internal static AssociateWithClanResult_t Fill( IntPtr p ) => ((AssociateWithClanResult_t)Marshal.PtrToStructure( p, typeof(AssociateWithClanResult_t) ) );
-		
-		static Action<AssociateWithClanResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<AssociateWithClanResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<AssociateWithClanResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 210, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 210, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -6713,25 +2894,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(ComputeNewPlayerCompatibilityResult_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 211;
-		internal static ComputeNewPlayerCompatibilityResult_t Fill( IntPtr p ) => ((ComputeNewPlayerCompatibilityResult_t)Marshal.PtrToStructure( p, typeof(ComputeNewPlayerCompatibilityResult_t) ) );
-		
-		static Action<ComputeNewPlayerCompatibilityResult_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<ComputeNewPlayerCompatibilityResult_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<ComputeNewPlayerCompatibilityResult_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 211, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 211, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -6745,25 +2907,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSStatsReceived_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1800;
-		internal static GSStatsReceived_t Fill( IntPtr p ) => ((GSStatsReceived_t)Marshal.PtrToStructure( p, typeof(GSStatsReceived_t) ) );
-		
-		static Action<GSStatsReceived_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<GSStatsReceived_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<GSStatsReceived_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1800, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1800, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -6777,25 +2920,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSStatsStored_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1801;
-		internal static GSStatsStored_t Fill( IntPtr p ) => ((GSStatsStored_t)Marshal.PtrToStructure( p, typeof(GSStatsStored_t) ) );
-		
-		static Action<GSStatsStored_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<GSStatsStored_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<GSStatsStored_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1801, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1801, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	
@@ -6808,25 +2932,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GSStatsUnloaded_t) );
 		public int DataSize => _datasize;
 		public int CallbackId => 1108;
-		internal static GSStatsUnloaded_t Fill( IntPtr p ) => ((GSStatsUnloaded_t)Marshal.PtrToStructure( p, typeof(GSStatsUnloaded_t) ) );
-		
-		static Action<GSStatsUnloaded_t> actionClient;
-		[MonoPInvokeCallback] static void OnClient( IntPtr thisptr, IntPtr pvParam ) => actionClient?.Invoke( Fill( pvParam ) );
-		static Action<GSStatsUnloaded_t> actionServer;
-		[MonoPInvokeCallback] static void OnServer( IntPtr thisptr, IntPtr pvParam ) => actionServer?.Invoke( Fill( pvParam ) );
-		public static void Install( Action<GSStatsUnloaded_t> action, bool server = false )
-		{
-			if ( server )
-			{
-				Event.Register( OnServer, _datasize, 1108, true );
-				actionServer = action;
-			}
-			else
-			{
-				Event.Register( OnClient, _datasize, 1108, false );
-				actionClient = action;
-			}
-		}
 		#endregion
 	}
 	

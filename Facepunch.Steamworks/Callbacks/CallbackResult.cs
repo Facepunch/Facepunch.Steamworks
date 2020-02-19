@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Steamworks
 {
-	internal struct CallbackResult<T> : INotifyCompletion where T : struct, ICallbackData
+	internal struct CallResult<T> : INotifyCompletion where T : struct, ICallbackData
 	{
 		SteamAPICall_t call;
 
-		public CallbackResult( SteamAPICall_t call )
+		public CallResult( SteamAPICall_t call )
 		{
 			this.call = call;
 			Console.WriteLine( $"{this.GetType().ToString()} == {call.Value}" );
@@ -56,7 +56,7 @@ namespace Steamworks
 			}
 		}
 
-		internal CallbackResult<T> GetAwaiter()
+		internal CallResult<T> GetAwaiter()
 		{
 			return this;
 		}

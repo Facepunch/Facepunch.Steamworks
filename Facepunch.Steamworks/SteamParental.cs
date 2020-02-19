@@ -24,7 +24,7 @@ namespace Steamworks
 
 		internal static void InstallEvents()
 		{
-			SteamParentalSettingsChanged_t.Install( x => OnSettingsChanged?.Invoke() );
+			Dispatch.Install<SteamParentalSettingsChanged_t>( x => OnSettingsChanged?.Invoke() );
 		}
 
 		/// <summary>

@@ -231,10 +231,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _CheckFileSignature( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string szFileName );
 		
 		#endregion
-		internal CallbackResult<CheckFileSignature_t> CheckFileSignature( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string szFileName )
+		internal CallResult<CheckFileSignature_t> CheckFileSignature( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string szFileName )
 		{
 			var returnValue = _CheckFileSignature( Self, szFileName );
-			return new CallbackResult<CheckFileSignature_t>( returnValue );
+			return new CallResult<CheckFileSignature_t>( returnValue );
 		}
 		
 		#region FunctionMeta

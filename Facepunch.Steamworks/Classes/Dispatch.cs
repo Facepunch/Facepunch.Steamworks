@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Steamworks.Data;
+using Steamworks;
 
 namespace Steamworks
 {
@@ -17,8 +18,8 @@ namespace Steamworks
 
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ManualDispatch_GetNextCallback", CallingConvention = CallingConvention.Cdecl )]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		internal static extern bool SteamAPI_ManualDispatch_GetNextCallback( HSteamPipe pipe, [In, Out] ref CallbackMsg_t msg );		
-		
+		internal static extern bool SteamAPI_ManualDispatch_GetNextCallback( HSteamPipe pipe, [In, Out] ref CallbackMsg_t msg );
+
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ManualDispatch_FreeLastCallback", CallingConvention = CallingConvention.Cdecl )]
 		[return: MarshalAs( UnmanagedType.I1 )]
 		internal static extern bool SteamAPI_ManualDispatch_FreeLastCallback( HSteamPipe pipe );		
@@ -83,20 +84,20 @@ namespace Steamworks
 
 		private static void ProcessResult( CallbackMsg_t msg )
 		{
-			var result = SteamAPICallCompleted_t.Fill( msg.m_pubParam );
+			var result = msg.m_pubParam.ToType<SteamAPICallCompleted_t>();
 
 			Console.WriteLine( $"Result: {result.AsyncCall} / {result.Callback}" );
 
 			//
 			// Do we have an entry added via OnCallComplete
 			//
-			if ( !Callbacks.TryGetValue( result.AsyncCall, out var callbackInfo ) )
+			if ( !ResultCallbacks.TryGetValue( result.AsyncCall, out var callbackInfo ) )
 			{
 				// Do we care? Should we throw errors?
 				return;
 			}
 
-			Callbacks.Remove( result.AsyncCall );
+			ResultCallbacks.Remove( result.AsyncCall );
 
 			// At this point whatever async routine called this 
 			// continues running.
@@ -125,22 +126,55 @@ namespace Steamworks
 			Console.WriteLine( $"Exiting ServerPipe: {ServerPipe}" );
 		}
 
-		struct CallbackInfo
+		struct ResultCallback
 		{
 			public Action continuation;
 		}
 
-		static Dictionary<ulong, CallbackInfo> Callbacks = new Dictionary<ulong, CallbackInfo>();
+		static Dictionary<ulong, ResultCallback> ResultCallbacks = new Dictionary<ulong, ResultCallback>();
 
 		/// <summary>
 		/// Watch for a steam api call
 		/// </summary>
 		internal static void OnCallComplete( SteamAPICall_t call, Action continuation )
 		{
-			Callbacks[call.Value] = new CallbackInfo
+			ResultCallbacks[call.Value] = new ResultCallback
 			{
 				continuation = continuation
 			};
+		}
+
+		struct Callback
+		{
+			public Action<IntPtr> action;
+			public bool server;
+		}
+
+		static Dictionary<int, List<Callback>> Callbacks = new Dictionary<int, List<Callback>>();
+
+		internal static void Install<T>( Action<T> p, bool server = false ) where T : ICallbackData
+		{
+			var t = default( T );
+
+			if ( !Callbacks.TryGetValue( t.CallbackId, out var list ) )
+			{
+				list = new List<Callback>();
+				Callbacks[t.CallbackId] = list;
+			}
+
+			list.Add( new Callback
+			{
+				action = x => p( x.ToType<T>() ),
+				server = server
+			} );
+		}
+
+		internal static void Wipe()
+		{
+			Callbacks = new Dictionary<int, List<Callback>>();
+			ResultCallbacks = new Dictionary<ulong, ResultCallback>();
+			ClientPipe = 0;
+			ServerPipe = 0;
 		}
 	}
 }

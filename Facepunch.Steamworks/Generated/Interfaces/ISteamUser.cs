@@ -243,10 +243,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _RequestEncryptedAppTicket( IntPtr self, IntPtr pDataToInclude, int cbDataToInclude );
 		
 		#endregion
-		internal CallbackResult<EncryptedAppTicketResponse_t> RequestEncryptedAppTicket( IntPtr pDataToInclude, int cbDataToInclude )
+		internal CallResult<EncryptedAppTicketResponse_t> RequestEncryptedAppTicket( IntPtr pDataToInclude, int cbDataToInclude )
 		{
 			var returnValue = _RequestEncryptedAppTicket( Self, pDataToInclude, cbDataToInclude );
-			return new CallbackResult<EncryptedAppTicketResponse_t>( returnValue );
+			return new CallResult<EncryptedAppTicketResponse_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -288,10 +288,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _RequestStoreAuthURL( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchRedirectURL );
 		
 		#endregion
-		internal CallbackResult<StoreAuthURLResponse_t> RequestStoreAuthURL( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchRedirectURL )
+		internal CallResult<StoreAuthURLResponse_t> RequestStoreAuthURL( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchRedirectURL )
 		{
 			var returnValue = _RequestStoreAuthURL( Self, pchRedirectURL );
-			return new CallbackResult<StoreAuthURLResponse_t>( returnValue );
+			return new CallResult<StoreAuthURLResponse_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -347,10 +347,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _GetMarketEligibility( IntPtr self );
 		
 		#endregion
-		internal CallbackResult<MarketEligibilityResponse_t> GetMarketEligibility()
+		internal CallResult<MarketEligibilityResponse_t> GetMarketEligibility()
 		{
 			var returnValue = _GetMarketEligibility( Self );
-			return new CallbackResult<MarketEligibilityResponse_t>( returnValue );
+			return new CallResult<MarketEligibilityResponse_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -358,10 +358,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _GetDurationControl( IntPtr self );
 		
 		#endregion
-		internal CallbackResult<DurationControl_t> GetDurationControl()
+		internal CallResult<DurationControl_t> GetDurationControl()
 		{
 			var returnValue = _GetDurationControl( Self );
-			return new CallbackResult<DurationControl_t>( returnValue );
+			return new CallResult<DurationControl_t>( returnValue );
 		}
 		
 		#region FunctionMeta

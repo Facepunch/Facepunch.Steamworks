@@ -31,10 +31,10 @@ namespace Steamworks
 			SteamInventory.InstallEvents();
             //SteamNetworkingSockets.InstallEvents(true);
 
-            ValidateAuthTicketResponse_t.Install( x => OnValidateAuthTicketResponse?.Invoke( x.SteamID, x.OwnerSteamID, x.AuthSessionResponse ), true );
-			SteamServersConnected_t.Install( x => OnSteamServersConnected?.Invoke(), true );
-			SteamServerConnectFailure_t.Install( x => OnSteamServerConnectFailure?.Invoke( x.Result, x.StillRetrying ), true );
-			SteamServersDisconnected_t.Install( x => OnSteamServersDisconnected?.Invoke( x.Result ), true );
+            Dispatch.Install<ValidateAuthTicketResponse_t>( x => OnValidateAuthTicketResponse?.Invoke( x.SteamID, x.OwnerSteamID, x.AuthSessionResponse ), true );
+			Dispatch.Install<SteamServersConnected_t>( x => OnSteamServersConnected?.Invoke(), true );
+			Dispatch.Install<SteamServerConnectFailure_t>( x => OnSteamServerConnectFailure?.Invoke( x.Result, x.StillRetrying ), true );
+			Dispatch.Install<SteamServersDisconnected_t>( x => OnSteamServersDisconnected?.Invoke( x.Result ), true );
 		}
 
 		/// <summary>
@@ -140,8 +140,6 @@ namespace Steamworks
 
 		public static void Shutdown()
 		{
-			Event.DisposeAllServer();
-
 			Internal = null;
 
 			ShutdownInterfaces();

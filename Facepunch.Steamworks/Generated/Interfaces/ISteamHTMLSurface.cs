@@ -49,10 +49,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _CreateBrowser( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchUserAgent, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchUserCSS );
 		
 		#endregion
-		internal CallbackResult<HTML_BrowserReady_t> CreateBrowser( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchUserAgent, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchUserCSS )
+		internal CallResult<HTML_BrowserReady_t> CreateBrowser( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchUserAgent, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchUserCSS )
 		{
 			var returnValue = _CreateBrowser( Self, pchUserAgent, pchUserCSS );
-			return new CallbackResult<HTML_BrowserReady_t>( returnValue );
+			return new CallResult<HTML_BrowserReady_t>( returnValue );
 		}
 		
 		#region FunctionMeta

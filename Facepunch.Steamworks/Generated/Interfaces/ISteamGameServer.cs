@@ -382,10 +382,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _GetServerReputation( IntPtr self );
 		
 		#endregion
-		internal CallbackResult<GSReputation_t> GetServerReputation()
+		internal CallResult<GSReputation_t> GetServerReputation()
 		{
 			var returnValue = _GetServerReputation( Self );
-			return new CallbackResult<GSReputation_t>( returnValue );
+			return new CallResult<GSReputation_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -457,10 +457,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _AssociateWithClan( IntPtr self, SteamId steamIDClan );
 		
 		#endregion
-		internal CallbackResult<AssociateWithClanResult_t> AssociateWithClan( SteamId steamIDClan )
+		internal CallResult<AssociateWithClanResult_t> AssociateWithClan( SteamId steamIDClan )
 		{
 			var returnValue = _AssociateWithClan( Self, steamIDClan );
-			return new CallbackResult<AssociateWithClanResult_t>( returnValue );
+			return new CallResult<AssociateWithClanResult_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -468,10 +468,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _ComputeNewPlayerCompatibility( IntPtr self, SteamId steamIDNewPlayer );
 		
 		#endregion
-		internal CallbackResult<ComputeNewPlayerCompatibilityResult_t> ComputeNewPlayerCompatibility( SteamId steamIDNewPlayer )
+		internal CallResult<ComputeNewPlayerCompatibilityResult_t> ComputeNewPlayerCompatibility( SteamId steamIDNewPlayer )
 		{
 			var returnValue = _ComputeNewPlayerCompatibility( Self, steamIDNewPlayer );
-			return new CallbackResult<ComputeNewPlayerCompatibilityResult_t>( returnValue );
+			return new CallResult<ComputeNewPlayerCompatibilityResult_t>( returnValue );
 		}
 		
 	}

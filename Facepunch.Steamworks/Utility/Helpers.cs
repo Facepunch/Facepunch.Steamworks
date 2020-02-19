@@ -83,7 +83,7 @@ namespace Steamworks
 				return string.Empty;
 
 			return UTF8Encoding.UTF8.GetString( (byte*)ptr, len );
-		}
+		}		
 	}
 
 	internal class MonoPInvokeCallbackAttribute : Attribute

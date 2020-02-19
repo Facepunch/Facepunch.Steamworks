@@ -25,10 +25,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _RequestUserStats( IntPtr self, SteamId steamIDUser );
 		
 		#endregion
-		internal CallbackResult<GSStatsReceived_t> RequestUserStats( SteamId steamIDUser )
+		internal CallResult<GSStatsReceived_t> RequestUserStats( SteamId steamIDUser )
 		{
 			var returnValue = _RequestUserStats( Self, steamIDUser );
-			return new CallbackResult<GSStatsReceived_t>( returnValue );
+			return new CallResult<GSStatsReceived_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -132,10 +132,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _StoreUserStats( IntPtr self, SteamId steamIDUser );
 		
 		#endregion
-		internal CallbackResult<GSStatsStored_t> StoreUserStats( SteamId steamIDUser )
+		internal CallResult<GSStatsStored_t> StoreUserStats( SteamId steamIDUser )
 		{
 			var returnValue = _StoreUserStats( Self, steamIDUser );
-			return new CallbackResult<GSStatsStored_t>( returnValue );
+			return new CallResult<GSStatsStored_t>( returnValue );
 		}
 		
 	}

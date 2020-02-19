@@ -213,10 +213,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _RequestUserStats( IntPtr self, SteamId steamIDUser );
 		
 		#endregion
-		internal CallbackResult<UserStatsReceived_t> RequestUserStats( SteamId steamIDUser )
+		internal CallResult<UserStatsReceived_t> RequestUserStats( SteamId steamIDUser )
 		{
 			var returnValue = _RequestUserStats( Self, steamIDUser );
-			return new CallbackResult<UserStatsReceived_t>( returnValue );
+			return new CallResult<UserStatsReceived_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -284,10 +284,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _FindOrCreateLeaderboard( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchLeaderboardName, LeaderboardSort eLeaderboardSortMethod, LeaderboardDisplay eLeaderboardDisplayType );
 		
 		#endregion
-		internal CallbackResult<LeaderboardFindResult_t> FindOrCreateLeaderboard( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchLeaderboardName, LeaderboardSort eLeaderboardSortMethod, LeaderboardDisplay eLeaderboardDisplayType )
+		internal CallResult<LeaderboardFindResult_t> FindOrCreateLeaderboard( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchLeaderboardName, LeaderboardSort eLeaderboardSortMethod, LeaderboardDisplay eLeaderboardDisplayType )
 		{
 			var returnValue = _FindOrCreateLeaderboard( Self, pchLeaderboardName, eLeaderboardSortMethod, eLeaderboardDisplayType );
-			return new CallbackResult<LeaderboardFindResult_t>( returnValue );
+			return new CallResult<LeaderboardFindResult_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -295,10 +295,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _FindLeaderboard( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchLeaderboardName );
 		
 		#endregion
-		internal CallbackResult<LeaderboardFindResult_t> FindLeaderboard( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchLeaderboardName )
+		internal CallResult<LeaderboardFindResult_t> FindLeaderboard( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchLeaderboardName )
 		{
 			var returnValue = _FindLeaderboard( Self, pchLeaderboardName );
-			return new CallbackResult<LeaderboardFindResult_t>( returnValue );
+			return new CallResult<LeaderboardFindResult_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -350,10 +350,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _DownloadLeaderboardEntries( IntPtr self, SteamLeaderboard_t hSteamLeaderboard, LeaderboardDataRequest eLeaderboardDataRequest, int nRangeStart, int nRangeEnd );
 		
 		#endregion
-		internal CallbackResult<LeaderboardScoresDownloaded_t> DownloadLeaderboardEntries( SteamLeaderboard_t hSteamLeaderboard, LeaderboardDataRequest eLeaderboardDataRequest, int nRangeStart, int nRangeEnd )
+		internal CallResult<LeaderboardScoresDownloaded_t> DownloadLeaderboardEntries( SteamLeaderboard_t hSteamLeaderboard, LeaderboardDataRequest eLeaderboardDataRequest, int nRangeStart, int nRangeEnd )
 		{
 			var returnValue = _DownloadLeaderboardEntries( Self, hSteamLeaderboard, eLeaderboardDataRequest, nRangeStart, nRangeEnd );
-			return new CallbackResult<LeaderboardScoresDownloaded_t>( returnValue );
+			return new CallResult<LeaderboardScoresDownloaded_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -364,10 +364,10 @@ namespace Steamworks
 		/// <summary>
 		/// Downloads leaderboard entries for an arbitrary set of users - ELeaderboardDataRequest is k_ELeaderboardDataRequestUsers
 		/// </summary>
-		internal CallbackResult<LeaderboardScoresDownloaded_t> DownloadLeaderboardEntriesForUsers( SteamLeaderboard_t hSteamLeaderboard, [In,Out] SteamId[]  prgUsers, int cUsers )
+		internal CallResult<LeaderboardScoresDownloaded_t> DownloadLeaderboardEntriesForUsers( SteamLeaderboard_t hSteamLeaderboard, [In,Out] SteamId[]  prgUsers, int cUsers )
 		{
 			var returnValue = _DownloadLeaderboardEntriesForUsers( Self, hSteamLeaderboard, prgUsers, cUsers );
-			return new CallbackResult<LeaderboardScoresDownloaded_t>( returnValue );
+			return new CallResult<LeaderboardScoresDownloaded_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -387,10 +387,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _UploadLeaderboardScore( IntPtr self, SteamLeaderboard_t hSteamLeaderboard, LeaderboardUploadScoreMethod eLeaderboardUploadScoreMethod, int nScore, [In,Out] int[]  pScoreDetails, int cScoreDetailsCount );
 		
 		#endregion
-		internal CallbackResult<LeaderboardScoreUploaded_t> UploadLeaderboardScore( SteamLeaderboard_t hSteamLeaderboard, LeaderboardUploadScoreMethod eLeaderboardUploadScoreMethod, int nScore, [In,Out] int[]  pScoreDetails, int cScoreDetailsCount )
+		internal CallResult<LeaderboardScoreUploaded_t> UploadLeaderboardScore( SteamLeaderboard_t hSteamLeaderboard, LeaderboardUploadScoreMethod eLeaderboardUploadScoreMethod, int nScore, [In,Out] int[]  pScoreDetails, int cScoreDetailsCount )
 		{
 			var returnValue = _UploadLeaderboardScore( Self, hSteamLeaderboard, eLeaderboardUploadScoreMethod, nScore, pScoreDetails, cScoreDetailsCount );
-			return new CallbackResult<LeaderboardScoreUploaded_t>( returnValue );
+			return new CallResult<LeaderboardScoreUploaded_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -398,10 +398,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _AttachLeaderboardUGC( IntPtr self, SteamLeaderboard_t hSteamLeaderboard, UGCHandle_t hUGC );
 		
 		#endregion
-		internal CallbackResult<LeaderboardUGCSet_t> AttachLeaderboardUGC( SteamLeaderboard_t hSteamLeaderboard, UGCHandle_t hUGC )
+		internal CallResult<LeaderboardUGCSet_t> AttachLeaderboardUGC( SteamLeaderboard_t hSteamLeaderboard, UGCHandle_t hUGC )
 		{
 			var returnValue = _AttachLeaderboardUGC( Self, hSteamLeaderboard, hUGC );
-			return new CallbackResult<LeaderboardUGCSet_t>( returnValue );
+			return new CallResult<LeaderboardUGCSet_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -409,10 +409,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _GetNumberOfCurrentPlayers( IntPtr self );
 		
 		#endregion
-		internal CallbackResult<NumberOfCurrentPlayers_t> GetNumberOfCurrentPlayers()
+		internal CallResult<NumberOfCurrentPlayers_t> GetNumberOfCurrentPlayers()
 		{
 			var returnValue = _GetNumberOfCurrentPlayers( Self );
-			return new CallbackResult<NumberOfCurrentPlayers_t>( returnValue );
+			return new CallResult<NumberOfCurrentPlayers_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -420,10 +420,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _RequestGlobalAchievementPercentages( IntPtr self );
 		
 		#endregion
-		internal CallbackResult<GlobalAchievementPercentagesReady_t> RequestGlobalAchievementPercentages()
+		internal CallResult<GlobalAchievementPercentagesReady_t> RequestGlobalAchievementPercentages()
 		{
 			var returnValue = _RequestGlobalAchievementPercentages( Self );
-			return new CallbackResult<GlobalAchievementPercentagesReady_t>( returnValue );
+			return new CallResult<GlobalAchievementPercentagesReady_t>( returnValue );
 		}
 		
 		#region FunctionMeta
@@ -469,10 +469,10 @@ namespace Steamworks
 		private static extern SteamAPICall_t _RequestGlobalStats( IntPtr self, int nHistoryDays );
 		
 		#endregion
-		internal CallbackResult<GlobalStatsReceived_t> RequestGlobalStats( int nHistoryDays )
+		internal CallResult<GlobalStatsReceived_t> RequestGlobalStats( int nHistoryDays )
 		{
 			var returnValue = _RequestGlobalStats( Self, nHistoryDays );
-			return new CallbackResult<GlobalStatsReceived_t>( returnValue );
+			return new CallResult<GlobalStatsReceived_t>( returnValue );
 		}
 		
 		#region FunctionMeta

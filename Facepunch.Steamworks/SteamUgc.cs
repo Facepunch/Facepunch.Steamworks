@@ -25,7 +25,7 @@ namespace Steamworks
 
 		internal static void InstallEvents()
 		{
-			DownloadItemResult_t.Install( x => OnDownloadItemResult?.Invoke( x.Result ) );
+			Dispatch.Install<DownloadItemResult_t>( x => OnDownloadItemResult?.Invoke( x.Result ) );
 		}
 
 		/// <summary>
