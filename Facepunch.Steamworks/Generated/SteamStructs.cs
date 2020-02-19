@@ -196,10 +196,10 @@ namespace Steamworks.Data
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
-	internal struct SteamNetworkingConfigValue_t
+	internal struct NetConfig_t
 	{
-		internal SteamNetworkingConfigValue Value; // m_eValue ESteamNetworkingConfigValue
-		internal SteamNetworkingConfigDataType DataType; // m_eDataType ESteamNetworkingConfigDataType
+		internal NetConfig Value; // m_eValue ESteamNetworkingConfigValue
+		internal NetConfigType DataType; // m_eDataType ESteamNetworkingConfigDataType
 		internal long Nt64; // m_int64 int64_t
 		internal int Val_int32; // m_val_int32 int32_t
 		internal long Val_int64; // m_val_int64 int64_t

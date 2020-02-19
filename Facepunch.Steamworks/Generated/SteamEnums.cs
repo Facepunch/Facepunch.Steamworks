@@ -2049,7 +2049,7 @@ namespace Steamworks
 	//
 	// ESteamNetworkingConfigDataType
 	//
-	internal enum SteamNetworkingConfigDataType : int
+	internal enum NetConfigType : int
 	{
 		_Int32 = 1,
 		_Int64 = 2,
@@ -2062,7 +2062,7 @@ namespace Steamworks
 	//
 	// ESteamNetworkingConfigValue
 	//
-	internal enum SteamNetworkingConfigValue : int
+	internal enum NetConfig : int
 	{
 		_Invalid = 0,
 		_FakePacketLoss_Send = 2,

@@ -186,10 +186,10 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_SetGlobalConfigValueInt32")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SetGlobalConfigValueInt32( IntPtr self, SteamNetworkingConfigValue eValue, int val );
+		private static extern bool _SetGlobalConfigValueInt32( IntPtr self, NetConfig eValue, int val );
 		
 		#endregion
-		internal bool SetGlobalConfigValueInt32( SteamNetworkingConfigValue eValue, int val )
+		internal bool SetGlobalConfigValueInt32( NetConfig eValue, int val )
 		{
 			var returnValue = _SetGlobalConfigValueInt32( Self, eValue, val );
 			return returnValue;
@@ -198,10 +198,10 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_SetGlobalConfigValueFloat")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SetGlobalConfigValueFloat( IntPtr self, SteamNetworkingConfigValue eValue, float val );
+		private static extern bool _SetGlobalConfigValueFloat( IntPtr self, NetConfig eValue, float val );
 		
 		#endregion
-		internal bool SetGlobalConfigValueFloat( SteamNetworkingConfigValue eValue, float val )
+		internal bool SetGlobalConfigValueFloat( NetConfig eValue, float val )
 		{
 			var returnValue = _SetGlobalConfigValueFloat( Self, eValue, val );
 			return returnValue;
@@ -210,10 +210,10 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_SetGlobalConfigValueString")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SetGlobalConfigValueString( IntPtr self, SteamNetworkingConfigValue eValue, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string val );
+		private static extern bool _SetGlobalConfigValueString( IntPtr self, NetConfig eValue, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string val );
 		
 		#endregion
-		internal bool SetGlobalConfigValueString( SteamNetworkingConfigValue eValue, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string val )
+		internal bool SetGlobalConfigValueString( NetConfig eValue, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string val )
 		{
 			var returnValue = _SetGlobalConfigValueString( Self, eValue, val );
 			return returnValue;
@@ -222,10 +222,10 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_SetConnectionConfigValueInt32")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SetConnectionConfigValueInt32( IntPtr self, Connection hConn, SteamNetworkingConfigValue eValue, int val );
+		private static extern bool _SetConnectionConfigValueInt32( IntPtr self, Connection hConn, NetConfig eValue, int val );
 		
 		#endregion
-		internal bool SetConnectionConfigValueInt32( Connection hConn, SteamNetworkingConfigValue eValue, int val )
+		internal bool SetConnectionConfigValueInt32( Connection hConn, NetConfig eValue, int val )
 		{
 			var returnValue = _SetConnectionConfigValueInt32( Self, hConn, eValue, val );
 			return returnValue;
@@ -234,10 +234,10 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_SetConnectionConfigValueFloat")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SetConnectionConfigValueFloat( IntPtr self, Connection hConn, SteamNetworkingConfigValue eValue, float val );
+		private static extern bool _SetConnectionConfigValueFloat( IntPtr self, Connection hConn, NetConfig eValue, float val );
 		
 		#endregion
-		internal bool SetConnectionConfigValueFloat( Connection hConn, SteamNetworkingConfigValue eValue, float val )
+		internal bool SetConnectionConfigValueFloat( Connection hConn, NetConfig eValue, float val )
 		{
 			var returnValue = _SetConnectionConfigValueFloat( Self, hConn, eValue, val );
 			return returnValue;
@@ -246,10 +246,10 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_SetConnectionConfigValueString")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SetConnectionConfigValueString( IntPtr self, Connection hConn, SteamNetworkingConfigValue eValue, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string val );
+		private static extern bool _SetConnectionConfigValueString( IntPtr self, Connection hConn, NetConfig eValue, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string val );
 		
 		#endregion
-		internal bool SetConnectionConfigValueString( Connection hConn, SteamNetworkingConfigValue eValue, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string val )
+		internal bool SetConnectionConfigValueString( Connection hConn, NetConfig eValue, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string val )
 		{
 			var returnValue = _SetConnectionConfigValueString( Self, hConn, eValue, val );
 			return returnValue;
@@ -258,10 +258,10 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_SetConfigValue")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SetConfigValue( IntPtr self, SteamNetworkingConfigValue eValue, SteamNetworkingConfigScope eScopeType, long scopeObj, SteamNetworkingConfigDataType eDataType, IntPtr pArg );
+		private static extern bool _SetConfigValue( IntPtr self, NetConfig eValue, SteamNetworkingConfigScope eScopeType, long scopeObj, NetConfigType eDataType, IntPtr pArg );
 		
 		#endregion
-		internal bool SetConfigValue( SteamNetworkingConfigValue eValue, SteamNetworkingConfigScope eScopeType, long scopeObj, SteamNetworkingConfigDataType eDataType, IntPtr pArg )
+		internal bool SetConfigValue( NetConfig eValue, SteamNetworkingConfigScope eScopeType, long scopeObj, NetConfigType eDataType, IntPtr pArg )
 		{
 			var returnValue = _SetConfigValue( Self, eValue, eScopeType, scopeObj, eDataType, pArg );
 			return returnValue;
@@ -270,10 +270,10 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_SetConfigValueStruct")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SetConfigValueStruct( IntPtr self, ref SteamNetworkingConfigValue_t opt, SteamNetworkingConfigScope eScopeType, long scopeObj );
+		private static extern bool _SetConfigValueStruct( IntPtr self, ref NetConfig_t opt, SteamNetworkingConfigScope eScopeType, long scopeObj );
 		
 		#endregion
-		internal bool SetConfigValueStruct( ref SteamNetworkingConfigValue_t opt, SteamNetworkingConfigScope eScopeType, long scopeObj )
+		internal bool SetConfigValueStruct( ref NetConfig_t opt, SteamNetworkingConfigScope eScopeType, long scopeObj )
 		{
 			var returnValue = _SetConfigValueStruct( Self, ref opt, eScopeType, scopeObj );
 			return returnValue;
@@ -281,10 +281,10 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_GetConfigValue")]
-		private static extern NetConfigResult _GetConfigValue( IntPtr self, SteamNetworkingConfigValue eValue, SteamNetworkingConfigScope eScopeType, long scopeObj, ref SteamNetworkingConfigDataType pOutDataType, IntPtr pResult, ref UIntPtr cbResult );
+		private static extern NetConfigResult _GetConfigValue( IntPtr self, NetConfig eValue, SteamNetworkingConfigScope eScopeType, long scopeObj, ref NetConfigType pOutDataType, IntPtr pResult, ref UIntPtr cbResult );
 		
 		#endregion
-		internal NetConfigResult GetConfigValue( SteamNetworkingConfigValue eValue, SteamNetworkingConfigScope eScopeType, long scopeObj, ref SteamNetworkingConfigDataType pOutDataType, IntPtr pResult, ref UIntPtr cbResult )
+		internal NetConfigResult GetConfigValue( NetConfig eValue, SteamNetworkingConfigScope eScopeType, long scopeObj, ref NetConfigType pOutDataType, IntPtr pResult, ref UIntPtr cbResult )
 		{
 			var returnValue = _GetConfigValue( Self, eValue, eScopeType, scopeObj, ref pOutDataType, pResult, ref cbResult );
 			return returnValue;
@@ -293,10 +293,10 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_GetConfigValueInfo")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _GetConfigValueInfo( IntPtr self, SteamNetworkingConfigValue eValue, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pOutName, ref SteamNetworkingConfigDataType pOutDataType, [In,Out] SteamNetworkingConfigScope[]  pOutScope, [In,Out] SteamNetworkingConfigValue[]  pOutNextValue );
+		private static extern bool _GetConfigValueInfo( IntPtr self, NetConfig eValue, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pOutName, ref NetConfigType pOutDataType, [In,Out] SteamNetworkingConfigScope[]  pOutScope, [In,Out] NetConfig[]  pOutNextValue );
 		
 		#endregion
-		internal bool GetConfigValueInfo( SteamNetworkingConfigValue eValue, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pOutName, ref SteamNetworkingConfigDataType pOutDataType, [In,Out] SteamNetworkingConfigScope[]  pOutScope, [In,Out] SteamNetworkingConfigValue[]  pOutNextValue )
+		internal bool GetConfigValueInfo( NetConfig eValue, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pOutName, ref NetConfigType pOutDataType, [In,Out] SteamNetworkingConfigScope[]  pOutScope, [In,Out] NetConfig[]  pOutNextValue )
 		{
 			var returnValue = _GetConfigValueInfo( Self, eValue, pOutName, ref pOutDataType, pOutScope, pOutNextValue );
 			return returnValue;
@@ -304,10 +304,10 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_GetFirstConfigValue")]
-		private static extern SteamNetworkingConfigValue _GetFirstConfigValue( IntPtr self );
+		private static extern NetConfig _GetFirstConfigValue( IntPtr self );
 		
 		#endregion
-		internal SteamNetworkingConfigValue GetFirstConfigValue()
+		internal NetConfig GetFirstConfigValue()
 		{
 			var returnValue = _GetFirstConfigValue( Self );
 			return returnValue;
