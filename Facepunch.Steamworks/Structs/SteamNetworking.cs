@@ -33,8 +33,8 @@ namespace Steamworks.Data
 		// Not implemented
 	};
 
-	struct SteamDatagramHostedAddress
-	{
+	//struct SteamDatagramHostedAddress
+	//{
 		// Not implemented
-	}
+	//}
 }
