@@ -19,6 +19,7 @@ namespace Generator
 
             public class Method
             {
+                public string Desc { get; set; }
                 public string ReturnType { get; set; }
                 public string CallResult { get; set; }
 

@@ -78,6 +78,7 @@ namespace Generator
 
 			System.IO.File.WriteAllText( $"{folder}{iface.Name}.cs", sb.ToString() );
 		}
+
 		private void WriteFunction( SteamApiDefinition.Interface iface, SteamApiDefinition.Interface.Method func )
 		{
 			var returnType = BaseType.Parse( func.ReturnType, null, func.CallResult );
@@ -131,6 +132,14 @@ namespace Generator
 
 			WriteLine();
 			WriteLine( $"#endregion" );
+
+
+			if ( !string.IsNullOrEmpty( func.Desc ) )
+			{
+				WriteLine( "/// <summary>" );
+				WriteLine( $"/// {func.Desc}" );
+				WriteLine( "/// </summary>" );
+			}
 
 			StartBlock( $"internal {returnType.ReturnType} {func.Name}( {argstr} )".Replace( "(  )", "()" ) );
 			{

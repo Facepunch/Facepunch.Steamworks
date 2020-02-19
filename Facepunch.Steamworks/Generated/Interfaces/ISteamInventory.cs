@@ -28,6 +28,9 @@ namespace Steamworks
 		private static extern Result _GetResultStatus( IntPtr self, SteamInventoryResult_t resultHandle );
 		
 		#endregion
+		/// <summary>
+		/// Find out the status of an asynchronous inventory result handle.
+		/// </summary>
 		internal Result GetResultStatus( SteamInventoryResult_t resultHandle )
 		{
 			var returnValue = _GetResultStatus( Self, resultHandle );
@@ -40,6 +43,9 @@ namespace Steamworks
 		private static extern bool _GetResultItems( IntPtr self, SteamInventoryResult_t resultHandle, [In,Out] SteamItemDetails_t[]  pOutItemsArray, ref uint punOutItemsArraySize );
 		
 		#endregion
+		/// <summary>
+		/// Copies the contents of a result set into a flat array. The specific contents of the result set depend on which query which was used.
+		/// </summary>
 		internal bool GetResultItems( SteamInventoryResult_t resultHandle, [In,Out] SteamItemDetails_t[]  pOutItemsArray, ref uint punOutItemsArraySize )
 		{
 			var returnValue = _GetResultItems( Self, resultHandle, pOutItemsArray, ref punOutItemsArraySize );
@@ -65,6 +71,9 @@ namespace Steamworks
 		private static extern uint _GetResultTimestamp( IntPtr self, SteamInventoryResult_t resultHandle );
 		
 		#endregion
+		/// <summary>
+		/// Returns the server time at which the result was generated. Compare against the value of IClientUtils::GetServerRealTime() to determine age.
+		/// </summary>
 		internal uint GetResultTimestamp( SteamInventoryResult_t resultHandle )
 		{
 			var returnValue = _GetResultTimestamp( Self, resultHandle );
@@ -77,6 +86,9 @@ namespace Steamworks
 		private static extern bool _CheckResultSteamID( IntPtr self, SteamInventoryResult_t resultHandle, SteamId steamIDExpected );
 		
 		#endregion
+		/// <summary>
+		/// Returns true if the result belongs to the target steam ID or false if the result does not. This is important when using DeserializeResult to verify that a remote player is not pretending to have a different users inventory.
+		/// </summary>
 		internal bool CheckResultSteamID( SteamInventoryResult_t resultHandle, SteamId steamIDExpected )
 		{
 			var returnValue = _CheckResultSteamID( Self, resultHandle, steamIDExpected );
@@ -88,6 +100,9 @@ namespace Steamworks
 		private static extern void _DestroyResult( IntPtr self, SteamInventoryResult_t resultHandle );
 		
 		#endregion
+		/// <summary>
+		/// Destroys a result handle and frees all associated memory.
+		/// </summary>
 		internal void DestroyResult( SteamInventoryResult_t resultHandle )
 		{
 			_DestroyResult( Self, resultHandle );
@@ -99,6 +114,9 @@ namespace Steamworks
 		private static extern bool _GetAllItems( IntPtr self, ref SteamInventoryResult_t pResultHandle );
 		
 		#endregion
+		/// <summary>
+		/// Captures the entire state of the current users Steam inventory.
+		/// </summary>
 		internal bool GetAllItems( ref SteamInventoryResult_t pResultHandle )
 		{
 			var returnValue = _GetAllItems( Self, ref pResultHandle );
@@ -111,6 +129,9 @@ namespace Steamworks
 		private static extern bool _GetItemsByID( IntPtr self, ref SteamInventoryResult_t pResultHandle, ref InventoryItemId pInstanceIDs, uint unCountInstanceIDs );
 		
 		#endregion
+		/// <summary>
+		/// Captures the state of a subset of the current users Steam inventory identified by an array of item instance IDs.
+		/// </summary>
 		internal bool GetItemsByID( ref SteamInventoryResult_t pResultHandle, ref InventoryItemId pInstanceIDs, uint unCountInstanceIDs )
 		{
 			var returnValue = _GetItemsByID( Self, ref pResultHandle, ref pInstanceIDs, unCountInstanceIDs );
@@ -159,6 +180,9 @@ namespace Steamworks
 		private static extern bool _GrantPromoItems( IntPtr self, ref SteamInventoryResult_t pResultHandle );
 		
 		#endregion
+		/// <summary>
+		/// GrantPromoItems() checks the list of promotional items for which the user may be eligible and grants the items (one time only).
+		/// </summary>
 		internal bool GrantPromoItems( ref SteamInventoryResult_t pResultHandle )
 		{
 			var returnValue = _GrantPromoItems( Self, ref pResultHandle );
@@ -195,6 +219,9 @@ namespace Steamworks
 		private static extern bool _ConsumeItem( IntPtr self, ref SteamInventoryResult_t pResultHandle, InventoryItemId itemConsume, uint unQuantity );
 		
 		#endregion
+		/// <summary>
+		/// ConsumeItem() removes items from the inventory permanently.
+		/// </summary>
 		internal bool ConsumeItem( ref SteamInventoryResult_t pResultHandle, InventoryItemId itemConsume, uint unQuantity )
 		{
 			var returnValue = _ConsumeItem( Self, ref pResultHandle, itemConsume, unQuantity );
@@ -230,6 +257,9 @@ namespace Steamworks
 		private static extern void _SendItemDropHeartbeat( IntPtr self );
 		
 		#endregion
+		/// <summary>
+		/// Deprecated method. Playtime accounting is performed on the Steam servers.
+		/// </summary>
 		internal void SendItemDropHeartbeat()
 		{
 			_SendItemDropHeartbeat( Self );
@@ -241,6 +271,9 @@ namespace Steamworks
 		private static extern bool _TriggerItemDrop( IntPtr self, ref SteamInventoryResult_t pResultHandle, InventoryDefId dropListDefinition );
 		
 		#endregion
+		/// <summary>
+		/// Playtime credit must be consumed and turned into item drops by your game.
+		/// </summary>
 		internal bool TriggerItemDrop( ref SteamInventoryResult_t pResultHandle, InventoryDefId dropListDefinition )
 		{
 			var returnValue = _TriggerItemDrop( Self, ref pResultHandle, dropListDefinition );
@@ -265,6 +298,9 @@ namespace Steamworks
 		private static extern bool _LoadItemDefinitions( IntPtr self );
 		
 		#endregion
+		/// <summary>
+		/// LoadItemDefinitions triggers the automatic load and refresh of item definitions.
+		/// </summary>
 		internal bool LoadItemDefinitions()
 		{
 			var returnValue = _LoadItemDefinitions( Self );
