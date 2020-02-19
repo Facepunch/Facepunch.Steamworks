@@ -47,7 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeWriter\GlobalFunctions.cs" />
     <Compile Include="CodeWriter\ClassVTable.cs" />
     <Compile Include="CodeWriter\Constants.cs" />
     <Compile Include="CodeWriter\StructCallbacks.cs" />
