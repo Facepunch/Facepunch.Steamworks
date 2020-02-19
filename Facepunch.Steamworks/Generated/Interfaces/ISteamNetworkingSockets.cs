@@ -145,12 +145,12 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingSockets_SendMessageToConnection")]
-		private static extern Result _SendMessageToConnection( IntPtr self, Connection hConn, IntPtr pData, uint cbData, int nSendFlags, [In,Out] long[]  pOutMessageNumber );
+		private static extern Result _SendMessageToConnection( IntPtr self, Connection hConn, IntPtr pData, uint cbData, int nSendFlags, ref long pOutMessageNumber );
 		
 		#endregion
-		internal Result SendMessageToConnection( Connection hConn, IntPtr pData, uint cbData, int nSendFlags, [In,Out] long[]  pOutMessageNumber )
+		internal Result SendMessageToConnection( Connection hConn, IntPtr pData, uint cbData, int nSendFlags, ref long pOutMessageNumber )
 		{
-			var returnValue = _SendMessageToConnection( Self, hConn, pData, cbData, nSendFlags, pOutMessageNumber );
+			var returnValue = _SendMessageToConnection( Self, hConn, pData, cbData, nSendFlags, ref pOutMessageNumber );
 			return returnValue;
 		}
 		
