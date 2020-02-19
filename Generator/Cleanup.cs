@@ -35,7 +35,7 @@ public static class Cleanup
 		type = type.Replace( "ChatRoomEnterResponse", "RoomEnter" );
 		type = type.Replace( "SteamNetworkPingLocation_t", "PingLocation" );
 		type = type.Replace( "SteamNetworkingConfigValue", "NetConfig" );
-		//type = type.Replace( "SteamNetworkingConfigScope", "NetScope" );
+		type = type.Replace( "SteamNetworkingConfigScope", "NetConfigScope" );
 		type = type.Replace( "SteamNetworkingConfigDataType", "NetConfigType" );
 		type = type.Replace( "HSteamNetConnection", "Connection" );
 		type = type.Replace( "HSteamListenSocket", "Socket" );

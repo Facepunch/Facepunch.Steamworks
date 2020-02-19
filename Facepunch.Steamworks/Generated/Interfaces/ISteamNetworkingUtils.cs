@@ -258,10 +258,10 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_SetConfigValue")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SetConfigValue( IntPtr self, NetConfig eValue, SteamNetworkingConfigScope eScopeType, long scopeObj, NetConfigType eDataType, IntPtr pArg );
+		private static extern bool _SetConfigValue( IntPtr self, NetConfig eValue, NetConfigScope eScopeType, long scopeObj, NetConfigType eDataType, IntPtr pArg );
 		
 		#endregion
-		internal bool SetConfigValue( NetConfig eValue, SteamNetworkingConfigScope eScopeType, long scopeObj, NetConfigType eDataType, IntPtr pArg )
+		internal bool SetConfigValue( NetConfig eValue, NetConfigScope eScopeType, long scopeObj, NetConfigType eDataType, IntPtr pArg )
 		{
 			var returnValue = _SetConfigValue( Self, eValue, eScopeType, scopeObj, eDataType, pArg );
 			return returnValue;
@@ -270,10 +270,10 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_SetConfigValueStruct")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SetConfigValueStruct( IntPtr self, ref NetConfig_t opt, SteamNetworkingConfigScope eScopeType, long scopeObj );
+		private static extern bool _SetConfigValueStruct( IntPtr self, ref NetConfig_t opt, NetConfigScope eScopeType, long scopeObj );
 		
 		#endregion
-		internal bool SetConfigValueStruct( ref NetConfig_t opt, SteamNetworkingConfigScope eScopeType, long scopeObj )
+		internal bool SetConfigValueStruct( ref NetConfig_t opt, NetConfigScope eScopeType, long scopeObj )
 		{
 			var returnValue = _SetConfigValueStruct( Self, ref opt, eScopeType, scopeObj );
 			return returnValue;
@@ -281,10 +281,10 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_GetConfigValue")]
-		private static extern NetConfigResult _GetConfigValue( IntPtr self, NetConfig eValue, SteamNetworkingConfigScope eScopeType, long scopeObj, ref NetConfigType pOutDataType, IntPtr pResult, ref UIntPtr cbResult );
+		private static extern NetConfigResult _GetConfigValue( IntPtr self, NetConfig eValue, NetConfigScope eScopeType, long scopeObj, ref NetConfigType pOutDataType, IntPtr pResult, ref UIntPtr cbResult );
 		
 		#endregion
-		internal NetConfigResult GetConfigValue( NetConfig eValue, SteamNetworkingConfigScope eScopeType, long scopeObj, ref NetConfigType pOutDataType, IntPtr pResult, ref UIntPtr cbResult )
+		internal NetConfigResult GetConfigValue( NetConfig eValue, NetConfigScope eScopeType, long scopeObj, ref NetConfigType pOutDataType, IntPtr pResult, ref UIntPtr cbResult )
 		{
 			var returnValue = _GetConfigValue( Self, eValue, eScopeType, scopeObj, ref pOutDataType, pResult, ref cbResult );
 			return returnValue;
@@ -293,10 +293,10 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_GetConfigValueInfo")]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _GetConfigValueInfo( IntPtr self, NetConfig eValue, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pOutName, ref NetConfigType pOutDataType, [In,Out] SteamNetworkingConfigScope[]  pOutScope, [In,Out] NetConfig[]  pOutNextValue );
+		private static extern bool _GetConfigValueInfo( IntPtr self, NetConfig eValue, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pOutName, ref NetConfigType pOutDataType, [In,Out] NetConfigScope[]  pOutScope, [In,Out] NetConfig[]  pOutNextValue );
 		
 		#endregion
-		internal bool GetConfigValueInfo( NetConfig eValue, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pOutName, ref NetConfigType pOutDataType, [In,Out] SteamNetworkingConfigScope[]  pOutScope, [In,Out] NetConfig[]  pOutNextValue )
+		internal bool GetConfigValueInfo( NetConfig eValue, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pOutName, ref NetConfigType pOutDataType, [In,Out] NetConfigScope[]  pOutScope, [In,Out] NetConfig[]  pOutNextValue )
 		{
 			var returnValue = _GetConfigValueInfo( Self, eValue, pOutName, ref pOutDataType, pOutScope, pOutNextValue );
 			return returnValue;
