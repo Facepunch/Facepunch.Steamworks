@@ -143,7 +143,7 @@ internal class StructType : BaseType
 	{
 		if ( NativeType.EndsWith( "*" ) )
 		{
-			return $"return {TypeName}.Fill( {varname} );";
+			return $"return ({TypeName}) Marshal.PtrToStructure( {varname}, typeof( {TypeName} ) );";
 		}
 
 		return base.Return( varname );
