@@ -261,10 +261,10 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_SetConfigValue", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SetConfigValue( IntPtr self, NetConfig eValue, NetConfigScope eScopeType, long scopeObj, NetConfigType eDataType, IntPtr pArg );
+		private static extern bool _SetConfigValue( IntPtr self, NetConfig eValue, NetConfigScope eScopeType, IntPtr scopeObj, NetConfigType eDataType, IntPtr pArg );
 		
 		#endregion
-		internal bool SetConfigValue( NetConfig eValue, NetConfigScope eScopeType, long scopeObj, NetConfigType eDataType, IntPtr pArg )
+		internal bool SetConfigValue( NetConfig eValue, NetConfigScope eScopeType, IntPtr scopeObj, NetConfigType eDataType, IntPtr pArg )
 		{
 			var returnValue = _SetConfigValue( Self, eValue, eScopeType, scopeObj, eDataType, pArg );
 			return returnValue;
@@ -273,10 +273,10 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_SetConfigValueStruct", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SetConfigValueStruct( IntPtr self, ref NetKeyValue opt, NetConfigScope eScopeType, long scopeObj );
+		private static extern bool _SetConfigValueStruct( IntPtr self, ref NetKeyValue opt, NetConfigScope eScopeType, IntPtr scopeObj );
 		
 		#endregion
-		internal bool SetConfigValueStruct( ref NetKeyValue opt, NetConfigScope eScopeType, long scopeObj )
+		internal bool SetConfigValueStruct( ref NetKeyValue opt, NetConfigScope eScopeType, IntPtr scopeObj )
 		{
 			var returnValue = _SetConfigValueStruct( Self, ref opt, eScopeType, scopeObj );
 			return returnValue;
@@ -284,10 +284,10 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_GetConfigValue", CallingConvention = Platform.CC)]
-		private static extern NetConfigResult _GetConfigValue( IntPtr self, NetConfig eValue, NetConfigScope eScopeType, long scopeObj, ref NetConfigType pOutDataType, IntPtr pResult, ref UIntPtr cbResult );
+		private static extern NetConfigResult _GetConfigValue( IntPtr self, NetConfig eValue, NetConfigScope eScopeType, IntPtr scopeObj, ref NetConfigType pOutDataType, IntPtr pResult, ref UIntPtr cbResult );
 		
 		#endregion
-		internal NetConfigResult GetConfigValue( NetConfig eValue, NetConfigScope eScopeType, long scopeObj, ref NetConfigType pOutDataType, IntPtr pResult, ref UIntPtr cbResult )
+		internal NetConfigResult GetConfigValue( NetConfig eValue, NetConfigScope eScopeType, IntPtr scopeObj, ref NetConfigType pOutDataType, IntPtr pResult, ref UIntPtr cbResult )
 		{
 			var returnValue = _GetConfigValue( Self, eValue, eScopeType, scopeObj, ref pOutDataType, pResult, ref cbResult );
 			return returnValue;

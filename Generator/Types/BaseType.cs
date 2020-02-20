@@ -38,7 +38,7 @@ internal class BaseType
 		if ( basicType == "unsigned short" ) return new UInt16Type { NativeType = type, VarName = varname };
 		
 		// DANGER DANGER Danger
-		if ( basicType == "intptr_t" ) return new LongType { NativeType = type, VarName = varname };
+		if ( basicType == "intptr_t" ) return new PointerType { NativeType = type, VarName = varname };
 		if ( basicType == "size_t" ) return new UIntPtrType { NativeType = type, VarName = varname };
 
 		if ( basicType == "uint64" ) return new ULongType { NativeType = type, VarName = varname };

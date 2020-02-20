@@ -150,7 +150,7 @@ namespace Steamworks
 		internal unsafe static bool GetConfigInt( NetConfig type, int value )
 		{
 			int* ptr = &value;
-			return Internal.SetConfigValue( type, NetConfigScope.Global, 0, NetConfigType.Int32, (IntPtr)ptr );
+			return Internal.SetConfigValue( type, NetConfigScope.Global, IntPtr.Zero, NetConfigType.Int32, (IntPtr)ptr );
 		}
 
 		internal unsafe static int GetConfigInt( NetConfig type )
@@ -159,7 +159,7 @@ namespace Steamworks
 			NetConfigType dtype = NetConfigType.Int32;
 			int* ptr = &value;
 			UIntPtr size = new UIntPtr( sizeof( int ) );
-			var result = Internal.GetConfigValue( type, NetConfigScope.Global, 0, ref dtype, (IntPtr) ptr, ref size );
+			var result = Internal.GetConfigValue( type, NetConfigScope.Global, IntPtr.Zero, ref dtype, (IntPtr) ptr, ref size );
 			if ( result != NetConfigResult.OK )
 				return 0;
 
@@ -169,7 +169,7 @@ namespace Steamworks
 		internal unsafe static bool SetConfigFloat( NetConfig type, float value )
 		{
 			float* ptr = &value;
-			return Internal.SetConfigValue( type, NetConfigScope.Global, 0, NetConfigType.Float, (IntPtr)ptr );
+			return Internal.SetConfigValue( type, NetConfigScope.Global, IntPtr.Zero, NetConfigType.Float, (IntPtr)ptr );
 		}
 
 		internal unsafe static float GetConfigFloat( NetConfig type )
@@ -178,7 +178,7 @@ namespace Steamworks
 			NetConfigType dtype = NetConfigType.Float;
 			float* ptr = &value;
 			UIntPtr size = new UIntPtr( sizeof( float ) );
-			var result = Internal.GetConfigValue( type, NetConfigScope.Global, 0, ref dtype, (IntPtr)ptr, ref size );
+			var result = Internal.GetConfigValue( type, NetConfigScope.Global, IntPtr.Zero, ref dtype, (IntPtr)ptr, ref size );
 			if ( result != NetConfigResult.OK )
 				return 0;
 
@@ -191,7 +191,7 @@ namespace Steamworks
 
 			fixed ( byte* ptr = bytes )
 			{
-				return Internal.SetConfigValue( type, NetConfigScope.Global, 0, NetConfigType.String, (IntPtr)ptr );
+				return Internal.SetConfigValue( type, NetConfigScope.Global, IntPtr.Zero, NetConfigType.String, (IntPtr)ptr );
 			}
 		}
 
