@@ -144,5 +144,17 @@ public static class Cleanup
 		}
 
 		return false;
+	}	
+	
+	//
+	// If we start with E[Capital] then strip the E
+	// (makes us more C# like)
+	//
+	internal static string CleanEnum( string name )
+	{
+		if ( name[0] != 'E' ) return name;
+		if ( !char.IsUpper( name[1] ) ) return name;
+
+		return name.Substring( 1 );
 	}
 }

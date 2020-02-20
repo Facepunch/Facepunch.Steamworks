@@ -96,13 +96,13 @@ namespace Generator
 
 			for( int i=0; i<args.Length; i++ )
 			{
-				if ( args[i] is StringType )
+				if ( args[i] is FetchStringType )
 				{
 					if ( args[i + 1] is IntType || args[i + 1] is UIntType || args[i + 1] is UIntPtrType )
 					{
 						if ( args[i + 1].Ref == string.Empty )
 						{
-							args[i + 1] = new ConstValueType( args[i + 1], "(1024 * 32)" );
+							args[i + 1] = new LiteralType( args[i + 1], "(1024 * 32)" );
 						}
 					}
 					else
@@ -150,7 +150,7 @@ namespace Generator
 				//
 				foreach ( var arg in args )
 				{
-					if ( arg is StringType sb )
+					if ( arg is FetchStringType sb )
 					{
 						WriteLine( $"IntPtr mem{sb.VarName} = Helpers.TakeMemory();" );
 					}
@@ -170,7 +170,7 @@ namespace Generator
 				//
 				foreach ( var arg in args )
 				{
-					if ( arg is StringType sb )
+					if ( arg is FetchStringType sb )
 					{
 						WriteLine( $"{sb.VarName} = Helpers.MemoryToString( mem{sb.VarName} );" );
 					}

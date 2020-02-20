@@ -104,7 +104,7 @@ namespace Steamworks
 		internal gameserveritem_t GetServerDetails( HServerListRequest hRequest, int iServer )
 		{
 			var returnValue = _GetServerDetails( Self, hRequest, iServer );
-			return (gameserveritem_t) Marshal.PtrToStructure( returnValue, typeof( gameserveritem_t ) );
+			return returnValue.ToType<gameserveritem_t>();
 		}
 		
 		#region FunctionMeta

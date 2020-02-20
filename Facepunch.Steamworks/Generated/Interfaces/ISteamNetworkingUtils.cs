@@ -28,7 +28,7 @@ namespace Steamworks
 		internal NetMsg AllocateMessage( int cbAllocateBuffer )
 		{
 			var returnValue = _AllocateMessage( Self, cbAllocateBuffer );
-			return (NetMsg) Marshal.PtrToStructure( returnValue, typeof( NetMsg ) );
+			return returnValue.ToType<NetMsg>();
 		}
 		
 		#region FunctionMeta

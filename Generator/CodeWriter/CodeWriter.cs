@@ -10,11 +10,14 @@ namespace Generator
 {
     public partial class CodeWriter
     {
+        public static CodeWriter Current { get; private set; }
+
         private SteamApiDefinition def;
 
 		public CodeWriter( SteamApiDefinition def )
         {
 			this.def = def;
+            Current = this;
             WorkoutTypes();
         }
 
@@ -118,6 +121,38 @@ namespace Generator
         private void Footer()
         {
             EndBlock();
+        }
+
+        public bool IsStruct( string name )
+        {
+            if ( def.structs.Any( x => x.Name == name || Cleanup.ConvertType( x.Name ) == name ) )
+                return true;
+
+            return false;
+        }
+
+        public bool IsTypeDef( string name )
+        {
+            if ( def.typedefs.Any( x => x.Name == name || Cleanup.ConvertType( x.Name ) == name ) )
+                return true;
+
+            return false;
+        }
+
+        public bool IsCallback( string name )
+        {
+            if ( def.callback_structs.Any( x => x.Name == name || Cleanup.ConvertType( x.Name ) == name ) )
+                return true;
+
+            return false;
+        }
+
+        public bool IsEnum( string name )
+        {
+            if ( def.enums.Any( x => x.Name == name || Cleanup.ConvertType( x.Name ) == name ) )
+                return true;
+
+            return false;
         }
     }
 }

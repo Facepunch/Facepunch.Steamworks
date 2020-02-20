@@ -51,7 +51,14 @@
     <Compile Include="CodeWriter\Constants.cs" />
     <Compile Include="CodeWriter\CustomEnums.cs" />
     <Compile Include="CodeWriter\StructCallbacks.cs" />
-    <Compile Include="CodeWriter\Types\BaseType.cs" />
+    <Compile Include="Types\FetchStringType.cs" />
+    <Compile Include="Types\ConstCharType.cs" />
+    <Compile Include="Types\LiteralType.cs" />
+    <Compile Include="Types\StructType.cs" />
+    <Compile Include="Types\BoolType.cs" />
+    <Compile Include="Types\VoidType.cs" />
+    <Compile Include="Types\SteamApiCallType.cs" />
+    <Compile Include="Types\BaseType.cs" />
     <Compile Include="CodeWriter\Writing.cs" />
     <Compile Include="CodeWriter\CodeWriter.cs" />
     <Compile Include="CodeWriter\Enums.cs" />
