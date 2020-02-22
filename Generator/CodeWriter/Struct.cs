@@ -17,11 +17,6 @@ namespace Generator
 
         private Dictionary<string, TypeDef> TypeDefs = new Dictionary<string, TypeDef>();
 
-        public readonly static string[] ForceLargePackStructs = new string[]
-        {
-            "LeaderboardEntry_t"
-        };
-
         void Structs()
         {
             foreach ( var c in def.structs )

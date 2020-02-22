@@ -108,6 +108,9 @@ namespace Generator
                     if ( Fields.Any( x => x.Type.Contains( "CSteamID" ) ) )
                         return true;
 
+                    if ( Fields.Any( x => x.Type.Contains( "CGameID" ) ) )
+                        return true;
+
                     return false;
                 }
             }

@@ -1479,7 +1479,7 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
 	internal struct UserAchievementIconFetched_t : ICallbackData
 	{
 		internal GameId GameID; // m_nGameID CGameID
