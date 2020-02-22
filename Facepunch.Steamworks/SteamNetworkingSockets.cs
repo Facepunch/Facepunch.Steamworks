@@ -73,8 +73,9 @@ namespace Steamworks
 
 		internal static void InstallEvents( bool server = false )
 		{
-			Dispatch.Install<SteamNetConnectionStatusChangedCallback_t>( x => ConnectionStatusChanged( x ), server );
+			Dispatch.Install<SteamNetConnectionStatusChangedCallback_t>( ConnectionStatusChanged, server );
 		}
+
 
 		private static void ConnectionStatusChanged( SteamNetConnectionStatusChangedCallback_t data )
 		{
@@ -107,6 +108,8 @@ namespace Steamworks
 			var t = new T();
 			var options = new NetKeyValue[0];
 			t.Socket = Internal.CreateListenSocketIP( ref address, options.Length, options );
+			t.Initialize();
+
 			SetSocketInterface( t.Socket.Id, t );
 			return t;
 		}

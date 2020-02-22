@@ -24,7 +24,12 @@ namespace Steamworks.Data
 			return value.steamID;
 		}
 
-		public override string ToString() => $"{type};{m_cbSize};{steamID}";
+		public override string ToString()
+		{
+			var id = this;
+			SteamNetworkingUtils.Internal.SteamNetworkingIdentity_ToString( ref id, out var str );
+			return str;
+		}
 
 		internal enum IdentityType
 		{

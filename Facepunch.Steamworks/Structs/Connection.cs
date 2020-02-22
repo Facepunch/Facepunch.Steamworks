@@ -94,27 +94,5 @@ namespace Steamworks.Data
 
 			return strVal;
 		}
-
-		/*
-		[ThreadStatic]
-		private static SteamNetworkingMessage_t[] messageBuffer;
-
-		public IEnumerable<SteamNetworkingMessage_t> Messages
-		{
-			get
-			{
-				if ( messageBuffer == null )
-					messageBuffer = new SteamNetworkingMessage_t[128];
-
-				var num = SteamNetworkingSockets.Internal.ReceiveMessagesOnConnection( this, ref messageBuffer, messageBuffer.Length );
-
-				for ( int i = 0; i < num; i++)
-				{
-					yield return messageBuffer[i];
-					messageBuffer[i].Release();
-				}
-			}
-		}*/
-
 	}
 }

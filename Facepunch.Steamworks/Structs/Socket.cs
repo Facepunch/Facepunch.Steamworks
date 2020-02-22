@@ -17,7 +17,7 @@ namespace Steamworks.Data
 		/// </summary>
 		public bool Close()
 		{
-			return SteamNetworkingSockets.Internal.CloseListenSocket( this );
+			return SteamNetworkingSockets.Internal.CloseListenSocket( Id );
 		}
 
 		public SocketInterface Interface

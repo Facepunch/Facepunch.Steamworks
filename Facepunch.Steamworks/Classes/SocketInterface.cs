@@ -11,9 +11,27 @@ namespace Steamworks
 		public List<Connection> Connected = new List<Connection>();
 		public Socket Socket { get; internal set; }
 
-		public bool Close() => Socket.Close();
-
 		public override string ToString() => Socket.ToString();
+
+		internal HSteamNetPollGroup pollGroup;
+
+		internal void Initialize()
+		{
+			pollGroup = SteamNetworkingSockets.Internal.CreatePollGroup();
+		}
+
+		public bool Close()
+		{
+			if ( SteamNetworkingSockets.Internal.IsValid )
+			{
+				SteamNetworkingSockets.Internal.DestroyPollGroup( pollGroup );
+				Socket.Close();
+			}
+
+			pollGroup = 0;
+			Socket = 0;
+			return true;
+		}
 
 		public virtual void OnConnectionChanged( Connection connection, ConnectionInfo data )
 		{
@@ -40,6 +58,8 @@ namespace Steamworks
 		{
 			connection.Accept();
 			Connecting.Add( connection );
+
+			SteamNetworkingSockets.Internal.SetConnectionPollGroup( connection, pollGroup );
 		}
 
 		/// <summary>
@@ -67,10 +87,10 @@ namespace Steamworks
 			int processed = 0;
 			IntPtr messageBuffer = Marshal.AllocHGlobal( IntPtr.Size * bufferSize );
 
-			/*
+			
 			try
 			{
-				processed = SteamNetworkingSockets.Internal.ReceiveMessagesOnListenSocket( Socket, messageBuffer, bufferSize );
+				processed = SteamNetworkingSockets.Internal.ReceiveMessagesOnPollGroup( pollGroup, messageBuffer, bufferSize );
 
 				for ( int i = 0; i < processed; i++ )
 				{
@@ -81,7 +101,7 @@ namespace Steamworks
 			{
 				Marshal.FreeHGlobal( messageBuffer );
 			}
-			*/
+			
 
 			//
 			// Overwhelmed our buffer, keep going
