@@ -15,7 +15,7 @@ Another fucking c# Steamworks implementation
 | Single C# dll (no native requirements apart from Steam) | ✔ |
 | Open Source | ✔ |
 | MIT license | ✔ |
-| Any 32bit OS | ❌ |
+| Any 32bit OS | ✔  |
 
 ## Why
 
