@@ -10,14 +10,14 @@ namespace Generator
 {
     public partial class CodeWriter
     {
+        public static CodeWriter Current { get; private set; }
+
         private SteamApiDefinition def;
-		public CodeParser Parser;
 
-		public CodeWriter( CodeParser parser, SteamApiDefinition def )
+		public CodeWriter( SteamApiDefinition def )
         {
-			Parser = parser;
-
 			this.def = def;
+            Current = this;
             WorkoutTypes();
         }
 
@@ -29,6 +29,14 @@ namespace Generator
                 Enums();
                 Footer();
                 System.IO.File.WriteAllText( $"{folder}SteamEnums.cs", sb.ToString() );
+            }            
+            
+            {
+                sb = new StringBuilder();
+                Header();
+                CustomEnums();
+                Footer();
+                System.IO.File.WriteAllText( $"{folder}CustomEnums.cs", sb.ToString() );
             }
 
             {
@@ -37,6 +45,14 @@ namespace Generator
                 Types();
                 Footer();
                 System.IO.File.WriteAllText( $"{folder}SteamTypes.cs", sb.ToString() );
+            }
+
+            {
+                sb = new StringBuilder();
+                Header( "Steamworks.Data" );
+                StructCallbacks();
+                Footer();
+                System.IO.File.WriteAllText( $"{folder}SteamCallbacks.cs", sb.ToString() );
             }
 
             {
@@ -56,34 +72,15 @@ namespace Generator
             }
 
 			{
-				GenerateGlobalFunctions( "SteamAPI", $"{folder}../Generated/SteamAPI.cs" );
-				GenerateGlobalFunctions( "SteamGameServer", $"{folder}../Generated/SteamGameServer.cs" );
-				GenerateGlobalFunctions( "SteamInternal", $"{folder}../Generated/SteamInternal.cs" );
+			//	GenerateGlobalFunctions( "SteamAPI", $"{folder}../Generated/SteamAPI.cs" );
+			//	GenerateGlobalFunctions( "SteamGameServer", $"{folder}../Generated/SteamGameServer.cs" );
+			//	GenerateGlobalFunctions( "SteamInternal", $"{folder}../Generated/SteamInternal.cs" );
 			}
 
-			{
-				GenerateVTableClass( "ISteamApps", $"{folder}../Generated/Interfaces/ISteamApps.cs" );
-				GenerateVTableClass( "ISteamUtils", $"{folder}../Generated/Interfaces/ISteamUtils.cs" );
-				GenerateVTableClass( "ISteamParentalSettings", $"{folder}../Generated/Interfaces/ISteamParentalSettings.cs" );
-				GenerateVTableClass( "ISteamMusic", $"{folder}../Generated/Interfaces/ISteamMusic.cs" );
-				GenerateVTableClass( "ISteamVideo", $"{folder}../Generated/Interfaces/ISteamVideo.cs" );
-				GenerateVTableClass( "ISteamUser", $"{folder}../Generated/Interfaces/ISteamUser.cs" );
-				GenerateVTableClass( "ISteamMatchmakingServers", $"{folder}../Generated/Interfaces/ISteamMatchmakingServers.cs" );
-				GenerateVTableClass( "ISteamFriends", $"{folder}../Generated/Interfaces/ISteamFriends.cs" );
-				GenerateVTableClass( "ISteamGameServer", $"{folder}../Generated/Interfaces/ISteamGameServer.cs" );
-				GenerateVTableClass( "ISteamScreenshots", $"{folder}../Generated/Interfaces/ISteamScreenshots.cs" );
-				GenerateVTableClass( "ISteamUserStats", $"{folder}../Generated/Interfaces/ISteamUserStats.cs" );
-				GenerateVTableClass( "ISteamUGC", $"{folder}../Generated/Interfaces/ISteamUGC.cs" );
-				GenerateVTableClass( "ISteamRemoteStorage", $"{folder}../Generated/Interfaces/ISteamRemoteStorage.cs" );
-				GenerateVTableClass( "ISteamInventory", $"{folder}../Generated/Interfaces/ISteamInventory.cs" );
-				GenerateVTableClass( "ISteamNetworking", $"{folder}../Generated/Interfaces/ISteamNetworking.cs" );
-				GenerateVTableClass( "ISteamMatchmaking", $"{folder}../Generated/Interfaces/ISteamMatchmaking.cs" );
-				GenerateVTableClass( "ISteamParties", $"{folder}../Generated/Interfaces/ISteamParties.cs" );
-				GenerateVTableClass( "ISteamNetworkingUtils", $"{folder}../Generated/Interfaces/ISteamNetworkingUtils.cs" );
-				GenerateVTableClass( "ISteamNetworkingSockets", $"{folder}../Generated/Interfaces/ISteamNetworkingSockets.cs" );
-				GenerateVTableClass( "ISteamGameServerStats", $"{folder}../Generated/Interfaces/ISteamGameServerStats.cs" );
-				GenerateVTableClass( "ISteamInput", $"{folder}../Generated/Interfaces/ISteamInput.cs" );
-			}
+            foreach ( var iface in def.Interfaces )
+            {
+                GenerateInterface( iface, $"{folder}../Generated/Interfaces/" );
+            }
 		}
 
         void WorkoutTypes()
@@ -124,6 +121,38 @@ namespace Generator
         private void Footer()
         {
             EndBlock();
+        }
+
+        public bool IsStruct( string name )
+        {
+            if ( def.structs.Any( x => x.Name == name || Cleanup.ConvertType( x.Name ) == name ) )
+                return true;
+
+            return false;
+        }
+
+        public bool IsTypeDef( string name )
+        {
+            if ( def.typedefs.Any( x => x.Name == name || Cleanup.ConvertType( x.Name ) == name ) )
+                return true;
+
+            return false;
+        }
+
+        public bool IsCallback( string name )
+        {
+            if ( def.callback_structs.Any( x => x.Name == name || Cleanup.ConvertType( x.Name ) == name ) )
+                return true;
+
+            return false;
+        }
+
+        public bool IsEnum( string name )
+        {
+            if ( def.enums.Any( x => x.Name == name || Cleanup.ConvertType( x.Name ) == name ) )
+                return true;
+
+            return false;
         }
     }
 }

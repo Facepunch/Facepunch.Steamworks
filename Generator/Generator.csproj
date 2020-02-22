@@ -47,13 +47,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeParser\CodeParser.Class.cs" />
-    <Compile Include="CodeParser\CodeParser.cs" />
-    <Compile Include="CodeParser\ParseClasses.cs" />
-    <Compile Include="CodeWriter\GlobalFunctions.cs" />
-    <Compile Include="CodeWriter\ClassVTable.cs" />
+    <Compile Include="CodeWriter\Interface.cs" />
     <Compile Include="CodeWriter\Constants.cs" />
-    <Compile Include="CodeWriter\Types\BaseType.cs" />
+    <Compile Include="CodeWriter\CustomEnums.cs" />
+    <Compile Include="CodeWriter\StructCallbacks.cs" />
+    <Compile Include="Types\FetchStringType.cs" />
+    <Compile Include="Types\ConstCharType.cs" />
+    <Compile Include="Types\LiteralType.cs" />
+    <Compile Include="Types\StructType.cs" />
+    <Compile Include="Types\BoolType.cs" />
+    <Compile Include="Types\VoidType.cs" />
+    <Compile Include="Types\SteamApiCallType.cs" />
+    <Compile Include="Types\BaseType.cs" />
     <Compile Include="CodeWriter\Writing.cs" />
     <Compile Include="CodeWriter\CodeWriter.cs" />
     <Compile Include="CodeWriter\Enums.cs" />

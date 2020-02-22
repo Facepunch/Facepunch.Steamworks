@@ -57,7 +57,9 @@ namespace Generator
                 case "uint64": return "ulong";
                 case "uint32": return "uint";
                 case "int32": return "int";
+                case "int32_t": return "int";
                 case "int64": return "long";
+                case "int64_t": return "long";
                 case "void *": return "IntPtr";
                 case "uint8 *": return "IntPtr";
                 case "int16": return "short";
