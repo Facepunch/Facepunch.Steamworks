@@ -552,17 +552,6 @@ namespace Steamworks
 	}
 	
 	//
-	// EDurationControlOnlineState
-	//
-	internal enum DurationControlOnlineState : int
-	{
-		Invalid = 0,
-		Offline = 1,
-		Online = 2,
-		OnlineHighPri = 3,
-	}
-	
-	//
 	// EGameSearchErrorCode_t
 	//
 	internal enum GameSearchErrorCode_t : int

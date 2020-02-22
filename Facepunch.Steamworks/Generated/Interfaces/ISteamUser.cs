@@ -364,17 +364,5 @@ namespace Steamworks
 			return new CallResult<DurationControl_t>( returnValue );
 		}
 		
-		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUser_BSetDurationControlOnlineState", CallingConvention = Platform.CC)]
-		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _BSetDurationControlOnlineState( IntPtr self, DurationControlOnlineState eNewState );
-		
-		#endregion
-		internal bool BSetDurationControlOnlineState( DurationControlOnlineState eNewState )
-		{
-			var returnValue = _BSetDurationControlOnlineState( Self, eNewState );
-			return returnValue;
-		}
-		
 	}
 }
