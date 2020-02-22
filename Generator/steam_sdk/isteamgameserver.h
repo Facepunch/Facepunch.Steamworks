@@ -27,7 +27,7 @@ public:
 //
 
 	/// This is called by SteamGameServer_Init, and you will usually not need to call it directly
-	virtual bool InitGameServer( uint32 unIP, uint16 usGamePort, uint16 usQueryPort, uint32 unFlags, AppId_t nGameAppId, const char *pchVersionString ) = 0;
+	STEAM_PRIVATE_API( virtual bool InitGameServer( uint32 unIP, uint16 usGamePort, uint16 usQueryPort, uint32 unFlags, AppId_t nGameAppId, const char *pchVersionString ) = 0; )
 
 	/// Game product identifier.  This is currently used by the master server for version checking purposes.
 	/// It's a required field, but will eventually will go away, and the AppID will be used for this purpose.
@@ -199,7 +199,7 @@ public:
 	// Returns the public IP of the server according to Steam, useful when the server is 
 	// behind NAT and you want to advertise its IP in a lobby for other clients to directly
 	// connect to
-	virtual uint32 GetPublicIP() = 0;
+	virtual SteamIPAddress_t GetPublicIP() = 0;
 
 // These are in GameSocketShare mode, where instead of ISteamGameServer creating its own
 // socket to talk to the master server on, it lets the game use its socket to forward messages
@@ -250,7 +250,7 @@ public:
 
 };
 
-#define STEAMGAMESERVER_INTERFACE_VERSION "SteamGameServer012"
+#define STEAMGAMESERVER_INTERFACE_VERSION "SteamGameServer013"
 
 // Global accessor
 inline ISteamGameServer *SteamGameServer();

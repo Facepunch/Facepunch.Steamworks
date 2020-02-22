@@ -36,7 +36,6 @@ const size_t k_cbSteamDatagramMaxSerializedTicket = 512;
 /// to the intended destination, but otherwise clients really should not
 /// need to know what's inside.  (Indeed, we don't really want them to
 /// know, as it could reveal information useful to an attacker.)
-#ifndef IS_STEAMDATAGRAMROUTER
 struct SteamDatagramHostedAddress
 {
 
@@ -73,7 +72,7 @@ struct SteamDatagramHostedAddress
 	/// Convert to/from std::string (or anything that acts like it).
 	/// Useful for interfacing with google protobuf.  It's a template
 	/// mainly so that we don't have to include <string> in the header.
-	/// Note: by "string", we don't mean that it's text.  Ut's a binary
+	/// Note: by "string", we don't mean that it's text.  It's a binary
 	/// blob, and it might have zeros in it.  (std::string can handle that.)
 	template <typename T> bool SetFromStdString( const T &str )
 	{
@@ -90,9 +89,7 @@ struct SteamDatagramHostedAddress
 	{
 		str->assign( m_data, m_cbSize );
 	}
-
 };
-#endif
 
 /// Ticket used to gain access to the relay network.
 struct SteamDatagramRelayAuthTicket
@@ -228,7 +225,7 @@ private:
 		if ( m_nExtraFields >= k_nMaxExtraFields )
 		{
 			assert( false );
-			return nullptr;
+			return NULL;
 		}
 		ExtraField *p = &m_vecExtraFields[ m_nExtraFields++ ];
 		p->m_eType = eType;
@@ -243,5 +240,47 @@ private:
 };
 
 #pragma pack(pop)
+
+/// Max size of user data blob
+const size_t k_cbMaxSteamDatagramGameCoordinatorServerLoginAppData = 2048;
+
+/// Max size of serialized data blob
+const size_t k_cbMaxSteamDatagramGameCoordinatorServerLoginSerialized = 4096;
+
+/// Structure that describes a gameserver attempting to authenticate
+/// with your central server allocator / matchmaking service ("game coordinator").
+/// This is useful because the game coordinator needs to know:
+///
+/// - What data center is the gameserver running in?
+/// - The routing blob of the gameserver
+/// - Is the gameserver actually trusted?
+///
+/// Using this structure, you can securely communicate this information
+/// to your server, and you can do this WITHOUT maintaining any
+/// whitelists or tables of IP addresses.
+///
+/// See ISteamNetworkingSockets::GetGameCoordinatorServerLogin
+struct SteamDatagramGameCoordinatorServerLogin
+{
+	/// Server's identity
+	SteamNetworkingIdentity m_identity;
+
+	/// Routing info.  Note that this includes the POPID
+	SteamDatagramHostedAddress m_routing;
+
+	/// AppID that the server thinks it is running
+	AppId_t m_nAppID;
+
+	/// Unix timestamp when this was generated
+	RTime32 m_rtime;
+
+	/// Size of application data
+	int m_cbAppData;
+
+	/// Application data.  This is any additional information
+	/// that you need to identify the server not contained above.
+	/// (E.g. perhaps a public IP as seen by the coordinator service.)
+	char m_appData[ k_cbMaxSteamDatagramGameCoordinatorServerLoginAppData ];
+};
 
 #endif // STEAMDATAGRAM_TICKETS_H

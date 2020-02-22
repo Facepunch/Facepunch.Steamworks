@@ -49,13 +49,6 @@ public:
 inline ISteamVideo *SteamVideo();
 STEAM_DEFINE_USER_INTERFACE_ACCESSOR( ISteamVideo *, SteamVideo, STEAMVIDEO_INTERFACE_VERSION );
 
-STEAM_CALLBACK_BEGIN( BroadcastUploadStart_t, k_iClientVideoCallbacks + 4 )
-STEAM_CALLBACK_END(0)
-
-STEAM_CALLBACK_BEGIN( BroadcastUploadStop_t, k_iClientVideoCallbacks + 5 )
-	STEAM_CALLBACK_MEMBER( 0, EBroadcastUploadResult, m_eResult )
-STEAM_CALLBACK_END(1)
-
 STEAM_CALLBACK_BEGIN( GetVideoURLResult_t, k_iClientVideoCallbacks + 11 )
 	STEAM_CALLBACK_MEMBER( 0, EResult, m_eResult )
 	STEAM_CALLBACK_MEMBER( 1, AppId_t, m_unVideoAppID )
