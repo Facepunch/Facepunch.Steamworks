@@ -2377,15 +2377,6 @@
       ]
     },
     {
-      "enumname": "EDurationControlOnlineState",
-      "values": [
-        { "name":"k_EDurationControlOnlineState_Invalid", "value":"0" },
-        { "name":"k_EDurationControlOnlineState_Offline", "value":"1" },
-        { "name":"k_EDurationControlOnlineState_Online", "value":"2" },
-        { "name":"k_EDurationControlOnlineState_OnlineHighPri", "value":"3" }
-      ]
-    },
-    {
       "enumname": "EGameSearchErrorCode_t",
       "values": [
         { "name":"k_EGameSearchErrorCode_OK", "value":"1" },
@@ -4452,14 +4443,6 @@
           "methodname_flat": "SteamAPI_ISteamUser_GetDurationControl",
           "params": [],
           "returntype": "SteamAPICall_t"
-        },
-        {
-          "methodname": "BSetDurationControlOnlineState",
-          "methodname_flat": "SteamAPI_ISteamUser_BSetDurationControlOnlineState",
-          "params": [
-            { "paramname":"eNewState", "paramtype":"EDurationControlOnlineState" }
-          ],
-          "returntype": "bool"
         }
       ],
       "version_string": "SteamUser020"
@@ -12968,12 +12951,7 @@
       "fields": [
         { "fieldname":"m_eValue", "fieldtype":"ESteamNetworkingConfigValue" },
         { "fieldname":"m_eDataType", "fieldtype":"ESteamNetworkingConfigDataType" },
-        { "fieldname":"m_int64", "fieldtype":"int64_t" },
-        { "fieldname":"m_val_int32", "fieldtype":"int32_t" },
-        { "fieldname":"m_val_int64", "fieldtype":"int64_t" },
-        { "fieldname":"m_val_float", "fieldtype":"float" },
-        { "fieldname":"m_val_string", "fieldtype":"const char *" },
-        { "fieldname":"m_val_functionPtr", "fieldtype":"void *" }
+        { "fieldname":"m_int64", "fieldtype":"int64_t" }
       ],
       "struct": "SteamNetworkingConfigValue_t"
     },
