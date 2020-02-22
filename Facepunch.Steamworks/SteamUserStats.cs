@@ -7,36 +7,24 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	public static class SteamUserStats
+	public class SteamUserStats : SteamClass
 	{
-		static ISteamUserStats _internal;
-		internal static ISteamUserStats Internal
+		internal static ISteamUserStats Internal;
+		internal override SteamInterface Interface => Internal;
+
+		internal override void InitializeInterface( bool server )
 		{
-			get
-			{
-				SteamClient.ValidCheck();
+			Internal = new ISteamUserStats( server );
 
-				if ( _internal == null )
-				{
-					_internal = new ISteamUserStats();
-					_internal.Init();
-
-					RequestCurrentStats();
-				}
-
-				return _internal;
-			}
-		}
-		internal static void Shutdown()
-		{
-			_internal = null;
+			InstallEvents();
+			RequestCurrentStats();
 		}
 
 		public static bool StatsRecieved { get; internal set; }
 
 		internal static void InstallEvents()
 		{
-			UserStatsReceived_t.Install( x =>
+			Dispatch.Install<UserStatsReceived_t>( x =>
 			{
 				if ( x.SteamIDUser == SteamClient.SteamId )
 					StatsRecieved = true;
@@ -44,10 +32,10 @@ namespace Steamworks
 				OnUserStatsReceived?.Invoke( x.SteamIDUser, x.Result );
 			} );
 
-			UserStatsStored_t.Install( x => OnUserStatsStored?.Invoke( x.Result ) );
-			UserAchievementStored_t.Install( x => OnAchievementProgress?.Invoke( new Achievement( x.AchievementNameUTF8() ), (int) x.CurProgress, (int)x.MaxProgress ) );
-			UserStatsUnloaded_t.Install( x => OnUserStatsUnloaded?.Invoke( x.SteamIDUser ) );
-			UserAchievementIconFetched_t.Install( x => OnAchievementIconFetched?.Invoke( x.AchievementNameUTF8(), x.IconHandle ) );
+			Dispatch.Install<UserStatsStored_t>( x => OnUserStatsStored?.Invoke( x.Result ) );
+			Dispatch.Install<UserAchievementStored_t>( x => OnAchievementProgress?.Invoke( new Achievement( x.AchievementNameUTF8() ), (int) x.CurProgress, (int)x.MaxProgress ) );
+			Dispatch.Install<UserStatsUnloaded_t>( x => OnUserStatsUnloaded?.Invoke( x.SteamIDUser ) );
+			Dispatch.Install<UserAchievementIconFetched_t>( x => OnAchievementIconFetched?.Invoke( x.AchievementNameUTF8(), x.IconHandle ) );
 		}
 
 
@@ -209,7 +197,7 @@ namespace Steamworks
 		/// </summary>
 		public static bool SetStat( string name, int value )
 		{
-			return Internal.SetStat1( name, value );
+			return Internal.SetStat( name, value );
 		}
 
 		/// <summary>
@@ -218,7 +206,7 @@ namespace Steamworks
 		/// </summary>
 		public static bool SetStat( string name, float value )
 		{
-			return Internal.SetStat2( name, value );
+			return Internal.SetStat( name, value );
 		}
 
 		/// <summary>
@@ -227,7 +215,7 @@ namespace Steamworks
 		public static int GetStatInt( string name )
 		{
 			int data = 0;
-			Internal.GetStat1( name, ref data );
+			Internal.GetStat( name, ref data );
 			return data;
 		}
 
@@ -237,7 +225,7 @@ namespace Steamworks
 		public static float GetStatFloat( string name )
 		{
 			float data = 0;
-			Internal.GetStat2( name, ref data );
+			Internal.GetStat( name, ref data );
 			return data;
 		}
 

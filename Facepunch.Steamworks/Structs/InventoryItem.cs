@@ -130,17 +130,20 @@ namespace Steamworks
 			{
 				if ( Properties == null ) return DateTime.UtcNow;
 
-				var str = Properties["acquired"];
+				if ( Properties.TryGetValue( "acquired", out var str ) )
+				{
+					var y = int.Parse( str.Substring( 0, 4 ) );
+					var m = int.Parse( str.Substring( 4, 2 ) );
+					var d = int.Parse( str.Substring( 6, 2 ) );
 
-				var y = int.Parse( str.Substring( 0, 4 ) );
-				var m = int.Parse( str.Substring( 4, 2 ) );
-				var d = int.Parse( str.Substring( 6, 2 ) );
+					var h = int.Parse( str.Substring( 9, 2 ) );
+					var mn = int.Parse( str.Substring( 11, 2 ) );
+					var s = int.Parse( str.Substring( 13, 2 ) );
 
-				var h = int.Parse( str.Substring( 9, 2 ) );
-				var mn = int.Parse( str.Substring( 11, 2 ) );
-				var s = int.Parse( str.Substring( 13, 2 ) );
+					return new DateTime( y, m, d, h, mn, s, DateTimeKind.Utc );
+				}
 
-				return new DateTime( y, m, d, h, mn, s, DateTimeKind.Utc );
+				return DateTime.UtcNow;
 			}
 		}
 
@@ -153,7 +156,11 @@ namespace Steamworks
 			get
 			{
 				if ( Properties == null ) return null;
-				return Properties["origin"];
+				
+				if ( Properties.TryGetValue( "origin", out var str ) )
+					return str;
+
+				return null;
 			}
 		}
 

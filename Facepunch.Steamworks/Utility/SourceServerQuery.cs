@@ -57,7 +57,7 @@ namespace Steamworks
                     return await GetRules(client);
                 }
             }
-            catch (System.Exception e)
+            catch (System.Exception)
             {
                 //Console.Error.WriteLine( e.Message );
                 return null;

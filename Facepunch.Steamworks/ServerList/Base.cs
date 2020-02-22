@@ -11,27 +11,7 @@ namespace Steamworks.ServerList
 	{
 
 		#region ISteamMatchmakingServers
-
-		static ISteamMatchmakingServers _internal;
-		internal static ISteamMatchmakingServers Internal
-		{
-			get
-			{
-				if ( _internal == null )
-				{
-					_internal = new ISteamMatchmakingServers();
-					_internal.Init();
-				}
-
-				return _internal;
-			}
-		}
-
-		internal static void Shutdown()
-		{
-			_internal = null;
-		}
-
+		internal static ISteamMatchmakingServers Internal => SteamMatchmakingServers.Internal;
 		#endregion
 
 
