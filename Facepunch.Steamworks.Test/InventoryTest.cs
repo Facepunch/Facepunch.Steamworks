@@ -10,7 +10,8 @@ namespace Steamworks
 {
     [TestClass]
     [DeploymentItem( "steam_api64.dll" )]
-    public class InventoryTest
+	[DeploymentItem( "steam_api.dll" )]
+	public class InventoryTest
 	{
 		[TestMethod]
 		public async Task LoadItemDefinitionsAsync()

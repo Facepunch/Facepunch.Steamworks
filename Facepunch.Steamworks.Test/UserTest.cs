@@ -11,7 +11,8 @@ namespace Steamworks
 {
     [TestClass]
     [DeploymentItem( "steam_api64.dll" )]
-    public class UserTest
+	[DeploymentItem( "steam_api.dll" )]
+	public class UserTest
     {
 		[TestMethod]
 		public void GetVoice()
