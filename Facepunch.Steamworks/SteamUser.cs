@@ -13,46 +13,33 @@ namespace Steamworks
 	/// Functions for accessing and manipulating Steam user information.
 	/// This is also where the APIs for Steam Voice are exposed.
 	/// </summary>
-	public static class SteamUser
+	public class SteamUser : SteamClass
 	{
-		static ISteamUser _internal;
-		internal static ISteamUser Internal
+		internal static ISteamUser Internal;
+		internal override SteamInterface Interface => Internal;
+
+		internal override void InitializeInterface( bool server )
 		{
-			get
-			{
-				SteamClient.ValidCheck();
+			Internal = new ISteamUser( server );
+			InstallEvents();
 
-				if ( _internal == null )
-				{
-					_internal = new ISteamUser();
-					_internal.Init();
-
-					richPresence = new Dictionary<string, string>();
-
-					SampleRate = OptimalSampleRate;
-				}
-
-				return _internal;
-			}
-		}
-		internal static void Shutdown()
-		{
-			_internal = null;
+			richPresence = new Dictionary<string, string>();
+			SampleRate = OptimalSampleRate;
 		}
 
 		static Dictionary<string, string> richPresence;
 
 		internal static void InstallEvents()
 		{
-			SteamServersConnected_t.Install( x => OnSteamServersConnected?.Invoke() );
-			SteamServerConnectFailure_t.Install( x => OnSteamServerConnectFailure?.Invoke() );
-			SteamServersDisconnected_t.Install( x => OnSteamServersDisconnected?.Invoke() );
-			ClientGameServerDeny_t.Install( x => OnClientGameServerDeny?.Invoke() );
-			LicensesUpdated_t.Install( x => OnLicensesUpdated?.Invoke() );
-			ValidateAuthTicketResponse_t.Install( x => OnValidateAuthTicketResponse?.Invoke( x.SteamID, x.OwnerSteamID, x.AuthSessionResponse ) );
-			MicroTxnAuthorizationResponse_t.Install( x => OnMicroTxnAuthorizationResponse?.Invoke( x.AppID, x.OrderID, x.Authorized != 0 ) );
-			GameWebCallback_t.Install( x => OnGameWebCallback?.Invoke( x.URLUTF8() ) );
-			GetAuthSessionTicketResponse_t.Install( x => OnGetAuthSessionTicketResponse?.Invoke( x ) );
+			Dispatch.Install<SteamServersConnected_t>( x => OnSteamServersConnected?.Invoke() );
+			Dispatch.Install<SteamServerConnectFailure_t>( x => OnSteamServerConnectFailure?.Invoke() );
+			Dispatch.Install<SteamServersDisconnected_t>( x => OnSteamServersDisconnected?.Invoke() );
+			Dispatch.Install<ClientGameServerDeny_t>( x => OnClientGameServerDeny?.Invoke() );
+			Dispatch.Install<LicensesUpdated_t>( x => OnLicensesUpdated?.Invoke() );
+			Dispatch.Install<ValidateAuthTicketResponse_t>( x => OnValidateAuthTicketResponse?.Invoke( x.SteamID, x.OwnerSteamID, x.AuthSessionResponse ) );
+			Dispatch.Install<MicroTxnAuthorizationResponse_t>( x => OnMicroTxnAuthorizationResponse?.Invoke( x.AppID, x.OrderID, x.Authorized != 0 ) );
+			Dispatch.Install<GameWebCallback_t>( x => OnGameWebCallback?.Invoke( x.URLUTF8() ) );
+			Dispatch.Install<GetAuthSessionTicketResponse_t>( x => OnGetAuthSessionTicketResponse?.Invoke( x ) );
 		}
 
 		/// <summary>
@@ -424,6 +411,7 @@ namespace Steamworks
 		/// Requests an application ticket encrypted with the secret "encrypted app ticket key".
 		/// The encryption key can be obtained from the Encrypted App Ticket Key page on the App Admin for your app.
 		/// There can only be one call pending, and this call is subject to a 60 second rate limit.
+		/// If you get a null result from this it's probably because you're calling it too often.
 		/// This can fail if you don't have an encrypted ticket set for your app here https://partner.steamgames.com/apps/sdkauth/
 		/// </summary>
 		public static async Task<byte[]> RequestEncryptedAppTicketAsync( byte[] dataToInclude )

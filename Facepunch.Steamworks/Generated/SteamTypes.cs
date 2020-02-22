@@ -8,6 +8,7 @@ namespace Steamworks.Data
 {
 	internal struct GID_t : IEquatable<GID_t>, IComparable<GID_t>
 	{
+		// Name: GID_t, Type: unsigned long long
 		public ulong Value;
 		
 		public static implicit operator GID_t( ulong value ) => new GID_t(){ Value = value };
@@ -23,6 +24,7 @@ namespace Steamworks.Data
 	
 	internal struct JobID_t : IEquatable<JobID_t>, IComparable<JobID_t>
 	{
+		// Name: JobID_t, Type: unsigned long long
 		public ulong Value;
 		
 		public static implicit operator JobID_t( ulong value ) => new JobID_t(){ Value = value };
@@ -38,10 +40,11 @@ namespace Steamworks.Data
 	
 	internal struct TxnID_t : IEquatable<TxnID_t>, IComparable<TxnID_t>
 	{
-		public GID_t Value;
+		// Name: TxnID_t, Type: unsigned long long
+		public ulong Value;
 		
-		public static implicit operator TxnID_t( GID_t value ) => new TxnID_t(){ Value = value };
-		public static implicit operator GID_t( TxnID_t value ) => value.Value;
+		public static implicit operator TxnID_t( ulong value ) => new TxnID_t(){ Value = value };
+		public static implicit operator ulong( TxnID_t value ) => value.Value;
 		public override string ToString() => Value.ToString();
 		public override int GetHashCode() => Value.GetHashCode();
 		public override bool Equals( object p ) => this.Equals( (TxnID_t) p );
@@ -53,6 +56,7 @@ namespace Steamworks.Data
 	
 	internal struct PackageId_t : IEquatable<PackageId_t>, IComparable<PackageId_t>
 	{
+		// Name: PackageId_t, Type: unsigned int
 		public uint Value;
 		
 		public static implicit operator PackageId_t( uint value ) => new PackageId_t(){ Value = value };
@@ -68,6 +72,7 @@ namespace Steamworks.Data
 	
 	internal struct BundleId_t : IEquatable<BundleId_t>, IComparable<BundleId_t>
 	{
+		// Name: BundleId_t, Type: unsigned int
 		public uint Value;
 		
 		public static implicit operator BundleId_t( uint value ) => new BundleId_t(){ Value = value };
@@ -83,6 +88,7 @@ namespace Steamworks.Data
 	
 	internal struct AssetClassId_t : IEquatable<AssetClassId_t>, IComparable<AssetClassId_t>
 	{
+		// Name: AssetClassId_t, Type: unsigned long long
 		public ulong Value;
 		
 		public static implicit operator AssetClassId_t( ulong value ) => new AssetClassId_t(){ Value = value };
@@ -98,6 +104,7 @@ namespace Steamworks.Data
 	
 	internal struct PhysicalItemId_t : IEquatable<PhysicalItemId_t>, IComparable<PhysicalItemId_t>
 	{
+		// Name: PhysicalItemId_t, Type: unsigned int
 		public uint Value;
 		
 		public static implicit operator PhysicalItemId_t( uint value ) => new PhysicalItemId_t(){ Value = value };
@@ -113,6 +120,7 @@ namespace Steamworks.Data
 	
 	internal struct DepotId_t : IEquatable<DepotId_t>, IComparable<DepotId_t>
 	{
+		// Name: DepotId_t, Type: unsigned int
 		public uint Value;
 		
 		public static implicit operator DepotId_t( uint value ) => new DepotId_t(){ Value = value };
@@ -128,6 +136,7 @@ namespace Steamworks.Data
 	
 	internal struct RTime32 : IEquatable<RTime32>, IComparable<RTime32>
 	{
+		// Name: RTime32, Type: unsigned int
 		public uint Value;
 		
 		public static implicit operator RTime32( uint value ) => new RTime32(){ Value = value };
@@ -143,6 +152,7 @@ namespace Steamworks.Data
 	
 	internal struct CellID_t : IEquatable<CellID_t>, IComparable<CellID_t>
 	{
+		// Name: CellID_t, Type: unsigned int
 		public uint Value;
 		
 		public static implicit operator CellID_t( uint value ) => new CellID_t(){ Value = value };
@@ -158,6 +168,7 @@ namespace Steamworks.Data
 	
 	internal struct SteamAPICall_t : IEquatable<SteamAPICall_t>, IComparable<SteamAPICall_t>
 	{
+		// Name: SteamAPICall_t, Type: unsigned long long
 		public ulong Value;
 		
 		public static implicit operator SteamAPICall_t( ulong value ) => new SteamAPICall_t(){ Value = value };
@@ -173,6 +184,7 @@ namespace Steamworks.Data
 	
 	internal struct AccountID_t : IEquatable<AccountID_t>, IComparable<AccountID_t>
 	{
+		// Name: AccountID_t, Type: unsigned int
 		public uint Value;
 		
 		public static implicit operator AccountID_t( uint value ) => new AccountID_t(){ Value = value };
@@ -188,6 +200,7 @@ namespace Steamworks.Data
 	
 	internal struct PartnerId_t : IEquatable<PartnerId_t>, IComparable<PartnerId_t>
 	{
+		// Name: PartnerId_t, Type: unsigned int
 		public uint Value;
 		
 		public static implicit operator PartnerId_t( uint value ) => new PartnerId_t(){ Value = value };
@@ -203,6 +216,7 @@ namespace Steamworks.Data
 	
 	internal struct ManifestId_t : IEquatable<ManifestId_t>, IComparable<ManifestId_t>
 	{
+		// Name: ManifestId_t, Type: unsigned long long
 		public ulong Value;
 		
 		public static implicit operator ManifestId_t( ulong value ) => new ManifestId_t(){ Value = value };
@@ -218,6 +232,7 @@ namespace Steamworks.Data
 	
 	internal struct SiteId_t : IEquatable<SiteId_t>, IComparable<SiteId_t>
 	{
+		// Name: SiteId_t, Type: unsigned long long
 		public ulong Value;
 		
 		public static implicit operator SiteId_t( ulong value ) => new SiteId_t(){ Value = value };
@@ -233,6 +248,7 @@ namespace Steamworks.Data
 	
 	internal struct PartyBeaconID_t : IEquatable<PartyBeaconID_t>, IComparable<PartyBeaconID_t>
 	{
+		// Name: PartyBeaconID_t, Type: unsigned long long
 		public ulong Value;
 		
 		public static implicit operator PartyBeaconID_t( ulong value ) => new PartyBeaconID_t(){ Value = value };
@@ -248,6 +264,7 @@ namespace Steamworks.Data
 	
 	internal struct HAuthTicket : IEquatable<HAuthTicket>, IComparable<HAuthTicket>
 	{
+		// Name: HAuthTicket, Type: unsigned int
 		public uint Value;
 		
 		public static implicit operator HAuthTicket( uint value ) => new HAuthTicket(){ Value = value };
@@ -263,6 +280,7 @@ namespace Steamworks.Data
 	
 	internal struct BREAKPAD_HANDLE : IEquatable<BREAKPAD_HANDLE>, IComparable<BREAKPAD_HANDLE>
 	{
+		// Name: BREAKPAD_HANDLE, Type: void *
 		public IntPtr Value;
 		
 		public static implicit operator BREAKPAD_HANDLE( IntPtr value ) => new BREAKPAD_HANDLE(){ Value = value };
@@ -278,6 +296,7 @@ namespace Steamworks.Data
 	
 	internal struct HSteamPipe : IEquatable<HSteamPipe>, IComparable<HSteamPipe>
 	{
+		// Name: HSteamPipe, Type: int
 		public int Value;
 		
 		public static implicit operator HSteamPipe( int value ) => new HSteamPipe(){ Value = value };
@@ -293,6 +312,7 @@ namespace Steamworks.Data
 	
 	internal struct HSteamUser : IEquatable<HSteamUser>, IComparable<HSteamUser>
 	{
+		// Name: HSteamUser, Type: int
 		public int Value;
 		
 		public static implicit operator HSteamUser( int value ) => new HSteamUser(){ Value = value };
@@ -308,6 +328,7 @@ namespace Steamworks.Data
 	
 	internal struct FriendsGroupID_t : IEquatable<FriendsGroupID_t>, IComparable<FriendsGroupID_t>
 	{
+		// Name: FriendsGroupID_t, Type: short
 		public short Value;
 		
 		public static implicit operator FriendsGroupID_t( short value ) => new FriendsGroupID_t(){ Value = value };
@@ -323,6 +344,7 @@ namespace Steamworks.Data
 	
 	internal struct HServerListRequest : IEquatable<HServerListRequest>, IComparable<HServerListRequest>
 	{
+		// Name: HServerListRequest, Type: void *
 		public IntPtr Value;
 		
 		public static implicit operator HServerListRequest( IntPtr value ) => new HServerListRequest(){ Value = value };
@@ -338,6 +360,7 @@ namespace Steamworks.Data
 	
 	internal struct HServerQuery : IEquatable<HServerQuery>, IComparable<HServerQuery>
 	{
+		// Name: HServerQuery, Type: int
 		public int Value;
 		
 		public static implicit operator HServerQuery( int value ) => new HServerQuery(){ Value = value };
@@ -353,6 +376,7 @@ namespace Steamworks.Data
 	
 	internal struct UGCHandle_t : IEquatable<UGCHandle_t>, IComparable<UGCHandle_t>
 	{
+		// Name: UGCHandle_t, Type: unsigned long long
 		public ulong Value;
 		
 		public static implicit operator UGCHandle_t( ulong value ) => new UGCHandle_t(){ Value = value };
@@ -368,6 +392,7 @@ namespace Steamworks.Data
 	
 	internal struct PublishedFileUpdateHandle_t : IEquatable<PublishedFileUpdateHandle_t>, IComparable<PublishedFileUpdateHandle_t>
 	{
+		// Name: PublishedFileUpdateHandle_t, Type: unsigned long long
 		public ulong Value;
 		
 		public static implicit operator PublishedFileUpdateHandle_t( ulong value ) => new PublishedFileUpdateHandle_t(){ Value = value };
@@ -383,6 +408,7 @@ namespace Steamworks.Data
 	
 	public struct PublishedFileId : IEquatable<PublishedFileId>, IComparable<PublishedFileId>
 	{
+		// Name: PublishedFileId_t, Type: unsigned long long
 		public ulong Value;
 		
 		public static implicit operator PublishedFileId( ulong value ) => new PublishedFileId(){ Value = value };
@@ -398,6 +424,7 @@ namespace Steamworks.Data
 	
 	internal struct UGCFileWriteStreamHandle_t : IEquatable<UGCFileWriteStreamHandle_t>, IComparable<UGCFileWriteStreamHandle_t>
 	{
+		// Name: UGCFileWriteStreamHandle_t, Type: unsigned long long
 		public ulong Value;
 		
 		public static implicit operator UGCFileWriteStreamHandle_t( ulong value ) => new UGCFileWriteStreamHandle_t(){ Value = value };
@@ -413,6 +440,7 @@ namespace Steamworks.Data
 	
 	internal struct SteamLeaderboard_t : IEquatable<SteamLeaderboard_t>, IComparable<SteamLeaderboard_t>
 	{
+		// Name: SteamLeaderboard_t, Type: unsigned long long
 		public ulong Value;
 		
 		public static implicit operator SteamLeaderboard_t( ulong value ) => new SteamLeaderboard_t(){ Value = value };
@@ -428,6 +456,7 @@ namespace Steamworks.Data
 	
 	internal struct SteamLeaderboardEntries_t : IEquatable<SteamLeaderboardEntries_t>, IComparable<SteamLeaderboardEntries_t>
 	{
+		// Name: SteamLeaderboardEntries_t, Type: unsigned long long
 		public ulong Value;
 		
 		public static implicit operator SteamLeaderboardEntries_t( ulong value ) => new SteamLeaderboardEntries_t(){ Value = value };
@@ -443,6 +472,7 @@ namespace Steamworks.Data
 	
 	internal struct SNetSocket_t : IEquatable<SNetSocket_t>, IComparable<SNetSocket_t>
 	{
+		// Name: SNetSocket_t, Type: unsigned int
 		public uint Value;
 		
 		public static implicit operator SNetSocket_t( uint value ) => new SNetSocket_t(){ Value = value };
@@ -458,6 +488,7 @@ namespace Steamworks.Data
 	
 	internal struct SNetListenSocket_t : IEquatable<SNetListenSocket_t>, IComparable<SNetListenSocket_t>
 	{
+		// Name: SNetListenSocket_t, Type: unsigned int
 		public uint Value;
 		
 		public static implicit operator SNetListenSocket_t( uint value ) => new SNetListenSocket_t(){ Value = value };
@@ -473,6 +504,7 @@ namespace Steamworks.Data
 	
 	internal struct ScreenshotHandle : IEquatable<ScreenshotHandle>, IComparable<ScreenshotHandle>
 	{
+		// Name: ScreenshotHandle, Type: unsigned int
 		public uint Value;
 		
 		public static implicit operator ScreenshotHandle( uint value ) => new ScreenshotHandle(){ Value = value };
@@ -488,6 +520,7 @@ namespace Steamworks.Data
 	
 	internal struct HTTPRequestHandle : IEquatable<HTTPRequestHandle>, IComparable<HTTPRequestHandle>
 	{
+		// Name: HTTPRequestHandle, Type: unsigned int
 		public uint Value;
 		
 		public static implicit operator HTTPRequestHandle( uint value ) => new HTTPRequestHandle(){ Value = value };
@@ -503,6 +536,7 @@ namespace Steamworks.Data
 	
 	internal struct HTTPCookieContainerHandle : IEquatable<HTTPCookieContainerHandle>, IComparable<HTTPCookieContainerHandle>
 	{
+		// Name: HTTPCookieContainerHandle, Type: unsigned int
 		public uint Value;
 		
 		public static implicit operator HTTPCookieContainerHandle( uint value ) => new HTTPCookieContainerHandle(){ Value = value };
@@ -518,6 +552,7 @@ namespace Steamworks.Data
 	
 	internal struct InputHandle_t : IEquatable<InputHandle_t>, IComparable<InputHandle_t>
 	{
+		// Name: InputHandle_t, Type: unsigned long long
 		public ulong Value;
 		
 		public static implicit operator InputHandle_t( ulong value ) => new InputHandle_t(){ Value = value };
@@ -533,6 +568,7 @@ namespace Steamworks.Data
 	
 	internal struct InputActionSetHandle_t : IEquatable<InputActionSetHandle_t>, IComparable<InputActionSetHandle_t>
 	{
+		// Name: InputActionSetHandle_t, Type: unsigned long long
 		public ulong Value;
 		
 		public static implicit operator InputActionSetHandle_t( ulong value ) => new InputActionSetHandle_t(){ Value = value };
@@ -548,6 +584,7 @@ namespace Steamworks.Data
 	
 	internal struct InputDigitalActionHandle_t : IEquatable<InputDigitalActionHandle_t>, IComparable<InputDigitalActionHandle_t>
 	{
+		// Name: InputDigitalActionHandle_t, Type: unsigned long long
 		public ulong Value;
 		
 		public static implicit operator InputDigitalActionHandle_t( ulong value ) => new InputDigitalActionHandle_t(){ Value = value };
@@ -563,6 +600,7 @@ namespace Steamworks.Data
 	
 	internal struct InputAnalogActionHandle_t : IEquatable<InputAnalogActionHandle_t>, IComparable<InputAnalogActionHandle_t>
 	{
+		// Name: InputAnalogActionHandle_t, Type: unsigned long long
 		public ulong Value;
 		
 		public static implicit operator InputAnalogActionHandle_t( ulong value ) => new InputAnalogActionHandle_t(){ Value = value };
@@ -578,6 +616,7 @@ namespace Steamworks.Data
 	
 	internal struct ControllerHandle_t : IEquatable<ControllerHandle_t>, IComparable<ControllerHandle_t>
 	{
+		// Name: ControllerHandle_t, Type: unsigned long long
 		public ulong Value;
 		
 		public static implicit operator ControllerHandle_t( ulong value ) => new ControllerHandle_t(){ Value = value };
@@ -593,6 +632,7 @@ namespace Steamworks.Data
 	
 	internal struct ControllerActionSetHandle_t : IEquatable<ControllerActionSetHandle_t>, IComparable<ControllerActionSetHandle_t>
 	{
+		// Name: ControllerActionSetHandle_t, Type: unsigned long long
 		public ulong Value;
 		
 		public static implicit operator ControllerActionSetHandle_t( ulong value ) => new ControllerActionSetHandle_t(){ Value = value };
@@ -608,6 +648,7 @@ namespace Steamworks.Data
 	
 	internal struct ControllerDigitalActionHandle_t : IEquatable<ControllerDigitalActionHandle_t>, IComparable<ControllerDigitalActionHandle_t>
 	{
+		// Name: ControllerDigitalActionHandle_t, Type: unsigned long long
 		public ulong Value;
 		
 		public static implicit operator ControllerDigitalActionHandle_t( ulong value ) => new ControllerDigitalActionHandle_t(){ Value = value };
@@ -623,6 +664,7 @@ namespace Steamworks.Data
 	
 	internal struct ControllerAnalogActionHandle_t : IEquatable<ControllerAnalogActionHandle_t>, IComparable<ControllerAnalogActionHandle_t>
 	{
+		// Name: ControllerAnalogActionHandle_t, Type: unsigned long long
 		public ulong Value;
 		
 		public static implicit operator ControllerAnalogActionHandle_t( ulong value ) => new ControllerAnalogActionHandle_t(){ Value = value };
@@ -638,6 +680,7 @@ namespace Steamworks.Data
 	
 	internal struct UGCQueryHandle_t : IEquatable<UGCQueryHandle_t>, IComparable<UGCQueryHandle_t>
 	{
+		// Name: UGCQueryHandle_t, Type: unsigned long long
 		public ulong Value;
 		
 		public static implicit operator UGCQueryHandle_t( ulong value ) => new UGCQueryHandle_t(){ Value = value };
@@ -653,6 +696,7 @@ namespace Steamworks.Data
 	
 	internal struct UGCUpdateHandle_t : IEquatable<UGCUpdateHandle_t>, IComparable<UGCUpdateHandle_t>
 	{
+		// Name: UGCUpdateHandle_t, Type: unsigned long long
 		public ulong Value;
 		
 		public static implicit operator UGCUpdateHandle_t( ulong value ) => new UGCUpdateHandle_t(){ Value = value };
@@ -668,6 +712,7 @@ namespace Steamworks.Data
 	
 	internal struct HHTMLBrowser : IEquatable<HHTMLBrowser>, IComparable<HHTMLBrowser>
 	{
+		// Name: HHTMLBrowser, Type: unsigned int
 		public uint Value;
 		
 		public static implicit operator HHTMLBrowser( uint value ) => new HHTMLBrowser(){ Value = value };
@@ -683,6 +728,7 @@ namespace Steamworks.Data
 	
 	public struct InventoryItemId : IEquatable<InventoryItemId>, IComparable<InventoryItemId>
 	{
+		// Name: SteamItemInstanceID_t, Type: unsigned long long
 		public ulong Value;
 		
 		public static implicit operator InventoryItemId( ulong value ) => new InventoryItemId(){ Value = value };
@@ -698,6 +744,7 @@ namespace Steamworks.Data
 	
 	public struct InventoryDefId : IEquatable<InventoryDefId>, IComparable<InventoryDefId>
 	{
+		// Name: SteamItemDef_t, Type: int
 		public int Value;
 		
 		public static implicit operator InventoryDefId( int value ) => new InventoryDefId(){ Value = value };
@@ -713,6 +760,7 @@ namespace Steamworks.Data
 	
 	internal struct SteamInventoryResult_t : IEquatable<SteamInventoryResult_t>, IComparable<SteamInventoryResult_t>
 	{
+		// Name: SteamInventoryResult_t, Type: int
 		public int Value;
 		
 		public static implicit operator SteamInventoryResult_t( int value ) => new SteamInventoryResult_t(){ Value = value };
@@ -728,6 +776,7 @@ namespace Steamworks.Data
 	
 	internal struct SteamInventoryUpdateHandle_t : IEquatable<SteamInventoryUpdateHandle_t>, IComparable<SteamInventoryUpdateHandle_t>
 	{
+		// Name: SteamInventoryUpdateHandle_t, Type: unsigned long long
 		public ulong Value;
 		
 		public static implicit operator SteamInventoryUpdateHandle_t( ulong value ) => new SteamInventoryUpdateHandle_t(){ Value = value };
@@ -739,6 +788,54 @@ namespace Steamworks.Data
 		public static bool operator ==( SteamInventoryUpdateHandle_t a, SteamInventoryUpdateHandle_t b ) => a.Equals( b );
 		public static bool operator !=( SteamInventoryUpdateHandle_t a, SteamInventoryUpdateHandle_t b ) => !a.Equals( b );
 		public int CompareTo( SteamInventoryUpdateHandle_t other ) => Value.CompareTo( other.Value );
+	}
+	
+	internal struct RemotePlaySessionID_t : IEquatable<RemotePlaySessionID_t>, IComparable<RemotePlaySessionID_t>
+	{
+		// Name: RemotePlaySessionID_t, Type: unsigned int
+		public uint Value;
+		
+		public static implicit operator RemotePlaySessionID_t( uint value ) => new RemotePlaySessionID_t(){ Value = value };
+		public static implicit operator uint( RemotePlaySessionID_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
+		public override int GetHashCode() => Value.GetHashCode();
+		public override bool Equals( object p ) => this.Equals( (RemotePlaySessionID_t) p );
+		public bool Equals( RemotePlaySessionID_t p ) => p.Value == Value;
+		public static bool operator ==( RemotePlaySessionID_t a, RemotePlaySessionID_t b ) => a.Equals( b );
+		public static bool operator !=( RemotePlaySessionID_t a, RemotePlaySessionID_t b ) => !a.Equals( b );
+		public int CompareTo( RemotePlaySessionID_t other ) => Value.CompareTo( other.Value );
+	}
+	
+	internal struct HSteamNetPollGroup : IEquatable<HSteamNetPollGroup>, IComparable<HSteamNetPollGroup>
+	{
+		// Name: HSteamNetPollGroup, Type: unsigned int
+		public uint Value;
+		
+		public static implicit operator HSteamNetPollGroup( uint value ) => new HSteamNetPollGroup(){ Value = value };
+		public static implicit operator uint( HSteamNetPollGroup value ) => value.Value;
+		public override string ToString() => Value.ToString();
+		public override int GetHashCode() => Value.GetHashCode();
+		public override bool Equals( object p ) => this.Equals( (HSteamNetPollGroup) p );
+		public bool Equals( HSteamNetPollGroup p ) => p.Value == Value;
+		public static bool operator ==( HSteamNetPollGroup a, HSteamNetPollGroup b ) => a.Equals( b );
+		public static bool operator !=( HSteamNetPollGroup a, HSteamNetPollGroup b ) => !a.Equals( b );
+		public int CompareTo( HSteamNetPollGroup other ) => Value.CompareTo( other.Value );
+	}
+	
+	internal struct SteamNetworkingPOPID : IEquatable<SteamNetworkingPOPID>, IComparable<SteamNetworkingPOPID>
+	{
+		// Name: SteamNetworkingPOPID, Type: unsigned int
+		public uint Value;
+		
+		public static implicit operator SteamNetworkingPOPID( uint value ) => new SteamNetworkingPOPID(){ Value = value };
+		public static implicit operator uint( SteamNetworkingPOPID value ) => value.Value;
+		public override string ToString() => Value.ToString();
+		public override int GetHashCode() => Value.GetHashCode();
+		public override bool Equals( object p ) => this.Equals( (SteamNetworkingPOPID) p );
+		public bool Equals( SteamNetworkingPOPID p ) => p.Value == Value;
+		public static bool operator ==( SteamNetworkingPOPID a, SteamNetworkingPOPID b ) => a.Equals( b );
+		public static bool operator !=( SteamNetworkingPOPID a, SteamNetworkingPOPID b ) => !a.Equals( b );
+		public int CompareTo( SteamNetworkingPOPID other ) => Value.CompareTo( other.Value );
 	}
 	
 }

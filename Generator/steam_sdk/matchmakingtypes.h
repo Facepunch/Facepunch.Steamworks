@@ -82,7 +82,7 @@ public:
 
 	// Access the IP
 	uint32 GetIP() const;
-	void SetIP( uint32 );
+	void SetIP( uint32 unIP );
 
 	// This gets the 'a.b.c.d:port' string with the connection port (instead of the query port).
 	const char *GetConnectionAddressString() const;

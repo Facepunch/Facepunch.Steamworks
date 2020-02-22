@@ -10,26 +10,51 @@ namespace Steamworks
 	/// <summary>
 	/// Undocumented Parental Settings
 	/// </summary>
-	public static class SteamNetworkingUtils
+	public class SteamNetworkingUtils : SteamClass
 	{
-		static ISteamNetworkingUtils _internal;
-		internal static ISteamNetworkingUtils Internal
-		{
-			get
-			{
-				if ( _internal == null )
-				{
-					_internal = new ISteamNetworkingUtils();
-					_internal.InitUserless();
-				}
+		internal static ISteamNetworkingUtils Internal;
+		internal override SteamInterface Interface => Internal;
 
-				return _internal;
-			}
+		internal override void InitializeInterface( bool server )
+		{
+			Internal = new ISteamNetworkingUtils( server );
 		}
 
-		internal static void Shutdown()
+		static void InstallCallbacks()
 		{
-			_internal = null;
+			Dispatch.Install<SteamRelayNetworkStatus_t>( x =>
+			{
+				Status = x.Avail;
+			} );
+		}
+
+		public static SteamNetworkingAvailability Status { get; private set; }
+
+		/// <summary>
+		/// If you know that you are going to be using the relay network (for example,
+		/// because you anticipate making P2P connections), call this to initialize the
+		/// relay network.  If you do not call this, the initialization will
+		/// be delayed until the first time you use a feature that requires access
+		/// to the relay network, which will delay that first access.
+		///
+		/// You can also call this to force a retry if the previous attempt has failed.
+		/// Performing any action that requires access to the relay network will also
+		/// trigger a retry, and so calling this function is never strictly necessary,
+		/// but it can be useful to call it a program launch time, if access to the
+		/// relay network is anticipated.
+		///
+		/// Use GetRelayNetworkStatus or listen for SteamRelayNetworkStatus_t
+		/// callbacks to know when initialization has completed.
+		/// Typically initialization completes in a few seconds.
+		///
+		/// Note: dedicated servers hosted in known data centers do *not* need
+		/// to call this, since they do not make routing decisions.  However, if
+		/// the dedicated server will be using P2P functionality, it will act as
+		/// a "client" and this should be called.
+		/// </summary>
+		public static void InitRelayNetworkAccess()
+		{
+			Internal.InitRelayNetworkAccess();
 		}
 
 		/// <summary>
@@ -70,10 +95,12 @@ namespace Steamworks
 		/// </summary>
 		public static async Task WaitForPingDataAsync( float maxAgeInSeconds = 60 * 5 )
 		{
-			if ( Internal.CheckPingDataUpToDate( 60.0f ) )
+			if ( Internal.CheckPingDataUpToDate( 120.0f ) )
 				return;
 
-			while ( Internal.IsPingMeasurementInProgress() )
+			SteamRelayNetworkStatus_t status = default;
+
+			while ( Internal.GetRelayNetworkStatus( ref status ) != SteamNetworkingAvailability.Current )
 			{
 				await Task.Delay( 10 );
 			}
@@ -118,12 +145,12 @@ namespace Steamworks
 			set => SetConfigFloat( NetConfig.FakePacketLag_Recv, value );
 		}
 
-		#region Config Internals
+#region Config Internals
 
 		internal unsafe static bool GetConfigInt( NetConfig type, int value )
 		{
 			int* ptr = &value;
-			return Internal.SetConfigValue( type, NetScope.Global, 0, NetConfigType.Int32, (IntPtr)ptr );
+			return Internal.SetConfigValue( type, NetConfigScope.Global, IntPtr.Zero, NetConfigType.Int32, (IntPtr)ptr );
 		}
 
 		internal unsafe static int GetConfigInt( NetConfig type )
@@ -131,8 +158,8 @@ namespace Steamworks
 			int value = 0;
 			NetConfigType dtype = NetConfigType.Int32;
 			int* ptr = &value;
-			ulong size = sizeof( int );
-			var result = Internal.GetConfigValue( type, NetScope.Global, 0, ref dtype, (IntPtr) ptr, ref size );
+			UIntPtr size = new UIntPtr( sizeof( int ) );
+			var result = Internal.GetConfigValue( type, NetConfigScope.Global, IntPtr.Zero, ref dtype, (IntPtr) ptr, ref size );
 			if ( result != NetConfigResult.OK )
 				return 0;
 
@@ -142,7 +169,7 @@ namespace Steamworks
 		internal unsafe static bool SetConfigFloat( NetConfig type, float value )
 		{
 			float* ptr = &value;
-			return Internal.SetConfigValue( type, NetScope.Global, 0, NetConfigType.Float, (IntPtr)ptr );
+			return Internal.SetConfigValue( type, NetConfigScope.Global, IntPtr.Zero, NetConfigType.Float, (IntPtr)ptr );
 		}
 
 		internal unsafe static float GetConfigFloat( NetConfig type )
@@ -150,8 +177,8 @@ namespace Steamworks
 			float value = 0;
 			NetConfigType dtype = NetConfigType.Float;
 			float* ptr = &value;
-			ulong size = sizeof( float );
-			var result = Internal.GetConfigValue( type, NetScope.Global, 0, ref dtype, (IntPtr)ptr, ref size );
+			UIntPtr size = new UIntPtr( sizeof( float ) );
+			var result = Internal.GetConfigValue( type, NetConfigScope.Global, IntPtr.Zero, ref dtype, (IntPtr)ptr, ref size );
 			if ( result != NetConfigResult.OK )
 				return 0;
 
@@ -164,7 +191,7 @@ namespace Steamworks
 
 			fixed ( byte* ptr = bytes )
 			{
-				return Internal.SetConfigValue( type, NetScope.Global, 0, NetConfigType.String, (IntPtr)ptr );
+				return Internal.SetConfigValue( type, NetConfigScope.Global, IntPtr.Zero, NetConfigType.String, (IntPtr)ptr );
 			}
 		}
 
@@ -211,6 +238,6 @@ namespace Steamworks
 			}
 		}*/
 
-		#endregion
+#endregion
 	}
 }

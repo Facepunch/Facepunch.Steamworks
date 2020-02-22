@@ -10,7 +10,8 @@ namespace Steamworks
 {
     [TestClass]
     [DeploymentItem( "steam_api64.dll" )]
-    public class UgcEditor
+	[DeploymentItem( "steam_api.dll" )]
+	public class UgcEditor
     {
 		[TestMethod]
         public async Task CreateFile()

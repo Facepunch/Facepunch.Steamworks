@@ -3,12 +3,21 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Steamworks
 {
 	public static partial class Utility
     {
+        static internal T ToType<T>( this IntPtr ptr )
+        {
+            if ( ptr == IntPtr.Zero )
+                return default;
+
+            return (T)Marshal.PtrToStructure( ptr, typeof( T ) );
+        }
+
         static internal uint Swap( uint x )
         {
             return ((x & 0x000000ff) << 24) +

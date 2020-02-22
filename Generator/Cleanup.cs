@@ -10,9 +10,15 @@ public static class Cleanup
 {
 	public static string ConvertType( string type )
 	{
+		type = type.Replace( "class ", "" );
+		type = type.Replace( "struct ", "" );
+
+		type = type.Replace( "unsigned long long", "uint64" );
+		type = type.Replace( "unsigned int", "uint" );
+		type = type.Replace( "uint32", "uint" );
+
 		type = type.Replace( "CSteamID", "SteamId" );
 		type = type.Replace( "CGameID", "GameId" );
-		type = type.Replace( "PersonaState", "FriendState" );
 		type = type.Replace( "AudioPlayback_Status", "MusicStatus" );
 		type = type.Replace( "AuthSessionResponse", "AuthResponse" );
 		type = type.Replace( "FriendRelationship", "Relationship" );
@@ -27,8 +33,9 @@ public static class Cleanup
 		type = type.Replace( "SteamItemDef_t", "InventoryDefId" );
 		type = type.Replace( "ChatRoomEnterResponse", "RoomEnter" );
 		type = type.Replace( "SteamNetworkPingLocation_t", "PingLocation" );
+		type = type.Replace( "SteamNetworkingConfigValue_t", "NetKeyValue" );
 		type = type.Replace( "SteamNetworkingConfigValue", "NetConfig" );
-		type = type.Replace( "SteamNetworkingConfigScope", "NetScope" );
+		type = type.Replace( "SteamNetworkingConfigScope", "NetConfigScope" );
 		type = type.Replace( "SteamNetworkingConfigDataType", "NetConfigType" );
 		type = type.Replace( "HSteamNetConnection", "Connection" );
 		type = type.Replace( "HSteamListenSocket", "Socket" );
@@ -44,6 +51,15 @@ public static class Cleanup
 		type = type.Replace( "InputAnalogActionData_t", "AnalogState" );
 		type = type.Replace( "InputMotionData_t", "MotionState" );
 		type = type.Replace( "MatchMakingKeyValuePair_t", "MatchMakingKeyValuePair" );
+		type = type.Replace( "ISteamNetworkingMessage", "NetMsg" );
+		type = type.Replace( "SteamNetworkingMessage_t", "NetMsg" );
+		type = type.Replace( "SteamIPAddress_t", "SteamIPAddress" );
+
+		type = type.Replace( "::", "." );
+
+
+		if ( type == "EPersonaState" ) return "EFriendState";
+		if ( type == "PersonaState" ) return "FriendState";
 
 		return type;
 	}
@@ -58,6 +74,28 @@ public static class Cleanup
 		if ( type == "DigitalState" ) return false;
 		if ( type == "MotionState" ) return false;
 		if ( type == "MatchMakingKeyValuePair" ) return false;
+		if ( type == "Connection" ) return false;
+		if ( type == "Socket" ) return false;
+		if ( type == "SteamNetworkingMicroseconds" ) return false;
+		if ( type == "FSteamNetworkingSocketsDebugOutput" ) return false;
+		if ( type == "NetMsg" ) return false;
+		if ( type == "SteamDatagramErrMsg" ) return false;
+		if ( type == "ConnectionInfo" ) return false;
+		if ( type == "SteamNetworkingIPAddr" ) return false;
+		if ( type == "NetAddress" ) return false;
+		if ( type == "NetIdentity" ) return false;
+		if ( type == "SteamNetworkingQuickConnectionStatus" ) return false;
+		if ( type == "SteamNetworkingErrMsg" ) return false;
+		if ( type == "NetKeyValue" ) return false;
+		if ( type == "SteamIPAddress" ) return false;
+		if ( type == "PingLocation" ) return false;
+		if ( type == "CSteamID" ) return false;
+		if ( type == "CSteamAPIContext" ) return false;
+		if ( type == "CCallResult" ) return false;
+		if ( type == "CCallback" ) return false;
+		if ( type == "ValvePackingSentinel_t" ) return false;
+		if ( type == "CCallbackBase" ) return false;
+		if ( type == "CSteamGameServerAPIContext" ) return false;
 
 		return true;
 	}
@@ -88,6 +126,9 @@ public static class Cleanup
 		if ( name == "InputType" ) return "public";
 		if ( name == "InputSourceMode" ) return "public";
 		if ( name == "UserHasLicenseForAppResult" ) return "public";
+		if ( name == "PingLocation" ) return "public";
+		if ( name == "ConnectionState" ) return "public";
+		if ( name == "SteamNetworkingAvailability" ) return "public";
 
 		return "internal";
 	}
@@ -103,5 +144,17 @@ public static class Cleanup
 		}
 
 		return false;
+	}	
+	
+	//
+	// If we start with E[Capital] then strip the E
+	// (makes us more C# like)
+	//
+	internal static string CleanEnum( string name )
+	{
+		if ( name[0] != 'E' ) return name;
+		if ( !char.IsUpper( name[1] ) ) return name;
+
+		return name.Substring( 1 );
 	}
 }

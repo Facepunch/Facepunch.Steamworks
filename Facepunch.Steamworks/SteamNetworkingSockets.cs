@@ -8,27 +8,22 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	public static class SteamNetworkingSockets
+	public class SteamNetworkingSockets : SteamClass
 	{
-		static ISteamNetworkingSockets _internal;
-		internal static ISteamNetworkingSockets Internal
+		internal static ISteamNetworkingSockets Internal;
+		internal override SteamInterface Interface => Internal;
+
+		internal override void InitializeInterface( bool server )
 		{
-			get
-			{
-				if ( _internal == null )
-				{
-					_internal = new ISteamNetworkingSockets();
-					_internal.Init();
+			Internal = new ISteamNetworkingSockets( server );
 
-					SocketInterfaces = new Dictionary<uint, SocketInterface>();
-					ConnectionInterfaces = new Dictionary<uint, ConnectionInterface>();
-				}
+			SocketInterfaces = new Dictionary<uint, SocketInterface>();
+			ConnectionInterfaces = new Dictionary<uint, ConnectionInterface>();
 
-				return _internal;
-			}
+			InstallEvents();
 		}
 
-		#region SocketInterface
+#region SocketInterface
 
 		static Dictionary<uint, SocketInterface> SocketInterfaces;
 
@@ -50,9 +45,9 @@ namespace Steamworks
 			Console.WriteLine( $"Installing Socket For {id}" );
 			SocketInterfaces[id] = iface;
 		}
-		#endregion
+#endregion
 
-		#region ConnectionInterface
+#region ConnectionInterface
 		static Dictionary<uint, ConnectionInterface> ConnectionInterfaces;
 
 
@@ -72,19 +67,15 @@ namespace Steamworks
 			if ( id == 0 ) throw new System.ArgumentException( "Invalid Connection" );
 			ConnectionInterfaces[id] = iface;
 		}
-		#endregion
+#endregion
 
-		internal static void Shutdown()
-		{
-			_internal = null;
-			SocketInterfaces = null;
-			ConnectionInterfaces = null;
-		}
+
 
 		internal static void InstallEvents( bool server = false )
 		{
-			SteamNetConnectionStatusChangedCallback_t.Install( x => ConnectionStatusChanged( x ), server );
+			Dispatch.Install<SteamNetConnectionStatusChangedCallback_t>( ConnectionStatusChanged, server );
 		}
+
 
 		private static void ConnectionStatusChanged( SteamNetConnectionStatusChangedCallback_t data )
 		{
@@ -115,7 +106,10 @@ namespace Steamworks
 		public static T CreateNormalSocket<T>( NetAddress address ) where T : SocketInterface, new()
 		{
 			var t = new T();
-			t.Socket = Internal.CreateListenSocketIP( ref address );
+			var options = new NetKeyValue[0];
+			t.Socket = Internal.CreateListenSocketIP( ref address, options.Length, options );
+			t.Initialize();
+
 			SetSocketInterface( t.Socket.Id, t );
 			return t;
 		}
@@ -126,7 +120,8 @@ namespace Steamworks
 		public static T ConnectNormal<T>( NetAddress address ) where T : ConnectionInterface, new()
 		{
 			var t = new T();
-			t.Connection = Internal.ConnectByIPAddress( ref address );
+			var options = new NetKeyValue[0];
+			t.Connection = Internal.ConnectByIPAddress( ref address, options.Length, options );
 			SetConnectionInterface( t.Connection.Id, t );
 			return t;
 		}
@@ -137,7 +132,8 @@ namespace Steamworks
 		public static T CreateRelaySocket<T>( int virtualport = 0 ) where T : SocketInterface, new()
 		{
 			var t = new T();
-			t.Socket = Internal.CreateListenSocketP2P( virtualport );
+			var options = new NetKeyValue[0];
+			t.Socket = Internal.CreateListenSocketP2P( virtualport, options.Length, options );
 			SetSocketInterface( t.Socket.Id, t );
 			return t;
 		}
@@ -149,7 +145,8 @@ namespace Steamworks
 		{
 			var t = new T();
 			NetIdentity identity = serverId;
-			t.Connection = Internal.ConnectP2P( ref identity, virtualport );
+			var options = new NetKeyValue[0];
+			t.Connection = Internal.ConnectP2P( ref identity, virtualport, options.Length, options );
 			SetConnectionInterface( t.Connection.Id, t );
 			return t;
 		}

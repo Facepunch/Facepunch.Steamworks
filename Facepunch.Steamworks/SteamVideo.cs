@@ -10,34 +10,22 @@ namespace Steamworks
 	/// <summary>
 	/// Undocumented Parental Settings
 	/// </summary>
-	public static class SteamVideo
+	public class SteamVideo : SteamClass
 	{
-		static ISteamVideo _internal;
-		internal static ISteamVideo Internal
+		internal static ISteamVideo Internal;
+		internal override SteamInterface Interface => Internal;
+
+		internal override void InitializeInterface( bool server )
 		{
-			get
-			{
-				SteamClient.ValidCheck();
+			Internal = new ISteamVideo( server );
 
-				if ( _internal == null )
-				{
-					_internal = new ISteamVideo();
-					_internal.Init();
-				}
-
-				return _internal;
-			}
-		}
-
-		internal static void Shutdown()
-		{
-			_internal = null;
+			InstallEvents();
 		}
 
 		internal static void InstallEvents()
 		{
-			BroadcastUploadStart_t.Install( x => OnBroadcastStarted?.Invoke() );
-			BroadcastUploadStop_t.Install( x => OnBroadcastStopped?.Invoke( x.Result ) );
+			Dispatch.Install<BroadcastUploadStart_t>( x => OnBroadcastStarted?.Invoke() );
+			Dispatch.Install<BroadcastUploadStop_t>( x => OnBroadcastStopped?.Invoke( x.Result ) );
 		}
 
 		public static event Action OnBroadcastStarted;

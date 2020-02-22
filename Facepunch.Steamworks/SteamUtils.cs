@@ -10,34 +10,24 @@ namespace Steamworks
 	/// <summary>
 	/// Interface which provides access to a range of miscellaneous utility functions
 	/// </summary>
-	public static class SteamUtils
+	public class SteamUtils : SteamClass
 	{
-		static ISteamUtils _internal;
-		internal static ISteamUtils Internal
-		{
-			get
-			{
-				if ( _internal == null )
-				{
-					_internal = new ISteamUtils();
-					_internal.Init();
-				}
+		internal static ISteamUtils Internal;
+		internal override SteamInterface Interface => Internal;
 
-				return _internal;
-			}
-		}
-
-		internal static void Shutdown()
+		internal override void InitializeInterface( bool server )
 		{
-			_internal = null;
+			Internal = new ISteamUtils( server );
+
+			InstallEvents();
 		}
 
 		internal static void InstallEvents()
 		{
-			IPCountry_t.Install( x => OnIpCountryChanged?.Invoke() );
-			LowBatteryPower_t.Install( x => OnLowBatteryPower?.Invoke( x.MinutesBatteryLeft ) );
-			SteamShutdown_t.Install( x => SteamClosed() );
-			GamepadTextInputDismissed_t.Install( x => OnGamepadTextInputDismissed?.Invoke( x.Submitted ) );
+			Dispatch.Install<IPCountry_t>( x => OnIpCountryChanged?.Invoke() );
+			Dispatch.Install<LowBatteryPower_t>( x => OnLowBatteryPower?.Invoke( x.MinutesBatteryLeft ) );
+			Dispatch.Install<SteamShutdown_t>( x => SteamClosed() );
+			Dispatch.Install<GamepadTextInputDismissed_t>( x => OnGamepadTextInputDismissed?.Invoke( x.Submitted ) );
 		}
 
 		private static void SteamClosed()

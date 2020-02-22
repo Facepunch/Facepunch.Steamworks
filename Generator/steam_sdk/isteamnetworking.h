@@ -209,14 +209,14 @@ public:
 	//		pass in 0 if you just want the default local IP
 	// unPort is the port to use
 	//		pass in 0 if you don't want users to be able to connect via IP/Port, but expect to be always peer-to-peer connections only
-	virtual SNetListenSocket_t CreateListenSocket( int nVirtualP2PPort, uint32 nIP, uint16 nPort, bool bAllowUseOfPacketRelay ) = 0;
+	virtual SNetListenSocket_t CreateListenSocket( int nVirtualP2PPort, SteamIPAddress_t nIP, uint16 nPort, bool bAllowUseOfPacketRelay ) = 0;
 
 	// creates a socket and begin connection to a remote destination
 	// can connect via a known steamID (client or game server), or directly to an IP
 	// on success will trigger a SocketStatusCallback_t callback
 	// on failure or timeout will trigger a SocketStatusCallback_t callback with a failure code in m_eSNetSocketState
 	virtual SNetSocket_t CreateP2PConnectionSocket( CSteamID steamIDTarget, int nVirtualPort, int nTimeoutSec, bool bAllowUseOfPacketRelay ) = 0;
-	virtual SNetSocket_t CreateConnectionSocket( uint32 nIP, uint16 nPort, int nTimeoutSec ) = 0;
+	virtual SNetSocket_t CreateConnectionSocket( SteamIPAddress_t nIP, uint16 nPort, int nTimeoutSec ) = 0;
 
 	// disconnects the connection to the socket, if any, and invalidates the handle
 	// any unread data on the socket will be thrown away
@@ -258,11 +258,11 @@ public:
 	virtual bool RetrieveData( SNetListenSocket_t hListenSocket, void *pubDest, uint32 cubDest, uint32 *pcubMsgSize, SNetSocket_t *phSocket ) = 0;
 
 	// returns information about the specified socket, filling out the contents of the pointers
-	virtual bool GetSocketInfo( SNetSocket_t hSocket, CSteamID *pSteamIDRemote, int *peSocketStatus, uint32 *punIPRemote, uint16 *punPortRemote ) = 0;
+	virtual bool GetSocketInfo( SNetSocket_t hSocket, CSteamID *pSteamIDRemote, int *peSocketStatus, SteamIPAddress_t *punIPRemote, uint16 *punPortRemote ) = 0;
 
 	// returns which local port the listen socket is bound to
 	// *pnIP and *pnPort will be 0 if the socket is set to listen for P2P connections only
-	virtual bool GetListenSocketInfo( SNetListenSocket_t hListenSocket, uint32 *pnIP, uint16 *pnPort ) = 0;
+	virtual bool GetListenSocketInfo( SNetListenSocket_t hListenSocket, SteamIPAddress_t *pnIP, uint16 *pnPort ) = 0;
 
 	// returns true to describe how the socket ended up connecting
 	virtual ESNetSocketConnectionType GetSocketConnectionType( SNetSocket_t hSocket ) = 0;
@@ -270,7 +270,7 @@ public:
 	// max packet size, in bytes
 	virtual int GetMaxPacketSize( SNetSocket_t hSocket ) = 0;
 };
-#define STEAMNETWORKING_INTERFACE_VERSION "SteamNetworking005"
+#define STEAMNETWORKING_INTERFACE_VERSION "SteamNetworking006"
 
 // Global interface accessor
 inline ISteamNetworking *SteamNetworking();

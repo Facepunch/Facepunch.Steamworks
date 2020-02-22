@@ -95,7 +95,7 @@ namespace Steamworks
 		[TestMethod]
 		public async Task GetFileDetails()
 		{
-			var fileinfo = await SteamApps.GetFileDetailsAsync( "hl2.exe" );
+			var fileinfo = await SteamApps.GetFileDetailsAsync( "RustClient.exe" );
 
 			Console.WriteLine( $"fileinfo.SizeInBytes: {fileinfo?.SizeInBytes}" );
 			Console.WriteLine( $"fileinfo.Sha1: {fileinfo?.Sha1}" );

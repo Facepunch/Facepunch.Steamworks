@@ -10,32 +10,21 @@ namespace Steamworks
 	/// <summary>
 	/// Undocumented Parental Settings
 	/// </summary>
-	public static class SteamParental
+	public class SteamParental : SteamClass
 	{
-		static ISteamParentalSettings _internal;
-		internal static ISteamParentalSettings Internal
-		{
-			get
-			{
-				SteamClient.ValidCheck();
+		internal static ISteamParentalSettings Internal;
+		internal override SteamInterface Interface => Internal;
 
-				if ( _internal == null )
-				{
-					_internal = new ISteamParentalSettings();
-					_internal.Init();
-				}
-
-				return _internal;
-			}
-		}
-		internal static void Shutdown()
+		internal override void InitializeInterface( bool server )
 		{
-			_internal = null;
+			Internal = new ISteamParentalSettings( server );
+			InstallEvents();
 		}
+
 
 		internal static void InstallEvents()
 		{
-			SteamParentalSettingsChanged_t.Install( x => OnSettingsChanged?.Invoke() );
+			Dispatch.Install<SteamParentalSettingsChanged_t>( x => OnSettingsChanged?.Invoke() );
 		}
 
 		/// <summary>

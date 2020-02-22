@@ -5,9 +5,11 @@ namespace Steamworks.Data
 {
 	public struct Connection
 	{
-		public uint Id { get; }
+		public uint Id { get; set; }
 
 		public override string ToString() => Id.ToString();
+		public static implicit operator Connection( uint value ) => new Connection() { Id = value };
+		public static implicit operator uint( Connection value ) => value.Id;
 
 		/// <summary>
 		/// Accept an incoming connection that has been received on a listen socket.
@@ -54,7 +56,8 @@ namespace Steamworks.Data
 
 		public Result SendMessage( IntPtr ptr, int size, SendType sendType = SendType.Reliable )
 		{
-			return SteamNetworkingSockets.Internal.SendMessageToConnection( this, ptr, (uint) size, (int)sendType );
+			long messageNumber = 0;
+			return SteamNetworkingSockets.Internal.SendMessageToConnection( this, ptr, (uint) size, (int)sendType, ref messageNumber );
 		}
 
 		public unsafe Result SendMessage( byte[] data, SendType sendType = SendType.Reliable )
@@ -91,27 +94,5 @@ namespace Steamworks.Data
 
 			return strVal;
 		}
-
-		/*
-		[ThreadStatic]
-		private static SteamNetworkingMessage_t[] messageBuffer;
-
-		public IEnumerable<SteamNetworkingMessage_t> Messages
-		{
-			get
-			{
-				if ( messageBuffer == null )
-					messageBuffer = new SteamNetworkingMessage_t[128];
-
-				var num = SteamNetworkingSockets.Internal.ReceiveMessagesOnConnection( this, ref messageBuffer, messageBuffer.Length );
-
-				for ( int i = 0; i < num; i++)
-				{
-					yield return messageBuffer[i];
-					messageBuffer[i].Release();
-				}
-			}
-		}*/
-
 	}
 }

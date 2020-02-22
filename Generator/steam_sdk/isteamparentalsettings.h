@@ -28,6 +28,7 @@ enum EParentalFeature
 	k_EFeatureParentalSetup = 10,
 	k_EFeatureLibrary = 11,
 	k_EFeatureTest = 12,
+	k_EFeatureSiteLicense = 13,
 	k_EFeatureMax
 };
 

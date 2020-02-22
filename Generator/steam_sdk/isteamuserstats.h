@@ -93,12 +93,19 @@ public:
 	virtual bool RequestCurrentStats() = 0;
 
 	// Data accessors
+	STEAM_FLAT_NAME( GetStatInt32 )
 	virtual bool GetStat( const char *pchName, int32 *pData ) = 0;
+
+	STEAM_FLAT_NAME( GetStatFloat )
 	virtual bool GetStat( const char *pchName, float *pData ) = 0;
 
 	// Set / update data
+	STEAM_FLAT_NAME( SetStatInt32 )
 	virtual bool SetStat( const char *pchName, int32 nData ) = 0;
+
+	STEAM_FLAT_NAME( SetStatFloat )
 	virtual bool SetStat( const char *pchName, float fData ) = 0;
+
 	virtual bool UpdateAvgRateStat( const char *pchName, float flCountThisSession, double dSessionLength ) = 0;
 
 	// Achievement flag accessors
@@ -153,8 +160,12 @@ public:
 	virtual SteamAPICall_t RequestUserStats( CSteamID steamIDUser ) = 0;
 
 	// requests stat information for a user, usable after a successful call to RequestUserStats()
+	STEAM_FLAT_NAME( GetUserStatInt32 )
 	virtual bool GetUserStat( CSteamID steamIDUser, const char *pchName, int32 *pData ) = 0;
+
+	STEAM_FLAT_NAME( GetUserStatFloat )
 	virtual bool GetUserStat( CSteamID steamIDUser, const char *pchName, float *pData ) = 0;
+
 	virtual bool GetUserAchievement( CSteamID steamIDUser, const char *pchName, bool *pbAchieved ) = 0;
 	// See notes for GetAchievementAndUnlockTime above
 	virtual bool GetUserAchievementAndUnlockTime( CSteamID steamIDUser, const char *pchName, bool *pbAchieved, uint32 *punUnlockTime ) = 0;
@@ -265,14 +276,21 @@ public:
 	virtual SteamAPICall_t RequestGlobalStats( int nHistoryDays ) = 0;
 
 	// Gets the lifetime totals for an aggregated stat
+	STEAM_FLAT_NAME( GetGlobalStatInt64 )
 	virtual bool GetGlobalStat( const char *pchStatName, int64 *pData ) = 0;
+
+	STEAM_FLAT_NAME( GetGlobalStatDouble )
 	virtual bool GetGlobalStat( const char *pchStatName, double *pData ) = 0;
 
 	// Gets history for an aggregated stat. pData will be filled with daily values, starting with today.
 	// So when called, pData[0] will be today, pData[1] will be yesterday, and pData[2] will be two days ago, 
 	// etc. cubData is the size in bytes of the pubData buffer. Returns the number of 
 	// elements actually set.
+
+	STEAM_FLAT_NAME( GetGlobalStatHistoryInt64 )
 	virtual int32 GetGlobalStatHistory( const char *pchStatName, STEAM_ARRAY_COUNT(cubData) int64 *pData, uint32 cubData ) = 0;
+
+	STEAM_FLAT_NAME( GetGlobalStatHistoryDouble )
 	virtual int32 GetGlobalStatHistory( const char *pchStatName, STEAM_ARRAY_COUNT(cubData) double *pData, uint32 cubData ) = 0;
 
 #ifdef _PS3

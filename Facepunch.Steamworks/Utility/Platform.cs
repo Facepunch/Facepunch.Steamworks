@@ -13,32 +13,21 @@ namespace Steamworks
 #if PLATFORM_WIN64
 		public const int StructPlatformPackSize = 8;
 		public const string LibraryName = "steam_api64";
-		public const CallingConvention MemberConvention = CallingConvention.Cdecl;
+		public const CallingConvention CC = CallingConvention.Cdecl;
 #elif PLATFORM_WIN32
 		public const int StructPlatformPackSize = 8;
 		public const string LibraryName = "steam_api";
-		public const CallingConvention MemberConvention = CallingConvention.ThisCall;
+		public const CallingConvention CC = CallingConvention.Cdecl;
 #elif PLATFORM_POSIX32
 		public const int StructPlatformPackSize = 4;
 		public const string LibraryName = "libsteam_api";
-		public const CallingConvention MemberConvention = CallingConvention.Cdecl;
+		public const CallingConvention CC = CallingConvention.Cdecl;
 #elif PLATFORM_POSIX64
 		public const int StructPlatformPackSize = 4;
 		public const string LibraryName = "libsteam_api";
-		public const CallingConvention MemberConvention = CallingConvention.Cdecl;
+		public const CallingConvention CC = CallingConvention.Cdecl;
 #endif
 
 		public const int StructPackSize = 4;
-
-
-
-		public static int MemoryOffset( int memLocation )
-		{
-#if PLATFORM_64
-			return memLocation;
-#else
-			return memLocation / 2;
-#endif
-		}
 	}
 }

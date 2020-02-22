@@ -41,7 +41,6 @@ enum EGamepadTextInputLineMode
 	k_EGamepadTextInputLineModeMultipleLines = 1
 };
 
-
 // function prototype for warning message hook
 #if defined( POSIX )
 #define __cdecl
@@ -160,26 +159,45 @@ public:
 	// ask SteamUI to create and render its OpenVR dashboard
 	virtual void StartVRDashboard() = 0;
 
-	// Returns true if the HMD content will be streamed via Steam In-Home Streaming
+	// Returns true if the HMD content will be streamed via Steam Remote Play
 	virtual bool IsVRHeadsetStreamingEnabled() = 0;
 
-	// Set whether the HMD content will be streamed via Steam In-Home Streaming
+	// Set whether the HMD content will be streamed via Steam Remote Play
 	// If this is set to true, then the scene in the HMD headset will be streamed, and remote input will not be allowed.
 	// If this is set to false, then the application window will be streamed instead, and remote input will be allowed.
 	// The default is true unless "VRHeadsetStreaming" "0" is in the extended appinfo for a game.
 	// (this is useful for games that have asymmetric multiplayer gameplay)
 	virtual void SetVRHeadsetStreamingEnabled( bool bEnabled ) = 0;
+
+	// Returns whether this steam client is a Steam China specific client, vs the global client.
+	virtual bool IsSteamChinaLauncher() = 0;
+
+	// Initializes text filtering.
+	//   Returns false if filtering is unavailable for the language the user is currently running in.
+	virtual bool InitFilterText() = 0; 
+
+	// Filters the provided input message and places the filtered result into pchOutFilteredText.
+	//   pchOutFilteredText is where the output will be placed, even if no filtering or censoring is performed
+	//   nByteSizeOutFilteredText is the size (in bytes) of pchOutFilteredText
+	//   pchInputText is the input string that should be filtered, which can be ASCII or UTF-8
+	//   bLegalOnly should be false if you want profanity and legally required filtering (where required) and true if you want legally required filtering only
+	//   Returns the number of characters (not bytes) filtered.
+	virtual int FilterText( char* pchOutFilteredText, uint32 nByteSizeOutFilteredText, const char * pchInputMessage, bool bLegalOnly ) = 0;
+
+	// Return what we believe your current ipv6 connectivity to "the internet" is on the specified protocol.
+	// This does NOT tell you if the Steam client is currently connected to Steam via ipv6.
+	virtual ESteamIPv6ConnectivityState GetIPv6ConnectivityState( ESteamIPv6ConnectivityProtocol eProtocol ) = 0;
 };
 
 #define STEAMUTILS_INTERFACE_VERSION "SteamUtils009"
 
 // Global interface accessor
 inline ISteamUtils *SteamUtils();
-STEAM_DEFINE_INTERFACE_ACCESSOR( ISteamUtils *, SteamUtils, SteamInternal_FindOrCreateUserInterface( 0, STEAMUTILS_INTERFACE_VERSION ) );
+STEAM_DEFINE_INTERFACE_ACCESSOR( ISteamUtils *, SteamUtils, SteamInternal_FindOrCreateUserInterface( 0, STEAMUTILS_INTERFACE_VERSION ), "user", STEAMUTILS_INTERFACE_VERSION );
 
 // Global accessor for the gameserver client
 inline ISteamUtils *SteamGameServerUtils();
-STEAM_DEFINE_INTERFACE_ACCESSOR( ISteamUtils *, SteamGameServerUtils, SteamInternal_FindOrCreateGameServerInterface( 0, STEAMUTILS_INTERFACE_VERSION ) );
+STEAM_DEFINE_INTERFACE_ACCESSOR( ISteamUtils *, SteamGameServerUtils, SteamInternal_FindOrCreateGameServerInterface( 0, STEAMUTILS_INTERFACE_VERSION ), "gameserver", STEAMUTILS_INTERFACE_VERSION );
 
 // callbacks
 #if defined( VALVE_CALLBACK_PACK_SMALL )

@@ -10,7 +10,8 @@ namespace Steamworks
 {
     [TestClass]
     [DeploymentItem( "steam_api64.dll" )]
-    public class SteamNetworkingTest
+	[DeploymentItem( "steam_api.dll" )]
+	public class SteamNetworkingTest
     {
 		[TestMethod]
         public async Task SendP2PPacket()

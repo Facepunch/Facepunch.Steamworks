@@ -10,7 +10,8 @@ namespace Steamworks
 {
     [TestClass]
     [DeploymentItem( "steam_api64.dll" )]
-    public class UgcTest
+	[DeploymentItem( "steam_api.dll" )]
+	public class UgcTest
     {
 		[TestMethod]
         public void Download()

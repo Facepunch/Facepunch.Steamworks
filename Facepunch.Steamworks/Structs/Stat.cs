@@ -36,7 +36,7 @@ namespace Steamworks.Data
 		{
 			double val = 0.0;
 
-			if ( SteamUserStats.Internal.GetGlobalStat2( Name, ref val ) )
+			if ( SteamUserStats.Internal.GetGlobalStat( Name, ref val ) )
 				return val;
 
 			return 0;
@@ -45,7 +45,7 @@ namespace Steamworks.Data
 		public long GetGlobalInt()
 		{
 			long val = 0;
-			SteamUserStats.Internal.GetGlobalStat1( Name, ref val );
+			SteamUserStats.Internal.GetGlobalStat( Name, ref val );
 			return val;
 		}
 
@@ -56,7 +56,7 @@ namespace Steamworks.Data
 
 			var r = new long[days];
 
-			var rows = SteamUserStats.Internal.GetGlobalStatHistory1( Name, r, (uint) r.Length * sizeof(long) );
+			var rows = SteamUserStats.Internal.GetGlobalStatHistory( Name, r, (uint) r.Length * sizeof(long) );
 			
 			if ( days != rows )
 				r = r.Take( rows ).ToArray();
@@ -71,7 +71,7 @@ namespace Steamworks.Data
 
 			var r = new double[days];
 
-			var rows = SteamUserStats.Internal.GetGlobalStatHistory2( Name, r, (uint)r.Length * sizeof( double ) );
+			var rows = SteamUserStats.Internal.GetGlobalStatHistory( Name, r, (uint)r.Length * sizeof( double ) );
 
 			if ( days != rows )
 				r = r.Take( rows ).ToArray();
@@ -85,11 +85,11 @@ namespace Steamworks.Data
 
 			if ( UserId > 0 )
 			{
-				SteamUserStats.Internal.GetUserStat2( UserId, Name, ref val );
+				SteamUserStats.Internal.GetUserStat( UserId, Name, ref val );
 			}
 			else
 			{
-				SteamUserStats.Internal.GetStat2( Name, ref val );
+				SteamUserStats.Internal.GetStat( Name, ref val );
 			}
 
 			return 0;
@@ -101,11 +101,11 @@ namespace Steamworks.Data
 
 			if ( UserId > 0 )
 			{
-				SteamUserStats.Internal.GetUserStat1( UserId, Name, ref val );
+				SteamUserStats.Internal.GetUserStat( UserId, Name, ref val );
 			}
 			else
 			{
-				SteamUserStats.Internal.GetStat1( Name, ref val );
+				SteamUserStats.Internal.GetStat( Name, ref val );
 			}
 
 			return val;
@@ -114,13 +114,13 @@ namespace Steamworks.Data
 		public bool Set( int val )
 		{
 			LocalUserOnly();
-			return SteamUserStats.Internal.SetStat1( Name, val );
+			return SteamUserStats.Internal.SetStat( Name, val );
 		}
 
 		public bool Set( float val )
 		{
 			LocalUserOnly();
-			return SteamUserStats.Internal.SetStat2( Name, val );
+			return SteamUserStats.Internal.SetStat( Name, val );
 		}
 
 		public bool Add( int val )
