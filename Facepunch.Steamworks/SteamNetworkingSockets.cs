@@ -41,8 +41,6 @@ namespace Steamworks
 		internal static void SetSocketInterface( uint id, SocketInterface iface )
 		{
 			if ( id == 0 ) throw new System.ArgumentException( "Invalid Socket" );
-
-			Console.WriteLine( $"Installing Socket For {id}" );
 			SocketInterfaces[id] = iface;
 		}
 #endregion

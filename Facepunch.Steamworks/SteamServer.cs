@@ -91,7 +91,6 @@ namespace Steamworks
 			//
 			Dispatch.Init();
 			Dispatch.ServerPipe = SteamGameServer.GetHSteamPipe();
-			Console.WriteLine( $"Dispatch.ServerPipe = {Dispatch.ServerPipe.Value}" );
 
 			AddInterface<SteamServer>();
 			AddInterface<SteamNetworkingUtils>();

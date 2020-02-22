@@ -35,7 +35,6 @@ namespace Steamworks
 			//
 			Dispatch.Init();
 			Dispatch.ClientPipe = SteamAPI.GetHSteamPipe();
-			Console.WriteLine( $"Dispatch.ClientPipe = {Dispatch.ClientPipe.Value}" );
 
 			AddInterface<SteamApps>();
 			AddInterface<SteamFriends>();
