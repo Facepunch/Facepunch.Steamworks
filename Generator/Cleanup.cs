@@ -130,6 +130,7 @@ public static class Cleanup
 		if ( name == "ConnectionState" ) return "public";
 		if ( name == "SteamNetworkingAvailability" ) return "public";
 		if ( name == "SteamDeviceFormFactor" ) return "public";
+		if ( name == "DurationControlProgress" ) return "public";
 
 		return "internal";
 	}

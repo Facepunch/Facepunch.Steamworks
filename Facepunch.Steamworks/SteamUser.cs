@@ -39,6 +39,7 @@ namespace Steamworks
 			Dispatch.Install<MicroTxnAuthorizationResponse_t>( x => OnMicroTxnAuthorizationResponse?.Invoke( x.AppID, x.OrderID, x.Authorized != 0 ) );
 			Dispatch.Install<GameWebCallback_t>( x => OnGameWebCallback?.Invoke( x.URLUTF8() ) );
 			Dispatch.Install<GetAuthSessionTicketResponse_t>( x => OnGetAuthSessionTicketResponse?.Invoke( x ) );
+			Dispatch.Install<DurationControl_t>( x => OnDurationControl?.Invoke( new DurationControl { _inner = x } ) );
 		}
 
 		/// <summary>
@@ -100,6 +101,13 @@ namespace Steamworks
 		/// signup sequence, and optionally get back some detail about that.
 		/// </summary>
 		public static event Action<string> OnGameWebCallback;
+
+		/// <summary>
+		/// Sent for games with enabled anti indulgence / duration control, for enabled users.
+		/// Lets the game know whether persistent rewards or XP should be granted at normal rate, 
+		/// half rate, or zero rate.
+		/// </summary>
+		public static event Action<DurationControl> OnDurationControl;
 
 
 
@@ -470,5 +478,16 @@ namespace Steamworks
 
 		}
 
+
+		/// <summary>
+		/// Get anti indulgence / duration control
+		/// </summary>
+		public static async Task<DurationControl> GetDurationControl()
+		{
+			var response = await Internal.GetDurationControl();
+			if ( !response.HasValue ) return default;
+
+			return new DurationControl { _inner = response.Value };
+		}
 	}
 }
