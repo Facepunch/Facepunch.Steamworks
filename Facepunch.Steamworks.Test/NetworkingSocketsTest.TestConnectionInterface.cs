@@ -51,7 +51,7 @@ namespace Steamworks
 				{
 					await Task.Delay( 10 );
 
-					if ( sw.Elapsed.TotalSeconds > 30 )
+					if ( sw.Elapsed.TotalSeconds > 10 )
 						break;
 				}
 
