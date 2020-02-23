@@ -1,5 +1,5 @@
 # Facepunch.Steamworks
-[nother fucking c# Steamworks implementation](https://wiki.facepunch.com/steamworks/)
+[Another fucking c# Steamworks implementation](https://wiki.facepunch.com/steamworks/)
 
 ## Features
 
