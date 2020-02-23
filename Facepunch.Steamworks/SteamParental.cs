@@ -10,7 +10,7 @@ namespace Steamworks
 	/// <summary>
 	/// Undocumented Parental Settings
 	/// </summary>
-	public class SteamParental : SteamClass<SteamParental>
+	public class SteamParental : SteamSharedClass<SteamParental>
 	{
 		internal static ISteamParentalSettings Internal => Interface as ISteamParentalSettings;
 

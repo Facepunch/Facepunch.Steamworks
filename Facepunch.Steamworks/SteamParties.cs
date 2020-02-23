@@ -7,7 +7,7 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	public class SteamParties : SteamClass<SteamParties>
+	public class SteamParties : SteamClientClass<SteamParties>
 	{
 		internal static ISteamParties Internal => Interface as ISteamParties;
 

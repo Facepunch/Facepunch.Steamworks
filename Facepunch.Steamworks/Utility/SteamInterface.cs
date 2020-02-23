@@ -59,7 +59,7 @@ namespace Steamworks
 		internal abstract void DestroyInterface( bool server );
 	}
 
-	public class SteamClass<T> : SteamClass
+	public class SteamSharedClass<T> : SteamClass
 	{
 		internal static SteamInterface Interface => InterfaceClient != null ? InterfaceClient : InterfaceServer;
 		internal static SteamInterface InterfaceClient;
@@ -86,6 +86,54 @@ namespace Steamworks
 		internal override void DestroyInterface( bool server )
 		{
 			InterfaceClient = null;
+			InterfaceServer = null;
+		}
+	}
+
+	public class SteamClientClass<T> : SteamClass
+	{
+		internal static SteamInterface Interface => InterfaceClient;
+		internal static SteamInterface InterfaceClient;
+
+		internal override void InitializeInterface( bool server )
+		{
+
+		}
+
+		internal virtual void SetInterface( bool server, SteamInterface iface )
+		{
+			if ( server )
+				throw new System.NotSupportedException();
+
+			InterfaceClient = iface;
+		}
+
+		internal override void DestroyInterface( bool server )
+		{
+			InterfaceClient = null;
+		}
+	}	
+	
+	public class SteamServerClass<T> : SteamClass
+	{
+		internal static SteamInterface Interface => InterfaceServer;
+		internal static SteamInterface InterfaceServer;
+
+		internal override void InitializeInterface( bool server )
+		{
+
+		}
+
+		internal virtual void SetInterface( bool server, SteamInterface iface )
+		{
+			if ( !server )
+				throw new System.NotSupportedException();
+
+			InterfaceServer = iface;
+		}
+
+		internal override void DestroyInterface( bool server )
+		{
 			InterfaceServer = null;
 		}
 	}

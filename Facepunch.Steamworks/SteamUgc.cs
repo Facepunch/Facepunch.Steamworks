@@ -12,7 +12,7 @@ namespace Steamworks
 	/// Functions for accessing and manipulating Steam user information.
 	/// This is also where the APIs for Steam Voice are exposed.
 	/// </summary>
-	public class SteamUGC : SteamClass<SteamUGC>
+	public class SteamUGC : SteamSharedClass<SteamUGC>
 	{
 		internal static ISteamUGC Internal => Interface as ISteamUGC;
 

@@ -10,7 +10,7 @@ namespace Steamworks
 	/// <summary>
 	/// Provides the core of the Steam Game Servers API
 	/// </summary>
-	public partial class SteamServer : SteamClass<SteamServer>
+	public partial class SteamServer : SteamServerClass<SteamServer>
 	{
 		internal static ISteamGameServer Internal => Interface as ISteamGameServer;
 

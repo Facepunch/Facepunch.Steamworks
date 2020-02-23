@@ -12,7 +12,7 @@ namespace Steamworks
 	/// <summary>
 	/// Undocumented Parental Settings
 	/// </summary>
-	public class SteamInventory : SteamClass<SteamInventory>
+	public class SteamInventory : SteamSharedClass<SteamInventory>
 	{
 		internal static ISteamInventory Internal => Interface as ISteamInventory;
 
@@ -28,12 +28,9 @@ namespace Steamworks
 			if ( !server )
 			{
 				Dispatch.Install<SteamInventoryFullUpdate_t>( x => InventoryUpdated( x ) );
-				Dispatch.Install<SteamInventoryDefinitionUpdate_t>( x => LoadDefinitions() );
 			}
-			else
-			{
-				Dispatch.Install<SteamInventoryDefinitionUpdate_t>( x => LoadDefinitions(), true );
-			}
+
+			Dispatch.Install<SteamInventoryDefinitionUpdate_t>( x => LoadDefinitions(), server );
 		}
 
 		private static void InventoryUpdated( SteamInventoryFullUpdate_t x )

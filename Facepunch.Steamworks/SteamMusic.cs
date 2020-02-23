@@ -13,7 +13,7 @@ namespace Steamworks
 	/// when an important cut scene is shown, and start playing afterwards.
 	/// Nothing uses Steam Music though so this can probably get fucked
 	/// </summary>
-	public class SteamMusic : SteamClass<SteamMusic>
+	public class SteamMusic : SteamClientClass<SteamMusic>
 	{
 		internal static ISteamMusic Internal => Interface as ISteamMusic;
 

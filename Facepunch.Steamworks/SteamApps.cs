@@ -11,7 +11,7 @@ namespace Steamworks
 	/// <summary>
 	/// Exposes a wide range of information and actions for applications and Downloadable Content (DLC).
 	/// </summary>
-	public class SteamApps : SteamClass<SteamApps>
+	public class SteamApps : SteamSharedClass<SteamApps>
 	{
 		internal static ISteamApps Internal => Interface as ISteamApps;
 

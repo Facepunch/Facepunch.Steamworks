@@ -10,7 +10,7 @@ namespace Steamworks
 	/// <summary>
 	/// Interface which provides access to a range of miscellaneous utility functions
 	/// </summary>
-	public class SteamUtils : SteamClass<SteamUtils>
+	public class SteamUtils : SteamSharedClass<SteamUtils>
 	{
 		internal static ISteamUtils Internal => Interface as ISteamUtils;
 

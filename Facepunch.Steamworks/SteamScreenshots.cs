@@ -10,7 +10,7 @@ namespace Steamworks
 	/// <summary>
 	/// Undocumented Parental Settings
 	/// </summary>
-	public class SteamScreenshots : SteamClass<SteamScreenshots>
+	public class SteamScreenshots : SteamClientClass<SteamScreenshots>
 	{
 		internal static ISteamScreenshots Internal => Interface as ISteamScreenshots;
 

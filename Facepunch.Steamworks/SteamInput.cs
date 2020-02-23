@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Steamworks
 {
-	public class SteamInput : SteamClass<SteamInput>
+	public class SteamInput : SteamClientClass<SteamInput>
 	{
 		internal static ISteamInput Internal => Interface as ISteamInput;
 

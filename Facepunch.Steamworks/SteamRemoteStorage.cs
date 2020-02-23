@@ -10,7 +10,7 @@ namespace Steamworks
 	/// <summary>
 	/// Undocumented Parental Settings
 	/// </summary>
-	public class SteamRemoteStorage : SteamClass<SteamRemoteStorage>
+	public class SteamRemoteStorage : SteamClientClass<SteamRemoteStorage>
 	{
 		internal static ISteamRemoteStorage Internal => Interface as ISteamRemoteStorage;
 

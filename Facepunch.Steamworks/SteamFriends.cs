@@ -10,7 +10,7 @@ namespace Steamworks
 	/// <summary>
 	/// Undocumented Parental Settings
 	/// </summary>
-	public class SteamFriends : SteamClass<SteamFriends>
+	public class SteamFriends : SteamClientClass<SteamFriends>
 	{
 		internal static ISteamFriends Internal => Interface as ISteamFriends;
 
