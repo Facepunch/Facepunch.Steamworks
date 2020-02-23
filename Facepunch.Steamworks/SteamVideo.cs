@@ -10,15 +10,13 @@ namespace Steamworks
 	/// <summary>
 	/// Undocumented Parental Settings
 	/// </summary>
-	public class SteamVideo : SteamClass
+	public class SteamVideo : SteamClass<SteamVideo>
 	{
-		internal static ISteamVideo Internal;
-		internal override SteamInterface Interface => Internal;
+		internal static ISteamVideo Internal => Interface as ISteamVideo;
 
 		internal override void InitializeInterface( bool server )
 		{
-			Internal = new ISteamVideo( server );
-
+			SetInterface( server, new ISteamVideo( server ) );
 			InstallEvents();
 		}
 

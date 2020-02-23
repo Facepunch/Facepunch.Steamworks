@@ -16,20 +16,33 @@ namespace Steamworks
 		public virtual IntPtr GetGlobalInterfacePointer() => IntPtr.Zero;
 
 		public IntPtr Self;
+		public IntPtr SelfGlobal;
+		public IntPtr SelfServer;
+		public IntPtr SelfClient;
 
 		public bool IsValid => Self != IntPtr.Zero;
 
 		internal void SetupInterface( bool gameServer )
 		{
-			Self = GetGlobalInterfacePointer();
+			if ( Self != IntPtr.Zero )
+				return;
+
+			SelfGlobal = GetGlobalInterfacePointer();
+			Self = SelfGlobal;
 
 			if ( Self != IntPtr.Zero )
 				return;
 
 			if ( gameServer )
-				Self = GetServerInterfacePointer();
+			{
+				SelfServer = GetServerInterfacePointer();
+				Self = SelfServer;
+			}
 			else
-				Self = GetUserInterfacePointer();
+			{
+				SelfClient = GetUserInterfacePointer();
+				Self = SelfClient;
+			}
 		}
 
 		internal void ShutdownInterface()
@@ -41,12 +54,38 @@ namespace Steamworks
 	public abstract class SteamClass
 	{
 		internal abstract void InitializeInterface( bool server );
-		internal virtual void DestroyInterface()
+		internal abstract void DestroyInterface( bool server );
+	}
+
+	public class SteamClass<T> : SteamClass
+	{
+		internal static SteamInterface Interface => InterfaceClient != null ? InterfaceClient : InterfaceServer;
+		internal static SteamInterface InterfaceClient;
+		internal static SteamInterface InterfaceServer;
+
+		internal override void InitializeInterface( bool server )
 		{
-			Interface.ShutdownInterface();
+
 		}
 
-		internal abstract SteamInterface Interface { get; }
+		internal virtual void SetInterface( bool server, SteamInterface iface )
+		{
+			if ( server )
+			{
+				InterfaceServer = iface;
+			}
+
+			if ( !server )
+			{
+				InterfaceClient = iface;
+			}
+		}
+
+		internal override void DestroyInterface( bool server )
+		{
+			InterfaceClient = null;
+			InterfaceServer = null;
+		}
 	}
 
 }

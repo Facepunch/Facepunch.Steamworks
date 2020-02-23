@@ -10,14 +10,13 @@ namespace Steamworks
 	/// <summary>
 	/// Provides the core of the Steam Game Servers API
 	/// </summary>
-	public partial class SteamServer : SteamClass
+	public partial class SteamServer : SteamClass<SteamServer>
 	{
-		internal static ISteamGameServer Internal;
-		internal override SteamInterface Interface => Internal;
+		internal static ISteamGameServer Internal => Interface as ISteamGameServer;
 
 		internal override void InitializeInterface( bool server )
 		{
-			Internal = new ISteamGameServer( server );
+			SetInterface( server, new ISteamGameServer( server ) );
 			InstallEvents();
 		}
 
@@ -28,9 +27,6 @@ namespace Steamworks
 
 		internal static void InstallEvents()
 		{
-			SteamInventory.InstallEvents();
-            //SteamNetworkingSockets.InstallEvents(true);
-
             Dispatch.Install<ValidateAuthTicketResponse_t>( x => OnValidateAuthTicketResponse?.Invoke( x.SteamID, x.OwnerSteamID, x.AuthSessionResponse ), true );
 			Dispatch.Install<SteamServersConnected_t>( x => OnSteamServersConnected?.Invoke(), true );
 			Dispatch.Install<SteamServerConnectFailure_t>( x => OnSteamServerConnectFailure?.Invoke( x.Result, x.StillRetrying ), true );
@@ -141,7 +137,7 @@ namespace Steamworks
 		{
 			foreach ( var e in openInterfaces )
 			{
-				e.DestroyInterface();
+				e.DestroyInterface( true );
 			}
 
 			openInterfaces.Clear();
@@ -149,8 +145,6 @@ namespace Steamworks
 
 		public static void Shutdown()
 		{
-			Internal = null;
-
 			ShutdownInterfaces();
 			SteamGameServer.Shutdown();
 		}

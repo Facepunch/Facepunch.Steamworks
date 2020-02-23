@@ -3,14 +3,13 @@ using System.Collections.Generic;
 
 namespace Steamworks
 {
-	public class SteamInput : SteamClass
+	public class SteamInput : SteamClass<SteamInput>
 	{
-		internal static ISteamInput Internal;
-		internal override SteamInterface Interface => Internal;
+		internal static ISteamInput Internal => Interface as ISteamInput;
 
 		internal override void InitializeInterface( bool server )
 		{
-			Internal = new ISteamInput( server );
+			SetInterface( server, new ISteamInput( server ) );
 		}
 
 		internal const int STEAM_CONTROLLER_MAX_COUNT = 16;

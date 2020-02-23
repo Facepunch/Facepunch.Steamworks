@@ -7,15 +7,13 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	public class SteamUserStats : SteamClass
+	public class SteamUserStats : SteamClass<SteamUserStats>
 	{
-		internal static ISteamUserStats Internal;
-		internal override SteamInterface Interface => Internal;
+		internal static ISteamUserStats Internal => Interface as ISteamUserStats;
 
 		internal override void InitializeInterface( bool server )
 		{
-			Internal = new ISteamUserStats( server );
-
+			SetInterface( server, new ISteamUserStats( server ) );
 			InstallEvents();
 			RequestCurrentStats();
 		}

@@ -12,20 +12,19 @@ namespace Steamworks
 	/// Functions for accessing and manipulating Steam user information.
 	/// This is also where the APIs for Steam Voice are exposed.
 	/// </summary>
-	public class SteamUGC : SteamClass
+	public class SteamUGC : SteamClass<SteamUGC>
 	{
-		internal static ISteamUGC Internal;
-		internal override SteamInterface Interface => Internal;
+		internal static ISteamUGC Internal => Interface as ISteamUGC;
 
 		internal override void InitializeInterface( bool server )
 		{
-			Internal = new ISteamUGC( server );
-			InstallEvents();
+			SetInterface( server, new ISteamUGC( server ) );
+			InstallEvents( server );
 		}
 
-		internal static void InstallEvents()
+		internal static void InstallEvents( bool server )
 		{
-			Dispatch.Install<DownloadItemResult_t>( x => OnDownloadItemResult?.Invoke( x.Result ) );
+			Dispatch.Install<DownloadItemResult_t>( x => OnDownloadItemResult?.Invoke( x.Result ), server );
 		}
 
 		/// <summary>

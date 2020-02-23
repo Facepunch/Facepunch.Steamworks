@@ -8,22 +8,21 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	public class SteamNetworking : SteamClass
+	public class SteamNetworking : SteamClass<SteamNetworking>
 	{
-		internal static ISteamNetworking Internal;
-		internal override SteamInterface Interface => Internal;
+		internal static ISteamNetworking Internal => Interface as ISteamNetworking;
 
 		internal override void InitializeInterface( bool server )
 		{
-			Internal = new ISteamNetworking( server );
+			SetInterface( server, new ISteamNetworking( server ) );
 
-			InstallEvents();
+			InstallEvents( server );
 		}
 
-		internal static void InstallEvents()
+		internal static void InstallEvents( bool server )
 		{
-			Dispatch.Install<P2PSessionRequest_t>( x => OnP2PSessionRequest?.Invoke( x.SteamIDRemote ) );
-			Dispatch.Install<P2PSessionConnectFail_t>( x => OnP2PConnectionFailed?.Invoke( x.SteamIDRemote, (P2PSessionError) x.P2PSessionError ) );
+			Dispatch.Install<P2PSessionRequest_t>( x => OnP2PSessionRequest?.Invoke( x.SteamIDRemote ), server );
+			Dispatch.Install<P2PSessionConnectFail_t>( x => OnP2PConnectionFailed?.Invoke( x.SteamIDRemote, (P2PSessionError) x.P2PSessionError ), server );
 		}
 
 		/// <summary>

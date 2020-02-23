@@ -8,21 +8,20 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	public class SteamNetworkingSockets : SteamClass
+	public class SteamNetworkingSockets : SteamClass<SteamNetworkingSockets>
 	{
-		internal static ISteamNetworkingSockets Internal;
-		internal override SteamInterface Interface => Internal;
+		internal static ISteamNetworkingSockets Internal => Interface as ISteamNetworkingSockets;
 
 		internal override void InitializeInterface( bool server )
 		{
-			Internal = new ISteamNetworkingSockets( server );
+			SetInterface( server, new ISteamNetworkingSockets( server ) );
 
 			SocketInterfaces = new Dictionary<uint, SocketInterface>();
 			ConnectionInterfaces = new Dictionary<uint, ConnectionInterface>();
 
-			InstallEvents();
+			InstallEvents( server );
 		}
-
+	
 #region SocketInterface
 
 		static Dictionary<uint, SocketInterface> SocketInterfaces;
@@ -69,7 +68,7 @@ namespace Steamworks
 
 
 
-		internal static void InstallEvents( bool server = false )
+		internal static void InstallEvents( bool server )
 		{
 			Dispatch.Install<SteamNetConnectionStatusChangedCallback_t>( ConnectionStatusChanged, server );
 		}

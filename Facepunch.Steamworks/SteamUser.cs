@@ -13,14 +13,13 @@ namespace Steamworks
 	/// Functions for accessing and manipulating Steam user information.
 	/// This is also where the APIs for Steam Voice are exposed.
 	/// </summary>
-	public class SteamUser : SteamClass
+	public class SteamUser : SteamClass<SteamUser>
 	{
-		internal static ISteamUser Internal;
-		internal override SteamInterface Interface => Internal;
+		internal static ISteamUser Internal => Interface as ISteamUser;
 
 		internal override void InitializeInterface( bool server )
 		{
-			Internal = new ISteamUser( server );
+			SetInterface( server, new ISteamUser( server ) );
 			InstallEvents();
 
 			richPresence = new Dictionary<string, string>();

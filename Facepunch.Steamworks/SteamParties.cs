@@ -7,21 +7,20 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	public class SteamParties : SteamClass
+	public class SteamParties : SteamClass<SteamParties>
 	{
-		internal static ISteamParties Internal;
-		internal override SteamInterface Interface => Internal;
+		internal static ISteamParties Internal => Interface as ISteamParties;
 
 		internal override void InitializeInterface( bool server )
 		{
-			Internal = new ISteamParties( server );
-			InstallEvents();
+			SetInterface( server, new ISteamParties( server ) );
+			InstallEvents( server );
 		}
 
-		internal static void InstallEvents()
+		internal static void InstallEvents( bool server )
 		{
-			Dispatch.Install<AvailableBeaconLocationsUpdated_t>( x => OnBeaconLocationsUpdated?.Invoke() );
-			Dispatch.Install<ActiveBeaconsUpdated_t>( x => OnActiveBeaconsUpdated?.Invoke() );
+			Dispatch.Install<AvailableBeaconLocationsUpdated_t>( x => OnBeaconLocationsUpdated?.Invoke(), server );
+			Dispatch.Install<ActiveBeaconsUpdated_t>( x => OnActiveBeaconsUpdated?.Invoke(), server );
 		}
 
 		/// <summary>

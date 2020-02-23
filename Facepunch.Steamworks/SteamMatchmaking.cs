@@ -10,18 +10,16 @@ namespace Steamworks
 	/// <summary>
 	/// Functions for clients to access matchmaking services, favorites, and to operate on game lobbies
 	/// </summary>
-	public class SteamMatchmaking : SteamClass
+	public class SteamMatchmaking : SteamClass<SteamMatchmaking>
 	{
-		internal static ISteamMatchmaking Internal;
-		internal override SteamInterface Interface => Internal;
+		internal static ISteamMatchmaking Internal => Interface as ISteamMatchmaking;
 
 		internal override void InitializeInterface( bool server )
 		{
-			Internal = new ISteamMatchmaking( server );
+			SetInterface( server, new ISteamMatchmaking( server ) );
 
 			InstallEvents();
 		}
-
 	
 		/// <summary>
 		/// Maximum number of characters a lobby metadata key can be

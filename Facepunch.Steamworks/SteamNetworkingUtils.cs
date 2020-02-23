@@ -10,22 +10,22 @@ namespace Steamworks
 	/// <summary>
 	/// Undocumented Parental Settings
 	/// </summary>
-	public class SteamNetworkingUtils : SteamClass
+	public class SteamNetworkingUtils : SteamClass<SteamNetworkingUtils>
 	{
-		internal static ISteamNetworkingUtils Internal;
-		internal override SteamInterface Interface => Internal;
+		internal static ISteamNetworkingUtils Internal => Interface as ISteamNetworkingUtils;
 
 		internal override void InitializeInterface( bool server )
 		{
-			Internal = new ISteamNetworkingUtils( server );
+			SetInterface( server, new ISteamNetworkingUtils( server ) );
+			InstallCallbacks( server );
 		}
 
-		static void InstallCallbacks()
+		static void InstallCallbacks( bool server )
 		{
 			Dispatch.Install<SteamRelayNetworkStatus_t>( x =>
 			{
 				Status = x.Avail;
-			} );
+			}, server );
 		}
 
 		public static SteamNetworkingAvailability Status { get; private set; }

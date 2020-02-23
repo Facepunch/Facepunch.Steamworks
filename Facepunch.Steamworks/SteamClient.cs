@@ -79,7 +79,7 @@ namespace Steamworks
 		{
 			foreach ( var e in openInterfaces )
 			{
-				e.DestroyInterface();
+				e.DestroyInterface( false );
 			}
 
 			openInterfaces.Clear();

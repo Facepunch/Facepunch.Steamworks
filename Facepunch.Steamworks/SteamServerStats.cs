@@ -7,15 +7,15 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
-	public class SteamServerStats : SteamClass
+	public class SteamServerStats : SteamClass<SteamServerStats>
 	{
-		internal static ISteamGameServerStats Internal;
-		internal override SteamInterface Interface => Internal;
+		internal static ISteamGameServerStats Internal => Interface as ISteamGameServerStats;
 
 		internal override void InitializeInterface( bool server )
 		{
-			Internal = new ISteamGameServerStats( server );
+			SetInterface( server, new ISteamGameServerStats( server ) );
 		}
+		
 
 		/// <summary>
 		/// Downloads stats for the user
