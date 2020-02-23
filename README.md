@@ -1,5 +1,5 @@
 # Facepunch.Steamworks
-Another fucking c# Steamworks implementation
+[Another fucking c# Steamworks implementation](https://wiki.facepunch.com/steamworks/)
 
 ## Features
 
@@ -346,6 +346,8 @@ catch ( System.Exception )
 Wanna help? Go for it, pull requests, bug reports, yes, do it.
 
 You can also hit up the [Steamworks Thread](http://steamcommunity.com/groups/steamworks/discussions/0/1319961618833314524/) for help/discussion.
+
+We also have [a wiki you can read](https://wiki.facepunch.com/steamworks/) and help fill out with examples and advice.
 
 # License
 
