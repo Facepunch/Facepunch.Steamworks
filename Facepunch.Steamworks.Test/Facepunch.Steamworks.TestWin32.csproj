@@ -108,6 +108,7 @@
     <Compile Include="SteamNetworkingTest.cs" />
     <Compile Include="UgcTest.cs" />
     <Compile Include="UgcEditor.cs" />
+    <Compile Include="RemotePlayTest.cs" />
     <Compile Include="UserTest.cs" />
     <Compile Include="UserStatsTest.cs" />
     <Compile Include="UgcQuery.cs" />

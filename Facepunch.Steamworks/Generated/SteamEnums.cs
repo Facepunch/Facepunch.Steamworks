@@ -1927,7 +1927,7 @@ namespace Steamworks
 	//
 	// ESteamDeviceFormFactor
 	//
-	internal enum SteamDeviceFormFactor : int
+	public enum SteamDeviceFormFactor : int
 	{
 		Unknown = 0,
 		Phone = 1,

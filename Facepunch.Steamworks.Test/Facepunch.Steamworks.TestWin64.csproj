@@ -101,6 +101,7 @@
     <Compile Include="NetworkingSockets.cs" />
     <Compile Include="NetworkingSocketsTest.TestConnectionInterface.cs" />
     <Compile Include="NetworkingSocketsTest.TestSocketInterface.cs" />
+    <Compile Include="RemotePlayTest.cs" />
     <Compile Include="SteamMatchmakingTest.cs" />
     <Compile Include="RemoteStorageTest.cs" />
     <Compile Include="InventoryTest.cs" />

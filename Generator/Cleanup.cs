@@ -129,6 +129,7 @@ public static class Cleanup
 		if ( name == "PingLocation" ) return "public";
 		if ( name == "ConnectionState" ) return "public";
 		if ( name == "SteamNetworkingAvailability" ) return "public";
+		if ( name == "SteamDeviceFormFactor" ) return "public";
 
 		return "internal";
 	}

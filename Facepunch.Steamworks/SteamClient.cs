@@ -55,6 +55,7 @@ namespace Steamworks
 			AddInterface<SteamUserStats>();
 			AddInterface<SteamUtils>();
 			AddInterface<SteamVideo>();
+			AddInterface<SteamRemotePlay>();
 
 			if ( asyncCallbacks )
 			{
