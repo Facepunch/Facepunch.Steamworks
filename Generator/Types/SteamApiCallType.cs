@@ -15,10 +15,7 @@ internal class SteamApiCallType : BaseType
 	public override string TypeName => "SteamAPICall_t";
 	public override string Return( string varname )
 	{
-		if ( !string.IsNullOrEmpty( CallResult ) )
-			return $"return new CallResult<{CallResult}>( {varname} );";
-
-		return $"return new CallResult( {varname} );";
+		return $"return new CallResult<{CallResult}>( {varname}, IsServer );";
 	}
 
 	public override string ReturnType

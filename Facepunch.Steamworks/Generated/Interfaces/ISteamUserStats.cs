@@ -216,7 +216,7 @@ namespace Steamworks
 		internal CallResult<UserStatsReceived_t> RequestUserStats( SteamId steamIDUser )
 		{
 			var returnValue = _RequestUserStats( Self, steamIDUser );
-			return new CallResult<UserStatsReceived_t>( returnValue );
+			return new CallResult<UserStatsReceived_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -287,7 +287,7 @@ namespace Steamworks
 		internal CallResult<LeaderboardFindResult_t> FindOrCreateLeaderboard( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchLeaderboardName, LeaderboardSort eLeaderboardSortMethod, LeaderboardDisplay eLeaderboardDisplayType )
 		{
 			var returnValue = _FindOrCreateLeaderboard( Self, pchLeaderboardName, eLeaderboardSortMethod, eLeaderboardDisplayType );
-			return new CallResult<LeaderboardFindResult_t>( returnValue );
+			return new CallResult<LeaderboardFindResult_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -298,7 +298,7 @@ namespace Steamworks
 		internal CallResult<LeaderboardFindResult_t> FindLeaderboard( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchLeaderboardName )
 		{
 			var returnValue = _FindLeaderboard( Self, pchLeaderboardName );
-			return new CallResult<LeaderboardFindResult_t>( returnValue );
+			return new CallResult<LeaderboardFindResult_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -353,7 +353,7 @@ namespace Steamworks
 		internal CallResult<LeaderboardScoresDownloaded_t> DownloadLeaderboardEntries( SteamLeaderboard_t hSteamLeaderboard, LeaderboardDataRequest eLeaderboardDataRequest, int nRangeStart, int nRangeEnd )
 		{
 			var returnValue = _DownloadLeaderboardEntries( Self, hSteamLeaderboard, eLeaderboardDataRequest, nRangeStart, nRangeEnd );
-			return new CallResult<LeaderboardScoresDownloaded_t>( returnValue );
+			return new CallResult<LeaderboardScoresDownloaded_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -367,7 +367,7 @@ namespace Steamworks
 		internal CallResult<LeaderboardScoresDownloaded_t> DownloadLeaderboardEntriesForUsers( SteamLeaderboard_t hSteamLeaderboard, [In,Out] SteamId[]  prgUsers, int cUsers )
 		{
 			var returnValue = _DownloadLeaderboardEntriesForUsers( Self, hSteamLeaderboard, prgUsers, cUsers );
-			return new CallResult<LeaderboardScoresDownloaded_t>( returnValue );
+			return new CallResult<LeaderboardScoresDownloaded_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -390,7 +390,7 @@ namespace Steamworks
 		internal CallResult<LeaderboardScoreUploaded_t> UploadLeaderboardScore( SteamLeaderboard_t hSteamLeaderboard, LeaderboardUploadScoreMethod eLeaderboardUploadScoreMethod, int nScore, [In,Out] int[]  pScoreDetails, int cScoreDetailsCount )
 		{
 			var returnValue = _UploadLeaderboardScore( Self, hSteamLeaderboard, eLeaderboardUploadScoreMethod, nScore, pScoreDetails, cScoreDetailsCount );
-			return new CallResult<LeaderboardScoreUploaded_t>( returnValue );
+			return new CallResult<LeaderboardScoreUploaded_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -401,7 +401,7 @@ namespace Steamworks
 		internal CallResult<LeaderboardUGCSet_t> AttachLeaderboardUGC( SteamLeaderboard_t hSteamLeaderboard, UGCHandle_t hUGC )
 		{
 			var returnValue = _AttachLeaderboardUGC( Self, hSteamLeaderboard, hUGC );
-			return new CallResult<LeaderboardUGCSet_t>( returnValue );
+			return new CallResult<LeaderboardUGCSet_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -412,7 +412,7 @@ namespace Steamworks
 		internal CallResult<NumberOfCurrentPlayers_t> GetNumberOfCurrentPlayers()
 		{
 			var returnValue = _GetNumberOfCurrentPlayers( Self );
-			return new CallResult<NumberOfCurrentPlayers_t>( returnValue );
+			return new CallResult<NumberOfCurrentPlayers_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -423,7 +423,7 @@ namespace Steamworks
 		internal CallResult<GlobalAchievementPercentagesReady_t> RequestGlobalAchievementPercentages()
 		{
 			var returnValue = _RequestGlobalAchievementPercentages( Self );
-			return new CallResult<GlobalAchievementPercentagesReady_t>( returnValue );
+			return new CallResult<GlobalAchievementPercentagesReady_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -472,7 +472,7 @@ namespace Steamworks
 		internal CallResult<GlobalStatsReceived_t> RequestGlobalStats( int nHistoryDays )
 		{
 			var returnValue = _RequestGlobalStats( Self, nHistoryDays );
-			return new CallResult<GlobalStatsReceived_t>( returnValue );
+			return new CallResult<GlobalStatsReceived_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta

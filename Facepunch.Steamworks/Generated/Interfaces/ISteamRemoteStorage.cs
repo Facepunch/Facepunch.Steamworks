@@ -51,7 +51,7 @@ namespace Steamworks
 		internal CallResult<RemoteStorageFileWriteAsyncComplete_t> FileWriteAsync( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFile, IntPtr pvData, uint cubData )
 		{
 			var returnValue = _FileWriteAsync( Self, pchFile, pvData, cubData );
-			return new CallResult<RemoteStorageFileWriteAsyncComplete_t>( returnValue );
+			return new CallResult<RemoteStorageFileWriteAsyncComplete_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -62,7 +62,7 @@ namespace Steamworks
 		internal CallResult<RemoteStorageFileReadAsyncComplete_t> FileReadAsync( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFile, uint nOffset, uint cubToRead )
 		{
 			var returnValue = _FileReadAsync( Self, pchFile, nOffset, cubToRead );
-			return new CallResult<RemoteStorageFileReadAsyncComplete_t>( returnValue );
+			return new CallResult<RemoteStorageFileReadAsyncComplete_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -109,7 +109,7 @@ namespace Steamworks
 		internal CallResult<RemoteStorageFileShareResult_t> FileShare( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchFile )
 		{
 			var returnValue = _FileShare( Self, pchFile );
-			return new CallResult<RemoteStorageFileShareResult_t>( returnValue );
+			return new CallResult<RemoteStorageFileShareResult_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -304,7 +304,7 @@ namespace Steamworks
 		internal CallResult<RemoteStorageDownloadUGCResult_t> UGCDownload( UGCHandle_t hContent, uint unPriority )
 		{
 			var returnValue = _UGCDownload( Self, hContent, unPriority );
-			return new CallResult<RemoteStorageDownloadUGCResult_t>( returnValue );
+			return new CallResult<RemoteStorageDownloadUGCResult_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -372,7 +372,7 @@ namespace Steamworks
 		internal CallResult<RemoteStorageDownloadUGCResult_t> UGCDownloadToLocation( UGCHandle_t hContent, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchLocation, uint unPriority )
 		{
 			var returnValue = _UGCDownloadToLocation( Self, hContent, pchLocation, unPriority );
-			return new CallResult<RemoteStorageDownloadUGCResult_t>( returnValue );
+			return new CallResult<RemoteStorageDownloadUGCResult_t>( returnValue, IsServer );
 		}
 		
 	}

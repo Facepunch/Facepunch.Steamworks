@@ -21,12 +21,14 @@ namespace Steamworks
 		public IntPtr SelfClient;
 
 		public bool IsValid => Self != IntPtr.Zero;
+		public bool IsServer { get; private set; }
 
 		internal void SetupInterface( bool gameServer )
 		{
 			if ( Self != IntPtr.Zero )
 				return;
 
+			IsServer = gameServer;
 			SelfGlobal = GetGlobalInterfacePointer();
 			Self = SelfGlobal;
 

@@ -341,7 +341,7 @@ namespace Steamworks
 		internal CallResult<SteamInventoryEligiblePromoItemDefIDs_t> RequestEligiblePromoItemDefinitionsIDs( SteamId steamID )
 		{
 			var returnValue = _RequestEligiblePromoItemDefinitionsIDs( Self, steamID );
-			return new CallResult<SteamInventoryEligiblePromoItemDefIDs_t>( returnValue );
+			return new CallResult<SteamInventoryEligiblePromoItemDefIDs_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -364,7 +364,7 @@ namespace Steamworks
 		internal CallResult<SteamInventoryStartPurchaseResult_t> StartPurchase( [In,Out] InventoryDefId[]  pArrayItemDefs, [In,Out] uint[]  punArrayQuantity, uint unArrayLength )
 		{
 			var returnValue = _StartPurchase( Self, pArrayItemDefs, punArrayQuantity, unArrayLength );
-			return new CallResult<SteamInventoryStartPurchaseResult_t>( returnValue );
+			return new CallResult<SteamInventoryStartPurchaseResult_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -375,7 +375,7 @@ namespace Steamworks
 		internal CallResult<SteamInventoryRequestPricesResult_t> RequestPrices()
 		{
 			var returnValue = _RequestPrices( Self );
-			return new CallResult<SteamInventoryRequestPricesResult_t>( returnValue );
+			return new CallResult<SteamInventoryRequestPricesResult_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta

@@ -64,7 +64,7 @@ namespace Steamworks
 		internal CallResult<JoinPartyCallback_t> JoinParty( PartyBeaconID_t ulBeaconID )
 		{
 			var returnValue = _JoinParty( Self, ulBeaconID );
-			return new CallResult<JoinPartyCallback_t>( returnValue );
+			return new CallResult<JoinPartyCallback_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -99,7 +99,7 @@ namespace Steamworks
 		internal CallResult<CreateBeaconCallback_t> CreateBeacon( uint unOpenSlots,  /* ref */ SteamPartyBeaconLocation_t pBeaconLocation, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchConnectString, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchMetadata )
 		{
 			var returnValue = _CreateBeacon( Self, unOpenSlots, ref pBeaconLocation, pchConnectString, pchMetadata );
-			return new CallResult<CreateBeaconCallback_t>( returnValue );
+			return new CallResult<CreateBeaconCallback_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -130,7 +130,7 @@ namespace Steamworks
 		internal CallResult<ChangeNumOpenSlotsCallback_t> ChangeNumOpenSlots( PartyBeaconID_t ulBeacon, uint unOpenSlots )
 		{
 			var returnValue = _ChangeNumOpenSlots( Self, ulBeacon, unOpenSlots );
-			return new CallResult<ChangeNumOpenSlotsCallback_t>( returnValue );
+			return new CallResult<ChangeNumOpenSlotsCallback_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta

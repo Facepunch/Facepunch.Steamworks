@@ -74,7 +74,7 @@ namespace Steamworks
 		internal CallResult<LobbyMatchList_t> RequestLobbyList()
 		{
 			var returnValue = _RequestLobbyList( Self );
-			return new CallResult<LobbyMatchList_t>( returnValue );
+			return new CallResult<LobbyMatchList_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -166,7 +166,7 @@ namespace Steamworks
 		internal CallResult<LobbyCreated_t> CreateLobby( LobbyType eLobbyType, int cMaxMembers )
 		{
 			var returnValue = _CreateLobby( Self, eLobbyType, cMaxMembers );
-			return new CallResult<LobbyCreated_t>( returnValue );
+			return new CallResult<LobbyCreated_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -177,7 +177,7 @@ namespace Steamworks
 		internal CallResult<LobbyEnter_t> JoinLobby( SteamId steamIDLobby )
 		{
 			var returnValue = _JoinLobby( Self, steamIDLobby );
-			return new CallResult<LobbyEnter_t>( returnValue );
+			return new CallResult<LobbyEnter_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta

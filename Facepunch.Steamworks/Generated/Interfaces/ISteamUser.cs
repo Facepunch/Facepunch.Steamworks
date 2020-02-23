@@ -246,7 +246,7 @@ namespace Steamworks
 		internal CallResult<EncryptedAppTicketResponse_t> RequestEncryptedAppTicket( IntPtr pDataToInclude, int cbDataToInclude )
 		{
 			var returnValue = _RequestEncryptedAppTicket( Self, pDataToInclude, cbDataToInclude );
-			return new CallResult<EncryptedAppTicketResponse_t>( returnValue );
+			return new CallResult<EncryptedAppTicketResponse_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -291,7 +291,7 @@ namespace Steamworks
 		internal CallResult<StoreAuthURLResponse_t> RequestStoreAuthURL( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchRedirectURL )
 		{
 			var returnValue = _RequestStoreAuthURL( Self, pchRedirectURL );
-			return new CallResult<StoreAuthURLResponse_t>( returnValue );
+			return new CallResult<StoreAuthURLResponse_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -350,7 +350,7 @@ namespace Steamworks
 		internal CallResult<MarketEligibilityResponse_t> GetMarketEligibility()
 		{
 			var returnValue = _GetMarketEligibility( Self );
-			return new CallResult<MarketEligibilityResponse_t>( returnValue );
+			return new CallResult<MarketEligibilityResponse_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -361,7 +361,7 @@ namespace Steamworks
 		internal CallResult<DurationControl_t> GetDurationControl()
 		{
 			var returnValue = _GetDurationControl( Self );
-			return new CallResult<DurationControl_t>( returnValue );
+			return new CallResult<DurationControl_t>( returnValue, IsServer );
 		}
 		
 	}

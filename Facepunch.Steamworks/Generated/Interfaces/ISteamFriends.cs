@@ -39,7 +39,7 @@ namespace Steamworks
 		internal CallResult<SetPersonaNameResponse_t> SetPersonaName( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchPersonaName )
 		{
 			var returnValue = _SetPersonaName( Self, pchPersonaName );
-			return new CallResult<SetPersonaNameResponse_t>( returnValue );
+			return new CallResult<SetPersonaNameResponse_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -283,7 +283,7 @@ namespace Steamworks
 		internal CallResult<DownloadClanActivityCountsResult_t> DownloadClanActivityCounts( [In,Out] SteamId[]  psteamIDClans, int cClansToRequest )
 		{
 			var returnValue = _DownloadClanActivityCounts( Self, psteamIDClans, cClansToRequest );
-			return new CallResult<DownloadClanActivityCountsResult_t>( returnValue );
+			return new CallResult<DownloadClanActivityCountsResult_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -443,7 +443,7 @@ namespace Steamworks
 		internal CallResult<ClanOfficerListResponse_t> RequestClanOfficerList( SteamId steamIDClan )
 		{
 			var returnValue = _RequestClanOfficerList( Self, steamIDClan );
-			return new CallResult<ClanOfficerListResponse_t>( returnValue );
+			return new CallResult<ClanOfficerListResponse_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -619,7 +619,7 @@ namespace Steamworks
 		internal CallResult<JoinClanChatRoomCompletionResult_t> JoinClanChatRoom( SteamId steamIDClan )
 		{
 			var returnValue = _JoinClanChatRoom( Self, steamIDClan );
-			return new CallResult<JoinClanChatRoomCompletionResult_t>( returnValue );
+			return new CallResult<JoinClanChatRoomCompletionResult_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -770,7 +770,7 @@ namespace Steamworks
 		internal CallResult<FriendsGetFollowerCount_t> GetFollowerCount( SteamId steamID )
 		{
 			var returnValue = _GetFollowerCount( Self, steamID );
-			return new CallResult<FriendsGetFollowerCount_t>( returnValue );
+			return new CallResult<FriendsGetFollowerCount_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -781,7 +781,7 @@ namespace Steamworks
 		internal CallResult<FriendsIsFollowing_t> IsFollowing( SteamId steamID )
 		{
 			var returnValue = _IsFollowing( Self, steamID );
-			return new CallResult<FriendsIsFollowing_t>( returnValue );
+			return new CallResult<FriendsIsFollowing_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -792,7 +792,7 @@ namespace Steamworks
 		internal CallResult<FriendsEnumerateFollowingList_t> EnumerateFollowingList( uint unStartIndex )
 		{
 			var returnValue = _EnumerateFollowingList( Self, unStartIndex );
-			return new CallResult<FriendsEnumerateFollowingList_t>( returnValue );
+			return new CallResult<FriendsEnumerateFollowingList_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta

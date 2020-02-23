@@ -75,7 +75,7 @@ namespace Steamworks
 		internal CallResult<SteamUGCQueryCompleted_t> SendQueryUGCRequest( UGCQueryHandle_t handle )
 		{
 			var returnValue = _SendQueryUGCRequest( Self, handle );
-			return new CallResult<SteamUGCQueryCompleted_t>( returnValue );
+			return new CallResult<SteamUGCQueryCompleted_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -446,7 +446,7 @@ namespace Steamworks
 		internal CallResult<SteamUGCRequestUGCDetailsResult_t> RequestUGCDetails( PublishedFileId nPublishedFileID, uint unMaxAgeSeconds )
 		{
 			var returnValue = _RequestUGCDetails( Self, nPublishedFileID, unMaxAgeSeconds );
-			return new CallResult<SteamUGCRequestUGCDetailsResult_t>( returnValue );
+			return new CallResult<SteamUGCRequestUGCDetailsResult_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -457,7 +457,7 @@ namespace Steamworks
 		internal CallResult<CreateItemResult_t> CreateItem( AppId nConsumerAppId, WorkshopFileType eFileType )
 		{
 			var returnValue = _CreateItem( Self, nConsumerAppId, eFileType );
-			return new CallResult<CreateItemResult_t>( returnValue );
+			return new CallResult<CreateItemResult_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -683,7 +683,7 @@ namespace Steamworks
 		internal CallResult<SubmitItemUpdateResult_t> SubmitItemUpdate( UGCUpdateHandle_t handle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchChangeNote )
 		{
 			var returnValue = _SubmitItemUpdate( Self, handle, pchChangeNote );
-			return new CallResult<SubmitItemUpdateResult_t>( returnValue );
+			return new CallResult<SubmitItemUpdateResult_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -705,7 +705,7 @@ namespace Steamworks
 		internal CallResult<SetUserItemVoteResult_t> SetUserItemVote( PublishedFileId nPublishedFileID, [MarshalAs( UnmanagedType.U1 )] bool bVoteUp )
 		{
 			var returnValue = _SetUserItemVote( Self, nPublishedFileID, bVoteUp );
-			return new CallResult<SetUserItemVoteResult_t>( returnValue );
+			return new CallResult<SetUserItemVoteResult_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -716,7 +716,7 @@ namespace Steamworks
 		internal CallResult<GetUserItemVoteResult_t> GetUserItemVote( PublishedFileId nPublishedFileID )
 		{
 			var returnValue = _GetUserItemVote( Self, nPublishedFileID );
-			return new CallResult<GetUserItemVoteResult_t>( returnValue );
+			return new CallResult<GetUserItemVoteResult_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -727,7 +727,7 @@ namespace Steamworks
 		internal CallResult<UserFavoriteItemsListChanged_t> AddItemToFavorites( AppId nAppId, PublishedFileId nPublishedFileID )
 		{
 			var returnValue = _AddItemToFavorites( Self, nAppId, nPublishedFileID );
-			return new CallResult<UserFavoriteItemsListChanged_t>( returnValue );
+			return new CallResult<UserFavoriteItemsListChanged_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -738,7 +738,7 @@ namespace Steamworks
 		internal CallResult<UserFavoriteItemsListChanged_t> RemoveItemFromFavorites( AppId nAppId, PublishedFileId nPublishedFileID )
 		{
 			var returnValue = _RemoveItemFromFavorites( Self, nAppId, nPublishedFileID );
-			return new CallResult<UserFavoriteItemsListChanged_t>( returnValue );
+			return new CallResult<UserFavoriteItemsListChanged_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -749,7 +749,7 @@ namespace Steamworks
 		internal CallResult<RemoteStorageSubscribePublishedFileResult_t> SubscribeItem( PublishedFileId nPublishedFileID )
 		{
 			var returnValue = _SubscribeItem( Self, nPublishedFileID );
-			return new CallResult<RemoteStorageSubscribePublishedFileResult_t>( returnValue );
+			return new CallResult<RemoteStorageSubscribePublishedFileResult_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -760,7 +760,7 @@ namespace Steamworks
 		internal CallResult<RemoteStorageUnsubscribePublishedFileResult_t> UnsubscribeItem( PublishedFileId nPublishedFileID )
 		{
 			var returnValue = _UnsubscribeItem( Self, nPublishedFileID );
-			return new CallResult<RemoteStorageUnsubscribePublishedFileResult_t>( returnValue );
+			return new CallResult<RemoteStorageUnsubscribePublishedFileResult_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -864,7 +864,7 @@ namespace Steamworks
 		internal CallResult<StartPlaytimeTrackingResult_t> StartPlaytimeTracking( [In,Out] PublishedFileId[]  pvecPublishedFileID, uint unNumPublishedFileIDs )
 		{
 			var returnValue = _StartPlaytimeTracking( Self, pvecPublishedFileID, unNumPublishedFileIDs );
-			return new CallResult<StartPlaytimeTrackingResult_t>( returnValue );
+			return new CallResult<StartPlaytimeTrackingResult_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -875,7 +875,7 @@ namespace Steamworks
 		internal CallResult<StopPlaytimeTrackingResult_t> StopPlaytimeTracking( [In,Out] PublishedFileId[]  pvecPublishedFileID, uint unNumPublishedFileIDs )
 		{
 			var returnValue = _StopPlaytimeTracking( Self, pvecPublishedFileID, unNumPublishedFileIDs );
-			return new CallResult<StopPlaytimeTrackingResult_t>( returnValue );
+			return new CallResult<StopPlaytimeTrackingResult_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -886,7 +886,7 @@ namespace Steamworks
 		internal CallResult<StopPlaytimeTrackingResult_t> StopPlaytimeTrackingForAllItems()
 		{
 			var returnValue = _StopPlaytimeTrackingForAllItems( Self );
-			return new CallResult<StopPlaytimeTrackingResult_t>( returnValue );
+			return new CallResult<StopPlaytimeTrackingResult_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -897,7 +897,7 @@ namespace Steamworks
 		internal CallResult<AddUGCDependencyResult_t> AddDependency( PublishedFileId nParentPublishedFileID, PublishedFileId nChildPublishedFileID )
 		{
 			var returnValue = _AddDependency( Self, nParentPublishedFileID, nChildPublishedFileID );
-			return new CallResult<AddUGCDependencyResult_t>( returnValue );
+			return new CallResult<AddUGCDependencyResult_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -908,7 +908,7 @@ namespace Steamworks
 		internal CallResult<RemoveUGCDependencyResult_t> RemoveDependency( PublishedFileId nParentPublishedFileID, PublishedFileId nChildPublishedFileID )
 		{
 			var returnValue = _RemoveDependency( Self, nParentPublishedFileID, nChildPublishedFileID );
-			return new CallResult<RemoveUGCDependencyResult_t>( returnValue );
+			return new CallResult<RemoveUGCDependencyResult_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -919,7 +919,7 @@ namespace Steamworks
 		internal CallResult<AddAppDependencyResult_t> AddAppDependency( PublishedFileId nPublishedFileID, AppId nAppID )
 		{
 			var returnValue = _AddAppDependency( Self, nPublishedFileID, nAppID );
-			return new CallResult<AddAppDependencyResult_t>( returnValue );
+			return new CallResult<AddAppDependencyResult_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -930,7 +930,7 @@ namespace Steamworks
 		internal CallResult<RemoveAppDependencyResult_t> RemoveAppDependency( PublishedFileId nPublishedFileID, AppId nAppID )
 		{
 			var returnValue = _RemoveAppDependency( Self, nPublishedFileID, nAppID );
-			return new CallResult<RemoveAppDependencyResult_t>( returnValue );
+			return new CallResult<RemoveAppDependencyResult_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -941,7 +941,7 @@ namespace Steamworks
 		internal CallResult<GetAppDependenciesResult_t> GetAppDependencies( PublishedFileId nPublishedFileID )
 		{
 			var returnValue = _GetAppDependencies( Self, nPublishedFileID );
-			return new CallResult<GetAppDependenciesResult_t>( returnValue );
+			return new CallResult<GetAppDependenciesResult_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -952,7 +952,7 @@ namespace Steamworks
 		internal CallResult<DeleteItemResult_t> DeleteItem( PublishedFileId nPublishedFileID )
 		{
 			var returnValue = _DeleteItem( Self, nPublishedFileID );
-			return new CallResult<DeleteItemResult_t>( returnValue );
+			return new CallResult<DeleteItemResult_t>( returnValue, IsServer );
 		}
 		
 	}

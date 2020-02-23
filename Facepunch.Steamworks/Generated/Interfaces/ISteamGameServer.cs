@@ -385,7 +385,7 @@ namespace Steamworks
 		internal CallResult<GSReputation_t> GetServerReputation()
 		{
 			var returnValue = _GetServerReputation( Self );
-			return new CallResult<GSReputation_t>( returnValue );
+			return new CallResult<GSReputation_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -460,7 +460,7 @@ namespace Steamworks
 		internal CallResult<AssociateWithClanResult_t> AssociateWithClan( SteamId steamIDClan )
 		{
 			var returnValue = _AssociateWithClan( Self, steamIDClan );
-			return new CallResult<AssociateWithClanResult_t>( returnValue );
+			return new CallResult<AssociateWithClanResult_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -471,7 +471,7 @@ namespace Steamworks
 		internal CallResult<ComputeNewPlayerCompatibilityResult_t> ComputeNewPlayerCompatibility( SteamId steamIDNewPlayer )
 		{
 			var returnValue = _ComputeNewPlayerCompatibility( Self, steamIDNewPlayer );
-			return new CallResult<ComputeNewPlayerCompatibilityResult_t>( returnValue );
+			return new CallResult<ComputeNewPlayerCompatibilityResult_t>( returnValue, IsServer );
 		}
 		
 	}

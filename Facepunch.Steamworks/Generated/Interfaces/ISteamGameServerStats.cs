@@ -28,7 +28,7 @@ namespace Steamworks
 		internal CallResult<GSStatsReceived_t> RequestUserStats( SteamId steamIDUser )
 		{
 			var returnValue = _RequestUserStats( Self, steamIDUser );
-			return new CallResult<GSStatsReceived_t>( returnValue );
+			return new CallResult<GSStatsReceived_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta
@@ -135,7 +135,7 @@ namespace Steamworks
 		internal CallResult<GSStatsStored_t> StoreUserStats( SteamId steamIDUser )
 		{
 			var returnValue = _StoreUserStats( Self, steamIDUser );
-			return new CallResult<GSStatsStored_t>( returnValue );
+			return new CallResult<GSStatsStored_t>( returnValue, IsServer );
 		}
 		
 	}

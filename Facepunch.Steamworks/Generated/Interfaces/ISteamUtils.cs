@@ -234,7 +234,7 @@ namespace Steamworks
 		internal CallResult<CheckFileSignature_t> CheckFileSignature( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string szFileName )
 		{
 			var returnValue = _CheckFileSignature( Self, szFileName );
-			return new CallResult<CheckFileSignature_t>( returnValue );
+			return new CallResult<CheckFileSignature_t>( returnValue, IsServer );
 		}
 		
 		#region FunctionMeta

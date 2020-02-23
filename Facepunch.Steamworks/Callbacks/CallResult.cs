@@ -14,10 +14,16 @@ namespace Steamworks
 	internal struct CallResult<T> : INotifyCompletion where T : struct, ICallbackData
 	{
 		SteamAPICall_t call;
+		ISteamUtils utils;
 
-		public CallResult( SteamAPICall_t call )
+		public CallResult( SteamAPICall_t call, bool server )
 		{
 			this.call = call;
+
+			utils = (server ? SteamUtils.InterfaceServer : SteamUtils.InterfaceClient) as ISteamUtils;
+
+			if ( utils == null )
+				utils = SteamUtils.Interface as ISteamUtils;
 		}
 
 		/// <summary>
@@ -35,7 +41,8 @@ namespace Steamworks
 		/// </summary>
 		public T? GetResult()
 		{
-			if ( !SteamUtils.IsCallComplete( call, out var failed ) || failed )
+			bool failed = false;
+			if ( !utils.IsAPICallCompleted( call, ref failed ) || failed )
 				return null;
 
 			var t = default( T );
@@ -44,8 +51,11 @@ namespace Steamworks
 
 			try
 			{
-				if ( !SteamUtils.Internal.GetAPICallResult( call, ptr, size, (int) t.CallbackType, ref failed ) || failed )
+				if ( !utils.GetAPICallResult( call, ptr, size, (int)t.CallbackType, ref failed ) || failed )
+				{
+					Console.WriteLine( $"Api Call result returned false or {failed}" );
 					return null;
+				}
 
 				return ((T)Marshal.PtrToStructure( ptr, typeof( T ) ));
 			}
@@ -62,7 +72,8 @@ namespace Steamworks
 		{
 			get
 			{
-				if ( SteamUtils.IsCallComplete( call, out var failed ) || failed )
+				bool failed = false;
+				if ( utils.IsAPICallCompleted( call, ref failed ) || failed )
 					return true;
 
 				return false;
