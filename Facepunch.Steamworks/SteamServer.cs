@@ -93,6 +93,14 @@ namespace Steamworks
 			Dispatch.ServerPipe = SteamGameServer.GetHSteamPipe();
 
 			AddInterface<SteamServer>();
+			AddInterface<SteamUtils>();
+			AddInterface<SteamNetworking>();
+			AddInterface<SteamServerStats>();
+			//AddInterface<ISteamHTTP>();
+			AddInterface<SteamInventory>();
+			AddInterface<SteamUGC>();
+			AddInterface<SteamApps>();
+
 			AddInterface<SteamNetworkingUtils>();
 			AddInterface<SteamNetworkingSockets>();
 
