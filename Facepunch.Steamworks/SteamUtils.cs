@@ -255,5 +255,11 @@ namespace Steamworks
 			failed = false;
 			return Internal.IsAPICallCompleted( call, ref failed );
 		}
+
+
+		/// <summary>
+		/// Returns whether this steam client is a Steam China specific client, vs the global client
+		/// </summary>
+		public static bool IsSteamChinaLauncher => Internal.IsSteamChinaLauncher();
 	}
 }
