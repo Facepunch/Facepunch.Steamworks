@@ -32,11 +32,14 @@ public static class Cleanup
 		type = type.Replace( "SteamItemInstanceID_t", "InventoryItemId" );
 		type = type.Replace( "SteamItemDef_t", "InventoryDefId" );
 		type = type.Replace( "ChatRoomEnterResponse", "RoomEnter" );
-		type = type.Replace( "SteamNetworkPingLocation_t", "PingLocation" );
+		type = type.Replace( "SteamNetworkPingLocation_t", "NetPingLocation" );
 		type = type.Replace( "SteamNetworkingConfigValue_t", "NetKeyValue" );
 		type = type.Replace( "SteamNetworkingConfigValue", "NetConfig" );
 		type = type.Replace( "SteamNetworkingConfigScope", "NetConfigScope" );
 		type = type.Replace( "SteamNetworkingConfigDataType", "NetConfigType" );
+		type = type.Replace( "FSteamNetworkingSocketsDebugOutput", "NetDebugFunc" );
+		type = type.Replace( "SteamNetworkingErrMsg", "NetErrorMessage" );
+		type = type.Replace( "SteamNetConnectionEnd", "NetConnectionEnd" );
 		type = type.Replace( "HSteamNetConnection", "Connection" );
 		type = type.Replace( "HSteamListenSocket", "Socket" );
 		type = type.Replace( "SteamNetworkingIPAddr", "NetAddress" );
@@ -77,18 +80,17 @@ public static class Cleanup
 		if ( type == "Connection" ) return false;
 		if ( type == "Socket" ) return false;
 		if ( type == "SteamNetworkingMicroseconds" ) return false;
-		if ( type == "FSteamNetworkingSocketsDebugOutput" ) return false;
+		if ( type == "NetDebugFunc" ) return false;
 		if ( type == "NetMsg" ) return false;
 		if ( type == "SteamDatagramErrMsg" ) return false;
 		if ( type == "ConnectionInfo" ) return false;
 		if ( type == "SteamNetworkingIPAddr" ) return false;
 		if ( type == "NetAddress" ) return false;
 		if ( type == "NetIdentity" ) return false;
-		if ( type == "SteamNetworkingQuickConnectionStatus" ) return false;
 		if ( type == "SteamNetworkingErrMsg" ) return false;
 		if ( type == "NetKeyValue" ) return false;
 		if ( type == "SteamIPAddress" ) return false;
-		if ( type == "PingLocation" ) return false;
+		if ( type == "NetPingLocation" ) return false;
 		if ( type == "CSteamID" ) return false;
 		if ( type == "CSteamAPIContext" ) return false;
 		if ( type == "CCallResult" ) return false;
@@ -126,11 +128,12 @@ public static class Cleanup
 		if ( name == "InputType" ) return "public";
 		if ( name == "InputSourceMode" ) return "public";
 		if ( name == "UserHasLicenseForAppResult" ) return "public";
-		if ( name == "PingLocation" ) return "public";
+		if ( name == "NetPingLocation" ) return "public";
 		if ( name == "ConnectionState" ) return "public";
 		if ( name == "SteamNetworkingAvailability" ) return "public";
 		if ( name == "SteamDeviceFormFactor" ) return "public";
 		if ( name == "DurationControlProgress" ) return "public";
+		if ( name == "NetConnectionEnd" ) return "public";
 
 		return "internal";
 	}

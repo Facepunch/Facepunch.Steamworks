@@ -179,6 +179,27 @@ namespace Steamworks.Data
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
+	internal struct SteamNetworkingQuickConnectionStatus
+	{
+		internal ConnectionState State; // m_eState ESteamNetworkingConnectionState
+		internal int Ping; // m_nPing int
+		internal float ConnectionQualityLocal; // m_flConnectionQualityLocal float
+		internal float ConnectionQualityRemote; // m_flConnectionQualityRemote float
+		internal float OutPacketsPerSec; // m_flOutPacketsPerSec float
+		internal float OutBytesPerSec; // m_flOutBytesPerSec float
+		internal float InPacketsPerSec; // m_flInPacketsPerSec float
+		internal float InBytesPerSec; // m_flInBytesPerSec float
+		internal int SendRateBytesPerSecond; // m_nSendRateBytesPerSecond int
+		internal int CbPendingUnreliable; // m_cbPendingUnreliable int
+		internal int CbPendingReliable; // m_cbPendingReliable int
+		internal int CbSentUnackedReliable; // m_cbSentUnackedReliable int
+		internal long EcQueueTime; // m_usecQueueTime SteamNetworkingMicroseconds
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 16, ArraySubType = UnmanagedType.U4)]
+		internal uint[] Reserved; // reserved uint32 [16]
+		
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamDatagramHostedAddress
 	{
 		internal int CbSize; // m_cbSize int

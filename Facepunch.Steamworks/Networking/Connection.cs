@@ -3,6 +3,14 @@ using System.Collections.Generic;
 
 namespace Steamworks.Data
 {
+
+	/// <summary>
+	/// Used as a base to create your client connection. This creates a socket
+	/// to a single connection.
+	/// 
+	/// You can override all the virtual functions to turn it into what you
+	/// want it to do.
+	/// </summary>
 	public struct Connection
 	{
 		public uint Id { get; set; }
@@ -83,10 +91,16 @@ namespace Steamworks.Data
 		}
 
 		/// <summary>
-		/// Flush any messages waiting on the Nagle timer and send them at the next transmission opportunity (often that means right now).
+		/// Flush any messages waiting on the Nagle timer and send them at the next transmission 
+		/// opportunity (often that means right now).
 		/// </summary>
 		public Result Flush() => SteamNetworkingSockets.Internal.FlushMessagesOnConnection( this );
 
+		/// <summary>
+		/// Returns detailed connection stats in text format.  Useful
+		/// for dumping to a log, etc.
+		/// </summary>
+		/// <returns>Plain text connection info</returns>
 		public string DetailedStatus()
 		{
 			if ( SteamNetworkingSockets.Internal.GetDetailedConnectionStatus( this, out var strVal ) != 0 )

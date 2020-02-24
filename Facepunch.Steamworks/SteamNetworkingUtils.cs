@@ -66,11 +66,11 @@ namespace Steamworks
 		/// This always return the most up-to-date information we have available
 		/// right now, even if we are in the middle of re-calculating ping times.
 		/// </summary>
-		public static PingLocation? LocalPingLocation
+		public static NetPingLocation? LocalPingLocation
 		{
 			get
 			{
-				PingLocation location = default;
+				NetPingLocation location = default;
 				var age = Internal.GetLocalPingLocation( ref location );
 				if ( age < 0 )
 					return null;
@@ -84,7 +84,7 @@ namespace Steamworks
 		/// This is a bit faster, especially if you need to calculate a bunch of
 		/// these in a loop to find the fastest one.
 		/// </summary>
-		public static int EstimatePingTo( PingLocation target )
+		public static int EstimatePingTo( NetPingLocation target )
 		{
 			return Internal.EstimatePingTimeFromLocalHost( ref target );
 		}

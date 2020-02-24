@@ -5,6 +5,13 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
+	/// <summary>
+	/// Used as a base to create your networking server. This creates a socket
+	/// and listens/communicates with multiple queries.
+	/// 
+	/// You can override all the virtual functions to turn it into what you
+	/// want it to do.
+	/// </summary>
 	public class SocketInterface
 	{
 		public List<Connection> Connecting = new List<Connection>();
@@ -87,7 +94,6 @@ namespace Steamworks
 			int processed = 0;
 			IntPtr messageBuffer = Marshal.AllocHGlobal( IntPtr.Size * bufferSize );
 
-			
 			try
 			{
 				processed = SteamNetworkingSockets.Internal.ReceiveMessagesOnPollGroup( pollGroup, messageBuffer, bufferSize );

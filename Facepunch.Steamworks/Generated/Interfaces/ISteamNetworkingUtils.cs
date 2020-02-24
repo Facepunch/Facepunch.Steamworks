@@ -54,10 +54,10 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_GetLocalPingLocation", CallingConvention = Platform.CC)]
-		private static extern float _GetLocalPingLocation( IntPtr self, ref PingLocation result );
+		private static extern float _GetLocalPingLocation( IntPtr self, ref NetPingLocation result );
 		
 		#endregion
-		internal float GetLocalPingLocation( ref PingLocation result )
+		internal float GetLocalPingLocation( ref NetPingLocation result )
 		{
 			var returnValue = _GetLocalPingLocation( Self, ref result );
 			return returnValue;
@@ -65,10 +65,10 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_EstimatePingTimeBetweenTwoLocations", CallingConvention = Platform.CC)]
-		private static extern int _EstimatePingTimeBetweenTwoLocations( IntPtr self, ref PingLocation location1, ref PingLocation location2 );
+		private static extern int _EstimatePingTimeBetweenTwoLocations( IntPtr self, ref NetPingLocation location1, ref NetPingLocation location2 );
 		
 		#endregion
-		internal int EstimatePingTimeBetweenTwoLocations( ref PingLocation location1, ref PingLocation location2 )
+		internal int EstimatePingTimeBetweenTwoLocations( ref NetPingLocation location1, ref NetPingLocation location2 )
 		{
 			var returnValue = _EstimatePingTimeBetweenTwoLocations( Self, ref location1, ref location2 );
 			return returnValue;
@@ -76,10 +76,10 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_EstimatePingTimeFromLocalHost", CallingConvention = Platform.CC)]
-		private static extern int _EstimatePingTimeFromLocalHost( IntPtr self, ref PingLocation remoteLocation );
+		private static extern int _EstimatePingTimeFromLocalHost( IntPtr self, ref NetPingLocation remoteLocation );
 		
 		#endregion
-		internal int EstimatePingTimeFromLocalHost( ref PingLocation remoteLocation )
+		internal int EstimatePingTimeFromLocalHost( ref NetPingLocation remoteLocation )
 		{
 			var returnValue = _EstimatePingTimeFromLocalHost( Self, ref remoteLocation );
 			return returnValue;
@@ -87,10 +87,10 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_ConvertPingLocationToString", CallingConvention = Platform.CC)]
-		private static extern void _ConvertPingLocationToString( IntPtr self, ref PingLocation location, IntPtr pszBuf, int cchBufSize );
+		private static extern void _ConvertPingLocationToString( IntPtr self, ref NetPingLocation location, IntPtr pszBuf, int cchBufSize );
 		
 		#endregion
-		internal void ConvertPingLocationToString( ref PingLocation location, out string pszBuf )
+		internal void ConvertPingLocationToString( ref NetPingLocation location, out string pszBuf )
 		{
 			IntPtr mempszBuf = Helpers.TakeMemory();
 			_ConvertPingLocationToString( Self, ref location, mempszBuf, (1024 * 32) );
@@ -100,10 +100,10 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_ParsePingLocationString", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _ParsePingLocationString( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszString, ref PingLocation result );
+		private static extern bool _ParsePingLocationString( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszString, ref NetPingLocation result );
 		
 		#endregion
-		internal bool ParsePingLocationString( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszString, ref PingLocation result )
+		internal bool ParsePingLocationString( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pszString, ref NetPingLocation result )
 		{
 			var returnValue = _ParsePingLocationString( Self, pszString, ref result );
 			return returnValue;
@@ -178,10 +178,10 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_SetDebugOutputFunction", CallingConvention = Platform.CC)]
-		private static extern void _SetDebugOutputFunction( IntPtr self, DebugOutputType eDetailLevel, FSteamNetworkingSocketsDebugOutput pfnFunc );
+		private static extern void _SetDebugOutputFunction( IntPtr self, DebugOutputType eDetailLevel, NetDebugFunc pfnFunc );
 		
 		#endregion
-		internal void SetDebugOutputFunction( DebugOutputType eDetailLevel, FSteamNetworkingSocketsDebugOutput pfnFunc )
+		internal void SetDebugOutputFunction( DebugOutputType eDetailLevel, NetDebugFunc pfnFunc )
 		{
 			_SetDebugOutputFunction( Self, eDetailLevel, pfnFunc );
 		}

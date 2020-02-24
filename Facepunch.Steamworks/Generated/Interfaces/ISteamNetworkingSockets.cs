@@ -448,10 +448,10 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingSockets_GetCertificateRequest", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _GetCertificateRequest( IntPtr self, ref int pcbBlob, IntPtr pBlob, ref SteamNetworkingErrMsg errMsg );
+		private static extern bool _GetCertificateRequest( IntPtr self, ref int pcbBlob, IntPtr pBlob, ref NetErrorMessage errMsg );
 		
 		#endregion
-		internal bool GetCertificateRequest( ref int pcbBlob, IntPtr pBlob, ref SteamNetworkingErrMsg errMsg )
+		internal bool GetCertificateRequest( ref int pcbBlob, IntPtr pBlob, ref NetErrorMessage errMsg )
 		{
 			var returnValue = _GetCertificateRequest( Self, ref pcbBlob, pBlob, ref errMsg );
 			return returnValue;
@@ -460,10 +460,10 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingSockets_SetCertificate", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _SetCertificate( IntPtr self, IntPtr pCertificate, int cbCertificate, ref SteamNetworkingErrMsg errMsg );
+		private static extern bool _SetCertificate( IntPtr self, IntPtr pCertificate, int cbCertificate, ref NetErrorMessage errMsg );
 		
 		#endregion
-		internal bool SetCertificate( IntPtr pCertificate, int cbCertificate, ref SteamNetworkingErrMsg errMsg )
+		internal bool SetCertificate( IntPtr pCertificate, int cbCertificate, ref NetErrorMessage errMsg )
 		{
 			var returnValue = _SetCertificate( Self, pCertificate, cbCertificate, ref errMsg );
 			return returnValue;

@@ -38,7 +38,7 @@ namespace Steamworks
 		[TestMethod]
 		public void PingLocationParse()
 		{
-			var pl = Data.PingLocation.TryParseFromString( GarrysLocation );
+			var pl = Data.NetPingLocation.TryParseFromString( GarrysLocation );
 
 			Assert.IsTrue( pl.HasValue );
 
@@ -50,7 +50,7 @@ namespace Steamworks
 		{
 			await SteamNetworkingUtils.WaitForPingDataAsync();
 
-			var garrysping = Data.PingLocation.TryParseFromString( GarrysLocation );
+			var garrysping = Data.NetPingLocation.TryParseFromString( GarrysLocation );
 			Assert.IsTrue( garrysping.HasValue );
 
 			var ping = SteamNetworkingUtils.EstimatePingTo( garrysping.Value );

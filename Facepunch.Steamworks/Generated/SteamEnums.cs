@@ -526,7 +526,7 @@ namespace Steamworks
 	//
 	// EDurationControlProgress
 	//
-	internal enum DurationControlProgress : int
+	public enum DurationControlProgress : int
 	{
 		Progress_Full = 0,
 		Progress_Half = 1,
@@ -1988,7 +1988,7 @@ namespace Steamworks
 	//
 	// ESteamNetConnectionEnd
 	//
-	internal enum SteamNetConnectionEnd : int
+	public enum NetConnectionEnd : int
 	{
 		Invalid = 0,
 		App_Min = 1000,

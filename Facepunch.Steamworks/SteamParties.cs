@@ -7,6 +7,12 @@ using Steamworks.Data;
 
 namespace Steamworks
 {
+	/// <summary>
+	/// This API can be used to selectively advertise your multiplayer game session in a Steam chat room group. 
+	/// Tell Steam the number of player spots that are available for your party, and a join-game string, and it
+	/// will show a beacon in the selected group and allow that many users to “follow” the beacon to your party. 
+	/// Adjust the number of open slots if other players join through alternate matchmaking methods.
+	/// </summary>
 	public class SteamParties : SteamClientClass<SteamParties>
 	{
 		internal static ISteamParties Internal => Interface as ISteamParties;
@@ -17,7 +23,7 @@ namespace Steamworks
 			InstallEvents( server );
 		}
 
-		internal static void InstallEvents( bool server )
+		internal void InstallEvents( bool server )
 		{
 			Dispatch.Install<AvailableBeaconLocationsUpdated_t>( x => OnBeaconLocationsUpdated?.Invoke(), server );
 			Dispatch.Install<ActiveBeaconsUpdated_t>( x => OnActiveBeaconsUpdated?.Invoke(), server );
@@ -49,18 +55,5 @@ namespace Steamworks
 				}
 			}
 		}
-
-		/// <summary>
-		///  Create a new party beacon and activate it in the selected location.
-		/// When people begin responding to your beacon, Steam will send you
-		/// OnPartyReservation callbacks to let you know who is on the way.
-		/// </summary>
-		//public async Task<PartyBeacon?> CreateBeacon( int slots, string connectString, string meta )
-		//{
-		//	var result = await Internal.CreateBeacon( (uint)slots, null, connectString, meta );
-		//	if ( !result.HasValue ) return null;
-		//}
-
-		// TODO - is this useful to anyone, or is it a load of shit?
 	}
 }
