@@ -184,5 +184,16 @@ namespace Steamworks
 			return SteamFriends.Internal.ReplyToFriendMessage( Id, message );
 		}
 
+
+		/// <summary>
+		/// Tries to get download the latest user stats
+		/// </summary>
+		/// <returns>True if successful, False if failure</returns>
+		public async Task<bool> RequestUserStats()
+		{
+			var result = await SteamUserStats.Internal.RequestUserStats( Id );
+			return result.HasValue && result.Value.Result == Result.OK;
+		}
+
 	}
 }

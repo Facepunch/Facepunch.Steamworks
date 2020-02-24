@@ -169,6 +169,30 @@ namespace Steamworks
 		}
 
 		[TestMethod]
+		public async Task GetFriendStats()
+		{
+			var friend = new Friend( 76561197965732579 ); // Hezzy
+
+			// Download stats
+			var status = await friend.RequestUserStats();
+			Assert.AreNotEqual( false, status );
+
+			var deaths = friend.GetStatInt( "deaths" );
+
+			Console.WriteLine( $"Hezzy has died {deaths} times" );
+
+			Assert.AreNotEqual( 0, deaths );
+
+			var unlocked = friend.GetAchievement( "COLLECT_100_WOOD" );
+			Assert.AreNotEqual( false, unlocked );
+
+			var when = friend.GetAchievementUnlockTime( "COLLECT_100_WOOD" );
+			Assert.AreNotEqual( when, DateTime.MinValue );
+
+			Console.WriteLine( $"Hezzy unlocked COLLECT_100_WOOD {when}" );
+		}
+
+		[TestMethod]
 		public async Task GetStatGlobalInt()
 		{
 			var deaths = new Stat( "deaths" );
