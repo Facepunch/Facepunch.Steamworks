@@ -9,9 +9,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    
+
     - name: setup-msbuild
       uses: microsoft/setup-msbuild@v1
+
+    - name: Restore
+      run: dotnet restore Facepunch.Steamworks\Facepunch.Steamworks.Win64.csproj
+      run: dotnet restore Facepunch.Steamworks\Facepunch.Steamworks.Win32.csproj
+      run: dotnet restore Facepunch.Steamworks\Facepunch.Steamworks.Posix.csproj
       
     - name: Build with msbuild
       run: msbuild Facepunch.Steamworks\Facepunch.Steamworks.Win64.csproj
