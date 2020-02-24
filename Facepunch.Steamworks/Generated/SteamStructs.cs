@@ -26,7 +26,7 @@ namespace Steamworks.Data
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
-	internal struct servernetadr_t
+	internal partial struct servernetadr_t
 	{
 		internal ushort ConnectionPort; // m_usConnectionPort uint16
 		internal ushort QueryPort; // m_usQueryPort uint16
@@ -35,7 +35,7 @@ namespace Steamworks.Data
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
-	internal struct gameserveritem_t
+	internal partial struct gameserveritem_t
 	{
 		internal servernetadr_t NetAdr; // m_NetAdr servernetadr_t
 		internal int Ping; // m_nPing int
@@ -200,7 +200,7 @@ namespace Steamworks.Data
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
-	internal struct SteamDatagramHostedAddress
+	internal partial struct SteamDatagramHostedAddress
 	{
 		internal int CbSize; // m_cbSize int
 		internal string DataUTF8() => System.Text.Encoding.UTF8.GetString( Data, 0, System.Array.IndexOf<byte>( Data, 0 ) );

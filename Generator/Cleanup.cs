@@ -134,6 +134,8 @@ public static class Cleanup
 		if ( name == "SteamDeviceFormFactor" ) return "public";
 		if ( name == "DurationControlProgress" ) return "public";
 		if ( name == "NetConnectionEnd" ) return "public";
+		if ( name == "NetIdentity" ) return "public";
+		if ( name == "NetAddress" ) return "public";
 
 		return "internal";
 	}

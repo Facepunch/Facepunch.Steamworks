@@ -97,6 +97,7 @@ namespace Generator
             public string Name { get; set; }
             [JsonProperty( PropertyName = "fields" )]
             public StructFields[] Fields { get; set; }
+            public Interface.Method[] Methods { get; set; }
 
             public bool IsPack4OnWindows
             {

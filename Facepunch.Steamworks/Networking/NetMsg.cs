@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 namespace Steamworks.Data
 {
 	[StructLayout( LayoutKind.Sequential )]
-	internal struct NetMsg
+	internal partial struct NetMsg
 	{
 		internal IntPtr DataPtr;
 		internal int DataSize;

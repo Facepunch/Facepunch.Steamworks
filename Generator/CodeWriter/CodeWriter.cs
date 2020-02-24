@@ -50,7 +50,7 @@ namespace Generator
             {
                 sb = new StringBuilder();
                 Header( "Steamworks.Data" );
-                StructCallbacks();
+                Callbacks();
                 Footer();
                 System.IO.File.WriteAllText( $"{folder}SteamCallbacks.cs", sb.ToString() );
             }
@@ -69,6 +69,14 @@ namespace Generator
                 Constants();
                 Footer();
                 System.IO.File.WriteAllText( $"{folder}SteamConstants.cs", sb.ToString() );
+            }            
+            
+            {
+                sb = new StringBuilder();
+                Header( "Steamworks.Data" );
+                StructFunctions();
+                Footer();
+                System.IO.File.WriteAllText( $"{folder}SteamStructFunctions.cs", sb.ToString() );
             }
 
 			{

@@ -8,7 +8,7 @@ namespace Generator
 {
     public partial class CodeWriter
     {
-        void StructCallbacks()
+        void Callbacks()
         {
             var callbackList = new List<SteamApiDefinition.StructDef>();
 
@@ -22,7 +22,10 @@ namespace Generator
                 if ( name.Contains( "::" ) )
                     continue;
 
-				int defaultPack = c.IsPack4OnWindows ? 4 : 8;
+                var partial = "";
+                if ( c.Methods != null ) partial = " partial";
+
+                int defaultPack = c.IsPack4OnWindows ? 4 : 8;
 
 				var isCallback = true;
                 var iface = "";
@@ -33,7 +36,7 @@ namespace Generator
                 // Main struct
                 //
                 WriteLine( $"[StructLayout( LayoutKind.Sequential, Pack = Platform.{(c.IsPack4OnWindows?"StructPackSize": "StructPlatformPackSize")} )]" );
-                StartBlock( $"{Cleanup.Expose( name )} struct {name}{iface}" );
+                StartBlock( $"{Cleanup.Expose( name )}{partial} struct {name}{iface}" );
                 {
 					//
 					// The fields

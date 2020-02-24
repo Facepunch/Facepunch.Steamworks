@@ -3,7 +3,7 @@
 namespace Steamworks.Data
 {
 	[StructLayout( LayoutKind.Explicit, Size = 136, Pack = 1 )]
-	public struct NetIdentity
+	public partial struct NetIdentity
 	{
 		[FieldOffset( 0 )]
 		internal IdentityType type;

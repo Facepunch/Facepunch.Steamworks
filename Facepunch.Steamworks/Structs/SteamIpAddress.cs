@@ -7,7 +7,7 @@ using System.Text;
 namespace Steamworks.Data
 {
 	[StructLayout( LayoutKind.Explicit, Pack = Platform.StructPlatformPackSize )]
-	internal struct SteamIPAddress
+	internal partial struct SteamIPAddress
 	{
 		[FieldOffset( 0 )]
 		public uint Ip4Address; // Host Order

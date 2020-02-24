@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace Steamworks.Data
 {
 	[StructLayout( LayoutKind.Explicit, Size = 18, Pack = 1 )]
-	public struct NetAddress
+	public partial struct NetAddress
 	{
 		[FieldOffset( 0 )]
 		internal IPV4 ip;

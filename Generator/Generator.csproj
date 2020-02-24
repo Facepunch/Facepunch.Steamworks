@@ -50,7 +50,8 @@
     <Compile Include="CodeWriter\Interface.cs" />
     <Compile Include="CodeWriter\Constants.cs" />
     <Compile Include="CodeWriter\CustomEnums.cs" />
-    <Compile Include="CodeWriter\StructCallbacks.cs" />
+    <Compile Include="CodeWriter\Callbacks.cs" />
+    <Compile Include="CodeWriter\StructFunctions.cs" />
     <Compile Include="Types\FetchStringType.cs" />
     <Compile Include="Types\ConstCharType.cs" />
     <Compile Include="Types\LiteralType.cs" />

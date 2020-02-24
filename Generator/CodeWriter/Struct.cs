@@ -31,11 +31,14 @@ namespace Generator
 
 				int defaultPack = c.IsPack4OnWindows ? 4 : 8;
 
+                var partial = "";
+                if ( c.Methods != null ) partial = " partial";
+
                 //
                 // Main struct
                 //
                 WriteLine( $"[StructLayout( LayoutKind.Sequential, Pack = Platform.{(c.IsPack4OnWindows?"StructPackSize": "StructPlatformPackSize")} )]" );
-                StartBlock( $"{Cleanup.Expose( name )} struct {name}" );
+                StartBlock( $"{Cleanup.Expose( name )}{partial} struct {name}" );
                 {
 					//
 					// The fields
