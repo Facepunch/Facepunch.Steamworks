@@ -1,17 +1,15 @@
-name: .NET Core
+name: Build All
 
 on: [push]
 
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 2.2.108
-    - name: Build with dotnet
-      run: dotnet build --configuration Release
+    - name: setup-msbuild
+      uses: microsoft/setup-msbuild@v1
+      
+    - name: Build with msbuild
+      run: msbuild Facepunch.Steamworks\Facepunch.Steamworks.Win64.csproj
