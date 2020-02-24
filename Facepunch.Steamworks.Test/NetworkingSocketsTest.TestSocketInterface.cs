@@ -96,7 +96,7 @@ namespace Steamworks
 
 				await Task.Delay( 1000 );
 
-				Close();
+				//Close();
 			}
 
 			public override unsafe void OnMessage( Connection connection, NetIdentity identity, IntPtr data, int size, long messageNum, long recvTime, int channel )

@@ -178,7 +178,9 @@ namespace Steamworks
 			set
 			{
 				_debugLevel = value;
-				Internal.SetDebugOutputFunction( value, OnDebugMessage );
+				_debugFunc = new NetDebugFunc( OnDebugMessage );
+
+				Internal.SetDebugOutputFunction( value, _debugFunc );
 			}
 		}
 
@@ -186,6 +188,11 @@ namespace Steamworks
 		/// So we can remember and provide a Get for DebugLEvel
 		/// </summary>
 		private static NetDebugOutput _debugLevel;
+
+		/// <summary>
+		/// We need to keep the delegate around until it's not used anymore
+		/// </summary>
+		static NetDebugFunc _debugFunc;
 
 		struct DebugMessage
 		{
@@ -198,9 +205,9 @@ namespace Steamworks
 		/// <summary>
 		/// This can be called from other threads - so we're going to queue these up and process them in a safe place.
 		/// </summary>
-		private static void OnDebugMessage( NetDebugOutput nType, string pszMsg )
+		private static void OnDebugMessage( NetDebugOutput nType, IntPtr str )
 		{
-			debugMessages.Enqueue( new DebugMessage { Type = nType, Msg = pszMsg } );
+			debugMessages.Enqueue( new DebugMessage { Type = nType, Msg = Helpers.MemoryToString( str ) } );
 		}
 
 		/// <summary>
