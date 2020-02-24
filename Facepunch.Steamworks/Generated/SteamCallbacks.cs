@@ -1644,21 +1644,6 @@ namespace Steamworks.Data
 		#endregion
 	}
 	
-	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
-	internal struct SocketStatusCallback_t : ICallbackData
-	{
-		internal uint Socket; // m_hSocket SNetSocket_t
-		internal uint ListenSocket; // m_hListenSocket SNetListenSocket_t
-		internal ulong SteamIDRemote; // m_steamIDRemote CSteamID
-		internal int SNetSocketState; // m_eSNetSocketState int
-		
-		#region SteamCallback
-		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SocketStatusCallback_t) );
-		public int DataSize => _datasize;
-		public CallbackType CallbackType => CallbackType.SocketStatusCallback;
-		#endregion
-	}
-	
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct ScreenshotReady_t : ICallbackData
 	{

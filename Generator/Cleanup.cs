@@ -69,6 +69,7 @@ public static class Cleanup
 
 	public static bool ShouldCreate( string type )
 	{
+		if ( IsDeprecated( type ) ) return false;
 		if ( type == "SteamId" ) return false;
 		if ( type == "LeaderboardSort" ) return false;
 		if ( type == "LeaderboardDisplay" ) return false;
@@ -142,12 +143,25 @@ public static class Cleanup
 
 	internal static bool IsDeprecated( string name )
 	{
+		if ( name == "SocketStatusCallback_t" ) return true;
+		if ( name == "SNetSocketConnectionType" ) return true;
+		if ( name == "SNetSocketState" ) return true;
+
 		if ( name.StartsWith( "ISteamRemoteStorage." ) )
 		{
 			if ( name.Contains( "Publish" ) ) return true;
 			if ( name.Contains( "ResetFileRequestState" ) ) return true;
 			if ( name.Contains( "EnumerateUserSubscribedFiles" ) ) return true;
 			if ( name.Contains( "EnumerateUserSharedWorkshopFile" ) ) return true;
+		}
+
+		//
+		// In ISteamNetworking everything is deprecated apart from the p2p stuff
+		//
+		if ( name.StartsWith( "ISteamNetworking." ) )
+		{
+			if ( !name.Contains( "P2P" ))
+				return true;
 		}
 
 		return false;
