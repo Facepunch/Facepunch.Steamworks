@@ -20,5 +20,14 @@ jobs:
     - name: Restore Posix
       run: dotnet restore Facepunch.Steamworks\Facepunch.Steamworks.Posix.csproj
       
-    - name: Build with msbuild
+    - name: Build Win64
       run: msbuild Facepunch.Steamworks\Facepunch.Steamworks.Win64.csproj
+    - name: Build Win32
+      run: msbuild Facepunch.Steamworks\Facepunch.Steamworks.Win32.csproj
+    - name: Build Posix
+      run: msbuild Facepunch.Steamworks\Facepunch.Steamworks.Posix.csproj
+
+    - uses: actions/upload-artifact@v1
+      with:
+        name: Compiled Files
+        path: Facepunch.Steamworks/bin
