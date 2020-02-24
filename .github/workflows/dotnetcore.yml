@@ -13,9 +13,11 @@ jobs:
     - name: setup-msbuild
       uses: microsoft/setup-msbuild@v1
 
-    - name: Restore
+    - name: Restore Win64
       run: dotnet restore Facepunch.Steamworks\Facepunch.Steamworks.Win64.csproj
+    - name: Restore Win32
       run: dotnet restore Facepunch.Steamworks\Facepunch.Steamworks.Win32.csproj
+    - name: Restore Posix
       run: dotnet restore Facepunch.Steamworks\Facepunch.Steamworks.Posix.csproj
       
     - name: Build with msbuild
