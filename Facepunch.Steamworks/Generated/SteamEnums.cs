@@ -1982,7 +1982,6 @@ namespace Steamworks
 		FinWait = -1,
 		Linger = -2,
 		Dead = -3,
-		Force32Bit = 2147483647,
 	}
 	
 	//
@@ -2020,7 +2019,6 @@ namespace Steamworks
 		Misc_SteamConnectivity = 5005,
 		Misc_NoRelaySessionsToClient = 5006,
 		Misc_Max = 5999,
-		Force32Bit = 2147483647,
 	}
 	
 	//
@@ -2032,7 +2030,6 @@ namespace Steamworks
 		SocketsInterface = 2,
 		ListenSocket = 3,
 		Connection = 4,
-		Scope__Force32Bit = 2147483647,
 	}
 	
 	//
@@ -2045,7 +2042,6 @@ namespace Steamworks
 		Float = 3,
 		String = 4,
 		FunctionPtr = 5,
-		DataType__Force32Bit = 2147483647,
 	}
 	
 	//
@@ -2089,7 +2085,6 @@ namespace Steamworks
 		LogLevel_PacketGaps = 16,
 		LogLevel_P2PRendezvous = 17,
 		LogLevel_SDRRelayPings = 18,
-		Value__Force32Bit = 2147483647,
 	}
 	
 	//
@@ -2102,13 +2097,12 @@ namespace Steamworks
 		BufferTooSmall = -3,
 		OK = 1,
 		OKInherited = 2,
-		Result__Force32Bit = 2147483647,
 	}
 	
 	//
 	// ESteamNetworkingSocketsDebugOutputType
 	//
-	internal enum DebugOutputType : int
+	public enum NetDebugOutput : int
 	{
 		None = 0,
 		Bug = 1,
@@ -2119,7 +2113,6 @@ namespace Steamworks
 		Verbose = 6,
 		Debug = 7,
 		Everything = 8,
-		Force32Bit = 2147483647,
 	}
 	
 	//

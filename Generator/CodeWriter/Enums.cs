@@ -72,6 +72,9 @@ namespace Generator
                 {
                     var ename = entry.Name;
 
+                    if ( ename.Contains( "Force32Bit" ) )
+                        continue;
+
                     if ( iFinished != int.MaxValue )
                         ename = ename.Substring( iFinished );
 
