@@ -144,7 +144,7 @@ namespace Steamworks
 		/// </summary>
 		/// <param name="days">How many days of day-by-day history to retrieve in addition to the overall totals. The limit is 60.</param>
 		/// <returns>OK indicates success, InvalidState means you need to call RequestCurrentStats first, Fail means the remote call failed</returns>
-		public static async Task<Result> RequestGlobalStats( int days )
+		public static async Task<Result> RequestGlobalStatsAsync( int days )
 		{
 			var result = await SteamUserStats.Internal.RequestGlobalStats( days );
 			if ( !result.HasValue ) return Result.Fail;
