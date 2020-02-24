@@ -131,7 +131,7 @@ namespace Steamworks
 			openInterfaces.Add( t );
 		}
 
-		static List<SteamClass> openInterfaces = new List<SteamClass>();
+		static readonly List<SteamClass> openInterfaces = new List<SteamClass>();
 
 		internal static void ShutdownInterfaces()
 		{

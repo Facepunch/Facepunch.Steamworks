@@ -130,7 +130,7 @@ namespace Steamworks
 		[TestMethod]
 		public async Task CreateAndThenEditFile()
 		{
-			PublishedFileId fileid = default;
+			PublishedFileId fileid;
 
 			//
 			// Make a file

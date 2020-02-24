@@ -43,11 +43,6 @@ namespace Steamworks
 
 		}
 
-		static void OnNewUrlLaunchParameters()
-		{
-			// Wow!
-		}
-
 		[TestMethod]
         public void GameLangauge()
         {

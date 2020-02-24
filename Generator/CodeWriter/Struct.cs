@@ -15,7 +15,7 @@ namespace Generator
             public string ManagedType;
         }
 
-        private Dictionary<string, TypeDef> TypeDefs = new Dictionary<string, TypeDef>();
+        private readonly Dictionary<string, TypeDef> TypeDefs = new Dictionary<string, TypeDef>();
 
         void Structs()
         {
@@ -28,8 +28,6 @@ namespace Generator
 
                 if ( name.Contains( "::" ) )
                     continue;
-
-				int defaultPack = c.IsPack4OnWindows ? 4 : 8;
 
                 var partial = "";
                 if ( c.Methods != null ) partial = " partial";

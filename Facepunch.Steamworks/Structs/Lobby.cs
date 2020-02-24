@@ -123,7 +123,7 @@ namespace Steamworks.Data
 		/// <summary>
 		/// Sets per-user metadata (for the local user implicitly)
 		/// </summary>
-		public void SetMemberData( Friend member, string key, string value )
+		public void SetMemberData( string key, string value )
 		{
 			SteamMatchmaking.Internal.SetLobbyMemberData( Id, key, value );
 		}

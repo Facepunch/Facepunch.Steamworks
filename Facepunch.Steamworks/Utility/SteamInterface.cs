@@ -61,7 +61,7 @@ namespace Steamworks
 
 	public class SteamSharedClass<T> : SteamClass
 	{
-		internal static SteamInterface Interface => InterfaceClient != null ? InterfaceClient : InterfaceServer;
+		internal static SteamInterface Interface => InterfaceClient ?? InterfaceServer;
 		internal static SteamInterface InterfaceClient;
 		internal static SteamInterface InterfaceServer;
 

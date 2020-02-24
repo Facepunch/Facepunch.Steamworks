@@ -135,7 +135,7 @@ namespace Steamworks
 			string val = GetProperty( name );
 
 			if ( string.IsNullOrEmpty( val ) )
-				return default( T );
+				return default;
 
 			try
 			{
@@ -143,7 +143,7 @@ namespace Steamworks
 			}
 			catch ( System.Exception )
 			{
-				return default( T );
+				return default;
 			}
 		}
 

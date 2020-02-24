@@ -109,7 +109,7 @@ namespace Steamworks
 		/// </summary>
 		public static async Task WaitForPingDataAsync( float maxAgeInSeconds = 60 * 5 )
 		{
-			if ( Internal.CheckPingDataUpToDate( 120.0f ) )
+			if ( Internal.CheckPingDataUpToDate( maxAgeInSeconds ) )
 				return;
 
 			SteamRelayNetworkStatus_t status = default;

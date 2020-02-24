@@ -89,7 +89,7 @@ namespace Steamworks
             }
         }
 
-		static byte[] readBuffer = new byte[1024 * 8];
+		static readonly byte[] readBuffer = new byte[1024 * 8];
 
 		public static string ReadNullTerminatedUTF8String( this BinaryReader br )
 		{

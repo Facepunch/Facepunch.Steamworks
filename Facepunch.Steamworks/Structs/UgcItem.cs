@@ -183,8 +183,7 @@ namespace Steamworks.Ugc
 
 				ulong size = 0;
 				uint ts = 0;
-
-				if ( !SteamUGC.Internal.GetItemInstallInfo( Id, ref size, out var strVal, ref ts ) )
+				if ( !SteamUGC.Internal.GetItemInstallInfo( Id, ref size, out _, ref ts ) )
 					return 0;
 
 				return (long) size;
@@ -262,9 +261,9 @@ namespace Steamworks.Ugc
 		/// If CancellationToken is default then there is 60 seconds timeout
 		/// Progress will be set to 0-1
 		/// </summary>
-		public async Task<bool> DownloadAsync( Action<float> progress = null, CancellationToken ct = default, int milisecondsUpdateDelay = 60 )
+		public async Task<bool> DownloadAsync( Action<float> progress = null, int milisecondsUpdateDelay = 60, CancellationToken ct = default )
 		{
-			return await SteamUGC.DownloadAsync( Id, progress, ct, milisecondsUpdateDelay );
+			return await SteamUGC.DownloadAsync( Id, progress, milisecondsUpdateDelay, ct );
 		}
 
 		/// <summary>

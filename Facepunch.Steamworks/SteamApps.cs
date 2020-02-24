@@ -168,9 +168,7 @@ namespace Steamworks
 				appid = SteamClient.AppId;
 
 			var depots = new DepotId_t[32];
-			uint count = 0;
-
-			count = Internal.GetInstalledDepots( appid.Value, depots, (uint) depots.Length );
+			uint count = Internal.GetInstalledDepots( appid.Value, depots, (uint) depots.Length );
 
 			for ( int i = 0; i < count; i++ )
 			{
@@ -220,7 +218,7 @@ namespace Steamworks
 			ulong punBytesTotal = 0;
 
 			if ( !Internal.GetDlcDownloadProgress( appid.Value, ref punBytesDownloaded, ref punBytesTotal ) )
-				return default( DownloadProgress );
+				return default;
 
 			return new DownloadProgress { BytesDownloaded = punBytesDownloaded, BytesTotal = punBytesTotal, Active = true };
 		}
@@ -263,7 +261,7 @@ namespace Steamworks
 		{
 			get
 			{
-				var len = Internal.GetLaunchCommandLine( out var strVal );
+				Internal.GetLaunchCommandLine( out var strVal );
 				return strVal;
 			}
 		}

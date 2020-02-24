@@ -75,12 +75,12 @@ namespace Steamworks.Data
 			var ident = Identifier;
 			bool gotCallback = false;
 
-			Action<string, int> f = ( x, icon ) =>
+			void f( string x, int icon )
 			{
 				if ( x != ident ) return;
 				i = icon;
 				gotCallback = true;
-			};
+			}
 
 			try
 			{

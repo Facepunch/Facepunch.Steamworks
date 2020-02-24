@@ -58,7 +58,7 @@ namespace Steamworks
 		/// <param name="ct">Allows you to send a message to cancel the download anywhere during the process</param>
 		/// <param name="milisecondsUpdateDelay">How often to call the progress function</param>
 		/// <returns>true if downloaded and installed correctly</returns>
-		public static async Task<bool> DownloadAsync( PublishedFileId fileId, Action<float> progress = null, CancellationToken ct = default, int milisecondsUpdateDelay = 60 )
+		public static async Task<bool> DownloadAsync( PublishedFileId fileId, Action<float> progress = null, int milisecondsUpdateDelay = 60, CancellationToken ct = default )
 		{
 			var item = new Steamworks.Ugc.Item( fileId );
 

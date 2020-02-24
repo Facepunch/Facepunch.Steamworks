@@ -318,11 +318,11 @@ namespace Steamworks
 			AuthTicket ticket = null;
 			var stopwatch = Stopwatch.StartNew();
 
-			Action<GetAuthSessionTicketResponse_t> f = ( t ) =>
+			void f( GetAuthSessionTicketResponse_t t )
 			{
 				if ( t.AuthTicket != ticket.Handle ) return;
 				result = t.Result;
-			};
+			}
 
 			OnGetAuthSessionTicketResponse += f;
 

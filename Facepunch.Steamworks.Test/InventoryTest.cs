@@ -195,8 +195,8 @@ namespace Steamworks
 		{
 			await SteamInventory.WaitForDefinitions();
 
-			byte[] data = null;
-			int itemCount = 0;
+			byte[] data;
+			int itemCount;
 
 			// Serialize
 			{

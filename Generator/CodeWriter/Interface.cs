@@ -100,7 +100,7 @@ namespace Generator
 				{
 					if ( args[i + 1] is IntType || args[i + 1] is UIntType || args[i + 1] is UIntPtrType )
 					{
-						if ( args[i + 1].Ref == string.Empty )
+						if ( string.IsNullOrEmpty(  args[i + 1].Ref ) )
 						{
 							args[i + 1] = new LiteralType( args[i + 1], "(1024 * 32)" );
 						}

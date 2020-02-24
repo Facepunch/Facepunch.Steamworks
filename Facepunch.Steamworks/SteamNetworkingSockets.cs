@@ -103,7 +103,7 @@ namespace Steamworks
 		public static T CreateNormalSocket<T>( NetAddress address ) where T : SocketInterface, new()
 		{
 			var t = new T();
-			var options = new NetKeyValue[0];
+			var options = Array.Empty<NetKeyValue>();
 			t.Socket = Internal.CreateListenSocketIP( ref address, options.Length, options );
 			t.Initialize();
 
@@ -117,7 +117,7 @@ namespace Steamworks
 		public static T ConnectNormal<T>( NetAddress address ) where T : ConnectionInterface, new()
 		{
 			var t = new T();
-			var options = new NetKeyValue[0];
+			var options = Array.Empty<NetKeyValue>();
 			t.Connection = Internal.ConnectByIPAddress( ref address, options.Length, options );
 			SetConnectionInterface( t.Connection.Id, t );
 			return t;
@@ -129,7 +129,7 @@ namespace Steamworks
 		public static T CreateRelaySocket<T>( int virtualport = 0 ) where T : SocketInterface, new()
 		{
 			var t = new T();
-			var options = new NetKeyValue[0];
+			var options = Array.Empty<NetKeyValue>();
 			t.Socket = Internal.CreateListenSocketP2P( virtualport, options.Length, options );
 			SetSocketInterface( t.Socket.Id, t );
 			return t;
@@ -142,7 +142,7 @@ namespace Steamworks
 		{
 			var t = new T();
 			NetIdentity identity = serverId;
-			var options = new NetKeyValue[0];
+			var options = Array.Empty<NetKeyValue>();
 			t.Connection = Internal.ConnectP2P( ref identity, virtualport, options.Length, options );
 			SetConnectionInterface( t.Connection.Id, t );
 			return t;

@@ -25,7 +25,7 @@ namespace Steamworks
 			Internal.RunFrame();
 		}
 
-		static InputHandle_t[] queryArray = new InputHandle_t[STEAM_CONTROLLER_MAX_COUNT];
+		static readonly InputHandle_t[] queryArray = new InputHandle_t[STEAM_CONTROLLER_MAX_COUNT];
 
 		/// <summary>
 		/// Return a list of connected controllers.
