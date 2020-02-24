@@ -22,7 +22,7 @@ namespace Steamworks
 		/// If the user has no stats will return fail
 		/// these stats will only be auto-updated for clients playing on the server
 		/// </summary>
-		public static async Task<Result> RequestUserStats( SteamId steamid )
+		public static async Task<Result> RequestUserStatsAsync( SteamId steamid )
 		{
 			var r = await Internal.RequestUserStats( steamid );
 			if ( !r.HasValue ) return Result.Fail;

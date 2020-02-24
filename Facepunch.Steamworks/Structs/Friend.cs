@@ -189,7 +189,7 @@ namespace Steamworks
 		/// Tries to get download the latest user stats
 		/// </summary>
 		/// <returns>True if successful, False if failure</returns>
-		public async Task<bool> RequestUserStats()
+		public async Task<bool> RequestUserStatsAsync()
 		{
 			var result = await SteamUserStats.Internal.RequestUserStats( Id );
 			return result.HasValue && result.Value.Result == Result.OK;

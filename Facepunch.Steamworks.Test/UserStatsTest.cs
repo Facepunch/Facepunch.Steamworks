@@ -174,7 +174,7 @@ namespace Steamworks
 			var friend = new Friend( 76561197965732579 ); // Hezzy
 
 			// Download stats
-			var status = await friend.RequestUserStats();
+			var status = await friend.RequestUserStatsAsync();
 			Assert.AreNotEqual( false, status );
 
 			var deaths = friend.GetStatInt( "deaths" );
