@@ -58,6 +58,7 @@ namespace Steamworks
 		public static void Frame( HSteamPipe pipe )
 		{ 
 			SteamAPI_ManualDispatch_RunFrame( pipe );
+			SteamNetworkingUtils.OutputDebugMessages();
 
 			CallbackMsg_t msg = default;
 

@@ -4,5 +4,5 @@ using System.Runtime.InteropServices;
 
 namespace Steamworks.Data
 {
-	delegate void NetDebugFunc( DebugOutputType nType, string pszMsg );
+	delegate void NetDebugFunc( NetDebugOutput nType, string pszMsg );
 }

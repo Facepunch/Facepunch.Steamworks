@@ -178,10 +178,10 @@ namespace Steamworks
 		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_SetDebugOutputFunction", CallingConvention = Platform.CC)]
-		private static extern void _SetDebugOutputFunction( IntPtr self, DebugOutputType eDetailLevel, NetDebugFunc pfnFunc );
+		private static extern void _SetDebugOutputFunction( IntPtr self, NetDebugOutput eDetailLevel, NetDebugFunc pfnFunc );
 		
 		#endregion
-		internal void SetDebugOutputFunction( DebugOutputType eDetailLevel, NetDebugFunc pfnFunc )
+		internal void SetDebugOutputFunction( NetDebugOutput eDetailLevel, NetDebugFunc pfnFunc )
 		{
 			_SetDebugOutputFunction( Self, eDetailLevel, pfnFunc );
 		}

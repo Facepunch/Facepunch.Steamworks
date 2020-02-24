@@ -14,10 +14,17 @@ namespace Steamworks
     [DeploymentItem( "steam_api.dll" )]
     public partial class NetworkingSocketsTest
 	{
+		void DebugOutput( NetDebugOutput type, string text )
+		{
+			Console.WriteLine( $"[NET:{type}]\t\t{text}" );
+		}
 
 		[TestMethod]
         public async Task CreateRelayServer()
         {
+			SteamNetworkingUtils.DebugLevel = NetDebugOutput.Everything;
+			SteamNetworkingUtils.OnDebugOutput += DebugOutput;
+
 			var si = SteamNetworkingSockets.CreateRelaySocket<TestSocketInterface>();
 
 			Console.WriteLine( $"Created Socket: {si}" );
@@ -31,6 +38,9 @@ namespace Steamworks
 		[TestMethod]
 		public async Task CreateNormalServer()
 		{
+			SteamNetworkingUtils.DebugLevel = NetDebugOutput.Everything;
+			SteamNetworkingUtils.OnDebugOutput += DebugOutput;
+
 			var si = SteamNetworkingSockets.CreateNormalSocket<TestSocketInterface>( Data.NetAddress.AnyIp( 21893 ) );
 
 			Console.WriteLine( $"Created Socket: {si}" );
@@ -45,6 +55,8 @@ namespace Steamworks
 		public async Task RelayEndtoEnd()
 		{
 			SteamNetworkingUtils.InitRelayNetworkAccess();
+			SteamNetworkingUtils.DebugLevel = NetDebugOutput.Warning;
+			SteamNetworkingUtils.OnDebugOutput += DebugOutput;
 
 			// For some reason giving steam a couple of seconds here 
 			// seems to prevent it returning null connections from ConnectNormal
@@ -66,6 +78,9 @@ namespace Steamworks
 		[TestMethod]
 		public async Task NormalEndtoEnd()
 		{
+			SteamNetworkingUtils.DebugLevel = NetDebugOutput.Everything;
+			SteamNetworkingUtils.OnDebugOutput += DebugOutput;
+
 			// For some reason giving steam a couple of seconds here 
 			// seems to prevent it returning null connections from ConnectNormal
 			await Task.Delay( 2000 );

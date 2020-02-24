@@ -47,6 +47,7 @@ namespace Steamworks
 
 				var sw = System.Diagnostics.Stopwatch.StartNew();
 
+				Console.WriteLine( "[Connection] Connecting" );
 				while ( Connecting )
 				{
 					await Task.Delay( 10 );
@@ -88,14 +89,18 @@ namespace Steamworks
 
 				if ( str.Contains( "Hello" ) )
 				{
+					Console.WriteLine( $"[Connection][{messageNum}][{recvTime}][{channel}] Sending: Hello, How are you!?" );
 					Connection.SendMessage( "Hello, How are you!?" );
 
+					Console.WriteLine( $"[Connection][{messageNum}][{recvTime}][{channel}] Sending: How do you like 20 messages in a row?" );
 					Connection.SendMessage( "How do you like 20 messages in a row?" );
 
 					for ( int i=0; i<20; i++ )
 					{
 						Connection.SendMessage( $"BLAMMO!" );
 					}
+
+					Connection.Flush();
 				}
 
 				if ( str.Contains( "status" ))

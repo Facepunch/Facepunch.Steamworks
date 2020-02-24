@@ -77,17 +77,22 @@ namespace Steamworks
 
 				sw = System.Diagnostics.Stopwatch.StartNew();
 
+				Console.WriteLine( $"Socket: Listening" );
+
 				while ( Connected.Contains( singleClient ) )
 				{
 					Receive();
 					await Task.Delay( 100 );
 
-					if ( sw.Elapsed.TotalSeconds > 10 )
+					if ( sw.Elapsed.TotalSeconds > 5 )
 					{
+						Console.WriteLine( "Socket: This all took too long - throwing an exception" );
 						Assert.Fail( "Socket Took Too Long" );
 						break;
 					}
 				}
+
+				Console.WriteLine( $"Socket: Closing connection because {Connected.Count()} Connected" );
 
 				await Task.Delay( 1000 );
 

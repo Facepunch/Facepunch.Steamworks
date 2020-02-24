@@ -47,7 +47,7 @@ public static class Cleanup
 		type = type.Replace( "SteamNetConnectionInfo_t", "ConnectionInfo" );
 		type = type.Replace( "SteamNetworkingConnectionState", "ConnectionState" );
 		type = type.Replace( "SteamNetworkingMicroseconds", "long" );
-		type = type.Replace( "SteamNetworkingSocketsDebugOutputType", "DebugOutputType" );
+		type = type.Replace( "SteamNetworkingSocketsDebugOutputType", "NetDebugOutput" );
 		type = type.Replace( "SteamNetworkingGetConfigValueResult", "NetConfigResult" );
 		type = type.Replace( "SteamInputType", "InputType" );
 		type = type.Replace( "InputDigitalActionData_t", "DigitalState" );
@@ -136,6 +136,7 @@ public static class Cleanup
 		if ( name == "NetConnectionEnd" ) return "public";
 		if ( name == "NetIdentity" ) return "public";
 		if ( name == "NetAddress" ) return "public";
+		if ( name == "NetDebugOutput" ) return "public";
 
 		return "internal";
 	}

@@ -28,6 +28,20 @@ namespace Steamworks
 			}, server );
 		}
 
+		/// <summary>
+		/// A function to receive debug network information on. This will do nothing
+		/// unless you set DebugLevel to something other than None.
+		/// 
+		/// You should set this to an appropriate level instead of setting it to the highest
+		/// and then filtering it by hand because a lot of energy is used by creating the strings
+		/// and your frame rate will tank and you won't know why.
+		/// </summary>
+
+		public static event Action<NetDebugOutput, string> OnDebugOutput;
+
+		/// <summary>
+		/// The latest available status gathered from the SteamRelayNetworkStatus callback
+		/// </summary>
 		public static SteamNetworkingAvailability Status { get; private set; }
 
 		/// <summary>
@@ -145,7 +159,66 @@ namespace Steamworks
 			set => SetConfigFloat( NetConfig.FakePacketLag_Recv, value );
 		}
 
-#region Config Internals
+
+
+		/// <summary>
+		/// Get Debug Information via OnDebugOutput event
+		/// 
+		/// Except when debugging, you should only use NetDebugOutput.Msg
+		/// or NetDebugOutput.Warning.  For best performance, do NOT
+		/// request a high detail level and then filter out messages in the callback.  
+		/// 
+		/// This incurs all of the expense of formatting the messages, which are then discarded.  
+		/// Setting a high priority value (low numeric value) here allows the library to avoid 
+		/// doing this work.
+		/// </summary>
+		public static NetDebugOutput DebugLevel
+		{
+			get => _debugLevel;
+			set
+			{
+				_debugLevel = value;
+				Internal.SetDebugOutputFunction( value, OnDebugMessage );
+			}
+		}
+
+		/// <summary>
+		/// So we can remember and provide a Get for DebugLEvel
+		/// </summary>
+		private static NetDebugOutput _debugLevel;
+
+		struct DebugMessage
+		{
+			public NetDebugOutput Type;
+			public string Msg;
+		}
+
+		private static System.Collections.Concurrent.ConcurrentQueue<DebugMessage> debugMessages = new System.Collections.Concurrent.ConcurrentQueue<DebugMessage>();
+
+		/// <summary>
+		/// This can be called from other threads - so we're going to queue these up and process them in a safe place.
+		/// </summary>
+		private static void OnDebugMessage( NetDebugOutput nType, string pszMsg )
+		{
+			debugMessages.Enqueue( new DebugMessage { Type = nType, Msg = pszMsg } );
+		}
+
+		/// <summary>
+		/// Called regularly from the Dispatch loop so we can provide a timely
+		/// stream of messages.
+		/// </summary>
+		internal static void OutputDebugMessages()
+		{
+			if ( debugMessages.IsEmpty )
+				return;
+
+			while ( debugMessages.TryDequeue( out var result ) )
+			{
+				OnDebugOutput?.Invoke( result.Type, result.Msg );
+			}
+		}
+
+		#region Config Internals
 
 		internal unsafe static bool GetConfigInt( NetConfig type, int value )
 		{
