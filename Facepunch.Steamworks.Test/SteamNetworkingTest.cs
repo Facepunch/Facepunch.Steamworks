@@ -20,12 +20,15 @@ namespace Steamworks
 
 			Assert.IsTrue( sent );
 
-			while ( !SteamNetworking.IsP2PPacketAvailable() )
-			{
-				await Task.Delay( 10 );
-			}
+while ( SteamNetworking.IsP2PPacketAvailable() )
+{
+	var packet = SteamNetworking.ReadP2PPacket();
+	if ( packet.HasValue )
+	{
+		HandleMessageFrom( packet.Value.SteamId, packet.Value.Data );
+	}
+}
 
-			var packet = SteamNetworking.ReadP2PPacket();
 
 			Assert.IsTrue( packet.HasValue );
 

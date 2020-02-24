@@ -10,26 +10,27 @@
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	</PropertyGroup>
 
-	<ItemGroup>
-		<None Update="steam_api64.dll">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-	</ItemGroup>
-
 	<PropertyGroup>
 		<FrameworkPathOverride Condition="'$(TargetFramework)' == 'net40'">C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\Profile\Client</FrameworkPathOverride>
 		<Authors>Garry Newman</Authors>
 		<PackageId>Facepunch.Steamworks</PackageId>
 		<PackageDescription>Another fucking c# Steamworks implementation</PackageDescription>
 		<PackageProjectUrl>https://github.com/Facepunch/Facepunch.Steamworks</PackageProjectUrl>
-		<PackageIconUrl>https://files.facepunch.com/garry/c5edce1c-0c21-4c5d-95b6-37743be7455d.jpg</PackageIconUrl>
+		<PackageIcon>Facepunch.Steamworks.jpg</PackageIcon>
 		<PackageTags>facepunch;steam;unity;steamworks;valve</PackageTags>
-		<PackageVersion>2.2.0</PackageVersion>
+		<PackageVersion>2.3.0</PackageVersion>
 		<LangVersion>latest</LangVersion>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<RepositoryUrl>https://github.com/Facepunch/Facepunch.Steamworks.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
+
+		<ItemGroup>
+			<None Include="steam_api64.dll" Pack="true" PackagePath="\native\">
+				<CopyToOutputDirectory>Always</CopyToOutputDirectory>			
+      </None>
+      <None Include="Facepunch.Steamworks.jpg" Pack="true" PackagePath="\"/>
+		</ItemGroup>
 
 	<Import Project="Facepunch.Steamworks.targets" />
 
