@@ -108,7 +108,7 @@ namespace Steamworks
 				//
 				// Releases the message
 				//
-				msg.Release( msgPtr );
+				NetMsg.InternalRelease( (NetMsg*) msgPtr );
 			}
 		}
 

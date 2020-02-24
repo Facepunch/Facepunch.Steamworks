@@ -17,17 +17,5 @@ namespace Steamworks.Data
 		internal IntPtr FreeDataPtr;
 		internal IntPtr ReleasePtr;
 		internal int Channel;
-
-		internal delegate void ReleaseDelegate( IntPtr msg );
-
-		public void Release( IntPtr data )
-		{
-			//
-			// I think this function might be a static global, so we could probably
-			// cache this release call.
-			//
-			var d = Marshal.GetDelegateForFunctionPointer<ReleaseDelegate>( ReleasePtr );
-			d( data );
-		}
 	}
 }

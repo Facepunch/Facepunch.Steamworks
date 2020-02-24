@@ -32,6 +32,10 @@ namespace Steamworks
 			if ( SteamNetworkingSockets.Internal.IsValid )
 			{
 				SteamNetworkingSockets.Internal.DestroyPollGroup( pollGroup );
+
+				Console.WriteLine( "Closing Socket!" );
+				Console.WriteLine( Socket.ToString() );
+
 				Socket.Close();
 			}
 
@@ -128,7 +132,7 @@ namespace Steamworks
 				//
 				// Releases the message
 				//
-				msg.Release( msgPtr );
+				NetMsg.InternalRelease( (NetMsg*) msgPtr );
 			}
 		}
 
