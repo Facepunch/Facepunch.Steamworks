@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Steamworks.Data;
 
@@ -38,9 +39,89 @@ namespace Steamworks
 			return r?.Result == Result.OK;
 		}
 
+		/// <summary>
+		/// Start downloading this item. You'll get notified of completion via OnDownloadItemResult.
+		/// </summary>
+		/// <param name="fileId">The ID of the file you want to download</param>
+		/// <param name="highPriority">If true this should go straight to the top of the download list</param>
+		/// <returns>true if nothing went wrong and the download is started</returns>
 		public static bool Download( PublishedFileId fileId, bool highPriority = false )
 		{
 			return Internal.DownloadItem( fileId, highPriority );
+		}
+
+		/// <summary>
+		/// Will attempt to download this item asyncronously - allowing you to instantly react to its installation
+		/// </summary>
+		/// <param name="fileId">The ID of the file you want to download</param>
+		/// <param name="progress">An optional callback</param>
+		/// <param name="ct">Allows you to send a message to cancel the download anywhere during the process</param>
+		/// <param name="milisecondsUpdateDelay">How often to call the progress function</param>
+		/// <returns>true if downloaded and installed correctly</returns>
+		public static async Task<bool> DownloadAsync( PublishedFileId fileId, Action<float> progress = null, CancellationToken ct = default, int milisecondsUpdateDelay = 60 )
+		{
+			var item = new Steamworks.Ugc.Item( fileId );
+
+			if ( ct == default )
+				ct = new CancellationTokenSource( TimeSpan.FromSeconds( 60 ) ).Token;
+
+			progress?.Invoke( 0.0f );
+
+			if ( Download( fileId, true ) == false )
+				return item.IsInstalled;
+
+			// Steam docs about Download:
+			// If the return value is true then register and wait
+			// for the Callback DownloadItemResult_t before calling 
+			// GetItemInstallInfo or accessing the workshop item on disk.
+
+			// Wait for DownloadItemResult_t
+			{
+				Action<Result> onDownloadStarted = null;
+
+				try
+				{
+					var downloadStarted = false;
+					
+					onDownloadStarted = r => downloadStarted = true;
+					OnDownloadItemResult += onDownloadStarted;
+
+					while ( downloadStarted == false )
+					{
+						if ( ct.IsCancellationRequested )
+							break;
+
+						await Task.Delay( milisecondsUpdateDelay );
+					}
+				}
+				finally
+				{
+					OnDownloadItemResult -= onDownloadStarted;
+				}
+			}
+
+			progress?.Invoke( 0.2f );
+			await Task.Delay( milisecondsUpdateDelay );
+
+			//Wait for downloading completion
+			{
+				while ( true )
+				{
+					if ( ct.IsCancellationRequested )
+						break;
+
+					progress?.Invoke( 0.2f + item.DownloadAmount * 0.8f );
+
+					if ( !item.IsDownloading && item.IsInstalled )
+						break;
+
+					await Task.Delay( milisecondsUpdateDelay );
+				}
+			}
+
+			progress?.Invoke( 1.0f );
+
+			return item.IsInstalled;
 		}
 
 		/// <summary>

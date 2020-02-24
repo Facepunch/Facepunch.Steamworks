@@ -126,11 +126,11 @@ namespace Steamworks.Ugc
 
 		/// <summary>
 		/// Start downloading this item.
-		/// If this returns false the item isn#t getting downloaded.
+		/// If this returns false the item isn't getting downloaded.
 		/// </summary>
 		public bool Download( bool highPriority = false )
 		{
-			return SteamUGC.Internal.DownloadItem( Id, highPriority );
+			return SteamUGC.Download( Id, highPriority );
 		}
 
 		/// <summary>
@@ -258,79 +258,13 @@ namespace Steamworks.Ugc
         }
 
 		/// <summary>
-		/// Allows the user to subscribe to this item and wait for it to be downloaded
+		/// Allows the user to subscribe to download this item asyncronously
 		/// If CancellationToken is default then there is 60 seconds timeout
 		/// Progress will be set to 0-1
 		/// </summary>
-		public async Task<bool> SubscribeDownloadAsync( Action<float> progress = null, CancellationToken ct = default, int milisecondsUpdateDelay = 60 )
+		public async Task<bool> DownloadAsync( Action<float> progress = null, CancellationToken ct = default, int milisecondsUpdateDelay = 60 )
 		{
-			if ( ct == default )
-				ct = new CancellationTokenSource( TimeSpan.FromSeconds( 60 ) ).Token;
-
-			progress?.Invoke( 0 );
-			await Task.Delay( milisecondsUpdateDelay );
-
-			//Subscribe
-			{
-				var subResult = await SteamUGC.Internal.SubscribeItem( _id );
-				if ( subResult?.Result != Result.OK )
-					return false;
-			}
-
-			progress?.Invoke( 0.1f );
-			await Task.Delay( milisecondsUpdateDelay );
-
-			//Try to start downloading
-			{
-				if ( Download( true ) == false )
-					return State.HasFlag( ItemState.Installed );
-
-				//Steam docs about Download:
-				//If the return value is true then register and wait
-				//for the Callback DownloadItemResult_t before calling 
-				//GetItemInstallInfo or accessing the workshop item on disk.
-
-				//Wait for DownloadItemResult_t
-				{
-					var downloadStarted = false;
-					Action<Result> onDownloadStarted = null;
-					onDownloadStarted = r =>
-					{
-						SteamUGC.OnDownloadItemResult -= onDownloadStarted;
-						downloadStarted = true;
-					};
-					SteamUGC.OnDownloadItemResult += onDownloadStarted;
-
-					while ( downloadStarted == false )
-					{
-						if ( ct.IsCancellationRequested )
-							break;
-
-						await Task.Delay( milisecondsUpdateDelay );
-					}
-				}
-			}
-
-			progress?.Invoke( 0.2f );
-			await Task.Delay( milisecondsUpdateDelay );
-
-			//Wait for downloading completion
-			{
-				while ( true )
-				{
-					if ( ct.IsCancellationRequested )
-						break;
-
-					progress?.Invoke( 0.2f + DownloadAmount * 0.8f );
-
-					if ( !IsDownloading && State.HasFlag( ItemState.Installed ) )
-						break;
-
-					await Task.Delay( milisecondsUpdateDelay );
-				}
-			}
-
-			return State.HasFlag( ItemState.Installed );
+			return await SteamUGC.DownloadAsync( Id, progress, ct, milisecondsUpdateDelay );
 		}
 
 		/// <summary>
