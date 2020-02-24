@@ -243,5 +243,21 @@ namespace Steamworks
 			return val;
 		}		
 		
+		/// <summary>
+		/// Gets a the time this achievement was unlocked.
+		/// </summary>
+		/// <param name="statName">The name of the achievement you want to get</param>
+		/// <returns>The time unlocked. If it wasn't unlocked, or you haven't downloaded the stats yet - will return DateTime.MinValue</returns>
+		public DateTime GetAchievementUnlockTime( string statName )
+		{
+			bool val = false;
+			uint time = 0;
+
+			if ( !SteamUserStats.Internal.GetUserAchievementAndUnlockTime( Id, statName, ref val, ref time ) || !val )
+				return DateTime.MinValue;
+
+			return Epoch.ToDateTime( time );
+		}
+
 	}
 }
