@@ -98,7 +98,7 @@ namespace Steamworks
 			}
 		}
 		
-		public static IEnumerable<Friend> GetFriendsWithFlag(FriendFlags flag)
+		private static IEnumerable<Friend> GetFriendsWithFlag(FriendFlags flag)
 		{
 			for ( int i=0; i<Internal.GetFriendCount( (int)flag); i++ )
 			{
@@ -114,6 +114,26 @@ namespace Steamworks
 		public static IEnumerable<Friend> GetBlocked()
 		{
 			return GetFriendsWithFlag(FriendFlags.Blocked);
+		}
+
+		public static IEnumerable<Friend> GetFriendsRequested()
+		{
+			return GetFriendsWithFlag( FriendFlags.FriendshipRequested );
+		}
+
+		public static IEnumerable<Friend> GetFriendsClanMembers()
+		{
+			return GetFriendsWithFlag( FriendFlags.ClanMember );
+		}
+
+		public static IEnumerable<Friend> GetFriendsOnGameServer()
+		{
+			return GetFriendsWithFlag( FriendFlags.OnGameServer );
+		}
+
+		public static IEnumerable<Friend> GetFriendsRequestingFriendship()
+		{
+			return GetFriendsWithFlag( FriendFlags.RequestingFriendship );
 		}
 
 		public static IEnumerable<Friend> GetPlayedWith()

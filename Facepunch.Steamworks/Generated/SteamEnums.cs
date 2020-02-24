@@ -634,7 +634,7 @@ namespace Steamworks
 	//
 	// EFriendFlags
 	//
-	public enum FriendFlags : int
+	internal enum FriendFlags : int
 	{
 		None = 0,
 		Blocked = 1,
