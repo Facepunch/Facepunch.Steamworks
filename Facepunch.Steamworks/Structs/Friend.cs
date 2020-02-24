@@ -211,5 +211,21 @@ namespace Steamworks
 			return val;
 		}
 
+		/// <summary>
+		/// Gets a user stat. Must call RequestUserStats first.
+		/// </summary>
+		/// <param name="statName">The name of the stat you want to get</param>
+		/// <param name="defult">Will return this value if not available</param>
+		/// <returns>The value, or defult if not available</returns>
+		public int GetStatInt( string statName, int defult = 0 )
+		{
+			var val = defult;
+
+			if ( !SteamUserStats.Internal.GetUserStat( Id, statName, ref val ) )
+				return defult;
+
+			return val;
+		}
+
 	}
 }
