@@ -17,18 +17,14 @@ namespace Steamworks
         public async Task SendP2PPacket()
         {
 			var sent = SteamNetworking.SendP2PPacket( SteamClient.SteamId, new byte[] { 1, 2, 3 } );
-
 			Assert.IsTrue( sent );
 
-while ( SteamNetworking.IsP2PPacketAvailable() )
-{
-	var packet = SteamNetworking.ReadP2PPacket();
-	if ( packet.HasValue )
-	{
-		HandleMessageFrom( packet.Value.SteamId, packet.Value.Data );
-	}
-}
+			while ( !SteamNetworking.IsP2PPacketAvailable() )
+			{
+				await Task.Delay( 10 );
+			}
 
+			var packet = SteamNetworking.ReadP2PPacket();
 
 			Assert.IsTrue( packet.HasValue );
 
