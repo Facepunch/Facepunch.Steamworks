@@ -115,8 +115,6 @@ namespace Steamworks
 			Passworded = false;
 			DedicatedServer = init.DedicatedServer;
 
-			InstallEvents();
-
 			if ( asyncCallbacks )
 			{
 				//
