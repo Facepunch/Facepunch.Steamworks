@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Steamworks.Data;
 using Steamworks;
+using System.Linq;
 
 namespace Steamworks
 {
@@ -151,6 +152,7 @@ namespace Steamworks
 		struct ResultCallback
 		{
 			public Action continuation;
+			public bool server;
 		}
 
 		static Dictionary<ulong, ResultCallback> ResultCallbacks = new Dictionary<ulong, ResultCallback>();
@@ -158,11 +160,12 @@ namespace Steamworks
 		/// <summary>
 		/// Watch for a steam api call
 		/// </summary>
-		internal static void OnCallComplete( SteamAPICall_t call, Action continuation )
+		internal static void OnCallComplete( SteamAPICall_t call, Action continuation, bool server )
 		{
 			ResultCallbacks[call.Value] = new ResultCallback
 			{
-				continuation = continuation
+				continuation = continuation,
+				server = server
 			};
 		}
 
@@ -195,12 +198,30 @@ namespace Steamworks
 			} );
 		}
 
-		internal static void Wipe()
+		internal static void ShutdownServer()
 		{
-			Callbacks = new Dictionary<CallbackType, List<Callback>>();
-			ResultCallbacks = new Dictionary<ulong, ResultCallback>();
-			ClientPipe = 0;
 			ServerPipe = 0;
+
+			foreach ( var callback in Callbacks )
+			{
+				Callbacks[callback.Key].RemoveAll( x => x.server );
+			}
+
+			ResultCallbacks = ResultCallbacks.Where( x => !x.Value.server )
+											 .ToDictionary( x => x.Key, x => x.Value );
+		}
+
+		internal static void ShutdownClient()
+		{
+			ClientPipe = 0;
+
+			foreach ( var callback in Callbacks )
+			{
+				Callbacks[callback.Key].RemoveAll( x => !x.server );
+			}
+
+			ResultCallbacks = ResultCallbacks.Where( x => x.Value.server )
+											 .ToDictionary( x => x.Key, x => x.Value );
 		}
 	}
 }

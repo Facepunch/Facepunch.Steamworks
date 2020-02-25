@@ -102,10 +102,9 @@ namespace Steamworks
 
 		internal static void Cleanup()
 		{
-			Dispatch.Wipe();
+			Dispatch.ShutdownClient();
 
 			initialized = false;
-
 			ShutdownInterfaces();
 		}
 

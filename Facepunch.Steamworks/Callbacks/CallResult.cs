@@ -15,10 +15,12 @@ namespace Steamworks
 	{
 		SteamAPICall_t call;
 		ISteamUtils utils;
+		bool server;
 
 		public CallResult( SteamAPICall_t call, bool server )
 		{
 			this.call = call;
+			this.server = server;
 
 			utils = (server ? SteamUtils.InterfaceServer : SteamUtils.InterfaceClient) as ISteamUtils;
 
@@ -33,7 +35,7 @@ namespace Steamworks
 		/// </summary>
 		public void OnCompleted( Action continuation )
 		{
-			Dispatch.OnCallComplete( call, continuation );
+			Dispatch.OnCallComplete( call, continuation, server );
 		}
 
 		/// <summary>

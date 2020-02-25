@@ -145,6 +145,8 @@ namespace Steamworks
 
 		public static void Shutdown()
 		{
+			Dispatch.ShutdownServer();
+
 			ShutdownInterfaces();
 			SteamGameServer.Shutdown();
 		}
