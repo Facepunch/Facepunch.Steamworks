@@ -147,7 +147,7 @@ namespace Steamworks
 					continue;
 				}
 
-				Console.WriteLine( $"data: {string.Join( "", data.Select( x => x.ToString( "x" ) ) )}" );
+				Console.WriteLine( $"data: {BitConverter.ToString( data )}" );
 				return;
 			}
 
@@ -168,7 +168,7 @@ namespace Steamworks
 					continue;
 				}
 
-				Console.WriteLine( $"data: {string.Join( "", data.Select( x => x.ToString( "x" ) ) )}" );
+				Console.WriteLine( $"data: {BitConverter.ToString( data )}" );
 				return;
 			}
 
