@@ -19,11 +19,13 @@ namespace Steamworks
 			SetInterface( server, new ISteamFriends( server ) );
 
 			richPresence = new Dictionary<string, string>();
+
+			InstallEvents();
 		}
 
 		static Dictionary<string, string> richPresence;
 
-		internal static void InstallEvents()
+		internal void InstallEvents()
 		{
 			Dispatch.Install<PersonaStateChange_t>( x => OnPersonaStateChange?.Invoke( new Friend( x.SteamID ) ) );
 			Dispatch.Install<GameRichPresenceJoinRequested_t>( x => OnGameRichPresenceJoinRequested?.Invoke( new Friend( x.SteamIDFriend), x.ConnectUTF8() ) );
