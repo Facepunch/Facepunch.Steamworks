@@ -40,20 +40,20 @@ namespace Steamworks
 			return true;
 		}
 
-		public virtual void OnConnectionChanged( Connection connection, ConnectionInfo data )
+		public virtual void OnConnectionChanged( Connection connection, ConnectionInfo info )
 		{
-			switch ( data.State )
+			switch ( info.State )
 			{
 				case ConnectionState.Connecting:
 					if ( !Connecting.Contains( connection ) )
 					{
-						OnConnecting( connection, data );
+						OnConnecting( connection, info );
 					}
 					break;
 				case ConnectionState.Connected:
 					if ( !Connected.Contains( connection ) )
 					{
-						OnConnected( connection, data );
+						OnConnected( connection, info );
 					}
 					break;
 				case ConnectionState.ClosedByPeer:
@@ -61,7 +61,7 @@ namespace Steamworks
 				case ConnectionState.None:
 					if ( Connecting.Contains( connection ) || Connected.Contains( connection ) )
 					{
-						OnDisconnected( connection, data );
+						OnDisconnected( connection, info );
 					}
 					break;
 			}
@@ -70,7 +70,7 @@ namespace Steamworks
 		/// <summary>
 		/// Default behaviour is to accept every connection
 		/// </summary>
-		public virtual void OnConnecting( Connection connection, ConnectionInfo data )
+		public virtual void OnConnecting( Connection connection, ConnectionInfo info )
 		{
 			connection.Accept();
 			Connecting.Add( connection );
@@ -79,7 +79,7 @@ namespace Steamworks
 		/// <summary>
 		/// Client is connected. They move from connecting to Connections
 		/// </summary>
-		public virtual void OnConnected( Connection connection, ConnectionInfo data )
+		public virtual void OnConnected( Connection connection, ConnectionInfo info )
 		{
 			Connecting.Remove( connection );
 			Connected.Add( connection );
@@ -89,7 +89,7 @@ namespace Steamworks
 		/// <summary>
 		/// The connection has been closed remotely or disconnected locally. Check data.State for details.
 		/// </summary>
-		public virtual void OnDisconnected( Connection connection, ConnectionInfo data )
+		public virtual void OnDisconnected( Connection connection, ConnectionInfo info )
 		{
 			SteamNetworkingSockets.Internal.SetConnectionPollGroup( connection, 0 );
 

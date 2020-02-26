@@ -26,20 +26,20 @@ namespace Steamworks
 
 		public override string ToString() => Connection.ToString();
 
-		public virtual void OnConnectionChanged( ConnectionInfo data )
+		public virtual void OnConnectionChanged( ConnectionInfo info )
 		{
-			switch ( data.State )
+			switch ( info.State )
 			{
 				case ConnectionState.Connecting:
-					OnConnecting( data );
+					OnConnecting( info );
 					break;
 				case ConnectionState.Connected:
-					OnConnected( data );
+					OnConnected( info );
 					break;
 				case ConnectionState.ClosedByPeer:
 				case ConnectionState.ProblemDetectedLocally:
 				case ConnectionState.None:
-					OnDisconnected( data );
+					OnDisconnected( info );
 					break;
 			}
 		}
@@ -47,7 +47,7 @@ namespace Steamworks
 		/// <summary>
 		/// We're trying to connect!
 		/// </summary>
-		public virtual void OnConnecting( ConnectionInfo data )
+		public virtual void OnConnecting( ConnectionInfo info )
 		{
 			Connecting = true;
 		}
@@ -55,7 +55,7 @@ namespace Steamworks
 		/// <summary>
 		/// Client is connected. They move from connecting to Connections
 		/// </summary>
-		public virtual void OnConnected( ConnectionInfo data )
+		public virtual void OnConnected( ConnectionInfo info )
 		{
 			Connected = true;
 			Connecting = false;
@@ -64,7 +64,7 @@ namespace Steamworks
 		/// <summary>
 		/// The connection has been closed remotely or disconnected locally. Check data.State for details.
 		/// </summary>
-		public virtual void OnDisconnected( ConnectionInfo data )
+		public virtual void OnDisconnected( ConnectionInfo info )
 		{
 			Connected = false;
 			Connecting = false;
