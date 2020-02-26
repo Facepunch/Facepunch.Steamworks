@@ -168,6 +168,14 @@ namespace Steamworks
 			set => SetConfigInt( NetConfig.TimeoutInitial, value );
 		}
 
+		/// <summary>
+		/// Timeout value (in ms) to use after connection is established
+		/// </summary>
+		public static int Timeout
+		{
+			get => GetConfigInt( NetConfig.TimeoutConnected );
+			set => SetConfigInt( NetConfig.TimeoutConnected, value );
+		}
 
 
 		/// <summary>
