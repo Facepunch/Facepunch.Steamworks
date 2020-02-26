@@ -92,8 +92,7 @@ namespace Steamworks
 
 	public class SteamClientClass<T> : SteamClass
 	{
-		internal static SteamInterface Interface => InterfaceClient;
-		internal static SteamInterface InterfaceClient;
+		internal static SteamInterface Interface;
 
 		internal override void InitializeInterface( bool server )
 		{
@@ -105,19 +104,18 @@ namespace Steamworks
 			if ( server )
 				throw new System.NotSupportedException();
 
-			InterfaceClient = iface;
+			Interface = iface;
 		}
 
 		internal override void DestroyInterface( bool server )
 		{
-			InterfaceClient = null;
+			Interface = null;
 		}
 	}	
 	
 	public class SteamServerClass<T> : SteamClass
 	{
-		internal static SteamInterface Interface => InterfaceServer;
-		internal static SteamInterface InterfaceServer;
+		internal static SteamInterface Interface;
 
 		internal override void InitializeInterface( bool server )
 		{
@@ -129,12 +127,12 @@ namespace Steamworks
 			if ( !server )
 				throw new System.NotSupportedException();
 
-			InterfaceServer = iface;
+			Interface = iface;
 		}
 
 		internal override void DestroyInterface( bool server )
 		{
-			InterfaceServer = null;
+			Interface = null;
 		}
 	}
 
