@@ -159,6 +159,15 @@ namespace Steamworks
 			set => SetConfigFloat( NetConfig.FakePacketLag_Recv, value );
 		}
 
+		/// <summary>
+		/// Timeout value (in ms) to use when first connecting
+		/// </summary>
+		public static int ConnectionTimeout
+		{
+			get => GetConfigInt( NetConfig.TimeoutInitial );
+			set => SetConfigInt( NetConfig.TimeoutInitial, value );
+		}
+
 
 
 		/// <summary>
