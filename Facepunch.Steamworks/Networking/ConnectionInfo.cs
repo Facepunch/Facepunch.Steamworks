@@ -28,9 +28,14 @@ namespace Steamworks.Data
 		public ConnectionState State => state;
 
 		/// <summary>
+		/// Remote address.  Might be all 0's if we don't know it, or if this is N/A.
+		/// </summary>
+		public NetAddress Address => address;
+
+		/// <summary>
 		/// Who is on the other end?  Depending on the connection type and phase of the connection, we might not know
 		/// </summary>
-		public SteamId SteamId => identity.steamID;
+		public NetIdentity Identity => address;
 
 		/// <summary>
 		/// Basic cause of the connection termination or problem.
