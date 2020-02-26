@@ -24,25 +24,18 @@ namespace Steamworks.Data
 		}
 
 		/// <summary>
+		/// The Port. This is redundant documentation.
+		/// </summary>
+		public ushort Port => port;
+
+		/// <summary>
 		/// Any IP, specific port
 		/// </summary>
 		public static NetAddress AnyIp( ushort port )
 		{
-			return new NetAddress
-			{
-				ip = new IPV4
-				{
-					m_8zeros = 0,
-					m_0000 = 0,
-					m_ffff = 0,
-					ip0 = 0,
-					ip1 = 0,
-					ip2 = 0,
-					ip3 = 0,
-				},
-
-				port = port
-			};
+			var addr = Cleared;
+			addr.port = port;
+			return addr;
 		}
 
 		/// <summary>
@@ -50,21 +43,9 @@ namespace Steamworks.Data
 		/// </summary>
 		public static NetAddress LocalHost( ushort port )
 		{
-			return new NetAddress
-			{
-				ip = new IPV4
-				{
-					m_8zeros = 0,
-					m_0000 = 0,
-					m_ffff = 0,
-					ip0 = 0,
-					ip1 = 0,
-					ip2 = 0,
-					ip3 = 1,
-				},
-
-				port = port
-			};
+			var local = Cleared;
+			InternalSetIPv6LocalHost( ref local, port );
+			return local;
 		}
 
 		/// <summary>
@@ -82,26 +63,89 @@ namespace Steamworks.Data
 		{
 			var addr = address.GetAddressBytes();
 
-			if ( addr.Length == 4 )
+			if ( address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork )
 			{
-				return new NetAddress
-				{
-					ip = new IPV4
-					{
-						m_8zeros = 0,
-						m_0000 = 0,
-						m_ffff = 0xffff,
-						ip0 = addr[0],
-						ip1 = addr[1],
-						ip2 = addr[2],
-						ip3 = addr[3],
-					},
-
-					port = port
-				};
+				var local = Cleared;
+				InternalSetIPv4( ref local, Utility.IpToInt32( address ), port );
+				return local;
 			}
 
 			throw new System.NotImplementedException( "Oops - no IPV6 support yet?" );
+		}
+
+		/// <summary>
+		/// Set everything to zero
+		/// </summary>
+		public static NetAddress Cleared
+		{
+			get
+			{
+				NetAddress self = default;
+				InternalClear( ref self );
+				return self;
+			}
+		}
+
+		/// <summary>
+		/// Return true if the IP is ::0.  (Doesn't check port.)
+		/// </summary>
+		public bool IsIPv6AllZeros
+		{
+			get
+			{
+				NetAddress self = this;
+				return InternalIsIPv6AllZeros( ref self );
+			}
+		}
+
+		/// <summary>
+		/// Return true if IP is mapped IPv4
+		/// </summary>
+		public bool IsIPv4
+		{
+			get
+			{
+				NetAddress self = this;
+				return InternalIsIPv4( ref self );
+			}
+		}
+
+		/// <summary>
+		/// Return true if this identity is localhost.  (Either IPv6 ::1, or IPv4 127.0.0.1)
+		/// </summary>
+		public bool IsLocalHost
+		{
+			get
+			{
+				NetAddress self = this;
+				return InternalIsLocalHost( ref self );
+			}
+		}
+
+		/// <summary>
+		/// Get the Address section
+		/// </summary>
+		public IPAddress Address
+		{
+			get
+			{
+				if ( IsIPv4 )
+				{
+					NetAddress self = this;
+					var ip = InternalGetIPv4( ref self  );
+					return Utility.Int32ToIp( ip );
+				}
+
+				throw new System.NotImplementedException( "Oops - no IPV6 support yet?" );
+			}
+		}
+
+		public override string ToString()
+		{
+			var ptr = Helpers.TakeMemory();
+			var self = this;
+			InternalToString( ref self, ptr, Helpers.MaxStringSize, true );
+			return Helpers.MemoryToString( ptr );
 		}
 	}
 }
