@@ -15,7 +15,7 @@ namespace Steamworks
 
 			public override void OnConnectionChanged( Connection connection, ConnectionInfo data )
 			{
-				Console.WriteLine( $"[Socket{Socket}][{connection}] [{data.State}]" );
+				Console.WriteLine( $"[Socket{Socket}][connection:{connection}][data.Identity:{data.Identity}] [data.State:{data.State}]" );
 
 				base.OnConnectionChanged( connection, data );
 			}
@@ -31,7 +31,19 @@ namespace Steamworks
 			/// </summary>
 			public override void OnConnected( Connection connection, ConnectionInfo data )
 			{
-				Console.WriteLine( $" - OnConnected" );
+				Console.WriteLine( $"" );
+				Console.WriteLine( $"Socket -> OnConnected:" );
+				Console.WriteLine( $"	data.Address:	{data.Address}" );
+				Console.WriteLine( $"	data.Identity:	{data.Identity}" );
+				Console.WriteLine( $"	data.Identity.Steamid:		{data.Identity.SteamId}" );
+				Console.WriteLine( $"	data.Identity.IsIpAddress:	{data.Identity.IsIpAddress}" );
+				Console.WriteLine( $"	data.Identity.IsLocalHost:	{data.Identity.IsLocalHost}" );
+				Console.WriteLine( $"	data.Identity.IsSteamId:	{data.Identity.IsSteamId}" );
+				Console.WriteLine( $"	data.Identity.Address:		{data.Identity.Address}" );
+				Console.WriteLine( $"	data.Identity.Address.Address:		{data.Identity.Address.Address}" );
+				Console.WriteLine( $"	data.Identity.Address.Port:			{data.Identity.Address.Port}" );
+				Console.WriteLine( $"" );
+
 				base.OnConnected( connection, data );
 			}
 
@@ -52,9 +64,9 @@ namespace Steamworks
 				{
 					await Task.Delay( 10 );
 
-					if ( sw.Elapsed.TotalSeconds > 5 )
+					if ( sw.Elapsed.TotalSeconds > 10 )
 					{
-						Assert.Fail( "Client Took Too Long To Connect"  );
+						Assert.Fail( "Client Took Too Long To Connect" );
 						break;
 					}
 				}
@@ -96,7 +108,7 @@ namespace Steamworks
 
 				await Task.Delay( 1000 );
 
-				//Close();
+				Close();
 			}
 
 			public override unsafe void OnMessage( Connection connection, NetIdentity identity, IntPtr data, int size, long messageNum, long recvTime, int channel )
