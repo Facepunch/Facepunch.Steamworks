@@ -67,7 +67,7 @@ namespace Steamworks
 			{
 				try
 				{
-					ProcessCallback( msg );
+					ProcessCallback( msg, pipe == ServerPipe );
 				}
 				finally
 				{
@@ -79,7 +79,7 @@ namespace Steamworks
 		/// <summary>
 		/// A callback is a general global message
 		/// </summary>
-		private static void ProcessCallback( CallbackMsg_t msg )
+		private static void ProcessCallback( CallbackMsg_t msg, bool isServer )
 		{
 			// Is this a special callback telling us that the call result is ready?
 			if ( msg.Type == CallbackType.SteamAPICallCompleted )
@@ -92,6 +92,9 @@ namespace Steamworks
 			{
 				foreach ( var item in list )
 				{
+					if ( item.server != isServer )
+						continue;
+
 					item.action( msg.Data );
 				}
 			}
