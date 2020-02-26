@@ -96,7 +96,7 @@ namespace Steamworks
 			// Start the client
 			//
 			Console.WriteLine( "ConnectNormal" );
-			var connection = SteamNetworkingSockets.ConnectNormal<TestConnectionInterface>( NetAddress.From( System.Net.IPAddress.Parse( "127.0.0.1" ), 12445 ) );
+			var connection = SteamNetworkingSockets.ConnectNormal<TestConnectionInterface>( NetAddress.From( "127.0.0.1", 12445 ) );
 			var client = connection.RunAsync();
 
 			await Task.WhenAll( server, client );
