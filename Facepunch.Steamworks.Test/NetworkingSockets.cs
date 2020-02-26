@@ -101,6 +101,20 @@ namespace Steamworks
 
 			await Task.WhenAll( server, client );
 		}
+
+		[TestMethod]
+		public async Task NetAddressTest()
+		{
+			{
+				var n = NetAddress.From( "127.0.0.1", 12445 );
+				Assert.AreEqual( n.ToString(), "127.0.0.1:12445" );
+			}
+
+			{
+				var n = NetAddress.AnyIp( 5543 );
+				Assert.AreEqual( n.ToString(), "[::]:5543" );
+			}
+		}
 	}
 
 }
