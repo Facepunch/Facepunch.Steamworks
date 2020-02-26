@@ -244,7 +244,7 @@ namespace Steamworks
 
 		#region Config Internals
 
-		internal unsafe static bool GetConfigInt( NetConfig type, int value )
+		internal unsafe static bool SetConfigInt( NetConfig type, int value )
 		{
 			int* ptr = &value;
 			return Internal.SetConfigValue( type, NetConfigScope.Global, IntPtr.Zero, NetConfigType.Int32, (IntPtr)ptr );
