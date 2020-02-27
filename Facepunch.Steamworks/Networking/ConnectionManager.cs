@@ -6,7 +6,21 @@ namespace Steamworks
 {
 	public class ConnectionManager
 	{
+		/// <summary>
+		/// An optional interface to use instead of deriving
+		/// </summary>
+		public IConnectionManager Interface { get; set; }
+
+		/// <summary>
+		/// The actual connection we're managing
+		/// </summary>
 		public Connection Connection;
+
+		/// <summary>
+		/// The last received ConnectionInfo
+		/// </summary>
+		public ConnectionInfo ConnectionInfo { get; internal set; }
+
 		public bool Connected = false;
 		public bool Connecting = true;
 
@@ -28,6 +42,8 @@ namespace Steamworks
 
 		public virtual void OnConnectionChanged( ConnectionInfo info )
 		{
+			ConnectionInfo = info;
+
 			switch ( info.State )
 			{
 				case ConnectionState.Connecting:
@@ -49,6 +65,8 @@ namespace Steamworks
 		/// </summary>
 		public virtual void OnConnecting( ConnectionInfo info )
 		{
+			Interface?.OnConnecting( info );
+
 			Connecting = true;
 		}
 
@@ -57,6 +75,8 @@ namespace Steamworks
 		/// </summary>
 		public virtual void OnConnected( ConnectionInfo info )
 		{
+			Interface?.OnConnected( info );
+
 			Connected = true;
 			Connecting = false;
 		}
@@ -66,6 +86,8 @@ namespace Steamworks
 		/// </summary>
 		public virtual void OnDisconnected( ConnectionInfo info )
 		{
+			Interface?.OnDisconnected( info );
+
 			Connected = false;
 			Connecting = false;
 		}
@@ -114,7 +136,7 @@ namespace Steamworks
 
 		public virtual void OnMessage( IntPtr data, int size, long messageNum, long recvTime, int channel )
 		{
-
+			Interface?.OnMessage( data, size, messageNum, recvTime, channel );
 		}
 	}
 }

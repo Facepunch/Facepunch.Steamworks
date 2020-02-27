@@ -12,8 +12,10 @@ namespace Steamworks
 	/// You can override all the virtual functions to turn it into what you
 	/// want it to do.
 	/// </summary>
-	public class SocketManager
+	public partial class SocketManager
 	{
+		public ISocketManager Interface { get; set; }
+
 		public List<Connection> Connecting = new List<Connection>();
 		public List<Connection> Connected = new List<Connection>();
 		public Socket Socket { get; internal set; }
@@ -47,12 +49,16 @@ namespace Steamworks
 				case ConnectionState.Connecting:
 					if ( !Connecting.Contains( connection ) )
 					{
+						Connecting.Add( connection );
 						OnConnecting( connection, info );
 					}
 					break;
 				case ConnectionState.Connected:
 					if ( !Connected.Contains( connection ) )
 					{
+						Connecting.Remove( connection );
+						Connected.Add( connection );
+
 						OnConnected( connection, info );
 					}
 					break;
@@ -72,8 +78,15 @@ namespace Steamworks
 		/// </summary>
 		public virtual void OnConnecting( Connection connection, ConnectionInfo info )
 		{
-			connection.Accept();
-			Connecting.Add( connection );
+			if ( Interface != null )
+			{
+				Interface.OnConnecting( connection, info );
+				return;
+			}
+			else
+			{
+				connection.Accept();
+			}			
 		}
 
 		/// <summary>
@@ -81,9 +94,9 @@ namespace Steamworks
 		/// </summary>
 		public virtual void OnConnected( Connection connection, ConnectionInfo info )
 		{
-			Connecting.Remove( connection );
-			Connected.Add( connection );
 			SteamNetworkingSockets.Internal.SetConnectionPollGroup( connection, pollGroup );
+
+			Interface?.OnConnected( connection, info );
 		}
 
 		/// <summary>
@@ -97,6 +110,8 @@ namespace Steamworks
 
 			Connecting.Remove( connection );
 			Connected.Remove( connection );
+
+			Interface?.OnDisconnected( connection, info );
 		}
 
 		public void Receive( int bufferSize = 32 )
@@ -144,7 +159,7 @@ namespace Steamworks
 
 		public virtual void OnMessage( Connection connection, NetIdentity identity, IntPtr data, int size, long messageNum, long recvTime, int channel )
 		{
-
+			Interface?.OnMessage( connection, identity, data, size, messageNum, recvTime, channel );
 		}
 	}
 }

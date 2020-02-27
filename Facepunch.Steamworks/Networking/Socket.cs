@@ -20,10 +20,10 @@ namespace Steamworks.Data
 			return SteamNetworkingSockets.Internal.CloseListenSocket( Id );
 		}
 
-		public SocketManager Interface
+		public SocketManager Manager
 		{
-			get => SteamNetworkingSockets.GetSocketInterface( Id );
-			set => SteamNetworkingSockets.SetSocketInterface( Id, value );
+			get => SteamNetworkingSockets.GetSocketManager( Id );
+			set => SteamNetworkingSockets.SetSocketManager( Id, value );
 		}
 	}
 }
