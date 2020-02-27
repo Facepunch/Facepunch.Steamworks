@@ -61,13 +61,19 @@ namespace Steamworks.Data
 			set => SteamNetworkingSockets.Internal.SetConnectionName( this, value );
 		}
 
-
+		/// <summary>
+		/// This is the best version to use.
+		/// </summary>
 		public Result SendMessage( IntPtr ptr, int size, SendType sendType = SendType.Reliable )
 		{
 			long messageNumber = 0;
 			return SteamNetworkingSockets.Internal.SendMessageToConnection( this, ptr, (uint) size, (int)sendType, ref messageNumber );
 		}
 
+		/// <summary>
+		/// Ideally should be using an IntPtr version unless you're being really careful with the byte[] array and 
+		/// you're not creating a new one every frame (like using .ToArray())
+		/// </summary>
 		public unsafe Result SendMessage( byte[] data, SendType sendType = SendType.Reliable )
 		{
 			fixed ( byte* ptr = data )
@@ -76,6 +82,10 @@ namespace Steamworks.Data
 			}
 		}
 
+		/// <summary>
+		/// Ideally should be using an IntPtr version unless you're being really careful with the byte[] array and 
+		/// you're not creating a new one every frame (like using .ToArray())
+		/// </summary>
 		public unsafe Result SendMessage( byte[] data, int offset, int length, SendType sendType = SendType.Reliable )
 		{
 			fixed ( byte* ptr = data )
@@ -84,6 +94,9 @@ namespace Steamworks.Data
 			}
 		}
 
+		/// <summary>
+		/// This creates a ton of garbage - so don't do anything with this beyond testing!
+		/// </summary>
 		public unsafe Result SendMessage( string str, SendType sendType = SendType.Reliable )
 		{
 			var bytes = System.Text.Encoding.UTF8.GetBytes( str );
