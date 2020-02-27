@@ -12,7 +12,7 @@ namespace Steamworks
 	/// You can override all the virtual functions to turn it into what you
 	/// want it to do.
 	/// </summary>
-	public class SocketInterface
+	public class SocketManager
 	{
 		public List<Connection> Connecting = new List<Connection>();
 		public List<Connection> Connected = new List<Connection>();

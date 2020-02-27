@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace Steamworks
 {
-	public class ConnectionInterface
+	public class ConnectionManager
 	{
 		public Connection Connection;
 		public bool Connected = false;

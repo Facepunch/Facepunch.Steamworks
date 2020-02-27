@@ -16,17 +16,17 @@ namespace Steamworks
 		{
 			SetInterface( server, new ISteamNetworkingSockets( server ) );
 
-			SocketInterfaces = new Dictionary<uint, SocketInterface>();
-			ConnectionInterfaces = new Dictionary<uint, ConnectionInterface>();
+			SocketInterfaces = new Dictionary<uint, SocketManager>();
+			ConnectionInterfaces = new Dictionary<uint, ConnectionManager>();
 
 			InstallEvents( server );
 		}
 	
 #region SocketInterface
 
-		static Dictionary<uint, SocketInterface> SocketInterfaces;
+		static Dictionary<uint, SocketManager> SocketInterfaces;
 
-		internal static SocketInterface GetSocketInterface( uint id )
+		internal static SocketManager GetSocketInterface( uint id )
 		{
 			if ( SocketInterfaces == null ) return null;
 			if ( id == 0 ) throw new System.ArgumentException( "Invalid Socket" );
@@ -37,7 +37,7 @@ namespace Steamworks
 			return null;
 		}
 
-		internal static void SetSocketInterface( uint id, SocketInterface iface )
+		internal static void SetSocketInterface( uint id, SocketManager iface )
 		{
 			if ( id == 0 ) throw new System.ArgumentException( "Invalid Socket" );
 			SocketInterfaces[id] = iface;
@@ -45,10 +45,10 @@ namespace Steamworks
 #endregion
 
 #region ConnectionInterface
-		static Dictionary<uint, ConnectionInterface> ConnectionInterfaces;
+		static Dictionary<uint, ConnectionManager> ConnectionInterfaces;
 
 
-		internal static ConnectionInterface GetConnectionInterface( uint id )
+		internal static ConnectionManager GetConnectionInterface( uint id )
 		{
 			if ( ConnectionInterfaces == null ) return null;
 			if ( id == 0 ) return null;
@@ -59,7 +59,7 @@ namespace Steamworks
 			return null;
 		}
 
-		internal static void SetConnectionInterface( uint id, ConnectionInterface iface )
+		internal static void SetConnectionInterface( uint id, ConnectionManager iface )
 		{
 			if ( id == 0 ) throw new System.ArgumentException( "Invalid Connection" );
 			ConnectionInterfaces[id] = iface;
@@ -100,7 +100,7 @@ namespace Steamworks
 		/// Creates a "server" socket that listens for clients to connect to by calling
 		/// Connect, over ordinary UDP (IPv4 or IPv6)
 		/// </summary>
-		public static T CreateNormalSocket<T>( NetAddress address ) where T : SocketInterface, new()
+		public static T CreateNormalSocket<T>( NetAddress address ) where T : SocketManager, new()
 		{
 			var t = new T();
 			var options = Array.Empty<NetKeyValue>();
@@ -114,7 +114,7 @@ namespace Steamworks
 		/// <summary>
 		/// Connect to a socket created via <method>CreateListenSocketIP</method>
 		/// </summary>
-		public static T ConnectNormal<T>( NetAddress address ) where T : ConnectionInterface, new()
+		public static T ConnectNormal<T>( NetAddress address ) where T : ConnectionManager, new()
 		{
 			var t = new T();
 			var options = Array.Empty<NetKeyValue>();
@@ -126,7 +126,7 @@ namespace Steamworks
 		/// <summary>
 		/// Creates a server that will be relayed via Valve's network (hiding the IP and improving ping)
 		/// </summary>
-		public static T CreateRelaySocket<T>( int virtualport = 0 ) where T : SocketInterface, new()
+		public static T CreateRelaySocket<T>( int virtualport = 0 ) where T : SocketManager, new()
 		{
 			var t = new T();
 			var options = Array.Empty<NetKeyValue>();
@@ -138,7 +138,7 @@ namespace Steamworks
 		/// <summary>
 		/// Connect to a relay server
 		/// </summary>
-		public static T ConnectRelay<T>( SteamId serverId, int virtualport = 0 ) where T : ConnectionInterface, new()
+		public static T ConnectRelay<T>( SteamId serverId, int virtualport = 0 ) where T : ConnectionManager, new()
 		{
 			var t = new T();
 			NetIdentity identity = serverId;

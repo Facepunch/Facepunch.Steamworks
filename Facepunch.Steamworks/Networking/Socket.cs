@@ -20,7 +20,7 @@ namespace Steamworks.Data
 			return SteamNetworkingSockets.Internal.CloseListenSocket( Id );
 		}
 
-		public SocketInterface Interface
+		public SocketManager Interface
 		{
 			get => SteamNetworkingSockets.GetSocketInterface( Id );
 			set => SteamNetworkingSockets.SetSocketInterface( Id, value );

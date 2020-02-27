@@ -34,4 +34,9 @@
 
 	<Import Project="Facepunch.Steamworks.targets" />
 
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	  <Exec Command="Copy $(TargetDir)\Facepunch.Steamworks.Win64.* C:\plastic\RustMain\Assets\Plugins\Facepunch.Steamworks\" />
+	  <Exec Command="Copy $(TargetDir)\Facepunch.Steamworks.Posix.* C:\plastic\RustMain\Assets\Plugins\Facepunch.Steamworks\" />
+	</Target>
+
 </Project>

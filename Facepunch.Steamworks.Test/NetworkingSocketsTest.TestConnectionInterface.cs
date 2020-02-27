@@ -8,7 +8,7 @@ namespace Steamworks
 {
 	public partial class NetworkingSocketsTest
 	{
-		private class TestConnectionInterface : ConnectionInterface
+		private class TestConnectionInterface : ConnectionManager
 		{
 			public override void OnConnectionChanged( ConnectionInfo data )
 			{

@@ -9,7 +9,7 @@ namespace Steamworks
 {
 	public partial class NetworkingSocketsTest
 	{
-		private class TestSocketInterface : SocketInterface
+		private class TestSocketInterface : SocketManager
 		{
 			public bool HasFinished = false;
 
