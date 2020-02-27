@@ -53,7 +53,7 @@ namespace Steamworks
 		/// </summary>
 		public async Task<InventoryResult?> ConsumeAsync( int amount = 1 )
 		{
-			var sresult = default( SteamInventoryResult_t );
+			var sresult = Defines.k_SteamInventoryResultInvalid;
 			if ( !SteamInventory.Internal.ConsumeItem( ref sresult, Id, (uint)amount ) )
 				return null;
 
@@ -65,7 +65,7 @@ namespace Steamworks
 		/// </summary>
 		public async Task<InventoryResult?> SplitStackAsync( int quantity = 1 )
 		{
-			var sresult = default( SteamInventoryResult_t );
+			var sresult = Defines.k_SteamInventoryResultInvalid;
 			if ( !SteamInventory.Internal.TransferItemQuantity( ref sresult, Id, (uint)quantity, ulong.MaxValue ) )
 				return null;
 
@@ -77,7 +77,7 @@ namespace Steamworks
 		/// </summary>
 		public async Task<InventoryResult?> AddAsync( InventoryItem add, int quantity = 1 )
 		{
-			var sresult = default( SteamInventoryResult_t );
+			var sresult = Defines.k_SteamInventoryResultInvalid;
 			if ( !SteamInventory.Internal.TransferItemQuantity( ref sresult, add.Id, (uint)quantity, Id ) )
 				return null;
 
