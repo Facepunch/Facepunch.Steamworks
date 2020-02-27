@@ -1524,20 +1524,6 @@ namespace Steamworks.Data
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
-	internal struct PS3TrophiesInstalled_t : ICallbackData
-	{
-		internal ulong GameID; // m_nGameID uint64
-		internal Result Result; // m_eResult EResult
-		internal ulong RequiredDiskSpace; // m_ulRequiredDiskSpace uint64
-		
-		#region SteamCallback
-		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(PS3TrophiesInstalled_t) );
-		public int DataSize => _datasize;
-		public CallbackType CallbackType => CallbackType.PS3TrophiesInstalled;
-		#endregion
-	}
-	
-	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct GlobalStatsReceived_t : ICallbackData
 	{
 		internal ulong GameID; // m_nGameID uint64

@@ -143,10 +143,12 @@ public static class Cleanup
 
 	internal static bool IsDeprecated( string name )
 	{
+		if ( name.StartsWith( "PS3" ) ) return true;
+
 		if ( name == "SocketStatusCallback_t" ) return true;
 		if ( name == "SNetSocketConnectionType" ) return true;
 		if ( name == "SNetSocketState" ) return true;
-
+		
 		if ( name.StartsWith( "ISteamRemoteStorage." ) )
 		{
 			if ( name.Contains( "Publish" ) ) return true;
