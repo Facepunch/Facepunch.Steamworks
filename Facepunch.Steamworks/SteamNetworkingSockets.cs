@@ -132,6 +132,7 @@ namespace Steamworks
 			var options = Array.Empty<NetKeyValue>();
 			t.Socket = Internal.CreateListenSocketP2P( virtualport, options.Length, options );
 			SetSocketInterface( t.Socket.Id, t );
+			t.Initialize();
 			return t;
 		}
 
