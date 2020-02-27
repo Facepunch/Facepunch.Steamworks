@@ -5,6 +5,10 @@
 		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 	</PropertyGroup>
 
+	<PropertyGroup>
+		<PackageVersion>2.3.2</PackageVersion>
+	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DefineConstants>$(DefineConstants);TRACE;DEBUG</DefineConstants>
 		<NoWarn>1701;1702;1705;618;1591</NoWarn>
