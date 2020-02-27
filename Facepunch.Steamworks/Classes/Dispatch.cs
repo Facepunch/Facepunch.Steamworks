@@ -9,11 +9,24 @@ using System.Linq;
 namespace Steamworks
 {
 	/// <summary>
-	/// Manually pumps Steam's message queue and dispatches those
+	/// Responsible for all callback/callresult handling
+	/// 
+	/// This manually pumps Steam's message queue and dispatches those
 	/// events to any waiting callbacks/callresults.
 	/// </summary>
-	internal static class Dispatch
+	public static class Dispatch
 	{
+		/// <summary>
+		/// If set then we'll call this function every time a callback is generated.
+		/// 
+		/// This is SLOW!! - it's for debugging - don't keep it on all the time. If you want to access a specific
+		/// callback then please create an issue on github and I'll add it!
+		/// 
+		/// Params are : [Callback Type] [Callback Contents] [server]
+		/// 
+		/// </summary>
+		public static Action<CallbackType, string, bool> OnDebugCallback;
+
 		#region interop
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ManualDispatch_Init", CallingConvention = CallingConvention.Cdecl )]
 		internal static extern void SteamAPI_ManualDispatch_Init();
@@ -45,9 +58,9 @@ namespace Steamworks
 
 		/// <summary>
 		/// This gets called from Client/Server Init
-		/// It's important to switch to the manual dipatcher
+		/// It's important to switch to the manual dispatcher
 		/// </summary>
-		public static void Init()
+		internal static void Init()
 		{
 			SteamAPI_ManualDispatch_Init();
 		}
@@ -56,7 +69,7 @@ namespace Steamworks
 		/// <summary>
 		/// Calls RunFrame and processes events from this Steam Pipe
 		/// </summary>
-		public static void Frame( HSteamPipe pipe )
+		internal static void Frame( HSteamPipe pipe )
 		{ 
 			SteamAPI_ManualDispatch_RunFrame( pipe );
 			SteamNetworkingUtils.OutputDebugMessages();
@@ -88,6 +101,11 @@ namespace Steamworks
 				return;
 			}
 
+			if ( OnDebugCallback != null )
+			{
+				OnDebugCallback( msg.Type, CallbackToString( msg ), isServer );
+			}
+
 			if ( Callbacks.TryGetValue( msg.Type, out var list ) )
 			{
 				foreach ( var item in list )
@@ -98,6 +116,28 @@ namespace Steamworks
 					item.action( msg.Data );
 				}
 			}
+		}
+
+		/// <summary>
+		/// Given a callback, try to turn it into a string
+		/// </summary>
+		private static string CallbackToString( CallbackMsg_t msg )
+		{
+			if ( !CallbackTypeFactory.All.TryGetValue( msg.Type, out var t ) )
+				return "[not in sdk]";
+
+			var strct = msg.Data.ToType( t );
+			if ( strct == null )
+				return "[null]";
+
+			var str = "";
+
+			foreach ( var field in t.GetFields( System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic ) )
+			{
+				str += $"{field.Name}:  \"{field.GetValue( strct )}\"\n";
+			}
+
+			return str.Trim( '\n' );
 		}
 
 		/// <summary>
@@ -129,7 +169,7 @@ namespace Steamworks
 		/// have to think about it. This has the advantage that
 		/// you can call .Wait() on async shit and it still works.
 		/// </summary>
-		public static async void LoopClientAsync()
+		internal static async void LoopClientAsync()
 		{
 			while ( ClientPipe != 0 )
 			{
@@ -143,7 +183,7 @@ namespace Steamworks
 		/// have to think about it. This has the advantage that
 		/// you can call .Wait() on async shit and it still works.
 		/// </summary>
-		public static async void LoopServerAsync()
+		internal static async void LoopServerAsync()
 		{
 			while ( ServerPipe != 0 )
 			{

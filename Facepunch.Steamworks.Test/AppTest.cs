@@ -15,6 +15,13 @@ namespace Steamworks
 		[AssemblyInitialize]
 		public static void AssemblyInit( TestContext context )
 		{
+			Steamworks.Dispatch.OnDebugCallback = ( type, str, server ) =>
+			{
+				Console.WriteLine( $"[Callback {type} {(server ? "server" : "client")}]" );
+				Console.WriteLine( str );
+				Console.WriteLine( $"" );
+			};
+
 			Steamworks.SteamClient.OnCallbackException = ( e ) =>
 			{
 				Console.Error.WriteLine( e.Message );

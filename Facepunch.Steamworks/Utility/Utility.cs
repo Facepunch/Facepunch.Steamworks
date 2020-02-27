@@ -18,6 +18,14 @@ namespace Steamworks
             return (T)Marshal.PtrToStructure( ptr, typeof( T ) );
         }
 
+        static internal object ToType( this IntPtr ptr, System.Type t )
+        {
+            if ( ptr == IntPtr.Zero )
+                return default;
+
+            return Marshal.PtrToStructure( ptr, t );
+        }
+
         static internal uint Swap( uint x )
         {
             return ((x & 0x000000ff) << 24) +
