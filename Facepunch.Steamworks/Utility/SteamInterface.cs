@@ -85,8 +85,15 @@ namespace Steamworks
 
 		internal override void DestroyInterface( bool server )
 		{
-			InterfaceClient = null;
-			InterfaceServer = null;
+			if ( !server )
+			{
+				InterfaceClient = null;
+			}
+
+			if ( server )
+			{
+				InterfaceServer = null;
+			}
 		}
 	}
 
