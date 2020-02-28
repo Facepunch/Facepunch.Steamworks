@@ -26,7 +26,10 @@ namespace Generator
 			StartBlock( "internal static System.Collections.Generic.Dictionary<CallbackType, System.Type> All = new System.Collections.Generic.Dictionary<CallbackType, System.Type>" );
 			foreach ( var c in def.callback_structs.OrderBy( x => x.CallbackId ) )
 			{
-				if ( Cleanup.IsDeprecated( c.Name ) || last == c.CallbackId )
+				if ( Cleanup.IsDeprecated( c.Name ) )
+					continue;
+
+				if ( last == c.CallbackId )
 					Write( "// " );
 
 				WriteLine( $"{{ CallbackType.{c.Name.Replace( "_t", "" ) }, typeof( {Cleanup.ConvertType(c.Name)} )}}," );
