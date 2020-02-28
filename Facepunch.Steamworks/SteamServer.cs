@@ -22,9 +22,6 @@ namespace Steamworks
 
 		public static bool IsValid => Internal != null && Internal.IsValid;
 
-
-		public static Action<Exception> OnCallbackException;
-
 		internal static void InstallEvents()
 		{
             Dispatch.Install<ValidateAuthTicketResponse_t>( x => OnValidateAuthTicketResponse?.Invoke( x.SteamID, x.OwnerSteamID, x.AuthSessionResponse ), true );

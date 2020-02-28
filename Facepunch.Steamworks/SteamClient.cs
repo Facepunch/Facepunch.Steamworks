@@ -89,10 +89,7 @@ namespace Steamworks
 			openInterfaces.Clear();
 		}
 
-		public static Action<Exception> OnCallbackException;
-
 		public static bool IsValid => initialized;
-
 
 		public static void Shutdown()
 		{
