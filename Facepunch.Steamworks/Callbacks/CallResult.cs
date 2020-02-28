@@ -35,7 +35,7 @@ namespace Steamworks
 		/// </summary>
 		public void OnCompleted( Action continuation )
 		{
-			Dispatch.OnCallComplete( call, continuation, server );
+			Dispatch.OnCallComplete<T>( call, continuation, server );
 		}
 
 		/// <summary>
@@ -55,9 +55,11 @@ namespace Steamworks
 			{
 				if ( !utils.GetAPICallResult( call, ptr, size, (int)t.CallbackType, ref failed ) || failed )
 				{
-					Console.WriteLine( $"Api Call result returned false or {failed}" );
+					Dispatch.OnDebugCallback?.Invoke( t.CallbackType, "!GetAPICallResult or failed", server );
 					return null;
 				}
+
+				Dispatch.OnDebugCallback?.Invoke( t.CallbackType, Dispatch.CallbackToString( t.CallbackType, ptr, size ), server );
 
 				return ((T)Marshal.PtrToStructure( ptr, typeof( T ) ));
 			}

@@ -130,16 +130,13 @@ namespace Steamworks
 		/// </summary>
 		private static void ProcessCallback( CallbackMsg_t msg, bool isServer )
 		{
+			OnDebugCallback?.Invoke( msg.Type, CallbackToString( msg.Type, msg.Data, msg.DataSize ), isServer );
+
 			// Is this a special callback telling us that the call result is ready?
 			if ( msg.Type == CallbackType.SteamAPICallCompleted )
 			{
 				ProcessResult( msg );
 				return;
-			}
-
-			if ( OnDebugCallback != null )
-			{
-				OnDebugCallback( msg.Type, CallbackToString( msg ), isServer );
 			}
 
 			if ( Callbacks.TryGetValue( msg.Type, out var list ) )
@@ -166,20 +163,30 @@ namespace Steamworks
 		/// <summary>
 		/// Given a callback, try to turn it into a string
 		/// </summary>
-		private static string CallbackToString( CallbackMsg_t msg )
+		internal static string CallbackToString( CallbackType type, IntPtr data, int expectedsize )
 		{
-			if ( !CallbackTypeFactory.All.TryGetValue( msg.Type, out var t ) )
-				return "[not in sdk]";
+			if ( !CallbackTypeFactory.All.TryGetValue( type, out var t ) )
+				return $"[{type} not in sdk]";
 
-			var strct = msg.Data.ToType( t );
+			var strct = data.ToType( t );
 			if ( strct == null )
 				return "[null]";
 
 			var str = "";
 
-			foreach ( var field in t.GetFields( System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic ) )
+			var fields = t.GetFields( System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic );
+
+			var columnSize = fields.Max( x => x.Name.Length ) + 1;
+
+			if ( columnSize < 10 )
+				columnSize = 10;
+
+			foreach ( var field in fields )
 			{
-				str += $"{field.Name}:  \"{field.GetValue( strct )}\"\n";
+				var spaces = (columnSize - field.Name.Length);
+				if ( spaces < 0 ) spaces = 0;
+
+				str += $"{new String( ' ', spaces )}{field.Name}: {field.GetValue( strct )}\n";
 			}
 
 			return str.Trim( '\n' );
@@ -197,7 +204,16 @@ namespace Steamworks
 			//
 			if ( !ResultCallbacks.TryGetValue( result.AsyncCall, out var callbackInfo ) )
 			{
-				// Do we care? Should we throw errors?
+				//
+				// This can happen if the callback result was immediately available
+				// so we just returned that without actually going through the callback
+				// dance. It's okay for this to fail.
+				//
+
+				//
+				// But still let everyone know that this happened..
+				//
+				OnDebugCallback?.Invoke( (CallbackType)result.Callback, $"[no callback waiting/required]", false );
 				return;
 			}
 
@@ -248,7 +264,7 @@ namespace Steamworks
 		/// <summary>
 		/// Watch for a steam api call
 		/// </summary>
-		internal static void OnCallComplete( SteamAPICall_t call, Action continuation, bool server )
+		internal static void OnCallComplete<T>( SteamAPICall_t call, Action continuation, bool server ) where T : struct, ICallbackData
 		{
 			ResultCallbacks[call.Value] = new ResultCallback
 			{
