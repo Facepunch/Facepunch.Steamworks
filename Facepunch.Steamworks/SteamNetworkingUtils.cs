@@ -233,6 +233,7 @@ namespace Steamworks
 		/// <summary>
 		/// This can be called from other threads - so we're going to queue these up and process them in a safe place.
 		/// </summary>
+		[MonoPInvokeCallback]
 		private static void OnDebugMessage( NetDebugOutput nType, IntPtr str )
 		{
 			debugMessages.Enqueue( new DebugMessage { Type = nType, Msg = Helpers.MemoryToString( str ) } );
