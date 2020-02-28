@@ -176,6 +176,9 @@ namespace Steamworks
 
 			var fields = t.GetFields( System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic );
 
+			if ( fields.Length == 0 )
+				return "[no fields]";
+
 			var columnSize = fields.Max( x => x.Name.Length ) + 1;
 
 			if ( columnSize < 10 )

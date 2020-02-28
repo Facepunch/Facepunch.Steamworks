@@ -106,10 +106,10 @@ namespace Generator
                     // 4/8 packing is irrevant to these classes
                     if ( Name.Contains( "MatchMakingKeyValuePair_t" ) ) return true;
 
-                    if ( Fields.Any( x => x.Type.Contains( "CSteamID" ) ) )
+                    if ( Fields.Skip( 1 ).Any( x => x.Type.Contains( "CSteamID" ) ) )
                         return true;
 
-                    if ( Fields.Any( x => x.Type.Contains( "CGameID" ) ) )
+                    if ( Fields.Skip( 1 ).Any( x => x.Type.Contains( "CGameID" ) ) )
                         return true;
 
                     return false;
