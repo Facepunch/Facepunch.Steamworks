@@ -38,5 +38,13 @@
 	  <Exec Command="Copy $(TargetDir)\Facepunch.Steamworks.Win64.* C:\plastic\RustMain\Assets\Plugins\Facepunch.Steamworks\" />
 	  <Exec Command="Copy $(TargetDir)\Facepunch.Steamworks.Posix.* C:\plastic\RustMain\Assets\Plugins\Facepunch.Steamworks\" />
 	</Target>
+  
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Computername)'=='GARRYSOFFICEPC'">
+    <Exec Command="Copy $(TargetDir)\Facepunch.Steamworks.Win64.* C:\Plastic\Rust\Assets\Plugins\Facepunch.Steamworks\" />
+    <Exec Command="Copy $(TargetDir)\Facepunch.Steamworks.Posix.* C:\Plastic\Rust\Assets\Plugins\Facepunch.Steamworks\" />
+  </Target>
+
+
+  
 
 </Project>
