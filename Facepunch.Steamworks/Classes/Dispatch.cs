@@ -65,29 +65,53 @@ namespace Steamworks
 			SteamAPI_ManualDispatch_Init();
 		}
 
+		/// <summary>
+		/// Make sure we don't call Frame in a callback - because that'll cause some issues for everyone.
+		/// </summary>
+		static bool runningFrame = false;
 
 		/// <summary>
 		/// Calls RunFrame and processes events from this Steam Pipe
 		/// </summary>
 		internal static void Frame( HSteamPipe pipe )
-		{ 
-			SteamAPI_ManualDispatch_RunFrame( pipe );
-			SteamNetworkingUtils.OutputDebugMessages();
+		{
+			if ( runningFrame )
+				return;
 
-			CallbackMsg_t msg = default;
-
-			while ( SteamAPI_ManualDispatch_GetNextCallback( pipe, ref msg ) )
+			try
 			{
-				try
+				runningFrame = true;
+
+				SteamAPI_ManualDispatch_RunFrame( pipe );
+				SteamNetworkingUtils.OutputDebugMessages();
+
+				CallbackMsg_t msg = default;
+
+				while ( SteamAPI_ManualDispatch_GetNextCallback( pipe, ref msg ) )
 				{
-					ProcessCallback( msg, pipe == ServerPipe );
-				}
-				finally
-				{
-					SteamAPI_ManualDispatch_FreeLastCallback( pipe );
+					try
+					{
+						ProcessCallback( msg, pipe == ServerPipe );
+					}
+					finally
+					{
+						SteamAPI_ManualDispatch_FreeLastCallback( pipe );
+					}
 				}
 			}
+			finally
+			{
+				runningFrame = false;
+			}
 		}
+
+		/// <summary>
+		/// To be safe we don't call the continuation functions while iterating
+		/// the Callback list. This is maybe overly safe because the only way this
+		/// could be an issue is if the callback list is modified in the continuation
+		/// which would only happen if starting or shutting down in the callback.
+		/// </summary>
+		static List<Action<IntPtr>> actionsToCall = new List<Action<IntPtr>>();
 
 		/// <summary>
 		/// A callback is a general global message
@@ -108,13 +132,22 @@ namespace Steamworks
 
 			if ( Callbacks.TryGetValue( msg.Type, out var list ) )
 			{
+				actionsToCall.Clear();
+
 				foreach ( var item in list )
 				{
 					if ( item.server != isServer )
 						continue;
 
-					item.action( msg.Data );
+					actionsToCall.Add( item.action );
 				}
+
+				foreach ( var action in actionsToCall )
+				{
+					action( msg.Data );
+				}
+
+				actionsToCall.Clear();
 			}
 		}
 
