@@ -22,7 +22,7 @@ namespace Steamworks
 				Console.WriteLine( $"" );
 			};
 
-			Steamworks.SteamClient.OnCallbackException = ( e ) =>
+			Steamworks.Dispatch.OnException = ( e ) =>
 			{
 				Console.Error.WriteLine( e.Message );
 				Console.Error.WriteLine( e.StackTrace );

@@ -103,7 +103,7 @@ namespace Steamworks
 		}
 
 		[TestMethod]
-		public async Task NetAddressTest()
+		public void NetAddressTest()
 		{
 			{
 				var n = NetAddress.From( "127.0.0.1", 12445 );

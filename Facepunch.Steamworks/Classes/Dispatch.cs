@@ -27,6 +27,14 @@ namespace Steamworks
 		/// </summary>
 		public static Action<CallbackType, string, bool> OnDebugCallback;
 
+		/// <summary>
+		/// Called if an exception happens during a callback/callresult.
+		/// This is needed because the exception isn't always accessible when running
+		/// async.. and can fail silently. With this hooked you won't be stuck wondering
+		/// what happened.
+		/// </summary>
+		public static Action<Exception> OnException;
+
 		#region interop
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ManualDispatch_Init", CallingConvention = CallingConvention.Cdecl )]
 		internal static extern void SteamAPI_ManualDispatch_Init();
@@ -98,6 +106,10 @@ namespace Steamworks
 						SteamAPI_ManualDispatch_FreeLastCallback( pipe );
 					}
 				}
+			}
+			catch ( System.Exception e )
+			{
+				OnException?.Invoke( e );
 			}
 			finally
 			{
