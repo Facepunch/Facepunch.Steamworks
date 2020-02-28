@@ -42,6 +42,12 @@
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Computername)'=='GARRYSOFFICEPC'">
     <Exec Command="Copy $(TargetDir)\Facepunch.Steamworks.Win64.* C:\Plastic\Rust\Assets\Plugins\Facepunch.Steamworks\" />
     <Exec Command="Copy $(TargetDir)\Facepunch.Steamworks.Posix.* C:\Plastic\Rust\Assets\Plugins\Facepunch.Steamworks\" />
+  </Target>  
+  
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Computername)'=='GARRYSOFFICEPC'">
+    <Exec Command="Copy $(TargetDir)\Facepunch.Steamworks.Win64.* C:\Git\Facepunch.Steamworks.UnityTest\Assets\Steamworks" />
+    <Exec Command="Copy $(TargetDir)\Facepunch.Steamworks.Win32.* C:\Git\Facepunch.Steamworks.UnityTest\Assets\Steamworks" />
+    <Exec Command="Copy $(TargetDir)\Facepunch.Steamworks.Posix.* C:\Git\Facepunch.Steamworks.UnityTest\Assets\Steamworks" />
   </Target>
 
 
