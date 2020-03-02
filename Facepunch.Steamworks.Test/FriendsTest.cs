@@ -121,7 +121,7 @@ namespace Steamworks
 			else
 				Console.WriteLine( "Overlay Is Not Enabled" );
 
-			SteamFriends.OpenWebOverlay( "https://www/google.com/" );
+			SteamFriends.OpenWebOverlay( "https://www.google.com/" );
 
 			await Task.Delay( 2000 );
 		}
