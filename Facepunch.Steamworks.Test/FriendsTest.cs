@@ -113,43 +113,20 @@ namespace Steamworks
 			}
 		}
 
-		/*
-        [TestMethod]
-        public void FriendListWithoutRefresh()
-        {
-            using ( var client = new Facepunch.Steamworks.Client( 252490 ) )
-            {
-                Assert.IsTrue( client.IsValid );
+		[TestMethod]
+		public async Task OpenWebOverlay()
+		{
+			if ( SteamUtils.IsOverlayEnabled )
+				Console.WriteLine( "Overlay Is Enabled" );
+			else
+				Console.WriteLine( "Overlay Is Not Enabled" );
 
-                foreach ( var friend in client.Friends.All )
-                {
-                    Console.WriteLine( "{0}: {1} (Friend:{2}) (Blocked:{3})", friend.Id, friend.Name, friend.IsFriend, friend.IsBlocked );
-                }
-            }
-        }
+			SteamFriends.OpenWebOverlay( "https://www/google.com/" );
+
+			await Task.Delay( 2000 );
+		}
 
 
-
-        [TestMethod]
-        public void CachedAvatar()
-        {
-            using (var client = new Facepunch.Steamworks.Client(252490))
-            {
-                Assert.IsTrue(client.IsValid);
-
-                var friend = client.Friends.All.First();
-
-                var image = client.Friends.GetCachedAvatar( Steamworks.Friends.AvatarSize.Medium, friend.Id );
-
-                if (image != null)
-                {
-                    Assert.AreEqual(image.Width, 64);
-                    Assert.AreEqual(image.Height, 64);
-                    Assert.AreEqual(image.Data.Length, image.Width * image.Height * 4);
-                }
-            }
-        }
-				*/
 		public static void DrawImage( Image img )
 		{
 			var grad = " -:+#";
