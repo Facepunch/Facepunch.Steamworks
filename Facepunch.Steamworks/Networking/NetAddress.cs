@@ -136,6 +136,11 @@ namespace Steamworks.Data
 					return Utility.Int32ToIp( ip );
 				}
 
+				if ( IsIPv6AllZeros )
+				{
+					return IPAddress.IPv6Loopback;
+				}
+
 				throw new System.NotImplementedException( "Oops - no IPV6 support yet?" );
 			}
 		}

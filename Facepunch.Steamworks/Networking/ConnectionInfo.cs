@@ -35,7 +35,7 @@ namespace Steamworks.Data
 		/// <summary>
 		/// Who is on the other end?  Depending on the connection type and phase of the connection, we might not know
 		/// </summary>
-		public NetIdentity Identity => address;
+		public NetIdentity Identity => identity;
 
 		/// <summary>
 		/// Basic cause of the connection termination or problem.
