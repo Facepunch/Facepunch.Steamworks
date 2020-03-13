@@ -28,6 +28,7 @@ namespace Steamworks
 			Dispatch.Install<SteamServersConnected_t>( x => OnSteamServersConnected?.Invoke(), true );
 			Dispatch.Install<SteamServerConnectFailure_t>( x => OnSteamServerConnectFailure?.Invoke( x.Result, x.StillRetrying ), true );
 			Dispatch.Install<SteamServersDisconnected_t>( x => OnSteamServersDisconnected?.Invoke( x.Result ), true );
+			Dispatch.Install<SteamNetAuthenticationStatus_t>(x => OnSteamNetAuthenticationStatus?.Invoke(x.Avail), true);
 		}
 
 		/// <summary>
@@ -50,6 +51,11 @@ namespace Steamworks
 		/// Disconnected from Steam
 		/// </summary>
 		public static event Action<Result> OnSteamServersDisconnected;
+
+		/// <summary>
+		/// Called when authentication status changes, useful for grabbing SteamId once aavailability is current
+		/// </summary>
+		public static event Action<SteamNetworkingAvailability> OnSteamNetAuthenticationStatus;
 
 
 		/// <summary>
@@ -268,6 +274,8 @@ namespace Steamworks
 			}
 		}
 		private static string _gametags = "";
+
+		public static SteamId SteamId => Internal.GetSteamID();
 
 		/// <summary>
 		/// Log onto Steam anonymously.
