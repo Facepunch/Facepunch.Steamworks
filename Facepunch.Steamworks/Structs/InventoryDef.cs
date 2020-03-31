@@ -98,7 +98,7 @@ namespace Steamworks
 			if ( _properties!= null && _properties.TryGetValue( name, out string val ) )
 				return val;
 
-			uint _ = (uint)Helpers.MaxStringSize;
+			uint _ = (uint)Helpers.MaxMemorySize;
 
 			if ( !SteamInventory.Internal.GetItemDefinitionProperty( Id, name, out var vl, ref _ ) )
 				return null;

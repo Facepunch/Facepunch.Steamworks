@@ -83,21 +83,18 @@ namespace Steamworks
 
 			var friend = new Friend( data.SteamIDUser );
 
-			var buffer = Helpers.TakeBuffer( 1024 * 32 );
+			var buffer = Helpers.TakeMemory();
 			var type = ChatEntryType.ChatMsg;
 
-			fixed ( byte* ptr = buffer )
-			{
-				var len = Internal.GetFriendMessage( data.SteamIDUser, data.MessageID, (IntPtr)ptr, buffer.Length, ref type );
+			var len = Internal.GetFriendMessage( data.SteamIDUser, data.MessageID, buffer, Helpers.MemoryBufferSize, ref type );
 
-				if ( len == 0 && type == ChatEntryType.Invalid )
-					return;
+			if ( len == 0 && type == ChatEntryType.Invalid )
+				return;
 
-				var typeName = type.ToString();
-				var message = Encoding.UTF8.GetString( buffer, 0, len );
+			var typeName = type.ToString();
+			var message = Helpers.MemoryToString( buffer );
 
-				OnChatMessage( friend, typeName, message );
-			}
+			OnChatMessage( friend, typeName, message );
 		}
 		
 		private static IEnumerable<Friend> GetFriendsWithFlag(FriendFlags flag)

@@ -149,7 +149,7 @@ namespace Steamworks.Data
 		{
 			var ptr = Helpers.TakeMemory();
 			var self = this;
-			InternalToString( ref self, ptr, Helpers.MaxStringSize, true );
+			InternalToString( ref self, ptr, Helpers.MemoryBufferSize, true );
 			return Helpers.MemoryToString( ptr );
 		}
 	}
