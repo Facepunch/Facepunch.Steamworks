@@ -25,13 +25,27 @@ namespace Steamworks
 
 		internal static void InstallEvents( bool server )
 		{
-			Dispatch.Install<DownloadItemResult_t>( x => OnDownloadItemResult?.Invoke( x.Result ), server );
+			Dispatch.Install<DownloadItemResult_t>( x => OnDownloadItemResult?.Invoke( new DownloadItemResult(x) ), server );
 		}
 
 		/// <summary>
 		/// Posted after Download call
 		/// </summary>
-		public static event Action<Result> OnDownloadItemResult;
+		public static event Action<DownloadItemResult> OnDownloadItemResult;
+
+		public struct DownloadItemResult
+		{
+			internal DownloadItemResult( DownloadItemResult_t result )
+			{
+				AppID = result.AppID;
+				PublishedFileId = result.PublishedFileId;
+				Result = result.Result;
+			}
+
+			public AppId AppID { get; }
+			public PublishedFileId PublishedFileId { get; }
+			public Result Result { get; }
+		}
 
 		public static async Task<bool> DeleteFileAsync( PublishedFileId fileId )
 		{
@@ -77,13 +91,16 @@ namespace Steamworks
 
 			// Wait for DownloadItemResult_t
 			{
-				Action<Result> onDownloadStarted = null;
+				var downloadStarted = false;
+
+				Action<DownloadItemResult> onDownloadStarted = r =>
+				{
+					if ( r.AppID == SteamClient.AppId && r.PublishedFileId == fileId )
+						downloadStarted = true;
+				};
 
 				try
 				{
-					var downloadStarted = false;
-					
-					onDownloadStarted = r => downloadStarted = true;
 					OnDownloadItemResult += onDownloadStarted;
 
 					while ( downloadStarted == false )
