@@ -25,13 +25,13 @@ namespace Steamworks
 
 		internal static void InstallEvents( bool server )
 		{
-			Dispatch.Install<DownloadItemResult_t>( x => OnDownloadItemResult?.Invoke( x ), server );
+			Dispatch.Install<DownloadItemResult_t>( x => OnDownloadItemResult?.Invoke( x.Result ), server );
 		}
 
 		/// <summary>
 		/// Posted after Download call
 		/// </summary>
-		public static event Action<DownloadItemResult_t> OnDownloadItemResult;
+		public static event Action<Result> OnDownloadItemResult;
 
 		public static async Task<bool> DeleteFileAsync( PublishedFileId fileId )
 		{
@@ -77,16 +77,13 @@ namespace Steamworks
 
 			// Wait for DownloadItemResult_t
 			{
-				var downloadStarted = false;
-
-				Action<DownloadItemResult_t> onDownloadStarted = r =>
-				{
-					if ( r.AppID == SteamClient.AppId && r.PublishedFileId == fileId )
-						downloadStarted = true;
-				};
+				Action<Result> onDownloadStarted = null;
 
 				try
 				{
+					var downloadStarted = false;
+					
+					onDownloadStarted = r => downloadStarted = true;
 					OnDownloadItemResult += onDownloadStarted;
 
 					while ( downloadStarted == false )
@@ -147,18 +144,18 @@ namespace Steamworks
 			return item;
 		}
 
-		public static async Task<bool> StartPlaytimeTracking( PublishedFileId fileId )
+		public static async Task<bool> StartPlaytimeTracking(PublishedFileId fileId)
 		{
 			var result = await Internal.StartPlaytimeTracking(new[] {fileId}, 1);
 			return result.Value.Result == Result.OK;
 		}
-
-		public static async Task<bool> StopPlaytimeTracking( PublishedFileId fileId )
+		
+		public static async Task<bool> StopPlaytimeTracking(PublishedFileId fileId)
 		{
 			var result = await Internal.StopPlaytimeTracking(new[] {fileId}, 1);
 			return result.Value.Result == Result.OK;
 		}
-
+		
 		public static async Task<bool> StopPlaytimeTrackingForAllItems()
 		{
 			var result = await Internal.StopPlaytimeTrackingForAllItems();
