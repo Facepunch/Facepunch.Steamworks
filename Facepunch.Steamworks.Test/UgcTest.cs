@@ -35,6 +35,7 @@ namespace Steamworks
 			Console.WriteLine( $"Description: {itemInfo?.Description}" );
 			Console.WriteLine( $"Owner: {itemInfo?.Owner}" );
 			Console.WriteLine( $"Score: {itemInfo?.Score}" );
+			Console.WriteLine( $"PreviewImageUrl: {itemInfo?.PreviewImageUrl}" );
 		}
 	}
 }

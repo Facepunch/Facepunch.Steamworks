@@ -439,17 +439,6 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_RequestUGCDetails", CallingConvention = Platform.CC)]
-		private static extern SteamAPICall_t _RequestUGCDetails( IntPtr self, PublishedFileId nPublishedFileID, uint unMaxAgeSeconds );
-		
-		#endregion
-		internal CallResult<SteamUGCRequestUGCDetailsResult_t> RequestUGCDetails( PublishedFileId nPublishedFileID, uint unMaxAgeSeconds )
-		{
-			var returnValue = _RequestUGCDetails( Self, nPublishedFileID, unMaxAgeSeconds );
-			return new CallResult<SteamUGCRequestUGCDetailsResult_t>( returnValue, IsServer );
-		}
-		
-		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUGC_CreateItem", CallingConvention = Platform.CC)]
 		private static extern SteamAPICall_t _CreateItem( IntPtr self, AppId nConsumerAppId, WorkshopFileType eFileType );
 		

@@ -166,6 +166,8 @@ public static class Cleanup
 				return true;
 		}
 
+		if ( name == "ISteamUGC.RequestUGCDetails" ) return true;
+
 		return false;
 	}	
 	

@@ -217,10 +217,15 @@ namespace Steamworks.Ugc
 
 		public static async Task<Item?> GetAsync( PublishedFileId id, int maxageseconds = 60 * 30 )
 		{
-			var result = await SteamUGC.Internal.RequestUGCDetails( id, (uint) maxageseconds );
-			if ( !result.HasValue ) return null;
+			var file = await Steamworks.Ugc.Query.All
+											.WithFileId( id )
+											.WithLongDescription( true )
+											.GetPageAsync( 1 );
 
-			return From( result.Value.Details );
+			if ( !file.HasValue ) return null;
+			if ( file.Value.ResultCount == 0 ) return null;
+
+			return file.Value.Entries.First();
 		}
 
 		internal static Item From( SteamUGCDetails_t details )
