@@ -1962,7 +1962,7 @@ namespace Steamworks.Data
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
-	internal struct DownloadItemResult_t : ICallbackData
+	public struct DownloadItemResult_t : ICallbackData
 	{
 		internal AppId AppID; // m_unAppID AppId_t
 		internal PublishedFileId PublishedFileId; // m_nPublishedFileId PublishedFileId_t
