@@ -9,8 +9,8 @@ namespace Steamworks
 	{
 		public const int MaxStringSize = 1024 * 32;
 
-		private static IntPtr[] MemoryPool;
-		private static int MemoryPoolIndex;
+		[ThreadStatic] private static IntPtr[] MemoryPool;
+		[ThreadStatic] private static int MemoryPoolIndex;
 
 		public static unsafe IntPtr TakeMemory()
 		{
@@ -38,8 +38,8 @@ namespace Steamworks
 		}
 
 
-		private static byte[][] BufferPool;
-		private static int BufferPoolIndex;
+		[ThreadStatic] private static byte[][] BufferPool;
+		[ThreadStatic] private static int BufferPoolIndex;
 
 		/// <summary>
 		/// Returns a buffer. This will get returned and reused later on.
@@ -49,9 +49,9 @@ namespace Steamworks
 			if ( BufferPool == null )
 			{
 				//
-				// The pool has 8 items.
+				// The pool has 4 items.
 				//
-				BufferPool = new byte[8][];
+				BufferPool = new byte[4][];
 
 				for ( int i = 0; i < BufferPool.Length; i++ )
 					BufferPool[i] = new byte[ 1024 * 128 ];
