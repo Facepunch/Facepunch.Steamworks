@@ -79,17 +79,17 @@ namespace Steamworks
 			if ( ct == default )
 				ct = new CancellationTokenSource( TimeSpan.FromSeconds( 60 ) ).Token;
 
-			progress?.Invoke( 0.0f );
+			progress?.Invoke( 0.05f );
 
-			if ( Download( fileId, true ) == false )
-				return item.IsInstalled;
+			//Sometimes Steam can finish downloading between Subscribe and DownloadAsync calls
+			if ( item.IsInstalled )
+				return true;
+
 
 			// Steam docs about Download:
 			// If the return value is true then register and wait
 			// for the Callback DownloadItemResult_t before calling 
 			// GetItemInstallInfo or accessing the workshop item on disk.
-
-			// Wait for DownloadItemResult_t
 			{
 				var downloadStarted = false;
 
@@ -99,11 +99,16 @@ namespace Steamworks
 						downloadStarted = true;
 				};
 
+
+
+				// Wait for DownloadItemResult_t
 				try
 				{
 					OnDownloadItemResult += onDownloadStarted;
+					if ( Download( fileId, true ) == false )
+						return item.IsInstalled;
 
-					while ( downloadStarted == false )
+					while ( downloadStarted == false && !item.IsInstalled)
 					{
 						if ( ct.IsCancellationRequested )
 							break;
