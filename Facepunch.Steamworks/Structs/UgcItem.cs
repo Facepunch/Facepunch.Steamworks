@@ -140,9 +140,6 @@ namespace Steamworks.Ugc
 		{
 			get
 			{
-				if ( !NeedsUpdate )
-					return SizeBytes;
-
 				ulong downloaded = 0;
 				ulong total = 0;
 				if ( SteamUGC.Internal.GetItemDownloadInfo( Id, ref downloaded, ref total ) )
@@ -159,9 +156,6 @@ namespace Steamworks.Ugc
 		{
 			get
 			{
-				if ( !NeedsUpdate )
-					return SizeBytes;
-
 				ulong downloaded = 0;
 				ulong total = 0;
 				if ( SteamUGC.Internal.GetItemDownloadInfo( Id, ref downloaded, ref total ) )
@@ -197,10 +191,6 @@ namespace Steamworks.Ugc
 		{
 			get
 			{
-				//changed from NeedsUpdate as it's false when validating and redownloading ugc
-				//possibly similar properties should also be changed
-				if ( !IsDownloading ) return 1;
-
 				ulong downloaded = 0;
 				ulong total = 0;
 				if ( SteamUGC.Internal.GetItemDownloadInfo( Id, ref downloaded, ref total ) && total > 0 )
@@ -213,7 +203,7 @@ namespace Steamworks.Ugc
 			}
 		}
 
-		private ItemState State => (ItemState) SteamUGC.Internal.GetItemState( Id );
+		internal ItemState State => (ItemState) SteamUGC.Internal.GetItemState( Id );
 
 		public static async Task<Item?> GetAsync( PublishedFileId id, int maxageseconds = 60 * 30 )
 		{
@@ -266,9 +256,9 @@ namespace Steamworks.Ugc
 		/// If CancellationToken is default then there is 60 seconds timeout
 		/// Progress will be set to 0-1
 		/// </summary>
-		public async Task<bool> DownloadAsync( Action<float> progress = null, int milisecondsUpdateDelay = 60, CancellationToken ct = default )
+		public async Task<bool> DownloadAsync( Action<float> progress = null, Action<string> onError = null, int milisecondsUpdateDelay = 60, CancellationToken ct = default, bool highPriority = true )
 		{
-			return await SteamUGC.DownloadAsync( Id, progress, milisecondsUpdateDelay, ct );
+			return await SteamUGC.DownloadAsync( Id, progress, onError, milisecondsUpdateDelay, ct, highPriority );
 		}
 
 		/// <summary>
