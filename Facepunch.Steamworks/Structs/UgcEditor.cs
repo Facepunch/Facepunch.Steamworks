@@ -97,6 +97,19 @@ namespace Steamworks.Ugc
 				consumerAppId = SteamClient.AppId;
 
 			//
+			// Checks
+			//
+			if ( ContentFolder != null )
+			{
+				if ( !System.IO.Directory.Exists( ContentFolder.FullName ) )
+					throw new System.Exception( $"UgcEditor - Content Folder doesn't exist ({ContentFolder.FullName})" );
+
+				if ( !ContentFolder.EnumerateFiles( "*", System.IO.SearchOption.AllDirectories ).Any() )
+					throw new System.Exception( $"UgcEditor - Content Folder is empty" );
+			}
+
+
+			//
 			// Item Create
 			//
 			if ( creatingNew )
