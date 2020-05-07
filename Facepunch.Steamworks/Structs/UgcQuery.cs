@@ -148,7 +148,7 @@ namespace Steamworks.Ugc
 				Handle = result.Value.Handle,
 				ResultCount = (int) result.Value.NumResultsReturned,
 				TotalCount = (int)result.Value.TotalMatchingResults,
-				CachedData = result.Value.CachedData
+				CachedData = result.Value.CachedData,
 				ReturnsKeyValueTags = WantsReturnKeyValueTags ?? false,
 			};
 		}
