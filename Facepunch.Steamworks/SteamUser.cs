@@ -261,6 +261,9 @@ namespace Steamworks
 			return (int)szWritten;
 		}
 
+		/// <summary>
+		/// Lazy version
+		/// </summary>
 		public static unsafe int DecompressVoice( byte[] from, System.IO.Stream output )
 		{
 			var to = Helpers.TakeBuffer( 1024 * 64 );
@@ -281,6 +284,22 @@ namespace Steamworks
 			// Copy to output buffer
 			//
 			output.Write( to, 0, (int)szWritten );
+			return (int)szWritten;
+		}
+
+		/// <summary>
+		/// Advanced and potentially fastest version - incase you know what you're doing
+		/// </summary>
+		public static unsafe int DecompressVoice( IntPtr from, int length, IntPtr to, int bufferSize )
+		{
+			if ( length <= 0 ) throw new ArgumentException( $"length should be > 0 " );
+			if ( bufferSize <= 0 ) throw new ArgumentException( $"bufferSize should be > 0 " );
+
+			uint szWritten = 0;
+
+			if ( Internal.DecompressVoice( from, (uint) length, to, (uint)bufferSize, ref szWritten, SampleRate ) != VoiceResult.OK )
+				return 0;
+			
 			return (int)szWritten;
 		}
 
