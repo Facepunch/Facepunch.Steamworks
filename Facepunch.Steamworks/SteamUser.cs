@@ -96,7 +96,8 @@ namespace Steamworks
 		public static event Action<AppId, ulong, bool> OnMicroTxnAuthorizationResponse;
 
 		/// <summary>
-		/// Sent to your game in response to a steam://gamewebcallback/ command from a user clicking a link in the Steam overlay browser.
+		/// Sent to your game in response to a steam://gamewebcallback/(appid)/command/stuff command from a user clicking a 
+		/// link in the Steam overlay browser.
 		/// You can use this to add support for external site signups where you want to pop back into the browser after some web page 
 		/// signup sequence, and optionally get back some detail about that.
 		/// </summary>
