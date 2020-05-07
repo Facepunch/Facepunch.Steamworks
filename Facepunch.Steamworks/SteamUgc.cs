@@ -82,6 +82,9 @@ namespace Steamworks
 		{
 			progress?.Invoke( 0.00f );
 
+			if ( ct == default )
+				ct = new CancellationTokenSource( TimeSpan.FromSeconds( 60 ) ).Token;
+
 			Ugc.Item? itemNullable = await Ugc.Item.GetAsync( fileId );
 
 			progress?.Invoke( 0.05f );
