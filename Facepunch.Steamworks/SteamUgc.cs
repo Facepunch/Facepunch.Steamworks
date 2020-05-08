@@ -145,7 +145,10 @@ namespace Steamworks
 
 				await Task.Delay( milisecondsUpdateDelay );
 				if ( downloadError != null )
+				{
 					onError?.Invoke( "Download item result error: " + downloadError.ToString() );
+					return false;
+				}
 
 				progress?.Invoke( 1.0f );
 				return true;
