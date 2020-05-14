@@ -69,8 +69,9 @@ namespace Steamworks.Ugc
 		public Editor WithPrivateVisibility() { Visibility = RemoteStoragePublishedFileVisibility.Private; return this; }
 
 		List<string> Tags;
-		Dictionary<string, string> KeyValueTags;
-		
+		Dictionary<string, List<string>> KeyValueTags;
+		HashSet<string> KeyValueTagsToRemove;
+
 		public Editor WithTag( string tag )
 		{
 			if ( Tags == null ) Tags = new List<string>();
@@ -80,10 +81,37 @@ namespace Steamworks.Ugc
 			return this;
 		}
 
+		/// <summary>
+		/// Adds a key-value tag pair to an item. 
+		/// Keys can map to multiple different values (1-to-many relationship). 
+		/// Key names are restricted to alpha-numeric characters and the '_' character. 
+		/// Both keys and values cannot exceed 255 characters in length. Key-value tags are searchable by exact match only.
+		/// To replace all values associated to one key use RemoveKeyValueTags then AddKeyValueTag.
+		/// </summary>
 		public Editor AddKeyValueTag(string key, string value)
 		{
-			if (KeyValueTags == null) KeyValueTags = new Dictionary<string, string>();
-			KeyValueTags.Add(key, value);
+			if (KeyValueTags == null) 
+				KeyValueTags = new Dictionary<string, List<string>>();
+
+			if ( KeyValueTags.TryGetValue( key, out var list ) )
+				list.Add( value );
+			else
+				KeyValueTags[key] = new List<string>() { value };
+
+			return this;
+		}
+
+		/// <summary>
+		/// Removes a key and all values associated to it. 
+		/// You can remove up to 100 keys per item update. 
+		/// If you need remove more tags than that you'll need to make subsequent item updates.
+		/// </summary>
+		public Editor RemoveKeyValueTags( string key )
+		{
+			if ( KeyValueTagsToRemove == null )
+				KeyValueTagsToRemove = new HashSet<string>();
+
+			KeyValueTagsToRemove.Add( key );
 			return this;
 		}
 
@@ -143,11 +171,19 @@ namespace Steamworks.Ugc
 					}
 				}
 
-				if (KeyValueTags != null && KeyValueTags.Count > 0)
+				if ( KeyValueTagsToRemove != null)
 				{
-					foreach (var keyValueTag in KeyValueTags)
+					foreach ( var key in KeyValueTagsToRemove )
+						SteamUGC.Internal.RemoveItemKeyValueTags( handle, key );
+				}
+
+				if ( KeyValueTags != null )
+				{
+					foreach ( var keyWithValues in KeyValueTags )
 					{
-						SteamUGC.Internal.AddItemKeyValueTag(handle, keyValueTag.Key, keyValueTag.Value);
+						var key = keyWithValues.Key;
+						foreach ( var value in keyWithValues.Value )
+							SteamUGC.Internal.AddItemKeyValueTag( handle, key, value );
 					}
 				}
 
