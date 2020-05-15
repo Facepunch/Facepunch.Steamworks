@@ -148,7 +148,8 @@ namespace Steamworks.Ugc
 				Handle = result.Value.Handle,
 				ResultCount = (int) result.Value.NumResultsReturned,
 				TotalCount = (int)result.Value.TotalMatchingResults,
-				CachedData = result.Value.CachedData
+				CachedData = result.Value.CachedData,
+				ReturnsKeyValueTags = WantsReturnKeyValueTags ?? false,
 			};
 		}
 
@@ -241,7 +242,9 @@ namespace Steamworks.Ugc
 	    bool? WantsReturnOnlyIDs;
 	    public QueryType WithOnlyIDs(bool b) { WantsReturnOnlyIDs = b; return this; }
 	    bool? WantsReturnKeyValueTags;
-	    public QueryType WithKeyValueTag(bool b) { WantsReturnKeyValueTags = b; return this; }
+		public QueryType WithKeyValueTags(bool b) { WantsReturnKeyValueTags = b; return this; }
+		[Obsolete( "Renamed to WithKeyValueTags" )]
+        public QueryType WithKeyValueTag(bool b) { WantsReturnKeyValueTags = b; return this; }
 	    bool? WantsReturnLongDescription;
 	    public QueryType WithLongDescription(bool b) { WantsReturnLongDescription = b; return this; }
 	    bool? WantsReturnMetadata;

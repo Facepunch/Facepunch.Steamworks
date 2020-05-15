@@ -12,6 +12,7 @@ namespace Steamworks.Ugc
 
 		public bool CachedData;
 
+		internal bool ReturnsKeyValueTags;
 		public IEnumerable<Item> Entries
 		{
 			get
@@ -43,9 +44,21 @@ namespace Steamworks.Ugc
 							item.PreviewImageUrl = preview;
 						}
 
+						if ( ReturnsKeyValueTags )
+						{
+							var keyValueTagsCount = SteamUGC.Internal.GetQueryUGCNumKeyValueTags( Handle, i );
+
+							item.KeyValueTags = new Dictionary<string, string>( (int)keyValueTagsCount );
+							for ( uint j = 0; j < keyValueTagsCount; j++ )
+							{
+								string key, value;
+								if ( SteamUGC.Internal.GetQueryUGCKeyValueTag( Handle, i, j, out key, out value ) )
+									item.KeyValueTags[key] = value;
+							}
+						}
+
 						// TODO GetQueryUGCAdditionalPreview
 						// TODO GetQueryUGCChildren
-						// TODO GetQueryUGCKeyValueTag
 						// TODO GetQueryUGCMetadata
 
 
