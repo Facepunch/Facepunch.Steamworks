@@ -71,7 +71,7 @@ foreach ( var friend in SteamFriends.GetFriends() )
     var image = await SteamFriends.GetLargeAvatarAsync( steamid );
     if ( !image.HasValue ) return DefaultImage;
 
-    return MakeTextureFromRGBA( image.Data, image.Width, image.Height );
+    return MakeTextureFromRGBA( image.Value.Data, image.Value.Width, image.Value.Height );
 ```
 
 ### Get a list of servers
