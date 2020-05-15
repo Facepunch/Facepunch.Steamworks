@@ -167,6 +167,9 @@ namespace Steamworks
 
 		/// <summary>
 		/// Creates a server that will be relayed via Valve's network (hiding the IP and improving ping)
+		/// 
+		/// To use this derive a class from SocketManager and override as much as you want.
+		/// 
 		/// </summary>
 		public static T CreateRelaySocket<T>( int virtualport = 0 ) where T : SocketManager, new()
 		{
@@ -174,6 +177,31 @@ namespace Steamworks
 			var options = Array.Empty<NetKeyValue>();
 			t.Socket = Internal.CreateListenSocketP2P( virtualport, options.Length, options );
 			t.Initialize();
+			SetSocketManager( t.Socket.Id, t );
+			return t;
+		}
+
+		/// <summary>
+		/// Creates a server that will be relayed via Valve's network (hiding the IP and improving ping)
+		/// 
+		/// To use this you should pass a class that inherits ISocketManager. You can use
+		/// SocketManager to get connections and send messages, but the ISocketManager class
+		/// will received all the appropriate callbacks.
+		/// 
+		/// </summary>
+		public static SocketManager CreateRelaySocket( int virtualport, ISocketManager intrface )
+		{
+			var options = Array.Empty<NetKeyValue>();
+			var socket = Internal.CreateListenSocketP2P( virtualport, options.Length, options );
+
+			var t = new SocketManager
+			{
+				Socket = socket,
+				Interface = intrface
+			};
+
+			t.Initialize();
+
 			SetSocketManager( t.Socket.Id, t );
 			return t;
 		}
