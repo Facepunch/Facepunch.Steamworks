@@ -150,6 +150,7 @@ namespace Steamworks.Ugc
 				TotalCount = (int)result.Value.TotalMatchingResults,
 				CachedData = result.Value.CachedData,
 				ReturnsKeyValueTags = WantsReturnKeyValueTags ?? false,
+				ReturnsDefaultStats = WantsDefaultStats ?? true, //true by default
 			};
 		}
 
@@ -302,5 +303,15 @@ namespace Steamworks.Ugc
 	    }
 
         #endregion
-    }
+
+		#region LoadingBehaviour
+
+		bool? WantsDefaultStats; //true by default
+		/// <summary>
+		/// Set to false to disable, by default following stats are loaded: NumSubscriptions, NumFavorites, NumFollowers, NumUniqueSubscriptions, NumUniqueFavorites, NumUniqueFollowers, NumUniqueWebsiteViews, ReportScore, NumSecondsPlayed, NumPlaytimeSessions, NumComments, NumSecondsPlayedDuringTimePeriod, NumPlaytimeSessionsDuringTimePeriod
+		/// </summary>
+		public QueryType WithDefaultStats( bool b ) { WantsDefaultStats = b; return this; }
+
+		#endregion
+	}
 }
