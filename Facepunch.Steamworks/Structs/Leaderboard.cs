@@ -66,7 +66,7 @@ namespace Steamworks.Data
 		{
 			if ( offset <= 0 ) throw new System.ArgumentException( "Should be 1+", nameof( offset ) );
 
-			var r = await SteamUserStats.Internal.DownloadLeaderboardEntries( Id, LeaderboardDataRequest.Global, offset, offset + count );
+			var r = await SteamUserStats.Internal.DownloadLeaderboardEntries( Id, LeaderboardDataRequest.Global, offset, offset + count - 1 );
 			if ( !r.HasValue )
 				return null;
 
