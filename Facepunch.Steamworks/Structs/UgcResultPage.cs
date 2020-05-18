@@ -13,6 +13,8 @@ namespace Steamworks.Ugc
 		public bool CachedData;
 
 		internal bool ReturnsKeyValueTags;
+		internal bool ReturnsDefaultStats;
+
 		public IEnumerable<Item> Entries
 		{
 			get
@@ -25,19 +27,23 @@ namespace Steamworks.Ugc
 					{
 						var item = Item.From( details );
 
-						item.NumSubscriptions = GetStat( i, ItemStatistic.NumSubscriptions );
-						item.NumFavorites = GetStat( i, ItemStatistic.NumFavorites );
-						item.NumFollowers = GetStat( i, ItemStatistic.NumFollowers );
-						item.NumUniqueSubscriptions = GetStat( i, ItemStatistic.NumUniqueSubscriptions );
-						item.NumUniqueFavorites = GetStat( i, ItemStatistic.NumUniqueFavorites );
-						item.NumUniqueFollowers = GetStat( i, ItemStatistic.NumUniqueFollowers );
-						item.NumUniqueWebsiteViews = GetStat( i, ItemStatistic.NumUniqueWebsiteViews );
-						item.ReportScore = GetStat( i, ItemStatistic.ReportScore );
-						item.NumSecondsPlayed = GetStat( i, ItemStatistic.NumSecondsPlayed );
-						item.NumPlaytimeSessions = GetStat( i, ItemStatistic.NumPlaytimeSessions );
-						item.NumComments = GetStat( i, ItemStatistic.NumComments );
-						item.NumSecondsPlayedDuringTimePeriod = GetStat( i, ItemStatistic.NumSecondsPlayedDuringTimePeriod );
-						item.NumPlaytimeSessionsDuringTimePeriod = GetStat( i, ItemStatistic.NumPlaytimeSessionsDuringTimePeriod );
+
+						if ( ReturnsDefaultStats )
+						{
+							item.NumSubscriptions = GetStat( i, ItemStatistic.NumSubscriptions );
+							item.NumFavorites = GetStat( i, ItemStatistic.NumFavorites );
+							item.NumFollowers = GetStat( i, ItemStatistic.NumFollowers );
+							item.NumUniqueSubscriptions = GetStat( i, ItemStatistic.NumUniqueSubscriptions );
+							item.NumUniqueFavorites = GetStat( i, ItemStatistic.NumUniqueFavorites );
+							item.NumUniqueFollowers = GetStat( i, ItemStatistic.NumUniqueFollowers );
+							item.NumUniqueWebsiteViews = GetStat( i, ItemStatistic.NumUniqueWebsiteViews );
+							item.ReportScore = GetStat( i, ItemStatistic.ReportScore );
+							item.NumSecondsPlayed = GetStat( i, ItemStatistic.NumSecondsPlayed );
+							item.NumPlaytimeSessions = GetStat( i, ItemStatistic.NumPlaytimeSessions );
+							item.NumComments = GetStat( i, ItemStatistic.NumComments );
+							item.NumSecondsPlayedDuringTimePeriod = GetStat( i, ItemStatistic.NumSecondsPlayedDuringTimePeriod );
+							item.NumPlaytimeSessionsDuringTimePeriod = GetStat( i, ItemStatistic.NumPlaytimeSessionsDuringTimePeriod );
+						}
 
 						if ( SteamUGC.Internal.GetQueryUGCPreviewURL( Handle, i, out string preview ) )
 						{
