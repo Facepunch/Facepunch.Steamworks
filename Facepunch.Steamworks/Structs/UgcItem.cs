@@ -230,7 +230,10 @@ namespace Steamworks.Ugc
 			if ( !file.HasValue ) return null;
 			if ( file.Value.ResultCount == 0 ) return null;
 
-			return file.Value.Entries.First();
+			var item = file.Value.Entries.First();
+			file.Value.Dispose();
+			return item;
+		}
 		}
 
 		internal static Item From( SteamUGCDetails_t details )
