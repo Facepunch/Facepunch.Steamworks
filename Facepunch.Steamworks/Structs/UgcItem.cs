@@ -234,7 +234,6 @@ namespace Steamworks.Ugc
 			file.Value.Dispose();
 			return item;
 		}
-		}
 
 		internal static Item From( SteamUGCDetails_t details )
 		{
