@@ -228,9 +228,12 @@ namespace Steamworks.Ugc
 											.GetPageAsync( 1 );
 
 			if ( !file.HasValue ) return null;
-			if ( file.Value.ResultCount == 0 ) return null;
+			using ( file.Value )
+			{
+				if ( file.Value.ResultCount == 0 ) return null;
 
-			return file.Value.Entries.First();
+				return file.Value.Entries.First();
+			}
 		}
 
 		internal static Item From( SteamUGCDetails_t details )
