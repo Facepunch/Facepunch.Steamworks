@@ -14,6 +14,9 @@ namespace Steamworks.Ugc
 		internal SteamUGCDetails_t details;
 		internal PublishedFileId _id;
 
+		static HashSet<PublishedFileId> userFavoriteItems;
+		static Task favoriteItemsQuery;
+
 		public Item( PublishedFileId id ) : this()
 		{
 			_id = id;
@@ -236,6 +239,56 @@ namespace Steamworks.Ugc
 			}
 		}
 
+		/// <summary>
+		/// Queries all favorite items (of current user) looking for this one.
+		/// </summary>
+		public async Task<bool> IsFavoriteAsync()
+		{
+			if ( favoriteItemsQuery != null )
+				await favoriteItemsQuery;
+
+			if ( userFavoriteItems == null )
+			{
+				favoriteItemsQuery = SaveFavoriteItems();
+				await favoriteItemsQuery;
+				favoriteItemsQuery = null;
+			}
+
+			return userFavoriteItems.Contains( Id );
+		}
+
+		async Task SaveFavoriteItems()
+		{
+			userFavoriteItems = new HashSet<PublishedFileId>();
+
+			var query = Steamworks.Ugc.Query.All
+											.WhereUserFavorited( SteamClient.SteamId )
+											.WithOnlyIDs( true )
+											.WithDefaultStats( false );
+
+			var cancelation = new CancellationTokenSource( TimeSpan.FromMinutes(1) );
+			int pageId = 1;
+
+			while ( !cancelation.IsCancellationRequested )
+			{
+				var page = await query.GetPageAsync( pageId );
+
+				if ( !page.HasValue )
+					break;
+
+				using ( var pageValue = page.Value )
+				{
+					if ( pageValue.ResultCount == 0 )
+						break;
+
+					foreach ( var item in pageValue.Entries )
+						userFavoriteItems.Add( item.Id );
+				}
+
+				pageId++;
+			}
+		}
+
 		internal static Item From( SteamUGCDetails_t details )
 		{
 			var d = new Item
@@ -288,28 +341,45 @@ namespace Steamworks.Ugc
             return result?.Result == Result.OK;
         }
 
-        /// <summary>
-        /// Adds item to user favorite list
-        /// </summary>
-	    public async Task<bool> AddFavorite()
-	    {
-	        var result = await SteamUGC.Internal.AddItemToFavorites(details.ConsumerAppID, _id);
-	        return result?.Result == Result.OK;
-	    }
+		/// <summary>
+		/// Adds item to user favorite list
+		/// </summary>
+		public async Task<bool> AddFavorite()
+		{
+			if ( favoriteItemsQuery != null )
+				await favoriteItemsQuery;
 
-	    /// <summary>
-	    /// Removes item from user favorite list
-	    /// </summary>
-        public async Task<bool> RemoveFavorite()
-	    {
-	        var result = await SteamUGC.Internal.RemoveItemFromFavorites(details.ConsumerAppID, _id);
-	        return result?.Result == Result.OK;
-	    }
+			var result = await SteamUGC.Internal.AddItemToFavorites(details.ConsumerAppID, _id);
+			bool added = result?.Result == Result.OK;
 
-        /// <summary>
-        /// Allows the user to rate a workshop item up or down.
-        /// </summary>
-        public async Task<Result?> Vote( bool up )
+			if ( added && userFavoriteItems != null )
+				userFavoriteItems.Add( Id );
+
+			return added;
+		}
+
+		/// <summary>
+		/// Removes item from user favorite list
+		/// </summary>
+		public async Task<bool> RemoveFavorite()
+		{
+			if ( favoriteItemsQuery != null )
+				await favoriteItemsQuery;
+
+			var result = await SteamUGC.Internal.RemoveItemFromFavorites(details.ConsumerAppID, _id);
+
+			bool removed = result?.Result == Result.OK;
+
+			if ( removed && userFavoriteItems != null )
+				userFavoriteItems.Remove( Id );
+
+			return removed;
+		}
+
+		/// <summary>
+		/// Allows the user to rate a workshop item up or down.
+		/// </summary>
+		public async Task<Result?> Vote( bool up )
 		{
 			var r = await SteamUGC.Internal.SetUserItemVote( Id, up );
 			return r?.Result;
