@@ -365,10 +365,15 @@ namespace Steamworks.Ugc
 		public ulong NumSecondsPlayedDuringTimePeriod { get; internal set; }
 		public ulong NumPlaytimeSessionsDuringTimePeriod { get; internal set; }
 
-        /// <summary>
-        /// The URL to the preview image for this item
-        /// </summary>
-        public string PreviewImageUrl { get; internal set; }
+		/// <summary>
+		/// The URL to the preview image for this item
+		/// </summary>
+		public string PreviewImageUrl { get; internal set; }
+
+		/// <summary>
+		/// The metadata string for this item
+		/// </summary>
+		public string Metadata { get; internal set; }
 
 		/// <summary>
 		/// Edit this item

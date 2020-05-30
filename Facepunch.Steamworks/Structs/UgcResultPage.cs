@@ -14,6 +14,7 @@ namespace Steamworks.Ugc
 
 		internal bool ReturnsKeyValueTags;
 		internal bool ReturnsDefaultStats;
+		internal bool ReturnsMetadata;
 
 		public IEnumerable<Item> Entries
 		{
@@ -63,10 +64,17 @@ namespace Steamworks.Ugc
 							}
 						}
 
+						if (ReturnsMetadata)
+						{
+							string metadata;
+							if (SteamUGC.Internal.GetQueryUGCMetadata(Handle, i, out metadata))
+							{
+								item.Metadata = metadata;
+							}
+						}
+
 						// TODO GetQueryUGCAdditionalPreview
 						// TODO GetQueryUGCChildren
-						// TODO GetQueryUGCMetadata
-
 
 						yield return item;
 					}

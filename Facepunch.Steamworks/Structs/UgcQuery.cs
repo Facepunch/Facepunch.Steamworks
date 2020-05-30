@@ -151,6 +151,7 @@ namespace Steamworks.Ugc
 				CachedData = result.Value.CachedData,
 				ReturnsKeyValueTags = WantsReturnKeyValueTags ?? false,
 				ReturnsDefaultStats = WantsDefaultStats ?? true, //true by default
+				ReturnsMetadata = WantsReturnMetadata ?? false,
 			};
 		}
 
