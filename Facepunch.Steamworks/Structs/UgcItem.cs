@@ -371,7 +371,7 @@ namespace Steamworks.Ugc
 		public string PreviewImageUrl { get; internal set; }
 
 		/// <summary>
-		/// The metadata string for this item
+		/// The metadata string for this item, only available from queries WithMetadata(true)
 		/// </summary>
 		public string Metadata { get; internal set; }
 
