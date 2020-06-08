@@ -382,7 +382,19 @@ namespace Steamworks.Ugc
 		{
 			return new Ugc.Editor( Id );
 		}
-		
+
+		public async Task<bool> AddDependency( PublishedFileId child )
+		{
+			var r = await SteamUGC.Internal.AddDependency( Id, child );
+			return r?.Result == Result.OK;
+		}
+
+		public async Task<bool> RemoveDependency( PublishedFileId child )
+		{
+			var r = await SteamUGC.Internal.RemoveDependency( Id, child );
+			return r?.Result == Result.OK;
+		}
+
 		public Result Result => details.Result;
 	}
 }
