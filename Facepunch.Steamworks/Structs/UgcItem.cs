@@ -266,26 +266,26 @@ namespace Steamworks.Ugc
 											.WithOnlyIDs( true )
 											.WithDefaultStats( false );
 
-			var cancelation = new CancellationTokenSource( TimeSpan.FromMinutes(1) );
-			int pageId = 1;
-
-			while ( !cancelation.IsCancellationRequested )
+			using ( var cancelation = new CancellationTokenSource( TimeSpan.FromMinutes( 1 ) ) )
 			{
-				var page = await query.GetPageAsync( pageId );
+				int pageId = 1;
 
-				if ( !page.HasValue )
-					break;
-
-				using ( var pageValue = page.Value )
+				while ( !cancelation.IsCancellationRequested )
 				{
-					if ( pageValue.ResultCount == 0 )
-						break;
+					using ( var page = await query.GetPageAsync( pageId ) )
+					{
+						if ( !page.HasValue )
+							break;
 
-					foreach ( var item in pageValue.Entries )
-						userFavoriteItems.Add( item.Id );
+						if ( page.Value.ResultCount == 0 )
+							break;
+
+						foreach ( var item in page.Value.Entries )
+							userFavoriteItems.Add( item.Id );
+
+						pageId++;
+					}
 				}
-
-				pageId++;
 			}
 		}
 
