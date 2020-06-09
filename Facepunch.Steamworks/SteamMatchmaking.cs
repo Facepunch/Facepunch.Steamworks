@@ -155,9 +155,9 @@ namespace Steamworks
 			return new Lobby { Id = lobby.Value.SteamIDLobby };
 		}
 
-		/// <summmary>
+		/// <summary>
 		/// Attempts to directly join the specified lobby
-		/// </summmary>
+		/// </summary>
 		public static async Task<Lobby?> JoinLobbyAsync( SteamId lobbyId )
 		{
 			var lobby = await Internal.JoinLobby( lobbyId );
