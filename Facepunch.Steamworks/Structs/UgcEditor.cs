@@ -34,6 +34,12 @@ namespace Steamworks.Ugc
 		public static Editor NewCommunityFile => new Editor( WorkshopFileType.Community );
 
 		/// <summary>
+		/// Create a Collection
+		/// Add items using Item.AddDependency()
+		/// </summary>
+		public static Editor NewCollection => new Editor( WorkshopFileType.Collection );
+
+		/// <summary>
 		/// Workshop item that is meant to be voted on for the purpose of selling in-game
 		/// </summary>
 		public static Editor NewMicrotransactionFile => new Editor( WorkshopFileType.Microtransaction );
