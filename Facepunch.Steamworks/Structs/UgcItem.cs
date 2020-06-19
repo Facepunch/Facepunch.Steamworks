@@ -108,6 +108,10 @@ namespace Steamworks.Ugc
         /// The number of downvotes of this item
         /// </summary>
         public uint VotesDown => details.VotesDown;
+		/// <summary>
+		/// Dependencies/children of this item or collection, available only from WithDependencies(true) queries
+		/// </summary>
+		public PublishedFileId[] Children;
 
         public bool IsInstalled => (State & ItemState.Installed) == ItemState.Installed;
 		public bool IsDownloading => (State & ItemState.Downloading) == ItemState.Downloading;

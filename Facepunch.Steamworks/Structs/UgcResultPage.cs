@@ -15,6 +15,7 @@ namespace Steamworks.Ugc
 		internal bool ReturnsKeyValueTags;
 		internal bool ReturnsDefaultStats;
 		internal bool ReturnsMetadata;
+		internal bool ReturnsChildren;
 
 		public IEnumerable<Item> Entries
 		{
@@ -73,8 +74,16 @@ namespace Steamworks.Ugc
 							}
 						}
 
+						uint numChildren = item.details.NumChildren;
+						if ( ReturnsChildren && numChildren > 0 )
+						{
+							var children = new PublishedFileId[numChildren];
+							if ( SteamUGC.Internal.GetQueryUGCChildren( Handle, i, children, numChildren ) )
+							{
+								item.Children = children;
+							}
+						}
 						// TODO GetQueryUGCAdditionalPreview
-						// TODO GetQueryUGCChildren
 
 						yield return item;
 					}
