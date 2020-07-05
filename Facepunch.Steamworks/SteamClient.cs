@@ -89,6 +89,9 @@ namespace Steamworks
 			openInterfaces.Clear();
 		}
 
+		/// <summary>
+		/// Check if Steam is loaded and accessible.
+		/// </summary>		
 		public static bool IsValid => initialized;
 
 		public static void Shutdown()
