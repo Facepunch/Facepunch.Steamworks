@@ -35,7 +35,10 @@ namespace Steamworks
 		/// </summary>
 		public void OnCompleted( Action continuation )
 		{
-			Dispatch.OnCallComplete<T>( call, continuation, server );
+			if (IsCompleted)
+				continuation();
+			else
+				Dispatch.OnCallComplete<T>(call, continuation, server);
 		}
 
 		/// <summary>
