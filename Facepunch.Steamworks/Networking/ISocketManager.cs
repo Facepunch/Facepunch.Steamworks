@@ -16,7 +16,7 @@ namespace Steamworks
 		void OnConnected( Connection connection, ConnectionInfo info );			
 			
 		/// <summary>
-		/// Called when the connection leaves
+		/// Called when the connection leaves. Must call Close on the connection
 		/// </summary>
 		void OnDisconnected( Connection connection, ConnectionInfo info );
 

@@ -50,6 +50,7 @@ namespace Steamworks
 					if ( !Connecting.Contains( connection ) )
 					{
 						Connecting.Add( connection );
+
 						OnConnecting( connection, info );
 					}
 					break;
@@ -67,6 +68,9 @@ namespace Steamworks
 				case ConnectionState.None:
 					if ( Connecting.Contains( connection ) || Connected.Contains( connection ) )
 					{
+						Connecting.Remove( connection );
+						Connected.Remove( connection );
+
 						OnDisconnected( connection, info );
 					}
 					break;
@@ -81,7 +85,6 @@ namespace Steamworks
 			if ( Interface != null )
 			{
 				Interface.OnConnecting( connection, info );
-				return;
 			}
 			else
 			{
@@ -106,12 +109,14 @@ namespace Steamworks
 		{
 			SteamNetworkingSockets.Internal.SetConnectionPollGroup( connection, 0 );
 
-			connection.Close();
-
-			Connecting.Remove( connection );
-			Connected.Remove( connection );
-
-			Interface?.OnDisconnected( connection, info );
+			if ( Interface != null )
+			{
+				Interface.OnDisconnected( connection, info );
+			}
+			else
+			{
+				connection.Close();
+			}
 		}
 
 		public void Receive( int bufferSize = 32 )
