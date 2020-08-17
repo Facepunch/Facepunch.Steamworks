@@ -36,7 +36,10 @@ namespace Steamworks
 			set => Connection.UserData = value;
 		}
 
-		public void Close() => Connection.Close();
+		public void Close( bool linger = false, int reasonCode = 0, string debugString = "Closing Connection" )
+		{
+			Connection.Close( linger, reasonCode, debugString );
+		}
 
 		public override string ToString() => Connection.ToString();
 
