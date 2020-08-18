@@ -16,8 +16,6 @@ namespace Steamworks
 	{
 		public ISocketManager Interface { get; set; }
 
-		public List<Connection> Connecting = new List<Connection>();
-		public List<Connection> Connected = new List<Connection>();
 		public Socket Socket { get; internal set; }
 
 		public override string ToString() => Socket.ToString();
@@ -49,31 +47,14 @@ namespace Steamworks
 				case ConnectionState.None:
 					break;
 				case ConnectionState.Connecting:
-					if ( !Connecting.Contains( connection ) )
-					{
-						Connecting.Add( connection );
-
-						OnConnecting( connection, info );
-					}
+					OnConnecting( connection, info );
 					break;
 				case ConnectionState.Connected:
-					if ( !Connected.Contains( connection ) )
-					{
-						Connecting.Remove( connection );
-						Connected.Add( connection );
-
-						OnConnected( connection, info );
-					}
+					OnConnected( connection, info );
 					break;
 				case ConnectionState.ClosedByPeer:
 				case ConnectionState.ProblemDetectedLocally:
-					if ( Connecting.Contains( connection ) || Connected.Contains( connection ) )
-					{
-						Connecting.Remove( connection );
-						Connected.Remove( connection );
-
-						OnDisconnected( connection, info );
-					}
+					OnDisconnected( connection, info );
 					break;
 			}
 		}
