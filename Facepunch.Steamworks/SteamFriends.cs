@@ -34,6 +34,7 @@ namespace Steamworks
 			Dispatch.Install<GameServerChangeRequested_t>( x => OnGameServerChangeRequested?.Invoke( x.ServerUTF8(), x.PasswordUTF8() ) );
 			Dispatch.Install<GameLobbyJoinRequested_t>( x => OnGameLobbyJoinRequested?.Invoke( new Lobby( x.SteamIDLobby ), x.SteamIDFriend ) );
 			Dispatch.Install<FriendRichPresenceUpdate_t>( x => OnFriendRichPresenceUpdate?.Invoke( new Friend( x.SteamIDFriend ) ) );
+			Dispatch.Install<OverlayBrowserProtocolNavigation_t>( x => OnOverlayBrowserProtocol?.Invoke( x.RgchURIUTF8() ) );
 		}
 
 		/// <summary>
@@ -76,6 +77,13 @@ namespace Steamworks
 		/// Callback indicating updated data about friends rich presence information
 		/// </summary>
 		public static event Action<Friend> OnFriendRichPresenceUpdate;
+
+		/// <summary>
+		/// Dispatched when an overlay browser instance is navigated to a
+		/// protocol/scheme registered by RegisterProtocolInOverlayBrowser()
+		/// </summary>
+		public static event Action<string> OnOverlayBrowserProtocol;
+
 
 		static unsafe void OnFriendChatMessage( GameConnectedFriendChatMsg_t data )
 		{
