@@ -89,8 +89,6 @@ namespace Steamworks
 		/// </summary>
 		public virtual void OnDisconnected( Connection connection, ConnectionInfo info )
 		{
-			SteamNetworkingSockets.Internal.SetConnectionPollGroup( connection, 0 );
-
 			if ( Interface != null )
 			{
 				Interface.OnDisconnected( connection, info );
