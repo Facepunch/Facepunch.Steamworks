@@ -496,5 +496,20 @@ namespace Steamworks
 			return returnValue;
 		}
 		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamInventory_InspectItem", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _InspectItem( IntPtr self, ref SteamInventoryResult_t pResultHandle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchItemToken );
+		
+		#endregion
+		/// <summary>
+		/// Look up the given token and return a pseudo-Inventory item.
+		/// </summary>
+		internal bool InspectItem( ref SteamInventoryResult_t pResultHandle, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchItemToken )
+		{
+			var returnValue = _InspectItem( Self, ref pResultHandle, pchItemToken );
+			return returnValue;
+		}
+		
 	}
 }

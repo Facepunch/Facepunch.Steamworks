@@ -348,5 +348,17 @@ namespace Steamworks
 			return returnValue;
 		}
 		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamApps_BIsTimedTrial", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _BIsTimedTrial( IntPtr self, ref uint punSecondsAllowed, ref uint punSecondsPlayed );
+		
+		#endregion
+		internal bool BIsTimedTrial( ref uint punSecondsAllowed, ref uint punSecondsPlayed )
+		{
+			var returnValue = _BIsTimedTrial( Self, ref punSecondsAllowed, ref punSecondsPlayed );
+			return returnValue;
+		}
+		
 	}
 }

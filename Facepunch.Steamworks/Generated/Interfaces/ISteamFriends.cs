@@ -840,5 +840,17 @@ namespace Steamworks
 			_ActivateGameOverlayRemotePlayTogetherInviteDialog( Self, steamIDLobby );
 		}
 		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamFriends_RegisterProtocolInOverlayBrowser", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _RegisterProtocolInOverlayBrowser( IntPtr self, [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchProtocol );
+		
+		#endregion
+		internal bool RegisterProtocolInOverlayBrowser( [MarshalAs( UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof( Utf8StringToNative ) )] string pchProtocol )
+		{
+			var returnValue = _RegisterProtocolInOverlayBrowser( Self, pchProtocol );
+			return returnValue;
+		}
+		
 	}
 }

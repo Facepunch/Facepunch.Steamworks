@@ -148,6 +148,7 @@ namespace Steamworks
 		CantRemoveItem = 113,
 		AccountDeleted = 114,
 		ExistingUserCancelledLicense = 115,
+		CommunityCooldown = 116,
 	}
 	
 	//
@@ -288,6 +289,7 @@ namespace Steamworks
 		SiteLicense = 262144,
 		LegacyFreeSub = 524288,
 		InvalidOSType = 1048576,
+		TimedTrial = 2097152,
 	}
 	
 	//
@@ -549,6 +551,17 @@ namespace Steamworks
 		ExitSoon_3h = 5,
 		ExitSoon_5h = 6,
 		ExitSoon_Night = 7,
+	}
+	
+	//
+	// EDurationControlOnlineState
+	//
+	internal enum DurationControlOnlineState : int
+	{
+		Invalid = 0,
+		Offline = 1,
+		Online = 2,
+		OnlineHighPri = 3,
 	}
 	
 	//
@@ -1083,6 +1096,7 @@ namespace Steamworks
 		Code417ExpectationFailed = 417,
 		Code4xxUnknown = 418,
 		Code429TooManyRequests = 429,
+		Code444ConnectionClosed = 444,
 		Code500InternalServerError = 500,
 		Code501NotImplemented = 501,
 		Code502BadGateway = 502,
@@ -1870,17 +1884,6 @@ namespace Steamworks
 	}
 	
 	//
-	// ESteamTVRegionBehavior
-	//
-	internal enum SteamTVRegionBehavior : int
-	{
-		Invalid = -1,
-		Hover = 0,
-		ClickPopup = 1,
-		ClickSurroundingRegion = 2,
-	}
-	
-	//
 	// EParentalFeature
 	//
 	public enum ParentalFeature : int
@@ -1980,6 +1983,7 @@ namespace Steamworks
 		Local_HostedServerPrimaryRelay = 3003,
 		Local_NetworkConfig = 3004,
 		Local_Rights = 3005,
+		Local_P2P_ICE_NoPublicAddresses = 3006,
 		Local_Max = 3999,
 		Remote_Min = 4000,
 		Remote_Timeout = 4001,
@@ -1988,6 +1992,7 @@ namespace Steamworks
 		Remote_NotLoggedIn = 4004,
 		Remote_NotRunningApp = 4005,
 		Remote_BadProtocolVersion = 4006,
+		Remote_P2P_ICE_NoPublicAddresses = 4007,
 		Remote_Max = 4999,
 		Misc_Min = 5000,
 		Misc_Generic = 5001,
@@ -1996,7 +2001,24 @@ namespace Steamworks
 		Misc_RelayConnectivity = 5004,
 		Misc_SteamConnectivity = 5005,
 		Misc_NoRelaySessionsToClient = 5006,
+		Misc_P2P_Rendezvous = 5008,
+		Misc_P2P_NAT_Firewall = 5009,
 		Misc_Max = 5999,
+	}
+	
+	//
+	// ESteamNetTransportKind
+	//
+	internal enum SteamNetTransportKind : int
+	{
+		Unknown = 0,
+		LoopbackBuffers = 1,
+		LocalHost = 2,
+		UDP = 3,
+		UDPProbablyLocal = 4,
+		TURN = 5,
+		SDRP2P = 6,
+		SDRHostedServer = 7,
 	}
 	
 	//
@@ -2049,6 +2071,10 @@ namespace Steamworks
 		MTU_DataSize = 33,
 		Unencrypted = 34,
 		EnumerateDevVars = 35,
+		P2P_STUN_ServerList = 103,
+		P2P_Transport_ICE_Enable = 104,
+		P2P_Transport_ICE_Penalty = 105,
+		P2P_Transport_SDR_Penalty = 106,
 		SDRClient_ConsecutitivePingTimeoutsFailInitial = 19,
 		SDRClient_ConsecutitivePingTimeoutsFail = 20,
 		SDRClient_MinPingsBeforePingAccurate = 21,

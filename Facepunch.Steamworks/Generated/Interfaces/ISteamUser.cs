@@ -15,9 +15,9 @@ namespace Steamworks
 			SetupInterface( IsGameServer );
 		}
 		
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamUser_v020", CallingConvention = Platform.CC)]
-		internal static extern IntPtr SteamAPI_SteamUser_v020();
-		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamUser_v020();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamUser_v021", CallingConvention = Platform.CC)]
+		internal static extern IntPtr SteamAPI_SteamUser_v021();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamUser_v021();
 		
 		
 		#region FunctionMeta
@@ -362,6 +362,18 @@ namespace Steamworks
 		{
 			var returnValue = _GetDurationControl( Self );
 			return new CallResult<DurationControl_t>( returnValue, IsServer );
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamUser_BSetDurationControlOnlineState", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _BSetDurationControlOnlineState( IntPtr self, DurationControlOnlineState eNewState );
+		
+		#endregion
+		internal bool BSetDurationControlOnlineState( DurationControlOnlineState eNewState )
+		{
+			var returnValue = _BSetDurationControlOnlineState( Self, eNewState );
+			return returnValue;
 		}
 		
 	}
