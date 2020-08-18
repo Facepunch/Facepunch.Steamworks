@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Steamworks.Data;
@@ -12,6 +13,8 @@ namespace Steamworks
 		private class TestSocketInterface : SocketManager
 		{
 			public bool HasFinished = false;
+
+			public List<Connection> Connected = new List<Connection>();
 
 			public override void OnConnectionChanged( Connection connection, ConnectionInfo data )
 			{
@@ -31,6 +34,8 @@ namespace Steamworks
 			/// </summary>
 			public override void OnConnected( Connection connection, ConnectionInfo data )
 			{
+				Connected.Add( connection );
+
 				Console.WriteLine( $"" );
 				Console.WriteLine( $"Socket -> OnConnected:" );
 				Console.WriteLine( $"	data.Address:	{data.Address}" );
@@ -52,7 +57,10 @@ namespace Steamworks
 			/// </summary>
 			public override void OnDisconnected( Connection connection, ConnectionInfo data )
 			{
+				Connected.Remove( connection );
+
 				Console.WriteLine( $" - OnDisconnected" );
+
 				base.OnDisconnected( connection, data );
 			}
 
