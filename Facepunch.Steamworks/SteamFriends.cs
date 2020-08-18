@@ -350,5 +350,15 @@ namespace Steamworks
 
             return steamIds.ToArray();
         }
-    }
+
+		/// <summary>
+		/// Call this before calling ActivateGameOverlayToWebPage() to have the Steam Overlay Browser block navigations
+		///  to your specified protocol (scheme) uris and instead dispatch a OverlayBrowserProtocolNavigation callback to your game.
+		/// </summary>
+		public static bool RegisterProtocolInOverlayBrowser( string protocol )
+        {
+			return Internal.RegisterProtocolInOverlayBrowser( protocol );
+        }
+
+	}
 }
