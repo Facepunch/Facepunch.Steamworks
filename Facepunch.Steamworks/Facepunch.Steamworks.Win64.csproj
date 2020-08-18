@@ -27,9 +27,15 @@
   
 	<ItemGroup>
 		<Content Include="steam_api64.dll" PackagePath="\content\" Pack="true" PackageCopyToOutput="true">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory></CopyToOutputDirectory>
       </Content>
       <None Include="Facepunch.Steamworks.jpg" Pack="true" PackagePath="\" />
+	</ItemGroup>
+  
+	<ItemGroup>
+	  <None Update="steam_api.dll">
+	    <CopyToOutputDirectory></CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 
 	<Import Project="Facepunch.Steamworks.targets" />
