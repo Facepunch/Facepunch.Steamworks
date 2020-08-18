@@ -266,5 +266,24 @@ namespace Steamworks
 			}
 		}
 
+		/// <summary>
+		///  check if game is a timed trial with limited playtime
+		/// </summary>
+		public static bool IsTimedTrial( out int secondsAllowed, out int secondsPlayed )
+        {
+			uint a = 0;
+			uint b = 0;
+			secondsAllowed = 0;
+			secondsPlayed = 0;
+
+			if ( !Internal.BIsTimedTrial( ref a, ref b ) )
+				return false;
+
+			secondsAllowed = (int) a;
+			secondsPlayed = (int) b;
+
+			return true;
+        }
+
 	}
 }
