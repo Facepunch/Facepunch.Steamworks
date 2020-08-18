@@ -44,8 +44,6 @@ namespace Steamworks
 		{
 			switch ( info.State )
 			{
-				case ConnectionState.None:
-					break;
 				case ConnectionState.Connecting:
 					OnConnecting( connection, info );
 					break;
@@ -54,6 +52,7 @@ namespace Steamworks
 					break;
 				case ConnectionState.ClosedByPeer:
 				case ConnectionState.ProblemDetectedLocally:
+				case ConnectionState.None:
 					OnDisconnected( connection, info );
 					break;
 			}
