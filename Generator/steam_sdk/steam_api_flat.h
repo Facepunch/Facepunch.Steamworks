@@ -56,7 +56,7 @@ S_API ISteamParties * SteamAPI_ISteamClient_GetISteamParties( ISteamClient* self
 S_API ISteamRemotePlay * SteamAPI_ISteamClient_GetISteamRemotePlay( ISteamClient* self, HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char * pchVersion );
 
 // ISteamUser
-S_API ISteamUser *SteamAPI_SteamUser_v020();
+S_API ISteamUser *SteamAPI_SteamUser_v021();
 S_API HSteamUser SteamAPI_ISteamUser_GetHSteamUser( ISteamUser* self );
 S_API bool SteamAPI_ISteamUser_BLoggedOn( ISteamUser* self );
 S_API uint64_steamid SteamAPI_ISteamUser_GetSteamID( ISteamUser* self );
@@ -88,6 +88,7 @@ S_API bool SteamAPI_ISteamUser_BIsPhoneIdentifying( ISteamUser* self );
 S_API bool SteamAPI_ISteamUser_BIsPhoneRequiringVerification( ISteamUser* self );
 S_API SteamAPICall_t SteamAPI_ISteamUser_GetMarketEligibility( ISteamUser* self );
 S_API SteamAPICall_t SteamAPI_ISteamUser_GetDurationControl( ISteamUser* self );
+S_API bool SteamAPI_ISteamUser_BSetDurationControlOnlineState( ISteamUser* self, EDurationControlOnlineState eNewState );
 
 // ISteamFriends
 S_API ISteamFriends *SteamAPI_SteamFriends_v017();
@@ -165,6 +166,7 @@ S_API bool SteamAPI_ISteamFriends_IsClanPublic( ISteamFriends* self, uint64_stea
 S_API bool SteamAPI_ISteamFriends_IsClanOfficialGameGroup( ISteamFriends* self, uint64_steamid steamIDClan );
 S_API int SteamAPI_ISteamFriends_GetNumChatsWithUnreadPriorityMessages( ISteamFriends* self );
 S_API void SteamAPI_ISteamFriends_ActivateGameOverlayRemotePlayTogetherInviteDialog( ISteamFriends* self, uint64_steamid steamIDLobby );
+S_API bool SteamAPI_ISteamFriends_RegisterProtocolInOverlayBrowser( ISteamFriends* self, const char * pchProtocol );
 
 // ISteamUtils
 S_API ISteamUtils *SteamAPI_SteamUtils_v009();
@@ -374,7 +376,7 @@ S_API SteamAPICall_t SteamAPI_ISteamRemoteStorage_EnumeratePublishedWorkshopFile
 S_API SteamAPICall_t SteamAPI_ISteamRemoteStorage_UGCDownloadToLocation( ISteamRemoteStorage* self, UGCHandle_t hContent, const char * pchLocation, uint32 unPriority );
 
 // ISteamUserStats
-S_API ISteamUserStats *SteamAPI_SteamUserStats_v011();
+S_API ISteamUserStats *SteamAPI_SteamUserStats_v012();
 S_API bool SteamAPI_ISteamUserStats_RequestCurrentStats( ISteamUserStats* self );
 S_API bool SteamAPI_ISteamUserStats_GetStatInt32( ISteamUserStats* self, const char * pchName, int32 * pData );
 S_API bool SteamAPI_ISteamUserStats_GetStatFloat( ISteamUserStats* self, const char * pchName, float * pData );
@@ -418,6 +420,8 @@ S_API bool SteamAPI_ISteamUserStats_GetGlobalStatInt64( ISteamUserStats* self, c
 S_API bool SteamAPI_ISteamUserStats_GetGlobalStatDouble( ISteamUserStats* self, const char * pchStatName, double * pData );
 S_API int32 SteamAPI_ISteamUserStats_GetGlobalStatHistoryInt64( ISteamUserStats* self, const char * pchStatName, int64 * pData, uint32 cubData );
 S_API int32 SteamAPI_ISteamUserStats_GetGlobalStatHistoryDouble( ISteamUserStats* self, const char * pchStatName, double * pData, uint32 cubData );
+S_API bool SteamAPI_ISteamUserStats_GetAchievementProgressLimitsInt32( ISteamUserStats* self, const char * pchName, int32 * pnMinProgress, int32 * pnMaxProgress );
+S_API bool SteamAPI_ISteamUserStats_GetAchievementProgressLimitsFloat( ISteamUserStats* self, const char * pchName, float * pfMinProgress, float * pfMaxProgress );
 
 // ISteamApps
 S_API ISteamApps *SteamAPI_SteamApps_v008();
@@ -450,6 +454,7 @@ S_API void SteamAPI_ISteamApps_RequestAllProofOfPurchaseKeys( ISteamApps* self )
 S_API SteamAPICall_t SteamAPI_ISteamApps_GetFileDetails( ISteamApps* self, const char * pszFileName );
 S_API int SteamAPI_ISteamApps_GetLaunchCommandLine( ISteamApps* self, char * pszCommandLine, int cubCommandLine );
 S_API bool SteamAPI_ISteamApps_BIsSubscribedFromFamilySharing( ISteamApps* self );
+S_API bool SteamAPI_ISteamApps_BIsTimedTrial( ISteamApps* self, uint32 * punSecondsAllowed, uint32 * punSecondsPlayed );
 
 // ISteamNetworking
 S_API ISteamNetworking *SteamAPI_SteamNetworking_v006();
@@ -811,6 +816,7 @@ S_API bool SteamAPI_ISteamInventory_SetPropertyBool( ISteamInventory* self, Stea
 S_API bool SteamAPI_ISteamInventory_SetPropertyInt64( ISteamInventory* self, SteamInventoryUpdateHandle_t handle, SteamItemInstanceID_t nItemID, const char * pchPropertyName, int64 nValue );
 S_API bool SteamAPI_ISteamInventory_SetPropertyFloat( ISteamInventory* self, SteamInventoryUpdateHandle_t handle, SteamItemInstanceID_t nItemID, const char * pchPropertyName, float flValue );
 S_API bool SteamAPI_ISteamInventory_SubmitUpdateProperties( ISteamInventory* self, SteamInventoryUpdateHandle_t handle, SteamInventoryResult_t * pResultHandle );
+S_API bool SteamAPI_ISteamInventory_InspectItem( ISteamInventory* self, SteamInventoryResult_t * pResultHandle, const char * pchItemToken );
 
 // ISteamVideo
 S_API ISteamVideo *SteamAPI_SteamVideo_v002();
@@ -818,16 +824,6 @@ S_API void SteamAPI_ISteamVideo_GetVideoURL( ISteamVideo* self, AppId_t unVideoA
 S_API bool SteamAPI_ISteamVideo_IsBroadcasting( ISteamVideo* self, int * pnNumViewers );
 S_API void SteamAPI_ISteamVideo_GetOPFSettings( ISteamVideo* self, AppId_t unVideoAppID );
 S_API bool SteamAPI_ISteamVideo_GetOPFStringForApp( ISteamVideo* self, AppId_t unVideoAppID, char * pchBuffer, int32 * pnBufferSize );
-
-// ISteamTV
-S_API ISteamTV *SteamAPI_SteamTV_v001();
-S_API bool SteamAPI_ISteamTV_IsBroadcasting( ISteamTV* self, int * pnNumViewers );
-S_API void SteamAPI_ISteamTV_AddBroadcastGameData( ISteamTV* self, const char * pchKey, const char * pchValue );
-S_API void SteamAPI_ISteamTV_RemoveBroadcastGameData( ISteamTV* self, const char * pchKey );
-S_API void SteamAPI_ISteamTV_AddTimelineMarker( ISteamTV* self, const char * pchTemplateName, bool bPersistent, uint8 nColorR, uint8 nColorG, uint8 nColorB );
-S_API void SteamAPI_ISteamTV_RemoveTimelineMarker( ISteamTV* self );
-S_API uint32 SteamAPI_ISteamTV_AddRegion( ISteamTV* self, const char * pchElementName, const char * pchTimelineDataSection, const SteamTVRegion_t * pSteamTVRegion, ESteamTVRegionBehavior eSteamTVRegionBehavior );
-S_API void SteamAPI_ISteamTV_RemoveRegion( ISteamTV* self, uint32 unRegionHandle );
 
 // ISteamParentalSettings
 S_API ISteamParentalSettings *SteamAPI_SteamParentalSettings_v001();
@@ -1052,6 +1048,15 @@ S_API bool SteamAPI_SteamNetworkingIdentity_ParseString( SteamNetworkingIdentity
 
 // SteamNetworkingMessage_t
 S_API void SteamAPI_SteamNetworkingMessage_t_Release( SteamNetworkingMessage_t* self );
+
+// SteamNetworkingPOPIDRender
+S_API const char * SteamAPI_SteamNetworkingPOPIDRender_c_str( SteamNetworkingPOPIDRender* self );
+
+// SteamNetworkingIdentityRender
+S_API const char * SteamAPI_SteamNetworkingIdentityRender_c_str( SteamNetworkingIdentityRender* self );
+
+// SteamNetworkingIPAddrRender
+S_API const char * SteamAPI_SteamNetworkingIPAddrRender_c_str( SteamNetworkingIPAddrRender* self );
 
 // SteamDatagramHostedAddress
 S_API void SteamAPI_SteamDatagramHostedAddress_Clear( SteamDatagramHostedAddress* self );

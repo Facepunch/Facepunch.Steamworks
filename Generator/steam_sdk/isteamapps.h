@@ -105,6 +105,9 @@ public:
 
 	// Check if user borrowed this game via Family Sharing, If true, call GetAppOwner() to get the lender SteamID
 	virtual bool BIsSubscribedFromFamilySharing() = 0;
+
+	// check if game is a timed trial with limited playtime
+	virtual bool BIsTimedTrial( uint32* punSecondsAllowed, uint32* punSecondsPlayed ) = 0; 
 };
 
 #define STEAMAPPS_INTERFACE_VERSION "STEAMAPPS_INTERFACE_VERSION008"
@@ -197,6 +200,18 @@ struct FileDetailsResult_t
 	uint32		m_unFlags;		// 
 };
 
+
+//-----------------------------------------------------------------------------
+// Purpose: called for games in Timed Trial mode
+//-----------------------------------------------------------------------------
+struct TimedTrialStatus_t
+{
+	enum { k_iCallback = k_iSteamAppsCallbacks + 30 };
+	AppId_t		m_unAppID;			// appID
+	bool		m_bIsOffline;		// if true, time allowed / played refers to offline time, not total time
+	uint32		m_unSecondsAllowed;	// how many seconds the app can be played in total 
+	uint32		m_unSecondsPlayed;	// how many seconds the app was already played
+};
 
 #pragma pack( pop )
 #endif // ISTEAMAPPS_H

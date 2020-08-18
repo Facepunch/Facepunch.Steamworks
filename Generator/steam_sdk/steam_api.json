@@ -284,6 +284,13 @@
       "struct": "UnreadChatMessagesChanged_t"
     },
     {
+      "callback_id": 349,
+      "fields": [
+        { "fieldname":"rgchURI", "fieldtype":"char [1024]" }
+      ],
+      "struct": "OverlayBrowserProtocolNavigation_t"
+    },
+    {
       "callback_id": 701,
       "fields": [],
       "struct": "IPCountry_t"
@@ -997,6 +1004,16 @@
       "struct": "FileDetailsResult_t"
     },
     {
+      "callback_id": 1030,
+      "fields": [
+        { "fieldname":"m_unAppID", "fieldtype":"AppId_t" },
+        { "fieldname":"m_bIsOffline", "fieldtype":"bool" },
+        { "fieldname":"m_unSecondsAllowed", "fieldtype":"uint32" },
+        { "fieldname":"m_unSecondsPlayed", "fieldtype":"uint32" }
+      ],
+      "struct": "TimedTrialStatus_t"
+    },
+    {
       "callback_id": 1202,
       "fields": [
         { "fieldname":"m_steamIDRemote", "fieldtype":"CSteamID" }
@@ -1608,20 +1625,6 @@
       "struct": "GetOPFSettingsResult_t"
     },
     {
-      "callback_id": 4604,
-      "fields": [
-        { "fieldname":"m_bIsRTMP", "fieldtype":"bool" }
-      ],
-      "struct": "BroadcastUploadStart_t"
-    },
-    {
-      "callback_id": 4605,
-      "fields": [
-        { "fieldname":"m_eResult", "fieldtype":"EBroadcastUploadResult" }
-      ],
-      "struct": "BroadcastUploadStop_t"
-    },
-    {
       "callback_id": 5001,
       "fields": [],
       "struct": "SteamParentalSettingsChanged_t"
@@ -1866,6 +1869,12 @@
     { "constname":"k_cchMaxSteamNetworkingPingLocationString", "consttype":"int", "constval":"1024" },
     { "constname":"k_nSteamNetworkingPing_Failed", "consttype":"int", "constval":"- 1" },
     { "constname":"k_nSteamNetworkingPing_Unknown", "consttype":"int", "constval":"- 2" },
+    { "constname":"k_nSteamNetworkingConfig_P2P_Transport_ICE_Enable_Default", "consttype":"int", "constval":"- 1" },
+    { "constname":"k_nSteamNetworkingConfig_P2P_Transport_ICE_Enable_Disable", "consttype":"int", "constval":"0" },
+    { "constname":"k_nSteamNetworkingConfig_P2P_Transport_ICE_Enable_Relay", "consttype":"int", "constval":"1" },
+    { "constname":"k_nSteamNetworkingConfig_P2P_Transport_ICE_Enable_Private", "consttype":"int", "constval":"2" },
+    { "constname":"k_nSteamNetworkingConfig_P2P_Transport_ICE_Enable_Public", "consttype":"int", "constval":"4" },
+    { "constname":"k_nSteamNetworkingConfig_P2P_Transport_ICE_Enable_All", "consttype":"int", "constval":"0x7fffffff" },
     { "constname":"k_SteamDatagramPOPID_dev", "consttype":"SteamNetworkingPOPID", "constval":"( ( uint32 ) 'd' << 16U ) | ( ( uint32 ) 'e' << 8U ) | ( uint32 ) 'v'" },
     { "constname":"k_unServerFlagNone", "consttype":"uint32", "constval":"0x00" },
     { "constname":"k_unServerFlagActive", "consttype":"uint32", "constval":"0x01" },
@@ -2014,7 +2023,8 @@
         { "name":"k_EResultLimitedUserAccount", "value":"112" },
         { "name":"k_EResultCantRemoveItem", "value":"113" },
         { "name":"k_EResultAccountDeleted", "value":"114" },
-        { "name":"k_EResultExistingUserCancelledLicense", "value":"115" }
+        { "name":"k_EResultExistingUserCancelledLicense", "value":"115" },
+        { "name":"k_EResultCommunityCooldown", "value":"116" }
       ]
     },
     {
@@ -2138,7 +2148,8 @@
         { "name":"k_EAppOwnershipFlags_Rental", "value":"131072" },
         { "name":"k_EAppOwnershipFlags_SiteLicense", "value":"262144" },
         { "name":"k_EAppOwnershipFlags_LegacyFreeSub", "value":"524288" },
-        { "name":"k_EAppOwnershipFlags_InvalidOSType", "value":"1048576" }
+        { "name":"k_EAppOwnershipFlags_InvalidOSType", "value":"1048576" },
+        { "name":"k_EAppOwnershipFlags_TimedTrial", "value":"2097152" }
       ]
     },
     {
@@ -2374,6 +2385,15 @@
         { "name":"k_EDurationControlNotification_ExitSoon_3h", "value":"5" },
         { "name":"k_EDurationControlNotification_ExitSoon_5h", "value":"6" },
         { "name":"k_EDurationControlNotification_ExitSoon_Night", "value":"7" }
+      ]
+    },
+    {
+      "enumname": "EDurationControlOnlineState",
+      "values": [
+        { "name":"k_EDurationControlOnlineState_Invalid", "value":"0" },
+        { "name":"k_EDurationControlOnlineState_Offline", "value":"1" },
+        { "name":"k_EDurationControlOnlineState_Online", "value":"2" },
+        { "name":"k_EDurationControlOnlineState_OnlineHighPri", "value":"3" }
       ]
     },
     {
@@ -2859,6 +2879,7 @@
         { "name":"k_EHTTPStatusCode417ExpectationFailed", "value":"417" },
         { "name":"k_EHTTPStatusCode4xxUnknown", "value":"418" },
         { "name":"k_EHTTPStatusCode429TooManyRequests", "value":"429" },
+        { "name":"k_EHTTPStatusCode444ConnectionClosed", "value":"444" },
         { "name":"k_EHTTPStatusCode500InternalServerError", "value":"500" },
         { "name":"k_EHTTPStatusCode501NotImplemented", "value":"501" },
         { "name":"k_EHTTPStatusCode502BadGateway", "value":"502" },
@@ -3612,15 +3633,6 @@
       ]
     },
     {
-      "enumname": "ESteamTVRegionBehavior",
-      "values": [
-        { "name":"k_ESteamVideoRegionBehaviorInvalid", "value":"-1" },
-        { "name":"k_ESteamVideoRegionBehaviorHover", "value":"0" },
-        { "name":"k_ESteamVideoRegionBehaviorClickPopup", "value":"1" },
-        { "name":"k_ESteamVideoRegionBehaviorClickSurroundingRegion", "value":"2" }
-      ]
-    },
-    {
       "enumname": "EParentalFeature",
       "values": [
         { "name":"k_EFeatureInvalid", "value":"0" },
@@ -3709,6 +3721,7 @@
         { "name":"k_ESteamNetConnectionEnd_Local_HostedServerPrimaryRelay", "value":"3003" },
         { "name":"k_ESteamNetConnectionEnd_Local_NetworkConfig", "value":"3004" },
         { "name":"k_ESteamNetConnectionEnd_Local_Rights", "value":"3005" },
+        { "name":"k_ESteamNetConnectionEnd_Local_P2P_ICE_NoPublicAddresses", "value":"3006" },
         { "name":"k_ESteamNetConnectionEnd_Local_Max", "value":"3999" },
         { "name":"k_ESteamNetConnectionEnd_Remote_Min", "value":"4000" },
         { "name":"k_ESteamNetConnectionEnd_Remote_Timeout", "value":"4001" },
@@ -3717,6 +3730,7 @@
         { "name":"k_ESteamNetConnectionEnd_Remote_NotLoggedIn", "value":"4004" },
         { "name":"k_ESteamNetConnectionEnd_Remote_NotRunningApp", "value":"4005" },
         { "name":"k_ESteamNetConnectionEnd_Remote_BadProtocolVersion", "value":"4006" },
+        { "name":"k_ESteamNetConnectionEnd_Remote_P2P_ICE_NoPublicAddresses", "value":"4007" },
         { "name":"k_ESteamNetConnectionEnd_Remote_Max", "value":"4999" },
         { "name":"k_ESteamNetConnectionEnd_Misc_Min", "value":"5000" },
         { "name":"k_ESteamNetConnectionEnd_Misc_Generic", "value":"5001" },
@@ -3725,8 +3739,24 @@
         { "name":"k_ESteamNetConnectionEnd_Misc_RelayConnectivity", "value":"5004" },
         { "name":"k_ESteamNetConnectionEnd_Misc_SteamConnectivity", "value":"5005" },
         { "name":"k_ESteamNetConnectionEnd_Misc_NoRelaySessionsToClient", "value":"5006" },
+        { "name":"k_ESteamNetConnectionEnd_Misc_P2P_Rendezvous", "value":"5008" },
+        { "name":"k_ESteamNetConnectionEnd_Misc_P2P_NAT_Firewall", "value":"5009" },
         { "name":"k_ESteamNetConnectionEnd_Misc_Max", "value":"5999" },
         { "name":"k_ESteamNetConnectionEnd__Force32Bit", "value":"2147483647" }
+      ]
+    },
+    {
+      "enumname": "ESteamNetTransportKind",
+      "values": [
+        { "name":"k_ESteamNetTransport_Unknown", "value":"0" },
+        { "name":"k_ESteamNetTransport_LoopbackBuffers", "value":"1" },
+        { "name":"k_ESteamNetTransport_LocalHost", "value":"2" },
+        { "name":"k_ESteamNetTransport_UDP", "value":"3" },
+        { "name":"k_ESteamNetTransport_UDPProbablyLocal", "value":"4" },
+        { "name":"k_ESteamNetTransport_TURN", "value":"5" },
+        { "name":"k_ESteamNetTransport_SDRP2P", "value":"6" },
+        { "name":"k_ESteamNetTransport_SDRHostedServer", "value":"7" },
+        { "name":"k_ESteamNetTransport_Force32Bit", "value":"2147483647" }
       ]
     },
     {
@@ -3775,6 +3805,10 @@
         { "name":"k_ESteamNetworkingConfig_MTU_DataSize", "value":"33" },
         { "name":"k_ESteamNetworkingConfig_Unencrypted", "value":"34" },
         { "name":"k_ESteamNetworkingConfig_EnumerateDevVars", "value":"35" },
+        { "name":"k_ESteamNetworkingConfig_P2P_STUN_ServerList", "value":"103" },
+        { "name":"k_ESteamNetworkingConfig_P2P_Transport_ICE_Enable", "value":"104" },
+        { "name":"k_ESteamNetworkingConfig_P2P_Transport_ICE_Penalty", "value":"105" },
+        { "name":"k_ESteamNetworkingConfig_P2P_Transport_SDR_Penalty", "value":"106" },
         { "name":"k_ESteamNetworkingConfig_SDRClient_ConsecutitivePingTimeoutsFailInitial", "value":"19" },
         { "name":"k_ESteamNetworkingConfig_SDRClient_ConsecutitivePingTimeoutsFail", "value":"20" },
         { "name":"k_ESteamNetworkingConfig_SDRClient_MinPingsBeforePingAccurate", "value":"21" },
@@ -4178,7 +4212,7 @@
         {
           "kind": "user",
           "name": "SteamUser",
-          "name_flat": "SteamAPI_SteamUser_v020"
+          "name_flat": "SteamAPI_SteamUser_v021"
         }
       ],
       "classname": "ISteamUser",
@@ -4443,9 +4477,17 @@
           "methodname_flat": "SteamAPI_ISteamUser_GetDurationControl",
           "params": [],
           "returntype": "SteamAPICall_t"
+        },
+        {
+          "methodname": "BSetDurationControlOnlineState",
+          "methodname_flat": "SteamAPI_ISteamUser_BSetDurationControlOnlineState",
+          "params": [
+            { "paramname":"eNewState", "paramtype":"EDurationControlOnlineState" }
+          ],
+          "returntype": "bool"
         }
       ],
-      "version_string": "SteamUser020"
+      "version_string": "SteamUser021"
     },
     {
       "accessors": [
@@ -5098,6 +5140,14 @@
             { "paramname":"steamIDLobby", "paramtype":"CSteamID", "paramtype_flat":"uint64_steamid" }
           ],
           "returntype": "void"
+        },
+        {
+          "methodname": "RegisterProtocolInOverlayBrowser",
+          "methodname_flat": "SteamAPI_ISteamFriends_RegisterProtocolInOverlayBrowser",
+          "params": [
+            { "paramname":"pchProtocol", "paramtype":"const char *" }
+          ],
+          "returntype": "bool"
         }
       ],
       "version_string": "SteamFriends017"
@@ -6862,7 +6912,7 @@
         {
           "kind": "user",
           "name": "SteamUserStats",
-          "name_flat": "SteamAPI_SteamUserStats_v011"
+          "name_flat": "SteamAPI_SteamUserStats_v012"
         }
       ],
       "classname": "ISteamUserStats",
@@ -7277,9 +7327,29 @@
             { "paramname":"cubData", "paramtype":"uint32" }
           ],
           "returntype": "int32"
+        },
+        {
+          "methodname": "GetAchievementProgressLimits",
+          "methodname_flat": "SteamAPI_ISteamUserStats_GetAchievementProgressLimitsInt32",
+          "params": [
+            { "paramname":"pchName", "paramtype":"const char *" },
+            { "paramname":"pnMinProgress", "paramtype":"int32 *" },
+            { "paramname":"pnMaxProgress", "paramtype":"int32 *" }
+          ],
+          "returntype": "bool"
+        },
+        {
+          "methodname": "GetAchievementProgressLimits",
+          "methodname_flat": "SteamAPI_ISteamUserStats_GetAchievementProgressLimitsFloat",
+          "params": [
+            { "paramname":"pchName", "paramtype":"const char *" },
+            { "paramname":"pfMinProgress", "paramtype":"float *" },
+            { "paramname":"pfMaxProgress", "paramtype":"float *" }
+          ],
+          "returntype": "bool"
         }
       ],
-      "version_string": "STEAMUSERSTATS_INTERFACE_VERSION011"
+      "version_string": "STEAMUSERSTATS_INTERFACE_VERSION012"
     },
     {
       "accessors": [
@@ -7509,6 +7579,15 @@
           "methodname": "BIsSubscribedFromFamilySharing",
           "methodname_flat": "SteamAPI_ISteamApps_BIsSubscribedFromFamilySharing",
           "params": [],
+          "returntype": "bool"
+        },
+        {
+          "methodname": "BIsTimedTrial",
+          "methodname_flat": "SteamAPI_ISteamApps_BIsTimedTrial",
+          "params": [
+            { "paramname":"punSecondsAllowed", "paramtype":"uint32 *" },
+            { "paramname":"punSecondsPlayed", "paramtype":"uint32 *" }
+          ],
           "returntype": "bool"
         }
       ],
@@ -10873,6 +10952,16 @@
             { "paramname":"pResultHandle", "paramtype":"SteamInventoryResult_t *" }
           ],
           "returntype": "bool"
+        },
+        {
+          "desc": "Look up the given token and return a pseudo-Inventory item.",
+          "methodname": "InspectItem",
+          "methodname_flat": "SteamAPI_ISteamInventory_InspectItem",
+          "params": [
+            { "paramname":"pResultHandle", "paramtype":"SteamInventoryResult_t *" },
+            { "paramname":"pchItemToken", "paramtype":"const char *" }
+          ],
+          "returntype": "bool"
         }
       ],
       "version_string": "STEAMINVENTORY_INTERFACE_V003"
@@ -10925,82 +11014,6 @@
         }
       ],
       "version_string": "STEAMVIDEO_INTERFACE_V002"
-    },
-    {
-      "accessors": [
-        {
-          "kind": "user",
-          "name": "SteamTV",
-          "name_flat": "SteamAPI_SteamTV_v001"
-        }
-      ],
-      "classname": "ISteamTV",
-      "fields": [],
-      "methods": [
-        {
-          "methodname": "IsBroadcasting",
-          "methodname_flat": "SteamAPI_ISteamTV_IsBroadcasting",
-          "params": [
-            { "paramname":"pnNumViewers", "paramtype":"int *" }
-          ],
-          "returntype": "bool"
-        },
-        {
-          "methodname": "AddBroadcastGameData",
-          "methodname_flat": "SteamAPI_ISteamTV_AddBroadcastGameData",
-          "params": [
-            { "paramname":"pchKey", "paramtype":"const char *" },
-            { "paramname":"pchValue", "paramtype":"const char *" }
-          ],
-          "returntype": "void"
-        },
-        {
-          "methodname": "RemoveBroadcastGameData",
-          "methodname_flat": "SteamAPI_ISteamTV_RemoveBroadcastGameData",
-          "params": [
-            { "paramname":"pchKey", "paramtype":"const char *" }
-          ],
-          "returntype": "void"
-        },
-        {
-          "methodname": "AddTimelineMarker",
-          "methodname_flat": "SteamAPI_ISteamTV_AddTimelineMarker",
-          "params": [
-            { "paramname":"pchTemplateName", "paramtype":"const char *" },
-            { "paramname":"bPersistent", "paramtype":"bool" },
-            { "paramname":"nColorR", "paramtype":"uint8" },
-            { "paramname":"nColorG", "paramtype":"uint8" },
-            { "paramname":"nColorB", "paramtype":"uint8" }
-          ],
-          "returntype": "void"
-        },
-        {
-          "methodname": "RemoveTimelineMarker",
-          "methodname_flat": "SteamAPI_ISteamTV_RemoveTimelineMarker",
-          "params": [],
-          "returntype": "void"
-        },
-        {
-          "methodname": "AddRegion",
-          "methodname_flat": "SteamAPI_ISteamTV_AddRegion",
-          "params": [
-            { "paramname":"pchElementName", "paramtype":"const char *" },
-            { "paramname":"pchTimelineDataSection", "paramtype":"const char *" },
-            { "paramname":"pSteamTVRegion", "paramtype":"const SteamTVRegion_t *" },
-            { "paramname":"eSteamTVRegionBehavior", "paramtype":"ESteamTVRegionBehavior" }
-          ],
-          "returntype": "uint32"
-        },
-        {
-          "methodname": "RemoveRegion",
-          "methodname_flat": "SteamAPI_ISteamTV_RemoveRegion",
-          "params": [
-            { "paramname":"unRegionHandle", "paramtype":"uint32" }
-          ],
-          "returntype": "void"
-        }
-      ],
-      "version_string": "STEAMTV_INTERFACE_V001"
     },
     {
       "accessors": [
@@ -12339,13 +12352,6 @@
     },
     {
       "fields": [
-        { "fieldname":"m_uiOnlineSessionInstances", "fieldtype":"uint32" },
-        { "fieldname":"m_uiPublishedToFriendsSessionInstance", "fieldtype":"uint8" }
-      ],
-      "struct": "FriendSessionStateInfo_t"
-    },
-    {
-      "fields": [
         { "fieldname":"m_szKey", "fieldtype":"char [256]" },
         { "fieldname":"m_szValue", "fieldtype":"char [256]" }
       ],
@@ -12625,15 +12631,6 @@
       "struct": "SteamItemDetails_t"
     },
     {
-      "fields": [
-        { "fieldname":"unMinX", "fieldtype":"uint32" },
-        { "fieldname":"unMinY", "fieldtype":"uint32" },
-        { "fieldname":"unMaxX", "fieldtype":"uint32" },
-        { "fieldname":"unMaxY", "fieldtype":"uint32" }
-      ],
-      "struct": "SteamTVRegion_t"
-    },
-    {
       "consts": [
         { "constname":"k_cchMaxString", "consttype":"int", "constval":"48" }
       ],
@@ -12731,7 +12728,7 @@
       "consts": [
         { "constname":"k_cchMaxString", "consttype":"int", "constval":"128" },
         { "constname":"k_cchMaxGenericString", "consttype":"int", "constval":"32" },
-        { "constname":"k_cchMaxXboxPairwiseID", "consttype":"int", "constval":"32" },
+        { "constname":"k_cchMaxXboxPairwiseID", "consttype":"int", "constval":"33" },
         { "constname":"k_cbMaxGenericBytes", "consttype":"int", "constval":"32" }
       ],
       "fields": [
@@ -12893,7 +12890,8 @@
         { "fieldname":"m_eEndReason", "fieldtype":"int" },
         { "fieldname":"m_szEndDebug", "fieldtype":"char [128]" },
         { "fieldname":"m_szConnectionDescription", "fieldtype":"char [128]" },
-        { "fieldname":"reserved", "fieldtype":"uint32 [64]" }
+        { "fieldname":"m_eTransportKind", "fieldtype":"ESteamNetTransportKind" },
+        { "fieldname":"reserved", "fieldtype":"uint32 [63]" }
       ],
       "struct": "SteamNetConnectionInfo_t"
     },
@@ -12954,6 +12952,60 @@
         { "fieldname":"m_int64", "fieldtype":"int64_t" }
       ],
       "struct": "SteamNetworkingConfigValue_t"
+    },
+    {
+      "fields": [
+        {
+          "fieldname": "buf",
+          "fieldtype": "char [8]",
+          "private": true
+        }
+      ],
+      "methods": [
+        {
+          "methodname": "c_str",
+          "methodname_flat": "SteamAPI_SteamNetworkingPOPIDRender_c_str",
+          "params": [],
+          "returntype": "const char *"
+        }
+      ],
+      "struct": "SteamNetworkingPOPIDRender"
+    },
+    {
+      "fields": [
+        {
+          "fieldname": "buf",
+          "fieldtype": "char [128]",
+          "private": true
+        }
+      ],
+      "methods": [
+        {
+          "methodname": "c_str",
+          "methodname_flat": "SteamAPI_SteamNetworkingIdentityRender_c_str",
+          "params": [],
+          "returntype": "const char *"
+        }
+      ],
+      "struct": "SteamNetworkingIdentityRender"
+    },
+    {
+      "fields": [
+        {
+          "fieldname": "buf",
+          "fieldtype": "char [48]",
+          "private": true
+        }
+      ],
+      "methods": [
+        {
+          "methodname": "c_str",
+          "methodname_flat": "SteamAPI_SteamNetworkingIPAddrRender_c_str",
+          "params": [],
+          "returntype": "const char *"
+        }
+      ],
+      "struct": "SteamNetworkingIPAddrRender"
     },
     {
       "fields": [

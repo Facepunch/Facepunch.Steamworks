@@ -197,9 +197,14 @@ public:
 	STEAM_CALL_RESULT( DurationControl_t )
 	virtual SteamAPICall_t GetDurationControl() = 0;
 
+	// Advise steam china duration control system about the online state of the game.
+	// This will prevent offline gameplay time from counting against a user's
+	// playtime limits.
+	virtual bool BSetDurationControlOnlineState( EDurationControlOnlineState eNewState ) = 0;
+
 };
 
-#define STEAMUSER_INTERFACE_VERSION "SteamUser020"
+#define STEAMUSER_INTERFACE_VERSION "SteamUser021"
 
 // Global interface accessor
 inline ISteamUser *SteamUser();

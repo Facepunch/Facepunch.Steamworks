@@ -141,6 +141,7 @@ enum EResult
 	k_EResultCantRemoveItem = 113,				// item can't be removed
 	k_EResultAccountDeleted = 114,				// account has been deleted
 	k_EResultExistingUserCancelledLicense = 115,	// A license for this already exists, but cancelled
+	k_EResultCommunityCooldown = 116,			// access is denied because of a community cooldown (probably from support profile data resets)
 };
 
 // Error codes for use with the voice functions
@@ -246,9 +247,9 @@ enum EAccountType
 enum EAppReleaseState
 {
 	k_EAppReleaseState_Unknown			= 0,	// unknown, required appinfo or license info is missing
-	k_EAppReleaseState_Unavailable		= 1,	// even if user 'just' owns it, can see game at all
-	k_EAppReleaseState_Prerelease		= 2,	// can be purchased and is visible in games list, nothing else. Common appInfo section released
-	k_EAppReleaseState_PreloadOnly		= 3,	// owners can preload app, not play it. AppInfo fully released.
+	k_EAppReleaseState_Unavailable		= 1,	// even owners can't see game in library yet, no AppInfo released
+	k_EAppReleaseState_Prerelease		= 2,	// app can be purchased and is visible in library, nothing else. Only Common AppInfo section released
+	k_EAppReleaseState_PreloadOnly		= 3,	// owners can preload app, but not play it. All AppInfo sections fully released
 	k_EAppReleaseState_Released			= 4,	// owners can download and play app.
 };
 
@@ -280,6 +281,7 @@ enum EAppOwnershipFlags
 	k_EAppOwnershipFlags_SiteLicense		= 0x40000,	// Is from a site license
 	k_EAppOwnershipFlags_LegacyFreeSub		= 0x80000,	// App only owned through Steam's legacy free sub
 	k_EAppOwnershipFlags_InvalidOSType		= 0x100000,	// app not supported on current OS version, used to indicate a game is 32-bit on post-catalina. Currently it's own flag so the library will display a notice.
+	k_EAppOwnershipFlags_TimedTrial			= 0x200000,	// App is playable only for limited time
 };
 
 
@@ -505,6 +507,18 @@ static inline bool BIsVRLaunchOptionType( const ELaunchOptionType  eType )
 
 
 //-----------------------------------------------------------------------------
+// Purpose: true if this launch option is any of the vr launching types
+//-----------------------------------------------------------------------------
+static inline bool BIsLaunchOptionTypeExemptFromGameTheater( const ELaunchOptionType  eType )
+{
+	return eType == k_ELaunchOptionType_Config
+		|| eType == k_ELaunchOptionType_Server
+		|| eType == k_ELaunchOptionType_Editor
+		|| eType == k_ELaunchOptionType_Manual;
+}
+
+
+//-----------------------------------------------------------------------------
 // Purpose: code points for VR HMD vendors and models 
 // WARNING: DO NOT RENUMBER EXISTING VALUES - STORED IN A DATABASE
 //-----------------------------------------------------------------------------
@@ -690,6 +704,18 @@ enum EDurationControlNotification
 	k_EDurationControlNotification_ExitSoon_3h = 5,	// allowed 3h time since 5h gap/break has elapsed, game should exit - steam will terminate the game soon
 	k_EDurationControlNotification_ExitSoon_5h = 6,	// allowed 5h time in calendar day has elapsed, game should exit - steam will terminate the game soon
 	k_EDurationControlNotification_ExitSoon_Night = 7,// game running after day period, game should exit - steam will terminate the game soon
+};
+
+
+//
+// Specifies a game's online state in relation to duration control
+//
+enum EDurationControlOnlineState
+{
+	k_EDurationControlOnlineState_Invalid = 0,				// nil value
+	k_EDurationControlOnlineState_Offline = 1,				// currently in offline play - single-player, offline co-op, etc.
+	k_EDurationControlOnlineState_Online = 2,				// currently in online play
+	k_EDurationControlOnlineState_OnlineHighPri = 3,		// currently in online play and requests not to be interrupted
 };
 
 

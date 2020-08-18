@@ -293,28 +293,18 @@ public:
 	STEAM_FLAT_NAME( GetGlobalStatHistoryDouble )
 	virtual int32 GetGlobalStatHistory( const char *pchStatName, STEAM_ARRAY_COUNT(cubData) double *pData, uint32 cubData ) = 0;
 
-#ifdef _PS3
-	// Call to kick off installation of the PS3 trophies. This call is asynchronous, and the results will be returned in a PS3TrophiesInstalled_t
-	// callback.
-	virtual bool InstallPS3Trophies() = 0;
+	// For achievements that have related Progress stats, use this to query what the bounds of that progress are.
+	// You may want this info to selectively call IndicateAchievementProgress when appropriate milestones of progress
+	// have been made, to show a progress notification to the user.
+	STEAM_FLAT_NAME( GetAchievementProgressLimitsInt32 )
+	virtual bool GetAchievementProgressLimits( const char *pchName, int32 *pnMinProgress, int32 *pnMaxProgress ) = 0;
 
-	// Returns the amount of space required at boot to install trophies. This value can be used when comparing the amount of space needed
-	// by the game to the available space value passed to the game at boot. The value is set during InstallPS3Trophies().
-	virtual uint64 GetTrophySpaceRequiredBeforeInstall() = 0;
+	STEAM_FLAT_NAME( GetAchievementProgressLimitsFloat )
+	virtual bool GetAchievementProgressLimits( const char *pchName, float *pfMinProgress, float *pfMaxProgress ) = 0;
 
-	// On PS3, user stats & achievement progress through Steam must be stored with the user's saved game data.
-	// At startup, before calling RequestCurrentStats(), you must pass the user's stats data to Steam via this method.
-	// If you do not have any user data, call this function with pvData = NULL and cubData = 0
-	virtual bool SetUserStatsData( const void *pvData, uint32 cubData ) = 0;
-
-	// Call to get the user's current stats data. You should retrieve this data after receiving successful UserStatsReceived_t & UserStatsStored_t
-	// callbacks, and store the data with the user's save game data. You can call this method with pvData = NULL and cubData = 0 to get the required
-	// buffer size.
-	virtual bool GetUserStatsData( void *pvData, uint32 cubData, uint32 *pcubWritten ) = 0;
-#endif
 };
 
-#define STEAMUSERSTATS_INTERFACE_VERSION "STEAMUSERSTATS_INTERFACE_VERSION011"
+#define STEAMUSERSTATS_INTERFACE_VERSION "STEAMUSERSTATS_INTERFACE_VERSION012"
 
 // Global interface accessor
 inline ISteamUserStats *SteamUserStats();
