@@ -46,6 +46,8 @@ namespace Steamworks
 		{
 			switch ( info.State )
 			{
+				case ConnectionState.None:
+					break;
 				case ConnectionState.Connecting:
 					if ( !Connecting.Contains( connection ) )
 					{
@@ -65,7 +67,6 @@ namespace Steamworks
 					break;
 				case ConnectionState.ClosedByPeer:
 				case ConnectionState.ProblemDetectedLocally:
-				case ConnectionState.None:
 					if ( Connecting.Contains( connection ) || Connected.Contains( connection ) )
 					{
 						Connecting.Remove( connection );
