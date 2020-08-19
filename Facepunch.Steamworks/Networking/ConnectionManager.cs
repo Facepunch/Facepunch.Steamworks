@@ -47,18 +47,40 @@ namespace Steamworks
 		{
 			ConnectionInfo = info;
 
+			//
+			// Some notes:
+			// - Update state before the callbacks, in case an exception is thrown
+			// - ConnectionState.None happens when a connection is destroyed, even if it was already disconnected (ClosedByPeer / ProblemDetectedLocally)
+			//
 			switch ( info.State )
 			{
 				case ConnectionState.Connecting:
-					OnConnecting( info );
+					if ( !Connecting && !Connected )
+					{
+						Connecting = true;
+
+						OnConnecting( info );
+					}
 					break;
 				case ConnectionState.Connected:
-					OnConnected( info );
+					if ( Connecting && !Connected )
+					{
+						Connecting = false;
+						Connected = true;
+
+						OnConnected( info );
+					}
 					break;
 				case ConnectionState.ClosedByPeer:
 				case ConnectionState.ProblemDetectedLocally:
 				case ConnectionState.None:
-					OnDisconnected( info );
+					if ( Connecting || Connected )
+					{
+						Connecting = false;
+						Connected = false;
+
+						OnDisconnected( info );
+					}
 					break;
 			}
 		}
@@ -69,8 +91,6 @@ namespace Steamworks
 		public virtual void OnConnecting( ConnectionInfo info )
 		{
 			Interface?.OnConnecting( info );
-
-			Connecting = true;
 		}
 
 		/// <summary>
@@ -79,9 +99,6 @@ namespace Steamworks
 		public virtual void OnConnected( ConnectionInfo info )
 		{
 			Interface?.OnConnected( info );
-
-			Connected = true;
-			Connecting = false;
 		}
 
 		/// <summary>
@@ -90,9 +107,6 @@ namespace Steamworks
 		public virtual void OnDisconnected( ConnectionInfo info )
 		{
 			Interface?.OnDisconnected( info );
-
-			Connected = false;
-			Connecting = false;
 		}
 
 		public void Receive( int bufferSize = 32 )

@@ -11,10 +11,11 @@ namespace Steamworks.Data
 	/// You can override all the virtual functions to turn it into what you
 	/// want it to do.
 	/// </summary>
-	public struct Connection
+	public struct Connection : IEquatable<Connection>
 	{
 		public uint Id { get; set; }
 
+		public bool Equals( Connection other ) => Id == other.Id;
 		public override string ToString() => Id.ToString();
 		public static implicit operator Connection( uint value ) => new Connection() { Id = value };
 		public static implicit operator uint( Connection value ) => value.Id;

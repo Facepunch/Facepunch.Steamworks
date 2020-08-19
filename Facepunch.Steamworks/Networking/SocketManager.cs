@@ -16,6 +16,9 @@ namespace Steamworks
 	{
 		public ISocketManager Interface { get; set; }
 
+		public HashSet<Connection> Connecting = new HashSet<Connection>();
+		public HashSet<Connection> Connected = new HashSet<Connection>();
+
 		public Socket Socket { get; internal set; }
 
 		public override string ToString() => Socket.ToString();
@@ -42,18 +45,40 @@ namespace Steamworks
 
 		public virtual void OnConnectionChanged( Connection connection, ConnectionInfo info )
 		{
+			//
+			// Some notes:
+			// - Update state before the callbacks, in case an exception is thrown
+			// - ConnectionState.None happens when a connection is destroyed, even if it was already disconnected (ClosedByPeer / ProblemDetectedLocally)
+			//
 			switch ( info.State )
 			{
 				case ConnectionState.Connecting:
-					OnConnecting( connection, info );
+					if ( !Connecting.Contains( connection ) && !Connected.Contains( connection ) )
+					{
+						Connecting.Add( connection );
+
+						OnConnecting( connection, info );
+					}
 					break;
 				case ConnectionState.Connected:
-					OnConnected( connection, info );
+					if ( Connecting.Contains( connection ) && !Connected.Contains( connection ) )
+					{
+						Connecting.Remove( connection );
+						Connected.Add( connection );
+
+						OnConnected( connection, info );
+					}
 					break;
 				case ConnectionState.ClosedByPeer:
 				case ConnectionState.ProblemDetectedLocally:
 				case ConnectionState.None:
-					OnDisconnected( connection, info );
+					if ( Connecting.Contains( connection ) || Connected.Contains( connection ) )
+					{
+						Connecting.Remove( connection );
+						Connected.Remove( connection );
+
+						OnDisconnected( connection, info );
+					}
 					break;
 			}
 		}
