@@ -57,6 +57,7 @@ public static class Cleanup
 		type = type.Replace( "ISteamNetworkingMessage", "NetMsg" );
 		type = type.Replace( "SteamNetworkingMessage_t", "NetMsg" );
 		type = type.Replace( "SteamIPAddress_t", "SteamIPAddress" );
+		type = type.Replace( "SteamNetworkingQuickConnectionStatus", "ConnectionStatus" );
 
 		type = type.Replace( "::", "." );
 
@@ -99,6 +100,7 @@ public static class Cleanup
 		if ( type == "ValvePackingSentinel_t" ) return false;
 		if ( type == "CCallbackBase" ) return false;
 		if ( type == "CSteamGameServerAPIContext" ) return false;
+		if ( type == "ConnectionStatus") return false;
 
 		return true;
 	}

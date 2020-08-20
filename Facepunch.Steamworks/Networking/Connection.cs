@@ -122,5 +122,17 @@ namespace Steamworks.Data
 
 			return strVal;
 		}
+
+		/// <summary>
+		/// Returns a small set of information about the real-time state of the connection.
+		/// </summary>
+		public ConnectionStatus QuickStatus()
+		{
+			ConnectionStatus connectionStatus = default( ConnectionStatus );
+
+			SteamNetworkingSockets.Internal.GetQuickConnectionStatus( this, ref connectionStatus );
+
+			return connectionStatus;
+		}
 	}
 }

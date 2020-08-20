@@ -207,10 +207,10 @@ namespace Steamworks
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingSockets_GetQuickConnectionStatus", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _GetQuickConnectionStatus( IntPtr self, Connection hConn, ref SteamNetworkingQuickConnectionStatus pStats );
+		private static extern bool _GetQuickConnectionStatus( IntPtr self, Connection hConn, ref ConnectionStatus pStats );
 		
 		#endregion
-		internal bool GetQuickConnectionStatus( Connection hConn, ref SteamNetworkingQuickConnectionStatus pStats )
+		internal bool GetQuickConnectionStatus( Connection hConn, ref ConnectionStatus pStats )
 		{
 			var returnValue = _GetQuickConnectionStatus( Self, hConn, ref pStats );
 			return returnValue;
