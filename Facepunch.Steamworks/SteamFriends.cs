@@ -30,6 +30,7 @@ namespace Steamworks
 			Dispatch.Install<PersonaStateChange_t>( x => OnPersonaStateChange?.Invoke( new Friend( x.SteamID ) ) );
 			Dispatch.Install<GameRichPresenceJoinRequested_t>( x => OnGameRichPresenceJoinRequested?.Invoke( new Friend( x.SteamIDFriend), x.ConnectUTF8() ) );
 			Dispatch.Install<GameConnectedFriendChatMsg_t>( OnFriendChatMessage );
+			Dispatch.Install<GameConnectedClanChatMsg_t>( OnGameConnectedClanChatMessage );
 			Dispatch.Install<GameOverlayActivated_t>( x => OnGameOverlayActivated?.Invoke( x.Active != 0 ) );
 			Dispatch.Install<GameServerChangeRequested_t>( x => OnGameServerChangeRequested?.Invoke( x.ServerUTF8(), x.PasswordUTF8() ) );
 			Dispatch.Install<GameLobbyJoinRequested_t>( x => OnGameLobbyJoinRequested?.Invoke( new Lobby( x.SteamIDLobby ), x.SteamIDFriend ) );
@@ -42,6 +43,11 @@ namespace Steamworks
 		/// ListenForFriendsMessages to recieve this. (friend, msgtype, message)
 		/// </summary>
 		public static event Action<Friend, string, string> OnChatMessage;
+
+		/// <summary>
+		/// Called when a chat message has been received in a Steam group chat that we are in. Associated Functions: JoinClanChatRoom. (friend, msgtype, message)
+		/// </summary>
+		public static event Action<Friend, string, string> OnClanChatMessage;
 
 		/// <summary>
 		/// called when a friends' status changes
@@ -104,7 +110,28 @@ namespace Steamworks
 
 			OnChatMessage( friend, typeName, message );
 		}
-		
+
+		static unsafe void OnGameConnectedClanChatMessage( GameConnectedClanChatMsg_t data )
+		{
+			if ( OnClanChatMessage == null ) return;
+
+			var friend = new Friend( data.SteamIDUser );
+
+			var buffer = Helpers.TakeMemory();
+			var type = ChatEntryType.ChatMsg;
+			SteamId chatter = data.SteamIDUser;
+
+			var len = Internal.GetClanChatMessage( data.SteamIDClanChat, data.MessageID, buffer, Helpers.MemoryBufferSize, ref type, ref chatter );
+
+			if ( len == 0 && type == ChatEntryType.Invalid )
+				return;
+
+			var typeName = type.ToString();
+			var message = Helpers.MemoryToString( buffer );
+
+			OnClanChatMessage( friend, typeName, message );
+		}
+
 		private static IEnumerable<Friend> GetFriendsWithFlag(FriendFlags flag)
 		{
 			for ( int i=0; i<Internal.GetFriendCount( (int)flag); i++ )
@@ -360,5 +387,18 @@ namespace Steamworks
 			return Internal.RegisterProtocolInOverlayBrowser( protocol );
         }
 
+		public static async Task<bool> JoinClanChatRoom( SteamId chatId )
+		{
+			var result = await Internal.JoinClanChatRoom( chatId );
+			if ( !result.HasValue )
+				return false;
+
+			return result.Value.ChatRoomEnterResponse == RoomEnter.Success ;
+		}
+
+		public static bool SendClanChatRoomMessage( SteamId chatId, string message )
+		{
+			return Internal.SendClanChatMessage( chatId, message );
+		}
 	}
 }
