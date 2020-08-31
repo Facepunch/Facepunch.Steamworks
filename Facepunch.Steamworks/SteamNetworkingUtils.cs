@@ -188,6 +188,21 @@ namespace Steamworks
 			set => SetConfigInt( NetConfig.SendBufferSize, value );
 		}
 
+		/// <summary>
+		/// Don't automatically fail IP connections that don't have
+		/// strong auth.  On clients, this means we will attempt the connection even if
+		/// we don't know our identity or can't get a cert.  On the server, it means that
+		/// we won't automatically reject a connection due to a failure to authenticate.
+		/// (You can examine the incoming connection and decide whether to accept it.)
+		///
+		/// This is a dev configuration value, and you should not let users modify it in
+		/// production.
+		/// </summary>
+		public static int AllowWithoutAuth
+		{
+			get => GetConfigInt( NetConfig.IP_AllowWithoutAuth );
+			set => SetConfigInt( NetConfig.IP_AllowWithoutAuth, value );
+		}
 
 		/// <summary>
 		/// Get Debug Information via OnDebugOutput event
