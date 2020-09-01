@@ -237,5 +237,24 @@ namespace Steamworks
 			SetConnectionManager( t.Connection.Id, t );
 			return t;
 		}
+
+		/// <summary>
+		/// Connect to a relay server
+		/// </summary>
+		public static ConnectionManager ConnectRelay( SteamId serverId, int virtualport, IConnectionManager iface )
+		{
+			NetIdentity identity = serverId;
+			var options = Array.Empty<NetKeyValue>();
+			var connection = Internal.ConnectP2P( ref identity, virtualport, options.Length, options );
+
+			var t = new ConnectionManager
+			{
+				Connection = connection,
+				Interface = iface
+			};
+
+			SetConnectionManager( t.Connection.Id, t );
+			return t;
+		}
 	}
 }
