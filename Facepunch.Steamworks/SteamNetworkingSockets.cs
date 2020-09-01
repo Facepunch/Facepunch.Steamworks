@@ -12,6 +12,25 @@ namespace Steamworks
 	{
 		internal static ISteamNetworkingSockets Internal => Interface as ISteamNetworkingSockets;
 
+		/// <summary>
+		/// Get the identity assigned to this interface.
+		/// E.g. on Steam, this is the user's SteamID, or for the gameserver interface, the SteamID assigned
+		/// to the gameserver.  Returns false and sets the result to an invalid identity if we don't know
+		/// our identity yet.  (E.g. GameServer has not logged in.  On Steam, the user will know their SteamID
+		/// even if they are not signed into Steam.)
+		/// </summary>
+		public static NetIdentity Identity
+		{
+			get
+			{
+				NetIdentity identity = default;
+
+				Internal.GetIdentity( ref identity );
+
+				return identity;
+			}
+		}
+
 		internal override void InitializeInterface( bool server )
 		{
 			SetInterface( server, new ISteamNetworkingSockets( server ) );
