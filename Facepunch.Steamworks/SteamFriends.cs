@@ -195,7 +195,7 @@ namespace Steamworks
 		/// <summary>
 		/// Activates the Steam Overlay to the Steam store page for the provided app.
 		/// </summary>
-		public static void OpenStoreOverlay( AppId id ) => Internal.ActivateGameOverlayToStore( id.Value, OverlayToStoreFlag.None );
+		public static void OpenStoreOverlay( AppId id, OverlayToStoreFlag overlayToStoreFlag = OverlayToStoreFlag.None ) => Internal.ActivateGameOverlayToStore( id.Value, OverlayToStoreFlag.None );
 
 		/// <summary>
 		/// Activates Steam Overlay web browser directly to the specified URL.
