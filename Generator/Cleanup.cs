@@ -142,6 +142,7 @@ public static class Cleanup
 		if ( name == "NetIdentity" ) return "public";
 		if ( name == "NetAddress" ) return "public";
 		if ( name == "NetDebugOutput" ) return "public";
+		if ( name == "ItemPreviewType" ) return "public";
 
 		return "internal";
 	}

@@ -17,17 +17,6 @@ namespace Steamworks.Data
 
 		public string UrlOrVideoID { get; private set; }
 		public string OriginalFileName { get; private set; }
-		internal ItemPreviewType ItemPreviewType { get; private set; }
-
-		/// <summary>
-		/// Flags that specify the type of preview an item has:
-		/// Image = 0,
-		/// YouTubeVideo = 1,
-		/// Sketchfab = 2,
-		/// EnvironmentMap_HorizontalCross = 3,
-		/// EnvironmentMap_LatLong = 4,
-		/// ReservedMax = 255
-		/// </summary>
-		public int GetItemPreviewType() => (int)ItemPreviewType;
+		public ItemPreviewType ItemPreviewType { get; private set; }
 	}
 }
