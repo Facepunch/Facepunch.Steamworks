@@ -681,7 +681,7 @@ namespace Steamworks
 	//
 	// EOverlayToStoreFlag
 	//
-	internal enum OverlayToStoreFlag : int
+	public enum OverlayToStoreFlag : int
 	{
 		None = 0,
 		AddToCart = 1,
