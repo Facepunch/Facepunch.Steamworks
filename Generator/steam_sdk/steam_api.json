@@ -1623,19 +1623,6 @@
         { "fieldname":"m_unVideoAppID", "fieldtype":"AppId_t" }
       ],
       "struct": "GetOPFSettingsResult_t"
-    },    {
-      "callback_id": 4604,
-      "fields": [
-        { "fieldname":"m_bIsRTMP", "fieldtype":"bool" }
-      ],
-      "struct": "BroadcastUploadStart_t"
-    },
-    {
-      "callback_id": 4605,
-      "fields": [
-        { "fieldname":"m_eResult", "fieldtype":"EBroadcastUploadResult" }
-      ],
-      "struct": "BroadcastUploadStop_t"
     },
     {
       "callback_id": 5001,
@@ -1655,6 +1642,20 @@
         { "fieldname":"m_unSessionID", "fieldtype":"RemotePlaySessionID_t" }
       ],
       "struct": "SteamRemotePlaySessionDisconnected_t"
+    },
+    {
+      "callback_id": 1251,
+      "fields": [
+        { "fieldname":"m_identityRemote", "fieldtype":"SteamNetworkingIdentity" }
+      ],
+      "struct": "SteamNetworkingMessagesSessionRequest_t"
+    },
+    {
+      "callback_id": 1252,
+      "fields": [
+        { "fieldname":"m_info", "fieldtype":"SteamNetConnectionInfo_t" }
+      ],
+      "struct": "SteamNetworkingMessagesSessionFailed_t"
     },
     {
       "callback_id": 1221,
@@ -1879,6 +1880,7 @@
     { "constname":"k_nSteamNetworkingSend_Reliable", "consttype":"int", "constval":"8" },
     { "constname":"k_nSteamNetworkingSend_ReliableNoNagle", "consttype":"int", "constval":"k_nSteamNetworkingSend_Reliable | k_nSteamNetworkingSend_NoNagle" },
     { "constname":"k_nSteamNetworkingSend_UseCurrentThread", "consttype":"int", "constval":"16" },
+    { "constname":"k_nSteamNetworkingSend_AutoRestartBrokenSession", "consttype":"int", "constval":"32" },
     { "constname":"k_cchMaxSteamNetworkingPingLocationString", "consttype":"int", "constval":"1024" },
     { "constname":"k_nSteamNetworkingPing_Failed", "consttype":"int", "constval":"- 1" },
     { "constname":"k_nSteamNetworkingPing_Unknown", "consttype":"int", "constval":"- 2" },
@@ -2564,6 +2566,15 @@
       "values": [
         { "name":"k_EGamepadTextInputLineModeSingleLine", "value":"0" },
         { "name":"k_EGamepadTextInputLineModeMultipleLines", "value":"1" }
+      ]
+    },
+    {
+      "enumname": "ETextFilteringContext",
+      "values": [
+        { "name":"k_ETextFilteringContextUnknown", "value":"0" },
+        { "name":"k_ETextFilteringContextGameContent", "value":"1" },
+        { "name":"k_ETextFilteringContextChat", "value":"2" },
+        { "name":"k_ETextFilteringContextName", "value":"3" }
       ]
     },
     {
@@ -3754,6 +3765,7 @@
         { "name":"k_ESteamNetConnectionEnd_Misc_NoRelaySessionsToClient", "value":"5006" },
         { "name":"k_ESteamNetConnectionEnd_Misc_P2P_Rendezvous", "value":"5008" },
         { "name":"k_ESteamNetConnectionEnd_Misc_P2P_NAT_Firewall", "value":"5009" },
+        { "name":"k_ESteamNetConnectionEnd_Misc_PeerSentNoConnection", "value":"5010" },
         { "name":"k_ESteamNetConnectionEnd_Misc_Max", "value":"5999" },
         { "name":"k_ESteamNetConnectionEnd__Force32Bit", "value":"2147483647" }
       ]
@@ -3789,7 +3801,7 @@
         { "name":"k_ESteamNetworkingConfig_Int64", "value":"2" },
         { "name":"k_ESteamNetworkingConfig_Float", "value":"3" },
         { "name":"k_ESteamNetworkingConfig_String", "value":"4" },
-        { "name":"k_ESteamNetworkingConfig_FunctionPtr", "value":"5" },
+        { "name":"k_ESteamNetworkingConfig_Ptr", "value":"5" },
         { "name":"k_ESteamNetworkingConfigDataType__Force32Bit", "value":"2147483647" }
       ]
     },
@@ -3818,6 +3830,13 @@
         { "name":"k_ESteamNetworkingConfig_MTU_DataSize", "value":"33" },
         { "name":"k_ESteamNetworkingConfig_Unencrypted", "value":"34" },
         { "name":"k_ESteamNetworkingConfig_EnumerateDevVars", "value":"35" },
+        { "name":"k_ESteamNetworkingConfig_SymmetricConnect", "value":"37" },
+        { "name":"k_ESteamNetworkingConfig_LocalVirtualPort", "value":"38" },
+        { "name":"k_ESteamNetworkingConfig_Callback_ConnectionStatusChanged", "value":"201" },
+        { "name":"k_ESteamNetworkingConfig_Callback_AuthStatusChanged", "value":"202" },
+        { "name":"k_ESteamNetworkingConfig_Callback_RelayNetworkStatusChanged", "value":"203" },
+        { "name":"k_ESteamNetworkingConfig_Callback_MessagesSessionRequest", "value":"204" },
+        { "name":"k_ESteamNetworkingConfig_Callback_MessagesSessionFailed", "value":"205" },
         { "name":"k_ESteamNetworkingConfig_P2P_STUN_ServerList", "value":"103" },
         { "name":"k_ESteamNetworkingConfig_P2P_Transport_ICE_Enable", "value":"104" },
         { "name":"k_ESteamNetworkingConfig_P2P_Transport_ICE_Penalty", "value":"105" },
@@ -5170,12 +5189,12 @@
         {
           "kind": "user",
           "name": "SteamUtils",
-          "name_flat": "SteamAPI_SteamUtils_v009"
+          "name_flat": "SteamAPI_SteamUtils_v010"
         },
         {
           "kind": "gameserver",
           "name": "SteamGameServerUtils",
-          "name_flat": "SteamAPI_SteamGameServerUtils_v009"
+          "name_flat": "SteamAPI_SteamGameServerUtils_v010"
         }
       ],
       "classname": "ISteamUtils",
@@ -5407,17 +5426,20 @@
         {
           "methodname": "InitFilterText",
           "methodname_flat": "SteamAPI_ISteamUtils_InitFilterText",
-          "params": [],
+          "params": [
+            { "paramname":"unFilterOptions", "paramtype":"uint32" }
+          ],
           "returntype": "bool"
         },
         {
           "methodname": "FilterText",
           "methodname_flat": "SteamAPI_ISteamUtils_FilterText",
           "params": [
-            { "paramname":"pchOutFilteredText", "paramtype":"char *" },
-            { "paramname":"nByteSizeOutFilteredText", "paramtype":"uint32" },
+            { "paramname":"eContext", "paramtype":"ETextFilteringContext" },
+            { "paramname":"sourceSteamID", "paramtype":"CSteamID", "paramtype_flat":"uint64_steamid" },
             { "paramname":"pchInputMessage", "paramtype":"const char *" },
-            { "paramname":"bLegalOnly", "paramtype":"bool" }
+            { "paramname":"pchOutFilteredText", "paramtype":"char *" },
+            { "paramname":"nByteSizeOutFilteredText", "paramtype":"uint32" }
           ],
           "returntype": "int"
         },
@@ -5430,7 +5452,7 @@
           "returntype": "ESteamIPv6ConnectivityState"
         }
       ],
-      "version_string": "SteamUtils009"
+      "version_string": "SteamUtils010"
     },
     {
       "accessors": [
@@ -11161,13 +11183,89 @@
       "accessors": [
         {
           "kind": "user",
+          "name": "SteamNetworkingMessages",
+          "name_flat": "SteamAPI_SteamNetworkingMessages_v002"
+        },
+        {
+          "kind": "gameserver",
+          "name": "SteamGameServerNetworkingMessages",
+          "name_flat": "SteamAPI_SteamGameServerNetworkingMessages_v002"
+        }
+      ],
+      "classname": "ISteamNetworkingMessages",
+      "fields": [],
+      "methods": [
+        {
+          "methodname": "SendMessageToUser",
+          "methodname_flat": "SteamAPI_ISteamNetworkingMessages_SendMessageToUser",
+          "params": [
+            { "paramname":"identityRemote", "paramtype":"const SteamNetworkingIdentity &" },
+            { "paramname":"pubData", "paramtype":"const void *" },
+            { "paramname":"cubData", "paramtype":"uint32" },
+            { "paramname":"nSendFlags", "paramtype":"int" },
+            { "paramname":"nRemoteChannel", "paramtype":"int" }
+          ],
+          "returntype": "EResult"
+        },
+        {
+          "methodname": "ReceiveMessagesOnChannel",
+          "methodname_flat": "SteamAPI_ISteamNetworkingMessages_ReceiveMessagesOnChannel",
+          "params": [
+            { "paramname":"nLocalChannel", "paramtype":"int" },
+            { "paramname":"ppOutMessages", "paramtype":"SteamNetworkingMessage_t **" },
+            { "paramname":"nMaxMessages", "paramtype":"int" }
+          ],
+          "returntype": "int"
+        },
+        {
+          "methodname": "AcceptSessionWithUser",
+          "methodname_flat": "SteamAPI_ISteamNetworkingMessages_AcceptSessionWithUser",
+          "params": [
+            { "paramname":"identityRemote", "paramtype":"const SteamNetworkingIdentity &" }
+          ],
+          "returntype": "bool"
+        },
+        {
+          "methodname": "CloseSessionWithUser",
+          "methodname_flat": "SteamAPI_ISteamNetworkingMessages_CloseSessionWithUser",
+          "params": [
+            { "paramname":"identityRemote", "paramtype":"const SteamNetworkingIdentity &" }
+          ],
+          "returntype": "bool"
+        },
+        {
+          "methodname": "CloseChannelWithUser",
+          "methodname_flat": "SteamAPI_ISteamNetworkingMessages_CloseChannelWithUser",
+          "params": [
+            { "paramname":"identityRemote", "paramtype":"const SteamNetworkingIdentity &" },
+            { "paramname":"nLocalChannel", "paramtype":"int" }
+          ],
+          "returntype": "bool"
+        },
+        {
+          "methodname": "GetSessionConnectionInfo",
+          "methodname_flat": "SteamAPI_ISteamNetworkingMessages_GetSessionConnectionInfo",
+          "params": [
+            { "paramname":"identityRemote", "paramtype":"const SteamNetworkingIdentity &" },
+            { "paramname":"pConnectionInfo", "paramtype":"SteamNetConnectionInfo_t *" },
+            { "paramname":"pQuickStatus", "paramtype":"SteamNetworkingQuickConnectionStatus *" }
+          ],
+          "returntype": "ESteamNetworkingConnectionState"
+        }
+      ],
+      "version_string": "SteamNetworkingMessages002"
+    },
+    {
+      "accessors": [
+        {
+          "kind": "user",
           "name": "SteamNetworkingSockets",
-          "name_flat": "SteamAPI_SteamNetworkingSockets_v008"
+          "name_flat": "SteamAPI_SteamNetworkingSockets_v009"
         },
         {
           "kind": "gameserver",
           "name": "SteamGameServerNetworkingSockets",
-          "name_flat": "SteamAPI_SteamGameServerNetworkingSockets_v008"
+          "name_flat": "SteamAPI_SteamGameServerNetworkingSockets_v009"
         }
       ],
       "classname": "ISteamNetworkingSockets",
@@ -11197,7 +11295,7 @@
           "methodname": "CreateListenSocketP2P",
           "methodname_flat": "SteamAPI_ISteamNetworkingSockets_CreateListenSocketP2P",
           "params": [
-            { "paramname":"nVirtualPort", "paramtype":"int" },
+            { "paramname":"nLocalVirtualPort", "paramtype":"int" },
             { "paramname":"nOptions", "paramtype":"int" },
             { "paramname":"pOptions", "paramtype":"const SteamNetworkingConfigValue_t *" }
           ],
@@ -11208,7 +11306,7 @@
           "methodname_flat": "SteamAPI_ISteamNetworkingSockets_ConnectP2P",
           "params": [
             { "paramname":"identityRemote", "paramtype":"const SteamNetworkingIdentity &" },
-            { "paramname":"nVirtualPort", "paramtype":"int" },
+            { "paramname":"nRemoteVirtualPort", "paramtype":"int" },
             { "paramname":"nOptions", "paramtype":"int" },
             { "paramname":"pOptions", "paramtype":"const SteamNetworkingConfigValue_t *" }
           ],
@@ -11436,7 +11534,7 @@
           "methodname_flat": "SteamAPI_ISteamNetworkingSockets_FindRelayAuthTicketForServer",
           "params": [
             { "paramname":"identityGameServer", "paramtype":"const SteamNetworkingIdentity &" },
-            { "paramname":"nVirtualPort", "paramtype":"int" },
+            { "paramname":"nRemoteVirtualPort", "paramtype":"int" },
             { "paramname":"pOutParsedTicket", "paramtype":"SteamDatagramRelayAuthTicket *" }
           ],
           "returntype": "int"
@@ -11446,7 +11544,7 @@
           "methodname_flat": "SteamAPI_ISteamNetworkingSockets_ConnectToHostedDedicatedServer",
           "params": [
             { "paramname":"identityTarget", "paramtype":"const SteamNetworkingIdentity &" },
-            { "paramname":"nVirtualPort", "paramtype":"int" },
+            { "paramname":"nRemoteVirtualPort", "paramtype":"int" },
             { "paramname":"nOptions", "paramtype":"int" },
             { "paramname":"pOptions", "paramtype":"const SteamNetworkingConfigValue_t *" }
           ],
@@ -11476,7 +11574,7 @@
           "methodname": "CreateHostedDedicatedServerListenSocket",
           "methodname_flat": "SteamAPI_ISteamNetworkingSockets_CreateHostedDedicatedServerListenSocket",
           "params": [
-            { "paramname":"nVirtualPort", "paramtype":"int" },
+            { "paramname":"nLocalVirtualPort", "paramtype":"int" },
             { "paramname":"nOptions", "paramtype":"int" },
             { "paramname":"pOptions", "paramtype":"const SteamNetworkingConfigValue_t *" }
           ],
@@ -11498,6 +11596,7 @@
           "params": [
             { "paramname":"pSignaling", "paramtype":"ISteamNetworkingConnectionCustomSignaling *" },
             { "paramname":"pPeerIdentity", "paramtype":"const SteamNetworkingIdentity *" },
+            { "paramname":"nRemoteVirtualPort", "paramtype":"int" },
             { "paramname":"nOptions", "paramtype":"int" },
             { "paramname":"pOptions", "paramtype":"const SteamNetworkingConfigValue_t *" }
           ],
@@ -11532,57 +11631,15 @@
             { "paramname":"errMsg", "paramtype":"SteamNetworkingErrMsg &" }
           ],
           "returntype": "bool"
-        }
-      ],
-      "version_string": "SteamNetworkingSockets008"
-    },
-    {
-      "classname": "ISteamNetworkingConnectionCustomSignaling",
-      "fields": [],
-      "methods": [
-        {
-          "methodname": "SendSignal",
-          "methodname_flat": "SteamAPI_ISteamNetworkingConnectionCustomSignaling_SendSignal",
-          "params": [
-            { "paramname":"hConn", "paramtype":"HSteamNetConnection" },
-            { "paramname":"info", "paramtype":"const SteamNetConnectionInfo_t &" },
-            { "paramname":"pMsg", "paramtype":"const void *" },
-            { "paramname":"cbMsg", "paramtype":"int" }
-          ],
-          "returntype": "bool"
         },
         {
-          "methodname": "Release",
-          "methodname_flat": "SteamAPI_ISteamNetworkingConnectionCustomSignaling_Release",
+          "methodname": "RunCallbacks",
+          "methodname_flat": "SteamAPI_ISteamNetworkingSockets_RunCallbacks",
           "params": [],
           "returntype": "void"
         }
-      ]
-    },
-    {
-      "classname": "ISteamNetworkingCustomSignalingRecvContext",
-      "fields": [],
-      "methods": [
-        {
-          "methodname": "OnConnectRequest",
-          "methodname_flat": "SteamAPI_ISteamNetworkingCustomSignalingRecvContext_OnConnectRequest",
-          "params": [
-            { "paramname":"hConn", "paramtype":"HSteamNetConnection" },
-            { "paramname":"identityPeer", "paramtype":"const SteamNetworkingIdentity &" }
-          ],
-          "returntype": "ISteamNetworkingConnectionCustomSignaling *"
-        },
-        {
-          "methodname": "SendRejectionSignal",
-          "methodname_flat": "SteamAPI_ISteamNetworkingCustomSignalingRecvContext_SendRejectionSignal",
-          "params": [
-            { "paramname":"identityPeer", "paramtype":"const SteamNetworkingIdentity &" },
-            { "paramname":"pMsg", "paramtype":"const void *" },
-            { "paramname":"cbMsg", "paramtype":"int" }
-          ],
-          "returntype": "void"
-        }
-      ]
+      ],
+      "version_string": "SteamNetworkingSockets009"
     },
     {
       "accessors": [
@@ -11744,6 +11801,15 @@
           "returntype": "bool"
         },
         {
+          "methodname": "SetGlobalConfigValuePtr",
+          "methodname_flat": "SteamAPI_ISteamNetworkingUtils_SetGlobalConfigValuePtr",
+          "params": [
+            { "paramname":"eValue", "paramtype":"ESteamNetworkingConfigValue" },
+            { "paramname":"val", "paramtype":"void *" }
+          ],
+          "returntype": "bool"
+        },
+        {
           "methodname": "SetConnectionConfigValueInt32",
           "methodname_flat": "SteamAPI_ISteamNetworkingUtils_SetConnectionConfigValueInt32",
           "params": [
@@ -11770,6 +11836,46 @@
             { "paramname":"hConn", "paramtype":"HSteamNetConnection" },
             { "paramname":"eValue", "paramtype":"ESteamNetworkingConfigValue" },
             { "paramname":"val", "paramtype":"const char *" }
+          ],
+          "returntype": "bool"
+        },
+        {
+          "methodname": "SetGlobalCallback_SteamNetConnectionStatusChanged",
+          "methodname_flat": "SteamAPI_ISteamNetworkingUtils_SetGlobalCallback_SteamNetConnectionStatusChanged",
+          "params": [
+            { "paramname":"fnCallback", "paramtype":"FnSteamNetConnectionStatusChanged" }
+          ],
+          "returntype": "bool"
+        },
+        {
+          "methodname": "SetGlobalCallback_SteamNetAuthenticationStatusChanged",
+          "methodname_flat": "SteamAPI_ISteamNetworkingUtils_SetGlobalCallback_SteamNetAuthenticationStatusChanged",
+          "params": [
+            { "paramname":"fnCallback", "paramtype":"FnSteamNetAuthenticationStatusChanged" }
+          ],
+          "returntype": "bool"
+        },
+        {
+          "methodname": "SetGlobalCallback_SteamRelayNetworkStatusChanged",
+          "methodname_flat": "SteamAPI_ISteamNetworkingUtils_SetGlobalCallback_SteamRelayNetworkStatusChanged",
+          "params": [
+            { "paramname":"fnCallback", "paramtype":"FnSteamRelayNetworkStatusChanged" }
+          ],
+          "returntype": "bool"
+        },
+        {
+          "methodname": "SetGlobalCallback_MessagesSessionRequest",
+          "methodname_flat": "SteamAPI_ISteamNetworkingUtils_SetGlobalCallback_MessagesSessionRequest",
+          "params": [
+            { "paramname":"fnCallback", "paramtype":"FnSteamNetworkingMessagesSessionRequest" }
+          ],
+          "returntype": "bool"
+        },
+        {
+          "methodname": "SetGlobalCallback_MessagesSessionFailed",
+          "methodname_flat": "SteamAPI_ISteamNetworkingUtils_SetGlobalCallback_MessagesSessionFailed",
+          "params": [
+            { "paramname":"fnCallback", "paramtype":"FnSteamNetworkingMessagesSessionFailed" }
           ],
           "returntype": "bool"
         },
@@ -12964,6 +13070,53 @@
         { "fieldname":"m_eDataType", "fieldtype":"ESteamNetworkingConfigDataType" },
         { "fieldname":"m_int64", "fieldtype":"int64_t" }
       ],
+      "methods": [
+        {
+          "methodname": "SetInt32",
+          "methodname_flat": "SteamAPI_SteamNetworkingConfigValue_t_SetInt32",
+          "params": [
+            { "paramname":"eVal", "paramtype":"ESteamNetworkingConfigValue" },
+            { "paramname":"data", "paramtype":"int32_t" }
+          ],
+          "returntype": "void"
+        },
+        {
+          "methodname": "SetInt64",
+          "methodname_flat": "SteamAPI_SteamNetworkingConfigValue_t_SetInt64",
+          "params": [
+            { "paramname":"eVal", "paramtype":"ESteamNetworkingConfigValue" },
+            { "paramname":"data", "paramtype":"int64_t" }
+          ],
+          "returntype": "void"
+        },
+        {
+          "methodname": "SetFloat",
+          "methodname_flat": "SteamAPI_SteamNetworkingConfigValue_t_SetFloat",
+          "params": [
+            { "paramname":"eVal", "paramtype":"ESteamNetworkingConfigValue" },
+            { "paramname":"data", "paramtype":"float" }
+          ],
+          "returntype": "void"
+        },
+        {
+          "methodname": "SetPtr",
+          "methodname_flat": "SteamAPI_SteamNetworkingConfigValue_t_SetPtr",
+          "params": [
+            { "paramname":"eVal", "paramtype":"ESteamNetworkingConfigValue" },
+            { "paramname":"data", "paramtype":"void *" }
+          ],
+          "returntype": "void"
+        },
+        {
+          "methodname": "SetString",
+          "methodname_flat": "SteamAPI_SteamNetworkingConfigValue_t_SetString",
+          "params": [
+            { "paramname":"eVal", "paramtype":"ESteamNetworkingConfigValue" },
+            { "paramname":"data", "paramtype":"const char *" }
+          ],
+          "returntype": "void"
+        }
+      ],
       "struct": "SteamNetworkingConfigValue_t"
     },
     {
@@ -13131,6 +13284,11 @@
     { "typedef":"SteamInventoryResult_t", "type":"int" },
     { "typedef":"SteamInventoryUpdateHandle_t", "type":"unsigned long long" },
     { "typedef":"RemotePlaySessionID_t", "type":"unsigned int" },
+    { "typedef":"FnSteamNetConnectionStatusChanged", "type":"void (*)(SteamNetConnectionStatusChangedCallback_t *)" },
+    { "typedef":"FnSteamNetAuthenticationStatusChanged", "type":"void (*)(SteamNetAuthenticationStatus_t *)" },
+    { "typedef":"FnSteamRelayNetworkStatusChanged", "type":"void (*)(SteamRelayNetworkStatus_t *)" },
+    { "typedef":"FnSteamNetworkingMessagesSessionRequest", "type":"void (*)(SteamNetworkingMessagesSessionRequest_t *)" },
+    { "typedef":"FnSteamNetworkingMessagesSessionFailed", "type":"void (*)(SteamNetworkingMessagesSessionFailed_t *)" },
     { "typedef":"HSteamNetConnection", "type":"unsigned int" },
     { "typedef":"HSteamListenSocket", "type":"unsigned int" },
     { "typedef":"HSteamNetPollGroup", "type":"unsigned int" },

@@ -169,8 +169,8 @@ S_API void SteamAPI_ISteamFriends_ActivateGameOverlayRemotePlayTogetherInviteDia
 S_API bool SteamAPI_ISteamFriends_RegisterProtocolInOverlayBrowser( ISteamFriends* self, const char * pchProtocol );
 
 // ISteamUtils
-S_API ISteamUtils *SteamAPI_SteamUtils_v009();
-S_API ISteamUtils *SteamAPI_SteamGameServerUtils_v009();
+S_API ISteamUtils *SteamAPI_SteamUtils_v010();
+S_API ISteamUtils *SteamAPI_SteamGameServerUtils_v010();
 S_API uint32 SteamAPI_ISteamUtils_GetSecondsSinceAppActive( ISteamUtils* self );
 S_API uint32 SteamAPI_ISteamUtils_GetSecondsSinceComputerActive( ISteamUtils* self );
 S_API EUniverse SteamAPI_ISteamUtils_GetConnectedUniverse( ISteamUtils* self );
@@ -201,8 +201,8 @@ S_API void SteamAPI_ISteamUtils_StartVRDashboard( ISteamUtils* self );
 S_API bool SteamAPI_ISteamUtils_IsVRHeadsetStreamingEnabled( ISteamUtils* self );
 S_API void SteamAPI_ISteamUtils_SetVRHeadsetStreamingEnabled( ISteamUtils* self, bool bEnabled );
 S_API bool SteamAPI_ISteamUtils_IsSteamChinaLauncher( ISteamUtils* self );
-S_API bool SteamAPI_ISteamUtils_InitFilterText( ISteamUtils* self );
-S_API int SteamAPI_ISteamUtils_FilterText( ISteamUtils* self, char * pchOutFilteredText, uint32 nByteSizeOutFilteredText, const char * pchInputMessage, bool bLegalOnly );
+S_API bool SteamAPI_ISteamUtils_InitFilterText( ISteamUtils* self, uint32 unFilterOptions );
+S_API int SteamAPI_ISteamUtils_FilterText( ISteamUtils* self, ETextFilteringContext eContext, uint64_steamid sourceSteamID, const char * pchInputMessage, char * pchOutFilteredText, uint32 nByteSizeOutFilteredText );
 S_API ESteamIPv6ConnectivityState SteamAPI_ISteamUtils_GetIPv6ConnectivityState( ISteamUtils* self, ESteamIPv6ConnectivityProtocol eProtocol );
 
 // ISteamMatchmaking
@@ -844,13 +844,23 @@ S_API ESteamDeviceFormFactor SteamAPI_ISteamRemotePlay_GetSessionClientFormFacto
 S_API bool SteamAPI_ISteamRemotePlay_BGetSessionClientResolution( ISteamRemotePlay* self, RemotePlaySessionID_t unSessionID, int * pnResolutionX, int * pnResolutionY );
 S_API bool SteamAPI_ISteamRemotePlay_BSendRemotePlayTogetherInvite( ISteamRemotePlay* self, uint64_steamid steamIDFriend );
 
+// ISteamNetworkingMessages
+S_API ISteamNetworkingMessages *SteamAPI_SteamNetworkingMessages_v002();
+S_API ISteamNetworkingMessages *SteamAPI_SteamGameServerNetworkingMessages_v002();
+S_API EResult SteamAPI_ISteamNetworkingMessages_SendMessageToUser( ISteamNetworkingMessages* self, const SteamNetworkingIdentity & identityRemote, const void * pubData, uint32 cubData, int nSendFlags, int nRemoteChannel );
+S_API int SteamAPI_ISteamNetworkingMessages_ReceiveMessagesOnChannel( ISteamNetworkingMessages* self, int nLocalChannel, SteamNetworkingMessage_t ** ppOutMessages, int nMaxMessages );
+S_API bool SteamAPI_ISteamNetworkingMessages_AcceptSessionWithUser( ISteamNetworkingMessages* self, const SteamNetworkingIdentity & identityRemote );
+S_API bool SteamAPI_ISteamNetworkingMessages_CloseSessionWithUser( ISteamNetworkingMessages* self, const SteamNetworkingIdentity & identityRemote );
+S_API bool SteamAPI_ISteamNetworkingMessages_CloseChannelWithUser( ISteamNetworkingMessages* self, const SteamNetworkingIdentity & identityRemote, int nLocalChannel );
+S_API ESteamNetworkingConnectionState SteamAPI_ISteamNetworkingMessages_GetSessionConnectionInfo( ISteamNetworkingMessages* self, const SteamNetworkingIdentity & identityRemote, SteamNetConnectionInfo_t * pConnectionInfo, SteamNetworkingQuickConnectionStatus * pQuickStatus );
+
 // ISteamNetworkingSockets
-S_API ISteamNetworkingSockets *SteamAPI_SteamNetworkingSockets_v008();
-S_API ISteamNetworkingSockets *SteamAPI_SteamGameServerNetworkingSockets_v008();
+S_API ISteamNetworkingSockets *SteamAPI_SteamNetworkingSockets_v009();
+S_API ISteamNetworkingSockets *SteamAPI_SteamGameServerNetworkingSockets_v009();
 S_API HSteamListenSocket SteamAPI_ISteamNetworkingSockets_CreateListenSocketIP( ISteamNetworkingSockets* self, const SteamNetworkingIPAddr & localAddress, int nOptions, const SteamNetworkingConfigValue_t * pOptions );
 S_API HSteamNetConnection SteamAPI_ISteamNetworkingSockets_ConnectByIPAddress( ISteamNetworkingSockets* self, const SteamNetworkingIPAddr & address, int nOptions, const SteamNetworkingConfigValue_t * pOptions );
-S_API HSteamListenSocket SteamAPI_ISteamNetworkingSockets_CreateListenSocketP2P( ISteamNetworkingSockets* self, int nVirtualPort, int nOptions, const SteamNetworkingConfigValue_t * pOptions );
-S_API HSteamNetConnection SteamAPI_ISteamNetworkingSockets_ConnectP2P( ISteamNetworkingSockets* self, const SteamNetworkingIdentity & identityRemote, int nVirtualPort, int nOptions, const SteamNetworkingConfigValue_t * pOptions );
+S_API HSteamListenSocket SteamAPI_ISteamNetworkingSockets_CreateListenSocketP2P( ISteamNetworkingSockets* self, int nLocalVirtualPort, int nOptions, const SteamNetworkingConfigValue_t * pOptions );
+S_API HSteamNetConnection SteamAPI_ISteamNetworkingSockets_ConnectP2P( ISteamNetworkingSockets* self, const SteamNetworkingIdentity & identityRemote, int nRemoteVirtualPort, int nOptions, const SteamNetworkingConfigValue_t * pOptions );
 S_API EResult SteamAPI_ISteamNetworkingSockets_AcceptConnection( ISteamNetworkingSockets* self, HSteamNetConnection hConn );
 S_API bool SteamAPI_ISteamNetworkingSockets_CloseConnection( ISteamNetworkingSockets* self, HSteamNetConnection hPeer, int nReason, const char * pszDebug, bool bEnableLinger );
 S_API bool SteamAPI_ISteamNetworkingSockets_CloseListenSocket( ISteamNetworkingSockets* self, HSteamListenSocket hSocket );
@@ -875,25 +885,18 @@ S_API bool SteamAPI_ISteamNetworkingSockets_DestroyPollGroup( ISteamNetworkingSo
 S_API bool SteamAPI_ISteamNetworkingSockets_SetConnectionPollGroup( ISteamNetworkingSockets* self, HSteamNetConnection hConn, HSteamNetPollGroup hPollGroup );
 S_API int SteamAPI_ISteamNetworkingSockets_ReceiveMessagesOnPollGroup( ISteamNetworkingSockets* self, HSteamNetPollGroup hPollGroup, SteamNetworkingMessage_t ** ppOutMessages, int nMaxMessages );
 S_API bool SteamAPI_ISteamNetworkingSockets_ReceivedRelayAuthTicket( ISteamNetworkingSockets* self, const void * pvTicket, int cbTicket, SteamDatagramRelayAuthTicket * pOutParsedTicket );
-S_API int SteamAPI_ISteamNetworkingSockets_FindRelayAuthTicketForServer( ISteamNetworkingSockets* self, const SteamNetworkingIdentity & identityGameServer, int nVirtualPort, SteamDatagramRelayAuthTicket * pOutParsedTicket );
-S_API HSteamNetConnection SteamAPI_ISteamNetworkingSockets_ConnectToHostedDedicatedServer( ISteamNetworkingSockets* self, const SteamNetworkingIdentity & identityTarget, int nVirtualPort, int nOptions, const SteamNetworkingConfigValue_t * pOptions );
+S_API int SteamAPI_ISteamNetworkingSockets_FindRelayAuthTicketForServer( ISteamNetworkingSockets* self, const SteamNetworkingIdentity & identityGameServer, int nRemoteVirtualPort, SteamDatagramRelayAuthTicket * pOutParsedTicket );
+S_API HSteamNetConnection SteamAPI_ISteamNetworkingSockets_ConnectToHostedDedicatedServer( ISteamNetworkingSockets* self, const SteamNetworkingIdentity & identityTarget, int nRemoteVirtualPort, int nOptions, const SteamNetworkingConfigValue_t * pOptions );
 S_API uint16 SteamAPI_ISteamNetworkingSockets_GetHostedDedicatedServerPort( ISteamNetworkingSockets* self );
 S_API SteamNetworkingPOPID SteamAPI_ISteamNetworkingSockets_GetHostedDedicatedServerPOPID( ISteamNetworkingSockets* self );
 S_API EResult SteamAPI_ISteamNetworkingSockets_GetHostedDedicatedServerAddress( ISteamNetworkingSockets* self, SteamDatagramHostedAddress * pRouting );
-S_API HSteamListenSocket SteamAPI_ISteamNetworkingSockets_CreateHostedDedicatedServerListenSocket( ISteamNetworkingSockets* self, int nVirtualPort, int nOptions, const SteamNetworkingConfigValue_t * pOptions );
+S_API HSteamListenSocket SteamAPI_ISteamNetworkingSockets_CreateHostedDedicatedServerListenSocket( ISteamNetworkingSockets* self, int nLocalVirtualPort, int nOptions, const SteamNetworkingConfigValue_t * pOptions );
 S_API EResult SteamAPI_ISteamNetworkingSockets_GetGameCoordinatorServerLogin( ISteamNetworkingSockets* self, SteamDatagramGameCoordinatorServerLogin * pLoginInfo, int * pcbSignedBlob, void * pBlob );
-S_API HSteamNetConnection SteamAPI_ISteamNetworkingSockets_ConnectP2PCustomSignaling( ISteamNetworkingSockets* self, ISteamNetworkingConnectionCustomSignaling * pSignaling, const SteamNetworkingIdentity * pPeerIdentity, int nOptions, const SteamNetworkingConfigValue_t * pOptions );
+S_API HSteamNetConnection SteamAPI_ISteamNetworkingSockets_ConnectP2PCustomSignaling( ISteamNetworkingSockets* self, ISteamNetworkingConnectionCustomSignaling * pSignaling, const SteamNetworkingIdentity * pPeerIdentity, int nRemoteVirtualPort, int nOptions, const SteamNetworkingConfigValue_t * pOptions );
 S_API bool SteamAPI_ISteamNetworkingSockets_ReceivedP2PCustomSignal( ISteamNetworkingSockets* self, const void * pMsg, int cbMsg, ISteamNetworkingCustomSignalingRecvContext * pContext );
 S_API bool SteamAPI_ISteamNetworkingSockets_GetCertificateRequest( ISteamNetworkingSockets* self, int * pcbBlob, void * pBlob, SteamNetworkingErrMsg & errMsg );
 S_API bool SteamAPI_ISteamNetworkingSockets_SetCertificate( ISteamNetworkingSockets* self, const void * pCertificate, int cbCertificate, SteamNetworkingErrMsg & errMsg );
-
-// ISteamNetworkingConnectionCustomSignaling
-S_API bool SteamAPI_ISteamNetworkingConnectionCustomSignaling_SendSignal( ISteamNetworkingConnectionCustomSignaling* self, HSteamNetConnection hConn, const SteamNetConnectionInfo_t & info, const void * pMsg, int cbMsg );
-S_API void SteamAPI_ISteamNetworkingConnectionCustomSignaling_Release( ISteamNetworkingConnectionCustomSignaling* self );
-
-// ISteamNetworkingCustomSignalingRecvContext
-S_API ISteamNetworkingConnectionCustomSignaling * SteamAPI_ISteamNetworkingCustomSignalingRecvContext_OnConnectRequest( ISteamNetworkingCustomSignalingRecvContext* self, HSteamNetConnection hConn, const SteamNetworkingIdentity & identityPeer );
-S_API void SteamAPI_ISteamNetworkingCustomSignalingRecvContext_SendRejectionSignal( ISteamNetworkingCustomSignalingRecvContext* self, const SteamNetworkingIdentity & identityPeer, const void * pMsg, int cbMsg );
+S_API void SteamAPI_ISteamNetworkingSockets_RunCallbacks( ISteamNetworkingSockets* self );
 
 // ISteamNetworkingUtils
 S_API ISteamNetworkingUtils *SteamAPI_SteamNetworkingUtils_v003();
@@ -915,9 +918,15 @@ S_API void SteamAPI_ISteamNetworkingUtils_SetDebugOutputFunction( ISteamNetworki
 S_API bool SteamAPI_ISteamNetworkingUtils_SetGlobalConfigValueInt32( ISteamNetworkingUtils* self, ESteamNetworkingConfigValue eValue, int32 val );
 S_API bool SteamAPI_ISteamNetworkingUtils_SetGlobalConfigValueFloat( ISteamNetworkingUtils* self, ESteamNetworkingConfigValue eValue, float val );
 S_API bool SteamAPI_ISteamNetworkingUtils_SetGlobalConfigValueString( ISteamNetworkingUtils* self, ESteamNetworkingConfigValue eValue, const char * val );
+S_API bool SteamAPI_ISteamNetworkingUtils_SetGlobalConfigValuePtr( ISteamNetworkingUtils* self, ESteamNetworkingConfigValue eValue, void * val );
 S_API bool SteamAPI_ISteamNetworkingUtils_SetConnectionConfigValueInt32( ISteamNetworkingUtils* self, HSteamNetConnection hConn, ESteamNetworkingConfigValue eValue, int32 val );
 S_API bool SteamAPI_ISteamNetworkingUtils_SetConnectionConfigValueFloat( ISteamNetworkingUtils* self, HSteamNetConnection hConn, ESteamNetworkingConfigValue eValue, float val );
 S_API bool SteamAPI_ISteamNetworkingUtils_SetConnectionConfigValueString( ISteamNetworkingUtils* self, HSteamNetConnection hConn, ESteamNetworkingConfigValue eValue, const char * val );
+S_API bool SteamAPI_ISteamNetworkingUtils_SetGlobalCallback_SteamNetConnectionStatusChanged( ISteamNetworkingUtils* self, FnSteamNetConnectionStatusChanged fnCallback );
+S_API bool SteamAPI_ISteamNetworkingUtils_SetGlobalCallback_SteamNetAuthenticationStatusChanged( ISteamNetworkingUtils* self, FnSteamNetAuthenticationStatusChanged fnCallback );
+S_API bool SteamAPI_ISteamNetworkingUtils_SetGlobalCallback_SteamRelayNetworkStatusChanged( ISteamNetworkingUtils* self, FnSteamRelayNetworkStatusChanged fnCallback );
+S_API bool SteamAPI_ISteamNetworkingUtils_SetGlobalCallback_MessagesSessionRequest( ISteamNetworkingUtils* self, FnSteamNetworkingMessagesSessionRequest fnCallback );
+S_API bool SteamAPI_ISteamNetworkingUtils_SetGlobalCallback_MessagesSessionFailed( ISteamNetworkingUtils* self, FnSteamNetworkingMessagesSessionFailed fnCallback );
 S_API bool SteamAPI_ISteamNetworkingUtils_SetConfigValue( ISteamNetworkingUtils* self, ESteamNetworkingConfigValue eValue, ESteamNetworkingConfigScope eScopeType, intptr_t scopeObj, ESteamNetworkingConfigDataType eDataType, const void * pArg );
 S_API bool SteamAPI_ISteamNetworkingUtils_SetConfigValueStruct( ISteamNetworkingUtils* self, const SteamNetworkingConfigValue_t & opt, ESteamNetworkingConfigScope eScopeType, intptr_t scopeObj );
 S_API ESteamNetworkingGetConfigValueResult SteamAPI_ISteamNetworkingUtils_GetConfigValue( ISteamNetworkingUtils* self, ESteamNetworkingConfigValue eValue, ESteamNetworkingConfigScope eScopeType, intptr_t scopeObj, ESteamNetworkingConfigDataType * pOutDataType, void * pResult, size_t * cbResult );
@@ -1048,6 +1057,13 @@ S_API bool SteamAPI_SteamNetworkingIdentity_ParseString( SteamNetworkingIdentity
 
 // SteamNetworkingMessage_t
 S_API void SteamAPI_SteamNetworkingMessage_t_Release( SteamNetworkingMessage_t* self );
+
+// SteamNetworkingConfigValue_t
+S_API void SteamAPI_SteamNetworkingConfigValue_t_SetInt32( SteamNetworkingConfigValue_t* self, ESteamNetworkingConfigValue eVal, int32_t data );
+S_API void SteamAPI_SteamNetworkingConfigValue_t_SetInt64( SteamNetworkingConfigValue_t* self, ESteamNetworkingConfigValue eVal, int64_t data );
+S_API void SteamAPI_SteamNetworkingConfigValue_t_SetFloat( SteamNetworkingConfigValue_t* self, ESteamNetworkingConfigValue eVal, float data );
+S_API void SteamAPI_SteamNetworkingConfigValue_t_SetPtr( SteamNetworkingConfigValue_t* self, ESteamNetworkingConfigValue eVal, void * data );
+S_API void SteamAPI_SteamNetworkingConfigValue_t_SetString( SteamNetworkingConfigValue_t* self, ESteamNetworkingConfigValue eVal, const char * data );
 
 // SteamNetworkingPOPIDRender
 S_API const char * SteamAPI_SteamNetworkingPOPIDRender_c_str( SteamNetworkingPOPIDRender* self );

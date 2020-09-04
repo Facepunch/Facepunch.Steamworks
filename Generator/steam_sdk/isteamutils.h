@@ -41,6 +41,17 @@ enum EGamepadTextInputLineMode
 	k_EGamepadTextInputLineModeMultipleLines = 1
 };
 
+
+// The context where text filtering is being done
+enum ETextFilteringContext
+{
+	k_ETextFilteringContextUnknown = 0,	// Unknown context
+	k_ETextFilteringContextGameContent = 1,	// Game content, only legally required filtering is performed
+	k_ETextFilteringContextChat = 2,	// Chat from another player
+	k_ETextFilteringContextName = 3,	// Character or item name
+};
+
+
 // function prototype for warning message hook
 #if defined( POSIX )
 #define __cdecl
@@ -173,23 +184,25 @@ public:
 	virtual bool IsSteamChinaLauncher() = 0;
 
 	// Initializes text filtering.
-	//   Returns false if filtering is unavailable for the language the user is currently running in.
-	virtual bool InitFilterText() = 0; 
+	//   unFilterOptions are reserved for future use and should be set to 0
+	// Returns false if filtering is unavailable for the language the user is currently running in.
+	virtual bool InitFilterText( uint32 unFilterOptions = 0 ) = 0;
 
-	// Filters the provided input message and places the filtered result into pchOutFilteredText.
-	//   pchOutFilteredText is where the output will be placed, even if no filtering or censoring is performed
-	//   nByteSizeOutFilteredText is the size (in bytes) of pchOutFilteredText
+	// Filters the provided input message and places the filtered result into pchOutFilteredText, using legally required filtering and additional filtering based on the context and user settings
+	//   eContext is the type of content in the input string
+	//   sourceSteamID is the Steam ID that is the source of the input string (e.g. the player with the name, or who said the chat text)
 	//   pchInputText is the input string that should be filtered, which can be ASCII or UTF-8
-	//   bLegalOnly should be false if you want profanity and legally required filtering (where required) and true if you want legally required filtering only
-	//   Returns the number of characters (not bytes) filtered.
-	virtual int FilterText( char* pchOutFilteredText, uint32 nByteSizeOutFilteredText, const char * pchInputMessage, bool bLegalOnly ) = 0;
+	//   pchOutFilteredText is where the output will be placed, even if no filtering is performed
+	//   nByteSizeOutFilteredText is the size (in bytes) of pchOutFilteredText, should be at least strlen(pchInputText)+1
+	// Returns the number of characters (not bytes) filtered
+	virtual int FilterText( ETextFilteringContext eContext, CSteamID sourceSteamID, const char *pchInputMessage, char *pchOutFilteredText, uint32 nByteSizeOutFilteredText ) = 0;
 
 	// Return what we believe your current ipv6 connectivity to "the internet" is on the specified protocol.
 	// This does NOT tell you if the Steam client is currently connected to Steam via ipv6.
 	virtual ESteamIPv6ConnectivityState GetIPv6ConnectivityState( ESteamIPv6ConnectivityProtocol eProtocol ) = 0;
 };
 
-#define STEAMUTILS_INTERFACE_VERSION "SteamUtils009"
+#define STEAMUTILS_INTERFACE_VERSION "SteamUtils010"
 
 // Global interface accessor
 inline ISteamUtils *SteamUtils();

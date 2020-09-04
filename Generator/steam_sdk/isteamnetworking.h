@@ -120,6 +120,10 @@ enum ESNetSocketConnectionType
 //-----------------------------------------------------------------------------
 // Purpose: Functions for making connections and sending data between clients,
 //			traversing NAT's where possible
+//
+// NOTE: This interface is deprecated and may be removed in a future release of
+///      the Steamworks SDK.  Please see ISteamNetworkingSockets and
+///      ISteamNetworkingMessages
 //-----------------------------------------------------------------------------
 class ISteamNetworking
 {
@@ -133,6 +137,9 @@ public:
 	// Both interface styles can send both reliable and unreliable messages.
 	//
 	// Automatically establishes NAT-traversing or Relay server connections
+	//
+	// These APIs are deprecated, and may be removed in a future version of the Steamworks
+	// SDK.  See ISteamNetworkingMessages.
 
 	// Sends a P2P packet to the specified user
 	// UDP-like, unreliable and a max packet size of 1200 bytes
@@ -181,6 +188,10 @@ public:
 	// or to existing connections that need to automatically reconnect after this value is set.
 	//
 	// P2P packet relay is allowed by default
+	//
+	// NOTE: This function is deprecated and may be removed in a future version of the SDK.  For
+	// security purposes, we may decide to relay the traffic to certain peers, even if you pass false
+	// to this function, to prevent revealing the client's IP address top another peer.
 	virtual bool AllowP2PPacketRelay( bool bAllow ) = 0;
 
 
@@ -197,6 +208,9 @@ public:
 	// simply send messages to a SteamID, use the UDP-style functions above.
 	//
 	// Both methods can send both reliable and unreliable methods.
+	//
+	// These APIs are deprecated, and may be removed in a future version of the Steamworks
+	// SDK.  See ISteamNetworkingSockets.
 	//
 	////////////////////////////////////////////////////////////////////////////////////////////
 
