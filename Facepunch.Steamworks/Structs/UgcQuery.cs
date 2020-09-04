@@ -152,6 +152,8 @@ namespace Steamworks.Ugc
 				ReturnsKeyValueTags = WantsReturnKeyValueTags ?? false,
 				ReturnsDefaultStats = WantsDefaultStats ?? true, //true by default
 				ReturnsMetadata = WantsReturnMetadata ?? false,
+				ReturnsChildren = WantsReturnChildren ?? false,
+				ReturnsAdditionalPreviews = WantsReturnAdditionalPreviews ?? false,
 			};
 		}
 
