@@ -806,6 +806,86 @@ namespace Steamworks.Data
 		public int CompareTo( RemotePlaySessionID_t other ) => Value.CompareTo( other.Value );
 	}
 	
+	internal struct FnSteamNetConnectionStatusChanged : IEquatable<FnSteamNetConnectionStatusChanged>, IComparable<FnSteamNetConnectionStatusChanged>
+	{
+		// Name: FnSteamNetConnectionStatusChanged, Type: void (*)(SteamNetConnectionStatusChangedCallback_t *)
+		public void (*)(SteamNetConnectionStatusChangedCallback_t *) Value;
+		
+		public static implicit operator FnSteamNetConnectionStatusChanged( void (*)(SteamNetConnectionStatusChangedCallback_t *) value ) => new FnSteamNetConnectionStatusChanged(){ Value = value };
+		public static implicit operator void (*)(SteamNetConnectionStatusChangedCallback_t *)( FnSteamNetConnectionStatusChanged value ) => value.Value;
+		public override string ToString() => Value.ToString();
+		public override int GetHashCode() => Value.GetHashCode();
+		public override bool Equals( object p ) => this.Equals( (FnSteamNetConnectionStatusChanged) p );
+		public bool Equals( FnSteamNetConnectionStatusChanged p ) => p.Value == Value;
+		public static bool operator ==( FnSteamNetConnectionStatusChanged a, FnSteamNetConnectionStatusChanged b ) => a.Equals( b );
+		public static bool operator !=( FnSteamNetConnectionStatusChanged a, FnSteamNetConnectionStatusChanged b ) => !a.Equals( b );
+		public int CompareTo( FnSteamNetConnectionStatusChanged other ) => Value.CompareTo( other.Value );
+	}
+	
+	internal struct FnSteamNetAuthenticationStatusChanged : IEquatable<FnSteamNetAuthenticationStatusChanged>, IComparable<FnSteamNetAuthenticationStatusChanged>
+	{
+		// Name: FnSteamNetAuthenticationStatusChanged, Type: void (*)(SteamNetAuthenticationStatus_t *)
+		public void (*)(SteamNetAuthenticationStatus_t *) Value;
+		
+		public static implicit operator FnSteamNetAuthenticationStatusChanged( void (*)(SteamNetAuthenticationStatus_t *) value ) => new FnSteamNetAuthenticationStatusChanged(){ Value = value };
+		public static implicit operator void (*)(SteamNetAuthenticationStatus_t *)( FnSteamNetAuthenticationStatusChanged value ) => value.Value;
+		public override string ToString() => Value.ToString();
+		public override int GetHashCode() => Value.GetHashCode();
+		public override bool Equals( object p ) => this.Equals( (FnSteamNetAuthenticationStatusChanged) p );
+		public bool Equals( FnSteamNetAuthenticationStatusChanged p ) => p.Value == Value;
+		public static bool operator ==( FnSteamNetAuthenticationStatusChanged a, FnSteamNetAuthenticationStatusChanged b ) => a.Equals( b );
+		public static bool operator !=( FnSteamNetAuthenticationStatusChanged a, FnSteamNetAuthenticationStatusChanged b ) => !a.Equals( b );
+		public int CompareTo( FnSteamNetAuthenticationStatusChanged other ) => Value.CompareTo( other.Value );
+	}
+	
+	internal struct FnSteamRelayNetworkStatusChanged : IEquatable<FnSteamRelayNetworkStatusChanged>, IComparable<FnSteamRelayNetworkStatusChanged>
+	{
+		// Name: FnSteamRelayNetworkStatusChanged, Type: void (*)(SteamRelayNetworkStatus_t *)
+		public void (*)(SteamRelayNetworkStatus_t *) Value;
+		
+		public static implicit operator FnSteamRelayNetworkStatusChanged( void (*)(SteamRelayNetworkStatus_t *) value ) => new FnSteamRelayNetworkStatusChanged(){ Value = value };
+		public static implicit operator void (*)(SteamRelayNetworkStatus_t *)( FnSteamRelayNetworkStatusChanged value ) => value.Value;
+		public override string ToString() => Value.ToString();
+		public override int GetHashCode() => Value.GetHashCode();
+		public override bool Equals( object p ) => this.Equals( (FnSteamRelayNetworkStatusChanged) p );
+		public bool Equals( FnSteamRelayNetworkStatusChanged p ) => p.Value == Value;
+		public static bool operator ==( FnSteamRelayNetworkStatusChanged a, FnSteamRelayNetworkStatusChanged b ) => a.Equals( b );
+		public static bool operator !=( FnSteamRelayNetworkStatusChanged a, FnSteamRelayNetworkStatusChanged b ) => !a.Equals( b );
+		public int CompareTo( FnSteamRelayNetworkStatusChanged other ) => Value.CompareTo( other.Value );
+	}
+	
+	internal struct FnSteamNetworkingMessagesSessionRequest : IEquatable<FnSteamNetworkingMessagesSessionRequest>, IComparable<FnSteamNetworkingMessagesSessionRequest>
+	{
+		// Name: FnSteamNetworkingMessagesSessionRequest, Type: void (*)(SteamNetworkingMessagesSessionRequest_t *)
+		public void (*)(SteamNetworkingMessagesSessionRequest_t *) Value;
+		
+		public static implicit operator FnSteamNetworkingMessagesSessionRequest( void (*)(SteamNetworkingMessagesSessionRequest_t *) value ) => new FnSteamNetworkingMessagesSessionRequest(){ Value = value };
+		public static implicit operator void (*)(SteamNetworkingMessagesSessionRequest_t *)( FnSteamNetworkingMessagesSessionRequest value ) => value.Value;
+		public override string ToString() => Value.ToString();
+		public override int GetHashCode() => Value.GetHashCode();
+		public override bool Equals( object p ) => this.Equals( (FnSteamNetworkingMessagesSessionRequest) p );
+		public bool Equals( FnSteamNetworkingMessagesSessionRequest p ) => p.Value == Value;
+		public static bool operator ==( FnSteamNetworkingMessagesSessionRequest a, FnSteamNetworkingMessagesSessionRequest b ) => a.Equals( b );
+		public static bool operator !=( FnSteamNetworkingMessagesSessionRequest a, FnSteamNetworkingMessagesSessionRequest b ) => !a.Equals( b );
+		public int CompareTo( FnSteamNetworkingMessagesSessionRequest other ) => Value.CompareTo( other.Value );
+	}
+	
+	internal struct FnSteamNetworkingMessagesSessionFailed : IEquatable<FnSteamNetworkingMessagesSessionFailed>, IComparable<FnSteamNetworkingMessagesSessionFailed>
+	{
+		// Name: FnSteamNetworkingMessagesSessionFailed, Type: void (*)(SteamNetworkingMessagesSessionFailed_t *)
+		public void (*)(SteamNetworkingMessagesSessionFailed_t *) Value;
+		
+		public static implicit operator FnSteamNetworkingMessagesSessionFailed( void (*)(SteamNetworkingMessagesSessionFailed_t *) value ) => new FnSteamNetworkingMessagesSessionFailed(){ Value = value };
+		public static implicit operator void (*)(SteamNetworkingMessagesSessionFailed_t *)( FnSteamNetworkingMessagesSessionFailed value ) => value.Value;
+		public override string ToString() => Value.ToString();
+		public override int GetHashCode() => Value.GetHashCode();
+		public override bool Equals( object p ) => this.Equals( (FnSteamNetworkingMessagesSessionFailed) p );
+		public bool Equals( FnSteamNetworkingMessagesSessionFailed p ) => p.Value == Value;
+		public static bool operator ==( FnSteamNetworkingMessagesSessionFailed a, FnSteamNetworkingMessagesSessionFailed b ) => a.Equals( b );
+		public static bool operator !=( FnSteamNetworkingMessagesSessionFailed a, FnSteamNetworkingMessagesSessionFailed b ) => !a.Equals( b );
+		public int CompareTo( FnSteamNetworkingMessagesSessionFailed other ) => Value.CompareTo( other.Value );
+	}
+	
 	internal struct HSteamNetPollGroup : IEquatable<HSteamNetPollGroup>, IComparable<HSteamNetPollGroup>
 	{
 		// Name: HSteamNetPollGroup, Type: unsigned int

@@ -86,6 +86,7 @@ namespace Steamworks.Data
 		internal static readonly int k_nSteamNetworkingSend_Reliable = 8;
 		internal static readonly int k_nSteamNetworkingSend_ReliableNoNagle = k_nSteamNetworkingSend_Reliable | k_nSteamNetworkingSend_NoNagle;
 		internal static readonly int k_nSteamNetworkingSend_UseCurrentThread = 16;
+		internal static readonly int k_nSteamNetworkingSend_AutoRestartBrokenSession = 32;
 		internal static readonly int k_cchMaxSteamNetworkingPingLocationString = 1024;
 		internal static readonly int k_nSteamNetworkingPing_Failed = - 1;
 		internal static readonly int k_nSteamNetworkingPing_Unknown = - 2;
