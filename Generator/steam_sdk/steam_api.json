@@ -1,5 +1,22 @@
 {
   "callback_structs": [
+
+    {
+      "callback_id": 4604,
+      "fields": [
+        { "fieldname":"m_bIsRTMP", "fieldtype":"bool" }
+      ],
+      "struct": "BroadcastUploadStart_t"
+    },
+    
+    {
+      "callback_id": 4605,
+      "fields": [
+        { "fieldname":"m_eResult", "fieldtype":"EBroadcastUploadResult" }
+      ],
+      "struct": "BroadcastUploadStop_t"
+    },
+
     {
       "callback_id": 101,
       "fields": [],

@@ -7,6 +7,31 @@ using System.Threading.Tasks;
 namespace Steamworks.Data
 {
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
+	internal struct BroadcastUploadStart_t : ICallbackData
+	{
+		[MarshalAs(UnmanagedType.I1)]
+		internal bool IsRTMP; // m_bIsRTMP bool
+		
+		#region SteamCallback
+		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(BroadcastUploadStart_t) );
+		public int DataSize => _datasize;
+		public CallbackType CallbackType => CallbackType.BroadcastUploadStart;
+		#endregion
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
+	internal struct BroadcastUploadStop_t : ICallbackData
+	{
+		internal BroadcastUploadResult Result; // m_eResult EBroadcastUploadResult
+		
+		#region SteamCallback
+		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(BroadcastUploadStop_t) );
+		public int DataSize => _datasize;
+		public CallbackType CallbackType => CallbackType.BroadcastUploadStop;
+		#endregion
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamServersConnected_t : ICallbackData
 	{
 		
