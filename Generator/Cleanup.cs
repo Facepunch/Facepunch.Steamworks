@@ -101,6 +101,7 @@ public static class Cleanup
 		if ( type == "CCallbackBase" ) return false;
 		if ( type == "CSteamGameServerAPIContext" ) return false;
 		if ( type == "ConnectionStatus") return false;
+		if ( type.StartsWith( "FnSteam" ) ) return false;
 
 		return true;
 	}
