@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 namespace Steamworks.Data
 {
 	[StructLayout( LayoutKind.Explicit, Pack = Platform.StructPlatformPackSize )]
-	internal struct NetKeyValue
+	internal partial struct NetKeyValue
 	{
 		[FieldOffset(0)]
 		internal NetConfig Value; // m_eValue ESteamNetworkingConfigValue
