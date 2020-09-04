@@ -347,8 +347,9 @@ namespace Steamworks
 		/// </summary>
 		public static async Task<InventoryPurchaseResult?> StartPurchaseAsync( InventoryDef[] items )
 		{
-			var item_i = items.Select( x => x._id ).ToArray();
-			var item_q = items.Select( x => (uint)1 ).ToArray();
+			var d = items.GroupBy( x => x._id ).ToDictionary( x => x.Key, x => (uint) x.Count() );
+			var item_i = d.Keys.ToArray();
+			var item_q = d.Values.ToArray();
 
 			var r = await Internal.StartPurchase( item_i, item_q, (uint)item_i.Length );
 			if ( !r.HasValue ) return null;
