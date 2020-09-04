@@ -257,7 +257,7 @@ namespace Steamworks
 			var returnValue = _SetConnectionConfigValueFloat( Self, hConn, eValue, val );
 			return returnValue;
 		}
-
+		
 		#region FunctionMeta
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamNetworkingUtils_SetConnectionConfigValueString", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]

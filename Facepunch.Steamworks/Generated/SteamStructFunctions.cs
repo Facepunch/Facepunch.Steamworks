@@ -91,10 +91,10 @@ namespace Steamworks.Data
 	internal partial struct NetKeyValue
 	{
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingConfigValue_t_SetInt32", CallingConvention = Platform.CC)]
-		internal static extern void InternalSetInt32( ref NetKeyValue self, NetConfig eVal, int32_t data );
+		internal static extern void InternalSetInt32( ref NetKeyValue self, NetConfig eVal, int data );
 		
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingConfigValue_t_SetInt64", CallingConvention = Platform.CC)]
-		internal static extern void InternalSetInt64( ref NetKeyValue self, NetConfig eVal, int64_t data );
+		internal static extern void InternalSetInt64( ref NetKeyValue self, NetConfig eVal, long data );
 		
 		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamNetworkingConfigValue_t_SetFloat", CallingConvention = Platform.CC)]
 		internal static extern void InternalSetFloat( ref NetKeyValue self, NetConfig eVal, float data );

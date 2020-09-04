@@ -16,6 +16,8 @@ public static class Cleanup
 		type = type.Replace( "unsigned long long", "uint64" );
 		type = type.Replace( "unsigned int", "uint" );
 		type = type.Replace( "uint32", "uint" );
+		type = type.Replace( "int32_t", "int" );
+		type = type.Replace( "int64_t", "long" );
 
 		type = type.Replace( "CSteamID", "SteamId" );
 		type = type.Replace( "CGameID", "GameId" );
