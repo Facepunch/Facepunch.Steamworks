@@ -8,7 +8,7 @@ namespace Steamworks.Data
 		public int GlobalRank;
 		public int Score;
 		public int[] Details;
-		// UGCHandle_t m_hUGC
+		public PublishedFileId? AttachedUgcId;
 
 		internal static LeaderboardEntry From( LeaderboardEntry_t e, int[] detailsBuffer )
 		{
@@ -19,6 +19,8 @@ namespace Steamworks.Data
 				Score = e.Score,
 				Details = null
 			};
+			if ( e.UGC != 0 )
+				r.AttachedUgcId = 0;
 
 			if ( e.CDetails > 0 )
 			{
