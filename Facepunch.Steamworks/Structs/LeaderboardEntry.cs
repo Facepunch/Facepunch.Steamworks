@@ -20,7 +20,7 @@ namespace Steamworks.Data
 				Details = null
 			};
 			if ( e.UGC != 0 )
-				r.AttachedUgcId = 0;
+				r.AttachedUgcId = e.UGC;
 
 			if ( e.CDetails > 0 )
 			{
