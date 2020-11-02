@@ -10,13 +10,13 @@ namespace Steamworks
 {
 	internal static class Platform
     {
-#if PLATFORM_WIN64
+#if PLATFORM_WIN64 || ((UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN) && UNITY_EDITOR_64)
 		public const int StructPlatformPackSize = 8;
 		public const string LibraryName = "steam_api64";
-#elif PLATFORM_WIN32
+#elif PLATFORM_WIN32 || UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN 
 		public const int StructPlatformPackSize = 8;
 		public const string LibraryName = "steam_api";
-#elif PLATFORM_POSIX
+#elif PLATFORM_POSIX || UNITY_EDITOR_LINUX || UNITY_STANDALONE_LINUX
 		public const int StructPlatformPackSize = 4;
 		public const string LibraryName = "libsteam_api";
 #endif
