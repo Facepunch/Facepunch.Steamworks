@@ -295,6 +295,16 @@ Get a list of your items
 
 # Getting Started
 
+## Installing for Unity
+
+#### Unity 2020.1 or above
+
+If you are using unity 2020.1 you can install Facepunch.Steamworks through the [package manager](https://docs.unity3d.com/Manual/upm-ui-giturl.html) by using [this](https://github.com/LukasKastern/Facepunch.Steamworks.git?path=/Facepunch.Steamworks) git url.
+
+#### Everything below Unity 2020.1
+
+Follow the instructions under https://wiki.facepunch.com/steamworks/Installing_For_Unity 
+
 ## Client
 
 To initialize a client you can do this.
